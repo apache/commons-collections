@@ -30,12 +30,12 @@ import org.apache.commons.collections.KeyValue;
  * @author Neil O'Toole
  * @author Stephen Colebourne
  */
-public abstract class AbstractKeyValue implements KeyValue {
+public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
 
     /** The key */
-    protected Object key;
+    protected K key;
     /** The value */
-    protected Object value;
+    protected V value;
 
     /**
      * Constructs a new pair with the specified key and given value.
@@ -43,7 +43,7 @@ public abstract class AbstractKeyValue implements KeyValue {
      * @param key  the key for the entry, may be null
      * @param value  the value for the entry, may be null
      */
-    protected AbstractKeyValue(Object key, Object value) {
+    protected AbstractKeyValue(K key, V value) {
         super();
         this.key = key;
         this.value = value;
@@ -54,7 +54,7 @@ public abstract class AbstractKeyValue implements KeyValue {
      *
      * @return the key 
      */
-    public Object getKey() {
+    public K getKey() {
         return key;
     }
 
@@ -63,7 +63,7 @@ public abstract class AbstractKeyValue implements KeyValue {
      *
      * @return the value
      */
-    public Object getValue() {
+    public V getValue() {
         return value;
     }
 

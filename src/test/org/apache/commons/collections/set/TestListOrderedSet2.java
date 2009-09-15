@@ -19,7 +19,6 @@ package org.apache.commons.collections.set;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -34,7 +33,12 @@ import junit.framework.TestSuite;
  * @author Henning P. Schmiedehausen
  * @author Stephen Colebourne
  */
-public class TestListOrderedSet2 extends AbstractTestSet {
+public class TestListOrderedSet2<E> extends AbstractTestSet<E> {
+
+    private static final Integer ZERO = new Integer(0);
+    private static final Integer ONE = new Integer(1);
+    private static final Integer TWO = new Integer(2);
+    private static final Integer THREE = new Integer(3);
 
     public TestListOrderedSet2(String testName) {
         super(testName);
@@ -49,22 +53,24 @@ public class TestListOrderedSet2 extends AbstractTestSet {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Set makeEmptySet() {
-        return new ListOrderedSet();
+    public ListOrderedSet<E> makeObject() {
+        return new ListOrderedSet<E>();
     }
 
-    protected Set setupSet() {
-        Set set = makeEmptySet();
+    @SuppressWarnings("unchecked")
+    protected ListOrderedSet<E> setupSet() {
+        ListOrderedSet<E> set = makeObject();
 
         for (int i = 0; i < 10; i++) {
-            set.add(Integer.toString(i));
+            set.add((E) Integer.toString(i));
         }
         return set;
     }
 
+    @SuppressWarnings("unchecked")
     public void testOrdering() {
-        Set set = setupSet();
-        Iterator it = set.iterator();
+        ListOrderedSet<E> set = setupSet();
+        Iterator<E> it = set.iterator();
 
         for (int i = 0; i < 10; i++) {
             assertEquals("Sequence is wrong", Integer.toString(i), it.next());
@@ -80,7 +86,7 @@ public class TestListOrderedSet2 extends AbstractTestSet {
         }
 
         for (int i = 0; i < 10; i++) {
-            set.add(Integer.toString(i));
+            set.add((E) Integer.toString(i));
         }
 
         assertEquals("Size of set is wrong!", 10, set.size());
@@ -93,19 +99,15 @@ public class TestListOrderedSet2 extends AbstractTestSet {
             assertEquals("Sequence is wrong", Integer.toString(i), it.next());
         }
     }
-    
-    private static final Integer ZERO = new Integer(0);
-    private static final Integer ONE = new Integer(1);
-    private static final Integer TWO = new Integer(2);
-    private static final Integer THREE = new Integer(3);
-    
+
+    @SuppressWarnings("unchecked")
     public void testListAddRemove() {
-        ListOrderedSet set = (ListOrderedSet) makeEmptySet();
-        List view = set.asList();
-        set.add(ZERO);
-        set.add(ONE);
-        set.add(TWO);
-        
+        ListOrderedSet<E> set = makeObject();
+        List<E> view = set.asList();
+        set.add((E) ZERO);
+        set.add((E) ONE);
+        set.add((E) TWO);
+
         assertEquals(3, set.size());
         assertSame(ZERO, set.get(0));
         assertSame(ONE, set.get(1));
@@ -114,11 +116,11 @@ public class TestListOrderedSet2 extends AbstractTestSet {
         assertSame(ZERO, view.get(0));
         assertSame(ONE, view.get(1));
         assertSame(TWO, view.get(2));
-        
+
         assertEquals(0, set.indexOf(ZERO));
         assertEquals(1, set.indexOf(ONE));
         assertEquals(2, set.indexOf(TWO));
-        
+
         set.remove(1);
         assertEquals(2, set.size());
         assertSame(ZERO, set.get(0));
@@ -126,37 +128,37 @@ public class TestListOrderedSet2 extends AbstractTestSet {
         assertEquals(2, view.size());
         assertSame(ZERO, view.get(0));
         assertSame(TWO, view.get(1));
-    }        
-    
+    }
+
+    @SuppressWarnings("unchecked")
     public void testListAddIndexed() {
-        ListOrderedSet set = (ListOrderedSet) makeEmptySet();
-        List view = set.asList();
-        set.add(ZERO);
-        set.add(TWO);
-        
-        set.add(1, ONE);
+        ListOrderedSet<E> set = makeObject();
+        set.add((E) ZERO);
+        set.add((E) TWO);
+
+        set.add(1, (E) ONE);
         assertEquals(3, set.size());
         assertSame(ZERO, set.get(0));
         assertSame(ONE, set.get(1));
         assertSame(TWO, set.get(2));
-        
-        set.add(0, ONE);
+
+        set.add(0, (E) ONE);
         assertEquals(3, set.size());
         assertSame(ZERO, set.get(0));
         assertSame(ONE, set.get(1));
         assertSame(TWO, set.get(2));
-        
-        List list = new ArrayList();
-        list.add(ZERO);
-        list.add(TWO);
-        
+
+        List<E> list = new ArrayList<E>();
+        list.add((E) ZERO);
+        list.add((E) TWO);
+
         set.addAll(0, list);
         assertEquals(3, set.size());
         assertSame(ZERO, set.get(0));
         assertSame(ONE, set.get(1));
         assertSame(TWO, set.get(2));
-        
-        list.add(0, THREE); // list = [3,0,2]
+
+        list.add(0, (E) THREE); // list = [3,0,2]
         set.remove(TWO);    //  set = [0,1]
         set.addAll(1, list);
         assertEquals(4, set.size());
@@ -165,7 +167,7 @@ public class TestListOrderedSet2 extends AbstractTestSet {
         assertSame(TWO, set.get(2));
         assertSame(ONE, set.get(3));
     }
-    
+
     public String getCompatibilityVersion() {
         return "3.1";
     }

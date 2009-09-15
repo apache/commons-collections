@@ -31,22 +31,22 @@ import org.apache.commons.collections.Predicate;
  *
  * @author Stephen Colebourne
  */
-public final class UniquePredicate implements Predicate, Serializable {
+public final class UniquePredicate<T> implements Predicate<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -3319417438027438040L;
-    
+
     /** The set of previously seen objects */
-    private final Set iSet = new HashSet();
-    
+    private final Set<T> iSet = new HashSet<T>();
+
     /**
      * Factory to create the predicate.
-     * 
+     *
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null
      */
-    public static Predicate getInstance() {
-        return new UniquePredicate();
+    public static <E> Predicate<E> getInstance() {
+        return new UniquePredicate<E>();
     }
 
     /**
@@ -60,11 +60,11 @@ public final class UniquePredicate implements Predicate, Serializable {
     /**
      * Evaluates the predicate returning true if the input object hasn't been
      * received yet.
-     * 
+     *
      * @param object  the input object
      * @return true if this is the first time the object is seen
      */
-    public boolean evaluate(Object object) {
+    public boolean evaluate(T object) {
         return iSet.add(object);
     }
 

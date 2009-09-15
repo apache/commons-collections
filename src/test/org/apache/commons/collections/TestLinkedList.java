@@ -38,46 +38,21 @@ import org.apache.commons.collections.list.AbstractTestList;
  *
  * @author Rich Dougherty
  */
-public abstract class TestLinkedList extends AbstractTestList {
+public abstract class TestLinkedList<T> extends AbstractTestList<T> {
 
     public TestLinkedList(String testName) {
         super(testName);
     }
 
-    public List makeEmptyList() {
-        return makeEmptyLinkedList();
-    }
-
-    public List makeFullList() {
-        return makeFullLinkedList();
-    }
-
-    /**
-     *  Return a new, empty {@link LinkedList} to be used for testing.
-     *
-     *  @return an empty list for testing.
-     */
-    protected abstract LinkedList makeEmptyLinkedList();
-
-    /**
-     *  Return a new, full {@link List} to be used for testing.
-     *
-     *  @return a full list for testing
-     */
-    protected LinkedList makeFullLinkedList() {
-        // only works if list supports optional "addAll(Collection)" 
-        LinkedList list = makeEmptyLinkedList();
-        list.addAll(Arrays.asList(getFullElements()));
-        return list;
-    }
+    public abstract LinkedList<T> makeObject();
 
     /**
      *  Returns the {@link #collection} field cast to a {@link LinkedList}.
      *
      *  @return the collection field as a List
      */
-    protected LinkedList getLinkedList() {
-        return (LinkedList)collection;
+    public LinkedList<T> getCollection() {
+        return (LinkedList<T>) super.getCollection();
     }
 
     /**
@@ -85,24 +60,25 @@ public abstract class TestLinkedList extends AbstractTestList {
      *
      *  @return the confirmed field as a List
      */
-    protected LinkedList getConfirmedLinkedList() {
-        return (LinkedList)confirmed;
+    protected LinkedList<T> getConfirmedLinkedList() {
+        return (LinkedList<T>) getConfirmed();
     }
 
     /**
      *  Tests {@link LinkedList#addFirst(Object)}.
      */
+    @SuppressWarnings("unchecked")
     public void testLinkedListAddFirst() {
         if (!isAddSupported()) return;
-        Object o = "hello";
+        T o = (T) "hello";
 
         resetEmpty();
-        getLinkedList().addFirst(o);
+        getCollection().addFirst(o);
         getConfirmedLinkedList().addFirst(o);
         verify();
 
         resetFull();
-        getLinkedList().addFirst(o);
+        getCollection().addFirst(o);
         getConfirmedLinkedList().addFirst(o);
         verify();
     }
@@ -110,17 +86,18 @@ public abstract class TestLinkedList extends AbstractTestList {
     /**
      *  Tests {@link LinkedList#addLast(Object)}.
      */
+    @SuppressWarnings("unchecked")
     public void testLinkedListAddLast() {
         if (!isAddSupported()) return;
-        Object o = "hello";
+        T o = (T) "hello";
 
         resetEmpty();
-        getLinkedList().addLast(o);
+        getCollection().addLast(o);
         getConfirmedLinkedList().addLast(o);
         verify();
 
         resetFull();
-        getLinkedList().addLast(o);
+        getCollection().addLast(o);
         getConfirmedLinkedList().addLast(o);
         verify();
     }
@@ -131,7 +108,7 @@ public abstract class TestLinkedList extends AbstractTestList {
     public void testLinkedListGetFirst() {
         resetEmpty();
         try {
-            getLinkedList().getFirst();
+            getCollection().getFirst();
             fail("getFirst() should throw a NoSuchElementException for an " +
                     "empty list.");
         } catch (NoSuchElementException e) {
@@ -140,7 +117,7 @@ public abstract class TestLinkedList extends AbstractTestList {
         verify();
 
         resetFull();
-        Object first = getLinkedList().getFirst();
+        Object first = getCollection().getFirst();
         Object confirmedFirst = getConfirmedLinkedList().getFirst();
         assertEquals("Result returned by getFirst() was wrong.",
                 confirmedFirst, first);
@@ -153,7 +130,7 @@ public abstract class TestLinkedList extends AbstractTestList {
     public void testLinkedListGetLast() {
         resetEmpty();
         try {
-            getLinkedList().getLast();
+            getCollection().getLast();
             fail("getLast() should throw a NoSuchElementException for an " +
                     "empty list.");
         } catch (NoSuchElementException e) {
@@ -162,7 +139,7 @@ public abstract class TestLinkedList extends AbstractTestList {
         verify();
         
         resetFull();
-        Object last = getLinkedList().getLast();
+        Object last = getCollection().getLast();
         Object confirmedLast = getConfirmedLinkedList().getLast();
         assertEquals("Result returned by getLast() was wrong.",
                 confirmedLast, last);
@@ -177,7 +154,7 @@ public abstract class TestLinkedList extends AbstractTestList {
 
         resetEmpty();
         try {
-            getLinkedList().removeFirst();
+            getCollection().removeFirst();
             fail("removeFirst() should throw a NoSuchElementException for " +
                     "an empty list.");
         } catch (NoSuchElementException e) {
@@ -186,7 +163,7 @@ public abstract class TestLinkedList extends AbstractTestList {
         verify();
         
         resetFull();
-        Object first = getLinkedList().removeFirst();
+        Object first = getCollection().removeFirst();
         Object confirmedFirst = getConfirmedLinkedList().removeFirst();
         assertEquals("Result returned by removeFirst() was wrong.",
                 confirmedFirst, first);
@@ -201,7 +178,7 @@ public abstract class TestLinkedList extends AbstractTestList {
 
         resetEmpty();
         try {
-            getLinkedList().removeLast();
+            getCollection().removeLast();
             fail("removeLast() should throw a NoSuchElementException for " +
                     "an empty list.");
         } catch (NoSuchElementException e) {
@@ -210,7 +187,7 @@ public abstract class TestLinkedList extends AbstractTestList {
         verify();
 
         resetFull();
-        Object last = getLinkedList().removeLast();
+        Object last = getCollection().removeLast();
         Object confirmedLast = getConfirmedLinkedList().removeLast();
         assertEquals("Result returned by removeLast() was wrong.",
                 confirmedLast, last);
@@ -220,15 +197,15 @@ public abstract class TestLinkedList extends AbstractTestList {
     /**
      *  Returns an empty {@link LinkedList}.
      */
-    public Collection makeConfirmedCollection() {
-        return new LinkedList();
+    public Collection<T> makeConfirmedCollection() {
+        return new LinkedList<T>();
     }
 
     /**
      *  Returns a full {@link LinkedList}.
      */
-    public Collection makeConfirmedFullCollection() {
-        List list = new LinkedList();
+    public Collection<T> makeConfirmedFullCollection() {
+        List<T> list = new LinkedList<T>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }

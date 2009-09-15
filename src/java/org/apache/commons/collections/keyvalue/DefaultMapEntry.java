@@ -32,7 +32,7 @@ import org.apache.commons.collections.KeyValue;
  * @author Neil O'Toole
  * @author Stephen Colebourne
  */
-public final class DefaultMapEntry extends AbstractMapEntry {
+public final class DefaultMapEntry<K, V> extends AbstractMapEntry<K, V> {
 
     /**
      * Constructs a new entry with the specified key and given value.
@@ -40,7 +40,7 @@ public final class DefaultMapEntry extends AbstractMapEntry {
      * @param key  the key for the entry, may be null
      * @param value  the value for the entry, may be null
      */
-    public DefaultMapEntry(final Object key, final Object value) {
+    public DefaultMapEntry(final K key, final V value) {
         super(key, value);
     }
 
@@ -50,7 +50,7 @@ public final class DefaultMapEntry extends AbstractMapEntry {
      * @param pair  the pair to copy, must not be null
      * @throws NullPointerException if the entry is null
      */
-    public DefaultMapEntry(final KeyValue pair) {
+    public DefaultMapEntry(final KeyValue<K, V> pair) {
         super(pair.getKey(), pair.getValue());
     }
 
@@ -60,7 +60,7 @@ public final class DefaultMapEntry extends AbstractMapEntry {
      * @param entry  the entry to copy, must not be null
      * @throws NullPointerException if the entry is null
      */
-    public DefaultMapEntry(final Map.Entry entry) {
+    public DefaultMapEntry(final Map.Entry<K, V> entry) {
         super(entry.getKey(), entry.getValue());
     }
 

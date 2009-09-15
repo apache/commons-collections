@@ -25,13 +25,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 
 import junit.framework.Test;
 import junit.textui.TestRunner;
 
-import org.apache.commons.collections.BidiMap;
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.SortedBidiMap;
 import org.apache.commons.collections.comparators.ComparableComparator;
@@ -46,7 +44,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
  * @author Stephen Colebourne
  * @author Jonas Van Poucke
  */
-public class TestDualTreeBidiMap2 extends AbstractTestSortedBidiMap {
+public class TestDualTreeBidiMap2<K extends Comparable<K>, V extends Comparable<V>> extends AbstractTestSortedBidiMap<K, V> {
 
     public static void main(String[] args) {
         TestRunner.run(suite());
@@ -60,21 +58,24 @@ public class TestDualTreeBidiMap2 extends AbstractTestSortedBidiMap {
         super(testName);
     }
 
-    public BidiMap makeEmptyBidiMap() {
-        return new DualTreeBidiMap(new ReverseComparator(ComparableComparator.getInstance()));
+    public DualTreeBidiMap<K, V> makeObject() {
+        return new DualTreeBidiMap<K, V>(
+                new ReverseComparator<K>(ComparableComparator.<K> getInstance()),
+                new ReverseComparator<V>(ComparableComparator.<V> getInstance()));
     }
 
-    public Map makeConfirmedMap() {
-        return new TreeMap(new ReverseComparator(ComparableComparator.getInstance()));
+    public TreeMap<K, V> makeConfirmedMap() {
+        return new TreeMap<K, V>(new ReverseComparator<K>(ComparableComparator.<K>getInstance()));
     }
 
     public void testComparator() {
         resetEmpty();
-        SortedBidiMap bidi = (SortedBidiMap) map;
+        SortedBidiMap<K, V> bidi = (SortedBidiMap<K, V>) map;
         assertNotNull(bidi.comparator());
         assertTrue(bidi.comparator() instanceof ReverseComparator);
     }
 
+    @SuppressWarnings("unchecked")
     public void testSerializeDeserializeCheckComparator() throws Exception {
         SortedBidiMap obj = (SortedBidiMap) makeObject();
         if (obj instanceof Serializable && isTestSerialization()) {
@@ -95,18 +96,18 @@ public class TestDualTreeBidiMap2 extends AbstractTestSortedBidiMap {
     }
 
     public void testSortOrder() throws Exception {
-        SortedBidiMap sm = (SortedBidiMap) makeFullMap();
+        SortedBidiMap<K, V> sm = makeFullMap();
 
         // Sort by the comparator used in the makeEmptyBidiMap() method
-        List newSortedKeys = Arrays.asList(getSampleKeys());
-        Collections.sort(newSortedKeys, new ReverseComparator(ComparableComparator.getInstance()));
+        List<K> newSortedKeys = Arrays.asList(getSampleKeys());
+        Collections.sort(newSortedKeys, new ReverseComparator<K>(ComparableComparator.<K>getInstance()));
         newSortedKeys = Collections.unmodifiableList(newSortedKeys);
 
-        Iterator mapIter = sm.keySet().iterator();
-        Iterator expectedIter = newSortedKeys.iterator();
+        Iterator<K> mapIter = sm.keySet().iterator();
+        Iterator<K> expectedIter = newSortedKeys.iterator();
         while (expectedIter.hasNext()) {
-            Object expectedKey = expectedIter.next();
-            Object mapKey = mapIter.next();
+            K expectedKey = expectedIter.next();
+            K mapKey = mapIter.next();
             assertNotNull("key in sorted list may not be null", expectedKey);
             assertNotNull("key in map may not be null", mapKey);
             assertEquals("key from sorted list and map must be equal", expectedKey, mapKey);

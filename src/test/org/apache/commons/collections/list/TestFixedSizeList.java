@@ -32,7 +32,7 @@ import junit.framework.TestSuite;
  *
  * @author Stephen Colebourne
  */
-public class TestFixedSizeList extends AbstractTestList {
+public class TestFixedSizeList<E> extends AbstractTestList<E> {
 
     public TestFixedSizeList(String testName) {
         super(testName);
@@ -47,16 +47,16 @@ public class TestFixedSizeList extends AbstractTestList {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public List makeEmptyList() {
-        return FixedSizeList.decorate(new ArrayList());
+    public List<E> makeObject() {
+        return FixedSizeList.decorate(new ArrayList<E>());
     }
 
-    public List makeFullList() {
-        List list = new ArrayList();
+    public List<E> makeFullCollection() {
+        List<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return FixedSizeList.decorate(list);
     }
-    
+
     public boolean isAddSupported() {
         return false;
     }

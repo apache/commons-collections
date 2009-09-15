@@ -35,7 +35,7 @@ import org.apache.commons.collections.BoundedMap;
  * <p>
  * The map implements <code>OrderedMap</code> and entries may be queried using
  * the bidirectional <code>OrderedMapIterator</code>. The order returned is
- * least recently used to most recently used. Iterators from map views can 
+ * least recently used to most recently used. Iterators from map views can
  * also be cast to <code>OrderedIterator</code> if required.
  * <p>
  * All the available iterators can be reset back to the start by casting to
@@ -44,7 +44,7 @@ import org.apache.commons.collections.BoundedMap;
  * <strong>Note that LRUMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
- * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw 
+ * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * <code>NullPointerException</code>'s when accessed by concurrent threads.
  *
  * @since Commons Collections 3.0 (previously in main package v1.0)
@@ -56,14 +56,14 @@ import org.apache.commons.collections.BoundedMap;
  * @author Mike Pettypiece
  * @author Mario Ivankovits
  */
-public class LRUMap
-        extends AbstractLinkedMap implements BoundedMap, Serializable, Cloneable {
-    
+public class LRUMap<K, V>
+        extends AbstractLinkedMap<K, V> implements BoundedMap<K, V>, Serializable, Cloneable {
+
     /** Serialisation version */
     private static final long serialVersionUID = -612114643488955218L;
     /** Default maximum size */
     protected static final int DEFAULT_MAX_SIZE = 100;
-    
+
     /** Maximum size */
     private transient int maxSize;
     /** Scan behaviour */
@@ -100,7 +100,7 @@ public class LRUMap
 
     /**
      * Constructs a new, empty map with the specified initial capacity and
-     * load factor. 
+     * load factor.
      *
      * @param maxSize  the maximum size of the map
      * @param loadFactor  the load factor
@@ -140,7 +140,7 @@ public class LRUMap
      * @throws NullPointerException if the map is null
      * @throws IllegalArgumentException if the map is empty
      */
-    public LRUMap(Map map) {
+    public LRUMap(Map<K, V> map) {
         this(map, false);
     }
 
@@ -155,7 +155,7 @@ public class LRUMap
      * @throws IllegalArgumentException if the map is empty
      * @since Commons Collections 3.1
      */
-    public LRUMap(Map map, boolean scanUntilRemovable) {
+    public LRUMap(Map<K, V> map, boolean scanUntilRemovable) {
         this(map.size(), DEFAULT_LOAD_FACTOR, scanUntilRemovable);
         putAll(map);
     }
@@ -166,12 +166,12 @@ public class LRUMap
      * <p>
      * This operation changes the position of the key in the map to the
      * most recently used position (first).
-     * 
+     *
      * @param key  the key
      * @return the mapped value, null if no match
      */
-    public Object get(Object key) {
-        LinkEntry entry = (LinkEntry) getEntry(key);
+    public V get(Object key) {
+        LinkEntry<K, V> entry = getEntry(key);
         if (entry == null) {
             return null;
         }
@@ -184,10 +184,10 @@ public class LRUMap
      * Moves an entry to the MRU position at the end of the list.
      * <p>
      * This implementation moves the updated entry to the end of the list.
-     * 
+     *
      * @param entry  the entry to update
      */
-    protected void moveToMRU(LinkEntry entry) {
+    protected void moveToMRU(LinkEntry<K, V> entry) {
         if (entry.after != header) {
             modCount++;
             // remove
@@ -208,21 +208,21 @@ public class LRUMap
                 " (please report this to dev@commons.apache.org)");
         }
     }
-    
+
     /**
      * Updates an existing key-value mapping.
      * <p>
      * This implementation moves the updated entry to the top of the list
      * using {@link #moveToMRU(AbstractLinkedMap.LinkEntry)}.
-     * 
+     *
      * @param entry  the entry to update
      * @param newValue  the new value to store
      */
-    protected void updateEntry(HashEntry entry, Object newValue) {
-        moveToMRU((LinkEntry) entry);  // handles modCount
+    protected void updateEntry(HashEntry<K, V> entry, V newValue) {
+        moveToMRU((LinkEntry<K, V>) entry);  // handles modCount
         entry.setValue(newValue);
     }
-    
+
     /**
      * Adds a new key-value mapping into this map.
      * <p>
@@ -232,15 +232,15 @@ public class LRUMap
      * From Commons Collections 3.1 this method uses {@link #isFull()} rather
      * than accessing <code>size</code> and <code>maxSize</code> directly.
      * It also handles the scanUntilRemovable functionality.
-     * 
+     *
      * @param hashIndex  the index into the data array to store at
      * @param hashCode  the hash code of the key to add
      * @param key  the key to add
      * @param value  the value to add
      */
-    protected void addMapping(int hashIndex, int hashCode, Object key, Object value) {
+    protected void addMapping(int hashIndex, int hashCode, K key, V value) {
         if (isFull()) {
-            LinkEntry reuse = header.after;
+            LinkEntry<K, V> reuse = header.after;
             boolean removeLRUEntry = false;
             if (scanUntilRemovable) {
                 while (reuse != header && reuse != null) {
@@ -260,7 +260,7 @@ public class LRUMap
             } else {
                 removeLRUEntry = removeLRU(reuse);
             }
-            
+
             if (removeLRUEntry) {
                 if (reuse == null) {
                     throw new IllegalStateException(
@@ -277,27 +277,27 @@ public class LRUMap
             super.addMapping(hashIndex, hashCode, key, value);
         }
     }
-    
+
     /**
      * Reuses an entry by removing it and moving it to a new place in the map.
      * <p>
      * This method uses {@link #removeEntry}, {@link #reuseEntry} and {@link #addEntry}.
-     * 
+     *
      * @param entry  the entry to reuse
      * @param hashIndex  the index into the data array to store at
      * @param hashCode  the hash code of the key to add
      * @param key  the key to add
      * @param value  the value to add
      */
-    protected void reuseMapping(LinkEntry entry, int hashIndex, int hashCode, Object key, Object value) {
+    protected void reuseMapping(LinkEntry<K, V> entry, int hashIndex, int hashCode, K key, V value) {
         // find the entry before the entry specified in the hash table
         // remember that the parameters (except the first) refer to the new entry,
         // not the old one
         try {
             int removeIndex = hashIndex(entry.hashCode, data.length);
-            HashEntry[] tmp = data;  // may protect against some sync issues
-            HashEntry loop = tmp[removeIndex];
-            HashEntry previous = null;
+            HashEntry<K, V>[] tmp = data;  // may protect against some sync issues
+            HashEntry<K, V> loop = tmp[removeIndex];
+            HashEntry<K, V> previous = null;
             while (loop != entry && loop != null) {
                 previous = loop;
                 loop = loop.next;
@@ -309,7 +309,7 @@ public class LRUMap
                     " Please check that your keys are immutable, and that you have used synchronization properly." +
                     " If so, then please report this to dev@commons.apache.org as a bug.");
             }
-            
+
             // reuse the entry
             modCount++;
             removeEntry(entry, removeIndex, previous);
@@ -323,7 +323,7 @@ public class LRUMap
                     " If so, then please report this to dev@commons.apache.org as a bug.");
         }
     }
-    
+
     /**
      * Subclass method to control removal of the least recently used entry from the map.
      * <p>
@@ -354,10 +354,10 @@ public class LRUMap
      * <p>
      * NOTE: Commons Collections 3.0 passed the wrong entry to this method.
      * This is fixed in version 3.1 onwards.
-     * 
+     *
      * @param entry  the entry to be removed
      */
-    protected boolean removeLRU(LinkEntry entry) {
+    protected boolean removeLRU(LinkEntry<K, V> entry) {
         return true;
     }
 
@@ -397,10 +397,10 @@ public class LRUMap
      *
      * @return a shallow clone
      */
-    public Object clone() {
-        return super.clone();
+    public LRUMap<K, V> clone() {
+        return (LRUMap<K, V>) super.clone();
     }
-    
+
     /**
      * Write the map out using a custom routine.
      */
@@ -416,7 +416,7 @@ public class LRUMap
         in.defaultReadObject();
         doReadObject(in);
     }
-    
+
     /**
      * Writes the data necessary for <code>put()</code> to work in deserialization.
      */
@@ -432,5 +432,5 @@ public class LRUMap
         maxSize = in.readInt();
         super.doReadObject(in);
     }
-    
+
 }

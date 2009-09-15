@@ -44,7 +44,7 @@ import java.util.Collection;
  * @author Phil Steitz
  * @author Stephen Colebourne
  */
-public class NodeCachingLinkedList extends AbstractLinkedList implements Serializable {
+public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = 6897789178562232073L;
@@ -59,7 +59,7 @@ public class NodeCachingLinkedList extends AbstractLinkedList implements Seriali
      * Cached nodes are stored in a singly-linked list with
      * <code>next</code> pointing to the next element.
      */
-    protected transient Node firstCachedNode;
+    protected transient Node<E> firstCachedNode;
     
     /**
      * The size of the cache.
@@ -84,7 +84,7 @@ public class NodeCachingLinkedList extends AbstractLinkedList implements Seriali
      * 
      * @param coll  the collection to copy
      */
-    public NodeCachingLinkedList(Collection coll) {
+    public NodeCachingLinkedList(Collection<E> coll) {
         super(coll);
         this.maximumCacheSize = DEFAULT_MAXIMUM_CACHE_SIZE;
     }
@@ -137,11 +137,11 @@ public class NodeCachingLinkedList extends AbstractLinkedList implements Seriali
      *
      * @return a node, or <code>null</code> if there are no nodes in the cache.
      */
-    protected Node getNodeFromCache() {
+    protected Node<E> getNodeFromCache() {
         if (cacheSize == 0) {
             return null;
         }
-        Node cachedNode = firstCachedNode;
+        Node<E> cachedNode = firstCachedNode;
         firstCachedNode = cachedNode.next;
         cachedNode.next = null; // This should be changed anyway, but defensively
                                 // set it to null.                    
@@ -164,13 +164,13 @@ public class NodeCachingLinkedList extends AbstractLinkedList implements Seriali
      * 
      * @param node  the node to add to the cache
      */
-    protected void addNodeToCache(Node node) {
+    protected void addNodeToCache(Node<E> node) {
         if (isCacheFull()) {
             // don't cache the node.
             return;
         }
         // clear the node's contents and add it to the cache.
-        Node nextCachedNode = firstCachedNode;
+        Node<E> nextCachedNode = firstCachedNode;
         node.previous = null;
         node.next = nextCachedNode;
         node.setValue(null);
@@ -186,14 +186,13 @@ public class NodeCachingLinkedList extends AbstractLinkedList implements Seriali
      * @param value  value of the new node
      * @return the newly created node
      */
-    protected Node createNode(Object value) {
-        Node cachedNode = getNodeFromCache();
+    protected Node<E> createNode(E value) {
+        Node<E> cachedNode = getNodeFromCache();
         if (cachedNode == null) {
             return super.createNode(value);
-        } else {
-            cachedNode.setValue(value);
-            return cachedNode;
         }
+        cachedNode.setValue(value);
+        return cachedNode;
     }
 
     /**
@@ -202,7 +201,7 @@ public class NodeCachingLinkedList extends AbstractLinkedList implements Seriali
      * 
      * @param node  the node to remove
      */
-    protected void removeNode(Node node) {
+    protected void removeNode(Node<E> node) {
         super.removeNode(node);
         addNodeToCache(node);
     }
@@ -218,9 +217,9 @@ public class NodeCachingLinkedList extends AbstractLinkedList implements Seriali
         // {@link AbstractLinkedList.removeAllNodes()} removes the
         // nodes by removing references directly from {@link #header}.
         int numberOfNodesToCache = Math.min(size, maximumCacheSize - cacheSize);
-        Node node = header.next;
+        Node<E> node = header.next;
         for (int currentIndex = 0; currentIndex < numberOfNodesToCache; currentIndex++) {
-            Node oldNode = node;
+            Node<E> oldNode = node;
             node = node.next;
             addNodeToCache(oldNode);
         }

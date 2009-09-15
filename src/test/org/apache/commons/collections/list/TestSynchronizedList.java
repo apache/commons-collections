@@ -17,7 +17,6 @@
 package org.apache.commons.collections.list;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import junit.framework.Test;
@@ -32,8 +31,8 @@ import junit.framework.TestSuite;
  *
  * @author Stephen Colebourne
  */
-public class TestSynchronizedList extends AbstractTestList {
-    
+public class TestSynchronizedList<E> extends AbstractTestList<E> {
+
     public TestSynchronizedList(String testName) {
         super(testName);
     }
@@ -47,12 +46,12 @@ public class TestSynchronizedList extends AbstractTestList {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Collection makeConfirmedCollection() {
-        return new ArrayList();
+    public List<E> makeConfirmedCollection() {
+        return new ArrayList<E>();
     }
 
-    public List makeEmptyList() {
-        return SynchronizedList.decorate(new ArrayList());
+    public List<E> makeObject() {
+        return SynchronizedList.decorate(new ArrayList<E>());
     }
 
     public String getCompatibilityVersion() {

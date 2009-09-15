@@ -35,14 +35,14 @@ import org.apache.commons.collections.Predicate;
  * @author Stephen Colebourne
  * @author Matt Benson
  */
-public final class NonePredicate implements Predicate, PredicateDecorator, Serializable {
+public final class NonePredicate<T> implements Predicate<T>, PredicateDecorator<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 2007613066565892961L;
-    
+
     /** The array of predicates to call */
-    private final Predicate[] iPredicates;
-    
+    private final Predicate<? super T>[] iPredicates;
+
     /**
      * Factory to create the predicate.
      * <p>
@@ -53,13 +53,13 @@ public final class NonePredicate implements Predicate, PredicateDecorator, Seria
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static Predicate getInstance(Predicate[] predicates) {
+    public static <T> Predicate<T> getInstance(Predicate<? super T>[] predicates) {
         FunctorUtils.validate(predicates);
         if (predicates.length == 0) {
-            return TruePredicate.INSTANCE;
+            return TruePredicate.<T>truePredicate();
         }
         predicates = FunctorUtils.copy(predicates);
-        return new NonePredicate(predicates);
+        return new NonePredicate<T>(predicates);
     }
 
     /**
@@ -72,32 +72,32 @@ public final class NonePredicate implements Predicate, PredicateDecorator, Seria
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static Predicate getInstance(Collection predicates) {
-        Predicate[] preds = FunctorUtils.validate(predicates);
+    public static <T> Predicate<T> getInstance(Collection<? extends Predicate<T>> predicates) {
+        Predicate<? super T>[] preds = FunctorUtils.validate(predicates);
         if (preds.length == 0) {
-            return TruePredicate.INSTANCE;
+            return TruePredicate.<T>truePredicate();
         }
-        return new NonePredicate(preds);
+        return new NonePredicate<T>(preds);
     }
 
     /**
      * Constructor that performs no validation.
      * Use <code>getInstance</code> if you want that.
-     * 
+     *
      * @param predicates  the predicates to check, not cloned, not null
      */
-    public NonePredicate(Predicate[] predicates) {
+    public NonePredicate(Predicate<? super T>[] predicates) {
         super();
         iPredicates = predicates;
     }
 
     /**
      * Evaluates the predicate returning false if any stored predicate returns false.
-     * 
+     *
      * @param object  the input object
      * @return true if none of decorated predicates return true
      */
-    public boolean evaluate(Object object) {
+    public boolean evaluate(T object) {
         for (int i = 0; i < iPredicates.length; i++) {
             if (iPredicates[i].evaluate(object)) {
                 return false;
@@ -108,11 +108,11 @@ public final class NonePredicate implements Predicate, PredicateDecorator, Seria
 
     /**
      * Gets the predicates, do not modify the array.
-     * 
+     *
      * @return the predicates
      * @since Commons Collections 3.1
      */
-    public Predicate[] getPredicates() {
+    public Predicate<? super T>[] getPredicates() {
         return iPredicates;
     }
 

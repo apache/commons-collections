@@ -24,6 +24,7 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.BufferUnderflowException;
+import org.apache.commons.collections.comparators.ComparableComparator;
 
 /**
  * Binary heap implementation of <code>Buffer</code> that provides for
@@ -62,8 +63,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * @author Stephen Colebourne
  * @author Steve Phelps
  */
-public class PriorityBuffer extends AbstractCollection
-        implements Buffer, Serializable {
+public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E>, Serializable {
 
     /** Serialization lock. */
     private static final long serialVersionUID = 6891186490470027896L;
@@ -76,21 +76,24 @@ public class PriorityBuffer extends AbstractCollection
     /**
      * The elements in this buffer.
      */
-    protected Object[] elements;
+    protected E[] elements;
+
     /**
      * The number of elements currently in this buffer.
      */
     protected int size;
+
     /**
      * If true, the first element as determined by the sort order will 
      * be returned.  If false, the last element as determined by the
      * sort order will be returned.
      */
     protected boolean ascendingOrder;
+
     /**
      * The comparator used to order the elements
      */
-    protected Comparator comparator;
+    protected Comparator<? super E> comparator;
 
     //-----------------------------------------------------------------------
     /**
@@ -108,7 +111,7 @@ public class PriorityBuffer extends AbstractCollection
      * @param comparator  the comparator used to order the elements,
      *  null means use natural order
      */
-    public PriorityBuffer(Comparator comparator) {
+    public PriorityBuffer(Comparator<? super E> comparator) {
         this(DEFAULT_CAPACITY, true, comparator);
     }
 
@@ -131,7 +134,7 @@ public class PriorityBuffer extends AbstractCollection
      * @param comparator  the comparator used to order the elements,
      *  null means use natural order
      */
-    public PriorityBuffer(boolean ascendingOrder, Comparator comparator) {
+    public PriorityBuffer(boolean ascendingOrder, Comparator<? super E> comparator) {
         this(DEFAULT_CAPACITY, ascendingOrder, comparator);
     }
 
@@ -155,7 +158,7 @@ public class PriorityBuffer extends AbstractCollection
      *  null means use natural order
      * @throws IllegalArgumentException if <code>capacity</code> is &lt;= <code>0</code>
      */
-    public PriorityBuffer(int capacity, Comparator comparator) {
+    public PriorityBuffer(int capacity, Comparator<? super E> comparator) {
         this(capacity, true, comparator);
     }
 
@@ -183,7 +186,8 @@ public class PriorityBuffer extends AbstractCollection
      *  null means use natural order
      * @throws IllegalArgumentException if <code>capacity</code> is <code>&lt;= 0</code>
      */
-    public PriorityBuffer(int capacity, boolean ascendingOrder, Comparator comparator) {
+    @SuppressWarnings("unchecked")
+    public PriorityBuffer(int capacity, boolean ascendingOrder, Comparator<? super E> comparator) {
         super();
         if (capacity <= 0) {
             throw new IllegalArgumentException("invalid capacity");
@@ -191,8 +195,8 @@ public class PriorityBuffer extends AbstractCollection
         this.ascendingOrder = ascendingOrder;
 
         //+1 as 0 is noop
-        this.elements = new Object[capacity + 1];
-        this.comparator = comparator;
+        this.elements = (E[]) new Object[capacity + 1];
+        this.comparator = (Comparator<? super E>) (comparator == null ? ComparableComparator.INSTANCE : comparator);
     }
 
     //-----------------------------------------------------------------------
@@ -210,7 +214,7 @@ public class PriorityBuffer extends AbstractCollection
      * 
      * @return the comparator in use, null is natural order
      */
-    public Comparator comparator() {
+    public Comparator<? super E> comparator() {
         return comparator;
     }
     
@@ -227,8 +231,9 @@ public class PriorityBuffer extends AbstractCollection
     /**
      * Clears all elements from the buffer.
      */
+    @SuppressWarnings("unchecked")
     public void clear() {
-        elements = new Object[elements.length]; // for gc
+        elements = (E[]) new Object[elements.length]; // for gc
         size = 0;
     }
 
@@ -240,11 +245,11 @@ public class PriorityBuffer extends AbstractCollection
      * @param element  the element to be added
      * @return true always
      */
-    public boolean add(Object element) {
+    public boolean add(E element) {
         if (isAtCapacity()) {
             grow();
         }
-        // percolate element to it's place in tree
+        // percolate element to its place in tree
         if (ascendingOrder) {
             percolateUpMinHeap(element);
         } else {
@@ -259,12 +264,11 @@ public class PriorityBuffer extends AbstractCollection
      * @return the next element
      * @throws BufferUnderflowException if the buffer is empty
      */
-    public Object get() {
+    public E get() {
         if (isEmpty()) {
             throw new BufferUnderflowException();
-        } else {
-            return elements[1];
         }
+        return elements[1];
     }
 
     /**
@@ -273,8 +277,8 @@ public class PriorityBuffer extends AbstractCollection
      * @return the next element
      * @throws BufferUnderflowException if the buffer is empty
      */
-    public Object remove() {
-        final Object result = get();
+    public E remove() {
+        final E result = get();
         elements[1] = elements[size--];
 
         // set the unused element to 'null' so that the garbage collector
@@ -313,7 +317,7 @@ public class PriorityBuffer extends AbstractCollection
      * @param index the index for the element
      */
     protected void percolateDownMinHeap(final int index) {
-        final Object element = elements[index];
+        final E element = elements[index];
         int hole = index;
 
         while ((hole * 2) <= size) {
@@ -345,7 +349,7 @@ public class PriorityBuffer extends AbstractCollection
      * @param index the index of the element
      */
     protected void percolateDownMaxHeap(final int index) {
-        final Object element = elements[index];
+        final E element = elements[index];
         int hole = index;
 
         while ((hole * 2) <= size) {
@@ -378,7 +382,7 @@ public class PriorityBuffer extends AbstractCollection
      */
     protected void percolateUpMinHeap(final int index) {
         int hole = index;
-        Object element = elements[hole];
+        E element = elements[hole];
         while (hole > 1 && compare(element, elements[hole / 2]) < 0) {
             // save element that is being pushed down
             // as the element "bubble" is percolated up
@@ -396,7 +400,7 @@ public class PriorityBuffer extends AbstractCollection
      *
      * @param element the element
      */
-    protected void percolateUpMinHeap(final Object element) {
+    protected void percolateUpMinHeap(final E element) {
         elements[++size] = element;
         percolateUpMinHeap(size);
     }
@@ -410,7 +414,7 @@ public class PriorityBuffer extends AbstractCollection
      */
     protected void percolateUpMaxHeap(final int index) {
         int hole = index;
-        Object element = elements[hole];
+        E element = elements[hole];
 
         while (hole > 1 && compare(element, elements[hole / 2]) > 0) {
             // save element that is being pushed down
@@ -430,7 +434,7 @@ public class PriorityBuffer extends AbstractCollection
      *
      * @param element the element
      */
-    protected void percolateUpMaxHeap(final Object element) {
+    protected void percolateUpMaxHeap(final E element) {
         elements[++size] = element;
         percolateUpMaxHeap(size);
     }
@@ -443,19 +447,16 @@ public class PriorityBuffer extends AbstractCollection
      * @param b  the second object
      * @return -ve if a less than b, 0 if they are equal, +ve if a greater than b
      */
-    protected int compare(Object a, Object b) {
-        if (comparator != null) {
-            return comparator.compare(a, b);
-        } else {
-            return ((Comparable) a).compareTo(b);
-        }
+    protected int compare(E a, E b) {
+        return comparator.compare(a, b);
     }
 
     /**
      * Increases the size of the heap to support additional elements
      */
+    @SuppressWarnings("unchecked")
     protected void grow() {
-        final Object[] array = new Object[elements.length * 2];
+        final E[] array = (E[]) new Object[elements.length * 2];
         System.arraycopy(elements, 0, array, 0, elements.length);
         elements = array;
     }
@@ -466,8 +467,8 @@ public class PriorityBuffer extends AbstractCollection
      *
      * @return an iterator over this heap's elements
      */
-    public Iterator iterator() {
-        return new Iterator() {
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
 
             private int index = 1;
             private int lastReturnedIndex = -1;
@@ -476,7 +477,7 @@ public class PriorityBuffer extends AbstractCollection
                 return index <= size;
             }
 
-            public Object next() {
+            public E next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }

@@ -55,22 +55,22 @@ public class PrototypeFactory {
      * @throws IllegalArgumentException if the prototype is null
      * @throws IllegalArgumentException if the prototype cannot be cloned
      */
-    public static Factory getInstance(Object prototype) {
+    @SuppressWarnings("unchecked")
+    public static <T> Factory<T> getInstance(T prototype) {
         if (prototype == null) {
-            return ConstantFactory.NULL_INSTANCE;
+            return ConstantFactory.<T>getInstance(null);
         }
         try {
             Method method = prototype.getClass().getMethod("clone", (Class[]) null);
-            return new PrototypeCloneFactory(prototype, method);
+            return new PrototypeCloneFactory<T>(prototype, method);
 
         } catch (NoSuchMethodException ex) {
             try {
-                prototype.getClass().getConstructor(new Class[] { prototype.getClass()});
-                return new InstantiateFactory(
-                    prototype.getClass(),
-                    new Class[] { prototype.getClass()},
+                prototype.getClass().getConstructor(new Class<?>[] { prototype.getClass() });
+                return new InstantiateFactory<T>(
+                    (Class<T>) prototype.getClass(),
+                    new Class<?>[] { prototype.getClass() },
                     new Object[] { prototype });
-
             } catch (NoSuchMethodException ex2) {
                 if (prototype instanceof Serializable) {
                     return new PrototypeSerializationFactory((Serializable) prototype);
@@ -93,20 +93,20 @@ public class PrototypeFactory {
     /**
      * PrototypeCloneFactory creates objects by copying a prototype using the clone method.
      */
-    static class PrototypeCloneFactory implements Factory, Serializable {
+    static class PrototypeCloneFactory<T> implements Factory<T>, Serializable {
         
         /** The serial version */
         private static final long serialVersionUID = 5604271422565175555L;
         
         /** The object to clone each time */
-        private final Object iPrototype;
+        private final T iPrototype;
         /** The method used to clone */
         private transient Method iCloneMethod;
 
         /**
          * Constructor to store prototype.
          */
-        private PrototypeCloneFactory(Object prototype, Method method) {
+        private PrototypeCloneFactory(T prototype, Method method) {
             super();
             iPrototype = prototype;
             iCloneMethod = method;
@@ -118,7 +118,6 @@ public class PrototypeFactory {
         private void findCloneMethod() {
             try {
                 iCloneMethod = iPrototype.getClass().getMethod("clone", (Class[]) null);
-
             } catch (NoSuchMethodException ex) {
                 throw new IllegalArgumentException("PrototypeCloneFactory: The clone method must exist and be public ");
             }
@@ -129,15 +128,15 @@ public class PrototypeFactory {
          * 
          * @return the new object
          */
-        public Object create() {
+        @SuppressWarnings("unchecked")
+        public T create() {
             // needed for post-serialization
             if (iCloneMethod == null) {
                 findCloneMethod();
             }
 
             try {
-                return iCloneMethod.invoke(iPrototype, (Object[])null);
-
+                return (T) iCloneMethod.invoke(iPrototype, (Object[]) null);
             } catch (IllegalAccessException ex) {
                 throw new FunctorException("PrototypeCloneFactory: Clone method must be public", ex);
             } catch (InvocationTargetException ex) {
@@ -151,18 +150,18 @@ public class PrototypeFactory {
     /**
      * PrototypeSerializationFactory creates objects by cloning a prototype using serialization.
      */
-    static class PrototypeSerializationFactory implements Factory, Serializable {
+    static class PrototypeSerializationFactory<T extends Serializable> implements Factory<T>, Serializable {
         
         /** The serial version */
         private static final long serialVersionUID = -8704966966139178833L;
         
         /** The object to clone via serialization each time */
-        private final Serializable iPrototype;
+        private final T iPrototype;
 
         /**
          * Constructor to store prototype
          */
-        private PrototypeSerializationFactory(Serializable prototype) {
+        private PrototypeSerializationFactory(T prototype) {
             super();
             iPrototype = prototype;
         }
@@ -172,7 +171,8 @@ public class PrototypeFactory {
          * 
          * @return the new object
          */
-        public Object create() {
+        @SuppressWarnings("unchecked")
+        public T create() {
             ByteArrayOutputStream baos = new ByteArrayOutputStream(512);
             ByteArrayInputStream bais = null;
             try {
@@ -181,7 +181,7 @@ public class PrototypeFactory {
 
                 bais = new ByteArrayInputStream(baos.toByteArray());
                 ObjectInputStream in = new ObjectInputStream(bais);
-                return in.readObject();
+                return (T) in.readObject();
 
             } catch (ClassNotFoundException ex) {
                 throw new FunctorException(ex);

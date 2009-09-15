@@ -29,23 +29,23 @@ import org.apache.commons.collections.Transformer;
  *
  * @author Stephen Colebourne
  */
-public final class ExceptionTransformer implements Transformer, Serializable {
+public final class ExceptionTransformer<I, O> implements Transformer<I, O>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 7179106032121985545L;
-    
 
     /** Singleton predicate instance */
-    public static final Transformer INSTANCE = new ExceptionTransformer();
+    public static final Transformer<Object, Object> INSTANCE = new ExceptionTransformer<Object, Object>();
 
     /**
      * Factory returning the singleton instance.
-     * 
+     *
      * @return the singleton instance
      * @since Commons Collections 3.1
      */
-    public static Transformer getInstance() {
-        return INSTANCE;
+    @SuppressWarnings("unchecked")
+    public static <I, O> Transformer<I, O> getInstance() {
+        return (Transformer<I, O>) INSTANCE;
     }
 
     /**
@@ -57,12 +57,12 @@ public final class ExceptionTransformer implements Transformer, Serializable {
 
     /**
      * Transforms the input to result by cloning it.
-     * 
+     *
      * @param input  the input object to transform
      * @return never
      * @throws FunctorException always
      */
-    public Object transform(Object input) {
+    public O transform(I input) {
         throw new FunctorException("ExceptionTransformer invoked");
     }
 

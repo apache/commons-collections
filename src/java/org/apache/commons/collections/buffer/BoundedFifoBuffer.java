@@ -35,7 +35,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * The BoundedFifoBuffer is a very efficient implementation of
  * <code>Buffer</code> that is of a fixed size.
  * <p>
- * The removal order of a <code>BoundedFifoBuffer</code> is based on the 
+ * The removal order of a <code>BoundedFifoBuffer</code> is based on the
  * insertion order; elements are removed in the same order in which they
  * were added.  The iteration order is the same as the removal order.
  * <p>
@@ -62,30 +62,30 @@ import org.apache.commons.collections.BufferUnderflowException;
  * @author Stephen Colebourne
  * @author Herve Quiroz
  */
-public class BoundedFifoBuffer extends AbstractCollection
-        implements Buffer, BoundedCollection, Serializable {
+public class BoundedFifoBuffer<E> extends AbstractCollection<E>
+        implements Buffer<E>, BoundedCollection<E>, Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = 5603722811189451017L;
 
     /** Underlying storage array */
-    private transient Object[] elements;
-    
+    private transient E[] elements;
+
     /** Array index of first (oldest) buffer element */
     private transient int start = 0;
-    
-    /** 
+
+    /**
      * Index mod maxElements of the array position following the last buffer
      * element.  Buffer elements start at elements[start] and "wrap around"
-     * elements[maxElements-1], ending at elements[decrement(end)].  
-     * For example, elements = {c,a,b}, start=1, end=1 corresponds to 
+     * elements[maxElements-1], ending at elements[decrement(end)].
+     * For example, elements = {c,a,b}, start=1, end=1 corresponds to
      * the buffer [a,b,c].
      */
     private transient int end = 0;
-    
+
     /** Flag to indicate if the buffer is currently full. */
     private transient boolean full = false;
-    
+
     /** Capacity of the buffer */
     private final int maxElements;
 
@@ -104,11 +104,12 @@ public class BoundedFifoBuffer extends AbstractCollection
      * @param size  the maximum number of elements for this fifo
      * @throws IllegalArgumentException  if the size is less than 1
      */
+    @SuppressWarnings("unchecked")
     public BoundedFifoBuffer(int size) {
         if (size <= 0) {
             throw new IllegalArgumentException("The size must be greater than 0");
         }
-        elements = new Object[size];
+        elements = (E[]) new Object[size];
         maxElements = elements.length;
     }
 
@@ -120,7 +121,7 @@ public class BoundedFifoBuffer extends AbstractCollection
      * @param coll  the collection whose elements to add, may not be null
      * @throws NullPointerException if the collection is null
      */
-    public BoundedFifoBuffer(Collection coll) {
+    public BoundedFifoBuffer(Collection<? extends E> coll) {
         this(coll.size());
         addAll(coll);
     }
@@ -128,31 +129,32 @@ public class BoundedFifoBuffer extends AbstractCollection
     //-----------------------------------------------------------------------
     /**
      * Write the buffer out using a custom routine.
-     * 
+     *
      * @param out  the output stream
      * @throws IOException
      */
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeInt(size());
-        for (Iterator it = iterator(); it.hasNext();) {
+        for (Iterator<E> it = iterator(); it.hasNext();) {
             out.writeObject(it.next());
         }
     }
 
     /**
      * Read the buffer in using a custom routine.
-     * 
+     *
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException
      */
+    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        elements = new Object[maxElements];
+        elements = (E[]) new Object[maxElements];
         int size = in.readInt();
         for (int i = 0; i < size; i++) {
-            elements[i] = in.readObject();
+            elements[i] = (E) in.readObject();
         }
         start = 0;
         full = (size == maxElements);
@@ -200,7 +202,7 @@ public class BoundedFifoBuffer extends AbstractCollection
     public boolean isFull() {
         return size() == maxElements;
     }
-    
+
     /**
      * Gets the maximum size of the collection (the bound).
      *
@@ -209,7 +211,7 @@ public class BoundedFifoBuffer extends AbstractCollection
     public int maxSize() {
         return maxElements;
     }
-    
+
     /**
      * Clears this buffer.
      */
@@ -228,7 +230,7 @@ public class BoundedFifoBuffer extends AbstractCollection
      * @throws NullPointerException  if the given element is null
      * @throws BufferOverflowException  if this buffer is full
      */
-    public boolean add(Object element) {
+    public boolean add(E element) {
         if (null == element) {
             throw new NullPointerException("Attempted to add null object to buffer");
         }
@@ -256,11 +258,10 @@ public class BoundedFifoBuffer extends AbstractCollection
      * @return the least recently inserted element
      * @throws BufferUnderflowException  if the buffer is empty
      */
-    public Object get() {
+    public E get() {
         if (isEmpty()) {
             throw new BufferUnderflowException("The buffer is already empty");
         }
-
         return elements[start];
     }
 
@@ -270,12 +271,12 @@ public class BoundedFifoBuffer extends AbstractCollection
      * @return the least recently inserted element
      * @throws BufferUnderflowException  if the buffer is empty
      */
-    public Object remove() {
+    public E remove() {
         if (isEmpty()) {
             throw new BufferUnderflowException("The buffer is already empty");
         }
 
-        Object element = elements[start];
+        E element = elements[start];
 
         if (null != element) {
             elements[start++] = null;
@@ -283,21 +284,19 @@ public class BoundedFifoBuffer extends AbstractCollection
             if (start >= maxElements) {
                 start = 0;
             }
-
             full = false;
         }
-
         return element;
     }
 
     /**
      * Increments the internal index.
-     * 
+     *
      * @param index  the index to increment
      * @return the updated index
      */
     private int increment(int index) {
-        index++; 
+        index++;
         if (index >= maxElements) {
             index = 0;
         }
@@ -306,7 +305,7 @@ public class BoundedFifoBuffer extends AbstractCollection
 
     /**
      * Decrements the internal index.
-     * 
+     *
      * @param index  the index to decrement
      * @return the updated index
      */
@@ -323,8 +322,8 @@ public class BoundedFifoBuffer extends AbstractCollection
      *
      * @return an iterator over this buffer's elements
      */
-    public Iterator iterator() {
-        return new Iterator() {
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
 
             private int index = start;
             private int lastReturnedIndex = -1;
@@ -332,10 +331,9 @@ public class BoundedFifoBuffer extends AbstractCollection
 
             public boolean hasNext() {
                 return isFirst || (index != end);
-                
             }
 
-            public Object next() {
+            public E next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }

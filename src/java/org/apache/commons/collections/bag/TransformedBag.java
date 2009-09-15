@@ -38,8 +38,8 @@ import org.apache.commons.collections.set.TransformedSet;
  *
  * @author Stephen Colebourne
  */
-public class TransformedBag
-        extends TransformedCollection implements Bag {
+public class TransformedBag<E>
+        extends TransformedCollection<E> implements Bag<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = 5421170911299074185L;
@@ -56,8 +56,8 @@ public class TransformedBag
      * @return a new transformed Bag
      * @throws IllegalArgumentException if bag or transformer is null
      */
-    public static Bag decorate(Bag bag, Transformer transformer) {
-        return new TransformedBag(bag, transformer);
+    public static <E> Bag<E> decorate(Bag<E> bag, Transformer<? super E, ? extends E> transformer) {
+        return new TransformedBag<E>(bag, transformer);
     }
     
     /**
@@ -74,13 +74,14 @@ public class TransformedBag
      * @throws IllegalArgumentException if bag or transformer is null
      * @since Commons Collections 3.3
      */
+    // TODO: Generics
     public static Bag decorateTransform(Bag bag, Transformer transformer) {
         TransformedBag decorated = new TransformedBag(bag, transformer);
         if (transformer != null && bag != null && bag.size() > 0) {
             Object[] values = bag.toArray();
             bag.clear();
             for(int i=0; i<values.length; i++) {
-                decorated.getCollection().add(transformer.transform(values[i]));
+                decorated.decorated().add(transformer.transform(values[i]));
             }
         }
         return decorated;
@@ -97,7 +98,7 @@ public class TransformedBag
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if bag or transformer is null
      */
-    protected TransformedBag(Bag bag, Transformer transformer) {
+    protected TransformedBag(Bag<E> bag, Transformer<? super E, ? extends E> transformer) {
         super(bag, transformer);
     }
 
@@ -106,8 +107,8 @@ public class TransformedBag
      * 
      * @return the decorated bag
      */
-    protected Bag getBag() {
-        return (Bag) collection;
+    protected Bag<E> getBag() {
+        return (Bag<E>) collection;
     }
 
     //-----------------------------------------------------------------------
@@ -120,14 +121,13 @@ public class TransformedBag
     }
 
     //-----------------------------------------------------------------------
-    public boolean add(Object object, int nCopies) {
-        object = transform(object);
-        return getBag().add(object, nCopies);
+    public boolean add(E object, int nCopies) {
+        return getBag().add(transform(object), nCopies);
     }
 
-    public Set uniqueSet() {
-        Set set = getBag().uniqueSet();
-        return TransformedSet.decorate(set, transformer);
+    public Set<E> uniqueSet() {
+        Set<E> set = getBag().uniqueSet();
+        return TransformedSet.<E>decorate(set, transformer);
     }
 
 }

@@ -26,7 +26,7 @@ import java.util.NoSuchElementException;
  *
  * @author Stephen Colebourne
  */
-abstract class AbstractEmptyIterator {
+abstract class AbstractEmptyIterator<E> {
  
     /**
      * Constructor.
@@ -39,7 +39,7 @@ abstract class AbstractEmptyIterator {
         return false;
     }
 
-    public Object next() {
+    public E next() {
         throw new NoSuchElementException("Iterator contains no elements");
     }
 
@@ -47,7 +47,7 @@ abstract class AbstractEmptyIterator {
         return false;
     }
 
-    public Object previous() {
+    public E previous() {
         throw new NoSuchElementException("Iterator contains no elements");
     }
 
@@ -59,27 +59,15 @@ abstract class AbstractEmptyIterator {
         return -1;
     }
 
-    public void add(Object obj) {
+    public void add(E obj) {
         throw new UnsupportedOperationException("add() not supported for empty Iterator");
     }
 
-    public void set(Object obj) {
+    public void set(E obj) {
         throw new IllegalStateException("Iterator contains no elements");
     }
 
     public void remove() {
-        throw new IllegalStateException("Iterator contains no elements");
-    }
-
-    public Object getKey() {
-        throw new IllegalStateException("Iterator contains no elements");
-    }
-
-    public Object getValue() {
-        throw new IllegalStateException("Iterator contains no elements");
-    }
-
-    public Object setValue(Object value) {
         throw new IllegalStateException("Iterator contains no elements");
     }
 

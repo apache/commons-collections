@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
  *
  * @author Unknown
  */
-public class TestComparableComparator extends AbstractTestComparator {
+public class TestComparableComparator extends AbstractTestComparator<Integer> {
 
     public TestComparableComparator(String testName) {
         super(testName);
@@ -40,17 +40,17 @@ public class TestComparableComparator extends AbstractTestComparator {
         return new TestSuite(TestComparableComparator.class);
     }
 
-    public Comparator makeComparator() {
-        return new ComparableComparator();
+    public Comparator<Integer> makeObject() {
+        return new ComparableComparator<Integer>();
     }
 
-    public List getComparableObjectsOrdered() {
-        List list = new LinkedList();
-        list.add(new Integer(1));
-        list.add(new Integer(2));
-        list.add(new Integer(3));
-        list.add(new Integer(4));
-        list.add(new Integer(5));
+    public List<Integer> getComparableObjectsOrdered() {
+        List<Integer> list = new LinkedList<Integer>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        list.add(5);
         return list;
     }
 

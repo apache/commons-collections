@@ -27,7 +27,7 @@ import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.collection.AbstractTestCollection;
 
 /**
- * Extension of {@link AbstractTestCollection} for exercising the 
+ * Extension of {@link AbstractTestCollection} for exercising the
  * {@link SynchronizedBuffer} implementation.
  *
  * @since Commons Collections 3.1
@@ -36,39 +36,38 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
  * @author Phil Steitz
  * @author Stephen Colebourne
  */
-public class TestSynchronizedBuffer extends AbstractTestCollection {
-    
+public class TestSynchronizedBuffer<E> extends AbstractTestCollection<E> {
+
     public TestSynchronizedBuffer(String testName) {
         super(testName);
     }
-    
+
     public static Test suite() {
         return new TestSuite(TestSynchronizedBuffer.class);
     }
-    
+
     public static void main(String args[]) {
         String[] testCaseName = { TestSynchronizedBuffer.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    //-----------------------------------------------------------------------    
-    public Collection makeCollection() {
-        return SynchronizedBuffer.decorate(new UnboundedFifoBuffer());
+    //-----------------------------------------------------------------------
+    public Buffer<E> makeObject() {
+        return SynchronizedBuffer.decorate(new UnboundedFifoBuffer<E>());
     }
-    
-    public Collection makeFullCollection() {
-        Buffer buffer = new UnboundedFifoBuffer();
+
+    public Collection<E> makeFullCollection() {
+        Buffer<E> buffer = new UnboundedFifoBuffer<E>();
         buffer.addAll(Arrays.asList(getFullElements()));
         return SynchronizedBuffer.decorate(buffer);
     }
-    
-    public Collection makeConfirmedCollection() {
-        ArrayStack list = new ArrayStack();
-        return list;
+
+    public Collection<E> makeConfirmedCollection() {
+        return new ArrayStack<E>();
     }
 
-    public Collection makeConfirmedFullCollection() {
-        ArrayStack list = new ArrayStack();
+    public Collection<E> makeConfirmedFullCollection() {
+        ArrayStack<E> list = new ArrayStack<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }
@@ -76,7 +75,7 @@ public class TestSynchronizedBuffer extends AbstractTestCollection {
     public boolean isNullSupported() {
         return false;
     }
-    
+
     public String getCompatibilityVersion() {
         return "3.1";
     }

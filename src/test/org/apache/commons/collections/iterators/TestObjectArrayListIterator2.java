@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections.iterators;
 
-import java.util.ListIterator;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -28,10 +26,10 @@ import junit.framework.TestSuite;
  *
  * @author Stephen Colebourne
  */
-public class TestObjectArrayListIterator2 extends AbstractTestListIterator {
+public class TestObjectArrayListIterator2<E> extends AbstractTestListIterator<E> {
 
     protected String[] testArray = { "One", "Two", "Three" };
-    
+
     public TestObjectArrayListIterator2(String testName) {
         super(testName);
     }
@@ -40,22 +38,24 @@ public class TestObjectArrayListIterator2 extends AbstractTestListIterator {
         return new TestSuite(TestObjectArrayListIterator2.class);
     }
 
-    public ListIterator makeEmptyListIterator() {
-        return new ObjectArrayListIterator(new Object[0]);
+    @SuppressWarnings("unchecked")
+    public ObjectArrayListIterator<E> makeEmptyIterator() {
+        return new ObjectArrayListIterator<E>((E[]) new Object[0]);
     }
 
-    public ListIterator makeFullListIterator() {
-        return new ObjectArrayListIterator(testArray);
+    @SuppressWarnings("unchecked")
+    public ObjectArrayListIterator<E> makeObject() {
+        return new ObjectArrayListIterator<E>((E[]) testArray);
     }
 
-    public ListIterator makeArrayListIterator(Object[] array) {
-        return new ObjectArrayListIterator(array);
+    public ObjectArrayListIterator<E> makeArrayListIterator(E[] array) {
+        return new ObjectArrayListIterator<E>(array);
     }
 
     public boolean supportsAdd() {
         return false;
     }
-    
+
     public boolean supportsRemove() {
         return false;
     }

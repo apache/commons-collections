@@ -29,22 +29,23 @@ import org.apache.commons.collections.Predicate;
  *
  * @author Stephen Colebourne
  */
-public final class ExceptionPredicate implements Predicate, Serializable {
+public final class ExceptionPredicate<T> implements Predicate<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 7179106032121985545L;
-    
+
     /** Singleton predicate instance */
-    public static final Predicate INSTANCE = new ExceptionPredicate();
+    public static final Predicate<Object> INSTANCE = new ExceptionPredicate<Object>();
 
     /**
      * Factory returning the singleton instance.
-     * 
+     *
      * @return the singleton instance
      * @since Commons Collections 3.1
      */
-    public static Predicate getInstance() {
-        return INSTANCE;
+    @SuppressWarnings("unchecked")
+    public static <T> Predicate<T> getInstance() {
+        return (Predicate<T>) INSTANCE;
     }
 
     /**
@@ -56,13 +57,13 @@ public final class ExceptionPredicate implements Predicate, Serializable {
 
     /**
      * Evaluates the predicate always throwing an exception.
-     * 
+     *
      * @param object  the input object
      * @return never
      * @throws FunctorException always
      */
-    public boolean evaluate(Object object) {
+    public boolean evaluate(T object) {
         throw new FunctorException("ExceptionPredicate invoked");
     }
-    
+
 }

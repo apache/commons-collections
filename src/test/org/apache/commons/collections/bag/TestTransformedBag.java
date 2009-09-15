@@ -20,6 +20,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.Bag;
+import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.collection.TestTransformedCollection;
 
 /**
@@ -31,8 +32,8 @@ import org.apache.commons.collections.collection.TestTransformedCollection;
  *
  * @author Stephen Colebourne
  */
-public class TestTransformedBag extends AbstractTestBag {
-    
+public class TestTransformedBag<T> extends AbstractTestBag<T> {
+
     public TestTransformedBag(String testName) {
         super(testName);
     }
@@ -46,25 +47,29 @@ public class TestTransformedBag extends AbstractTestBag {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Bag makeBag() {
-        return TransformedBag.decorate(new HashBag(), TestTransformedCollection.NOOP_TRANSFORMER);
+    @SuppressWarnings("unchecked")
+    public Bag<T> makeObject() {
+        return TransformedBag.decorate(new HashBag<T>(), (Transformer<T, T>) TestTransformedCollection.NOOP_TRANSFORMER);
     }
 
+    @SuppressWarnings("unchecked")
     public void testTransformedBag() {
-        Bag bag = TransformedBag.decorate(new HashBag(), TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        //T had better be Object!
+        Bag<T> bag = TransformedBag.decorate(new HashBag<T>(), (Transformer<T, T>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, bag.size());
         Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {
-            bag.add(els[i]);
+            bag.add((T) els[i]);
             assertEquals(i + 1, bag.size());
             assertEquals(true, bag.contains(new Integer((String) els[i])));
             assertEquals(false, bag.contains(els[i]));
         }
-        
+
         assertEquals(false, bag.remove(els[0]));
         assertEquals(true, bag.remove(new Integer((String) els[0])));
     }
 
+    // TODO: Generics
     public void testTransformedBag_decorateTransform() {
         Bag originalBag = new HashBag();
         Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};

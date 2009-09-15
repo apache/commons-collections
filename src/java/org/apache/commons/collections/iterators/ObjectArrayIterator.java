@@ -40,11 +40,11 @@ import org.apache.commons.collections.ResettableIterator;
  * @author Stephen Colebourne
  * @author Phil Steitz
  */
-public class ObjectArrayIterator
-        implements Iterator, ResettableIterator {
+public class ObjectArrayIterator<E>
+        implements Iterator<E>, ResettableIterator<E> {
 
     /** The array */
-    protected Object[] array = null;
+    protected E[] array = null;
     /** The start index to loop from */
     protected int startIndex = 0;
     /** The end index to loop to */
@@ -69,7 +69,7 @@ public class ObjectArrayIterator
      * @param array the array to iterate over
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      */
-    public ObjectArrayIterator(Object[] array) {
+    public ObjectArrayIterator(E[] array) {
         this(array, 0, array.length);
     }
 
@@ -82,7 +82,7 @@ public class ObjectArrayIterator
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      * @throws IndexOutOfBoundsException if the start index is out of bounds
      */
-    public ObjectArrayIterator(Object array[], int start) {
+    public ObjectArrayIterator(E array[], int start) {
         this(array, start, array.length);
     }
 
@@ -97,7 +97,7 @@ public class ObjectArrayIterator
      * @throws IllegalArgumentException if end index is before the start
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      */
-    public ObjectArrayIterator(Object array[], int start, int end) {
+    public ObjectArrayIterator(E array[], int start, int end) {
         super();
         if (start < 0) {
             throw new ArrayIndexOutOfBoundsException("Start index must not be less than zero");
@@ -136,7 +136,7 @@ public class ObjectArrayIterator
      * @throws NoSuchElementException if all the elements in the array
      *    have already been returned
      */
-    public Object next() {
+    public E next() {
         if (hasNext() == false) {
             throw new NoSuchElementException();
         }
@@ -162,7 +162,7 @@ public class ObjectArrayIterator
      * the no-arg constructor was used and {@link #setArray} has never
      * been called with a valid array.
      */
-    public Object[] getArray() {
+    public E[] getArray() {
         return this.array;
     }
 
@@ -178,7 +178,7 @@ public class ObjectArrayIterator
      * @throws IllegalStateException if the <code>array</code> was set in the constructor
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      */
-    public void setArray(Object[] array) {
+    public void setArray(E[] array) {
         if (this.array != null) {
             throw new IllegalStateException("The array to iterate over has already been set");
         }

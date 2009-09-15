@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections.map;
 
-import java.util.Map;
-
 import junit.framework.Test;
 import junit.textui.TestRunner;
 
@@ -30,7 +28,7 @@ import org.apache.commons.collections.BulkTest;
  *
  * @author Stephen Colebourne
  */
-public class TestHashedMap extends AbstractTestIterableMap {
+public class TestHashedMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     public TestHashedMap(String testName) {
         super(testName);
@@ -39,29 +37,30 @@ public class TestHashedMap extends AbstractTestIterableMap {
     public static void main(String[] args) {
         TestRunner.run(suite());
     }
-    
+
     public static Test suite() {
         return BulkTest.makeSuite(TestHashedMap.class);
     }
 
-    public Map makeEmptyMap() {
-        return new HashedMap();
+    public HashedMap<K, V> makeObject() {
+        return new HashedMap<K, V>();
     }
-    
+
     public String getCompatibilityVersion() {
         return "3";
     }
 
+    @SuppressWarnings("unchecked")
     public void testClone() {
-        HashedMap map = new HashedMap(10);
-        map.put("1", "1");
-        Map cloned = (Map) map.clone();
+        HashedMap<K, V> map = new HashedMap<K, V>(10);
+        map.put((K) "1", (V) "1");
+        HashedMap<K, V> cloned = map.clone();
         assertEquals(map.size(), cloned.size());
         assertSame(map.get("1"), cloned.get("1"));
     }
 
     public void testInternalState() {
-        HashedMap map = new HashedMap(42, 0.75f);
+        HashedMap<K, V> map = new HashedMap<K, V>(42, 0.75f);
         assertEquals(0.75f, map.loadFactor, 0.1f);
         assertEquals(0, map.size);
         assertEquals(64, map.data.length);

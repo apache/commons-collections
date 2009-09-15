@@ -28,7 +28,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.collection.TestPredicatedCollection;
 
 /**
- * Extension of {@link TestPredicatedCollection} for exercising the 
+ * Extension of {@link TestPredicatedCollection} for exercising the
  * {@link PredicatedBuffer} implementation.
  *
  * @since Commons Collections 3.0
@@ -36,71 +36,73 @@ import org.apache.commons.collections.collection.TestPredicatedCollection;
  *
  * @author Phil Steitz
  */
-public class TestPredicatedBuffer extends TestPredicatedCollection {
-    
+public class TestPredicatedBuffer<E> extends TestPredicatedCollection<E> {
+
     public TestPredicatedBuffer(String testName) {
         super(testName);
     }
-    
+
     public static Test suite() {
         return new TestSuite(TestPredicatedBuffer.class);
     }
-    
+
     public static void main(String args[]) {
         String[] testCaseName = { TestPredicatedBuffer.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
+
     //---------------------------------------------------------------
-    
-    protected Buffer decorateBuffer(Buffer buffer, Predicate predicate) {
+
+    protected Buffer<E> decorateCollection(Buffer<E> buffer, Predicate<E> predicate) {
         return PredicatedBuffer.decorate(buffer, predicate);
     }
-    
-    public Collection makeCollection() {
-        return decorateBuffer(new ArrayStack(), truePredicate);
+
+    public Buffer<E> makeObject() {
+        return decorateCollection(new ArrayStack<E>(), truePredicate);
     }
-    
-    public Collection makeConfirmedCollection() {
-        return new ArrayStack();
+
+    public Collection<E> makeConfirmedCollection() {
+        return new ArrayStack<E>();
     }
-    
-    public Collection makeConfirmedFullCollection() {
-        ArrayStack list = new ArrayStack();
+
+    public Collection<E> makeConfirmedFullCollection() {
+        ArrayStack<E> list = new ArrayStack<E>();
         list.addAll(java.util.Arrays.asList(getFullElements()));
         return list;
     }
-    
+
     //------------------------------------------------------------
-    
-    public Buffer makeTestBuffer() {
-        return decorateBuffer(new ArrayStack(), testPredicate);
+
+    public Buffer<E> makeTestBuffer() {
+        return decorateCollection(new ArrayStack<E>(), testPredicate);
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testGet() {
-        Buffer buffer = makeTestBuffer();
+        Buffer<E> buffer = makeTestBuffer();
         try {
-            Object o = buffer.get();
+            buffer.get();
             fail("Expecting BufferUnderflowException");
         } catch (BufferUnderflowException ex) {
             // expected
         }
-        buffer.add("one");
-        buffer.add("two");
-        buffer.add("three");
+        buffer.add((E) "one");
+        buffer.add((E) "two");
+        buffer.add((E) "three");
         assertEquals("Buffer get", "three", buffer.get());
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testRemove() {
-        Buffer buffer = makeTestBuffer();
-        buffer.add("one");
+        Buffer<E> buffer = makeTestBuffer();
+        buffer.add((E) "one");
         assertEquals("Buffer get", "one", buffer.remove());
         try {
             buffer.remove();
             fail("Expecting BufferUnderflowException");
         } catch (BufferUnderflowException ex) {
             // expected
-        }      
+        }
     }
 
     public String getCompatibilityVersion() {

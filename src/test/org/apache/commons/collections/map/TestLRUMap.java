@@ -37,7 +37,7 @@ import org.apache.commons.collections.ResettableIterator;
  *
  * @author Stephen Colebourne
  */
-public class TestLRUMap extends AbstractTestOrderedMap {
+public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
 
     public TestLRUMap(String testName) {
         super(testName);
@@ -46,19 +46,27 @@ public class TestLRUMap extends AbstractTestOrderedMap {
     public static void main(String[] args) {
         TestRunner.run(suite());
     }
-    
+
     public static Test suite() {
         return BulkTest.makeSuite(TestLRUMap.class);
     }
 
-    public Map makeEmptyMap() {
-        return new LRUMap();
+    public LRUMap<K, V> makeObject() {
+        return new LRUMap<K, V>();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public LRUMap<K, V> makeFullMap() {
+        return (LRUMap<K, V>) super.makeFullMap();
     }
 
     public boolean isGetStructuralModify() {
         return true;
     }
-    
+
     public String getCompatibilityVersion() {
         return "3";
     }
@@ -66,169 +74,174 @@ public class TestLRUMap extends AbstractTestOrderedMap {
     //-----------------------------------------------------------------------
     public void testLRU() {
         if (isPutAddSupported() == false || isPutChangeSupported() == false) return;
-        Object[] keys = getSampleKeys();
-        Object[] values = getSampleValues();
-        Iterator it = null;
-        
-        LRUMap map = new LRUMap(2);
+        K[] keys = getSampleKeys();
+        V[] values = getSampleValues();
+        Iterator<K> kit;
+        Iterator<V> vit;
+
+        LRUMap<K, V> map = new LRUMap<K, V>(2);
         assertEquals(0, map.size());
         assertEquals(false, map.isFull());
         assertEquals(2, map.maxSize());
-        
+
         map.put(keys[0], values[0]);
         assertEquals(1, map.size());
         assertEquals(false, map.isFull());
         assertEquals(2, map.maxSize());
-        
+
         map.put(keys[1], values[1]);
         assertEquals(2, map.size());
         assertEquals(true, map.isFull());
         assertEquals(2, map.maxSize());
-        it = map.keySet().iterator();
-        assertSame(keys[0], it.next());
-        assertSame(keys[1], it.next());
-        it = map.values().iterator();
-        assertSame(values[0], it.next());
-        assertSame(values[1], it.next());
+        kit = map.keySet().iterator();
+        assertSame(keys[0], kit.next());
+        assertSame(keys[1], kit.next());
+        vit = map.values().iterator();
+        assertSame(values[0], vit.next());
+        assertSame(values[1], vit.next());
 
         map.put(keys[2], values[2]);
         assertEquals(2, map.size());
         assertEquals(true, map.isFull());
         assertEquals(2, map.maxSize());
-        it = map.keySet().iterator();
-        assertSame(keys[1], it.next());
-        assertSame(keys[2], it.next());
-        it = map.values().iterator();
-        assertSame(values[1], it.next());
-        assertSame(values[2], it.next());
+        kit = map.keySet().iterator();
+        assertSame(keys[1], kit.next());
+        assertSame(keys[2], kit.next());
+        vit = map.values().iterator();
+        assertSame(values[1], vit.next());
+        assertSame(values[2], vit.next());
 
         map.put(keys[2], values[0]);
         assertEquals(2, map.size());
         assertEquals(true, map.isFull());
         assertEquals(2, map.maxSize());
-        it = map.keySet().iterator();
-        assertSame(keys[1], it.next());
-        assertSame(keys[2], it.next());
-        it = map.values().iterator();
-        assertSame(values[1], it.next());
-        assertSame(values[0], it.next());
+        kit = map.keySet().iterator();
+        assertSame(keys[1], kit.next());
+        assertSame(keys[2], kit.next());
+        vit = map.values().iterator();
+        assertSame(values[1], vit.next());
+        assertSame(values[0], vit.next());
 
         map.put(keys[1], values[3]);
         assertEquals(2, map.size());
         assertEquals(true, map.isFull());
         assertEquals(2, map.maxSize());
-        it = map.keySet().iterator();
-        assertSame(keys[2], it.next());
-        assertSame(keys[1], it.next());
-        it = map.values().iterator();
-        assertSame(values[0], it.next());
-        assertSame(values[3], it.next());
+        kit = map.keySet().iterator();
+        assertSame(keys[2], kit.next());
+        assertSame(keys[1], kit.next());
+        vit = map.values().iterator();
+        assertSame(values[0], vit.next());
+        assertSame(values[3], vit.next());
     }
-    
-    //-----------------------------------------------------------------------    
+
+    //-----------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
     public void testReset() {
         resetEmpty();
-        OrderedMap ordered = (OrderedMap) map;
-        ((ResettableIterator) ordered.mapIterator()).reset();
-        
+        OrderedMap<K, V> ordered = getMap();
+        ((ResettableIterator<K>) ordered.mapIterator()).reset();
+
         resetFull();
-        ordered = (OrderedMap) map;
-        List list = new ArrayList(ordered.keySet());
-        ResettableIterator it = (ResettableIterator) ordered.mapIterator();
+        ordered = getMap();
+        List<K> list = new ArrayList<K>(ordered.keySet());
+        ResettableIterator<K> it = (ResettableIterator<K>) ordered.mapIterator();
         assertSame(list.get(0), it.next());
         assertSame(list.get(1), it.next());
         it.reset();
         assertSame(list.get(0), it.next());
     }
-    
+
     //-----------------------------------------------------------------------
     public void testAccessOrder() {
         if (isPutAddSupported() == false || isPutChangeSupported() == false) return;
-        Object[] keys = getSampleKeys();
-        Object[] values = getSampleValues();
-        Iterator it = null;
-        
+        K[] keys = getSampleKeys();
+        V[] values = getSampleValues();
+        Iterator<K> kit = null;
+        Iterator<V> vit = null;
+
         resetEmpty();
         map.put(keys[0], values[0]);
         map.put(keys[1], values[1]);
-        it = map.keySet().iterator();
-        assertSame(keys[0], it.next());
-        assertSame(keys[1], it.next());
-        it = map.values().iterator();
-        assertSame(values[0], it.next());
-        assertSame(values[1], it.next());
+        kit = map.keySet().iterator();
+        assertSame(keys[0], kit.next());
+        assertSame(keys[1], kit.next());
+        vit = map.values().iterator();
+        assertSame(values[0], vit.next());
+        assertSame(values[1], vit.next());
 
         // no change to order
         map.put(keys[1], values[1]);
-        it = map.keySet().iterator();
-        assertSame(keys[0], it.next());
-        assertSame(keys[1], it.next());
-        it = map.values().iterator();
-        assertSame(values[0], it.next());
-        assertSame(values[1], it.next());
+        kit = map.keySet().iterator();
+        assertSame(keys[0], kit.next());
+        assertSame(keys[1], kit.next());
+        vit = map.values().iterator();
+        assertSame(values[0], vit.next());
+        assertSame(values[1], vit.next());
 
         // no change to order
         map.put(keys[1], values[2]);
-        it = map.keySet().iterator();
-        assertSame(keys[0], it.next());
-        assertSame(keys[1], it.next());
-        it = map.values().iterator();
-        assertSame(values[0], it.next());
-        assertSame(values[2], it.next());
+        kit = map.keySet().iterator();
+        assertSame(keys[0], kit.next());
+        assertSame(keys[1], kit.next());
+        vit = map.values().iterator();
+        assertSame(values[0], vit.next());
+        assertSame(values[2], vit.next());
 
         // change to order
         map.put(keys[0], values[3]);
-        it = map.keySet().iterator();
-        assertSame(keys[1], it.next());
-        assertSame(keys[0], it.next());
-        it = map.values().iterator();
-        assertSame(values[2], it.next());
-        assertSame(values[3], it.next());
+        kit = map.keySet().iterator();
+        assertSame(keys[1], kit.next());
+        assertSame(keys[0], kit.next());
+        vit = map.values().iterator();
+        assertSame(values[2], vit.next());
+        assertSame(values[3], vit.next());
 
         // change to order
         map.get(keys[1]);
-        it = map.keySet().iterator();
-        assertSame(keys[0], it.next());
-        assertSame(keys[1], it.next());
-        it = map.values().iterator();
-        assertSame(values[3], it.next());
-        assertSame(values[2], it.next());
+        kit = map.keySet().iterator();
+        assertSame(keys[0], kit.next());
+        assertSame(keys[1], kit.next());
+        vit = map.values().iterator();
+        assertSame(values[3], vit.next());
+        assertSame(values[2], vit.next());
 
         // change to order
         map.get(keys[0]);
-        it = map.keySet().iterator();
-        assertSame(keys[1], it.next());
-        assertSame(keys[0], it.next());
-        it = map.values().iterator();
-        assertSame(values[2], it.next());
-        assertSame(values[3], it.next());
+        kit = map.keySet().iterator();
+        assertSame(keys[1], kit.next());
+        assertSame(keys[0], kit.next());
+        vit = map.values().iterator();
+        assertSame(values[2], vit.next());
+        assertSame(values[3], vit.next());
 
         // no change to order
         map.get(keys[0]);
-        it = map.keySet().iterator();
-        assertSame(keys[1], it.next());
-        assertSame(keys[0], it.next());
-        it = map.values().iterator();
-        assertSame(values[2], it.next());
-        assertSame(values[3], it.next());
+        kit = map.keySet().iterator();
+        assertSame(keys[1], kit.next());
+        assertSame(keys[0], kit.next());
+        vit = map.values().iterator();
+        assertSame(values[2], vit.next());
+        assertSame(values[3], vit.next());
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testClone() {
-        LRUMap map = new LRUMap(10);
-        map.put("1", "1");
-        Map cloned = (Map) map.clone();
+        LRUMap<K, V> map = new LRUMap<K, V>(10);
+        map.put((K) "1", (V) "1");
+        Map<K, V> cloned = map.clone();
         assertEquals(map.size(), cloned.size());
         assertSame(map.get("1"), cloned.get("1"));
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testRemoveLRU() {
         MockLRUMapSubclass map = new MockLRUMapSubclass(2);
         assertNull(map.entry);
-        map.put("A", "a");
+        map.put((K) "A", "a");
         assertNull(map.entry);
-        map.put("B", "b");
+        map.put((K) "B", "b");
         assertNull(map.entry);
-        map.put("C", "c");  // removes oldest, which is A=a
+        map.put((K) "C", "c");  // removes oldest, which is A=a
         assertNotNull(map.entry);
         assertEquals("A", map.key);
         assertEquals("a", map.value);
@@ -238,32 +251,34 @@ public class TestLRUMap extends AbstractTestOrderedMap {
         assertEquals(true, map.containsKey("B"));
         assertEquals(true, map.containsKey("C"));
     }
-    
-    static class MockLRUMapSubclass extends LRUMap {
-        LinkEntry entry;
-        Object key;
-        Object value;
+
+    @SuppressWarnings("serial")
+    static class MockLRUMapSubclass<K, V> extends LRUMap<K, V> {
+        LinkEntry<K, V> entry;
+        K key;
+        V value;
 
         MockLRUMapSubclass(int size) {
             super(size);
         }
 
-        protected boolean removeLRU(LinkEntry entry) {
+        protected boolean removeLRU(LinkEntry<K, V> entry) {
             this.entry = entry;
             this.key = entry.getKey();
             this.value = entry.getValue();
             return true;
         }
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testRemoveLRUBlocksRemove() {
-        MockLRUMapSubclassBlocksRemove map = new MockLRUMapSubclassBlocksRemove(2, false);
+        MockLRUMapSubclassBlocksRemove<K, V> map = new MockLRUMapSubclassBlocksRemove<K, V>(2, false);
         assertEquals(0, map.size());
-        map.put("A", "a");
+        map.put((K) "A", (V) "a");
         assertEquals(1, map.size());
-        map.put("B", "b");
+        map.put((K) "B", (V) "b");
         assertEquals(2, map.size());
-        map.put("C", "c");  // should remove oldest, which is A=a, but this is blocked
+        map.put((K) "C", (V) "c");  // should remove oldest, which is A=a, but this is blocked
         assertEquals(3, map.size());
         assertEquals(2, map.maxSize());
         assertEquals(true, map.containsKey("A"));
@@ -271,39 +286,42 @@ public class TestLRUMap extends AbstractTestOrderedMap {
         assertEquals(true, map.containsKey("C"));
     }
 
+    @SuppressWarnings("unchecked")
     public void testRemoveLRUBlocksRemoveScan() {
-        MockLRUMapSubclassBlocksRemove map = new MockLRUMapSubclassBlocksRemove(2, true);
+        MockLRUMapSubclassBlocksRemove<K, V> map = new MockLRUMapSubclassBlocksRemove<K, V>(2, true);
         assertEquals(0, map.size());
-        map.put("A", "a");
+        map.put((K) "A", (V) "a");
         assertEquals(1, map.size());
-        map.put("B", "b");
+        map.put((K) "B", (V) "b");
         assertEquals(2, map.size());
-        map.put("C", "c");  // should remove oldest, which is A=a, but this is blocked
+        map.put((K) "C", (V) "c");  // should remove oldest, which is A=a, but this is blocked
         assertEquals(3, map.size());
         assertEquals(2, map.maxSize());
         assertEquals(true, map.containsKey("A"));
         assertEquals(true, map.containsKey("B"));
         assertEquals(true, map.containsKey("C"));
     }
-    
-    static class MockLRUMapSubclassBlocksRemove extends LRUMap {
+
+    @SuppressWarnings("serial")
+    static class MockLRUMapSubclassBlocksRemove<K, V> extends LRUMap<K, V> {
         MockLRUMapSubclassBlocksRemove(int size, boolean scanUntilRemove) {
             super(size, scanUntilRemove);
         }
 
-        protected boolean removeLRU(LinkEntry entry) {
+        protected boolean removeLRU(LinkEntry<K, V> entry) {
             return false;
         }
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testRemoveLRUFirstBlocksRemove() {
-        MockLRUMapSubclassFirstBlocksRemove map = new MockLRUMapSubclassFirstBlocksRemove(2);
+        MockLRUMapSubclassFirstBlocksRemove<K, V> map = new MockLRUMapSubclassFirstBlocksRemove<K, V>(2);
         assertEquals(0, map.size());
-        map.put("A", "a");
+        map.put((K) "A", (V) "a");
         assertEquals(1, map.size());
-        map.put("B", "b");
+        map.put((K) "B", (V) "b");
         assertEquals(2, map.size());
-        map.put("C", "c");  // should remove oldest, which is A=a  but this is blocked - so advance to B=b
+        map.put((K) "C", (V) "c");  // should remove oldest, which is A=a  but this is blocked - so advance to B=b
         assertEquals(2, map.size());
         assertEquals(2, map.maxSize());
         assertEquals(true, map.containsKey("A"));
@@ -311,12 +329,13 @@ public class TestLRUMap extends AbstractTestOrderedMap {
         assertEquals(true, map.containsKey("C"));
     }
 
-    static class MockLRUMapSubclassFirstBlocksRemove extends LRUMap {
+    @SuppressWarnings("serial")
+    static class MockLRUMapSubclassFirstBlocksRemove<K, V> extends LRUMap<K, V> {
         MockLRUMapSubclassFirstBlocksRemove(int size) {
             super(size, true);
         }
 
-        protected boolean removeLRU(LinkEntry entry) {
+        protected boolean removeLRU(LinkEntry<K, V> entry) {
             if ("a".equals(entry.getValue())) {
                 return false;
             } else {
@@ -341,6 +360,7 @@ public class TestLRUMap extends AbstractTestOrderedMap {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void testInternalState_Buckets() {
         if (isPutAddSupported() == false || isPutChangeSupported() == false) return;
         SingleHashCode one = new SingleHashCode("1");
@@ -350,12 +370,12 @@ public class TestLRUMap extends AbstractTestOrderedMap {
         SingleHashCode five = new SingleHashCode("5");
         SingleHashCode six = new SingleHashCode("6");
 
-        LRUMap map = new LRUMap(3, 1.0f);
+        LRUMap<K, V> map = new LRUMap<K, V>(3, 1.0f);
         int hashIndex = map.hashIndex(map.hash(one), 4);
-        map.put(one, "A");
-        map.put(two, "B");
-        map.put(three, "C");
-        
+        map.put((K) one, (V) "A");
+        map.put((K) two, (V) "B");
+        map.put((K) three, (V) "C");
+
         assertEquals(4, map.data.length);
         assertEquals(3, map.size);
         assertEquals(null, map.header.next);
@@ -365,9 +385,9 @@ public class TestLRUMap extends AbstractTestOrderedMap {
         assertEquals(three, map.data[hashIndex].key);
         assertEquals(two, map.data[hashIndex].next.key);
         assertEquals(one, map.data[hashIndex].next.next.key);
-        
-        map.put(four, "D");  // reuses last in next list
-        
+
+        map.put((K) four, (V) "D");  // reuses last in next list
+
         assertEquals(4, map.data.length);
         assertEquals(3, map.size);
         assertEquals(null, map.header.next);
@@ -377,9 +397,9 @@ public class TestLRUMap extends AbstractTestOrderedMap {
         assertEquals(four, map.data[hashIndex].key);
         assertEquals(three, map.data[hashIndex].next.key);
         assertEquals(two, map.data[hashIndex].next.next.key);
-        
+
         map.get(three);
-        
+
         assertEquals(4, map.data.length);
         assertEquals(3, map.size);
         assertEquals(null, map.header.next);
@@ -389,9 +409,9 @@ public class TestLRUMap extends AbstractTestOrderedMap {
         assertEquals(four, map.data[hashIndex].key);
         assertEquals(three, map.data[hashIndex].next.key);
         assertEquals(two, map.data[hashIndex].next.next.key);
-        
-        map.put(five, "E");  // reuses last in next list
-        
+
+        map.put((K) five, (V) "E");  // reuses last in next list
+
         assertEquals(4, map.data.length);
         assertEquals(3, map.size);
         assertEquals(null, map.header.next);
@@ -401,10 +421,10 @@ public class TestLRUMap extends AbstractTestOrderedMap {
         assertEquals(five, map.data[hashIndex].key);
         assertEquals(four, map.data[hashIndex].next.key);
         assertEquals(three, map.data[hashIndex].next.next.key);
-        
+
         map.get(three);
         map.get(five);
-        
+
         assertEquals(4, map.data.length);
         assertEquals(3, map.size);
         assertEquals(null, map.header.next);
@@ -414,9 +434,9 @@ public class TestLRUMap extends AbstractTestOrderedMap {
         assertEquals(five, map.data[hashIndex].key);
         assertEquals(four, map.data[hashIndex].next.key);
         assertEquals(three, map.data[hashIndex].next.next.key);
-        
-        map.put(six, "F");  // reuses middle in next list
-        
+
+        map.put((K) six, (V) "F");  // reuses middle in next list
+
         assertEquals(4, map.data.length);
         assertEquals(3, map.size);
         assertEquals(null, map.header.next);
@@ -428,21 +448,18 @@ public class TestLRUMap extends AbstractTestOrderedMap {
         assertEquals(three, map.data[hashIndex].next.next.key);
     }
 
+    @SuppressWarnings("unchecked")
     public void testInternalState_getEntry_int() {
         if (isPutAddSupported() == false || isPutChangeSupported() == false) return;
         SingleHashCode one = new SingleHashCode("1");
         SingleHashCode two = new SingleHashCode("2");
         SingleHashCode three = new SingleHashCode("3");
-        SingleHashCode four = new SingleHashCode("4");
-        SingleHashCode five = new SingleHashCode("5");
-        SingleHashCode six = new SingleHashCode("6");
 
-        LRUMap map = new LRUMap(3, 1.0f);
-        int hashIndex = map.hashIndex(map.hash(one), 4);
-        map.put(one, "A");
-        map.put(two, "B");
-        map.put(three, "C");
-        
+        LRUMap<K, V> map = new LRUMap<K, V>(3, 1.0f);
+        map.put((K) one, (V) "A");
+        map.put((K) two, (V) "B");
+        map.put((K) three, (V) "C");
+
         assertEquals(one, map.getEntry(0).key);
         assertEquals(two, map.getEntry(1).key);
         assertEquals(three, map.getEntry(2).key);
@@ -787,4 +804,12 @@ public class TestLRUMap extends AbstractTestOrderedMap {
 //        resetFull();
 //        writeExternalFormToDisk((java.io.Serializable) map, "D:/dev/collections/data/test/LRUMap.fullCollection.version3.obj");
 //    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public LRUMap<K, V> getMap() {
+        return (LRUMap<K, V>) super.getMap();
+    }
 }

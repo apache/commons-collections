@@ -34,7 +34,7 @@ import junit.framework.TestSuite;
  * @author Morgan Delagrange
  * @author Stephen Colebourne
  */
-public class TestArrayIterator extends AbstractTestIterator {
+public class TestArrayIterator<E> extends AbstractTestIterator<E> {
 
     protected String[] testArray = { "One", "Two", "Three" };
 
@@ -46,24 +46,23 @@ public class TestArrayIterator extends AbstractTestIterator {
         super(testName);
     }
 
-    public Iterator makeEmptyIterator() {
-        return new ArrayIterator(new Object[0]);
+    public ArrayIterator<E> makeEmptyIterator() {
+        return new ArrayIterator<E>(new Object[0]);
     }
 
-    public Iterator makeFullIterator() {
-        return new ArrayIterator(testArray);
+    public ArrayIterator<E> makeObject() {
+        return new ArrayIterator<E>(testArray);
     }
 
     public boolean supportsRemove() {
         return false;
     }
 
-
     public void testIterator() {
-        Iterator iter = (Iterator) makeFullIterator();
+        Iterator<E> iter = makeObject();
         for (int i = 0; i < testArray.length; i++) {
             Object testValue = testArray[i];
-            Object iterValue = iter.next();
+            E iterValue = iter.next();
 
             assertEquals("Iteration value is correct", testValue, iterValue);
         }
@@ -71,7 +70,7 @@ public class TestArrayIterator extends AbstractTestIterator {
         assertTrue("Iterator should now be empty", !iter.hasNext());
 
         try {
-            Object testValue = iter.next();
+            iter.next();
         } catch (Exception e) {
             assertTrue(
                 "NoSuchElementException must be thrown",
@@ -81,14 +80,13 @@ public class TestArrayIterator extends AbstractTestIterator {
 
     public void testNullArray() {
         try {
-            Iterator iter = new ArrayIterator(null);
-
+            new ArrayIterator<Object>(null);
             fail("Constructor should throw a NullPointerException when constructed with a null array");
         } catch (NullPointerException e) {
             // expected
         }
 
-        ArrayIterator iter = new ArrayIterator();
+        ArrayIterator<Object> iter = new ArrayIterator<Object>();
         try {
             iter.setArray(null);
 
@@ -99,7 +97,7 @@ public class TestArrayIterator extends AbstractTestIterator {
     }
     
     public void testReset() {
-        ArrayIterator it = (ArrayIterator) makeFullIterator();
+        ArrayIterator<E> it = makeObject();
         it.next();
         it.reset();
         assertEquals("One", it.next());

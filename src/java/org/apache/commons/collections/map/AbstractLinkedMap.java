@@ -21,7 +21,6 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.OrderedIterator;
 import org.apache.commons.collections.OrderedMap;
 import org.apache.commons.collections.OrderedMapIterator;
@@ -63,10 +62,10 @@ import org.apache.commons.collections.iterators.EmptyOrderedMapIterator;
  * @author java util LinkedHashMap
  * @author Stephen Colebourne
  */
-public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
+public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> implements OrderedMap<K, V> {
     
     /** Header in the linked list */
-    protected transient LinkEntry header;
+    protected transient LinkEntry<K, V> header;
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
@@ -115,7 +114,7 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      * @param map  the map to copy
      * @throws NullPointerException if the map is null
      */
-    protected AbstractLinkedMap(Map map) {
+    protected AbstractLinkedMap(Map<K, V> map) {
         super(map);
     }
 
@@ -127,7 +126,7 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      * the map entry object.
      */
     protected void init() {
-        header = (LinkEntry) createEntry(null, -1, null, null);
+        header = createEntry(null, -1, null, null);
         header.before = header.after = header;
     }
 
@@ -141,13 +140,13 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
     public boolean containsValue(Object value) {
         // override uses faster iterator
         if (value == null) {
-            for (LinkEntry entry = header.after; entry != header; entry = entry.after) {
+            for (LinkEntry<K, V> entry = header.after; entry != header; entry = entry.after) {
                 if (entry.getValue() == null) {
                     return true;
                 }
             }
         } else {
-            for (LinkEntry entry = header.after; entry != header; entry = entry.after) {
+            for (LinkEntry<K, V> entry = header.after; entry != header; entry = entry.after) {
                 if (isEqualValue(value, entry.getValue())) {
                     return true;
                 }
@@ -172,7 +171,7 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      * 
      * @return the eldest key
      */
-    public Object firstKey() {
+    public K firstKey() {
         if (size == 0) {
             throw new NoSuchElementException("Map is empty");
         }
@@ -184,7 +183,7 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      * 
      * @return the most recently inserted key
      */
-    public Object lastKey() {
+    public K lastKey() {
         if (size == 0) {
             throw new NoSuchElementException("Map is empty");
         }
@@ -197,9 +196,13 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      * @param key  the key to get after
      * @return the next key
      */
-    public Object nextKey(Object key) {
-        LinkEntry entry = (LinkEntry) getEntry(key);
+    public K nextKey(Object key) {
+        LinkEntry<K, V> entry = getEntry(key);
         return (entry == null || entry.after == header ? null : entry.after.getKey());
+    }
+
+    protected LinkEntry<K, V> getEntry(Object key) {
+        return (LinkEntry<K, V>) super.getEntry(key);
     }
 
     /**
@@ -208,8 +211,8 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      * @param key  the key to get before
      * @return the previous key
      */
-    public Object previousKey(Object key) {
-        LinkEntry entry = (LinkEntry) getEntry(key);
+    public K previousKey(Object key) {
+        LinkEntry<K, V> entry = getEntry(key);
         return (entry == null || entry.before == header ? null : entry.before.getKey());
     }
 
@@ -221,14 +224,14 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      * @return the key at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
-    protected LinkEntry getEntry(int index) {
+    protected LinkEntry<K, V> getEntry(int index) {
         if (index < 0) {
             throw new IndexOutOfBoundsException("Index " + index + " is less than zero");
         }
         if (index >= size) {
             throw new IndexOutOfBoundsException("Index " + index + " is invalid for size " + size);
         }
-        LinkEntry entry;
+        LinkEntry<K, V> entry;
         if (index < (size / 2)) {
             // Search forwards
             entry = header.after;
@@ -251,18 +254,18 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      * This implementation adds the entry to the data storage table and
      * to the end of the linked list.
      * 
-     * @param entry  the entry to add
+     * @param link  the entry to add
      * @param hashIndex  the index into the data array to store at
      */
-    protected void addEntry(HashEntry entry, int hashIndex) {
-        LinkEntry link = (LinkEntry) entry;
+    protected void addEntry(HashEntry<K, V> entry, int hashIndex) {
+        LinkEntry<K, V> link = (LinkEntry<K, V>) entry;
         link.after  = header;
         link.before = header.before;
         header.before.after = link;
         header.before = link;
-        data[hashIndex] = entry;
+        data[hashIndex] = link;
     }
-    
+
     /**
      * Creates an entry to store the data.
      * <p>
@@ -274,10 +277,10 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      * @param value  the value to store
      * @return the newly created entry
      */
-    protected HashEntry createEntry(HashEntry next, int hashCode, Object key, Object value) {
-        return new LinkEntry(next, hashCode, key, value);
+    protected LinkEntry<K, V> createEntry(HashEntry<K, V> next, int hashCode, K key, V value) {
+        return new LinkEntry<K, V>(next, hashCode, convertKey(key), value);
     }
-    
+
     /**
      * Removes an entry from the map and the linked list.
      * <p>
@@ -288,15 +291,15 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      * @param hashIndex  the index into the data structure
      * @param previous  the previous entry in the chain
      */
-    protected void removeEntry(HashEntry entry, int hashIndex, HashEntry previous) {
-        LinkEntry link = (LinkEntry) entry;
+    protected void removeEntry(HashEntry<K, V> entry, int hashIndex, HashEntry<K, V> previous) {
+        LinkEntry<K, V> link = (LinkEntry<K, V>) entry;
         link.before.after = link.after;
         link.after.before = link.before;
         link.after = null;
         link.before = null;
         super.removeEntry(entry, hashIndex, previous);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Gets the <code>before</code> field from a <code>LinkEntry</code>.
@@ -307,10 +310,10 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      * @throws NullPointerException if the entry is null
      * @since Commons Collections 3.1
      */
-    protected LinkEntry entryBefore(LinkEntry entry) {
+    protected LinkEntry<K, V> entryBefore(LinkEntry<K, V> entry) {
         return entry.before;
     }
-    
+
     /**
      * Gets the <code>after</code> field from a <code>LinkEntry</code>.
      * Used in subclasses that have no visibility of the field.
@@ -320,87 +323,64 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      * @throws NullPointerException if the entry is null
      * @since Commons Collections 3.1
      */
-    protected LinkEntry entryAfter(LinkEntry entry) {
+    protected LinkEntry<K, V> entryAfter(LinkEntry<K, V> entry) {
         return entry.after;
     }
-    
+
     //-----------------------------------------------------------------------
     /**
-     * Gets an iterator over the map.
-     * Changes made to the iterator affect this map.
-     * <p>
-     * A MapIterator returns the keys in the map. It also provides convenient
-     * methods to get the key and value, and set the value.
-     * It avoids the need to create an entrySet/keySet/values object.
-     * 
-     * @return the map iterator
+     * {@inheritDoc}
      */
-    public MapIterator mapIterator() {
+    public OrderedMapIterator<K, V> mapIterator() {
         if (size == 0) {
-            return EmptyOrderedMapIterator.INSTANCE;
+            return EmptyOrderedMapIterator.<K, V>getInstance();
         }
-        return new LinkMapIterator(this);
-    }
-
-    /**
-     * Gets a bidirectional iterator over the map.
-     * Changes made to the iterator affect this map.
-     * <p>
-     * A MapIterator returns the keys in the map. It also provides convenient
-     * methods to get the key and value, and set the value.
-     * It avoids the need to create an entrySet/keySet/values object.
-     * 
-     * @return the map iterator
-     */
-    public OrderedMapIterator orderedMapIterator() {
-        if (size == 0) {
-            return EmptyOrderedMapIterator.INSTANCE;
-        }
-        return new LinkMapIterator(this);
+        return new LinkMapIterator<K, V>(this);
     }
 
     /**
      * MapIterator implementation.
      */
-    protected static class LinkMapIterator extends LinkIterator implements OrderedMapIterator {
-        
-        protected LinkMapIterator(AbstractLinkedMap parent) {
+    protected static class LinkMapIterator<K, V> extends LinkIterator<K, V> implements
+            OrderedMapIterator<K, V>, ResettableIterator<K> {
+
+        protected LinkMapIterator(AbstractLinkedMap<K, V> parent) {
             super(parent);
         }
 
-        public Object next() {
+        public K next() {
             return super.nextEntry().getKey();
         }
 
-        public Object previous() {
+        public K previous() {
             return super.previousEntry().getKey();
         }
 
-        public Object getKey() {
-            HashEntry current = currentEntry();
+        public K getKey() {
+            LinkEntry<K, V> current = currentEntry();
             if (current == null) {
                 throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
             }
             return current.getKey();
         }
 
-        public Object getValue() {
-            HashEntry current = currentEntry();
+        public V getValue() {
+            LinkEntry<K, V> current = currentEntry();
             if (current == null) {
                 throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
             }
             return current.getValue();
         }
 
-        public Object setValue(Object value) {
-            HashEntry current = currentEntry();
+        public V setValue(V value) {
+            LinkEntry<K, V> current = currentEntry();
             if (current == null) {
                 throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
             }
             return current.setValue(value);
         }
     }
-    
+
     //-----------------------------------------------------------------------    
     /**
      * Creates an entry set iterator.
@@ -408,27 +388,28 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      * 
      * @return the entrySet iterator
      */
-    protected Iterator createEntrySetIterator() {
+    protected Iterator<Map.Entry<K, V>> createEntrySetIterator() {
         if (size() == 0) {
-            return EmptyOrderedIterator.INSTANCE;
+            return EmptyOrderedIterator.<Map.Entry<K, V>>getInstance();
         }
-        return new EntrySetIterator(this);
+        return new EntrySetIterator<K, V>(this);
     }
 
     /**
      * EntrySet iterator.
      */
-    protected static class EntrySetIterator extends LinkIterator {
-        
-        protected EntrySetIterator(AbstractLinkedMap parent) {
+    protected static class EntrySetIterator<K, V> extends LinkIterator<K, V> implements
+            OrderedIterator<Map.Entry<K, V>>, ResettableIterator<Map.Entry<K, V>> {
+
+        protected EntrySetIterator(AbstractLinkedMap<K, V> parent) {
             super(parent);
         }
 
-        public Object next() {
+        public Map.Entry<K, V> next() {
             return super.nextEntry();
         }
 
-        public Object previous() {
+        public Map.Entry<K, V> previous() {
             return super.previousEntry();
         }
     }
@@ -440,31 +421,33 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      * 
      * @return the keySet iterator
      */
-    protected Iterator createKeySetIterator() {
+    protected Iterator<K> createKeySetIterator() {
         if (size() == 0) {
-            return EmptyOrderedIterator.INSTANCE;
+            return EmptyOrderedIterator.<K>getInstance();
         }
-        return new KeySetIterator(this);
+        return new KeySetIterator<K>(this);
     }
 
     /**
      * KeySet iterator.
      */
-    protected static class KeySetIterator extends EntrySetIterator {
+    protected static class KeySetIterator<K> extends LinkIterator<K, Object> implements
+            OrderedIterator<K>, ResettableIterator<K> {
         
-        protected KeySetIterator(AbstractLinkedMap parent) {
-            super(parent);
+        @SuppressWarnings("unchecked")
+        protected KeySetIterator(AbstractLinkedMap<K, ?> parent) {
+            super((AbstractLinkedMap<K, Object>) parent);
         }
 
-        public Object next() {
+        public K next() {
             return super.nextEntry().getKey();
         }
 
-        public Object previous() {
+        public K previous() {
             return super.previousEntry().getKey();
         }
     }
-    
+
     //-----------------------------------------------------------------------    
     /**
      * Creates a values iterator.
@@ -472,31 +455,33 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      * 
      * @return the values iterator
      */
-    protected Iterator createValuesIterator() {
+    protected Iterator<V> createValuesIterator() {
         if (size() == 0) {
-            return EmptyOrderedIterator.INSTANCE;
+            return EmptyOrderedIterator.<V>getInstance();
         }
-        return new ValuesIterator(this);
+        return new ValuesIterator<V>(this);
     }
 
     /**
      * Values iterator.
      */
-    protected static class ValuesIterator extends LinkIterator {
-        
-        protected ValuesIterator(AbstractLinkedMap parent) {
-            super(parent);
+    protected static class ValuesIterator<V> extends LinkIterator<Object, V> implements
+            OrderedIterator<V>, ResettableIterator<V> {
+
+        @SuppressWarnings("unchecked")
+        protected ValuesIterator(AbstractLinkedMap<?, V> parent) {
+            super((AbstractLinkedMap<Object, V>) parent);
         }
 
-        public Object next() {
+        public V next() {
             return super.nextEntry().getValue();
         }
 
-        public Object previous() {
+        public V previous() {
             return super.previousEntry().getValue();
         }
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * LinkEntry that stores the data.
@@ -506,12 +491,12 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
      * The <code>entryXxx()</code> methods on <code>AbstractLinkedMap</code> exist
      * to provide the necessary access.
      */
-    protected static class LinkEntry extends HashEntry {
+    protected static class LinkEntry<K, V> extends HashEntry<K, V> {
         /** The entry before this one in the order */
-        protected LinkEntry before;
+        protected LinkEntry<K, V> before;
         /** The entry after this one in the order */
-        protected LinkEntry after;
-        
+        protected LinkEntry<K, V> after;
+
         /**
          * Constructs a new entry.
          * 
@@ -520,27 +505,26 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
          * @param key  the key
          * @param value  the value
          */
-        protected LinkEntry(HashEntry next, int hashCode, Object key, Object value) {
+        protected LinkEntry(HashEntry<K, V> next, int hashCode, Object key, V value) {
             super(next, hashCode, key, value);
         }
     }
-    
+
     /**
      * Base Iterator that iterates in link order.
      */
-    protected static abstract class LinkIterator
-            implements OrderedIterator, ResettableIterator {
-                
+    protected static abstract class LinkIterator<K, V> {
+
         /** The parent map */
-        protected final AbstractLinkedMap parent;
+        protected final AbstractLinkedMap<K, V> parent;
         /** The current (last returned) entry */
-        protected LinkEntry last;
+        protected LinkEntry<K, V> last;
         /** The next entry */
-        protected LinkEntry next;
+        protected LinkEntry<K, V> next;
         /** The modification count expected */
         protected int expectedModCount;
-        
-        protected LinkIterator(AbstractLinkedMap parent) {
+
+        protected LinkIterator(AbstractLinkedMap<K, V> parent) {
             super();
             this.parent = parent;
             this.next = parent.header.after;
@@ -550,12 +534,12 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
         public boolean hasNext() {
             return (next != parent.header);
         }
-        
+
         public boolean hasPrevious() {
             return (next.before != parent.header);
         }
 
-        protected LinkEntry nextEntry() {
+        protected LinkEntry<K, V> nextEntry() {
             if (parent.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
             }
@@ -567,11 +551,11 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
             return last;
         }
 
-        protected LinkEntry previousEntry() {
+        protected LinkEntry<K, V> previousEntry() {
             if (parent.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
             }
-            LinkEntry previous = next.before;
+            LinkEntry<K, V> previous = next.before;
             if (previous == parent.header)  {
                 throw new NoSuchElementException(AbstractHashedMap.NO_PREVIOUS_ENTRY);
             }
@@ -579,11 +563,11 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
             last = previous;
             return last;
         }
-        
-        protected LinkEntry currentEntry() {
+
+        protected LinkEntry<K, V> currentEntry() {
             return last;
         }
-        
+
         public void remove() {
             if (last == null) {
                 throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
@@ -595,7 +579,7 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
             last = null;
             expectedModCount = parent.modCount;
         }
-        
+
         public void reset() {
             last = null;
             next = parent.header.after;
@@ -604,10 +588,9 @@ public class AbstractLinkedMap extends AbstractHashedMap implements OrderedMap {
         public String toString() {
             if (last != null) {
                 return "Iterator[" + last.getKey() + "=" + last.getValue() + "]";
-            } else {
-                return "Iterator[]";
             }
+            return "Iterator[]";
         }
     }
-    
+
 }

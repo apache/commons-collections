@@ -72,7 +72,7 @@ import org.apache.commons.collections.keyvalue.DefaultMapEntry;
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
  * <p>
  * This implementation is not synchronized.
- * You can use {@link java.util.Collections#synchronizedMap} to 
+ * You can use {@link java.util.Collections#synchronizedMap} to
  * provide synchronized access to a <code>ReferenceMap</code>.
  *
  * @see java.lang.ref.Reference
@@ -82,28 +82,51 @@ import org.apache.commons.collections.keyvalue.DefaultMapEntry;
  * @author Paul Jack
  * @author Stephen Colebourne
  */
-public abstract class AbstractReferenceMap extends AbstractHashedMap {
-
-    /** Constant indicating that hard references should be used */
-    public static final int HARD = 0;
-
-    /** Constant indicating that soft references should be used */
-    public static final int SOFT = 1;
-
-    /** Constant indicating that weak references should be used */
-    public static final int WEAK = 2;
+public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V> {
 
     /**
-     * The reference type for keys.  Must be HARD, SOFT, WEAK.
-     * @serial
+     * Reference type enum.
      */
-    protected int keyType;
+    public static enum ReferenceStrength {
+        HARD(0), SOFT(1), WEAK(2);
+
+        /** value */
+        public final int value;
+
+        /**
+         * Resolve enum from int.
+         * @param value
+         * @return ReferenceType
+         * @throws IllegalArgumentException if the specified value is invalid.
+         */
+        public static ReferenceStrength resolve(int value) {
+            switch (value) {
+            case 0:
+                return HARD;
+            case 1:
+                return SOFT;
+            case 2:
+                return WEAK;
+            default:
+                throw new IllegalArgumentException();
+            }
+        }
+
+        private ReferenceStrength(int value) {
+            this.value = value;
+        }
+
+    }
 
     /**
-     * The reference type for values.  Must be HARD, SOFT, WEAK.
-     * @serial
+     * The reference type for keys.
      */
-    protected int valueType;
+    protected ReferenceStrength keyType;
+
+    /**
+     * The reference type for values.
+     */
+    protected ReferenceStrength valueType;
 
     /**
      * Should the value be automatically purged when the associated key has been collected?
@@ -114,7 +137,7 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
      * ReferenceQueue used to eliminate stale mappings.
      * See purge.
      */
-    private transient ReferenceQueue queue;
+    private transient ReferenceQueue<Object> queue;
 
     //-----------------------------------------------------------------------
     /**
@@ -134,15 +157,13 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
      *   must be {@link #HARD}, {@link #SOFT}, {@link #WEAK}
      * @param capacity  the initial capacity for the map
      * @param loadFactor  the load factor for the map
-     * @param purgeValues  should the value be automatically purged when the 
-     *   key is garbage collected 
+     * @param purgeValues  should the value be automatically purged when the
+     *   key is garbage collected
      */
     protected AbstractReferenceMap(
-            int keyType, int valueType, int capacity, 
+            ReferenceStrength keyType, ReferenceStrength valueType, int capacity,
             float loadFactor, boolean purgeValues) {
         super(capacity, loadFactor);
-        verify("keyType", keyType);
-        verify("valueType", valueType);
         this.keyType = keyType;
         this.valueType = valueType;
         this.purgeValues = purgeValues;
@@ -152,27 +173,13 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
      * Initialise this subclass during construction, cloning or deserialization.
      */
     protected void init() {
-        queue = new ReferenceQueue();
-    }
-
-    //-----------------------------------------------------------------------
-    /**
-     * Checks the type int is a valid value.
-     * 
-     * @param name  the name for error messages
-     * @param type  the type value to check
-     * @throws IllegalArgumentException if the value if invalid
-     */
-    private static void verify(String name, int type) {
-        if ((type < HARD) || (type > WEAK)) {
-            throw new IllegalArgumentException(name + " must be HARD, SOFT, WEAK.");
-        }
+        queue = new ReferenceQueue<Object>();
     }
 
     //-----------------------------------------------------------------------
     /**
      * Gets the size of the map.
-     * 
+     *
      * @return the size
      */
     public int size() {
@@ -182,7 +189,7 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
 
     /**
      * Checks whether the map is currently empty.
-     * 
+     *
      * @return true if the map is currently size zero
      */
     public boolean isEmpty() {
@@ -192,13 +199,13 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
 
     /**
      * Checks whether the map contains the specified key.
-     * 
+     *
      * @param key  the key to search for
      * @return true if the map contains the key
      */
     public boolean containsKey(Object key) {
         purgeBeforeRead();
-        Entry entry = getEntry(key);
+        Entry<K, V> entry = getEntry(key);
         if (entry == null) {
             return false;
         }
@@ -207,7 +214,7 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
 
     /**
      * Checks whether the map contains the specified value.
-     * 
+     *
      * @param value  the value to search for
      * @return true if the map contains the value
      */
@@ -221,13 +228,13 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
 
     /**
      * Gets the value mapped to the key specified.
-     * 
+     *
      * @param key  the key
      * @return the mapped value, null if no match
      */
-    public Object get(Object key) {
+    public V get(Object key) {
         purgeBeforeRead();
-        Entry entry = getEntry(key);
+        Entry<K, V> entry = getEntry(key);
         if (entry == null) {
             return null;
         }
@@ -238,13 +245,13 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
     /**
      * Puts a key-value mapping into this map.
      * Neither the key nor the value may be null.
-     * 
+     *
      * @param key  the key to add, must not be null
      * @param value  the value to add, must not be null
      * @return the value previously mapped to this key, null if none
      * @throws NullPointerException if either the key or value is null
      */
-    public Object put(Object key, Object value) {
+    public V put(K key, V value) {
         if (key == null) {
             throw new NullPointerException("null keys not allowed");
         }
@@ -255,14 +262,14 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
         purgeBeforeWrite();
         return super.put(key, value);
     }
-    
+
     /**
      * Removes the specified mapping from this map.
-     * 
+     *
      * @param key  the mapping to remove
      * @return the value mapped to the removed key, null if key not in map
      */
-    public Object remove(Object key) {
+    public V remove(Object key) {
         if (key == null) {
             return null;
         }
@@ -282,11 +289,11 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
     /**
      * Gets a MapIterator over the reference map.
      * The iterator only returns valid key/value pairs.
-     * 
+     *
      * @return a map iterator
      */
-    public MapIterator mapIterator() {
-        return new ReferenceMapIterator(this);
+    public MapIterator<K, V> mapIterator() {
+        return new ReferenceMapIterator<K, V>(this);
     }
 
     /**
@@ -296,9 +303,9 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
      *
      * @return a set view of this map's entries
      */
-    public Set entrySet() {
+    public Set<Map.Entry<K, V>> entrySet() {
         if (entrySet == null) {
-            entrySet = new ReferenceEntrySet(this);
+            entrySet = new ReferenceEntrySet<K, V>(this);
         }
         return entrySet;
     }
@@ -308,9 +315,9 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
      *
      * @return a set view of this map's keys
      */
-    public Set keySet() {
+    public Set<K> keySet() {
         if (keySet == null) {
-            keySet = new ReferenceKeySet(this);
+            keySet = new ReferenceKeySet<K>(this);
         }
         return keySet;
     }
@@ -320,9 +327,9 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
      *
      * @return a set view of this map's values
      */
-    public Collection values() {
+    public Collection<V> values() {
         if (values == null) {
-            values = new ReferenceValues(this);
+            values = new ReferenceValues<V>(this);
         }
         return values;
     }
@@ -355,7 +362,7 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
      * background thread.
      */
     protected void purge() {
-        Reference ref = queue.poll();
+        Reference<?> ref = queue.poll();
         while (ref != null) {
             purge(ref);
             ref = queue.poll();
@@ -364,19 +371,19 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
 
     /**
      * Purges the specified reference.
-     * 
+     *
      * @param ref  the reference to purge
      */
-    protected void purge(Reference ref) {
+    protected void purge(Reference<?> ref) {
         // The hashCode of the reference is the hashCode of the
-        // mapping key, even if the reference refers to the 
+        // mapping key, even if the reference refers to the
         // mapping value...
         int hash = ref.hashCode();
         int index = hashIndex(hash, data.length);
-        HashEntry previous = null;
-        HashEntry entry = data[index];
+        HashEntry<K, V> previous = null;
+        HashEntry<K, V> entry = data[index];
         while (entry != null) {
-            if (((ReferenceEntry) entry).purge(ref)) {
+            if (((ReferenceEntry<K, V>) entry).purge(ref)) {
                 if (previous == null) {
                     data[index] = entry.next;
                 } else {
@@ -394,93 +401,93 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
     //-----------------------------------------------------------------------
     /**
      * Gets the entry mapped to the key specified.
-     * 
+     *
      * @param key  the key
      * @return the entry, null if no match
      */
-    protected HashEntry getEntry(Object key) {
+    protected HashEntry<K, V> getEntry(Object key) {
         if (key == null) {
             return null;
-        } else {
-            return super.getEntry(key);
         }
+        return super.getEntry(key);
     }
 
     /**
      * Gets the hash code for a MapEntry.
      * Subclasses can override this, for example to use the identityHashCode.
-     * 
+     *
      * @param key  the key to get a hash code for, may be null
      * @param value  the value to get a hash code for, may be null
      * @return the hash code, as per the MapEntry specification
      */
     protected int hashEntry(Object key, Object value) {
         return (key == null ? 0 : key.hashCode()) ^
-               (value == null ? 0 : value.hashCode()); 
+               (value == null ? 0 : value.hashCode());
     }
-    
+
     /**
      * Compares two keys, in internal converted form, to see if they are equal.
      * <p>
      * This implementation converts the key from the entry to a real reference
      * before comparison.
-     * 
+     *
      * @param key1  the first key to compare passed in from outside
      * @param key2  the second key extracted from the entry via <code>entry.key</code>
      * @return true if equal
      */
+    @SuppressWarnings("unchecked")
     protected boolean isEqualKey(Object key1, Object key2) {
-        key2 = (keyType > HARD ? ((Reference) key2).get() : key2);
+        key2 = (keyType == ReferenceStrength.HARD ? key2 : ((Reference<K>) key2).get());
         return (key1 == key2 || key1.equals(key2));
     }
-    
+
     /**
      * Creates a ReferenceEntry instead of a HashEntry.
-     * 
+     *
      * @param next  the next entry in sequence
      * @param hashCode  the hash code to use
      * @param key  the key to store
      * @param value  the value to store
      * @return the newly created entry
      */
-    protected HashEntry createEntry(HashEntry next, int hashCode, Object key, Object value) {
-        return new ReferenceEntry(this, next, hashCode, key, value);
+    protected ReferenceEntry<K, V> createEntry(HashEntry<K, V> next, int hashCode, K key, V value) {
+        return new ReferenceEntry<K, V>(this, next, hashCode, key, value);
     }
 
     /**
      * Creates an entry set iterator.
-     * 
+     *
      * @return the entrySet iterator
      */
-    protected Iterator createEntrySetIterator() {
-        return new ReferenceEntrySetIterator(this);
+    protected Iterator<Map.Entry<K, V>> createEntrySetIterator() {
+        return new ReferenceEntrySetIterator<K, V>(this);
     }
 
     /**
      * Creates an key set iterator.
-     * 
+     *
      * @return the keySet iterator
      */
-    protected Iterator createKeySetIterator() {
-        return new ReferenceKeySetIterator(this);
+    protected Iterator<K> createKeySetIterator() {
+        return new ReferenceKeySetIterator<K>(this);
     }
 
     /**
      * Creates an values iterator.
-     * 
+     *
      * @return the values iterator
      */
-    protected Iterator createValuesIterator() {
-        return new ReferenceValuesIterator(this);
+    protected Iterator<V> createValuesIterator() {
+        return new ReferenceValuesIterator<V>(this);
     }
 
     //-----------------------------------------------------------------------
     /**
      * EntrySet implementation.
      */
-    static class ReferenceEntrySet extends EntrySet {
-        
-        protected ReferenceEntrySet(AbstractHashedMap parent) {
+    static class ReferenceEntrySet<K, V> extends EntrySet<K, V> {
+
+        protected ReferenceEntrySet(AbstractHashedMap<K, V> parent) {
             super(parent);
         }
 
@@ -488,13 +495,11 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
             return toArray(new Object[0]);
         }
 
-        public Object[] toArray(Object[] arr) {
+        public <T> T[] toArray(T[] arr) {
             // special implementation to handle disappearing entries
-            ArrayList list = new ArrayList();
-            Iterator iterator = iterator();
-            while (iterator.hasNext()) {
-                Entry e = (Entry) iterator.next();
-                list.add(new DefaultMapEntry(e.getKey(), e.getValue()));
+            ArrayList<Map.Entry<K, V>> list = new ArrayList<Map.Entry<K, V>>();
+            for (Map.Entry<K, V> entry : this) {
+                list.add(new DefaultMapEntry<K, V>(entry));
             }
             return list.toArray(arr);
         }
@@ -504,9 +509,9 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
     /**
      * KeySet implementation.
      */
-    static class ReferenceKeySet extends KeySet {
-        
-        protected ReferenceKeySet(AbstractHashedMap parent) {
+    static class ReferenceKeySet<K> extends KeySet<K> {
+
+        protected ReferenceKeySet(AbstractHashedMap<K, ?> parent) {
             super(parent);
         }
 
@@ -514,11 +519,11 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
             return toArray(new Object[0]);
         }
 
-        public Object[] toArray(Object[] arr) {
+        public <T> T[] toArray(T[] arr) {
             // special implementation to handle disappearing keys
-            List list = new ArrayList(parent.size());
-            for (Iterator it = iterator(); it.hasNext(); ) {
-                list.add(it.next());
+            List<K> list = new ArrayList<K>(parent.size());
+            for (K key : this) {
+                list.add(key);
             }
             return list.toArray(arr);
         }
@@ -528,9 +533,9 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
     /**
      * Values implementation.
      */
-    static class ReferenceValues extends Values {
-        
-        protected ReferenceValues(AbstractHashedMap parent) {
+    static class ReferenceValues<V> extends Values<V> {
+
+        protected ReferenceValues(AbstractHashedMap<?, V> parent) {
             super(parent);
         }
 
@@ -538,11 +543,11 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
             return toArray(new Object[0]);
         }
 
-        public Object[] toArray(Object[] arr) {
+        public <T> T[] toArray(T[] arr) {
             // special implementation to handle disappearing values
-            List list = new ArrayList(parent.size());
-            for (Iterator it = iterator(); it.hasNext(); ) {
-                list.add(it.next());
+            List<V> list = new ArrayList<V>(parent.size());
+            for (V value : this) {
+                list.add(value);
             }
             return list.toArray(arr);
         }
@@ -554,23 +559,23 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
      * <p>
      * If getKey() or getValue() returns null, it means
      * the mapping is stale and should be removed.
-     * 
+     *
      * @since Commons Collections 3.1
      */
-    protected static class ReferenceEntry extends HashEntry {
+    protected static class ReferenceEntry<K, V> extends HashEntry<K, V> {
         /** The parent map */
-        protected final AbstractReferenceMap parent;
+        protected final AbstractReferenceMap<K, V> parent;
 
         /**
          * Creates a new entry object for the ReferenceMap.
-         * 
+         *
          * @param parent  the parent map
          * @param next  the next entry in the hash bucket
          * @param hashCode  the hash code of the key
          * @param key  the key
          * @param value  the value
          */
-        public ReferenceEntry(AbstractReferenceMap parent, HashEntry next, int hashCode, Object key, Object value) {
+        public ReferenceEntry(AbstractReferenceMap<K, V> parent, HashEntry<K, V> next, int hashCode, K key, V value) {
             super(next, hashCode, null, null);
             this.parent = parent;
             this.key = toReference(parent.keyType, key, hashCode);
@@ -580,33 +585,36 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
         /**
          * Gets the key from the entry.
          * This method dereferences weak and soft keys and thus may return null.
-         * 
+         *
          * @return the key, which may be null if it was garbage collected
          */
-        public Object getKey() {
-            return (parent.keyType > HARD) ? ((Reference) key).get() : key;
+        @SuppressWarnings("unchecked")
+        public K getKey() {
+            return (K) ((parent.keyType == ReferenceStrength.HARD) ? key : ((Reference<K>) key).get());
         }
 
         /**
          * Gets the value from the entry.
          * This method dereferences weak and soft value and thus may return null.
-         * 
+         *
          * @return the value, which may be null if it was garbage collected
          */
-        public Object getValue() {
-            return (parent.valueType > HARD) ? ((Reference) value).get() : value;
+        @SuppressWarnings("unchecked")
+        public V getValue() {
+            return (V) ((parent.valueType == ReferenceStrength.HARD) ? value : ((Reference<V>) value).get());
         }
 
         /**
          * Sets the value of the entry.
-         * 
+         *
          * @param obj  the object to store
          * @return the previous value
          */
-        public Object setValue(Object obj) {
-            Object old = getValue();
-            if (parent.valueType > HARD) {
-                ((Reference)value).clear();
+        @SuppressWarnings("unchecked")
+        public V setValue(V obj) {
+            V old = getValue();
+            if (parent.valueType != ReferenceStrength.HARD) {
+                ((Reference<V>) value).clear();
             }
             value = toReference(parent.valueType, obj, hashCode);
             return old;
@@ -617,10 +625,11 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
          * <p>
          * This implementation uses <code>isEqualKey</code> and
          * <code>isEqualValue</code> on the main map for comparison.
-         * 
+         *
          * @param obj  the other map entry to compare to
          * @return true if equal, false if not
          */
+        @SuppressWarnings("unchecked")
         public boolean equals(Object obj) {
             if (obj == this) {
                 return true;
@@ -628,7 +637,7 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
             if (obj instanceof Map.Entry == false) {
                 return false;
             }
-            
+
             Map.Entry entry = (Map.Entry)obj;
             Object entryKey = entry.getKey();  // convert to hard reference
             Object entryValue = entry.getValue();  // convert to hard reference
@@ -645,7 +654,7 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
          * Gets the hashcode of the entry using temporary hard references.
          * <p>
          * This implementation uses <code>hashEntry</code> on the main map.
-         * 
+         *
          * @return the hashcode of the entry
          */
         public int hashCode() {
@@ -662,13 +671,17 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
          *    this number might be different from referent.hashCode() if
          *    the referent represents a value and not a key
          */
-        protected Object toReference(int type, Object referent, int hash) {
-            switch (type) {
-                case HARD: return referent;
-                case SOFT: return new SoftRef(hash, referent, parent.queue);
-                case WEAK: return new WeakRef(hash, referent, parent.queue);
-                default: throw new Error();
+        protected <T> Object toReference(ReferenceStrength type, T referent, int hash) {
+            if (type == ReferenceStrength.HARD) {
+                return referent;
             }
+            if (type == ReferenceStrength.SOFT) {
+                return new SoftRef<T>(hash, referent, parent.queue);
+            }
+            if (type == ReferenceStrength.WEAK) {
+                return new WeakRef<T>(hash, referent, parent.queue);
+            }
+            throw new Error();
         }
 
         /**
@@ -676,15 +689,15 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
          * @param ref  the reference to purge
          * @return true or false
          */
-        boolean purge(Reference ref) {
-            boolean r = (parent.keyType > HARD) && (key == ref);
-            r = r || ((parent.valueType > HARD) && (value == ref));
+        boolean purge(Reference<?> ref) {
+            boolean r = (parent.keyType != ReferenceStrength.HARD) && (key == ref);
+            r = r || ((parent.valueType != ReferenceStrength.HARD) && (value == ref));
             if (r) {
-                if (parent.keyType > HARD) {
-                    ((Reference)key).clear();
+                if (parent.keyType != ReferenceStrength.HARD) {
+                    ((Reference<?>) key).clear();
                 }
-                if (parent.valueType > HARD) {
-                    ((Reference)value).clear();
+                if (parent.valueType != ReferenceStrength.HARD) {
+                    ((Reference<?>) value).clear();
                 } else if (parent.purgeValues) {
                     value = null;
                 }
@@ -694,36 +707,36 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
 
         /**
          * Gets the next entry in the bucket.
-         * 
+         *
          * @return the next entry in the bucket
          */
-        protected ReferenceEntry next() {
-            return (ReferenceEntry) next;
+        protected ReferenceEntry<K, V> next() {
+            return (ReferenceEntry<K, V>) next;
         }
     }
 
     //-----------------------------------------------------------------------
     /**
-     * The EntrySet iterator.
+     * Base iterator class.
      */
-    static class ReferenceEntrySetIterator implements Iterator {
+    static class ReferenceBaseIterator<K, V> {
         /** The parent map */
-        final AbstractReferenceMap parent;
-        
+        final AbstractReferenceMap<K, V> parent;
+
         // These fields keep track of where we are in the table.
         int index;
-        ReferenceEntry entry;
-        ReferenceEntry previous;
+        ReferenceEntry<K, V> entry;
+        ReferenceEntry<K, V> previous;
 
         // These Object fields provide hard references to the
         // current and next entry; this assures that if hasNext()
         // returns true, next() will actually return a valid element.
-        Object nextKey, nextValue;
-        Object currentKey, currentValue;
+        K currentKey, nextKey;
+        V currentValue, nextValue;
 
         int expectedModCount;
 
-        public ReferenceEntrySetIterator(AbstractReferenceMap parent) {
+        public ReferenceBaseIterator(AbstractReferenceMap<K, V> parent) {
             super();
             this.parent = parent;
             index = (parent.size() != 0 ? parent.data.length : 0);
@@ -735,11 +748,11 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
         public boolean hasNext() {
             checkMod();
             while (nextNull()) {
-                ReferenceEntry e = entry;
+                ReferenceEntry<K, V> e = entry;
                 int i = index;
                 while ((e == null) && (i > 0)) {
                     i--;
-                    e = (ReferenceEntry) parent.data[i];
+                    e = (ReferenceEntry<K, V>) parent.data[i];
                 }
                 entry = e;
                 index = i;
@@ -767,7 +780,7 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
             return (nextKey == null) || (nextValue == null);
         }
 
-        protected ReferenceEntry nextEntry() {    
+        protected ReferenceEntry<K, V> nextEntry() {
             checkMod();
             if (nextNull() && !hasNext()) {
                 throw new NoSuchElementException();
@@ -781,13 +794,9 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
             return previous;
         }
 
-        protected ReferenceEntry currentEntry() {
+        protected ReferenceEntry<K, V> currentEntry() {
             checkMod();
             return previous;
-        }
-        
-        public Object next() {
-            return nextEntry();
         }
 
         public void remove() {
@@ -804,15 +813,31 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
     }
 
     /**
-     * The keySet iterator.
+     * The EntrySet iterator.
      */
-    static class ReferenceKeySetIterator extends ReferenceEntrySetIterator {
-        
-        ReferenceKeySetIterator(AbstractReferenceMap parent) {
+    static class ReferenceEntrySetIterator<K, V> extends ReferenceBaseIterator<K, V> implements Iterator<Map.Entry<K, V>> {
+
+        public ReferenceEntrySetIterator(AbstractReferenceMap<K, V> parent) {
             super(parent);
         }
-        
-        public Object next() {
+
+        public Map.Entry<K, V> next() {
+            return nextEntry();
+        }
+
+    }
+
+    /**
+     * The keySet iterator.
+     */
+    static class ReferenceKeySetIterator<K> extends ReferenceBaseIterator<K, Object> implements Iterator<K> {
+
+        @SuppressWarnings("unchecked")
+        ReferenceKeySetIterator(AbstractReferenceMap<K, ?> parent) {
+            super((AbstractReferenceMap<K, Object>) parent);
+        }
+
+        public K next() {
             return nextEntry().getKey();
         }
     }
@@ -820,13 +845,14 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
     /**
      * The values iterator.
      */
-    static class ReferenceValuesIterator extends ReferenceEntrySetIterator {
-        
-        ReferenceValuesIterator(AbstractReferenceMap parent) {
-            super(parent);
+    static class ReferenceValuesIterator<V> extends ReferenceBaseIterator<Object, V> implements Iterator<V> {
+
+        @SuppressWarnings("unchecked")
+        ReferenceValuesIterator(AbstractReferenceMap<?, V> parent) {
+            super((AbstractReferenceMap<Object, V>) parent);
         }
-        
-        public Object next() {
+
+        public V next() {
             return nextEntry().getValue();
         }
     }
@@ -834,41 +860,41 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
     /**
      * The MapIterator implementation.
      */
-    static class ReferenceMapIterator extends ReferenceEntrySetIterator implements MapIterator {
-        
-        protected ReferenceMapIterator(AbstractReferenceMap parent) {
+    static class ReferenceMapIterator<K, V> extends ReferenceBaseIterator<K, V> implements MapIterator<K, V> {
+
+        protected ReferenceMapIterator(AbstractReferenceMap<K, V> parent) {
             super(parent);
         }
 
-        public Object next() {
+        public K next() {
             return nextEntry().getKey();
         }
 
-        public Object getKey() {
-            HashEntry current = currentEntry();
+        public K getKey() {
+            HashEntry<K, V> current = currentEntry();
             if (current == null) {
                 throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
             }
             return current.getKey();
         }
 
-        public Object getValue() {
-            HashEntry current = currentEntry();
+        public V getValue() {
+            HashEntry<K, V> current = currentEntry();
             if (current == null) {
                 throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
             }
             return current.getValue();
         }
 
-        public Object setValue(Object value) {
-            HashEntry current = currentEntry();
+        public V setValue(V value) {
+            HashEntry<K, V> current = currentEntry();
             if (current == null) {
                 throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
             }
             return current.setValue(value);
         }
     }
-    
+
     //-----------------------------------------------------------------------
     // These two classes store the hashCode of the key of
     // of the mapping, so that after they're dequeued a quick
@@ -877,11 +903,11 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
     /**
      * A soft reference holder.
      */
-    static class SoftRef extends SoftReference {
+    static class SoftRef<T> extends SoftReference<T> {
         /** the hashCode of the key (even if the reference points to a value) */
         private int hash;
 
-        public SoftRef(int hash, Object r, ReferenceQueue q) {
+        public SoftRef(int hash, T r, ReferenceQueue<? super T> q) {
             super(r, q);
             this.hash = hash;
         }
@@ -894,11 +920,11 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
     /**
      * A weak reference holder.
      */
-    static class WeakRef extends WeakReference {
+    static class WeakRef<T> extends WeakReference<T> {
         /** the hashCode of the key (even if the reference points to a value) */
         private int hash;
 
-        public WeakRef(int hash, Object r, ReferenceQueue q) {
+        public WeakRef(int hash, T r, ReferenceQueue<? super T> q) {
             super(r, q);
             this.hash = hash;
         }
@@ -924,16 +950,16 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
      * Subclasses may override if they have a specific field that must be present
      * on read before this implementation will work. Generally, the read determines
      * what must be serialized here, if anything.
-     * 
+     *
      * @param out  the output stream
      */
     protected void doWriteObject(ObjectOutputStream out) throws IOException {
-        out.writeInt(keyType);
-        out.writeInt(valueType);
+        out.writeInt(keyType.value);
+        out.writeInt(valueType.value);
         out.writeBoolean(purgeValues);
         out.writeFloat(loadFactor);
         out.writeInt(data.length);
-        for (MapIterator it = mapIterator(); it.hasNext();) {
+        for (MapIterator<K, V> it = mapIterator(); it.hasNext();) {
             out.writeObject(it.next());
             out.writeObject(it.getValue());
         }
@@ -955,23 +981,24 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
      * <p>
      * Subclasses may override if the subclass has a specific field that must be present
      * before <code>put()</code> or <code>calculateThreshold()</code> will work correctly.
-     * 
+     *
      * @param in  the input stream
      */
+    @SuppressWarnings("unchecked")
     protected void doReadObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        this.keyType = in.readInt();
-        this.valueType = in.readInt();
+        this.keyType = ReferenceStrength.resolve(in.readInt());
+        this.valueType = ReferenceStrength.resolve(in.readInt());
         this.purgeValues = in.readBoolean();
         this.loadFactor = in.readFloat();
         int capacity = in.readInt();
         init();
         data = new HashEntry[capacity];
         while (true) {
-            Object key = in.readObject();
+            K key = (K) in.readObject();
             if (key == null) {
                 break;
             }
-            Object value = in.readObject();
+            V value = (V) in.readObject();
             put(key, value);
         }
         threshold = calculateThreshold(data.length, loadFactor);

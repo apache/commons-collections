@@ -31,6 +31,9 @@ package org.apache.commons.collections;
  */
 public class BufferOverflowException extends RuntimeException {
     
+    /** Serialization version */
+    private static final long serialVersionUID = -3992254982265755876L;
+
     /** The root cause throwable */
     private final Throwable throwable;
 

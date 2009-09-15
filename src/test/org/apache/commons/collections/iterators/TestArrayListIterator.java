@@ -17,7 +17,6 @@
 package org.apache.commons.collections.iterators;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
@@ -30,7 +29,7 @@ import junit.framework.TestSuite;
  * @version $Revision$ $Date$
  * @author Neil O'Toole
  */
-public class TestArrayListIterator extends TestArrayIterator {
+public class TestArrayListIterator<E> extends TestArrayIterator<E> {
 
     public TestArrayListIterator(String testName) {
         super(testName);
@@ -40,16 +39,16 @@ public class TestArrayListIterator extends TestArrayIterator {
         return new TestSuite(TestArrayListIterator.class);
     }
 
-    public Iterator makeEmptyIterator() {
-        return new ArrayListIterator(new Object[0]);
+    public ArrayListIterator<E> makeEmptyIterator() {
+        return new ArrayListIterator<E>(new Object[0]);
     }
 
-    public Iterator makeFullIterator() {
-        return new ArrayListIterator(testArray);
+    public ArrayListIterator<E> makeObject() {
+        return new ArrayListIterator<E>(testArray);
     }
 
-    public ListIterator makeArrayListIterator(Object array) {
-        return new ArrayListIterator(array);
+    public ArrayListIterator<E> makeArrayListIterator(Object array) {
+        return new ArrayListIterator<E>(array);
     }
 
     public boolean supportsRemove() {
@@ -61,7 +60,7 @@ public class TestArrayListIterator extends TestArrayIterator {
      * <code>previous()</code>.
      */
     public void testListIterator() {
-        ListIterator iter = (ListIterator) makeFullIterator();
+        ListIterator<E> iter = makeObject();
 
         // TestArrayIterator#testIterator() has already tested the iterator forward,
         //  now we need to test it in reverse
@@ -81,7 +80,7 @@ public class TestArrayListIterator extends TestArrayIterator {
         assertTrue("Iterator should now be empty", !iter.hasPrevious());
 
         try {
-            Object testValue = iter.previous();
+            iter.previous();
         } catch (Exception e) {
             assertTrue(
                 "NoSuchElementException must be thrown",
@@ -93,17 +92,18 @@ public class TestArrayListIterator extends TestArrayIterator {
     /**
      * Tests the {@link java.util.ListIterator#set} operation.
      */
+    @SuppressWarnings("unchecked")
     public void testListIteratorSet() {
         String[] testData = new String[] { "a", "b", "c" };
 
         String[] result = new String[] { "0", "1", "2" };
 
-        ListIterator iter = (ListIterator) makeArrayListIterator(testData);
+        ListIterator<E> iter = makeArrayListIterator(testData);
         int x = 0;
 
         while (iter.hasNext()) {
             iter.next();
-            iter.set(Integer.toString(x));
+            iter.set((E) Integer.toString(x));
             x++;
         }
 
@@ -113,7 +113,7 @@ public class TestArrayListIterator extends TestArrayIterator {
         iter = makeArrayListIterator(testArray);
 
         try {
-            iter.set("should fail");
+            iter.set((E) "should fail");
             fail("ListIterator#set should fail if next() or previous() have not yet been called.");
         } catch (IllegalStateException e) {
             // expected

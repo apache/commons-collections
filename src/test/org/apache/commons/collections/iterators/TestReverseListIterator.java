@@ -33,7 +33,7 @@ import org.apache.commons.collections.ResettableListIterator;
  *
  * @version $Revision: $ $Date$
  */
-public class TestReverseListIterator extends AbstractTestListIterator {
+public class TestReverseListIterator<E> extends AbstractTestListIterator<E> {
 
     protected String[] testArray = { "One", "Two", "Three", "Four" };
 
@@ -50,33 +50,33 @@ public class TestReverseListIterator extends AbstractTestListIterator {
         super(testName);
     }
 
-    public ListIterator makeEmptyListIterator() {
-        List list = new ArrayList();
-        return new ReverseListIterator(list);
+    public ListIterator<E> makeEmptyIterator() {
+        return new ReverseListIterator<E>(new ArrayList<E>());
     }
 
-    public ListIterator makeFullListIterator() {
-        List list = new ArrayList(Arrays.asList(testArray));
-        return new ReverseListIterator(list);
+    @SuppressWarnings("unchecked")
+    public ReverseListIterator<E> makeObject() {
+        List<E> list = new ArrayList<E>(Arrays.asList((E[]) testArray));
+        return new ReverseListIterator<E>(list);
     }
 
     // overrides
     //-----------------------------------------------------------------------
     public void testEmptyListIteratorIsIndeedEmpty() {
-        ListIterator it = makeEmptyListIterator();
-        
+        ListIterator<E> it = makeEmptyIterator();
+
         assertEquals(false, it.hasNext());
         assertEquals(-1, it.nextIndex());  // reversed index
         assertEquals(false, it.hasPrevious());
         assertEquals(0, it.previousIndex());  // reversed index
-        
+
         // next() should throw a NoSuchElementException
         try {
             it.next();
             fail("NoSuchElementException must be thrown from empty ListIterator");
         } catch (NoSuchElementException e) {
         }
-        
+
         // previous() should throw a NoSuchElementException
         try {
             it.previous();
@@ -86,16 +86,16 @@ public class TestReverseListIterator extends AbstractTestListIterator {
     }
 
     public void testWalkForwardAndBack() {
-        ArrayList list = new ArrayList();
-        ListIterator it = makeFullListIterator();
+        ArrayList<E> list = new ArrayList<E>();
+        ListIterator<E> it = makeObject();
         while (it.hasNext()) {
             list.add(it.next());
         }
-        
+
         // check state at end
         assertEquals(false, it.hasNext());
         assertEquals(true, it.hasPrevious());
-        
+
         // this had to be commented out, as there is a bug in the JDK before JDK1.5
         // where calling previous at the start of an iterator would push the cursor
         // back to an invalid negative value
@@ -104,16 +104,16 @@ public class TestReverseListIterator extends AbstractTestListIterator {
 //            fail("NoSuchElementException must be thrown from next at end of ListIterator");
 //        } catch (NoSuchElementException e) {
 //        }
-        
+
         // loop back through comparing
         for (int i = list.size() - 1; i >= 0; i--) {
             assertEquals("" + i, list.size() - i - 2, it.nextIndex());  // reversed index
             assertEquals(list.size() - i - 1, it.previousIndex());  // reversed index
-            
+
             Object obj = list.get(i);
             assertEquals(obj, it.previous());
         }
-        
+
         // check state at start
         assertEquals(true, it.hasNext());
         assertEquals(false, it.hasPrevious());
@@ -126,7 +126,7 @@ public class TestReverseListIterator extends AbstractTestListIterator {
 
     //-----------------------------------------------------------------------
     public void testReverse() {
-        ListIterator it = makeFullListIterator();
+        ListIterator<E> it = makeObject();
         assertEquals(true, it.hasNext());
         assertEquals(3, it.nextIndex());
         assertEquals(false, it.hasPrevious());
@@ -158,7 +158,7 @@ public class TestReverseListIterator extends AbstractTestListIterator {
     }
 
     public void testReset() {
-        ResettableListIterator it = (ResettableListIterator) makeFullListIterator();
+        ResettableListIterator<E> it = makeObject();
         assertEquals("Four", it.next());
         it.reset();
         assertEquals("Four", it.next());

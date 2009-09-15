@@ -29,22 +29,22 @@ import org.apache.commons.collections.Predicate;
  *
  * @author Stephen Colebourne
  */
-public final class InstanceofPredicate implements Predicate, Serializable {
+public final class InstanceofPredicate implements Predicate<Object>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -6682656911025165584L;
 
     /** The type to compare to */
-    private final Class iType;
-    
+    private final Class<?> iType;
+
     /**
      * Factory to create the identity predicate.
-     * 
+     *
      * @param type  the type to check for, may not be null
      * @return the predicate
      * @throws IllegalArgumentException if the class is null
      */
-    public static Predicate getInstance(Class type) {
+    public static Predicate<Object> getInstance(Class<?> type) {
         if (type == null) {
             throw new IllegalArgumentException("The type to check instanceof must not be null");
         }
@@ -54,17 +54,17 @@ public final class InstanceofPredicate implements Predicate, Serializable {
     /**
      * Constructor that performs no validation.
      * Use <code>getInstance</code> if you want that.
-     * 
+     *
      * @param type  the type to check for
      */
-    public InstanceofPredicate(Class type) {
+    public InstanceofPredicate(Class<?> type) {
         super();
         iType = type;
     }
 
     /**
      * Evaluates the predicate returning true if the input object is of the correct type.
-     * 
+     *
      * @param object  the input object
      * @return true if input is of stored type
      */
@@ -74,11 +74,11 @@ public final class InstanceofPredicate implements Predicate, Serializable {
 
     /**
      * Gets the type to compare to.
-     * 
+     *
      * @return the type
      * @since Commons Collections 3.1
      */
-    public Class getType() {
+    public Class<?> getType() {
         return iType;
     }
 

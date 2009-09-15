@@ -29,7 +29,7 @@ import org.apache.commons.collections.Bag;
  *
  * @author Chuck Burdick
  */
-public class TestHashBag extends AbstractTestBag {
+public class TestHashBag<T> extends AbstractTestBag<T> {
     
     public TestHashBag(String testName) {
         super(testName);
@@ -44,8 +44,8 @@ public class TestHashBag extends AbstractTestBag {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Bag makeBag() {
-        return new HashBag();
+    public Bag<T> makeObject() {
+        return new HashBag<T>();
     }
     
     public String getCompatibilityVersion() {

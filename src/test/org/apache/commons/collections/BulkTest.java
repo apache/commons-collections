@@ -246,7 +246,7 @@ public class BulkTest extends TestCase implements Cloneable {
      *  @return  a {@link TestSuite} containing all the simple and bulk tests
      *    defined by that class
      */
-    public static TestSuite makeSuite(Class c) {
+    public static TestSuite makeSuite(Class<? extends BulkTest> c) {
         if (Modifier.isAbstract(c.getModifiers())) {
             throw new IllegalArgumentException("Class must not be abstract.");
         }
@@ -265,10 +265,10 @@ public class BulkTest extends TestCase implements Cloneable {
 class BulkTestSuiteMaker {
 
     /** The class that defines simple and bulk tests methods. */
-    private Class startingClass;
+    private Class<? extends BulkTest> startingClass;
 
     /** List of ignored simple test names. */
-    private List ignored;
+    private List<String> ignored;
    
     /** The TestSuite we're currently populating.  Can change over time. */
     private TestSuite result;
@@ -284,7 +284,7 @@ class BulkTestSuiteMaker {
      *
      *  @param startingClass  the starting class
      */     
-    public BulkTestSuiteMaker(Class startingClass) {
+    public BulkTestSuiteMaker(Class<? extends BulkTest> startingClass) {
         this.startingClass = startingClass;
     }
 
@@ -299,7 +299,7 @@ class BulkTestSuiteMaker {
          result.setName(prefix);
 
          BulkTest bulk = makeFirstTestCase(startingClass);
-         ignored = new ArrayList();
+         ignored = new ArrayList<String>();
          String[] s = bulk.ignoredTests();
          if (s != null) {
              ignored.addAll(Arrays.asList(s));
@@ -316,7 +316,7 @@ class BulkTestSuiteMaker {
      *    tests for us to append
      */
     void make(BulkTest bulk) {
-        Class c = bulk.getClass();
+        Class<? extends BulkTest> c = bulk.getClass();
         Method[] all = c.getMethods();
         for (int i = 0; i < all.length; i++) {
             if (isTest(all[i])) addTest(bulk, all[i]);
@@ -388,7 +388,7 @@ class BulkTestSuiteMaker {
      *  @param c  the class
      *  @return the name of that class, minus any package names
      */
-    private static String getBaseName(Class c) {
+    private static String getBaseName(Class<?> c) {
         String name = c.getName();
         int p = name.lastIndexOf('.');
         if (p > 0) {
@@ -401,7 +401,7 @@ class BulkTestSuiteMaker {
     // These three methods are used to create a valid BulkTest instance
     // from a class.
 
-    private static Constructor getTestCaseConstructor(Class c) {
+    private static <T> Constructor<T> getTestCaseConstructor(Class<T> c) {
         try {
             return c.getConstructor(new Class[] { String.class });
         } catch (NoSuchMethodException e) {
@@ -410,10 +410,10 @@ class BulkTestSuiteMaker {
         }
     }
 
-    private static BulkTest makeTestCase(Class c, Method m) {
-        Constructor con = getTestCaseConstructor(c);
+    private static <T extends BulkTest> BulkTest makeTestCase(Class<T> c, Method m) {
+        Constructor<T> con = getTestCaseConstructor(c);
         try {
-            return (BulkTest)con.newInstance(new Object[] {m.getName()});
+            return (BulkTest) con.newInstance(new Object[] { m.getName() });
         } catch (InvocationTargetException e) {
             e.printStackTrace();
             throw new RuntimeException(); // FIXME;
@@ -424,7 +424,7 @@ class BulkTestSuiteMaker {
         }
     }
 
-    private static BulkTest makeFirstTestCase(Class c) {
+    private static <T extends BulkTest> BulkTest makeFirstTestCase(Class<T> c) {
         Method[] all = c.getMethods();
         for (int i = 0; i < all.length; i++) {
             if (isTest(all[i])) return makeTestCase(c, all[i]);

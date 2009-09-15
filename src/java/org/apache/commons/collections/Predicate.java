@@ -28,13 +28,15 @@ package org.apache.commons.collections;
  * {@link PredicateUtils}. These include true, false, instanceof, equals, and,
  * or, not, method invokation and null testing.
  *
+ * @param <T> the type that the predicate queries
+ *
  * @since Commons Collections 1.0
  * @version $Revision$ $Date$
  *
  * @author James Strachan
  * @author Stephen Colebourne
  */
-public interface Predicate {
+public interface Predicate<T> {
 
     /**
      * Use the specified parameter to perform a test that returns true or false.
@@ -45,6 +47,6 @@ public interface Predicate {
      * @throws IllegalArgumentException (runtime) if the input is invalid
      * @throws FunctorException (runtime) if the predicate encounters a problem
      */
-    public boolean evaluate(Object object);
+    public boolean evaluate(T object);
 
 }

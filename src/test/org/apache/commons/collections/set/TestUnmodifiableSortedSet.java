@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Set;
+import java.util.SortedSet;
 import java.util.TreeSet;
 
 import junit.framework.Test;
@@ -27,7 +28,7 @@ import junit.framework.Test;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * Extension of {@link AbstractTestSortedSet} for exercising the 
+ * Extension of {@link AbstractTestSortedSet} for exercising the
  * {@link UnmodifiableSortedSet} implementation.
  *
  * @since Commons Collections 3.0
@@ -35,73 +36,75 @@ import org.apache.commons.collections.BulkTest;
  *
  * @author Phil Steitz
  */
-public class TestUnmodifiableSortedSet extends AbstractTestSortedSet{
-    
+public class TestUnmodifiableSortedSet<E> extends AbstractTestSortedSet<E> {
+    protected UnmodifiableSortedSet<E> set = null;
+    protected ArrayList<E> array = null;
+
     public TestUnmodifiableSortedSet(String testName) {
         super(testName);
     }
-    
+
     public static Test suite() {
         return BulkTest.makeSuite(TestUnmodifiableSortedSet.class);
     }
-    
+
     public static void main(String args[]) {
         String[] testCaseName = { TestUnmodifiableSortedSet.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
-    //-------------------------------------------------------------------  
-    public Set makeEmptySet() {
-        return UnmodifiableSortedSet.decorate(new TreeSet());
+
+    //-------------------------------------------------------------------
+    public SortedSet<E> makeObject() {
+        return UnmodifiableSortedSet.decorate(new TreeSet<E>());
     }
-    
-    public Set makeFullSet() {
-        TreeSet set = new TreeSet();
+
+    public UnmodifiableSortedSet<E> makeFullCollection() {
+        TreeSet<E> set = new TreeSet<E>();
         set.addAll(Arrays.asList(getFullElements()));
-        return UnmodifiableSortedSet.decorate(set);
+        return (UnmodifiableSortedSet<E>) UnmodifiableSortedSet.decorate(set);
     }
-    
+
     public boolean isAddSupported() {
         return false;
     }
-    
+
     public boolean isRemoveSupported() {
         return false;
     }
-           
+
     //--------------------------------------------------------------------
-    protected UnmodifiableSortedSet set = null;
-    protected ArrayList array = null;
-    
+    @SuppressWarnings("unchecked")
     protected void setupSet() {
-        set = (UnmodifiableSortedSet) makeFullSet();
-        array = new ArrayList();
-        array.add(new Integer(1));
+        set = makeFullCollection();
+        array = new ArrayList<E>();
+        array.add((E) new Integer(1));
     }
-    
-    /** 
+
+    /**
      * Verify that base set and subsets are not modifiable
      */
+    @SuppressWarnings("unchecked")
     public void testUnmodifiable() {
         setupSet();
         verifyUnmodifiable(set);
-        verifyUnmodifiable(set.headSet(new Integer(1)));
-        verifyUnmodifiable(set.tailSet(new Integer(1)));
-        verifyUnmodifiable(set.subSet(new Integer(1), new Integer(3)));    
+        verifyUnmodifiable(set.headSet((E) new Integer(1)));
+        verifyUnmodifiable(set.tailSet((E) new Integer(1)));
+        verifyUnmodifiable(set.subSet((E) new Integer(1), (E) new Integer(3)));
     }
-    
+
     /**
      * Verifies that a set is not modifiable
      */
-    public void verifyUnmodifiable(Set set) {
+    @SuppressWarnings("unchecked")
+    public void verifyUnmodifiable(Set<E> set) {
         try {
-            set.add("value");
+            set.add((E) "value");
             fail("Expecting UnsupportedOperationException.");
         } catch (UnsupportedOperationException e) {
-            // expected  
+            // expected
         }
         try {
-            set.addAll(new TreeSet());
+            set.addAll(new TreeSet<E>());
             fail("Expecting UnsupportedOperationException.");
         } catch (UnsupportedOperationException e) {
             // expected
@@ -131,10 +134,10 @@ public class TestUnmodifiableSortedSet extends AbstractTestSortedSet{
             // expected
         }
     }
-    
+
     public void testComparator() {
         setupSet();
-        Comparator c = set.comparator();
+        Comparator<? super E> c = set.comparator();
         assertTrue("natural order, so comparator should be null", c == null);
     }
 

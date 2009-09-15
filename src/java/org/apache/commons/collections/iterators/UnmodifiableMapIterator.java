@@ -29,10 +29,10 @@ import org.apache.commons.collections.Unmodifiable;
  *
  * @author Stephen Colebourne
  */
-public final class UnmodifiableMapIterator implements MapIterator, Unmodifiable {
+public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, Unmodifiable {
 
     /** The iterator being decorated */
-    private MapIterator iterator;
+    private MapIterator<K, V> iterator;
 
     //-----------------------------------------------------------------------
     /**
@@ -41,23 +41,23 @@ public final class UnmodifiableMapIterator implements MapIterator, Unmodifiable 
      * @param iterator  the iterator to decorate
      * @throws IllegalArgumentException if the iterator is null
      */
-    public static MapIterator decorate(MapIterator iterator) {
+    public static <K, V> MapIterator<K, V> decorate(MapIterator<K, V> iterator) {
         if (iterator == null) {
             throw new IllegalArgumentException("MapIterator must not be null");
         }
         if (iterator instanceof Unmodifiable) {
             return iterator;
         }
-        return new UnmodifiableMapIterator(iterator);
+        return new UnmodifiableMapIterator<K, V>(iterator);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Constructor.
      *
      * @param iterator  the iterator to decorate
      */
-    private UnmodifiableMapIterator(MapIterator iterator) {
+    private UnmodifiableMapIterator(MapIterator<K, V> iterator) {
         super();
         this.iterator = iterator;
     }
@@ -67,19 +67,19 @@ public final class UnmodifiableMapIterator implements MapIterator, Unmodifiable 
         return iterator.hasNext();
     }
 
-    public Object next() {
+    public K next() {
         return iterator.next();
     }
 
-    public Object getKey() {
+    public K getKey() {
         return iterator.getKey();
     }
 
-    public Object getValue() {
+    public V getValue() {
         return iterator.getValue();
     }
 
-    public Object setValue(Object value) {
+    public V setValue(V value) {
         throw new UnsupportedOperationException("setValue() is not supported");
     }
 

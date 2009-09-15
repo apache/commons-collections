@@ -29,13 +29,16 @@ package org.apache.commons.collections;
  * {@link TransformerUtils}. These include method invokation, returning a constant,
  * cloning and returning the string value.
  *
+ * @param <I> the input type to the transformer
+ * @param <O> the output type from the transformer
+ *
  * @since Commons Collections 1.0
  * @version $Revision$ $Date$
  *
  * @author James Strachan
  * @author Stephen Colebourne
  */
-public interface Transformer {
+public interface Transformer<I, O> {
 
     /**
      * Transforms the input object (leaving it unchanged) into some output object.
@@ -46,6 +49,6 @@ public interface Transformer {
      * @throws IllegalArgumentException (runtime) if the input is invalid
      * @throws FunctorException (runtime) if the transform cannot be completed
      */
-    public Object transform(Object input);
+    public O transform(I input);
 
 }

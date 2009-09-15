@@ -18,11 +18,11 @@ package org.apache.commons.collections.buffer;
 
 import java.util.Collection;
 
-/** 
+/**
  * CircularFifoBuffer is a first in first out buffer with a fixed size that
  * replaces its oldest element if full.
  * <p>
- * The removal order of a <code>CircularFifoBuffer</code> is based on the 
+ * The removal order of a <code>CircularFifoBuffer</code> is based on the
  * insertion order; elements are removed in the same order in which they
  * were added.  The iteration order is the same as the removal order.
  * <p>
@@ -46,7 +46,7 @@ import java.util.Collection;
  * @author Stefano Fornari
  * @author Stephen Colebourne
  */
-public class CircularFifoBuffer extends BoundedFifoBuffer {
+public class CircularFifoBuffer<E> extends BoundedFifoBuffer<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = -8423413834657610406L;
@@ -60,7 +60,7 @@ public class CircularFifoBuffer extends BoundedFifoBuffer {
 
     /**
      * Constructor that creates a buffer with the specified size.
-     * 
+     *
      * @param size  the size of the buffer (cannot be changed)
      * @throws IllegalArgumentException  if the size is less than 1
      */
@@ -71,11 +71,11 @@ public class CircularFifoBuffer extends BoundedFifoBuffer {
     /**
      * Constructor that creates a buffer from the specified collection.
      * The collection size also sets the buffer size
-     * 
+     *
      * @param coll  the collection to copy into the buffer, may not be null
      * @throws NullPointerException if the collection is null
      */
-    public CircularFifoBuffer(Collection coll) {
+    public CircularFifoBuffer(Collection<E> coll) {
         super(coll);
     }
 
@@ -86,11 +86,11 @@ public class CircularFifoBuffer extends BoundedFifoBuffer {
      * @param element the element to add
      * @return true, always
      */
-    public boolean add(Object element) {
+    public boolean add(E element) {
         if (isFull()) {
             remove();
         }
         return super.add(element);
     }
-    
+
 }

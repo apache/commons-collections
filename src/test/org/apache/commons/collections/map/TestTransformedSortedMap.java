@@ -24,6 +24,7 @@ import java.util.TreeMap;
 import junit.framework.Test;
 
 import org.apache.commons.collections.BulkTest;
+import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.TransformerUtils;
 import org.apache.commons.collections.collection.TestTransformedCollection;
 
@@ -36,8 +37,8 @@ import org.apache.commons.collections.collection.TestTransformedCollection;
  *
  * @author Stephen Colebourne
  */
-public class TestTransformedSortedMap extends AbstractTestSortedMap {
-    
+public class TestTransformedSortedMap<K, V> extends AbstractTestSortedMap<K, V> {
+
     public TestTransformedSortedMap(String testName) {
         super(testName);
     }
@@ -52,8 +53,11 @@ public class TestTransformedSortedMap extends AbstractTestSortedMap {
     }
 
     //-----------------------------------------------------------------------
-    public Map makeEmptyMap() {
-        return TransformedSortedMap.decorate(new TreeMap(), TransformerUtils.nopTransformer(), TransformerUtils.nopTransformer());
+    @SuppressWarnings("unchecked")
+    public SortedMap<K, V> makeObject() {
+        return TransformedSortedMap.decorate(new TreeMap<K, V>(),
+                (Transformer<? super K, ? extends K>) TransformerUtils.nopTransformer(),
+                (Transformer<? super V, ? extends V>) TransformerUtils.nopTransformer());
     }
 
     public boolean isSubMapViewsSerializable() {
@@ -61,14 +65,19 @@ public class TestTransformedSortedMap extends AbstractTestSortedMap {
         return false;
     }
 
-    //-----------------------------------------------------------------------    
+    //-----------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
     public void testTransformedMap() {
-        Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
 
-        Map map = TransformedSortedMap.decorate(new TreeMap(), TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER, null);
+        SortedMap<K, V> map = TransformedSortedMap
+                .decorate(
+                        new TreeMap<K, V>(),
+                        (Transformer<? super K, ? extends K>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER,
+                        null);
         assertEquals(0, map.size());
         for (int i = 0; i < els.length; i++) {
-            map.put(els[i], els[i]);
+            map.put((K) els[i], (V) els[i]);
             assertEquals(i + 1, map.size());
             assertEquals(true, map.containsKey(new Integer((String) els[i])));
             try {
@@ -78,17 +87,21 @@ public class TestTransformedSortedMap extends AbstractTestSortedMap {
             assertEquals(true, map.containsValue(els[i]));
             assertEquals(els[i], map.get(new Integer((String) els[i])));
         }
-        
+
         try {
             map.remove(els[0]);
             fail();
         } catch (ClassCastException ex) {}
         assertEquals(els[0], map.remove(new Integer((String) els[0])));
-        
-        map = TransformedSortedMap.decorate(new TreeMap(), null, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+
+        map = TransformedSortedMap
+                .decorate(
+                        new TreeMap<K, V>(),
+                        null,
+                        (Transformer<? super V, ? extends V>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, map.size());
         for (int i = 0; i < els.length; i++) {
-            map.put(els[i], els[i]);
+            map.put((K) els[i], (V) els[i]);
             assertEquals(i + 1, map.size());
             assertEquals(true, map.containsValue(new Integer((String) els[i])));
             assertEquals(false, map.containsValue(els[i]));
@@ -97,47 +110,57 @@ public class TestTransformedSortedMap extends AbstractTestSortedMap {
         }
 
         assertEquals(new Integer((String) els[0]), map.remove(els[0]));
-        
-        Set entrySet = map.entrySet();
-        Map.Entry[] array = (Map.Entry[]) entrySet.toArray(new Map.Entry[0]);
-        array[0].setValue("66");
+
+        Set<Map.Entry<K, V>> entrySet = map.entrySet();
+        Map.Entry<K, V>[] array = (Map.Entry<K, V>[]) entrySet.toArray(new Map.Entry[0]);
+        array[0].setValue((V) "66");
         assertEquals(new Integer(66), array[0].getValue());
         assertEquals(new Integer(66), map.get(array[0].getKey()));
-        
-        Map.Entry entry = (Map.Entry) entrySet.iterator().next();
-        entry.setValue("88");
+
+        Map.Entry<K, V> entry = entrySet.iterator().next();
+        entry.setValue((V) "88");
         assertEquals(new Integer(88), entry.getValue());
         assertEquals(new Integer(88), map.get(entry.getKey()));
     }
 
     //-----------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
     public void testFactory_Decorate() {
-        SortedMap base = new TreeMap();
-        base.put("A", "1");
-        base.put("B", "2");
-        base.put("C", "3");
-        
-        SortedMap trans = TransformedSortedMap.decorate(base, null, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        SortedMap<K, V> base = new TreeMap<K, V>();
+        base.put((K) "A", (V) "1");
+        base.put((K) "B", (V) "2");
+        base.put((K) "C", (V) "3");
+
+        SortedMap<K, V> trans = TransformedSortedMap
+                .decorate(
+                        base,
+                        null,
+                        (Transformer<? super V, ? extends V>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(3, trans.size());
         assertEquals("1", trans.get("A"));
         assertEquals("2", trans.get("B"));
         assertEquals("3", trans.get("C"));
-        trans.put("D", "4");
+        trans.put((K) "D", (V) "4");
         assertEquals(new Integer(4), trans.get("D"));
     }
 
+    @SuppressWarnings("unchecked")
     public void testFactory_decorateTransform() {
-        SortedMap base = new TreeMap();
-        base.put("A", "1");
-        base.put("B", "2");
-        base.put("C", "3");
-        
-        SortedMap trans = TransformedSortedMap.decorateTransform(base, null, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        SortedMap<K, V> base = new TreeMap<K, V>();
+        base.put((K) "A", (V) "1");
+        base.put((K) "B", (V) "2");
+        base.put((K) "C", (V) "3");
+
+        SortedMap<K, V> trans = TransformedSortedMap
+                .decorateTransform(
+                        base,
+                        null,
+                        (Transformer<? super V, ? extends V>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(3, trans.size());
         assertEquals(new Integer(1), trans.get("A"));
         assertEquals(new Integer(2), trans.get("B"));
         assertEquals(new Integer(3), trans.get("C"));
-        trans.put("D", "4");
+        trans.put((K) "D", (V) "4");
         assertEquals(new Integer(4), trans.get("D"));
     }
 

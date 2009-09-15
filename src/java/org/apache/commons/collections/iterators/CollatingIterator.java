@@ -27,12 +27,12 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections.list.UnmodifiableList;
 
 /**
- * Provides an ordered iteration over the elements contained in
- * a collection of ordered Iterators.
+ * Provides an ordered iteration over the elements contained in a collection of
+ * ordered Iterators.
  * <p>
- * Given two ordered {@link Iterator} instances <code>A</code> and <code>B</code>,
- * the {@link #next} method on this iterator will return the lesser of 
- * <code>A.next()</code> and <code>B.next()</code>.
+ * Given two ordered {@link Iterator} instances <code>A</code> and
+ * <code>B</code>, the {@link #next} method on this iterator will return the
+ * lesser of <code>A.next()</code> and <code>B.next()</code>.
  *
  * @since Commons Collections 2.1
  * @version $Revision$ $Date$
@@ -40,86 +40,93 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * @author Rodney Waldhoff
  * @author Stephen Colebourne
  */
-public class CollatingIterator implements Iterator {
+public class CollatingIterator<E> implements Iterator<E> {
 
     /** The {@link Comparator} used to evaluate order. */
-    private Comparator comparator = null;
+    private Comparator<? super E> comparator = null;
 
     /** The list of {@link Iterator}s to evaluate. */
-    private ArrayList iterators = null;
-   
+    private ArrayList<Iterator<? extends E>> iterators = null;
+
     /** {@link Iterator#next Next} objects peeked from each iterator. */
-    private ArrayList values = null;
-    
+    private ArrayList<E> values = null;
+
     /** Whether or not each {@link #values} element has been set. */
     private BitSet valueSet = null;
 
-    /** Index of the {@link #iterators iterator} from whom the last returned value was obtained. */
+    /**
+     * Index of the {@link #iterators iterator} from whom the last returned
+     * value was obtained.
+     */
     private int lastReturned = -1;
 
     // Constructors
     // ----------------------------------------------------------------------
     /**
-     * Constructs a new <code>CollatingIterator</code>.  Natural sort order
-     * will be used, and child iterators will have to be manually added 
-     * using the {@link #addIterator(Iterator)} method.
+     * Constructs a new <code>CollatingIterator</code>. Natural sort order will
+     * be used, and child iterators will have to be manually added using the
+     * {@link #addIterator(Iterator)} method.
      */
     public CollatingIterator() {
-        this(null,2);
+        this(null, 2);
     }
-    
+
     /**
      * Constructs a new <code>CollatingIterator</code> that will used the
-     * specified comparator for ordering.  Child iterators will have to be 
+     * specified comparator for ordering. Child iterators will have to be
      * manually added using the {@link #addIterator(Iterator)} method.
-     *
-     * @param comp  the comparator to use to sort, or null to use natural sort order
+     * 
+     * @param comp the comparator to use to sort, or null to use natural sort
+     * order
      */
-    public CollatingIterator(final Comparator comp) {
-        this(comp,2);
+    public CollatingIterator(final Comparator<? super E> comp) {
+        this(comp, 2);
     }
-    
+
     /**
      * Constructs a new <code>CollatingIterator</code> that will used the
      * specified comparator for ordering and have the specified initial
-     * capacity.  Child iterators will have to be 
-     * manually added using the {@link #addIterator(Iterator)} method.
-     *
-     * @param comp  the comparator to use to sort, or null to use natural sort order
-     * @param initIterCapacity  the initial capacity for the internal list
-     *    of child iterators
+     * capacity. Child iterators will have to be manually added using the
+     * {@link #addIterator(Iterator)} method.
+     * 
+     * @param comp the comparator to use to sort, or null to use natural sort
+     * order
+     * @param initIterCapacity the initial capacity for the internal list of
+     * child iterators
      */
-    public CollatingIterator(final Comparator comp, final int initIterCapacity) {
-        iterators = new ArrayList(initIterCapacity);
+    public CollatingIterator(final Comparator<? super E> comp, final int initIterCapacity) {
+        iterators = new ArrayList<Iterator<? extends E>>(initIterCapacity);
         setComparator(comp);
     }
 
     /**
      * Constructs a new <code>CollatingIterator</code> that will use the
-     * specified comparator to provide ordered iteration over the two
-     * given iterators.
-     *
-     * @param comp  the comparator to use to sort, or null to use natural sort order
-     * @param a  the first child ordered iterator
-     * @param b  the second child ordered iterator
+     * specified comparator to provide ordered iteration over the two given
+     * iterators.
+     * 
+     * @param comp the comparator to use to sort, or null to use natural sort
+     * order
+     * @param a the first child ordered iterator
+     * @param b the second child ordered iterator
      * @throws NullPointerException if either iterator is null
      */
-    public CollatingIterator(final Comparator comp, final Iterator a, final Iterator b) {
-        this(comp,2);
+    public CollatingIterator(final Comparator<? super E> comp, final Iterator<? extends E> a, final Iterator<? extends E> b) {
+        this(comp, 2);
         addIterator(a);
         addIterator(b);
     }
 
     /**
      * Constructs a new <code>CollatingIterator</code> that will use the
-     * specified comparator to provide ordered iteration over the array
-     * of iterators.
-     *
-     * @param comp  the comparator to use to sort, or null to use natural sort order
-     * @param iterators  the array of iterators
+     * specified comparator to provide ordered iteration over the array of
+     * iterators.
+     * 
+     * @param comp the comparator to use to sort, or null to use natural sort
+     * order
+     * @param iterators the array of iterators
      * @throws NullPointerException if iterators array is or contains null
      */
-    public CollatingIterator(final Comparator comp, final Iterator[] iterators) {
+    public CollatingIterator(final Comparator<? super E> comp, final Iterator<? extends E>[] iterators) {
         this(comp, iterators.length);
         for (int i = 0; i < iterators.length; i++) {
             addIterator(iterators[i]);
@@ -128,20 +135,21 @@ public class CollatingIterator implements Iterator {
 
     /**
      * Constructs a new <code>CollatingIterator</code> that will use the
-     * specified comparator to provide ordered iteration over the collection
-     * of iterators.
-     *
-     * @param comp  the comparator to use to sort, or null to use natural sort order
-     * @param iterators  the collection of iterators
-     * @throws NullPointerException if the iterators collection is or contains null
+     * specified comparator to provide ordered iteration over the collection of
+     * iterators.
+     * 
+     * @param comp the comparator to use to sort, or null to use natural sort
+     * order
+     * @param iterators the collection of iterators
+     * @throws NullPointerException if the iterators collection is or contains
+     * null
      * @throws ClassCastException if the iterators collection contains an
-     *         element that's not an {@link Iterator}
+     * element that's not an {@link Iterator}
      */
-    public CollatingIterator(final Comparator comp, final Collection iterators) {
+    public CollatingIterator(final Comparator<? super E> comp, final Collection<Iterator<? extends E>> iterators) {
         this(comp, iterators.size());
-        for (Iterator it = iterators.iterator(); it.hasNext();) {
-            Iterator item = (Iterator) it.next();
-            addIterator(item);
+        for (Iterator<? extends E> iterator : iterators) {
+            addIterator(iterator);
         }
     }
 
@@ -150,11 +158,11 @@ public class CollatingIterator implements Iterator {
     /**
      * Adds the given {@link Iterator} to the iterators being collated.
      * 
-     * @param iterator  the iterator to add to the collation, must not be null
+     * @param iterator the iterator to add to the collation, must not be null
      * @throws IllegalStateException if iteration has started
      * @throws NullPointerException if the iterator is null
      */
-    public void addIterator(final Iterator iterator) {
+    public void addIterator(final Iterator<? extends E> iterator) {
         checkNotStarted();
         if (iterator == null) {
             throw new NullPointerException("Iterator must not be null");
@@ -165,13 +173,13 @@ public class CollatingIterator implements Iterator {
     /**
      * Sets the iterator at the given index.
      * 
-     * @param index  index of the Iterator to replace
-     * @param iterator  Iterator to place at the given index
+     * @param index index of the Iterator to replace
+     * @param iterator Iterator to place at the given index
      * @throws IndexOutOfBoundsException if index &lt; 0 or index &gt; size()
      * @throws IllegalStateException if iteration has started
      * @throws NullPointerException if the iterator is null
      */
-    public void setIterator(final int index, final Iterator iterator) {
+    public void setIterator(final int index, final Iterator<? extends E> iterator) {
         checkNotStarted();
         if (iterator == null) {
             throw new NullPointerException("Iterator must not be null");
@@ -184,14 +192,14 @@ public class CollatingIterator implements Iterator {
      * 
      * @return the unmodifiable list of iterators added
      */
-    public List getIterators() {
+    public List<Iterator<? extends E>> getIterators() {
         return UnmodifiableList.decorate(iterators);
     }
 
     /**
      * Gets the {@link Comparator} by which collatation occurs.
      */
-    public Comparator getComparator() {
+    public Comparator<? super E> getComparator() {
         return comparator;
     }
 
@@ -200,7 +208,7 @@ public class CollatingIterator implements Iterator {
      * 
      * @throws IllegalStateException if iteration has started
      */
-    public void setComparator(final Comparator comp) {
+    public void setComparator(final Comparator<? super E> comp) {
         checkNotStarted();
         comparator = comp;
     }
@@ -209,7 +217,7 @@ public class CollatingIterator implements Iterator {
     // -------------------------------------------------------------------
     /**
      * Returns <code>true</code> if any child iterator has remaining elements.
-     *
+     * 
      * @return true if this iterator has remaining elements
      */
     public boolean hasNext() {
@@ -219,38 +227,36 @@ public class CollatingIterator implements Iterator {
 
     /**
      * Returns the next ordered element from a child iterator.
-     *
+     * 
      * @return the next ordered element
      * @throws NoSuchElementException if no child iterator has any more elements
      */
-    public Object next() throws NoSuchElementException {
+    public E next() throws NoSuchElementException {
         if (hasNext() == false) {
             throw new NoSuchElementException();
         }
         int leastIndex = least();
         if (leastIndex == -1) {
             throw new NoSuchElementException();
-        } else {
-            Object val = values.get(leastIndex);
-            clear(leastIndex);
-            lastReturned = leastIndex;
-            return val;
         }
+        E val = values.get(leastIndex);
+        clear(leastIndex);
+        lastReturned = leastIndex;
+        return val;
     }
 
     /**
-     * Removes the last returned element from the child iterator that 
-     * produced it.
-     *
-     * @throws IllegalStateException if there is no last returned element,
-     *  or if the last returned element has already been removed
+     * Removes the last returned element from the child iterator that produced
+     * it.
+     * 
+     * @throws IllegalStateException if there is no last returned element, or if
+     * the last returned element has already been removed
      */
     public void remove() {
         if (lastReturned == -1) {
             throw new IllegalStateException("No value can be removed at present");
         }
-        Iterator it = (Iterator) (iterators.get(lastReturned));
-        it.remove();
+        iterators.get(lastReturned).remove();
     }
 
     /**
@@ -269,12 +275,12 @@ public class CollatingIterator implements Iterator {
     
     // Private Methods
     // -------------------------------------------------------------------
-    /** 
+    /**
      * Initializes the collating state if it hasn't been already.
      */
     private void start() {
         if (values == null) {
-            values = new ArrayList(iterators.size());
+            values = new ArrayList<E>(iterators.size());
             valueSet = new BitSet(iterators.size());
             for (int i = 0; i < iterators.size(); i++) {
                 values.add(null);
@@ -283,40 +289,38 @@ public class CollatingIterator implements Iterator {
         }
     }
 
-    /** 
-     * Sets the {@link #values} and {@link #valueSet} attributes 
-     * at position <i>i</i> to the next value of the 
-     * {@link #iterators iterator} at position <i>i</i>, or 
-     * clear them if the <i>i</i><sup>th</sup> iterator
-     * has no next value.
-     *
+    /**
+     * Sets the {@link #values} and {@link #valueSet} attributes at position
+     * <i>i</i> to the next value of the {@link #iterators iterator} at position
+     * <i>i</i>, or clear them if the <i>i</i><sup>th</sup> iterator has no next
+     * value.
+     * 
      * @return <tt>false</tt> iff there was no value to set
      */
     private boolean set(int i) {
-        Iterator it = (Iterator)(iterators.get(i));
+        Iterator<? extends E> it = iterators.get(i);
         if (it.hasNext()) {
             values.set(i, it.next());
             valueSet.set(i);
             return true;
-        } else {
-            values.set(i,null);
-            valueSet.clear(i);
-            return false;
         }
+        values.set(i, null);
+        valueSet.clear(i);
+        return false;
     }
 
-    /** 
-     * Clears the {@link #values} and {@link #valueSet} attributes 
-     * at position <i>i</i>.
+    /**
+     * Clears the {@link #values} and {@link #valueSet} attributes at position
+     * <i>i</i>.
      */
     private void clear(int i) {
-        values.set(i,null);
+        values.set(i, null);
         valueSet.clear(i);
     }
 
-    /** 
-     * Throws {@link IllegalStateException} if iteration has started 
-     * via {@link #start}.
+    /**
+     * Throws {@link IllegalStateException} if iteration has started via
+     * {@link #start}.
      * 
      * @throws IllegalStateException if iteration started
      */
@@ -326,7 +330,7 @@ public class CollatingIterator implements Iterator {
         }
     }
 
-    /** 
+    /**
      * Returns the index of the least element in {@link #values},
      * {@link #set(int) setting} any uninitialized values.
      * 
@@ -334,7 +338,7 @@ public class CollatingIterator implements Iterator {
      */
     private int least() {
         int leastIndex = -1;
-        Object leastObject = null;                
+        E leastObject = null;
         for (int i = 0; i < values.size(); i++) {
             if (valueSet.get(i) == false) {
                 set(i);
@@ -344,8 +348,8 @@ public class CollatingIterator implements Iterator {
                     leastIndex = i;
                     leastObject = values.get(i);
                 } else {
-                    Object curObject = values.get(i);
-                    if (comparator.compare(curObject,leastObject) < 0) {
+                    E curObject = values.get(i);
+                    if (comparator.compare(curObject, leastObject) < 0) {
                         leastObject = curObject;
                         leastIndex = i;
                     }
@@ -356,7 +360,7 @@ public class CollatingIterator implements Iterator {
     }
 
     /**
-     * Returns <code>true</code> iff any bit in the given set is 
+     * Returns <code>true</code> iff any bit in the given set is
      * <code>true</code>.
      */
     private boolean anyValueSet(BitSet set) {
@@ -369,13 +373,12 @@ public class CollatingIterator implements Iterator {
     }
 
     /**
-     * Returns <code>true</code> iff any {@link Iterator} 
-     * in the given list has a next value.
+     * Returns <code>true</code> iff any {@link Iterator} in the given list has
+     * a next value.
      */
-    private boolean anyHasNext(ArrayList iters) {
-        for (int i = 0; i < iters.size(); i++) {
-            Iterator it = (Iterator) iters.get(i);
-            if (it.hasNext()) {
+    private boolean anyHasNext(ArrayList<Iterator<? extends E>> iters) {
+        for (Iterator<? extends E> iterator : iters) {
+            if (iterator.hasNext()) {
                 return true;
             }
         }

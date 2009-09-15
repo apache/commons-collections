@@ -39,12 +39,12 @@ import org.apache.commons.collections.ResettableListIterator;
  *
  * @author Eric Crampton <ccesc@eonomine.com>
  */
-public class LoopingListIterator implements ResettableListIterator {
+public class LoopingListIterator<E> implements ResettableListIterator<E> {
 
     /** The list to base the iterator on */
-    private List list;
+    private List<E> list;
     /** The current list iterator */
-    private ListIterator iterator;
+    private ListIterator<E> iterator;
 
     /**
      * Constructor that wraps a list.
@@ -56,7 +56,7 @@ public class LoopingListIterator implements ResettableListIterator {
      * @param list the list to wrap
      * @throws NullPointerException if the list it null
      */
-    public LoopingListIterator(List list) {
+    public LoopingListIterator(List<E> list) {
         if (list == null) {
             throw new NullPointerException("The list must not be null");
         }
@@ -84,7 +84,7 @@ public class LoopingListIterator implements ResettableListIterator {
      * @return the object after the last element returned
      * @throws NoSuchElementException if there are no elements in the list
      */
-    public Object next() {
+    public E next() {
         if (list.isEmpty()) {
             throw new NoSuchElementException(
                 "There are no elements for this iterator to loop on");
@@ -113,9 +113,8 @@ public class LoopingListIterator implements ResettableListIterator {
         }
         if (iterator.hasNext() == false) {
             return 0;
-        } else {
-            return iterator.nextIndex();
         }
+        return iterator.nextIndex();
     }
 
     /**
@@ -139,21 +138,20 @@ public class LoopingListIterator implements ResettableListIterator {
      * @return the object before the last element returned
      * @throws NoSuchElementException if there are no elements in the list
      */
-    public Object previous() {
+    public E previous() {
         if (list.isEmpty()) {
             throw new NoSuchElementException(
                 "There are no elements for this iterator to loop on");
         }
         if (iterator.hasPrevious() == false) {
-            Object result = null;
+            E result = null;
             while (iterator.hasNext()) {
                 result = iterator.next();
             }
             iterator.previous();
             return result;
-        } else {
-            return iterator.previous();
         }
+        return iterator.previous();
     }
 
     /**
@@ -174,9 +172,8 @@ public class LoopingListIterator implements ResettableListIterator {
         }
         if (iterator.hasPrevious() == false) {
             return list.size() - 1;
-        } else {
-            return iterator.previousIndex();
         }
+        return iterator.previousIndex();
     }
 
     /**
@@ -216,7 +213,7 @@ public class LoopingListIterator implements ResettableListIterator {
      * @throws UnsupportedOperationException if the add method is not
      *  supported by the iterator implementation of the underlying list
      */
-    public void add(Object obj) {
+    public void add(E obj) {
         iterator.add(obj);
     }
 
@@ -232,7 +229,7 @@ public class LoopingListIterator implements ResettableListIterator {
      * @throws UnsupportedOperationException if the set method is not
      *  supported by the iterator implementation of the underlying list
      */
-    public void set(Object obj) {
+    public void set(E obj) {
         iterator.set(obj);
     }
 

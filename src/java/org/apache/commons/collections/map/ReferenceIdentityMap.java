@@ -70,7 +70,7 @@ import java.lang.ref.Reference;
  *
  * @author Stephen Colebourne
  */
-public class ReferenceIdentityMap extends AbstractReferenceMap implements Serializable {
+public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> implements Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = -1266190134568365852L;
@@ -80,7 +80,8 @@ public class ReferenceIdentityMap extends AbstractReferenceMap implements Serial
      * use hard references to keys and soft references to values.
      */
     public ReferenceIdentityMap() {
-        super(HARD, SOFT, DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR, false);
+        super(ReferenceStrength.HARD, ReferenceStrength.SOFT, DEFAULT_CAPACITY,
+                DEFAULT_LOAD_FACTOR, false);
     }
 
     /**
@@ -92,7 +93,7 @@ public class ReferenceIdentityMap extends AbstractReferenceMap implements Serial
      * @param valueType  the type of reference to use for values;
      *   must be {@link #HARD}, {@link #SOFT}, {@link #WEAK}
      */
-    public ReferenceIdentityMap(int keyType, int valueType) {
+    public ReferenceIdentityMap(ReferenceStrength keyType, ReferenceStrength valueType) {
         super(keyType, valueType, DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR, false);
     }
 
@@ -107,7 +108,8 @@ public class ReferenceIdentityMap extends AbstractReferenceMap implements Serial
      * @param purgeValues should the value be automatically purged when the 
      *   key is garbage collected 
      */
-    public ReferenceIdentityMap(int keyType, int valueType, boolean purgeValues) {
+    public ReferenceIdentityMap(ReferenceStrength keyType, ReferenceStrength valueType,
+            boolean purgeValues) {
         super(keyType, valueType, DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR, purgeValues);
     }
 
@@ -122,7 +124,8 @@ public class ReferenceIdentityMap extends AbstractReferenceMap implements Serial
      * @param capacity  the initial capacity for the map
      * @param loadFactor  the load factor for the map
      */
-    public ReferenceIdentityMap(int keyType, int valueType, int capacity, float loadFactor) {
+    public ReferenceIdentityMap(ReferenceStrength keyType, ReferenceStrength valueType,
+            int capacity, float loadFactor) {
         super(keyType, valueType, capacity, loadFactor, false);
     }
 
@@ -139,8 +142,8 @@ public class ReferenceIdentityMap extends AbstractReferenceMap implements Serial
      * @param purgeValues  should the value be automatically purged when the 
      *   key is garbage collected 
      */
-    public ReferenceIdentityMap(int keyType, int valueType, int capacity,
-                        float loadFactor, boolean purgeValues) {
+    public ReferenceIdentityMap(ReferenceStrength keyType, ReferenceStrength valueType,
+            int capacity, float loadFactor, boolean purgeValues) {
         super(keyType, valueType, capacity, loadFactor, purgeValues);
     }
 
@@ -182,8 +185,8 @@ public class ReferenceIdentityMap extends AbstractReferenceMap implements Serial
      * @return true if equal by identity
      */
     protected boolean isEqualKey(Object key1, Object key2) {
-        key2 = (keyType > HARD ? ((Reference) key2).get() : key2);
-        return (key1 == key2);
+        key2 = keyType == ReferenceStrength.HARD ? key2 : ((Reference<?>) key2).get();
+        return key1 == key2;
     }
 
     /**
@@ -196,7 +199,7 @@ public class ReferenceIdentityMap extends AbstractReferenceMap implements Serial
      * @return true if equal by identity
      */
     protected boolean isEqualValue(Object value1, Object value2) {
-        return (value1 == value2);
+        return value1 == value2;
     }
 
     //-----------------------------------------------------------------------

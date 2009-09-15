@@ -31,17 +31,17 @@ import org.apache.commons.collections.Predicate;
  * @author Stephen Colebourne
  * @author Matt Benson
  */
-public class IfClosure implements Closure, Serializable {
+public class IfClosure<E> implements Closure<E>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 3518477308466486130L;
 
     /** The test */
-    private final Predicate iPredicate;
+    private final Predicate<? super E> iPredicate;
     /** The closure to use if true */
-    private final Closure iTrueClosure;
+    private final Closure<? super E> iTrueClosure;
     /** The closure to use if false */
-    private final Closure iFalseClosure;
+    private final Closure<? super E> iFalseClosure;
 
     /**
      * Factory method that performs validation.
@@ -55,8 +55,8 @@ public class IfClosure implements Closure, Serializable {
      * @throws IllegalArgumentException if either argument is null
      * @since Commons Collections 3.2
      */
-    public static Closure getInstance(Predicate predicate, Closure trueClosure) {
-        return getInstance(predicate, trueClosure, NOPClosure.INSTANCE);
+    public static <E> Closure<E> getInstance(Predicate<? super E> predicate, Closure<? super E> trueClosure) {
+        return IfClosure.<E>getInstance(predicate, trueClosure, NOPClosure.<E>getInstance());
     }
 
     /**
@@ -68,14 +68,14 @@ public class IfClosure implements Closure, Serializable {
      * @return the <code>if</code> closure
      * @throws IllegalArgumentException if any argument is null
      */
-    public static Closure getInstance(Predicate predicate, Closure trueClosure, Closure falseClosure) {
+    public static <E> Closure<E> getInstance(Predicate<? super E> predicate, Closure<? super E> trueClosure, Closure<? super E> falseClosure) {
         if (predicate == null) {
             throw new IllegalArgumentException("Predicate must not be null");
         }
         if (trueClosure == null || falseClosure == null) {
             throw new IllegalArgumentException("Closures must not be null");
         }
-        return new IfClosure(predicate, trueClosure, falseClosure);
+        return new IfClosure<E>(predicate, trueClosure, falseClosure);
     }
 
     /**
@@ -89,7 +89,7 @@ public class IfClosure implements Closure, Serializable {
      * @param trueClosure  closure used if true, not null
      * @since Commons Collections 3.2
      */
-    public IfClosure(Predicate predicate, Closure trueClosure) {
+    public IfClosure(Predicate<? super E> predicate, Closure<? super E> trueClosure) {
         this(predicate, trueClosure, NOPClosure.INSTANCE);
     }
 
@@ -101,7 +101,7 @@ public class IfClosure implements Closure, Serializable {
      * @param trueClosure  closure used if true, not null
      * @param falseClosure  closure used if false, not null
      */
-    public IfClosure(Predicate predicate, Closure trueClosure, Closure falseClosure) {
+    public IfClosure(Predicate<? super E> predicate, Closure<? super E> trueClosure, Closure<? super E> falseClosure) {
         super();
         iPredicate = predicate;
         iTrueClosure = trueClosure;
@@ -113,8 +113,8 @@ public class IfClosure implements Closure, Serializable {
      * 
      * @param input  the input object
      */
-    public void execute(Object input) {
-        if (iPredicate.evaluate(input) == true) {
+    public void execute(E input) {
+        if (iPredicate.evaluate(input)) {
             iTrueClosure.execute(input);
         } else {
             iFalseClosure.execute(input);
@@ -127,7 +127,7 @@ public class IfClosure implements Closure, Serializable {
      * @return the predicate
      * @since Commons Collections 3.1
      */
-    public Predicate getPredicate() {
+    public Predicate<? super E> getPredicate() {
         return iPredicate;
     }
 
@@ -137,7 +137,7 @@ public class IfClosure implements Closure, Serializable {
      * @return the closure
      * @since Commons Collections 3.1
      */
-    public Closure getTrueClosure() {
+    public Closure<? super E> getTrueClosure() {
         return iTrueClosure;
     }
 
@@ -147,7 +147,7 @@ public class IfClosure implements Closure, Serializable {
      * @return the closure
      * @since Commons Collections 3.1
      */
-    public Closure getFalseClosure() {
+    public Closure<? super E> getFalseClosure() {
         return iFalseClosure;
     }
 

@@ -28,22 +28,34 @@ import org.apache.commons.collections.Predicate;
  *
  * @author Stephen Colebourne
  */
-public final class FalsePredicate implements Predicate, Serializable {
+public final class FalsePredicate<T> implements Predicate<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 7533784454832764388L;
-    
+
     /** Singleton predicate instance */
-    public static final Predicate INSTANCE = new FalsePredicate();
+    public static final Predicate<Object> INSTANCE = new FalsePredicate<Object>();
 
     /**
-     * Factory returning the singleton instance.
-     * 
+     * Get a typed instance.
+     *
      * @return the singleton instance
      * @since Commons Collections 3.1
+     * @deprecated use {@link #falsePredicate()} instead.
      */
-    public static Predicate getInstance() {
-        return INSTANCE;
+    public static <T> Predicate<T> getInstance() {
+        return FalsePredicate.<T>falsePredicate();
+    }
+
+    /**
+     * Get a typed instance.
+     *
+     * @return the singleton instance
+     * @since Commons Collections 5
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> Predicate<T> falsePredicate() {
+        return (Predicate<T>) INSTANCE;
     }
 
     /**
@@ -55,11 +67,11 @@ public final class FalsePredicate implements Predicate, Serializable {
 
     /**
      * Evaluates the predicate returning false always.
-     * 
+     *
      * @param object  the input object
      * @return false always
      */
-    public boolean evaluate(Object object) {
+    public boolean evaluate(T object) {
         return false;
     }
 

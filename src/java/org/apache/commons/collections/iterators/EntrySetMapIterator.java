@@ -39,11 +39,11 @@ import org.apache.commons.collections.ResettableIterator;
  *
  * @author Stephen Colebourne
  */
-public class EntrySetMapIterator implements MapIterator, ResettableIterator {
+public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableIterator<K> {
     
-    private final Map map;
-    private Iterator iterator;
-    private Map.Entry last;
+    private final Map<K, V> map;
+    private Iterator<Map.Entry<K, V>> iterator;
+    private Map.Entry<K, V> last;
     private boolean canRemove = false;
     
     /**
@@ -51,7 +51,7 @@ public class EntrySetMapIterator implements MapIterator, ResettableIterator {
      * 
      * @param map  the map to iterate over
      */
-    public EntrySetMapIterator(Map map) {
+    public EntrySetMapIterator(Map<K, V> map) {
         super();
         this.map = map;
         this.iterator = map.entrySet().iterator();
@@ -73,8 +73,8 @@ public class EntrySetMapIterator implements MapIterator, ResettableIterator {
      * @return the next key in the iteration
      * @throws java.util.NoSuchElementException if the iteration is finished
      */
-    public Object next() {
-        last = (Map.Entry) iterator.next();
+    public K next() {
+        last = (Map.Entry<K, V>) iterator.next();
         canRemove = true;
         return last.getKey();
     }
@@ -107,7 +107,7 @@ public class EntrySetMapIterator implements MapIterator, ResettableIterator {
      * @return the current key
      * @throws IllegalStateException if <code>next()</code> has not yet been called
      */
-    public Object getKey() {
+    public K getKey() {
         if (last == null) {
             throw new IllegalStateException("Iterator getKey() can only be called after next() and before remove()");
         }
@@ -121,7 +121,7 @@ public class EntrySetMapIterator implements MapIterator, ResettableIterator {
      * @return the current value
      * @throws IllegalStateException if <code>next()</code> has not yet been called
      */
-    public Object getValue() {
+    public V getValue() {
         if (last == null) {
             throw new IllegalStateException("Iterator getValue() can only be called after next() and before remove()");
         }
@@ -138,7 +138,7 @@ public class EntrySetMapIterator implements MapIterator, ResettableIterator {
      * @throws IllegalStateException if <code>remove()</code> has been called since the
      *  last call to <code>next()</code>
      */
-    public Object setValue(Object value) {
+    public V setValue(V value) {
         if (last == null) {
             throw new IllegalStateException("Iterator setValue() can only be called after next() and before remove()");
         }
@@ -163,9 +163,8 @@ public class EntrySetMapIterator implements MapIterator, ResettableIterator {
     public String toString() {
         if (last != null) {
             return "MapIterator[" + getKey() + "=" + getValue() + "]";
-        } else {
-            return "MapIterator[]";
         }
+        return "MapIterator[]";
     }
     
 }

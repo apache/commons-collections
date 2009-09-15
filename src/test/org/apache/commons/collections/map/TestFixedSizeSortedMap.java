@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections.map;
 
-import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -33,7 +32,7 @@ import org.apache.commons.collections.BulkTest;
  *
  * @author Stephen Colebourne
  */
-public class TestFixedSizeSortedMap extends AbstractTestSortedMap {
+public class TestFixedSizeSortedMap<K, V> extends AbstractTestSortedMap<K, V> {
 
     public TestFixedSizeSortedMap(String testName) {
         super(testName);
@@ -49,16 +48,16 @@ public class TestFixedSizeSortedMap extends AbstractTestSortedMap {
     }
 
     //-----------------------------------------------------------------------
-    public Map makeEmptyMap() {
-        return FixedSizeSortedMap.decorate(new TreeMap());
+    public SortedMap<K, V> makeObject() {
+        return FixedSizeSortedMap.decorate(new TreeMap<K, V>());
     }
 
-    public Map makeFullMap() {
-        SortedMap map = new TreeMap();
+    public SortedMap<K, V> makeFullMap() {
+        SortedMap<K, V> map = new TreeMap<K, V>();
         addSampleMappings(map);
         return FixedSizeSortedMap.decorate(map);
     }
-    
+
     public boolean isSubMapViewsSerializable() {
         // TreeMap sub map views have a bug in deserialization.
         return false;
@@ -76,7 +75,7 @@ public class TestFixedSizeSortedMap extends AbstractTestSortedMap {
     public String getCompatibilityVersion() {
         return "3.1";
     }
-    
+
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(

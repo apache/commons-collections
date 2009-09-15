@@ -34,10 +34,10 @@ import org.apache.commons.collections.Unmodifiable;
  *
  * @author Stephen Colebourne
  */
-public class TestUnmodifiableIterator extends AbstractTestIterator {
+public class TestUnmodifiableIterator<E> extends AbstractTestIterator<E> {
 
     protected String[] testArray = { "One", "Two", "Three" };
-    protected List testList = new ArrayList(Arrays.asList(testArray));
+    protected List<E> testList;
 
     public static Test suite() {
         return new TestSuite(TestUnmodifiableIterator.class);
@@ -47,11 +47,21 @@ public class TestUnmodifiableIterator extends AbstractTestIterator {
         super(testName);
     }
 
-    public Iterator makeEmptyIterator() {
-        return UnmodifiableIterator.decorate(Collections.EMPTY_LIST.iterator());
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        testList = new ArrayList<E>(Arrays.asList((E[]) testArray));
     }
 
-    public Iterator makeFullIterator() {
+    public Iterator<E> makeEmptyIterator() {
+        return UnmodifiableIterator.decorate(Collections.<E>emptyList().iterator());
+    }
+
+    public Iterator<E> makeObject() {
         return UnmodifiableIterator.decorate(testList.iterator());
     }
 
@@ -63,14 +73,14 @@ public class TestUnmodifiableIterator extends AbstractTestIterator {
     public void testIterator() {
         assertTrue(makeEmptyIterator() instanceof Unmodifiable);
     }
-    
+
     public void testDecorateFactory() {
-        Iterator it = makeFullIterator();
+        Iterator<E> it = makeObject();
         assertSame(it, UnmodifiableIterator.decorate(it));
-        
+
         it = testList.iterator();
         assertTrue(it != UnmodifiableIterator.decorate(it));
-        
+
         try {
             UnmodifiableIterator.decorate(null);
             fail();

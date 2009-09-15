@@ -20,6 +20,8 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.Bag;
+import org.apache.commons.collections.SortedBag;
+import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.collection.TestTransformedCollection;
 
 /**
@@ -31,8 +33,8 @@ import org.apache.commons.collections.collection.TestTransformedCollection;
  *
  * @author Stephen Colebourne
  */
-public class TestTransformedSortedBag extends AbstractTestSortedBag {
-    
+public class TestTransformedSortedBag<T> extends AbstractTestSortedBag<T> {
+
     public TestTransformedSortedBag(String testName) {
         super(testName);
     }
@@ -46,22 +48,24 @@ public class TestTransformedSortedBag extends AbstractTestSortedBag {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Bag makeBag() {
-        return TransformedSortedBag.decorate(new TreeBag(), TestTransformedCollection.NOOP_TRANSFORMER);
+    @SuppressWarnings("unchecked")
+    public SortedBag<T> makeObject() {
+        return TransformedSortedBag.decorate(new TreeBag<T>(), (Transformer<T, T>) TestTransformedCollection.NOOP_TRANSFORMER);
     }
 
+    @SuppressWarnings("unchecked")
     public void testTransformedBag() {
-        Bag bag = TransformedSortedBag.decorate(new TreeBag(), TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        SortedBag<T> bag = TransformedSortedBag.decorate(new TreeBag<T>(), (Transformer<T, T>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, bag.size());
         Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {
-            bag.add(els[i]);
+            bag.add((T) els[i]);
             assertEquals(i + 1, bag.size());
             assertEquals(true, bag.contains(new Integer((String) els[i])));
         }
-        
+
         assertEquals(true, bag.remove(new Integer((String) els[0])));
-        
+
     }
 
     public void testTransformedBag_decorateTransform() {

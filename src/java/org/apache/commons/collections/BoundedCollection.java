@@ -34,7 +34,7 @@ import java.util.Collection;
  * @author Herve Quiroz
  * @author Stephen Colebourne
  */
-public interface BoundedCollection extends Collection {
+public interface BoundedCollection<E> extends Collection<E> {
 
     /**
      * Returns true if this collection is full and no new elements can be added.

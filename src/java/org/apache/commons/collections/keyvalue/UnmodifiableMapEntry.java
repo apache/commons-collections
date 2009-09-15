@@ -30,7 +30,7 @@ import org.apache.commons.collections.Unmodifiable;
  *
  * @author Stephen Colebourne
  */
-public final class UnmodifiableMapEntry extends AbstractMapEntry implements Unmodifiable {
+public final class UnmodifiableMapEntry<K, V> extends AbstractMapEntry<K, V> implements Unmodifiable {
 
     /**
      * Constructs a new entry with the specified key and given value.
@@ -38,7 +38,7 @@ public final class UnmodifiableMapEntry extends AbstractMapEntry implements Unmo
      * @param key  the key for the entry, may be null
      * @param value  the value for the entry, may be null
      */
-    public UnmodifiableMapEntry(final Object key, final Object value) {
+    public UnmodifiableMapEntry(final K key, final V value) {
         super(key, value);
     }
 
@@ -48,7 +48,7 @@ public final class UnmodifiableMapEntry extends AbstractMapEntry implements Unmo
      * @param pair  the pair to copy, must not be null
      * @throws NullPointerException if the entry is null
      */
-    public UnmodifiableMapEntry(final KeyValue pair) {
+    public UnmodifiableMapEntry(final KeyValue<K, V> pair) {
         super(pair.getKey(), pair.getValue());
     }
 
@@ -58,7 +58,7 @@ public final class UnmodifiableMapEntry extends AbstractMapEntry implements Unmo
      * @param entry  the entry to copy, must not be null
      * @throws NullPointerException if the entry is null
      */
-    public UnmodifiableMapEntry(final Map.Entry entry) {
+    public UnmodifiableMapEntry(final Map.Entry<K, V> entry) {
         super(entry.getKey(), entry.getValue());
     }
 
@@ -69,7 +69,7 @@ public final class UnmodifiableMapEntry extends AbstractMapEntry implements Unmo
      * @return the previous value
      * @throws UnsupportedOperationException always
      */
-    public Object setValue(Object value) {
+    public V setValue(V value) {
         throw new UnsupportedOperationException("setValue() is not supported");
     }
 

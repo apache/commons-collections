@@ -19,7 +19,6 @@ package org.apache.commons.collections.bidimap;
 import junit.framework.Test;
 import junit.textui.TestRunner;
 
-import org.apache.commons.collections.BidiMap;
 import org.apache.commons.collections.BulkTest;
 
 /**
@@ -30,7 +29,7 @@ import org.apache.commons.collections.BulkTest;
  * @author Matthew Hawthorne
  * @author Stephen Colebourne
  */
-public class TestDualTreeBidiMap extends AbstractTestSortedBidiMap {
+public class TestDualTreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> extends AbstractTestSortedBidiMap<K, V> {
 
     public static void main(String[] args) {
         TestRunner.run(suite());
@@ -44,8 +43,12 @@ public class TestDualTreeBidiMap extends AbstractTestSortedBidiMap {
         super(testName);
     }
 
-    public BidiMap makeEmptyBidiMap() {
-        return new DualTreeBidiMap();
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public DualTreeBidiMap<K, V> makeObject() {
+        return new DualTreeBidiMap<K, V>();
     }
 
     /**

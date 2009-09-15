@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
  * @author Morgan Delagrange
  * @author James Strachan
  */
-public class TestArrayIterator2 extends AbstractTestIterator {
+public class TestArrayIterator2<E> extends AbstractTestIterator<E> {
 
     protected int[] testArray = { 2, 4, 6, 8 };
 
@@ -42,41 +42,32 @@ public class TestArrayIterator2 extends AbstractTestIterator {
         super(testName);
     }
 
-    public Iterator makeEmptyIterator() {
-        return new ArrayIterator(new int[0]);
+    public ArrayIterator<E> makeEmptyIterator() {
+        return new ArrayIterator<E>(new int[0]);
     }
 
-    public Iterator makeFullIterator() {
-        return new ArrayIterator(testArray);
+    public ArrayIterator<E> makeObject() {
+        return new ArrayIterator<E>(testArray);
     }
 
-    /*
-     * We use these <code>makeArrayIterator</code> factory methods instead of
-     * directly calling the constructor so as to allow subclasses
-     * (e.g. TestArrayListIterator2) to use the existing test code.
-     * 
-     * @return ArrayIterator
-     */
-    public ArrayIterator makeArrayIterator() {
-        return (ArrayIterator) makeEmptyIterator();
+    public ArrayIterator<E> makeArrayIterator(Object array) {
+        return new ArrayIterator<E>(array);
     }
-    public ArrayIterator makeArrayIterator(Object array) {
-        return new ArrayIterator(array);
+
+    public ArrayIterator<E> makeArrayIterator(Object array, int index) {
+        return new ArrayIterator<E>(array, index);
     }
-    public ArrayIterator makeArrayIterator(Object array, int index) {
-        return new ArrayIterator(array, index);
-    }
-    public ArrayIterator makeArrayIterator(Object array, int start, int end) {
-        return new ArrayIterator(array, start, end);
+
+    public ArrayIterator<E> makeArrayIterator(Object array, int start, int end) {
+        return new ArrayIterator<E>(array, start, end);
     }
 
     public boolean supportsRemove() {
         return false;
     }
 
-
     public void testIterator() {
-        Iterator iter = (Iterator) makeFullIterator();
+        Iterator<E> iter = makeObject();
         for (int i = 0; i < testArray.length; i++) {
             Integer testValue = new Integer(testArray[i]);
             Number iterValue = (Number) iter.next();
@@ -87,7 +78,7 @@ public class TestArrayIterator2 extends AbstractTestIterator {
         assertTrue("Iterator should now be empty", !iter.hasNext());
 
         try {
-            Object testValue = iter.next();
+            iter.next();
         } catch (Exception e) {
             assertTrue(
                 "NoSuchElementException must be thrown",
@@ -96,9 +87,9 @@ public class TestArrayIterator2 extends AbstractTestIterator {
     }
 
     // proves that an ArrayIterator set with the constructor has the same number of elements
-    // as an ArrayIterator set with setArray(Object) 
+    // as an ArrayIterator set with setArray(Object)
     public void testSetArray() {
-        Iterator iter1 = makeArrayIterator(testArray);
+        Iterator<E> iter1 = makeArrayIterator(testArray);
         int count1 = 0;
         while (iter1.hasNext()) {
             ++count1;
@@ -107,7 +98,7 @@ public class TestArrayIterator2 extends AbstractTestIterator {
 
         assertEquals("the count should be right using the constructor", count1, testArray.length);
 
-        ArrayIterator iter2 = makeArrayIterator();
+        ArrayIterator<E> iter2 = makeObject();
         iter2.setArray(testArray);
         int count2 = 0;
         while (iter2.hasNext()) {
@@ -119,7 +110,7 @@ public class TestArrayIterator2 extends AbstractTestIterator {
     }
 
     public void testIndexedArray() {
-        Iterator iter = makeArrayIterator(testArray, 2);
+        Iterator<E> iter = makeArrayIterator(testArray, 2);
         int count = 0;
         while (iter.hasNext()) {
             ++count;

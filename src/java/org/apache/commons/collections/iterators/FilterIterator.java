@@ -35,14 +35,14 @@ import org.apache.commons.collections.Predicate;
  * @author Ralph Wagner
  * @author Stephen Colebourne
  */
-public class FilterIterator implements Iterator {
+public class FilterIterator<E> implements Iterator<E> {
 
     /** The iterator being used */
-    private Iterator iterator;
+    private Iterator<? extends E> iterator;
     /** The predicate being used */
-    private Predicate predicate;
+    private Predicate<? super E> predicate;
     /** The next object in the iteration */
-    private Object nextObject;
+    private E nextObject;
     /** Whether the next object has been calculated yet */
     private boolean nextObjectSet = false;
 
@@ -61,7 +61,7 @@ public class FilterIterator implements Iterator {
      *
      * @param iterator  the iterator to use
      */
-    public FilterIterator(Iterator iterator) {
+    public FilterIterator(Iterator<? extends E> iterator) {
         super();
         this.iterator = iterator;
     }
@@ -73,7 +73,7 @@ public class FilterIterator implements Iterator {
      * @param iterator  the iterator to use
      * @param predicate  the predicate to use
      */
-    public FilterIterator(Iterator iterator, Predicate predicate) {
+    public FilterIterator(Iterator<? extends E> iterator, Predicate<? super E> predicate) {
         super();
         this.iterator = iterator;
         this.predicate = predicate;
@@ -88,11 +88,7 @@ public class FilterIterator implements Iterator {
      * @throws NullPointerException if either the iterator or predicate are null
      */
     public boolean hasNext() {
-        if (nextObjectSet) {
-            return true;
-        } else {
-            return setNextObject();
-        }
+        return nextObjectSet || setNextObject();
     }
 
     /** 
@@ -103,7 +99,7 @@ public class FilterIterator implements Iterator {
      * @throws NoSuchElementException if there are no more elements that
      *  match the predicate 
      */
-    public Object next() {
+    public E next() {
         if (!nextObjectSet) {
             if (!setNextObject()) {
                 throw new NoSuchElementException();
@@ -137,7 +133,7 @@ public class FilterIterator implements Iterator {
      *
      * @return the iterator
      */
-    public Iterator getIterator() {
+    public Iterator<? extends E> getIterator() {
         return iterator;
     }
 
@@ -147,7 +143,7 @@ public class FilterIterator implements Iterator {
      *
      * @param iterator  the iterator to use
      */
-    public void setIterator(Iterator iterator) {
+    public void setIterator(Iterator<? extends E> iterator) {
         this.iterator = iterator;
         nextObject = null;
         nextObjectSet = false;
@@ -159,7 +155,7 @@ public class FilterIterator implements Iterator {
      *
      * @return the predicate
      */
-    public Predicate getPredicate() {
+    public Predicate<? super E> getPredicate() {
         return predicate;
     }
 
@@ -168,7 +164,7 @@ public class FilterIterator implements Iterator {
      *
      * @param predicate  the predicate to use
      */
-    public void setPredicate(Predicate predicate) {
+    public void setPredicate(Predicate<? super E> predicate) {
         this.predicate = predicate;
         nextObject = null;
         nextObjectSet = false;
@@ -181,7 +177,7 @@ public class FilterIterator implements Iterator {
      */
     private boolean setNextObject() {
         while (iterator.hasNext()) {
-            Object object = iterator.next();
+            E object = iterator.next();
             if (predicate.evaluate(object)) {
                 nextObject = object;
                 nextObjectSet = true;

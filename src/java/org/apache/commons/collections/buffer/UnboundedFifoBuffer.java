@@ -63,7 +63,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * @author Thomas Knych
  * @author Jordan Krey
  */
-public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, Serializable {
+public class UnboundedFifoBuffer<E> extends AbstractCollection<E> implements Buffer<E>, Serializable {
     // invariant: buffer.length > size()
     //   ie.buffer always has at least one empty entry
 
@@ -71,9 +71,11 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, S
     private static final long serialVersionUID = -3482960336579541419L;
 
     /** The array of objects in the buffer. */
-    protected transient Object[] buffer;
+    protected transient E[] buffer;
+
     /** The current head index. */
     protected transient int head;
+
     /** The current tail index. */
     protected transient int tail;
 
@@ -92,15 +94,16 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, S
     /**
      * Constructs an UnboundedFifoBuffer with the specified number of elements.
      * The integer must be a positive integer.
-     * 
+     *
      * @param initialSize  the initial size of the buffer
      * @throws IllegalArgumentException  if the size is less than 1
      */
+    @SuppressWarnings("unchecked")
     public UnboundedFifoBuffer(int initialSize) {
         if (initialSize <= 0) {
             throw new IllegalArgumentException("The size must be greater than 0");
         }
-        buffer = new Object[initialSize + 1];
+        buffer = (E[]) new Object[initialSize + 1];
         head = 0;
         tail = 0;
     }
@@ -108,7 +111,7 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, S
     //-----------------------------------------------------------------------
     /**
      * Write the buffer out using a custom routine.
-     * 
+     *
      * @param out  the output stream
      * @throws IOException
      */
@@ -116,25 +119,26 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, S
         out.defaultWriteObject();
         out.writeInt(size());
         out.writeInt(buffer.length);
-        for (Iterator it = iterator(); it.hasNext();) {
+        for (Iterator<E> it = iterator(); it.hasNext();) {
             out.writeObject(it.next());
         }
     }
 
     /**
      * Read the buffer in using a custom routine.
-     * 
+     *
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException
      */
+    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         int size = in.readInt();
         int length = in.readInt();
-        buffer = new Object[length];
+        buffer = (E[]) new Object[length];
         for (int i = 0; i < size; i++) {
-            buffer[i] = in.readObject();
+            buffer[i] = (E) in.readObject();
         }
         head = 0;
         tail = size;
@@ -174,14 +178,15 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, S
      * @return true, always
      * @throws NullPointerException  if the given element is null
      */
-    public boolean add(final Object obj) {
+    @SuppressWarnings("unchecked")
+    public boolean add(final E obj) {
         if (obj == null) {
             throw new NullPointerException("Attempted to add null object to buffer");
         }
 
         if (size() + 1 >= buffer.length) {
             // copy contents to a new buffer array
-            Object[] tmp = new Object[((buffer.length - 1) * 2) + 1];
+            E[] tmp = (E[]) new Object[((buffer.length - 1) * 2) + 1];
             int j = 0;
             // move head to element zero in the new array
             for (int i = head; i != tail;) {
@@ -207,7 +212,7 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, S
      * @return the next object in the buffer
      * @throws BufferUnderflowException  if this buffer is empty
      */
-    public Object get() {
+    public E get() {
         if (isEmpty()) {
             throw new BufferUnderflowException("The buffer is already empty");
         }
@@ -221,12 +226,12 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, S
      * @return the removed object
      * @throws BufferUnderflowException  if this buffer is empty
      */
-    public Object remove() {
+    public E remove() {
         if (isEmpty()) {
             throw new BufferUnderflowException("The buffer is already empty");
         }
 
-        Object element = buffer[head];
+        E element = buffer[head];
         if (element != null) {
             buffer[head] = null;
             head = increment(head);
@@ -236,7 +241,7 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, S
 
     /**
      * Increments the internal index.
-     * 
+     *
      * @param index  the index to increment
      * @return the updated index
      */
@@ -250,7 +255,7 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, S
 
     /**
      * Decrements the internal index.
-     * 
+     *
      * @param index  the index to decrement
      * @return the updated index
      */
@@ -267,8 +272,8 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, S
      *
      * @return an iterator over this buffer's elements
      */
-    public Iterator iterator() {
-        return new Iterator() {
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
 
             private int index = head;
             private int lastReturnedIndex = -1;
@@ -278,7 +283,7 @@ public class UnboundedFifoBuffer extends AbstractCollection implements Buffer, S
 
             }
 
-            public Object next() {
+            public E next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }

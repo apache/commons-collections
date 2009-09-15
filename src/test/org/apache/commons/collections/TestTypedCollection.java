@@ -27,25 +27,25 @@ import java.util.List;
  *
  * @author Stephen Colebourne
  */
-public abstract class TestTypedCollection extends BulkTest {
+public abstract class TestTypedCollection<T> extends BulkTest {
 
     public TestTypedCollection(String name) {
         super(name);
     }
 
+    protected abstract Collection<T> typedCollection();
 
-    protected abstract Collection typedCollection();
-
-    protected Class getType() {
-        return String.class;
+    @SuppressWarnings("unchecked")
+    protected Class<T> getType() {
+        return (Class<T>) String.class;
     }
 
-
+    @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
-        Collection c = typedCollection();
+        Collection<T> c = typedCollection();
         Integer i = new Integer(3);
         try {
-            c.add(i);
+            c.add((T) i);
             fail("Integer should fail string predicate.");
         } catch (IllegalArgumentException e) {
             // expected
@@ -55,15 +55,16 @@ public abstract class TestTypedCollection extends BulkTest {
     }
 
 
+    @SuppressWarnings("unchecked")
     public void testIllegalAddAll() {
-        Collection c = typedCollection();
-        List elements = new ArrayList();
+        Collection<T> c = typedCollection();
+        List<Object> elements = new ArrayList<Object>();
         elements.add("one");
         elements.add("two");
         elements.add(new Integer(3));
         elements.add("four");
         try {
-            c.addAll(elements);
+            c.addAll((Collection<? extends T>) elements);
             fail("Integer should fail string predicate.");
         } catch (IllegalArgumentException e) {
             // expected

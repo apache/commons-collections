@@ -18,7 +18,7 @@ package org.apache.commons.collections.iterators;
 
 import java.util.Iterator;
 
-/** 
+/**
  * Provides basic behaviour for decorating an iterator with extra functionality.
  * <p>
  * All methods are forwarded to the decorated iterator.
@@ -29,10 +29,7 @@ import java.util.Iterator;
  * @author James Strachan
  * @author Stephen Colebourne
  */
-public class AbstractIteratorDecorator implements Iterator {
-
-    /** The iterator being decorated */
-    protected final Iterator iterator;
+public abstract class AbstractIteratorDecorator<E> extends AbstractUntypedIteratorDecorator<E, E> {
 
     //-----------------------------------------------------------------------
     /**
@@ -41,34 +38,12 @@ public class AbstractIteratorDecorator implements Iterator {
      * @param iterator  the iterator to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    public AbstractIteratorDecorator(Iterator iterator) {
-        super();
-        if (iterator == null) {
-            throw new IllegalArgumentException("Iterator must not be null");
-        }
-        this.iterator = iterator;
+    protected AbstractIteratorDecorator(Iterator<E> iterator) {
+        super(iterator);
     }
 
-    /**
-     * Gets the iterator being decorated.
-     * 
-     * @return the decorated iterator
-     */
-    protected Iterator getIterator() {
-        return iterator;
-    }
-
-    //-----------------------------------------------------------------------
-    public boolean hasNext() {
-        return iterator.hasNext();
-    }
-
-    public Object next() {
-        return iterator.next();
-    }
-
-    public void remove() {
-        iterator.remove();
+    public E next() {
+        return getIterator().next();
     }
 
 }

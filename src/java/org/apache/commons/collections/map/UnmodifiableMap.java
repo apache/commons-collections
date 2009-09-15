@@ -44,9 +44,9 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  *
  * @author Stephen Colebourne
  */
-public final class UnmodifiableMap
-        extends AbstractMapDecorator
-        implements IterableMap, Unmodifiable, Serializable {
+public final class UnmodifiableMap<K, V>
+        extends AbstractMapDecorator<K, V>
+        implements IterableMap<K, V>, Unmodifiable, Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = 2737023427269031941L;
@@ -57,11 +57,11 @@ public final class UnmodifiableMap
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    public static Map decorate(Map map) {
+    public static <K, V> Map<K, V> decorate(Map<K, V> map) {
         if (map instanceof Unmodifiable) {
             return map;
         }
-        return new UnmodifiableMap(map);
+        return new UnmodifiableMap<K, V>(map);
     }
 
     //-----------------------------------------------------------------------
@@ -71,7 +71,7 @@ public final class UnmodifiableMap
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    private UnmodifiableMap(Map map) {
+    private UnmodifiableMap(Map<K, V> map) {
         super(map);
     }
 
@@ -96,9 +96,10 @@ public final class UnmodifiableMap
      * @throws ClassNotFoundException
      * @since Commons Collections 3.1
      */
+    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        map = (Map) in.readObject();
+        map = (Map<K, V>) in.readObject();
     }
 
     //-----------------------------------------------------------------------
@@ -106,40 +107,39 @@ public final class UnmodifiableMap
         throw new UnsupportedOperationException();
     }
 
-    public Object put(Object key, Object value) {
+    public V put(K key, V value) {
         throw new UnsupportedOperationException();
     }
 
-    public void putAll(Map mapToCopy) {
+    public void putAll(Map<? extends K, ? extends V> mapToCopy) {
         throw new UnsupportedOperationException();
     }
 
-    public Object remove(Object key) {
+    public V remove(Object key) {
         throw new UnsupportedOperationException();
     }
 
-    public MapIterator mapIterator() {
+    public MapIterator<K, V> mapIterator() {
         if (map instanceof IterableMap) {
-            MapIterator it = ((IterableMap) map).mapIterator();
-            return UnmodifiableMapIterator.decorate(it);
-        } else {
-            MapIterator it = new EntrySetMapIterator(map);
+            MapIterator<K, V> it = ((IterableMap<K, V>) map).mapIterator();
             return UnmodifiableMapIterator.decorate(it);
         }
+        MapIterator<K, V> it = new EntrySetMapIterator<K, V>(map);
+        return UnmodifiableMapIterator.decorate(it);
     }
 
-    public Set entrySet() {
-        Set set = super.entrySet();
+    public Set<Map.Entry<K, V>> entrySet() {
+        Set<Map.Entry<K, V>> set = super.entrySet();
         return UnmodifiableEntrySet.decorate(set);
     }
 
-    public Set keySet() {
-        Set set = super.keySet();
+    public Set<K> keySet() {
+        Set<K> set = super.keySet();
         return UnmodifiableSet.decorate(set);
     }
 
-    public Collection values() {
-        Collection coll = super.values();
+    public Collection<V> values() {
+        Collection<V> coll = super.values();
         return UnmodifiableCollection.decorate(coll);
     }
 

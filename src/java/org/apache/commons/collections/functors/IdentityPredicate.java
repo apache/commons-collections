@@ -29,36 +29,35 @@ import org.apache.commons.collections.Predicate;
  *
  * @author Stephen Colebourne
  */
-public final class IdentityPredicate implements Predicate, Serializable {
+public final class IdentityPredicate<T> implements Predicate<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -89901658494523293L;
 
-    
     /** The value to compare to */
-    private final Object iValue;
-    
+    private final T iValue;
+
     /**
      * Factory to create the identity predicate.
-     * 
+     *
      * @param object  the object to compare to
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null
      */
-    public static Predicate getInstance(Object object) {
+    public static <T> Predicate<T> getInstance(T object) {
         if (object == null) {
-            return NullPredicate.INSTANCE;
+            return NullPredicate.<T>nullPredicate();
         }
-        return new IdentityPredicate(object);
+        return new IdentityPredicate<T>(object);
     }
 
     /**
      * Constructor that performs no validation.
      * Use <code>getInstance</code> if you want that.
-     * 
+     *
      * @param object  the object to compare to
      */
-    public IdentityPredicate(Object object) {
+    public IdentityPredicate(T object) {
         super();
         iValue = object;
     }
@@ -66,21 +65,21 @@ public final class IdentityPredicate implements Predicate, Serializable {
     /**
      * Evaluates the predicate returning true if the input object is identical to
      * the stored object.
-     * 
+     *
      * @param object  the input object
      * @return true if input is the same object as the stored value
      */
-    public boolean evaluate(Object object) {
+    public boolean evaluate(T object) {
         return (iValue == object);
     }
 
     /**
      * Gets the value.
-     * 
+     *
      * @return the value
      * @since Commons Collections 3.1
      */
-    public Object getValue() {
+    public T getValue() {
         return iValue;
     }
 

@@ -27,13 +27,23 @@ import org.apache.commons.collections.ResettableIterator;
  *
  * @author Stephen Colebourne
  */
-public class EmptyOrderedIterator extends AbstractEmptyIterator implements OrderedIterator, ResettableIterator {
+public class EmptyOrderedIterator<E> extends AbstractEmptyIterator<E> implements OrderedIterator<E>, ResettableIterator<E> {
 
     /**
      * Singleton instance of the iterator.
      * @since Commons Collections 3.1
      */
-    public static final OrderedIterator INSTANCE = new EmptyOrderedIterator();
+    public static final OrderedIterator<Object> INSTANCE = new EmptyOrderedIterator<Object>();
+
+    /**
+     * Typed instance of the iterator.
+     * @param <E>
+     * @return OrderedIterator<E>
+     */
+    @SuppressWarnings("unchecked")
+    public static <E> OrderedIterator<E> getInstance() {
+        return (OrderedIterator<E>) INSTANCE;
+    }
 
     /**
      * Constructor.

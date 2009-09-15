@@ -18,7 +18,6 @@ package org.apache.commons.collections.functors;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.apache.commons.collections.Closure;
 
@@ -30,13 +29,13 @@ import org.apache.commons.collections.Closure;
  *
  * @author Stephen Colebourne
  */
-public class ChainedClosure implements Closure, Serializable {
+public class ChainedClosure<E> implements Closure<E>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -3520677225766901240L;
 
     /** The closures to call in turn */
-    private final Closure[] iClosures;
+    private final Closure<? super E>[] iClosures;
 
     /**
      * Factory method that performs validation and copies the parameter array.
@@ -46,15 +45,15 @@ public class ChainedClosure implements Closure, Serializable {
      * @throws IllegalArgumentException if the closures array is null
      * @throws IllegalArgumentException if any closure in the array is null
      */
-    public static Closure getInstance(Closure[] closures) {
+    public static <E> Closure<E> getInstance(Closure<? super E>[] closures) {
         FunctorUtils.validate(closures);
         if (closures.length == 0) {
-            return NOPClosure.INSTANCE;
+            return NOPClosure.<E>getInstance();
         }
         closures = FunctorUtils.copy(closures);
-        return new ChainedClosure(closures);
+        return new ChainedClosure<E>(closures);
     }
-    
+
     /**
      * Create a new Closure that calls each closure in turn, passing the 
      * result into the next closure. The ordering is that of the iterator()
@@ -65,21 +64,22 @@ public class ChainedClosure implements Closure, Serializable {
      * @throws IllegalArgumentException if the closures collection is null
      * @throws IllegalArgumentException if any closure in the collection is null
      */
-    public static Closure getInstance(Collection closures) {
+    @SuppressWarnings("unchecked")
+    public static <E> Closure<E> getInstance(Collection<Closure<E>> closures) {
         if (closures == null) {
             throw new IllegalArgumentException("Closure collection must not be null");
         }
         if (closures.size() == 0) {
-            return NOPClosure.INSTANCE;
+            return NOPClosure.<E>getInstance();
         }
         // convert to array like this to guarantee iterator() ordering
-        Closure[] cmds = new Closure[closures.size()];
+        Closure<? super E>[] cmds = new Closure[closures.size()];
         int i = 0;
-        for (Iterator it = closures.iterator(); it.hasNext();) {
-            cmds[i++] = (Closure) it.next();
+        for (Closure<? super E> closure : closures) {
+            cmds[i++] = (Closure<E>) closure;
         }
         FunctorUtils.validate(cmds);
-        return new ChainedClosure(cmds);
+        return new ChainedClosure<E>(cmds);
     }
 
     /**
@@ -90,12 +90,13 @@ public class ChainedClosure implements Closure, Serializable {
      * @return the <code>chained</code> closure
      * @throws IllegalArgumentException if either closure is null
      */
-    public static Closure getInstance(Closure closure1, Closure closure2) {
+    @SuppressWarnings("unchecked")
+    public static <E> Closure<E> getInstance(Closure<? super E> closure1, Closure<? super E> closure2) {
         if (closure1 == null || closure2 == null) {
             throw new IllegalArgumentException("Closures must not be null");
         }
-        Closure[] closures = new Closure[] { closure1, closure2 };
-        return new ChainedClosure(closures);
+        Closure<E>[] closures = new Closure[] { closure1, closure2 };
+        return new ChainedClosure<E>(closures);
     }
 
     /**
@@ -104,7 +105,7 @@ public class ChainedClosure implements Closure, Serializable {
      * 
      * @param closures  the closures to chain, not copied, no nulls
      */
-    public ChainedClosure(Closure[] closures) {
+    public ChainedClosure(Closure<? super E>[] closures) {
         super();
         iClosures = closures;
     }
@@ -114,7 +115,7 @@ public class ChainedClosure implements Closure, Serializable {
      * 
      * @param input  the input object passed to each closure
      */
-    public void execute(Object input) {
+    public void execute(E input) {
         for (int i = 0; i < iClosures.length; i++) {
             iClosures[i].execute(input);
         }
@@ -125,7 +126,7 @@ public class ChainedClosure implements Closure, Serializable {
      * @return the closures
      * @since Commons Collections 3.1
      */
-    public Closure[] getClosures() {
+    public Closure<? super E>[] getClosures() {
         return iClosures;
     }
 

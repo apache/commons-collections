@@ -21,12 +21,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 
 import org.apache.commons.collections.BoundedMap;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.collection.UnmodifiableCollection;
 import org.apache.commons.collections.set.UnmodifiableSet;
 
@@ -57,9 +57,9 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public class FixedSizeSortedMap
-        extends AbstractSortedMapDecorator
-        implements SortedMap, BoundedMap, Serializable {
+public class FixedSizeSortedMap<K, V>
+        extends AbstractSortedMapDecorator<K, V>
+        implements SortedMap<K, V>, BoundedMap<K, V>, Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = 3126019624511683653L;
@@ -70,8 +70,8 @@ public class FixedSizeSortedMap
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    public static SortedMap decorate(SortedMap map) {
-        return new FixedSizeSortedMap(map);
+    public static <K, V> SortedMap<K, V> decorate(SortedMap<K, V> map) {
+        return new FixedSizeSortedMap<K, V>(map);
     }
 
     //-----------------------------------------------------------------------
@@ -81,7 +81,7 @@ public class FixedSizeSortedMap
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    protected FixedSizeSortedMap(SortedMap map) {
+    protected FixedSizeSortedMap(SortedMap<K, V> map) {
         super(map);
     }
 
@@ -90,8 +90,8 @@ public class FixedSizeSortedMap
      * 
      * @return the decorated map
      */
-    protected SortedMap getSortedMap() {
-        return (SortedMap) map;
+    protected SortedMap<K, V> getSortedMap() {
+        return (SortedMap<K, V>) map;
     }
 
     //-----------------------------------------------------------------------
@@ -106,24 +106,23 @@ public class FixedSizeSortedMap
     /**
      * Read the map in using a custom routine.
      */
+    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map) in.readObject();
     }
 
     //-----------------------------------------------------------------------
-    public Object put(Object key, Object value) {
+    public V put(K key, V value) {
         if (map.containsKey(key) == false) {
             throw new IllegalArgumentException("Cannot put new key/value pair - Map is fixed size");
         }
         return map.put(key, value);
     }
 
-    public void putAll(Map mapToCopy) {
-        for (Iterator it = mapToCopy.keySet().iterator(); it.hasNext(); ) {
-            if (mapToCopy.containsKey(it.next()) == false) {
-                throw new IllegalArgumentException("Cannot put new key/value pair - Map is fixed size");
-            }
+    public void putAll(Map<? extends K, ? extends V> mapToCopy) {
+        if (CollectionUtils.isSubCollection(mapToCopy.keySet(), keySet())) {
+            throw new IllegalArgumentException("Cannot put new key/value pair - Map is fixed size");
         }
         map.putAll(mapToCopy);
     }
@@ -132,39 +131,33 @@ public class FixedSizeSortedMap
         throw new UnsupportedOperationException("Map is fixed size");
     }
 
-    public Object remove(Object key) {
+    public V remove(Object key) {
         throw new UnsupportedOperationException("Map is fixed size");
     }
 
-    public Set entrySet() {
-        Set set = map.entrySet();
-        return UnmodifiableSet.decorate(set);
+    public Set<Map.Entry<K, V>> entrySet() {
+        return UnmodifiableSet.decorate(map.entrySet());
     }
 
-    public Set keySet() {
-        Set set = map.keySet();
-        return UnmodifiableSet.decorate(set);
+    public Set<K> keySet() {
+        return UnmodifiableSet.decorate(map.keySet());
     }
 
-    public Collection values() {
-        Collection coll = map.values();
-        return UnmodifiableCollection.decorate(coll);
+    public Collection<V> values() {
+        return UnmodifiableCollection.decorate(map.values());
     }
 
     //-----------------------------------------------------------------------
-    public SortedMap subMap(Object fromKey, Object toKey) {
-        SortedMap map = getSortedMap().subMap(fromKey, toKey);
-        return new FixedSizeSortedMap(map);
+    public SortedMap<K, V> subMap(K fromKey, K toKey) {
+        return new FixedSizeSortedMap<K, V>(getSortedMap().subMap(fromKey, toKey));
     }
 
-    public SortedMap headMap(Object toKey) {
-        SortedMap map = getSortedMap().headMap(toKey);
-        return new FixedSizeSortedMap(map);
+    public SortedMap<K, V> headMap(K toKey) {
+        return new FixedSizeSortedMap<K, V>(getSortedMap().headMap(toKey));
     }
 
-    public SortedMap tailMap(Object fromKey) {
-        SortedMap map = getSortedMap().tailMap(fromKey);
-        return new FixedSizeSortedMap(map);
+    public SortedMap<K, V> tailMap(K fromKey) {
+        return new FixedSizeSortedMap<K, V>(getSortedMap().tailMap(fromKey));
     }
 
     public boolean isFull() {

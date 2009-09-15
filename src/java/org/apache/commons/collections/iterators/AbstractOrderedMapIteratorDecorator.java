@@ -28,10 +28,10 @@ import org.apache.commons.collections.OrderedMapIterator;
  *
  * @author Stephen Colebourne
  */
-public class AbstractOrderedMapIteratorDecorator implements OrderedMapIterator {
+public class AbstractOrderedMapIteratorDecorator<K, V> implements OrderedMapIterator<K, V> {
 
     /** The iterator being decorated */
-    protected final OrderedMapIterator iterator;
+    protected final OrderedMapIterator<K, V> iterator;
 
     //-----------------------------------------------------------------------
     /**
@@ -40,7 +40,7 @@ public class AbstractOrderedMapIteratorDecorator implements OrderedMapIterator {
      * @param iterator  the iterator to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    public AbstractOrderedMapIteratorDecorator(OrderedMapIterator iterator) {
+    public AbstractOrderedMapIteratorDecorator(OrderedMapIterator<K, V> iterator) {
         super();
         if (iterator == null) {
             throw new IllegalArgumentException("OrderedMapIterator must not be null");
@@ -53,7 +53,7 @@ public class AbstractOrderedMapIteratorDecorator implements OrderedMapIterator {
      * 
      * @return the decorated iterator
      */
-    protected OrderedMapIterator getOrderedMapIterator() {
+    protected OrderedMapIterator<K, V> getOrderedMapIterator() {
         return iterator;
     }
 
@@ -62,7 +62,7 @@ public class AbstractOrderedMapIteratorDecorator implements OrderedMapIterator {
         return iterator.hasNext();
     }
 
-    public Object next() {
+    public K next() {
         return iterator.next();
     }
 
@@ -70,7 +70,7 @@ public class AbstractOrderedMapIteratorDecorator implements OrderedMapIterator {
         return iterator.hasPrevious();
     }
 
-    public Object previous() {
+    public K previous() {
         return iterator.previous();
     }
 
@@ -78,15 +78,15 @@ public class AbstractOrderedMapIteratorDecorator implements OrderedMapIterator {
         iterator.remove();
     }
     
-    public Object getKey() {
+    public K getKey() {
         return iterator.getKey();
     }
 
-    public Object getValue() {
+    public V getValue() {
         return iterator.getValue();
     }
 
-    public Object setValue(Object obj) {
+    public V setValue(V obj) {
         return iterator.setValue(obj);
     }
 

@@ -21,9 +21,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 
-import org.apache.commons.collections.BidiMap;
-import org.apache.commons.collections.MapIterator;
-import org.apache.commons.collections.OrderedBidiMap;
 import org.apache.commons.collections.OrderedMapIterator;
 import org.apache.commons.collections.SortedBidiMap;
 import org.apache.commons.collections.Unmodifiable;
@@ -43,36 +40,36 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  *
  * @author Stephen Colebourne
  */
-public final class UnmodifiableSortedBidiMap
-        extends AbstractSortedBidiMapDecorator implements Unmodifiable {
-    
+public final class UnmodifiableSortedBidiMap<K, V>
+        extends AbstractSortedBidiMapDecorator<K, V> implements Unmodifiable {
+
     /** The inverse unmodifiable map */
-    private UnmodifiableSortedBidiMap inverse;
+    private UnmodifiableSortedBidiMap<V, K> inverse;
 
     /**
      * Factory method to create an unmodifiable map.
      * <p>
      * If the map passed in is already unmodifiable, it is returned.
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @return an unmodifiable SortedBidiMap
      * @throws IllegalArgumentException if map is null
      */
-    public static SortedBidiMap decorate(SortedBidiMap map) {
+    public static <K, V> SortedBidiMap<K, V> decorate(SortedBidiMap<K, V> map) {
         if (map instanceof Unmodifiable) {
             return map;
         }
-        return new UnmodifiableSortedBidiMap(map);
+        return new UnmodifiableSortedBidiMap<K, V>(map);
     }
 
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    private UnmodifiableSortedBidiMap(SortedBidiMap map) {
+    private UnmodifiableSortedBidiMap(SortedBidiMap<K, V> map) {
         super(map);
     }
 
@@ -81,77 +78,65 @@ public final class UnmodifiableSortedBidiMap
         throw new UnsupportedOperationException();
     }
 
-    public Object put(Object key, Object value) {
+    public V put(K key, V value) {
         throw new UnsupportedOperationException();
     }
 
-    public void putAll(Map mapToCopy) {
+    public void putAll(Map<? extends K, ? extends V> mapToCopy) {
         throw new UnsupportedOperationException();
     }
 
-    public Object remove(Object key) {
+    public V remove(Object key) {
         throw new UnsupportedOperationException();
     }
 
-    public Set entrySet() {
-        Set set = super.entrySet();
+    public Set<Map.Entry<K, V>> entrySet() {
+        Set<Map.Entry<K, V>> set = super.entrySet();
         return UnmodifiableEntrySet.decorate(set);
     }
 
-    public Set keySet() {
-        Set set = super.keySet();
+    public Set<K> keySet() {
+        Set<K> set = super.keySet();
         return UnmodifiableSet.decorate(set);
     }
 
-    public Collection values() {
-        Collection coll = super.values();
+    public Collection<V> values() {
+        Collection<V> coll = super.values();
         return UnmodifiableCollection.decorate(coll);
     }
 
     //-----------------------------------------------------------------------
-    public Object removeValue(Object value) {
+    public K removeValue(Object value) {
         throw new UnsupportedOperationException();
     }
 
-    public MapIterator mapIterator() {
-        return orderedMapIterator();
-    }
-
-    public BidiMap inverseBidiMap() {
-        return inverseSortedBidiMap();
-    }
-    
     //-----------------------------------------------------------------------
-    public OrderedMapIterator orderedMapIterator() {
-        OrderedMapIterator it = getSortedBidiMap().orderedMapIterator();
+    public OrderedMapIterator<K, V> mapIterator() {
+        OrderedMapIterator<K, V> it = decorated().mapIterator();
         return UnmodifiableOrderedMapIterator.decorate(it);
     }
 
-    public OrderedBidiMap inverseOrderedBidiMap() {
-        return inverseSortedBidiMap();
-    }
-
     //-----------------------------------------------------------------------
-    public SortedBidiMap inverseSortedBidiMap() {
+    public SortedBidiMap<V, K> inverseBidiMap() {
         if (inverse == null) {
-            inverse = new UnmodifiableSortedBidiMap(getSortedBidiMap().inverseSortedBidiMap());
+            inverse = new UnmodifiableSortedBidiMap<V, K>(decorated().inverseBidiMap());
             inverse.inverse = this;
         }
         return inverse;
     }
 
-    public SortedMap subMap(Object fromKey, Object toKey) {
-        SortedMap sm = getSortedBidiMap().subMap(fromKey, toKey);
+    public SortedMap<K, V> subMap(K fromKey, K toKey) {
+        SortedMap<K, V> sm = decorated().subMap(fromKey, toKey);
         return UnmodifiableSortedMap.decorate(sm);
     }
 
-    public SortedMap headMap(Object toKey) {
-        SortedMap sm = getSortedBidiMap().headMap(toKey);
+    public SortedMap<K, V> headMap(K toKey) {
+        SortedMap<K, V> sm = decorated().headMap(toKey);
         return UnmodifiableSortedMap.decorate(sm);
     }
 
-    public SortedMap tailMap(Object fromKey) {
-        SortedMap sm = getSortedBidiMap().tailMap(fromKey);
+    public SortedMap<K, V> tailMap(K fromKey) {
+        SortedMap<K, V> sm = decorated().tailMap(fromKey);
         return UnmodifiableSortedMap.decorate(sm);
     }
 

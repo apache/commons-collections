@@ -27,13 +27,25 @@ import org.apache.commons.collections.ResettableIterator;
  *
  * @author Stephen Colebourne
  */
-public class EmptyMapIterator extends AbstractEmptyIterator implements MapIterator, ResettableIterator {
+public class EmptyMapIterator<K, V> extends AbstractEmptyMapIterator<K, V> implements
+        MapIterator<K, V>, ResettableIterator<K> {
 
     /**
      * Singleton instance of the iterator.
      * @since Commons Collections 3.1
      */
-    public static final MapIterator INSTANCE = new EmptyMapIterator();
+    public static final MapIterator<Object, Object> INSTANCE = new EmptyMapIterator<Object, Object>();
+
+    /**
+     * Get a typed instance of the iterator.
+     * @param <K>
+     * @param <V>
+     * @return {@link MapIterator}<K, V>
+     */
+    @SuppressWarnings("unchecked")
+    public static <K, V> MapIterator<K, V> getInstance() {
+        return (MapIterator<K, V>) INSTANCE;
+    }
 
     /**
      * Constructor.

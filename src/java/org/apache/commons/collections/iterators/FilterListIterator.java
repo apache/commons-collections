@@ -32,19 +32,19 @@ import org.apache.commons.collections.Predicate;
  *
  * @author Rodney Waldhoff
  */
-public class FilterListIterator implements ListIterator {
+public class FilterListIterator<E> implements ListIterator<E> {
 
     /** The iterator being used */
-    private ListIterator iterator;
+    private ListIterator<? extends E> iterator;
     
     /** The predicate being used */
-    private Predicate predicate;
+    private Predicate<? super E> predicate;
 
     /** 
      * The value of the next (matching) object, when 
      * {@link #nextObjectSet} is true. 
      */
-    private Object nextObject;
+    private E nextObject;
 
     /** 
      * Whether or not the {@link #nextObject} has been set
@@ -56,7 +56,7 @@ public class FilterListIterator implements ListIterator {
      * The value of the previous (matching) object, when 
      * {@link #previousObjectSet} is true. 
      */
-    private Object previousObject;
+    private E previousObject;
 
     /** 
      * Whether or not the {@link #previousObject} has been set
@@ -85,7 +85,7 @@ public class FilterListIterator implements ListIterator {
      *
      * @param iterator  the iterator to use
      */
-    public FilterListIterator(ListIterator iterator ) {
+    public FilterListIterator(ListIterator<? extends E> iterator ) {
         super();
         this.iterator = iterator;
     }
@@ -96,7 +96,7 @@ public class FilterListIterator implements ListIterator {
      * @param iterator  the iterator to use
      * @param predicate  the predicate to use
      */
-    public FilterListIterator(ListIterator iterator, Predicate predicate) {
+    public FilterListIterator(ListIterator<? extends E> iterator, Predicate<? super E> predicate) {
         super();
         this.iterator = iterator;
         this.predicate = predicate;
@@ -108,41 +108,33 @@ public class FilterListIterator implements ListIterator {
      *
      * @param predicate  the predicate to use.
      */
-    public FilterListIterator(Predicate predicate) {
+    public FilterListIterator(Predicate<? super E> predicate) {
         super();
         this.predicate = predicate;
     }
 
     //-----------------------------------------------------------------------
     /** Not supported. */
-    public void add(Object o) {
+    public void add(E o) {
         throw new UnsupportedOperationException("FilterListIterator.add(Object) is not supported.");
     }
 
     public boolean hasNext() {
-        if(nextObjectSet) {
-            return true;
-        } else {
-            return setNextObject();
-        }
+        return nextObjectSet || setNextObject();
     }
 
     public boolean hasPrevious() {
-        if(previousObjectSet) {
-            return true;
-        } else {
-            return setPreviousObject();
-        }
+        return previousObjectSet || setPreviousObject();
     }
 
-    public Object next() {
-        if(!nextObjectSet) {
-            if(!setNextObject()) {
+    public E next() {
+        if (!nextObjectSet) {
+            if (!setNextObject()) {
                 throw new NoSuchElementException();
             }
         }
         nextIndex++;
-        Object temp = nextObject;
+        E temp = nextObject;
         clearNextObject();
         return temp;
     }
@@ -151,14 +143,14 @@ public class FilterListIterator implements ListIterator {
         return nextIndex;
     }
 
-    public Object previous() {
-        if(!previousObjectSet) {
-            if(!setPreviousObject()) {
+    public E previous() {
+        if (!previousObjectSet) {
+            if (!setPreviousObject()) {
                 throw new NoSuchElementException();
             }
         }
         nextIndex--;
-        Object temp = previousObject;
+        E temp = previousObject;
         clearPreviousObject();
         return temp;
     }
@@ -173,7 +165,7 @@ public class FilterListIterator implements ListIterator {
     }
 
     /** Not supported. */
-    public void set(Object o) {
+    public void set(E o) {
         throw new UnsupportedOperationException("FilterListIterator.set(Object) is not supported.");
     }
 
@@ -183,7 +175,7 @@ public class FilterListIterator implements ListIterator {
      * 
      * @return the iterator.
      */
-    public ListIterator getListIterator() {
+    public ListIterator<? extends E> getListIterator() {
         return iterator;
     }
 
@@ -193,7 +185,7 @@ public class FilterListIterator implements ListIterator {
      * 
      * @param iterator  the iterator to use
      */
-    public void setListIterator(ListIterator iterator) {
+    public void setListIterator(ListIterator<? extends E> iterator) {
         this.iterator = iterator;
     }
 
@@ -203,7 +195,7 @@ public class FilterListIterator implements ListIterator {
      * 
      * @return the predicate.
      */
-    public Predicate getPredicate() {
+    public Predicate<? super E> getPredicate() {
         return predicate;
     }
 
@@ -212,7 +204,7 @@ public class FilterListIterator implements ListIterator {
      * 
      * @param predicate  the transformer to use
      */
-    public void setPredicate(Predicate predicate) {
+    public void setPredicate(Predicate<? super E> predicate) {
         this.predicate = predicate;
     }
 
@@ -227,18 +219,17 @@ public class FilterListIterator implements ListIterator {
         // then we've walked back one step in the 
         // underlying list (due to a hasPrevious() call)
         // so skip ahead one matching object
-        if(previousObjectSet) {
+        if (previousObjectSet) {
             clearPreviousObject();
-            if(!setNextObject()) {
+            if (!setNextObject()) {
                 return false;
-            } else {
-                clearNextObject();
             }
+            clearNextObject();
         }
 
-        while(iterator.hasNext()) {
-            Object object = iterator.next();
-            if(predicate.evaluate(object)) {
+        while (iterator.hasNext()) {
+            E object = iterator.next();
+            if (predicate.evaluate(object)) {
                 nextObject = object;
                 nextObjectSet = true;
                 return true;
@@ -257,18 +248,17 @@ public class FilterListIterator implements ListIterator {
         // then we've walked back one step in the 
         // underlying list (due to a hasNext() call)
         // so skip ahead one matching object
-        if(nextObjectSet) {
+        if (nextObjectSet) {
             clearNextObject();
-            if(!setPreviousObject()) {
+            if (!setPreviousObject()) {
                 return false;
-            } else {
-                clearPreviousObject();
             }
+            clearPreviousObject();
         }
 
-        while(iterator.hasPrevious()) {
-            Object object = iterator.previous();
-            if(predicate.evaluate(object)) {
+        while (iterator.hasPrevious()) {
+            E object = iterator.previous();
+            if (predicate.evaluate(object)) {
                 previousObject = object;
                 previousObjectSet = true;
                 return true;

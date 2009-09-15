@@ -32,18 +32,39 @@ import org.apache.commons.collections.ResettableIterator;
  *
  * @author Stephen Colebourne
  */
-public class EmptyIterator extends AbstractEmptyIterator implements ResettableIterator {
+public class EmptyIterator<E> extends AbstractEmptyIterator<E> implements ResettableIterator<E> {
 
     /**
      * Singleton instance of the iterator.
      * @since Commons Collections 3.1
      */
-    public static final ResettableIterator RESETTABLE_INSTANCE = new EmptyIterator();
+    public static final ResettableIterator<Object> RESETTABLE_INSTANCE = new EmptyIterator<Object>();
+
     /**
      * Singleton instance of the iterator.
      * @since Commons Collections 2.1.1 and 3.1
      */
-    public static final Iterator INSTANCE = RESETTABLE_INSTANCE;
+    public static final Iterator<Object> INSTANCE = RESETTABLE_INSTANCE;
+
+    /**
+     * Get a typed resettable empty iterator instance.
+     * @param <E>
+     * @return ResettableIterator<E>
+     */
+    @SuppressWarnings("unchecked")
+    public static <E> ResettableIterator<E> getResettableInstance() {
+        return (ResettableIterator<E>) RESETTABLE_INSTANCE;
+    }
+
+    /**
+     * Get a typed empty iterator instance.
+     * @param <E>
+     * @return Iterator<E>
+     */
+    @SuppressWarnings("unchecked")
+    public static <E> Iterator<E> getInstance() {
+        return (Iterator<E>) INSTANCE;
+    }
 
     /**
      * Constructor.

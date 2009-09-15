@@ -44,8 +44,8 @@ import org.apache.commons.collections.set.AbstractSetDecorator;
  *
  * @author Stephen Colebourne
  */
-abstract class AbstractInputCheckedMapDecorator
-        extends AbstractMapDecorator {
+abstract class AbstractInputCheckedMapDecorator<K, V>
+        extends AbstractMapDecorator<K, V> {
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
@@ -60,7 +60,7 @@ abstract class AbstractInputCheckedMapDecorator
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    protected AbstractInputCheckedMapDecorator(Map map) {
+    protected AbstractInputCheckedMapDecorator(Map<K, V> map) {
         super(map);
     }
 
@@ -79,7 +79,7 @@ abstract class AbstractInputCheckedMapDecorator
      * @throws ClassCastException if the class of the specified value is invalid
      * @throws NullPointerException if the specified value is null and nulls are invalid
      */
-    protected abstract Object checkSetValue(Object value);
+    protected abstract V checkSetValue(V value);
 
     /**
      * Hook method called to determine if <code>checkSetValue</code> has any effect.
@@ -96,41 +96,43 @@ abstract class AbstractInputCheckedMapDecorator
     }
 
     //-----------------------------------------------------------------------
-    public Set entrySet() {
+    public Set<Map.Entry<K, V>> entrySet() {
         if (isSetValueChecking()) {
             return new EntrySet(map.entrySet(), this);
-        } else {
-            return map.entrySet();
         }
+        return map.entrySet();
     }
 
     //-----------------------------------------------------------------------
     /**
      * Implementation of an entry set that checks additions via setValue.
      */
-    static class EntrySet extends AbstractSetDecorator {
+    @SuppressWarnings("serial")
+    private class EntrySet extends AbstractSetDecorator<Map.Entry<K, V>> {
         
         /** The parent map */
-        private final AbstractInputCheckedMapDecorator parent;
+        private final AbstractInputCheckedMapDecorator<K, V> parent;
 
-        protected EntrySet(Set set, AbstractInputCheckedMapDecorator parent) {
+        protected EntrySet(Set<Map.Entry<K, V>> set, AbstractInputCheckedMapDecorator<K, V> parent) {
             super(set);
             this.parent = parent;
         }
 
-        public Iterator iterator() {
+        public Iterator<Map.Entry<K, V>> iterator() {
             return new EntrySetIterator(collection.iterator(), parent);
         }
         
+        @SuppressWarnings("unchecked")
         public Object[] toArray() {
             Object[] array = collection.toArray();
             for (int i = 0; i < array.length; i++) {
-                array[i] = new MapEntry((Map.Entry) array[i], parent);
+                array[i] = new MapEntry((Map.Entry<K, V>) array[i], parent);
             }
             return array;
         }
         
-        public Object[] toArray(Object array[]) {
+        @SuppressWarnings("unchecked")
+        public <T> T[] toArray(T[] array) {
             Object[] result = array;
             if (array.length > 0) {
                 // we must create a new array to handle multi-threaded situations
@@ -139,12 +141,12 @@ abstract class AbstractInputCheckedMapDecorator
             }
             result = collection.toArray(result);
             for (int i = 0; i < result.length; i++) {
-                result[i] = new MapEntry((Map.Entry) result[i], parent);
+                result[i] = new MapEntry((Map.Entry<K, V>) result[i], parent);
             }
 
             // check to see if result should be returned straight
             if (result.length > array.length) {
-                return result;
+                return (T[]) result;
             }
 
             // copy back into input array to fulfil the method contract
@@ -159,18 +161,18 @@ abstract class AbstractInputCheckedMapDecorator
     /**
      * Implementation of an entry set iterator that checks additions via setValue.
      */
-    static class EntrySetIterator extends AbstractIteratorDecorator {
-        
+    private class EntrySetIterator extends AbstractIteratorDecorator<Map.Entry<K, V>> {
+
         /** The parent map */
-        private final AbstractInputCheckedMapDecorator parent;
-        
-        protected EntrySetIterator(Iterator iterator, AbstractInputCheckedMapDecorator parent) {
+        private final AbstractInputCheckedMapDecorator<K, V> parent;
+
+        protected EntrySetIterator(Iterator<Map.Entry<K, V>> iterator, AbstractInputCheckedMapDecorator<K, V> parent) {
             super(iterator);
             this.parent = parent;
         }
-        
-        public Object next() {
-            Map.Entry entry = (Map.Entry) iterator.next();
+
+        public Map.Entry<K, V> next() {
+            Map.Entry<K, V> entry = iterator.next();
             return new MapEntry(entry, parent);
         }
     }
@@ -178,17 +180,17 @@ abstract class AbstractInputCheckedMapDecorator
     /**
      * Implementation of a map entry that checks additions via setValue.
      */
-    static class MapEntry extends AbstractMapEntryDecorator {
+    private class MapEntry extends AbstractMapEntryDecorator<K, V> {
 
         /** The parent map */
-        private final AbstractInputCheckedMapDecorator parent;
+        private final AbstractInputCheckedMapDecorator<K, V> parent;
 
-        protected MapEntry(Map.Entry entry, AbstractInputCheckedMapDecorator parent) {
+        protected MapEntry(Map.Entry<K, V> entry, AbstractInputCheckedMapDecorator<K, V> parent) {
             super(entry);
             this.parent = parent;
         }
 
-        public Object setValue(Object value) {
+        public V setValue(V value) {
             value = parent.checkSetValue(value);
             return entry.setValue(value);
         }

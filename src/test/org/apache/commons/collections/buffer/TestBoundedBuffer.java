@@ -28,7 +28,7 @@ import java.util.Arrays;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class TestBoundedBuffer extends AbstractTestObject {
+public class TestBoundedBuffer<E> extends AbstractTestObject {
 
     public TestBoundedBuffer(String testName) {
         super(testName);
@@ -51,136 +51,142 @@ public class TestBoundedBuffer extends AbstractTestObject {
         return false;
     }
 
-    public Object makeObject() {
-        return BoundedBuffer.decorate(new UnboundedFifoBuffer(), 1);
+    public Buffer<E> makeObject() {
+        return BoundedBuffer.decorate(new UnboundedFifoBuffer<E>(), 1);
     }
 
     //-----------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
     public void testMaxSize() {
-        final Buffer bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer(), 2, 500);
-        BoundedCollection bc = (BoundedCollection) bounded;
+        final Buffer<E> bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer<E>(), 2, 500);
+        BoundedCollection<?> bc = (BoundedCollection<?>) bounded;
         assertEquals(2, bc.maxSize());
         assertEquals(false, bc.isFull());
-        bounded.add("A");
+        bounded.add((E) "A");
         assertEquals(false, bc.isFull());
-        bounded.add("B");
+        bounded.add((E) "B");
         assertEquals(true, bc.isFull());
         bounded.remove();
         assertEquals(false, bc.isFull());
         try {
-            BoundedBuffer.decorate(new UnboundedFifoBuffer(), 0);
+            BoundedBuffer.decorate(new UnboundedFifoBuffer<E>(), 0);
             fail();
         } catch (IllegalArgumentException ex) {}
         try {
-            BoundedBuffer.decorate(new UnboundedFifoBuffer(), -1);
+            BoundedBuffer.decorate(new UnboundedFifoBuffer<E>(), -1);
             fail();
         } catch (IllegalArgumentException ex) {}
     }
 
+    @SuppressWarnings("unchecked")
     public void testAddToFullBufferNoTimeout() {
-        final Buffer bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer(), 1);
-        bounded.add( "Hello" );
+        final Buffer<E> bounded = makeObject();
+        bounded.add((E) "Hello");
         try {
-            bounded.add("World");
+            bounded.add((E) "World");
             fail();
         } catch (BufferOverflowException e) {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void testAddAllToFullBufferNoTimeout() {
-        final Buffer bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer(), 1);
-        bounded.add( "Hello" );
+        final Buffer<E> bounded = makeObject();
+        bounded.add((E) "Hello");
         try {
-            bounded.addAll(Collections.singleton("World"));
+            bounded.addAll(Collections.singleton((E) "World"));
             fail();
         } catch (BufferOverflowException e) {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void testAddAllToEmptyBufferExceedMaxSizeNoTimeout() {
-        final Buffer bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer(), 1);
+        final Buffer<E> bounded = makeObject();
         try {
-            bounded.addAll(Collections.nCopies(2, "test"));
+            bounded.addAll(Collections.nCopies(2, (E) "test"));
             fail();
         } catch (BufferOverflowException e) {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void testAddToFullBufferRemoveViaIterator() {
-        final Buffer bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer(), 1, 500);
-        bounded.add( "Hello" );
-        new DelayedIteratorRemove( bounded, 200 ).start();
-        bounded.add( "World" );
-        assertEquals( 1, bounded.size() );
-        assertEquals( "World", bounded.get() );
+        final Buffer<E> bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer<E>(), 1, 500);
+        bounded.add((E) "Hello");
+        new DelayedIteratorRemove(bounded, 200).start();
+        bounded.add((E) "World");
+        assertEquals(1, bounded.size());
+        assertEquals("World", bounded.get());
 
     }
 
+    @SuppressWarnings("unchecked")
     public void testAddAllToFullBufferRemoveViaIterator() {
-        final Buffer bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer(), 2, 500);
-        bounded.add( "Hello" );
-        bounded.add( "World" );
-        new DelayedIteratorRemove( bounded, 200, 2 ).start();
-        bounded.addAll( Arrays.asList( new String[] { "Foo", "Bar" } ) );
-        assertEquals( 2, bounded.size() );
-        assertEquals( "Foo", bounded.remove() );
-        assertEquals( "Bar", bounded.remove() );
+        final Buffer<E> bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer<E>(), 2, 500);
+        bounded.add((E) "Hello");
+        bounded.add((E) "World");
+        new DelayedIteratorRemove(bounded, 200, 2).start();
+        bounded.addAll(Arrays.asList((E[]) new String[] { "Foo", "Bar" }));
+        assertEquals(2, bounded.size());
+        assertEquals("Foo", bounded.remove());
+        assertEquals("Bar", bounded.remove());
     }
 
+    @SuppressWarnings("unchecked")
     public void testAddToFullBufferWithTimeout() {
-        final Buffer bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer(), 1, 500);
-        bounded.add( "Hello" );
-        new DelayedRemove( bounded, 200 ).start();
-        bounded.add( "World" );
-        assertEquals( 1, bounded.size() );
-        assertEquals( "World", bounded.get() );
+        final Buffer<E> bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer<E>(), 1, 500);
+        bounded.add((E) "Hello");
+        new DelayedRemove(bounded, 200).start();
+        bounded.add((E) "World");
+        assertEquals(1, bounded.size());
+        assertEquals("World", bounded.get());
         try {
-            bounded.add( "!" );
+            bounded.add((E) "!");
             fail();
-        }
-        catch( BufferOverflowException e ) {
+        } catch (BufferOverflowException e) {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void testAddAllToFullBufferWithTimeout() {
-        final Buffer bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer(), 2, 500);
-        bounded.add( "Hello" );
-        bounded.add( "World" );
-        new DelayedRemove( bounded, 200, 2 ).start();
+        final Buffer<E> bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer<E>(), 2, 500);
+        bounded.add((E) "Hello");
+        bounded.add((E) "World");
+        new DelayedRemove(bounded, 200, 2).start();
 
-        bounded.addAll( Arrays.asList( new String[] { "Foo", "Bar" } ) );
-        assertEquals( 2, bounded.size() );
-        assertEquals( "Foo", bounded.get() );
+        bounded.addAll(Arrays.asList((E[]) new String[] { "Foo", "Bar" }));
+        assertEquals(2, bounded.size());
+        assertEquals("Foo", bounded.get());
         try {
-            bounded.add( "!" );
+            bounded.add((E) "!");
             fail();
-        }
-        catch( BufferOverflowException e ) {
+        } catch (BufferOverflowException e) {
         }
     }
 
     private class DelayedIteratorRemove extends Thread {
 
-        private final Buffer buffer;
+        private final Buffer<?> buffer;
 
         private final long delay;
 
         private final int nToRemove;
 
-        public DelayedIteratorRemove(Buffer buffer, long delay, int nToRemove) {
+        public DelayedIteratorRemove(Buffer<?> buffer, long delay, int nToRemove) {
             this.buffer = buffer;
             this.delay = delay;
             this.nToRemove = nToRemove;
         }
 
-        public DelayedIteratorRemove(Buffer buffer, long delay) {
+        public DelayedIteratorRemove(Buffer<?> buffer, long delay) {
             this(buffer, delay, 1);
         }
 
         public void run() {
             try {
                 Thread.sleep(delay);
-                Iterator iter = buffer.iterator();
+                Iterator<?> iter = buffer.iterator();
                 for (int i = 0; i < nToRemove; ++i) {
                     iter.next();
                     iter.remove();
@@ -193,19 +199,19 @@ public class TestBoundedBuffer extends AbstractTestObject {
 
     private class DelayedRemove extends Thread {
 
-        private final Buffer buffer;
+        private final Buffer<?> buffer;
 
         private final long delay;
 
         private final int nToRemove;
 
-        public DelayedRemove(Buffer buffer, long delay, int nToRemove) {
+        public DelayedRemove(Buffer<?> buffer, long delay, int nToRemove) {
             this.buffer = buffer;
             this.delay = delay;
             this.nToRemove = nToRemove;
         }
 
-        public DelayedRemove(Buffer buffer, long delay) {
+        public DelayedRemove(Buffer<?> buffer, long delay) {
             this(buffer, delay, 1);
         }
 

@@ -35,7 +35,7 @@ import junit.framework.TestSuite;
  *
  * @author Unknown
  */
-public class TestReverseComparator extends AbstractTestComparator {
+public class TestReverseComparator extends AbstractTestComparator<Integer> {
 
     public TestReverseComparator(String testName) {
         super(testName);
@@ -46,21 +46,21 @@ public class TestReverseComparator extends AbstractTestComparator {
     }
 
     /**
-     * For the purposes of this test, return a 
+     * For the purposes of this test, return a
      * ReverseComparator that wraps the java.util.Collections.reverseOrder()
      * Comparator.  The resulting comparator should
      * sort according to natural Order.  (Note: we wrap
      * a Comparator taken from the JDK so that we can
      * save a "canonical" form in SVN.
-     * 
+     *
      * @return Comparator that returns "natural" order
      */
-    public Comparator makeComparator() {
-        return new ReverseComparator(Collections.reverseOrder());
+    public Comparator<Integer> makeObject() {
+        return new ReverseComparator<Integer>(Collections.<Integer>reverseOrder());
     }
 
-    public List getComparableObjectsOrdered() {
-        List list = new LinkedList();
+    public List<Integer> getComparableObjectsOrdered() {
+        List<Integer> list = new LinkedList<Integer>();
         list.add(new Integer(1));
         list.add(new Integer(2));
         list.add(new Integer(3));
@@ -69,11 +69,12 @@ public class TestReverseComparator extends AbstractTestComparator {
         return list;
     }
 
-    /** 
+    /**
      * Override this inherited test since Collections.reverseOrder
      * doesn't adhere to the "soft" Comparator contract, and we've
      * already "cannonized" the comparator returned by makeComparator.
      */
+    @SuppressWarnings("unchecked")
     public void testSerializeDeserializeThenCompare() throws Exception {
         Comparator comp = new ReverseComparator(new ComparableComparator());
 
@@ -81,7 +82,7 @@ public class TestReverseComparator extends AbstractTestComparator {
         ObjectOutputStream out = new ObjectOutputStream(buffer);
         out.writeObject(comp);
         out.close();
-            
+
         ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
         Object dest = in.readObject();
         in.close();

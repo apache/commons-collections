@@ -30,10 +30,10 @@ import org.apache.commons.collections.Unmodifiable;
  *
  * @author Stephen Colebourne
  */
-public final class UnmodifiableIterator implements Iterator, Unmodifiable {
+public final class UnmodifiableIterator<E> implements Iterator<E>, Unmodifiable {
 
     /** The iterator being decorated */
-    private Iterator iterator;
+    private Iterator<E> iterator;
 
     //-----------------------------------------------------------------------
     /**
@@ -44,23 +44,23 @@ public final class UnmodifiableIterator implements Iterator, Unmodifiable {
      * @param iterator  the iterator to decorate
      * @throws IllegalArgumentException if the iterator is null
      */
-    public static Iterator decorate(Iterator iterator) {
+    public static <E> Iterator<E> decorate(Iterator<E> iterator) {
         if (iterator == null) {
             throw new IllegalArgumentException("Iterator must not be null");
         }
         if (iterator instanceof Unmodifiable) {
             return iterator;
         }
-        return new UnmodifiableIterator(iterator);
+        return new UnmodifiableIterator<E>(iterator);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Constructor.
      *
      * @param iterator  the iterator to decorate
      */
-    private UnmodifiableIterator(Iterator iterator) {
+    private UnmodifiableIterator(Iterator<E> iterator) {
         super();
         this.iterator = iterator;
     }
@@ -70,7 +70,7 @@ public final class UnmodifiableIterator implements Iterator, Unmodifiable {
         return iterator.hasNext();
     }
 
-    public Object next() {
+    public E next() {
         return iterator.next();
     }
 

@@ -42,7 +42,7 @@ import java.util.EmptyStackException;
  * @author Paul Jack
  * @author Stephen Colebourne
  */
-public class ArrayStack extends ArrayList implements Buffer {
+public class ArrayStack<E> extends ArrayList<E> implements Buffer<E> {
 
     /** Ensure serialization compatibility */    
     private static final long serialVersionUID = 2130079159931574599L;
@@ -84,7 +84,7 @@ public class ArrayStack extends ArrayList implements Buffer {
      * @return the top item on the stack
      * @throws EmptyStackException  if the stack is empty
      */
-    public Object peek() throws EmptyStackException {
+    public E peek() throws EmptyStackException {
         int n = size();
         if (n <= 0) {
             throw new EmptyStackException();
@@ -102,7 +102,7 @@ public class ArrayStack extends ArrayList implements Buffer {
      * @throws EmptyStackException  if there are not enough items on the
      *  stack to satisfy this request
      */
-    public Object peek(int n) throws EmptyStackException {
+    public E peek(int n) throws EmptyStackException {
         int m = (size() - n) - 1;
         if (m < 0) {
             throw new EmptyStackException();
@@ -117,7 +117,7 @@ public class ArrayStack extends ArrayList implements Buffer {
      * @return the top item on the stack
      * @throws EmptyStackException  if the stack is empty
      */
-    public Object pop() throws EmptyStackException {
+    public E pop() throws EmptyStackException {
         int n = size();
         if (n <= 0) {
             throw new EmptyStackException();
@@ -133,7 +133,7 @@ public class ArrayStack extends ArrayList implements Buffer {
      * @param item  the item to be added
      * @return the item just pushed
      */
-    public Object push(Object item) {
+    public E push(E item) {
         add(item);
         return item;
     }
@@ -170,7 +170,7 @@ public class ArrayStack extends ArrayList implements Buffer {
      * @return the element on the top of the stack
      * @throws BufferUnderflowException  if the stack is empty
      */
-    public Object get() {
+    public E get() {
         int size = size();
         if (size == 0) {
             throw new BufferUnderflowException();
@@ -184,7 +184,7 @@ public class ArrayStack extends ArrayList implements Buffer {
      * @return the removed element 
      * @throws BufferUnderflowException  if the stack is empty
      */
-    public Object remove() {
+    public E remove() {
         int size = size();
         if (size == 0) {
             throw new BufferUnderflowException();

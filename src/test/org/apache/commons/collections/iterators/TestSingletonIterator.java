@@ -32,32 +32,33 @@ import org.apache.commons.collections.ResettableIterator;
  *
  * @author James Strachan
  */
-public class TestSingletonIterator extends AbstractTestIterator {
+public class TestSingletonIterator<E> extends AbstractTestIterator<E> {
 
     private static final Object testValue = "foo";
-    
+
     public static Test suite() {
         return new TestSuite(TestSingletonIterator.class);
     }
-    
+
     public TestSingletonIterator(String testName) {
         super(testName);
     }
-    
+
     /**
-     * Returns a SingletonIterator from which 
+     * Returns a SingletonIterator from which
      * the element has already been removed.
      */
-    public Iterator makeEmptyIterator() {
-        SingletonIterator iter = (SingletonIterator)makeFullIterator();
+    public SingletonIterator<E> makeEmptyIterator() {
+        SingletonIterator<E> iter = makeObject();
         iter.next();
-        iter.remove();        
+        iter.remove();
         iter.reset();
         return iter;
     }
 
-    public Iterator makeFullIterator() {
-        return new SingletonIterator( testValue );
+    @SuppressWarnings("unchecked")
+    public SingletonIterator<E> makeObject() {
+        return new SingletonIterator<E>((E) testValue);
     }
 
     public boolean supportsRemove() {
@@ -69,10 +70,10 @@ public class TestSingletonIterator extends AbstractTestIterator {
     }
 
     public void testIterator() {
-        Iterator iter = (Iterator) makeObject();
+        Iterator<E> iter = makeObject();
         assertTrue("Iterator has a first item", iter.hasNext());
 
-        Object iterValue = iter.next();
+        E iterValue = iter.next();
         assertEquals("Iteration value is correct", testValue, iterValue);
 
         assertTrue("Iterator should now be empty", !iter.hasNext());
@@ -85,33 +86,34 @@ public class TestSingletonIterator extends AbstractTestIterator {
                 e.getClass().equals((new NoSuchElementException()).getClass()));
         }
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testSingletonIteratorRemove() {
-        ResettableIterator iter = new SingletonIterator("xyzzy");
+        ResettableIterator<E> iter = new SingletonIterator<E>((E) "xyzzy");
         assertTrue(iter.hasNext());
         assertEquals("xyzzy",iter.next());
         iter.remove();
         iter.reset();
         assertTrue(! iter.hasNext());
     }
-    
+
     public void testReset() {
-        ResettableIterator it = (ResettableIterator) makeObject();
-        
+        ResettableIterator<E> it = makeObject();
+
         assertEquals(true, it.hasNext());
         assertEquals(testValue, it.next());
         assertEquals(false, it.hasNext());
 
         it.reset();
-        
+
         assertEquals(true, it.hasNext());
         assertEquals(testValue, it.next());
         assertEquals(false, it.hasNext());
-        
+
         it.reset();
         it.reset();
-        
+
         assertEquals(true, it.hasNext());
     }
-    
+
 }

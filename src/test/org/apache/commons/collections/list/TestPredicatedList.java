@@ -23,7 +23,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.PredicateUtils;
+import org.apache.commons.collections.functors.TruePredicate;
 
 /**
  * Extension of {@link AbstractTestList} for exercising the 
@@ -34,113 +34,118 @@ import org.apache.commons.collections.PredicateUtils;
  *
  * @author Phil Steitz
  */
-public class TestPredicatedList extends AbstractTestList {
-    
+public class TestPredicatedList<E> extends AbstractTestList<E> {
+
     public TestPredicatedList(String testName) {
         super(testName);
     }
-    
+
     public static Test suite() {
         return new TestSuite(TestPredicatedList.class);
     }
-    
+
     public static void main(String args[]) {
         String[] testCaseName = { TestPredicatedList.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
+
  //-------------------------------------------------------------------
-    
-    protected Predicate truePredicate = PredicateUtils.truePredicate();
-    
-    protected List decorateList(List list, Predicate predicate) {
+
+    protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
+
+    protected List<E> decorateList(List<E> list, Predicate<E> predicate) {
         return PredicatedList.decorate(list, predicate);
     }
-    
-    public List makeEmptyList() {
-        return decorateList(new ArrayList(), truePredicate);
-    }
-    
-    public Object[] getFullElements() {
-        return new Object[] {"1", "3", "5", "7", "2", "4", "6"};
-    }
-    
-//--------------------------------------------------------------------   
-    
-     protected Predicate testPredicate =  
-        new Predicate() {
-            public boolean evaluate(Object o) {
-                return o instanceof String;
-            }
-        };      
-    
-    public List makeTestList() {
-        return decorateList(new ArrayList(), testPredicate);
-    }
-    
-    public void testIllegalAdd() {
-        List list = makeTestList();
-        Integer i = new Integer(3);
-        try {
-            list.add(i);
-            fail("Integer should fail string predicate.");
-        } catch (IllegalArgumentException e) {
-            // expected
-        }
-        assertTrue("Collection shouldn't contain illegal element", 
-         !list.contains(i));   
+
+    public List<E> makeObject() {
+        return decorateList(new ArrayList<E>(), truePredicate);
     }
 
+    @SuppressWarnings("unchecked")
+    public E[] getFullElements() {
+        return (E[]) new Object[] { "1", "3", "5", "7", "2", "4", "6" };
+    }
+
+//--------------------------------------------------------------------
+
+    protected Predicate<E> testPredicate =
+        new Predicate<E>() {
+            public boolean evaluate(E o) {
+                return o instanceof String;
+            }
+        };
+
+    public List<E> makeTestList() {
+        return decorateList(new ArrayList<E>(), testPredicate);
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testIllegalAdd() {
+        List<E> list = makeTestList();
+        Integer i = new Integer(3);
+        try {
+            list.add((E) i);
+            fail("Integer should fail string predicate.");
+        } catch (IllegalArgumentException e) {
+            // expected
+        }
+        assertTrue("Collection shouldn't contain illegal element",
+         !list.contains(i));
+    }
+
+    @SuppressWarnings("unchecked")
     public void testIllegalAddAll() {
-        List list = makeTestList();
-        List elements = new ArrayList();
-        elements.add("one");
-        elements.add("two");
-        elements.add(new Integer(3));
-        elements.add("four");
+        List<E> list = makeTestList();
+        List<E> elements = new ArrayList<E>();
+        elements.add((E) "one");
+        elements.add((E) "two");
+        elements.add((E) new Integer(3));
+        elements.add((E) "four");
         try {
-            list.addAll(0,elements);
+            list.addAll(0, elements);
             fail("Integer should fail string predicate.");
         } catch (IllegalArgumentException e) {
             // expected
         }
-        assertTrue("List shouldn't contain illegal element", 
-         !list.contains("one"));   
-        assertTrue("List shouldn't contain illegal element", 
-         !list.contains("two"));   
-        assertTrue("List shouldn't contain illegal element", 
-         !list.contains(new Integer(3)));   
-        assertTrue("List shouldn't contain illegal element", 
-         !list.contains("four"));   
+        assertTrue("List shouldn't contain illegal element",
+         !list.contains("one"));
+        assertTrue("List shouldn't contain illegal element",
+         !list.contains("two"));
+        assertTrue("List shouldn't contain illegal element",
+         !list.contains(new Integer(3)));
+        assertTrue("List shouldn't contain illegal element",
+         !list.contains("four"));
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testIllegalSet() {
-        List list = makeTestList();
+        List<E> list = makeTestList();
         try {
-            list.set(0,new Integer(3));
+            list.set(0, (E) new Integer(3));
             fail("Integer should fail string predicate.");
         } catch (IllegalArgumentException e) {
             // expected
         }
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testLegalAddAll() {
-        List list = makeTestList();
-        list.add("zero");
-        List elements = new ArrayList();
-        elements.add("one");
-        elements.add("two");
-        elements.add("three");
+        List<E> list = makeTestList();
+        list.add((E) "zero");
+        List<E> elements = new ArrayList<E>();
+        elements.add((E) "one");
+        elements.add((E) "two");
+        elements.add((E) "three");
         list.addAll(1,elements);
-        assertTrue("List should contain legal element", 
-         list.contains("zero"));   
-        assertTrue("List should contain legal element", 
-         list.contains("one"));   
-        assertTrue("List should contain legal element", 
-         list.contains("two"));   
-        assertTrue("List should contain legal element", 
-         list.contains("three"));   
-    }       
+        assertTrue("List should contain legal element",
+         list.contains("zero"));
+        assertTrue("List should contain legal element",
+         list.contains("one"));
+        assertTrue("List should contain legal element",
+         list.contains("two"));
+        assertTrue("List should contain legal element",
+         list.contains("three"));
+    }
 
     public String getCompatibilityVersion() {
         return "3.1";

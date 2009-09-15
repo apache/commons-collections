@@ -27,8 +27,8 @@ import org.apache.commons.collections.map.AbstractTestMap;
  *
  * @author Jason van Zyl
  */
-public abstract class TestTreeMap extends AbstractTestMap {
-    
+public abstract class TestTreeMap<K, V> extends AbstractTestMap<K, V> {
+
     public TestTreeMap(String testName) {
         super(testName);
     }
@@ -42,23 +42,27 @@ public abstract class TestTreeMap extends AbstractTestMap {
         return false;
     }
 
-    protected TreeMap map = null;
-
-    public void setUp() {
-        map = (TreeMap) makeEmptyMap();
-    }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public abstract TreeMap<K, V> makeObject();
 
     public void testNewMap() {
+        TreeMap<K, V> map = makeObject();
         assertTrue("New map is empty", map.isEmpty());
         assertEquals("New map has size zero", 0, map.size());
     }
 
+    @SuppressWarnings("unchecked")
     public void testSearch() {
-        map.put("first", "First Item");
-        map.put("second", "Second Item");
+        TreeMap<K, V> map = makeObject();
+        map.put((K) "first", (V) "First Item");
+        map.put((K) "second", (V) "Second Item");
         assertEquals("Top item is 'Second Item'",
             "First Item", map.get("first"));
         assertEquals("Next Item is 'First Item'",
             "Second Item", map.get("second"));
     }
+
 }

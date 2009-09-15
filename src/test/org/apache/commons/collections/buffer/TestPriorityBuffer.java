@@ -42,7 +42,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
  * @author Michael A. Smith
  * @author Steve Phelps
  */
-public class TestPriorityBuffer extends AbstractTestCollection {
+public class TestPriorityBuffer<E> extends AbstractTestCollection<E> {
 
     public static void main(String[] args) {
         junit.textui.TestRunner.run(suite());
@@ -56,22 +56,23 @@ public class TestPriorityBuffer extends AbstractTestCollection {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------  
+    //-----------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
     public void verify() {
         super.verify();
-        PriorityBuffer heap = (PriorityBuffer) collection;
+        PriorityBuffer<E> heap = getCollection();
 
-        Comparator c = heap.comparator;
+        Comparator<? super E> c = heap.comparator;
         if (c == null) {
-            c = ComparatorUtils.naturalComparator();
+            c = ComparatorUtils.NATURAL_COMPARATOR;
         }
         if (!heap.ascendingOrder) {
             c = ComparatorUtils.reversedComparator(c);
         }
 
-        Object[] tree = heap.elements;
+        E[] tree = heap.elements;
         for (int i = 1; i <= heap.size; i++) {
-            Object parent = tree[i];
+            E parent = tree[i];
             if (i * 2 <= heap.size) {
                 assertTrue("Parent is less than or equal to its left child", c.compare(parent, tree[i * 2]) <= 0);
             }
@@ -81,7 +82,7 @@ public class TestPriorityBuffer extends AbstractTestCollection {
         }
     }
 
-    //-----------------------------------------------------------------------  
+    //-----------------------------------------------------------------------
     /**
      * Overridden because BinaryBuffer isn't fail fast.
      * @return false
@@ -90,13 +91,13 @@ public class TestPriorityBuffer extends AbstractTestCollection {
         return false;
     }
 
-    //-----------------------------------------------------------------------  
-    public Collection makeConfirmedCollection() {
-        return new ArrayList();
+    //-----------------------------------------------------------------------
+    public Collection<E> makeConfirmedCollection() {
+        return new ArrayList<E>();
     }
 
-    public Collection makeConfirmedFullCollection() {
-        ArrayList list = new ArrayList();
+    public Collection<E> makeConfirmedFullCollection() {
+        ArrayList<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }
@@ -104,23 +105,25 @@ public class TestPriorityBuffer extends AbstractTestCollection {
     /**
      * Return a new, empty {@link Object} to used for testing.
      */
-    public Collection makeCollection() {
-        return new PriorityBuffer();
+    public Buffer<E> makeObject() {
+        return new PriorityBuffer<E>();
     }
 
-    //-----------------------------------------------------------------------  
-    public Object[] getFullElements() {
-        return getFullNonNullStringElements();
+    //-----------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
+    public E[] getFullElements() {
+        return (E[]) getFullNonNullStringElements();
     }
 
-    public Object[] getOtherElements() {
-        return getOtherNonNullStringElements();
+    @SuppressWarnings("unchecked")
+    public E[] getOtherElements() {
+        return (E[]) getOtherNonNullStringElements();
     }
 
-    //-----------------------------------------------------------------------  
+    //-----------------------------------------------------------------------
     public void testBufferEmpty() {
         resetEmpty();
-        Buffer buffer = (Buffer) collection;
+        Buffer<E> buffer = getCollection();
 
         assertEquals(0, buffer.size());
         assertEquals(true, buffer.isEmpty());
@@ -134,24 +137,24 @@ public class TestPriorityBuffer extends AbstractTestCollection {
             fail();
         } catch (BufferUnderflowException ex) {}
     }
-    
-    public void testBasicOps() {
-        PriorityBuffer heap = new PriorityBuffer();
 
-        heap.add("a");
-        heap.add("c");
-        heap.add("e");
-        heap.add("b");
-        heap.add("d");
-        heap.add("n");
-        heap.add("m");
-        heap.add("l");
-        heap.add("k");
-        heap.add("j");
-        heap.add("i");
-        heap.add("h");
-        heap.add("g");
-        heap.add("f");
+    @SuppressWarnings("unchecked")
+    public void testBasicOps() {
+        PriorityBuffer<E> heap = new PriorityBuffer<E>();
+        heap.add((E) "a");
+        heap.add((E) "c");
+        heap.add((E) "e");
+        heap.add((E) "b");
+        heap.add((E) "d");
+        heap.add((E) "n");
+        heap.add((E) "m");
+        heap.add((E) "l");
+        heap.add((E) "k");
+        heap.add((E) "j");
+        heap.add((E) "i");
+        heap.add((E) "h");
+        heap.add((E) "g");
+        heap.add((E) "f");
 
         assertTrue("heap should not be empty after adds", !heap.isEmpty());
 
@@ -184,8 +187,9 @@ public class TestPriorityBuffer extends AbstractTestCollection {
         } catch (BufferUnderflowException ex) {}
     }
 
+    @SuppressWarnings("unchecked")
     public void testBasicComparatorOps() {
-        PriorityBuffer heap = new PriorityBuffer(new ReverseComparator(new ComparableComparator()));
+        PriorityBuffer<E> heap = new PriorityBuffer<E>(new ReverseComparator<E>((Comparator<E>) ComparableComparator.INSTANCE));
 
         assertTrue("heap should be empty after create", heap.isEmpty());
 
@@ -199,20 +203,20 @@ public class TestPriorityBuffer extends AbstractTestCollection {
             fail("NoSuchElementException should be thrown if remove is called before any elements are added");
         } catch (BufferUnderflowException ex) {}
 
-        heap.add("a");
-        heap.add("c");
-        heap.add("e");
-        heap.add("b");
-        heap.add("d");
-        heap.add("n");
-        heap.add("m");
-        heap.add("l");
-        heap.add("k");
-        heap.add("j");
-        heap.add("i");
-        heap.add("h");
-        heap.add("g");
-        heap.add("f");
+        heap.add((E) "a");
+        heap.add((E) "c");
+        heap.add((E) "e");
+        heap.add((E) "b");
+        heap.add((E) "d");
+        heap.add((E) "n");
+        heap.add((E) "m");
+        heap.add((E) "l");
+        heap.add((E) "k");
+        heap.add((E) "j");
+        heap.add((E) "i");
+        heap.add((E) "h");
+        heap.add((E) "g");
+        heap.add((E) "f");
 
         assertTrue("heap should not be empty after adds", !heap.isEmpty());
 
@@ -250,28 +254,28 @@ public class TestPriorityBuffer extends AbstractTestCollection {
     }
 
     /**
-     * Illustrates bad internal heap state reported in Bugzilla PR #235818. 
-     */  
+     * Illustrates bad internal heap state reported in Bugzilla PR #235818.
+     */
+    @SuppressWarnings("unchecked")
     public void testAddRemove() {
         resetEmpty();
-        PriorityBuffer heap = (PriorityBuffer) collection;
-        heap.add(new Integer(0));
-        heap.add(new Integer(2));
-        heap.add(new Integer(4));
-        heap.add(new Integer(3));
-        heap.add(new Integer(8));
-        heap.add(new Integer(10));
-        heap.add(new Integer(12));
-        heap.add(new Integer(3));
-        confirmed.addAll(heap);
+        PriorityBuffer heap = getCollection();
+        heap.add(0);
+        heap.add(2);
+        heap.add(4);
+        heap.add(3);
+        heap.add(8);
+        heap.add(10);
+        heap.add(12);
+        heap.add(3);
+        getConfirmed().addAll(heap);
         // System.out.println(heap);
-        Object obj = new Integer(10);
-        heap.remove(obj);
-        confirmed.remove(obj);
+        heap.remove(10);
+        getConfirmed().remove(10);
         // System.out.println(heap);
         verify();
     }
-    
+
     /**
      * Generate heaps staring with Integers from 0 - heapSize - 1.
      * Then perform random add / remove operations, checking
@@ -285,29 +289,29 @@ public class TestPriorityBuffer extends AbstractTestCollection {
         int heapSize = 100;
         int operations = 20;
         Random randGenerator = new Random();
-        PriorityBuffer h = null;
-        for(int i=0; i < iterations; i++) {
-            if (i < iterations / 2) {          
-                h = new PriorityBuffer(true);
+        PriorityBuffer<Integer> h = null;
+        for (int i = 0; i < iterations; i++) {
+            if (i < iterations / 2) {
+                h = new PriorityBuffer<Integer>(true);
             } else {
-                h = new PriorityBuffer(false);
+                h = new PriorityBuffer<Integer>(false);
             }
-            for(int r = 0; r < heapSize; r++) {
-                h.add( new Integer( randGenerator.nextInt(heapSize)) );
+            for (int r = 0; r < heapSize; r++) {
+                h.add(randGenerator.nextInt(heapSize));
             }
-            for( int r = 0; r < operations; r++ ) {
+            for (int r = 0; r < operations; r++) {
                 h.remove(new Integer(r));
-                h.add(new Integer(randGenerator.nextInt(heapSize)));
+                h.add(randGenerator.nextInt(heapSize));
             }
             checkOrder(h);
         }
     }
-     
+
     /**
      * Pops all elements from the heap and verifies that the elements come off
      * in the correct order.  NOTE: this method empties the heap.
      */
-    protected void checkOrder(PriorityBuffer h) {
+    protected void checkOrder(PriorityBuffer<?> h) {
         Integer lastNum = null;
         Integer num = null;
         while (!h.isEmpty()) {
@@ -321,17 +325,17 @@ public class TestPriorityBuffer extends AbstractTestCollection {
             num = null;
         }
     }
-    
+
     /**
      * Returns a string showing the contents of the heap formatted as a tree.
-     * Makes no attempt at padding levels or handling wrapping. 
+     * Makes no attempt at padding levels or handling wrapping.
      */
-    protected String showTree(PriorityBuffer h) {
+    protected String showTree(PriorityBuffer<?> h) {
         int count = 1;
         StringBuffer buffer = new StringBuffer();
         for (int offset = 1; count < h.size() + 1; offset *= 2) {
             for (int i = offset; i < offset * 2; i++) {
-                if (i < h.elements.length && h.elements[i] != null) 
+                if (i < h.elements.length && h.elements[i] != null)
                     buffer.append(h.elements[i] + " ");
                 count++;
             }
@@ -344,15 +348,16 @@ public class TestPriorityBuffer extends AbstractTestCollection {
      * Generates 500 randomly initialized heaps of size 100
      * and tests that after serializing and restoring them to a byte array
      * that the following conditions hold:
-     * 
-     *  - the size of the restored heap is the same 
+     *
+     *  - the size of the restored heap is the same
      *      as the size of the orignal heap
-     *  
+     *
      *  - all elements in the original heap are present in the restored heap
-     *  
-     *  - the heap order of the restored heap is intact as 
+     *
+     *  - the heap order of the restored heap is intact as
      *      verified by checkOrder()
      */
+    @SuppressWarnings("unchecked")
     public void testSerialization() {
         int iterations = 500;
         int heapSize = 100;
@@ -360,17 +365,17 @@ public class TestPriorityBuffer extends AbstractTestCollection {
         Random randGenerator = new Random();
         for (int i = 0; i < iterations; i++) {
             if (i < iterations / 2) {
-                h = new PriorityBuffer(true);
+                h = new PriorityBuffer<E>(true);
             } else {
-                h = new PriorityBuffer(false);
+                h = new PriorityBuffer<E>(false);
             }
             for (int r = 0; r < heapSize; r++) {
                 h.add(new Integer(randGenerator.nextInt(heapSize)));
             }
             assertTrue(h.size() == heapSize);
-            PriorityBuffer h1 = serializeAndRestore(h);
+            PriorityBuffer<?> h1 = serializeAndRestore(h);
             assertTrue(h1.size() == heapSize);
-            Iterator hit = h.iterator();
+            Iterator<?> hit = h.iterator();
             while (hit.hasNext()) {
                 Integer n = (Integer) hit.next();
                 assertTrue(h1.contains(n));
@@ -379,11 +384,11 @@ public class TestPriorityBuffer extends AbstractTestCollection {
         }
     }
 
-    public PriorityBuffer serializeAndRestore(PriorityBuffer h) {
-        PriorityBuffer h1 = null;
+    public PriorityBuffer<?> serializeAndRestore(PriorityBuffer<E> h) {
+        PriorityBuffer<?> h1 = null;
         try {
             byte[] objekt = writeExternalFormToBytes(h);
-            h1 = (PriorityBuffer) readExternalFormFromBytes(objekt);
+            h1 = (PriorityBuffer<?>) readExternalFormFromBytes(objekt);
         } catch (IOException e) {
             e.printStackTrace();
             fail(e.toString());
@@ -405,4 +410,11 @@ public class TestPriorityBuffer extends AbstractTestCollection {
 //        writeExternalFormToDisk((java.io.Serializable) collection, "C:/commons/collections/data/test/PriorityBuffer.fullCollection.version3.2.obj");
 //    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PriorityBuffer<E> getCollection() {
+        return (PriorityBuffer<E>) super.getCollection();
+    }
 }

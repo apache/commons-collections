@@ -28,13 +28,13 @@ import org.apache.commons.collections.Closure;
  *
  * @author Stephen Colebourne
  */
-public class NOPClosure implements Closure, Serializable {
+public class NOPClosure<E> implements Closure<E>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 3518477308466486130L;
 
     /** Singleton predicate instance */
-    public static final Closure INSTANCE = new NOPClosure();
+    public static final Closure<Object> INSTANCE = new NOPClosure<Object>();
 
     /**
      * Factory returning the singleton instance.
@@ -42,8 +42,9 @@ public class NOPClosure implements Closure, Serializable {
      * @return the singleton instance
      * @since Commons Collections 3.1
      */
-    public static Closure getInstance() {
-        return INSTANCE;
+    @SuppressWarnings("unchecked")
+    public static <E> Closure<E> getInstance() {
+        return (Closure<E>) INSTANCE;
     }
 
     /**
@@ -58,8 +59,23 @@ public class NOPClosure implements Closure, Serializable {
      * 
      * @param input  the input object
      */
-    public void execute(Object input) {
+    public void execute(E input) {
         // do nothing
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object arg0) {
+        return arg0.hashCode() == this.hashCode();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return System.identityHashCode(INSTANCE);
+    }
 }

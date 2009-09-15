@@ -18,6 +18,7 @@ package org.apache.commons.collections.comparators;
 
 import java.util.Comparator;
 
+import org.apache.commons.collections.ComparatorUtils;
 import org.apache.commons.collections.Transformer;
 
 /**
@@ -31,12 +32,12 @@ import org.apache.commons.collections.Transformer;
  * @see org.apache.commons.collections.Transformer
  * @see org.apache.commons.collections.comparators.ComparableComparator
  */
-public class TransformingComparator implements Comparator {
+public class TransformingComparator<E> implements Comparator<E> {
     
     /** The decorated comparator. */
-    protected Comparator decorated;
+    protected Comparator<E> decorated;
     /** The transformer being used. */    
-    protected Transformer transformer;
+    protected Transformer<? super E, ? extends E> transformer;
 
     //-----------------------------------------------------------------------
     /**
@@ -45,8 +46,9 @@ public class TransformingComparator implements Comparator {
      * 
      * @param transformer what will transform the arguments to <code>compare</code>
      */
-    public TransformingComparator(Transformer transformer) {
-        this(transformer, new ComparableComparator());
+    @SuppressWarnings("unchecked")
+    public TransformingComparator(Transformer<? super E, ? extends E> transformer) {
+        this(transformer, ComparatorUtils.NATURAL_COMPARATOR);
     }
 
     /**
@@ -55,7 +57,7 @@ public class TransformingComparator implements Comparator {
      * @param transformer  what will transform the arguments to <code>compare</code>
      * @param decorated  the decorated Comparator
      */
-    public TransformingComparator(Transformer transformer, Comparator decorated) {
+    public TransformingComparator(Transformer<? super E, ? extends E> transformer, Comparator<E> decorated) {
         this.decorated = decorated;
         this.transformer = transformer;
     }
@@ -68,9 +70,9 @@ public class TransformingComparator implements Comparator {
      * @param obj2  the second object to transform then compare
      * @return negative if obj1 is less, positive if greater, zero if equal
      */
-    public int compare(Object obj1, Object obj2) {
-        Object value1 = this.transformer.transform(obj1);
-        Object value2 = this.transformer.transform(obj2);
+    public int compare(E obj1, E obj2) {
+        E value1 = this.transformer.transform(obj1);
+        E value2 = this.transformer.transform(obj2);
         return this.decorated.compare(value1, value2);
     }
 

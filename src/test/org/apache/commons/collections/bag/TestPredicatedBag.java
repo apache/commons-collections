@@ -23,7 +23,7 @@ import junit.framework.TestSuite;
 
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.PredicateUtils;
+import org.apache.commons.collections.functors.TruePredicate;
 
 /**
  * Extension of {@link AbstractTestBag} for exercising the {@link PredicatedBag}
@@ -34,8 +34,8 @@ import org.apache.commons.collections.PredicateUtils;
  *
  * @author Phil Steitz
  */
-public class TestPredicatedBag extends AbstractTestBag {
-    
+public class TestPredicatedBag<T> extends AbstractTestBag<T> {
+
     public TestPredicatedBag(String testName) {
         super(testName);
     }
@@ -48,81 +48,84 @@ public class TestPredicatedBag extends AbstractTestBag {
         String[] testCaseName = { TestPredicatedBag.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
+
     //--------------------------------------------------------------------------
 
-    protected Predicate stringPredicate() {
-        return new Predicate() {
-            public boolean evaluate(Object o) {
+    protected Predicate<T> stringPredicate() {
+        return new Predicate<T>() {
+            public boolean evaluate(T o) {
                 return o instanceof String;
             }
         };
-    }   
-    
-    protected Predicate truePredicate = PredicateUtils.truePredicate();
-    
-    protected Bag decorateBag(HashBag bag, Predicate predicate) {
+    }
+
+    protected Predicate<T> truePredicate = TruePredicate.<T>truePredicate();
+
+    protected Bag<T> decorateBag(HashBag<T> bag, Predicate<T> predicate) {
         return PredicatedBag.decorate(bag, predicate);
     }
 
-    public Bag makeBag() {
-        return decorateBag(new HashBag(), truePredicate);
+    public Bag<T> makeObject() {
+        return decorateBag(new HashBag<T>(), truePredicate);
     }
-    
-    protected Bag makeTestBag() {
-        return decorateBag(new HashBag(), stringPredicate());
+
+    protected Bag<T> makeTestBag() {
+        return decorateBag(new HashBag<T>(), stringPredicate());
     }
-    
+
     //--------------------------------------------------------------------------
 
+    @SuppressWarnings("unchecked")
     public void testlegalAddRemove() {
-        Bag bag = makeTestBag();
+        Bag<T> bag = makeTestBag();
         assertEquals(0, bag.size());
-        Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "1"};
+        T[] els = (T[]) new Object[] { "1", "3", "5", "7", "2", "4", "1" };
         for (int i = 0; i < els.length; i++) {
             bag.add(els[i]);
             assertEquals(i + 1, bag.size());
             assertEquals(true, bag.contains(els[i]));
         }
-        Set set = ((PredicatedBag) bag).uniqueSet();
+        Set<T> set = ((PredicatedBag<T>) bag).uniqueSet();
         assertTrue("Unique set contains the first element",set.contains(els[0]));
-        assertEquals(true, bag.remove(els[0])); 
-        set = ((PredicatedBag) bag).uniqueSet();
+        assertEquals(true, bag.remove(els[0]));
+        set = ((PredicatedBag<T>) bag).uniqueSet();
         assertTrue("Unique set now does not contain the first element",
-            !set.contains(els[0])); 
+            !set.contains(els[0]));
     }
- 
+
+    @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
-        Bag bag = makeTestBag();
+        Bag<T> bag = makeTestBag();
         Integer i = new Integer(3);
         try {
-            bag.add(i);
+            bag.add((T) i);
             fail("Integer should fail string predicate.");
         } catch (IllegalArgumentException e) {
             // expected
         }
-        assertTrue("Collection shouldn't contain illegal element", 
-         !bag.contains(i));   
+        assertTrue("Collection shouldn't contain illegal element",
+         !bag.contains(i));
     }
 
+    @SuppressWarnings("unchecked")
     public void testIllegalDecorate() {
-        HashBag elements = new HashBag();
+        HashBag<Object> elements = new HashBag<Object>();
         elements.add("one");
         elements.add("two");
         elements.add(new Integer(3));
         elements.add("four");
         try {
-            Bag bag = decorateBag(elements, stringPredicate());
+            decorateBag((HashBag<T>) elements, stringPredicate());
             fail("Bag contains an element that should fail the predicate.");
         } catch (IllegalArgumentException e) {
             // expected
         }
         try {
-            Bag bag = decorateBag(new HashBag(), null);
+            decorateBag(new HashBag<T>(), null);
             fail("Expectiing IllegalArgumentException for null predicate.");
         } catch (IllegalArgumentException e) {
             // expected
-        }              
+        }
     }
 
     public String getCompatibilityVersion() {

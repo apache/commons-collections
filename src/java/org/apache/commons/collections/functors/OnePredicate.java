@@ -35,13 +35,13 @@ import org.apache.commons.collections.Predicate;
  * @author Stephen Colebourne
  * @author Matt Benson
  */
-public final class OnePredicate implements Predicate, PredicateDecorator, Serializable {
+public final class OnePredicate<T> implements Predicate<T>, PredicateDecorator<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -8125389089924745785L;
     
     /** The array of predicates to call */
-    private final Predicate[] iPredicates;
+    private final Predicate<? super T>[] iPredicates;
     
     /**
      * Factory to create the predicate.
@@ -54,16 +54,17 @@ public final class OnePredicate implements Predicate, PredicateDecorator, Serial
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static Predicate getInstance(Predicate[] predicates) {
+    @SuppressWarnings("unchecked")
+    public static <T> Predicate<T> getInstance(Predicate<? super T>[] predicates) {
         FunctorUtils.validate(predicates);
         if (predicates.length == 0) {
-            return FalsePredicate.INSTANCE;
+            return FalsePredicate.<T>falsePredicate();
         }
         if (predicates.length == 1) {
-            return predicates[0];
+            return (Predicate<T>) predicates[0];
         }
         predicates = FunctorUtils.copy(predicates);
-        return new OnePredicate(predicates);
+        return new OnePredicate<T>(predicates);
     }
 
     /**
@@ -74,9 +75,9 @@ public final class OnePredicate implements Predicate, PredicateDecorator, Serial
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static Predicate getInstance(Collection predicates) {
-        Predicate[] preds = FunctorUtils.validate(predicates);
-        return new OnePredicate(preds);
+    public static <T> Predicate<T> getInstance(Collection<? extends Predicate<T>> predicates) {
+        Predicate<? super T>[] preds = FunctorUtils.validate(predicates);
+        return new OnePredicate<T>(preds);
     }
 
     /**
@@ -85,7 +86,7 @@ public final class OnePredicate implements Predicate, PredicateDecorator, Serial
      * 
      * @param predicates  the predicates to check, not cloned, not null
      */
-    public OnePredicate(Predicate[] predicates) {
+    public OnePredicate(Predicate<? super T>[] predicates) {
         super();
         iPredicates = predicates;
     }
@@ -97,7 +98,7 @@ public final class OnePredicate implements Predicate, PredicateDecorator, Serial
      * @param object  the input object
      * @return true if only one decorated predicate returns true
      */
-    public boolean evaluate(Object object) {
+    public boolean evaluate(T object) {
         boolean match = false;
         for (int i = 0; i < iPredicates.length; i++) {
             if (iPredicates[i].evaluate(object)) {
@@ -116,7 +117,7 @@ public final class OnePredicate implements Predicate, PredicateDecorator, Serial
      * @return the predicates
      * @since Commons Collections 3.1
      */
-    public Predicate[] getPredicates() {
+    public Predicate<? super T>[] getPredicates() {
         return iPredicates;
     }
 

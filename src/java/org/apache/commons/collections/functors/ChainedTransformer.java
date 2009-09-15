@@ -18,7 +18,6 @@ package org.apache.commons.collections.functors;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.apache.commons.collections.Transformer;
 
@@ -33,13 +32,13 @@ import org.apache.commons.collections.Transformer;
  *
  * @author Stephen Colebourne
  */
-public class ChainedTransformer implements Transformer, Serializable {
+public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 3514945074733160196L;
 
     /** The transformers to call in turn */
-    private final Transformer[] iTransformers;
+    private final Transformer<? super T, ? extends T>[] iTransformers;
 
     /**
      * Factory method that performs validation and copies the parameter array.
@@ -49,13 +48,13 @@ public class ChainedTransformer implements Transformer, Serializable {
      * @throws IllegalArgumentException if the transformers array is null
      * @throws IllegalArgumentException if any transformer in the array is null
      */
-    public static Transformer getInstance(Transformer[] transformers) {
+    public static <T> Transformer<T, T> getInstance(Transformer<? super T, ? extends T>[] transformers) {
         FunctorUtils.validate(transformers);
         if (transformers.length == 0) {
-            return NOPTransformer.INSTANCE;
+            return NOPTransformer.<T>getInstance();
         }
         transformers = FunctorUtils.copy(transformers);
-        return new ChainedTransformer(transformers);
+        return new ChainedTransformer<T>(transformers);
     }
     
     /**
@@ -68,21 +67,18 @@ public class ChainedTransformer implements Transformer, Serializable {
      * @throws IllegalArgumentException if the transformers collection is null
      * @throws IllegalArgumentException if any transformer in the collection is null
      */
-    public static Transformer getInstance(Collection transformers) {
+    @SuppressWarnings("unchecked")
+    public static <T> Transformer<T, T> getInstance(Collection<? extends Transformer<T, T>> transformers) {
         if (transformers == null) {
             throw new IllegalArgumentException("Transformer collection must not be null");
         }
         if (transformers.size() == 0) {
-            return NOPTransformer.INSTANCE;
+            return NOPTransformer.<T>getInstance();
         }
         // convert to array like this to guarantee iterator() ordering
-        Transformer[] cmds = new Transformer[transformers.size()];
-        int i = 0;
-        for (Iterator it = transformers.iterator(); it.hasNext();) {
-            cmds[i++] = (Transformer) it.next();
-        }
+        Transformer<T, T>[] cmds = transformers.toArray(new Transformer[transformers.size()]);
         FunctorUtils.validate(cmds);
-        return new ChainedTransformer(cmds);
+        return new ChainedTransformer<T>(cmds);
     }
 
     /**
@@ -93,12 +89,13 @@ public class ChainedTransformer implements Transformer, Serializable {
      * @return the <code>chained</code> transformer
      * @throws IllegalArgumentException if either transformer is null
      */
-    public static Transformer getInstance(Transformer transformer1, Transformer transformer2) {
+    @SuppressWarnings("unchecked")
+    public static <T> Transformer<T, T> getInstance(Transformer<? super T, ? extends T> transformer1, Transformer<? super T, ? extends T> transformer2) {
         if (transformer1 == null || transformer2 == null) {
             throw new IllegalArgumentException("Transformers must not be null");
         }
-        Transformer[] transformers = new Transformer[] { transformer1, transformer2 };
-        return new ChainedTransformer(transformers);
+        Transformer<? super T, ? extends T>[] transformers = new Transformer[] { transformer1, transformer2 };
+        return new ChainedTransformer<T>(transformers);
     }
 
     /**
@@ -107,7 +104,7 @@ public class ChainedTransformer implements Transformer, Serializable {
      * 
      * @param transformers  the transformers to chain, not copied, no nulls
      */
-    public ChainedTransformer(Transformer[] transformers) {
+    public ChainedTransformer(Transformer<? super T, ? extends T>[] transformers) {
         super();
         iTransformers = transformers;
     }
@@ -118,7 +115,7 @@ public class ChainedTransformer implements Transformer, Serializable {
      * @param object  the input object passed to the first transformer
      * @return the transformed result
      */
-    public Object transform(Object object) {
+    public T transform(T object) {
         for (int i = 0; i < iTransformers.length; i++) {
             object = iTransformers[i].transform(object);
         }
@@ -130,7 +127,7 @@ public class ChainedTransformer implements Transformer, Serializable {
      * @return the transformers
      * @since Commons Collections 3.1
      */
-    public Transformer[] getTransformers() {
+    public Transformer<? super T, ? extends T>[] getTransformers() {
         return iTransformers;
     }
 

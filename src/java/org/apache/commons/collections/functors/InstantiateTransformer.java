@@ -31,27 +31,36 @@ import org.apache.commons.collections.Transformer;
  *
  * @author Stephen Colebourne
  */
-public class InstantiateTransformer implements Transformer, Serializable {
+public class InstantiateTransformer<T> implements Transformer<Class<? extends T>, T>, Serializable {
 
     /** The serial version */
     private static final long serialVersionUID = 3786388740793356347L;
-    
+
     /** Singleton instance that uses the no arg constructor */
-    public static final Transformer NO_ARG_INSTANCE = new InstantiateTransformer();
+    public static final Transformer<Class<?>, ?> NO_ARG_INSTANCE = new InstantiateTransformer<Object>();
 
     /** The constructor parameter types */
-    private final Class[] iParamTypes;
+    private final Class<?>[] iParamTypes;
     /** The constructor arguments */
     private final Object[] iArgs;
 
     /**
+     * Get a typed no-arg instance.
+     * @param <T>
+     * @return Transformer<Class<? extends T>, T>
+     */
+    public static <T> Transformer<Class<? extends T>, T> getInstance() {
+        return new InstantiateTransformer<T>();
+    }
+
+    /**
      * Transformer method that performs validation.
-     * 
+     *
      * @param paramTypes  the constructor parameter types
      * @param args  the constructor arguments
      * @return an instantiate transformer
      */
-    public static Transformer getInstance(Class[] paramTypes, Object[] args) {
+    public static <T> Transformer<Class<? extends T>, T> getInstance(Class<?>[] paramTypes, Object[] args) {
         if (((paramTypes == null) && (args != null))
             || ((paramTypes != null) && (args == null))
             || ((paramTypes != null) && (args != null) && (paramTypes.length != args.length))) {
@@ -59,12 +68,11 @@ public class InstantiateTransformer implements Transformer, Serializable {
         }
 
         if (paramTypes == null || paramTypes.length == 0) {
-            return NO_ARG_INSTANCE;
-        } else {
-            paramTypes = (Class[]) paramTypes.clone();
-            args = (Object[]) args.clone();
+            return new InstantiateTransformer<T>();
         }
-        return new InstantiateTransformer(paramTypes, args);
+        paramTypes = (Class[]) paramTypes.clone();
+        args = (Object[]) args.clone();
+        return new InstantiateTransformer<T>(paramTypes, args);
     }
 
     /**
@@ -79,11 +87,11 @@ public class InstantiateTransformer implements Transformer, Serializable {
     /**
      * Constructor that performs no validation.
      * Use <code>getInstance</code> if you want that.
-     * 
+     *
      * @param paramTypes  the constructor parameter types, not cloned
      * @param args  the constructor arguments, not cloned
      */
-    public InstantiateTransformer(Class[] paramTypes, Object[] args) {
+    public InstantiateTransformer(Class<?>[] paramTypes, Object[] args) {
         super();
         iParamTypes = paramTypes;
         iArgs = args;
@@ -91,20 +99,19 @@ public class InstantiateTransformer implements Transformer, Serializable {
 
     /**
      * Transforms the input Class object to a result by instantiation.
-     * 
+     *
      * @param input  the input object to transform
      * @return the transformed result
      */
-    public Object transform(Object input) {
+    public T transform(Class<? extends T> input) {
         try {
             if (input instanceof Class == false) {
                 throw new FunctorException(
                     "InstantiateTransformer: Input object was not an instanceof Class, it was a "
                         + (input == null ? "null object" : input.getClass().getName()));
             }
-            Constructor con = ((Class) input).getConstructor(iParamTypes);
+            Constructor<? extends T> con = input.getConstructor(iParamTypes);
             return con.newInstance(iArgs);
-
         } catch (NoSuchMethodException ex) {
             throw new FunctorException("InstantiateTransformer: The constructor must exist and be public ");
         } catch (InstantiationException ex) {

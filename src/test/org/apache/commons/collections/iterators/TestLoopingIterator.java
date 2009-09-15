@@ -48,7 +48,7 @@ public class TestLoopingIterator extends TestCase {
      */
     public void testConstructorEx() throws Exception {
         try {
-            new LoopingIterator(null);
+            new LoopingIterator<Object>(null);
             fail();
         } catch (NullPointerException ex) {
         }
@@ -59,8 +59,8 @@ public class TestLoopingIterator extends TestCase {
      * @throws Exception  If something unexpected occurs.
      */
     public void testLooping0() throws Exception {
-        List list = new ArrayList();
-        LoopingIterator loop = new LoopingIterator(list);
+        List<Object> list = new ArrayList<Object>();
+        LoopingIterator<Object> loop = new LoopingIterator<Object>(list);
         assertTrue("hasNext should return false", loop.hasNext() == false);
 
         try {
@@ -75,8 +75,8 @@ public class TestLoopingIterator extends TestCase {
      * @throws Exception  If something unexpected occurs.
      */
     public void testLooping1() throws Exception {
-        List list = new ArrayList(Arrays.asList(new String[] { "a" }));
-        LoopingIterator loop = new LoopingIterator(list);
+        List<String> list = Arrays.asList(new String[] { "a" });
+        LoopingIterator<String> loop = new LoopingIterator<String>(list);
 
         assertTrue("1st hasNext should return true", loop.hasNext());
         assertEquals("a", loop.next());
@@ -94,8 +94,8 @@ public class TestLoopingIterator extends TestCase {
      * @throws Exception  If something unexpected occurs.
      */
     public void testLooping2() throws Exception {
-        List list = new ArrayList(Arrays.asList(new String[] { "a", "b" }));
-        LoopingIterator loop = new LoopingIterator(list);
+        List<String> list = Arrays.asList(new String[] { "a", "b" });
+        LoopingIterator<String> loop = new LoopingIterator<String>(list);
 
         assertTrue("1st hasNext should return true", loop.hasNext());
         assertEquals("a", loop.next());
@@ -113,8 +113,8 @@ public class TestLoopingIterator extends TestCase {
      * @throws Exception  If something unexpected occurs.
      */
     public void testLooping3() throws Exception {
-        List list = new ArrayList(Arrays.asList(new String[] { "a", "b", "c" }));
-        LoopingIterator loop = new LoopingIterator(list);
+        List<String> list = Arrays.asList(new String[] { "a", "b", "c" });
+        LoopingIterator<String> loop = new LoopingIterator<String>(list);
 
         assertTrue("1st hasNext should return true", loop.hasNext());
         assertEquals("a", loop.next());
@@ -135,8 +135,8 @@ public class TestLoopingIterator extends TestCase {
      * @throws Exception  If something unexpected occurs.
      */
     public void testRemoving1() throws Exception {
-        List list = new ArrayList(Arrays.asList(new String[] { "a", "b", "c" }));
-        LoopingIterator loop = new LoopingIterator(list);
+        List<String> list = new ArrayList<String>(Arrays.asList(new String[] { "a", "b", "c" }));
+        LoopingIterator<String> loop = new LoopingIterator<String>(list);
         assertEquals("list should have 3 elements.", 3, list.size());
 
         assertTrue("1st hasNext should return true", loop.hasNext());
@@ -167,8 +167,8 @@ public class TestLoopingIterator extends TestCase {
      * @throws Exception  If something unexpected occurs.
      */
     public void testReset() throws Exception {
-        List list = new ArrayList(Arrays.asList(new String[] { "a", "b", "c" }));
-        LoopingIterator loop = new LoopingIterator(list);
+        List<String> list = Arrays.asList(new String[] { "a", "b", "c" });
+        LoopingIterator<String> loop = new LoopingIterator<String>(list);
 
         assertEquals("a", loop.next());
         assertEquals("b", loop.next());
@@ -189,8 +189,8 @@ public class TestLoopingIterator extends TestCase {
      * @throws Exception  If something unexpected occurs.
      */
     public void testSize() throws Exception {
-        List list = new ArrayList(Arrays.asList(new String[] { "a", "b", "c" }));
-        LoopingIterator loop = new LoopingIterator(list);
+        List<String> list = new ArrayList<String>(Arrays.asList(new String[] { "a", "b", "c" }));
+        LoopingIterator<String> loop = new LoopingIterator<String>(list);
 
         assertEquals(3, loop.size());
         loop.next();

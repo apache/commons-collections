@@ -17,7 +17,6 @@
 package org.apache.commons.collections.map;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import junit.framework.Test;
 import junit.textui.TestRunner;
@@ -25,6 +24,7 @@ import junit.textui.TestRunner;
 import org.apache.commons.collections.BoundedMap;
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.KeyValue;
+import org.apache.commons.collections.OrderedMap;
 
 /**
  * JUnit tests.
@@ -33,13 +33,12 @@ import org.apache.commons.collections.KeyValue;
  *
  * @author Stephen Colebourne
  */
-public class TestSingletonMap extends AbstractTestOrderedMap {
+public class TestSingletonMap<K, V> extends AbstractTestOrderedMap<K, V> {
 
     private static final Integer ONE = new Integer(1);
     private static final Integer TWO = new Integer(2);
     private static final String TEN = "10";
-    private static final String TWENTY = "20";
-        
+
     public TestSingletonMap(String testName) {
         super(testName);
     }
@@ -47,18 +46,18 @@ public class TestSingletonMap extends AbstractTestOrderedMap {
     public static void main(String[] args) {
         TestRunner.run(suite());
     }
-    
+
     public static Test suite() {
         return BulkTest.makeSuite(TestSingletonMap.class);
     }
 
     //-----------------------------------------------------------------------
-    public Map makeEmptyMap() {
+    public OrderedMap<K, V> makeObject() {
         // need an empty singleton map, but thats not possible
         // use a ridiculous fake instead to make the tests pass
-        return UnmodifiableOrderedMap.decorate(ListOrderedMap.decorate(new HashMap()));
+        return UnmodifiableOrderedMap.decorate(ListOrderedMap.decorate(new HashMap<K, V>()));
     }
-    
+
     public String[] ignoredTests() {
         // the ridiculous map above still doesn't pass these tests
         // but its not relevant, so we ignore them
@@ -68,9 +67,9 @@ public class TestSingletonMap extends AbstractTestOrderedMap {
         };
     }
 
-
-    public Map makeFullMap() {
-        return new SingletonMap(ONE, TWO);
+    @SuppressWarnings("unchecked")
+    public SingletonMap<K, V> makeFullMap() {
+        return new SingletonMap<K, V>((K) ONE, (V) TWO);
     }
 
     public boolean isPutAddSupported() {
@@ -81,30 +80,33 @@ public class TestSingletonMap extends AbstractTestOrderedMap {
         return false;
     }
 
-    public Object[] getSampleKeys() {
-        return new Object[] {ONE};
+    @SuppressWarnings("unchecked")
+    public K[] getSampleKeys() {
+        return (K[]) new Object[] { ONE };
     }
 
-    public Object[] getSampleValues() {
-        return new Object[] {TWO};
+    @SuppressWarnings("unchecked")
+    public V[] getSampleValues() {
+        return (V[]) new Object[] { TWO };
     }
 
-    public Object[] getNewSampleValues() {
-        return new Object[] {TEN};
+    @SuppressWarnings("unchecked")
+    public V[] getNewSampleValues() {
+        return (V[]) new Object[] { TEN };
     }
 
     //-----------------------------------------------------------------------
     public void testClone() {
-        SingletonMap map = new SingletonMap(ONE, TWO);
+        SingletonMap<K, V> map = makeFullMap();
         assertEquals(1, map.size());
-        SingletonMap cloned = (SingletonMap) map.clone();
+        SingletonMap<K, V> cloned = map.clone();
         assertEquals(1, cloned.size());
         assertEquals(true, cloned.containsKey(ONE));
         assertEquals(true, cloned.containsValue(TWO));
     }
 
     public void testKeyValue() {
-        SingletonMap map = new SingletonMap(ONE, TWO);
+        SingletonMap<K, V> map = makeFullMap();
         assertEquals(1, map.size());
         assertEquals(ONE, map.getKey());
         assertEquals(TWO, map.getValue());
@@ -112,7 +114,7 @@ public class TestSingletonMap extends AbstractTestOrderedMap {
     }
 
     public void testBoundedMap() {
-        SingletonMap map = new SingletonMap(ONE, TWO);
+        SingletonMap<K, V> map = makeFullMap();
         assertEquals(1, map.size());
         assertEquals(true, map.isFull());
         assertEquals(1, map.maxSize());
@@ -123,16 +125,16 @@ public class TestSingletonMap extends AbstractTestOrderedMap {
 //    public BulkTest bulkTestMapIterator() {
 //        return new TestFlatMapIterator();
 //    }
-//    
+//
 //    public class TestFlatMapIterator extends AbstractTestOrderedMapIterator {
 //        public TestFlatMapIterator() {
 //            super("TestFlatMapIterator");
 //        }
-//        
+//
 //        public Object[] addSetValues() {
 //            return TestSingletonMap.this.getNewSampleValues();
 //        }
-//        
+//
 //        public boolean supportsRemove() {
 //            return TestSingletonMap.this.isRemoveSupported();
 //        }
@@ -150,23 +152,23 @@ public class TestSingletonMap extends AbstractTestOrderedMap {
 //            resetFull();
 //            return ((Flat3Map) TestSingletonMap.this.map).mapIterator();
 //        }
-//        
+//
 //        public Map getMap() {
 //            // assumes makeFullMapIterator() called first
 //            return TestSingletonMap.this.map;
 //        }
-//        
+//
 //        public Map getConfirmedMap() {
 //            // assumes makeFullMapIterator() called first
 //            return TestSingletonMap.this.confirmed;
 //        }
-//        
+//
 //        public void verify() {
 //            super.verify();
 //            TestSingletonMap.this.verify();
 //        }
 //    }
-    
+
     public String getCompatibilityVersion() {
         return "3.1";
     }

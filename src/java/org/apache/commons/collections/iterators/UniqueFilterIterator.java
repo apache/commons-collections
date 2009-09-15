@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 import org.apache.commons.collections.functors.UniquePredicate;
 
-/** 
+/**
  * A FilterIterator which only returns "unique" Objects.  Internally,
  * the Iterator maintains a Set of objects it has already encountered,
  * and duplicate Objects are skipped.
@@ -30,16 +30,16 @@ import org.apache.commons.collections.functors.UniquePredicate;
  *
  * @author Morgan Delagrange
  */
-public class UniqueFilterIterator extends FilterIterator {
-       
+public class UniqueFilterIterator<E> extends FilterIterator<E> {
+
     //-------------------------------------------------------------------------
-    
+
     /**
      *  Constructs a new <code>UniqueFilterIterator</code>.
      *
      *  @param iterator  the iterator to use
      */
-    public UniqueFilterIterator( Iterator iterator ) {
+    public UniqueFilterIterator(Iterator<E> iterator) {
         super(iterator, UniquePredicate.getInstance());
     }
 

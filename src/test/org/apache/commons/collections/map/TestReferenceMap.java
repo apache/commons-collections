@@ -22,16 +22,17 @@ import java.util.Map;
 import junit.framework.Test;
 
 import org.apache.commons.collections.BulkTest;
+import org.apache.commons.collections.map.AbstractReferenceMap.ReferenceStrength;
 
 /**
- * Tests for ReferenceMap. 
+ * Tests for ReferenceMap.
  *
  * @version $Revision$ $Date$
  *
  * @author Paul Jack
  * @author Guilhem Lavaux
  */
-public class TestReferenceMap extends AbstractTestIterableMap {
+public class TestReferenceMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     public TestReferenceMap(String testName) {
         super(testName);
@@ -46,9 +47,8 @@ public class TestReferenceMap extends AbstractTestIterableMap {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Map makeEmptyMap() {
-        ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
-        return map;
+    public ReferenceMap<K, V> makeObject() {
+        return new ReferenceMap<K, V>(ReferenceStrength.WEAK, ReferenceStrength.WEAK);
     }
 
     public boolean isAllowNullKey() {
@@ -64,6 +64,7 @@ public class TestReferenceMap extends AbstractTestIterableMap {
     }
 
     //-----------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
     public void testNullHandling() {
         resetFull();
         assertEquals(null, map.get(null));
@@ -78,11 +79,11 @@ public class TestReferenceMap extends AbstractTestIterableMap {
             fail();
         } catch (NullPointerException ex) {}
         try {
-            map.put(new Object(), null);
+            map.put((K) new Object(), null);
             fail();
         } catch (NullPointerException ex) {}
         try {
-            map.put(null, new Object());
+            map.put(null, (V) new Object());
             fail();
         } catch (NullPointerException ex) {}
     }
@@ -198,19 +199,20 @@ public class TestReferenceMap extends AbstractTestIterableMap {
     }
 */
 
-    WeakReference keyReference;
-    WeakReference valueReference;
+    WeakReference<K> keyReference;
+    WeakReference<V> valueReference;
 
-    public Map buildRefMap() {
-        Object key = new Object();
-        Object value = new Object();
-        
-        keyReference = new WeakReference(key);
-        valueReference = new WeakReference(value);
-        
-        Map testMap = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.HARD, true);
+    @SuppressWarnings("unchecked")
+    public Map<K, V> buildRefMap() {
+        K key = (K) new Object();
+        V value = (V) new Object();
+
+        keyReference = new WeakReference<K>(key);
+        valueReference = new WeakReference<V>(value);
+
+        Map<K, V> testMap = new ReferenceMap<K, V>(ReferenceStrength.WEAK, ReferenceStrength.HARD, true);
         testMap.put(key, value);
- 
+
         assertEquals("In map", value, testMap.get(key));
         assertNotNull("Weak reference released early (1)", keyReference.get());
         assertNotNull("Weak reference released early (2)", valueReference.get());
@@ -220,29 +222,29 @@ public class TestReferenceMap extends AbstractTestIterableMap {
     /** Tests whether purge values setting works */
     public void testPurgeValues() throws Exception {
         // many thanks to Juozas Baliuka for suggesting this method
-        Map testMap = buildRefMap();
+        Map<K, V> testMap = buildRefMap();
 
         int iterations = 0;
         int bytz = 2;
-        while(true) {
+        while (true) {
             System.gc();
-            if(iterations++ > 50){
+            if (iterations++ > 50) {
                 fail("Max iterations reached before resource released.");
             }
             testMap.isEmpty();
-            if( 
-                keyReference.get() == null &&
-                valueReference.get() == null) {
+            if (keyReference.get() == null && valueReference.get() == null) {
                 break;
-                
+
             } else {
                 // create garbage:
-                byte[] b =  new byte[bytz];
+                @SuppressWarnings("unused")
+                byte[] b = new byte[bytz];
                 bytz = bytz * 2;
             }
         }
     }
 
+    @SuppressWarnings("unused")
     private static void gc() {
         try {
             // trigger GC

@@ -30,11 +30,14 @@ import java.io.PrintWriter;
  */
 public class FunctorException extends RuntimeException {
     
+    /** Serialization version */
+    private static final long serialVersionUID = 9139387246344345475L;
+
     /**
      * Does JDK support nested exceptions
      */
     private static final boolean JDK_SUPPORTS_NESTED;
-    
+
     static {
         boolean flag = false;
         try {
@@ -45,7 +48,7 @@ public class FunctorException extends RuntimeException {
         }
         JDK_SUPPORTS_NESTED = flag;
     }
-    
+
     /**
      * Root cause of the exception
      */

@@ -19,6 +19,8 @@ package org.apache.commons.collections.comparators;
 import java.io.Serializable;
 import java.util.Comparator;
 
+import org.apache.commons.collections.ComparatorUtils;
+
 /**
  * Reverses the order of another comparator by reversing the arguments
  * to its {@link #compare(Object, Object) compare} method.
@@ -30,13 +32,13 @@ import java.util.Comparator;
  *
  * @see java.util.Collections#reverseOrder()
  */
-public class ReverseComparator implements Comparator, Serializable {
+public class ReverseComparator<E> implements Comparator<E>, Serializable {
 
     /** Serialization version from Collections 2.0. */
     private static final long serialVersionUID = 2858887242028539265L;
 
     /** The comparator being decorated. */
-    private Comparator comparator;
+    private Comparator<E> comparator;
 
     //-----------------------------------------------------------------------
     /**
@@ -60,12 +62,9 @@ public class ReverseComparator implements Comparator, Serializable {
      * 
      * @param comparator Comparator to reverse
      */
-    public ReverseComparator(Comparator comparator) {
-        if(comparator != null) {
-            this.comparator = comparator;
-        } else {
-            this.comparator = ComparableComparator.getInstance();
-        }
+    @SuppressWarnings("unchecked")
+    public ReverseComparator(Comparator<E> comparator) {
+        this.comparator = comparator == null ? ComparatorUtils.NATURAL_COMPARATOR : comparator;
     }
 
     //-----------------------------------------------------------------------
@@ -76,7 +75,7 @@ public class ReverseComparator implements Comparator, Serializable {
      * @param obj2  the second object to compare
      * @return negative if obj1 is less, positive if greater, zero if equal
      */
-    public int compare(Object obj1, Object obj2) {
+    public int compare(E obj1, E obj2) {
         return comparator.compare(obj2, obj1);
     }
 
@@ -109,16 +108,17 @@ public class ReverseComparator implements Comparator, Serializable {
      * @since Commons Collections 3.0
      */
     public boolean equals(Object object) {
-        if(this == object) {
+        if (this == object) {
             return true;
-        } else if(null == object) {
-            return false;
-        } else if(object.getClass().equals(this.getClass())) {
-            ReverseComparator thatrc = (ReverseComparator)object;
-            return comparator.equals(thatrc.comparator);
-        } else {
+        }
+        if (null == object) {
             return false;
         }
+        if (object.getClass().equals(this.getClass())) {
+            ReverseComparator<?> thatrc = (ReverseComparator<?>) object;
+            return comparator.equals(thatrc.comparator);
+        }
+        return false;
     }
 
 }

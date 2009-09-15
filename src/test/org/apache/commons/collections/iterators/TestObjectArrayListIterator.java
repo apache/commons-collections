@@ -17,7 +17,6 @@
 package org.apache.commons.collections.iterators;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
@@ -31,7 +30,7 @@ import junit.framework.TestSuite;
  *
  * @author Neil O'Toole
  */
-public class TestObjectArrayListIterator extends TestObjectArrayIterator {
+public class TestObjectArrayListIterator<E> extends TestObjectArrayIterator<E> {
 
     public TestObjectArrayListIterator(String testName) {
         super(testName);
@@ -41,16 +40,18 @@ public class TestObjectArrayListIterator extends TestObjectArrayIterator {
         return new TestSuite(TestObjectArrayListIterator.class);
     }
 
-    public Iterator makeEmptyIterator() {
-        return new ObjectArrayListIterator(new Object[0]);
+    @SuppressWarnings("unchecked")
+    public ObjectArrayListIterator<E> makeEmptyIterator() {
+        return new ObjectArrayListIterator<E>((E[]) new Object[0]);
     }
 
-    public Iterator makeFullIterator() {
-        return new ObjectArrayListIterator(testArray);
+    @SuppressWarnings("unchecked")
+    public ObjectArrayListIterator<E> makeObject() {
+        return new ObjectArrayListIterator<E>((E[]) testArray);
     }
 
-    public ListIterator makeArrayListIterator(Object[] array) {
-        return new ObjectArrayListIterator(array);
+    public ObjectArrayListIterator<E> makeArrayListIterator(E[] array) {
+        return new ObjectArrayListIterator<E>(array);
     }
 
     /**
@@ -58,7 +59,7 @@ public class TestObjectArrayListIterator extends TestObjectArrayIterator {
      * <code>previous()</code>.
      */
     public void testListIterator() {
-        ListIterator iter = (ListIterator) makeFullIterator();
+        ListIterator<E> iter = makeObject();
 
         // TestArrayIterator#testIterator() has already tested the iterator forward,
         //  now we need to test it in reverse
@@ -78,7 +79,7 @@ public class TestObjectArrayListIterator extends TestObjectArrayIterator {
         assertTrue("Iterator should now be empty", !iter.hasPrevious());
 
         try {
-            Object testValue = iter.previous();
+            iter.previous();
         } catch (Exception e) {
             assertTrue(
                 "NoSuchElementException must be thrown",
@@ -90,27 +91,28 @@ public class TestObjectArrayListIterator extends TestObjectArrayIterator {
     /**
      * Tests the {@link java.util.ListIterator#set} operation.
      */
+    @SuppressWarnings("unchecked")
     public void testListIteratorSet() {
         String[] testData = new String[] { "a", "b", "c" };
 
         String[] result = new String[] { "0", "1", "2" };
 
-        ListIterator iter = (ListIterator) makeArrayListIterator(testData);
+        ListIterator<E> iter = makeArrayListIterator((E[]) testData);
         int x = 0;
 
         while (iter.hasNext()) {
             iter.next();
-            iter.set(Integer.toString(x));
+            iter.set((E) Integer.toString(x));
             x++;
         }
 
         assertTrue("The two arrays should have the same value, i.e. {0,1,2}", Arrays.equals(testData, result));
 
         // a call to set() before a call to next() or previous() should throw an IllegalStateException
-        iter = makeArrayListIterator(testArray);
+        iter = makeArrayListIterator((E[]) testArray);
 
         try {
-            iter.set("should fail");
+            iter.set((E) "should fail");
             fail("ListIterator#set should fail if next() or previous() have not yet been called.");
         } catch (IllegalStateException e) {
             // expected

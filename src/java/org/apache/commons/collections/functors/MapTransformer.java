@@ -30,57 +30,57 @@ import org.apache.commons.collections.Transformer;
  *
  * @author Stephen Colebourne
  */
-public final class MapTransformer implements Transformer, Serializable {
+public final class MapTransformer<I, O> implements Transformer<I, O>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 862391807045468939L;
-    
+
     /** The map of data to lookup in */
-    private final Map iMap;
+    private final Map<? super I, ? extends O> iMap;
 
     /**
      * Factory to create the transformer.
      * <p>
      * If the map is null, a transformer that always returns null is returned.
-     * 
+     *
      * @param map the map, not cloned
      * @return the transformer
      */
-    public static Transformer getInstance(Map map) {
+    public static <I, O> Transformer<I, O> getInstance(Map<? super I, ? extends O> map) {
         if (map == null) {
-            return ConstantTransformer.NULL_INSTANCE;
+            return ConstantTransformer.<I, O>getNullInstance();
         }
-        return new MapTransformer(map);
+        return new MapTransformer<I, O>(map);
     }
 
     /**
      * Constructor that performs no validation.
      * Use <code>getInstance</code> if you want that.
-     * 
+     *
      * @param map  the map to use for lookup, not cloned
      */
-    private MapTransformer(Map map) {
+    private MapTransformer(Map<? super I, ? extends O> map) {
         super();
         iMap = map;
     }
 
     /**
      * Transforms the input to result by looking it up in a <code>Map</code>.
-     * 
+     *
      * @param input  the input object to transform
      * @return the transformed result
      */
-    public Object transform(Object input) {
+    public O transform(I input) {
         return iMap.get(input);
     }
 
     /**
      * Gets the map to lookup in.
-     * 
+     *
      * @return the map
      * @since Commons Collections 3.1
      */
-    public Map getMap() {
+    public Map<? super I, ? extends O> getMap() {
         return iMap;
     }
 

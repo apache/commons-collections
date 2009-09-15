@@ -36,15 +36,15 @@ import org.apache.commons.collections.Predicate;
  * @author Mauricio S. Moura
  * @author Morgan Delagrange
  */
-public class TestIteratorChain extends AbstractTestIterator {
+public class TestIteratorChain extends AbstractTestIterator<String> {
 
     protected String[] testArray = {
         "One", "Two", "Three", "Four", "Five", "Six"
     };
 
-    protected List list1 = null;
-    protected List list2 = null;
-    protected List list3 = null;
+    protected List<String> list1 = null;
+    protected List<String> list2 = null;
+    protected List<String> list3 = null;
 
     public static Test suite() {
         return new TestSuite(TestIteratorChain.class);
@@ -55,24 +55,24 @@ public class TestIteratorChain extends AbstractTestIterator {
     }
 
     public void setUp() {
-        list1 = new ArrayList();
+        list1 = new ArrayList<String>();
         list1.add("One");
         list1.add("Two");
         list1.add("Three");
-        list2 = new ArrayList();
+        list2 = new ArrayList<String>();
         list2.add("Four");
-        list3 = new ArrayList();
+        list3 = new ArrayList<String>();
         list3.add("Five");
         list3.add("Six");        
     }
 
-    public Iterator makeEmptyIterator() {
-        ArrayList list = new ArrayList();
-        return new IteratorChain(list.iterator());
+    public IteratorChain<String> makeEmptyIterator() {
+        ArrayList<String> list = new ArrayList<String>();
+        return new IteratorChain<String>(list.iterator());
     }
 
-    public Iterator makeFullIterator() {
-        IteratorChain chain = new IteratorChain();
+    public IteratorChain<String> makeObject() {
+        IteratorChain<String> chain = new IteratorChain<String>();
 
         chain.addIterator(list1.iterator());
         chain.addIterator(list2.iterator());
@@ -81,18 +81,18 @@ public class TestIteratorChain extends AbstractTestIterator {
     }
 
     public void testIterator() {
-        Iterator iter = (Iterator) makeFullIterator();
-        for ( int i = 0; i < testArray.length; i++ ) {
+        Iterator<String> iter = makeObject();
+        for (int i = 0; i < testArray.length; i++) {
             Object testValue = testArray[i];            
             Object iterValue = iter.next();
 
             assertEquals( "Iteration value is correct", testValue, iterValue );
         }
 
-        assertTrue("Iterator should now be empty", ! iter.hasNext() );
+        assertTrue("Iterator should now be empty", !iter.hasNext());
 
         try {
-            Object testValue = iter.next();
+            iter.next();
         } catch (Exception e) {
             assertTrue("NoSuchElementException must be thrown", 
                        e.getClass().equals((new NoSuchElementException()).getClass()));
@@ -101,38 +101,34 @@ public class TestIteratorChain extends AbstractTestIterator {
 
     public void testRemoveFromFilteredIterator() {
 
-        final Predicate myPredicate = new Predicate() {
-            public boolean evaluate( Object object ) {
-                Integer i = (Integer) object;
-                if (i.compareTo(new Integer(4)) < 0)
-                    return true;
-                return false;
+        final Predicate<Integer> myPredicate = new Predicate<Integer>() {
+            public boolean evaluate(Integer i) {
+                return i.compareTo(new Integer(4)) < 0;
             }
         };
 
-        List list1 = new ArrayList();
-        List list2 = new ArrayList();
+        List<Integer> list1 = new ArrayList<Integer>();
+        List<Integer> list2 = new ArrayList<Integer>();
 
         list1.add(new Integer(1));
         list1.add(new Integer(2));
         list2.add(new Integer(3));
         list2.add(new Integer(4)); // will be ignored by the predicate
 
-        Iterator it1 = IteratorUtils.filteredIterator(list1.iterator(), myPredicate );
-        Iterator it2 = IteratorUtils.filteredIterator(list2.iterator(), myPredicate );
+        Iterator<Integer> it1 = IteratorUtils.filteredIterator(list1.iterator(), myPredicate);
+        Iterator<Integer> it2 = IteratorUtils.filteredIterator(list2.iterator(), myPredicate);
 
-        Iterator it = IteratorUtils.chainedIterator(it1, it2);
+        Iterator<Integer> it = IteratorUtils.chainedIterator(it1, it2);
         while (it.hasNext()) {
             it.next();
             it.remove();
         }
-        assertEquals( 0, list1.size() );
-        assertEquals( 1, list2.size() );
-
+        assertEquals(0, list1.size());
+        assertEquals(1, list2.size());
     }
     
     public void testRemove() {
-        Iterator iter = (Iterator) makeFullIterator();
+        Iterator<String> iter = makeObject();
 
         try {
             iter.remove();
@@ -141,13 +137,13 @@ public class TestIteratorChain extends AbstractTestIterator {
 
         }
 
-        for ( int i = 0; i < testArray.length; i++ ) {
-            Object testValue = testArray[i];            
-            Object iterValue = iter.next();
+        for (int i = 0; i < testArray.length; i++) {
+            String testValue = testArray[i];            
+            String iterValue = iter.next();
 
-            assertEquals( "Iteration value is correct", testValue, iterValue );
+            assertEquals("Iteration value is correct", testValue, iterValue);
 
-            if (! iterValue.equals("Four")) {
+            if (!iterValue.equals("Four")) {
                 iter.remove();
             }
         }
@@ -158,12 +154,12 @@ public class TestIteratorChain extends AbstractTestIterator {
     }
 
     public void testFirstIteratorIsEmptyBug() {
-        List empty = new ArrayList();
-        List notEmpty = new ArrayList();
+        List<String> empty = new ArrayList<String>();
+        List<String> notEmpty = new ArrayList<String>();
         notEmpty.add("A");
         notEmpty.add("B");
         notEmpty.add("C");
-        IteratorChain chain = new IteratorChain();
+        IteratorChain<String> chain = new IteratorChain<String>();
         chain.addIterator(empty.iterator());
         chain.addIterator(notEmpty.iterator());
         assertTrue("should have next",chain.hasNext());
@@ -176,7 +172,7 @@ public class TestIteratorChain extends AbstractTestIterator {
     }
     
     public void testEmptyChain() {
-        IteratorChain chain = new IteratorChain();
+        IteratorChain<Object> chain = new IteratorChain<Object>();
         assertEquals(false, chain.hasNext());
         try {
             chain.next();

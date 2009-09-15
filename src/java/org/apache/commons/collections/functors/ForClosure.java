@@ -28,7 +28,7 @@ import org.apache.commons.collections.Closure;
  *
  * @author Stephen Colebourne
  */
-public class ForClosure implements Closure, Serializable {
+public class ForClosure<E> implements Closure<E>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -1190120533393621674L;
@@ -36,7 +36,7 @@ public class ForClosure implements Closure, Serializable {
     /** The number of times to loop */
     private final int iCount;
     /** The closure to call */
-    private final Closure iClosure;
+    private final Closure<? super E> iClosure;
 
     /**
      * Factory method that performs validation.
@@ -48,14 +48,15 @@ public class ForClosure implements Closure, Serializable {
      * @param closure  the closure to execute, not null
      * @return the <code>for</code> closure
      */
-    public static Closure getInstance(int count, Closure closure) {
+    @SuppressWarnings("unchecked")
+    public static <E> Closure<E> getInstance(int count, Closure<? super E> closure) {
         if (count <= 0 || closure == null) {
-            return NOPClosure.INSTANCE;
+            return NOPClosure.<E>getInstance();
         }
         if (count == 1) {
-            return closure;
+            return (Closure<E>) closure;
         }
-        return new ForClosure(count, closure);
+        return new ForClosure<E>(count, closure);
     }
 
     /**
@@ -65,7 +66,7 @@ public class ForClosure implements Closure, Serializable {
      * @param count  the number of times to execute the closure
      * @param closure  the closure to execute, not null
      */
-    public ForClosure(int count, Closure closure) {
+    public ForClosure(int count, Closure<? super E> closure) {
         super();
         iCount = count;
         iClosure = closure;
@@ -76,7 +77,7 @@ public class ForClosure implements Closure, Serializable {
      * 
      * @param input  the input object
      */
-    public void execute(Object input) {
+    public void execute(E input) {
         for (int i = 0; i < iCount; i++) {
             iClosure.execute(input);
         }
@@ -88,7 +89,7 @@ public class ForClosure implements Closure, Serializable {
      * @return the closure
      * @since Commons Collections 3.1
      */
-    public Closure getClosure() {
+    public Closure<? super E> getClosure() {
         return iClosure;
     }
 

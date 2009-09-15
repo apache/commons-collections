@@ -31,7 +31,7 @@ import org.apache.commons.collections.map.HashedMap;
  *
  * @author Stephen Colebourne
  */
-public class TestMapBackedSet extends AbstractTestSet {
+public class TestMapBackedSet<E> extends AbstractTestSet<E> {
 
     public TestMapBackedSet(String testName) {
         super(testName);
@@ -46,8 +46,8 @@ public class TestMapBackedSet extends AbstractTestSet {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Set makeEmptySet() {
-        return MapBackedSet.decorate(new HashedMap());
+    public Set<E> makeObject() {
+        return MapBackedSet.decorate(new HashedMap<E, Object>());
     }
 
     public String getCompatibilityVersion() {

@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections.bidimap;
 
-import java.io.Serializable;
-
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
@@ -26,7 +24,6 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
-import org.apache.commons.collections.BidiMap;
 import org.apache.commons.collections.KeyValue;
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.OrderedBidiMap;
@@ -34,6 +31,7 @@ import org.apache.commons.collections.OrderedIterator;
 import org.apache.commons.collections.OrderedMapIterator;
 import org.apache.commons.collections.iterators.EmptyOrderedMapIterator;
 import org.apache.commons.collections.keyvalue.UnmodifiableMapEntry;
+import static org.apache.commons.collections.bidimap.TreeBidiMap.DataElement.*;
 
 /**
  * Red-Black tree-based implementation of BidiMap where all objects added
@@ -74,33 +72,47 @@ import org.apache.commons.collections.keyvalue.UnmodifiableMapEntry;
  *
  * @author Marc Johnson
  * @author Stephen Colebourne
+ * @author Matt Benson
  */
-public class TreeBidiMap implements OrderedBidiMap, Serializable {
+public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> implements OrderedBidiMap<K, V> {
 
-    private static final int KEY = 0;
-    private static final int VALUE = 1;
-    private static final int MAPENTRY = 2;
-    private static final int INVERSEMAPENTRY = 3;
-    private static final int SUM_OF_INDICES = KEY + VALUE;
-    private static final int FIRST_INDEX = 0;
-    private static final int NUMBER_OF_INDICES = 2;
-    private static final String[] dataName = new String[] { "key", "value" };
-    
-    private Node[] rootNode = new Node[2];
+    static enum DataElement {
+        KEY("key"), VALUE("value");
+
+        private final String description;
+
+        /**
+         * Create a new TreeBidiMap.DataElement.
+         */
+        private DataElement(String description) {
+            this.description = description;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public String toString() {
+            return description;
+        }
+    }
+
+    private Node<K, V>[] rootNode;
     private int nodeCount = 0;
     private int modifications = 0;
-
-    private transient Set keySet;
-    private transient Set valuesSet;
-    private transient Set entrySet;
-    private transient TreeBidiMap.Inverse inverse = null;
+    private Set<K> keySet;
+    private Set<V> valuesSet;
+    private Set<Map.Entry<K, V>> entrySet;
+    private Inverse inverse = null;
 
     //-----------------------------------------------------------------------
     /**
      * Constructs a new empty TreeBidiMap.
      */
+    @SuppressWarnings("unchecked")
     public TreeBidiMap() {
         super();
+        rootNode = new Node[2];
     }
 
     /**
@@ -111,8 +123,8 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      *  not Comparable or are not mutually comparable
      * @throws NullPointerException if any key or value in the map is null
      */
-    public TreeBidiMap(final Map map) {
-        super();
+    public TreeBidiMap(final Map<K, V> map) {
+        this();
         putAll(map);
     }
 
@@ -147,11 +159,11 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      */
     public boolean containsKey(final Object key) {
         checkKey(key);
-        return (lookup((Comparable) key, KEY) != null);
+        return (lookupKey(key) != null);
     }
 
     /**
-     * Checks whether this map contains a mapping for the specified value.
+     * Checks whether this map contains the a mapping for the specified value.
      * <p>
      * The value must implement <code>Comparable</code>.
      *
@@ -162,7 +174,7 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      */
     public boolean containsValue(final Object value) {
         checkValue(value);
-        return (lookup((Comparable) value, VALUE) != null);
+        return (lookupValue(value) != null);
     }
 
     /**
@@ -177,8 +189,10 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @throws ClassCastException if the key is of an inappropriate type
      * @throws NullPointerException if the key is null
      */
-    public Object get(final Object key) {
-        return doGet((Comparable) key, KEY);
+    public V get(final Object key) {
+        checkKey(key);
+        Node<K, V> node = lookupKey(key);
+        return node == null ? null : node.getValue();
     }
 
     /**
@@ -191,7 +205,7 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      *  BidiMap map1 = new TreeBidiMap();
      *  map.put("A","B");  // contains A mapped to B, as per Map
      *  map.put("A","C");  // contains A mapped to C, as per Map
-     * 
+     *
      *  BidiMap map2 = new TreeBidiMap();
      *  map.put("A","B");  // contains A mapped to B, as per Map
      *  map.put("C","B");  // contains C mapped to B, key A is removed
@@ -205,25 +219,25 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @throws ClassCastException if the key is of an inappropriate type
      * @throws NullPointerException if the key is null
      */
-    public Object put(final Object key, final Object value) {
-        return doPut((Comparable) key, (Comparable) value, KEY);
+    public V put(final K key, final V value) {
+        V result = get(key);
+        doPut(key, value);
+        return result;
     }
 
     /**
      * Puts all the mappings from the specified map into this map.
      * <p>
      * All keys and values must implement <code>Comparable</code>.
-     * 
+     *
      * @param map  the map to copy from
      */
-    public void putAll(Map map) {
-        Iterator it = map.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry entry = (Map.Entry) it.next();
-            put(entry.getKey(), entry.getValue());
+    public void putAll(Map<? extends K, ? extends V> map) {
+        for (Map.Entry<? extends K, ? extends V> e : map.entrySet()) {
+            put(e.getKey(), e.getValue());
         }
     }
-        
+
     /**
      * Removes the mapping for this key from this map if present.
      * <p>
@@ -235,8 +249,8 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @throws ClassCastException if the key is of an inappropriate type
      * @throws NullPointerException if the key is null
      */
-    public Object remove(final Object key) {
-        return doRemove((Comparable) key, KEY);
+    public V remove(final Object key) {
+        return doRemoveKey(key);
     }
 
     /**
@@ -246,8 +260,8 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
         modify();
 
         nodeCount = 0;
-        rootNode[KEY] = null;
-        rootNode[VALUE] = null;
+        rootNode[KEY.ordinal()] = null;
+        rootNode[VALUE.ordinal()] = null;
     }
 
     //-----------------------------------------------------------------------
@@ -263,8 +277,10 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @throws ClassCastException if the value is of an inappropriate type
      * @throws NullPointerException if the value is null
      */
-    public Object getKey(final Object value) {
-        return doGet((Comparable) value, VALUE);
+    public K getKey(final Object value) {
+        checkValue(value);
+        Node<K, V> node = lookupValue(value);
+        return node == null ? null : node.getKey();
     }
 
     /**
@@ -278,8 +294,8 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @throws ClassCastException if the value is of an inappropriate type
      * @throws NullPointerException if the value is null
      */
-    public Object removeValue(final Object value) {
-        return doRemove((Comparable) value, VALUE);
+    public K removeValue(final Object value) {
+        return doRemoveValue(value);
     }
 
     //-----------------------------------------------------------------------
@@ -289,11 +305,11 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @return the first (lowest) key currently in this sorted map
      * @throws NoSuchElementException if this map is empty
      */
-    public Object firstKey() {
+    public K firstKey() {
         if (nodeCount == 0) {
             throw new NoSuchElementException("Map is empty");
         }
-        return leastNode(rootNode[KEY], KEY).getKey();
+        return leastNode(rootNode[KEY.ordinal()], KEY).getKey();
     }
 
     /**
@@ -302,13 +318,13 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @return the last (highest) key currently in this sorted map
      * @throws NoSuchElementException if this map is empty
      */
-    public Object lastKey() {
+    public K lastKey() {
         if (nodeCount == 0) {
             throw new NoSuchElementException("Map is empty");
         }
-        return greatestNode(rootNode[KEY], KEY).getKey();
+        return greatestNode(rootNode[KEY.ordinal()], KEY).getKey();
     }
-    
+
     /**
      * Gets the next key after the one specified.
      * <p>
@@ -317,10 +333,10 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @param key the key to search for next from
      * @return the next key, null if no match or at end
      */
-    public Object nextKey(Object key) {
+    public K nextKey(K key) {
         checkKey(key);
-        Node node = nextGreater(lookup((Comparable) key, KEY), KEY);
-        return (node == null ? null : node.getKey());
+        Node<K, V> node = nextGreater(lookupKey(key), KEY);
+        return node == null ? null : node.getKey();
     }
 
     /**
@@ -331,12 +347,12 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @param key the key to search for previous from
      * @return the previous key, null if no match or at start
      */
-    public Object previousKey(Object key) {
+    public K previousKey(K key) {
         checkKey(key);
-        Node node = nextSmaller(lookup((Comparable) key, KEY), KEY);
-        return (node == null ? null : node.getKey());
+        Node<K, V> node = nextSmaller(lookupKey(key), KEY);
+        return node == null ? null : node.getKey();
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Returns a set view of the keys contained in this map in key order.
@@ -350,9 +366,9 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      *
      * @return a set view of the keys contained in this map.
      */
-    public Set keySet() {
+    public Set<K> keySet() {
         if (keySet == null) {
-            keySet = new View(this, KEY, KEY);
+            keySet = new KeyView(KEY);
         }
         return keySet;
     }
@@ -371,9 +387,9 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      *
      * @return a set view of the values contained in this map.
      */
-    public Collection values() {
+    public Collection<V> values() {
         if (valuesSet == null) {
-            valuesSet = new View(this, KEY, VALUE);
+            valuesSet = new ValueView(KEY);
         }
         return valuesSet;
     }
@@ -393,60 +409,33 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      *
      * @return a set view of the values contained in this map.
      */
-    public Set entrySet() {
+    public Set<Map.Entry<K, V>> entrySet() {
         if (entrySet == null) {
-            entrySet = new EntryView(this, KEY, MAPENTRY);
+            return new EntryView();
         }
         return entrySet;
     }
 
     //-----------------------------------------------------------------------
     /**
-     * Gets an iterator over the map entries.
-     * <p>
-     * For this map, this iterator is the fastest way to iterate over the entries.
-     * 
-     * @return an iterator
+     * {@inheritDoc}
      */
-    public MapIterator mapIterator() {
+    public OrderedMapIterator<K, V> mapIterator() {
         if (isEmpty()) {
-            return EmptyOrderedMapIterator.INSTANCE;
+            return EmptyOrderedMapIterator.<K, V>getInstance();
         }
-        return new ViewMapIterator(this, KEY);
-    }
-
-    /**
-     * Gets an ordered iterator over the map entries.
-     * <p>
-     * This iterator allows both forward and reverse iteration over the entries.
-     * 
-     * @return an iterator
-     */
-    public OrderedMapIterator orderedMapIterator() {
-        if (isEmpty()) {
-            return EmptyOrderedMapIterator.INSTANCE;
-        }
-        return new ViewMapIterator(this, KEY);
+        return new ViewMapIterator(KEY);
     }
 
     //-----------------------------------------------------------------------
     /**
      * Gets the inverse map for comparison.
-     * 
+     *
      * @return the inverse map
      */
-    public BidiMap inverseBidiMap() {
-        return inverseOrderedBidiMap();
-    }
-
-    /**
-     * Gets the inverse map for comparison.
-     * 
-     * @return the inverse map
-     */
-    public OrderedBidiMap inverseOrderedBidiMap() {
+    public OrderedBidiMap<V, K> inverseBidiMap() {
         if (inverse == null) {
-            inverse = new Inverse(this);
+            inverse = new Inverse();
         }
         return inverse;
     }
@@ -461,7 +450,7 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
     public boolean equals(Object obj) {
         return this.doEquals(obj, KEY);
     }
-    
+
     /**
      * Gets the hash code value for this map as per the API.
      *
@@ -470,61 +459,43 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
     public int hashCode() {
         return this.doHashCode(KEY);
     }
-    
+
     /**
      * Returns a string version of this Map in standard format.
-     * 
+     *
      * @return a standard format string version of the map
      */
     public String toString() {
         return this.doToString(KEY);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
-     * Common get logic, used to get by key or get by value
+     * Put logic.
      *
-     * @param obj  the key or value that we're looking for
-     * @param index  the KEY or VALUE int
-     * @return the key (if the value was mapped) or the value (if the
-     *         key was mapped); null if we couldn't find the specified
-     *         object
-     */
-    private Object doGet(final Comparable obj, final int index) {
-        checkNonNullComparable(obj, index);
-        Node node = lookup(obj, index);
-        return ((node == null) ? null : node.getData(oppositeIndex(index)));
-    }
-
-    /**
-     * Common put logic, differing only in the return value.
-     * 
      * @param key  the key, always the main map key
      * @param value  the value, always the main map value
-     * @param index  the KEY or VALUE int, for the return value only
-     * @return the previously mapped value
      */
-    private Object doPut(final Comparable key, final Comparable value, final int index) {
+    private void doPut(final K key, final V value) {
         checkKeyAndValue(key, value);
-        
+
         // store previous and remove previous mappings
-        Object prev = (index == KEY ? doGet(key, KEY) :  doGet(value, VALUE));
-        doRemove(key, KEY);
-        doRemove(value, VALUE);
-        
-        Node node = rootNode[KEY];
+        doRemoveKey(key);
+        doRemoveValue(value);
+
+        Node<K, V> node = rootNode[KEY.ordinal()];
         if (node == null) {
             // map is empty
-            Node root = new Node(key, value);
-            rootNode[KEY] = root;
-            rootNode[VALUE] = root;
+            Node<K, V> root = new Node<K, V>(key, value);
+            rootNode[KEY.ordinal()] = root;
+            rootNode[VALUE.ordinal()] = root;
             grow();
-            
+
         } else {
             // add new mapping
             while (true) {
-                int cmp = compare(key, node.getData(KEY));
-        
+                int cmp = compare(key, node.getKey());
+
                 if (cmp == 0) {
                     // shouldn't happen
                     throw new IllegalArgumentException("Cannot store a duplicate key (\"" + key + "\") in this Map");
@@ -532,54 +503,51 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
                     if (node.getLeft(KEY) != null) {
                         node = node.getLeft(KEY);
                     } else {
-                        Node newNode = new Node(key, value);
-        
+                        Node<K, V> newNode = new Node<K, V>(key, value);
+
                         insertValue(newNode);
                         node.setLeft(newNode, KEY);
                         newNode.setParent(node, KEY);
                         doRedBlackInsert(newNode, KEY);
                         grow();
-        
+
                         break;
                     }
                 } else { // cmp > 0
                     if (node.getRight(KEY) != null) {
                         node = node.getRight(KEY);
                     } else {
-                        Node newNode = new Node(key, value);
-        
+                        Node<K, V> newNode = new Node<K, V>(key, value);
+
                         insertValue(newNode);
                         node.setRight(newNode, KEY);
                         newNode.setParent(node, KEY);
                         doRedBlackInsert(newNode, KEY);
                         grow();
-        
+
                         break;
                     }
                 }
             }
         }
-        return prev;
     }
 
-    /**
-     * Remove by object (remove by key or remove by value)
-     *
-     * @param o the key, or value, that we're looking for
-     * @param index  the KEY or VALUE int
-     *
-     * @return the key, if remove by value, or the value, if remove by
-     *         key. null if the specified key or value could not be
-     *         found
-     */
-    private Object doRemove(final Comparable o, final int index) {
-        Node node = lookup(o, index);
-        Object rval = null;
-        if (node != null) {
-            rval = node.getData(oppositeIndex(index));
-            doRedBlackDelete(node);
+    private V doRemoveKey(Object key) {
+        Node<K, V> node = lookupKey(key);
+        if (node == null) {
+            return null;
         }
-        return rval;
+        doRedBlackDelete(node);
+        return node.getValue();
+    }
+
+    private K doRemoveValue(Object value) {
+        Node<K, V> node = lookupValue(value);
+        if (node == null) {
+            return null;
+        }
+        doRedBlackDelete(node);
+        return node.getKey();
     }
 
     /**
@@ -590,21 +558,30 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @return the desired Node, or null if there is no mapping of the
      *         specified data
      */
-    private Node lookup(final Comparable data, final int index) {
-        Node rval = null;
-        Node node = rootNode[index];
+    @SuppressWarnings("unchecked")
+    private <T extends Comparable<T>> Node<K, V> lookup(final Object data, final DataElement dataElement) {
+        Node<K, V> rval = null;
+        Node<K, V> node = rootNode[dataElement.ordinal()];
 
         while (node != null) {
-            int cmp = compare(data, node.getData(index));
+            int cmp = compare((T) data, (T) node.getData(dataElement));
             if (cmp == 0) {
                 rval = node;
                 break;
             } else {
-                node = (cmp < 0) ? node.getLeft(index) : node.getRight(index);
+                node = (cmp < 0) ? node.getLeft(dataElement) : node.getRight(dataElement);
             }
         }
 
         return rval;
+    }
+
+    private Node<K, V> lookupKey(Object key) {
+        return this.<K>lookup(key, KEY);
+    }
+
+    private Node<K, V> lookupValue(Object value) {
+        return this.<V>lookup(value, VALUE);
     }
 
     /**
@@ -614,14 +591,14 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @param index  the KEY or VALUE int
      * @return the specified node
      */
-    private Node nextGreater(final Node node, final int index) {
-        Node rval = null;
+    private Node<K, V> nextGreater(final Node<K, V> node, final DataElement dataElement) {
+        Node<K, V> rval = null;
         if (node == null) {
             rval = null;
-        } else if (node.getRight(index) != null) {
+        } else if (node.getRight(dataElement) != null) {
             // everything to the node's right is larger. The least of
             // the right node's descendants is the next larger node
-            rval = leastNode(node.getRight(index), index);
+            rval = leastNode(node.getRight(dataElement), dataElement);
         } else {
             // traverse up our ancestry until we find an ancestor that
             // is null or one whose left child is our ancestor. If we
@@ -629,12 +606,12 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
             // tree, and there is no greater node. Otherwise, we are
             // the largest node in the subtree on that ancestor's left
             // ... and that ancestor is the next greatest node
-            Node parent = node.getParent(index);
-            Node child = node;
+            Node<K, V> parent = node.getParent(dataElement);
+            Node<K, V> child = node;
 
-            while ((parent != null) && (child == parent.getRight(index))) {
+            while ((parent != null) && (child == parent.getRight(dataElement))) {
                 child = parent;
-                parent = parent.getParent(index);
+                parent = parent.getParent(dataElement);
             }
             rval = parent;
         }
@@ -648,14 +625,14 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @param index  the KEY or VALUE int
      * @return the specified node
      */
-    private Node nextSmaller(final Node node, final int index) {
-        Node rval = null;
+    private Node<K, V> nextSmaller(final Node<K, V> node, final DataElement dataElement) {
+        Node<K, V> rval = null;
         if (node == null) {
             rval = null;
-        } else if (node.getLeft(index) != null) {
+        } else if (node.getLeft(dataElement) != null) {
             // everything to the node's left is smaller. The greatest of
             // the left node's descendants is the next smaller node
-            rval = greatestNode(node.getLeft(index), index);
+            rval = greatestNode(node.getLeft(dataElement), dataElement);
         } else {
             // traverse up our ancestry until we find an ancestor that
             // is null or one whose right child is our ancestor. If we
@@ -663,12 +640,12 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
             // tree, and there is no greater node. Otherwise, we are
             // the largest node in the subtree on that ancestor's right
             // ... and that ancestor is the next greatest node
-            Node parent = node.getParent(index);
-            Node child = node;
+            Node<K, V> parent = node.getParent(dataElement);
+            Node<K, V> child = node;
 
-            while ((parent != null) && (child == parent.getLeft(index))) {
+            while ((parent != null) && (child == parent.getLeft(dataElement))) {
                 child = parent;
-                parent = parent.getParent(index);
+                parent = parent.getParent(dataElement);
             }
             rval = parent;
         }
@@ -676,18 +653,6 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
     }
 
     //-----------------------------------------------------------------------
-    /**
-     * Get the opposite index of the specified index
-     *
-     * @param index  the KEY or VALUE int
-     * @return VALUE (if KEY was specified), else KEY
-     */
-    private static int oppositeIndex(final int index) {
-        // old trick ... to find the opposite of a value, m or n,
-        // subtract the value from the sum of the two possible
-        // values. (m + n) - m = n; (m + n) - n = m
-        return SUM_OF_INDICES - index;
-    }
 
     /**
      * Compare two objects
@@ -698,7 +663,7 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @return negative value if o1 &lt; o2; 0 if o1 == o2; positive
      *         value if o1 &gt; o2
      */
-    private static int compare(final Comparable o1, final Comparable o2) {
+    private static <T extends Comparable<T>> int compare(final T o1, final T o2) {
         return o1.compareTo(o2);
     }
 
@@ -710,11 +675,11 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @return the smallest node, from the specified node, in the
      *         specified mapping
      */
-    private static Node leastNode(final Node node, final int index) {
-        Node rval = node;
+    private Node<K, V> leastNode(final Node<K, V> node, final DataElement dataElement) {
+        Node<K, V> rval = node;
         if (rval != null) {
-            while (rval.getLeft(index) != null) {
-                rval = rval.getLeft(index);
+            while (rval.getLeft(dataElement) != null) {
+                rval = rval.getLeft(dataElement);
             }
         }
         return rval;
@@ -727,11 +692,11 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @param index  the KEY or VALUE int
      * @return the greatest node, from the specified node
      */
-    private static Node greatestNode(final Node node, final int index) {
-        Node rval = node;
+    private Node<K, V> greatestNode(final Node<K, V> node, final DataElement dataElement) {
+        Node<K, V> rval = node;
         if (rval != null) {
-            while (rval.getRight(index) != null) {
-                rval = rval.getRight(index);
+            while (rval.getRight(dataElement) != null) {
+                rval = rval.getRight(dataElement);
             }
         }
         return rval;
@@ -745,13 +710,13 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @param to the node whose color we're changing; may be null
      * @param index  the KEY or VALUE int
      */
-    private static void copyColor(final Node from, final Node to, final int index) {
+    private void copyColor(final Node<K, V> from, final Node<K, V> to, final DataElement dataElement) {
         if (to != null) {
             if (from == null) {
                 // by default, make it black
-                to.setBlack(index);
+                to.setBlack(dataElement);
             } else {
-                to.copyColor(from, index);
+                to.copyColor(from, dataElement);
             }
         }
     }
@@ -763,8 +728,8 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @param node the node (may be null) in question
      * @param index  the KEY or VALUE int
      */
-    private static boolean isRed(final Node node, final int index) {
-        return ((node == null) ? false : node.isRed(index));
+    private static boolean isRed(final Node<?, ?> node, final DataElement dataElement) {
+        return node != null && node.isRed(dataElement);
     }
 
     /**
@@ -774,8 +739,8 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @param node the node (may be null) in question
      * @param index  the KEY or VALUE int
      */
-    private static boolean isBlack(final Node node, final int index) {
-        return ((node == null) ? true : node.isBlack(index));
+    private static boolean isBlack(final Node<?, ?> node, final DataElement dataElement) {
+        return node == null || node.isBlack(dataElement);
     }
 
     /**
@@ -784,9 +749,9 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @param node the node (may be null) in question
      * @param index  the KEY or VALUE int
      */
-    private static void makeRed(final Node node, final int index) {
+    private static void makeRed(final Node<?, ?> node, final DataElement dataElement) {
         if (node != null) {
-            node.setRed(index);
+            node.setRed(dataElement);
         }
     }
 
@@ -796,9 +761,9 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @param node the node (may be null) in question
      * @param index  the KEY or VALUE int
      */
-    private static void makeBlack(final Node node, final int index) {
+    private static void makeBlack(final Node<?, ?> node, final DataElement dataElement) {
         if (node != null) {
-            node.setBlack(index);
+            node.setBlack(dataElement);
         }
     }
 
@@ -809,8 +774,8 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @param node the node (may be null) in question
      * @param index  the KEY or VALUE int
      */
-    private static Node getGrandParent(final Node node, final int index) {
-        return getParent(getParent(node, index), index);
+    private Node<K, V> getGrandParent(final Node<K, V> node, final DataElement dataElement) {
+        return getParent(getParent(node, dataElement), dataElement);
     }
 
     /**
@@ -820,8 +785,8 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @param node the node (may be null) in question
      * @param index  the KEY or VALUE int
      */
-    private static Node getParent(final Node node, final int index) {
-        return ((node == null) ? null : node.getParent(index));
+    private Node<K, V> getParent(final Node<K, V> node, final DataElement dataElement) {
+        return node == null ? null : node.getParent(dataElement);
     }
 
     /**
@@ -831,8 +796,8 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @param node the node (may be null) in question
      * @param index  the KEY or VALUE int
      */
-    private static Node getRightChild(final Node node, final int index) {
-        return (node == null) ? null : node.getRight(index);
+    private Node<K, V> getRightChild(final Node<K, V> node, final DataElement dataElement) {
+        return node == null ? null : node.getRight(dataElement);
     }
 
     /**
@@ -842,44 +807,8 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @param node the node (may be null) in question
      * @param index  the KEY or VALUE int
      */
-    private static Node getLeftChild(final Node node, final int index) {
-        return (node == null) ? null : node.getLeft(index);
-    }
-
-    /**
-     * is this node its parent's left child? mind you, the node, or
-     * its parent, may not exist. no problem. if the node doesn't
-     * exist ... it's its non-existent parent's left child. If the
-     * node does exist but has no parent ... no, we're not the
-     * non-existent parent's left child. Otherwise (both the specified
-     * node AND its parent exist), check.
-     *
-     * @param node the node (may be null) in question
-     * @param index  the KEY or VALUE int
-     */
-    private static boolean isLeftChild(final Node node, final int index) {
-        return (node == null)
-            ? true
-            : ((node.getParent(index) == null) ?
-                false : (node == node.getParent(index).getLeft(index)));
-    }
-
-    /**
-     * is this node its parent's right child? mind you, the node, or
-     * its parent, may not exist. no problem. if the node doesn't
-     * exist ... it's its non-existent parent's right child. If the
-     * node does exist but has no parent ... no, we're not the
-     * non-existent parent's right child. Otherwise (both the
-     * specified node AND its parent exist), check.
-     *
-     * @param node the node (may be null) in question
-     * @param index  the KEY or VALUE int
-     */
-    private static boolean isRightChild(final Node node, final int index) {
-        return (node == null)
-            ? true
-            : ((node.getParent(index) == null) ? 
-                false : (node == node.getParent(index).getRight(index)));
+    private Node<K, V> getLeftChild(final Node<K, V> node, final DataElement dataElement) {
+        return node == null ? null : node.getLeft(dataElement);
     }
 
     /**
@@ -888,26 +817,26 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @param node the node to be rotated
      * @param index  the KEY or VALUE int
      */
-    private void rotateLeft(final Node node, final int index) {
-        Node rightChild = node.getRight(index);
-        node.setRight(rightChild.getLeft(index), index);
+    private void rotateLeft(final Node<K, V> node, final DataElement dataElement) {
+        Node<K, V> rightChild = node.getRight(dataElement);
+        node.setRight(rightChild.getLeft(dataElement), dataElement);
 
-        if (rightChild.getLeft(index) != null) {
-            rightChild.getLeft(index).setParent(node, index);
+        if (rightChild.getLeft(dataElement) != null) {
+            rightChild.getLeft(dataElement).setParent(node, dataElement);
         }
-        rightChild.setParent(node.getParent(index), index);
-        
-        if (node.getParent(index) == null) {
+        rightChild.setParent(node.getParent(dataElement), dataElement);
+
+        if (node.getParent(dataElement) == null) {
             // node was the root ... now its right child is the root
-            rootNode[index] = rightChild;
-        } else if (node.getParent(index).getLeft(index) == node) {
-            node.getParent(index).setLeft(rightChild, index);
+            rootNode[dataElement.ordinal()] = rightChild;
+        } else if (node.getParent(dataElement).getLeft(dataElement) == node) {
+            node.getParent(dataElement).setLeft(rightChild, dataElement);
         } else {
-            node.getParent(index).setRight(rightChild, index);
+            node.getParent(dataElement).setRight(rightChild, dataElement);
         }
 
-        rightChild.setLeft(node, index);
-        node.setParent(rightChild, index);
+        rightChild.setLeft(node, dataElement);
+        node.setParent(rightChild, dataElement);
     }
 
     /**
@@ -916,25 +845,25 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @param node the node to be rotated
      * @param index  the KEY or VALUE int
      */
-    private void rotateRight(final Node node, final int index) {
-        Node leftChild = node.getLeft(index);
-        node.setLeft(leftChild.getRight(index), index);
-        if (leftChild.getRight(index) != null) {
-            leftChild.getRight(index).setParent(node, index);
+    private void rotateRight(final Node<K, V> node, final DataElement dataElement) {
+        Node<K, V> leftChild = node.getLeft(dataElement);
+        node.setLeft(leftChild.getRight(dataElement), dataElement);
+        if (leftChild.getRight(dataElement) != null) {
+            leftChild.getRight(dataElement).setParent(node, dataElement);
         }
-        leftChild.setParent(node.getParent(index), index);
+        leftChild.setParent(node.getParent(dataElement), dataElement);
 
-        if (node.getParent(index) == null) {
+        if (node.getParent(dataElement) == null) {
             // node was the root ... now its left child is the root
-            rootNode[index] = leftChild;
-        } else if (node.getParent(index).getRight(index) == node) {
-            node.getParent(index).setRight(leftChild, index);
+            rootNode[dataElement.ordinal()] = leftChild;
+        } else if (node.getParent(dataElement).getRight(dataElement) == node) {
+            node.getParent(dataElement).setRight(leftChild, dataElement);
         } else {
-            node.getParent(index).setLeft(leftChild, index);
+            node.getParent(dataElement).setLeft(leftChild, dataElement);
         }
 
-        leftChild.setRight(node, index);
-        node.setParent(leftChild, index);
+        leftChild.setRight(node, dataElement);
+        node.setParent(leftChild, dataElement);
     }
 
     /**
@@ -942,67 +871,69 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * implementation, though it's barely recognizable any more
      *
      * @param insertedNode the node to be inserted
-     * @param index  the KEY or VALUE int
+     * @param dataElement  the KEY or VALUE int
      */
-    private void doRedBlackInsert(final Node insertedNode, final int index) {
-        Node currentNode = insertedNode;
-        makeRed(currentNode, index);
+    private void doRedBlackInsert(final Node<K, V> insertedNode, final DataElement dataElement) {
+        Node<K, V> currentNode = insertedNode;
+        makeRed(currentNode, dataElement);
 
         while ((currentNode != null)
-            && (currentNode != rootNode[index])
-            && (isRed(currentNode.getParent(index), index))) {
-            if (isLeftChild(getParent(currentNode, index), index)) {
-                Node y = getRightChild(getGrandParent(currentNode, index), index);
+            && (currentNode != rootNode[dataElement.ordinal()])
+            && (isRed(currentNode.getParent(dataElement), dataElement))) {
+            if (currentNode.isLeftChild(dataElement)) {
+                Node<K, V> y = getRightChild(getGrandParent(currentNode, dataElement), dataElement);
 
-                if (isRed(y, index)) {
-                    makeBlack(getParent(currentNode, index), index);
-                    makeBlack(y, index);
-                    makeRed(getGrandParent(currentNode, index), index);
+                if (isRed(y, dataElement)) {
+                    makeBlack(getParent(currentNode, dataElement), dataElement);
+                    makeBlack(y, dataElement);
+                    makeRed(getGrandParent(currentNode, dataElement), dataElement);
 
-                    currentNode = getGrandParent(currentNode, index);
+                    currentNode = getGrandParent(currentNode, dataElement);
                 } else {
-                    if (isRightChild(currentNode, index)) {
-                        currentNode = getParent(currentNode, index);
+                    //dead code?
+                    if (currentNode.isRightChild(dataElement)) {
+                        currentNode = getParent(currentNode, dataElement);
 
-                        rotateLeft(currentNode, index);
+                        rotateLeft(currentNode, dataElement);
                     }
 
-                    makeBlack(getParent(currentNode, index), index);
-                    makeRed(getGrandParent(currentNode, index), index);
+                    makeBlack(getParent(currentNode, dataElement), dataElement);
+                    makeRed(getGrandParent(currentNode, dataElement), dataElement);
 
-                    if (getGrandParent(currentNode, index) != null) {
-                        rotateRight(getGrandParent(currentNode, index), index);
+                    if (getGrandParent(currentNode, dataElement) != null) {
+                        rotateRight(getGrandParent(currentNode, dataElement), dataElement);
                     }
                 }
             } else {
 
                 // just like clause above, except swap left for right
-                Node y = getLeftChild(getGrandParent(currentNode, index), index);
+                Node<K, V> y = getLeftChild(getGrandParent(currentNode, dataElement), dataElement);
 
-                if (isRed(y, index)) {
-                    makeBlack(getParent(currentNode, index), index);
-                    makeBlack(y, index);
-                    makeRed(getGrandParent(currentNode, index), index);
+                if (isRed(y, dataElement)) {
+                    makeBlack(getParent(currentNode, dataElement), dataElement);
+                    makeBlack(y, dataElement);
+                    makeRed(getGrandParent(currentNode, dataElement), dataElement);
 
-                    currentNode = getGrandParent(currentNode, index);
+                    currentNode = getGrandParent(currentNode, dataElement);
                 } else {
-                    if (isLeftChild(currentNode, index)) {
-                        currentNode = getParent(currentNode, index);
+                    //dead code?
+                    if (currentNode.isLeftChild(dataElement)) {
+                        currentNode = getParent(currentNode, dataElement);
 
-                        rotateRight(currentNode, index);
+                        rotateRight(currentNode, dataElement);
                     }
 
-                    makeBlack(getParent(currentNode, index), index);
-                    makeRed(getGrandParent(currentNode, index), index);
+                    makeBlack(getParent(currentNode, dataElement), dataElement);
+                    makeRed(getGrandParent(currentNode, dataElement), dataElement);
 
-                    if (getGrandParent(currentNode, index) != null) {
-                        rotateLeft(getGrandParent(currentNode, index), index);
+                    if (getGrandParent(currentNode, dataElement) != null) {
+                        rotateLeft(getGrandParent(currentNode, dataElement), dataElement);
                     }
                 }
             }
         }
 
-        makeBlack(rootNode[index], index);
+        makeBlack(rootNode[dataElement.ordinal()], dataElement);
     }
 
     /**
@@ -1011,57 +942,57 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      *
      * @param deletedNode the node to be deleted
      */
-    private void doRedBlackDelete(final Node deletedNode) {
-        for (int index = FIRST_INDEX; index < NUMBER_OF_INDICES; index++) {
+    private void doRedBlackDelete(final Node<K, V> deletedNode) {
+        for (DataElement dataElement : DataElement.values()) {
             // if deleted node has both left and children, swap with
             // the next greater node
-            if ((deletedNode.getLeft(index) != null) && (deletedNode.getRight(index) != null)) {
-                swapPosition(nextGreater(deletedNode, index), deletedNode, index);
+            if ((deletedNode.getLeft(dataElement) != null) && (deletedNode.getRight(dataElement) != null)) {
+                swapPosition(nextGreater(deletedNode, dataElement), deletedNode, dataElement);
             }
 
-            Node replacement =
-                ((deletedNode.getLeft(index) != null) ? deletedNode.getLeft(index) : deletedNode.getRight(index));
+            Node<K, V> replacement =
+                ((deletedNode.getLeft(dataElement) != null) ? deletedNode.getLeft(dataElement) : deletedNode.getRight(dataElement));
 
             if (replacement != null) {
-                replacement.setParent(deletedNode.getParent(index), index);
+                replacement.setParent(deletedNode.getParent(dataElement), dataElement);
 
-                if (deletedNode.getParent(index) == null) {
-                    rootNode[index] = replacement;
-                } else if (deletedNode == deletedNode.getParent(index).getLeft(index)) {
-                    deletedNode.getParent(index).setLeft(replacement, index);
+                if (deletedNode.getParent(dataElement) == null) {
+                    rootNode[dataElement.ordinal()] = replacement;
+                } else if (deletedNode == deletedNode.getParent(dataElement).getLeft(dataElement)) {
+                    deletedNode.getParent(dataElement).setLeft(replacement, dataElement);
                 } else {
-                    deletedNode.getParent(index).setRight(replacement, index);
+                    deletedNode.getParent(dataElement).setRight(replacement, dataElement);
                 }
 
-                deletedNode.setLeft(null, index);
-                deletedNode.setRight(null, index);
-                deletedNode.setParent(null, index);
+                deletedNode.setLeft(null, dataElement);
+                deletedNode.setRight(null, dataElement);
+                deletedNode.setParent(null, dataElement);
 
-                if (isBlack(deletedNode, index)) {
-                    doRedBlackDeleteFixup(replacement, index);
+                if (isBlack(deletedNode, dataElement)) {
+                    doRedBlackDeleteFixup(replacement, dataElement);
                 }
             } else {
 
                 // replacement is null
-                if (deletedNode.getParent(index) == null) {
+                if (deletedNode.getParent(dataElement) == null) {
 
                     // empty tree
-                    rootNode[index] = null;
+                    rootNode[dataElement.ordinal()] = null;
                 } else {
 
                     // deleted node had no children
-                    if (isBlack(deletedNode, index)) {
-                        doRedBlackDeleteFixup(deletedNode, index);
+                    if (isBlack(deletedNode, dataElement)) {
+                        doRedBlackDeleteFixup(deletedNode, dataElement);
                     }
 
-                    if (deletedNode.getParent(index) != null) {
-                        if (deletedNode == deletedNode.getParent(index).getLeft(index)) {
-                            deletedNode.getParent(index).setLeft(null, index);
+                    if (deletedNode.getParent(dataElement) != null) {
+                        if (deletedNode == deletedNode.getParent(dataElement).getLeft(dataElement)) {
+                            deletedNode.getParent(dataElement).setLeft(null, dataElement);
                         } else {
-                            deletedNode.getParent(index).setRight(null, index);
+                            deletedNode.getParent(dataElement).setRight(null, dataElement);
                         }
 
-                        deletedNode.setParent(null, index);
+                        deletedNode.setParent(null, dataElement);
                     }
                 }
             }
@@ -1076,80 +1007,80 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * perfectly balanced -- perfect balancing takes longer)
      *
      * @param replacementNode the node being replaced
-     * @param index  the KEY or VALUE int
+     * @param dataElement  the KEY or VALUE int
      */
-    private void doRedBlackDeleteFixup(final Node replacementNode, final int index) {
-        Node currentNode = replacementNode;
+    private void doRedBlackDeleteFixup(final Node<K, V> replacementNode, final DataElement dataElement) {
+        Node<K, V> currentNode = replacementNode;
 
-        while ((currentNode != rootNode[index]) && (isBlack(currentNode, index))) {
-            if (isLeftChild(currentNode, index)) {
-                Node siblingNode = getRightChild(getParent(currentNode, index), index);
+        while ((currentNode != rootNode[dataElement.ordinal()]) && (isBlack(currentNode, dataElement))) {
+            if (currentNode.isLeftChild(dataElement)) {
+                Node<K, V> siblingNode = getRightChild(getParent(currentNode, dataElement), dataElement);
 
-                if (isRed(siblingNode, index)) {
-                    makeBlack(siblingNode, index);
-                    makeRed(getParent(currentNode, index), index);
-                    rotateLeft(getParent(currentNode, index), index);
+                if (isRed(siblingNode, dataElement)) {
+                    makeBlack(siblingNode, dataElement);
+                    makeRed(getParent(currentNode, dataElement), dataElement);
+                    rotateLeft(getParent(currentNode, dataElement), dataElement);
 
-                    siblingNode = getRightChild(getParent(currentNode, index), index);
+                    siblingNode = getRightChild(getParent(currentNode, dataElement), dataElement);
                 }
 
-                if (isBlack(getLeftChild(siblingNode, index), index)
-                    && isBlack(getRightChild(siblingNode, index), index)) {
-                    makeRed(siblingNode, index);
+                if (isBlack(getLeftChild(siblingNode, dataElement), dataElement)
+                    && isBlack(getRightChild(siblingNode, dataElement), dataElement)) {
+                    makeRed(siblingNode, dataElement);
 
-                    currentNode = getParent(currentNode, index);
+                    currentNode = getParent(currentNode, dataElement);
                 } else {
-                    if (isBlack(getRightChild(siblingNode, index), index)) {
-                        makeBlack(getLeftChild(siblingNode, index), index);
-                        makeRed(siblingNode, index);
-                        rotateRight(siblingNode, index);
+                    if (isBlack(getRightChild(siblingNode, dataElement), dataElement)) {
+                        makeBlack(getLeftChild(siblingNode, dataElement), dataElement);
+                        makeRed(siblingNode, dataElement);
+                        rotateRight(siblingNode, dataElement);
 
-                        siblingNode = getRightChild(getParent(currentNode, index), index);
+                        siblingNode = getRightChild(getParent(currentNode, dataElement), dataElement);
                     }
 
-                    copyColor(getParent(currentNode, index), siblingNode, index);
-                    makeBlack(getParent(currentNode, index), index);
-                    makeBlack(getRightChild(siblingNode, index), index);
-                    rotateLeft(getParent(currentNode, index), index);
+                    copyColor(getParent(currentNode, dataElement), siblingNode, dataElement);
+                    makeBlack(getParent(currentNode, dataElement), dataElement);
+                    makeBlack(getRightChild(siblingNode, dataElement), dataElement);
+                    rotateLeft(getParent(currentNode, dataElement), dataElement);
 
-                    currentNode = rootNode[index];
+                    currentNode = rootNode[dataElement.ordinal()];
                 }
             } else {
-                Node siblingNode = getLeftChild(getParent(currentNode, index), index);
+                Node<K, V> siblingNode = getLeftChild(getParent(currentNode, dataElement), dataElement);
 
-                if (isRed(siblingNode, index)) {
-                    makeBlack(siblingNode, index);
-                    makeRed(getParent(currentNode, index), index);
-                    rotateRight(getParent(currentNode, index), index);
+                if (isRed(siblingNode, dataElement)) {
+                    makeBlack(siblingNode, dataElement);
+                    makeRed(getParent(currentNode, dataElement), dataElement);
+                    rotateRight(getParent(currentNode, dataElement), dataElement);
 
-                    siblingNode = getLeftChild(getParent(currentNode, index), index);
+                    siblingNode = getLeftChild(getParent(currentNode, dataElement), dataElement);
                 }
 
-                if (isBlack(getRightChild(siblingNode, index), index)
-                    && isBlack(getLeftChild(siblingNode, index), index)) {
-                    makeRed(siblingNode, index);
+                if (isBlack(getRightChild(siblingNode, dataElement), dataElement)
+                    && isBlack(getLeftChild(siblingNode, dataElement), dataElement)) {
+                    makeRed(siblingNode, dataElement);
 
-                    currentNode = getParent(currentNode, index);
+                    currentNode = getParent(currentNode, dataElement);
                 } else {
-                    if (isBlack(getLeftChild(siblingNode, index), index)) {
-                        makeBlack(getRightChild(siblingNode, index), index);
-                        makeRed(siblingNode, index);
-                        rotateLeft(siblingNode, index);
+                    if (isBlack(getLeftChild(siblingNode, dataElement), dataElement)) {
+                        makeBlack(getRightChild(siblingNode, dataElement), dataElement);
+                        makeRed(siblingNode, dataElement);
+                        rotateLeft(siblingNode, dataElement);
 
-                        siblingNode = getLeftChild(getParent(currentNode, index), index);
+                        siblingNode = getLeftChild(getParent(currentNode, dataElement), dataElement);
                     }
 
-                    copyColor(getParent(currentNode, index), siblingNode, index);
-                    makeBlack(getParent(currentNode, index), index);
-                    makeBlack(getLeftChild(siblingNode, index), index);
-                    rotateRight(getParent(currentNode, index), index);
+                    copyColor(getParent(currentNode, dataElement), siblingNode, dataElement);
+                    makeBlack(getParent(currentNode, dataElement), dataElement);
+                    makeBlack(getLeftChild(siblingNode, dataElement), dataElement);
+                    rotateRight(getParent(currentNode, dataElement), dataElement);
 
-                    currentNode = rootNode[index];
+                    currentNode = rootNode[dataElement.ordinal()];
                 }
             }
         }
 
-        makeBlack(currentNode, index);
+        makeBlack(currentNode, dataElement);
     }
 
     /**
@@ -1159,94 +1090,94 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      *
      * @param x one node
      * @param y another node
-     * @param index  the KEY or VALUE int
+     * @param dataElement  the KEY or VALUE int
      */
-    private void swapPosition(final Node x, final Node y, final int index) {
+    private void swapPosition(final Node<K, V> x, final Node<K, V> y, final DataElement dataElement) {
         // Save initial values.
-        Node xFormerParent = x.getParent(index);
-        Node xFormerLeftChild = x.getLeft(index);
-        Node xFormerRightChild = x.getRight(index);
-        Node yFormerParent = y.getParent(index);
-        Node yFormerLeftChild = y.getLeft(index);
-        Node yFormerRightChild = y.getRight(index);
-        boolean xWasLeftChild = (x.getParent(index) != null) && (x == x.getParent(index).getLeft(index));
-        boolean yWasLeftChild = (y.getParent(index) != null) && (y == y.getParent(index).getLeft(index));
+        Node<K, V> xFormerParent = x.getParent(dataElement);
+        Node<K, V> xFormerLeftChild = x.getLeft(dataElement);
+        Node<K, V> xFormerRightChild = x.getRight(dataElement);
+        Node<K, V> yFormerParent = y.getParent(dataElement);
+        Node<K, V> yFormerLeftChild = y.getLeft(dataElement);
+        Node<K, V> yFormerRightChild = y.getRight(dataElement);
+        boolean xWasLeftChild = (x.getParent(dataElement) != null) && (x == x.getParent(dataElement).getLeft(dataElement));
+        boolean yWasLeftChild = (y.getParent(dataElement) != null) && (y == y.getParent(dataElement).getLeft(dataElement));
 
         // Swap, handling special cases of one being the other's parent.
         if (x == yFormerParent) { // x was y's parent
-            x.setParent(y, index);
+            x.setParent(y, dataElement);
 
             if (yWasLeftChild) {
-                y.setLeft(x, index);
-                y.setRight(xFormerRightChild, index);
+                y.setLeft(x, dataElement);
+                y.setRight(xFormerRightChild, dataElement);
             } else {
-                y.setRight(x, index);
-                y.setLeft(xFormerLeftChild, index);
+                y.setRight(x, dataElement);
+                y.setLeft(xFormerLeftChild, dataElement);
             }
         } else {
-            x.setParent(yFormerParent, index);
+            x.setParent(yFormerParent, dataElement);
 
             if (yFormerParent != null) {
                 if (yWasLeftChild) {
-                    yFormerParent.setLeft(x, index);
+                    yFormerParent.setLeft(x, dataElement);
                 } else {
-                    yFormerParent.setRight(x, index);
+                    yFormerParent.setRight(x, dataElement);
                 }
             }
 
-            y.setLeft(xFormerLeftChild, index);
-            y.setRight(xFormerRightChild, index);
+            y.setLeft(xFormerLeftChild, dataElement);
+            y.setRight(xFormerRightChild, dataElement);
         }
 
         if (y == xFormerParent) { // y was x's parent
-            y.setParent(x, index);
+            y.setParent(x, dataElement);
 
             if (xWasLeftChild) {
-                x.setLeft(y, index);
-                x.setRight(yFormerRightChild, index);
+                x.setLeft(y, dataElement);
+                x.setRight(yFormerRightChild, dataElement);
             } else {
-                x.setRight(y, index);
-                x.setLeft(yFormerLeftChild, index);
+                x.setRight(y, dataElement);
+                x.setLeft(yFormerLeftChild, dataElement);
             }
         } else {
-            y.setParent(xFormerParent, index);
+            y.setParent(xFormerParent, dataElement);
 
             if (xFormerParent != null) {
                 if (xWasLeftChild) {
-                    xFormerParent.setLeft(y, index);
+                    xFormerParent.setLeft(y, dataElement);
                 } else {
-                    xFormerParent.setRight(y, index);
+                    xFormerParent.setRight(y, dataElement);
                 }
             }
 
-            x.setLeft(yFormerLeftChild, index);
-            x.setRight(yFormerRightChild, index);
+            x.setLeft(yFormerLeftChild, dataElement);
+            x.setRight(yFormerRightChild, dataElement);
         }
 
         // Fix children's parent pointers
-        if (x.getLeft(index) != null) {
-            x.getLeft(index).setParent(x, index);
+        if (x.getLeft(dataElement) != null) {
+            x.getLeft(dataElement).setParent(x, dataElement);
         }
 
-        if (x.getRight(index) != null) {
-            x.getRight(index).setParent(x, index);
+        if (x.getRight(dataElement) != null) {
+            x.getRight(dataElement).setParent(x, dataElement);
         }
 
-        if (y.getLeft(index) != null) {
-            y.getLeft(index).setParent(y, index);
+        if (y.getLeft(dataElement) != null) {
+            y.getLeft(dataElement).setParent(y, dataElement);
         }
 
-        if (y.getRight(index) != null) {
-            y.getRight(index).setParent(y, index);
+        if (y.getRight(dataElement) != null) {
+            y.getRight(dataElement).setParent(y, dataElement);
         }
 
-        x.swapColors(y, index);
+        x.swapColors(y, dataElement);
 
         // Check if root changed
-        if (rootNode[index] == x) {
-            rootNode[index] = y;
-        } else if (rootNode[index] == y) {
-            rootNode[index] = x;
+        if (rootNode[dataElement.ordinal()] == x) {
+            rootNode[dataElement.ordinal()] = y;
+        } else if (rootNode[dataElement.ordinal()] == y) {
+            rootNode[dataElement.ordinal()] = x;
         }
     }
 
@@ -1261,12 +1192,12 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @throws NullPointerException if o is null
      * @throws ClassCastException if o is not Comparable
      */
-    private static void checkNonNullComparable(final Object o, final int index) {
+    private static void checkNonNullComparable(final Object o, final DataElement dataElement) {
         if (o == null) {
-            throw new NullPointerException(dataName[index] + " cannot be null");
+            throw new NullPointerException(dataElement + " cannot be null");
         }
         if (!(o instanceof Comparable)) {
-            throw new ClassCastException(dataName[index] + " must be Comparable");
+            throw new ClassCastException(dataElement + " must be Comparable");
         }
     }
 
@@ -1342,11 +1273,11 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @throws IllegalArgumentException if the node already exists
      *                                     in the value mapping
      */
-    private void insertValue(final Node newNode) throws IllegalArgumentException {
-        Node node = rootNode[VALUE];
+    private void insertValue(final Node<K, V> newNode) throws IllegalArgumentException {
+        Node<K, V> node = rootNode[VALUE.ordinal()];
 
         while (true) {
-            int cmp = compare(newNode.getData(VALUE), node.getData(VALUE));
+            int cmp = compare(newNode.getValue(), node.getValue());
 
             if (cmp == 0) {
                 throw new IllegalArgumentException(
@@ -1374,7 +1305,7 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
             }
         }
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Compares for equals as per the API.
@@ -1383,21 +1314,21 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @param type  the KEY or VALUE int
      * @return true if equal
      */
-    private boolean doEquals(Object obj, final int type) {
+    private boolean doEquals(Object obj, DataElement dataElement) {
         if (obj == this) {
             return true;
         }
         if (obj instanceof Map == false) {
             return false;
         }
-        Map other = (Map) obj;
+        Map<?, ?> other = (Map<?, ?>) obj;
         if (other.size() != size()) {
             return false;
         }
 
         if (nodeCount > 0) {
             try {
-                for (MapIterator it = new ViewMapIterator(this, type); it.hasNext(); ) {
+                for (MapIterator<?, ?> it = getMapIterator(dataElement); it.hasNext(); ) {
                     Object key = it.next();
                     Object value = it.getValue();
                     if (value.equals(other.get(key)) == false) {
@@ -1419,10 +1350,10 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
      * @param type  the KEY or VALUE int
      * @return the hash code value for this map
      */
-    private int doHashCode(final int type) {
+    private int doHashCode(DataElement dataElement) {
         int total = 0;
         if (nodeCount > 0) {
-            for (MapIterator it = new ViewMapIterator(this, type); it.hasNext(); ) {
+            for (MapIterator<?, ?> it = getMapIterator(dataElement); it.hasNext(); ) {
                 Object key = it.next();
                 Object value = it.getValue();
                 total += (key.hashCode() ^ value.hashCode());
@@ -1430,20 +1361,20 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
         }
         return total;
     }
-    
+
     /**
      * Gets the string form of this map as per AbstractMap.
      *
      * @param type  the KEY or VALUE int
      * @return the string form of this map
      */
-    private String doToString(final int type) {
+    private String doToString(DataElement dataElement) {
         if (nodeCount == 0) {
             return "{}";
         }
         StringBuffer buf = new StringBuffer(nodeCount * 32);
         buf.append('{');
-        MapIterator it = new ViewMapIterator(this, type);
+        MapIterator<?, ?> it = getMapIterator(dataElement);
         boolean hasNext = it.hasNext();
         while (hasNext) {
             Object key = it.next();
@@ -1462,260 +1393,400 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
         return buf.toString();
     }
 
+    private MapIterator<?, ?> getMapIterator(DataElement dataElement) {
+        switch (dataElement) {
+        case KEY:
+            return new ViewMapIterator(KEY);
+        case VALUE:
+            return new InverseViewMapIterator(VALUE);
+        default:
+            throw new IllegalArgumentException();
+        }
+    }
+
     //-----------------------------------------------------------------------
     /**
      * A view of this map.
      */
-    static class View extends AbstractSet {
-        
-        /** The parent map. */
-        protected final TreeBidiMap main;
+    abstract class View<E> extends AbstractSet<E> {
+
         /** Whether to return KEY or VALUE order. */
-        protected final int orderType;
-        /** Whether to return KEY, VALUE, MAPENTRY or INVERSEMAPENTRY data. */
-        protected final int dataType;
+        protected final DataElement orderType;
 
         /**
          * Constructor.
-         *
-         * @param main  the main map
          * @param orderType  the KEY or VALUE int for the order
-         * @param dataType  the KEY, VALUE, MAPENTRY or INVERSEMAPENTRY int
+         * @param main  the main map
          */
-        View(final TreeBidiMap main, final int orderType, final int dataType) {
+        View(final DataElement orderType) {
             super();
-            this.main = main;
             this.orderType = orderType;
-            this.dataType = dataType;
-        }
-        
-        public Iterator iterator() {
-            return new ViewIterator(main, orderType, dataType);
         }
 
         public int size() {
-            return main.size();
-        }
-
-        public boolean contains(final Object obj) {
-            checkNonNullComparable(obj, dataType);
-            return (main.lookup((Comparable) obj, dataType) != null);
-        }
-
-        public boolean remove(final Object obj) {
-            return (main.doRemove((Comparable) obj, dataType) != null);
+            return TreeBidiMap.this.size();
         }
 
         public void clear() {
-            main.clear();
+            TreeBidiMap.this.clear();
         }
     }
 
-    //-----------------------------------------------------------------------
-    /**
-     * An iterator over the map.
-     */
-    static class ViewIterator implements OrderedIterator {
-
-        /** The parent map. */
-        protected final TreeBidiMap main;
-        /** Whether to return KEY or VALUE order. */
-        protected final int orderType;
-        /** Whether to return KEY, VALUE, MAPENTRY or INVERSEMAPENTRY data. */
-        protected final int dataType;
-        /** The last node returned by the iterator. */
-        protected Node lastReturnedNode;
-        /** The next node to be returned by the iterator. */
-        protected Node nextNode;
-        /** The previous node in the sequence returned by the iterator. */
-        protected Node previousNode;
-        /** The modification count. */
-        private int expectedModifications;
+    class KeyView extends View<K> {
 
         /**
-         * Constructor.
-         *
-         * @param main  the main map
-         * @param orderType  the KEY or VALUE int for the order
-         * @param dataType  the KEY, VALUE, MAPENTRY or INVERSEMAPENTRY int
+         * Create a new TreeBidiMap.KeyView.
          */
-        ViewIterator(final TreeBidiMap main, final int orderType, final int dataType) {
-            super();
-            this.main = main;
-            this.orderType = orderType;
-            this.dataType = dataType;
-            expectedModifications = main.modifications;
-            nextNode = leastNode(main.rootNode[orderType], orderType);
-            lastReturnedNode = null;
-            previousNode = null;
+        public KeyView(DataElement orderType) {
+            super(orderType);
         }
 
-        public final boolean hasNext() {
-            return (nextNode != null);
+        @Override
+        public Iterator<K> iterator() {
+            return new ViewMapIterator(orderType);
         }
 
-        public final Object next() {
-            if (nextNode == null) {
-                throw new NoSuchElementException();
-            }
-            if (main.modifications != expectedModifications) {
-                throw new ConcurrentModificationException();
-            }
-            lastReturnedNode = nextNode;
-            previousNode = nextNode;
-            nextNode = main.nextGreater(nextNode, orderType);
-            return doGetData();
+        @Override
+        public boolean contains(final Object obj) {
+            checkNonNullComparable(obj, KEY);
+            return (lookupKey(obj) != null);
         }
 
-        public boolean hasPrevious() {
-            return (previousNode != null);
+        @Override
+        public boolean remove(Object o) {
+            return doRemoveKey(o) != null;
         }
 
-        public Object previous() {
-            if (previousNode == null) {
-                throw new NoSuchElementException();
-            }
-            if (main.modifications != expectedModifications) {
-                throw new ConcurrentModificationException();
-            }
-            nextNode = lastReturnedNode;
-            if (nextNode == null) {
-                nextNode = main.nextGreater(previousNode, orderType);
-            }
-            lastReturnedNode = previousNode;
-            previousNode = main.nextSmaller(previousNode, orderType);
-            return doGetData();
-        }
-
-        /**
-         * Gets the data value for the lastReturnedNode field.
-         * @return the data value
-         */
-        protected Object doGetData() {
-            switch (dataType) {
-                case KEY:
-                    return lastReturnedNode.getKey();
-                case VALUE:
-                    return lastReturnedNode.getValue();
-                case MAPENTRY:
-                    return lastReturnedNode;
-                case INVERSEMAPENTRY:
-                    return new UnmodifiableMapEntry(lastReturnedNode.getValue(), lastReturnedNode.getKey());
-            }
-            return null;
-        }
-
-        public final void remove() {
-            if (lastReturnedNode == null) {
-                throw new IllegalStateException();
-            }
-            if (main.modifications != expectedModifications) {
-                throw new ConcurrentModificationException();
-            }
-            main.doRedBlackDelete(lastReturnedNode);
-            expectedModifications++;
-            lastReturnedNode = null;
-            if (nextNode == null) {
-                previousNode = TreeBidiMap.greatestNode(main.rootNode[orderType], orderType);
-            } else {
-                previousNode = main.nextSmaller(nextNode, orderType);
-            }
-        }
     }
 
-    //-----------------------------------------------------------------------
-    /**
-     * An iterator over the map.
-     */
-    static class ViewMapIterator extends ViewIterator implements OrderedMapIterator {
+    class ValueView extends View<V> {
 
-        private final int oppositeType;
-        
         /**
-         * Constructor.
-         *
-         * @param main  the main map
-         * @param orderType  the KEY or VALUE int for the order
+         * Create a new TreeBidiMap.ValueView.
          */
-        ViewMapIterator(final TreeBidiMap main, final int orderType) {
-            super(main, orderType, orderType);
-            this.oppositeType = oppositeIndex(dataType);
-        }
-        
-        public Object getKey() {
-            if (lastReturnedNode == null) {
-                throw new IllegalStateException("Iterator getKey() can only be called after next() and before remove()");
-            }
-            return lastReturnedNode.getData(dataType);
+        public ValueView(DataElement orderType) {
+            super(orderType);
         }
 
-        public Object getValue() {
-            if (lastReturnedNode == null) {
-                throw new IllegalStateException("Iterator getValue() can only be called after next() and before remove()");
-            }
-            return lastReturnedNode.getData(oppositeType);
+        @Override
+        public Iterator<V> iterator() {
+            return new InverseViewMapIterator(orderType);
         }
 
-        public Object setValue(final Object obj) {
-            throw new UnsupportedOperationException();
+        @Override
+        public boolean contains(final Object obj) {
+            checkNonNullComparable(obj, VALUE);
+            return (lookupValue(obj) != null);
         }
+
+        @Override
+        public boolean remove(Object o) {
+            return doRemoveValue(o) != null;
+        }
+
     }
 
-    //-----------------------------------------------------------------------
     /**
      * A view of this map.
      */
-    static class EntryView extends View {
-        
-        private final int oppositeType;
-        
-        /**
-         * Constructor.
-         *
-         * @param main  the main map
-         * @param orderType  the KEY or VALUE int for the order
-         * @param dataType  the MAPENTRY or INVERSEMAPENTRY int for the returned data
-         */
-        EntryView(final TreeBidiMap main, final int orderType, final int dataType) {
-            super(main, orderType, dataType);
-            this.oppositeType = TreeBidiMap.oppositeIndex(orderType);
+    class EntryView extends View<Map.Entry<K, V>> {
+
+        EntryView() {
+            super(KEY);
         }
-        
+
         public boolean contains(Object obj) {
             if (obj instanceof Map.Entry == false) {
                 return false;
             }
-            Map.Entry entry = (Map.Entry) obj;
+            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
             Object value = entry.getValue();
-            Node node = main.lookup((Comparable) entry.getKey(), orderType);
-            return (node != null && node.getData(oppositeType).equals(value));
+            Node<K, V> node = lookupKey(entry.getKey());
+            return node != null && node.getValue().equals(value);
         }
 
         public boolean remove(Object obj) {
             if (obj instanceof Map.Entry == false) {
                 return false;
             }
-            Map.Entry entry = (Map.Entry) obj;
+            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
             Object value = entry.getValue();
-            Node node = main.lookup((Comparable) entry.getKey(), orderType);
-            if (node != null && node.getData(oppositeType).equals(value)) {
-                main.doRedBlackDelete(node);
+            Node<K, V> node = lookupKey(entry.getKey());
+            if (node != null && node.getValue().equals(value)) {
+                doRedBlackDelete(node);
                 return true;
             }
             return false;
+        }
+
+        @Override
+        public Iterator<java.util.Map.Entry<K, V>> iterator() {
+            return new ViewMapEntryIterator();
+        }
+    }
+
+    /**
+     * A view of this map.
+     */
+    class InverseEntryView extends View<Map.Entry<V, K>> {
+
+        InverseEntryView() {
+            super(VALUE);
+        }
+
+        public boolean contains(Object obj) {
+            if (obj instanceof Map.Entry == false) {
+                return false;
+            }
+            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
+            Object value = entry.getValue();
+            Node<K, V> node = lookupValue(entry.getKey());
+            return node != null && node.getKey().equals(value);
+        }
+
+        public boolean remove(Object obj) {
+            if (obj instanceof Map.Entry == false) {
+                return false;
+            }
+            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
+            Object value = entry.getValue();
+            Node<K, V> node = lookupValue(entry.getKey());
+            if (node != null && node.getKey().equals(value)) {
+                doRedBlackDelete(node);
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public Iterator<java.util.Map.Entry<V, K>> iterator() {
+            return new InverseViewMapEntryIterator();
         }
     }
 
     //-----------------------------------------------------------------------
     /**
+     * An iterator over the map.
+     */
+    abstract class ViewIterator {
+
+        /** Whether to return KEY or VALUE order. */
+        protected final DataElement orderType;
+        /** The last node returned by the iterator. */
+        protected Node<K, V> lastReturnedNode;
+        /** The next node to be returned by the iterator. */
+        protected Node<K, V> nextNode;
+        /** The previous node in the sequence returned by the iterator. */
+        protected Node<K, V> previousNode;
+        /** The modification count. */
+        private int expectedModifications;
+
+        /**
+         * Constructor.
+         * @param orderType  the KEY or VALUE int for the order
+         * @param main  the main map
+         */
+        ViewIterator(final DataElement orderType) {
+            super();
+            this.orderType = orderType;
+            expectedModifications = modifications;
+            nextNode = leastNode(rootNode[orderType.ordinal()], orderType);
+            lastReturnedNode = null;
+            previousNode = null;
+        }
+
+        public final boolean hasNext() {
+            return nextNode != null;
+        }
+
+        protected Node<K, V> navigateNext() {
+            if (nextNode == null) {
+                throw new NoSuchElementException();
+            }
+            if (modifications != expectedModifications) {
+                throw new ConcurrentModificationException();
+            }
+            lastReturnedNode = nextNode;
+            previousNode = nextNode;
+            nextNode = nextGreater(nextNode, orderType);
+            return lastReturnedNode;
+        }
+
+        public boolean hasPrevious() {
+            return previousNode != null;
+        }
+
+        protected Node<K, V> navigatePrevious() {
+            if (previousNode == null) {
+                throw new NoSuchElementException();
+            }
+            if (modifications != expectedModifications) {
+                throw new ConcurrentModificationException();
+            }
+            nextNode = lastReturnedNode;
+            if (nextNode == null) {
+                nextNode = nextGreater(previousNode, orderType);
+            }
+            lastReturnedNode = previousNode;
+            previousNode = nextSmaller(previousNode, orderType);
+            return lastReturnedNode;
+        }
+
+        public final void remove() {
+            if (lastReturnedNode == null) {
+                throw new IllegalStateException();
+            }
+            if (modifications != expectedModifications) {
+                throw new ConcurrentModificationException();
+            }
+            doRedBlackDelete(lastReturnedNode);
+            expectedModifications++;
+            lastReturnedNode = null;
+            if (nextNode == null) {
+                previousNode = greatestNode(rootNode[orderType.ordinal()], orderType);
+            } else {
+                previousNode = nextSmaller(nextNode, orderType);
+            }
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * An iterator over the map.
+     */
+    class ViewMapIterator extends ViewIterator implements OrderedMapIterator<K, V> {
+
+        /**
+         * Constructor.
+         */
+        ViewMapIterator(DataElement orderType) {
+            super(orderType);
+        }
+
+        public K getKey() {
+            if (lastReturnedNode == null) {
+                throw new IllegalStateException("Iterator getKey() can only be called after next() and before remove()");
+            }
+            return lastReturnedNode.getKey();
+        }
+
+        public V getValue() {
+            if (lastReturnedNode == null) {
+                throw new IllegalStateException("Iterator getValue() can only be called after next() and before remove()");
+            }
+            return lastReturnedNode.getValue();
+        }
+
+        public V setValue(final V obj) {
+            throw new UnsupportedOperationException();
+        }
+
+        public K next() {
+            return navigateNext().getKey();
+        }
+
+        public K previous() {
+            return navigatePrevious().getKey();
+        }
+    }
+
+    /**
+     * An iterator over the map.
+     */
+    class InverseViewMapIterator extends ViewIterator implements OrderedMapIterator<V, K> {
+
+        /**
+         * Create a new TreeBidiMap.InverseViewMapIterator.
+         */
+        public InverseViewMapIterator(DataElement orderType) {
+            super(orderType);
+        }
+
+        public V getKey() {
+            if (lastReturnedNode == null) {
+                throw new IllegalStateException("Iterator getKey() can only be called after next() and before remove()");
+            }
+            return lastReturnedNode.getValue();
+        }
+
+        public K getValue() {
+            if (lastReturnedNode == null) {
+                throw new IllegalStateException("Iterator getValue() can only be called after next() and before remove()");
+            }
+            return lastReturnedNode.getKey();
+        }
+
+        public K setValue(final K obj) {
+            throw new UnsupportedOperationException();
+        }
+
+        public V next() {
+            return navigateNext().getValue();
+        }
+
+        public V previous() {
+            return navigatePrevious().getValue();
+        }
+    }
+
+    /**
+     * An iterator over the map entries.
+     */
+    class ViewMapEntryIterator extends ViewIterator implements OrderedIterator<Map.Entry<K, V>> {
+
+        /**
+         * Constructor.
+         */
+        ViewMapEntryIterator() {
+            super(KEY);
+        }
+
+        public Map.Entry<K, V> next() {
+            return navigateNext();
+        }
+
+        public Map.Entry<K, V> previous() {
+            return navigatePrevious();
+        }
+    }
+
+    /**
+     * An iterator over the inverse map entries.
+     */
+    class InverseViewMapEntryIterator extends ViewIterator implements OrderedIterator<Map.Entry<V, K>> {
+
+        /**
+         * Constructor.
+         */
+        InverseViewMapEntryIterator() {
+            super(VALUE);
+        }
+
+        public Map.Entry<V, K> next() {
+            return createEntry(navigateNext());
+        }
+
+        public Map.Entry<V, K> previous() {
+            return createEntry(navigatePrevious());
+        }
+
+        private Map.Entry<V, K> createEntry(Node<K, V> node) {
+            return new UnmodifiableMapEntry<V, K>(node.getValue(), node.getKey());
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    //-----------------------------------------------------------------------
+    /**
      * A node used to store the data.
      */
-    static class Node implements Map.Entry, KeyValue, Serializable {
+    static class Node<K extends Comparable<K>, V extends Comparable<V>> implements Map.Entry<K, V>, KeyValue<K, V> {
 
-        private Comparable[] data;
-        private Node[] leftNode;
-        private Node[] rightNode;
-        private Node[] parentNode;
+        private K key;
+        private V value;
+        private Node<K, V>[] leftNode;
+        private Node<K, V>[] rightNode;
+        private Node<K, V>[] parentNode;
         private boolean[] blackColor;
         private int hashcodeValue;
         private boolean calculatedHashCode;
@@ -1727,9 +1798,11 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
          * @param key
          * @param value
          */
-        Node(final Comparable key, final Comparable value) {
+        @SuppressWarnings("unchecked")
+        Node(final K key, final V value) {
             super();
-            data = new Comparable[] { key, value };
+            this.key = key;
+            this.value = value;
             leftNode = new Node[2];
             rightNode = new Node[2];
             parentNode = new Node[2];
@@ -1737,54 +1810,31 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
             calculatedHashCode = false;
         }
 
-        /**
-         * Get the specified data.
-         *
-         * @param index  the KEY or VALUE int
-         * @return the key or value
-         */
-        private Comparable getData(final int index) {
-            return data[index];
+        private Object getData(final DataElement dataElement) {
+            switch (dataElement) {
+            case KEY:
+                return getKey();
+            case VALUE:
+                return getValue();
+            default:
+                throw new IllegalArgumentException();
+            }
         }
 
-        /**
-         * Set this node's left node.
-         *
-         * @param node  the new left node
-         * @param index  the KEY or VALUE int
-         */
-        private void setLeft(final Node node, final int index) {
-            leftNode[index] = node;
+        private void setLeft(final Node<K, V> node, final DataElement dataElement) {
+            leftNode[dataElement.ordinal()] = node;
         }
 
-        /**
-         * Get the left node.
-         *
-         * @param index  the KEY or VALUE int
-         * @return the left node, may be null
-         */
-        private Node getLeft(final int index) {
-            return leftNode[index];
+        private Node<K, V> getLeft(final DataElement dataElement) {
+            return leftNode[dataElement.ordinal()];
         }
 
-        /**
-         * Set this node's right node.
-         *
-         * @param node  the new right node
-         * @param index  the KEY or VALUE int
-         */
-        private void setRight(final Node node, final int index) {
-            rightNode[index] = node;
+        private void setRight(final Node<K, V> node, final DataElement dataElement) {
+            rightNode[dataElement.ordinal()] = node;
         }
 
-        /**
-         * Get the right node.
-         *
-         * @param index  the KEY or VALUE int
-         * @return the right node, may be null
-         */
-        private Node getRight(final int index) {
-            return rightNode[index];
+        private Node<K, V> getRight(final DataElement dataElement) {
+            return rightNode[dataElement.ordinal()];
         }
 
         /**
@@ -1793,8 +1843,8 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
          * @param node  the new parent node
          * @param index  the KEY or VALUE int
          */
-        private void setParent(final Node node, final int index) {
-            parentNode[index] = node;
+        private void setParent(final Node<K, V> node, final DataElement dataElement) {
+            parentNode[dataElement.ordinal()] = node;
         }
 
         /**
@@ -1803,8 +1853,8 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
          * @param index  the KEY or VALUE int
          * @return the parent node, may be null
          */
-        private Node getParent(final int index) {
-            return parentNode[index];
+        private Node<K, V> getParent(final DataElement dataElement) {
+            return parentNode[dataElement.ordinal()];
         }
 
         /**
@@ -1813,11 +1863,11 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
          * @param node  the node to swap with
          * @param index  the KEY or VALUE int
          */
-        private void swapColors(final Node node, final int index) {
+        private void swapColors(final Node<K, V> node, final DataElement dataElement) {
             // Swap colors -- old hacker's trick
-            blackColor[index]      ^= node.blackColor[index];
-            node.blackColor[index] ^= blackColor[index];
-            blackColor[index]      ^= node.blackColor[index];
+            blackColor[dataElement.ordinal()]      ^= node.blackColor[dataElement.ordinal()];
+            node.blackColor[dataElement.ordinal()] ^= blackColor[dataElement.ordinal()];
+            blackColor[dataElement.ordinal()]      ^= node.blackColor[dataElement.ordinal()];
         }
 
         /**
@@ -1826,8 +1876,8 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
          * @param index  the KEY or VALUE int
          * @return true if black (which is represented as a true boolean)
          */
-        private boolean isBlack(final int index) {
-            return blackColor[index];
+        private boolean isBlack(final DataElement dataElement) {
+            return blackColor[dataElement.ordinal()];
         }
 
         /**
@@ -1836,8 +1886,8 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
          * @param index  the KEY or VALUE int
          * @return true if non-black
          */
-        private boolean isRed(final int index) {
-            return !blackColor[index];
+        private boolean isRed(final DataElement dataElement) {
+            return !blackColor[dataElement.ordinal()];
         }
 
         /**
@@ -1845,8 +1895,8 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
          *
          * @param index  the KEY or VALUE int
          */
-        private void setBlack(final int index) {
-            blackColor[index] = true;
+        private void setBlack(final DataElement dataElement) {
+            blackColor[dataElement.ordinal()] = true;
         }
 
         /**
@@ -1854,8 +1904,8 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
          *
          * @param index  the KEY or VALUE int
          */
-        private void setRed(final int index) {
-            blackColor[index] = false;
+        private void setRed(final DataElement dataElement) {
+            blackColor[dataElement.ordinal()] = false;
         }
 
         /**
@@ -1864,27 +1914,37 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
          * @param node  the node whose color we're adopting
          * @param index  the KEY or VALUE int
          */
-        private void copyColor(final Node node, final int index) {
-            blackColor[index] = node.blackColor[index];
+        private void copyColor(final Node<K, V> node, final DataElement dataElement) {
+            blackColor[dataElement.ordinal()] = node.blackColor[dataElement.ordinal()];
+        }
+
+        private boolean isLeftChild(final DataElement dataElement) {
+            return parentNode[dataElement.ordinal()] != null
+                    && parentNode[dataElement.ordinal()].leftNode[dataElement.ordinal()] == this;
+        }
+
+        private boolean isRightChild(final DataElement dataElement) {
+            return parentNode[dataElement.ordinal()] != null
+                    && parentNode[dataElement.ordinal()].rightNode[dataElement.ordinal()] == this;
         }
 
         //-------------------------------------------------------------------
         /**
          * Gets the key.
-         * 
+         *
          * @return the key corresponding to this entry.
          */
-        public Object getKey() {
-            return data[KEY];
+        public K getKey() {
+            return key;
         }
 
         /**
          * Gets the value.
-         * 
+         *
          * @return the value corresponding to this entry.
          */
-        public Object getValue() {
-            return data[VALUE];
+        public V getValue() {
+            return value;
         }
 
         /**
@@ -1894,10 +1954,8 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
          * @return does not return
          * @throws UnsupportedOperationException always
          */
-        public Object setValue(final Object ignored)
-                throws UnsupportedOperationException {
-            throw new UnsupportedOperationException(
-                "Map.Entry.setValue is not supported");
+        public V setValue(final V ignored) throws UnsupportedOperationException {
+            throw new UnsupportedOperationException("Map.Entry.setValue is not supported");
         }
 
         /**
@@ -1915,8 +1973,8 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
             if (!(obj instanceof Map.Entry)) {
                 return false;
             }
-            Map.Entry e = (Map.Entry) obj;
-            return data[KEY].equals(e.getKey()) && data[VALUE].equals(e.getValue());
+            Map.Entry<?, ?> e = (Map.Entry<?, ?>) obj;
+            return getKey().equals(e.getKey()) && getValue().equals(e.getValue());
         }
 
         /**
@@ -1924,164 +1982,142 @@ public class TreeBidiMap implements OrderedBidiMap, Serializable {
          */
         public int hashCode() {
             if (!calculatedHashCode) {
-                hashcodeValue = data[KEY].hashCode() ^ data[VALUE].hashCode();
+                hashcodeValue = getKey().hashCode() ^ getValue().hashCode();
                 calculatedHashCode = true;
             }
             return hashcodeValue;
         }
     }
-    
+
     //-----------------------------------------------------------------------
     /**
-     * A node used to store the data.
+     * The inverse map implementation.
      */
-    static class Inverse implements OrderedBidiMap {
-        
-        /** The parent map. */
-        private final TreeBidiMap main;
+    class Inverse implements OrderedBidiMap<V, K> {
+
         /** Store the keySet once created. */
-        private Set keySet;
+        private Set<V> keySet;
         /** Store the valuesSet once created. */
-        private Set valuesSet;
+        private Set<K> valuesSet;
         /** Store the entrySet once created. */
-        private Set entrySet;
-        
-        /**
-         * Constructor.
-         * @param main  the main map
-         */
-        Inverse(final TreeBidiMap main) {
-            super();
-            this.main = main;
-        }
+        private Set<Map.Entry<V, K>> entrySet;
 
         public int size() {
-            return main.size();
+            return TreeBidiMap.this.size();
         }
 
         public boolean isEmpty() {
-            return main.isEmpty();
+            return TreeBidiMap.this.isEmpty();
         }
 
-        public Object get(final Object key) {
-            return main.getKey(key);
+        public K get(final Object key) {
+            return TreeBidiMap.this.getKey(key);
         }
 
-        public Object getKey(final Object value) {
-            return main.get(value);
+        public V getKey(final Object value) {
+            return TreeBidiMap.this.get(value);
         }
 
         public boolean containsKey(final Object key) {
-            return main.containsValue(key);
+            return TreeBidiMap.this.containsValue(key);
         }
 
         public boolean containsValue(final Object value) {
-            return main.containsKey(value);
+            return TreeBidiMap.this.containsKey(value);
         }
 
-        public Object firstKey() {
-            if (main.nodeCount == 0) {
+        public V firstKey() {
+            if (TreeBidiMap.this.nodeCount == 0) {
                 throw new NoSuchElementException("Map is empty");
             }
-            return TreeBidiMap.leastNode(main.rootNode[VALUE], VALUE).getValue();
+            return leastNode(TreeBidiMap.this.rootNode[VALUE.ordinal()], VALUE).getValue();
         }
 
-        public Object lastKey() {
-            if (main.nodeCount == 0) {
+        public V lastKey() {
+            if (TreeBidiMap.this.nodeCount == 0) {
                 throw new NoSuchElementException("Map is empty");
             }
-            return TreeBidiMap.greatestNode(main.rootNode[VALUE], VALUE).getValue();
+            return greatestNode(TreeBidiMap.this.rootNode[VALUE.ordinal()], VALUE).getValue();
         }
-    
-        public Object nextKey(Object key) {
+
+        public V nextKey(V key) {
             checkKey(key);
-            Node node = main.nextGreater(main.lookup((Comparable) key, VALUE), VALUE);
-            return (node == null ? null : node.getValue());
+            Node<K, V> node = nextGreater(TreeBidiMap.this.<V>lookup(key, VALUE), VALUE);
+            return node == null ? null : node.getValue();
         }
 
-        public Object previousKey(Object key) {
+        public V previousKey(V key) {
             checkKey(key);
-            Node node = main.nextSmaller(main.lookup((Comparable) key, VALUE), VALUE);
-            return (node == null ? null : node.getValue());
+            Node<K, V> node = TreeBidiMap.this.nextSmaller(TreeBidiMap.this.<V>lookup(key, VALUE), VALUE);
+            return node == null ? null : node.getValue();
         }
 
-        public Object put(final Object key, final Object value) {
-            return main.doPut((Comparable) value, (Comparable) key, VALUE);
+        public K put(final V key, final K value) {
+            K result = get(key);
+            TreeBidiMap.this.doPut(value, key);
+            return result;
         }
 
-        public void putAll(Map map) {
-            Iterator it = map.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry entry = (Map.Entry) it.next();
-                put(entry.getKey(), entry.getValue());
+        public void putAll(Map<? extends V, ? extends K> map) {
+            for (Map.Entry<? extends V, ? extends K> e : map.entrySet()) {
+                put(e.getKey(), e.getValue());
             }
         }
-        
-        public Object remove(final Object key) {
-            return main.removeValue(key);
+
+        public K remove(final Object key) {
+            return TreeBidiMap.this.removeValue(key);
         }
 
-        public Object removeValue(final Object value) {
-            return main.remove(value);
+        public V removeValue(final Object value) {
+            return TreeBidiMap.this.remove(value);
         }
 
         public void clear() {
-            main.clear();
+            TreeBidiMap.this.clear();
         }
 
-        public Set keySet() {
+        public Set<V> keySet() {
             if (keySet == null) {
-                keySet = new View(main, VALUE, VALUE);
+                keySet = new ValueView(VALUE);
             }
             return keySet;
         }
 
-        public Collection values() {
+        public Collection<K> values() {
             if (valuesSet == null) {
-                valuesSet = new View(main, VALUE, KEY);
+                valuesSet = new KeyView(VALUE);
             }
             return valuesSet;
         }
 
-        public Set entrySet() {
+        public Set<Map.Entry<V, K>> entrySet() {
             if (entrySet == null) {
-                entrySet= new EntryView(main, VALUE, INVERSEMAPENTRY);
+                return new InverseEntryView();
             }
             return entrySet;
         }
-        
-        public MapIterator mapIterator() {
+
+        public OrderedMapIterator<V, K> mapIterator() {
             if (isEmpty()) {
-                return EmptyOrderedMapIterator.INSTANCE;
+                return EmptyOrderedMapIterator.<V, K>getInstance();
             }
-            return new ViewMapIterator(main, VALUE);
+            return new InverseViewMapIterator(VALUE);
         }
 
-        public OrderedMapIterator orderedMapIterator() {
-            if (isEmpty()) {
-                return EmptyOrderedMapIterator.INSTANCE;
-            }
-            return new ViewMapIterator(main, VALUE);
+        public OrderedBidiMap<K, V> inverseBidiMap() {
+            return TreeBidiMap.this;
         }
 
-        public BidiMap inverseBidiMap() {
-            return main;
-        }
-        
-        public OrderedBidiMap inverseOrderedBidiMap() {
-            return main;
-        }
-        
         public boolean equals(Object obj) {
-            return main.doEquals(obj, VALUE);
+            return TreeBidiMap.this.doEquals(obj, DataElement.VALUE);
         }
-    
+
         public int hashCode() {
-            return main.doHashCode(VALUE);
+            return TreeBidiMap.this.doHashCode(DataElement.VALUE);
         }
-    
+
         public String toString() {
-            return main.doToString(VALUE);
+            return TreeBidiMap.this.doToString(DataElement.VALUE);
         }
     }
 

@@ -26,8 +26,8 @@ import java.util.NoSuchElementException;
 import java.util.TreeMap;
 
 import org.apache.commons.collections.BulkTest;
-import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.OrderedMap;
+import org.apache.commons.collections.OrderedMapIterator;
 import org.apache.commons.collections.comparators.NullComparator;
 import org.apache.commons.collections.iterators.AbstractTestOrderedMapIterator;
 
@@ -38,93 +38,108 @@ import org.apache.commons.collections.iterators.AbstractTestOrderedMapIterator;
  *
  * @author Stephen Colebourne
  */
-public abstract class AbstractTestOrderedMap extends AbstractTestIterableMap {
+public abstract class AbstractTestOrderedMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     /**
      * JUnit constructor.
-     * 
+     *
      * @param testName  the test name
      */
     public AbstractTestOrderedMap(String testName) {
         super(testName);
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public abstract OrderedMap<K, V> makeObject();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public OrderedMap<K, V> makeFullMap() {
+        return (OrderedMap<K, V>) super.makeFullMap();
+    }
+
     //-----------------------------------------------------------------------
     /**
      * OrderedMap uses TreeMap as its known comparison.
-     * 
+     *
      * @return a map that is known to be valid
      */
-    public Map makeConfirmedMap() {
-        return new TreeMap(new NullComparator());
+    public Map<K, V> makeConfirmedMap() {
+        return new TreeMap<K, V>(new NullComparator<K>());
     }
-    
+
     /**
      * The only confirmed collection we have that is ordered is the sorted one.
      * Thus, sort the keys.
      */
-    public Object[] getSampleKeys() {
-        List list = new ArrayList(Arrays.asList(super.getSampleKeys()));
-        Collections.sort(list, new NullComparator());
-        return list.toArray();
+    @SuppressWarnings("unchecked")
+    public K[] getSampleKeys() {
+        List<K> list = new ArrayList<K>(Arrays.asList(super.getSampleKeys()));
+        Collections.sort(list, new NullComparator<K>());
+        return (K[]) list.toArray();
     }
 
     //-----------------------------------------------------------------------
     public void testFirstKey() {
         resetEmpty();
-        OrderedMap ordered = (OrderedMap) map;
+        OrderedMap<K, V> ordered = getMap();
         try {
             ordered.firstKey();
             fail();
         } catch (NoSuchElementException ex) {}
-        
+
         resetFull();
-        ordered = (OrderedMap) map;
-        Object confirmedFirst = confirmed.keySet().iterator().next();
+        ordered = getMap();
+        K confirmedFirst = confirmed.keySet().iterator().next();
         assertEquals(confirmedFirst, ordered.firstKey());
     }
-    
+
     public void testLastKey() {
         resetEmpty();
-        OrderedMap ordered = (OrderedMap) map;
+        OrderedMap<K, V> ordered = getMap();
         try {
             ordered.lastKey();
             fail();
         } catch (NoSuchElementException ex) {}
-        
+
         resetFull();
-        ordered = (OrderedMap) map;
-        Object confirmedLast = null;
-        for (Iterator it = confirmed.keySet().iterator(); it.hasNext();) {
+        ordered = getMap();
+        K confirmedLast = null;
+        for (Iterator<K> it = confirmed.keySet().iterator(); it.hasNext();) {
             confirmedLast = it.next();
         }
         assertEquals(confirmedLast, ordered.lastKey());
     }
 
-    //-----------------------------------------------------------------------    
+    //-----------------------------------------------------------------------
     public void testNextKey() {
         resetEmpty();
-        OrderedMap ordered = (OrderedMap) map;
+        OrderedMap<K, V> ordered = getMap();
         assertEquals(null, ordered.nextKey(getOtherKeys()[0]));
-        if (isAllowNullKey() == false) {
+        if (!isAllowNullKey()) {
             try {
                 assertEquals(null, ordered.nextKey(null)); // this is allowed too
             } catch (NullPointerException ex) {}
         } else {
             assertEquals(null, ordered.nextKey(null));
         }
-        
+
         resetFull();
-        ordered = (OrderedMap) map;
-        Iterator it = confirmed.keySet().iterator();
-        Object confirmedLast = it.next();
+        ordered = getMap();
+        Iterator<K> it = confirmed.keySet().iterator();
+        K confirmedLast = it.next();
         while (it.hasNext()) {
-            Object confirmedObject = it.next();
+            K confirmedObject = it.next();
             assertEquals(confirmedObject, ordered.nextKey(confirmedLast));
             confirmedLast = confirmedObject;
         }
         assertEquals(null, ordered.nextKey(confirmedLast));
-        
+
         if (isAllowNullKey() == false) {
             try {
                 ordered.nextKey(null);
@@ -134,10 +149,10 @@ public abstract class AbstractTestOrderedMap extends AbstractTestIterableMap {
             assertEquals(null, ordered.nextKey(null));
         }
     }
-    
+
     public void testPreviousKey() {
         resetEmpty();
-        OrderedMap ordered = (OrderedMap) map;
+        OrderedMap<K, V> ordered = getMap();
         assertEquals(null, ordered.previousKey(getOtherKeys()[0]));
         if (isAllowNullKey() == false) {
             try {
@@ -146,20 +161,20 @@ public abstract class AbstractTestOrderedMap extends AbstractTestIterableMap {
         } else {
             assertEquals(null, ordered.previousKey(null));
         }
-        
+
         resetFull();
-        ordered = (OrderedMap) map;
-        List list = new ArrayList(confirmed.keySet());
+        ordered = getMap();
+        List<K> list = new ArrayList<K>(confirmed.keySet());
         Collections.reverse(list);
-        Iterator it = list.iterator();
-        Object confirmedLast = it.next();
+        Iterator<K> it = list.iterator();
+        K confirmedLast = it.next();
         while (it.hasNext()) {
-            Object confirmedObject = it.next();
+            K confirmedObject = it.next();
             assertEquals(confirmedObject, ordered.previousKey(confirmedLast));
             confirmedLast = confirmedObject;
         }
         assertEquals(null, ordered.previousKey(confirmedLast));
-        
+
         if (isAllowNullKey() == false) {
             try {
                 ordered.previousKey(null);
@@ -171,17 +186,17 @@ public abstract class AbstractTestOrderedMap extends AbstractTestIterableMap {
             }
         }
     }
-    
+
     //-----------------------------------------------------------------------
     public BulkTest bulkTestOrderedMapIterator() {
         return new InnerTestOrderedMapIterator();
     }
-    
-    public class InnerTestOrderedMapIterator extends AbstractTestOrderedMapIterator {
+
+    public class InnerTestOrderedMapIterator extends AbstractTestOrderedMapIterator<K, V> {
         public InnerTestOrderedMapIterator() {
             super("InnerTestOrderedMapIterator");
         }
-        
+
         public boolean supportsRemove() {
             return AbstractTestOrderedMap.this.isRemoveSupported();
         }
@@ -189,35 +204,42 @@ public abstract class AbstractTestOrderedMap extends AbstractTestIterableMap {
         public boolean isGetStructuralModify() {
             return AbstractTestOrderedMap.this.isGetStructuralModify();
         }
-        
+
         public boolean supportsSetValue() {
             return AbstractTestOrderedMap.this.isSetValueSupported();
         }
 
-        public MapIterator makeEmptyMapIterator() {
+        public OrderedMapIterator<K, V> makeEmptyIterator() {
             resetEmpty();
-            return ((OrderedMap) AbstractTestOrderedMap.this.map).orderedMapIterator();
+            return AbstractTestOrderedMap.this.getMap().mapIterator();
         }
 
-        public MapIterator makeFullMapIterator() {
+        public OrderedMapIterator<K, V> makeObject() {
             resetFull();
-            return ((OrderedMap) AbstractTestOrderedMap.this.map).orderedMapIterator();
+            return AbstractTestOrderedMap.this.getMap().mapIterator();
         }
-        
-        public Map getMap() {
+
+        public OrderedMap<K, V> getMap() {
             // assumes makeFullMapIterator() called first
-            return AbstractTestOrderedMap.this.map;
+            return AbstractTestOrderedMap.this.getMap();
         }
-        
-        public Map getConfirmedMap() {
+
+        public Map<K, V> getConfirmedMap() {
             // assumes makeFullMapIterator() called first
-            return AbstractTestOrderedMap.this.confirmed;
+            return AbstractTestOrderedMap.this.getConfirmed();
         }
-        
+
         public void verify() {
             super.verify();
             AbstractTestOrderedMap.this.verify();
         }
     }
-    
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public OrderedMap<K, V> getMap() {
+        return (OrderedMap<K, V>) super.getMap();
+    }
 }

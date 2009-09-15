@@ -32,12 +32,12 @@ import org.apache.commons.collections.BulkTest;
  *
  * @author Stephen Colebourne
  */
-public class TestUnmodifiableBidiMap extends AbstractTestBidiMap {
+public class TestUnmodifiableBidiMap<K, V> extends AbstractTestBidiMap<K, V> {
 
     public static void main(String[] args) {
         TestRunner.run(suite());
     }
-    
+
     public static Test suite() {
         return BulkTest.makeSuite(TestUnmodifiableBidiMap.class);
     }
@@ -46,24 +46,18 @@ public class TestUnmodifiableBidiMap extends AbstractTestBidiMap {
         super(testName);
     }
 
-    public BidiMap makeEmptyBidiMap() {
-        return UnmodifiableBidiMap.decorate(new DualHashBidiMap());
+    public BidiMap<K, V> makeObject() {
+        return UnmodifiableBidiMap.decorate(new DualHashBidiMap<K, V>());
     }
-    public BidiMap makeFullBidiMap() {
-        BidiMap bidi = new DualHashBidiMap();
-        for (int i = 0; i < entries.length; i++) {
-            bidi.put(entries[i][0], entries[i][1]);
-        }
-        return UnmodifiableBidiMap.decorate(bidi);
-    }
-    public Map makeFullMap() {
-        BidiMap bidi = new DualHashBidiMap();
+
+    public BidiMap<K, V> makeFullMap() {
+        BidiMap<K, V> bidi = new DualHashBidiMap<K, V>();
         addSampleMappings(bidi);
         return UnmodifiableBidiMap.decorate(bidi);
     }
-    
-    public Map makeConfirmedMap() {
-        return new HashMap();
+
+    public Map<K, V> makeConfirmedMap() {
+        return new HashMap<K, V>();
     }
 
     /**
@@ -76,11 +70,13 @@ public class TestUnmodifiableBidiMap extends AbstractTestBidiMap {
     public boolean isPutAddSupported() {
         return false;
     }
+
     public boolean isPutChangeSupported() {
         return false;
     }
+
     public boolean isRemoveSupported() {
         return false;
     }
-    
+
 }

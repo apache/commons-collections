@@ -34,13 +34,13 @@ import junit.framework.TestSuite;
  * @author Morgan Delagrange
  * @author Stephen Colebourne
  */
-public class TestUniqueFilterIterator extends AbstractTestIterator {
+public class TestUniqueFilterIterator<E> extends AbstractTestIterator<E> {
 
     protected String[] testArray = {
         "One", "Two", "Three", "Four", "Five", "Six"
     };
 
-    protected List list1 = null;
+    protected List<E> list1 = null;
 
     public static Test suite() {
         return new TestSuite(TestUniqueFilterIterator.class);
@@ -50,36 +50,36 @@ public class TestUniqueFilterIterator extends AbstractTestIterator {
         super(testName);
     }
 
+    @SuppressWarnings("unchecked")
     public void setUp() {
-        list1 = new ArrayList();
-        list1.add("One");
-        list1.add("Two");
-        list1.add("Three");
-        list1.add("Two");
-        list1.add("One");
-        list1.add("Four");
-        list1.add("Five");
-        list1.add("Five");
-        list1.add("Six");
-        list1.add("Five");
+        list1 = new ArrayList<E>();
+        list1.add((E) "One");
+        list1.add((E) "Two");
+        list1.add((E) "Three");
+        list1.add((E) "Two");
+        list1.add((E) "One");
+        list1.add((E) "Four");
+        list1.add((E) "Five");
+        list1.add((E) "Five");
+        list1.add((E) "Six");
+        list1.add((E) "Five");
     }
 
-    public Iterator makeEmptyIterator() {
-        ArrayList list = new ArrayList();
-        return new UniqueFilterIterator(list.iterator());
+    public UniqueFilterIterator<E> makeEmptyIterator() {
+        ArrayList<E> list = new ArrayList<E>();
+        return new UniqueFilterIterator<E>(list.iterator());
     }
 
-    public Iterator makeFullIterator() {
-        Iterator i = list1.iterator();
-
-        return new UniqueFilterIterator(i);
+    public UniqueFilterIterator<E> makeObject() {
+        Iterator<E> i = list1.iterator();
+        return new UniqueFilterIterator<E>(i);
     }
 
     public void testIterator() {
-        Iterator iter = (Iterator) makeFullIterator();
-        for ( int i = 0; i < testArray.length; i++ ) {
+        Iterator<E> iter = makeObject();
+        for (int i = 0; i < testArray.length; i++) {
             Object testValue = testArray[i];            
-            Object iterValue = iter.next();
+            E iterValue = iter.next();
 
             assertEquals( "Iteration value is correct", testValue, iterValue );
         }
@@ -87,7 +87,7 @@ public class TestUniqueFilterIterator extends AbstractTestIterator {
         assertTrue("Iterator should now be empty", ! iter.hasNext() );
 
         try {
-            Object testValue = iter.next();
+            iter.next();
         } catch (Exception e) {
             assertTrue("NoSuchElementException must be thrown", 
                        e.getClass().equals((new NoSuchElementException()).getClass()));

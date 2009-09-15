@@ -35,7 +35,7 @@ import org.apache.commons.collections.collection.TransformedCollection;
  *
  * @author Stephen Colebourne
  */
-public class TransformedBuffer extends TransformedCollection implements Buffer {
+public class TransformedBuffer<E> extends TransformedCollection<E> implements Buffer<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = -7901091318986132033L;
@@ -52,8 +52,8 @@ public class TransformedBuffer extends TransformedCollection implements Buffer {
      * @return a new transformed Buffer
      * @throws IllegalArgumentException if buffer or transformer is null
      */
-    public static Buffer decorate(Buffer buffer, Transformer transformer) {
-        return new TransformedBuffer(buffer, transformer);
+    public static <E> Buffer<E> decorate(Buffer<E> buffer, Transformer<? super E, ? extends E> transformer) {
+        return new TransformedBuffer<E>(buffer, transformer);
     }
     
     /**
@@ -70,13 +70,14 @@ public class TransformedBuffer extends TransformedCollection implements Buffer {
      * @throws IllegalArgumentException if buffer or transformer is null
      * @since Commons Collections 3.3
      */
+    // TODO: Generics
     public static Buffer decorateTransform(Buffer buffer, Transformer transformer) {
         TransformedBuffer decorated = new TransformedBuffer(buffer, transformer);
         if (transformer != null && buffer != null && buffer.size() > 0) {
             Object[] values = buffer.toArray();
             buffer.clear();
             for(int i=0; i<values.length; i++) {
-                decorated.getCollection().add(transformer.transform(values[i]));
+                decorated.decorated().add(transformer.transform(values[i]));
             }
         }
         return decorated;
@@ -93,7 +94,7 @@ public class TransformedBuffer extends TransformedCollection implements Buffer {
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if buffer or transformer is null
      */
-    protected TransformedBuffer(Buffer buffer, Transformer transformer) {
+    protected TransformedBuffer(Buffer<E> buffer, Transformer<? super E, ? extends E> transformer) {
         super(buffer, transformer);
     }
 
@@ -102,16 +103,16 @@ public class TransformedBuffer extends TransformedCollection implements Buffer {
      * 
      * @return the decorated buffer
      */
-    protected Buffer getBuffer() {
-        return (Buffer) collection;
+    protected Buffer<E> getBuffer() {
+        return (Buffer<E>) collection;
     }
 
     //-----------------------------------------------------------------------
-    public Object get() {
+    public E get() {
         return getBuffer().get();
     }
 
-    public Object remove() {
+    public E remove() {
         return getBuffer().remove();
     }
 

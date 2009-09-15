@@ -35,7 +35,7 @@ import org.apache.commons.collections.KeyValue;
  * @author Neil O'Toole
  * @author Stephen Colebourne
  */
-public class DefaultKeyValue extends AbstractKeyValue {
+public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
 
     /**
      * Constructs a new pair with a null key and null value.
@@ -50,7 +50,7 @@ public class DefaultKeyValue extends AbstractKeyValue {
      * @param key  the key for the entry, may be null
      * @param value  the value for the entry, may be null
      */
-    public DefaultKeyValue(final Object key, final Object value) {
+    public DefaultKeyValue(final K key, final V value) {
         super(key, value);
     }
 
@@ -60,7 +60,7 @@ public class DefaultKeyValue extends AbstractKeyValue {
      * @param pair  the pair to copy, must not be null
      * @throws NullPointerException if the entry is null
      */
-    public DefaultKeyValue(final KeyValue pair) {
+    public DefaultKeyValue(final KeyValue<K, V> pair) {
         super(pair.getKey(), pair.getValue());
     }
 
@@ -70,7 +70,7 @@ public class DefaultKeyValue extends AbstractKeyValue {
      * @param entry  the entry to copy, must not be null
      * @throws NullPointerException if the entry is null
      */
-    public DefaultKeyValue(final Map.Entry entry) {
+    public DefaultKeyValue(final Map.Entry<K, V> entry) {
         super(entry.getKey(), entry.getValue());
     }
 
@@ -82,12 +82,12 @@ public class DefaultKeyValue extends AbstractKeyValue {
      * @return the old key
      * @throws IllegalArgumentException if key is this object
      */
-    public Object setKey(final Object key) {
+    public K setKey(final K key) {
         if (key == this) {
             throw new IllegalArgumentException("DefaultKeyValue may not contain itself as a key.");
         }
 
-        final Object old = this.key;
+        final K old = this.key;
         this.key = key;
         return old;
     }
@@ -99,12 +99,12 @@ public class DefaultKeyValue extends AbstractKeyValue {
      * @param value the new value
      * @throws IllegalArgumentException if value is this object
      */
-    public Object setValue(final Object value) {
+    public V setValue(final V value) {
         if (value == this) {
             throw new IllegalArgumentException("DefaultKeyValue may not contain itself as a value.");
         }
 
-        final Object old = this.value;
+        final V old = this.value;
         this.value = value;
         return old;
     }
@@ -115,8 +115,8 @@ public class DefaultKeyValue extends AbstractKeyValue {
      * 
      * @return a MapEntry instance
      */
-    public Map.Entry toMapEntry() {
-        return new DefaultMapEntry(this);
+    public Map.Entry<K, V> toMapEntry() {
+        return new DefaultMapEntry<K, V>(this);
     }
 
     //-----------------------------------------------------------------------
@@ -129,6 +129,7 @@ public class DefaultKeyValue extends AbstractKeyValue {
      * @param obj  the object to compare to
      * @return true if equal key and value
      */
+    @SuppressWarnings("unchecked")
     public boolean equals(final Object obj) {
         if (obj == this) {
             return true;

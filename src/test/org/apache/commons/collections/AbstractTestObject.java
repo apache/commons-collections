@@ -173,7 +173,7 @@ public abstract class AbstractTestObject extends BulkTest {
         Object o = makeObject();
         if (o instanceof Serializable && isTestSerialization()) {
             byte[] objekt = writeExternalFormToBytes((Serializable) o);
-            Object p = readExternalFormFromBytes(objekt);
+            readExternalFormFromBytes(objekt);
         }
     }
 

@@ -30,63 +30,62 @@ import org.apache.commons.collections.Transformer;
  *
  * @author Stephen Colebourne
  */
-public final class TransformerPredicate implements Predicate, Serializable {
+public final class TransformerPredicate<T> implements Predicate<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -2407966402920578741L;
-    
+
     /** The transformer to call */
-    private final Transformer iTransformer;
-    
+    private final Transformer<? super T, Boolean> iTransformer;
+
     /**
      * Factory to create the predicate.
-     * 
+     *
      * @param transformer  the transformer to decorate
      * @return the predicate
      * @throws IllegalArgumentException if the transformer is null
      */
-    public static Predicate getInstance(Transformer transformer) {
+    public static <T> Predicate<T> getInstance(Transformer<? super T, Boolean> transformer) {
         if (transformer == null) {
             throw new IllegalArgumentException("The transformer to call must not be null");
         }
-        return new TransformerPredicate(transformer);
+        return new TransformerPredicate<T>(transformer);
     }
 
     /**
      * Constructor that performs no validation.
      * Use <code>getInstance</code> if you want that.
-     * 
+     *
      * @param transformer  the transformer to decorate
      */
-    public TransformerPredicate(Transformer transformer) {
+    public TransformerPredicate(Transformer<? super T, Boolean> transformer) {
         super();
         iTransformer = transformer;
     }
 
     /**
      * Evaluates the predicate returning the result of the decorated transformer.
-     * 
+     *
      * @param object  the input object
      * @return true if decorated transformer returns Boolean.TRUE
      * @throws FunctorException if the transformer returns an invalid type
      */
-    public boolean evaluate(Object object) {
-        Object result = iTransformer.transform(object);
-        if (result instanceof Boolean == false) {
+    public boolean evaluate(T object) {
+        Boolean result = iTransformer.transform(object);
+        if (result == null) {
             throw new FunctorException(
-                "Transformer must return an instanceof Boolean, it was a "
-                    + (result == null ? "null object" : result.getClass().getName()));
+                    "Transformer must return an instanceof Boolean, it was a null object");
         }
-        return ((Boolean) result).booleanValue();
+        return result;
     }
 
     /**
      * Gets the transformer.
-     * 
+     *
      * @return the transformer
      * @since Commons Collections 3.1
      */
-    public Transformer getTransformer() {
+    public Transformer<? super T, Boolean> getTransformer() {
         return iTransformer;
     }
 

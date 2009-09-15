@@ -43,7 +43,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
  *
  * @author Paul Jack
  */
-public abstract class AbstractTestSet extends AbstractTestCollection {
+public abstract class AbstractTestSet<E> extends AbstractTestCollection<E> {
 
     /**
      * JUnit constructor.
@@ -61,14 +61,13 @@ public abstract class AbstractTestSet extends AbstractTestCollection {
     public void verify() {
         super.verify();
         
-        assertEquals("Sets should be equal", confirmed, collection);
+        assertEquals("Sets should be equal", getConfirmed(), getCollection());
         assertEquals("Sets should have equal hashCodes", 
-                     confirmed.hashCode(), collection.hashCode());
-        Collection set = makeConfirmedCollection();
-        Iterator iterator = collection.iterator();
+                     getConfirmed().hashCode(), getCollection().hashCode());
+        Collection<E> set = makeConfirmedCollection();
+        Iterator<E> iterator = getCollection().iterator();
         while (iterator.hasNext()) {
-            assertTrue("Set.iterator should only return unique elements", 
-                       set.add(iterator.next()));
+            assertTrue("Set.iterator should only return unique elements", set.add(iterator.next()));
         }
     }
 
@@ -85,8 +84,8 @@ public abstract class AbstractTestSet extends AbstractTestCollection {
      *
      * @return a confirmed empty collection
      */
-    public Collection makeConfirmedCollection() {
-        return new HashSet();
+    public Collection<E> makeConfirmedCollection() {
+        return new HashSet<E>();
     }
 
     /**
@@ -94,8 +93,8 @@ public abstract class AbstractTestSet extends AbstractTestCollection {
      *
      * @return a confirmed full collection
      */
-    public Collection makeConfirmedFullCollection() {
-        Collection set = makeConfirmedCollection();
+    public Collection<E> makeConfirmedFullCollection() {
+        Collection<E> set = makeConfirmedCollection();
         set.addAll(Arrays.asList(getFullElements()));
         return set;
     }
@@ -105,7 +104,7 @@ public abstract class AbstractTestSet extends AbstractTestCollection {
      *
      * @return an empty set
      */
-    public abstract Set makeEmptySet();
+    public abstract Set<E> makeObject();
 
     /**
      * Makes a full set by first creating an empty set and then adding
@@ -115,68 +114,48 @@ public abstract class AbstractTestSet extends AbstractTestCollection {
      *
      * @return a full set
      */
-    public Set makeFullSet() {
-        Set set = makeEmptySet();
+    public Set<E> makeFullCollection() {
+        Set<E> set = makeObject();
         set.addAll(Arrays.asList(getFullElements()));
         return set;
-    }
-
-    /**
-     * Makes an empty collection by invoking {@link #makeEmptySet()}.  
-     *
-     * @return an empty collection
-     */
-    public final Collection makeCollection() {
-        return makeEmptySet();
-    }
-
-    /**
-     * Makes a full collection by invoking {@link #makeFullSet()}.
-     *
-     * @return a full collection
-     */
-    public final Collection makeFullCollection() {
-        return makeFullSet();
     }
 
     //-----------------------------------------------------------------------
     /**
      * Return the {@link AbstractTestCollection#collection} fixture, but cast as a Set.  
      */
-    public Set getSet() {
-        return (Set)collection;
+    public Set<E> getCollection() {
+        return (Set<E>) super.getCollection();
     }
 
     /**
      * Return the {@link AbstractTestCollection#confirmed} fixture, but cast as a Set.
      */
-    public Set getConfirmedSet() {
-        return (Set)confirmed;
+    public Set<E> getConfirmed() {
+        return (Set<E>) super.getConfirmed();
     }
 
     //-----------------------------------------------------------------------
     /**
      * Tests {@link Set#equals(Object)}.
      */
+    @SuppressWarnings("unchecked")
     public void testSetEquals() {
         resetEmpty();
-        assertEquals("Empty sets should be equal", 
-                     getSet(), getConfirmedSet());
+        assertEquals("Empty sets should be equal", getCollection(), getConfirmed());
         verify();
 
-        Collection set2 = makeConfirmedCollection();
-        set2.add("foo");
-        assertTrue("Empty set shouldn't equal nonempty set", 
-                   !getSet().equals(set2));
+        Collection<E> set2 = makeConfirmedCollection();
+        set2.add((E) "foo");
+        assertTrue("Empty set shouldn't equal nonempty set", !getCollection().equals(set2));
 
         resetFull();
-        assertEquals("Full sets should be equal", getSet(), getConfirmedSet());
+        assertEquals("Full sets should be equal", getCollection(), getConfirmed());
         verify();
 
         set2.clear();
         set2.addAll(Arrays.asList(getOtherElements()));
-        assertTrue("Sets with different contents shouldn't be equal", 
-                   !getSet().equals(set2));
+        assertTrue("Sets with different contents shouldn't be equal", !getCollection().equals(set2));
     }
 
     /**
@@ -185,11 +164,11 @@ public abstract class AbstractTestSet extends AbstractTestCollection {
     public void testSetHashCode() {
         resetEmpty();
         assertEquals("Empty sets have equal hashCodes", 
-                     getSet().hashCode(), getConfirmedSet().hashCode());
+                getCollection().hashCode(), getConfirmed().hashCode());
 
         resetFull();
         assertEquals("Equal sets have equal hashCodes", 
-                     getSet().hashCode(), getConfirmedSet().hashCode());
+                getCollection().hashCode(), getConfirmed().hashCode());
     }
 
 }

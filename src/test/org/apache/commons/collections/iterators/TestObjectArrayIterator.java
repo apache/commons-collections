@@ -32,7 +32,7 @@ import junit.framework.TestSuite;
  * @author Morgan Delagrange
  * @author Stephen Colebourne
  */
-public class TestObjectArrayIterator extends AbstractTestIterator {
+public class TestObjectArrayIterator<E> extends AbstractTestIterator<E> {
 
     protected String[] testArray = { "One", "Two", "Three" };
 
@@ -44,28 +44,30 @@ public class TestObjectArrayIterator extends AbstractTestIterator {
         super(testName);
     }
 
-    public Iterator makeEmptyIterator() {
-        return new ObjectArrayIterator(new Object[0]);
+    @SuppressWarnings("unchecked")
+    public ObjectArrayIterator<E> makeEmptyIterator() {
+        return new ObjectArrayIterator<E>((E[]) new Object[0]);
     }
 
-    public Iterator makeFullIterator() {
-        return new ObjectArrayIterator(testArray);
+    @SuppressWarnings("unchecked")
+    public ObjectArrayIterator<E> makeObject() {
+        return new ObjectArrayIterator<E>((E[]) testArray);
     }
 
-    public ObjectArrayIterator makeArrayIterator() {
-        return new ObjectArrayIterator();
+    public ObjectArrayIterator<E> makeArrayIterator() {
+        return new ObjectArrayIterator<E>();
     }
 
-    public ObjectArrayIterator makeArrayIterator(Object[] array) {
-        return new ObjectArrayIterator(array);
+    public ObjectArrayIterator<E> makeArrayIterator(E[] array) {
+        return new ObjectArrayIterator<E>(array);
     }
 
-    public ObjectArrayIterator makeArrayIterator(Object[] array, int index) {
-        return new ObjectArrayIterator(array, index);
+    public ObjectArrayIterator<E> makeArrayIterator(E[] array, int index) {
+        return new ObjectArrayIterator<E>(array, index);
     }
 
-    public ObjectArrayIterator makeArrayIterator(Object[] array, int start, int end) {
-        return new ObjectArrayIterator(array, start, end);
+    public ObjectArrayIterator<E> makeArrayIterator(E[] array, int start, int end) {
+        return new ObjectArrayIterator<E>(array, start, end);
     }
 
     public boolean supportsRemove() {
@@ -73,10 +75,10 @@ public class TestObjectArrayIterator extends AbstractTestIterator {
     }
 
     public void testIterator() {
-        Iterator iter = (Iterator) makeFullIterator();
+        Iterator<E> iter = makeObject();
         for (int i = 0; i < testArray.length; i++) {
             Object testValue = testArray[i];
-            Object iterValue = iter.next();
+            E iterValue = iter.next();
 
             assertEquals("Iteration value is correct", testValue, iterValue);
         }
@@ -84,7 +86,7 @@ public class TestObjectArrayIterator extends AbstractTestIterator {
         assertTrue("Iterator should now be empty", !iter.hasNext());
 
         try {
-            Object testValue = iter.next();
+            iter.next();
         } catch (Exception e) {
             assertTrue(
                 "NoSuchElementException must be thrown",
@@ -94,14 +96,14 @@ public class TestObjectArrayIterator extends AbstractTestIterator {
 
     public void testNullArray() {
         try {
-            Iterator iter = makeArrayIterator(null);
+            makeArrayIterator(null);
 
             fail("Constructor should throw a NullPointerException when constructed with a null array");
         } catch (NullPointerException e) {
             // expected
         }
 
-        ObjectArrayIterator iter = makeArrayIterator();
+        ObjectArrayIterator<E> iter = makeArrayIterator();
         try {
             iter.setArray(null);
 
@@ -111,18 +113,20 @@ public class TestObjectArrayIterator extends AbstractTestIterator {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void testDoubleSet() {
-        ObjectArrayIterator it = makeArrayIterator();
-        it.setArray(new String[0]);
+        ObjectArrayIterator<E> it = makeArrayIterator();
+        it.setArray((E[]) new String[0]);
         try {
-            it.setArray(new String[0]);
+            it.setArray((E[]) new String[0]);
             fail();
         } catch (IllegalStateException ex) {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void testReset() {
-        ObjectArrayIterator it = makeArrayIterator(testArray);
+        ObjectArrayIterator<E> it = makeArrayIterator((E[]) testArray);
         it.next();
         it.reset();
         assertEquals("One", it.next());

@@ -26,13 +26,15 @@ package org.apache.commons.collections;
  * {@link FactoryUtils}. These include factories that return a constant,
  * a copy of a prototype or a new instance.
  *
+ * @param <T> the type that the factory creates
+ *
  * @since Commons Collections 2.1
  * @version $Revision$ $Date$
  *
  * @author Arron Bates
  * @author Stephen Colebourne
  */
-public interface Factory {
+public interface Factory<T> {
 
     /**
      * Create a new object.
@@ -40,6 +42,6 @@ public interface Factory {
      * @return a new object
      * @throws FunctorException (runtime) if the factory cannot create an object
      */
-    public Object create();
+    public T create();
 
 }

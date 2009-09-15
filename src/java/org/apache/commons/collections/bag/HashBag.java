@@ -41,8 +41,8 @@ import org.apache.commons.collections.Bag;
  * @author Chuck Burdick
  * @author Stephen Colebourne
  */
-public class HashBag
-        extends AbstractMapBag implements Bag, Serializable {
+public class HashBag<E>
+        extends AbstractMapBag<E> implements Bag<E>, Serializable {
 
     /** Serial version lock */
     private static final long serialVersionUID = -6561115435802554013L;
@@ -51,7 +51,7 @@ public class HashBag
      * Constructs an empty <code>HashBag</code>.
      */
     public HashBag() {
-        super(new HashMap());
+        super(new HashMap<E, MutableInteger>());
     }
 
     /**
@@ -59,7 +59,7 @@ public class HashBag
      * 
      * @param coll  a collection to copy into this bag
      */
-    public HashBag(Collection coll) {
+    public HashBag(Collection<? extends E> coll) {
         this();
         addAll(coll);
     }
@@ -78,7 +78,7 @@ public class HashBag
      */
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        super.doReadObject(new HashMap(), in);
+        super.doReadObject(new HashMap<E, MutableInteger>(), in);
     }
     
 }

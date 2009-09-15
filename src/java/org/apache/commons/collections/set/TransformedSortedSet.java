@@ -36,7 +36,7 @@ import org.apache.commons.collections.Transformer;
  *
  * @author Stephen Colebourne
  */
-public class TransformedSortedSet extends TransformedSet implements SortedSet {
+public class TransformedSortedSet<E> extends TransformedSet<E> implements SortedSet<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = -1675486811351124386L;
@@ -52,8 +52,8 @@ public class TransformedSortedSet extends TransformedSet implements SortedSet {
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if set or transformer is null
      */
-    public static SortedSet decorate(SortedSet set, Transformer transformer) {
-        return new TransformedSortedSet(set, transformer);
+    public static <E> SortedSet<E> decorate(SortedSet<E> set, Transformer<? super E, ? extends E> transformer) {
+        return new TransformedSortedSet<E>(set, transformer);
     }
     
     /**
@@ -70,13 +70,14 @@ public class TransformedSortedSet extends TransformedSet implements SortedSet {
      * @throws IllegalArgumentException if set or transformer is null
      * @since Commons Collections 3.3
      */
+     // TODO: Generics
     public static SortedSet decorateTransform(SortedSet set, Transformer transformer) {
         TransformedSortedSet decorated = new TransformedSortedSet(set, transformer);
         if (transformer != null && set != null && set.size() > 0) {
             Object[] values = set.toArray();
             set.clear();
             for(int i=0; i<values.length; i++) {
-                decorated.getCollection().add(transformer.transform(values[i]));
+                decorated.decorated().add(transformer.transform(values[i]));
             }
         }
         return decorated;
@@ -93,7 +94,7 @@ public class TransformedSortedSet extends TransformedSet implements SortedSet {
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if set or transformer is null
      */
-    protected TransformedSortedSet(SortedSet set, Transformer transformer) {
+    protected TransformedSortedSet(SortedSet<E> set, Transformer<? super E, ? extends E> transformer) {
         super(set, transformer);
     }
 
@@ -102,37 +103,37 @@ public class TransformedSortedSet extends TransformedSet implements SortedSet {
      * 
      * @return the decorated set
      */
-    protected SortedSet getSortedSet() {
-        return (SortedSet) collection;
+    protected SortedSet<E> getSortedSet() {
+        return (SortedSet<E>) collection;
     }
 
     //-----------------------------------------------------------------------
-    public Object first() {
+    public E first() {
         return getSortedSet().first();
     }
 
-    public Object last() {
+    public E last() {
         return getSortedSet().last();
     }
 
-    public Comparator comparator() {
+    public Comparator<? super E> comparator() {
         return getSortedSet().comparator();
     }
 
     //-----------------------------------------------------------------------
-    public SortedSet subSet(Object fromElement, Object toElement) {
-        SortedSet set = getSortedSet().subSet(fromElement, toElement);
-        return new TransformedSortedSet(set, transformer);
+    public SortedSet<E> subSet(E fromElement, E toElement) {
+        SortedSet<E> set = getSortedSet().subSet(fromElement, toElement);
+        return new TransformedSortedSet<E>(set, transformer);
     }
 
-    public SortedSet headSet(Object toElement) {
-        SortedSet set = getSortedSet().headSet(toElement);
-        return new TransformedSortedSet(set, transformer);
+    public SortedSet<E> headSet(E toElement) {
+        SortedSet<E> set = getSortedSet().headSet(toElement);
+        return new TransformedSortedSet<E>(set, transformer);
     }
 
-    public SortedSet tailSet(Object fromElement) {
-        SortedSet set = getSortedSet().tailSet(fromElement);
-        return new TransformedSortedSet(set, transformer);
+    public SortedSet<E> tailSet(E fromElement) {
+        SortedSet<E> set = getSortedSet().tailSet(fromElement);
+        return new TransformedSortedSet<E>(set, transformer);
     }
 
 }

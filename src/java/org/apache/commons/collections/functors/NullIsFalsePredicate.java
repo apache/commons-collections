@@ -28,35 +28,35 @@ import org.apache.commons.collections.Predicate;
  *
  * @author Stephen Colebourne
  */
-public final class NullIsFalsePredicate implements Predicate, PredicateDecorator, Serializable {
+public final class NullIsFalsePredicate<T> implements Predicate<T>, PredicateDecorator<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -2997501534564735525L;
-    
+
     /** The predicate to decorate */
-    private final Predicate iPredicate;
-    
+    private final Predicate<? super T> iPredicate;
+
     /**
      * Factory to create the null false predicate.
-     * 
+     *
      * @param predicate  the predicate to decorate, not null
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null
      */
-    public static Predicate getInstance(Predicate predicate) {
+    public static <T> Predicate<T> getInstance(Predicate<? super T> predicate) {
         if (predicate == null) {
             throw new IllegalArgumentException("Predicate must not be null");
         }
-        return new NullIsFalsePredicate(predicate);
+        return new NullIsFalsePredicate<T>(predicate);
     }
 
     /**
      * Constructor that performs no validation.
      * Use <code>getInstance</code> if you want that.
-     * 
+     *
      * @param predicate  the predicate to call after the null check
      */
-    public NullIsFalsePredicate(Predicate predicate) {
+    public NullIsFalsePredicate(Predicate<? super T> predicate) {
         super();
         iPredicate = predicate;
     }
@@ -64,11 +64,11 @@ public final class NullIsFalsePredicate implements Predicate, PredicateDecorator
     /**
      * Evaluates the predicate returning the result of the decorated predicate
      * once a null check is performed.
-     * 
+     *
      * @param object  the input object
      * @return true if decorated predicate returns true, false if input is null
      */
-    public boolean evaluate(Object object) {
+    public boolean evaluate(T object) {
         if (object == null) {
             return false;
         }
@@ -77,12 +77,13 @@ public final class NullIsFalsePredicate implements Predicate, PredicateDecorator
 
     /**
      * Gets the predicate being decorated.
-     * 
+     *
      * @return the predicate as the only element in an array
      * @since Commons Collections 3.1
      */
-    public Predicate[] getPredicates() {
-        return new Predicate[] {iPredicate};
+    @SuppressWarnings("unchecked")
+    public Predicate<? super T>[] getPredicates() {
+        return new Predicate[] { iPredicate };
     }
 
 }

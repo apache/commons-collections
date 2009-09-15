@@ -30,13 +30,13 @@ import org.apache.commons.collections.Transformer;
  *
  * @author Stephen Colebourne
  */
-public class PredicateTransformer implements Transformer, Serializable {
+public class PredicateTransformer<T> implements Transformer<T, Boolean>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 5278818408044349346L;
 
     /** The closure to wrap */
-    private final Predicate iPredicate;
+    private final Predicate<? super T> iPredicate;
 
     /**
      * Factory method that performs validation.
@@ -45,11 +45,11 @@ public class PredicateTransformer implements Transformer, Serializable {
      * @return the <code>predicate</code> transformer
      * @throws IllegalArgumentException if the predicate is null
      */
-    public static Transformer getInstance(Predicate predicate) {
+    public static <T> Transformer<T, Boolean> getInstance(Predicate<? super T> predicate) {
         if (predicate == null) {
             throw new IllegalArgumentException("Predicate must not be null");
         }
-        return new PredicateTransformer(predicate);
+        return new PredicateTransformer<T>(predicate);
     }
 
     /**
@@ -58,7 +58,7 @@ public class PredicateTransformer implements Transformer, Serializable {
      * 
      * @param predicate  the predicate to call, not null
      */
-    public PredicateTransformer(Predicate predicate) {
+    public PredicateTransformer(Predicate<? super T> predicate) {
         super();
         iPredicate = predicate;
     }
@@ -69,8 +69,8 @@ public class PredicateTransformer implements Transformer, Serializable {
      * @param input  the input object to transform
      * @return the transformed result
      */
-    public Object transform(Object input) {
-        return (iPredicate.evaluate(input) ? Boolean.TRUE : Boolean.FALSE);
+    public Boolean transform(T input) {
+        return iPredicate.evaluate(input);
     }
 
     /**
@@ -79,7 +79,7 @@ public class PredicateTransformer implements Transformer, Serializable {
      * @return the predicate
      * @since Commons Collections 3.1
      */
-    public Predicate getPredicate() {
+    public Predicate<? super T> getPredicate() {
         return iPredicate;
     }
 
