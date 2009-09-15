@@ -19,7 +19,6 @@ package org.apache.commons.collections.map;
 import java.io.Serializable;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -37,7 +36,7 @@ import org.apache.commons.collections.set.CompositeSet;
  * <strong>Note that CompositeMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
- * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw 
+ * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
  *
  * @since Commons Collections 3.0
@@ -45,62 +44,69 @@ import org.apache.commons.collections.set.CompositeSet;
  *
  * @author Brian McCallister
  */
-public class CompositeMap implements Map, Serializable {
+public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Serializable {
+
+    /** Serialization version */
+    private static final long serialVersionUID = -6096931280583808322L;
 
     /** Array of all maps in the composite */
-    private Map[] composite;
+    private Map<K, V>[] composite;
 
     /** Handle mutation operations */
-    private MapMutator mutator;
+    private MapMutator<K, V> mutator;
 
     /**
      * Create a new, empty, CompositeMap.
      */
+    @SuppressWarnings("unchecked")
     public CompositeMap() {
-        this(new Map[]{}, null);
+        this(new Map[] {}, null);
     }
 
     /**
      * Create a new CompositeMap with two composited Map instances.
-     * 
+     *
      * @param one  the first Map to be composited
      * @param two  the second Map to be composited
      * @throws IllegalArgumentException if there is a key collision
      */
-    public CompositeMap(Map one, Map two) {
-        this(new Map[]{one, two}, null);
+    @SuppressWarnings("unchecked")
+    public CompositeMap(Map<K, V> one, Map<K, V> two) {
+        this(new Map[] { one, two }, null);
     }
 
     /**
      * Create a new CompositeMap with two composited Map instances.
-     * 
+     *
      * @param one  the first Map to be composited
      * @param two  the second Map to be composited
      * @param mutator  MapMutator to be used for mutation operations
      */
-    public CompositeMap(Map one, Map two, MapMutator mutator) {
-        this(new Map[]{one, two}, mutator);
+    @SuppressWarnings("unchecked")
+    public CompositeMap(Map<K, V> one, Map<K, V> two, MapMutator<K, V> mutator) {
+        this(new Map[] { one, two }, mutator);
     }
 
     /**
      * Create a new CompositeMap which composites all of the Map instances in the
      * argument. It copies the argument array, it does not use it directly.
-     * 
+     *
      * @param composite  the Maps to be composited
      * @throws IllegalArgumentException if there is a key collision
      */
-    public CompositeMap(Map[] composite) {
+    public CompositeMap(Map<K, V>[] composite) {
         this(composite, null);
     }
 
     /**
      * Create a new CompositeMap which composites all of the Map instances in the
      * argument. It copies the argument array, it does not use it directly.
-     * 
+     *
      * @param composite  Maps to be composited
      * @param mutator  MapMutator to be used for mutation operations
      */
-    public CompositeMap(Map[] composite, MapMutator mutator) {
+    @SuppressWarnings("unchecked")
+    public CompositeMap(Map<K, V>[] composite, MapMutator<K, V> mutator) {
         this.mutator = mutator;
         this.composite = new Map[0];
         for (int i = composite.length - 1; i >= 0; --i) {
@@ -111,13 +117,13 @@ public class CompositeMap implements Map, Serializable {
     //-----------------------------------------------------------------------
     /**
      * Specify the MapMutator to be used by mutation operations.
-     * 
+     *
      * @param mutator  the MapMutator to be used for mutation delegation
      */
-    public void setMutator(MapMutator mutator) {
+    public void setMutator(MapMutator<K, V> mutator) {
         this.mutator = mutator;
     }
-    
+
     /**
      * Add an additional Map to the composite.
      *
@@ -125,35 +131,35 @@ public class CompositeMap implements Map, Serializable {
      * @throws IllegalArgumentException if there is a key collision and there is no
      *         MapMutator set to handle it.
      */
-    public synchronized void addComposited(Map map) throws IllegalArgumentException {
+    @SuppressWarnings("unchecked")
+    public synchronized void addComposited(Map<K, V> map) throws IllegalArgumentException {
         for (int i = composite.length - 1; i >= 0; --i) {
-            Collection intersect = CollectionUtils.intersection(this.composite[i].keySet(), map.keySet());
+            Collection<K> intersect = CollectionUtils.intersection(this.composite[i].keySet(), map.keySet());
             if (intersect.size() != 0) {
                 if (this.mutator == null) {
                     throw new IllegalArgumentException("Key collision adding Map to CompositeMap");
                 }
-                else {
-                    this.mutator.resolveCollision(this, this.composite[i], map, intersect);
-                }
+                this.mutator.resolveCollision(this, this.composite[i], map, intersect);
             }
         }
-        Map[] temp = new Map[this.composite.length + 1];
+        Map<K, V>[] temp = new Map[this.composite.length + 1];
         System.arraycopy(this.composite, 0, temp, 0, this.composite.length);
         temp[temp.length - 1] = map;
         this.composite = temp;
     }
-    
+
     /**
      * Remove a Map from the composite.
      *
      * @param map  the Map to be removed from the composite
      * @return The removed Map or <code>null</code> if map is not in the composite
      */
-    public synchronized Map removeComposited(Map map) {
+    @SuppressWarnings("unchecked")
+    public synchronized Map<K, V> removeComposited(Map<K, V> map) {
         int size = this.composite.length;
         for (int i = 0; i < size; ++i) {
             if (this.composite[i].equals(map)) {
-                Map[] temp = new Map[size - 1];
+                Map<K, V>[] temp = new Map[size - 1];
                 System.arraycopy(this.composite, 0, temp, 0, i);
                 System.arraycopy(this.composite, i + 1, temp, i, size - i - 1);
                 this.composite = temp;
@@ -163,7 +169,7 @@ public class CompositeMap implements Map, Serializable {
         return null;
     }
 
-    //-----------------------------------------------------------------------    
+    //-----------------------------------------------------------------------
     /**
      * Calls <code>clear()</code> on all composited Maps.
      *
@@ -174,7 +180,7 @@ public class CompositeMap implements Map, Serializable {
             this.composite[i].clear();
         }
     }
-    
+
     /**
      * Returns <tt>true</tt> if this map contains a mapping for the specified
      * key.  More formally, returns <tt>true</tt> if and only if
@@ -187,7 +193,7 @@ public class CompositeMap implements Map, Serializable {
      *         key.
      *
      * @throws ClassCastException if the key is of an inappropriate type for
-     *           this map (optional).
+     *         this map (optional).
      * @throws NullPointerException if the key is <tt>null</tt> and this map
      *            does not not permit <tt>null</tt> keys (optional).
      */
@@ -199,7 +205,7 @@ public class CompositeMap implements Map, Serializable {
         }
         return false;
     }
-    
+
     /**
      * Returns <tt>true</tt> if this map maps one or more keys to the
      * specified value.  More formally, returns <tt>true</tt> if and only if
@@ -212,7 +218,7 @@ public class CompositeMap implements Map, Serializable {
      * @return <tt>true</tt> if this map maps one or more keys to the
      *         specified value.
      * @throws ClassCastException if the value is of an inappropriate type for
-     *           this map (optional).
+     *         this map (optional).
      * @throws NullPointerException if the value is <tt>null</tt> and this map
      *            does not not permit <tt>null</tt> values (optional).
      */
@@ -224,7 +230,7 @@ public class CompositeMap implements Map, Serializable {
         }
         return false;
     }
-    
+
     /**
      * Returns a set view of the mappings contained in this map.  Each element
      * in the returned set is a <code>Map.Entry</code>.  The set is backed by the
@@ -242,14 +248,14 @@ public class CompositeMap implements Map, Serializable {
      * @see CompositeSet
      * @return a set view of the mappings contained in this map.
      */
-    public Set entrySet() {
-        CompositeSet entries = new CompositeSet();
-        for (int i = this.composite.length - 1; i >= 0; --i) {
-            entries.addComposited(this.composite[i].entrySet());
+    public Set<Map.Entry<K, V>> entrySet() {
+        CompositeSet<Map.Entry<K, V>> entries = new CompositeSet<Map.Entry<K,V>>();
+        for (int i = composite.length - 1; i >= 0; --i) {
+            entries.addComposited(composite[i].entrySet());
         }
         return entries;
     }
-    
+
     /**
      * Returns the value to which this map maps the specified key.  Returns
      * <tt>null</tt> if the map contains no mapping for this key.  A return
@@ -265,16 +271,16 @@ public class CompositeMap implements Map, Serializable {
      *
      * @param key key whose associated value is to be returned.
      * @return the value to which this map maps the specified key, or
-     *           <tt>null</tt> if the map contains no mapping for this key.
+     *         <tt>null</tt> if the map contains no mapping for this key.
      *
      * @throws ClassCastException if the key is of an inappropriate type for
-     *           this map (optional).
+     *         this map (optional).
      * @throws NullPointerException key is <tt>null</tt> and this map does not
-     *          not permit <tt>null</tt> keys (optional).
+     *         not permit <tt>null</tt> keys (optional).
      *
      * @see #containsKey(Object)
      */
-    public Object get(Object key) {
+    public V get(Object key) {
         for (int i = this.composite.length - 1; i >= 0; --i) {
             if (this.composite[i].containsKey(key)) {
                 return this.composite[i].get(key);
@@ -282,7 +288,7 @@ public class CompositeMap implements Map, Serializable {
         }
         return null;
     }
-    
+
     /**
      * Returns <tt>true</tt> if this map contains no key-value mappings.
      *
@@ -296,7 +302,7 @@ public class CompositeMap implements Map, Serializable {
         }
         return true;
     }
-    
+
     /**
      * Returns a set view of the keys contained in this map.  The set is
      * backed by the map, so changes to the map are reflected in the set, and
@@ -312,14 +318,14 @@ public class CompositeMap implements Map, Serializable {
      *
      * @return a set view of the keys contained in this map.
      */
-    public Set keySet() {
-        CompositeSet keys = new CompositeSet();
+    public Set<K> keySet() {
+        CompositeSet<K> keys = new CompositeSet<K>();
         for (int i = this.composite.length - 1; i >= 0; --i) {
             keys.addComposited(this.composite[i].keySet());
         }
         return keys;
     }
-    
+
     /**
      * Associates the specified value with the specified key in this map
      * (optional operation).  If the map previously contained a mapping for
@@ -331,27 +337,27 @@ public class CompositeMap implements Map, Serializable {
      * @param key key with which the specified value is to be associated.
      * @param value value to be associated with the specified key.
      * @return previous value associated with specified key, or <tt>null</tt>
-     *           if there was no mapping for key.  A <tt>null</tt> return can
-     *           also indicate that the map previously associated <tt>null</tt>
-     *           with the specified key, if the implementation supports
-     *           <tt>null</tt> values.
+     *         if there was no mapping for key.  A <tt>null</tt> return can
+     *         also indicate that the map previously associated <tt>null</tt>
+     *         with the specified key, if the implementation supports
+     *         <tt>null</tt> values.
      *
      * @throws UnsupportedOperationException if no MapMutator has been specified
      * @throws ClassCastException if the class of the specified key or value
-     *               prevents it from being stored in this map.
+     *            prevents it from being stored in this map.
      * @throws IllegalArgumentException if some aspect of this key or value
-     *              prevents it from being stored in this map.
+     *            prevents it from being stored in this map.
      * @throws NullPointerException this map does not permit <tt>null</tt>
      *            keys or values, and the specified key or value is
      *            <tt>null</tt>.
      */
-    public Object put(Object key, Object value) {
+    public V put(K key, V value) {
         if (this.mutator == null) {
             throw new UnsupportedOperationException("No mutator specified");
         }
         return this.mutator.put(this, this.composite, key, value);
     }
-    
+
     /**
      * Copies all of the mappings from the specified map to this map
      * (optional operation).  The effect of this call is equivalent to that
@@ -363,24 +369,24 @@ public class CompositeMap implements Map, Serializable {
      * @param map Mappings to be stored in this map.
      *
      * @throws UnsupportedOperationException if the <tt>putAll</tt> method is
-     *           not supported by this map.
+     *         not supported by this map.
      *
      * @throws ClassCastException if the class of a key or value in the
-     *               specified map prevents it from being stored in this map.
+     *         specified map prevents it from being stored in this map.
      *
      * @throws IllegalArgumentException some aspect of a key or value in the
-     *              specified map prevents it from being stored in this map.
+     *         specified map prevents it from being stored in this map.
      * @throws NullPointerException the specified map is <tt>null</tt>, or if
      *         this map does not permit <tt>null</tt> keys or values, and the
      *         specified map contains <tt>null</tt> keys or values.
      */
-    public void putAll(Map map) {
+    public void putAll(Map<? extends K, ? extends V> map) {
         if (this.mutator == null) {
             throw new UnsupportedOperationException("No mutator specified");
         }
         this.mutator.putAll(this, this.composite, map);
     }
-    
+
     /**
      * Removes the mapping for this key from this map if it is present
      * (optional operation).   More formally, if this map contains a mapping
@@ -397,16 +403,16 @@ public class CompositeMap implements Map, Serializable {
      *
      * @param key key whose mapping is to be removed from the map.
      * @return previous value associated with specified key, or <tt>null</tt>
-     *           if there was no mapping for key.
+     *         if there was no mapping for key.
      *
      * @throws ClassCastException if the key is of an inappropriate type for
-     *           the composited map (optional).
+     *         the composited map (optional).
      * @throws NullPointerException if the key is <tt>null</tt> and the composited map
      *            does not not permit <tt>null</tt> keys (optional).
      * @throws UnsupportedOperationException if the <tt>remove</tt> method is
      *         not supported by the composited map containing the key
      */
-    public Object remove(Object key) {
+    public V remove(Object key) {
         for (int i = this.composite.length - 1; i >= 0; --i) {
             if (this.composite[i].containsKey(key)) {
                 return this.composite[i].remove(key);
@@ -414,7 +420,7 @@ public class CompositeMap implements Map, Serializable {
         }
         return null;
     }
-    
+
     /**
      * Returns the number of key-value mappings in this map.  If the
      * map contains more than <tt>Integer.MAX_VALUE</tt> elements, returns
@@ -429,7 +435,7 @@ public class CompositeMap implements Map, Serializable {
         }
         return size;
     }
-    
+
     /**
      * Returns a collection view of the values contained in this map.  The
      * collection is backed by the map, so changes to the map are reflected in
@@ -443,20 +449,21 @@ public class CompositeMap implements Map, Serializable {
      *
      * @return a collection view of the values contained in this map.
      */
-    public Collection values() {
-        CompositeCollection keys = new CompositeCollection();
-        for (int i = this.composite.length - 1; i >= 0; --i) {
-            keys.addComposited(this.composite[i].values());
+    public Collection<V> values() {
+        CompositeCollection<V> values = new CompositeCollection<V>();
+        for (int i = composite.length - 1; i >= 0; --i) {
+            values.addComposited(composite[i].values());
         }
-        return keys;
+        return values;
     }
-    
+
     /**
      * Checks if this Map equals another as per the Map specification.
-     * 
+     *
      * @param obj  the object to compare to
      * @return true if the maps are equal
      */
+    @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
         if (obj instanceof Map) {
             Map map = (Map) obj;
@@ -464,24 +471,24 @@ public class CompositeMap implements Map, Serializable {
         }
         return false;
     }
-    
+
     /**
      * Gets a hash code for the Map as per the Map specification.
      */
     public int hashCode() {
         int code = 0;
-        for (Iterator i = this.entrySet().iterator(); i.hasNext();) {
-            code += i.next().hashCode();
+        for (Map.Entry<K, V> entry : entrySet()) {
+            code += entry.hashCode();
         }
         return code;
     }
-    
+
     /**
      * This interface allows definition for all of the indeterminate
      * mutators in a CompositeMap, as well as providing a hook for
      * callbacks on key collisions.
      */
-    public static interface MapMutator extends Serializable {
+    public static interface MapMutator<K, V> extends Serializable {
         /**
          * Called when adding a new Composited Map results in a
          * key collision.
@@ -492,9 +499,9 @@ public class CompositeMap implements Map, Serializable {
          * @param added  the Map being added
          * @param intersect  the intersection of the keysets of the existing and added maps
          */
-        public void resolveCollision(
-            CompositeMap composite, Map existing, Map added, Collection intersect);
-        
+        public void resolveCollision(CompositeMap<K, V> composite, Map<K, V> existing,
+                Map<K, V> added, Collection<K> intersect);
+
         /**
          * Called when the CompositeMap.put() method is invoked.
          *
@@ -503,22 +510,22 @@ public class CompositeMap implements Map, Serializable {
          * @param key  key with which the specified value is to be associated.
          * @param value  value to be associated with the specified key.
          * @return previous value associated with specified key, or <tt>null</tt>
-         *           if there was no mapping for key.  A <tt>null</tt> return can
-         *           also indicate that the map previously associated <tt>null</tt>
-         *           with the specified key, if the implementation supports
-         *           <tt>null</tt> values.
+         *         if there was no mapping for key.  A <tt>null</tt> return can
+         *         also indicate that the map previously associated <tt>null</tt>
+         *         with the specified key, if the implementation supports
+         *         <tt>null</tt> values.
          *
          * @throws UnsupportedOperationException if not defined
          * @throws ClassCastException if the class of the specified key or value
-         *               prevents it from being stored in this map.
+         *            prevents it from being stored in this map.
          * @throws IllegalArgumentException if some aspect of this key or value
-         *              prevents it from being stored in this map.
+         *            prevents it from being stored in this map.
          * @throws NullPointerException this map does not permit <tt>null</tt>
          *            keys or values, and the specified key or value is
          *            <tt>null</tt>.
          */
-        public Object put(CompositeMap map, Map[] composited, Object key, Object value);
-        
+        public V put(CompositeMap<K, V> map, Map<K, V>[] composited, K key, V value);
+
         /**
          * Called when the CompositeMap.putAll() method is invoked.
          *
@@ -528,13 +535,14 @@ public class CompositeMap implements Map, Serializable {
          *
          * @throws UnsupportedOperationException if not defined
          * @throws ClassCastException if the class of the specified key or value
-         *               prevents it from being stored in this map.
+         *            prevents it from being stored in this map.
          * @throws IllegalArgumentException if some aspect of this key or value
-         *              prevents it from being stored in this map.
+         *            prevents it from being stored in this map.
          * @throws NullPointerException this map does not permit <tt>null</tt>
          *            keys or values, and the specified key or value is
          *            <tt>null</tt>.
          */
-        public void putAll(CompositeMap map, Map[] composited, Map mapToAdd);
+        public void putAll(CompositeMap<K, V> map, Map<K, V>[] composited,
+                Map<? extends K, ? extends V> mapToAdd);
     }
 }
