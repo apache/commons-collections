@@ -61,13 +61,13 @@ import org.apache.commons.collections.Factory;
  * @author Arron Bates
  * @author Paul Jack
  */
-public class LazyList extends AbstractSerializableListDecorator {
+public class LazyList<E> extends AbstractSerializableListDecorator<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = -1708388017160694542L;
 
     /** The factory to use to lazily instantiate the objects */
-    protected final Factory factory;
+    protected final Factory<? extends E> factory;
 
     /**
      * Factory method to create a lazily instantiating list.
@@ -76,8 +76,8 @@ public class LazyList extends AbstractSerializableListDecorator {
      * @param factory  the factory to use for creation, must not be null
      * @throws IllegalArgumentException if list or factory is null
      */
-    public static List decorate(List list, Factory factory) {
-        return new LazyList(list, factory);
+    public static <E> List<E> decorate(List<E> list, Factory<? extends E> factory) {
+        return new LazyList<E>(list, factory);
     }
     
     //-----------------------------------------------------------------------
@@ -88,7 +88,7 @@ public class LazyList extends AbstractSerializableListDecorator {
      * @param factory  the factory to use for creation, must not be null
      * @throws IllegalArgumentException if list or factory is null
      */
-    protected LazyList(List list, Factory factory) {
+    protected LazyList(List<E> list, Factory<? extends E> factory) {
         super(list);
         if (factory == null) {
             throw new IllegalArgumentException("Factory must not be null");
@@ -107,36 +107,33 @@ public class LazyList extends AbstractSerializableListDecorator {
      * 
      * @param index  the index to retrieve
      */
-    public Object get(int index) {
-        int size = getList().size();
+    public E get(int index) {
+        int size = decorated().size();
         if (index < size) {
             // within bounds, get the object
-            Object object = getList().get(index);
+            E object = decorated().get(index);
             if (object == null) {
                 // item is a place holder, create new one, set and return
                 object = factory.create();
-                getList().set(index, object);
-                return object;
-            } else {
-                // good and ready to go
+                decorated().set(index, object);
                 return object;
             }
-        } else {
-            // we have to grow the list
-            for (int i = size; i < index; i++) {
-                getList().add(null);
-            }
-            // create our last object, set and return
-            Object object = factory.create();
-            getList().add(object);
+            // good and ready to go
             return object;
         }
+        // we have to grow the list
+        for (int i = size; i < index; i++) {
+            decorated().add(null);
+        }
+        // create our last object, set and return
+        E object = factory.create();
+        decorated().add(object);
+        return object;
     }
 
-
-    public List subList(int fromIndex, int toIndex) {
-        List sub = getList().subList(fromIndex, toIndex);
-        return new LazyList(sub, factory);
+    public List<E> subList(int fromIndex, int toIndex) {
+        List<E> sub = decorated().subList(fromIndex, toIndex);
+        return new LazyList<E>(sub, factory);
     }
 
 }
