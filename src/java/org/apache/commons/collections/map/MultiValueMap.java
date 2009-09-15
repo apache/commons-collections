@@ -29,6 +29,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.Factory;
 import org.apache.commons.collections.FunctorException;
 import org.apache.commons.collections.MultiMap;
@@ -66,15 +67,15 @@ import org.apache.commons.collections.iterators.IteratorChain;
  * @version $Revision$ $Date$
  * @since Commons Collections 3.2
  */
-public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Serializable {
+public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> implements MultiMap<K, V>, Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = -2214159910087182007L;
 
     /** The factory for creating value collections. */
-    private final Factory collectionFactory;
+    private final Factory<? extends Collection<V>> collectionFactory;
     /** The cached values. */
-    private transient Collection valuesView;
+    private transient Collection<V> valuesView;
 
     /**
      * Creates a map which wraps the given map and
@@ -82,8 +83,9 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
      *
      * @param map  the map to wrap
      */
-    public static MultiValueMap decorate(Map map) {
-        return new MultiValueMap(map, new ReflectionFactory(ArrayList.class));
+    @SuppressWarnings("unchecked")
+    public static <K, V> MultiValueMap<K, V> decorate(Map<K, ? super Collection<V>> map) {
+        return MultiValueMap.<K, V, ArrayList>decorate((Map<K, ? super Collection>) map, ArrayList.class);
     }
 
     /**
@@ -93,8 +95,8 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
      * @param map  the map to wrap
      * @param collectionClass  the type of the collection class
      */
-    public static MultiValueMap decorate(Map map, Class collectionClass) {
-        return new MultiValueMap(map, new ReflectionFactory(collectionClass));
+    public static <K, V, C extends Collection<V>> MultiValueMap<K, V> decorate(Map<K, ? super C> map, Class<C> collectionClass) {
+        return new MultiValueMap<K, V>(map, new ReflectionFactory<C>(collectionClass));
     }
 
     /**
@@ -104,8 +106,8 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
      * @param map  the map to decorate
      * @param collectionFactory  the collection factory (must return a Collection object).
      */
-    public static MultiValueMap decorate(Map map, Factory collectionFactory) {
-        return new MultiValueMap(map, collectionFactory);
+    public static <K, V, C extends Collection<V>> MultiValueMap<K, V> decorate(Map<K, ? super C> map, Factory<C> collectionFactory) {
+        return new MultiValueMap<K, V>(map, collectionFactory);
     }
 
     //-----------------------------------------------------------------------
@@ -113,6 +115,7 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
      * Creates a MultiValueMap based on a <code>HashMap</code> and
      * storing the multiple values in an <code>ArrayList</code>.
      */
+    @SuppressWarnings("unchecked")
     public MultiValueMap() {
         this(new HashMap(), new ReflectionFactory(ArrayList.class));
     }
@@ -124,8 +127,9 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
      * @param map  the map to decorate
      * @param collectionFactory  the collection factory which must return a Collection instance
      */
-    protected MultiValueMap(Map map, Factory collectionFactory) {
-        super(map);
+    @SuppressWarnings("unchecked")
+    protected <C extends Collection<V>> MultiValueMap(Map<K, ? super C> map, Factory<C> collectionFactory) {
+        super((Map<K, Object>) map);
         if (collectionFactory == null) {
             throw new IllegalArgumentException("The factory must not be null");
         }
@@ -171,7 +175,7 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
 //            Collection coll = (Collection) keyValuePair.getValue();
 //            coll.clear();
 //        }
-        getMap().clear();
+        decorated().clear();
     }
 
     /**
@@ -187,8 +191,9 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
      * @param value the value to remove
      * @return the value removed (which was passed in), null if nothing removed
      */
-    public Object remove(Object key, Object value) {
-        Collection valuesForKey = getCollection(key);
+    @SuppressWarnings("unchecked")
+    public V remove(Object key, Object value) {
+        Collection<V> valuesForKey = getCollection(key);
         if (valuesForKey == null) {
             return null;
         }
@@ -199,7 +204,7 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
         if (valuesForKey.isEmpty()) {
             remove(key);
         }
-        return value;
+        return (V) value;
     }
 
     /**
@@ -210,17 +215,14 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
      * @param value  the value to search for
      * @return true if the map contains the value
      */
+    @SuppressWarnings("unchecked")
     public boolean containsValue(Object value) {
-        Set pairs = getMap().entrySet();
-        if (pairs == null) {
-            return false;
-        }
-        Iterator pairsIterator = pairs.iterator();
-        while (pairsIterator.hasNext()) {
-            Map.Entry keyValuePair = (Map.Entry) pairsIterator.next();
-            Collection coll = (Collection) keyValuePair.getValue();
-            if (coll.contains(value)) {
-                return true;
+        Set<Map.Entry<K, Object>> pairs = decorated().entrySet();
+        if (pairs != null) {
+            for (Map.Entry<K, Object> entry : pairs) {
+                if (((Collection<V>) entry.getValue()).contains(value)) {
+                    return true;
+                }
             }
         }
         return false;
@@ -236,19 +238,20 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
      * @param value  the value to add to the collection at the key
      * @return the value added if the map changed and null if the map did not change
      */
-    public Object put(Object key, Object value) {
+    @SuppressWarnings("unchecked")
+    public Object put(K key, Object value) {
         boolean result = false;
-        Collection coll = getCollection(key);
+        Collection<V> coll = getCollection(key);
         if (coll == null) {
             coll = createCollection(1);  // might produce a non-empty collection
-            coll.add(value);
+            coll.add((V) value);
             if (coll.size() > 0) {
                 // only add if non-zero size to maintain class state
-                getMap().put(key, coll);
+                decorated().put(key, coll);
                 result = true;  // map definitely changed
             }
         } else {
-            result = coll.add(value);
+            result = coll.add((V) value);
         }
         return (result ? value : null);
     }
@@ -264,17 +267,15 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
      *
      * @param map  the map to copy (either a normal or multi map)
      */
-    public void putAll(Map map) {
+    @SuppressWarnings("unchecked")
+    public void putAll(Map<? extends K, ?> map) {
         if (map instanceof MultiMap) {
-            for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
-                Map.Entry entry = (Map.Entry) it.next();
-                Collection coll = (Collection) entry.getValue();
-                putAll(entry.getKey(), coll);
+            for (Map.Entry<? extends K, Object> entry : ((MultiMap<? extends K, V>) map).entrySet()) {
+                putAll(entry.getKey(), (Collection<V>) entry.getValue());
             }
         } else {
-            for (Iterator it = map.entrySet().iterator(); it.hasNext();) {
-                Map.Entry entry = (Map.Entry) it.next();
-                put(entry.getKey(), entry.getValue());
+            for (Map.Entry<? extends K, ?> entry : map.entrySet()) {
+                put(entry.getKey(), (V) entry.getValue());
             }
         }
     }
@@ -286,11 +287,10 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
      *
      * @return a collection view of the values contained in this map
      */
-    public Collection values() {
-        if (valuesView == null) {
-            valuesView = new Values();
-        }
-        return valuesView;
+    @SuppressWarnings("unchecked")
+    public Collection<Object> values() {
+        Collection<V> vs = valuesView;
+        return (Collection<Object>) (vs != null ? vs : (valuesView = new Values()));
     }
 
     /**
@@ -300,7 +300,7 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
      * @return true if the map contains the value
      */
     public boolean containsValue(Object key, Object value) {
-        Collection coll = getCollection(key);
+        Collection<V> coll = getCollection(key);
         if (coll == null) {
             return false;
         }
@@ -314,8 +314,9 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
      * @param key  the key to retrieve
      * @return the collection mapped to the key, null if no mapping
      */
-    public Collection getCollection(Object key) {
-        return (Collection) getMap().get(key);
+    @SuppressWarnings("unchecked")
+    public Collection<V> getCollection(Object key) {
+        return (Collection<V>) decorated().get(key);
     }
 
     /**
@@ -325,7 +326,7 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
      * @return the size of the collection at the key, zero if key not in map
      */
     public int size(Object key) {
-        Collection coll = getCollection(key);
+        Collection<V> coll = getCollection(key);
         if (coll == null) {
             return 0;
         }
@@ -340,18 +341,18 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
      * @param values  the values to add to the collection at the key, null ignored
      * @return true if this map changed
      */
-    public boolean putAll(Object key, Collection values) {
+    public boolean putAll(K key, Collection<V> values) {
         if (values == null || values.size() == 0) {
             return false;
         }
         boolean result = false;
-        Collection coll = getCollection(key);
+        Collection<V> coll = getCollection(key);
         if (coll == null) {
             coll = createCollection(values.size());  // might produce a non-empty collection
             coll.addAll(values);
             if (coll.size() > 0) {
                 // only add if non-zero size to maintain class state
-                getMap().put(key, coll);
+                decorated().put(key, coll);
                 result = true;  // map definitely changed
             }
         } else {
@@ -366,12 +367,11 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
      * @param key  the key to get an iterator for
      * @return the iterator of the collection at the key, empty iterator if key not in map
      */
-    public Iterator iterator(Object key) {
+    public Iterator<V> iterator(Object key) {
         if (!containsKey(key)) {
-            return EmptyIterator.INSTANCE;
-        } else {
-            return new ValuesIterator(key);
+            return EmptyIterator.<V>getInstance();
         }
+        return new ValuesIterator(key);
     }
 
     /**
@@ -381,10 +381,8 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
      */
     public int totalSize() {
         int total = 0;
-        Collection values = getMap().values();
-        for (Iterator it = values.iterator(); it.hasNext();) {
-            Collection coll = (Collection) it.next();
-            total += coll.size();
+        for (Object v : decorated().values()) {
+            total += CollectionUtils.size(v);
         }
         return total;
     }
@@ -399,18 +397,18 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
      * @param size  the collection size that is about to be added
      * @return the new collection
      */
-    protected Collection createCollection(int size) {
-        return (Collection) collectionFactory.create();
+    protected Collection<V> createCollection(int size) {
+        return collectionFactory.create();
     }
 
     //-----------------------------------------------------------------------
     /**
      * Inner class that provides the values view.
      */
-    private class Values extends AbstractCollection {
-        public Iterator iterator() {
-            final IteratorChain chain = new IteratorChain();
-            for (Iterator it = keySet().iterator(); it.hasNext();) {
+    private class Values extends AbstractCollection<V> {
+        public Iterator<V> iterator() {
+            final IteratorChain<V> chain = new IteratorChain<V>();
+            for (Iterator<K> it = keySet().iterator(); it.hasNext();) {
                 chain.addIterator(new ValuesIterator(it.next()));
             }
             return chain;
@@ -428,10 +426,10 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
     /**
      * Inner class that provides the values iterator.
      */
-    private class ValuesIterator implements Iterator {
+    private class ValuesIterator implements Iterator<V> {
         private final Object key;
-        private final Collection values;
-        private final Iterator iterator;
+        private final Collection<V> values;
+        private final Iterator<V> iterator;
 
         public ValuesIterator(Object key) {
             this.key = key;
@@ -450,7 +448,7 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
             return iterator.hasNext();
         }
 
-        public Object next() {
+        public V next() {
             return iterator.next();
         }
     }
@@ -458,14 +456,18 @@ public class MultiValueMap extends AbstractMapDecorator implements MultiMap, Ser
     /**
      * Inner class that provides a simple reflection factory.
      */
-    private static class ReflectionFactory implements Factory, Serializable {
-        private final Class clazz;
+    private static class ReflectionFactory<T extends Collection<?>> implements Factory<T>, Serializable {
 
-        public ReflectionFactory(Class clazz) {
+        /** Serialization version */
+        private static final long serialVersionUID = 2986114157496788874L;
+
+        private final Class<T> clazz;
+
+        public ReflectionFactory(Class<T> clazz) {
             this.clazz = clazz;
         }
 
-        public Object create() {
+        public T create() {
             try {
                 return clazz.newInstance();
             } catch (Exception ex) {
