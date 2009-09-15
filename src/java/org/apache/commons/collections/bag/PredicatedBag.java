@@ -41,8 +41,8 @@ import org.apache.commons.collections.collection.PredicatedCollection;
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public class PredicatedBag
-        extends PredicatedCollection implements Bag {
+public class PredicatedBag<E>
+        extends PredicatedCollection<E> implements Bag<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = -2575833140344736876L;
@@ -59,8 +59,8 @@ public class PredicatedBag
      * @throws IllegalArgumentException if bag or predicate is null
      * @throws IllegalArgumentException if the bag contains invalid elements
      */
-    public static Bag decorate(Bag bag, Predicate predicate) {
-        return new PredicatedBag(bag, predicate);
+    public static <T> Bag<T> decorate(Bag<T> bag, Predicate<? super T> predicate) {
+        return new PredicatedBag<T>(bag, predicate);
     }
 
     //-----------------------------------------------------------------------
@@ -75,7 +75,7 @@ public class PredicatedBag
      * @throws IllegalArgumentException if bag or predicate is null
      * @throws IllegalArgumentException if the bag contains invalid elements
      */
-    protected PredicatedBag(Bag bag, Predicate predicate) {
+    protected PredicatedBag(Bag<E> bag, Predicate<? super E> predicate) {
         super(bag, predicate);
     }
 
@@ -84,26 +84,26 @@ public class PredicatedBag
      * 
      * @return the decorated bag
      */
-    protected Bag getBag() {
-        return (Bag) getCollection();
+    protected Bag<E> decorated() {
+        return (Bag<E>) super.decorated();
     }
     
     //-----------------------------------------------------------------------
-    public boolean add(Object object, int count) {
+    public boolean add(E object, int count) {
         validate(object);
-        return getBag().add(object, count);
+        return decorated().add(object, count);
     }
 
     public boolean remove(Object object, int count) {
-        return getBag().remove(object, count);
+        return decorated().remove(object, count);
     }
 
-    public Set uniqueSet() {
-        return getBag().uniqueSet();
+    public Set<E> uniqueSet() {
+        return decorated().uniqueSet();
     }
 
     public int getCount(Object object) {
-        return getBag().getCount(object);
+        return decorated().getCount(object);
     }
 
 }
