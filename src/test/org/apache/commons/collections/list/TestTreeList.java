@@ -31,8 +31,8 @@ import org.apache.commons.collections.BulkTest;
  *
  * @author Joerg Schmuecker
  */
-public class TestTreeList extends AbstractTestList {
-    
+public class TestTreeList<E> extends AbstractTestList<E> {
+
     public TestTreeList(String name) {
         super(name);
     }
@@ -53,49 +53,49 @@ public class TestTreeList extends AbstractTestList {
         return BulkTest.makeSuite(TestTreeList.class);
     }
 
-    public static void benchmark(List l) {
+    public static void benchmark(List<? super Integer> l) {
         long start = System.currentTimeMillis();
         for (int i = 0; i < 100000; i++) {
             l.add(new Integer(i));
         }
         System.out.print(System.currentTimeMillis() - start + ";");
-        
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 200; i++) {
             l.toArray();
         }
         System.out.print(System.currentTimeMillis() - start + ";");
-        
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 100; i++) {
-            java.util.Iterator it = l.iterator();
+            java.util.Iterator<? super Integer> it = l.iterator();
             while (it.hasNext()) {
                 it.next();
             }
         }
         System.out.print(System.currentTimeMillis() - start + ";");
-        
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 10000; i++) {
             int j = (int) (Math.random() * 100000);
             l.add(j, new Integer(-j));
         }
         System.out.print(System.currentTimeMillis() - start + ";");
-        
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 50000; i++) {
             int j = (int) (Math.random() * 110000);
             l.get(j);
         }
         System.out.print(System.currentTimeMillis() - start + ";");
-        
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 200; i++) {
             int j = (int) (Math.random() * 100000);
             l.indexOf(new Integer(j));
         }
         System.out.print(System.currentTimeMillis() - start + ";");
-        
+
         start = System.currentTimeMillis();
         for (int i = 0; i < 10000; i++) {
             int j = (int) (Math.random() * 100000);
@@ -105,18 +105,19 @@ public class TestTreeList extends AbstractTestList {
     }
 
     //-----------------------------------------------------------------------
-    public List makeEmptyList() {
-        return new TreeList();
+    public TreeList<E> makeObject() {
+        return new TreeList<E>();
     }
 
     //-----------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
     public void testAddMultiple() {
-        List l = makeEmptyList();
-        l.add("hugo");
-        l.add("erna");
-        l.add("daniel");
-        l.add("andres");
-        l.add("harald");
+        List<E> l = makeObject();
+        l.add((E) "hugo");
+        l.add((E) "erna");
+        l.add((E) "daniel");
+        l.add((E) "andres");
+        l.add((E) "harald");
         l.add(0, null);
         assertEquals(null, l.get(0));
         assertEquals("hugo", l.get(1));
@@ -126,13 +127,14 @@ public class TestTreeList extends AbstractTestList {
         assertEquals("harald", l.get(5));
     }
 
+    @SuppressWarnings("unchecked")
     public void testRemove() {
-        List l = makeEmptyList();
-        l.add("hugo");
-        l.add("erna");
-        l.add("daniel");
-        l.add("andres");
-        l.add("harald");
+        List<E> l = makeObject();
+        l.add((E) "hugo");
+        l.add((E) "erna");
+        l.add((E) "daniel");
+        l.add((E) "andres");
+        l.add((E) "harald");
         l.add(0, null);
         int i = 0;
         assertEquals(null, l.get(i++));
@@ -164,23 +166,25 @@ public class TestTreeList extends AbstractTestList {
         assertEquals("harald", l.get(i++));
     }
 
+    @SuppressWarnings("unchecked")
     public void testInsertBefore() {
-        List l = makeEmptyList();
-        l.add("erna");
-        l.add(0, "hugo");
+        List<E> l = makeObject();
+        l.add((E) "erna");
+        l.add(0, (E) "hugo");
         assertEquals("hugo", l.get(0));
         assertEquals("erna", l.get(1));
     }
 
+    @SuppressWarnings("unchecked")
     public void testIndexOf() {
-        List l = makeEmptyList();
-        l.add("0");
-        l.add("1");
-        l.add("2");
-        l.add("3");
-        l.add("4");
-        l.add("5");
-        l.add("6");
+        List<E> l = makeObject();
+        l.add((E) "0");
+        l.add((E) "1");
+        l.add((E) "2");
+        l.add((E) "3");
+        l.add((E) "4");
+        l.add((E) "5");
+        l.add((E) "6");
         assertEquals(0, l.indexOf("0"));
         assertEquals(1, l.indexOf("1"));
         assertEquals(2, l.indexOf("2"));
@@ -188,17 +192,17 @@ public class TestTreeList extends AbstractTestList {
         assertEquals(4, l.indexOf("4"));
         assertEquals(5, l.indexOf("5"));
         assertEquals(6, l.indexOf("6"));
-        
-        l.set(1, "0");
+
+        l.set(1, (E) "0");
         assertEquals(0, l.indexOf("0"));
-        
-        l.set(3, "3");
+
+        l.set(3, (E) "3");
         assertEquals(3, l.indexOf("3"));
-        l.set(2, "3");
+        l.set(2, (E) "3");
         assertEquals(2, l.indexOf("3"));
-        l.set(1, "3");
+        l.set(1, (E) "3");
         assertEquals(1, l.indexOf("3"));
-        l.set(0, "3");
+        l.set(0, (E) "3");
         assertEquals(0, l.indexOf("3"));
     }
 
@@ -214,18 +218,18 @@ public class TestTreeList extends AbstractTestList {
 
     public void testBug35258() {
         Object objectToRemove = new Integer(3);
-        
-        List treelist = new TreeList();
+
+        List<Integer> treelist = new TreeList<Integer>();
         treelist.add(new Integer(0));
         treelist.add(new Integer(1));
         treelist.add(new Integer(2));
         treelist.add(new Integer(3));
         treelist.add(new Integer(4));
-        
+
         // this cause inconsistence of ListIterator()
         treelist.remove(objectToRemove);
-        
-        ListIterator li = treelist.listIterator();
+
+        ListIterator<Integer> li = treelist.listIterator();
         assertEquals(new Integer(0), li.next());
         assertEquals(new Integer(0), li.previous());
         assertEquals(new Integer(0), li.next());

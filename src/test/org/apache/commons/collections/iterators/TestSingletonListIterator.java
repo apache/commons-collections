@@ -31,7 +31,7 @@ import org.apache.commons.collections.ResettableListIterator;
  *
  * @author Stephen Colebourne
  */
-public class TestSingletonListIterator extends AbstractTestListIterator {
+public class TestSingletonListIterator<E> extends AbstractTestListIterator<E> {
 
     private static final Object testValue = "foo";
     
@@ -47,16 +47,17 @@ public class TestSingletonListIterator extends AbstractTestListIterator {
      * Returns a SingletonListIterator from which 
      * the element has already been removed.
      */
-    public ListIterator makeEmptyListIterator() {
-        SingletonListIterator iter = (SingletonListIterator)makeFullIterator();
+    public SingletonListIterator<E> makeEmptyIterator() {
+        SingletonListIterator<E> iter = makeObject();
         iter.next();
         iter.remove();
         iter.reset();        
         return iter;
     }
 
-    public ListIterator makeFullListIterator() {
-        return new SingletonListIterator( testValue );
+    @SuppressWarnings("unchecked")
+    public SingletonListIterator<E> makeObject() {
+        return new SingletonListIterator<E>((E) testValue);
     }
 
     public boolean supportsAdd() {
@@ -72,7 +73,7 @@ public class TestSingletonListIterator extends AbstractTestListIterator {
     }
 
     public void testIterator() {
-        ListIterator iter = (ListIterator) makeObject();
+        ListIterator<E> iter = makeObject();
         assertTrue( "Iterator should have next item", iter.hasNext() );
         assertTrue( "Iterator should have no previous item", !iter.hasPrevious() );
         assertEquals( "Iteration next index", 0, iter.nextIndex() );
@@ -118,7 +119,7 @@ public class TestSingletonListIterator extends AbstractTestListIterator {
     }
     
     public void testReset() {
-        ResettableListIterator it = (ResettableListIterator) makeObject();
+        ResettableListIterator<E> it = makeObject();
         
         assertEquals(true, it.hasNext());
         assertEquals(false, it.hasPrevious());

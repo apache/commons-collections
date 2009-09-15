@@ -44,8 +44,8 @@ import org.apache.commons.collections.ResettableListIterator;
  * @author Stephen Colebourne
  * @author Phil Steitz
  */
-public class ArrayListIterator extends ArrayIterator
-        implements ListIterator, ResettableListIterator {
+public class ArrayListIterator<E> extends ArrayIterator<E>
+        implements ListIterator<E>, ResettableListIterator<E> {
 
     /**
      * Holds the index of the last item returned by a call to <code>next()</code>
@@ -129,12 +129,13 @@ public class ArrayListIterator extends ArrayIterator
      * @return the previous element
      * @throws NoSuchElementException if there is no previous element
      */
-    public Object previous() {
+    @SuppressWarnings("unchecked")
+    public E previous() {
         if (hasPrevious() == false) {
             throw new NoSuchElementException();
         }
         this.lastItemIndex = --this.index;
-        return Array.get(this.array, this.index);
+        return (E) Array.get(this.array, this.index);
     }
 
     /**
@@ -143,12 +144,13 @@ public class ArrayListIterator extends ArrayIterator
      * @return the next element
      * @throws NoSuchElementException if there is no next element
      */
-    public Object next() {
+    @SuppressWarnings("unchecked")
+    public E next() {
         if (hasNext() == false) {
             throw new NoSuchElementException();
         }
         this.lastItemIndex = this.index;
-        return Array.get(this.array, this.index++);
+        return (E) Array.get(this.array, this.index++);
     }
 
     /**

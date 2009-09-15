@@ -32,8 +32,8 @@ import org.apache.commons.collections.ResettableIterator;
  * @author Stephen Colebourne
  * @author Rodney Waldhoff
  */
-public class SingletonIterator
-        implements Iterator, ResettableIterator {
+public class SingletonIterator<E>
+        implements Iterator<E>, ResettableIterator<E> {
 
     /** Whether remove is allowed */
     private final boolean removeAllowed;
@@ -42,7 +42,7 @@ public class SingletonIterator
     /** Has the element been removed */
     private boolean removed = false;
     /** The object */
-    private Object object;
+    private E object;
 
     /**
      * Constructs a new <code>SingletonIterator</code> where <code>remove</code>
@@ -50,7 +50,7 @@ public class SingletonIterator
      *
      * @param object  the single object to return from the iterator
      */
-    public SingletonIterator(Object object) {
+    public SingletonIterator(E object) {
         this(object, true);
     }
 
@@ -62,7 +62,7 @@ public class SingletonIterator
      * @param removeAllowed  true if remove is allowed
      * @since Commons Collections 3.1
      */
-    public SingletonIterator(Object object, boolean removeAllowed) {
+    public SingletonIterator(E object, boolean removeAllowed) {
         super();
         this.object = object;
         this.removeAllowed = removeAllowed;
@@ -89,7 +89,7 @@ public class SingletonIterator
      * @throws NoSuchElementException if the single object has already 
      *    been returned
      */
-    public Object next() {
+    public E next() {
         if (!beforeFirst || removed) {
             throw new NoSuchElementException();
         }

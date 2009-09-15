@@ -30,7 +30,7 @@ import junit.framework.TestSuite;
  *
  * @author Michael A. Smith
  */
-public abstract class TestNullComparator extends AbstractTestComparator {
+public abstract class TestNullComparator extends AbstractTestComparator<Integer> {
 
     public TestNullComparator(String testName) {
         super(testName);
@@ -52,12 +52,12 @@ public abstract class TestNullComparator extends AbstractTestComparator {
             super(testName);
         }
 
-    public Comparator makeComparator() {
-            return new NullComparator();
+        public Comparator<Integer> makeObject() {
+            return new NullComparator<Integer>();
         }
-        
-    public List getComparableObjectsOrdered() {
-        List list = new LinkedList();
+
+        public List<Integer> getComparableObjectsOrdered() {
+            List<Integer> list = new LinkedList<Integer>();
             list.add(new Integer(1));
             list.add(new Integer(2));
             list.add(new Integer(3));
@@ -76,17 +76,17 @@ public abstract class TestNullComparator extends AbstractTestComparator {
      *  Test the NullComparator with nulls low using the comparable comparator
      **/
     public static class TestNullComparator2 extends TestNullComparator {
-        
+
         public TestNullComparator2(String testName) {
             super(testName);
         }
-        
-        public Comparator makeComparator() {
-            return new NullComparator(false);
+
+        public Comparator<Integer> makeObject() {
+            return new NullComparator<Integer>(false);
         }
-        
-        public List getComparableObjectsOrdered() {
-            List list = new LinkedList();
+
+        public List<Integer> getComparableObjectsOrdered() {
+            List<Integer> list = new LinkedList<Integer>();
             list.add(null);
             list.add(new Integer(1));
             list.add(new Integer(2));
@@ -95,7 +95,7 @@ public abstract class TestNullComparator extends AbstractTestComparator {
             list.add(new Integer(5));
             return list;
         }
-        
+
         public String getCanonicalComparatorName(Object object) {
             return super.getCanonicalComparatorName(object) + "2";
         }
