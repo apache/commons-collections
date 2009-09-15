@@ -84,154 +84,161 @@ public class PredicateUtils {
     // Simple predicates
     //-----------------------------------------------------------------------------
 
-    /** 
+    /**
      * Gets a Predicate that always throws an exception.
      * This could be useful during testing as a placeholder.
      *
      * @see org.apache.commons.collections.functors.ExceptionPredicate
-     * 
+     *
      * @return the predicate
      */
-    public static Predicate exceptionPredicate() {
-        return ExceptionPredicate.INSTANCE;
+    public static <T> Predicate<T> exceptionPredicate() {
+        return ExceptionPredicate.<T>getInstance();
     }
 
     /**
      * Gets a Predicate that always returns true.
-     * 
+     *
      * @see org.apache.commons.collections.functors.TruePredicate
-     * 
+     *
      * @return the predicate
+     * @deprecated use {@link TruePredicate#truePredicate()} instead.
      */
-    public static Predicate truePredicate() {
-        return TruePredicate.INSTANCE;
+    @Deprecated
+    public static <T> Predicate<T> truePredicate() {
+        return TruePredicate.truePredicate();
     }
 
     /**
      * Gets a Predicate that always returns false.
-     * 
+     *
      * @see org.apache.commons.collections.functors.FalsePredicate
-     * 
+     *
      * @return the predicate
+     * @deprecated use {@link FalsePredicate#()} instead.
      */
-    public static Predicate falsePredicate() {
-        return FalsePredicate.INSTANCE;
+    public static <T> Predicate<T> falsePredicate() {
+        return FalsePredicate.<T>getInstance();
     }
 
     /**
      * Gets a Predicate that checks if the input object passed in is null.
-     * 
+     *
      * @see org.apache.commons.collections.functors.NullPredicate
-     * 
+     *
      * @return the predicate
+     * @deprecated use {@link NullPredicate#nullPredicate()} instead
      */
-    public static Predicate nullPredicate() {
-        return NullPredicate.INSTANCE;
+    @Deprecated
+    public static <T> Predicate<T> nullPredicate() {
+        return NullPredicate.nullPredicate();
     }
 
     /**
      * Gets a Predicate that checks if the input object passed in is not null.
-     * 
+     *
      * @see org.apache.commons.collections.functors.NotNullPredicate
-     * 
+     *
      * @return the predicate
      */
-    public static Predicate notNullPredicate() {
-        return NotNullPredicate.INSTANCE;
+    public static <T> Predicate<T> notNullPredicate() {
+        return NotNullPredicate.<T>getInstance();
     }
 
     /**
      * Creates a Predicate that checks if the input object is equal to the
      * specified object using equals().
-     * 
+     *
      * @see org.apache.commons.collections.functors.EqualPredicate
-     * 
+     *
      * @param value  the value to compare against
      * @return the predicate
+     * @deprecated use {@link EqualPredicate#equalPredicate(Object)} instead.
      */
-    public static Predicate equalPredicate(Object value) {
-        return EqualPredicate.getInstance(value);
+    @Deprecated
+    public static <T> Predicate<T> equalPredicate(T value) {
+        return EqualPredicate.equalPredicate(value);
     }
 
     /**
      * Creates a Predicate that checks if the input object is equal to the
      * specified object by identity.
-     * 
+     *
      * @see org.apache.commons.collections.functors.IdentityPredicate
-     * 
+     *
      * @param value  the value to compare against
      * @return the predicate
      */
-    public static Predicate identityPredicate(Object value) {
-        return IdentityPredicate.getInstance(value);
+    public static <T> Predicate<T> identityPredicate(T value) {
+        return IdentityPredicate.<T>getInstance(value);
     }
-    
+
     /**
      * Creates a Predicate that checks if the object passed in is of
      * a particular type, using instanceof. A <code>null</code> input
      * object will return <code>false</code>.
-     * 
+     *
      * @see org.apache.commons.collections.functors.InstanceofPredicate
-     * 
+     *
      * @param type  the type to check for, may not be null
      * @return the predicate
      * @throws IllegalArgumentException if the class is null
      */
-    public static Predicate instanceofPredicate(Class type) {
+    public static Predicate<Object> instanceofPredicate(Class<?> type) {
         return InstanceofPredicate.getInstance(type);
     }
 
     /**
      * Creates a Predicate that returns true the first time an object is
-     * encountered, and false if the same object is received 
+     * encountered, and false if the same object is received
      * again. The comparison is by equals(). A <code>null</code> input object
      * is accepted and will return true the first time, and false subsequently
      * as well.
-     * 
+     *
      * @see org.apache.commons.collections.functors.UniquePredicate
-     * 
+     *
      * @return the predicate
      */
-    public static Predicate uniquePredicate() {
+    public static <T> Predicate<T> uniquePredicate() {
         // must return new instance each time
-        return UniquePredicate.getInstance();
+        return UniquePredicate.<T>getInstance();
     }
 
     /**
      * Creates a Predicate that invokes a method on the input object.
      * The method must return either a boolean or a non-null Boolean,
-     * and have no parameters. If the input object is null, a 
+     * and have no parameters. If the input object is null, a
      * PredicateException is thrown.
      * <p>
      * For example, <code>PredicateUtils.invokerPredicate("isEmpty");</code>
-     * will call the <code>isEmpty</code> method on the input object to 
+     * will call the <code>isEmpty</code> method on the input object to
      * determine the predicate result.
-     * 
+     *
      * @see org.apache.commons.collections.functors.InvokerTransformer
      * @see org.apache.commons.collections.functors.TransformerPredicate
-     * 
+     *
      * @param methodName  the method name to call on the input object, may not be null
      * @return the predicate
      * @throws IllegalArgumentException if the methodName is null.
      */
-    public static Predicate invokerPredicate(String methodName){
+    public static <T> Predicate<T> invokerPredicate(String methodName){
         // reuse transformer as it has caching - this is lazy really, should have inner class here
-        return asPredicate(InvokerTransformer.getInstance(methodName));
+        return asPredicate(InvokerTransformer.<Object, Boolean>getInstance(methodName));
     }
 
     /**
      * Creates a Predicate that invokes a method on the input object.
      * The method must return either a boolean or a non-null Boolean,
-     * and have no parameters. If the input object is null, a 
+     * and have no parameters. If the input object is null, a
      * PredicateException is thrown.
      * <p>
      * For example, <code>PredicateUtils.invokerPredicate("isEmpty");</code>
-     * will call the <code>isEmpty</code> method on the input object to 
+     * will call the <code>isEmpty</code> method on the input object to
      * determine the predicate result.
-     * 
+     *
      * @see org.apache.commons.collections.functors.InvokerTransformer
      * @see org.apache.commons.collections.functors.TransformerPredicate
-     * 
+     *
      * @param methodName  the method name to call on the input object, may not be null
      * @param paramTypes  the parameter types
      * @param args  the arguments
@@ -239,9 +246,9 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if the method name is null
      * @throws IllegalArgumentException if the paramTypes and args don't match
      */
-    public static Predicate invokerPredicate(String methodName, Class[] paramTypes, Object[] args){
+    public static <T> Predicate<T> invokerPredicate(String methodName, Class<?>[] paramTypes, Object[] args){
         // reuse transformer as it has caching - this is lazy really, should have inner class here
-        return asPredicate(InvokerTransformer.getInstance(methodName, paramTypes, args));
+        return asPredicate(InvokerTransformer.<Object, Boolean>getInstance(methodName, paramTypes, args));
     }
 
     // Boolean combinations
@@ -250,78 +257,80 @@ public class PredicateUtils {
     /**
      * Create a new Predicate that returns true only if both of the specified
      * predicates are true.
-     * 
+     *
      * @see org.apache.commons.collections.functors.AndPredicate
-     * 
+     *
      * @param predicate1  the first predicate, may not be null
      * @param predicate2  the second predicate, may not be null
      * @return the <code>and</code> predicate
      * @throws IllegalArgumentException if either predicate is null
      */
-    public static Predicate andPredicate(Predicate predicate1, Predicate predicate2) {
-        return AndPredicate.getInstance(predicate1, predicate2);
+    public static <T> Predicate<T> andPredicate(Predicate<? super T> predicate1, Predicate<? super T> predicate2) {
+        return AndPredicate.<T>getInstance(predicate1, predicate2);
     }
 
     /**
      * Create a new Predicate that returns true only if all of the specified
      * predicates are true.
      * If the array of predicates is empty, then this predicate returns true.
-     * 
+     *
      * @see org.apache.commons.collections.functors.AllPredicate
-     * 
+     *
      * @param predicates  an array of predicates to check, may not be null
      * @return the <code>all</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
+     * @deprecated use {@link AllPredicate#allPredicate(Predicate...)} instead.
      */
-    public static Predicate allPredicate(Predicate[] predicates) {
-        return AllPredicate.getInstance(predicates);
+    @Deprecated
+    public static <T> Predicate<T> allPredicate(Predicate<? super T>[] predicates) {
+        return AllPredicate.allPredicate(predicates);
     }
 
     /**
      * Create a new Predicate that returns true only if all of the specified
      * predicates are true. The predicates are checked in iterator order.
      * If the collection of predicates is empty, then this predicate returns true.
-     * 
+     *
      * @see org.apache.commons.collections.functors.AllPredicate
-     * 
+     *
      * @param predicates  a collection of predicates to check, may not be null
      * @return the <code>all</code> predicate
      * @throws IllegalArgumentException if the predicates collection is null
      * @throws IllegalArgumentException if any predicate in the collection is null
      */
-    public static Predicate allPredicate(Collection predicates) {
-        return AllPredicate.getInstance(predicates);
+    public static <T> Predicate<T> allPredicate(Collection<? extends Predicate<T>> predicates) {
+        return AllPredicate.allPredicate(predicates);
     }
 
     /**
      * Create a new Predicate that returns true if either of the specified
      * predicates are true.
-     * 
+     *
      * @see org.apache.commons.collections.functors.OrPredicate
-     * 
+     *
      * @param predicate1  the first predicate, may not be null
      * @param predicate2  the second predicate, may not be null
      * @return the <code>or</code> predicate
      * @throws IllegalArgumentException if either predicate is null
      */
-    public static Predicate orPredicate(Predicate predicate1, Predicate predicate2) {
-        return OrPredicate.getInstance(predicate1, predicate2);
+    public static <T> Predicate<T> orPredicate(Predicate<? super T> predicate1, Predicate<? super T> predicate2) {
+        return OrPredicate.<T>getInstance(predicate1, predicate2);
     }
 
     /**
      * Create a new Predicate that returns true if any of the specified
      * predicates are true.
      * If the array of predicates is empty, then this predicate returns false.
-     * 
+     *
      * @see org.apache.commons.collections.functors.AnyPredicate
-     * 
+     *
      * @param predicates  an array of predicates to check, may not be null
      * @return the <code>any</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static Predicate anyPredicate(Predicate[] predicates) {
+    public static <T> Predicate<T> anyPredicate(Predicate<? super T>[] predicates) {
         return AnyPredicate.getInstance(predicates);
     }
 
@@ -329,30 +338,31 @@ public class PredicateUtils {
      * Create a new Predicate that returns true if any of the specified
      * predicates are true. The predicates are checked in iterator order.
      * If the collection of predicates is empty, then this predicate returns false.
-     * 
+     *
      * @see org.apache.commons.collections.functors.AnyPredicate
-     * 
+     *
      * @param predicates  a collection of predicates to check, may not be null
      * @return the <code>any</code> predicate
      * @throws IllegalArgumentException if the predicates collection is null
      * @throws IllegalArgumentException if any predicate in the collection is null
      */
-    public static Predicate anyPredicate(Collection predicates) {
+    public static <T> Predicate<T> anyPredicate(Collection<? extends Predicate<T>> predicates) {
         return AnyPredicate.getInstance(predicates);
     }
 
     /**
      * Create a new Predicate that returns true if one, but not both, of the
-     * specified predicates are true.
-     * 
+     * specified predicates are true. XOR
+     *
      * @see org.apache.commons.collections.functors.OnePredicate
-     * 
+     *
      * @param predicate1  the first predicate, may not be null
      * @param predicate2  the second predicate, may not be null
      * @return the <code>either</code> predicate
      * @throws IllegalArgumentException if either predicate is null
      */
-    public static Predicate eitherPredicate(Predicate predicate1, Predicate predicate2) {
+    @SuppressWarnings("unchecked")
+    public static <T> Predicate<T> eitherPredicate(Predicate<? super T> predicate1, Predicate<? super T> predicate2) {
         return onePredicate(new Predicate[] { predicate1, predicate2 });
     }
 
@@ -360,15 +370,15 @@ public class PredicateUtils {
      * Create a new Predicate that returns true if only one of the specified
      * predicates are true.
      * If the array of predicates is empty, then this predicate returns false.
-     * 
+     *
      * @see org.apache.commons.collections.functors.OnePredicate
-     * 
+     *
      * @param predicates  an array of predicates to check, may not be null
      * @return the <code>one</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static Predicate onePredicate(Predicate[] predicates) {
+    public static <T> Predicate<T> onePredicate(Predicate<? super T>[] predicates) {
         return OnePredicate.getInstance(predicates);
     }
 
@@ -376,30 +386,31 @@ public class PredicateUtils {
      * Create a new Predicate that returns true if only one of the specified
      * predicates are true. The predicates are checked in iterator order.
      * If the collection of predicates is empty, then this predicate returns false.
-     * 
+     *
      * @see org.apache.commons.collections.functors.OnePredicate
-     * 
+     *
      * @param predicates  a collection of predicates to check, may not be null
      * @return the <code>one</code> predicate
      * @throws IllegalArgumentException if the predicates collection is null
      * @throws IllegalArgumentException if any predicate in the collection is null
      */
-    public static Predicate onePredicate(Collection predicates) {
+    public static <T> Predicate<T> onePredicate(Collection<Predicate<T>> predicates) {
         return OnePredicate.getInstance(predicates);
     }
 
     /**
-     * Create a new Predicate that returns true if neither of the specified 
+     * Create a new Predicate that returns true if neither of the specified
      * predicates are true.
-     * 
+     *
      * @see org.apache.commons.collections.functors.NonePredicate
-     * 
+     *
      * @param predicate1  the first predicate, may not be null
      * @param predicate2  the second predicate, may not be null
      * @return the <code>neither</code> predicate
      * @throws IllegalArgumentException if either predicate is null
      */
-    public static Predicate neitherPredicate(Predicate predicate1, Predicate predicate2) {
+    @SuppressWarnings("unchecked")
+    public static <T> Predicate<T> neitherPredicate(Predicate<? super T> predicate1, Predicate<? super T> predicate2) {
         return nonePredicate(new Predicate[] { predicate1, predicate2 });
     }
 
@@ -407,15 +418,15 @@ public class PredicateUtils {
      * Create a new Predicate that returns true if none of the specified
      * predicates are true.
      * If the array of predicates is empty, then this predicate returns true.
-     * 
+     *
      * @see org.apache.commons.collections.functors.NonePredicate
-     * 
+     *
      * @param predicates  an array of predicates to check, may not be null
      * @return the <code>none</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static Predicate nonePredicate(Predicate[] predicates) {
+    public static <T> Predicate<T> nonePredicate(Predicate<? super T>[] predicates) {
         return NonePredicate.getInstance(predicates);
     }
 
@@ -423,29 +434,29 @@ public class PredicateUtils {
      * Create a new Predicate that returns true if none of the specified
      * predicates are true. The predicates are checked in iterator order.
      * If the collection of predicates is empty, then this predicate returns true.
-     * 
+     *
      * @see org.apache.commons.collections.functors.NonePredicate
-     * 
+     *
      * @param predicates  a collection of predicates to check, may not be null
      * @return the <code>none</code> predicate
      * @throws IllegalArgumentException if the predicates collection is null
      * @throws IllegalArgumentException if any predicate in the collection is null
      */
-    public static Predicate nonePredicate(Collection predicates) {
+    public static <T> Predicate<T> nonePredicate(Collection<? extends Predicate<T>> predicates) {
         return NonePredicate.getInstance(predicates);
     }
 
     /**
      * Create a new Predicate that returns true if the specified predicate
      * returns false and vice versa.
-     * 
+     *
      * @see org.apache.commons.collections.functors.NotPredicate
-     * 
+     *
      * @param predicate  the predicate to not
      * @return the <code>not</code> predicate
      * @throws IllegalArgumentException if the predicate is null
      */
-    public static Predicate notPredicate(Predicate predicate) {
+    public static <T> Predicate<T> notPredicate(Predicate<? super T> predicate) {
         return NotPredicate.getInstance(predicate);
     }
 
@@ -456,14 +467,14 @@ public class PredicateUtils {
      * Create a new Predicate that wraps a Transformer. The Transformer must
      * return either Boolean.TRUE or Boolean.FALSE otherwise a PredicateException
      * will be thrown.
-     * 
+     *
      * @see org.apache.commons.collections.functors.TransformerPredicate
-     * 
+     *
      * @param transformer  the transformer to wrap, may not be null
      * @return the transformer wrapping predicate
      * @throws IllegalArgumentException if the transformer is null
      */
-    public static Predicate asPredicate(Transformer transformer) {
+    public static <T> Predicate<T> asPredicate(Transformer<? super T, Boolean> transformer) {
         return TransformerPredicate.getInstance(transformer);
     }
 
@@ -471,17 +482,17 @@ public class PredicateUtils {
     //-----------------------------------------------------------------------------
 
     /**
-     * Gets a Predicate that throws an exception if the input object is null, 
-     * otherwise it calls the specified Predicate. This allows null handling 
+     * Gets a Predicate that throws an exception if the input object is null,
+     * otherwise it calls the specified Predicate. This allows null handling
      * behaviour to be added to Predicates that don't support nulls.
-     * 
+     *
      * @see org.apache.commons.collections.functors.NullIsExceptionPredicate
-     * 
+     *
      * @param predicate  the predicate to wrap, may not be null
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null.
      */
-    public static Predicate nullIsExceptionPredicate(Predicate predicate){
+    public static <T> Predicate<T> nullIsExceptionPredicate(Predicate<? super T> predicate){
         return NullIsExceptionPredicate.getInstance(predicate);
     }
 
@@ -489,14 +500,14 @@ public class PredicateUtils {
      * Gets a Predicate that returns false if the input object is null, otherwise
      * it calls the specified Predicate. This allows null handling behaviour to
      * be added to Predicates that don't support nulls.
-     * 
+     *
      * @see org.apache.commons.collections.functors.NullIsFalsePredicate
-     * 
+     *
      * @param predicate  the predicate to wrap, may not be null
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null.
      */
-    public static Predicate nullIsFalsePredicate(Predicate predicate){
+    public static <T> Predicate<T> nullIsFalsePredicate(Predicate<? super T> predicate){
         return NullIsFalsePredicate.getInstance(predicate);
     }
 
@@ -504,14 +515,14 @@ public class PredicateUtils {
      * Gets a Predicate that returns true if the input object is null, otherwise
      * it calls the specified Predicate. This allows null handling behaviour to
      * be added to Predicates that don't support nulls.
-     * 
+     *
      * @see org.apache.commons.collections.functors.NullIsTruePredicate
-     * 
+     *
      * @param predicate  the predicate to wrap, may not be null
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null.
      */
-    public static Predicate nullIsTruePredicate(Predicate predicate){
+    public static <T> Predicate<T> nullIsTruePredicate(Predicate<? super T> predicate){
         return NullIsTruePredicate.getInstance(predicate);
     }
 
@@ -520,17 +531,18 @@ public class PredicateUtils {
     /**
      * Creates a predicate that transforms the input object before passing it
      * to the predicate.
-     * 
+     *
      * @see org.apache.commons.collections.functors.TransformedPredicate
-     * 
+     *
      * @param transformer  the transformer to call first
      * @param predicate  the predicate to call with the result of the transform
      * @return the predicate
      * @throws IllegalArgumentException if the transformer or the predicate is null
      * @since Commons Collections 3.1
      */
-    public static Predicate transformedPredicate(Transformer transformer, Predicate predicate) {
-        return TransformedPredicate.getInstance(transformer, predicate);
+    public static <T> Predicate<T> transformedPredicate(
+            Transformer<? super T, ? extends T> transformer, Predicate<? super T> predicate) {
+        return TransformedPredicate.<T>getInstance(transformer, predicate);
     }
 
 }
