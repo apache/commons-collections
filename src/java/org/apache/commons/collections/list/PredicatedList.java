@@ -16,14 +16,13 @@
  */
 package org.apache.commons.collections.list;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.collection.PredicatedCollection;
 import org.apache.commons.collections.iterators.AbstractListIteratorDecorator;
+
+import java.util.Collection;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Decorates another <code>List</code> to validate that all additions
@@ -44,7 +43,7 @@ import org.apache.commons.collections.iterators.AbstractListIteratorDecorator;
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public class PredicatedList extends PredicatedCollection implements List {
+public class PredicatedList<E> extends PredicatedCollection<E> implements List<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = -5722039223898659102L;
@@ -57,11 +56,12 @@ public class PredicatedList extends PredicatedCollection implements List {
      * 
      * @param list  the list to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
+     * @return the decorated list
      * @throws IllegalArgumentException if list or predicate is null
      * @throws IllegalArgumentException if the list contains invalid elements
      */
-    public static List decorate(List list, Predicate predicate) {
-        return new PredicatedList(list, predicate);
+    public static <T> List<T> decorate(List<T> list, Predicate<? super T> predicate) {
+        return new PredicatedList<T>(list, predicate);
     }
 
     //-----------------------------------------------------------------------
@@ -76,7 +76,7 @@ public class PredicatedList extends PredicatedCollection implements List {
      * @throws IllegalArgumentException if list or predicate is null
      * @throws IllegalArgumentException if the list contains invalid elements
      */
-    protected PredicatedList(List list, Predicate predicate) {
+    protected PredicatedList(List<E> list, Predicate<? super E> predicate) {
         super(list, predicate);
     }
 
@@ -85,73 +85,73 @@ public class PredicatedList extends PredicatedCollection implements List {
      * 
      * @return the decorated list
      */
-    protected List getList() {
-        return (List) getCollection();
+    protected List<E> decorated() {
+        return (List<E>) super.decorated();
     }
 
     //-----------------------------------------------------------------------
-    public Object get(int index) {
-        return getList().get(index);
+    public E get(int index) {
+        return decorated().get(index);
     }
 
     public int indexOf(Object object) {
-        return getList().indexOf(object);
+        return decorated().indexOf(object);
     }
 
     public int lastIndexOf(Object object) {
-        return getList().lastIndexOf(object);
+        return decorated().lastIndexOf(object);
     }
 
-    public Object remove(int index) {
-        return getList().remove(index);
+    public E remove(int index) {
+        return decorated().remove(index);
     }
 
     //-----------------------------------------------------------------------
-    public void add(int index, Object object) {
+    public void add(int index, E object) {
         validate(object);
-        getList().add(index, object);
+        decorated().add(index, object);
     }
 
-    public boolean addAll(int index, Collection coll) {
-        for (Iterator it = coll.iterator(); it.hasNext(); ) {
-            validate(it.next());
+    public boolean addAll(int index, Collection<? extends E> coll) {
+        for (E aColl : coll) {
+            validate(aColl);
         }
-        return getList().addAll(index, coll);
+        return decorated().addAll(index, coll);
     }
 
-    public ListIterator listIterator() {
+    public ListIterator<E> listIterator() {
         return listIterator(0);
     }
 
-    public ListIterator listIterator(int i) {
-        return new PredicatedListIterator(getList().listIterator(i));
+    public ListIterator<E> listIterator(int i) {
+        return new PredicatedListIterator(decorated().listIterator(i));
     }
 
-    public Object set(int index, Object object) {
+    public E set(int index, E object) {
         validate(object);
-        return getList().set(index, object);
+        return decorated().set(index, object);
     }
 
-    public List subList(int fromIndex, int toIndex) {
-        List sub = getList().subList(fromIndex, toIndex);
-        return new PredicatedList(sub, predicate);
+    public List<E> subList(int fromIndex, int toIndex) {
+        List<E> sub = decorated().subList(fromIndex, toIndex);
+        return new PredicatedList<E>(sub, predicate);
     }
 
     /**
      * Inner class Iterator for the PredicatedList
      */
-    protected class PredicatedListIterator extends AbstractListIteratorDecorator {
+    protected class PredicatedListIterator extends AbstractListIteratorDecorator<E> {
         
-        protected PredicatedListIterator(ListIterator iterator) {
+        protected PredicatedListIterator(ListIterator<E> iterator) {
             super(iterator);
         }
         
-        public void add(Object object) {
+        public void add(E object) {
             validate(object);
             iterator.add(object);
         }
         
-        public void set(Object object) {
+        public void set(E object) {
             validate(object);
             iterator.set(object);
         }
