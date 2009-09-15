@@ -55,8 +55,8 @@ public class FactoryUtils {
      * 
      * @return the factory
      */
-    public static Factory exceptionFactory() {
-        return ExceptionFactory.INSTANCE;
+    public static <T> Factory<T> exceptionFactory() {
+        return ExceptionFactory.<T>getInstance();
     }
 
     /**
@@ -64,11 +64,11 @@ public class FactoryUtils {
      * This could be useful during testing as a placeholder.
      *
      * @see org.apache.commons.collections.functors.ConstantFactory
-     * 
+     * @param <T> the "type" of null object the factory should return.
      * @return the factory
      */
-    public static Factory nullFactory() {
-        return ConstantFactory.NULL_INSTANCE;
+    public static <T> Factory<T> nullFactory() {
+        return ConstantFactory.<T>getInstance(null);
     }
 
     /**
@@ -82,7 +82,7 @@ public class FactoryUtils {
      * @param constantToReturn  the constant object to return each time in the factory
      * @return the <code>constant</code> factory.
      */
-    public static Factory constantFactory(Object constantToReturn) {
+    public static <T> Factory<T> constantFactory(T constantToReturn) {
         return ConstantFactory.getInstance(constantToReturn);
     }
 
@@ -103,8 +103,8 @@ public class FactoryUtils {
      * @throws IllegalArgumentException if the prototype is null
      * @throws IllegalArgumentException if the prototype cannot be cloned
      */
-    public static Factory prototypeFactory(Object prototype) {
-        return PrototypeFactory.getInstance(prototype);
+    public static <T> Factory<T> prototypeFactory(T  prototype) {
+        return PrototypeFactory.<T>getInstance(prototype);
     }
 
     /**
@@ -117,7 +117,7 @@ public class FactoryUtils {
      * @return the <code>reflection</code> factory
      * @throws IllegalArgumentException if the classToInstantiate is null
      */
-    public static Factory instantiateFactory(Class classToInstantiate) {
+    public static <T> Factory<T> instantiateFactory(Class<T> classToInstantiate) {
         return InstantiateFactory.getInstance(classToInstantiate, null, null);
     }
 
@@ -135,7 +135,7 @@ public class FactoryUtils {
      * @throws IllegalArgumentException if the paramTypes and args don't match
      * @throws IllegalArgumentException if the constructor doesn't exist
      */
-    public static Factory instantiateFactory(Class classToInstantiate, Class[] paramTypes, Object[] args) {
+    public static <T> Factory<T> instantiateFactory(Class<T> classToInstantiate, Class<?>[] paramTypes, Object[] args) {
         return InstantiateFactory.getInstance(classToInstantiate, paramTypes, args);
     }
 
