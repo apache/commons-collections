@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections.collection;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -34,16 +35,21 @@ import java.util.Iterator;
  * wrapped collection. This may be undesirable, for example if you are trying
  * to write an unmodifiable implementation it might provide a loophole.
  *
+ * @param <E> the type of the elements in the collection
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public abstract class AbstractCollectionDecorator implements Collection {
+public abstract class AbstractCollectionDecorator<E>
+        implements Collection<E>, Serializable {
+
+    /** Serialization version */
+    private static final long serialVersionUID = 6249888059822088500L;
 
     /** The collection being decorated */
-    protected Collection collection;
+    protected Collection<E> collection;
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
@@ -59,7 +65,7 @@ public abstract class AbstractCollectionDecorator implements Collection {
      * @param coll  the collection to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    protected AbstractCollectionDecorator(Collection coll) {
+    protected AbstractCollectionDecorator(Collection<E> coll) {
         if (coll == null) {
             throw new IllegalArgumentException("Collection must not be null");
         }
@@ -68,79 +74,77 @@ public abstract class AbstractCollectionDecorator implements Collection {
 
     /**
      * Gets the collection being decorated.
+     * All access to the decorated collection goes via this method.
      * 
      * @return the decorated collection
      */
-    protected Collection getCollection() {
+    protected Collection<E> decorated() {
         return collection;
     }
 
     //-----------------------------------------------------------------------
-    public boolean add(Object object) {
-        return collection.add(object);
+    public boolean add(E object) {
+        return decorated().add(object);
     }
 
-    public boolean addAll(Collection coll) {
-        return collection.addAll(coll);
+    public boolean addAll(Collection<? extends E> coll) {
+        return decorated().addAll(coll);
     }
 
     public void clear() {
-        collection.clear();
+        decorated().clear();
     }
 
     public boolean contains(Object object) {
-        return collection.contains(object);
+        return decorated().contains(object);
     }
 
     public boolean isEmpty() {
-        return collection.isEmpty();
+        return decorated().isEmpty();
     }
 
-    public Iterator iterator() {
-        return collection.iterator();
+    public Iterator<E> iterator() {
+        return decorated().iterator();
     }
 
     public boolean remove(Object object) {
-        return collection.remove(object);
+        return decorated().remove(object);
     }
 
     public int size() {
-        return collection.size();
+        return decorated().size();
     }
 
     public Object[] toArray() {
-        return collection.toArray();
+        return decorated().toArray();
     }
 
-    public Object[] toArray(Object[] object) {
-        return collection.toArray(object);
+    public <T> T[] toArray(T[] object) {
+        return decorated().toArray(object);
     }
 
-    public boolean containsAll(Collection coll) {
-        return collection.containsAll(coll);
+    public boolean containsAll(Collection<?> coll) {
+        return decorated().containsAll(coll);
     }
 
-    public boolean removeAll(Collection coll) {
-        return collection.removeAll(coll);
+    public boolean removeAll(Collection<?> coll) {
+        return decorated().removeAll(coll);
     }
 
-    public boolean retainAll(Collection coll) {
-        return collection.retainAll(coll);
+    public boolean retainAll(Collection<?> coll) {
+        return decorated().retainAll(coll);
     }
 
     public boolean equals(Object object) {
-        if (object == this) {
-            return true;
-        }
-        return collection.equals(object);
+        return object == this || decorated().equals(object);
     }
 
     public int hashCode() {
-        return collection.hashCode();
+        return decorated().hashCode();
     }
 
     public String toString() {
-        return collection.toString();
+        return decorated().toString();
     }
 
 }
