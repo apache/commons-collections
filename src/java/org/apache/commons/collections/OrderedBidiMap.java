@@ -23,12 +23,15 @@ package org.apache.commons.collections;
  * Implementations should allow a value to be looked up from a key and
  * a key to be looked up from a value with equal performance.
  *
+ * @param <K> the type of the keys in the map
+ * @param <V> the type of the values in the map
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */
-public interface OrderedBidiMap extends BidiMap, OrderedMap {
+public interface OrderedBidiMap<K, V> extends BidiMap<K, V>, OrderedMap<K, V> {
 
     /**
      * Gets a view of this map where the keys and values are reversed.
@@ -45,20 +48,6 @@ public interface OrderedBidiMap extends BidiMap, OrderedMap {
      *
      * @return an inverted bidirectional map
      */
-    public BidiMap inverseBidiMap();
-    
-    /**
-     * Gets a view of this map where the keys and values are reversed.
-     * <p>
-     * Changes to one map will be visible in the other and vice versa.
-     * This enables both directions of the map to be accessed equally.
-     * <p>
-     * Implementations should seek to avoid creating a new object every time this
-     * method is called. See <code>AbstractMap.values()</code> etc. Calling this
-     * method on the inverse map should return the original.
-     *
-     * @return an inverted bidirectional map
-     */
-    public OrderedBidiMap inverseOrderedBidiMap();
-    
+    public OrderedBidiMap<V, K> inverseBidiMap();
+
 }

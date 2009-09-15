@@ -25,7 +25,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.PredicateUtils;
+import org.apache.commons.collections.functors.TruePredicate;
 
 /**
  * Extension of {@link AbstractTestCollection} for exercising the 
@@ -36,12 +36,12 @@ import org.apache.commons.collections.PredicateUtils;
  *
  * @author Phil Steitz
  */
-public class TestPredicatedCollection extends AbstractTestCollection {
+public class TestPredicatedCollection<E> extends AbstractTestCollection<E> {
 
     public TestPredicatedCollection(String name) {
         super(name);
     }
-    
+
     public static Test suite() {
         return new TestSuite(TestPredicatedCollection.class);
     }
@@ -50,86 +50,84 @@ public class TestPredicatedCollection extends AbstractTestCollection {
         String[] testCaseName = { TestPredicatedCollection.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
- 
+
    //------------------------------------------------------------------------
-        
-    protected Predicate truePredicate = PredicateUtils.truePredicate();
-    
-    protected Collection decorateCollection(Collection collection, 
-        Predicate predicate) {
+    protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
+
+    protected Collection<E> decorateCollection(
+                Collection<E> collection, Predicate<E> predicate) {
         return PredicatedCollection.decorate(collection, predicate);
     }
-    
-    public Collection makeCollection() {
-        return decorateCollection(new ArrayList(), truePredicate);
+
+    public Collection<E> makeObject() {
+        return decorateCollection(new ArrayList<E>(), truePredicate);
     }
-    
-    public Collection makeConfirmedCollection() {
-        return new ArrayList();
+
+    public Collection<E> makeConfirmedCollection() {
+        return new ArrayList<E>();
     }
-    
-    public Object[] getFullElements() {
-        return new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+
+    @SuppressWarnings("unchecked")
+    public E[] getFullElements() {
+        return (E[]) new Object[] { "1", "3", "5", "7", "2", "4", "6" };
     }
-    
-    public Collection makeFullCollection() {
-        List list = new ArrayList();
+
+    public Collection<E> makeFullCollection() {
+        List<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return decorateCollection(list, truePredicate);
     }
-    
-    public Collection makeConfirmedFullCollection() {
-        List list = new ArrayList();
+
+    public Collection<E> makeConfirmedFullCollection() {
+        List<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }
 
- //-----------------------------------------------------------------
-    protected Predicate testPredicate =  
-        new Predicate() {
-            public boolean evaluate(Object o) {
+    //-----------------------------------------------------------------------
+    protected Predicate<E> testPredicate =
+        new Predicate<E>() {
+            public boolean evaluate(E o) {
                 return o instanceof String;
             }
         };
-    
-    public Collection makeTestCollection() {
-        return decorateCollection(new ArrayList(), testPredicate);
+
+    public Collection<E> makeTestCollection() {
+        return decorateCollection(new ArrayList<E>(), testPredicate);
     }
-     
+
+    @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
-        Collection c = makeTestCollection();
+        Collection<E> c = makeTestCollection();
         Integer i = new Integer(3);
         try {
-            c.add(i);
+            c.add((E) i);
             fail("Integer should fail string predicate.");
         } catch (IllegalArgumentException e) {
             // expected
         }
-        assertTrue("Collection shouldn't contain illegal element", 
-         !c.contains(i));   
+        assertTrue("Collection shouldn't contain illegal element",
+         !c.contains(i));
     }
 
+    @SuppressWarnings("unchecked")
     public void testIllegalAddAll() {
-        Collection c = makeTestCollection();
-        List elements = new ArrayList();
-        elements.add("one");
-        elements.add("two");
-        elements.add(new Integer(3));
-        elements.add("four");
+        Collection<E> c = makeTestCollection();
+        List<E> elements = new ArrayList<E>();
+        elements.add((E) "one");
+        elements.add((E) "two");
+        elements.add((E) new Integer(3));
+        elements.add((E) "four");
         try {
             c.addAll(elements);
             fail("Integer should fail string predicate.");
         } catch (IllegalArgumentException e) {
             // expected
         }
-        assertTrue("Collection shouldn't contain illegal element", 
-         !c.contains("one"));   
-        assertTrue("Collection shouldn't contain illegal element", 
-         !c.contains("two"));   
-        assertTrue("Collection shouldn't contain illegal element", 
-         !c.contains(new Integer(3)));   
-        assertTrue("Collection shouldn't contain illegal element", 
-         !c.contains("four"));   
+        assertTrue("Collection shouldn't contain illegal element", !c.contains("one"));
+        assertTrue("Collection shouldn't contain illegal element", !c.contains("two"));
+        assertTrue("Collection shouldn't contain illegal element", !c.contains(new Integer(3)));
+        assertTrue("Collection shouldn't contain illegal element", !c.contains("four"));
     }
 
     public String getCompatibilityVersion() {

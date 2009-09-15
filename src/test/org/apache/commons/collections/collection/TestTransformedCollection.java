@@ -36,16 +36,16 @@ import org.apache.commons.collections.TransformerUtils;
  *
  * @author Stephen Colebourne
  */
-public class TestTransformedCollection extends AbstractTestCollection {
+public class TestTransformedCollection extends AbstractTestCollection<Object> {
     
-    private static class StringToInteger implements Transformer {
+    private static class StringToInteger implements Transformer<Object, Object> {
         public Object transform(Object input) {
             return new Integer((String) input);
         }
     }
     
-    public static final Transformer NOOP_TRANSFORMER = TransformerUtils.nopTransformer();
-    public static final Transformer STRING_TO_INTEGER_TRANSFORMER = new StringToInteger();
+    public static final Transformer<Object, Object> NOOP_TRANSFORMER = TransformerUtils.nopTransformer();
+    public static final Transformer<Object, Object> STRING_TO_INTEGER_TRANSFORMER = new StringToInteger();
 
     public TestTransformedCollection(String testName) {
         super(testName);
@@ -61,22 +61,22 @@ public class TestTransformedCollection extends AbstractTestCollection {
     }
 
     //-----------------------------------------------------------------------
-    public Collection makeConfirmedCollection() {
-        return new ArrayList();
+    public Collection<Object> makeConfirmedCollection() {
+        return new ArrayList<Object>();
     }
 
-    public Collection makeConfirmedFullCollection() {
-        List list = new ArrayList();
+    public Collection<Object> makeConfirmedFullCollection() {
+        List<Object> list = new ArrayList<Object>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }
     
-    public Collection makeCollection() {
-        return TransformedCollection.decorate(new ArrayList(), NOOP_TRANSFORMER);
+    public Collection<Object> makeObject() {
+        return TransformedCollection.decorate(new ArrayList<Object>(), NOOP_TRANSFORMER);
     }
 
-    public Collection makeFullCollection() {
-        List list = new ArrayList();
+    public Collection<Object> makeFullCollection() {
+        List<Object> list = new ArrayList<Object>();
         list.addAll(Arrays.asList(getFullElements()));
         return TransformedCollection.decorate(list, NOOP_TRANSFORMER);
     }
@@ -92,7 +92,7 @@ public class TestTransformedCollection extends AbstractTestCollection {
 
     //-----------------------------------------------------------------------
     public void testTransformedCollection() {
-        Collection coll = TransformedCollection.decorate(new ArrayList(), STRING_TO_INTEGER_TRANSFORMER);
+        Collection<Object> coll = TransformedCollection.decorate(new ArrayList<Object>(), STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, coll.size());
         Object[] els = getFullElements();
         for (int i = 0; i < els.length; i++) {

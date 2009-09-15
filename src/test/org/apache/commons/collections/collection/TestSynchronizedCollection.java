@@ -24,7 +24,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Extension of {@link AbstractTestCollection} for exercising the 
+ * Extension of {@link AbstractTestCollection} for exercising the
  * {@link SynchronizedCollection} implementation.
  *
  * @since Commons Collections 3.1
@@ -33,33 +33,32 @@ import junit.framework.TestSuite;
  * @author Phil Steitz
  * @author Stephen Colebourne
  */
-public class TestSynchronizedCollection extends AbstractTestCollection {
-    
+public class TestSynchronizedCollection<E> extends AbstractTestCollection<E> {
+
     public TestSynchronizedCollection(String testName) {
         super(testName);
     }
-    
+
     public static Test suite() {
         return new TestSuite(TestSynchronizedCollection.class);
     }
-    
+
     public static void main(String args[]) {
         String[] testCaseName = { TestSynchronizedCollection.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    //-----------------------------------------------------------------------    
-    public Collection makeCollection() {
-        return SynchronizedCollection.decorate(new ArrayList());
-    }
-    
-    public Collection makeConfirmedCollection() {
-        ArrayList list = new ArrayList();
-        return list;
+    //-----------------------------------------------------------------------
+    public Collection<E> makeObject() {
+        return SynchronizedCollection.decorate(new ArrayList<E>());
     }
 
-    public Collection makeConfirmedFullCollection() {
-        ArrayList list = new ArrayList();
+    public Collection<E> makeConfirmedCollection() {
+        return new ArrayList<E>();
+    }
+
+    public Collection<E> makeConfirmedFullCollection() {
+        ArrayList<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }

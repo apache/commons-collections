@@ -35,6 +35,7 @@ import java.util.Collection;
  * also implement {@link java.util.List}, {@link java.util.Set} or 
  * {@link Bag}.
  *
+ * @param <E> the type of the elements in the buffer
  * @since Commons Collections 2.1
  * @version $Revision$ $Date$
  *
@@ -43,7 +44,7 @@ import java.util.Collection;
  * @author Paul Jack
  * @author Stephen Colebourne
  */
-public interface Buffer extends Collection {
+public interface Buffer<E> extends Collection<E> {
 
     /**
      * Gets and removes the next object from the buffer.
@@ -51,7 +52,7 @@ public interface Buffer extends Collection {
      * @return the next object in the buffer, which is also removed
      * @throws BufferUnderflowException if the buffer is already empty
      */
-    Object remove();
+    E remove();
 
     /**
      * Gets the next object from the buffer without removing it.
@@ -59,6 +60,6 @@ public interface Buffer extends Collection {
      * @return the next object in the buffer, which is not removed
      * @throws BufferUnderflowException if the buffer is empty
      */
-    Object get();
+    E get();
 
 }

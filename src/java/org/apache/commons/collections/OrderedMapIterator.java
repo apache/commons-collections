@@ -16,18 +16,22 @@
  */
 package org.apache.commons.collections;
 
+import java.util.NoSuchElementException;
+
 /**
  * Defines an iterator that operates over an ordered <code>Map</code>.
  * <p>
  * This iterator allows both forward and reverse iteration through the map.
- *  
+ *
+ * @param <K> the type of the keys in the map
+ * @param <V> the type of the values in the map
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */
-public interface OrderedMapIterator extends MapIterator, OrderedIterator {
-    
+public interface OrderedMapIterator<K, V> extends MapIterator<K, V>, OrderedIterator<K> {
+
     /**
      * Checks to see if there is a previous entry that can be iterated to.
      *
@@ -39,8 +43,8 @@ public interface OrderedMapIterator extends MapIterator, OrderedIterator {
      * Gets the previous <em>key</em> from the <code>Map</code>.
      *
      * @return the previous key in the iteration
-     * @throws java.util.NoSuchElementException if the iteration is finished
+     * @throws NoSuchElementException if the iteration is finished
      */
-    Object previous();
+    K previous();
 
 }

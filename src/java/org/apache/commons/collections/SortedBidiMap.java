@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections;
 
+import java.util.Comparator;
 import java.util.SortedMap;
 
 /**
@@ -25,12 +26,14 @@ import java.util.SortedMap;
  * Implementations should allow a value to be looked up from a key and
  * a key to be looked up from a value with equal performance.
  *  
+ * @param <K> the type of the keys in the map
+ * @param <V> the type of the values in the map
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */
-public interface SortedBidiMap extends OrderedBidiMap, SortedMap {
+public interface SortedBidiMap<K, V> extends OrderedBidiMap<K, V>, SortedMap<K, V> {
 
     /**
      * Gets a view of this map where the keys and values are reversed.
@@ -47,23 +50,11 @@ public interface SortedBidiMap extends OrderedBidiMap, SortedMap {
      *
      * @return an inverted bidirectional map
      */
-    public BidiMap inverseBidiMap();
-    
+    public SortedBidiMap<V, K> inverseBidiMap();
+
     /**
-     * Gets a view of this map where the keys and values are reversed.
-     * <p>
-     * Changes to one map will be visible in the other and vice versa.
-     * This enables both directions of the map to be accessed as a <code>SortedMap</code>.
-     * <p>
-     * Implementations should seek to avoid creating a new object every time this
-     * method is called. See <code>AbstractMap.values()</code> etc. Calling this
-     * method on the inverse map should return the original.
-     * <p>
-     * The inverse map returned by <code>inverseBidiMap()</code> should be the
-     * same object as returned by this method.
-     *
-     * @return an inverted bidirectional map
+     * Get the comparator used for the values in the value-to-key map aspect.
+     * @return Comparator<? super V>
      */
-    public SortedBidiMap inverseSortedBidiMap();
-    
+    public Comparator<? super V> valueComparator();
 }

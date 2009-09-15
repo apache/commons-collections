@@ -25,7 +25,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Extension of {@link AbstractTestCollection} for exercising the 
+ * Extension of {@link AbstractTestCollection} for exercising the
  * {@link UnmodifiableCollection} implementation.
  *
  * @since Commons Collections 3.0
@@ -34,39 +34,38 @@ import junit.framework.TestSuite;
  * @author Phil Steitz
  * @author Stephen Colebourne
  */
-public class TestUnmodifiableCollection extends AbstractTestCollection {
-    
+public class TestUnmodifiableCollection<E> extends AbstractTestCollection<E> {
+
     public TestUnmodifiableCollection(String testName) {
         super(testName);
     }
-    
+
     public static Test suite() {
         return new TestSuite(TestUnmodifiableCollection.class);
     }
-    
+
     public static void main(String args[]) {
         String[] testCaseName = { TestUnmodifiableCollection.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    //-----------------------------------------------------------------------    
-    public Collection makeCollection() {
-        return UnmodifiableCollection.decorate(new ArrayList());
+    //-----------------------------------------------------------------------
+    public Collection<E> makeObject() {
+        return UnmodifiableCollection.decorate(new ArrayList<E>());
     }
-    
-    public Collection makeFullCollection() {
-        List list = new ArrayList();
+
+    public Collection<E> makeFullCollection() {
+        List<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return UnmodifiableCollection.decorate(list);
     }
-    
-    public Collection makeConfirmedCollection() {
-        ArrayList list = new ArrayList();
-        return list;
+
+    public Collection<E> makeConfirmedCollection() {
+        return new ArrayList<E>();
     }
 
-    public Collection makeConfirmedFullCollection() {
-        ArrayList list = new ArrayList();
+    public Collection<E> makeConfirmedFullCollection() {
+        ArrayList<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }
@@ -74,7 +73,7 @@ public class TestUnmodifiableCollection extends AbstractTestCollection {
     public boolean isAddSupported() {
         return false;
     }
-    
+
     public boolean isRemoveSupported() {
         return false;
     }
