@@ -21,11 +21,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections.BoundedMap;
+import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.collection.UnmodifiableCollection;
 import org.apache.commons.collections.set.UnmodifiableSet;
 
@@ -56,9 +56,9 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public class FixedSizeMap
-        extends AbstractMapDecorator
-        implements Map, BoundedMap, Serializable {
+public class FixedSizeMap<K, V>
+        extends AbstractMapDecorator<K, V>
+        implements Map<K, V>, BoundedMap<K, V>, Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = 7450927208116179316L;
@@ -69,8 +69,8 @@ public class FixedSizeMap
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    public static Map decorate(Map map) {
-        return new FixedSizeMap(map);
+    public static <K, V> IterableMap<K, V> decorate(Map<K, V> map) {
+        return new FixedSizeMap<K, V>(map);
     }
 
     //-----------------------------------------------------------------------
@@ -80,7 +80,7 @@ public class FixedSizeMap
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    protected FixedSizeMap(Map map) {
+    protected FixedSizeMap(Map<K, V> map) {
         super(map);
     }
 
@@ -105,22 +105,23 @@ public class FixedSizeMap
      * @throws ClassNotFoundException
      * @since Commons Collections 3.1
      */
+    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map) in.readObject();
     }
 
     //-----------------------------------------------------------------------
-    public Object put(Object key, Object value) {
+    public V put(K key, V value) {
         if (map.containsKey(key) == false) {
             throw new IllegalArgumentException("Cannot put new key/value pair - Map is fixed size");
         }
         return map.put(key, value);
     }
 
-    public void putAll(Map mapToCopy) {
-        for (Iterator it = mapToCopy.keySet().iterator(); it.hasNext(); ) {
-            if (mapToCopy.containsKey(it.next()) == false) {
+    public void putAll(Map<? extends K, ? extends V> mapToCopy) {
+        for (K key : mapToCopy.keySet()) {
+            if (!containsKey(key)) {
                 throw new IllegalArgumentException("Cannot put new key/value pair - Map is fixed size");
             }
         }
@@ -131,23 +132,23 @@ public class FixedSizeMap
         throw new UnsupportedOperationException("Map is fixed size");
     }
 
-    public Object remove(Object key) {
+    public V remove(Object key) {
         throw new UnsupportedOperationException("Map is fixed size");
     }
 
-    public Set entrySet() {
-        Set set = map.entrySet();
+    public Set<Map.Entry<K, V>> entrySet() {
+        Set<Map.Entry<K, V>> set = map.entrySet();
         // unmodifiable set will still allow modification via Map.Entry objects
         return UnmodifiableSet.decorate(set);
     }
 
-    public Set keySet() {
-        Set set = map.keySet();
+    public Set<K> keySet() {
+        Set<K> set = map.keySet();
         return UnmodifiableSet.decorate(set);
     }
 
-    public Collection values() {
-        Collection coll = map.values();
+    public Collection<V> values() {
+        Collection<V> coll = map.values();
         return UnmodifiableCollection.decorate(coll);
     }
 
@@ -158,5 +159,5 @@ public class FixedSizeMap
     public int maxSize() {
         return size();
     }
-   
+
 }
