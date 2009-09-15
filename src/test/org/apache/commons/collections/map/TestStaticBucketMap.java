@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections.map;
 
-import java.util.Map;
-
 import junit.framework.Test;
 
 import org.apache.commons.collections.BulkTest;
@@ -30,7 +28,7 @@ import org.apache.commons.collections.BulkTest;
  *
  * @author Michael A. Smith
  */
-public class TestStaticBucketMap extends AbstractTestMap {
+public class TestStaticBucketMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     public TestStaticBucketMap(String name) {
         super(name);
@@ -45,8 +43,16 @@ public class TestStaticBucketMap extends AbstractTestMap {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Map makeEmptyMap() {
-        return new StaticBucketMap(30);
+    public StaticBucketMap<K, V> makeObject() {
+        return new StaticBucketMap<K, V>(30);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isFailFastExpected() {
+        return false;
     }
 
     public String[] ignoredTests() {
@@ -60,9 +66,10 @@ public class TestStaticBucketMap extends AbstractTestMap {
     }
 
     // Bugzilla 37567
+    @SuppressWarnings("unchecked")
     public void test_get_nullMatchesIncorrectly() {
-        StaticBucketMap map = new StaticBucketMap(17);
-        map.put(null, "A");
+        StaticBucketMap<K, V> map = new StaticBucketMap<K, V>(17);
+        map.put(null, (V) "A");
         assertEquals("A", map.get(null));
         // loop so we find a string that is in the same bucket as the null
         for (int i = 'A'; i <= 'Z'; i++) {
@@ -71,9 +78,10 @@ public class TestStaticBucketMap extends AbstractTestMap {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void test_containsKey_nullMatchesIncorrectly() {
-        StaticBucketMap map = new StaticBucketMap(17);
-        map.put(null, "A");
+        StaticBucketMap<K, V> map = new StaticBucketMap<K, V>(17);
+        map.put(null, (V) "A");
         assertEquals(true, map.containsKey(null));
         // loop so we find a string that is in the same bucket as the null
         for (int i = 'A'; i <= 'Z'; i++) {
@@ -82,9 +90,10 @@ public class TestStaticBucketMap extends AbstractTestMap {
         }
     }
 
+    @SuppressWarnings("unchecked")
     public void test_containsValue_nullMatchesIncorrectly() {
-        StaticBucketMap map = new StaticBucketMap(17);
-        map.put("A", null);
+        StaticBucketMap<K, V> map = new StaticBucketMap<K, V>(17);
+        map.put((K) "A", null);
         assertEquals(true, map.containsValue(null));
         // loop so we find a string that is in the same bucket as the null
         for (int i = 'A'; i <= 'Z'; i++) {
