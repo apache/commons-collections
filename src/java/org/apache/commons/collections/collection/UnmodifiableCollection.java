@@ -29,13 +29,14 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
  * <p>
  * Attempts to modify it will result in an UnsupportedOperationException. 
  *
+ * @param <E> the type of the elements in the collection
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */
-public final class UnmodifiableCollection
-        extends AbstractSerializableCollectionDecorator
+public final class UnmodifiableCollection<E>
+        extends AbstractCollectionDecorator<E>
         implements Unmodifiable {
 
     /** Serialization version */
@@ -46,17 +47,18 @@ public final class UnmodifiableCollection
      * <p>
      * If the collection passed in is already unmodifiable, it is returned.
      * 
+     * @param <T> the type of the elements in the collection
      * @param coll  the collection to decorate, must not be null
      * @return an unmodifiable collection
      * @throws IllegalArgumentException if collection is null
      */
-    public static Collection decorate(Collection coll) {
+    public static <T> Collection<T> decorate(Collection<T> coll) {
         if (coll instanceof Unmodifiable) {
             return coll;
         }
-        return new UnmodifiableCollection(coll);
+        return new UnmodifiableCollection<T>(coll);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
@@ -64,20 +66,20 @@ public final class UnmodifiableCollection
      * @param coll  the collection to decorate, must not be null
      * @throws IllegalArgumentException if collection is null
      */
-    private UnmodifiableCollection(Collection coll) {
+    private UnmodifiableCollection(Collection<E> coll) {
         super(coll);
     }
 
     //-----------------------------------------------------------------------
-    public Iterator iterator() {
-        return UnmodifiableIterator.decorate(getCollection().iterator());
+    public Iterator<E> iterator() {
+        return UnmodifiableIterator.decorate(decorated().iterator());
     }
 
-    public boolean add(Object object) {
+    public boolean add(E object) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean addAll(Collection coll) {
+    public boolean addAll(Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -89,11 +91,11 @@ public final class UnmodifiableCollection
         throw new UnsupportedOperationException();
     }
 
-    public boolean removeAll(Collection coll) {
+    public boolean removeAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean retainAll(Collection coll) {
+    public boolean retainAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
