@@ -29,7 +29,6 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.SortedMap;
 import java.util.TreeMap;
-import java.util.Collection;
 
 import org.apache.commons.collections.map.AbstractMapDecorator;
 import org.apache.commons.collections.map.AbstractSortedMapDecorator;
@@ -66,8 +65,6 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
  *  <li>{@link #predicatedSortedMap(SortedMap,Predicate,Predicate)}
  *  <li>{@link #transformedMap(Map, Transformer, Transformer)}
  *  <li>{@link #transformedSortedMap(SortedMap, Transformer, Transformer)}
- *  <li>{@link #typedMap(Map, Class, Class)}
- *  <li>{@link #typedSortedMap(SortedMap, Class, Class)}
  *  <li>{@link #multiValueMap( Map )}
  *  <li>{@link #multiValueMap( Map, Class )}
  *  <li>{@link #multiValueMap( Map, Factory )}
