@@ -39,9 +39,9 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public class FixedSizeList
-        extends AbstractSerializableListDecorator
-        implements BoundedCollection {
+public class FixedSizeList<E>
+        extends AbstractSerializableListDecorator<E>
+        implements BoundedCollection<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = -2218010673611160319L;
@@ -52,8 +52,8 @@ public class FixedSizeList
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    public static List decorate(List list) {
-        return new FixedSizeList(list);
+    public static <E> List<E> decorate(List<E> list) {
+        return new FixedSizeList<E>(list);
     }
 
     //-----------------------------------------------------------------------
@@ -63,24 +63,24 @@ public class FixedSizeList
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    protected FixedSizeList(List list) {
+    protected FixedSizeList(List<E> list) {
         super(list);
     }
 
     //-----------------------------------------------------------------------
-    public boolean add(Object object) {
+    public boolean add(E object) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
-    public void add(int index, Object object) {
+    public void add(int index, E object) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
-    public boolean addAll(Collection coll) {
+    public boolean addAll(Collection<? extends E> coll) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
-    public boolean addAll(int index, Collection coll) {
+    public boolean addAll(int index, Collection<? extends E> coll) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
@@ -88,31 +88,31 @@ public class FixedSizeList
         throw new UnsupportedOperationException("List is fixed size");
     }
 
-    public Object get(int index) {
-        return getList().get(index);
+    public E get(int index) {
+        return decorated().get(index);
     }
 
     public int indexOf(Object object) {
-        return getList().indexOf(object);
+        return decorated().indexOf(object);
     }
 
-    public Iterator iterator() {
-        return UnmodifiableIterator.decorate(getCollection().iterator());
+    public Iterator<E> iterator() {
+        return UnmodifiableIterator.decorate(decorated().iterator());
     }
 
     public int lastIndexOf(Object object) {
-        return getList().lastIndexOf(object);
+        return decorated().lastIndexOf(object);
     }
 
-    public ListIterator listIterator() {
-        return new FixedSizeListIterator(getList().listIterator(0));
+    public ListIterator<E> listIterator() {
+        return new FixedSizeListIterator(decorated().listIterator(0));
     }
 
-    public ListIterator listIterator(int index) {
-        return new FixedSizeListIterator(getList().listIterator(index));
+    public ListIterator<E> listIterator(int index) {
+        return new FixedSizeListIterator(decorated().listIterator(index));
     }
 
-    public Object remove(int index) {
+    public E remove(int index) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
@@ -120,28 +120,28 @@ public class FixedSizeList
         throw new UnsupportedOperationException("List is fixed size");
     }
 
-    public boolean removeAll(Collection coll) {
+    public boolean removeAll(Collection<?> coll) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
-    public boolean retainAll(Collection coll) {
+    public boolean retainAll(Collection<?> coll) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
-    public Object set(int index, Object object) {
-        return getList().set(index, object);
+    public E set(int index, E object) {
+        return decorated().set(index, object);
     }
 
-    public List subList(int fromIndex, int toIndex) {
-        List sub = getList().subList(fromIndex, toIndex);
-        return new FixedSizeList(sub);
+    public List<E> subList(int fromIndex, int toIndex) {
+        List<E> sub = decorated().subList(fromIndex, toIndex);
+        return new FixedSizeList<E>(sub);
     }
 
     /**
      * List iterator that only permits changes via set()
      */
-    static class FixedSizeListIterator extends AbstractListIteratorDecorator {
-        protected FixedSizeListIterator(ListIterator iterator) {
+    private class FixedSizeListIterator extends AbstractListIteratorDecorator<E> {
+        protected FixedSizeListIterator(ListIterator<E> iterator) {
             super(iterator);
         }
         public void remove() {
