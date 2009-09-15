@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections.functors;
 
+import static org.apache.commons.collections.functors.NullPredicate.nullPredicate;
+
 import java.io.Serializable;
 
 import org.apache.commons.collections.Predicate;
@@ -29,7 +31,7 @@ import org.apache.commons.collections.Predicate;
  *
  * @author Stephen Colebourne
  */
-public final class EqualPredicate implements Predicate, Serializable {
+public final class EqualPredicate<T> implements Predicate<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 5633766978029907089L;
@@ -43,12 +45,28 @@ public final class EqualPredicate implements Predicate, Serializable {
      * @param object  the object to compare to
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null
+     * @deprecated use {@link #equalPredicate(Object)} instead.
      */
-    public static Predicate getInstance(Object object) {
+    @Deprecated
+    public static <T> Predicate<T> getInstance(T object) {
         if (object == null) {
-            return NullPredicate.INSTANCE;
+            return nullPredicate();
         }
-        return new EqualPredicate(object);
+        return new EqualPredicate<T>(object);
+    }
+
+    /**
+     * Factory to create the identity predicate.
+     * 
+     * @param object  the object to compare to
+     * @return the predicate
+     * @throws IllegalArgumentException if the predicate is null
+     */
+    public static <T> Predicate<T> equalPredicate(T object) {
+        if (object == null) {
+            return nullPredicate();
+        }
+        return new EqualPredicate<T>(object);
     }
 
     /**
