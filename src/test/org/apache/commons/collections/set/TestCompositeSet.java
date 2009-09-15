@@ -16,17 +16,18 @@
  */
 package org.apache.commons.collections.set;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.collection.CompositeCollection;
 
-import java.util.Set;
-import java.util.HashSet;
-import java.util.Collection;
-
 /**
- * Extension of {@link AbstractTestSet} for exercising the 
+ * Extension of {@link AbstractTestSet} for exercising the
  * {@link CompositeSet} implementation.
  *
  * @since Commons Collections 3.0
@@ -36,90 +37,97 @@ import java.util.Collection;
  * @author Phil Steitz
  */
 
-public class TestCompositeSet extends AbstractTestSet {
+public class TestCompositeSet<E> extends AbstractTestSet<E> {
     public TestCompositeSet(String name) {
         super(name);
     }
-    
+
     public static Test suite() {
         return new TestSuite(TestCompositeSet.class);
     }
-    
-    public Set makeEmptySet() {
-        final HashSet contained = new HashSet();
-        CompositeSet set = new CompositeSet(contained);
+
+    public CompositeSet<E> makeObject() {
+        final HashSet<E> contained = new HashSet<E>();
+        CompositeSet<E> set = new CompositeSet<E>(contained);
         set.setMutator( new EmptySetMutator(contained) );
         return set;
     }
-    
-    public Set buildOne() {
-        HashSet set = new HashSet();
-        set.add("1");
-        set.add("2");
+
+    @SuppressWarnings("unchecked")
+    public Set<E> buildOne() {
+        HashSet<E> set = new HashSet<E>();
+        set.add((E) "1");
+        set.add((E) "2");
         return set;
     }
-    
-    public Set buildTwo() {
-        HashSet set = new HashSet();
-        set.add("3");
-        set.add("4");
+
+    @SuppressWarnings("unchecked")
+    public Set<E> buildTwo() {
+        HashSet<E> set = new HashSet<E>();
+        set.add((E) "3");
+        set.add((E) "4");
         return set;
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testContains() {
-        CompositeSet set = new CompositeSet(new Set[]{buildOne(), buildTwo()});
+        CompositeSet<E> set = new CompositeSet<E>(new Set[]{ buildOne(), buildTwo() });
         assertTrue(set.contains("1"));
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testRemoveUnderlying() {
-        Set one = buildOne();
-        Set two = buildTwo();
-        CompositeSet set = new CompositeSet(new Set[]{one, two});
+        Set<E> one = buildOne();
+        Set<E> two = buildTwo();
+        CompositeSet<E> set = new CompositeSet<E>(new Set[] { one, two });
         one.remove("1");
         assertFalse(set.contains("1"));
-        
+
         two.remove("3");
         assertFalse(set.contains("3"));
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testRemoveComposited() {
-        Set one = buildOne();
-        Set two = buildTwo();
-        CompositeSet set = new CompositeSet(new Set[]{one, two});
+        Set<E> one = buildOne();
+        Set<E> two = buildTwo();
+        CompositeSet<E> set = new CompositeSet<E>(new Set[] { one, two });
         set.remove("1");
         assertFalse(one.contains("1"));
-        
+
         set.remove("3");
         assertFalse(one.contains("3"));
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testFailedCollisionResolution() {
-        Set one = buildOne();
-        Set two = buildTwo();
-        CompositeSet set = new CompositeSet(new Set[]{one, two});
-        set.setMutator(new CompositeSet.SetMutator() {
-            public void resolveCollision(CompositeSet comp, Set existing, 
-                Set added, Collection intersects) {
+        Set<E> one = buildOne();
+        Set<E> two = buildTwo();
+        CompositeSet<E> set = new CompositeSet<E>(new Set[] { one, two });
+        set.setMutator(new CompositeSet.SetMutator<E>() {
+            public void resolveCollision(CompositeSet<E> comp, Set<E> existing,
+                Set<E> added, Collection<E> intersects) {
+                //noop
             }
-            
-            public boolean add(CompositeCollection composite, 
-                Collection[] collections, Object obj) {
+
+            public boolean add(CompositeCollection<E> composite,
+                    List<Collection<E>> collections, E obj) {
                 throw new UnsupportedOperationException();
             }
-            
-            public boolean addAll(CompositeCollection composite, 
-                Collection[] collections, Collection coll) {
+
+            public boolean addAll(CompositeCollection<E> composite,
+                    List<Collection<E>> collections, Collection<? extends E> coll) {
                 throw new UnsupportedOperationException();
             }
-            
-            public boolean remove(CompositeCollection composite, 
-                Collection[] collections, Object obj) {
+
+            public boolean remove(CompositeCollection<E> composite,
+                    List<Collection<E>> collections, Object obj) {
                 throw new UnsupportedOperationException();
             }
         });
-        
-        HashSet three = new HashSet();
-        three.add("1");
+
+        HashSet<E> three = new HashSet<E>();
+        three.add((E) "1");
         try {
             set.addComposited(three);
             fail("IllegalArgumentException should have been thrown");
@@ -128,22 +136,23 @@ public class TestCompositeSet extends AbstractTestSet {
             // expected
         }
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testAddComposited() {
-        Set one = buildOne();
-        Set two = buildTwo();
-        CompositeSet set = new CompositeSet();
+        Set<E> one = buildOne();
+        Set<E> two = buildTwo();
+        CompositeSet<E> set = new CompositeSet<E>();
         set.addComposited(one, two);
-        CompositeSet set2 = new CompositeSet(buildOne());
+        CompositeSet<E> set2 = new CompositeSet<E>(buildOne());
         set2.addComposited(buildTwo());
         assertTrue(set.equals(set2));
-        HashSet set3 = new HashSet();
-        set3.add("1");
-        set3.add("2");
-        set3.add("3");
-        HashSet set4 = new HashSet();
-        set4.add("4");
-        CompositeSet set5 = new CompositeSet(set3);
+        HashSet<E> set3 = new HashSet<E>();
+        set3.add((E) "1");
+        set3.add((E) "2");
+        set3.add((E) "3");
+        HashSet<E> set4 = new HashSet<E>();
+        set4.add((E) "4");
+        CompositeSet<E> set5 = new CompositeSet<E>(set3);
         set5.addComposited(set4);
         assertTrue(set.equals(set5));
         try {
