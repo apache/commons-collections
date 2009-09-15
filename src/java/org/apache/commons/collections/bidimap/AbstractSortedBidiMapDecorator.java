@@ -38,16 +38,16 @@ import org.apache.commons.collections.SortedBidiMap;
  *
  * @author Stephen Colebourne
  */
-public abstract class AbstractSortedBidiMapDecorator
-        extends AbstractOrderedBidiMapDecorator implements SortedBidiMap {
-    
+public abstract class AbstractSortedBidiMapDecorator<K, V> extends
+        AbstractOrderedBidiMapDecorator<K, V> implements SortedBidiMap<K, V> {
+
     /**
      * Constructor that wraps (not copies).
      *
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    public AbstractSortedBidiMapDecorator(SortedBidiMap map) {
+    public AbstractSortedBidiMapDecorator(SortedBidiMap<K, V> map) {
         super(map);
     }
 
@@ -56,29 +56,34 @@ public abstract class AbstractSortedBidiMapDecorator
      * 
      * @return the decorated map
      */
-    protected SortedBidiMap getSortedBidiMap() {
-        return (SortedBidiMap) map;
+    protected SortedBidiMap<K, V> decorated() {
+        return (SortedBidiMap<K, V>) super.decorated();
     }
 
     //-----------------------------------------------------------------------
-    public SortedBidiMap inverseSortedBidiMap() {
-        return getSortedBidiMap().inverseSortedBidiMap();
+    @Override
+    public SortedBidiMap<V, K> inverseBidiMap() {
+        return decorated().inverseBidiMap();
     }
 
-    public Comparator comparator() {
-        return getSortedBidiMap().comparator();
+    public Comparator<? super K> comparator() {
+        return decorated().comparator();
     }
 
-    public SortedMap subMap(Object fromKey, Object toKey) {
-        return getSortedBidiMap().subMap(fromKey, toKey);
+    public Comparator<? super V> valueComparator() {
+        return decorated().valueComparator();
     }
 
-    public SortedMap headMap(Object toKey) {
-        return getSortedBidiMap().headMap(toKey);
+    public SortedMap<K, V> subMap(K fromKey, K toKey) {
+        return decorated().subMap(fromKey, toKey);
     }
 
-    public SortedMap tailMap(Object fromKey) {
-        return getSortedBidiMap().tailMap(fromKey);
+    public SortedMap<K, V> headMap(K toKey) {
+        return decorated().headMap(toKey);
+    }
+
+    public SortedMap<K, V> tailMap(K fromKey) {
+        return decorated().tailMap(fromKey);
     }
 
 }
