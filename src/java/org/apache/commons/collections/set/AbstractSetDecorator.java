@@ -25,12 +25,17 @@ import org.apache.commons.collections.collection.AbstractCollectionDecorator;
  * <p>
  * Methods are forwarded directly to the decorated set.
  *
+ * @param <E> the type of the elements in the set
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */
-public abstract class AbstractSetDecorator extends AbstractCollectionDecorator implements Set {
+public abstract class AbstractSetDecorator<E> extends AbstractCollectionDecorator<E> implements
+        Set<E> {
+
+    /** Serialization version */
+    private static final long serialVersionUID = -4678668309576958546L;
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
@@ -46,7 +51,7 @@ public abstract class AbstractSetDecorator extends AbstractCollectionDecorator i
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    protected AbstractSetDecorator(Set set) {
+    protected AbstractSetDecorator(Set<E> set) {
         super(set);
     }
 
@@ -55,8 +60,8 @@ public abstract class AbstractSetDecorator extends AbstractCollectionDecorator i
      * 
      * @return the decorated set
      */
-    protected Set getSet() {
-        return (Set) getCollection();
+    protected Set<E> decorated() {
+        return (Set<E>) super.decorated();
     }
 
 }
