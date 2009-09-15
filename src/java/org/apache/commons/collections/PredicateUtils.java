@@ -115,7 +115,7 @@ public class PredicateUtils {
      * @see org.apache.commons.collections.functors.FalsePredicate
      *
      * @return the predicate
-     * @deprecated use {@link FalsePredicate#()} instead.
+     * @deprecated use {@link FalsePredicate#falsePredicate()} instead.
      */
     @Deprecated
     public static <T> Predicate<T> falsePredicate() {
