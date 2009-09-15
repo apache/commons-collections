@@ -17,18 +17,21 @@
 package org.apache.commons.collections;
 
 import java.util.Iterator;
+import java.util.ListIterator;
+import java.util.NoSuchElementException;
 
 /**
- * Defines an iterator that operates over an ordered collection.
+ * Defines an iterator that operates over an ordered container. Subset of {@link ListIterator}.
  * <p>
- * This iterator allows both forward and reverse iteration through the collection.
- *  
+ * This iterator allows both forward and reverse iteration through the container.
+ *
+ * @param <E> the type to iterate over
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */
-public interface OrderedIterator extends Iterator {
+public interface OrderedIterator<E> extends Iterator<E> {
 
     /**
      * Checks to see if there is a previous element that can be iterated to.
@@ -38,11 +41,11 @@ public interface OrderedIterator extends Iterator {
     boolean hasPrevious();
 
     /**
-     * Gets the previous element from the collection.
+     * Gets the previous element from the container.
      *
      * @return the previous element in the iteration
-     * @throws java.util.NoSuchElementException if the iteration is finished
+     * @throws NoSuchElementException if the iteration is finished
      */
-    Object previous();
+    E previous();
 
 }
