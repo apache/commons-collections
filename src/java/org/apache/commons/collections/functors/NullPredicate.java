@@ -28,13 +28,25 @@ import org.apache.commons.collections.Predicate;
  *
  * @author Stephen Colebourne
  */
-public final class NullPredicate implements Predicate, Serializable {
+public final class NullPredicate<T> implements Predicate<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 7533784454832764388L;
     
     /** Singleton predicate instance */
-    public static final Predicate INSTANCE = new NullPredicate();
+    public static final Predicate<?> INSTANCE = new NullPredicate<Object>();
+
+    /**
+     * Factory returning the singleton instance.
+     * 
+     * @return the singleton instance
+     * @since Commons Collections 3.1
+     * @deprecated use {@link #nullPredicate()} instead.
+     */
+    @Deprecated
+    public static <T> Predicate<T> getInstance() {
+        return nullPredicate();
+    }
 
     /**
      * Factory returning the singleton instance.
@@ -42,8 +54,9 @@ public final class NullPredicate implements Predicate, Serializable {
      * @return the singleton instance
      * @since Commons Collections 3.1
      */
-    public static Predicate getInstance() {
-        return INSTANCE;
+    @SuppressWarnings("unchecked")
+    public static <T> Predicate<T> nullPredicate() {
+        return (Predicate<T>) INSTANCE;
     }
 
     /**
