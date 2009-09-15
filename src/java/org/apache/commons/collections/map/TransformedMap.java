@@ -20,9 +20,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.Transformer;
 
 /**
@@ -36,42 +36,46 @@ import org.apache.commons.collections.Transformer;
  * <strong>Note that TransformedMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
- * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw 
+ * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
+ * <p>
+ * @see org.apache.commons.collections.splitmap.TransformedMap
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */
-public class TransformedMap
-        extends AbstractInputCheckedMapDecorator
+public class TransformedMap<K, V>
+        extends AbstractInputCheckedMapDecorator<K, V>
         implements Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = 7023152376788900464L;
 
     /** The transformer to use for the key */
-    protected final Transformer keyTransformer;
+    protected final Transformer<? super K, ? extends K> keyTransformer;
     /** The transformer to use for the value */
-    protected final Transformer valueTransformer;
+    protected final Transformer<? super V, ? extends V> valueTransformer;
 
     /**
      * Factory method to create a transforming map.
      * <p>
      * If there are any elements already in the map being decorated, they
      * are NOT transformed.
-     * Constrast this with {@link #decorateTransform}.
-     * 
+     * Contrast this with {@link #decorateTransform}.
+     *
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no transformation
      * @param valueTransformer  the transformer to use for value conversion, null means no transformation
      * @throws IllegalArgumentException if map is null
      */
-    public static Map decorate(Map map, Transformer keyTransformer, Transformer valueTransformer) {
-        return new TransformedMap(map, keyTransformer, valueTransformer);
+    public static <K, V> IterableMap<K, V> decorate(Map<K, V> map,
+            Transformer<? super K, ? extends K> keyTransformer,
+            Transformer<? super V, ? extends V> valueTransformer) {
+        return new TransformedMap<K, V>(map, keyTransformer, valueTransformer);
     }
 
     /**
@@ -80,20 +84,22 @@ public class TransformedMap
      * <p>
      * If there are any elements already in the map being decorated, they
      * will be transformed by this method.
-     * Constrast this with {@link #decorate}.
-     * 
+     * Contrast this with {@link #decorate}.
+     *
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no transformation
      * @param valueTransformer  the transformer to use for value conversion, null means no transformation
      * @throws IllegalArgumentException if map is null
      * @since Commons Collections 3.2
      */
-    public static Map decorateTransform(Map map, Transformer keyTransformer, Transformer valueTransformer) {
-        TransformedMap decorated = new TransformedMap(map, keyTransformer, valueTransformer);
+    public static <K, V> Map<K, V> decorateTransform(Map<K, V> map,
+            Transformer<? super K, ? extends K> keyTransformer,
+            Transformer<? super V, ? extends V> valueTransformer) {
+        TransformedMap<K, V> decorated = new TransformedMap<K, V>(map, keyTransformer, valueTransformer);
         if (map.size() > 0) {
-            Map transformed = decorated.transformMap(map);
+            Map<K, V> transformed = decorated.transformMap(map);
             decorated.clear();
-            decorated.getMap().putAll(transformed);  // avoids double transformation
+            decorated.decorated().putAll(transformed);  // avoids double transformation
         }
         return decorated;
     }
@@ -104,13 +110,14 @@ public class TransformedMap
      * <p>
      * If there are any elements already in the collection being decorated, they
      * are NOT transformed.
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no conversion
      * @param valueTransformer  the transformer to use for value conversion, null means no conversion
      * @throws IllegalArgumentException if map is null
      */
-    protected TransformedMap(Map map, Transformer keyTransformer, Transformer valueTransformer) {
+    protected TransformedMap(Map<K, V> map, Transformer<? super K, ? extends K> keyTransformer,
+            Transformer<? super V, ? extends V> valueTransformer) {
         super(map);
         this.keyTransformer = keyTransformer;
         this.valueTransformer = valueTransformer;
@@ -119,7 +126,7 @@ public class TransformedMap
     //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
-     * 
+     *
      * @param out  the output stream
      * @throws IOException
      * @since Commons Collections 3.1
@@ -131,12 +138,13 @@ public class TransformedMap
 
     /**
      * Read the map in using a custom routine.
-     * 
+     *
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException
      * @since Commons Collections 3.1
      */
+    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map) in.readObject();
@@ -147,11 +155,11 @@ public class TransformedMap
      * Transforms a key.
      * <p>
      * The transformer itself may throw an exception if necessary.
-     * 
+     *
      * @param object  the object to transform
      * @throws the transformed object
      */
-    protected Object transformKey(Object object) {
+    protected K transformKey(K object) {
         if (keyTransformer == null) {
             return object;
         }
@@ -162,11 +170,11 @@ public class TransformedMap
      * Transforms a value.
      * <p>
      * The transformer itself may throw an exception if necessary.
-     * 
+     *
      * @param object  the object to transform
      * @throws the transformed object
      */
-    protected Object transformValue(Object object) {
+    protected V transformValue(V object) {
         if (valueTransformer == null) {
             return object;
         }
@@ -177,36 +185,37 @@ public class TransformedMap
      * Transforms a map.
      * <p>
      * The transformer itself may throw an exception if necessary.
-     * 
+     *
      * @param map  the map to transform
      * @throws the transformed object
      */
-    protected Map transformMap(Map map) {
+    @SuppressWarnings("unchecked")
+    protected Map<K, V> transformMap(Map<? extends K, ? extends V> map) {
         if (map.isEmpty()) {
-            return map;
+            return (Map<K, V>) map;
         }
-        Map result = new LinkedMap(map.size());
-        for (Iterator it = map.entrySet().iterator(); it.hasNext(); ) {
-            Map.Entry entry = (Map.Entry) it.next();
-            result.put(transformKey(entry.getKey()), transformValue(entry.getValue()));
+        Map<K, V> result = new LinkedMap<K, V>(map.size());
+
+        for (Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
+            result.put((K) transformKey(entry.getKey()), transformValue(entry.getValue()));
         }
         return result;
     }
 
     /**
      * Override to transform the value when using <code>setValue</code>.
-     * 
+     *
      * @param value  the value to transform
      * @return the transformed value
      * @since Commons Collections 3.1
      */
-    protected Object checkSetValue(Object value) {
+    protected V checkSetValue(V value) {
         return valueTransformer.transform(value);
     }
 
     /**
      * Override to only return true when there is a value transformer.
-     * 
+     *
      * @return true if a value transformer is in use
      * @since Commons Collections 3.1
      */
@@ -215,15 +224,15 @@ public class TransformedMap
     }
 
     //-----------------------------------------------------------------------
-    public Object put(Object key, Object value) {
+    public V put(K key, V value) {
         key = transformKey(key);
         value = transformValue(value);
-        return getMap().put(key, value);
+        return decorated().put(key, value);
     }
 
-    public void putAll(Map mapToCopy) {
+    public void putAll(Map<? extends K, ? extends V> mapToCopy) {
         mapToCopy = transformMap(mapToCopy);
-        getMap().putAll(mapToCopy);
+        decorated().putAll(mapToCopy);
     }
 
 }
