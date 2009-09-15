@@ -18,7 +18,6 @@ package org.apache.commons.collections.collection;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections.Transformer;
@@ -33,18 +32,19 @@ import org.apache.commons.collections.Transformer;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
+ * @param <E> the type of the elements in the collection
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */
-public class TransformedCollection extends AbstractSerializableCollectionDecorator {
+public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = 8692300188161871514L;
 
     /** The transformer to use */
-    protected final Transformer transformer;
+    protected final Transformer<? super E, ? extends E> transformer;
 
     /**
      * Factory method to create a transforming collection.
@@ -58,10 +58,10 @@ public class TransformedCollection extends AbstractSerializableCollectionDecorat
      * @return a new transformed collection
      * @throws IllegalArgumentException if collection or transformer is null
      */
-    public static Collection decorate(Collection coll, Transformer transformer) {
-        return new TransformedCollection(coll, transformer);
+    public static <E> Collection<E> decorate(Collection<E> coll, Transformer<? super E, ? extends E> transformer) {
+        return new TransformedCollection<E>(coll, transformer);
     }
-    
+
     /**
      * Factory method to create a transforming collection that will transform
      * existing contents of the specified collection.
@@ -76,13 +76,14 @@ public class TransformedCollection extends AbstractSerializableCollectionDecorat
      * @throws IllegalArgumentException if collection or transformer is null
      * @since Commons Collections 3.3
      */
+    // TODO: Generics
     public static Collection decorateTransform(Collection collection, Transformer transformer) {
         TransformedCollection decorated = new TransformedCollection(collection, transformer);
         if (transformer != null && collection != null && collection.size() > 0) {
             Object[] values = collection.toArray();
             collection.clear();
             for(int i=0; i<values.length; i++) {
-                decorated.getCollection().add(transformer.transform(values[i]));
+                decorated.decorated().add(transformer.transform(values[i]));
             }
         }
         return decorated;
@@ -99,7 +100,7 @@ public class TransformedCollection extends AbstractSerializableCollectionDecorat
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if collection or transformer is null
      */
-    protected TransformedCollection(Collection coll, Transformer transformer) {
+    protected TransformedCollection(Collection<E> coll, Transformer<? super E, ? extends E> transformer) {
         super(coll);
         if (transformer == null) {
             throw new IllegalArgumentException("Transformer must not be null");
@@ -115,7 +116,7 @@ public class TransformedCollection extends AbstractSerializableCollectionDecorat
      * @param object  the object to transform
      * @return a transformed object
      */
-    protected Object transform(Object object) {
+    protected E transform(E object) {
         return transformer.transform(object);
     }
 
@@ -127,23 +128,21 @@ public class TransformedCollection extends AbstractSerializableCollectionDecorat
      * @param coll  the collection to transform
      * @return a transformed object
      */
-    protected Collection transform(Collection coll) {
-        List list = new ArrayList(coll.size());
-        for (Iterator it = coll.iterator(); it.hasNext(); ) {
-            list.add(transform(it.next()));
+    protected Collection<E> transform(Collection<? extends E> coll) {
+        List<E> list = new ArrayList<E>(coll.size());
+        for (E item : coll) {
+            list.add(transform(item));
         }
         return list;
     }
 
     //-----------------------------------------------------------------------
-    public boolean add(Object object) {
-        object = transform(object);
-        return getCollection().add(object);
+    public boolean add(E object) {
+        return decorated().add(transform(object));
     }
 
-    public boolean addAll(Collection coll) {
-        coll = transform(coll);
-        return getCollection().addAll(coll);
+    public boolean addAll(Collection<? extends E> coll) {
+        return decorated().addAll(transform(coll));
     }
 
 }
