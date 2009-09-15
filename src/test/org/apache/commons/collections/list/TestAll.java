@@ -52,7 +52,6 @@ public class TestAll extends TestCase {
         suite.addTest(TestSetUniqueList.suite());
         suite.addTest(TestSynchronizedList.suite());
         suite.addTest(TestTransformedList.suite());
-        suite.addTest(TestTypedList.suite());
         suite.addTest(TestUnmodifiableList.suite());
         
         return suite;
