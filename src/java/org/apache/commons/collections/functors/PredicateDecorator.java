@@ -27,8 +27,9 @@ import org.apache.commons.collections.Predicate;
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
+ * @author Stephen Kestle
  */
-public interface PredicateDecorator extends Predicate {
+public interface PredicateDecorator<T> extends Predicate<T> {
 
     /**
      * Gets the predicates being decorated as an array.
@@ -38,6 +39,6 @@ public interface PredicateDecorator extends Predicate {
      * 
      * @return the predicates being decorated
      */
-    Predicate[] getPredicates();
+    Predicate<? super T>[] getPredicates();
 
 }
