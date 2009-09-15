@@ -60,6 +60,7 @@ public final class AllPredicate<T> implements Predicate<T>, PredicateDecorator<T
      * @throws IllegalArgumentException if any predicate in the array is null
      * @deprecated Use {@link #allPredicate(Predicate<? super T>...)} instead
      */
+    @Deprecated
     public static <T> Predicate<T> getInstance(Predicate<? super T> ... predicates) {
         return allPredicate(predicates);
     }
@@ -99,6 +100,7 @@ public final class AllPredicate<T> implements Predicate<T>, PredicateDecorator<T
      * @throws IllegalArgumentException if any predicate in the array is null
      * @deprecated Use {@link #allPredicate(Collection<Predicate<? super T>>)} instead
      */
+    @Deprecated
     public static <T> Predicate<T> getInstance(Collection<Predicate<T>> predicates) {
         return allPredicate(predicates);
     }

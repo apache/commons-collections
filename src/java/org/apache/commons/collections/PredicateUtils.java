@@ -117,6 +117,7 @@ public class PredicateUtils {
      * @return the predicate
      * @deprecated use {@link FalsePredicate#()} instead.
      */
+    @Deprecated
     public static <T> Predicate<T> falsePredicate() {
         return FalsePredicate.<T>getInstance();
     }
