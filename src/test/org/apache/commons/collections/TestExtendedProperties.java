@@ -326,14 +326,6 @@ public class TestExtendedProperties extends TestCase {
         assertEquals("import", a.getInclude());
         assertEquals("include", b.getInclude());
         
-        a.setInclude("");
-        assertEquals(null, a.getInclude());
-        assertEquals("include", b.getInclude());
-        
-        a.setInclude("hi");
-        assertEquals("hi", a.getInclude());
-        assertEquals("include", b.getInclude());
-        
         a.setInclude(null);
         assertEquals(null, a.getInclude());
         assertEquals("include", b.getInclude());
