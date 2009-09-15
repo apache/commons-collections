@@ -23,11 +23,11 @@ import org.apache.commons.collections.BoundedCollection;
 import org.apache.commons.collections.iterators.UnmodifiableIterator;
 
 /**
- * <code>UnmodifiableBoundedCollection</code> decorates another 
+ * <code>UnmodifiableBoundedCollection</code> decorates another
  * <code>BoundedCollection</code> to ensure it can't be altered.
  * <p>
  * If a BoundedCollection is first wrapped in some other collection decorator,
- * such as synchronized or predicated, the BoundedCollection methods are no 
+ * such as synchronized or predicated, the BoundedCollection methods are no
  * longer accessible.
  * The factory on this class will attempt to retrieve the bounded nature by
  * examining the package scope variables.
@@ -41,78 +41,77 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
  *
  * @author Stephen Colebourne
  */
-public final class UnmodifiableBoundedCollection
-        extends AbstractSerializableCollectionDecorator
-        implements BoundedCollection {
+public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDecorator<E>
+        implements BoundedCollection<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = -7112672385450340330L;
 
     /**
      * Factory method to create an unmodifiable bounded collection.
-     * 
+     *
      * @param coll  the <code>BoundedCollection</code> to decorate, must not be null
      * @return a new unmodifiable bounded collection
      * @throws IllegalArgumentException if bag is null
      */
-    public static BoundedCollection decorate(BoundedCollection coll) {
-        return new UnmodifiableBoundedCollection(coll);
+    public static <E> BoundedCollection<E> decorate(BoundedCollection<E> coll) {
+        return new UnmodifiableBoundedCollection<E>(coll);
     }
-    
+
     /**
      * Factory method to create an unmodifiable bounded collection.
      * <p>
-     * This method is capable of drilling down through up to 1000 other decorators 
+     * This method is capable of drilling down through up to 1000 other decorators
      * to find a suitable BoundedCollection.
-     * 
+     *
      * @param coll  the <code>BoundedCollection</code> to decorate, must not be null
      * @return a new unmodifiable bounded collection
      * @throws IllegalArgumentException if bag is null
      */
-    public static BoundedCollection decorateUsing(Collection coll) {
+    @SuppressWarnings("unchecked")
+    public static <E> BoundedCollection<E> decorateUsing(Collection<? super E> coll) {
         if (coll == null) {
             throw new IllegalArgumentException("The collection must not be null");
         }
-        
+
         // handle decorators
         for (int i = 0; i < 1000; i++) {  // counter to prevent infinite looping
             if (coll instanceof BoundedCollection) {
                 break;  // normal loop exit
-            } else if (coll instanceof AbstractCollectionDecorator) {
-                coll = ((AbstractCollectionDecorator) coll).collection;
+            }
+            if (coll instanceof AbstractCollectionDecorator) {
+                coll = ((AbstractCollectionDecorator<E>) coll).collection;
             } else if (coll instanceof SynchronizedCollection) {
-                coll = ((SynchronizedCollection) coll).collection;
-            } else {
-                break;  // normal loop exit
+                coll = ((SynchronizedCollection<E>) coll).collection;
             }
         }
-            
+
         if (coll instanceof BoundedCollection == false) {
             throw new IllegalArgumentException("The collection is not a bounded collection");
         }
-        return new UnmodifiableBoundedCollection((BoundedCollection) coll);
-    }    
-    
+        return new UnmodifiableBoundedCollection((BoundedCollection<E>) coll);
+    }
+
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param coll  the collection to decorate, must not be null
      * @throws IllegalArgumentException if coll is null
      */
-    private UnmodifiableBoundedCollection(BoundedCollection coll) {
+    private UnmodifiableBoundedCollection(BoundedCollection<E> coll) {
         super(coll);
     }
 
     //-----------------------------------------------------------------------
-    public Iterator iterator() {
-        return UnmodifiableIterator.decorate(getCollection().iterator());
+    public Iterator<E> iterator() {
+        return UnmodifiableIterator.decorate(decorated().iterator());
     }
 
-    public boolean add(Object object) {
+    public boolean add(E object) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean addAll(Collection coll) {
+    public boolean addAll(Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -124,21 +123,28 @@ public final class UnmodifiableBoundedCollection
         throw new UnsupportedOperationException();
     }
 
-    public boolean removeAll(Collection coll) {
+    public boolean removeAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean retainAll(Collection coll) {
+    public boolean retainAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
-    //-----------------------------------------------------------------------    
+    //-----------------------------------------------------------------------
     public boolean isFull() {
-        return ((BoundedCollection) collection).isFull();
+        return decorated().isFull();
     }
 
     public int maxSize() {
-        return ((BoundedCollection) collection).maxSize();
+        return decorated().maxSize();
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected BoundedCollection<E> decorated() {
+        return (BoundedCollection<E>) super.decorated();
+    }
 }
