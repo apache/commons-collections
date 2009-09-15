@@ -1,25 +1,33 @@
- <!--
-   Licensed to the Apache Software Foundation (ASF) under one or more
-  contributor license agreements.  See the NOTICE file distributed with
-  this work for additional information regarding copyright ownership.
-  The ASF licenses this file to You under the Apache License, Version 2.0
-  (the "License"); you may not use this file except in compliance with
-  the License.  You may obtain a copy of the License at
+<?xml version="1.0"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one or more
+contributor license agreements.  See the NOTICE file distributed with
+this work for additional information regarding copyright ownership.
+The ASF licenses this file to You under the Apache License, Version 2.0
+(the "License"); you may not use this file except in compliance with
+the License.  You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+     http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-  -->
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
 <project name="commons-collections" default="compile" basedir=".">
 
 <!-- ========== Properties ================================================ -->
 
-  <!-- This can be used to define 'junit.jar' property if necessary -->
+  <!-- This can be used to define 'junit.jar' and 'emma.lib.dir' properties if necessary -->
   <property file="build.properties"/>
+  
+	<!-- Import EMMA coverage tool -->
+	<path id="emma.lib">
+		<pathelement location="${emma.lib.dir}/emma.jar" />
+		<pathelement location="${emma.lib.dir}/emma_ant.jar" />
+	</path>
+	<taskdef resource="emma_ant.properties" classpathref="emma.lib" />
 
 <!-- ========== Component Declarations ==================================== -->
 
@@ -56,6 +64,11 @@
   <property name="build.docs"              value="${build.home}/docs/apidocs"/>
   <property name="build.src"               value="${build.home}/src-ide" />
   
+  <!-- The directories for tests/instrumentation -->
+  <property name="build.instrumented"           value="${build.home}/instrumented" />
+  <property name="build.reports"           value="${build.home}/reports" />
+  <property name="build.reports.coverage"  value="${build.reports}/coverage" />
+  
   <!-- The name/location of the jar file to build -->
   <property name="final.name"           value="${component.name}-${component.version}"/>
   <property name="jar.name"             value="${final.name}.jar"/>
@@ -73,10 +86,20 @@
   <property name="build.src.tar.name"   value="${build.dist}/${component.name}-${component.version}-src.tar"/>
   <property name="build.src.gz.name"    value="${build.dist}/${component.name}-${component.version}-src.tar.gz"/>
   <property name="build.src.zip.name"   value="${build.dist}/${component.name}-${component.version}-src.zip"/>
-  <property name="dist.home"            value="dist"/> <!-- for nightly builds -->
+  <property name="dist.home"            value="dist"/>
+  <!-- for nightly builds -->
 
+  <!-- Used for generating a support jar for open source packages that require deprecated classes -->
+  <property name="collections-3.jar" value="commons-collections-3.2.jar"/>
+  
+  <!-- Path variables -->
+  <path id="test.support.path">
+    <!--Combines all jar references needed for running and compiling tests-->
+    <pathelement location="${junit.jar}" />
+    <pathelement location="${easymock.jar}" />
+  </path>
 
-<!-- ========== Settings ================================================== -->
+  <!-- ========== Settings ================================================== -->
 
   <!-- Javac -->
   <property name="compile.debug"           value="true"/>
@@ -90,35 +113,36 @@
   <!-- JUnit -->
   <property name="test.failonerror"        value="true"/>
   <property name="test.fork"               value="true"/>
+  <property name="test.haltonfailure"      value="true"/>
 
   <!-- Maven -->
   <property name="maven.repo"  value="${user.home}/.maven/repository" />
 
 
-<!-- ====================================================================== -->
-<!-- ========== Executable Targets ======================================== -->
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
+  <!-- ========== Executable Targets ======================================== -->
+  <!-- ====================================================================== -->
 
   <target name="clean"
           description="Clean build and distribution directories">
     <delete dir="${build.home}"/>
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <target name="init"
           description="Initialize and evaluate conditionals">
     <echo message="-------- ${component.name} ${component.version} --------"/>
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <target name="prepare" depends="init"
           description="Prepare build directory">
     <mkdir dir="${build.home}"/>
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <target name="compile" depends="prepare"
           description="Compile main code">
@@ -131,7 +155,7 @@
     </javac>
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <target name="jar" depends="compile"
           description="Create jar">
@@ -140,7 +164,7 @@
              tofile="${build.classes}/META-INF/LICENSE.txt"/>
     <copy      file="NOTICE.txt"
              tofile="${build.classes}/META-INF/NOTICE.txt"/>
-             
+
     <tstamp/>
     <mkdir      dir="${build.conf}"/>
     <copy     todir="${build.conf}" filtering="on">
@@ -152,14 +176,14 @@
       </filterset>
       <fileset dir="${source.conf}" includes="*.MF"/>
     </copy>
-             
+
     <!-- NOTE: A jar built using JDK1.4 is incompatible with JDK1.2 -->
     <jar    jarfile="${build.jar.name}"
             basedir="${build.classes}"
            manifest="${build.conf}/MANIFEST.MF"/>
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
   <!-- Targets you might use to get smaller jar files - not recommended -->
 
   <target name="splitjar" depends="jar"
@@ -261,7 +285,7 @@
 
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <target name="compile.tests" depends="compile"
           description="Compile unit test cases">
@@ -273,28 +297,51 @@
           optimize="false">
       <classpath>
         <pathelement location="${build.classes}"/>
-        <pathelement location="${junit.jar}"/>
+        <path refid="test.support.path"/>
       </classpath>
     </javac>
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <!-- Tests collections, either running all or one test -->
   <target name="test" depends="-test-all,-test-single"
           description="Run unit tests" />
 
+  <path id="build.path">
+    <pathelement location="${build.classes}" />
+  </path>
+
+  <target name="instrument"
+          depends="compile.tests"
+          description="Instruments the compiled classes and moves them to the instrumentation directory">
+    <emma>
+      <instr instrpathref="build.path"
+             destdir="${build.instrumented}"
+             metadatafile="${build.reports.coverage}/coverage.emma"
+             merge="true">
+      </instr>
+    </emma>
+  </target>
+
   <!-- Runs all tests -->
-  <target name="-test-all" depends="compile.tests" unless="testcase">
-    <mkdir dir="${build.test.reports}"/>
-    <junit printsummary="yes" haltonfailure="yes" showoutput="yes">
-      <formatter type="brief" />
+  <target name="-test-all" depends="instrument" unless="testcase">
+	<mkdir dir="${build.test.reports}" />
+
+    <junit printsummary="yes" haltonfailure="${test.haltonfailure}" showoutput="yes">
       <classpath>
+        <pathelement location="${build.instrumented}"/>
         <pathelement location="${build.classes}"/>
         <pathelement location="${build.tests}"/>
-        <pathelement location="${junit.jar}"/>
+        <path refid="test.support.path"/>
+      	<path refid="emma.lib"/>
       </classpath>
+      <jvmarg value="-Demma.coverage.out.file=${build.reports.coverage}/coverage.ec" />
+      <jvmarg value="-Demma.coverage.out.merge=true" />
+      <jvmarg value="-Demma.verbosity.level=quiet" />
 
+      <formatter type="xml" />
+      <formatter type="plain" />
       <batchtest fork="${test.fork}" todir="${build.test.reports}">
         <fileset dir="${source.test}">
           <include name="**/Test*.java"/>
@@ -305,20 +352,27 @@
           <exclude name="**/TestHashMap.java"/>
           <exclude name="**/TestTreeMap.java"/>
           <exclude name="**/TestTypedCollection.java"/>
+          <exclude name="**/TestAnyAllOnePredicate.java"/>
+          <exclude name="**/TestCompositePredicate.java"/>
         </fileset>
-        <formatter type="brief" usefile="false" />
       </batchtest>
     </junit>
+    <junitreport todir="${build.test.reports}">
+      <fileset dir="${build.test.reports}">
+        <include name="TEST-*.xml" />
+      </fileset>
+      <report format="frames" todir="${build.test.reports}/html" />
+    </junitreport>
   </target>
 
   <!-- Runs a single test -->
   <target name="-test-single" depends="compile.tests" if="testcase">
-    <junit printsummary="yes" haltonfailure="yes" showoutput="yes">
+    <junit printsummary="yes" haltonfailure="${test.haltonfailure}" showoutput="yes">
       <formatter type="brief" />
       <classpath>
         <pathelement location="${build.classes}"/>
         <pathelement location="${build.tests}"/>
-        <pathelement location="${junit.jar}"/>
+      	<path refid="test.support.path"/>
       </classpath>
 
       <test name="${testcase}" fork="${test.fork}" todir="${build.test.reports}">
@@ -326,17 +380,30 @@
       </test>
     </junit>
   </target>
+  
+  <target name="coverage.report"
+          depends="test"
+          description="Generates the coverage report for the code that has been run">
+    <emma>
+      <report sourcepath="${source.java}">
+        <fileset dir="${build.reports.coverage}">
+          <include name="*" />
+        </fileset>
+        <html outfile="${build.reports.coverage}/coverage.html" />
+      </report>
+    </emma>
+  </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <target name="testjar"  depends="compile.tests,jar"
           description="Run all unit test cases">
     <echo message="Running collections tests against built jar ..."/>
-    <junit printsummary="yes" haltonfailure="yes">
+    <junit printsummary="yes" haltonfailure="${test.haltonfailure}" dir="${basedir}">
       <classpath>
         <pathelement location="${build.jar.name}"/>
         <pathelement location="${build.tests}"/>
-        <pathelement location="${junit.jar}"/>
+      	<path refid="test.support.path"/>
       </classpath>
 
       <batchtest fork="${test.fork}">
@@ -348,32 +415,34 @@
     </junit>
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <target name="javadoc" depends="prepare"
           description="Create component Javadoc documentation">
-    <tstamp><format property="year" pattern="yyyy"/></tstamp>
+    <tstamp>
+      <format property="year" pattern="yyyy"/>
+    </tstamp>
     <delete     dir="${build.docs}"/>
     <mkdir      dir="${build.docs}"/>
     <javadoc sourcepath="${source.java}"
-                destdir="${build.docs}"
-           packagenames="${component.package}.*"
-                 access="${javadoc.access}"
-                 author="true"
-                version="true"
-                    use="true"
-                   link="${javadoc.links}"
-               overview="${source.java}/org/apache/commons/collections/overview.html"
-               doctitle="${component.title} ${component.version} API;"
-            windowtitle="${component.title} ${component.version} API"
-                 bottom="Copyright &amp;copy; 2001-${year} Apache Software Foundation. All Rights Reserved.">
+             destdir="${build.docs}"
+             packagenames="${component.package}.*"
+             access="${javadoc.access}"
+             author="true"
+             version="true"
+             use="true"
+             link="${javadoc.links}"
+             overview="${source.java}/org/apache/commons/collections/overview.html"
+             doctitle="${component.title} ${component.version} API;"
+             windowtitle="${component.title} ${component.version} API"
+             bottom="Copyright &amp;copy; 2001-${year} Apache Software Foundation. All Rights Reserved.">
     </javadoc>
   </target>
 
-<!-- ====================================================================== -->
-<!-- ========== Test framework ============================================ -->
-<!-- ====================================================================== -->
-   
+  <!-- ====================================================================== -->
+  <!-- ========== Test framework ============================================ -->
+  <!-- ====================================================================== -->
+
   <property name="tf.name"                 value="commons-collections-testframework"/>
   <property name="tf.package"              value="org.apache.commons.collections"/>
   <property name="tf.title"                value="Commons Collections Test Framework"/>
@@ -383,12 +452,12 @@
   <property name="tf.build.conf"           value="${build.home}/tfconf"/>
   <property name="tf.build.tf"             value="${build.home}/testframework"/>
   <property name="tf.build.docs"           value="${build.home}/docs/testframework"/>
-  
+
   <property name="tf.jar.name" value="${tf.name}-${tf.version}.jar"/>
   <property name="tf.build.jar.name" value="${build.home}/${tf.jar.name}"/>
 
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <!-- patternset describing test framework source not dependent on collections jar -->
   <patternset id="tf.patternset.validate">
@@ -405,25 +474,25 @@
     <include name="**/AbstractTestMapEntry.java"/>
     <include name="**/BulkTest.java"/>
   </patternset>
-  
+
   <target name="tf.validate" depends="prepare"
           description="Testframework - Validate testframework independence">
     <delete    dir="${tf.build.tf}"/>
     <mkdir     dir="${tf.build.tf}"/>
     <javac  srcdir="${source.test}"
-           destdir="${tf.build.tf}"
-             debug="true"
-       deprecation="false"
-          optimize="false">
+            destdir="${tf.build.tf}"
+            debug="true"
+            deprecation="false"
+            optimize="false">
       <patternset refid="tf.patternset.validate" />
       <classpath>
-        <pathelement location="${junit.jar}"/>
+        <path refid="test.support.path"/>
       </classpath>
     </javac>
     <delete dir="${tf.build.tf}"/>
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <target name="tf.jar" depends="compile.tests"
           description="Testframework - Create jar">
@@ -434,7 +503,7 @@
         <include name="**/BulkTest*.class"/>
       </fileset>
     </copy>
-    
+
     <!-- NOTE: A jar built using JDK1.4 is incompatible with JDK1.2 -->
     <ant antfile="build-testframework.xml" target="jar">
       <property name="test.classes"         value="${tf.build.tf}"/>
@@ -446,11 +515,13 @@
 
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <target name="tf.javadoc" depends="prepare"
           description="Testframework - Create Javadoc documentation">
-    <tstamp><format property="year" pattern="yyyy"/></tstamp>
+    <tstamp>
+      <format property="year" pattern="yyyy"/>
+    </tstamp>
     <delete     dir="${tf.build.docs}"/>
     <mkdir      dir="${tf.build.docs}"/>
     <javadoc    destdir="${tf.build.docs}"
@@ -470,11 +541,11 @@
   </target>
 
 
-<!-- ====================================================================== -->
-<!-- ========== Distributions ============================================= -->
-<!-- ====================================================================== -->
-   
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
+  <!-- ========== Distributions ============================================= -->
+  <!-- ====================================================================== -->
+
+  <!-- ====================================================================== -->
 
   <!-- Target needed for nightly builds -->
   <target name="dist" depends="javadoc,dist.create"
@@ -483,11 +554,10 @@
     <mkdir dir="${dist.home}" />
     <copy todir="${dist.home}">
       <fileset dir="${build.dist.bin}" />
-	</copy>
+    </copy>
   </target>
 
-  <target name="dist.create" depends="jar,testjar,tf.validate,tf.jar,dist.bin,dist.src">
-  </target>
+  <target name="dist.create" depends="jar,testjar,tf.validate,tf.jar,dist.bin,dist.src" />
 
   <target name="dist.bin">
     <copy todir="${build.src}">
@@ -500,7 +570,7 @@
     <antcall target="internal-md5">
       <param name="path" value="${build.home}/${final.name}.jar"/>
     </antcall>
-  	
+
     <mkdir      dir="${build.dist.bin.work}"/>
     <copy     todir="${build.dist.bin.work}">
       <fileset dir=".">
@@ -517,7 +587,7 @@
       </fileset>
     </copy>
   </target>
-  
+
   <target name="dist.src">
     <mkdir      dir="${build.dist.src.work}"/>
     <copy     todir="${build.dist.src.work}">
@@ -552,12 +622,12 @@
     </copy>
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
 
   <target name="release" depends="dist.create,zip"
           description="Create release">
-  	<!-- POM -->
-  	<copy file="project.xml" tofile="${build.home}/${final.name}.pom" />
+    <!-- POM -->
+    <copy file="project.xml" tofile="${build.home}/${final.name}.pom" />
     <antcall target="internal-md5">
       <param name="path" value="${build.home}/${final.name}.pom"/>
     </antcall>
@@ -565,10 +635,10 @@
 
   <target name="zip" depends="zip.bin,zip.src">
   </target>
-  
+
   <target name="zip.bin">
     <mkdir dir="${build.dist}"/>
-  	<fixcrlf srcdir="${build.dist.bin.work}" eol="lf" includes="*.txt" />
+    <fixcrlf srcdir="${build.dist.bin.work}" eol="lf" includes="*.txt" />
     <tar longfile="gnu" tarfile="${build.bin.tar.name}">
       <tarfileset dir="${build.dist.bin}"/>
     </tar>
@@ -577,8 +647,8 @@
     <antcall target="internal-md5">
       <param name="path" value="${build.bin.gz.name}"/>
     </antcall>
-    
-  	<fixcrlf srcdir="${build.dist.bin.work}" eol="crlf" includes="*.txt" />
+
+    <fixcrlf srcdir="${build.dist.bin.work}" eol="crlf" includes="*.txt" />
     <zip zipfile="${build.bin.zip.name}" >
       <zipfileset dir="${build.dist.bin}"/>
     </zip>
@@ -589,7 +659,7 @@
 
   <target name="zip.src">
     <mkdir dir="${build.dist}"/>
-  	<fixcrlf srcdir="${build.dist.src.work}" eol="lf" includes="*.txt,*.properties" />
+    <fixcrlf srcdir="${build.dist.src.work}" eol="lf" includes="*.txt,*.properties" />
     <tar longfile="gnu" tarfile="${build.src.tar.name}">
       <tarfileset dir="${build.dist.src}"/>
     </tar>
@@ -598,8 +668,8 @@
     <antcall target="internal-md5">
       <param name="path" value="${build.src.gz.name}"/>
     </antcall>
-    
-  	<fixcrlf srcdir="${build.dist.src.work}" eol="crlf" includes="*.txt,*.properties" />
+
+    <fixcrlf srcdir="${build.dist.src.work}" eol="crlf" includes="*.txt,*.properties" />
     <zip zipfile="${build.src.zip.name}" >
       <zipfileset dir="${build.dist.src}"/>
     </zip>
@@ -611,10 +681,10 @@
   <target name="internal-md5">
     <basename property="_base" file="${path}"/>
     <checksum file="${path}" property="md5"/>
-   	<echo message="${md5} *${_base}" file="${path}.md5"/>
+    <echo message="${md5} *${_base}" file="${path}.md5"/>
   </target>
 
-<!-- ====================================================================== -->
+  <!-- ====================================================================== -->
   <target name="clirr">
     <taskdef resource="clirrtask.properties">
       <classpath path="${maven.repo}/clirr/jars/clirr-core-0.6-uber.jar;" />
@@ -626,4 +696,16 @@
     </clirr>
   </target>
 
+  <!-- ====================================================================== -->
+  <target name="deprecated.jar" description="Compiles a jar of deprecated classes that existed in 3.* releases, and are necessary for other dependencies">
+    <jar jarfile="commons-collections-deprecated.jar">
+    	<zipfileset src="${collections-3.jar}">
+  			<!-- used by Hibernate -->
+    		<include name="**/SequencedHashMap*"/>
+  			<include name="**/KeyValue*"/> <!-- used by SequencedHashMap --> 
+    		<include name="**/LRUMap*"/>
+    		<include name="**/ReferenceMap*"/>
+    	</zipfileset>
+   	</jar>
+  </target>
 </project>
