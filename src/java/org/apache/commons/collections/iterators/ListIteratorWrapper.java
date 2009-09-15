@@ -16,15 +16,21 @@
  */
 package org.apache.commons.collections.iterators;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
+import org.apache.commons.collections.ResettableIterator;
 import org.apache.commons.collections.ResettableListIterator;
 
 /**
- * Converts an iterator into a list iterator by caching the returned entries.
+ * Converts an {@link Iterator} into a {@link ResettableListIterator}.
+ * For plain <code>Iterator</code>s this is accomplished by caching the returned
+ * elements.  This class can also be used to simply add {@link ResettableIterator}
+ * functionality to a given {@link ListIterator}.
  * <p>
  * The <code>ListIterator</code> interface has additional useful methods
  * for navigation - <code>previous()</code> and the index methods.
@@ -32,7 +38,7 @@ import org.apache.commons.collections.ResettableListIterator;
  * <code>ListIterator</code>. It achieves this by building a list internally
  * of as the underlying iterator is traversed.
  * <p>
- * The optional operations of <code>ListIterator</code> are not supported.
+ * The optional operations of <code>ListIterator</code> are not supported for plain <code>Iterator</code>s.
  * <p>
  * This class implements ResettableListIterator from Commons Collections 3.2.
  *
@@ -41,22 +47,28 @@ import org.apache.commons.collections.ResettableListIterator;
  *
  * @author Morgan Delagrange
  * @author Stephen Colebourne
+ * @author Matt Benson
  */
-public class ListIteratorWrapper implements ResettableListIterator {
+public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
 
-    /** Message used when remove, set or add are called. */
+    /** Message used when set or add are called. */
     private static final String UNSUPPORTED_OPERATION_MESSAGE =
         "ListIteratorWrapper does not support optional operations of ListIterator.";
 
+    /** Message used when set or add are called. */
+    private static final String CANNOT_REMOVE_MESSAGE = "Cannot remove element at index {0}.";
+
     /** The underlying iterator being decorated. */
-    private final Iterator iterator;
+    private final Iterator<? extends E> iterator;
     /** The list being used to cache the iterator. */
-    private final List list = new ArrayList();
+    private final List<E> list = new ArrayList<E>();
 
     /** The current index of this iterator. */
     private int currentIndex = 0;
     /** The current index of the wrapped iterator. */
     private int wrappedIteratorIndex = 0;
+    /** recall whether the wrapped iterator's "cursor" is in such a state as to allow remove() to be called */
+    private boolean removeState;
 
     // Constructor
     //-------------------------------------------------------------------------
@@ -67,7 +79,7 @@ public class ListIteratorWrapper implements ResettableListIterator {
      * @param iterator  the iterator to wrap
      * @throws NullPointerException if the iterator is null
      */
-    public ListIteratorWrapper(Iterator iterator) {
+    public ListIteratorWrapper(Iterator<? extends E> iterator) {
         super();
         if (iterator == null) {
             throw new NullPointerException("Iterator must not be null");
@@ -78,12 +90,19 @@ public class ListIteratorWrapper implements ResettableListIterator {
     // ListIterator interface
     //-------------------------------------------------------------------------
     /**
-     * Throws {@link UnsupportedOperationException}.
+     * Throws {@link UnsupportedOperationException}
+     * unless the underlying <code>Iterator</code> is a <code>ListIterator</code>.
      *
-     * @param obj  the object to add, ignored
-     * @throws UnsupportedOperationException always
+     * @param obj  the object to add
+     * @throws UnsupportedOperationException
      */
-    public void add(Object obj) throws UnsupportedOperationException {
+    public void add(E obj) throws UnsupportedOperationException {
+        if (iterator instanceof ListIterator) {
+            @SuppressWarnings("unchecked")
+            ListIterator<E> li = (ListIterator<E>) iterator;
+            li.add(obj);
+            return;
+        }
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MESSAGE);
     }
 
@@ -93,7 +112,7 @@ public class ListIteratorWrapper implements ResettableListIterator {
      * @return true if there are more elements
      */
     public boolean hasNext() {
-        if (currentIndex == wrappedIteratorIndex) {
+        if (currentIndex == wrappedIteratorIndex || iterator instanceof ListIterator) {
             return iterator.hasNext();
         }
         return true;
@@ -105,10 +124,12 @@ public class ListIteratorWrapper implements ResettableListIterator {
      * @return true if there are previous elements
      */
     public boolean hasPrevious() {
-        if (currentIndex == 0) {
-            return false;
+        if (iterator instanceof ListIterator) {
+            @SuppressWarnings("unchecked")
+            ListIterator li = (ListIterator) iterator;
+            return li.hasPrevious();
         }
-        return true;
+        return currentIndex > 0;
     }
 
     /**
@@ -117,25 +138,35 @@ public class ListIteratorWrapper implements ResettableListIterator {
      * @return the next element from the iterator
      * @throws NoSuchElementException if there are no more elements
      */
-    public Object next() throws NoSuchElementException {
+    public E next() throws NoSuchElementException {
+        if (iterator instanceof ListIterator) {
+            return iterator.next();
+        }
+
         if (currentIndex < wrappedIteratorIndex) {
             ++currentIndex;
             return list.get(currentIndex - 1);
         }
 
-        Object retval = iterator.next();
+        E retval = iterator.next();
         list.add(retval);
         ++currentIndex;
         ++wrappedIteratorIndex;
+        removeState = true;
         return retval;
     }
 
     /**
-     * Returns in the index of the next element.
+     * Returns the index of the next element.
      *
      * @return the index of the next element
      */
     public int nextIndex() {
+        if (iterator instanceof ListIterator) {
+            @SuppressWarnings("unchecked")
+            ListIterator li = (ListIterator) iterator;
+            return li.nextIndex();
+        }
         return currentIndex;
     }
 
@@ -145,12 +176,18 @@ public class ListIteratorWrapper implements ResettableListIterator {
      * @return the previous element
      * @throws NoSuchElementException  if there are no previous elements
      */
-    public Object previous() throws NoSuchElementException {
+    public E previous() throws NoSuchElementException {
+        if (iterator instanceof ListIterator) {
+            @SuppressWarnings("unchecked")
+            ListIterator<E> li = (ListIterator<E>) iterator;
+            return li.previous();
+        }
+
         if (currentIndex == 0) {
             throw new NoSuchElementException();
         }
-        --currentIndex;
-        return list.get(currentIndex);    
+        removeState = wrappedIteratorIndex == currentIndex;
+        return list.get(--currentIndex);
     }
 
     /**
@@ -159,25 +196,52 @@ public class ListIteratorWrapper implements ResettableListIterator {
      * @return  the index of the previous element
      */
     public int previousIndex() {
+        if (iterator instanceof ListIterator) {
+            @SuppressWarnings("unchecked")
+            ListIterator li = (ListIterator) iterator;
+            return li.previousIndex();
+        }
         return currentIndex - 1;
     }
 
     /**
-     * Throws {@link UnsupportedOperationException}.
+     * Throws {@link UnsupportedOperationException} if {@link #previous()} has ever been called.
      *
      * @throws UnsupportedOperationException always
      */
     public void remove() throws UnsupportedOperationException {
-        throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MESSAGE);
+        if (iterator instanceof ListIterator) {
+            iterator.remove();
+            return;
+        }
+        int removeIndex = currentIndex;
+        if (currentIndex == wrappedIteratorIndex) {
+            --removeIndex;
+        }
+        if (!removeState || wrappedIteratorIndex - currentIndex > 1) {
+            throw new IllegalStateException(MessageFormat.format(CANNOT_REMOVE_MESSAGE, removeIndex));
+        }
+        iterator.remove();
+        list.remove(removeIndex);
+        currentIndex = removeIndex;
+        wrappedIteratorIndex--;
+        removeState = false;
     }
 
     /**
-     * Throws {@link UnsupportedOperationException}.
+     * Throws {@link UnsupportedOperationException}
+     * unless the underlying <code>Iterator</code> is a <code>ListIterator</code>.
      *
-     * @param obj  the object to set, ignored
-     * @throws UnsupportedOperationException always
+     * @param obj  the object to set
+     * @throws UnsupportedOperationException
      */
-    public void set(Object obj) throws UnsupportedOperationException {
+    public void set(E obj) throws UnsupportedOperationException {
+        if (iterator instanceof ListIterator) {
+            @SuppressWarnings("unchecked")
+            ListIterator<E> li = (ListIterator<E>) iterator;
+            li.set(obj);
+            return;
+        }
         throw new UnsupportedOperationException(UNSUPPORTED_OPERATION_MESSAGE);
     }
 
@@ -190,6 +254,14 @@ public class ListIteratorWrapper implements ResettableListIterator {
      * @since Commons Collections 3.2
      */
     public void reset()  {
+        if (iterator instanceof ListIterator) {
+            @SuppressWarnings("unchecked")
+            ListIterator li = (ListIterator) iterator;
+            while (li.previousIndex() >= 0) {
+                li.previous();
+            }
+            return;
+        }
         currentIndex = 0;
     }
 
