@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections.functors;
 
+import static org.apache.commons.collections.functors.FunctorUtils.coerce;
+import static org.apache.commons.collections.functors.FunctorUtils.validate;
+import static org.apache.commons.collections.functors.TruePredicate.truePredicate;
+
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -34,14 +38,15 @@ import org.apache.commons.collections.Predicate;
  *
  * @author Stephen Colebourne
  * @author Matt Benson
+ * @author Stephen Kestle
  */
-public final class AllPredicate implements Predicate, PredicateDecorator, Serializable {
+public final class AllPredicate<T> implements Predicate<T>, PredicateDecorator<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -3094696765038308799L;
     
     /** The array of predicates to call */
-    private final Predicate[] iPredicates;
+    private final Predicate<? super T>[] iPredicates;
     
     /**
      * Factory to create the predicate.
@@ -53,17 +58,49 @@ public final class AllPredicate implements Predicate, PredicateDecorator, Serial
      * @return the <code>all</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
+     * @deprecated Use {@link #allPredicate(Predicate<? super T>...)} instead
      */
-    public static Predicate getInstance(Predicate[] predicates) {
+    public static <T> Predicate<T> getInstance(Predicate<? super T> ... predicates) {
+        return allPredicate(predicates);
+    }
+
+    /**
+     * Factory to create the predicate.
+     * <p>
+     * If the array is size zero, the predicate always returns true.
+     * If the array is size one, then that predicate is returned.
+     *
+     * @param predicates  the predicates to check, cloned, not null
+     * @return the <code>all</code> predicate
+     * @throws IllegalArgumentException if the predicates array is null
+     * @throws IllegalArgumentException if any predicate in the array is null
+     */
+    public static <T> Predicate<T> allPredicate(Predicate<? super T> ... predicates) {
         FunctorUtils.validate(predicates);
         if (predicates.length == 0) {
-            return TruePredicate.INSTANCE;
+            return truePredicate();
         }
         if (predicates.length == 1) {
-            return predicates[0];
+            return coerce(predicates[0]);
         }
-        predicates = FunctorUtils.copy(predicates);
-        return new AllPredicate(predicates);
+
+        return new AllPredicate<T>(FunctorUtils.copy(predicates));
+    }
+
+    /**
+     * Factory to create the predicate.
+     * <p>
+     * If the collection is size zero, the predicate always returns true.
+     * If the collection is size one, then that predicate is returned.
+     *
+     * @param predicates  the predicates to check, cloned, not null
+     * @return the <code>all</code> predicate
+     * @throws IllegalArgumentException if the predicates array is null
+     * @throws IllegalArgumentException if any predicate in the array is null
+     * @deprecated Use {@link #allPredicate(Collection<Predicate<? super T>>)} instead
+     */
+    public static <T> Predicate<T> getInstance(Collection<Predicate<T>> predicates) {
+        return allPredicate(predicates);
     }
 
     /**
@@ -77,24 +114,24 @@ public final class AllPredicate implements Predicate, PredicateDecorator, Serial
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static Predicate getInstance(Collection predicates) {
-        Predicate[] preds = FunctorUtils.validate(predicates);
+    public static <T> Predicate<T> allPredicate(Collection<? extends Predicate<T>> predicates) {
+        final Predicate<T>[] preds = validate(predicates);
         if (preds.length == 0) {
-            return TruePredicate.INSTANCE;
+            return truePredicate();
         }
         if (preds.length == 1) {
             return preds[0];
         }
-        return new AllPredicate(preds);
+        return new AllPredicate<T>(preds);
     }
 
     /**
      * Constructor that performs no validation.
      * Use <code>getInstance</code> if you want that.
-     * 
+     *
      * @param predicates  the predicates to check, not cloned, not null
      */
-    public AllPredicate(Predicate[] predicates) {
+    public AllPredicate(Predicate<? super T> ... predicates) {
         super();
         iPredicates = predicates;
     }
@@ -105,9 +142,9 @@ public final class AllPredicate implements Predicate, PredicateDecorator, Serial
      * @param object  the input object
      * @return true if all decorated predicates return true
      */
-    public boolean evaluate(Object object) {
-        for (int i = 0; i < iPredicates.length; i++) {
-            if (iPredicates[i].evaluate(object) == false) {
+    public boolean evaluate(T object) {
+        for (Predicate<? super T> iPredicate : iPredicates) {
+            if (!iPredicate.evaluate(object)) {
                 return false;
             }
         }
@@ -120,7 +157,7 @@ public final class AllPredicate implements Predicate, PredicateDecorator, Serial
      * @return the predicates
      * @since Commons Collections 3.1
      */
-    public Predicate[] getPredicates() {
+    public Predicate<? super T>[] getPredicates() {
         return iPredicates;
     }
 
