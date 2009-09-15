@@ -19,6 +19,8 @@ package org.apache.commons.collections.map;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.collections.IterableMap;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -31,7 +33,7 @@ import junit.framework.TestSuite;
  *
  * @author Stephen Colebourne
  */
-public class TestFixedSizeMap extends AbstractTestMap {
+public class TestFixedSizeMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     public TestFixedSizeMap(String testName) {
         super(testName);
@@ -46,16 +48,16 @@ public class TestFixedSizeMap extends AbstractTestMap {
         junit.textui.TestRunner.main(testCaseName);
     }
 
-    public Map makeEmptyMap() {
-        return FixedSizeMap.decorate(new HashMap());
+    public IterableMap<K, V> makeObject() {
+        return FixedSizeMap.decorate(new HashMap<K, V>());
     }
 
-    public Map makeFullMap() {
-        Map map = new HashMap();
+    public IterableMap<K, V> makeFullMap() {
+        Map<K, V> map = new HashMap<K, V>();
         addSampleMappings(map);
         return FixedSizeMap.decorate(map);
     }
-    
+
     public boolean isPutAddSupported() {
         return false;
     }
