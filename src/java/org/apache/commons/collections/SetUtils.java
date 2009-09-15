@@ -18,7 +18,6 @@ package org.apache.commons.collections;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -30,8 +29,6 @@ import org.apache.commons.collections.set.SynchronizedSet;
 import org.apache.commons.collections.set.SynchronizedSortedSet;
 import org.apache.commons.collections.set.TransformedSet;
 import org.apache.commons.collections.set.TransformedSortedSet;
-import org.apache.commons.collections.set.TypedSet;
-import org.apache.commons.collections.set.TypedSortedSet;
 import org.apache.commons.collections.set.UnmodifiableSet;
 import org.apache.commons.collections.set.UnmodifiableSortedSet;
 
@@ -54,12 +51,32 @@ public class SetUtils {
      * This uses the {@link Collections} implementation 
      * and is provided for completeness.
      */
-    public static final Set EMPTY_SET = Collections.EMPTY_SET;
+    public static final Set<?> EMPTY_SET = Collections.EMPTY_SET;
+
+    /**
+     * Get a typed empty unmodifiable Set.
+     * @param <E>
+     * @return Set<E>
+     */
+    public static <E> Set<E> emptySet() {
+        return Collections.<E>emptySet();
+    }
+
     /**
      * An empty unmodifiable sorted set.
      * This is not provided in the JDK.
      */
-    public static final SortedSet EMPTY_SORTED_SET = UnmodifiableSortedSet.decorate(new TreeSet());
+    public static final SortedSet<?> EMPTY_SORTED_SET = UnmodifiableSortedSet.decorate(new TreeSet<Object>());
+
+    /**
+     * Get a typed empty unmodifiable sorted set.
+     * @param <E>
+     * @return SortedSet<E>
+     */
+    @SuppressWarnings("unchecked")
+    public static <E> SortedSet<E> emptySortedSet() {
+        return (SortedSet<E>) EMPTY_SORTED_SET;
+    }
 
     /**
      * <code>SetUtils</code> should not normally be instantiated.
@@ -96,7 +113,7 @@ public class SetUtils {
      * @param set2  the second set, may be null
      * @return whether the sets are equal by value comparison
      */
-    public static boolean isEqualSet(final Collection set1, final Collection set2) {
+    public static boolean isEqualSet(final Collection<?> set1, final Collection<?> set2) {
         if (set1 == set2) {
             return true;
         }
@@ -119,16 +136,13 @@ public class SetUtils {
      * @param set  the set to calculate the hash code for, may be null
      * @return the hash code
      */
-    public static int hashCodeForSet(final Collection set) {
+    public static <T> int hashCodeForSet(final Collection<T> set) {
         if (set == null) {
             return 0;
         }
-        int hashCode = 0;
-        Iterator it = set.iterator();
-        Object obj = null;
 
-        while (it.hasNext()) {
-            obj = it.next();
+        int hashCode = 0;
+        for (T obj : set) {
             if (obj != null) {
                 hashCode += obj.hashCode();
             }
@@ -159,7 +173,7 @@ public class SetUtils {
      * @return a synchronized set backed by the given set
      * @throws IllegalArgumentException  if the set is null
      */
-    public static Set synchronizedSet(Set set) {
+    public static <T> Set<T> synchronizedSet(Set<T> set) {
         return SynchronizedSet.decorate(set);
     }
 
@@ -172,7 +186,7 @@ public class SetUtils {
      * @return an unmodifiable set backed by the given set
      * @throws IllegalArgumentException  if the set is null
      */
-    public static Set unmodifiableSet(Set set) {
+    public static <E> Set<E> unmodifiableSet(Set<E> set) {
         return UnmodifiableSet.decorate(set);
     }
 
@@ -189,23 +203,10 @@ public class SetUtils {
      * @return a predicated set backed by the given set
      * @throws IllegalArgumentException  if the Set or Predicate is null
      */
-    public static Set predicatedSet(Set set, Predicate predicate) {
+    public static <T> Set<T> predicatedSet(Set<T> set, Predicate<? super T> predicate) {
         return PredicatedSet.decorate(set, predicate);
     }
 
-    /**
-     * Returns a typed set backed by the given set.
-     * <p>
-     * Only objects of the specified type can be added to the set.
-     * 
-     * @param set  the set to limit to a specific type, must not be null
-     * @param type  the type of objects which may be added to the set
-     * @return a typed set backed by the specified set
-     */
-    public static Set typedSet(Set set, Class type) {
-        return TypedSet.decorate(set, type);
-    }
-    
     /**
      * Returns a transformed set backed by the given set.
      * <p>
@@ -221,7 +222,7 @@ public class SetUtils {
      * @return a transformed set backed by the given set
      * @throws IllegalArgumentException  if the Set or Transformer is null
      */
-    public static Set transformedSet(Set set, Transformer transformer) {
+    public static <E> Set<E> transformedSet(Set<E> set, Transformer<? super E, ? extends E> transformer) {
         return TransformedSet.decorate(set, transformer);
     }
     
@@ -236,7 +237,7 @@ public class SetUtils {
      * @return an ordered set backed by the given set
      * @throws IllegalArgumentException  if the Set is null
      */
-    public static Set orderedSet(Set set) {
+    public static <E> Set<E> orderedSet(Set<E> set) {
         return ListOrderedSet.decorate(set);
     }
     
@@ -263,7 +264,7 @@ public class SetUtils {
      * @return a synchronized set backed by the given set
      * @throws IllegalArgumentException  if the set is null
      */
-    public static SortedSet synchronizedSortedSet(SortedSet set) {
+    public static <T> SortedSet<T> synchronizedSortedSet(SortedSet<T> set) {
         return SynchronizedSortedSet.decorate(set);
     }
 
@@ -276,7 +277,7 @@ public class SetUtils {
      * @return an unmodifiable set backed by the given set
      * @throws IllegalArgumentException  if the set is null
      */
-    public static SortedSet unmodifiableSortedSet(SortedSet set) {
+    public static <T> SortedSet<T> unmodifiableSortedSet(SortedSet<T> set) {
         return UnmodifiableSortedSet.decorate(set);
     }
 
@@ -293,23 +294,10 @@ public class SetUtils {
      * @return a predicated sorted set backed by the given sorted set
      * @throws IllegalArgumentException  if the Set or Predicate is null
      */
-    public static SortedSet predicatedSortedSet(SortedSet set, Predicate predicate) {
+    public static <T> SortedSet<T> predicatedSortedSet(SortedSet<T> set, Predicate<? super T> predicate) {
         return PredicatedSortedSet.decorate(set, predicate);
     }
 
-    /**
-     * Returns a typed sorted set backed by the given set.
-     * <p>
-     * Only objects of the specified type can be added to the set.
-     * 
-     * @param set  the set to limit to a specific type, must not be null
-     * @param type  the type of objects which may be added to the set
-     * @return a typed set backed by the specified set
-     */
-    public static SortedSet typedSortedSet(SortedSet set, Class type) {
-        return TypedSortedSet.decorate(set, type);
-    }
-    
     /**
      * Returns a transformed sorted set backed by the given set.
      * <p>
@@ -325,7 +313,7 @@ public class SetUtils {
      * @return a transformed set backed by the given set
      * @throws IllegalArgumentException  if the Set or Transformer is null
      */
-    public static SortedSet transformedSortedSet(SortedSet set, Transformer transformer) {
+    public static <E> SortedSet<E> transformedSortedSet(SortedSet<E> set, Transformer<? super E, ? extends E> transformer) {
         return TransformedSortedSet.decorate(set, transformer);
     }
     
