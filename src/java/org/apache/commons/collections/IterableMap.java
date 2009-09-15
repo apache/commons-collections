@@ -22,41 +22,24 @@ import java.util.Map;
  * Defines a map that can be iterated directly without needing to create an entry set.
  * <p>
  * A map iterator is an efficient way of iterating over maps.
- * There is no need to access the entry set or cast to Map Entry objects.
+ * There is no need to access the entry set or use Map Entry objects.
  * <pre>
- * IterableMap map = new HashedMap();
- * MapIterator it = map.mapIterator();
+ * IterableMap<String,Integer> map = new HashedMap<String,Integer>();
+ * MapIterator<String,Integer> it = map.mapIterator();
  * while (it.hasNext()) {
- *   Object key = it.next();
- *   Object value = it.getValue();
- *   it.setValue("newValue");
+ *   String key = it.next();
+ *   Integer value = it.getValue();
+ *   it.setValue(value + 1);
  * }
  * </pre>
+ *
+ * @param <K> the type of the keys in the map
+ * @param <V> the type of the values in the map
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */
-public interface IterableMap extends Map {
-
-    /**
-     * Obtains a <code>MapIterator</code> over the map.
-     * <p>
-     * A map iterator is an efficient way of iterating over maps.
-     * There is no need to access the entry set or cast to Map Entry objects.
-     * <pre>
-     * IterableMap map = new HashedMap();
-     * MapIterator it = map.mapIterator();
-     * while (it.hasNext()) {
-     *   Object key = it.next();
-     *   Object value = it.getValue();
-     *   it.setValue("newValue");
-     * }
-     * </pre>
-     * 
-     * @return a map iterator
-     */
-    MapIterator mapIterator();
-    
+public interface IterableMap<K, V> extends Map<K, V>, Put<K, V>, IterableGet<K, V> {
 }
