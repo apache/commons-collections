@@ -25,12 +25,18 @@ import java.util.SortedSet;
  * <p>
  * Methods are forwarded directly to the decorated set.
  *
+ * @param <E> the type of the elements in the sorted set
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */
-public abstract class AbstractSortedSetDecorator extends AbstractSetDecorator implements SortedSet {
+public abstract class AbstractSortedSetDecorator<E>
+        extends AbstractSetDecorator<E>
+        implements SortedSet<E> {
+
+    /** Serialization version */
+    private static final long serialVersionUID = -3462240946294214398L;
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
@@ -46,42 +52,42 @@ public abstract class AbstractSortedSetDecorator extends AbstractSetDecorator im
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    protected AbstractSortedSetDecorator(Set set) {
+    protected AbstractSortedSetDecorator(Set<E> set) {
         super(set);
     }
 
     /**
-     * Gets the sorted set being decorated.
+     * Gets the set being decorated.
      * 
      * @return the decorated set
      */
-    protected SortedSet getSortedSet() {
-        return (SortedSet) getCollection();
+    protected SortedSet<E> decorated() {
+        return (SortedSet<E>) super.decorated();
     }
-    
+
     //-----------------------------------------------------------------------
-    public SortedSet subSet(Object fromElement, Object toElement) {
-        return getSortedSet().subSet(fromElement, toElement);
+    public SortedSet<E> subSet(E fromElement, E toElement) {
+        return decorated().subSet(fromElement, toElement);
     }
 
-    public SortedSet headSet(Object toElement) {
-        return getSortedSet().headSet(toElement);
+    public SortedSet<E> headSet(E toElement) {
+        return decorated().headSet(toElement);
     }
 
-    public SortedSet tailSet(Object fromElement) {
-        return getSortedSet().tailSet(fromElement);
+    public SortedSet<E> tailSet(E fromElement) {
+        return decorated().tailSet(fromElement);
     }
 
-    public Object first() {
-        return getSortedSet().first();
+    public E first() {
+        return decorated().first();
     }
 
-    public Object last() {
-        return getSortedSet().last();
+    public E last() {
+        return decorated().last();
     }
 
-    public Comparator comparator() {
-        return getSortedSet().comparator();
+    public Comparator<? super E> comparator() {
+        return decorated().comparator();
     }
 
 }
