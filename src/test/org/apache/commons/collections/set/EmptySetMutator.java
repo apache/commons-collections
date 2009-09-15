@@ -17,6 +17,7 @@
 package org.apache.commons.collections.set;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections.collection.CompositeCollection;
@@ -26,30 +27,26 @@ import org.apache.commons.collections.collection.CompositeCollection;
  * the class has to be separate of TestCompositeSet, else the test 
  * class also has to be serialized. 
  */
-class EmptySetMutator implements CompositeSet.SetMutator {
+class EmptySetMutator<E> implements CompositeSet.SetMutator<E> {
     private Set contained;
 
     public EmptySetMutator(Set set) {
         this.contained = set;
     }
 
-    public void resolveCollision(CompositeSet comp, Set existing, 
-        Set added, Collection intersects) {
+    public void resolveCollision(CompositeSet<E> comp, Set<E> existing, Set<E> added, Collection<E> intersects) {
         throw new IllegalArgumentException();
     }
     
-    public boolean add(CompositeCollection composite, 
-        Collection[] collections, Object obj) {
+    public boolean add(CompositeCollection<E> composite, List<Collection<E>> collections, E obj) {
         return contained.add(obj);
     }
     
-    public boolean addAll(CompositeCollection composite, 
-        Collection[] collections, Collection coll) {
+    public boolean addAll(CompositeCollection<E> composite, List<Collection<E>> collections, Collection<? extends E> coll) {
         return contained.addAll(coll);
     }
     
-    public boolean remove(CompositeCollection composite, 
-        Collection[] collections, Object obj) {
+    public boolean remove(CompositeCollection<E> composite, List<Collection<E>> collections, Object obj) {
         return contained.remove(obj);
     }
 }
