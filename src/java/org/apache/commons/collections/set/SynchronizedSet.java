@@ -33,7 +33,7 @@ import org.apache.commons.collections.collection.SynchronizedCollection;
  *
  * @author Stephen Colebourne
  */
-public class SynchronizedSet extends SynchronizedCollection implements Set {
+public class SynchronizedSet<E> extends SynchronizedCollection<E> implements Set<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = -8304417378626543635L;
@@ -44,8 +44,8 @@ public class SynchronizedSet extends SynchronizedCollection implements Set {
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    public static Set decorate(Set set) {
-        return new SynchronizedSet(set);
+    public static <T> Set<T> decorate(Set<T> set) {
+        return new SynchronizedSet<T>(set);
     }
     
     //-----------------------------------------------------------------------
@@ -55,7 +55,7 @@ public class SynchronizedSet extends SynchronizedCollection implements Set {
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    protected SynchronizedSet(Set set) {
+    protected SynchronizedSet(Set<E> set) {
         super(set);
     }
 
@@ -66,7 +66,7 @@ public class SynchronizedSet extends SynchronizedCollection implements Set {
      * @param lock  the lock object to use, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    protected SynchronizedSet(Set set, Object lock) {
+    protected SynchronizedSet(Set<E> set, Object lock) {
         super(set, lock);
     }
 
@@ -75,8 +75,8 @@ public class SynchronizedSet extends SynchronizedCollection implements Set {
      * 
      * @return the decorated set
      */
-    protected Set getSet() {
-        return (Set) collection;
+    protected Set<E> getSet() {
+        return (Set<E>) collection;
     }
 
 }
