@@ -37,16 +37,16 @@ import org.apache.commons.collections.map.AbstractMapDecorator;
  *
  * @author Stephen Colebourne
  */
-public abstract class AbstractBidiMapDecorator
-        extends AbstractMapDecorator implements BidiMap {
-    
+public abstract class AbstractBidiMapDecorator<K, V> extends AbstractMapDecorator<K, V> implements
+        BidiMap<K, V> {
+
     /**
      * Constructor that wraps (not copies).
      *
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    protected AbstractBidiMapDecorator(BidiMap map) {
+    protected AbstractBidiMapDecorator(BidiMap<K, V> map) {
         super(map);
     }
 
@@ -55,25 +55,25 @@ public abstract class AbstractBidiMapDecorator
      * 
      * @return the decorated map
      */
-    protected BidiMap getBidiMap() {
-        return (BidiMap) map;
+    protected BidiMap<K, V> decorated() {
+        return (BidiMap<K, V>) super.decorated();
     }
 
     //-----------------------------------------------------------------------
-    public MapIterator mapIterator() {
-        return getBidiMap().mapIterator();
+    public MapIterator<K, V> mapIterator() {
+        return decorated().mapIterator();
     }
 
-    public Object getKey(Object value) {
-        return getBidiMap().getKey(value);
+    public K getKey(Object value) {
+        return decorated().getKey(value);
     }
 
-    public Object removeValue(Object value) {
-        return getBidiMap().removeValue(value);
+    public K removeValue(Object value) {
+        return decorated().removeValue(value);
     }
 
-    public BidiMap inverseBidiMap() {
-        return getBidiMap().inverseBidiMap();
+    public BidiMap<V, K> inverseBidiMap() {
+        return decorated().inverseBidiMap();
     }
 
 }
