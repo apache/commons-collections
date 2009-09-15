@@ -23,7 +23,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.PredicateUtils;
+import org.apache.commons.collections.functors.TruePredicate;
 
 /**
  * Extension of {@link AbstractTestSet} for exercising the 
@@ -34,90 +34,92 @@ import org.apache.commons.collections.PredicateUtils;
  *
  * @author Phil Steitz
  */
-public class TestPredicatedSet extends AbstractTestSet{
-    
+public class TestPredicatedSet<E> extends AbstractTestSet<E> {
+
     public TestPredicatedSet(String testName) {
         super(testName);
     }
-    
+
     public static Test suite() {
         return new TestSuite(TestPredicatedSet.class);
     }
-    
+
     public static void main(String args[]) {
         String[] testCaseName = { TestPredicatedSet.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
+
  //-------------------------------------------------------------------
-    
-    protected Predicate truePredicate = PredicateUtils.truePredicate();
-    
-    protected Set decorateSet(Set set, Predicate predicate) {
-        return PredicatedSet.decorate(set, predicate);
+
+    protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
+
+    protected PredicatedSet<E> decorateSet(Set<E> set, Predicate<? super E> predicate) {
+        return (PredicatedSet<E>) PredicatedSet.decorate(set, predicate);
     }
-    
-    public Set makeEmptySet() {
-        return decorateSet(new HashSet(), truePredicate);
+
+    public PredicatedSet<E> makeObject() {
+        return decorateSet(new HashSet<E>(), truePredicate);
     }
-    
-    public Object[] getFullElements() {
-        return new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+
+    @SuppressWarnings("unchecked")
+    public E[] getFullElements() {
+        return (E[]) new Object[] {"1", "3", "5", "7", "2", "4", "6"};
     }
-    
-//--------------------------------------------------------------------   
-    
-    protected Predicate testPredicate =  
-        new Predicate() {
-            public boolean evaluate(Object o) {
+
+//--------------------------------------------------------------------
+
+    protected Predicate<E> testPredicate =
+        new Predicate<E>() {
+            public boolean evaluate(E o) {
                 return o instanceof String;
             }
-        };      
-    
-    protected Set makeTestSet() {
-        return decorateSet(new HashSet(), testPredicate);
+        };
+
+    protected PredicatedSet<E> makeTestSet() {
+        return decorateSet(new HashSet<E>(), testPredicate);
     }
-    
+
     public void testGetSet() {
-         Set set = makeTestSet();
-        assertTrue("returned set should not be null",
-            ((PredicatedSet) set).getSet() != null);
+        PredicatedSet<E> set = makeTestSet();
+        assertTrue("returned set should not be null", set.decorated() != null);
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
-        Set set = makeTestSet();
+        Set<E> set = makeTestSet();
         Integer i = new Integer(3);
         try {
-            set.add(i);
+            set.add((E) i);
             fail("Integer should fail string predicate.");
         } catch (IllegalArgumentException e) {
             // expected
         }
-        assertTrue("Collection shouldn't contain illegal element", 
-         !set.contains(i));   
+        assertTrue("Collection shouldn't contain illegal element",
+         !set.contains(i));
     }
 
+    @SuppressWarnings("unchecked")
     public void testIllegalAddAll() {
-        Set set = makeTestSet();
-        Set elements = new HashSet();
-        elements.add("one");
-        elements.add("two");
-        elements.add(new Integer(3));
-        elements.add("four");
+        Set<E> set = makeTestSet();
+        Set<E> elements = new HashSet<E>();
+        elements.add((E) "one");
+        elements.add((E) "two");
+        elements.add((E) new Integer(3));
+        elements.add((E) "four");
         try {
             set.addAll(elements);
             fail("Integer should fail string predicate.");
         } catch (IllegalArgumentException e) {
             // expected
         }
-        assertTrue("Set shouldn't contain illegal element", 
-         !set.contains("one"));   
-        assertTrue("Set shouldn't contain illegal element", 
-         !set.contains("two"));   
-        assertTrue("Set shouldn't contain illegal element", 
-         !set.contains(new Integer(3)));   
-        assertTrue("Set shouldn't contain illegal element", 
-         !set.contains("four"));   
+        assertTrue("Set shouldn't contain illegal element",
+         !set.contains("one"));
+        assertTrue("Set shouldn't contain illegal element",
+         !set.contains("two"));
+        assertTrue("Set shouldn't contain illegal element",
+         !set.contains(new Integer(3)));
+        assertTrue("Set shouldn't contain illegal element",
+         !set.contains("four"));
     }
 
     public String getCompatibilityVersion() {
