@@ -36,16 +36,17 @@ import org.apache.commons.collections.OrderedMapIterator;
  *
  * @author Stephen Colebourne
  */
-public abstract class AbstractOrderedBidiMapDecorator
-        extends AbstractBidiMapDecorator implements OrderedBidiMap {
-    
+public abstract class AbstractOrderedBidiMapDecorator<K, V>
+        extends AbstractBidiMapDecorator<K, V>
+        implements OrderedBidiMap<K, V> {
+
     /**
      * Constructor that wraps (not copies).
      *
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    protected AbstractOrderedBidiMapDecorator(OrderedBidiMap map) {
+    protected AbstractOrderedBidiMapDecorator(OrderedBidiMap<K, V> map) {
         super(map);
     }
 
@@ -54,33 +55,34 @@ public abstract class AbstractOrderedBidiMapDecorator
      * 
      * @return the decorated map
      */
-    protected OrderedBidiMap getOrderedBidiMap() {
-        return (OrderedBidiMap) map;
+    protected OrderedBidiMap<K, V> decorated() {
+        return (OrderedBidiMap<K, V>) super.decorated();
     }
 
     //-----------------------------------------------------------------------
-    public OrderedMapIterator orderedMapIterator() {
-        return getOrderedBidiMap().orderedMapIterator();
+    public OrderedMapIterator<K, V> mapIterator() {
+        return decorated().mapIterator();
     }
 
-    public Object firstKey() {
-        return getOrderedBidiMap().firstKey();
+    public K firstKey() {
+        return decorated().firstKey();
     }
 
-    public Object lastKey() {
-        return getOrderedBidiMap().lastKey();
+    public K lastKey() {
+        return decorated().lastKey();
     }
 
-    public Object nextKey(Object key) {
-        return getOrderedBidiMap().nextKey(key);
+    public K nextKey(K key) {
+        return decorated().nextKey(key);
     }
 
-    public Object previousKey(Object key) {
-        return getOrderedBidiMap().previousKey(key);
+    public K previousKey(K key) {
+        return decorated().previousKey(key);
     }
 
-    public OrderedBidiMap inverseOrderedBidiMap() {
-        return getOrderedBidiMap().inverseOrderedBidiMap();
+    @Override
+    public OrderedBidiMap<V, K> inverseBidiMap() {
+        return decorated().inverseBidiMap();
     }
 
 }
