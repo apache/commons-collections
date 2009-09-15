@@ -39,8 +39,8 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
  *
  * @author Stephen Colebourne
  */
-public final class UnmodifiableBuffer
-        extends AbstractBufferDecorator
+public final class UnmodifiableBuffer<E>
+        extends AbstractBufferDecorator<E>
         implements Unmodifiable, Serializable {
 
     /** Serialization version */
@@ -55,11 +55,11 @@ public final class UnmodifiableBuffer
      * @return an unmodifiable Buffer
      * @throws IllegalArgumentException if buffer is null
      */
-    public static Buffer decorate(Buffer buffer) {
+    public static <E> Buffer<E> decorate(Buffer<E> buffer) {
         if (buffer instanceof Unmodifiable) {
             return buffer;
         }
-        return new UnmodifiableBuffer(buffer);
+        return new UnmodifiableBuffer<E>(buffer);
     }
 
     //-----------------------------------------------------------------------
@@ -69,7 +69,7 @@ public final class UnmodifiableBuffer
      * @param buffer  the buffer to decorate, must not be null
      * @throws IllegalArgumentException if buffer is null
      */
-    private UnmodifiableBuffer(Buffer buffer) {
+    private UnmodifiableBuffer(Buffer<E> buffer) {
         super(buffer);
     }
 
@@ -92,21 +92,22 @@ public final class UnmodifiableBuffer
      * @throws IOException
      * @throws ClassNotFoundException
      */
+    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        collection = (Collection) in.readObject();
+        collection = (Collection<E>) in.readObject();
     }
 
     //-----------------------------------------------------------------------
-    public Iterator iterator() {
-        return UnmodifiableIterator.decorate(getCollection().iterator());
+    public Iterator<E> iterator() {
+        return UnmodifiableIterator.decorate(decorated().iterator());
     }
 
     public boolean add(Object object) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean addAll(Collection coll) {
+    public boolean addAll(Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -118,16 +119,16 @@ public final class UnmodifiableBuffer
         throw new UnsupportedOperationException();
     }
 
-    public boolean removeAll(Collection coll) {
+    public boolean removeAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
-    public boolean retainAll(Collection coll) {
+    public boolean retainAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     //-----------------------------------------------------------------------
-    public Object remove() {
+    public E remove() {
         throw new UnsupportedOperationException();
     }
 
