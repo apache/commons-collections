@@ -17,7 +17,6 @@
 package org.apache.commons.collections.collection;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 import org.apache.commons.collections.Predicate;
 
@@ -34,19 +33,20 @@ import org.apache.commons.collections.Predicate;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
+ * @param <E> the type of the elements in the collection
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  * @author Paul Jack
  */
-public class PredicatedCollection extends AbstractSerializableCollectionDecorator {
+public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = -5259182142076705162L;
 
     /** The predicate to use */
-    protected final Predicate predicate;
+    protected final Predicate<? super E> predicate;
 
     /**
      * Factory method to create a predicated (validating) collection.
@@ -54,16 +54,17 @@ public class PredicatedCollection extends AbstractSerializableCollectionDecorato
      * If there are any elements already in the collection being decorated, they
      * are validated.
      * 
+     * @param <T> the type of the elements in the collection
      * @param coll  the collection to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
      * @return a new predicated collection
      * @throws IllegalArgumentException if collection or predicate is null
      * @throws IllegalArgumentException if the collection contains invalid elements
      */
-    public static Collection decorate(Collection coll, Predicate predicate) {
-        return new PredicatedCollection(coll, predicate);
+    public static <T> Collection<T> decorate(Collection<T> coll, Predicate<? super T> predicate) {
+        return new PredicatedCollection<T>(coll, predicate);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
@@ -76,14 +77,14 @@ public class PredicatedCollection extends AbstractSerializableCollectionDecorato
      * @throws IllegalArgumentException if collection or predicate is null
      * @throws IllegalArgumentException if the collection contains invalid elements
      */
-    protected PredicatedCollection(Collection coll, Predicate predicate) {
+    protected PredicatedCollection(Collection<E> coll, Predicate<? super E> predicate) {
         super(coll);
         if (predicate == null) {
             throw new IllegalArgumentException("Predicate must not be null");
         }
         this.predicate = predicate;
-        for (Iterator it = coll.iterator(); it.hasNext(); ) {
-            validate(it.next());
+        for (E item : coll) {
+            validate(item);
         }
     }
 
@@ -96,7 +97,7 @@ public class PredicatedCollection extends AbstractSerializableCollectionDecorato
      * @param object  the object being added
      * @throws IllegalArgumentException if the add is invalid
      */
-    protected void validate(Object object) {
+    protected void validate(E object) {
         if (predicate.evaluate(object) == false) {
             throw new IllegalArgumentException("Cannot add Object '" + object + "' - Predicate '" + predicate + "' rejected it");
         }
@@ -111,9 +112,9 @@ public class PredicatedCollection extends AbstractSerializableCollectionDecorato
      * @return the result of adding to the underlying collection
      * @throws IllegalArgumentException if the add is invalid
      */
-    public boolean add(Object object) {
+    public boolean add(E object) {
         validate(object);
-        return getCollection().add(object);
+        return decorated().add(object);
     }
 
     /**
@@ -125,11 +126,11 @@ public class PredicatedCollection extends AbstractSerializableCollectionDecorato
      * @return the result of adding to the underlying collection
      * @throws IllegalArgumentException if the add is invalid
      */
-    public boolean addAll(Collection coll) {
-        for (Iterator it = coll.iterator(); it.hasNext(); ) {
-            validate(it.next());
+    public boolean addAll(Collection<? extends E> coll) {
+        for (E item : coll) {
+            validate(item);
         }
-        return getCollection().addAll(coll);
+        return decorated().addAll(coll);
     }
 
 }
