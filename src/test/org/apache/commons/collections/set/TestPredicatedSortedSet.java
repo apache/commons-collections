@@ -26,11 +26,11 @@ import junit.framework.Test;
 
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.PredicateUtils;
+import org.apache.commons.collections.functors.TruePredicate;
 import org.apache.commons.collections.map.TestPredicatedSortedMap;
 
 /**
- * Extension of {@link AbstractTestSortedSet} for exercising the 
+ * Extension of {@link AbstractTestSortedSet} for exercising the
  * {@link PredicatedSortedSet} implementation.
  *
  * @since Commons Collections 3.0
@@ -38,94 +38,89 @@ import org.apache.commons.collections.map.TestPredicatedSortedMap;
  *
  * @author Phil Steitz
  */
-public class TestPredicatedSortedSet extends AbstractTestSortedSet{
-    
+public class TestPredicatedSortedSet<E> extends AbstractTestSortedSet<E> {
+
     public TestPredicatedSortedSet(String testName) {
         super(testName);
     }
-    
+
     public static Test suite() {
         return BulkTest.makeSuite(TestPredicatedSortedSet.class);
     }
-    
+
     public static void main(String args[]) {
         String[] testCaseName = { TestPredicatedSortedMap.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
- //-------------------------------------------------------------------    
-    
-    protected Predicate truePredicate = PredicateUtils.truePredicate();
-    
-    public Set makeEmptySet() {
-        return PredicatedSortedSet.decorate(new TreeSet(), truePredicate);
+
+ //-------------------------------------------------------------------
+
+    protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
+
+    public SortedSet<E> makeObject() {
+        return PredicatedSortedSet.decorate(new TreeSet<E>(), truePredicate);
     }
-    
-    public Set makeFullSet() {
-        TreeSet set = new TreeSet();
+
+    public SortedSet<E> makeFullCollection() {
+        TreeSet<E> set = new TreeSet<E>();
         set.addAll(Arrays.asList(getFullElements()));
         return PredicatedSortedSet.decorate(set, truePredicate);
     }
-   
-    
-//--------------------------------------------------------------------   
-    protected Predicate testPredicate =  
-        new Predicate() {
-            public boolean evaluate(Object o) {
+
+//--------------------------------------------------------------------
+    protected Predicate<E> testPredicate =
+        new Predicate<E>() {
+            public boolean evaluate(E o) {
                 return (o instanceof String) && (((String) o).startsWith("A"));
             }
-        };      
-     
-    
-    protected SortedSet makeTestSet() {
-        return PredicatedSortedSet.decorate(new TreeSet(), testPredicate);
+        };
+
+    protected PredicatedSortedSet<E> makeTestSet() {
+        return (PredicatedSortedSet<E>) PredicatedSortedSet.decorate(new TreeSet<E>(), testPredicate);
     }
-    
+
     public void testGetSet() {
-        SortedSet set = makeTestSet();
-        assertTrue("returned set should not be null",
-            ((PredicatedSortedSet) set).getSet() != null);
+        PredicatedSortedSet<E> set = makeTestSet();
+        assertTrue("returned set should not be null", set.decorated() != null);
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
-        SortedSet set = makeTestSet();
+        SortedSet<E> set = makeTestSet();
         String testString = "B";
         try {
-            set.add(testString);
+            set.add((E) testString);
             fail("Should fail string predicate.");
         } catch (IllegalArgumentException e) {
             // expected
         }
-        assertTrue("Collection shouldn't contain illegal element", 
-         !set.contains(testString));   
+        assertTrue("Collection shouldn't contain illegal element",
+         !set.contains(testString));
     }
 
+    @SuppressWarnings("unchecked")
     public void testIllegalAddAll() {
-        SortedSet set = makeTestSet();
-        Set elements = new TreeSet();
-        elements.add("Aone");
-        elements.add("Atwo");
-        elements.add("Bthree");
-        elements.add("Afour");
+        SortedSet<E> set = makeTestSet();
+        Set<E> elements = new TreeSet<E>();
+        elements.add((E) "Aone");
+        elements.add((E) "Atwo");
+        elements.add((E) "Bthree");
+        elements.add((E) "Afour");
         try {
             set.addAll(elements);
             fail("Should fail string predicate.");
         } catch (IllegalArgumentException e) {
             // expected
         }
-        assertTrue("Set shouldn't contain illegal element", 
-         !set.contains("Aone"));   
-        assertTrue("Set shouldn't contain illegal element", 
-         !set.contains("Atwo"));   
-        assertTrue("Set shouldn't contain illegal element", 
-         !set.contains("Bthree"));   
-        assertTrue("Set shouldn't contain illegal element", 
-         !set.contains("Afour"));   
+        assertTrue("Set shouldn't contain illegal element", !set.contains("Aone"));
+        assertTrue("Set shouldn't contain illegal element", !set.contains("Atwo"));
+        assertTrue("Set shouldn't contain illegal element", !set.contains("Bthree"));
+        assertTrue("Set shouldn't contain illegal element", !set.contains("Afour"));
     }
-    
+
     public void testComparator() {
-        SortedSet set = makeTestSet();
-        Comparator c = set.comparator();
+        SortedSet<E> set = makeTestSet();
+        Comparator<? super E> c = set.comparator();
         assertTrue("natural order, so comparator should be null", c == null);
     }
 
