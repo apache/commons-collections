@@ -27,12 +27,15 @@ import org.apache.commons.collections.collection.SynchronizedCollection;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
+ * @param <E> the type of the elements in the buffer
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne
  */
-public class SynchronizedBuffer extends SynchronizedCollection implements Buffer {
+public class SynchronizedBuffer<E>
+        extends SynchronizedCollection<E>
+        implements Buffer<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = -6859936183953626253L;
@@ -40,14 +43,15 @@ public class SynchronizedBuffer extends SynchronizedCollection implements Buffer
     /**
      * Factory method to create a synchronized buffer.
      * 
+     * @param <T> the type of the elements in the buffer
      * @param buffer  the buffer to decorate, must not be null
      * @return a new synchronized Buffer
      * @throws IllegalArgumentException if buffer is null
      */
-    public static Buffer decorate(Buffer buffer) {
-        return new SynchronizedBuffer(buffer);
+    public static <T> Buffer<T> decorate(Buffer<T> buffer) {
+        return new SynchronizedBuffer<T>(buffer);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
@@ -55,7 +59,7 @@ public class SynchronizedBuffer extends SynchronizedCollection implements Buffer
      * @param buffer  the buffer to decorate, must not be null
      * @throws IllegalArgumentException if the buffer is null
      */
-    protected SynchronizedBuffer(Buffer buffer) {
+    protected SynchronizedBuffer(Buffer<E> buffer) {
         super(buffer);
     }
 
@@ -66,7 +70,7 @@ public class SynchronizedBuffer extends SynchronizedCollection implements Buffer
      * @param lock  the lock object to use, must not be null
      * @throws IllegalArgumentException if the buffer is null
      */
-    protected SynchronizedBuffer(Buffer buffer, Object lock) {
+    protected SynchronizedBuffer(Buffer<E> buffer, Object lock) {
         super(buffer, lock);
     }
 
@@ -75,21 +79,21 @@ public class SynchronizedBuffer extends SynchronizedCollection implements Buffer
      * 
      * @return the decorated buffer
      */
-    protected Buffer getBuffer() {
-        return (Buffer) collection;
+    protected Buffer<E> decorated() {
+        return (Buffer<E>) super.decorated();
     }
 
     //-----------------------------------------------------------------------
-    public Object get() {
+    public E get() {
         synchronized (lock) {
-            return getBuffer().get();
+            return decorated().get();
         }
     }
 
-    public Object remove() {
+    public E remove() {
         synchronized (lock) {
-            return getBuffer().remove();
+            return decorated().remove();
         }
     }
-    
+
 }
