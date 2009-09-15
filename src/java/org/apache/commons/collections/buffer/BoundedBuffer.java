@@ -45,7 +45,7 @@ import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
  * @version $Revision$ $Date$
  * @since Commons Collections 3.2
  */
-public class BoundedBuffer extends SynchronizedBuffer implements BoundedCollection {
+public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCollection<E> {
 
     /** The serialization version. */
     private static final long serialVersionUID = 1536432911093974264L;
@@ -67,8 +67,8 @@ public class BoundedBuffer extends SynchronizedBuffer implements BoundedCollecti
      * @throws IllegalArgumentException if the buffer is null
      * @throws IllegalArgumentException if the maximum size is zero or less
      */
-    public static BoundedBuffer decorate(Buffer buffer, int maximumSize) {
-        return new BoundedBuffer(buffer, maximumSize, 0L);
+    public static <E> BoundedBuffer<E> decorate(Buffer<E> buffer, int maximumSize) {
+        return new BoundedBuffer<E>(buffer, maximumSize, 0L);
     }
 
     /**
@@ -82,8 +82,8 @@ public class BoundedBuffer extends SynchronizedBuffer implements BoundedCollecti
      * @throws IllegalArgumentException if the buffer is null
      * @throws IllegalArgumentException if the maximum size is zero or less
      */
-    public static BoundedBuffer decorate(Buffer buffer, int maximumSize, long timeout) {
-        return new BoundedBuffer(buffer, maximumSize, timeout);
+    public static <E> BoundedBuffer<E> decorate(Buffer<E> buffer, int maximumSize, long timeout) {
+        return new BoundedBuffer<E>(buffer, maximumSize, timeout);
     }
 
     //-----------------------------------------------------------------------
@@ -97,7 +97,7 @@ public class BoundedBuffer extends SynchronizedBuffer implements BoundedCollecti
      * @throws IllegalArgumentException if the buffer is null
      * @throws IllegalArgumentException if the maximum size is zero or less
      */
-    protected BoundedBuffer(Buffer buffer, int maximumSize, long timeout) {
+    protected BoundedBuffer(Buffer<E> buffer, int maximumSize, long timeout) {
         super(buffer);
         if (maximumSize < 1) {
             throw new IllegalArgumentException();
@@ -107,29 +107,29 @@ public class BoundedBuffer extends SynchronizedBuffer implements BoundedCollecti
     }
 
     //-----------------------------------------------------------------------
-    public Object remove() {
+    public E remove() {
         synchronized (lock) {
-            Object returnValue = getBuffer().remove();
+            E returnValue = decorated().remove();
             lock.notifyAll();
             return returnValue;
         }
     }
 
-    public boolean add(Object o) {
+    public boolean add(E o) {
         synchronized (lock) {
             timeoutWait(1);
-            return getBuffer().add(o);
+            return decorated().add(o);
         }
     }
 
-    public boolean addAll(final Collection c) {
+    public boolean addAll(final Collection<? extends E> c) {
         synchronized (lock) {
             timeoutWait(c.size());
-            return getBuffer().addAll(c);
+            return decorated().addAll(c);
         }
     }
 
-    public Iterator iterator() {
+    public Iterator<E> iterator() {
         return new NotifyingIterator(collection.iterator());
     }
 
@@ -141,7 +141,7 @@ public class BoundedBuffer extends SynchronizedBuffer implements BoundedCollecti
         }
         if (timeout <= 0) {
             // no wait period (immediate timeout)
-            if (getBuffer().size() + nAdditions > maximumSize) {
+            if (decorated().size() + nAdditions > maximumSize) {
                 throw new BufferOverflowException(
                         "Buffer size cannot exceed " + maximumSize);
             }
@@ -149,7 +149,7 @@ public class BoundedBuffer extends SynchronizedBuffer implements BoundedCollecti
         }
         final long expiration = System.currentTimeMillis() + timeout;
         long timeLeft = expiration - System.currentTimeMillis();
-        while (timeLeft > 0 && getBuffer().size() + nAdditions > maximumSize) {
+        while (timeLeft > 0 && decorated().size() + nAdditions > maximumSize) {
             try {
                 lock.wait(timeLeft);
                 timeLeft = expiration - System.currentTimeMillis();
@@ -160,7 +160,7 @@ public class BoundedBuffer extends SynchronizedBuffer implements BoundedCollecti
                     "Caused by InterruptedException: " + out.toString());
             }
         }
-        if (getBuffer().size() + nAdditions > maximumSize) {
+        if (decorated().size() + nAdditions > maximumSize) {
             throw new BufferOverflowException("Timeout expired");
         }
     }
@@ -178,9 +178,9 @@ public class BoundedBuffer extends SynchronizedBuffer implements BoundedCollecti
     /**
      * BoundedBuffer iterator.
      */
-    private class NotifyingIterator extends AbstractIteratorDecorator {
+    private class NotifyingIterator extends AbstractIteratorDecorator<E> {
 
-        public NotifyingIterator(Iterator it) {
+        public NotifyingIterator(Iterator<E> it) {
             super(it);
         }
 
