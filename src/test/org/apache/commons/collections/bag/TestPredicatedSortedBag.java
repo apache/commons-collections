@@ -21,10 +21,9 @@ import java.util.Comparator;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.PredicateUtils;
 import org.apache.commons.collections.SortedBag;
+import org.apache.commons.collections.functors.TruePredicate;
 
 /**
  * Extension of {@link AbstractTestSortedBag} for exercising the {@link PredicatedSortedBag}
@@ -35,73 +34,74 @@ import org.apache.commons.collections.SortedBag;
  *
  * @author Phil Steitz
  */
-public class TestPredicatedSortedBag extends AbstractTestSortedBag {
-    
-    private SortedBag nullBag = null;
-    
+public class TestPredicatedSortedBag<T> extends AbstractTestSortedBag<T> {
+
+    private SortedBag<T> nullBag = null;
+
     public TestPredicatedSortedBag(String testName) {
         super(testName);
     }
-    
+
     public static Test suite() {
         return new TestSuite(TestPredicatedSortedBag.class);
     }
-    
+
     public static void main(String args[]) {
         String[] testCaseName = { TestPredicatedSortedBag.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
-    
+
     //--------------------------------------------------------------------------
-    
-    protected Predicate stringPredicate() {
-        return new Predicate() {
-            public boolean evaluate(Object o) {
+
+    protected Predicate<T> stringPredicate() {
+        return new Predicate<T>() {
+            public boolean evaluate(T o) {
                 return o instanceof String;
             }
         };
-    }   
-    
-    protected Predicate truePredicate = PredicateUtils.truePredicate();
-    
-    protected SortedBag decorateBag(SortedBag bag, Predicate predicate) {
+    }
+
+    protected Predicate<T> truePredicate = TruePredicate.<T>truePredicate();
+
+    protected SortedBag<T> decorateBag(SortedBag<T> bag, Predicate<T> predicate) {
         return PredicatedSortedBag.decorate(bag, predicate);
     }
-    
-    public Bag makeBag() {
-        return decorateBag(new TreeBag(), truePredicate);
+
+    public SortedBag<T> makeObject() {
+        return decorateBag(new TreeBag<T>(), truePredicate);
     }
-    
-    protected Bag makeTestBag() {
-        return decorateBag(new TreeBag(), stringPredicate());
+
+    protected SortedBag<T> makeTestBag() {
+        return decorateBag(new TreeBag<T>(), stringPredicate());
     }
-    
+
     //--------------------------------------------------------------------------
-    
+
     public void testDecorate() {
-        SortedBag bag = decorateBag(new TreeBag(), stringPredicate());
-        SortedBag bag2 = ((PredicatedSortedBag) bag).getSortedBag();
+        SortedBag<T> bag = decorateBag(new TreeBag<T>(), stringPredicate());
+        ((PredicatedSortedBag<T>) bag).decorated();
         try {
-            SortedBag bag3 = decorateBag(new TreeBag(), null);
+            decorateBag(new TreeBag<T>(), null);
             fail("Expecting IllegalArgumentException for null predicate");
         } catch (IllegalArgumentException e) {}
         try {
-            SortedBag bag4 = decorateBag(nullBag, stringPredicate());
+            decorateBag(nullBag, stringPredicate());
             fail("Expecting IllegalArgumentException for null bag");
         } catch (IllegalArgumentException e) {}
     }
-    
+
+    @SuppressWarnings("unchecked")
     public void testSortOrder() {
-        SortedBag bag = decorateBag(new TreeBag(), stringPredicate());
+        SortedBag<T> bag = decorateBag(new TreeBag<T>(), stringPredicate());
         String one = "one";
         String two = "two";
         String three = "three";
-        bag.add(one);
-        bag.add(two);
-        bag.add(three);
+        bag.add((T) one);
+        bag.add((T) two);
+        bag.add((T) three);
         assertEquals("first element", bag.first(), one);
-        assertEquals("last element", bag.last(), two); 
-        Comparator c = bag.comparator();
+        assertEquals("last element", bag.last(), two);
+        Comparator<? super T> c = bag.comparator();
         assertTrue("natural order, so comparator should be null", c == null);
     }
 
