@@ -28,6 +28,7 @@ import org.apache.commons.collections.bag.TransformedSortedBag;
 import org.apache.commons.collections.bag.TreeBag;
 import org.apache.commons.collections.bag.UnmodifiableBag;
 import org.apache.commons.collections.bag.UnmodifiableSortedBag;
+import org.apache.commons.collections.functors.TruePredicate;
 
 /**
  * Tests for BagUtils factory methods.
@@ -46,17 +47,17 @@ public class TestBagUtils extends BulkTest {
     public static Test suite() {
         return BulkTest.makeSuite(TestBagUtils.class);
     }
-    
+
     //----------------------------------------------------------------------
 
-    protected Class stringClass = this.getName().getClass();
-    protected Predicate truePredicate = PredicateUtils.truePredicate();
-    protected Transformer nopTransformer = TransformerUtils.nopTransformer();
-    
+    protected Class<?> stringClass = this.getName().getClass();
+    protected Predicate<Object> truePredicate = TruePredicate.truePredicate();
+    protected Transformer<Object, Object> nopTransformer = TransformerUtils.nopTransformer();
+
     //----------------------------------------------------------------------
-    
+
     public void testSynchronizedBag() {
-        Bag bag = BagUtils.synchronizedBag(new HashBag());
+        Bag<Object> bag = BagUtils.synchronizedBag(new HashBag<Object>());
         assertTrue("Returned object should be a SynchronizedBag.",
             bag instanceof SynchronizedBag);
         try {
@@ -64,11 +65,11 @@ public class TestBagUtils extends BulkTest {
             fail("Expecting IllegalArgumentException for null bag.");
         } catch (IllegalArgumentException ex) {
             // expected
-        }  
+        }
     }
-    
+
     public void testUnmodifiableBag() {
-        Bag bag = BagUtils.unmodifiableBag(new HashBag());
+        Bag<Object> bag = BagUtils.unmodifiableBag(new HashBag<Object>());
         assertTrue("Returned object should be an UnmodifiableBag.",
             bag instanceof UnmodifiableBag);
         try {
@@ -76,11 +77,11 @@ public class TestBagUtils extends BulkTest {
             fail("Expecting IllegalArgumentException for null bag.");
         } catch (IllegalArgumentException ex) {
             // expected
-        }  
+        }
     }
-    
+
     public void testPredicatedBag() {
-        Bag bag = BagUtils.predicatedBag(new HashBag(), truePredicate);
+        Bag<Object> bag = BagUtils.predicatedBag(new HashBag<Object>(), truePredicate);
         assertTrue("Returned object should be a PredicatedBag.",
             bag instanceof PredicatedBag);
         try {
@@ -88,53 +89,35 @@ public class TestBagUtils extends BulkTest {
             fail("Expecting IllegalArgumentException for null bag.");
         } catch (IllegalArgumentException ex) {
             // expected
-        } 
+        }
         try {
-            bag = BagUtils.predicatedBag(new HashBag(), null);
+            bag = BagUtils.predicatedBag(new HashBag<Object>(), null);
             fail("Expecting IllegalArgumentException for null predicate.");
         } catch (IllegalArgumentException ex) {
             // expected
-        }  
+        }
     }
-    
-    public void testTypedBag() {
-        Bag bag = BagUtils.typedBag(new HashBag(), stringClass);      
-        assertTrue("Returned object should be a TypedBag.",
-            bag instanceof PredicatedBag);
-        try {
-            bag = BagUtils.typedBag(null, stringClass);
-            fail("Expecting IllegalArgumentException for null bag.");
-        } catch (IllegalArgumentException ex) {
-            // expected
-        } 
-        try {
-            bag = BagUtils.typedBag(new HashBag(), null);
-            fail("Expecting IllegalArgumentException for null type.");
-        } catch (IllegalArgumentException ex) {
-            // expected
-        }  
-    }
-    
+
      public void testTransformedBag() {
-        Bag bag = BagUtils.transformedBag(new HashBag(), nopTransformer);      
+        Bag<Object> bag = BagUtils.transformedBag(new HashBag<Object>(), nopTransformer);
         assertTrue("Returned object should be an TransformedBag.",
             bag instanceof TransformedBag);
         try {
-            bag = BagUtils.transformedBag(null, nopTransformer);      
+            bag = BagUtils.transformedBag(null, nopTransformer);
             fail("Expecting IllegalArgumentException for null bag.");
         } catch (IllegalArgumentException ex) {
             // expected
-        } 
+        }
         try {
-            bag = BagUtils.transformedBag(new HashBag(), null);  
+            bag = BagUtils.transformedBag(new HashBag<Object>(), null);
             fail("Expecting IllegalArgumentException for null transformer.");
         } catch (IllegalArgumentException ex) {
             // expected
-        }  
+        }
     }
-     
+
     public void testSynchronizedSortedBag() {
-        Bag bag = BagUtils.synchronizedSortedBag(new TreeBag());
+        Bag<Object> bag = BagUtils.synchronizedSortedBag(new TreeBag<Object>());
         assertTrue("Returned object should be a SynchronizedSortedBag.",
             bag instanceof SynchronizedSortedBag);
         try {
@@ -142,11 +125,11 @@ public class TestBagUtils extends BulkTest {
             fail("Expecting IllegalArgumentException for null bag.");
         } catch (IllegalArgumentException ex) {
             // expected
-        }  
+        }
     }
-    
+
     public void testUnmodifiableSortedBag() {
-        Bag bag = BagUtils.unmodifiableSortedBag(new TreeBag());
+        Bag<Object> bag = BagUtils.unmodifiableSortedBag(new TreeBag<Object>());
         assertTrue("Returned object should be an UnmodifiableSortedBag.",
             bag instanceof UnmodifiableSortedBag);
         try {
@@ -154,11 +137,11 @@ public class TestBagUtils extends BulkTest {
             fail("Expecting IllegalArgumentException for null bag.");
         } catch (IllegalArgumentException ex) {
             // expected
-        }  
+        }
     }
-    
+
     public void testPredicatedSortedBag() {
-        Bag bag = BagUtils.predicatedSortedBag(new TreeBag(), truePredicate);
+        Bag<Object> bag = BagUtils.predicatedSortedBag(new TreeBag<Object>(), truePredicate);
         assertTrue("Returned object should be a PredicatedSortedBag.",
             bag instanceof PredicatedSortedBag);
         try {
@@ -166,49 +149,31 @@ public class TestBagUtils extends BulkTest {
             fail("Expecting IllegalArgumentException for null bag.");
         } catch (IllegalArgumentException ex) {
             // expected
-        } 
+        }
         try {
-            bag = BagUtils.predicatedSortedBag(new TreeBag(), null);
+            bag = BagUtils.predicatedSortedBag(new TreeBag<Object>(), null);
             fail("Expecting IllegalArgumentException for null predicate.");
         } catch (IllegalArgumentException ex) {
             // expected
-        }  
+        }
     }
-    
-    public void testTypedSortedBag() {
-        Bag bag = BagUtils.typedSortedBag(new TreeBag(), stringClass);      
-        assertTrue("Returned object should be a TypedSortedBag.",
-            bag instanceof PredicatedSortedBag);
-        try {
-            bag = BagUtils.typedSortedBag(null, stringClass);
-            fail("Expecting IllegalArgumentException for null bag.");
-        } catch (IllegalArgumentException ex) {
-            // expected
-        } 
-        try {
-            bag = BagUtils.typedSortedBag(new TreeBag(), null);
-            fail("Expecting IllegalArgumentException for null type.");
-        } catch (IllegalArgumentException ex) {
-            // expected
-        }  
-    }
-    
+
     public void testTransformedSortedBag() {
-        Bag bag = BagUtils.transformedSortedBag(new TreeBag(), nopTransformer);      
+        Bag<Object> bag = BagUtils.transformedSortedBag(new TreeBag<Object>(), nopTransformer);
         assertTrue("Returned object should be an TransformedSortedBag",
             bag instanceof TransformedSortedBag);
         try {
-            bag = BagUtils.transformedSortedBag(null, nopTransformer);      
+            bag = BagUtils.transformedSortedBag(null, nopTransformer);
             fail("Expecting IllegalArgumentException for null bag.");
         } catch (IllegalArgumentException ex) {
             // expected
-        } 
+        }
         try {
-            bag = BagUtils.transformedSortedBag(new TreeBag(), null);  
+            bag = BagUtils.transformedSortedBag(new TreeBag<Object>(), null);
             fail("Expecting IllegalArgumentException for null transformer.");
         } catch (IllegalArgumentException ex) {
             // expected
-        }  
+        }
     }
 }
 
