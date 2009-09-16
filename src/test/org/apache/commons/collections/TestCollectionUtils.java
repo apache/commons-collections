@@ -322,11 +322,11 @@ public class TestCollectionUtils extends MockTestCase {
 
         Collection<Number> col2 = CollectionUtils.disjunction(collectionC2, collectionA);
         Map<Number, Integer> freq2 = CollectionUtils.getCardinalityMap(col2);
-        assertEquals(1, freq2.get(1));
-        assertEquals(2, freq2.get(2));
+        assertEquals(Integer.valueOf(1), freq2.get(1));
+        assertEquals(Integer.valueOf(2), freq2.get(2));
         assertNull(freq2.get(3));
-        assertEquals(2, freq2.get(4));
-        assertEquals(1, freq2.get(5));
+        assertEquals(Integer.valueOf(2), freq2.get(4));
+        assertEquals(Integer.valueOf(1), freq2.get(5));
     }
 
     @Test
@@ -349,18 +349,18 @@ public class TestCollectionUtils extends MockTestCase {
     public void testSubtract() {
         Collection<Integer> col = CollectionUtils.subtract(iterableA, iterableC);
         Map<Integer, Integer> freq = CollectionUtils.getCardinalityMap(col);
-        assertEquals(1, freq.get(1));
+        assertEquals(Integer.valueOf(1), freq.get(1));
         assertNull(freq.get(2));
         assertNull(freq.get(3));
-        assertEquals(2, freq.get(4));
+        assertEquals(Integer.valueOf(2), freq.get(4));
         assertNull(freq.get(5));
 
         Collection<Number> col2 = CollectionUtils.subtract(collectionC2, collectionA);
         Map<Number, Integer> freq2 = CollectionUtils.getCardinalityMap(col2);
-        assertEquals(1, freq2.get(5));
+        assertEquals(Integer.valueOf(1), freq2.get(5));
         assertNull(freq2.get(4));
         assertNull(freq2.get(3));
-        assertEquals(2, freq2.get(2));
+        assertEquals(Integer.valueOf(2), freq2.get(2));
         assertNull(freq2.get(1));
     }
 
