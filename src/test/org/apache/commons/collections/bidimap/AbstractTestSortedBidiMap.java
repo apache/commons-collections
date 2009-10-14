@@ -46,9 +46,13 @@ public abstract class AbstractTestSortedBidiMap<K extends Comparable<K>, V exten
     protected List<V> sortedValues = new ArrayList<V>();
     protected SortedSet<V> sortedNewValues = new TreeSet<V>();
 
+    @SuppressWarnings("unchecked")
     public AbstractTestSortedBidiMap(String testName) {
         super(testName);
-        sortedKeys.addAll(Arrays.asList(getSampleKeys()));
+        Object[] sampleKeys = getSampleKeys();
+        for (Object key : sampleKeys) {
+            sortedKeys.add((K) key);
+        }
         Collections.sort(sortedKeys);
         sortedKeys = Collections.unmodifiableList(sortedKeys);
 
@@ -58,7 +62,10 @@ public abstract class AbstractTestSortedBidiMap<K extends Comparable<K>, V exten
         sortedValues.addAll(map.values());
         sortedValues = Collections.unmodifiableList(sortedValues);
 
-        sortedNewValues.addAll(Arrays.asList(getNewSampleValues()));
+        Object[] newSampleValues = getNewSampleValues();
+        for (Object value : newSampleValues) {
+            sortedNewValues.add((V) value);
+        }
     }
 
 //    public AbstractTestSortedBidiMap() {
