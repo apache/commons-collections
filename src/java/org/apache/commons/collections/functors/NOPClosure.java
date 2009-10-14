@@ -28,7 +28,7 @@ import org.apache.commons.collections.Closure;
  *
  * @author Stephen Colebourne
  */
-public class NOPClosure<E> implements Closure<E>, Serializable {
+public final class NOPClosure<E> implements Closure<E>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 3518477308466486130L;
@@ -68,13 +68,7 @@ public class NOPClosure<E> implements Closure<E>, Serializable {
      */
     @Override
     public boolean equals(Object arg0) {
-        if (arg0 == this) {
-            return true;
-        }
-        if (arg0 instanceof NOPClosure == false) {
-            return false;
-        }
-        return arg0.hashCode() == this.hashCode();
+        return arg0 == this || arg0 instanceof NOPClosure<?>;
     }
 
     /**
