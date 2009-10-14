@@ -315,11 +315,20 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
         return (V[]) getOtherNonNullStringElements();
     }
 
+    @SuppressWarnings("unchecked")
+    protected <E> List<E> getAsList(Object[] o) {
+        ArrayList<E> result = new ArrayList<E>();
+        for (Object element : o) {
+            result.add((E) element);
+        }
+        return result;
+    }
+
     /**
      * Returns a list of string elements suitable for return by
      * {@link #getOtherKeys()} or {@link #getOtherValues}.
      *
-     * <p>Override getOtherElements to returnthe results of this method if your
+     * <p>Override getOtherElements to return the results of this method if your
      * collection does not support heterogenous elements or the null element.
      * </p>
      */
@@ -1100,7 +1109,7 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
         Map.Entry<K, V> test = cloneMapEntry(entry);
         assertEquals(true, entrySet.contains(test));
     }
-    
+
     @SuppressWarnings("unchecked")
     public void testEntrySetContains3() {
         resetFull();
@@ -1307,7 +1316,7 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
         public boolean isGetStructuralModify() {
             return AbstractTestMap.this.isGetStructuralModify();
         }
-        
+
         public boolean isTestSerialization() {
             return false;
         }
@@ -1464,11 +1473,11 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
         public boolean isAddSupported() {
             return false;
         }
-        
+
         public boolean isRemoveSupported() {
             return AbstractTestMap.this.isRemoveSupported();
         }
-        
+
         public boolean isTestSerialization() {
             return false;
         }
@@ -1536,7 +1545,7 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
         public boolean isRemoveSupported() {
             return AbstractTestMap.this.isRemoveSupported();
         }
-        
+
         public boolean isTestSerialization() {
             return false;
         }

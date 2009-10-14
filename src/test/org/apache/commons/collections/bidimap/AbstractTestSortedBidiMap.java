@@ -42,17 +42,13 @@ import org.apache.commons.collections.map.AbstractTestSortedMap;
  */
 public abstract class AbstractTestSortedBidiMap<K extends Comparable<K>, V extends Comparable<V>> extends AbstractTestOrderedBidiMap<K, V> {
 
-    protected List<K> sortedKeys = new ArrayList<K>();
+    protected List<K> sortedKeys;
     protected List<V> sortedValues = new ArrayList<V>();
     protected SortedSet<V> sortedNewValues = new TreeSet<V>();
 
-    @SuppressWarnings("unchecked")
     public AbstractTestSortedBidiMap(String testName) {
         super(testName);
-        Object[] sampleKeys = getSampleKeys();
-        for (Object key : sampleKeys) {
-            sortedKeys.add((K) key);
-        }
+        sortedKeys = getAsList(getSampleKeys());
         Collections.sort(sortedKeys);
         sortedKeys = Collections.unmodifiableList(sortedKeys);
 
@@ -62,10 +58,7 @@ public abstract class AbstractTestSortedBidiMap<K extends Comparable<K>, V exten
         sortedValues.addAll(map.values());
         sortedValues = Collections.unmodifiableList(sortedValues);
 
-        Object[] newSampleValues = getNewSampleValues();
-        for (Object value : newSampleValues) {
-            sortedNewValues.add((V) value);
-        }
+        sortedNewValues.addAll(this.<V> getAsList(getNewSampleValues()));
     }
 
 //    public AbstractTestSortedBidiMap() {

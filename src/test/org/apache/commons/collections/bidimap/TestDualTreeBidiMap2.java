@@ -49,7 +49,7 @@ public class TestDualTreeBidiMap2<K extends Comparable<K>, V extends Comparable<
     public static void main(String[] args) {
         TestRunner.run(suite());
     }
-    
+
     public static Test suite() {
         return BulkTest.makeSuite(TestDualTreeBidiMap2.class);
     }
@@ -87,7 +87,7 @@ public class TestDualTreeBidiMap2<K extends Comparable<K>, V extends Comparable<
             ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
             Object dest = in.readObject();
             in.close();
-            
+
             SortedBidiMap bidi = (SortedBidiMap) dest;
             assertNotNull(obj.comparator());
             assertNotNull(bidi.comparator());
@@ -99,7 +99,7 @@ public class TestDualTreeBidiMap2<K extends Comparable<K>, V extends Comparable<
         SortedBidiMap<K, V> sm = makeFullMap();
 
         // Sort by the comparator used in the makeEmptyBidiMap() method
-        List<K> newSortedKeys = Arrays.asList(getSampleKeys());
+        List<K> newSortedKeys = getAsList(getSampleKeys());
         Collections.sort(newSortedKeys, new ReverseComparator<K>(ComparableComparator.<K>getInstance()));
         newSortedKeys = Collections.unmodifiableList(newSortedKeys);
 
@@ -124,7 +124,7 @@ public class TestDualTreeBidiMap2<K extends Comparable<K>, V extends Comparable<
     public String[] ignoredTests() {
         return new String[] {"TestDualTreeBidiMap2.bulkTestInverseMap.bulkTestInverseMap"};
     }
-    
+
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) map, "D:/dev/collections/data/test/DualTreeBidiMap.emptyCollection.version3.Test2.obj");
