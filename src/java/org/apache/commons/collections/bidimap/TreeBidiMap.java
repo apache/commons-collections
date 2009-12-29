@@ -411,7 +411,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      */
     public Set<Map.Entry<K, V>> entrySet() {
         if (entrySet == null) {
-            return new EntryView();
+            entrySet = new EntryView();
         }
         return entrySet;
     }
@@ -2092,7 +2092,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
 
         public Set<Map.Entry<V, K>> entrySet() {
             if (entrySet == null) {
-                return new InverseEntryView();
+                entrySet = new InverseEntryView();
             }
             return entrySet;
         }
