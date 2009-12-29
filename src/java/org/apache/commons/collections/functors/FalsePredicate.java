@@ -76,4 +76,8 @@ public final class FalsePredicate<T> implements Predicate<T>, Serializable {
         return false;
     }
 
+    private Object readResolve() {
+        return INSTANCE;
+    }
+
 }

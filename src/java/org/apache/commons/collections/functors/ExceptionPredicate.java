@@ -66,4 +66,8 @@ public final class ExceptionPredicate<T> implements Predicate<T>, Serializable {
         throw new FunctorException("ExceptionPredicate invoked");
     }
 
+    private Object readResolve() {
+        return INSTANCE;
+    }
+
 }

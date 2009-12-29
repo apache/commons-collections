@@ -32,13 +32,13 @@ public final class NotNullPredicate<T> implements Predicate<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 7533784454832764388L;
-    
+
     /** Singleton predicate instance */
     public static final Predicate<Object> INSTANCE = new NotNullPredicate<Object>();
 
     /**
      * Factory returning the singleton instance.
-     * 
+     *
      * @return the singleton instance
      * @since Commons Collections 3.1
      */
@@ -56,12 +56,16 @@ public final class NotNullPredicate<T> implements Predicate<T>, Serializable {
 
     /**
      * Evaluates the predicate returning true if the object does not equal null.
-     * 
+     *
      * @param object  the object to evaluate
      * @return true if not null
      */
     public boolean evaluate(T object) {
         return (object != null);
+    }
+
+    private Object readResolve() {
+        return INSTANCE;
     }
 
 }

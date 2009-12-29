@@ -69,4 +69,8 @@ public class CloneTransformer<T> implements Transformer<T, T>, Serializable {
         return PrototypeFactory.getInstance(input).create();
     }
 
+    private Object readResolve() {
+        return INSTANCE;
+    }
+
 }

@@ -27,6 +27,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import org.apache.commons.collections.functors.ConstantFactory;
+import org.apache.commons.collections.functors.ExceptionFactory;
 import org.junit.Test;
 
 /**
@@ -75,10 +76,10 @@ public class TestFactoryUtils extends junit.framework.TestCase {
         }
         fail();
     }
-    
+
     // nullFactory
     //------------------------------------------------------------------
-    
+
     public void testNullFactory() {
         Factory<Object> factory = FactoryUtils.nullFactory();
         assertNotNull(factory);
@@ -88,7 +89,7 @@ public class TestFactoryUtils extends junit.framework.TestCase {
 
     // constantFactory
     //------------------------------------------------------------------
-    
+
     public void testConstantFactoryNull() {
         Factory<Object> factory = FactoryUtils.constantFactory(null);
         assertNotNull(factory);
@@ -106,7 +107,7 @@ public class TestFactoryUtils extends junit.framework.TestCase {
 
     // prototypeFactory
     //------------------------------------------------------------------
-    
+
     public void testPrototypeFactoryNull() {
         assertSame(ConstantFactory.NULL_INSTANCE, FactoryUtils.prototypeFactory(null));
     }
@@ -118,7 +119,7 @@ public class TestFactoryUtils extends junit.framework.TestCase {
         Date created = factory.create();
         assertTrue(proto != created);
         assertEquals(proto, created);
-        
+
         // check serialisation works
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         ObjectOutputStream out = new ObjectOutputStream(buffer);
@@ -136,7 +137,7 @@ public class TestFactoryUtils extends junit.framework.TestCase {
         Object created = factory.create();
         assertTrue(proto != created);
         assertEquals(proto, created);
-        
+
         // check serialisation works
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         ObjectOutputStream out = new ObjectOutputStream(buffer);
@@ -162,7 +163,7 @@ public class TestFactoryUtils extends junit.framework.TestCase {
         Integer created = factory.create();
         assertTrue(proto != created);
         assertEquals(proto, created);
-        
+
         // check serialisation works
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         ObjectOutputStream out = new ObjectOutputStream(buffer);
@@ -213,7 +214,7 @@ public class TestFactoryUtils extends junit.framework.TestCase {
             return false;
         }
     }
-    
+
     @SuppressWarnings("serial")
     public static class Mock2 implements Serializable {
         private final Object iVal;
@@ -229,7 +230,7 @@ public class TestFactoryUtils extends junit.framework.TestCase {
             return false;
         }
     }
-    
+
     public static class Mock3 {
         private static int cCounter = 0;
         private final int iVal;
@@ -240,10 +241,10 @@ public class TestFactoryUtils extends junit.framework.TestCase {
             return iVal;
         }
     }
-    
+
     // instantiateFactory
     //------------------------------------------------------------------
-    
+
     @Test(expected=IllegalArgumentException.class)
     public void instantiateFactoryNull() {
         FactoryUtils.instantiateFactory(null);
@@ -280,6 +281,26 @@ public class TestFactoryUtils extends junit.framework.TestCase {
         Date created = factory.create();
         // long time of 1 day (== 2nd Jan 1970)
         assertEquals(new Date(1000 * 60 * 60 * 24), created);
+    }
+
+    // misc tests
+    //------------------------------------------------------------------
+
+    /**
+     * Test that all Factory singletones hold singleton pattern in
+     * serialization/deserialization process.
+     */
+    public void testSingletonPatternInSerialization() {
+        final Object[] singletones = new Object[] {
+                ExceptionFactory.INSTANCE,
+        };
+
+        for (final Object original : singletones) {
+            TestUtils.assertSameAfterSerialization(
+                    "Singletone patern broken for " + original.getClass(),
+                    original
+            );
+        }
     }
 
 }

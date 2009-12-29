@@ -32,13 +32,13 @@ public final class NullPredicate<T> implements Predicate<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 7533784454832764388L;
-    
+
     /** Singleton predicate instance */
     public static final Predicate<?> INSTANCE = new NullPredicate<Object>();
 
     /**
      * Factory returning the singleton instance.
-     * 
+     *
      * @return the singleton instance
      * @since Commons Collections 3.1
      * @deprecated use {@link #nullPredicate()} instead.
@@ -50,7 +50,7 @@ public final class NullPredicate<T> implements Predicate<T>, Serializable {
 
     /**
      * Factory returning the singleton instance.
-     * 
+     *
      * @return the singleton instance
      * @since Commons Collections 3.1
      */
@@ -68,12 +68,16 @@ public final class NullPredicate<T> implements Predicate<T>, Serializable {
 
     /**
      * Evaluates the predicate returning true if the input is null.
-     * 
+     *
      * @param object  the input object
      * @return true if input is null
      */
     public boolean evaluate(Object object) {
         return (object == null);
+    }
+
+    private Object readResolve() {
+        return INSTANCE;
     }
 
 }

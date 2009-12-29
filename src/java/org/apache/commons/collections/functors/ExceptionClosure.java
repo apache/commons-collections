@@ -65,4 +65,8 @@ public final class ExceptionClosure<E> implements Closure<E>, Serializable {
         throw new FunctorException("ExceptionClosure invoked");
     }
 
+    private Object readResolve() {
+        return INSTANCE;
+    }
+
 }

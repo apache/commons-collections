@@ -28,10 +28,13 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
+import org.apache.commons.collections.functors.CloneTransformer;
 import org.apache.commons.collections.functors.ConstantTransformer;
 import org.apache.commons.collections.functors.EqualPredicate;
+import org.apache.commons.collections.functors.ExceptionTransformer;
 import org.apache.commons.collections.functors.FalsePredicate;
 import org.apache.commons.collections.functors.NOPTransformer;
+import org.apache.commons.collections.functors.StringValueTransformer;
 import org.apache.commons.collections.functors.TruePredicate;
 
 /**
@@ -443,6 +446,29 @@ public class TestTransformerUtils extends junit.framework.TestCase {
 
         trans = TransformerUtils.instantiateTransformer(new Class[] { Long.TYPE }, new Object[] { new Long(1000L) });
         assertEquals(new Date(1000L), trans.transform(Date.class));
+    }
+
+    // misc tests
+    //------------------------------------------------------------------
+
+    /**
+     * Test that all Transformer singletones hold singleton pattern in
+     * serialization/deserialization process.
+     */
+    public void testSingletonPatternInSerialization() {
+        final Object[] singletones = new Object[] {
+                CloneTransformer.INSTANCE,
+                ExceptionTransformer.INSTANCE,
+                NOPTransformer.INSTANCE,
+                StringValueTransformer.INSTANCE,
+        };
+
+        for (final Object original : singletones) {
+            TestUtils.assertSameAfterSerialization(
+                    "Singletone patern broken for " + original.getClass(),
+                    original
+            );
+        }
     }
 
 }

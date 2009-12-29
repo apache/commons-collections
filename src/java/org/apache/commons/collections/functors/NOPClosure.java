@@ -63,19 +63,8 @@ public final class NOPClosure<E> implements Closure<E>, Serializable {
         // do nothing
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(Object arg0) {
-        return arg0 == this || arg0 instanceof NOPClosure<?>;
+    private Object readResolve() {
+        return INSTANCE;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return System.identityHashCode(INSTANCE);
-    }
 }

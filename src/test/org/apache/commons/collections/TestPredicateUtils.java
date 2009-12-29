@@ -33,7 +33,10 @@ import java.util.Map;
 import org.apache.commons.collections.functors.AllPredicate;
 import org.apache.commons.collections.functors.BasicPredicateTestBase;
 import org.apache.commons.collections.functors.EqualPredicate;
+import org.apache.commons.collections.functors.ExceptionPredicate;
 import org.apache.commons.collections.functors.FalsePredicate;
+import org.apache.commons.collections.functors.NotNullPredicate;
+import org.apache.commons.collections.functors.NullPredicate;
 import org.apache.commons.collections.functors.TruePredicate;
 import org.junit.Test;
 
@@ -828,6 +831,30 @@ public class TestPredicateUtils extends BasicPredicateTestBase {
             PredicateUtils.transformedPredicate(null, null);
             fail();
         } catch (IllegalArgumentException ex) {}
+    }
+
+    // misc tests
+    //------------------------------------------------------------------
+
+    /**
+     * Test that all Predicate singletones hold singleton pattern in
+     * serialization/deserialization process.
+     */
+    @Test public void testSingletonPatternInSerialization() {
+        final Object[] singletones = new Object[] {
+                ExceptionPredicate.INSTANCE,
+                FalsePredicate.INSTANCE,
+                NotNullPredicate.INSTANCE,
+                NullPredicate.INSTANCE,
+                TruePredicate.INSTANCE
+        };
+
+        for (final Object original : singletones) {
+            TestUtils.assertSameAfterSerialization(
+                    "Singletone patern broken for " + original.getClass(),
+                    original
+            );
+        }
     }
 
     @Override

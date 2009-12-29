@@ -27,6 +27,7 @@ import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
 import org.apache.commons.collections.functors.EqualPredicate;
+import org.apache.commons.collections.functors.ExceptionClosure;
 import org.apache.commons.collections.functors.FalsePredicate;
 import org.apache.commons.collections.functors.NOPClosure;
 import org.apache.commons.collections.functors.TruePredicate;
@@ -425,4 +426,24 @@ public class TestClosureUtils extends junit.framework.TestCase {
         assertEquals(ClosureUtils.nopClosure(), ClosureUtils.asClosure(null));
     }
 
+    // misc tests
+    //------------------------------------------------------------------
+
+    /**
+     * Test that all Closure singletones hold singleton pattern in
+     * serialization/deserialization process.
+     */
+    public void testSingletonPatternInSerialization() {
+        final Object[] singletones = new Object[] {
+                ExceptionClosure.INSTANCE,
+                NOPClosure.INSTANCE,
+        };
+
+        for (final Object original : singletones) {
+            TestUtils.assertSameAfterSerialization(
+                    "Singletone patern broken for " + original.getClass(),
+                    original
+            );
+        }
+    }
 }

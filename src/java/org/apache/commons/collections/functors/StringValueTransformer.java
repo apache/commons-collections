@@ -39,7 +39,7 @@ public final class StringValueTransformer<T> implements Transformer<T, String>, 
 
     /**
      * Factory returning the singleton instance.
-     * 
+     *
      * @return the singleton instance
      * @since Commons Collections 3.1
      */
@@ -57,12 +57,16 @@ public final class StringValueTransformer<T> implements Transformer<T, String>, 
 
     /**
      * Transforms the input to result by calling <code>String.valueOf</code>.
-     * 
+     *
      * @param input  the input object to transform
      * @return the transformed result
      */
     public String transform(T input) {
         return String.valueOf(input);
+    }
+
+    private Object readResolve() {
+        return INSTANCE;
     }
 
 }

@@ -66,4 +66,8 @@ public final class ExceptionTransformer<I, O> implements Transformer<I, O>, Seri
         throw new FunctorException("ExceptionTransformer invoked");
     }
 
+    private Object readResolve() {
+        return INSTANCE;
+    }
+
 }

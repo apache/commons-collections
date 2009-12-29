@@ -33,25 +33,25 @@ public final class TruePredicate<T> implements Predicate<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 3374767158756189740L;
-    
+
     /** Singleton predicate instance */
     public static final Predicate<?> INSTANCE = new TruePredicate<Object>();
 
     /**
      * Factory returning the singleton instance.
-     * 
+     *
      * @return the singleton instance
      * @since Commons Collections 3.1
      * @deprecated
      */
-    @Deprecated 
+    @Deprecated
     public static <T> Predicate<T> getInstance() {
         return truePredicate();
     }
 
     /**
      * Factory returning the singleton instance.
-     * 
+     *
      * @return the singleton instance
      * @since Commons Collections 3.1
      */
@@ -69,11 +69,16 @@ public final class TruePredicate<T> implements Predicate<T>, Serializable {
 
     /**
      * Evaluates the predicate returning true always.
-     * 
+     *
      * @param object  the input object
      * @return true always
      */
     public boolean evaluate(T object) {
         return true;
     }
+
+    private Object readResolve() {
+        return INSTANCE;
+    }
+
 }
