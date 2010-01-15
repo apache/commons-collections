@@ -204,7 +204,7 @@ public class MapUtils {
                         String text = (String) answer;
                         return NumberFormat.getInstance().parse(text);
                     } catch (ParseException e) {
-                        logInfo(e);
+                        // failure means null is returned
                     }
                 }
             }
@@ -941,17 +941,6 @@ public class MapUtils {
 
     // Implementation methods
     //-------------------------------------------------------------------------
-    /**
-     * Logs the given exception to <code>System.out</code>.
-     * <p>
-     * This method exists as Jakarta Collections does not depend on logging.
-     *
-     * @param ex  the exception to log
-     */
-    protected static void logInfo(final Exception ex) {
-        System.out.println("INFO: Exception: " + ex);
-    }
-
     /**
      * Implementation providing functionality for {@link #debugPrint} and for
      * {@link #verbosePrint}.  This prints the given map with nice line breaks.
