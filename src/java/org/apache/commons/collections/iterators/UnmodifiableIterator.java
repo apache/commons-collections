@@ -33,7 +33,7 @@ import org.apache.commons.collections.Unmodifiable;
 public final class UnmodifiableIterator<E> implements Iterator<E>, Unmodifiable {
 
     /** The iterator being decorated */
-    private Iterator<E> iterator;
+    private final Iterator<E> iterator;
 
     //-----------------------------------------------------------------------
     /**

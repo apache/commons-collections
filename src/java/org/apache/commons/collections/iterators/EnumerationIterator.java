@@ -33,7 +33,7 @@ import java.util.Iterator;
 public class EnumerationIterator<E> implements Iterator<E> {
     
     /** The collection to remove elements from */
-    private Collection<? super E> collection;
+    private final Collection<? super E> collection;
     /** The enumeration being converted */
     private Enumeration<? extends E> enumeration;
     /** The last object retrieved */

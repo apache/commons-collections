@@ -168,7 +168,7 @@ public class MapUtils {
                     return (Boolean) answer;
                 }
                 if (answer instanceof String) {
-                    return new Boolean((String) answer);
+                    return Boolean.valueOf((String) answer);
                 }
                 if (answer instanceof Number) {
                     Number n = (Number) answer;

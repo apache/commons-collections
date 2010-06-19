@@ -32,7 +32,7 @@ import org.apache.commons.collections.Unmodifiable;
 public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, Unmodifiable {
 
     /** The iterator being decorated */
-    private MapIterator<K, V> iterator;
+    private final MapIterator<K, V> iterator;
 
     //-----------------------------------------------------------------------
     /**

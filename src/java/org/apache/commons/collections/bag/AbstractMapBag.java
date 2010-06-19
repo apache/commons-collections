@@ -179,8 +179,8 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * Inner class iterator for the Bag.
      */
     static class BagIterator<E> implements Iterator<E> {
-        private AbstractMapBag<E> parent;
-        private Iterator<Map.Entry<E, MutableInteger>> entryIterator;
+        private final AbstractMapBag<E> parent;
+        private final Iterator<Map.Entry<E, MutableInteger>> entryIterator;
         private Map.Entry<E, MutableInteger> current;
         private int itemCount;
         private final int mods;

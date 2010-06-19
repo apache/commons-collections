@@ -286,9 +286,9 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
 
     @SuppressWarnings("unchecked")
     protected Set<E> createSetBasedOnList(Set<E> set, List<E> list) {
-        Set<E> subSet = null;
+        Set<E> subSet;
         if (set.getClass().equals(HashSet.class)) {
-            subSet = new HashSet<E>();
+            subSet = new HashSet<E>(list.size());
         } else {
             try {
                 subSet = (Set<E>) set.getClass().newInstance();

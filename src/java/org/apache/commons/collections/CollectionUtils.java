@@ -755,7 +755,7 @@ public class CollectionUtils {
      * @since Commons Collections 3.2
      */
     public static <T> boolean addIgnoreNull(Collection<T> collection, T object) {
-        return (object == null ? false : collection.add(object));
+        return (object != null && collection.add(object));
     }
 
     /**

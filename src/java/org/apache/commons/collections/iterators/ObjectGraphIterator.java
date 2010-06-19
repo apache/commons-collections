@@ -82,7 +82,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
     /** The root object in the tree */
     protected E root;
     /** The transformer to use */
-    protected Transformer<? super E, ? extends E> transformer;
+    protected final Transformer<? super E, ? extends E> transformer;
 
     /** Whether there is another element in the iteration */
     protected boolean hasNext = false;

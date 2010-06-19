@@ -262,7 +262,7 @@ public class ExtendedProperties extends Hashtable {
                 }
 
                 throw new IllegalStateException(
-                    "infinite loop in property interpolation of " + initialBase + ": " + priorVariableSb.toString());
+                    "infinite loop in property interpolation of " + initialBase + ": " + priorVariableSb);
             }
             // otherwise, add this variable to the interpolation list.
             else {
@@ -577,7 +577,7 @@ public class ExtendedProperties extends Hashtable {
 
                     if (includeProperty != null && key.equalsIgnoreCase(includeProperty)) {
                         // Recursively load properties files.
-                        File file = null;
+                        File file;
 
                         if (value.startsWith(fileSeparator)) {
                             // We have an absolute path so we'll use this
@@ -989,7 +989,7 @@ public class ExtendedProperties extends Hashtable {
             if (equalSign > 0) {
                 String pkey = token.substring(0, equalSign).trim();
                 String pvalue = token.substring(equalSign + 1).trim();
-                props.put(pkey, pvalue);
+                props.setProperty(pkey, pvalue);
             } else {
                 throw new IllegalArgumentException('\'' + token + "' does not contain " + "an equals sign");
             }
@@ -1186,7 +1186,7 @@ public class ExtendedProperties extends Hashtable {
             
         } else if (value instanceof String) {
             String s = testBoolean((String) value);
-            Boolean b = new Boolean(s);
+            Boolean b = Boolean.valueOf(s);
             super.put(key, b);
             return b;
             
