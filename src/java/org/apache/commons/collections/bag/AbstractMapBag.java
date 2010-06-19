@@ -579,7 +579,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         if (size() == 0) {
             return "[]";
         }
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         buf.append('[');
         Iterator<E> it = uniqueSet().iterator();
         while (it.hasNext()) {

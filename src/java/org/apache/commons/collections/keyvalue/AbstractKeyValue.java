@@ -73,7 +73,7 @@ public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
      * @return a String view of the entry
      */
     public String toString() {
-        return new StringBuffer()
+        return new StringBuilder()
             .append(getKey())
             .append('=')
             .append(getValue())

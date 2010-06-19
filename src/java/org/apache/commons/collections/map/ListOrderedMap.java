@@ -321,7 +321,7 @@ public class ListOrderedMap<K, V>
         if (isEmpty()) {
             return "{}";
         }
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         buf.append('{');
         boolean first = true;
         for (Map.Entry<K, V> entry : entrySet()) {

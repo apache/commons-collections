@@ -121,7 +121,7 @@ public class TestClosureUtils extends junit.framework.TestCase {
     //------------------------------------------------------------------
 
     public void testNopClosure() {
-        StringBuffer buf = new StringBuffer("Hello");
+        StringBuilder buf = new StringBuilder("Hello");
         ClosureUtils.nopClosure().execute(null);
         assertEquals("Hello", buf.toString());
         ClosureUtils.nopClosure().execute("Hello");
@@ -132,10 +132,10 @@ public class TestClosureUtils extends junit.framework.TestCase {
     //------------------------------------------------------------------
 
     public void testInvokeClosure() {
-        StringBuffer buf = new StringBuffer("Hello");
+        StringBuilder buf = new StringBuilder("Hello");
         ClosureUtils.invokerClosure("reverse").execute(buf);
         assertEquals("olleH", buf.toString());
-        buf = new StringBuffer("Hello");
+        buf = new StringBuilder("Hello");
         ClosureUtils.invokerClosure("setLength", new Class[] {Integer.TYPE}, new Object[] {new Integer(2)}).execute(buf);
         assertEquals("He", buf.toString());
     }

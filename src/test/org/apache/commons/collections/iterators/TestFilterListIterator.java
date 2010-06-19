@@ -397,7 +397,7 @@ public class TestFilterListIterator extends TestCase {
         }
 
         // random walk
-        StringBuffer walkdescr = new StringBuffer(500);
+        StringBuilder walkdescr = new StringBuilder(500);
         for (int i = 0; i < 500; i++) {
             if (random.nextBoolean()) {
                 // step forward

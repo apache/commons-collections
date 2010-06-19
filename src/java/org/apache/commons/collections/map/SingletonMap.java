@@ -557,7 +557,7 @@ public class SingletonMap<K, V>
      * @return a string version of the map
      */
     public String toString() {
-        return new StringBuffer(128)
+        return new StringBuilder(128)
             .append('{')
             .append((getKey() == this ? "(this Map)" : getKey()))
             .append('=')

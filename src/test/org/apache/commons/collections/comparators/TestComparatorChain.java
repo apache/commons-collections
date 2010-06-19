@@ -144,7 +144,7 @@ public class TestComparatorChain extends AbstractTestComparator<TestComparatorCh
         }
 
         public String toString() {
-            StringBuffer buf = new StringBuffer();
+            StringBuilder buf = new StringBuilder();
             buf.append("[");
             buf.append(cols[0]);
             buf.append(",");

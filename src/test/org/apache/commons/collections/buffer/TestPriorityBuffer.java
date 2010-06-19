@@ -332,7 +332,7 @@ public class TestPriorityBuffer<E> extends AbstractTestCollection<E> {
      */
     protected String showTree(PriorityBuffer<?> h) {
         int count = 1;
-        StringBuffer buffer = new StringBuffer();
+        StringBuilder buffer = new StringBuilder();
         for (int offset = 1; count < h.size() + 1; offset *= 2) {
             for (int i = offset; i < offset * 2; i++) {
                 if (i < h.elements.length && h.elements[i] != null)

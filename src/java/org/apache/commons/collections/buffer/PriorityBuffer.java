@@ -527,7 +527,7 @@ public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E
      * @return a string representation of this heap
      */
     public String toString() {
-        final StringBuffer sb = new StringBuffer();
+        final StringBuilder sb = new StringBuilder();
 
         sb.append("[ ");
 

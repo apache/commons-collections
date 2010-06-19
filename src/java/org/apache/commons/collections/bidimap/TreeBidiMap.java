@@ -1372,7 +1372,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         if (nodeCount == 0) {
             return "{}";
         }
-        StringBuffer buf = new StringBuffer(nodeCount * 32);
+        StringBuilder buf = new StringBuilder(nodeCount * 32);
         buf.append('{');
         MapIterator<?, ?> it = getMapIterator(dataElement);
         boolean hasNext = it.hasNext();

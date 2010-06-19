@@ -360,7 +360,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         if (size() == 0) {
             return "[]";
         }
-        StringBuffer buf = new StringBuffer(16 * size());
+        StringBuilder buf = new StringBuilder(16 * size());
         buf.append("[");
 
         Iterator<E> it = iterator();

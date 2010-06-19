@@ -238,7 +238,7 @@ public class ExtendedProperties extends Hashtable {
         int end = -1;
         int prec = 0 - END_TOKEN.length();
         String variable = null;
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
 
         // FIXME: we should probably allow the escaping of the start token
         while (((begin = base.indexOf(START_TOKEN, prec + END_TOKEN.length())) > -1)
@@ -250,7 +250,7 @@ public class ExtendedProperties extends Hashtable {
             if (priorVariables.contains(variable)) {
                 String initialBase = priorVariables.remove(0).toString();
                 priorVariables.add(variable);
-                StringBuffer priorVariableSb = new StringBuffer();
+                StringBuilder priorVariableSb = new StringBuilder();
 
                 // create a nice trace of interpolated variables like so:
                 // var1->var2->var3
@@ -296,7 +296,7 @@ public class ExtendedProperties extends Hashtable {
      * Inserts a backslash before every comma and backslash. 
      */
     private static String escape(String s) {
-        StringBuffer buf = new StringBuffer(s);
+        StringBuilder buf = new StringBuilder(s);
         for (int i = 0; i < buf.length(); i++) {
             char c = buf.charAt(i);
             if (c == ',' || c == '\\') {
@@ -311,7 +311,7 @@ public class ExtendedProperties extends Hashtable {
      * Removes a backslash from every pair of backslashes. 
      */
     private static String unescape(String s) {
-        StringBuffer buf = new StringBuffer(s);
+        StringBuilder buf = new StringBuilder(s);
         for (int i = 0; i < buf.length() - 1; i++) {
             char c1 = buf.charAt(i);
             char c2 = buf.charAt(i + 1);
@@ -369,7 +369,7 @@ public class ExtendedProperties extends Hashtable {
          * @throws IOException if there is difficulty reading the source.
          */
         public String readProperty() throws IOException {
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
             String line = readLine();
             while (line != null) {
                 line = line.trim();
@@ -423,7 +423,7 @@ public class ExtendedProperties extends Hashtable {
          * @return A String.
          */
         public String nextToken() {
-            StringBuffer buffer = new StringBuffer();
+            StringBuilder buffer = new StringBuilder();
 
             while (hasMoreTokens()) {
                 String token = super.nextToken();
@@ -757,7 +757,7 @@ public class ExtendedProperties extends Hashtable {
             Object value = get(key);
             if (value != null) {
                 if (value instanceof String) {
-                    StringBuffer currentOutput = new StringBuffer();
+                    StringBuilder currentOutput = new StringBuilder();
                     currentOutput.append(key);
                     currentOutput.append("=");
                     currentOutput.append(escape((String) value));
@@ -767,7 +767,7 @@ public class ExtendedProperties extends Hashtable {
                     List values = (List) value;
                     for (Iterator it = values.iterator(); it.hasNext(); ) {
                         String currentElement = (String) it.next();
-                        StringBuffer currentOutput = new StringBuffer();
+                        StringBuilder currentOutput = new StringBuilder();
                         currentOutput.append(key);
                         currentOutput.append("=");
                         currentOutput.append(escape(currentElement));

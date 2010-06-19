@@ -1128,7 +1128,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         if (size == 0) {
             return "{}";
         }
-        StringBuffer buf = new StringBuffer(128);
+        StringBuilder buf = new StringBuilder(128);
         buf.append('{');
         switch (size) {  // drop through
             case 3:

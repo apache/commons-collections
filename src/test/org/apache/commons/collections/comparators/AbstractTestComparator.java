@@ -169,7 +169,7 @@ public abstract class AbstractTestComparator<T> extends AbstractTestObject {
     }
 
     public String getCanonicalComparatorName(Object object) {
-        StringBuffer retval = new StringBuffer();
+        StringBuilder retval = new StringBuilder();
         retval.append("data/test/");
         String colName = object.getClass().getName();
         colName = colName.substring(colName.lastIndexOf(".")+1,colName.length());
