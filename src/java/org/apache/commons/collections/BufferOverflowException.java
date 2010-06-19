@@ -34,15 +34,11 @@ public class BufferOverflowException extends RuntimeException {
     /** Serialization version */
     private static final long serialVersionUID = -3992254982265755876L;
 
-    /** The root cause throwable */
-    private final Throwable throwable;
-
     /**
      * Constructs a new <code>BufferOverflowException</code>.
      */
     public BufferOverflowException() {
         super();
-        throwable = null;
     }
 
     /** 
@@ -61,18 +57,7 @@ public class BufferOverflowException extends RuntimeException {
      * @param exception  the root cause of the exception
      */
     public BufferOverflowException(String message, Throwable exception) {
-        super(message);
-        throwable = exception;
+        super(message, exception);
     }
 
-    /**
-     * Gets the root cause of the exception.
-     *
-     * @return the root cause
-     */
-    @Override
-    public final Throwable getCause() {
-        return throwable;
-    }
-    
 }

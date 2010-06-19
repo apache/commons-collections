@@ -35,17 +35,13 @@ import java.util.NoSuchElementException;
 public class BufferUnderflowException extends NoSuchElementException {
     
     /** Serialization version */
-    private static final long serialVersionUID = 4054570024234606028L;
-
-    /** The root cause throwable */
-    private final Throwable throwable;
+    private static final long serialVersionUID = 7106567570467436893L;
 
     /**
      * Constructs a new <code>BufferUnderflowException</code>.
      */
     public BufferUnderflowException() {
         super();
-        throwable = null;
     }
 
     /** 
@@ -54,7 +50,7 @@ public class BufferUnderflowException extends NoSuchElementException {
      * @param message  the detail message for this exception
      */
     public BufferUnderflowException(String message) {
-        this(message, null);
+        super(message);
     }
 
     /** 
@@ -65,17 +61,7 @@ public class BufferUnderflowException extends NoSuchElementException {
      */
     public BufferUnderflowException(String message, Throwable exception) {
         super(message);
-        throwable = exception;
+        initCause(exception);
     }
 
-    /**
-     * Gets the root cause of the exception.
-     *
-     * @return the root cause
-     */
-    @Override
-    public final Throwable getCause() {
-        return throwable;
-    }
-    
 }

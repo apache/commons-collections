@@ -16,9 +16,6 @@
  */
 package org.apache.commons.collections;
 
-import java.io.PrintStream;
-import java.io.PrintWriter;
-
 /**
  * Runtime exception thrown from functors.
  * If required, a root cause error can be wrapped within this one.
@@ -31,28 +28,7 @@ import java.io.PrintWriter;
 public class FunctorException extends RuntimeException {
     
     /** Serialization version */
-    private static final long serialVersionUID = 9139387246344345475L;
-
-    /**
-     * Does JDK support nested exceptions
-     */
-    private static final boolean JDK_SUPPORTS_NESTED;
-
-    static {
-        boolean flag = false;
-        try {
-            Throwable.class.getDeclaredMethod("getCause", new Class[0]);
-            flag = true;
-        } catch (NoSuchMethodException ex) {
-            flag = false;
-        }
-        JDK_SUPPORTS_NESTED = flag;
-    }
-
-    /**
-     * Root cause of the exception
-     */
-    private final Throwable rootCause;
+    private static final long serialVersionUID = -4704772662059351193L;
 
     /**
      * Constructs a new <code>FunctorException</code> without specified
@@ -60,7 +36,6 @@ public class FunctorException extends RuntimeException {
      */
     public FunctorException() {
         super();
-        this.rootCause = null;
     }
 
     /**
@@ -71,7 +46,6 @@ public class FunctorException extends RuntimeException {
      */
     public FunctorException(String msg) {
         super(msg);
-        this.rootCause = null;
     }
 
     /**
@@ -82,8 +56,7 @@ public class FunctorException extends RuntimeException {
      *                   to be thrown.
      */
     public FunctorException(Throwable rootCause) {
-        super((rootCause == null ? null : rootCause.getMessage()));
-        this.rootCause = rootCause;
+        super(rootCause);
     }
 
     /**
@@ -95,53 +68,7 @@ public class FunctorException extends RuntimeException {
      *                   to be thrown.
      */
     public FunctorException(String msg, Throwable rootCause) {
-        super(msg);
-        this.rootCause = rootCause;
-    }
-
-    /**
-     * Gets the cause of this throwable.
-     * 
-     * @return  the cause of this throwable, or <code>null</code>
-     */
-    public Throwable getCause() {
-        return rootCause;
-    }
-
-    /**
-     * Prints the stack trace of this exception to the standard error stream.
-     */
-    public void printStackTrace() {
-        printStackTrace(System.err);
-    }
-
-    /**
-     * Prints the stack trace of this exception to the specified stream.
-     *
-     * @param out  the <code>PrintStream</code> to use for output
-     */
-    public void printStackTrace(PrintStream out) {
-        synchronized (out) {
-            PrintWriter pw = new PrintWriter(out, false);
-            printStackTrace(pw);
-            // Flush the PrintWriter before it's GC'ed.
-            pw.flush();
-        }
-    }
-
-    /**
-     * Prints the stack trace of this exception to the specified writer.
-     *
-     * @param out  the <code>PrintWriter</code> to use for output
-     */
-    public void printStackTrace(PrintWriter out) {
-        synchronized (out) {
-            super.printStackTrace(out);
-            if (rootCause != null && JDK_SUPPORTS_NESTED == false) {
-                out.print("Caused by: ");
-                rootCause.printStackTrace(out);
-            }
-        }
+        super(msg, rootCause);
     }
 
 }
