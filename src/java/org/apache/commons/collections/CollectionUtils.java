@@ -804,11 +804,12 @@ public class CollectionUtils {
      * @param enumeration  the enumeration of elements to add, must not be null
      * @throws NullPointerException if the collection or enumeration is null
      */
-     //TODO return boolean or collection - check other add() methods too.
-    public static <C> void addAll(Collection<C> collection, Enumeration<? extends C> enumeration) {
+    public static <C> boolean addAll(Collection<C> collection, Enumeration<? extends C> enumeration) {
+        boolean changed = false;
         while (enumeration.hasMoreElements()) {
-            collection.add(enumeration.nextElement());
+            changed |= collection.add(enumeration.nextElement());
         }
+        return changed;
     }
 
     /**
@@ -821,10 +822,12 @@ public class CollectionUtils {
      * @throws NullPointerException
      *             if the collection or array is null
      */
-    public static <C> void addAll(Collection<C> collection, C[] elements) {
+    public static <C> boolean addAll(Collection<C> collection, C[] elements) {
+        boolean changed = false;
         for (int i = 0, size = elements.length; i < size; i++) {
-            collection.add(elements[i]);
+            changed |= collection.add(elements[i]);
         }
+        return changed;
     }
 
     /**
