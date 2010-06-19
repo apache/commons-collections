@@ -205,22 +205,20 @@ public class TestFixedOrderComparator extends TestCase {
         // this requires more than one shuffle.
 
         boolean isInNewOrder = false;
+        Random rand = new Random();
         while (keys.length > 1 && isInNewOrder == false) {
-            shuffle: {
-                Random rand = new Random();
-                for (int i = keys.length-1; i > 0; i--) {
-                        String swap = keys[i];
-                        int j = rand.nextInt(i+1);
-                        keys[i] = keys[j];
-                        keys[j] = swap;
-                    }
+            // shuffle:
+            for (int i = keys.length-1; i > 0; i--) {
+                String swap = keys[i];
+                int j = rand.nextInt(i+1);
+                keys[i] = keys[j];
+                keys[j] = swap;
             }
 
-            testShuffle: {
-                for (int i = 0; i < keys.length && !isInNewOrder; i++) {
-                    if( !orderedObjects[i].equals(keys[i])) {
-                        isInNewOrder = true;
-                    }
+            // testShuffle
+            for (int i = 0; i < keys.length && !isInNewOrder; i++) {
+                if( !orderedObjects[i].equals(keys[i])) {
+                    isInNewOrder = true;
                 }
             }
         }
