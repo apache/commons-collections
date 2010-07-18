@@ -19,6 +19,7 @@ package org.apache.commons.collections;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -70,12 +71,20 @@ public class ListUtils {
      */
     public static <E> List<E> intersection(final List<? extends E> list1, final List<? extends E> list2) {
         final List<E> result = new ArrayList<E>();
-        final ArrayList<E> copyOfList1 = new ArrayList<E>(list1);
 
-        for (E e : list2) {
-            if (copyOfList1.contains(e)) {
+        List<? extends E> smaller = list1;
+        List<? extends E> larger = list2;
+        if (list1.size() > list2.size()) {
+        	smaller = list2;
+        	larger = list1;
+        }
+        
+        HashSet<E> hashSet = new HashSet<E>(smaller);
+
+        for (E e : larger) {
+            if (hashSet.contains(e)) {
                 result.add(e);
-                copyOfList1.remove(e);
+                hashSet.remove(e);
             }
         }
         return result;
