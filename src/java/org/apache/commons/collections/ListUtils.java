@@ -70,10 +70,12 @@ public class ListUtils {
      */
     public static <E> List<E> intersection(final List<? extends E> list1, final List<? extends E> list2) {
         final List<E> result = new ArrayList<E>();
+        final ArrayList<E> copyOfList1 = new ArrayList<E>(list1);
 
         for (E e : list2) {
-            if (list1.contains(e)) {
+            if (copyOfList1.contains(e)) {
                 result.add(e);
+                copyOfList1.remove(e);
             }
         }
         return result;

@@ -110,6 +110,21 @@ public class TestListUtils extends BulkTest {
         assertEquals(fullList, ListUtils.intersection(fullList, fullList));
     }
 
+    /**
+     * Tests intersecting two lists in different orders.
+     */
+    public void testIntersectionOrderInsensitivity() {
+		List one = new ArrayList();
+		List two = new ArrayList();
+		one.add("a");
+		one.add("b");
+		two.add("a");
+		two.add("a");
+		two.add("b");
+		two.add("b");
+		assertEquals(ListUtils.intersection(one,two),ListUtils.intersection(two, one));
+    }
+
     public void testPredicatedList() {
         Predicate<Object> predicate = new Predicate<Object>() {
             public boolean evaluate(Object o) {
