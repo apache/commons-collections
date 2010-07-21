@@ -57,10 +57,12 @@ public class TestPredicatedSortedSet<E> extends AbstractTestSortedSet<E> {
 
     protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
 
+    @Override
     public SortedSet<E> makeObject() {
         return PredicatedSortedSet.decorate(new TreeSet<E>(), truePredicate);
     }
 
+    @Override
     public SortedSet<E> makeFullCollection() {
         TreeSet<E> set = new TreeSet<E>();
         set.addAll(Arrays.asList(getFullElements()));
@@ -124,6 +126,7 @@ public class TestPredicatedSortedSet<E> extends AbstractTestSortedSet<E> {
         assertTrue("natural order, so comparator should be null", c == null);
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

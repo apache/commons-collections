@@ -54,20 +54,24 @@ public class TestUnmodifiableSortedSet<E> extends AbstractTestSortedSet<E> {
     }
 
     //-------------------------------------------------------------------
+    @Override
     public SortedSet<E> makeObject() {
         return UnmodifiableSortedSet.decorate(new TreeSet<E>());
     }
 
+    @Override
     public UnmodifiableSortedSet<E> makeFullCollection() {
         TreeSet<E> set = new TreeSet<E>();
         set.addAll(Arrays.asList(getFullElements()));
         return (UnmodifiableSortedSet<E>) UnmodifiableSortedSet.decorate(set);
     }
 
+    @Override
     public boolean isAddSupported() {
         return false;
     }
 
+    @Override
     public boolean isRemoveSupported() {
         return false;
     }
@@ -141,6 +145,7 @@ public class TestUnmodifiableSortedSet<E> extends AbstractTestSortedSet<E> {
         assertTrue("natural order, so comparator should be null", c == null);
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

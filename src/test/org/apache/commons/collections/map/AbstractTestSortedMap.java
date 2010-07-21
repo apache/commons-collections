@@ -50,6 +50,7 @@ public abstract class AbstractTestSortedMap<K, V> extends AbstractTestMap<K, V> 
      *
      * @return false
      */
+    @Override
     public boolean isAllowNullKey() {
         return false;
     }
@@ -59,6 +60,7 @@ public abstract class AbstractTestSortedMap<K, V> extends AbstractTestMap<K, V> 
      *
      * @return a map that is known to be valid
      */
+    @Override
     public SortedMap<K, V> makeConfirmedMap() {
         return new TreeMap<K, V>();
     }
@@ -120,59 +122,74 @@ public abstract class AbstractTestSortedMap<K, V> extends AbstractTestMap<K, V> 
             super(name);
             this.main = main;
         }
+        @Override
         public void resetEmpty() {
             // needed to init verify correctly
             main.resetEmpty();
             super.resetEmpty();
         }
+        @Override
         public void resetFull() {
             // needed to init verify correctly
             main.resetFull();
             super.resetFull();
         }
+        @Override
         public void verify() {
             // cross verify changes on view with changes on main map
             super.verify();
             main.verify();
         }
+        @Override
         public BulkTest bulkTestHeadMap() {
             return null;  // block infinite recursion
         }
+        @Override
         public BulkTest bulkTestTailMap() {
             return null;  // block infinite recursion
         }
+        @Override
         public BulkTest bulkTestSubMap() {
             return null;  // block infinite recursion
         }
 
+        @Override
         @SuppressWarnings("unchecked")
         public K[] getSampleKeys() {
             return (K[]) subSortedKeys.toArray();
         }
+        @Override
         @SuppressWarnings("unchecked")
         public V[] getSampleValues() {
             return (V[]) subSortedValues.toArray();
         }
+        @Override
         @SuppressWarnings("unchecked")
         public V[] getNewSampleValues() {
             return (V[]) subSortedNewValues.toArray();
         }
 
+        @Override
         public boolean isAllowNullKey() {
             return main.isAllowNullKey();
         }
+        @Override
         public boolean isAllowNullValue() {
             return main.isAllowNullValue();
         }
+        @Override
         public boolean isPutAddSupported() {
             return main.isPutAddSupported();
         }
+        @Override
         public boolean isPutChangeSupported() {
             return main.isPutChangeSupported();
         }
+        @Override
         public boolean isRemoveSupported() {
             return main.isRemoveSupported();
         }
+        @Override
         public boolean isTestSerialization() {
             return false;
         }
@@ -211,10 +228,12 @@ public abstract class AbstractTestSortedMap<K, V> extends AbstractTestMap<K, V> 
             this.subSortedValues.subList(SUBSIZE, this.subSortedValues.size()).clear();
             this.subSortedNewValues.addAll(Arrays.asList(main.getNewSampleValues()).subList(0, SUBSIZE));
         }
+        @Override
         public SortedMap<K, V> makeObject() {
             // done this way so toKey is correctly set in the returned map
             return ((SortedMap<K, V>) main.makeObject()).headMap(toKey);
         }
+        @Override
         public SortedMap<K, V> makeFullMap() {
             return ((SortedMap<K, V>) main.makeFullMap()).headMap(toKey);
         }
@@ -227,6 +246,7 @@ public abstract class AbstractTestSortedMap<K, V> extends AbstractTestMap<K, V> 
             } catch (IllegalArgumentException ex) {}
             verify();
         }
+        @Override
         public String getCompatibilityVersion() {
             return main.getCompatibilityVersion() + ".HeadMapView";
         }
@@ -262,10 +282,12 @@ public abstract class AbstractTestSortedMap<K, V> extends AbstractTestMap<K, V> 
             this.subSortedValues.subList(0, this.subSortedValues.size() - SUBSIZE).clear();
             this.subSortedNewValues.addAll(Arrays.asList(main.getNewSampleValues()).subList(0, SUBSIZE));
         }
+        @Override
         public SortedMap<K, V> makeObject() {
             // done this way so toKey is correctly set in the returned map
             return ((SortedMap<K, V>) main.makeObject()).tailMap(fromKey);
         }
+        @Override
         public SortedMap<K, V> makeFullMap() {
             return ((SortedMap<K, V>) main.makeFullMap()).tailMap(fromKey);
         }
@@ -278,6 +300,7 @@ public abstract class AbstractTestSortedMap<K, V> extends AbstractTestMap<K, V> 
             } catch (IllegalArgumentException ex) {}
             verify();
         }
+        @Override
         public String getCompatibilityVersion() {
             return main.getCompatibilityVersion() + ".TailMapView";
         }
@@ -320,10 +343,12 @@ public abstract class AbstractTestSortedMap<K, V> extends AbstractTestMap<K, V> 
                 SUBSIZE, this.main.getNewSampleValues().length - SUBSIZE));
         }
 
+        @Override
         public SortedMap<K, V> makeObject() {
             // done this way so toKey is correctly set in the returned map
             return ((SortedMap<K, V>) main.makeObject()).subMap(fromKey, toKey);
         }
+        @Override
         public SortedMap<K, V> makeFullMap() {
             return ((SortedMap<K, V>) main.makeFullMap()).subMap(fromKey, toKey);
         }
@@ -336,6 +361,7 @@ public abstract class AbstractTestSortedMap<K, V> extends AbstractTestMap<K, V> 
             } catch (IllegalArgumentException ex) {}
             verify();
         }
+        @Override
         public String getCompatibilityVersion() {
             return main.getCompatibilityVersion() + ".SubMapView";
         }

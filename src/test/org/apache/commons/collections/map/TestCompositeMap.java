@@ -45,6 +45,7 @@ public class TestCompositeMap<K, V> extends AbstractTestIterableMap<K, V> {
         return new TestSuite(TestCompositeMap.class);
     }
     
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         this.pass = false;
@@ -55,6 +56,7 @@ public class TestCompositeMap<K, V> extends AbstractTestIterableMap<K, V> {
         junit.textui.TestRunner.main(testCaseName);
     }
     
+    @Override
     public CompositeMap<K, V> makeObject() {
         CompositeMap<K, V> map = new CompositeMap<K, V>();
         map.addComposited(new HashMap<K, V>());
@@ -215,6 +217,7 @@ public class TestCompositeMap<K, V> extends AbstractTestIterableMap<K, V> {
         assertTrue(pass);
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.3";
     }

@@ -47,10 +47,12 @@ public class TestCaseInsensitiveMap<K, V> extends AbstractTestIterableMap<K, V> 
         return BulkTest.makeSuite(TestCaseInsensitiveMap.class);
     }
 
+    @Override
     public CaseInsensitiveMap<K, V> makeObject() {
         return new CaseInsensitiveMap<K, V>();
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3";
     }

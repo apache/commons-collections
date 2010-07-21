@@ -49,24 +49,29 @@ public class TestUnmodifiableSet<E> extends AbstractTestSet<E> {
     }
 
     //-------------------------------------------------------------------
+    @Override
     public Set<E> makeObject() {
         return UnmodifiableSet.decorate(new HashSet<E>());
     }
 
+    @Override
     public Set<E> makeFullCollection() {
         HashSet<E> set = new HashSet<E>();
         set.addAll(Arrays.asList(getFullElements()));
         return UnmodifiableSet.decorate(set);
     }
 
+    @Override
     public boolean isAddSupported() {
         return false;
     }
 
+    @Override
     public boolean isRemoveSupported() {
         return false;
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

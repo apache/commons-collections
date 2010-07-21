@@ -57,10 +57,12 @@ public class TestPredicatedSet<E> extends AbstractTestSet<E> {
         return (PredicatedSet<E>) PredicatedSet.decorate(set, predicate);
     }
 
+    @Override
     public PredicatedSet<E> makeObject() {
         return decorateSet(new HashSet<E>(), truePredicate);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public E[] getFullElements() {
         return (E[]) new Object[] {"1", "3", "5", "7", "2", "4", "6"};
@@ -122,6 +124,7 @@ public class TestPredicatedSet<E> extends AbstractTestSet<E> {
          !set.contains("four"));
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

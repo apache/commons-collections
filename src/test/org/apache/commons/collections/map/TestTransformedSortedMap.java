@@ -53,6 +53,7 @@ public class TestTransformedSortedMap<K, V> extends AbstractTestSortedMap<K, V> 
     }
 
     //-----------------------------------------------------------------------
+    @Override
     @SuppressWarnings("unchecked")
     public SortedMap<K, V> makeObject() {
         return TransformedSortedMap.decorate(new TreeMap<K, V>(),
@@ -60,6 +61,7 @@ public class TestTransformedSortedMap<K, V> extends AbstractTestSortedMap<K, V> 
                 (Transformer<? super V, ? extends V>) TransformerUtils.nopTransformer());
     }
 
+    @Override
     public boolean isSubMapViewsSerializable() {
         // TreeMap sub map views have a bug in deserialization.
         return false;
@@ -165,6 +167,7 @@ public class TestTransformedSortedMap<K, V> extends AbstractTestSortedMap<K, V> 
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

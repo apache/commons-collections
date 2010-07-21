@@ -47,6 +47,7 @@ public class TestMapBackedSet2<E> extends AbstractTestSet<E> {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     public Set<E> makeObject() {
         return MapBackedSet.decorate(new LinkedMap<E, Object>());
     }
@@ -94,9 +95,11 @@ public class TestMapBackedSet2<E> extends AbstractTestSet<E> {
         }
     }
 
+    @Override
     public void testCanonicalEmptyCollectionExists() {
     }
 
+    @Override
     public void testCanonicalFullCollectionExists() {
     }
 

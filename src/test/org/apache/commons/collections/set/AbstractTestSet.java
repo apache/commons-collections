@@ -58,6 +58,7 @@ public abstract class AbstractTestSet<E> extends AbstractTestCollection<E> {
     /**
      * Provides additional verifications for sets.
      */
+    @Override
     public void verify() {
         super.verify();
         
@@ -75,6 +76,7 @@ public abstract class AbstractTestSet<E> extends AbstractTestCollection<E> {
     /**
      * Set equals method is defined.
      */
+    @Override
     public boolean isEqualsCheckable() {
         return true;
     }
@@ -84,6 +86,7 @@ public abstract class AbstractTestSet<E> extends AbstractTestCollection<E> {
      *
      * @return a confirmed empty collection
      */
+    @Override
     public Collection<E> makeConfirmedCollection() {
         return new HashSet<E>();
     }
@@ -93,6 +96,7 @@ public abstract class AbstractTestSet<E> extends AbstractTestCollection<E> {
      *
      * @return a confirmed full collection
      */
+    @Override
     public Collection<E> makeConfirmedFullCollection() {
         Collection<E> set = makeConfirmedCollection();
         set.addAll(Arrays.asList(getFullElements()));
@@ -104,6 +108,7 @@ public abstract class AbstractTestSet<E> extends AbstractTestCollection<E> {
      *
      * @return an empty set
      */
+    @Override
     public abstract Set<E> makeObject();
 
     /**
@@ -114,6 +119,7 @@ public abstract class AbstractTestSet<E> extends AbstractTestCollection<E> {
      *
      * @return a full set
      */
+    @Override
     public Set<E> makeFullCollection() {
         Set<E> set = makeObject();
         set.addAll(Arrays.asList(getFullElements()));
@@ -124,6 +130,7 @@ public abstract class AbstractTestSet<E> extends AbstractTestCollection<E> {
     /**
      * Return the {@link AbstractTestCollection#collection} fixture, but cast as a Set.  
      */
+    @Override
     public Set<E> getCollection() {
         return (Set<E>) super.getCollection();
     }
@@ -131,6 +138,7 @@ public abstract class AbstractTestSet<E> extends AbstractTestCollection<E> {
     /**
      * Return the {@link AbstractTestCollection#confirmed} fixture, but cast as a Set.
      */
+    @Override
     public Set<E> getConfirmed() {
         return (Set<E>) super.getConfirmed();
     }

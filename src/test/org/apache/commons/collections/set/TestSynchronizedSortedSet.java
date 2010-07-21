@@ -48,10 +48,12 @@ public class TestSynchronizedSortedSet<E> extends AbstractTestSortedSet<E> {
     }
 
    //-------------------------------------------------------------------
+    @Override
     public SortedSet<E> makeObject() {
         return SynchronizedSortedSet.decorate(new TreeSet<E>());
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

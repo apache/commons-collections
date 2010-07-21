@@ -55,6 +55,7 @@ public class TestListOrderedSet<E> extends AbstractTestSet<E> {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     public ListOrderedSet<E> makeObject() {
         return ListOrderedSet.decorate(new HashSet<E>());
     }
@@ -186,18 +187,22 @@ public class TestListOrderedSet<E> extends AbstractTestSet<E> {
     }
 
     static class A {
+        @Override
         public boolean equals(Object obj) {
             return (obj instanceof A || obj instanceof B);
         }
+        @Override
         public int hashCode() {
             return 1;
         }
     }
 
     static class B {
+        @Override
         public boolean equals(Object obj) {
             return (obj instanceof A || obj instanceof B);
         }
+        @Override
         public int hashCode() {
             return 1;
         }
@@ -226,6 +231,7 @@ public class TestListOrderedSet<E> extends AbstractTestSet<E> {
         } catch (IllegalArgumentException ex) {}
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

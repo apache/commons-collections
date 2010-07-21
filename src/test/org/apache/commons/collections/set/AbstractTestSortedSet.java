@@ -52,6 +52,7 @@ public abstract class AbstractTestSortedSet<E> extends AbstractTestSet<E> {
      * Verification extension, will check the order of elements,
      * the sets should already be verified equal.
      */
+    @Override
     public void verify() {
         super.verify();
         
@@ -83,6 +84,7 @@ public abstract class AbstractTestSortedSet<E> extends AbstractTestSet<E> {
      * Overridden because SortedSets don't allow null elements (normally).
      * @return false
      */
+    @Override
     public boolean isNullSupported() {
         return false;
     }
@@ -107,6 +109,7 @@ public abstract class AbstractTestSortedSet<E> extends AbstractTestSet<E> {
      *
      * @return a confirmed empty collection
      */
+    @Override
     public SortedSet<E> makeConfirmedCollection() {
         return new TreeSet<E>();
     }
@@ -117,6 +120,7 @@ public abstract class AbstractTestSortedSet<E> extends AbstractTestSet<E> {
     /**
      * Override to return comparable objects.
      */
+    @Override
     @SuppressWarnings("unchecked")
     public E[] getFullNonNullElements() {
         Object[] elements = new Object[30];
@@ -130,6 +134,7 @@ public abstract class AbstractTestSortedSet<E> extends AbstractTestSet<E> {
     /**
      * Override to return comparable objects.
      */
+    @Override
     @SuppressWarnings("unchecked")
     public E[] getOtherNonNullElements() {
         Object[] elements = new Object[30];
@@ -251,22 +256,28 @@ public abstract class AbstractTestSortedSet<E> extends AbstractTestSet<E> {
 
         }
 
+        @Override
         public boolean isNullSupported() {
             return AbstractTestSortedSet.this.isNullSupported();
         }
+        @Override
         public boolean isAddSupported() {
             return AbstractTestSortedSet.this.isAddSupported();
         }
+        @Override
         public boolean isRemoveSupported() {
             return AbstractTestSortedSet.this.isRemoveSupported();
         }
+        @Override
         public boolean isFailFastSupported() {
             return AbstractTestSortedSet.this.isFailFastSupported();
         }
 
+        @Override
         public E[] getFullElements() {
             return m_FullElements;
         }
+        @Override
         public E[] getOtherElements() {
             return m_OtherElements;
         }
@@ -285,24 +296,30 @@ public abstract class AbstractTestSortedSet<E> extends AbstractTestSet<E> {
             }
         }
 
+        @Override
         public SortedSet<E> makeObject() {
             return getSubSet(AbstractTestSortedSet.this.makeObject());
         }
 
+        @Override
         public SortedSet<E> makeFullCollection() {
             return getSubSet(AbstractTestSortedSet.this.makeFullCollection());
         }
         
+        @Override
         public boolean isTestSerialization() {
             return false;
         }
         
+        @Override
         public BulkTest bulkTestSortedSetSubSet() {
             return null;  // prevent infinite recursion
         }
+        @Override
         public BulkTest bulkTestSortedSetHeadSet() {
             return null;  // prevent infinite recursion
         }
+        @Override
         public BulkTest bulkTestSortedSetTailSet() {
             return null;  // prevent infinite recursion
         }

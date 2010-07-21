@@ -50,22 +50,26 @@ public class TestTransformedSet<E> extends AbstractTestSet<E> {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     public Set<E> makeConfirmedCollection() {
         return new HashSet<E>();
     }
 
+    @Override
     public Set<E> makeConfirmedFullCollection() {
         Set<E> set = new HashSet<E>();
         set.addAll(Arrays.asList(getFullElements()));
         return set;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public Set<E> makeObject() {
         return TransformedSet.decorate(new HashSet<E>(),
                 (Transformer<E, E>) TestTransformedCollection.NOOP_TRANSFORMER);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public Set<E> makeFullCollection() {
         Set<E> list = new HashSet<E>();
@@ -109,6 +113,7 @@ public class TestTransformedSet<E> extends AbstractTestSet<E> {
         assertEquals(true, set.remove(new Integer((String) els[0])));
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

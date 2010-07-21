@@ -46,6 +46,7 @@ public class TestCompositeSet<E> extends AbstractTestSet<E> {
         return new TestSuite(TestCompositeSet.class);
     }
 
+    @Override
     public CompositeSet<E> makeObject() {
         final HashSet<E> contained = new HashSet<E>();
         CompositeSet<E> set = new CompositeSet<E>(contained);
@@ -163,6 +164,7 @@ public class TestCompositeSet<E> extends AbstractTestSet<E> {
         }
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.3";
     }

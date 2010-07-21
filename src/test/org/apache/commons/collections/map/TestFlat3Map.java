@@ -59,6 +59,7 @@ public class TestFlat3Map<K, V> extends AbstractTestIterableMap<K, V> {
         return BulkTest.makeSuite(TestFlat3Map.class);
     }
 
+    @Override
     public Flat3Map<K, V> makeObject() {
         return new Flat3Map<K, V>();
     }
@@ -344,6 +345,7 @@ public class TestFlat3Map<K, V> extends AbstractTestIterableMap<K, V> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public BulkTest bulkTestMapIterator() {
         return new TestFlatMapIterator();
     }
@@ -353,44 +355,53 @@ public class TestFlat3Map<K, V> extends AbstractTestIterableMap<K, V> {
             super("TestFlatMapIterator");
         }
 
+        @Override
         public V[] addSetValues() {
             return TestFlat3Map.this.getNewSampleValues();
         }
 
+        @Override
         public boolean supportsRemove() {
             return TestFlat3Map.this.isRemoveSupported();
         }
 
+        @Override
         public boolean supportsSetValue() {
             return TestFlat3Map.this.isSetValueSupported();
         }
 
+        @Override
         public MapIterator<K, V> makeEmptyIterator() {
             resetEmpty();
             return TestFlat3Map.this.getMap().mapIterator();
         }
 
+        @Override
         public MapIterator<K, V> makeObject() {
             resetFull();
             return TestFlat3Map.this.getMap().mapIterator();
         }
 
+        @Override
         public IterableMap<K, V> getMap() {
             // assumes makeFullMapIterator() called first
             return TestFlat3Map.this.getMap();
         }
 
+        @Override
         public Map<K, V> getConfirmedMap() {
             // assumes makeFullMapIterator() called first
             return TestFlat3Map.this.getConfirmed();
         }
 
+        @Override
         public void verify() {
             super.verify();
             TestFlat3Map.this.verify();
         }
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

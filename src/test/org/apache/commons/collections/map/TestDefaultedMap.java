@@ -55,11 +55,13 @@ public class TestDefaultedMap<K, V> extends AbstractTestIterableMap<K, V> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public IterableMap<K, V> makeObject() {
         return DefaultedMap.decorate(new HashMap<K, V>(), nullFactory);
     }
 
     //-----------------------------------------------------------------------
+    @Override
     @SuppressWarnings("unchecked")
     public void testMapGet() {
         Map<K, V> map = new DefaultedMap<K, V>((V) "NULL");
@@ -142,6 +144,7 @@ public class TestDefaultedMap<K, V> extends AbstractTestIterableMap<K, V> {
         assertEquals("NULL_OBJECT", map.get(new Integer(0)));
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.2";
     }

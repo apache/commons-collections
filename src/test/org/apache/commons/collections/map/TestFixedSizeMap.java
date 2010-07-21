@@ -48,24 +48,29 @@ public class TestFixedSizeMap<K, V> extends AbstractTestIterableMap<K, V> {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     public IterableMap<K, V> makeObject() {
         return FixedSizeMap.decorate(new HashMap<K, V>());
     }
 
+    @Override
     public IterableMap<K, V> makeFullMap() {
         Map<K, V> map = new HashMap<K, V>();
         addSampleMappings(map);
         return FixedSizeMap.decorate(map);
     }
 
+    @Override
     public boolean isPutAddSupported() {
         return false;
     }
 
+    @Override
     public boolean isRemoveSupported() {
         return false;
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

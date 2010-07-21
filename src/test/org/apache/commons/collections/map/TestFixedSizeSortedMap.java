@@ -48,30 +48,36 @@ public class TestFixedSizeSortedMap<K, V> extends AbstractTestSortedMap<K, V> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public SortedMap<K, V> makeObject() {
         return FixedSizeSortedMap.decorate(new TreeMap<K, V>());
     }
 
+    @Override
     public SortedMap<K, V> makeFullMap() {
         SortedMap<K, V> map = new TreeMap<K, V>();
         addSampleMappings(map);
         return FixedSizeSortedMap.decorate(map);
     }
 
+    @Override
     public boolean isSubMapViewsSerializable() {
         // TreeMap sub map views have a bug in deserialization.
         return false;
     }
 
+    @Override
     public boolean isPutAddSupported() {
         return false;
     }
 
+    @Override
     public boolean isRemoveSupported() {
         return false;
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

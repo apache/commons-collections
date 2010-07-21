@@ -48,10 +48,12 @@ public class TestSynchronizedSet<E> extends AbstractTestSet<E> {
     }
 
    //-------------------------------------------------------------------
+    @Override
     public Set<E> makeObject() {
         return SynchronizedSet.decorate(new HashSet<E>());
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

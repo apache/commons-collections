@@ -52,11 +52,13 @@ public class TestTransformedSortedSet<E> extends AbstractTestSortedSet<E> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     @SuppressWarnings("unchecked")
     public SortedSet<E> makeObject() {
         return TransformedSortedSet.decorate(new TreeSet<E>(), (Transformer<E, E>) TestTransformedCollection.NOOP_TRANSFORMER);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public SortedSet<E> makeFullCollection() {
         SortedSet<E> set = new TreeSet<E>();
@@ -95,6 +97,7 @@ public class TestTransformedSortedSet<E> extends AbstractTestSortedSet<E> {
         assertEquals(true, set.remove(new Integer((String) els[0])));
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

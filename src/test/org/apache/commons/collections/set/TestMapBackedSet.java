@@ -46,10 +46,12 @@ public class TestMapBackedSet<E> extends AbstractTestSet<E> {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     public Set<E> makeObject() {
         return MapBackedSet.decorate(new HashedMap<E, Object>());
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

@@ -134,42 +134,51 @@ public abstract class AbstractTestIterableMap<K, V> extends AbstractTestMap<K, V
             super("InnerTestMapIterator");
         }
 
+        @Override
         public V[] addSetValues() {
             return AbstractTestIterableMap.this.getNewSampleValues();
         }
 
+        @Override
         public boolean supportsRemove() {
             return AbstractTestIterableMap.this.isRemoveSupported();
         }
 
+        @Override
         public boolean isGetStructuralModify() {
             return AbstractTestIterableMap.this.isGetStructuralModify();
         }
 
+        @Override
         public boolean supportsSetValue() {
             return AbstractTestIterableMap.this.isSetValueSupported();
         }
 
+        @Override
         public MapIterator<K, V> makeEmptyIterator() {
             resetEmpty();
             return AbstractTestIterableMap.this.getMap().mapIterator();
         }
 
+        @Override
         public MapIterator<K, V> makeObject() {
             resetFull();
             return AbstractTestIterableMap.this.getMap().mapIterator();
         }
 
+        @Override
         public Map<K, V> getMap() {
             // assumes makeFullMapIterator() called first
             return AbstractTestIterableMap.this.getMap();
         }
 
+        @Override
         public Map<K, V> getConfirmedMap() {
             // assumes makeFullMapIterator() called first
             return AbstractTestIterableMap.this.getConfirmed();
         }
 
+        @Override
         public void verify() {
             super.verify();
             AbstractTestIterableMap.this.verify();

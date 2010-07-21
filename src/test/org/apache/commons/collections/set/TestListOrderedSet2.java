@@ -53,6 +53,7 @@ public class TestListOrderedSet2<E> extends AbstractTestSet<E> {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     public ListOrderedSet<E> makeObject() {
         return new ListOrderedSet<E>();
     }
@@ -168,6 +169,7 @@ public class TestListOrderedSet2<E> extends AbstractTestSet<E> {
         assertSame(ONE, set.get(3));
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

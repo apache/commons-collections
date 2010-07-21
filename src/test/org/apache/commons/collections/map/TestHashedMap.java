@@ -42,10 +42,12 @@ public class TestHashedMap<K, V> extends AbstractTestIterableMap<K, V> {
         return BulkTest.makeSuite(TestHashedMap.class);
     }
 
+    @Override
     public HashedMap<K, V> makeObject() {
         return new HashedMap<K, V>();
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3";
     }
