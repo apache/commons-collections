@@ -174,7 +174,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     public <T> T[] toArray(T[] array) {
         // Extend the array if needed
         if (array.length < size) {
-            Class componentType = array.getClass().getComponentType();
+            Class<?> componentType = array.getClass().getComponentType();
             array = (T[]) Array.newInstance(componentType, size);
         }
         // Copy the values into the array
@@ -326,7 +326,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
     //-----------------------------------------------------------------------
     @Override
-    @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -334,12 +333,12 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         if (obj instanceof List == false) {
             return false;
         }
-        List other = (List) obj;
+        List<?> other = (List<?>) obj;
         if (other.size() != size()) {
             return false;
         }
-        ListIterator it1 = listIterator();
-        ListIterator it2 = other.listIterator();
+        ListIterator<?> it1 = listIterator();
+        ListIterator<?> it2 = other.listIterator();
         while (it1.hasNext() && it2.hasNext()) {
             Object o1 = it1.next();
             Object o2 = it2.next();

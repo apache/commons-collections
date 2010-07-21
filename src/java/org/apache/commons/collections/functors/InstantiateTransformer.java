@@ -70,8 +70,8 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
         if (paramTypes == null || paramTypes.length == 0) {
             return new InstantiateTransformer<T>();
         }
-        paramTypes = (Class[]) paramTypes.clone();
-        args = (Object[]) args.clone();
+        paramTypes = paramTypes.clone();
+        args = args.clone();
         return new InstantiateTransformer<T>(paramTypes, args);
     }
 

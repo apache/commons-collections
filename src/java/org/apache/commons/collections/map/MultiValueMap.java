@@ -279,7 +279,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
             }
         } else {
             for (Map.Entry<? extends K, ?> entry : map.entrySet()) {
-                put(entry.getKey(), (V) entry.getValue());
+                put(entry.getKey(), entry.getValue());
             }
         }
     }

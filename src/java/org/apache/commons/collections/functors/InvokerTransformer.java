@@ -77,8 +77,8 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
         if (paramTypes == null || paramTypes.length == 0) {
             return new InvokerTransformer<I, O>(methodName);
         } else {
-            paramTypes = (Class[]) paramTypes.clone();
-            args = (Object[]) args.clone();
+            paramTypes = paramTypes.clone();
+            args = args.clone();
             return new InvokerTransformer<I, O>(methodName, paramTypes, args);
         }
     }

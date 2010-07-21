@@ -173,7 +173,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
     @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        map = (Map) in.readObject();
+        map = (Map<K, V>) in.readObject();
     }
 
     //-----------------------------------------------------------------------

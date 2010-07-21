@@ -1053,7 +1053,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         try {
             Flat3Map<K, V> cloned = (Flat3Map<K, V>) super.clone();
             if (cloned.delegateMap != null) {
-                cloned.delegateMap = (HashedMap<K, V>) cloned.delegateMap.clone();
+                cloned.delegateMap = cloned.delegateMap.clone();
             }
             return cloned;
         } catch (CloneNotSupportedException ex) {

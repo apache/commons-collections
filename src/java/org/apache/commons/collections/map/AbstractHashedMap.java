@@ -634,16 +634,16 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             threshold = calculateThreshold(newCapacity, loadFactor);
             data = new HashEntry[newCapacity];
         } else {
-            HashEntry oldEntries[] = data;
-            HashEntry newEntries[] = new HashEntry[newCapacity];
+            HashEntry<K, V> oldEntries[] = data;
+            HashEntry<K, V> newEntries[] = new HashEntry[newCapacity];
 
             modCount++;
             for (int i = oldCapacity - 1; i >= 0; i--) {
-                HashEntry entry = oldEntries[i];
+                HashEntry<K, V> entry = oldEntries[i];
                 if (entry != null) {
                     oldEntries[i] = null;  // gc
                     do {
-                        HashEntry next = entry.next;
+                        HashEntry<K, V> next = entry.next;
                         int index = hashIndex(entry.hashCode, newCapacity);
                         entry.next = newEntries[index];
                         newEntries[index] = entry;
@@ -1305,7 +1305,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @return true if equal
      */
     @Override
-    @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;

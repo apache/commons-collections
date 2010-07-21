@@ -125,8 +125,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
      */
     public boolean hasPrevious() {
         if (iterator instanceof ListIterator) {
-            @SuppressWarnings("unchecked")
-            ListIterator li = (ListIterator) iterator;
+            ListIterator<?> li = (ListIterator<?>) iterator;
             return li.hasPrevious();
         }
         return currentIndex > 0;
@@ -163,8 +162,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
      */
     public int nextIndex() {
         if (iterator instanceof ListIterator) {
-            @SuppressWarnings("unchecked")
-            ListIterator li = (ListIterator) iterator;
+            ListIterator<?> li = (ListIterator<?>) iterator;
             return li.nextIndex();
         }
         return currentIndex;
@@ -197,8 +195,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
      */
     public int previousIndex() {
         if (iterator instanceof ListIterator) {
-            @SuppressWarnings("unchecked")
-            ListIterator li = (ListIterator) iterator;
+            ListIterator<?> li = (ListIterator<?>) iterator;
             return li.previousIndex();
         }
         return currentIndex - 1;
@@ -255,8 +252,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
      */
     public void reset()  {
         if (iterator instanceof ListIterator) {
-            @SuppressWarnings("unchecked")
-            ListIterator li = (ListIterator) iterator;
+            ListIterator<?> li = (ListIterator<?>) iterator;
             while (li.previousIndex() >= 0) {
                 li.previous();
             }

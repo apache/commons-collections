@@ -76,7 +76,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
         Closure<? super E>[] cmds = new Closure[closures.size()];
         int i = 0;
         for (Closure<? super E> closure : closures) {
-            cmds[i++] = (Closure<E>) closure;
+            cmds[i++] = closure;
         }
         FunctorUtils.validate(cmds);
         return new ChainedClosure<E>(cmds);

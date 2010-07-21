@@ -184,7 +184,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
         Map<K, V> result = new LinkedMap<K, V>(map.size());
 
         for (Map.Entry<? extends J, ? extends U> entry : map.entrySet()) {
-            result.put((K) transformKey(entry.getKey()), transformValue(entry.getValue()));
+            result.put(transformKey(entry.getKey()), transformValue(entry.getValue()));
         }
         return result;
     }

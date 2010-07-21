@@ -876,35 +876,34 @@ public class IteratorUtils {
      * @param obj  the object to convert to an iterator
      * @return a suitable iterator, never null
      */
-    @SuppressWarnings("unchecked")
     public static Iterator<?> getIterator(Object obj) {
         if (obj == null) {
             return emptyIterator();
         }
         if (obj instanceof Iterator) {
-            return (Iterator) obj;
+            return (Iterator<?>) obj;
         }
         if (obj instanceof Collection) {
-            return ((Collection) obj).iterator();
+            return ((Collection<?>) obj).iterator();
         }
         if (obj instanceof Object[]) {
-            return new ObjectArrayIterator((Object[]) obj);
+            return new ObjectArrayIterator<Object>((Object[]) obj);
         }
         if (obj instanceof Enumeration) {
-            return new EnumerationIterator((Enumeration) obj);
+            return new EnumerationIterator<Object>((Enumeration<?>) obj);
         }
         if (obj instanceof Map) {
-            return ((Map) obj).values().iterator();
+            return ((Map<?, ?>) obj).values().iterator();
         }
         if (obj instanceof Dictionary) {
-            return new EnumerationIterator(((Dictionary) obj).elements());
+            return new EnumerationIterator<Object>(((Dictionary<?, ?>) obj).elements());
         } else if (obj.getClass().isArray()) {
-            return new ArrayIterator(obj);
+            return new ArrayIterator<Object>(obj);
         }
         try {
             Method method = obj.getClass().getMethod("iterator", (Class[]) null);
             if (Iterator.class.isAssignableFrom(method.getReturnType())) {
-                Iterator it = (Iterator) method.invoke(obj, (Object[]) null);
+                Iterator<?> it = (Iterator<?>) method.invoke(obj, (Object[]) null);
                 if (it != null) {
                     return it;
                 }

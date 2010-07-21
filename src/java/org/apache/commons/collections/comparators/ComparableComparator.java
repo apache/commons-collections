@@ -46,7 +46,6 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
     private static final long serialVersionUID=-291439688585137865L;
 
     /** The singleton instance. */
-    @SuppressWarnings("unchecked")
     public static final ComparableComparator<?> INSTANCE = new ComparableComparator();
 
     //-----------------------------------------------------------------------

@@ -130,7 +130,6 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
      * @return true if equal key and value
      */
     @Override
-    @SuppressWarnings("unchecked")
     public boolean equals(final Object obj) {
         if (obj == this) {
             return true;
@@ -139,7 +138,7 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
             return false;
         }
 
-        DefaultKeyValue other = (DefaultKeyValue) obj;
+        DefaultKeyValue<?, ?> other = (DefaultKeyValue<?, ?>) obj;
         return 
             (getKey() == null ? other.getKey() == null : getKey().equals(other.getKey())) &&
             (getValue() == null ? other.getValue() == null : getValue().equals(other.getValue()));

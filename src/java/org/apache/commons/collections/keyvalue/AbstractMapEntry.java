@@ -68,7 +68,6 @@ public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> impl
      * @return true if equal key and value
      */
     @Override
-    @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -76,7 +75,7 @@ public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> impl
         if (obj instanceof Map.Entry == false) {
             return false;
         }
-        Map.Entry other = (Map.Entry) obj;
+        Map.Entry<?, ?> other = (Map.Entry<?, ?>) obj;
         return
             (getKey() == null ? other.getKey() == null : getKey().equals(other.getKey())) &&
             (getValue() == null ? other.getValue() == null : getValue().equals(other.getValue()));

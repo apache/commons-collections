@@ -307,7 +307,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
             subSet = new HashSet<E>(list.size());
         } else {
             try {
-                subSet = (Set<E>) set.getClass().newInstance();
+                subSet = set.getClass().newInstance();
             } catch (InstantiationException ie) {
                 subSet = new HashSet<E>();
             } catch (IllegalAccessException iae) {

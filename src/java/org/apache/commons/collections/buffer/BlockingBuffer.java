@@ -71,7 +71,6 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
     /**
      * Factory method to create a blocking buffer with a timeout value.
      *
-     * @param <t> the type of the elements in the buffer
      * @param buffer  the buffer to decorate, must not be null
      * @param timeoutMillis  the timeout value in milliseconds, zero or less for no timeout
      * @return a new blocking buffer

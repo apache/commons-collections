@@ -105,13 +105,13 @@ public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecora
     public K previousKey(K key) {
         SortedMap<K, V> headMap = headMap(key);
         return headMap.isEmpty() ? null : headMap.lastKey();
-    };
+    }
 
     public K nextKey(K key) {
         Iterator<K> it = tailMap(key).keySet().iterator();
         it.next();
         return it.hasNext() ? it.next() : null;
-    };
+    }
 
     /**
      * {@inheritDoc}

@@ -220,7 +220,7 @@ public class FixedOrderComparator<T> implements Comparator<T> {
      * @return negative if obj1 is less, positive if greater, zero if equal
      * @throws IllegalArgumentException if obj1 or obj2 are not known
      *  to this Comparator and an alternative behavior has not been set
-     *  via {@link #setUnknownObjectBehavior(int)}.
+     *  via {@link #setUnknownObjectBehavior(UnknownObjectBehavior)}.
      */
     public int compare(T obj1, T obj2) {
         isLocked = true;

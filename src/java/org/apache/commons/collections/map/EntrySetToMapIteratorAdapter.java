@@ -69,7 +69,7 @@ public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, Re
      */
     public V setValue(V value) {
         return current().setValue(value);
-    };
+    }
 
     /**
      * {@inheritDoc}

@@ -190,11 +190,11 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements
     }
 
     public SortedBidiMap<V, K> inverseSortedBidiMap() {
-        return (SortedBidiMap<V, K>) inverseBidiMap();
+        return inverseBidiMap();
     }
 
     public OrderedBidiMap<V, K> inverseOrderedBidiMap() {
-        return (OrderedBidiMap<V, K>) inverseBidiMap();
+        return inverseBidiMap();
     }
 
     //-----------------------------------------------------------------------
@@ -239,7 +239,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements
             // use the normalMap as the filtered map, but reverseMap as the full map
             // this forces containsValue and clear to be overridden
             super(new DualTreeBidiMap<K, V>(sm, bidi.reverseMap, bidi.inverseBidiMap));
-            this.bidi = (DualTreeBidiMap<K, V>) decorated();
+            this.bidi = decorated();
         }
 
         @Override
@@ -280,12 +280,12 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements
         @Override
         public K previousKey(K key) {
             return decorated().previousKey(key);
-        };
+        }
 
         @Override
         public K nextKey(K key) {
             return decorated().nextKey(key);
-        };
+        }
     }
 
     //-----------------------------------------------------------------------

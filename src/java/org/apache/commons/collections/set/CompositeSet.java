@@ -164,10 +164,9 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
      * @see Set#equals
      */
     @Override
-    @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
         if (obj instanceof Set) {
-            Set set = (Set) obj;
+            Set<?> set = (Set<?>) obj;
             return set.containsAll(this) && set.size() == this.size();
         }
         return false;

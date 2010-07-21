@@ -138,12 +138,11 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param coll the collection to check against
      * @return <code>true</code> if the Bag contains all the collection
      */
-    @SuppressWarnings("unchecked")
     public boolean containsAll(Collection<?> coll) {
         if (coll instanceof Bag) {
             return containsAll((Bag<?>) coll);
         }
-        return containsAll(new HashBag<Object>((Collection<Object>) coll));
+        return containsAll(new HashBag<Object>(coll));
     }
 
     /**
@@ -208,7 +207,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
                 throw new ConcurrentModificationException();
             }
             if (itemCount == 0) {
-                current = (Map.Entry<E, MutableInteger>) entryIterator.next();
+                current = entryIterator.next();
                 itemCount = current.getValue().value;
             }
             canRemove = true;
@@ -365,12 +364,11 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param coll the collection to retain
      * @return true if this call changed the collection
      */
-    @SuppressWarnings("unchecked")
     public boolean retainAll(Collection<?> coll) {
         if (coll instanceof Bag) {
             return retainAll((Bag<?>) coll);
         }
-        return retainAll(new HashBag<Object>((Collection<Object>) coll));
+        return retainAll(new HashBag<Object>(coll));
     }
 
     /**

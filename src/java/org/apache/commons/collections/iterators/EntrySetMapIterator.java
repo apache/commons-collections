@@ -74,7 +74,7 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
      * @throws java.util.NoSuchElementException if the iteration is finished
      */
     public K next() {
-        last = (Map.Entry<K, V>) iterator.next();
+        last = iterator.next();
         canRemove = true;
         return last.getKey();
     }

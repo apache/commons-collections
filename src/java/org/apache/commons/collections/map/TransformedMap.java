@@ -197,7 +197,7 @@ public class TransformedMap<K, V>
         Map<K, V> result = new LinkedMap<K, V>(map.size());
 
         for (Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
-            result.put((K) transformKey(entry.getKey()), transformValue(entry.getValue()));
+            result.put(transformKey(entry.getKey()), transformValue(entry.getValue()));
         }
         return result;
     }

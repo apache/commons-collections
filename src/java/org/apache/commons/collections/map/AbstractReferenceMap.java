@@ -658,7 +658,6 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
          * @return true if equal, false if not
          */
         @Override
-        @SuppressWarnings("unchecked")
         public boolean equals(Object obj) {
             if (obj == this) {
                 return true;
@@ -667,7 +666,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
                 return false;
             }
 
-            Map.Entry entry = (Map.Entry)obj;
+            Map.Entry<?, ?> entry = (Map.Entry<?, ?>)obj;
             Object entryKey = entry.getKey();  // convert to hard reference
             Object entryValue = entry.getValue();  // convert to hard reference
             if ((entryKey == null) || (entryValue == null)) {
