@@ -51,22 +51,27 @@ public class TestUnmodifiableMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     //-------------------------------------------------------------------
 
+    @Override
     public IterableMap<K, V> makeObject() {
         return (IterableMap<K, V>) UnmodifiableMap.decorate(new HashMap<K, V>());
     }
 
+    @Override
     public boolean isPutChangeSupported() {
         return false;
     }
 
+    @Override
     public boolean isPutAddSupported() {
         return false;
     }
 
+    @Override
     public boolean isRemoveSupported() {
         return false;
     }
 
+    @Override
     public IterableMap<K, V> makeFullMap() {
         Map<K, V> m = new HashMap<K, V>();
         addSampleMappings(m);
@@ -89,6 +94,7 @@ public class TestUnmodifiableMap<K, V> extends AbstractTestIterableMap<K, V> {
         } catch (IllegalArgumentException ex) {}
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

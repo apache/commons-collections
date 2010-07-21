@@ -45,15 +45,18 @@ public class TestUnmodifiableOrderedMapIterator<K, V> extends AbstractTestOrdere
         super(testName);
     }
 
+    @Override
     public OrderedMapIterator<K, V> makeEmptyIterator() {
         return UnmodifiableOrderedMapIterator.decorate(
                 ListOrderedMap.decorate(new HashMap<K, V>()).mapIterator());
     }
 
+    @Override
     public OrderedMapIterator<K, V> makeObject() {
         return UnmodifiableOrderedMapIterator.decorate(getMap().mapIterator());
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public OrderedMap<K, V> getMap() {
         OrderedMap<K, V> testMap = ListOrderedMap.decorate(new HashMap<K, V>());
@@ -63,6 +66,7 @@ public class TestUnmodifiableOrderedMapIterator<K, V> extends AbstractTestOrdere
         return testMap;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public Map<K, V> getConfirmedMap() {
         Map<K, V> testMap = new TreeMap<K, V>();
@@ -72,10 +76,12 @@ public class TestUnmodifiableOrderedMapIterator<K, V> extends AbstractTestOrdere
         return testMap;
     }
 
+    @Override
     public boolean supportsRemove() {
         return false;
     }
 
+    @Override
     public boolean supportsSetValue() {
         return false;
     }

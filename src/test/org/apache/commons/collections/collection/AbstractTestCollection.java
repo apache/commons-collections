@@ -232,6 +232,7 @@ public abstract class AbstractTestCollection<E> extends AbstractTestObject {
      * Returns true to indicate that the collection supports equals() comparisons.
      * This implementation returns false;
      */
+    @Override
     public boolean isEqualsCheckable() {
         return false;
     }
@@ -352,6 +353,7 @@ public abstract class AbstractTestCollection<E> extends AbstractTestObject {
     /**
      * Return a new, empty {@link Collection} to be used for testing.
      */
+    @Override
     public abstract Collection<E> makeObject();
 
     /**
@@ -1248,6 +1250,7 @@ public abstract class AbstractTestCollection<E> extends AbstractTestObject {
         }
     }
 
+    @Override
     public void testSerializeDeserializeThenCompare() throws Exception {
         Object obj = makeObject();
         if (obj instanceof Serializable && isTestSerialization()) {

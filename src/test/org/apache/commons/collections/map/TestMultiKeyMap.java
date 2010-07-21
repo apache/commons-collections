@@ -55,10 +55,12 @@ public class TestMultiKeyMap<K, V> extends AbstractTestIterableMap<MultiKey<? ex
         return BulkTest.makeSuite(TestMultiKeyMap.class);
     }
 
+    @Override
     public MultiKeyMap<K, V> makeObject() {
         return new MultiKeyMap<K, V>();
     }
 
+    @Override
     public MultiKey<K>[] getSampleKeys() {
         return getMultiKeyKeys();
     }
@@ -81,6 +83,7 @@ public class TestMultiKeyMap<K, V> extends AbstractTestIterableMap<MultiKey<? ex
         };
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public V[] getSampleValues() {
         return (V[]) new Object[] {
@@ -91,6 +94,7 @@ public class TestMultiKeyMap<K, V> extends AbstractTestIterableMap<MultiKey<? ex
         };
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public V[] getNewSampleValues() {
         return (V[]) new Object[] {
@@ -101,6 +105,7 @@ public class TestMultiKeyMap<K, V> extends AbstractTestIterableMap<MultiKey<? ex
         };
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public MultiKey<K>[] getOtherKeys() {
         return (MultiKey<K>[]) new MultiKey[] {
@@ -111,6 +116,7 @@ public class TestMultiKeyMap<K, V> extends AbstractTestIterableMap<MultiKey<? ex
         };
     }
 
+    @Override
     public boolean isAllowNullKey() {
         return false;
     }
@@ -441,6 +447,7 @@ public class TestMultiKeyMap<K, V> extends AbstractTestIterableMap<MultiKey<? ex
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

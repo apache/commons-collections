@@ -50,22 +50,27 @@ public class TestUnmodifiableOrderedMap<K, V> extends AbstractTestOrderedMap<K, 
 
     //-------------------------------------------------------------------
 
+    @Override
     public OrderedMap<K, V> makeObject() {
         return UnmodifiableOrderedMap.decorate(ListOrderedMap.decorate(new HashMap<K, V>()));
     }
 
+    @Override
     public boolean isPutChangeSupported() {
         return false;
     }
 
+    @Override
     public boolean isPutAddSupported() {
         return false;
     }
 
+    @Override
     public boolean isRemoveSupported() {
         return false;
     }
 
+    @Override
     public OrderedMap<K, V> makeFullMap() {
         OrderedMap<K, V> m = ListOrderedMap.decorate(new HashMap<K, V>());
         addSampleMappings(m);
@@ -88,6 +93,7 @@ public class TestUnmodifiableOrderedMap<K, V> extends AbstractTestOrderedMap<K, 
         } catch (IllegalArgumentException ex) {}
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

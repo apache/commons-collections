@@ -129,6 +129,7 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
      * @param obj  the object to compare to
      * @return true if equal key and value
      */
+    @Override
     @SuppressWarnings("unchecked")
     public boolean equals(final Object obj) {
         if (obj == this) {
@@ -152,6 +153,7 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
      * 
      * @return a suitable hash code
      */
+    @Override
     public int hashCode() {
         return (getKey() == null ? 0 : getKey().hashCode()) ^
                (getValue() == null ? 0 : getValue().hashCode());

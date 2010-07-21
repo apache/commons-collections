@@ -47,6 +47,7 @@ public class TestSingletonListIterator<E> extends AbstractTestListIterator<E> {
      * Returns a SingletonListIterator from which 
      * the element has already been removed.
      */
+    @Override
     public SingletonListIterator<E> makeEmptyIterator() {
         SingletonListIterator<E> iter = makeObject();
         iter.next();
@@ -55,19 +56,23 @@ public class TestSingletonListIterator<E> extends AbstractTestListIterator<E> {
         return iter;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public SingletonListIterator<E> makeObject() {
         return new SingletonListIterator<E>((E) testValue);
     }
 
+    @Override
     public boolean supportsAdd() {
         return false;
     }
 
+    @Override
     public boolean supportsRemove() {
         return true;
     }
 
+    @Override
     public boolean supportsEmptyIterator() {
         return true;
     }

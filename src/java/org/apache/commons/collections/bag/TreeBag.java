@@ -81,6 +81,7 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
 
     //-----------------------------------------------------------------------
     // TODO: Generics - should this be E<? extends Comparable> or some such?
+    @Override
     public boolean add(E object) {
         if(comparator() == null && !(object instanceof Comparable)) {
             throw new IllegalArgumentException("Objects of type " + object.getClass() + " cannot be added to " + 

@@ -48,10 +48,12 @@ public class TestNodeCachingLinkedList<E> extends TestAbstractLinkedList<E> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public NodeCachingLinkedList<E> makeObject() {
         return new NodeCachingLinkedList<E>();
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3";
     }

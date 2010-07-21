@@ -466,6 +466,7 @@ public class SingletonMap<K, V>
             hasNext = true;
         }
         
+        @Override
         public String toString() {
             if (hasNext) {
                 return "Iterator[]";
@@ -487,18 +488,23 @@ public class SingletonMap<K, V>
             this.parent = parent;
         }
 
+        @Override
         public int size() {
             return 1;
         }
+        @Override
         public boolean isEmpty() {
             return false;
         }
+        @Override
         public boolean contains(Object object) {
             return parent.containsValue(object);
         }
+        @Override
         public void clear() {
             throw new UnsupportedOperationException();
         }
+        @Override
         public Iterator<V> iterator() {
             return new SingletonIterator<V>(parent.getValue(), false);
         }
@@ -510,6 +516,7 @@ public class SingletonMap<K, V>
      *
      * @return a shallow clone
      */
+    @Override
     @SuppressWarnings("unchecked")
     public SingletonMap<K, V> clone() {
         try {
@@ -525,6 +532,7 @@ public class SingletonMap<K, V>
      * @param obj  the object to compare to
      * @return true if equal
      */
+    @Override
     @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
         if (obj == this) {
@@ -546,6 +554,7 @@ public class SingletonMap<K, V>
      * 
      * @return the hash code defined in the Map interface
      */
+    @Override
     public int hashCode() {
         return (getKey() == null ? 0 : getKey().hashCode()) ^
                (getValue() == null ? 0 : getValue().hashCode()); 
@@ -556,6 +565,7 @@ public class SingletonMap<K, V>
      * 
      * @return a string version of the map
      */
+    @Override
     public String toString() {
         return new StringBuilder(128)
             .append('{')

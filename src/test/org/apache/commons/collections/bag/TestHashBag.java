@@ -44,10 +44,12 @@ public class TestHashBag<T> extends AbstractTestBag<T> {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     public Bag<T> makeObject() {
         return new HashBag<T>();
     }
     
+    @Override
     public String getCompatibilityVersion() {
         return "3";
     }

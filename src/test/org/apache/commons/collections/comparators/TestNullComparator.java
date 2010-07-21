@@ -52,10 +52,12 @@ public abstract class TestNullComparator extends AbstractTestComparator<Integer>
             super(testName);
         }
 
+        @Override
         public Comparator<Integer> makeObject() {
             return new NullComparator<Integer>();
         }
 
+        @Override
         public List<Integer> getComparableObjectsOrdered() {
             List<Integer> list = new LinkedList<Integer>();
             list.add(new Integer(1));
@@ -67,6 +69,7 @@ public abstract class TestNullComparator extends AbstractTestComparator<Integer>
             return list;
         }
 
+        @Override
         public String getCanonicalComparatorName(Object object) {
             return super.getCanonicalComparatorName(object) + "1";
         }
@@ -81,10 +84,12 @@ public abstract class TestNullComparator extends AbstractTestComparator<Integer>
             super(testName);
         }
 
+        @Override
         public Comparator<Integer> makeObject() {
             return new NullComparator<Integer>(false);
         }
 
+        @Override
         public List<Integer> getComparableObjectsOrdered() {
             List<Integer> list = new LinkedList<Integer>();
             list.add(null);
@@ -96,6 +101,7 @@ public abstract class TestNullComparator extends AbstractTestComparator<Integer>
             return list;
         }
 
+        @Override
         public String getCanonicalComparatorName(Object object) {
             return super.getCanonicalComparatorName(object) + "2";
         }

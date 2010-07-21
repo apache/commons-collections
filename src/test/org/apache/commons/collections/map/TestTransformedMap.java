@@ -53,6 +53,7 @@ public class TestTransformedMap<K, V> extends AbstractTestIterableMap<K, V> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public IterableMap<K, V> makeObject() {
         return TransformedMap.decorate(new HashMap<K, V>(), TransformerUtils.<K> nopTransformer(),
                 TransformerUtils.<V> nopTransformer());
@@ -148,6 +149,7 @@ public class TestTransformedMap<K, V> extends AbstractTestIterableMap<K, V> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

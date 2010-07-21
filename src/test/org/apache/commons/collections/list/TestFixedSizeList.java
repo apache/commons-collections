@@ -47,24 +47,29 @@ public class TestFixedSizeList<E> extends AbstractTestList<E> {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     public List<E> makeObject() {
         return FixedSizeList.decorate(new ArrayList<E>());
     }
 
+    @Override
     public List<E> makeFullCollection() {
         List<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return FixedSizeList.decorate(list);
     }
 
+    @Override
     public boolean isAddSupported() {
         return false;
     }
 
+    @Override
     public boolean isRemoveSupported() {
         return false;
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

@@ -69,6 +69,7 @@ public abstract class AbstractMapEntryDecorator<K, V> implements Map.Entry<K, V>
         return entry.setValue(object);
     }
    
+    @Override
     public boolean equals(Object object) {
         if (object == this) {
             return true;
@@ -76,10 +77,12 @@ public abstract class AbstractMapEntryDecorator<K, V> implements Map.Entry<K, V>
         return entry.equals(object);
     }
 
+    @Override
     public int hashCode() {
         return entry.hashCode();
     }
 
+    @Override
     public String toString() {
         return entry.toString();
     }

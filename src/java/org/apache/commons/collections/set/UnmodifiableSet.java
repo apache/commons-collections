@@ -67,30 +67,37 @@ public final class UnmodifiableSet<E>
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public Iterator<E> iterator() {
         return UnmodifiableIterator.<E>decorate(decorated().iterator());
     }
 
+    @Override
     public boolean add(E object) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean addAll(Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void clear() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean remove(Object object) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean removeAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean retainAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }

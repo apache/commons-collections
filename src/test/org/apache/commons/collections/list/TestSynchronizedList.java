@@ -46,14 +46,17 @@ public class TestSynchronizedList<E> extends AbstractTestList<E> {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     public List<E> makeConfirmedCollection() {
         return new ArrayList<E>();
     }
 
+    @Override
     public List<E> makeObject() {
         return SynchronizedList.decorate(new ArrayList<E>());
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

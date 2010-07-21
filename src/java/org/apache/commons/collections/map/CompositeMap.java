@@ -463,6 +463,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @param obj  the object to compare to
      * @return true if the maps are equal
      */
+    @Override
     @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
         if (obj instanceof Map) {
@@ -475,6 +476,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
     /**
      * Gets a hash code for the Map as per the Map specification.
      */
+    @Override
     public int hashCode() {
         int code = 0;
         for (Map.Entry<K, V> entry : entrySet()) {

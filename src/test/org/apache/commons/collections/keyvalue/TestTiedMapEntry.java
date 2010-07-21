@@ -48,6 +48,7 @@ public class TestTiedMapEntry<K, V> extends AbstractTestMapEntry<K, V> {
     /**
      * Gets the instance to test
      */
+    @Override
     public Map.Entry<K, V> makeMapEntry(K key, V value) {
         Map<K, V> map = new HashMap<K, V>();
         map.put(key, value);
@@ -58,6 +59,7 @@ public class TestTiedMapEntry<K, V> extends AbstractTestMapEntry<K, V> {
     /**
      * Tests the constructors.
      */
+    @Override
     public void testConstructors() {
         // ignore
     }

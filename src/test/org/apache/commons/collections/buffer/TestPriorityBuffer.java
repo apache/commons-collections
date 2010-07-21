@@ -57,6 +57,7 @@ public class TestPriorityBuffer<E> extends AbstractTestCollection<E> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     @SuppressWarnings("unchecked")
     public void verify() {
         super.verify();
@@ -87,15 +88,18 @@ public class TestPriorityBuffer<E> extends AbstractTestCollection<E> {
      * Overridden because BinaryBuffer isn't fail fast.
      * @return false
      */
+    @Override
     public boolean isFailFastSupported() {
         return false;
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public Collection<E> makeConfirmedCollection() {
         return new ArrayList<E>();
     }
 
+    @Override
     public Collection<E> makeConfirmedFullCollection() {
         ArrayList<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
@@ -105,16 +109,19 @@ public class TestPriorityBuffer<E> extends AbstractTestCollection<E> {
     /**
      * Return a new, empty {@link Object} to used for testing.
      */
+    @Override
     public Buffer<E> makeObject() {
         return new PriorityBuffer<E>();
     }
 
     //-----------------------------------------------------------------------
+    @Override
     @SuppressWarnings("unchecked")
     public E[] getFullElements() {
         return (E[]) getFullNonNullStringElements();
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public E[] getOtherElements() {
         return (E[]) getOtherNonNullStringElements();
@@ -399,6 +406,7 @@ public class TestPriorityBuffer<E> extends AbstractTestCollection<E> {
         return h1;
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.2";
     }

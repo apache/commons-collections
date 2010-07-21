@@ -61,6 +61,7 @@ public abstract class AbstractSortedSetDecorator<E>
      * 
      * @return the decorated set
      */
+    @Override
     protected SortedSet<E> decorated() {
         return (SortedSet<E>) super.decorated();
     }

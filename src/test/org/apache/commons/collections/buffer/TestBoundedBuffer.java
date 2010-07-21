@@ -43,14 +43,17 @@ public class TestBoundedBuffer<E> extends AbstractTestObject {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.2";
     }
 
+    @Override
     public boolean isEqualsCheckable() {
         return false;
     }
 
+    @Override
     public Buffer<E> makeObject() {
         return BoundedBuffer.decorate(new UnboundedFifoBuffer<E>(), 1);
     }
@@ -183,6 +186,7 @@ public class TestBoundedBuffer<E> extends AbstractTestObject {
             this(buffer, delay, 1);
         }
 
+        @Override
         public void run() {
             try {
                 Thread.sleep(delay);
@@ -215,6 +219,7 @@ public class TestBoundedBuffer<E> extends AbstractTestObject {
             this(buffer, delay, 1);
         }
 
+        @Override
         public void run() {
             try {
                 Thread.sleep(delay);

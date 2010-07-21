@@ -417,6 +417,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
             this.value = value;
         }
 
+        @Override
         public boolean equals(Object obj) {
             if (obj instanceof MutableInteger == false) {
                 return false;
@@ -424,6 +425,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
             return ((MutableInteger) obj).value == value;
         }
 
+        @Override
         public int hashCode() {
             return value;
         }
@@ -530,6 +532,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param object the Bag to compare to
      * @return true if equal
      */
+    @Override
     public boolean equals(Object object) {
         if (object == this) {
             return true;
@@ -559,6 +562,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * 
      * @return the hash code of the Bag
      */
+    @Override
     public int hashCode() {
         int total = 0;
         for (Iterator<Map.Entry<E, MutableInteger>> it = map.entrySet().iterator(); it.hasNext();) {
@@ -575,6 +579,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * 
      * @return a debugging toString
      */
+    @Override
     public String toString() {
         if (size() == 0) {
             return "[]";

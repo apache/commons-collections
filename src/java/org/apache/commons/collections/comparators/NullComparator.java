@@ -151,6 +151,7 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      *
      *  @return a hash code for this comparator.
      **/
+    @Override
     public int hashCode() {
         return (nullsAreHigh ? -1 : 1) * nonNullComparator.hashCode();
     }
@@ -166,6 +167,7 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      *  (i.e. <code>null</code> high or low) and with equivalent underlying
      *  non-<code>null</code> object comparators.
      **/
+    @Override
     public boolean equals(Object obj) {
         if(obj == null) { return false; }
         if(obj == this) { return true; }

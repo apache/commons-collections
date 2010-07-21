@@ -55,10 +55,12 @@ public class TestReferenceIdentityMap<K, V> extends AbstractTestIterableMap<K, V
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     public ReferenceIdentityMap<K, V> makeObject() {
         return new ReferenceIdentityMap<K, V>(ReferenceStrength.WEAK, ReferenceStrength.WEAK);
     }
 
+    @Override
     public Map<K, V> makeConfirmedMap() {
         // Testing against another [collections] class generally isn't a good idea,
         // but the closest alternative is IdentityHashMap, which propagates reference-equality down to keySet and values.
@@ -66,14 +68,17 @@ public class TestReferenceIdentityMap<K, V> extends AbstractTestIterableMap<K, V
         return new IdentityMap<K, V>();
     }
 
+    @Override
     public boolean isAllowNullKey() {
         return false;
     }
 
+    @Override
     public boolean isAllowNullValue() {
         return false;
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

@@ -52,10 +52,12 @@ public class TestCursorableLinkedList<E> extends TestAbstractLinkedList<E> {
 
     private CursorableLinkedList<E> list;
 
+    @Override
     public void setUp() {
         list = new CursorableLinkedList<E>();
     }
 
+    @Override
     public CursorableLinkedList<E> makeObject() {
         return new CursorableLinkedList<E>();
     }
@@ -1089,6 +1091,7 @@ public class TestCursorableLinkedList<E> extends TestAbstractLinkedList<E> {
         assertEquals(0, it.nextIndex());
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public void testListIteratorSet() {
         list.add((E) "1");
@@ -1155,6 +1158,7 @@ public class TestCursorableLinkedList<E> extends TestAbstractLinkedList<E> {
         assertEquals("[]",list.toString());
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public void testListIteratorAdd() {
         ListIterator<E> it = list.listIterator();
@@ -1502,6 +1506,7 @@ public class TestCursorableLinkedList<E> extends TestAbstractLinkedList<E> {
      *
      *  @return an array of sublist serialization test names
      */
+    @Override
     public String[] ignoredTests() {
         ArrayList<String> list = new ArrayList<String>();
         String prefix = "TestCursorableLinkedList";
@@ -1523,6 +1528,7 @@ public class TestCursorableLinkedList<E> extends TestAbstractLinkedList<E> {
         return (String[]) list.toArray(new String[0]);
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "4.0";
     }

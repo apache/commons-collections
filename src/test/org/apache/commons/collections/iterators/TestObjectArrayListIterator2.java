@@ -38,11 +38,13 @@ public class TestObjectArrayListIterator2<E> extends AbstractTestListIterator<E>
         return new TestSuite(TestObjectArrayListIterator2.class);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public ObjectArrayListIterator<E> makeEmptyIterator() {
         return new ObjectArrayListIterator<E>((E[]) new Object[0]);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public ObjectArrayListIterator<E> makeObject() {
         return new ObjectArrayListIterator<E>((E[]) testArray);
@@ -52,10 +54,12 @@ public class TestObjectArrayListIterator2<E> extends AbstractTestListIterator<E>
         return new ObjectArrayListIterator<E>(array);
     }
 
+    @Override
     public boolean supportsAdd() {
         return false;
     }
 
+    @Override
     public boolean supportsRemove() {
         return false;
     }

@@ -137,10 +137,12 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public boolean add(E object) {
         return decorated().add(transform(object));
     }
 
+    @Override
     public boolean addAll(Collection<? extends E> coll) {
         return decorated().addAll(transform(coll));
     }

@@ -70,6 +70,7 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
      * @see org.apache.commons.collections.collection.CompositeCollection.CollectionMutator
      * @see SetMutator
      */
+    @Override
     public synchronized void addComposited(Collection<E> c) {
         if (!(c instanceof Set)) {
             throw new IllegalArgumentException("Collections added must implement java.util.Set");
@@ -110,6 +111,7 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
      *
      * @throws IllegalArgumentException if c or d does not implement java.util.Set
      */
+    @Override
     @SuppressWarnings("unchecked")
     public synchronized void addComposited(Collection<E> c, Collection<E> d) {
         if (!(c instanceof Set)) throw new IllegalArgumentException("Argument must implement java.util.Set");
@@ -122,6 +124,7 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
      * @param comps
      * @throws IllegalArgumentException if any of the collections in comps do not implement Set
      */
+    @Override
     public synchronized void addComposited(Collection<E>[] comps) {
         for (int i = comps.length - 1; i >= 0; --i) {
             this.addComposited(comps[i]);
@@ -135,6 +138,7 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
      * composited sets will throw IllegalArgumentException
      * <p>
      */
+    @Override
     public void setMutator(CollectionMutator<E> mutator) {
         super.setMutator(mutator);
     }
@@ -148,6 +152,7 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
      * @param obj Object to be removed
      * @return true if the object is removed, false otherwise
      */
+    @Override
     public boolean remove(Object obj) {
         for (Set<? extends E> set : getCollections()) {
             if (set.contains(obj)) return set.remove(obj);
@@ -158,6 +163,7 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
     /**
      * @see Set#equals
      */
+    @Override
     @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
         if (obj instanceof Set) {
@@ -170,6 +176,7 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
     /**
      * @see Set#hashCode
      */
+    @Override
     public int hashCode() {
         int code = 0;
         for (E e : this) {

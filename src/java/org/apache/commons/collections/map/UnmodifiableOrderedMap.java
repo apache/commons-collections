@@ -101,37 +101,45 @@ public final class UnmodifiableOrderedMap<K, V> extends AbstractOrderedMapDecora
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public OrderedMapIterator<K, V> mapIterator() {
         OrderedMapIterator<K, V> it = decorated().mapIterator();
         return UnmodifiableOrderedMapIterator.decorate(it);
     }
 
+    @Override
     public void clear() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public V put(K key, V value) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void putAll(Map<? extends K, ? extends V> mapToCopy) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public V remove(Object key) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Set<Map.Entry<K, V>> entrySet() {
         Set<Map.Entry<K, V>> set = super.entrySet();
         return UnmodifiableEntrySet.decorate(set);
     }
 
+    @Override
     public Set<K> keySet() {
         Set<K> set = super.keySet();
         return UnmodifiableSet.decorate(set);
     }
 
+    @Override
     public Collection<V> values() {
         Collection<V> coll = super.values();
         return UnmodifiableCollection.decorate(coll);

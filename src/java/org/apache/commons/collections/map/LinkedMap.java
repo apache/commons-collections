@@ -113,6 +113,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
      *
      * @return a shallow clone
      */
+    @Override
     public LinkedMap<K, V> clone() {
         return (LinkedMap<K, V>) super.clone();
     }
@@ -215,70 +216,87 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
             this.parent = parent;
         }
 
+        @Override
         public int size() {
             return parent.size();
         }
 
+        @Override
         public K get(int index) {
             return parent.get(index);
         }
 
+        @Override
         public boolean contains(Object obj) {
             return parent.containsKey(obj);
         }
 
+        @Override
         public int indexOf(Object obj) {
             return parent.indexOf(obj);
         }
 
+        @Override
         public int lastIndexOf(Object obj) {
             return parent.indexOf(obj);
         }
 
+        @Override
         public boolean containsAll(Collection<?> coll) {
             return parent.keySet().containsAll(coll);
         }
 
+        @Override
         public K remove(int index) {
             throw new UnsupportedOperationException();
         }
 
+        @Override
         public boolean remove(Object obj) {
             throw new UnsupportedOperationException();
         }
 
+        @Override
         public boolean removeAll(Collection<?> coll) {
             throw new UnsupportedOperationException();
         }
 
+        @Override
         public boolean retainAll(Collection<?> coll) {
             throw new UnsupportedOperationException();
         }
 
+        @Override
         public void clear() {
             throw new UnsupportedOperationException();
         }
 
+        @Override
         public Object[] toArray() {
             return parent.keySet().toArray();
         }
 
+        @Override
         public <T> T[] toArray(T[] array) {
             return parent.keySet().toArray(array);
         }
 
+        @Override
         public Iterator<K> iterator() {
             return UnmodifiableIterator.decorate(parent.keySet().iterator());
         }
 
+        @Override
         public ListIterator<K> listIterator() {
             return UnmodifiableListIterator.decorate(super.listIterator());
         }
 
+        @Override
         public ListIterator<K> listIterator(int fromIndex) {
             return UnmodifiableListIterator.decorate(super.listIterator(fromIndex));
         }
 
+        @Override
         public List<K> subList(int fromIndexInclusive, int toIndexExclusive) {
             return UnmodifiableList.decorate(super.subList(fromIndexInclusive, toIndexExclusive));
         }

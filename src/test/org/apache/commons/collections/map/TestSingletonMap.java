@@ -52,12 +52,14 @@ public class TestSingletonMap<K, V> extends AbstractTestOrderedMap<K, V> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public OrderedMap<K, V> makeObject() {
         // need an empty singleton map, but thats not possible
         // use a ridiculous fake instead to make the tests pass
         return UnmodifiableOrderedMap.decorate(ListOrderedMap.decorate(new HashMap<K, V>()));
     }
 
+    @Override
     public String[] ignoredTests() {
         // the ridiculous map above still doesn't pass these tests
         // but its not relevant, so we ignore them
@@ -67,29 +69,35 @@ public class TestSingletonMap<K, V> extends AbstractTestOrderedMap<K, V> {
         };
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public SingletonMap<K, V> makeFullMap() {
         return new SingletonMap<K, V>((K) ONE, (V) TWO);
     }
 
+    @Override
     public boolean isPutAddSupported() {
         return false;
     }
 
+    @Override
     public boolean isRemoveSupported() {
         return false;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public K[] getSampleKeys() {
         return (K[]) new Object[] { ONE };
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public V[] getSampleValues() {
         return (V[]) new Object[] { TWO };
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public V[] getNewSampleValues() {
         return (V[]) new Object[] { TEN };
@@ -169,6 +177,7 @@ public class TestSingletonMap<K, V> extends AbstractTestOrderedMap<K, V> {
 //        }
 //    }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

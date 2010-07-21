@@ -147,10 +147,12 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
         return map.keySet().toArray(array);
     }
 
+    @Override
     public boolean equals(Object obj) {
         return map.keySet().equals(obj);
     }
 
+    @Override
     public int hashCode() {
         return map.keySet().hashCode();
     }

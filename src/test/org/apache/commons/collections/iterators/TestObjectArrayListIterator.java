@@ -40,11 +40,13 @@ public class TestObjectArrayListIterator<E> extends TestObjectArrayIterator<E> {
         return new TestSuite(TestObjectArrayListIterator.class);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public ObjectArrayListIterator<E> makeEmptyIterator() {
         return new ObjectArrayListIterator<E>((E[]) new Object[0]);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public ObjectArrayListIterator<E> makeObject() {
         return new ObjectArrayListIterator<E>((E[]) testArray);

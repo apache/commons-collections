@@ -57,14 +57,17 @@ public class TestUnmodifiableIterator<E> extends AbstractTestIterator<E> {
         testList = new ArrayList<E>(Arrays.asList((E[]) testArray));
     }
 
+    @Override
     public Iterator<E> makeEmptyIterator() {
         return UnmodifiableIterator.decorate(Collections.<E>emptyList().iterator());
     }
 
+    @Override
     public Iterator<E> makeObject() {
         return UnmodifiableIterator.decorate(testList.iterator());
     }
 
+    @Override
     public boolean supportsRemove() {
         return false;
     }

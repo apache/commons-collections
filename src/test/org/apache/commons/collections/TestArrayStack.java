@@ -42,6 +42,7 @@ public class TestArrayStack<E> extends TestArrayList<E> {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     public ArrayStack<E> makeObject() {
         return new ArrayStack<E>();
     }
@@ -97,6 +98,7 @@ public class TestArrayStack<E> extends TestArrayList<E> {
 
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public void testSearch() {
         ArrayStack<E> stack = makeObject();

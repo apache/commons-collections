@@ -219,6 +219,7 @@ public class MultiKey<K> implements Serializable {
      * @param other  the other object to compare to
      * @return true if equal
      */
+    @Override
     public boolean equals(Object other) {
         if (other == this) {
             return true;
@@ -240,6 +241,7 @@ public class MultiKey<K> implements Serializable {
      * 
      * @return the hash code
      */
+    @Override
     public int hashCode() {
         return hashCode;
     }
@@ -249,6 +251,7 @@ public class MultiKey<K> implements Serializable {
      * 
      * @return a debugging string
      */
+    @Override
     public String toString() {
         return "MultiKey" + Arrays.asList(keys).toString();
     }

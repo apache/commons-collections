@@ -45,6 +45,7 @@ public class TestTreeBag<T> extends AbstractTestSortedBag<T> {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     public SortedBag<T> makeObject() {
         return new TreeBag<T>();
     }
@@ -79,6 +80,7 @@ public class TestTreeBag<T> extends AbstractTestSortedBag<T> {
         assertEquals("Should get last key", "D", ((SortedBag<T>) bag).last());
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3";
     }

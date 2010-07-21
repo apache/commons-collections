@@ -47,10 +47,12 @@ public class TestGrowthList<E> extends AbstractTestList<E> {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     public List<E> makeObject() {
         return new GrowthList<E>();
     }
 
+    @Override
     public List<E> makeFullCollection() {
         List<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
@@ -106,6 +108,7 @@ public class TestGrowthList<E> extends AbstractTestList<E> {
     /**
      * Override.
      */
+    @Override
     public void testListAddByIndexBoundsChecking() {
         List<E> list;
         E element = getOtherElements()[0];
@@ -121,6 +124,7 @@ public class TestGrowthList<E> extends AbstractTestList<E> {
     /**
      * Override.
      */
+    @Override
     public void testListAddByIndexBoundsChecking2() {
         List<E> list;
         E element = getOtherElements()[0];
@@ -136,6 +140,7 @@ public class TestGrowthList<E> extends AbstractTestList<E> {
     /**
      * Override.
      */
+    @Override
     public void testListSetByIndexBoundsChecking() {
         List<E> list = makeObject();
         E element = getOtherElements()[0];
@@ -150,6 +155,7 @@ public class TestGrowthList<E> extends AbstractTestList<E> {
     /**
      * Override.
      */
+    @Override
     public void testListSetByIndexBoundsChecking2() {
         List<E> list = makeFullCollection();
         E element = getOtherElements()[0];
@@ -162,6 +168,7 @@ public class TestGrowthList<E> extends AbstractTestList<E> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public String getCompatibilityVersion() {
         return "3.2";
     }

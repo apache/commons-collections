@@ -79,6 +79,7 @@ public class SynchronizedBuffer<E>
      * 
      * @return the decorated buffer
      */
+    @Override
     protected Buffer<E> decorated() {
         return (Buffer<E>) super.decorated();
     }

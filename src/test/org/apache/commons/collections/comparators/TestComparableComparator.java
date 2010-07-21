@@ -40,10 +40,12 @@ public class TestComparableComparator extends AbstractTestComparator<Integer> {
         return new TestSuite(TestComparableComparator.class);
     }
 
+    @Override
     public Comparator<Integer> makeObject() {
         return new ComparableComparator<Integer>();
     }
 
+    @Override
     public List<Integer> getComparableObjectsOrdered() {
         List<Integer> list = new LinkedList<Integer>();
         list.add(1);

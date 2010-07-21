@@ -59,25 +59,30 @@ public class TestPredicatedCollection<E> extends AbstractTestCollection<E> {
         return PredicatedCollection.decorate(collection, predicate);
     }
 
+    @Override
     public Collection<E> makeObject() {
         return decorateCollection(new ArrayList<E>(), truePredicate);
     }
 
+    @Override
     public Collection<E> makeConfirmedCollection() {
         return new ArrayList<E>();
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public E[] getFullElements() {
         return (E[]) new Object[] { "1", "3", "5", "7", "2", "4", "6" };
     }
 
+    @Override
     public Collection<E> makeFullCollection() {
         List<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return decorateCollection(list, truePredicate);
     }
 
+    @Override
     public Collection<E> makeConfirmedFullCollection() {
         List<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
@@ -130,6 +135,7 @@ public class TestPredicatedCollection<E> extends AbstractTestCollection<E> {
         assertTrue("Collection shouldn't contain illegal element", !c.contains("four"));
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

@@ -96,6 +96,7 @@ class LocalTestNode<K extends Comparable<K>, V extends Comparable<V>> implements
      *
      * @return true if equal
      */
+    @Override
     @SuppressWarnings("unchecked")
     public boolean equals(Object o) {
 
@@ -116,6 +117,7 @@ class LocalTestNode<K extends Comparable<K>, V extends Comparable<V>> implements
     /**
      * @return hash code
      */
+    @Override
     public int hashCode() {
         return getKey().hashCode() ^ getValue().hashCode();
     }

@@ -62,6 +62,7 @@ public class TestFilterListIterator extends TestCase {
     private Predicate<Integer> fourPred = null;
     private Random random = new Random();
 
+    @Override
     public void setUp() {
         list = new ArrayList<Integer>();
         odds = new ArrayList<Integer>();
@@ -116,6 +117,7 @@ public class TestFilterListIterator extends TestCase {
 
     }
 
+    @Override
     public void tearDown() throws Exception {
         list = null;
         odds = null;

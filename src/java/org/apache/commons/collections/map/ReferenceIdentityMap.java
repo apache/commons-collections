@@ -156,6 +156,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
      * @param key  the key to get a hash code for
      * @return the hash code
      */
+    @Override
     protected int hash(Object key) {
         return System.identityHashCode(key);
     }
@@ -169,6 +170,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
      * @param value  the value to get a hash code for, may be null
      * @return the hash code, as per the MapEntry specification
      */
+    @Override
     protected int hashEntry(Object key, Object value) {
         return System.identityHashCode(key) ^
                System.identityHashCode(value);
@@ -184,6 +186,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
      * @param key2  the second key extracted from the entry via <code>entry.key</code>
      * @return true if equal by identity
      */
+    @Override
     protected boolean isEqualKey(Object key1, Object key2) {
         key2 = keyType == ReferenceStrength.HARD ? key2 : ((Reference<?>) key2).get();
         return key1 == key2;
@@ -198,6 +201,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
      * @param value2  the second value extracted from the entry via <code>getValue()</code>
      * @return true if equal by identity
      */
+    @Override
     protected boolean isEqualValue(Object value1, Object value2) {
         return value1 == value2;
     }

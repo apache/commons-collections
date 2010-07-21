@@ -57,14 +57,17 @@ public class TestPredicatedBuffer<E> extends TestPredicatedCollection<E> {
         return PredicatedBuffer.decorate(buffer, predicate);
     }
 
+    @Override
     public Buffer<E> makeObject() {
         return decorateCollection(new ArrayStack<E>(), truePredicate);
     }
 
+    @Override
     public Collection<E> makeConfirmedCollection() {
         return new ArrayStack<E>();
     }
 
+    @Override
     public Collection<E> makeConfirmedFullCollection() {
         ArrayStack<E> list = new ArrayStack<E>();
         list.addAll(java.util.Arrays.asList(getFullElements()));
@@ -105,6 +108,7 @@ public class TestPredicatedBuffer<E> extends TestPredicatedCollection<E> {
         }
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

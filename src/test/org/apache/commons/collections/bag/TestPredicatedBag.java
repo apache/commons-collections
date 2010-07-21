@@ -65,6 +65,7 @@ public class TestPredicatedBag<T> extends AbstractTestBag<T> {
         return PredicatedBag.decorate(bag, predicate);
     }
 
+    @Override
     public Bag<T> makeObject() {
         return decorateBag(new HashBag<T>(), truePredicate);
     }
@@ -128,6 +129,7 @@ public class TestPredicatedBag<T> extends AbstractTestBag<T> {
         }
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

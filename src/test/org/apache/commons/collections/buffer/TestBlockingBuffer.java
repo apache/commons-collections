@@ -52,10 +52,12 @@ public class TestBlockingBuffer<E> extends AbstractTestObject {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     public Buffer<E> makeObject() {
         return BlockingBuffer.decorate(new MyBuffer<E>());
     }
 
+    @Override
     public boolean isEqualsCheckable() {
         return false;
     }
@@ -437,6 +439,7 @@ public class TestBlockingBuffer<E> extends AbstractTestObject {
             this.obj = obj;
         }
 
+        @Override
         public void run() {
             try {
                 // wait for other thread to block on get() or remove()
@@ -467,6 +470,7 @@ public class TestBlockingBuffer<E> extends AbstractTestObject {
             this.obj = obj;
         }
 
+        @Override
         public void run() {
             try {
                 // wait for other thread to block on get() or remove()
@@ -517,6 +521,7 @@ public class TestBlockingBuffer<E> extends AbstractTestObject {
             this.action = action;
         }
 
+        @Override
         public void run() {
             try {
                 if (action == "get") {
@@ -544,6 +549,7 @@ public class TestBlockingBuffer<E> extends AbstractTestObject {
             return get(0);
         }
 
+        @Override
         public E remove() {
             if (isEmpty()) {
                 throw new BufferUnderflowException();
@@ -559,6 +565,7 @@ public class TestBlockingBuffer<E> extends AbstractTestObject {
         }
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

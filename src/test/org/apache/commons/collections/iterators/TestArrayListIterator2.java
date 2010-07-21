@@ -35,10 +35,12 @@ public class TestArrayListIterator2<E> extends TestArrayIterator2<E> {
         return new TestSuite(TestArrayListIterator2.class);
     }
 
+    @Override
     public ArrayListIterator<E> makeEmptyIterator() {
         return new ArrayListIterator<E>(new int[0]);
     }
 
+    @Override
     public ArrayListIterator<E> makeObject() {
         return new ArrayListIterator<E>(testArray);
     }

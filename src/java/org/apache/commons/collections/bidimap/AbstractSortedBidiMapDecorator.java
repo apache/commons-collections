@@ -56,6 +56,7 @@ public abstract class AbstractSortedBidiMapDecorator<K, V> extends
      * 
      * @return the decorated map
      */
+    @Override
     protected SortedBidiMap<K, V> decorated() {
         return (SortedBidiMap<K, V>) super.decorated();
     }

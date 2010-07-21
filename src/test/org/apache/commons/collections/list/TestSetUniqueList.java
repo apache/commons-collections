@@ -53,10 +53,12 @@ public class TestSetUniqueList<E> extends AbstractTestList<E> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public List<E> makeObject() {
         return new SetUniqueList<E>(new ArrayList<E>(), new HashSet<E>());
     }
 
+    @Override
     public void testListIteratorSet() {
         // override to block
         resetFull();
@@ -68,6 +70,7 @@ public class TestSetUniqueList<E> extends AbstractTestList<E> {
         } catch (UnsupportedOperationException ex) {}
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public E[] getFullNonNullElements() {
         // override to avoid duplicate "One"
@@ -92,6 +95,7 @@ public class TestSetUniqueList<E> extends AbstractTestList<E> {
         };
     }
 
+    @Override
     public void testListIteratorAdd() {
         // override to cope with Set behaviour
         resetEmpty();
@@ -120,6 +124,7 @@ public class TestSetUniqueList<E> extends AbstractTestList<E> {
         }
     }
 
+    @Override
     public void testCollectionAddAll() {
         // override for set behaviour
         resetEmpty();
@@ -174,6 +179,7 @@ public class TestSetUniqueList<E> extends AbstractTestList<E> {
       assertEquals("Third new element should be at index 0", thirdNewElement, list.get(0));
     }
     
+    @Override
     @SuppressWarnings("unchecked")
     public void testListSetByIndex() {
         // override for set behaviour
@@ -188,6 +194,7 @@ public class TestSetUniqueList<E> extends AbstractTestList<E> {
     }
 
     boolean extraVerify = true;
+    @Override
     public void testCollectionIteratorRemove() {
         try {
             extraVerify = false;
@@ -197,6 +204,7 @@ public class TestSetUniqueList<E> extends AbstractTestList<E> {
         }
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public void verify() {
         super.verify();
@@ -447,6 +455,7 @@ public class TestSetUniqueList<E> extends AbstractTestList<E> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

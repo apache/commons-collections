@@ -52,6 +52,7 @@ public class TestUnmodifiableMapEntry<K, V> extends AbstractTestMapEntry<K, V> {
      * Subclasses should override this method to return a Map.Entry
      * of the type being tested.
      */
+    @Override
     public Map.Entry<K, V> makeMapEntry() {
         return new UnmodifiableMapEntry<K, V>(null, null);
     }
@@ -61,6 +62,7 @@ public class TestUnmodifiableMapEntry<K, V> extends AbstractTestMapEntry<K, V> {
      * Subclasses should override this method to return a Map.Entry
      * of the type being tested.
      */
+    @Override
     public Map.Entry<K, V> makeMapEntry(K key, V value) {
         return new UnmodifiableMapEntry<K, V>(key, value);
     }
@@ -70,6 +72,7 @@ public class TestUnmodifiableMapEntry<K, V> extends AbstractTestMapEntry<K, V> {
      * Subclasses should override this method.
      *
      */
+    @Override
     @SuppressWarnings("unchecked")
     public void testConstructors() {
         // 1. test key-value constructor
@@ -91,6 +94,7 @@ public class TestUnmodifiableMapEntry<K, V> extends AbstractTestMapEntry<K, V> {
         assertTrue(entry instanceof Unmodifiable);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public void testAccessorsAndMutators() {
         Map.Entry<K, V> entry = makeMapEntry((K) key, (V) value);
@@ -104,6 +108,7 @@ public class TestUnmodifiableMapEntry<K, V> extends AbstractTestMapEntry<K, V> {
         assertSame(null, entry.getValue());
     }
 
+    @Override
     public void testSelfReferenceHandling() {
         // block
     }

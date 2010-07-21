@@ -51,6 +51,7 @@ public class TestLinkedMap<K, V> extends AbstractTestOrderedMap<K, V> {
         return BulkTest.makeSuite(TestLinkedMap.class);
     }
 
+    @Override
     public LinkedMap<K, V> makeObject() {
         return new LinkedMap<K, V>();
     }
@@ -63,6 +64,7 @@ public class TestLinkedMap<K, V> extends AbstractTestOrderedMap<K, V> {
         return (LinkedMap<K, V>) super.makeFullMap();
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3";
     }
@@ -240,29 +242,37 @@ public class TestLinkedMap<K, V> extends AbstractTestOrderedMap<K, V> {
             super("TestListView");
         }
 
+        @Override
         public List<K> makeObject() {
             return TestLinkedMap.this.makeObject().asList();
         }
 
+        @Override
         public List<K> makeFullCollection() {
             return TestLinkedMap.this.makeFullMap().asList();
         }
 
+        @Override
         public K[] getFullElements() {
             return TestLinkedMap.this.getSampleKeys();
         }
+        @Override
         public boolean isAddSupported() {
             return false;
         }
+        @Override
         public boolean isRemoveSupported() {
             return false;
         }
+        @Override
         public boolean isSetSupported() {
             return false;
         }
+        @Override
         public boolean isNullSupported() {
             return TestLinkedMap.this.isAllowNullKey();
         }
+        @Override
         public boolean isTestSerialization() {
             return false;
         }

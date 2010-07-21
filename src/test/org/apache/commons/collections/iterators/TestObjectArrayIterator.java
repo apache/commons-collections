@@ -44,11 +44,13 @@ public class TestObjectArrayIterator<E> extends AbstractTestIterator<E> {
         super(testName);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public ObjectArrayIterator<E> makeEmptyIterator() {
         return new ObjectArrayIterator<E>((E[]) new Object[0]);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public ObjectArrayIterator<E> makeObject() {
         return new ObjectArrayIterator<E>((E[]) testArray);
@@ -70,6 +72,7 @@ public class TestObjectArrayIterator<E> extends AbstractTestIterator<E> {
         return new ObjectArrayIterator<E>(array, start, end);
     }
 
+    @Override
     public boolean supportsRemove() {
         return false;
     }

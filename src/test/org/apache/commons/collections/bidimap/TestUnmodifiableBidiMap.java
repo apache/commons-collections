@@ -46,16 +46,19 @@ public class TestUnmodifiableBidiMap<K, V> extends AbstractTestBidiMap<K, V> {
         super(testName);
     }
 
+    @Override
     public BidiMap<K, V> makeObject() {
         return UnmodifiableBidiMap.decorate(new DualHashBidiMap<K, V>());
     }
 
+    @Override
     public BidiMap<K, V> makeFullMap() {
         BidiMap<K, V> bidi = new DualHashBidiMap<K, V>();
         addSampleMappings(bidi);
         return UnmodifiableBidiMap.decorate(bidi);
     }
 
+    @Override
     public Map<K, V> makeConfirmedMap() {
         return new HashMap<K, V>();
     }
@@ -63,18 +66,22 @@ public class TestUnmodifiableBidiMap<K, V> extends AbstractTestBidiMap<K, V> {
     /**
      * Override to prevent infinite recursion of tests.
      */
+    @Override
     public String[] ignoredTests() {
         return new String[] {"TestUnmodifiableBidiMap.bulkTestInverseMap.bulkTestInverseMap"};
     }
 
+    @Override
     public boolean isPutAddSupported() {
         return false;
     }
 
+    @Override
     public boolean isPutChangeSupported() {
         return false;
     }
 
+    @Override
     public boolean isRemoveSupported() {
         return false;
     }

@@ -179,6 +179,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @param key  the key
      * @return the mapped value, null if no match
      */
+    @Override
     public V get(Object key) {
         key = convertKey(key);
         int hashCode = hash(key);
@@ -197,6 +198,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      *
      * @return the size
      */
+    @Override
     public int size() {
         return size;
     }
@@ -206,6 +208,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      *
      * @return true if the map is currently size zero
      */
+    @Override
     public boolean isEmpty() {
         return (size == 0);
     }
@@ -217,6 +220,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @param key  the key to search for
      * @return true if the map contains the key
      */
+    @Override
     public boolean containsKey(Object key) {
         key = convertKey(key);
         int hashCode = hash(key);
@@ -236,6 +240,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @param value  the value to search for
      * @return true if the map contains the value
      */
+    @Override
     public boolean containsValue(Object value) {
         if (value == null) {
             for (int i = 0, isize = data.length; i < isize; i++) {
@@ -269,6 +274,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @param value  the value to add
      * @return the value previously mapped to this key, null if none
      */
+    @Override
     public V put(K key, V value) {
         Object convertedKey = convertKey(key);
         int hashCode = hash(convertedKey);
@@ -296,6 +302,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @param map  the map to add
      * @throws NullPointerException if the map is null
      */
+    @Override
     public void putAll(Map<? extends K, ? extends V> map) {
         _putAll(map);
     }
@@ -330,6 +337,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @param key  the mapping to remove
      * @return the value mapped to the removed key, null if key not in map
      */
+    @Override
     public V remove(Object key) {
         key = convertKey(key);
         int hashCode = hash(key);
@@ -352,6 +360,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * Clears the map, resetting the size to zero and nullifying references
      * to avoid garbage collection issues.
      */
+    @Override
     public void clear() {
         modCount++;
         HashEntry<K, V>[] data = this.data;
@@ -799,6 +808,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      *
      * @return the entrySet view
      */
+    @Override
     public Set<Map.Entry<K, V>> entrySet() {
         if (entrySet == null) {
             entrySet = new EntrySet<K, V>(this);
@@ -831,14 +841,17 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             this.parent = parent;
         }
 
+        @Override
         public int size() {
             return parent.size();
         }
 
+        @Override
         public void clear() {
             parent.clear();
         }
 
+        @Override
         public boolean contains(Object entry) {
             if (entry instanceof Map.Entry) {
                 Map.Entry<?, ?> e = (Map.Entry<?, ?>) entry;
@@ -848,6 +861,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             return false;
         }
 
+        @Override
         public boolean remove(Object obj) {
             if (obj instanceof Map.Entry == false) {
                 return false;
@@ -860,6 +874,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             return true;
         }
 
+        @Override
         public Iterator<Map.Entry<K, V>> iterator() {
             return parent.createEntrySetIterator();
         }
@@ -887,6 +902,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      *
      * @return the keySet view
      */
+    @Override
     public Set<K> keySet() {
         if (keySet == null) {
             keySet = new KeySet<K>(this);
@@ -919,24 +935,29 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             this.parent = parent;
         }
 
+        @Override
         public int size() {
             return parent.size();
         }
 
+        @Override
         public void clear() {
             parent.clear();
         }
 
+        @Override
         public boolean contains(Object key) {
             return parent.containsKey(key);
         }
 
+        @Override
         public boolean remove(Object key) {
             boolean result = parent.containsKey(key);
             parent.remove(key);
             return result;
         }
 
+        @Override
         public Iterator<K> iterator() {
             return parent.createKeySetIterator();
         }
@@ -965,6 +986,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      *
      * @return the values view
      */
+    @Override
     public Collection<V> values() {
         if (values == null) {
             values = new Values<V>(this);
@@ -997,18 +1019,22 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             this.parent = parent;
         }
 
+        @Override
         public int size() {
             return parent.size();
         }
 
+        @Override
         public void clear() {
             parent.clear();
         }
 
+        @Override
         public boolean contains(Object value) {
             return parent.containsValue(value);
         }
 
+        @Override
         public Iterator<V> iterator() {
             return parent.createValuesIterator();
         }
@@ -1076,6 +1102,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             return (V) old;
         }
 
+        @Override
         public boolean equals(Object obj) {
             if (obj == this) {
                 return true;
@@ -1089,11 +1116,13 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
                 (getValue() == null ? other.getValue() == null : getValue().equals(other.getValue()));
         }
 
+        @Override
         public int hashCode() {
             return (getKey() == null ? 0 : getKey().hashCode()) ^
                    (getValue() == null ? 0 : getValue().hashCode());
         }
 
+        @Override
         public String toString() {
             return new StringBuilder().append(getKey()).append('=').append(getValue()).toString();
         }
@@ -1169,6 +1198,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             expectedModCount = parent.modCount;
         }
 
+        @Override
         public String toString() {
             if (last != null) {
                 return "Iterator[" + last.getKey() + "=" + last.getValue() + "]";
@@ -1249,6 +1279,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      *
      * @return a shallow clone
      */
+    @Override
     @SuppressWarnings("unchecked")
     protected AbstractHashedMap<K, V> clone() {
         try {
@@ -1273,6 +1304,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @param obj  the object to compare to
      * @return true if equal
      */
+    @Override
     @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
         if (obj == this) {
@@ -1313,6 +1345,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      *
      * @return the hash code defined in the Map interface
      */
+    @Override
     public int hashCode() {
         int total = 0;
         Iterator<Map.Entry<K, V>> it = createEntrySetIterator();
@@ -1327,6 +1360,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      *
      * @return a string version of the map
      */
+    @Override
     public String toString() {
         if (size() == 0) {
             return "{}";

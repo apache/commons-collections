@@ -60,11 +60,13 @@ public abstract class AbstractTestComparator<T> extends AbstractTestObject {
      * 
      * @return a full iterator
      */
+    @Override
     public abstract Comparator<T> makeObject();
 
     /**
      * Overrides superclass to block tests.
      */
+    @Override
     public boolean supportsEmptyCollections() {
         return false;
     }
@@ -72,6 +74,7 @@ public abstract class AbstractTestComparator<T> extends AbstractTestObject {
     /**
      * Overrides superclass to block tests.
      */
+    @Override
     public boolean supportsFullCollections() {
         return false;
     }
@@ -80,6 +83,7 @@ public abstract class AbstractTestComparator<T> extends AbstractTestObject {
      * Overrides superclass to set the compatability to version 2
      * as there were no Comparators in version 1.x.
      */
+    @Override
     public String getCompatibilityVersion() {
         return "2";
     }

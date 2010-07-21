@@ -41,6 +41,7 @@ public class TestComparatorChain extends AbstractTestComparator<TestComparatorCh
         return new TestSuite(TestComparatorChain.class);
     }
 
+    @Override
     public Comparator<PseudoRow> makeObject() {
         ComparatorChain<PseudoRow> chain = new ComparatorChain<PseudoRow>(new ColumnComparator(0));
         chain.addComparator(new ColumnComparator(1), true); // reverse the second column
@@ -114,6 +115,7 @@ public class TestComparatorChain extends AbstractTestComparator<TestComparatorCh
         assertTrue(chain.compare(new Integer(4), new Integer(4)) == 0);
     }
 
+    @Override
     public List<PseudoRow> getComparableObjectsOrdered() {
         List<PseudoRow> list = new LinkedList<PseudoRow>();
         // this is the correct order assuming a
@@ -143,6 +145,7 @@ public class TestComparatorChain extends AbstractTestComparator<TestComparatorCh
             return cols[colIndex];
         }
 
+        @Override
         public String toString() {
             StringBuilder buf = new StringBuilder();
             buf.append("[");
@@ -155,6 +158,7 @@ public class TestComparatorChain extends AbstractTestComparator<TestComparatorCh
             return buf.toString();
         }
 
+        @Override
         public boolean equals(Object o) {
             if (!(o instanceof PseudoRow)) {
                 return false;
@@ -201,10 +205,12 @@ public class TestComparatorChain extends AbstractTestComparator<TestComparatorCh
             return 0;
         }
 
+        @Override
         public int hashCode() {
             return colIndex;
         }
 
+        @Override
         public boolean equals(Object that) {
             return that instanceof ColumnComparator && colIndex == ((ColumnComparator) that).colIndex;
         }

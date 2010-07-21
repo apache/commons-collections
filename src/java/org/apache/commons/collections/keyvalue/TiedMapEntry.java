@@ -97,6 +97,7 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
      * @param obj  the object to compare to
      * @return true if equal key and value
      */
+    @Override
     @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
         if (obj == this) {
@@ -119,6 +120,7 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
      * 
      * @return a suitable hash code
      */
+    @Override
     public int hashCode() {
         Object value = getValue();
         return (getKey() == null ? 0 : getKey().hashCode()) ^
@@ -130,6 +132,7 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
      * 
      * @return entry as a string
      */
+    @Override
     public String toString() {
         return getKey() + "=" + getValue();
     }

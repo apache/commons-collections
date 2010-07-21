@@ -65,6 +65,7 @@ public class TestPredicatedMap<K, V> extends AbstractTestIterableMap<K, V> {
         return PredicatedMap.decorate(map, keyPredicate, valuePredicate);
     }
 
+    @Override
     public IterableMap<K, V> makeObject() {
         return decorateMap(new HashMap<K, V>(), truePredicate, truePredicate);
     }
@@ -136,6 +137,7 @@ public class TestPredicatedMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

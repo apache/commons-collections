@@ -83,6 +83,7 @@ public class PredicatedSortedBag<E>
      * 
      * @return the decorated bag
      */
+    @Override
     protected SortedBag<E> decorated() {
         return (SortedBag<E>) super.decorated();
     }

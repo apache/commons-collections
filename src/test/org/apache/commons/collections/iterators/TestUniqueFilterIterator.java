@@ -50,6 +50,7 @@ public class TestUniqueFilterIterator<E> extends AbstractTestIterator<E> {
         super(testName);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public void setUp() {
         list1 = new ArrayList<E>();
@@ -65,11 +66,13 @@ public class TestUniqueFilterIterator<E> extends AbstractTestIterator<E> {
         list1.add((E) "Five");
     }
 
+    @Override
     public UniqueFilterIterator<E> makeEmptyIterator() {
         ArrayList<E> list = new ArrayList<E>();
         return new UniqueFilterIterator<E>(list.iterator());
     }
 
+    @Override
     public UniqueFilterIterator<E> makeObject() {
         Iterator<E> i = list1.iterator();
         return new UniqueFilterIterator<E>(i);

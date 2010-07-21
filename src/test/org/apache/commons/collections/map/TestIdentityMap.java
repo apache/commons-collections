@@ -55,10 +55,12 @@ public class TestIdentityMap<K, V> extends AbstractTestObject {
 //        return BulkTest.makeSuite(TestIdentityMap.class);  // causes race condition!
     }
 
+    @Override
     public IdentityMap<K, V> makeObject() {
         return new IdentityMap<K, V>();
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3";
     }

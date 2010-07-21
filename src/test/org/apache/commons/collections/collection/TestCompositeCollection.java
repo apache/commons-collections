@@ -55,10 +55,12 @@ public class TestCompositeCollection<E> extends AbstractTestCollection<E> {
     /**
      * Run stock collection tests without Mutator, so turn off add, remove
      */
+    @Override
     public boolean isAddSupported() {
         return false;
     }
 
+    @Override
     public boolean isRemoveSupported() {
         return false;
     }
@@ -66,14 +68,17 @@ public class TestCompositeCollection<E> extends AbstractTestCollection<E> {
     /**
      * Empty collection is empty composite
      */
+    @Override
     public Collection<E> makeObject() {
         return new CompositeCollection<E>();
     }
 
+    @Override
     public Collection<E> makeConfirmedCollection() {
         return new HashSet<E>();
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public E[] getFullElements() {
         return (E[]) new Object[] { "1", "2", "3", "4" };
@@ -82,6 +87,7 @@ public class TestCompositeCollection<E> extends AbstractTestCollection<E> {
     /**
      * Full collection consists of 4 collections, each with one element
      */
+    @Override
     public Collection<E> makeFullCollection() {
         CompositeCollection<E> compositeCollection = new CompositeCollection<E>();
         E[] elements = getFullElements();
@@ -96,6 +102,7 @@ public class TestCompositeCollection<E> extends AbstractTestCollection<E> {
     /**
      * Full collection should look like a collection with 4 elements
      */
+    @Override
     public Collection<E> makeConfirmedFullCollection() {
         Collection<E> collection = new HashSet<E>();
         collection.addAll(Arrays.asList(getFullElements()));
@@ -106,6 +113,7 @@ public class TestCompositeCollection<E> extends AbstractTestCollection<E> {
      * Override testUnsupportedRemove, since the default impl expects removeAll,
      * retainAll and iterator().remove to throw
      */
+    @Override
     public void testUnsupportedRemove() {
         resetFull();
         try {
@@ -375,6 +383,7 @@ public class TestCompositeCollection<E> extends AbstractTestCollection<E> {
         assertEquals(2, c.size());
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.3";
     }

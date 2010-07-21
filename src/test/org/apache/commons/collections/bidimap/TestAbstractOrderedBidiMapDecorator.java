@@ -48,18 +48,22 @@ public class TestAbstractOrderedBidiMapDecorator<K, V>
         return new TestOrderedBidiMap<K, V>();
     }
 
+    @Override
     public SortedMap<K, V> makeConfirmedMap() {
         return new TreeMap<K, V>();
     }
 
+    @Override
     public boolean isAllowNullKey() {
         return false;
     }
 
+    @Override
     public boolean isAllowNullValue() {
         return false;
     }
 
+    @Override
     public boolean isSetValueSupported() {
         return true;
     }
@@ -79,6 +83,7 @@ public class TestAbstractOrderedBidiMapDecorator<K, V>
             super(map);
         }
 
+        @Override
         public OrderedBidiMap<V, K> inverseBidiMap() {
             if (inverse == null) {
                 inverse = new TestOrderedBidiMap<V, K>(decorated().inverseBidiMap());

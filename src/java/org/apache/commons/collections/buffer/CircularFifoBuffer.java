@@ -86,6 +86,7 @@ public class CircularFifoBuffer<E> extends BoundedFifoBuffer<E> {
      * @param element the element to add
      * @return true, always
      */
+    @Override
     public boolean add(E element) {
         if (isFull()) {
             remove();

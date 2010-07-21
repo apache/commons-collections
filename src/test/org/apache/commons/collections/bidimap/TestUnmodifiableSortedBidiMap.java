@@ -47,47 +47,57 @@ public class TestUnmodifiableSortedBidiMap<K extends Comparable<K>, V extends Co
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public SortedBidiMap<K, V> makeObject() {
         return UnmodifiableSortedBidiMap.decorate(new DualTreeBidiMap<K, V>());
     }
 
+    @Override
     public SortedBidiMap<K, V> makeFullMap() {
         SortedBidiMap<K, V> bidi = new DualTreeBidiMap<K, V>();
         addSampleMappings(bidi);
         return UnmodifiableSortedBidiMap.decorate(bidi);
     }
 
+    @Override
     public SortedMap<K, V> makeConfirmedMap() {
         return new TreeMap<K, V>();
     }
 
+    @Override
     public boolean isSubMapViewsSerializable() {
         // TreeMap sub map views have a bug in deserialization.
         return false;
     }
 
+    @Override
     public String[] ignoredTests() {
         // Override to prevent infinite recursion of tests.
         return new String[] {"TestUnmodifiableSortedBidiMap.bulkTestInverseMap.bulkTestInverseMap"};
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public boolean isAllowNullKey() {
         return false;
     }
 
+    @Override
     public boolean isAllowNullValue() {
         return false;
     }
 
+    @Override
     public boolean isPutAddSupported() {
         return false;
     }
 
+    @Override
     public boolean isPutChangeSupported() {
         return false;
     }
 
+    @Override
     public boolean isRemoveSupported() {
         return false;
     }

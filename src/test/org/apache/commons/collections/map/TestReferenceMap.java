@@ -47,18 +47,22 @@ public class TestReferenceMap<K, V> extends AbstractTestIterableMap<K, V> {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     public ReferenceMap<K, V> makeObject() {
         return new ReferenceMap<K, V>(ReferenceStrength.WEAK, ReferenceStrength.WEAK);
     }
 
+    @Override
     public boolean isAllowNullKey() {
         return false;
     }
 
+    @Override
     public boolean isAllowNullValue() {
         return false;
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

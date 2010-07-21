@@ -60,6 +60,7 @@ public abstract class AbstractBagDecorator<E>
      * 
      * @return the decorated bag
      */
+    @Override
     protected Bag<E> decorated() {
         return (Bag<E>) super.decorated();
     }

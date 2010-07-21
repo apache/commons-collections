@@ -100,6 +100,7 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
      * @return a hash code for this comparator.
      * @since Commons Collections 3.0
      */
+    @Override
     public int hashCode() {
         return "ComparableComparator".hashCode();
     }
@@ -119,6 +120,7 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
      * @return true if equal
      * @since Commons Collections 3.0
      */
+    @Override
     public boolean equals(Object object) {
         return (this == object) || 
                ((null != object) && (object.getClass().equals(this.getClass())));

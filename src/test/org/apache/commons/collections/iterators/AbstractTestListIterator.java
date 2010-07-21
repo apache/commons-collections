@@ -51,6 +51,7 @@ public abstract class AbstractTestListIterator<E> extends AbstractTestIterator<E
      *
      * @return an empty iterator
      */
+    @Override
     public abstract ListIterator<E> makeEmptyIterator();
 
     /**
@@ -58,6 +59,7 @@ public abstract class AbstractTestListIterator<E> extends AbstractTestIterator<E
      *
      * @return a full iterator
      */
+    @Override
     public abstract ListIterator<E> makeObject();
 
     /**

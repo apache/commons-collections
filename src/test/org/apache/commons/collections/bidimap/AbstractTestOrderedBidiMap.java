@@ -165,38 +165,46 @@ public abstract class AbstractTestOrderedBidiMap<K, V> extends AbstractTestBidiM
             super("TestBidiOrderedMapIterator");
         }
 
+        @Override
         public V[] addSetValues() {
             return AbstractTestOrderedBidiMap.this.getNewSampleValues();
         }
 
+        @Override
         public boolean supportsRemove() {
             return AbstractTestOrderedBidiMap.this.isRemoveSupported();
         }
 
+        @Override
         public boolean supportsSetValue() {
             return AbstractTestOrderedBidiMap.this.isSetValueSupported();
         }
 
+        @Override
         public MapIterator<K, V> makeEmptyIterator() {
             resetEmpty();
             return AbstractTestOrderedBidiMap.this.getMap().mapIterator();
         }
 
+        @Override
         public MapIterator<K, V> makeObject() {
             resetFull();
             return AbstractTestOrderedBidiMap.this.getMap().mapIterator();
         }
 
+        @Override
         public Map<K, V> getMap() {
             // assumes makeFullMapIterator() called first
             return AbstractTestOrderedBidiMap.this.map;
         }
 
+        @Override
         public Map<K, V> getConfirmedMap() {
             // assumes makeFullMapIterator() called first
             return AbstractTestOrderedBidiMap.this.confirmed;
         }
 
+        @Override
         public void verify() {
             super.verify();
             AbstractTestOrderedBidiMap.this.verify();

@@ -135,14 +135,17 @@ public abstract class AbstractCollectionDecorator<E>
         return decorated().retainAll(coll);
     }
 
+    @Override
     public boolean equals(Object object) {
         return object == this || decorated().equals(object);
     }
 
+    @Override
     public int hashCode() {
         return decorated().hashCode();
     }
 
+    @Override
     public String toString() {
         return decorated().toString();
     }

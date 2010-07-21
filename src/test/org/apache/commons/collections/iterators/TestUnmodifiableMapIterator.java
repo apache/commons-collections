@@ -44,14 +44,17 @@ public class TestUnmodifiableMapIterator<K, V> extends AbstractTestMapIterator<K
         super(testName);
     }
 
+    @Override
     public MapIterator<K, V> makeEmptyIterator() {
         return UnmodifiableMapIterator.decorate(new DualHashBidiMap<K, V>().mapIterator());
     }
 
+    @Override
     public MapIterator<K, V> makeObject() {
         return UnmodifiableMapIterator.decorate(getMap().mapIterator());
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public IterableMap<K, V> getMap() {
         IterableMap<K, V> testMap = new DualHashBidiMap<K, V>();
@@ -61,6 +64,7 @@ public class TestUnmodifiableMapIterator<K, V> extends AbstractTestMapIterator<K
         return testMap;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public Map<K, V> getConfirmedMap() {
         Map<K, V> testMap = new HashMap<K, V>();
@@ -70,10 +74,12 @@ public class TestUnmodifiableMapIterator<K, V> extends AbstractTestMapIterator<K
         return testMap;
     }
 
+    @Override
     public boolean supportsRemove() {
         return false;
     }
 
+    @Override
     public boolean supportsSetValue() {
         return false;
     }

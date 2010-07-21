@@ -42,10 +42,12 @@ public class TestArrayIterator2<E> extends AbstractTestIterator<E> {
         super(testName);
     }
 
+    @Override
     public ArrayIterator<E> makeEmptyIterator() {
         return new ArrayIterator<E>(new int[0]);
     }
 
+    @Override
     public ArrayIterator<E> makeObject() {
         return new ArrayIterator<E>(testArray);
     }
@@ -62,6 +64,7 @@ public class TestArrayIterator2<E> extends AbstractTestIterator<E> {
         return new ArrayIterator<E>(array, start, end);
     }
 
+    @Override
     public boolean supportsRemove() {
         return false;
     }

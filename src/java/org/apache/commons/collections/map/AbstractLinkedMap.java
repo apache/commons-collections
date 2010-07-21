@@ -125,6 +125,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * {@link #createEntry(HashEntry, int, Object, Object)} to create
      * the map entry object.
      */
+    @Override
     protected void init() {
         header = createEntry(null, -1, null, null);
         header.before = header.after = header;
@@ -137,6 +138,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @param value  the value to search for
      * @return true if the map contains the value
      */
+    @Override
     public boolean containsValue(Object value) {
         // override uses faster iterator
         if (value == null) {
@@ -159,6 +161,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * Clears the map, resetting the size to zero and nullifying references
      * to avoid garbage collection issues.
      */
+    @Override
     public void clear() {
         // override to reset the linked list
         super.clear();
@@ -201,6 +204,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         return (entry == null || entry.after == header ? null : entry.after.getKey());
     }
 
+    @Override
     protected LinkEntry<K, V> getEntry(Object key) {
         return (LinkEntry<K, V>) super.getEntry(key);
     }
@@ -257,6 +261,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @param link  the entry to add
      * @param hashIndex  the index into the data array to store at
      */
+    @Override
     protected void addEntry(HashEntry<K, V> entry, int hashIndex) {
         LinkEntry<K, V> link = (LinkEntry<K, V>) entry;
         link.after  = header;
@@ -277,6 +282,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @param value  the value to store
      * @return the newly created entry
      */
+    @Override
     protected LinkEntry<K, V> createEntry(HashEntry<K, V> next, int hashCode, K key, V value) {
         return new LinkEntry<K, V>(next, hashCode, convertKey(key), value);
     }
@@ -291,6 +297,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @param hashIndex  the index into the data structure
      * @param previous  the previous entry in the chain
      */
+    @Override
     protected void removeEntry(HashEntry<K, V> entry, int hashIndex, HashEntry<K, V> previous) {
         LinkEntry<K, V> link = (LinkEntry<K, V>) entry;
         link.before.after = link.after;
@@ -331,6 +338,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     /**
      * {@inheritDoc}
      */
+    @Override
     public OrderedMapIterator<K, V> mapIterator() {
         if (size == 0) {
             return EmptyOrderedMapIterator.<K, V>getInstance();
@@ -388,6 +396,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * 
      * @return the entrySet iterator
      */
+    @Override
     protected Iterator<Map.Entry<K, V>> createEntrySetIterator() {
         if (size() == 0) {
             return EmptyOrderedIterator.<Map.Entry<K, V>>getInstance();
@@ -421,6 +430,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * 
      * @return the keySet iterator
      */
+    @Override
     protected Iterator<K> createKeySetIterator() {
         if (size() == 0) {
             return EmptyOrderedIterator.<K>getInstance();
@@ -455,6 +465,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * 
      * @return the values iterator
      */
+    @Override
     protected Iterator<V> createValuesIterator() {
         if (size() == 0) {
             return EmptyOrderedIterator.<V>getInstance();
@@ -585,6 +596,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
             next = parent.header.after;
         }
 
+        @Override
         public String toString() {
             if (last != null) {
                 return "Iterator[" + last.getKey() + "=" + last.getValue() + "]";

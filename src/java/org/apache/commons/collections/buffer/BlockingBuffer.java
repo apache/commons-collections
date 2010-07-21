@@ -108,6 +108,7 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public boolean add(E o) {
         synchronized (lock) {
             boolean result = collection.add(o);
@@ -116,6 +117,7 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
         }
     }
 
+    @Override
     public boolean addAll(Collection<? extends E> c) {
         synchronized (lock) {
             boolean result = collection.addAll(c);
@@ -131,6 +133,7 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
      *
      * @throws BufferUnderflowException if an interrupt is received
      */
+    @Override
     public E get() {
         synchronized (lock) {
             while (collection.isEmpty()) {
@@ -187,6 +190,7 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
      *
      * @throws BufferUnderflowException if an interrupt is received
      */
+    @Override
     public E remove() {
         synchronized (lock) {
             while (collection.isEmpty()) {

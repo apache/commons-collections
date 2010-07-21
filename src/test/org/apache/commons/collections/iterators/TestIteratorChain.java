@@ -54,6 +54,7 @@ public class TestIteratorChain extends AbstractTestIterator<String> {
         super(testName);
     }
 
+    @Override
     public void setUp() {
         list1 = new ArrayList<String>();
         list1.add("One");
@@ -66,11 +67,13 @@ public class TestIteratorChain extends AbstractTestIterator<String> {
         list3.add("Six");        
     }
 
+    @Override
     public IteratorChain<String> makeEmptyIterator() {
         ArrayList<String> list = new ArrayList<String>();
         return new IteratorChain<String>(list.iterator());
     }
 
+    @Override
     public IteratorChain<String> makeObject() {
         IteratorChain<String> chain = new IteratorChain<String>();
 
@@ -127,6 +130,7 @@ public class TestIteratorChain extends AbstractTestIterator<String> {
         assertEquals(1, list2.size());
     }
     
+    @Override
     public void testRemove() {
         Iterator<String> iter = makeObject();
 

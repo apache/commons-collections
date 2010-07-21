@@ -112,6 +112,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * @return the result of adding to the underlying collection
      * @throws IllegalArgumentException if the add is invalid
      */
+    @Override
     public boolean add(E object) {
         validate(object);
         return decorated().add(object);
@@ -126,6 +127,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * @return the result of adding to the underlying collection
      * @throws IllegalArgumentException if the add is invalid
      */
+    @Override
     public boolean addAll(Collection<? extends E> coll) {
         for (E item : coll) {
             validate(item);

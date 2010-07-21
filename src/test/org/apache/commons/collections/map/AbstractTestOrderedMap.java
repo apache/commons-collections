@@ -69,6 +69,7 @@ public abstract class AbstractTestOrderedMap<K, V> extends AbstractTestIterableM
      *
      * @return a map that is known to be valid
      */
+    @Override
     public Map<K, V> makeConfirmedMap() {
         return new TreeMap<K, V>(new NullComparator<K>());
     }
@@ -77,6 +78,7 @@ public abstract class AbstractTestOrderedMap<K, V> extends AbstractTestIterableM
      * The only confirmed collection we have that is ordered is the sorted one.
      * Thus, sort the keys.
      */
+    @Override
     @SuppressWarnings("unchecked")
     public K[] getSampleKeys() {
         List<K> list = new ArrayList<K>(Arrays.asList(super.getSampleKeys()));
@@ -197,38 +199,46 @@ public abstract class AbstractTestOrderedMap<K, V> extends AbstractTestIterableM
             super("InnerTestOrderedMapIterator");
         }
 
+        @Override
         public boolean supportsRemove() {
             return AbstractTestOrderedMap.this.isRemoveSupported();
         }
 
+        @Override
         public boolean isGetStructuralModify() {
             return AbstractTestOrderedMap.this.isGetStructuralModify();
         }
 
+        @Override
         public boolean supportsSetValue() {
             return AbstractTestOrderedMap.this.isSetValueSupported();
         }
 
+        @Override
         public OrderedMapIterator<K, V> makeEmptyIterator() {
             resetEmpty();
             return AbstractTestOrderedMap.this.getMap().mapIterator();
         }
 
+        @Override
         public OrderedMapIterator<K, V> makeObject() {
             resetFull();
             return AbstractTestOrderedMap.this.getMap().mapIterator();
         }
 
+        @Override
         public OrderedMap<K, V> getMap() {
             // assumes makeFullMapIterator() called first
             return AbstractTestOrderedMap.this.getMap();
         }
 
+        @Override
         public Map<K, V> getConfirmedMap() {
             // assumes makeFullMapIterator() called first
             return AbstractTestOrderedMap.this.getConfirmed();
         }
 
+        @Override
         public void verify() {
             super.verify();
             AbstractTestOrderedMap.this.verify();

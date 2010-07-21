@@ -51,6 +51,7 @@ public class TestDefaultMapEntry<K, V> extends AbstractTestMapEntry<K, V> {
      * Subclasses should override this method to return a Map.Entry
      * of the type being tested.
      */
+    @Override
     public Map.Entry<K, V> makeMapEntry() {
         return new DefaultMapEntry<K, V>(null, null);
     }
@@ -60,6 +61,7 @@ public class TestDefaultMapEntry<K, V> extends AbstractTestMapEntry<K, V> {
      * Subclasses should override this method to return a Map.Entry
      * of the type being tested.
      */
+    @Override
     public Map.Entry<K, V> makeMapEntry(K key, V value) {
         return new DefaultMapEntry<K, V>(key, value);
     }
@@ -69,6 +71,7 @@ public class TestDefaultMapEntry<K, V> extends AbstractTestMapEntry<K, V> {
      * Subclasses should override this method.
      *
      */
+    @Override
     @SuppressWarnings("unchecked")
     public void testConstructors() {
         // 1. test key-value constructor
@@ -91,6 +94,7 @@ public class TestDefaultMapEntry<K, V> extends AbstractTestMapEntry<K, V> {
         assertSame(value, entry2.getValue());
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public void testSelfReferenceHandling() {
         Map.Entry<K, V> entry = makeMapEntry();

@@ -117,6 +117,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
      * @throws ClassCastException if the underlying list rejects the element
      * @throws IllegalArgumentException if the underlying list rejects the element
      */
+    @Override
     public void add(int index, E element) {
         int size = decorated().size();
         if (index > size) {
@@ -145,6 +146,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
      * @throws ClassCastException if the underlying list rejects the element
      * @throws IllegalArgumentException if the underlying list rejects the element
      */
+    @Override
     public boolean addAll(int index, Collection<? extends E> coll) {
         int size = decorated().size();
         boolean result = false;
@@ -175,6 +177,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
      * @throws ClassCastException if the underlying list rejects the element
      * @throws IllegalArgumentException if the underlying list rejects the element
      */
+    @Override
     public E set(int index, E element) {
         int size = decorated().size();
         if (index >= size) {

@@ -224,6 +224,7 @@ public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E
      *
      * @return the number of elements in this buffer
      */
+    @Override
     public int size() {
         return size;
     }
@@ -231,6 +232,7 @@ public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E
     /**
      * Clears all elements from the buffer.
      */
+    @Override
     @SuppressWarnings("unchecked")
     public void clear() {
         elements = (E[]) new Object[elements.length]; // for gc
@@ -245,6 +247,7 @@ public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E
      * @param element  the element to be added
      * @return true always
      */
+    @Override
     public boolean add(E element) {
         if (isAtCapacity()) {
             grow();
@@ -467,6 +470,7 @@ public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E
      *
      * @return an iterator over this heap's elements
      */
+    @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
 
@@ -526,6 +530,7 @@ public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E
      *
      * @return a string representation of this heap
      */
+    @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
 

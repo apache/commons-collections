@@ -78,10 +78,12 @@ public abstract class AbstractTestSortedBidiMap<K extends Comparable<K>, V exten
 //    }
 
     //-----------------------------------------------------------------------
+    @Override
     public boolean isAllowNullKey() {
         return false;
     }
 
+    @Override
     public boolean isAllowNullValue() {
         return false;
     }
@@ -100,6 +102,7 @@ public abstract class AbstractTestSortedBidiMap<K extends Comparable<K>, V exten
         return (SortedBidiMap<K, V>) super.makeFullMap();
     }
 
+    @Override
     public SortedMap<K, V> makeConfirmedMap() {
         return new TreeMap<K, V>();
     }

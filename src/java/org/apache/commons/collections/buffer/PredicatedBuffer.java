@@ -81,6 +81,7 @@ public class PredicatedBuffer<E> extends PredicatedCollection<E> implements Buff
      * 
      * @return the decorated buffer
      */
+    @Override
     protected Buffer<E> decorated() {
         return (Buffer<E>) super.decorated();
     }

@@ -59,6 +59,7 @@ public abstract class AbstractBufferDecorator<E> extends AbstractCollectionDecor
      * 
      * @return the decorated buffer
      */
+    @Override
     protected Buffer<E> decorated() {
         return (Buffer<E>) super.decorated();
     }

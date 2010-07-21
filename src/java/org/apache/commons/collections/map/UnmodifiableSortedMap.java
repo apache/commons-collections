@@ -101,55 +101,68 @@ public final class UnmodifiableSortedMap<K, V>
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public void clear() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public V put(K key, V value) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void putAll(Map<? extends K, ? extends V> mapToCopy) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public V remove(Object key) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Set<Map.Entry<K, V>> entrySet() {
         return UnmodifiableEntrySet.decorate(super.entrySet());
     }
 
+    @Override
     public Set<K> keySet() {
         return UnmodifiableSet.decorate(super.keySet());
     }
 
+    @Override
     public Collection<V> values() {
         return UnmodifiableCollection.decorate(super.values());
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public K firstKey() {
         return decorated().firstKey();
     }
 
+    @Override
     public K lastKey() {
         return decorated().lastKey();
     }
 
+    @Override
     public Comparator<? super K> comparator() {
         return decorated().comparator();
     }
 
+    @Override
     public SortedMap<K, V> subMap(K fromKey, K toKey) {
         return new UnmodifiableSortedMap<K, V>(decorated().subMap(fromKey, toKey));
     }
 
+    @Override
     public SortedMap<K, V> headMap(K toKey) {
         return new UnmodifiableSortedMap<K, V>(decorated().headMap(toKey));
     }
 
+    @Override
     public SortedMap<K, V> tailMap(K fromKey) {
         return new UnmodifiableSortedMap<K, V>(decorated().tailMap(fromKey));
     }

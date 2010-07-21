@@ -172,6 +172,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     /**
      * Initialise this subclass during construction, cloning or deserialization.
      */
+    @Override
     protected void init() {
         queue = new ReferenceQueue<Object>();
     }
@@ -182,6 +183,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      *
      * @return the size
      */
+    @Override
     public int size() {
         purgeBeforeRead();
         return super.size();
@@ -192,6 +194,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      *
      * @return true if the map is currently size zero
      */
+    @Override
     public boolean isEmpty() {
         purgeBeforeRead();
         return super.isEmpty();
@@ -203,6 +206,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * @param key  the key to search for
      * @return true if the map contains the key
      */
+    @Override
     public boolean containsKey(Object key) {
         purgeBeforeRead();
         Entry<K, V> entry = getEntry(key);
@@ -218,6 +222,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * @param value  the value to search for
      * @return true if the map contains the value
      */
+    @Override
     public boolean containsValue(Object value) {
         purgeBeforeRead();
         if (value == null) {
@@ -232,6 +237,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * @param key  the key
      * @return the mapped value, null if no match
      */
+    @Override
     public V get(Object key) {
         purgeBeforeRead();
         Entry<K, V> entry = getEntry(key);
@@ -251,6 +257,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * @return the value previously mapped to this key, null if none
      * @throws NullPointerException if either the key or value is null
      */
+    @Override
     public V put(K key, V value) {
         if (key == null) {
             throw new NullPointerException("null keys not allowed");
@@ -269,6 +276,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * @param key  the mapping to remove
      * @return the value mapped to the removed key, null if key not in map
      */
+    @Override
     public V remove(Object key) {
         if (key == null) {
             return null;
@@ -280,6 +288,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     /**
      * Clears this map.
      */
+    @Override
     public void clear() {
         super.clear();
         while (queue.poll() != null) {} // drain the queue
@@ -292,6 +301,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      *
      * @return a map iterator
      */
+    @Override
     public MapIterator<K, V> mapIterator() {
         return new ReferenceMapIterator<K, V>(this);
     }
@@ -303,6 +313,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      *
      * @return a set view of this map's entries
      */
+    @Override
     public Set<Map.Entry<K, V>> entrySet() {
         if (entrySet == null) {
             entrySet = new ReferenceEntrySet<K, V>(this);
@@ -315,6 +326,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      *
      * @return a set view of this map's keys
      */
+    @Override
     public Set<K> keySet() {
         if (keySet == null) {
             keySet = new ReferenceKeySet<K>(this);
@@ -327,6 +339,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      *
      * @return a set view of this map's values
      */
+    @Override
     public Collection<V> values() {
         if (values == null) {
             values = new ReferenceValues<V>(this);
@@ -405,6 +418,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * @param key  the key
      * @return the entry, null if no match
      */
+    @Override
     protected HashEntry<K, V> getEntry(Object key) {
         if (key == null) {
             return null;
@@ -435,6 +449,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * @param key2  the second key extracted from the entry via <code>entry.key</code>
      * @return true if equal
      */
+    @Override
     @SuppressWarnings("unchecked")
     protected boolean isEqualKey(Object key1, Object key2) {
         key2 = (keyType == ReferenceStrength.HARD ? key2 : ((Reference<K>) key2).get());
@@ -450,6 +465,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * @param value  the value to store
      * @return the newly created entry
      */
+    @Override
     protected ReferenceEntry<K, V> createEntry(HashEntry<K, V> next, int hashCode, K key, V value) {
         return new ReferenceEntry<K, V>(this, next, hashCode, key, value);
     }
@@ -459,6 +475,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      *
      * @return the entrySet iterator
      */
+    @Override
     protected Iterator<Map.Entry<K, V>> createEntrySetIterator() {
         return new ReferenceEntrySetIterator<K, V>(this);
     }
@@ -468,6 +485,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      *
      * @return the keySet iterator
      */
+    @Override
     protected Iterator<K> createKeySetIterator() {
         return new ReferenceKeySetIterator<K>(this);
     }
@@ -477,6 +495,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      *
      * @return the values iterator
      */
+    @Override
     protected Iterator<V> createValuesIterator() {
         return new ReferenceValuesIterator<V>(this);
     }
@@ -491,10 +510,12 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
             super(parent);
         }
 
+        @Override
         public Object[] toArray() {
             return toArray(new Object[0]);
         }
 
+        @Override
         public <T> T[] toArray(T[] arr) {
             // special implementation to handle disappearing entries
             ArrayList<Map.Entry<K, V>> list = new ArrayList<Map.Entry<K, V>>();
@@ -515,10 +536,12 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
             super(parent);
         }
 
+        @Override
         public Object[] toArray() {
             return toArray(new Object[0]);
         }
 
+        @Override
         public <T> T[] toArray(T[] arr) {
             // special implementation to handle disappearing keys
             List<K> list = new ArrayList<K>(parent.size());
@@ -539,10 +562,12 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
             super(parent);
         }
 
+        @Override
         public Object[] toArray() {
             return toArray(new Object[0]);
         }
 
+        @Override
         public <T> T[] toArray(T[] arr) {
             // special implementation to handle disappearing values
             List<V> list = new ArrayList<V>(parent.size());
@@ -588,6 +613,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
          *
          * @return the key, which may be null if it was garbage collected
          */
+        @Override
         @SuppressWarnings("unchecked")
         public K getKey() {
             return (K) ((parent.keyType == ReferenceStrength.HARD) ? key : ((Reference<K>) key).get());
@@ -599,6 +625,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
          *
          * @return the value, which may be null if it was garbage collected
          */
+        @Override
         @SuppressWarnings("unchecked")
         public V getValue() {
             return (V) ((parent.valueType == ReferenceStrength.HARD) ? value : ((Reference<V>) value).get());
@@ -610,6 +637,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
          * @param obj  the object to store
          * @return the previous value
          */
+        @Override
         @SuppressWarnings("unchecked")
         public V setValue(V obj) {
             V old = getValue();
@@ -629,6 +657,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
          * @param obj  the other map entry to compare to
          * @return true if equal, false if not
          */
+        @Override
         @SuppressWarnings("unchecked")
         public boolean equals(Object obj) {
             if (obj == this) {
@@ -657,6 +686,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
          *
          * @return the hashcode of the entry
          */
+        @Override
         public int hashCode() {
             return parent.hashEntry(getKey(), getValue());
         }
@@ -912,6 +942,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
             this.hash = hash;
         }
 
+        @Override
         public int hashCode() {
             return hash;
         }
@@ -929,6 +960,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
             this.hash = hash;
         }
 
+        @Override
         public int hashCode() {
             return hash;
         }
@@ -953,6 +985,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      *
      * @param out  the output stream
      */
+    @Override
     protected void doWriteObject(ObjectOutputStream out) throws IOException {
         out.writeInt(keyType.value);
         out.writeInt(valueType.value);
@@ -984,6 +1017,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      *
      * @param in  the input stream
      */
+    @Override
     @SuppressWarnings("unchecked")
     protected void doReadObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         this.keyType = ReferenceStrength.resolve(in.readInt());

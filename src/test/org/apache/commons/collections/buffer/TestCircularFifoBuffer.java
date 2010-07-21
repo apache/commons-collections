@@ -60,6 +60,7 @@ public class TestCircularFifoBuffer<E> extends AbstractTestCollection<E> {
      *  the buffer contains the same elements in the same sequence as the
      *  list.
      */
+    @Override
     public void verify() {
         super.verify();
         Iterator<E> iterator1 = getCollection().iterator();
@@ -77,6 +78,7 @@ public class TestCircularFifoBuffer<E> extends AbstractTestCollection<E> {
      * Overridden because UnboundedFifoBuffer doesn't allow null elements.
      * @return false
      */
+    @Override
     public boolean isNullSupported() {
         return false;
     }
@@ -85,6 +87,7 @@ public class TestCircularFifoBuffer<E> extends AbstractTestCollection<E> {
      * Overridden because UnboundedFifoBuffer isn't fail fast.
      * @return false
      */
+    @Override
     public boolean isFailFastSupported() {
         return false;
     }
@@ -95,6 +98,7 @@ public class TestCircularFifoBuffer<E> extends AbstractTestCollection<E> {
      *
      * @return an empty ArrayList
      */
+    @Override
     public Collection<E> makeConfirmedCollection() {
         return new ArrayList<E>();
     }
@@ -104,6 +108,7 @@ public class TestCircularFifoBuffer<E> extends AbstractTestCollection<E> {
      *
      * @return a full ArrayList
      */
+    @Override
     public Collection<E> makeConfirmedFullCollection() {
         Collection<E> c = makeConfirmedCollection();
         c.addAll(java.util.Arrays.asList(getFullElements()));
@@ -115,6 +120,7 @@ public class TestCircularFifoBuffer<E> extends AbstractTestCollection<E> {
      *
      * @return an empty BoundedFifoBuffer
      */
+    @Override
     public Collection<E> makeObject() {
         return new CircularFifoBuffer<E>(100);
     }
@@ -415,6 +421,7 @@ public class TestCircularFifoBuffer<E> extends AbstractTestCollection<E> {
         assertEquals(true, b3.contains("c"));
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

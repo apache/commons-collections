@@ -56,6 +56,7 @@ public class TestObjectGraphIterator extends AbstractTestIterator<Object> {
         return new TestSuite(TestObjectGraphIterator.class);
     }
 
+    @Override
     public void setUp() {
         list1 = new ArrayList<String>();
         list1.add("One");
@@ -73,11 +74,13 @@ public class TestObjectGraphIterator extends AbstractTestIterator<Object> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public ObjectGraphIterator<Object> makeEmptyIterator() {
         ArrayList<Object> list = new ArrayList<Object>();
         return new ObjectGraphIterator<Object>(list.iterator());
     }
 
+    @Override
     public ObjectGraphIterator<Object> makeObject() {
         return new ObjectGraphIterator<Object>(iteratorList.iterator());
     }

@@ -59,6 +59,7 @@ public abstract class AbstractSortedBagDecorator<E>
      * 
      * @return the decorated bag
      */
+    @Override
     protected SortedBag<E> decorated() {
         return (SortedBag<E>) super.decorated();
     }

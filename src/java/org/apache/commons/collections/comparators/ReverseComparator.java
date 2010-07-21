@@ -87,6 +87,7 @@ public class ReverseComparator<E> implements Comparator<E>, Serializable {
      * @return a suitable hash code
      * @since Commons Collections 3.0
      */
+    @Override
     public int hashCode() {
         return "ReverseComparator".hashCode() ^ comparator.hashCode();
     }
@@ -107,6 +108,7 @@ public class ReverseComparator<E> implements Comparator<E>, Serializable {
      * @return true if equal
      * @since Commons Collections 3.0
      */
+    @Override
     public boolean equals(Object object) {
         if (this == object) {
             return true;

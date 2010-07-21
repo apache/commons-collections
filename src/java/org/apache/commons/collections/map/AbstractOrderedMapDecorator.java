@@ -62,6 +62,7 @@ public abstract class AbstractOrderedMapDecorator<K, V> extends AbstractMapDecor
      * 
      * @return the decorated map
      */
+    @Override
     protected OrderedMap<K, V> decorated() {
         return (OrderedMap<K, V>) super.decorated();
     }
@@ -83,6 +84,7 @@ public abstract class AbstractOrderedMapDecorator<K, V> extends AbstractMapDecor
         return decorated().previousKey(key);
     }
 
+    @Override
     public OrderedMapIterator<K, V> mapIterator() {
         return decorated().mapIterator();
     }

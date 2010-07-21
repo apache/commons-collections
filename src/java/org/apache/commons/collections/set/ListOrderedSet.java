@@ -168,15 +168,18 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public void clear() {
         collection.clear();
         setOrder.clear();
     }
 
+    @Override
     public OrderedIterator<E> iterator() {
         return new OrderedSetIterator<E>(setOrder.listIterator(), collection);
     }
 
+    @Override
     public boolean add(E object) {
         if (collection.add(object)) {
             setOrder.add(object);
@@ -185,6 +188,7 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
         return false;
     }
 
+    @Override
     public boolean addAll(Collection<? extends E> coll) {
         boolean result = false;
         for (E e : coll) {
@@ -193,12 +197,14 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
         return result;
     }
 
+    @Override
     public boolean remove(Object object) {
         boolean result = collection.remove(object);
         setOrder.remove(object);
         return result;
     }
 
+    @Override
     public boolean removeAll(Collection<?> coll) {
         boolean result = false;
         for (Iterator<?> it = coll.iterator(); it.hasNext();) {
@@ -207,6 +213,7 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
         return result;
     }
 
+    @Override
     public boolean retainAll(Collection<?> coll) {
         boolean result = collection.retainAll(coll);
         if (result == false) {
@@ -224,10 +231,12 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
         return result;
     }
 
+    @Override
     public Object[] toArray() {
         return setOrder.toArray();
     }
 
+    @Override
     public <T> T[] toArray(T a[]) {
         return setOrder.toArray(a);
     }
@@ -273,6 +282,7 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
      * any custom toStrings will be ignored.
      */
     // Fortunately List.toString and Set.toString look the same
+    @Override
     public String toString() {
         return setOrder.toString();
     }
@@ -294,11 +304,13 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
             this.set = set;
         }
 
+        @Override
         public E next() {
             last = iterator.next();
             return last;
         }
 
+        @Override
         public void remove() {
             set.remove(last);
             iterator.remove();

@@ -151,6 +151,7 @@ public class PredicatedMap<K, V>
      * @throws IllegalArgumentException if invalid
      * @since Commons Collections 3.1
      */
+    @Override
     protected V checkSetValue(V value) {
         if (valuePredicate.evaluate(value) == false) {
             throw new IllegalArgumentException("Cannot set value - Predicate rejected it");
@@ -164,16 +165,19 @@ public class PredicatedMap<K, V>
      * @return true if a value predicate is in use
      * @since Commons Collections 3.1
      */
+    @Override
     protected boolean isSetValueChecking() {
         return (valuePredicate != null);
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public V put(K key, V value) {
         validate(key, value);
         return map.put(key, value);
     }
 
+    @Override
     public void putAll(Map<? extends K, ? extends V> mapToCopy) {
         for (Map.Entry<? extends K, ? extends V> entry : mapToCopy.entrySet()) {
             validate(entry.getKey(), entry.getValue());

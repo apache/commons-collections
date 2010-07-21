@@ -61,20 +61,24 @@ public class TestTransformedCollection extends AbstractTestCollection<Object> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public Collection<Object> makeConfirmedCollection() {
         return new ArrayList<Object>();
     }
 
+    @Override
     public Collection<Object> makeConfirmedFullCollection() {
         List<Object> list = new ArrayList<Object>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }
     
+    @Override
     public Collection<Object> makeObject() {
         return TransformedCollection.decorate(new ArrayList<Object>(), NOOP_TRANSFORMER);
     }
 
+    @Override
     public Collection<Object> makeFullCollection() {
         List<Object> list = new ArrayList<Object>();
         list.addAll(Arrays.asList(getFullElements()));
@@ -82,10 +86,12 @@ public class TestTransformedCollection extends AbstractTestCollection<Object> {
     }
     
     //-----------------------------------------------------------------------
+    @Override
     public Object[] getFullElements() {
         return new Object[] {"1", "3", "5", "7", "2", "4", "6"};
     }
 
+    @Override
     public Object[] getOtherElements() {
         return new Object[] {"9", "88", "678", "87", "98", "78", "99"};
     }
@@ -122,6 +128,7 @@ public class TestTransformedCollection extends AbstractTestCollection<Object> {
         assertEquals(true, collection.remove(new Integer((String) els[0])));
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

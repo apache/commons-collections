@@ -69,12 +69,14 @@ public class TestClosureUtils extends junit.framework.TestCase {
     /**
      * Set up instance variables required by this test case.
      */
+    @Override
     public void setUp() {
     }
 
     /**
      * Tear down instance variables required by this test case.
      */
+    @Override
     public void tearDown() {
     }
 

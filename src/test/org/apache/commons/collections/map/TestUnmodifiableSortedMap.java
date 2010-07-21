@@ -50,22 +50,27 @@ public class TestUnmodifiableSortedMap<K, V> extends AbstractTestSortedMap<K, V>
 
     //-------------------------------------------------------------------
 
+    @Override
     public SortedMap<K, V> makeObject() {
         return UnmodifiableSortedMap.decorate(new TreeMap<K, V>());
     }
 
+    @Override
     public boolean isPutChangeSupported() {
         return false;
     }
 
+    @Override
     public boolean isPutAddSupported() {
         return false;
     }
 
+    @Override
     public boolean isRemoveSupported() {
         return false;
     }
 
+    @Override
     public SortedMap<K, V> makeFullMap() {
         SortedMap<K, V> m = new TreeMap<K, V>();
         addSampleMappings(m);
@@ -88,6 +93,7 @@ public class TestUnmodifiableSortedMap<K, V> extends AbstractTestSortedMap<K, V>
         } catch (IllegalArgumentException ex) {}
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

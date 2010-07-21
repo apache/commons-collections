@@ -52,6 +52,7 @@ public class TestListOrderedMap<K, V> extends AbstractTestOrderedMap<K, V> {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     public ListOrderedMap<K, V> makeObject() {
         return (ListOrderedMap<K, V>) ListOrderedMap.decorate(new HashMap<K, V>());
     }
@@ -382,28 +383,36 @@ public class TestListOrderedMap<K, V> extends AbstractTestOrderedMap<K, V> {
             super("TestKeyListView");
         }
 
+        @Override
         public List<K> makeObject() {
             return TestListOrderedMap.this.makeObject().keyList();
         }
+        @Override
         public List<K> makeFullCollection() {
             return TestListOrderedMap.this.makeFullMap().keyList();
         }
 
+        @Override
         public K[] getFullElements() {
             return TestListOrderedMap.this.getSampleKeys();
         }
+        @Override
         public boolean isAddSupported() {
             return false;
         }
+        @Override
         public boolean isRemoveSupported() {
             return false;
         }
+        @Override
         public boolean isSetSupported() {
             return false;
         }
+        @Override
         public boolean isNullSupported() {
             return TestListOrderedMap.this.isAllowNullKey();
         }
+        @Override
         public boolean isTestSerialization() {
             return false;
         }
@@ -415,34 +424,43 @@ public class TestListOrderedMap<K, V> extends AbstractTestOrderedMap<K, V> {
             super("TestValueListView");
         }
 
+        @Override
         public List<V> makeObject() {
             return TestListOrderedMap.this.makeObject().valueList();
         }
+        @Override
         public List<V> makeFullCollection() {
             return TestListOrderedMap.this.makeFullMap().valueList();
         }
 
+        @Override
         public V[] getFullElements() {
             return TestListOrderedMap.this.getSampleValues();
         }
+        @Override
         public boolean isAddSupported() {
             return false;
         }
+        @Override
         public boolean isRemoveSupported() {
             return true;
         }
+        @Override
         public boolean isSetSupported() {
             return true;
         }
+        @Override
         public boolean isNullSupported() {
             return TestListOrderedMap.this.isAllowNullKey();
         }
+        @Override
         public boolean isTestSerialization() {
             return false;
         }
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

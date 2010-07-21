@@ -46,6 +46,7 @@ public abstract class TestAnyAllOnePredicate<T> extends TestCompositePredicate<T
     /**
      * Tests whether <code>getInstance</code> with a one element array returns the first element in the array.
      */
+    @Override
     @SuppressWarnings("unchecked")
     @Test
     public final void singleElementArrayToGetInstance() {
@@ -58,6 +59,7 @@ public abstract class TestAnyAllOnePredicate<T> extends TestCompositePredicate<T
      * Tests that passing a singleton collection to <code>getInstance</code> returns the single element in the
      * collection.
      */
+    @Override
     @Test
     public final void singletonCollectionToGetInstance() {
         final Predicate<T> predicate = createMockPredicate(null);

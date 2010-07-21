@@ -150,6 +150,7 @@ public class UnboundedFifoBuffer<E> extends AbstractCollection<E> implements Buf
      *
      * @return this buffer's size
      */
+    @Override
     public int size() {
         int size = 0;
 
@@ -167,6 +168,7 @@ public class UnboundedFifoBuffer<E> extends AbstractCollection<E> implements Buf
      *
      * @return true if this buffer is empty
      */
+    @Override
     public boolean isEmpty() {
         return (size() == 0);
     }
@@ -178,6 +180,7 @@ public class UnboundedFifoBuffer<E> extends AbstractCollection<E> implements Buf
      * @return true, always
      * @throws NullPointerException  if the given element is null
      */
+    @Override
     @SuppressWarnings("unchecked")
     public boolean add(final E obj) {
         if (obj == null) {
@@ -272,6 +275,7 @@ public class UnboundedFifoBuffer<E> extends AbstractCollection<E> implements Buf
      *
      * @return an iterator over this buffer's elements
      */
+    @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
 

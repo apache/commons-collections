@@ -93,6 +93,7 @@ public class HashedMap<K, V>
      *
      * @return a shallow clone
      */
+    @Override
     public HashedMap<K, V> clone() {
         return (HashedMap<K, V>) super.clone();
     }

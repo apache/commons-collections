@@ -46,10 +46,12 @@ public class TestBooleanComparator extends AbstractTestComparator<Boolean> {
     // collections testing framework
     // ------------------------------------------------------------------------
 
+    @Override
     public Comparator<Boolean> makeObject() {
         return new BooleanComparator();
     }
 
+    @Override
     public List<Boolean> getComparableObjectsOrdered() {
         List<Boolean> list = new ArrayList<Boolean>();
         list.add(new Boolean(false));
@@ -61,6 +63,7 @@ public class TestBooleanComparator extends AbstractTestComparator<Boolean> {
         return list;
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3";
     }

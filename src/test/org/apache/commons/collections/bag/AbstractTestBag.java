@@ -63,6 +63,7 @@ public abstract class AbstractTestBag<T> extends AbstractTestObject {
      * 
      * @return the bag to be tested
      */
+    @Override
     public abstract Bag<T> makeObject();
 
     //-----------------------------------------------------------------------
@@ -491,6 +492,7 @@ public abstract class AbstractTestBag<T> extends AbstractTestObject {
      *
      * TODO: store a new serialized object on the disk.
      */
+    @Override
     protected boolean skipSerializedCanonicalTests() {
         return true;
     }

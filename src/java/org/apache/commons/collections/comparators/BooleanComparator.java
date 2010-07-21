@@ -149,6 +149,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      *
      * @return a hash code for this comparator.
      */
+    @Override
     public int hashCode() {
         int hash = "BooleanComparator".hashCode();
         return trueFirst ? -1 * hash : hash;
@@ -166,6 +167,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      * @param object  the object to compare to
      * @return true if equal
      */
+    @Override
     public boolean equals(Object object) {
         return (this == object) || 
                ((object instanceof BooleanComparator) && 

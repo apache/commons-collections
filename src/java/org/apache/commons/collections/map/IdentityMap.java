@@ -95,6 +95,7 @@ public class IdentityMap<K, V>
      * @param key  the key to get a hash code for
      * @return the hash code
      */
+    @Override
     protected int hash(Object key) {
         return System.identityHashCode(key);
     }
@@ -107,6 +108,7 @@ public class IdentityMap<K, V>
      * @param key2  the second key to compare
      * @return true if equal by identity
      */
+    @Override
     protected boolean isEqualKey(Object key1, Object key2) {
         return (key1 == key2);
     }
@@ -119,6 +121,7 @@ public class IdentityMap<K, V>
      * @param value2  the second value to compare
      * @return true if equal by identity
      */
+    @Override
     protected boolean isEqualValue(Object value1, Object value2) {
         return (value1 == value2);
     }
@@ -133,6 +136,7 @@ public class IdentityMap<K, V>
      * @param value  the value to store
      * @return the newly created entry
      */
+    @Override
     protected IdentityEntry<K, V> createEntry(HashEntry<K, V> next, int hashCode, K key, V value) {
         return new IdentityEntry<K, V>(next, hashCode, key, value);
     }
@@ -147,6 +151,7 @@ public class IdentityMap<K, V>
             super(next, hashCode, key, value);
         }
 
+        @Override
         public boolean equals(Object obj) {
             if (obj == this) {
                 return true;
@@ -160,6 +165,7 @@ public class IdentityMap<K, V>
                 (getValue() == other.getValue());
         }
 
+        @Override
         public int hashCode() {
             return System.identityHashCode(getKey()) ^
                    System.identityHashCode(getValue());
@@ -172,6 +178,7 @@ public class IdentityMap<K, V>
      *
      * @return a shallow clone
      */
+    @Override
     public IdentityMap<K, V> clone() {
         return (IdentityMap<K, V>) super.clone();
     }

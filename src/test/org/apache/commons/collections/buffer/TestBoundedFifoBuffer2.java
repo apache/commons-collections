@@ -49,6 +49,7 @@ public class TestBoundedFifoBuffer2<E> extends TestBoundedFifoBuffer<E> {
      *
      *  @return a full BoundedFifoBuffer
      */
+    @Override
     public Collection<E> makeFullCollection() {
         return new BoundedFifoBuffer<E>(Arrays.asList(getFullElements()));
     }
@@ -59,6 +60,7 @@ public class TestBoundedFifoBuffer2<E> extends TestBoundedFifoBuffer<E> {
      *
      *  @return false
      */
+    @Override
     public boolean isAddSupported() {
         return false;
     }
@@ -67,6 +69,7 @@ public class TestBoundedFifoBuffer2<E> extends TestBoundedFifoBuffer<E> {
      *  Overridden because the add operations raise BufferOverflowException
      *  instead of UnsupportedOperationException.
      */
+    @Override
     public void testUnsupportedAdd() {
     }
 

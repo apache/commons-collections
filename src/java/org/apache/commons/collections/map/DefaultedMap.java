@@ -183,6 +183,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
     }
 
     //-----------------------------------------------------------------------
+    @Override
     @SuppressWarnings("unchecked")
     public V get(Object key) {
         // create value for key if key is not currently in the map

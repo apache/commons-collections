@@ -807,6 +807,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      *
      * @return a shallow clone
      */
+    @Override
     public MultiKeyMap<K, V> clone() {
         return new MultiKeyMap<K, V>(decorated().clone());
     }
@@ -821,6 +822,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @throws NullPointerException if the key is null
      * @throws ClassCastException if the key is not a MultiKey
      */
+    @Override
     public V put(MultiKey<? extends K> key, V value) {
         checkKey(key);
         return super.put(key, value);
@@ -843,6 +845,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public MapIterator<MultiKey<? extends K>, V> mapIterator() {
         return decorated().mapIterator();
     }

@@ -50,10 +50,12 @@ public class TestReverseListIterator<E> extends AbstractTestListIterator<E> {
         super(testName);
     }
 
+    @Override
     public ListIterator<E> makeEmptyIterator() {
         return new ReverseListIterator<E>(new ArrayList<E>());
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public ReverseListIterator<E> makeObject() {
         List<E> list = new ArrayList<E>(Arrays.asList((E[]) testArray));
@@ -62,6 +64,7 @@ public class TestReverseListIterator<E> extends AbstractTestListIterator<E> {
 
     // overrides
     //-----------------------------------------------------------------------
+    @Override
     public void testEmptyListIteratorIsIndeedEmpty() {
         ListIterator<E> it = makeEmptyIterator();
 
@@ -85,6 +88,7 @@ public class TestReverseListIterator<E> extends AbstractTestListIterator<E> {
         }
     }
 
+    @Override
     public void testWalkForwardAndBack() {
         ArrayList<E> list = new ArrayList<E>();
         ListIterator<E> it = makeObject();

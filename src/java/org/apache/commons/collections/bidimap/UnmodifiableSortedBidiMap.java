@@ -74,49 +74,59 @@ public final class UnmodifiableSortedBidiMap<K, V>
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public void clear() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public V put(K key, V value) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void putAll(Map<? extends K, ? extends V> mapToCopy) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public V remove(Object key) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Set<Map.Entry<K, V>> entrySet() {
         Set<Map.Entry<K, V>> set = super.entrySet();
         return UnmodifiableEntrySet.decorate(set);
     }
 
+    @Override
     public Set<K> keySet() {
         Set<K> set = super.keySet();
         return UnmodifiableSet.decorate(set);
     }
 
+    @Override
     public Collection<V> values() {
         Collection<V> coll = super.values();
         return UnmodifiableCollection.decorate(coll);
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public K removeValue(Object value) {
         throw new UnsupportedOperationException();
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public OrderedMapIterator<K, V> mapIterator() {
         OrderedMapIterator<K, V> it = decorated().mapIterator();
         return UnmodifiableOrderedMapIterator.decorate(it);
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public SortedBidiMap<V, K> inverseBidiMap() {
         if (inverse == null) {
             inverse = new UnmodifiableSortedBidiMap<V, K>(decorated().inverseBidiMap());
@@ -125,16 +135,19 @@ public final class UnmodifiableSortedBidiMap<K, V>
         return inverse;
     }
 
+    @Override
     public SortedMap<K, V> subMap(K fromKey, K toKey) {
         SortedMap<K, V> sm = decorated().subMap(fromKey, toKey);
         return UnmodifiableSortedMap.decorate(sm);
     }
 
+    @Override
     public SortedMap<K, V> headMap(K toKey) {
         SortedMap<K, V> sm = decorated().headMap(toKey);
         return UnmodifiableSortedMap.decorate(sm);
     }
 
+    @Override
     public SortedMap<K, V> tailMap(K fromKey) {
         SortedMap<K, V> sm = decorated().tailMap(fromKey);
         return UnmodifiableSortedMap.decorate(sm);

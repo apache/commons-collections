@@ -170,6 +170,7 @@ public class LRUMap<K, V>
      * @param key  the key
      * @return the mapped value, null if no match
      */
+    @Override
     public V get(Object key) {
         LinkEntry<K, V> entry = getEntry(key);
         if (entry == null) {
@@ -218,6 +219,7 @@ public class LRUMap<K, V>
      * @param entry  the entry to update
      * @param newValue  the new value to store
      */
+    @Override
     protected void updateEntry(HashEntry<K, V> entry, V newValue) {
         moveToMRU((LinkEntry<K, V>) entry);  // handles modCount
         entry.setValue(newValue);
@@ -238,6 +240,7 @@ public class LRUMap<K, V>
      * @param key  the key to add
      * @param value  the value to add
      */
+    @Override
     protected void addMapping(int hashIndex, int hashCode, K key, V value) {
         if (isFull()) {
             LinkEntry<K, V> reuse = header.after;
@@ -397,6 +400,7 @@ public class LRUMap<K, V>
      *
      * @return a shallow clone
      */
+    @Override
     public LRUMap<K, V> clone() {
         return (LRUMap<K, V>) super.clone();
     }
@@ -420,6 +424,7 @@ public class LRUMap<K, V>
     /**
      * Writes the data necessary for <code>put()</code> to work in deserialization.
      */
+    @Override
     protected void doWriteObject(ObjectOutputStream out) throws IOException {
         out.writeInt(maxSize);
         super.doWriteObject(out);
@@ -428,6 +433,7 @@ public class LRUMap<K, V>
     /**
      * Reads the data necessary for <code>put()</code> to work in the superclass.
      */
+    @Override
     protected void doReadObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         maxSize = in.readInt();
         super.doReadObject(in);

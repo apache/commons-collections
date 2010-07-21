@@ -209,6 +209,7 @@ public class TransformedMap<K, V>
      * @return the transformed value
      * @since Commons Collections 3.1
      */
+    @Override
     protected V checkSetValue(V value) {
         return valueTransformer.transform(value);
     }
@@ -219,17 +220,20 @@ public class TransformedMap<K, V>
      * @return true if a value transformer is in use
      * @since Commons Collections 3.1
      */
+    @Override
     protected boolean isSetValueChecking() {
         return (valueTransformer != null);
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public V put(K key, V value) {
         key = transformKey(key);
         value = transformValue(value);
         return decorated().put(key, value);
     }
 
+    @Override
     public void putAll(Map<? extends K, ? extends V> mapToCopy) {
         mapToCopy = transformMap(mapToCopy);
         decorated().putAll(mapToCopy);

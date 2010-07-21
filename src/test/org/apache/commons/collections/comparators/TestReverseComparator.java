@@ -55,10 +55,12 @@ public class TestReverseComparator extends AbstractTestComparator<Integer> {
      *
      * @return Comparator that returns "natural" order
      */
+    @Override
     public Comparator<Integer> makeObject() {
         return new ReverseComparator<Integer>(Collections.<Integer>reverseOrder());
     }
 
+    @Override
     public List<Integer> getComparableObjectsOrdered() {
         List<Integer> list = new LinkedList<Integer>();
         list.add(new Integer(1));
@@ -74,6 +76,7 @@ public class TestReverseComparator extends AbstractTestComparator<Integer> {
      * doesn't adhere to the "soft" Comparator contract, and we've
      * already "cannonized" the comparator returned by makeComparator.
      */
+    @Override
     @SuppressWarnings("unchecked")
     public void testSerializeDeserializeThenCompare() throws Exception {
         Comparator comp = new ReverseComparator(new ComparableComparator());

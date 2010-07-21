@@ -667,6 +667,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             canRemove = false;
         }
 
+        @Override
         public String toString() {
             if (canRemove) {
                 return "Iterator[" + getKey() + "=" + getValue() + "]";
@@ -702,14 +703,17 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             this.parent = parent;
         }
 
+        @Override
         public int size() {
             return parent.size();
         }
 
+        @Override
         public void clear() {
             parent.clear();
         }
 
+        @Override
         public boolean remove(Object obj) {
             if (obj instanceof Map.Entry == false) {
                 return false;
@@ -721,6 +725,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             return result;
         }
 
+        @Override
         public Iterator<Map.Entry<K, V>> iterator() {
             if (parent.delegateMap != null) {
                 return parent.delegateMap.entrySet().iterator();
@@ -829,6 +834,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             return nextEntry();
         }
 
+        @Override
         public boolean equals(Object obj) {
             if (canRemove == false) {
                 return false;
@@ -843,6 +849,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                    (value == null ? other.getValue() == null : value.equals(other.getValue()));
         }
 
+        @Override
         public int hashCode() {
             if (canRemove == false) {
                 return 0;
@@ -853,6 +860,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                    (value == null ? 0 : value.hashCode());
         }
 
+        @Override
         public String toString() {
             if (canRemove) {
                 return getKey() + "=" + getValue();
@@ -886,24 +894,29 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             this.parent = parent;
         }
 
+        @Override
         public int size() {
             return parent.size();
         }
 
+        @Override
         public void clear() {
             parent.clear();
         }
 
+        @Override
         public boolean contains(Object key) {
             return parent.containsKey(key);
         }
 
+        @Override
         public boolean remove(Object key) {
             boolean result = parent.containsKey(key);
             parent.remove(key);
             return result;
         }
 
+        @Override
         public Iterator<K> iterator() {
             if (parent.delegateMap != null) {
                 return parent.delegateMap.keySet().iterator();
@@ -956,18 +969,22 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             this.parent = parent;
         }
 
+        @Override
         public int size() {
             return parent.size();
         }
 
+        @Override
         public void clear() {
             parent.clear();
         }
 
+        @Override
         public boolean contains(Object value) {
             return parent.containsValue(value);
         }
 
+        @Override
         public Iterator<V> iterator() {
             if (parent.delegateMap != null) {
                 return parent.delegateMap.values().iterator();
@@ -1030,6 +1047,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * @return a shallow clone
      * @since Commons Collections 3.1
      */
+    @Override
     @SuppressWarnings("unchecked")
     public Flat3Map<K, V> clone() {
         try {
@@ -1049,6 +1067,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * @param obj  the object to compare to
      * @return true if equal
      */
+    @Override
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -1100,6 +1119,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      *
      * @return the hash code defined in the Map interface
      */
+    @Override
     public int hashCode() {
         if (delegateMap != null) {
             return delegateMap.hashCode();
@@ -1121,6 +1141,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      *
      * @return a string version of the map
      */
+    @Override
     public String toString() {
         if (delegateMap != null) {
             return delegateMap.toString();

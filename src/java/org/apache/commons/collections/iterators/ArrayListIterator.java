@@ -144,6 +144,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      * @return the next element
      * @throws NoSuchElementException if there is no next element
      */
+    @Override
     @SuppressWarnings("unchecked")
     public E next() {
         if (hasNext() == false) {
@@ -208,6 +209,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
     /**
      * Resets the iterator back to the start index.
      */
+    @Override
     public void reset() {
         super.reset();
         this.lastItemIndex = -1;

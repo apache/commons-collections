@@ -38,6 +38,7 @@ public abstract class TestTreeMap<K, V> extends AbstractTestMap<K, V> {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     public boolean isAllowNullKey() {
         return false;
     }

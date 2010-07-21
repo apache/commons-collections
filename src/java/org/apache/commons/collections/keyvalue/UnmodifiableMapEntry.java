@@ -69,6 +69,7 @@ public final class UnmodifiableMapEntry<K, V> extends AbstractMapEntry<K, V> imp
      * @return the previous value
      * @throws UnsupportedOperationException always
      */
+    @Override
     public V setValue(V value) {
         throw new UnsupportedOperationException("setValue() is not supported");
     }

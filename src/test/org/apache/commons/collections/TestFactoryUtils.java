@@ -50,12 +50,14 @@ public class TestFactoryUtils extends junit.framework.TestCase {
     /**
      * Set up instance variables required by this test case.
      */
+    @Override
     public void setUp() {
     }
 
     /**
      * Tear down instance variables required by this test case.
      */
+    @Override
     public void tearDown() {
     }
 
@@ -205,6 +207,7 @@ public class TestFactoryUtils extends junit.framework.TestCase {
         public Mock1(Mock1 mock) {
             iVal = mock.iVal;
         }
+        @Override
         public boolean equals(Object obj) {
             if (obj instanceof Mock1) {
                 if (iVal == ((Mock1) obj).iVal) {
@@ -221,6 +224,7 @@ public class TestFactoryUtils extends junit.framework.TestCase {
         public Mock2(Object val) {
             iVal = val;
         }
+        @Override
         public boolean equals(Object obj) {
             if (obj instanceof Mock2) {
                 if (iVal == ((Mock2) obj).iVal) {

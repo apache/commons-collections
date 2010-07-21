@@ -107,6 +107,7 @@ public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCo
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public E remove() {
         synchronized (lock) {
             E returnValue = decorated().remove();
@@ -115,6 +116,7 @@ public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCo
         }
     }
 
+    @Override
     public boolean add(E o) {
         synchronized (lock) {
             timeoutWait(1);
@@ -122,6 +124,7 @@ public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCo
         }
     }
 
+    @Override
     public boolean addAll(final Collection<? extends E> c) {
         synchronized (lock) {
             timeoutWait(c.size());
@@ -129,6 +132,7 @@ public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCo
         }
     }
 
+    @Override
     public Iterator<E> iterator() {
         return new NotifyingIterator(collection.iterator());
     }
@@ -184,6 +188,7 @@ public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCo
             super(it);
         }
 
+        @Override
         public void remove() {
             synchronized (lock) {
                 iterator.remove();

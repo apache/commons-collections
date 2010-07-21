@@ -68,35 +68,43 @@ public final class UnmodifiableEntrySet<K, V>
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public boolean add(Map.Entry<K, V> object) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean addAll(Collection<? extends Map.Entry<K, V>> coll) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void clear() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean remove(Object object) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean removeAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean retainAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public Iterator<Map.Entry<K, V>> iterator() {
         return new UnmodifiableEntrySetIterator(collection.iterator());
     }
     
+    @Override
     @SuppressWarnings("unchecked")
     public Object[] toArray() {
         Object[] array = collection.toArray();
@@ -106,6 +114,7 @@ public final class UnmodifiableEntrySet<K, V>
         return array;
     }
     
+    @Override
     @SuppressWarnings("unchecked")
     public <T> T[] toArray(T[] array) {
         Object[] result = array;
@@ -142,10 +151,12 @@ public final class UnmodifiableEntrySet<K, V>
             super(iterator);
         }
 
+        @Override
         public Map.Entry<K, V> next() {
             return new UnmodifiableEntry(iterator.next());
         }
 
+        @Override
         public void remove() {
             throw new UnsupportedOperationException();
         }
@@ -161,6 +172,7 @@ public final class UnmodifiableEntrySet<K, V>
             super(entry);
         }
 
+        @Override
         public V setValue(V obj) {
             throw new UnsupportedOperationException();
         }

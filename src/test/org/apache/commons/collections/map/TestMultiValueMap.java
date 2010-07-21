@@ -379,10 +379,12 @@ public class TestMultiValueMap<K, V> extends AbstractTestObject {
     // extend the AbstractTestMap
     //-----------------------------------------------------------------------
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.3";
     }
 
+    @Override
     public Object makeObject() {
         Map m = makeEmptyMap();
         m.put("a", "1");

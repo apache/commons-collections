@@ -54,6 +54,7 @@ public class TestDualTreeBidiMap<K extends Comparable<K>, V extends Comparable<V
     /**
      * Override to prevent infinite recursion of tests.
      */
+    @Override
     public String[] ignoredTests() {
         return new String[] {"TestDualTreeBidiMap.bulkTestInverseMap.bulkTestInverseMap"};
     }

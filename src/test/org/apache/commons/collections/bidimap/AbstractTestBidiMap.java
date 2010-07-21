@@ -60,11 +60,13 @@ public abstract class AbstractTestBidiMap<K, V> extends AbstractTestIterableMap<
     /**
      * Override to return the empty BidiMap.
      */
+    @Override
     public abstract BidiMap<K, V> makeObject();
 
     /**
      * Override to indicate to AbstractTestMap this is a BidiMap.
      */
+    @Override
     public boolean isAllowDuplicateValues() {
         return false;
     }
@@ -72,6 +74,7 @@ public abstract class AbstractTestBidiMap<K, V> extends AbstractTestIterableMap<
     /**
      * Override as DualHashBidiMap didn't exist until version 3.
      */
+    @Override
     public String getCompatibilityVersion() {
         return "3";
     }
@@ -117,6 +120,7 @@ public abstract class AbstractTestBidiMap<K, V> extends AbstractTestIterableMap<
      * <p>
      * This implementation checks the inverse map as well.
      */
+    @Override
     public void verify() {
         verifyInverse();
         super.verify();
@@ -334,6 +338,7 @@ public abstract class AbstractTestBidiMap<K, V> extends AbstractTestIterableMap<
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public BulkTest bulkTestMapEntrySet() {
         return new TestBidiMapEntrySet();
     }
@@ -412,45 +417,56 @@ public abstract class AbstractTestBidiMap<K, V> extends AbstractTestIterableMap<
             this.main = main;
         }
 
+        @Override
         public BidiMap<V, K> makeObject() {
             return main.makeObject().inverseBidiMap();
         }
 
+        @Override
         public BidiMap<V, K> makeFullMap() {
             return main.makeFullMap().inverseBidiMap();
         }
 
+        @Override
         public V[] getSampleKeys() {
             return main.getSampleValues();
         }
+        @Override
         public K[] getSampleValues() {
             return main.getSampleKeys();
         }
 
+        @Override
         public String getCompatibilityVersion() {
             return main.getCompatibilityVersion();
         }
 
+        @Override
         public boolean isAllowNullKey() {
             return main.isAllowNullKey();
         }
 
+        @Override
         public boolean isAllowNullValue() {
             return main.isAllowNullValue();
         }
 
+        @Override
         public boolean isPutAddSupported() {
             return main.isPutAddSupported();
         }
 
+        @Override
         public boolean isPutChangeSupported() {
             return main.isPutChangeSupported();
         }
 
+        @Override
         public boolean isSetValueSupported() {
             return main.isSetValueSupported();
         }
 
+        @Override
         public boolean isRemoveSupported() {
             return main.isRemoveSupported();
         }
@@ -467,38 +483,46 @@ public abstract class AbstractTestBidiMap<K, V> extends AbstractTestIterableMap<
             super("TestBidiMapIterator");
         }
 
+        @Override
         public V[] addSetValues() {
             return AbstractTestBidiMap.this.getNewSampleValues();
         }
 
+        @Override
         public boolean supportsRemove() {
             return AbstractTestBidiMap.this.isRemoveSupported();
         }
 
+        @Override
         public boolean supportsSetValue() {
             return AbstractTestBidiMap.this.isSetValueSupported();
         }
 
+        @Override
         public MapIterator<K, V> makeEmptyIterator() {
             resetEmpty();
             return AbstractTestBidiMap.this.getMap().mapIterator();
         }
 
+        @Override
         public MapIterator<K, V> makeObject() {
             resetFull();
             return AbstractTestBidiMap.this.getMap().mapIterator();
         }
 
+        @Override
         public BidiMap<K, V> getMap() {
             // assumes makeFullMapIterator() called first
             return AbstractTestBidiMap.this.getMap();
         }
 
+        @Override
         public Map<K, V> getConfirmedMap() {
             // assumes makeFullMapIterator() called first
             return AbstractTestBidiMap.this.getConfirmed();
         }
 
+        @Override
         public void verify() {
             super.verify();
             AbstractTestBidiMap.this.verify();

@@ -51,21 +51,25 @@ public class TestTransformedList<E> extends AbstractTestList<E> {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     public List<E> makeConfirmedCollection() {
         return new ArrayList<E>();
     }
 
+    @Override
     public List<E> makeConfirmedFullCollection() {
         List<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public List<E> makeObject() {
         return TransformedList.decorate(new ArrayList<E>(), (Transformer<E, E>) TestTransformedCollection.NOOP_TRANSFORMER);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public List<E> makeFullCollection() {
         List<E> list = new ArrayList<E>();
@@ -138,6 +142,7 @@ public class TestTransformedList<E> extends AbstractTestList<E> {
         assertEquals(true, list.remove(new Integer((String) els[0])));
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

@@ -43,6 +43,7 @@ public class TestStaticBucketMap<K, V> extends AbstractTestIterableMap<K, V> {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     public StaticBucketMap<K, V> makeObject() {
         return new StaticBucketMap<K, V>(30);
     }
@@ -55,6 +56,7 @@ public class TestStaticBucketMap<K, V> extends AbstractTestIterableMap<K, V> {
         return false;
     }
 
+    @Override
     public String[] ignoredTests() {
         String pre = "TestStaticBucketMap.bulkTestMap";
         String post = ".testCollectionIteratorFailFast";

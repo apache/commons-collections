@@ -48,6 +48,7 @@ public class TestUnboundedFifoBuffer<E> extends AbstractTestCollection<E> {
      *  Verifies that the ArrayList has the same elements in the same 
      *  sequence as the UnboundedFifoBuffer.
      */
+    @Override
     public void verify() {
         super.verify();
         Iterator<E> iterator1 = getCollection().iterator();
@@ -65,6 +66,7 @@ public class TestUnboundedFifoBuffer<E> extends AbstractTestCollection<E> {
      * Overridden because UnboundedFifoBuffer doesn't allow null elements.
      * @return false
      */
+    @Override
     public boolean isNullSupported() {
         return false;
     }
@@ -73,6 +75,7 @@ public class TestUnboundedFifoBuffer<E> extends AbstractTestCollection<E> {
      * Overridden because UnboundedFifoBuffer isn't fail fast.
      * @return false
      */
+    @Override
     public boolean isFailFastSupported() {
         return false;
     }
@@ -83,6 +86,7 @@ public class TestUnboundedFifoBuffer<E> extends AbstractTestCollection<E> {
      *
      *  @return an empty ArrayList
      */
+    @Override
     public Collection<E> makeConfirmedCollection() {
         return new ArrayList<E>();
     }
@@ -92,6 +96,7 @@ public class TestUnboundedFifoBuffer<E> extends AbstractTestCollection<E> {
      *
      *  @return a full ArrayList
      */
+    @Override
     public Collection<E> makeConfirmedFullCollection() {
         Collection<E> c = makeConfirmedCollection();
         c.addAll(java.util.Arrays.asList(getFullElements()));
@@ -103,6 +108,7 @@ public class TestUnboundedFifoBuffer<E> extends AbstractTestCollection<E> {
      *
      *  @return an empty UnboundedFifoBuffer
      */
+    @Override
     public Collection<E> makeObject() {
         return new UnboundedFifoBuffer<E>(5);
     }
@@ -437,6 +443,7 @@ public class TestUnboundedFifoBuffer<E> extends AbstractTestCollection<E> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

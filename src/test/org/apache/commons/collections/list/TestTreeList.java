@@ -105,6 +105,7 @@ public class TestTreeList<E> extends AbstractTestList<E> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public TreeList<E> makeObject() {
         return new TreeList<E>();
     }

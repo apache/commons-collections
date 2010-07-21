@@ -51,6 +51,7 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
         return BulkTest.makeSuite(TestLRUMap.class);
     }
 
+    @Override
     public LRUMap<K, V> makeObject() {
         return new LRUMap<K, V>();
     }
@@ -63,10 +64,12 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
         return (LRUMap<K, V>) super.makeFullMap();
     }
 
+    @Override
     public boolean isGetStructuralModify() {
         return true;
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3";
     }
@@ -262,6 +265,7 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
             super(size);
         }
 
+        @Override
         protected boolean removeLRU(LinkEntry<K, V> entry) {
             this.entry = entry;
             this.key = entry.getKey();
@@ -308,6 +312,7 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
             super(size, scanUntilRemove);
         }
 
+        @Override
         protected boolean removeLRU(LinkEntry<K, V> entry) {
             return false;
         }
@@ -335,6 +340,7 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
             super(size, true);
         }
 
+        @Override
         protected boolean removeLRU(LinkEntry<K, V> entry) {
             if ("a".equals(entry.getValue())) {
                 return false;
@@ -350,11 +356,13 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
         SingleHashCode(String code) {
             this.code = code;
         }
+        @Override
         public int hashCode() {
             // always return the same hashcode
             // that way, it will end up in the same bucket
             return 12;
         }
+        @Override
         public String toString() {
             return "SingleHashCode:" + code;
         }
@@ -480,6 +488,7 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
         
         final Map exceptions = new HashMap();
         final ThreadGroup tg = new ThreadGroup(getName()) {
+            @Override
             public void uncaughtException(Thread t, Throwable e) {
                 exceptions.put(e, t.getName());
                 super.uncaughtException(t, e);
@@ -492,6 +501,7 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
         for (int i = 0; i < threads.length; ++i) {
             threads[i] = new Thread(tg, "JUnit Thread " + i) {
 
+                @Override
                 public void run() {
                     int i = 0;
                     try {
@@ -561,6 +571,7 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
         
         final Map exceptions = new HashMap();
         final ThreadGroup tg = new ThreadGroup(getName()) {
+            @Override
             public void uncaughtException(Thread t, Throwable e) {
                 exceptions.put(e, t.getName());
                 super.uncaughtException(t, e);
@@ -573,6 +584,7 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
         for (int i = 0; i < threads.length; ++i) {
             threads[i] = new Thread(tg, "JUnit Thread " + i) {
 
+                @Override
                 public void run() {
                     int i = 0;
                     try {
@@ -643,6 +655,7 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
         
         final Map exceptions = new HashMap();
         final ThreadGroup tg = new ThreadGroup(getName()) {
+            @Override
             public void uncaughtException(Thread t, Throwable e) {
                 exceptions.put(e, t.getName());
                 super.uncaughtException(t, e);
@@ -655,6 +668,7 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
         for (int i = 0; i < threads.length; ++i) {
             threads[i] = new Thread(tg, "JUnit Thread " + i) {
 
+                @Override
                 public void run() {
                     int i = 0;
                     try {
@@ -724,6 +738,7 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
         
         final Map exceptions = new HashMap();
         final ThreadGroup tg = new ThreadGroup(getName()) {
+            @Override
             public void uncaughtException(Thread t, Throwable e) {
                 exceptions.put(e, t.getName());
                 super.uncaughtException(t, e);
@@ -736,6 +751,7 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
         for (int i = 0; i < threads.length; ++i) {
             threads[i] = new Thread(tg, "JUnit Thread " + i) {
 
+                @Override
                 public void run() {
                     int i = 0;
                     try {

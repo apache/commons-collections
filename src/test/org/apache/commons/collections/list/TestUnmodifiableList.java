@@ -49,24 +49,29 @@ public class TestUnmodifiableList<E> extends AbstractTestList<E> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public UnmodifiableList<E> makeObject() {
         return new UnmodifiableList<E>(new ArrayList<E>());
     }
 
+    @Override
     public UnmodifiableList<E> makeFullCollection() {
         ArrayList<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return new UnmodifiableList<E>(list);
     }
 
+    @Override
     public boolean isSetSupported() {
         return false;
     }
 
+    @Override
     public boolean isAddSupported() {
         return false;
     }
 
+    @Override
     public boolean isRemoveSupported() {
         return false;
     }
@@ -170,6 +175,7 @@ public class TestUnmodifiableList<E> extends AbstractTestList<E> {
         }
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

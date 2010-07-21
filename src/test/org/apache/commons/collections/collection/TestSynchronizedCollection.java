@@ -49,20 +49,24 @@ public class TestSynchronizedCollection<E> extends AbstractTestCollection<E> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public Collection<E> makeObject() {
         return SynchronizedCollection.decorate(new ArrayList<E>());
     }
 
+    @Override
     public Collection<E> makeConfirmedCollection() {
         return new ArrayList<E>();
     }
 
+    @Override
     public Collection<E> makeConfirmedFullCollection() {
         ArrayList<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

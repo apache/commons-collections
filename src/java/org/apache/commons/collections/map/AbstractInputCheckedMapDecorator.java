@@ -96,6 +96,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public Set<Map.Entry<K, V>> entrySet() {
         if (isSetValueChecking()) {
             return new EntrySet(map.entrySet(), this);
@@ -118,10 +119,12 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
             this.parent = parent;
         }
 
+        @Override
         public Iterator<Map.Entry<K, V>> iterator() {
             return new EntrySetIterator(collection.iterator(), parent);
         }
         
+        @Override
         @SuppressWarnings("unchecked")
         public Object[] toArray() {
             Object[] array = collection.toArray();
@@ -131,6 +134,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
             return array;
         }
         
+        @Override
         @SuppressWarnings("unchecked")
         public <T> T[] toArray(T[] array) {
             Object[] result = array;
@@ -171,6 +175,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
             this.parent = parent;
         }
 
+        @Override
         public Map.Entry<K, V> next() {
             Map.Entry<K, V> entry = iterator.next();
             return new MapEntry(entry, parent);
@@ -190,6 +195,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
             this.parent = parent;
         }
 
+        @Override
         public V setValue(V value) {
             value = parent.checkSetValue(value);
             return entry.setValue(value);

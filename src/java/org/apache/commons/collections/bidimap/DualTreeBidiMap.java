@@ -121,6 +121,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements
      * @param inverseMap  the inverse BidiMap
      * @return new bidi map
      */
+    @Override
     protected DualTreeBidiMap<V, K> createBidiMap(Map<V, K> normalMap, Map<K, V> reverseMap, BidiMap<K, V> inverseMap) {
         return new DualTreeBidiMap<V, K>(normalMap, reverseMap, inverseMap);
     }
@@ -183,6 +184,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements
      *
      * @return a new ordered map iterator
      */
+    @Override
     public OrderedMapIterator<K, V> mapIterator() {
         return new BidiOrderedMapIterator<K, V>(this);
     }
@@ -240,11 +242,13 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements
             this.bidi = (DualTreeBidiMap<K, V>) decorated();
         }
 
+        @Override
         public boolean containsValue(Object value) {
             // override as default implementation uses reverseMap
             return decorated().normalMap.containsValue(value);
         }
 
+        @Override
         public void clear() {
             // override as default implementation uses reverseMap
             for (Iterator<K> it = keySet().iterator(); it.hasNext();) {
@@ -253,14 +257,17 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements
             }
         }
 
+        @Override
         public SortedMap<K, V> headMap(K toKey) {
             return new ViewMap<K, V>(decorated(), super.headMap(toKey));
         }
 
+        @Override
         public SortedMap<K, V> tailMap(K fromKey) {
             return new ViewMap<K, V>(decorated(), super.tailMap(fromKey));
         }
 
+        @Override
         public SortedMap<K, V> subMap(K fromKey, K toKey) {
             return new ViewMap<K, V>(decorated(), super.subMap(fromKey, toKey));
         }
@@ -270,10 +277,12 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements
             return (DualTreeBidiMap<K, V>) super.decorated();
         }
 
+        @Override
         public K previousKey(K key) {
             return decorated().previousKey(key);
         };
 
+        @Override
         public K nextKey(K key) {
             return decorated().nextKey(key);
         };
@@ -358,6 +367,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements
             last = null;
         }
 
+        @Override
         public String toString() {
             if (last != null) {
                 return "MapIterator[" + getKey() + "=" + getValue() + "]";

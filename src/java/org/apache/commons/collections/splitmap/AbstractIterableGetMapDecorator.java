@@ -130,6 +130,7 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean equals(Object object) {
         if (object == this) {
             return true;
@@ -140,6 +141,7 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
     /**
      * {@inheritDoc}
      */
+    @Override
     public int hashCode() {
         return decorated().hashCode();
     }
@@ -147,6 +149,7 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
     /**
      * {@inheritDoc}
      */
+    @Override
     public String toString() {
         return decorated().toString();
     }

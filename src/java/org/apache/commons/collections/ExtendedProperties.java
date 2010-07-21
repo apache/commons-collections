@@ -413,6 +413,7 @@ public class ExtendedProperties extends Hashtable {
          *
          * @return True if the object has more tokens.
          */
+        @Override
         public boolean hasMoreTokens() {
             return super.hasMoreTokens();
         }
@@ -422,6 +423,7 @@ public class ExtendedProperties extends Hashtable {
          *
          * @return A String.
          */
+        @Override
         public String nextToken() {
             StringBuilder buffer = new StringBuilder();
 
@@ -1708,6 +1710,7 @@ public class ExtendedProperties extends Hashtable {
      * @param value for the property
      * @return old value of the property
      */
+    @Override
     public Object put(Object key, Object value) {
         String strKey = String.valueOf(key);
         Object ret = getProperty(strKey);
@@ -1722,6 +1725,7 @@ public class ExtendedProperties extends Hashtable {
      *
      * @param map full of key/value pair data
      */
+    @Override
     public void putAll(Map map) {
         if (map instanceof ExtendedProperties) {
             for (Iterator it = ((ExtendedProperties) map).getKeys(); it.hasNext(); ) {
@@ -1744,6 +1748,7 @@ public class ExtendedProperties extends Hashtable {
      * @param key specifying the property
      * @return old value of the property
      */
+    @Override
     public Object remove(Object key) {
         String strKey = String.valueOf(key);
         Object ret = getProperty(strKey);

@@ -84,6 +84,7 @@ public class PredicatedBag<E>
      * 
      * @return the decorated bag
      */
+    @Override
     protected Bag<E> decorated() {
         return (Bag<E>) super.decorated();
     }

@@ -96,45 +96,55 @@ public final class UnmodifiableSortedSet<E>
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public Iterator<E> iterator() {
         return UnmodifiableIterator.decorate(decorated().iterator());
     }
 
+    @Override
     public boolean add(E object) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean addAll(Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void clear() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean remove(Object object) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean removeAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean retainAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public SortedSet<E> subSet(E fromElement, E toElement) {
         SortedSet<E> sub = decorated().subSet(fromElement, toElement);
         return new UnmodifiableSortedSet<E>(sub);
     }
 
+    @Override
     public SortedSet<E> headSet(E toElement) {
         SortedSet<E> sub = decorated().headSet(toElement);
         return new UnmodifiableSortedSet<E>(sub);
     }
 
+    @Override
     public SortedSet<E> tailSet(E fromElement) {
         SortedSet<E> sub = decorated().tailSet(fromElement);
         return new UnmodifiableSortedSet<E>(sub);

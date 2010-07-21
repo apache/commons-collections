@@ -50,34 +50,41 @@ public class TestUnmodifiableCollection<E> extends AbstractTestCollection<E> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public Collection<E> makeObject() {
         return UnmodifiableCollection.decorate(new ArrayList<E>());
     }
 
+    @Override
     public Collection<E> makeFullCollection() {
         List<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return UnmodifiableCollection.decorate(list);
     }
 
+    @Override
     public Collection<E> makeConfirmedCollection() {
         return new ArrayList<E>();
     }
 
+    @Override
     public Collection<E> makeConfirmedFullCollection() {
         ArrayList<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }
 
+    @Override
     public boolean isAddSupported() {
         return false;
     }
 
+    @Override
     public boolean isRemoveSupported() {
         return false;
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

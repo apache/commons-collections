@@ -113,6 +113,7 @@ public class FixedSizeSortedMap<K, V>
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public V put(K key, V value) {
         if (map.containsKey(key) == false) {
             throw new IllegalArgumentException("Cannot put new key/value pair - Map is fixed size");
@@ -120,6 +121,7 @@ public class FixedSizeSortedMap<K, V>
         return map.put(key, value);
     }
 
+    @Override
     public void putAll(Map<? extends K, ? extends V> mapToCopy) {
         if (CollectionUtils.isSubCollection(mapToCopy.keySet(), keySet())) {
             throw new IllegalArgumentException("Cannot put new key/value pair - Map is fixed size");
@@ -127,35 +129,43 @@ public class FixedSizeSortedMap<K, V>
         map.putAll(mapToCopy);
     }
 
+    @Override
     public void clear() {
         throw new UnsupportedOperationException("Map is fixed size");
     }
 
+    @Override
     public V remove(Object key) {
         throw new UnsupportedOperationException("Map is fixed size");
     }
 
+    @Override
     public Set<Map.Entry<K, V>> entrySet() {
         return UnmodifiableSet.decorate(map.entrySet());
     }
 
+    @Override
     public Set<K> keySet() {
         return UnmodifiableSet.decorate(map.keySet());
     }
 
+    @Override
     public Collection<V> values() {
         return UnmodifiableCollection.decorate(map.values());
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public SortedMap<K, V> subMap(K fromKey, K toKey) {
         return new FixedSizeSortedMap<K, V>(getSortedMap().subMap(fromKey, toKey));
     }
 
+    @Override
     public SortedMap<K, V> headMap(K toKey) {
         return new FixedSizeSortedMap<K, V>(getSortedMap().headMap(toKey));
     }
 
+    @Override
     public SortedMap<K, V> tailMap(K fromKey) {
         return new FixedSizeSortedMap<K, V>(getSortedMap().tailMap(fromKey));
     }

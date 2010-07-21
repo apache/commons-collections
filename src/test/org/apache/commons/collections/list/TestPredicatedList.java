@@ -57,10 +57,12 @@ public class TestPredicatedList<E> extends AbstractTestList<E> {
         return PredicatedList.decorate(list, predicate);
     }
 
+    @Override
     public List<E> makeObject() {
         return decorateList(new ArrayList<E>(), truePredicate);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public E[] getFullElements() {
         return (E[]) new Object[] { "1", "3", "5", "7", "2", "4", "6" };
@@ -147,6 +149,7 @@ public class TestPredicatedList<E> extends AbstractTestList<E> {
          list.contains("three"));
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

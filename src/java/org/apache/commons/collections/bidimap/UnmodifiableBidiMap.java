@@ -72,47 +72,57 @@ public final class UnmodifiableBidiMap<K, V>
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public void clear() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public V put(K key, V value) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void putAll(Map<? extends K, ? extends V> mapToCopy) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public V remove(Object key) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Set<Map.Entry<K, V>> entrySet() {
         Set<Map.Entry<K, V>> set = super.entrySet();
         return UnmodifiableEntrySet.decorate(set);
     }
 
+    @Override
     public Set<K> keySet() {
         Set<K> set = super.keySet();
         return UnmodifiableSet.decorate(set);
     }
 
+    @Override
     public Collection<V> values() {
         Collection<V> coll = super.values();
         return UnmodifiableCollection.decorate(coll);
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public K removeValue(Object value) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public MapIterator<K, V> mapIterator() {
         MapIterator<K, V> it = decorated().mapIterator();
         return UnmodifiableMapIterator.decorate(it);
     }
 
+    @Override
     public synchronized BidiMap<V, K> inverseBidiMap() {
         if (inverse == null) {
             inverse = new UnmodifiableBidiMap<V, K>(decorated().inverseBidiMap());

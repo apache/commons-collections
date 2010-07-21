@@ -82,6 +82,7 @@ public class PredicatedSortedSet<E> extends PredicatedSet<E> implements SortedSe
      * 
      * @return the decorated sorted set
      */
+    @Override
     protected SortedSet<E> decorated() {
         return (SortedSet<E>) super.decorated();
     }

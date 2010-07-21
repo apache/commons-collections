@@ -49,6 +49,7 @@ public class TestCollatingIterator extends AbstractTestIterator<Integer> {
     private ArrayList<Integer> odds = null;
     private ArrayList<Integer> fib = null;
 
+    @Override
     public void setUp() throws Exception {
         super.setUp();
         comparator = new ComparableComparator<Integer>();
@@ -74,10 +75,12 @@ public class TestCollatingIterator extends AbstractTestIterator<Integer> {
 
     //---------------------------------------------------- TestIterator Methods
 
+    @Override
     public CollatingIterator<Integer> makeEmptyIterator() {
         return new CollatingIterator<Integer>(comparator);
     }
 
+    @Override
     public CollatingIterator<Integer> makeObject() {
         CollatingIterator<Integer> iter = new CollatingIterator<Integer>(comparator);
         iter.addIterator(evens.iterator());

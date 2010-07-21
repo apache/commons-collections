@@ -112,6 +112,7 @@ public class FixedSizeMap<K, V>
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public V put(K key, V value) {
         if (map.containsKey(key) == false) {
             throw new IllegalArgumentException("Cannot put new key/value pair - Map is fixed size");
@@ -119,6 +120,7 @@ public class FixedSizeMap<K, V>
         return map.put(key, value);
     }
 
+    @Override
     public void putAll(Map<? extends K, ? extends V> mapToCopy) {
         for (K key : mapToCopy.keySet()) {
             if (!containsKey(key)) {
@@ -128,25 +130,30 @@ public class FixedSizeMap<K, V>
         map.putAll(mapToCopy);
     }
 
+    @Override
     public void clear() {
         throw new UnsupportedOperationException("Map is fixed size");
     }
 
+    @Override
     public V remove(Object key) {
         throw new UnsupportedOperationException("Map is fixed size");
     }
 
+    @Override
     public Set<Map.Entry<K, V>> entrySet() {
         Set<Map.Entry<K, V>> set = map.entrySet();
         // unmodifiable set will still allow modification via Map.Entry objects
         return UnmodifiableSet.decorate(set);
     }
 
+    @Override
     public Set<K> keySet() {
         Set<K> set = map.keySet();
         return UnmodifiableSet.decorate(set);
     }
 
+    @Override
     public Collection<V> values() {
         Collection<V> coll = map.values();
         return UnmodifiableCollection.decorate(coll);

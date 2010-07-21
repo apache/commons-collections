@@ -52,34 +52,41 @@ public class TestUnmodifiableBuffer<E> extends AbstractTestCollection<E> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public Collection<E> makeObject() {
         return UnmodifiableBuffer.decorate(new UnboundedFifoBuffer<E>());
     }
 
+    @Override
     public Collection<E> makeFullCollection() {
         Buffer<E> buffer = new UnboundedFifoBuffer<E>();
         buffer.addAll(Arrays.asList(getFullElements()));
         return UnmodifiableBuffer.decorate(buffer);
     }
 
+    @Override
     public Collection<E> makeConfirmedCollection() {
         return new ArrayStack<E>();
     }
 
+    @Override
     public Collection<E> makeConfirmedFullCollection() {
         ArrayStack<E> list = new ArrayStack<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }
 
+    @Override
     public boolean isAddSupported() {
         return false;
     }
 
+    @Override
     public boolean isRemoveSupported() {
         return false;
     }
 
+    @Override
     public boolean isNullSupported() {
         return false;
     }
@@ -92,6 +99,7 @@ public class TestUnmodifiableBuffer<E> extends AbstractTestCollection<E> {
         } catch (UnsupportedOperationException ex) {}
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

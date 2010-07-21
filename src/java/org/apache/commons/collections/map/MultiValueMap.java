@@ -166,6 +166,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     /**
      * Clear the map.
      */
+    @Override
     public void clear() {
         // If you believe that you have GC issues here, try uncommenting this code
 //        Set pairs = getMap().entrySet();
@@ -215,6 +216,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @param value  the value to search for
      * @return true if the map contains the value
      */
+    @Override
     @SuppressWarnings("unchecked")
     public boolean containsValue(Object value) {
         Set<Map.Entry<K, Object>> pairs = decorated().entrySet();
@@ -238,6 +240,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @param value  the value to add to the collection at the key
      * @return the value added if the map changed and null if the map did not change
      */
+    @Override
     @SuppressWarnings("unchecked")
     public Object put(K key, Object value) {
         boolean result = false;
@@ -267,6 +270,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      *
      * @param map  the map to copy (either a normal or multi map)
      */
+    @Override
     @SuppressWarnings("unchecked")
     public void putAll(Map<? extends K, ?> map) {
         if (map instanceof MultiMap) {
@@ -287,6 +291,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      *
      * @return a collection view of the values contained in this map
      */
+    @Override
     @SuppressWarnings("unchecked")
     public Collection<Object> values() {
         Collection<V> vs = valuesView;
@@ -406,6 +411,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * Inner class that provides the values view.
      */
     private class Values extends AbstractCollection<V> {
+        @Override
         public Iterator<V> iterator() {
             final IteratorChain<V> chain = new IteratorChain<V>();
             for (Iterator<K> it = keySet().iterator(); it.hasNext();) {
@@ -414,10 +420,12 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
             return chain;
         }
 
+        @Override
         public int size() {
             return totalSize();
         }
 
+        @Override
         public void clear() {
             MultiValueMap.this.clear();
         }

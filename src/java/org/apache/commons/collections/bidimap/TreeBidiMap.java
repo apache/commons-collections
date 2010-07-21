@@ -447,6 +447,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      * @param obj  the object to compare to
      * @return true if equal
      */
+    @Override
     public boolean equals(Object obj) {
         return this.doEquals(obj, KEY);
     }
@@ -456,6 +457,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      *
      * @return the hash code value for this map
      */
+    @Override
     public int hashCode() {
         return this.doHashCode(KEY);
     }
@@ -465,6 +467,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      *
      * @return a standard format string version of the map
      */
+    @Override
     public String toString() {
         return this.doToString(KEY);
     }
@@ -1423,10 +1426,12 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
             this.orderType = orderType;
         }
 
+        @Override
         public int size() {
             return TreeBidiMap.this.size();
         }
 
+        @Override
         public void clear() {
             TreeBidiMap.this.clear();
         }
@@ -1495,6 +1500,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
             super(KEY);
         }
 
+        @Override
         public boolean contains(Object obj) {
             if (obj instanceof Map.Entry == false) {
                 return false;
@@ -1505,6 +1511,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
             return node != null && node.getValue().equals(value);
         }
 
+        @Override
         public boolean remove(Object obj) {
             if (obj instanceof Map.Entry == false) {
                 return false;
@@ -1534,6 +1541,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
             super(VALUE);
         }
 
+        @Override
         public boolean contains(Object obj) {
             if (obj instanceof Map.Entry == false) {
                 return false;
@@ -1544,6 +1552,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
             return node != null && node.getKey().equals(value);
         }
 
+        @Override
         public boolean remove(Object obj) {
             if (obj instanceof Map.Entry == false) {
                 return false;
@@ -1966,6 +1975,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
          * @param obj  the object to be compared for equality with this entry.
          * @return true if the specified object is equal to this entry.
          */
+        @Override
         public boolean equals(final Object obj) {
             if (obj == this) {
                 return true;
@@ -1980,6 +1990,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         /**
          * @return the hash code value for this map entry.
          */
+        @Override
         public int hashCode() {
             if (!calculatedHashCode) {
                 hashcodeValue = getKey().hashCode() ^ getValue().hashCode();
@@ -2108,14 +2119,17 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
             return TreeBidiMap.this;
         }
 
+        @Override
         public boolean equals(Object obj) {
             return TreeBidiMap.this.doEquals(obj, DataElement.VALUE);
         }
 
+        @Override
         public int hashCode() {
             return TreeBidiMap.this.doHashCode(DataElement.VALUE);
         }
 
+        @Override
         public String toString() {
             return TreeBidiMap.this.doToString(DataElement.VALUE);
         }

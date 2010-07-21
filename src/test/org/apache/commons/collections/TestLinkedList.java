@@ -44,6 +44,7 @@ public abstract class TestLinkedList<T> extends AbstractTestList<T> {
         super(testName);
     }
 
+    @Override
     public abstract LinkedList<T> makeObject();
 
     /**
@@ -51,6 +52,7 @@ public abstract class TestLinkedList<T> extends AbstractTestList<T> {
      *
      *  @return the collection field as a List
      */
+    @Override
     public LinkedList<T> getCollection() {
         return (LinkedList<T>) super.getCollection();
     }
@@ -197,6 +199,7 @@ public abstract class TestLinkedList<T> extends AbstractTestList<T> {
     /**
      *  Returns an empty {@link LinkedList}.
      */
+    @Override
     public Collection<T> makeConfirmedCollection() {
         return new LinkedList<T>();
     }
@@ -204,6 +207,7 @@ public abstract class TestLinkedList<T> extends AbstractTestList<T> {
     /**
      *  Returns a full {@link LinkedList}.
      */
+    @Override
     public Collection<T> makeConfirmedFullCollection() {
         List<T> list = new LinkedList<T>();
         list.addAll(Arrays.asList(getFullElements()));

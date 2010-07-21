@@ -116,6 +116,7 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
      * @param key  the key convert
      * @return the converted key
      */
+    @Override
     protected Object convertKey(Object key) {
         if (key != null) {
             char[] chars = key.toString().toCharArray();
@@ -133,6 +134,7 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
      *
      * @return a shallow clone
      */
+    @Override
     public CaseInsensitiveMap<K, V> clone() {
         return (CaseInsensitiveMap<K, V>) super.clone();
     }

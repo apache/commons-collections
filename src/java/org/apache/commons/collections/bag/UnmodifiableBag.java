@@ -100,43 +100,53 @@ public final class UnmodifiableBag<E>
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public Iterator<E> iterator() {
         return UnmodifiableIterator.<E>decorate(decorated().iterator());
     }
 
+    @Override
     public boolean add(E object) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean addAll(Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void clear() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean remove(Object object) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean removeAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean retainAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public boolean add(E object, int count) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean remove(Object object, int count) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public Set<E> uniqueSet() {
         Set<E> set = decorated().uniqueSet();
         return UnmodifiableSet.<E>decorate(set);

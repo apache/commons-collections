@@ -70,59 +70,73 @@ public final class UnmodifiableList<E>
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public Iterator<E> iterator() {
         return UnmodifiableIterator.decorate(decorated().iterator());
     }
 
+    @Override
     public boolean add(Object object) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean addAll(Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public void clear() {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean remove(Object object) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean removeAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean retainAll(Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public ListIterator<E> listIterator() {
         return UnmodifiableListIterator.decorate(decorated().listIterator());
     }
 
+    @Override
     public ListIterator<E> listIterator(int index) {
         return UnmodifiableListIterator.decorate(decorated().listIterator(index));
     }
 
+    @Override
     public void add(int index, E object) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public boolean addAll(int index, Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public E remove(int index) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public E set(int index, E object) {
         throw new UnsupportedOperationException();
     }
 
+    @Override
     public List<E> subList(int fromIndex, int toIndex) {
         List<E> sub = decorated().subList(fromIndex, toIndex);
         return new UnmodifiableList<E>(sub);

@@ -171,6 +171,7 @@ public class BoundedFifoBuffer<E> extends AbstractCollection<E>
      *
      * @return this buffer's size
      */
+    @Override
     public int size() {
         int size = 0;
 
@@ -190,6 +191,7 @@ public class BoundedFifoBuffer<E> extends AbstractCollection<E>
      *
      * @return true if this buffer is empty
      */
+    @Override
     public boolean isEmpty() {
         return size() == 0;
     }
@@ -215,6 +217,7 @@ public class BoundedFifoBuffer<E> extends AbstractCollection<E>
     /**
      * Clears this buffer.
      */
+    @Override
     public void clear() {
         full = false;
         start = 0;
@@ -230,6 +233,7 @@ public class BoundedFifoBuffer<E> extends AbstractCollection<E>
      * @throws NullPointerException  if the given element is null
      * @throws BufferOverflowException  if this buffer is full
      */
+    @Override
     public boolean add(E element) {
         if (null == element) {
             throw new NullPointerException("Attempted to add null object to buffer");
@@ -322,6 +326,7 @@ public class BoundedFifoBuffer<E> extends AbstractCollection<E>
      *
      * @return an iterator over this buffer's elements
      */
+    @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
 

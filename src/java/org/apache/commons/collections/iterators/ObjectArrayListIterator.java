@@ -133,6 +133,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      * @return the next element
      * @throws NoSuchElementException if there is no next element
      */
+    @Override
     public E next() {
         if (hasNext() == false) {
             throw new NoSuchElementException();
@@ -198,6 +199,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
     /**
      * Resets the iterator back to the start index.
      */
+    @Override
     public void reset() {
         super.reset();
         this.lastItemIndex = -1;

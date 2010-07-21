@@ -140,6 +140,7 @@ public class ListOrderedMap<K, V>
 
     // Implement OrderedMap
     //-----------------------------------------------------------------------
+    @Override
     public OrderedMapIterator<K, V> mapIterator() {
         return new ListOrderedMapIterator<K, V>(this);
     }
@@ -201,6 +202,7 @@ public class ListOrderedMap<K, V>
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public V put(K key, V value) {
         if (decorated().containsKey(key)) {
             // re-adding doesn't change order
@@ -213,6 +215,7 @@ public class ListOrderedMap<K, V>
         }
     }
 
+    @Override
     public void putAll(Map<? extends K, ? extends V> map) {
         for (Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
             put(entry.getKey(), entry.getValue());
@@ -233,12 +236,14 @@ public class ListOrderedMap<K, V>
         }
     }
 
+    @Override
     public V remove(Object key) {
         V result = decorated().remove(key);
         insertOrder.remove(key);
         return result;
     }
 
+    @Override
     public void clear() {
         decorated().clear();
         insertOrder.clear();
@@ -253,6 +258,7 @@ public class ListOrderedMap<K, V>
      * @see #keyList()
      * @return the fully modifiable collection view over the keys
      */
+    @Override
     public Set<K> keySet() {
         return new KeySetView<K>(this);
     }
@@ -282,6 +288,7 @@ public class ListOrderedMap<K, V>
      * @see #valueList()
      * @return the fully modifiable collection view over the values
      */
+    @Override
     public Collection<V> values() {
         return new ValuesView<V>(this);
     }
@@ -307,6 +314,7 @@ public class ListOrderedMap<K, V>
      *
      * @return the fully modifiable set view over the entries
      */
+    @Override
     public Set<Map.Entry<K, V>> entrySet() {
         return new EntrySetView<K, V>(this, this.insertOrder);
     }
@@ -317,6 +325,7 @@ public class ListOrderedMap<K, V>
      * 
      * @return the Map as a String
      */
+    @Override
     public String toString() {
         if (isEmpty()) {
             return "{}";
@@ -466,18 +475,22 @@ public class ListOrderedMap<K, V>
             this.parent = (ListOrderedMap<Object, V>) parent;
         }
 
+        @Override
         public int size() {
             return this.parent.size();
         }
 
+        @Override
         public boolean contains(Object value) {
             return this.parent.containsValue(value);
         }
 
+        @Override
         public void clear() {
             this.parent.clear();
         }
 
+        @Override
         public Iterator<V> iterator() {
             return new AbstractUntypedIteratorDecorator<Map.Entry<Object, V>, V>(parent.entrySet().iterator()) {
                 public V next() {
@@ -486,14 +499,17 @@ public class ListOrderedMap<K, V>
             };
         }
 
+        @Override
         public V get(int index) {
             return this.parent.getValue(index);
         }
 
+        @Override
         public V set(int index, V value) {
             return this.parent.setValue(index, value);
         }
 
+        @Override
         public V remove(int index) {
             return this.parent.remove(index);
         }
@@ -509,18 +525,22 @@ public class ListOrderedMap<K, V>
             this.parent = (ListOrderedMap<K, Object>) parent;
         }
 
+        @Override
         public int size() {
             return this.parent.size();
         }
 
+        @Override
         public boolean contains(Object value) {
             return this.parent.containsKey(value);
         }
 
+        @Override
         public void clear() {
             this.parent.clear();
         }
 
+        @Override
         public Iterator<K> iterator() {
             return new AbstractUntypedIteratorDecorator<Map.Entry<K, Object>, K>(parent.entrySet().iterator()) {
                 public K next() {
@@ -549,21 +569,26 @@ public class ListOrderedMap<K, V>
             return entrySet;
         }
         
+        @Override
         public int size() {
             return this.parent.size();
         }
+        @Override
         public boolean isEmpty() {
             return this.parent.isEmpty();
         }
 
+        @Override
         public boolean contains(Object obj) {
             return getEntrySet().contains(obj);
         }
 
+        @Override
         public boolean containsAll(Collection<?> coll) {
             return getEntrySet().containsAll(coll);
         }
 
+        @Override
         @SuppressWarnings("unchecked")
         public boolean remove(Object obj) {
             if (obj instanceof Map.Entry == false) {
@@ -577,10 +602,12 @@ public class ListOrderedMap<K, V>
             return false;
         }
 
+        @Override
         public void clear() {
             this.parent.clear();
         }
 
+        @Override
         public boolean equals(Object obj) {
             if (obj == this) {
                 return true;
@@ -588,14 +615,17 @@ public class ListOrderedMap<K, V>
             return getEntrySet().equals(obj);
         }
 
+        @Override
         public int hashCode() {
             return getEntrySet().hashCode();
         }
 
+        @Override
         public String toString() {
             return getEntrySet().toString();
         }
 
+        @Override
         public Iterator<Map.Entry<K, V>> iterator() {
             return new ListOrderedIterator<K, V>(parent, insertOrder);
         }
@@ -616,6 +646,7 @@ public class ListOrderedMap<K, V>
             return new ListOrderedMapEntry<K, V>(parent, last);
         }
 
+        @Override
         public void remove() {
             super.remove();
             parent.decorated().remove(last);
@@ -631,10 +662,12 @@ public class ListOrderedMap<K, V>
             this.parent = parent;
         }
 
+        @Override
         public V getValue() {
             return parent.get(key);
         }
 
+        @Override
         public V setValue(V value) {
             return parent.decorated().put(key, value);
         }
@@ -709,6 +742,7 @@ public class ListOrderedMap<K, V>
             readable = false;
         }
 
+        @Override
         public String toString() {
             if (readable == true) {
                 return "Iterator[" + getKey() + "=" + getValue() + "]";

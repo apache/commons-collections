@@ -54,6 +54,7 @@ public class TestFilterIterator<E> extends AbstractTestIterator<E> {
     /**
      * Set up instance variables required by this test case.
      */
+    @Override
     public void setUp() {
         array = new String[] { "a", "b", "c" };
         initIterator();
@@ -62,6 +63,7 @@ public class TestFilterIterator<E> extends AbstractTestIterator<E> {
     /**
      * Tear down instance variables required by this test case.
      */
+    @Override
     public void tearDown() throws Exception {
         iterator = null;
     }
@@ -79,6 +81,7 @@ public class TestFilterIterator<E> extends AbstractTestIterator<E> {
      *
      * @return "empty" FilterIterator
      */
+    @Override
     public FilterIterator<E> makeEmptyIterator() {
         return makeBlockAllFilter(new ArrayIterator<E>(array));
     }
@@ -89,6 +92,7 @@ public class TestFilterIterator<E> extends AbstractTestIterator<E> {
      * 
      * @return a filtered iterator
      */
+    @Override
     @SuppressWarnings("unchecked")
     public FilterIterator<E> makeObject() {
         list = new ArrayList<E>(Arrays.asList((E[]) array));

@@ -51,14 +51,17 @@ public abstract class AbstractTestOrderedMapIterator<K, V> extends AbstractTestM
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public abstract OrderedMapIterator<K, V> makeEmptyIterator();
 
+    @Override
     public abstract OrderedMapIterator<K, V> makeObject();
 
     //-----------------------------------------------------------------------
     /**
      * Test that the empty list iterator contract is correct.
      */
+    @Override
     public void testEmptyMapIterator() {
         if (supportsEmptyIterator() == false) {
             return;
@@ -78,6 +81,7 @@ public abstract class AbstractTestOrderedMapIterator<K, V> extends AbstractTestM
     /**
      * Test that the full list iterator contract is correct.
      */
+    @Override
     public void testFullMapIterator() {
         if (supportsFullIterator() == false) {
             return;

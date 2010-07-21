@@ -67,6 +67,7 @@ public class TestPredicatedSortedMap<K, V> extends AbstractTestSortedMap<K, V> {
         return PredicatedSortedMap.decorate(map, keyPredicate, valuePredicate);
     }
 
+    @Override
     public SortedMap<K, V> makeObject() {
         return decorateMap(new TreeMap<K, V>(), truePredicate, truePredicate);
     }
@@ -75,11 +76,13 @@ public class TestPredicatedSortedMap<K, V> extends AbstractTestSortedMap<K, V> {
         return decorateMap(new TreeMap<K, V>(), testPredicate, testPredicate);
     }
 
+    @Override
     public boolean isSubMapViewsSerializable() {
         // TreeMap sub map views have a bug in deserialization.
         return false;
     }
 
+    @Override
     public boolean isAllowNullKey() {
         return false;
     }
@@ -181,6 +184,7 @@ public class TestPredicatedSortedMap<K, V> extends AbstractTestSortedMap<K, V> {
             c == null);
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

@@ -39,10 +39,12 @@ public class TestArrayListIterator<E> extends TestArrayIterator<E> {
         return new TestSuite(TestArrayListIterator.class);
     }
 
+    @Override
     public ArrayListIterator<E> makeEmptyIterator() {
         return new ArrayListIterator<E>(new Object[0]);
     }
 
+    @Override
     public ArrayListIterator<E> makeObject() {
         return new ArrayListIterator<E>(testArray);
     }
@@ -51,6 +53,7 @@ public class TestArrayListIterator<E> extends TestArrayIterator<E> {
         return new ArrayListIterator<E>(array);
     }
 
+    @Override
     public boolean supportsRemove() {
         return false;
     }

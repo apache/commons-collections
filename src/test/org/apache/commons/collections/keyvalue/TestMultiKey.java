@@ -59,10 +59,12 @@ public class TestMultiKey extends TestCase {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     public void setUp() throws Exception {
         super.setUp();
     }
 
+    @Override
     protected void tearDown() throws Exception {
         super.tearDown();
     }
@@ -225,12 +227,14 @@ public class TestMultiKey extends TestCase {
             this.name = name;
         }
 
+        @Override
         public boolean equals(Object obj)
         {
             return obj instanceof SystemHashCodeSimulatingKey 
                 && name.equals(((SystemHashCodeSimulatingKey)obj).name);
         }
 
+        @Override
         public int hashCode()
         {
             return hashCode;

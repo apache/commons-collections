@@ -62,6 +62,7 @@ public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorat
      * 
      * @return the decorated list
      */
+    @Override
     protected List<E> decorated() {
         return (List<E>) super.decorated();
     }

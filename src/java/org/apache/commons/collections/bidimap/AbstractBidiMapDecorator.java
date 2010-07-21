@@ -55,11 +55,13 @@ public abstract class AbstractBidiMapDecorator<K, V> extends AbstractMapDecorato
      * 
      * @return the decorated map
      */
+    @Override
     protected BidiMap<K, V> decorated() {
         return (BidiMap<K, V>) super.decorated();
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public MapIterator<K, V> mapIterator() {
         return decorated().mapIterator();
     }

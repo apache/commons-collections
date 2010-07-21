@@ -81,6 +81,7 @@ public abstract class AbstractTestList<E> extends AbstractTestCollection<E> {
      *  Verifies that the test list implementation matches the confirmed list
      *  implementation.
      */
+    @Override
     @SuppressWarnings("unchecked")
     public void verify() {
         super.verify();
@@ -114,6 +115,7 @@ public abstract class AbstractTestList<E> extends AbstractTestCollection<E> {
     /**
      * List equals method is defined.
      */
+    @Override
     public boolean isEqualsCheckable() {
         return true;
     }
@@ -121,6 +123,7 @@ public abstract class AbstractTestList<E> extends AbstractTestCollection<E> {
     /**
      * Returns an empty {@link ArrayList}.
      */
+    @Override
     public Collection<E> makeConfirmedCollection() {
         ArrayList<E> list = new ArrayList<E>();
         return list;
@@ -129,6 +132,7 @@ public abstract class AbstractTestList<E> extends AbstractTestCollection<E> {
     /**
      * Returns a full {@link ArrayList}.
      */
+    @Override
     public Collection<E> makeConfirmedFullCollection() {
         ArrayList<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
@@ -140,11 +144,13 @@ public abstract class AbstractTestList<E> extends AbstractTestCollection<E> {
      *
      * @return an empty list to be used for testing
      */
+    @Override
     public abstract List<E> makeObject();
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public List<E> makeFullCollection() {
         // only works if list supports optional "addAll(Collection)"
         List<E> list = makeObject();
@@ -168,6 +174,7 @@ public abstract class AbstractTestList<E> extends AbstractTestCollection<E> {
      *
      * @return the confirmed field as a List
      */
+    @Override
     public List<E> getConfirmed() {
         return (List<E>) super.getConfirmed();
     }
@@ -339,10 +346,12 @@ public abstract class AbstractTestList<E> extends AbstractTestCollection<E> {
 
         final List<E> listForC = Arrays.asList(getFullElements());
         Collection<E> c = new AbstractCollection<E>() {
+            @Override
             public int size() {
                 return listForC.size();
             }
 
+            @Override
             public Iterator<E> iterator() {
                 return listForC.iterator();
             }
@@ -1036,6 +1045,7 @@ public abstract class AbstractTestList<E> extends AbstractTestCollection<E> {
      *
      * TODO: store new serialized objects in CVS.
      */
+    @Override
     protected boolean skipSerializedCanonicalTests() {
         return true;
     }
@@ -1116,43 +1126,52 @@ public abstract class AbstractTestList<E> extends AbstractTestCollection<E> {
            this.outer = outer;
        }
 
+       @Override
        @SuppressWarnings("unchecked")
        public E[] getFullElements() {
            List<E> l = Arrays.asList(outer.getFullElements());
            return (E[]) l.subList(3, l.size() - 3).toArray();
        }
 
+       @Override
        public E[] getOtherElements() {
            return outer.getOtherElements();
        }
 
+       @Override
        public boolean isAddSupported() {
            return outer.isAddSupported();
        }
 
+       @Override
        public boolean isSetSupported() {
            return outer.isSetSupported();
        }
 
+       @Override
        public boolean isRemoveSupported() {
            return outer.isRemoveSupported();
        }
 
+       @Override
        public List<E> makeObject() {
            return outer.makeFullCollection().subList(4, 4);
        }
 
+       @Override
        public List<E> makeFullCollection() {
            int size = getFullElements().length;
            return outer.makeFullCollection().subList(3, size - 3);
        }
 
+       @Override
        public void resetEmpty() {
            outer.resetFull();
            this.setCollection(outer.getCollection().subList(4, 4));
            this.setConfirmed(outer.getConfirmed().subList(4, 4));
        }
 
+       @Override
        public void resetFull() {
            outer.resetFull();
            int size = outer.getConfirmed().size();
@@ -1160,11 +1179,13 @@ public abstract class AbstractTestList<E> extends AbstractTestCollection<E> {
            this.setConfirmed(outer.getConfirmed().subList(3, size - 3));
        }
 
+       @Override
        public void verify() {
            super.verify();
            outer.verify();
        }
 
+       @Override
        public boolean isTestSerialization() {
            return false;
        }
@@ -1299,27 +1320,33 @@ public abstract class AbstractTestList<E> extends AbstractTestCollection<E> {
            super("TestListIterator");
        }
 
+       @Override
        public E addSetValue() {
            return AbstractTestList.this.getOtherElements()[0];
        }
 
+       @Override
        public boolean supportsRemove() {
            return AbstractTestList.this.isRemoveSupported();
        }
 
+       @Override
        public boolean supportsAdd() {
            return AbstractTestList.this.isAddSupported();
        }
 
+       @Override
        public boolean supportsSet() {
            return AbstractTestList.this.isSetSupported();
        }
 
+       @Override
        public ListIterator<E> makeEmptyIterator() {
            resetEmpty();
            return AbstractTestList.this.getCollection().listIterator();
        }
 
+       @Override
        public ListIterator<E> makeObject() {
            resetFull();
            return AbstractTestList.this.getCollection().listIterator();

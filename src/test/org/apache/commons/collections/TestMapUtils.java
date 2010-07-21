@@ -278,6 +278,7 @@ public class TestMapUtils extends BulkTest {
         in.put("5", "E");
 
         ResourceBundle b = new ListResourceBundle() {
+            @Override
             public Object[][] getContents() {
                 final Object[][] contents = new Object[ in.size() ][2];
                 final Iterator<String> i = in.keySet().iterator();

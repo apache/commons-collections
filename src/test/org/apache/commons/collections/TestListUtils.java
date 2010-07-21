@@ -56,6 +56,7 @@ public class TestListUtils extends BulkTest {
         return BulkTest.makeSuite(TestListUtils.class);
     }
 
+    @Override
     public void setUp() {
         fullArray = new String[]{a, b, c, d, e};
         fullList = new ArrayList<String>(Arrays.asList(fullArray));

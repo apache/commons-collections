@@ -47,16 +47,19 @@ public class TestUnmodifiableOrderedBidiMap<K extends Comparable<K>, V extends C
         super(testName);
     }
 
+    @Override
     public OrderedBidiMap<K, V> makeObject() {
         return UnmodifiableOrderedBidiMap.decorate(new TreeBidiMap<K, V>());
     }
 
+    @Override
     public BidiMap<K, V> makeFullMap() {
         OrderedBidiMap<K, V> bidi = new TreeBidiMap<K, V>();
         addSampleMappings(bidi);
         return UnmodifiableOrderedBidiMap.decorate(bidi);
     }
 
+    @Override
     public Map<K, V> makeConfirmedMap() {
         return new TreeMap<K, V>();
     }
@@ -64,26 +67,32 @@ public class TestUnmodifiableOrderedBidiMap<K extends Comparable<K>, V extends C
     /**
      * Override to prevent infinite recursion of tests.
      */
+    @Override
     public String[] ignoredTests() {
         return new String[] {"TestUnmodifiableOrderedBidiMap.bulkTestInverseMap.bulkTestInverseMap"};
     }
 
+    @Override
     public boolean isAllowNullKey() {
         return false;
     }
 
+    @Override
     public boolean isAllowNullValue() {
         return false;
     }
 
+    @Override
     public boolean isPutAddSupported() {
         return false;
     }
 
+    @Override
     public boolean isPutChangeSupported() {
         return false;
     }
 
+    @Override
     public boolean isRemoveSupported() {
         return false;
     }

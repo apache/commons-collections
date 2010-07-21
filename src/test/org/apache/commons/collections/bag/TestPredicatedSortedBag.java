@@ -67,6 +67,7 @@ public class TestPredicatedSortedBag<T> extends AbstractTestSortedBag<T> {
         return PredicatedSortedBag.decorate(bag, predicate);
     }
 
+    @Override
     public SortedBag<T> makeObject() {
         return decorateBag(new TreeBag<T>(), truePredicate);
     }
@@ -105,6 +106,7 @@ public class TestPredicatedSortedBag<T> extends AbstractTestSortedBag<T> {
         assertTrue("natural order, so comparator should be null", c == null);
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

@@ -299,6 +299,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      * @return a suitable hash code
      * @since Commons Collections 3.0
      */
+    @Override
     public int hashCode() {
         int hash = 0;
         if (null != comparatorChain) {
@@ -326,6 +327,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      * @return true if equal
      * @since Commons Collections 3.0
      */
+    @Override
     public boolean equals(Object object) {
         if (this == object) {
             return true;

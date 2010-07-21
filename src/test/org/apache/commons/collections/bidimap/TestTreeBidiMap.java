@@ -45,10 +45,12 @@ public class TestTreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> e
         super(testName);
     }
 
+    @Override
     public BidiMap<K, V> makeObject() {
         return new TreeBidiMap<K, V>();
     }
     
+    @Override
     public TreeMap<K, V> makeConfirmedMap() {
         return new TreeMap<K, V>();
     }
@@ -56,22 +58,27 @@ public class TestTreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> e
     /**
      * Override to prevent infinite recursion of tests.
      */
+    @Override
     public String[] ignoredTests() {
         return new String[] {"TestTreeBidiMap.bulkTestInverseMap.bulkTestInverseMap"};
     }
     
+    @Override
     public boolean isAllowNullKey() {
         return false;
     }
     
+    @Override
     public boolean isAllowNullValue() {
         return false;
     }
     
+    @Override
     public boolean isSetValueSupported() {
         return false;
     }
     
+    @Override
     public String getCompatibilityVersion() {
         return "3.3";
     }

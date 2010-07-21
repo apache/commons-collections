@@ -52,30 +52,36 @@ public class TestSynchronizedBuffer<E> extends AbstractTestCollection<E> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public Buffer<E> makeObject() {
         return SynchronizedBuffer.decorate(new UnboundedFifoBuffer<E>());
     }
 
+    @Override
     public Collection<E> makeFullCollection() {
         Buffer<E> buffer = new UnboundedFifoBuffer<E>();
         buffer.addAll(Arrays.asList(getFullElements()));
         return SynchronizedBuffer.decorate(buffer);
     }
 
+    @Override
     public Collection<E> makeConfirmedCollection() {
         return new ArrayStack<E>();
     }
 
+    @Override
     public Collection<E> makeConfirmedFullCollection() {
         ArrayStack<E> list = new ArrayStack<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }
 
+    @Override
     public boolean isNullSupported() {
         return false;
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

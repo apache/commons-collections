@@ -47,6 +47,7 @@ public class TestTransformedBag<T> extends AbstractTestBag<T> {
         junit.textui.TestRunner.main(testCaseName);
     }
 
+    @Override
     @SuppressWarnings("unchecked")
     public Bag<T> makeObject() {
         return TransformedBag.decorate(new HashBag<T>(), (Transformer<T, T>) TestTransformedCollection.NOOP_TRANSFORMER);
@@ -87,6 +88,7 @@ public class TestTransformedBag<T> extends AbstractTestBag<T> {
         assertEquals(true, bag.remove(new Integer((String) els[0])));
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.1";
     }

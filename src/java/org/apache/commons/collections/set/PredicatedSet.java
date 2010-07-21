@@ -82,6 +82,7 @@ public class PredicatedSet<E> extends PredicatedCollection<E> implements Set<E> 
      * 
      * @return the decorated set
      */
+    @Override
     protected Set<E> decorated() {
         return (Set<E>) super.decorated();
     }

@@ -58,12 +58,14 @@ public class TestDualTreeBidiMap2<K extends Comparable<K>, V extends Comparable<
         super(testName);
     }
 
+    @Override
     public DualTreeBidiMap<K, V> makeObject() {
         return new DualTreeBidiMap<K, V>(
                 new ReverseComparator<K>(ComparableComparator.<K> getInstance()),
                 new ReverseComparator<V>(ComparableComparator.<V> getInstance()));
     }
 
+    @Override
     public TreeMap<K, V> makeConfirmedMap() {
         return new TreeMap<K, V>(new ReverseComparator<K>(ComparableComparator.<K>getInstance()));
     }
@@ -114,6 +116,7 @@ public class TestDualTreeBidiMap2<K extends Comparable<K>, V extends Comparable<
         }
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "3.Test2";
     }
@@ -121,6 +124,7 @@ public class TestDualTreeBidiMap2<K extends Comparable<K>, V extends Comparable<
     /**
      * Override to prevent infinite recursion of tests.
      */
+    @Override
     public String[] ignoredTests() {
         return new String[] {"TestDualTreeBidiMap2.bulkTestInverseMap.bulkTestInverseMap"};
     }
