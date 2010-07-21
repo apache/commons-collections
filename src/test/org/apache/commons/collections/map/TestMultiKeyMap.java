@@ -68,18 +68,18 @@ public class TestMultiKeyMap<K, V> extends AbstractTestIterableMap<MultiKey<? ex
     @SuppressWarnings("unchecked")
     private MultiKey<K>[] getMultiKeyKeys() {
         return new MultiKey[] {
-            new MultiKey(I1, I2),
-            new MultiKey(I2, I3),
-            new MultiKey(I3, I4),
-            new MultiKey(I1, I1, I2),
-            new MultiKey(I2, I3, I4),
-            new MultiKey(I3, I7, I6),
-            new MultiKey(I1, I1, I2, I3),
-            new MultiKey(I2, I4, I5, I6),
-            new MultiKey(I3, I6, I7, I8),
-            new MultiKey(I1, I1, I2, I3, I4),
-            new MultiKey(I2, I3, I4, I5, I6),
-            new MultiKey(I3, I5, I6, I7, I8),
+            new MultiKey<Integer>(I1, I2),
+            new MultiKey<Integer>(I2, I3),
+            new MultiKey<Integer>(I3, I4),
+            new MultiKey<Integer>(I1, I1, I2),
+            new MultiKey<Integer>(I2, I3, I4),
+            new MultiKey<Integer>(I3, I7, I6),
+            new MultiKey<Integer>(I1, I1, I2, I3),
+            new MultiKey<Integer>(I2, I4, I5, I6),
+            new MultiKey<Integer>(I3, I6, I7, I8),
+            new MultiKey<Integer>(I1, I1, I2, I3, I4),
+            new MultiKey<Integer>(I2, I3, I4, I5, I6),
+            new MultiKey<Integer>(I3, I5, I6, I7, I8),
         };
     }
 
@@ -108,11 +108,11 @@ public class TestMultiKeyMap<K, V> extends AbstractTestIterableMap<MultiKey<? ex
     @Override
     @SuppressWarnings("unchecked")
     public MultiKey<K>[] getOtherKeys() {
-        return (MultiKey<K>[]) new MultiKey[] {
-            new MultiKey(I1, I7),
-            new MultiKey(I1, I8),
-            new MultiKey(I2, I4),
-            new MultiKey(I2, I5),
+        return new MultiKey[] {
+            new MultiKey<Integer>(I1, I7),
+            new MultiKey<Integer>(I1, I8),
+            new MultiKey<Integer>(I2, I4),
+            new MultiKey<Integer>(I2, I5),
         };
     }
 

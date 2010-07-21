@@ -142,7 +142,7 @@ public class TestCaseInsensitiveMap<K, V> extends AbstractTestIterableMap<K, V> 
                 Locale.setDefault(locales[i]);
                 for (int j = 0; j < data.length; j++) {
                     assertTrue("Test data corrupt: " + j, data[j][0].equalsIgnoreCase(data[j][1]));
-                    CaseInsensitiveMap map = new CaseInsensitiveMap();
+                    CaseInsensitiveMap<String, String> map = new CaseInsensitiveMap<String, String>();
                     map.put(data[j][0], "value");
                     assertEquals(Locale.getDefault() + ": " + j, "value", map.get(data[j][1]));
                 }

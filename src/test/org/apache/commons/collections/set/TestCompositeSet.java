@@ -50,7 +50,7 @@ public class TestCompositeSet<E> extends AbstractTestSet<E> {
     public CompositeSet<E> makeObject() {
         final HashSet<E> contained = new HashSet<E>();
         CompositeSet<E> set = new CompositeSet<E>(contained);
-        set.setMutator( new EmptySetMutator(contained) );
+        set.setMutator( new EmptySetMutator<E>(contained) );
         return set;
     }
 

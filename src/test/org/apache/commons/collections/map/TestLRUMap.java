@@ -238,7 +238,7 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testRemoveLRU() {
-        MockLRUMapSubclass map = new MockLRUMapSubclass(2);
+        MockLRUMapSubclass<K, String> map = new MockLRUMapSubclass<K, String>(2);
         assertNull(map.entry);
         map.put((K) "A", "a");
         assertNull(map.entry);
@@ -484,9 +484,9 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
     // TODO: COLLECTIONS-330
     public void todoTestSynchronizedRemoveFromMapIterator() throws InterruptedException {
 
-        final LRUMap map = new LRUMap(10000);
+        final LRUMap<Object, Thread> map = new LRUMap<Object, Thread>(10000);
         
-        final Map exceptions = new HashMap();
+        final Map<Throwable, String> exceptions = new HashMap<Throwable, String>();
         final ThreadGroup tg = new ThreadGroup(getName()) {
             @Override
             public void uncaughtException(Thread t, Throwable e) {
@@ -516,7 +516,7 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
                             }
                         }
                         synchronized (map) {
-                            for (MapIterator iter = map.mapIterator(); iter.hasNext();) {
+                            for (MapIterator<Object, Thread> iter = map.mapIterator(); iter.hasNext();) {
                                 String name = (String)iter.next();
                                 if (map.get(name) == this) {
                                     iter.remove();
@@ -567,9 +567,9 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
     
     public void testSynchronizedRemoveFromEntrySet() throws InterruptedException {
 
-        final Map map = new LRUMap(10000);
+        final Map<Object, Thread> map = new LRUMap<Object, Thread>(10000);
         
-        final Map exceptions = new HashMap();
+        final Map<Throwable, String> exceptions = new HashMap<Throwable, String>();
         final ThreadGroup tg = new ThreadGroup(getName()) {
             @Override
             public void uncaughtException(Thread t, Throwable e) {
@@ -599,8 +599,8 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
                             }
                         }
                         synchronized (map) {
-                            for (Iterator iter = map.entrySet().iterator(); iter.hasNext();) {
-                                Map.Entry entry = (Map.Entry)iter.next();
+                            for (Iterator<Map.Entry<Object, Thread>> iter = map.entrySet().iterator(); iter.hasNext();) {
+                                Map.Entry<Object, Thread> entry = iter.next();
                                 if (entry.getValue() == this) {
                                     iter.remove();
                                 }
@@ -651,9 +651,9 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
     // TODO: COLLECTIONS-330
     public void todoTestSynchronizedRemoveFromKeySet() throws InterruptedException {
 
-        final Map map = new LRUMap(10000);
+        final Map<Object, Thread> map = new LRUMap<Object, Thread>(10000);
         
-        final Map exceptions = new HashMap();
+        final Map<Throwable, String> exceptions = new HashMap<Throwable, String>();
         final ThreadGroup tg = new ThreadGroup(getName()) {
             @Override
             public void uncaughtException(Thread t, Throwable e) {
@@ -683,7 +683,7 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
                             }
                         }
                         synchronized (map) {
-                            for (Iterator iter = map.keySet().iterator(); iter.hasNext();) {
+                            for (Iterator<Object> iter = map.keySet().iterator(); iter.hasNext();) {
                                 String name = (String)iter.next();
                                 if (map.get(name) == this) {
                                     iter.remove();
@@ -734,9 +734,9 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
     
     public void testSynchronizedRemoveFromValues() throws InterruptedException {
 
-        final Map map = new LRUMap(10000);
+        final Map<Object, Thread> map = new LRUMap<Object, Thread>(10000);
         
-        final Map exceptions = new HashMap();
+        final Map<Throwable, String> exceptions = new HashMap<Throwable, String>();
         final ThreadGroup tg = new ThreadGroup(getName()) {
             @Override
             public void uncaughtException(Thread t, Throwable e) {
@@ -766,7 +766,7 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
                             }
                         }
                         synchronized (map) {
-                            for (Iterator iter = map.values().iterator(); iter.hasNext();) {
+                            for (Iterator<Thread> iter = map.values().iterator(); iter.hasNext();) {
                                 if (iter.next() == this) {
                                     iter.remove();
                                 }

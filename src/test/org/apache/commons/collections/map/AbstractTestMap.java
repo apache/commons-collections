@@ -745,7 +745,6 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
      * Compare the current serialized form of the Map
      * against the canonical version in SVN.
      */
-    @SuppressWarnings("unchecked")
     public void testEmptyMapCompatibility() throws Exception {
         /**
          * Create canonical objects with this code
@@ -756,9 +755,10 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
         */
 
         // test to make sure the canonical form has been preserved
-        Map map = makeObject();
+        Map<K, V> map = makeObject();
         if (map instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
-            Map map2 = (Map) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map));
+            @SuppressWarnings("unchecked")
+            Map<K, V> map2 = (Map<K, V>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map));
             assertEquals("Map is empty", 0, map2.size());
         }
     }
@@ -767,7 +767,6 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
      * Compare the current serialized form of the Map
      * against the canonical version in SVN.
      */
-    @SuppressWarnings("unchecked")
     public void testFullMapCompatibility() throws Exception {
         /**
          * Create canonical objects with this code
@@ -778,9 +777,10 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
         */
 
         // test to make sure the canonical form has been preserved
-        Map map = makeFullMap();
+        Map<K, V> map = makeFullMap();
         if (map instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
-            Map map2 = (Map) readExternalFormFromDisk(getCanonicalFullCollectionName(map));
+            @SuppressWarnings("unchecked")
+            Map<K, V> map2 = (Map<K, V>) readExternalFormFromDisk(getCanonicalFullCollectionName(map));
             assertEquals("Map is the right size", getSampleKeys().length, map2.size());
         }
     }

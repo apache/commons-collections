@@ -121,12 +121,12 @@ public class TestIdentityMap<K, V> extends AbstractTestObject {
      * Compare the current serialized form of the Map
      * against the canonical version in SVN.
      */
-    @SuppressWarnings("unchecked")
     public void testEmptyMapCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
         Map<K, V> map = makeObject();
         if (map instanceof Serializable && !skipSerializedCanonicalTests()) {
-            Map map2 = (Map) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map));
+            @SuppressWarnings("unchecked")
+            Map<K, V> map2 = (Map<K, V>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map));
             assertEquals("Map is empty", 0, map2.size());
         }
     }

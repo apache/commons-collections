@@ -28,9 +28,9 @@ import org.apache.commons.collections.collection.CompositeCollection;
  * class also has to be serialized. 
  */
 class EmptySetMutator<E> implements CompositeSet.SetMutator<E> {
-    private Set contained;
+    private Set<E> contained;
 
-    public EmptySetMutator(Set set) {
+    public EmptySetMutator(Set<E> set) {
         this.contained = set;
     }
 

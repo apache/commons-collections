@@ -42,7 +42,7 @@ public class TestTransformedMap extends BulkTest {
     private Transformer<Integer, String> intToString = new Transformer<Integer, String>() {
         public String transform(Integer input) {
             return String.valueOf(input);
-        };
+        }
     };
 
     private Transformer<Object, Class<?>> objectToClass = new Transformer<Object, Class<?>>() {
@@ -71,13 +71,12 @@ public class TestTransformedMap extends BulkTest {
     }
 
     // -----------------------------------------------------------------------
-    @SuppressWarnings("unchecked")
     public void testTransformedMap() {
         TransformedMap<Integer, String, Object, Class<?>> map = TransformedMap.decorate(
                 new HashMap<String, Class<?>>(), intToString, objectToClass);
 
         Integer[] k = new Integer[] { 0, 1, 2, 3, 4, 5, 6 };
-        Object[] v = new Object[] { "", new Object(), new HashMap(), 0, BigInteger.TEN, null,
+        Object[] v = new Object[] { "", new Object(), new HashMap<Object, Object>(), 0, BigInteger.TEN, null,
                 new Object[0] };
 
         assertEquals(0, map.size());

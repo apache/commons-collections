@@ -115,8 +115,8 @@ public class TestListUtils extends BulkTest {
      * Tests intersecting two lists in different orders.
      */
     public void testIntersectionOrderInsensitivity() {
-		List one = new ArrayList();
-		List two = new ArrayList();
+		List<String> one = new ArrayList<String>();
+		List<String> two = new ArrayList<String>();
 		one.add("a");
 		one.add("b");
 		two.add("a");
@@ -237,7 +237,7 @@ public class TestListUtils extends BulkTest {
      */
     // TODO: Generics
     public void testIndexOf() {
-        Predicate testPredicate = PredicateUtils.equalPredicate("d");
+        Predicate<String> testPredicate = PredicateUtils.equalPredicate("d");
         int index = ListUtils.indexOf(fullList, testPredicate);
         assertEquals(d, fullList.get(index));
 

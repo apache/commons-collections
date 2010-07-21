@@ -73,7 +73,7 @@ class LocalTestNode<K extends Comparable<K>, V extends Comparable<V>> implements
     /**
      * Method compareTo
      *
-     * @param o
+     * @param other
      *
      * @return a negative integer, zero, or a positive integer
      *  as this object is less than, equal to, or greater than the specified object.
@@ -97,7 +97,6 @@ class LocalTestNode<K extends Comparable<K>, V extends Comparable<V>> implements
      * @return true if equal
      */
     @Override
-    @SuppressWarnings("unchecked")
     public boolean equals(Object o) {
 
         if (o == null) {

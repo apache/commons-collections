@@ -21,7 +21,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -77,9 +76,8 @@ public class TestDualTreeBidiMap2<K extends Comparable<K>, V extends Comparable<
         assertTrue(bidi.comparator() instanceof ReverseComparator);
     }
 
-    @SuppressWarnings("unchecked")
     public void testSerializeDeserializeCheckComparator() throws Exception {
-        SortedBidiMap obj = (SortedBidiMap) makeObject();
+        SortedBidiMap<?, ?> obj = makeObject();
         if (obj instanceof Serializable && isTestSerialization()) {
             ByteArrayOutputStream buffer = new ByteArrayOutputStream();
             ObjectOutputStream out = new ObjectOutputStream(buffer);

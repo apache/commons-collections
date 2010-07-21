@@ -154,7 +154,6 @@ public class TestFlat3Map<K, V> extends AbstractTestIterableMap<K, V> {
         assertSame(TWO, cloned.get(TWENTY));
     }
 
-    @SuppressWarnings("unchecked")
     public void testSerialisation0() throws Exception {
         Flat3Map<K, V> map = makeObject();
         ByteArrayOutputStream bout = new ByteArrayOutputStream();
@@ -164,7 +163,7 @@ public class TestFlat3Map<K, V> extends AbstractTestIterableMap<K, V> {
         out.close();
         ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
         ObjectInputStream in = new ObjectInputStream(bin);
-        Flat3Map ser = (Flat3Map) in.readObject();
+        Flat3Map<?, ?> ser = (Flat3Map<?, ?>) in.readObject();
         in.close();
         assertEquals(0, map.size());
         assertEquals(0, ser.size());
@@ -183,7 +182,7 @@ public class TestFlat3Map<K, V> extends AbstractTestIterableMap<K, V> {
         out.close();
         ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
         ObjectInputStream in = new ObjectInputStream(bin);
-        Flat3Map ser = (Flat3Map) in.readObject();
+        Flat3Map<?, ?> ser = (Flat3Map<?, ?>) in.readObject();
         in.close();
         assertEquals(2, map.size());
         assertEquals(2, ser.size());
@@ -208,7 +207,7 @@ public class TestFlat3Map<K, V> extends AbstractTestIterableMap<K, V> {
         out.close();
         ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
         ObjectInputStream in = new ObjectInputStream(bin);
-        Flat3Map ser = (Flat3Map) in.readObject();
+        Flat3Map<?, ?> ser = (Flat3Map<?, ?>) in.readObject();
         in.close();
         assertEquals(4, map.size());
         assertEquals(4, ser.size());
@@ -418,7 +417,7 @@ public class TestFlat3Map<K, V> extends AbstractTestIterableMap<K, V> {
 //    }
 
     public void testCollections261() {
-        Flat3Map m = new Flat3Map();
+        Flat3Map<Integer, Integer> m = new Flat3Map<Integer, Integer>();
         m.put( new Integer(1), new Integer(1) );
         m.put( new Integer(0), new Integer(0) );
         assertEquals( new Integer(1), m.remove( new Integer(1) ) ); 

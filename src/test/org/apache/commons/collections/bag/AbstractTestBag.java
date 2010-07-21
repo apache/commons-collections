@@ -374,7 +374,7 @@ public abstract class AbstractTestBag<T> extends AbstractTestObject {
         bag.add((T) "B");
         bag.add((T) "B");
         bag.add((T) "C");
-        String[] array = (String[]) bag.toArray(new String[0]);
+        String[] array = bag.toArray(new String[0]);
         int a = 0, b = 0, c = 0;
         for (int i = 0; i < array.length; i++) {
             a += (array[i].equals("A") ? 1 : 0);
@@ -455,13 +455,12 @@ public abstract class AbstractTestBag<T> extends AbstractTestObject {
     }
 
     //-----------------------------------------------------------------------
-    @SuppressWarnings("unchecked")
     public void testEmptyBagSerialization() throws IOException, ClassNotFoundException {
         Bag<T> bag = makeObject();
         if (!(bag instanceof Serializable && isTestSerialization())) return;
         
         byte[] objekt = writeExternalFormToBytes((Serializable) bag);
-        Bag bag2 = (Bag) readExternalFormFromBytes(objekt);
+        Bag<?> bag2 = (Bag<?>) readExternalFormFromBytes(objekt);
 
         assertEquals("Bag should be empty",0, bag.size());
         assertEquals("Bag should be empty",0, bag2.size());
@@ -479,7 +478,7 @@ public abstract class AbstractTestBag<T> extends AbstractTestObject {
         if (!(bag instanceof Serializable && isTestSerialization())) return;
         
         byte[] objekt = writeExternalFormToBytes((Serializable) bag);
-        Bag bag2 = (Bag) readExternalFormFromBytes(objekt);
+        Bag<?> bag2 = (Bag<?>) readExternalFormFromBytes(objekt);
 
         assertEquals("Bag should be same size", size, bag.size());
         assertEquals("Bag should be same size", size, bag2.size());
@@ -501,12 +500,11 @@ public abstract class AbstractTestBag<T> extends AbstractTestObject {
      * Compare the current serialized form of the Bag
      * against the canonical version in SVN.
      */
-    @SuppressWarnings("unchecked")
     public void testEmptyBagCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
         Bag<T> bag = makeObject();
         if (bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
-            Bag bag2 = (Bag) readExternalFormFromDisk(getCanonicalEmptyCollectionName(bag));
+            Bag<?> bag2 = (Bag<?>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(bag));
             assertTrue("Bag is empty",bag2.size()  == 0);
             assertEquals(bag, bag2);
         }

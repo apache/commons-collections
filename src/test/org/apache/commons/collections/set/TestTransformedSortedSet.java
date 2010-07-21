@@ -83,12 +83,12 @@ public class TestTransformedSortedSet<E> extends AbstractTestSortedSet<E> {
     }
 
     public void testTransformedSet_decorateTransform() {
-        Set originalSet = new TreeSet();
+        Set<Object> originalSet = new TreeSet<Object>();
         Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {
             originalSet.add(els[i]);
         }
-        Set set = TransformedSortedSet.decorateTransform(originalSet, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        Set<?> set = TransformedSortedSet.decorateTransform(originalSet, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, set.size());
         for (int i = 0; i < els.length; i++) {
             assertEquals(true, set.contains(new Integer((String) els[i])));

@@ -28,7 +28,7 @@ import org.apache.commons.collections.BulkTest;
  * To use, subclass and override the {@link #makeEmptySet()}
  * method.  You may have to override other protected methods if your
  * set is not modifiable, or if your set restricts what kinds of
- * elements may be added; see {@link AbstractTestCollection} for more details.
+ * elements may be added; see {@link AbstractTestSet} for more details.
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$

@@ -70,12 +70,12 @@ public class TestTransformedSortedBag<T> extends AbstractTestSortedBag<T> {
     }
 
     public void testTransformedBag_decorateTransform() {
-        Bag originalBag = new TreeBag();
+        Bag<Object> originalBag = new TreeBag<Object>();
         Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {
             originalBag.add(els[i]);
         }
-        Bag bag = TransformedBag.decorateTransform(originalBag, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        Bag<?> bag = TransformedBag.decorateTransform(originalBag, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, bag.size());
         for (int i = 0; i < els.length; i++) {
             assertEquals(true, bag.contains(new Integer((String) els[i])));
