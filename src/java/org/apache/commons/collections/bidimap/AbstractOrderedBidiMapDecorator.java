@@ -55,11 +55,13 @@ public abstract class AbstractOrderedBidiMapDecorator<K, V>
      * 
      * @return the decorated map
      */
+    @Override
     protected OrderedBidiMap<K, V> decorated() {
         return (OrderedBidiMap<K, V>) super.decorated();
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public OrderedMapIterator<K, V> mapIterator() {
         return decorated().mapIterator();
     }

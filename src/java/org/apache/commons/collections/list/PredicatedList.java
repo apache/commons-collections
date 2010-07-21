@@ -85,6 +85,7 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
      * 
      * @return the decorated list
      */
+    @Override
     protected List<E> decorated() {
         return (List<E>) super.decorated();
     }
@@ -146,11 +147,13 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
             super(iterator);
         }
         
+        @Override
         public void add(E object) {
             validate(object);
             iterator.add(object);
         }
         
+        @Override
         public void set(E object) {
             validate(object);
             iterator.set(object);

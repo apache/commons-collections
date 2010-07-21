@@ -148,14 +148,17 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         return normalMap.containsKey(key);
     }
 
+    @Override
     public boolean equals(Object obj) {
         return normalMap.equals(obj);
     }
 
+    @Override
     public int hashCode() {
         return normalMap.hashCode();
     }
 
+    @Override
     public String toString() {
         return normalMap.toString();
     }
@@ -337,6 +340,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             this.parent = parent;
         }
 
+        @Override
         public boolean removeAll(Collection<?> coll) {
             if (parent.isEmpty() || coll.isEmpty()) {
                 return false;
@@ -352,6 +356,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             return modified;
         }
 
+        @Override
         public boolean retainAll(Collection<?> coll) {
             if (parent.isEmpty()) {
                 return false;
@@ -371,6 +376,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             return modified;
         }
 
+        @Override
         public void clear() {
             parent.clear();
         }
@@ -395,14 +401,17 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             super(parent.normalMap.keySet(), (AbstractDualBidiMap<K, Object>) parent);
         }
 
+        @Override
         public Iterator<K> iterator() {
             return parent.createKeySetIterator(super.iterator());
         }
 
+        @Override
         public boolean contains(Object key) {
             return parent.normalMap.containsKey(key);
         }
 
+        @Override
         public boolean remove(Object key) {
             if (parent.normalMap.containsKey(key)) {
                 Object value = parent.normalMap.remove(key);
@@ -437,12 +446,14 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             this.parent = parent;
         }
 
+        @Override
         public K next() {
             lastKey = super.next();
             canRemove = true;
             return lastKey;
         }
 
+        @Override
         public void remove() {
             if (canRemove == false) {
                 throw new IllegalStateException("Iterator remove() can only be called once after next()");
@@ -474,14 +485,17 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             super(parent.normalMap.values(), (AbstractDualBidiMap<Object, V>) parent);
         }
 
+        @Override
         public Iterator<V> iterator() {
             return parent.createValuesIterator(super.iterator());
         }
 
+        @Override
         public boolean contains(Object value) {
             return parent.reverseMap.containsKey(value);
         }
 
+        @Override
         public boolean remove(Object value) {
             if (parent.reverseMap.containsKey(value)) {
                 Object key = parent.reverseMap.remove(value);
@@ -517,12 +531,14 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             this.parent = (AbstractDualBidiMap<Object, V>) parent;
         }
 
+        @Override
         public V next() {
             lastValue = super.next();
             canRemove = true;
             return lastValue;
         }
 
+        @Override
         public void remove() {
             if (canRemove == false) {
                 throw new IllegalStateException("Iterator remove() can only be called once after next()");
@@ -552,10 +568,12 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             super(parent.normalMap.entrySet(), parent);
         }
 
+        @Override
         public Iterator<Map.Entry<K, V>> iterator() {
             return parent.createEntrySetIterator(super.iterator());
         }
 
+        @Override
         public boolean remove(Object obj) {
             if (obj instanceof Map.Entry == false) {
                 return false;
@@ -598,12 +616,14 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             this.parent = parent;
         }
 
+        @Override
         public Map.Entry<K, V> next() {
             last = new MapEntry<K, V>(super.next(), parent);
             canRemove = true;
             return last;
         }
 
+        @Override
         public void remove() {
             if (canRemove == false) {
                 throw new IllegalStateException("Iterator remove() can only be called once after next()");
@@ -635,6 +655,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             this.parent = parent;
         }
 
+        @Override
         public V setValue(V value) {
             K key = MapEntry.this.getKey();
             if (parent.reverseMap.containsKey(value) &&
@@ -727,6 +748,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             canRemove = false;
         }
 
+        @Override
         public String toString() {
             if (last != null) {
                 return "MapIterator[" + getKey() + "=" + getValue() + "]";

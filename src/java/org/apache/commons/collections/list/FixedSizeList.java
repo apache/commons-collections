@@ -68,70 +68,87 @@ public class FixedSizeList<E>
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public boolean add(E object) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
+    @Override
     public void add(int index, E object) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
+    @Override
     public boolean addAll(Collection<? extends E> coll) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
+    @Override
     public boolean addAll(int index, Collection<? extends E> coll) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
+    @Override
     public void clear() {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
+    @Override
     public E get(int index) {
         return decorated().get(index);
     }
 
+    @Override
     public int indexOf(Object object) {
         return decorated().indexOf(object);
     }
 
+    @Override
     public Iterator<E> iterator() {
         return UnmodifiableIterator.decorate(decorated().iterator());
     }
 
+    @Override
     public int lastIndexOf(Object object) {
         return decorated().lastIndexOf(object);
     }
 
+    @Override
     public ListIterator<E> listIterator() {
         return new FixedSizeListIterator(decorated().listIterator(0));
     }
 
+    @Override
     public ListIterator<E> listIterator(int index) {
         return new FixedSizeListIterator(decorated().listIterator(index));
     }
 
+    @Override
     public E remove(int index) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
+    @Override
     public boolean remove(Object object) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
+    @Override
     public boolean removeAll(Collection<?> coll) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
+    @Override
     public boolean retainAll(Collection<?> coll) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
+    @Override
     public E set(int index, E object) {
         return decorated().set(index, object);
     }
 
+    @Override
     public List<E> subList(int fromIndex, int toIndex) {
         List<E> sub = decorated().subList(fromIndex, toIndex);
         return new FixedSizeList<E>(sub);
@@ -144,9 +161,11 @@ public class FixedSizeList<E>
         protected FixedSizeListIterator(ListIterator<E> iterator) {
             super(iterator);
         }
+        @Override
         public void remove() {
             throw new UnsupportedOperationException("List is fixed size");
         }
+        @Override
         public void add(Object object) {
             throw new UnsupportedOperationException("List is fixed size");
         }

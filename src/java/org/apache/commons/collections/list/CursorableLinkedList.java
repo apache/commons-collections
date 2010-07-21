@@ -90,6 +90,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * The equivalent of a default constructor called
      * by any constructor and by <code>readObject</code>.
      */
+    @Override
     protected void init() {
         super.init();
         cursors = new ArrayList<WeakReference<Cursor<E>>>();
@@ -105,6 +106,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * 
      * @return a new iterator that does <b>not</b> support concurrent modification
      */
+    @Override
     public Iterator<E> iterator() {
         return super.listIterator(0);
     }
@@ -124,6 +126,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * 
      * @return a new cursor iterator
      */
+    @Override
     public ListIterator<E> listIterator() {
         return cursor(0);
     }
@@ -144,6 +147,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * @param fromIndex  the index to start from
      * @return a new cursor iterator
      */
+    @Override
     public ListIterator<E> listIterator(int fromIndex) {
         return cursor(fromIndex);
     }
@@ -217,6 +221,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * @param node  node to update
      * @param value  new value of the node
      */
+    @Override
     protected void updateNode(Node<E> node, E value) {
         super.updateNode(node, value);
         broadcastNodeChanged(node);
@@ -229,6 +234,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * @param insertBeforeNode  node to insert before
      * @throws NullPointerException if either node is null
      */
+    @Override
     protected void addNode(Node<E> nodeToInsert, Node<E> insertBeforeNode) {
         super.addNode(nodeToInsert, insertBeforeNode);
         broadcastNodeInserted(nodeToInsert);
@@ -240,6 +246,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * @param node  the node to remove
      * @throws NullPointerException if <code>node</code> is null
      */
+    @Override
     protected void removeNode(Node<E> node) {
         super.removeNode(node);
         broadcastNodeRemoved(node);
@@ -248,6 +255,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
     /**
      * Removes all nodes by iteration.
      */
+    @Override
     protected void removeAllNodes() {
         if (size() > 0) {
             // superclass implementation would break all the iterators
@@ -381,6 +389,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * @param subList  the sublist to get an iterator for
      * @param fromIndex  the index to start from, relative to the sublist
      */
+    @Override
     protected ListIterator<E> createSubListListIterator(LinkedSubList<E> subList, int fromIndex) {
         SubCursor<E> cursor = new SubCursor<E>(subList, fromIndex);
         registerCursor(cursor);
@@ -421,6 +430,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
          *
          * @throws IllegalStateException if there is no item to remove
          */
+        @Override
         public void remove() {
             // overridden, as the nodeRemoved() method updates the iterator
             // state in the parent.removeNode() call below
@@ -442,6 +452,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
          * 
          * @param obj  the object to add
          */
+        @Override
         public void add(E obj) {
             // overridden, as the nodeInserted() method updates the iterator state
             super.add(obj);
@@ -460,6 +471,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
          * 
          * @return the next index
          */
+        @Override
         public int nextIndex() {
             if (nextIndexValid == false) {
                 if (next == parent.header) {
@@ -533,6 +545,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
         /**
          * Override superclass modCount check, and replace it with our valid flag.
          */
+        @Override
         protected void checkModCount() {
             if (!valid) {
                 throw new ConcurrentModificationException("Cursor closed");
@@ -576,24 +589,29 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
             this.sub = sub;
         }
 
+        @Override
         public boolean hasNext() {
             return (nextIndex() < sub.size);
         }
 
+        @Override
         public boolean hasPrevious() {
             return (previousIndex() >= 0);
         }
 
+        @Override
         public int nextIndex() {
             return (super.nextIndex() - sub.offset);
         }
 
+        @Override
         public void add(E obj) {
             super.add(obj);
             sub.expectedModCount = parent.modCount;
             sub.size++;
         }
 
+        @Override
         public void remove() {
             super.remove();
             sub.expectedModCount = parent.modCount;

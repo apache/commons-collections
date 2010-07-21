@@ -84,6 +84,7 @@ public class DualHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements 
      * @param inverseBidiMap  the inverse BidiMap
      * @return new bidi map
      */
+    @Override
     protected BidiMap<V, K> createBidiMap(Map<V, K> normalMap, Map<K, V> reverseMap, BidiMap<K, V> inverseBidiMap) {
         return new DualHashBidiMap<V, K>(normalMap, reverseMap, inverseBidiMap);
     }
