@@ -22,9 +22,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
+import junit.framework.TestCase;
 
 import org.apache.commons.collections.functors.EqualPredicate;
 import org.apache.commons.collections.functors.ExceptionClosure;
@@ -40,7 +38,7 @@ import org.apache.commons.collections.functors.TruePredicate;
  *
  * @author Stephen Colebourne
  */
-public class TestClosureUtils extends junit.framework.TestCase {
+public class TestClosureUtils extends TestCase {
 
     private static final Object cString = "Hello";
 
@@ -49,35 +47,6 @@ public class TestClosureUtils extends junit.framework.TestCase {
      */
     public TestClosureUtils(String name) {
         super(name);
-    }
-
-    /**
-     * Main.
-     * @param args
-     */
-    public static void main(String[] args) {
-        TestRunner.run(suite());
-    }
-
-    /**
-     * Return class as a test suite.
-     */
-    public static Test suite() {
-        return new TestSuite(TestClosureUtils.class);
-    }
-
-    /**
-     * Set up instance variables required by this test case.
-     */
-    @Override
-    public void setUp() {
-    }
-
-    /**
-     * Tear down instance variables required by this test case.
-     */
-    @Override
-    public void tearDown() {
     }
 
     static class MockClosure<T> implements Closure<T> {
@@ -134,10 +103,10 @@ public class TestClosureUtils extends junit.framework.TestCase {
     //------------------------------------------------------------------
 
     public void testInvokeClosure() {
-        StringBuilder buf = new StringBuilder("Hello");
+        StringBuffer buf = new StringBuffer("Hello"); // Only StringBuffer has setLength() method
         ClosureUtils.invokerClosure("reverse").execute(buf);
         assertEquals("olleH", buf.toString());
-        buf = new StringBuilder("Hello");
+        buf = new StringBuffer("Hello");
         ClosureUtils.invokerClosure("setLength", new Class[] {Integer.TYPE}, new Object[] {new Integer(2)}).execute(buf);
         assertEquals("He", buf.toString());
     }
