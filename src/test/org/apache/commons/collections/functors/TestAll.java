@@ -31,6 +31,7 @@ import org.junit.runners.Suite.SuiteClasses;
  */
 @RunWith(Suite.class)
 @SuiteClasses({TestAllPredicate.class,
+    TestComparatorPredicate.class,
     TestEqualPredicate.class,
     TestNullPredicate.class})
 public class TestAll extends TestCase {
