@@ -148,7 +148,9 @@ import java.util.Vector;
  * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  */
 public class ExtendedProperties extends Hashtable {
-    
+
+    private static final long serialVersionUID = 1L;
+
     /**
      * Default configurations repository.
      */
