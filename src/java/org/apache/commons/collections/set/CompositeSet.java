@@ -37,6 +37,9 @@ import org.apache.commons.collections.collection.CompositeCollection;
  */
 public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
 
+    /** Serialization version */
+    private static final long serialVersionUID = 1L;
+
     /**
      * Create an empty CompositeSet
      */

@@ -25,6 +25,9 @@ import java.util.Collection;
  * class also has to be serialized. 
  */
 class EmptyMapMutator implements CompositeMap.MapMutator {
+    /** Serialization version */
+    private static final long serialVersionUID = 1L;
+
     public void resolveCollision(CompositeMap composite,
     Map existing,
     Map added,

@@ -45,6 +45,9 @@ import org.apache.commons.collections.list.UnmodifiableList;
  */
 public class CompositeCollection<E> implements Collection<E>, Serializable {
 
+    /** Serialization version */
+    private static final long serialVersionUID = 1L;
+
     /** CollectionMutator to handle changes to the collection */
     protected CollectionMutator<E> mutator;
 

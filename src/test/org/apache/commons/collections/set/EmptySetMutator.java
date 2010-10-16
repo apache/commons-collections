@@ -28,6 +28,10 @@ import org.apache.commons.collections.collection.CompositeCollection;
  * class also has to be serialized. 
  */
 class EmptySetMutator<E> implements CompositeSet.SetMutator<E> {
+
+    /** Serialization version */
+    private static final long serialVersionUID = 1L;
+
     private Set<E> contained;
 
     public EmptySetMutator(Set<E> set) {
