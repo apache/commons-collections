@@ -80,11 +80,11 @@ import org.apache.commons.collections.Predicate;
  */
 public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
 
+    private static final long serialVersionUID = -1863209236504077399L;
+
     public enum Criterion {
         EQUAL, GREATER, LESS, GREATER_OR_EQUAL, LESS_OR_EQUAL, 
-    };
-
-    private static final long serialVersionUID = 1L;
+    }
 
 	// Instance variables:
 	

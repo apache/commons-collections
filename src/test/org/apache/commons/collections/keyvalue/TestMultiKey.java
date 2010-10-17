@@ -218,7 +218,7 @@ public class TestMultiKey extends TestCase {
 
     static class SystemHashCodeSimulatingKey implements Serializable {
 
-        private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = -1736147315703444603L;
         private final String name;
         private int hashCode = 1;
 

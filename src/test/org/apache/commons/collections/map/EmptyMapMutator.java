@@ -26,7 +26,7 @@ import java.util.Collection;
  */
 class EmptyMapMutator implements CompositeMap.MapMutator {
     /** Serialization version */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -2729718980002476794L;
 
     public void resolveCollision(CompositeMap composite,
     Map existing,

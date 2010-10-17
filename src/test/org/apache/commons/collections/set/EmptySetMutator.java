@@ -30,7 +30,7 @@ import org.apache.commons.collections.collection.CompositeCollection;
 class EmptySetMutator<E> implements CompositeSet.SetMutator<E> {
 
     /** Serialization version */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 5321193666420238910L;
 
     private Set<E> contained;
 

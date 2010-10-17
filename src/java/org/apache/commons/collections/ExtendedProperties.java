@@ -149,7 +149,7 @@ import java.util.Vector;
  */
 public class ExtendedProperties extends Hashtable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -4064305575636043822L;
 
     /**
      * Default configurations repository.
