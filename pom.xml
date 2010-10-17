@@ -359,7 +359,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.3.1</version>
+      <version>4.8.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -395,8 +395,21 @@
           <artifactId>maven-surefire-plugin</artifactId>
             <configuration>
               <includes>
-                <include>org/apache/commons/collections/TestAllPackages.java</include>
+                <include>**/Test*.java</include>
               </includes>
+              <excludes>
+                <exclude>**/*$*</exclude>
+                <exclude >**/TestAll*.java</exclude>
+                <exclude >**/TestAbstract*</exclude>
+                <exclude >**/TestArrayList.java</exclude>
+                <exclude >**/TestLinkedList.java</exclude>
+                <exclude >**/TestHashMap.java</exclude>
+                <exclude >**/TestTreeMap.java</exclude>
+                <exclude >**/TestTypedCollection.java</exclude>
+                <exclude >**/TestAnyAllOnePredicate.java</exclude>
+                <exclude >**/TestCompositePredicate.java</exclude>
+                <exclude >**/TestUtils.java</exclude>
+              </excludes>
           </configuration>
         </plugin>
         <plugin>
