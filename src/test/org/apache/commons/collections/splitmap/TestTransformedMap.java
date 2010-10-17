@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections.splitmap;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.math.BigInteger;
 import java.util.HashMap;
 
@@ -130,4 +134,20 @@ public class TestTransformedMap extends BulkTest {
         }
     }
 
+    public void TODOtestCollections363() throws Exception {
+        TransformedMap<String, String, String, String> map = TransformedMap.decorate(
+                new HashMap<String, String>(), 
+                NOPTransformer.<String> getInstance(), 
+                NOPTransformer.<String> getInstance());
+        
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        ObjectOutputStream out = new ObjectOutputStream(bytes);
+        out.writeObject(map);
+        out.close();
+        ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bytes.toByteArray()));
+        Object readObject = in.readObject();
+        in.close();
+        assertEquals("deserializing class: " + map.getClass().getName(), map.getClass(), readObject
+                .getClass());
+    }
 }
