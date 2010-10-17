@@ -354,6 +354,7 @@ limitations under the License.
           <exclude name="**/TestTypedCollection.java"/>
           <exclude name="**/TestAnyAllOnePredicate.java"/>
           <exclude name="**/TestCompositePredicate.java"/>
+          <exclude name="**/TestUtils.java"/>
         </fileset>
       </batchtest>
     </junit>
