@@ -345,11 +345,13 @@ limitations under the License.
       <batchtest fork="${test.fork}" todir="${build.test.reports}">
         <fileset dir="${source.test}">
           <include name="**/Test*.java"/>
-          <exclude name="**/TestAll*.java"/>
+          <!-- Exclude groups of tests -->
+          <exclude name="**/TestAll.java"/>
+          <exclude name="**/TestAllPackages.java"/>
+          <!-- Exclude Asbtract classes -->
           <exclude name="**/TestAbstract*"/>
           <exclude name="**/TestArrayList.java"/>
           <exclude name="**/TestLinkedList.java"/>
-          <exclude name="**/TestHashMap.java"/>
           <exclude name="**/TestTreeMap.java"/>
           <exclude name="**/TestTypedCollection.java"/>
           <exclude name="**/TestAnyAllOnePredicate.java"/>

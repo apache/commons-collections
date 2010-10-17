@@ -399,11 +399,13 @@
               </includes>
               <excludes>
                 <exclude>**/*$*</exclude>
-                <exclude >**/TestAll*.java</exclude>
+                <!-- Exclude groups of tests -->
+                <exclude >**/TestAll.java</exclude>
+                <exclude >**/TestAllPackages.java</exclude>
+                <!-- Exclude Asbtract classes -->
                 <exclude >**/TestAbstract*</exclude>
                 <exclude >**/TestArrayList.java</exclude>
                 <exclude >**/TestLinkedList.java</exclude>
-                <exclude >**/TestHashMap.java</exclude>
                 <exclude >**/TestTreeMap.java</exclude>
                 <exclude >**/TestTypedCollection.java</exclude>
                 <exclude >**/TestAnyAllOnePredicate.java</exclude>
