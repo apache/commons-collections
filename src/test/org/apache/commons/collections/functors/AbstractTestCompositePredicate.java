@@ -34,14 +34,14 @@ import java.util.List;
  *
  * @author Edwin Tellman
  */
-public abstract class TestCompositePredicate<T> extends MockPredicateTestBase<T> {
+public abstract class AbstractTestCompositePredicate<T> extends MockPredicateTestBase<T> {
 
     /**
      * Creates a new <code>TestCompositePredicate</code>.
      *
      * @param testValue the value which the mock predicates should expect to see (may be null).
      */
-    protected TestCompositePredicate(final T testValue) {
+    protected AbstractTestCompositePredicate(final T testValue) {
         super(testValue);
     }
 

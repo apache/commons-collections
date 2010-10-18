@@ -36,7 +36,7 @@ import org.apache.commons.collections.BulkTest;
  * @author Rodney Waldhoff
  * @author Simon Kitching
  */
-public class TestCursorableLinkedList<E> extends TestAbstractLinkedList<E> {
+public class TestCursorableLinkedList<E> extends AbstractTestLinkedList<E> {
     public TestCursorableLinkedList(String testName) {
         super(testName);
     }

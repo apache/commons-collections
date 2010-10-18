@@ -18,7 +18,7 @@ import java.util.Collections;
  *
  * @author Edwin Tellman
  */
-public class TestAllPredicate extends TestAnyAllOnePredicate<Integer> {
+public class TestAllPredicate extends AbstractTestAnyAllOnePredicate<Integer> {
 
     /**
      * Creates a new <code>TestAllPredicate</code>.

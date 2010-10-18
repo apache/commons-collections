@@ -16,49 +16,50 @@
  */
 package org.apache.commons.collections;
 
-import java.util.TreeMap;
+import java.util.ArrayList;
 
-import org.apache.commons.collections.map.AbstractTestMap;
+import org.apache.commons.collections.list.AbstractTestList;
 
 /**
- * Tests TreeMap.
+ * Abstract test class for ArrayList.
  *
  * @version $Revision$ $Date$
  *
  * @author Jason van Zyl
  */
-public abstract class TestTreeMap<K, V> extends AbstractTestMap<K, V> {
+public abstract class AbstractTestArrayList<E> extends AbstractTestList<E> {
 
-    public TestTreeMap(String testName) {
+    public AbstractTestArrayList(String testName) {
         super(testName);
-    }
-
-    @Override
-    public boolean isAllowNullKey() {
-        return false;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public abstract TreeMap<K, V> makeObject();
+    public abstract ArrayList<E> makeObject();
 
-    public void testNewMap() {
-        TreeMap<K, V> map = makeObject();
-        assertTrue("New map is empty", map.isEmpty());
-        assertEquals("New map has size zero", 0, map.size());
+    //-----------------------------------------------------------------------
+    public void testNewArrayList() {
+        ArrayList<E> list = makeObject();
+        assertTrue("New list is empty", list.isEmpty());
+        assertEquals("New list has size zero", 0, list.size());
+
+        try {
+            list.get(1);
+            fail("get(int i) should have thrown IndexOutOfBoundsException");
+        } catch (IndexOutOfBoundsException e) {
+            // Expected result
+        }
     }
 
     @SuppressWarnings("unchecked")
     public void testSearch() {
-        TreeMap<K, V> map = makeObject();
-        map.put((K) "first", (V) "First Item");
-        map.put((K) "second", (V) "Second Item");
-        assertEquals("Top item is 'Second Item'",
-            "First Item", map.get("first"));
-        assertEquals("Next Item is 'First Item'",
-            "Second Item", map.get("second"));
+        ArrayList<E> list = makeObject();
+        list.add((E) "First Item");
+        list.add((E) "Last Item");
+        assertEquals("First item is 'First Item'", "First Item", list.get(0));
+        assertEquals("Last Item is 'Last Item'", "Last Item", list.get(1));
     }
 
 }

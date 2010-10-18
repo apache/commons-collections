@@ -27,9 +27,9 @@ import java.util.Arrays;
  * @author David Hay
  * @author Phil Steitz
  */
-public abstract class TestAbstractLinkedList<E> extends AbstractTestList<E> {
+public abstract class AbstractTestLinkedList<E> extends AbstractTestList<E> {
 
-    public TestAbstractLinkedList(String testName) {
+    public AbstractTestLinkedList(String testName) {
         super(testName);
     }
 

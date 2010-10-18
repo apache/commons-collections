@@ -27,7 +27,7 @@ import junit.framework.Test;
  *
  * @author Craig McClanahan
  */
-public class TestArrayStack<E> extends TestArrayList<E> {
+public class TestArrayStack<E> extends AbstractTestArrayList<E> {
     
     public TestArrayStack(String testName) {
         super(testName);

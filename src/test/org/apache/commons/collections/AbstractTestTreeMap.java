@@ -16,50 +16,49 @@
  */
 package org.apache.commons.collections;
 
-import java.util.ArrayList;
+import java.util.TreeMap;
 
-import org.apache.commons.collections.list.AbstractTestList;
+import org.apache.commons.collections.map.AbstractTestMap;
 
 /**
- * Abstract test class for ArrayList.
+ * Tests TreeMap.
  *
  * @version $Revision$ $Date$
  *
  * @author Jason van Zyl
  */
-public abstract class TestArrayList<E> extends AbstractTestList<E> {
+public abstract class AbstractTestTreeMap<K, V> extends AbstractTestMap<K, V> {
 
-    public TestArrayList(String testName) {
+    public AbstractTestTreeMap(String testName) {
         super(testName);
+    }
+
+    @Override
+    public boolean isAllowNullKey() {
+        return false;
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public abstract ArrayList<E> makeObject();
+    public abstract TreeMap<K, V> makeObject();
 
-    //-----------------------------------------------------------------------
-    public void testNewArrayList() {
-        ArrayList<E> list = makeObject();
-        assertTrue("New list is empty", list.isEmpty());
-        assertEquals("New list has size zero", 0, list.size());
-
-        try {
-            list.get(1);
-            fail("get(int i) should have thrown IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException e) {
-            // Expected result
-        }
+    public void testNewMap() {
+        TreeMap<K, V> map = makeObject();
+        assertTrue("New map is empty", map.isEmpty());
+        assertEquals("New map has size zero", 0, map.size());
     }
 
     @SuppressWarnings("unchecked")
     public void testSearch() {
-        ArrayList<E> list = makeObject();
-        list.add((E) "First Item");
-        list.add((E) "Last Item");
-        assertEquals("First item is 'First Item'", "First Item", list.get(0));
-        assertEquals("Last Item is 'Last Item'", "Last Item", list.get(1));
+        TreeMap<K, V> map = makeObject();
+        map.put((K) "first", (V) "First Item");
+        map.put((K) "second", (V) "Second Item");
+        assertEquals("Top item is 'Second Item'",
+            "First Item", map.get("first"));
+        assertEquals("Next Item is 'First Item'",
+            "Second Item", map.get("second"));
     }
 
 }

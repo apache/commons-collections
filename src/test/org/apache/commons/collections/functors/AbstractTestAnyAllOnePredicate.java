@@ -32,14 +32,14 @@ import java.util.Collections;
  *
  * @author Edwin Tellman
  */
-public abstract class TestAnyAllOnePredicate<T> extends TestCompositePredicate<T> {
+public abstract class AbstractTestAnyAllOnePredicate<T> extends AbstractTestCompositePredicate<T> {
 
     /**
      * Creates a new <code>TestCompositePredicate</code>.
      *
      * @param testValue the value which the mock predicates should expect to see (may be null).
      */
-    protected TestAnyAllOnePredicate(final T testValue) {
+    protected AbstractTestAnyAllOnePredicate(final T testValue) {
         super(testValue);
     }
 

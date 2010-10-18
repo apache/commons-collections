@@ -27,9 +27,9 @@ import java.util.List;
  *
  * @author Stephen Colebourne
  */
-public abstract class TestTypedCollection<T> extends BulkTest {
+public abstract class AbstractTestTypedCollection<T> extends BulkTest {
 
-    public TestTypedCollection(String name) {
+    public AbstractTestTypedCollection(String name) {
         super(name);
     }
 

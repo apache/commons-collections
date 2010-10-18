@@ -31,7 +31,7 @@ import org.apache.commons.collections.BulkTest;
  * @author Jeff Varszegi
  * @author Phil Steitz
  */
-public class TestNodeCachingLinkedList<E> extends TestAbstractLinkedList<E> {
+public class TestNodeCachingLinkedList<E> extends AbstractTestLinkedList<E> {
 
     public TestNodeCachingLinkedList(String testName) {
         super(testName);

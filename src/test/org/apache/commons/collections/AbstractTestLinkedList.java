@@ -38,9 +38,9 @@ import org.apache.commons.collections.list.AbstractTestList;
  *
  * @author Rich Dougherty
  */
-public abstract class TestLinkedList<T> extends AbstractTestList<T> {
+public abstract class AbstractTestLinkedList<T> extends AbstractTestList<T> {
 
-    public TestLinkedList(String testName) {
+    public AbstractTestLinkedList(String testName) {
         super(testName);
     }
 
