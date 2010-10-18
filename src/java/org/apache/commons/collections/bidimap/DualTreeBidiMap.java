@@ -383,12 +383,12 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements
         out.writeObject(normalMap);
     }
 
-    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        normalMap = new TreeMap(comparator);
-        reverseMap = new TreeMap(valueComparator);
-        Map map = (Map) in.readObject();
+        normalMap = new TreeMap<K, V>(comparator);
+        reverseMap = new TreeMap<V, K>(valueComparator);
+        @SuppressWarnings("unchecked") // will fail at runtime if the stream is incorrect
+        Map<K, V> map = (Map<K, V>) in.readObject();
         putAll(map);
     }
 
