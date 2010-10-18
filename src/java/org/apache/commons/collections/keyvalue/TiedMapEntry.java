@@ -98,7 +98,6 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
      * @return true if equal key and value
      */
     @Override
-    @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -106,7 +105,7 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
         if (obj instanceof Map.Entry == false) {
             return false;
         }
-        Map.Entry other = (Map.Entry) obj;
+        Map.Entry<?,?> other = (Map.Entry<?,?>) obj;
         Object value = getValue();
         return
             (key == null ? other.getKey() == null : key.equals(other.getKey())) &&
