@@ -87,7 +87,7 @@ public class CollectionUtils {
         private final int getFreq(final Object obj, final Map<?, Integer> freqMap) {
             Integer count = freqMap.get(obj);
             if (count != null) {
-                return count;
+                return count.intValue();
             }
             return 0;
         }
@@ -293,9 +293,9 @@ public class CollectionUtils {
         for (O obj : coll) {
             Integer c = count.get(obj);
             if (c == null) {
-                count.put(obj, 1);
+                count.put(obj, Integer.valueOf(1));
             } else {
-                count.put(obj, c + 1);
+                count.put(obj, Integer.valueOf(c.intValue() + 1));
             }
         }
         return count;
