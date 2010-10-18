@@ -412,10 +412,10 @@ public class ListUtils {
      * @param predicate  the predicate to use, may be null
      * @return the first index of an Object in the List which matches the predicate or -1 if none could be found
      */
-    public static int indexOf(List list, Predicate predicate) {
+    public static <E> int indexOf(List<E> list, Predicate<E> predicate) {
         if (list != null && predicate != null) {
             for (int i = 0; i < list.size(); i++) {
-                Object item = list.get(i);
+                E item = list.get(i);
                 if (predicate.evaluate(item)) {
                     return i;
                 }
