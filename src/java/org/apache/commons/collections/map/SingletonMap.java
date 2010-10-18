@@ -533,7 +533,6 @@ public class SingletonMap<K, V>
      * @return true if equal
      */
     @Override
-    @SuppressWarnings("unchecked")
     public boolean equals(Object obj) {
         if (obj == this) {
             return true;
@@ -541,11 +540,11 @@ public class SingletonMap<K, V>
         if (obj instanceof Map == false) {
             return false;
         }
-        Map other = (Map) obj;
+        Map<?,?> other = (Map<?,?>) obj;
         if (other.size() != 1) {
             return false;
         }
-        Map.Entry entry = (Map.Entry) other.entrySet().iterator().next();
+        Map.Entry<?,?> entry = other.entrySet().iterator().next();
         return isEqualKey(entry.getKey()) && isEqualValue(entry.getValue());
     }
 
