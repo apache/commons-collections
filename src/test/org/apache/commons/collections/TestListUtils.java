@@ -24,6 +24,7 @@ import java.util.List;
 
 import junit.framework.Test;
 
+import org.apache.commons.collections.functors.EqualPredicate;
 import org.apache.commons.collections.list.PredicatedList;
 
 /**
@@ -100,6 +101,7 @@ public class TestListUtils extends BulkTest {
      * Tests intersecting a non-empty list with an subset of iteself.
      */
     public void testIntersectListWithNoOverlapAndDifferentTypes() {
+        @SuppressWarnings("boxing")
         final List<Integer> other = Arrays.asList(1, 23);
         assertTrue(ListUtils.intersection(fullList, other).isEmpty());
     }
@@ -235,15 +237,14 @@ public class TestListUtils extends BulkTest {
     /**
      * Tests the <code>indexOf</code> method in <code>ListUtils</code> class..
      */
-    // TODO: Generics
     public void testIndexOf() {
-        Predicate<String> testPredicate = PredicateUtils.equalPredicate("d");
+        Predicate<String> testPredicate = EqualPredicate.equalPredicate("d");
         int index = ListUtils.indexOf(fullList, testPredicate);
         assertEquals(d, fullList.get(index));
 
-        testPredicate = PredicateUtils.equalPredicate("de");
+        testPredicate = EqualPredicate.equalPredicate("de");
         index = ListUtils.indexOf(fullList, testPredicate);
-        assertTrue(index == -1);
+        assertEquals(index, -1);
         
         assertEquals(ListUtils.indexOf(null,testPredicate), -1);
         assertEquals(ListUtils.indexOf(fullList, null), -1);
