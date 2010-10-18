@@ -23,6 +23,7 @@ import static junit.framework.Assert.assertNull;
 import org.junit.Before;
 import org.junit.Test;
 
+@SuppressWarnings("boxing")
 public class TestIndexedCollection extends AbstractDecoratedCollectionTest<String> {
     private IndexedCollection<Integer, String> indexed;
 
