@@ -595,7 +595,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      * @return the specified node
      */
     private Node<K, V> nextGreater(final Node<K, V> node, final DataElement dataElement) {
-        Node<K, V> rval = null;
+        Node<K, V> rval;
         if (node == null) {
             rval = null;
         } else if (node.getRight(dataElement) != null) {
@@ -629,7 +629,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      * @return the specified node
      */
     private Node<K, V> nextSmaller(final Node<K, V> node, final DataElement dataElement) {
-        Node<K, V> rval = null;
+        Node<K, V> rval;
         if (node == null) {
             rval = null;
         } else if (node.getLeft(dataElement) != null) {
@@ -2007,11 +2007,11 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
     class Inverse implements OrderedBidiMap<V, K> {
 
         /** Store the keySet once created. */
-        private Set<V> keySet;
+        private Set<V> inverseKeySet;
         /** Store the valuesSet once created. */
-        private Set<K> valuesSet;
+        private Set<K> inverseValuesSet;
         /** Store the entrySet once created. */
-        private Set<Map.Entry<V, K>> entrySet;
+        private Set<Map.Entry<V, K>> inverseEntrySet;
 
         public int size() {
             return TreeBidiMap.this.size();
@@ -2088,24 +2088,24 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         }
 
         public Set<V> keySet() {
-            if (keySet == null) {
-                keySet = new ValueView(VALUE);
+            if (inverseKeySet == null) {
+                inverseKeySet = new ValueView(VALUE);
             }
-            return keySet;
+            return inverseKeySet;
         }
 
         public Collection<K> values() {
-            if (valuesSet == null) {
-                valuesSet = new KeyView(VALUE);
+            if (inverseValuesSet == null) {
+                inverseValuesSet = new KeyView(VALUE);
             }
-            return valuesSet;
+            return inverseValuesSet;
         }
 
         public Set<Map.Entry<V, K>> entrySet() {
-            if (entrySet == null) {
-                entrySet = new InverseEntryView();
+            if (inverseEntrySet == null) {
+                inverseEntrySet = new InverseEntryView();
             }
-            return entrySet;
+            return inverseEntrySet;
         }
 
         public OrderedMapIterator<V, K> mapIterator() {
