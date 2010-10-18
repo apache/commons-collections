@@ -70,7 +70,7 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
      * @return the transformed result
      */
     public Boolean transform(T input) {
-        return iPredicate.evaluate(input);
+        return Boolean.valueOf(iPredicate.evaluate(input));
     }
 
     /**
