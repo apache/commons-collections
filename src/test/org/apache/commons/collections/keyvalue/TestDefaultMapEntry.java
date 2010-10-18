@@ -18,9 +18,6 @@ package org.apache.commons.collections.keyvalue;
 
 import java.util.Map;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.KeyValue;
 
 /**
@@ -35,14 +32,6 @@ public class TestDefaultMapEntry<K, V> extends AbstractTestMapEntry<K, V> {
 
     public TestDefaultMapEntry(String testName) {
         super(testName);
-    }
-
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestDefaultMapEntry.class);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestDefaultMapEntry.class);
     }
 
     //-----------------------------------------------------------------------

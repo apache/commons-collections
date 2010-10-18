@@ -19,9 +19,6 @@ package org.apache.commons.collections.iterators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.ResettableIterator;
 
 /**
@@ -35,10 +32,6 @@ import org.apache.commons.collections.ResettableIterator;
 public class TestSingletonIterator<E> extends AbstractTestIterator<E> {
 
     private static final Object testValue = "foo";
-
-    public static Test suite() {
-        return new TestSuite(TestSingletonIterator.class);
-    }
 
     public TestSingletonIterator(String testName) {
         super(testName);

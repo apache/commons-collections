@@ -19,9 +19,6 @@ package org.apache.commons.collections.map;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.Factory;
 import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.IterableMap;
@@ -43,15 +40,6 @@ public class TestDefaultedMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     public TestDefaultedMap(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestDefaultedMap.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestDefaultedMap.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     //-----------------------------------------------------------------------

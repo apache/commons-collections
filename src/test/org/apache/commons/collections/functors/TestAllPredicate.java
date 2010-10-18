@@ -1,6 +1,5 @@
 package org.apache.commons.collections.functors;
 
-import junit.framework.JUnit4TestAdapter;
 import org.apache.commons.collections.Predicate;
 
 import static org.apache.commons.collections.functors.AllPredicate.allPredicate;
@@ -21,15 +20,6 @@ import java.util.Collections;
  */
 public class TestAllPredicate extends TestAnyAllOnePredicate<Integer> {
 
-    /**
-     * Creates a JUnit3 test suite.
-     *
-     * @return a JUnit3 test suite
-     */
-    public static junit.framework.Test suite() {
-        return new JUnit4TestAdapter(TestAllPredicate.class);
-    }
-    
     /**
      * Creates a new <code>TestAllPredicate</code>.
      */

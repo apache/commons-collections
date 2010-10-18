@@ -18,9 +18,6 @@ package org.apache.commons.collections.bag;
 
 import java.util.Set;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.functors.TruePredicate;
@@ -38,15 +35,6 @@ public class TestPredicatedBag<T> extends AbstractTestBag<T> {
 
     public TestPredicatedBag(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestPredicatedBag.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestPredicatedBag.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     //--------------------------------------------------------------------------

@@ -18,9 +18,6 @@ package org.apache.commons.collections.buffer;
 
 import java.util.Collection;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.ArrayStack;
 import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.BufferUnderflowException;
@@ -40,15 +37,6 @@ public class TestPredicatedBuffer<E> extends TestPredicatedCollection<E> {
 
     public TestPredicatedBuffer(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestPredicatedBuffer.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestPredicatedBuffer.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     //---------------------------------------------------------------

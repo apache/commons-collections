@@ -19,9 +19,6 @@ package org.apache.commons.collections.map;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.Unmodifiable;
 
@@ -38,15 +35,6 @@ public class TestUnmodifiableMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     public TestUnmodifiableMap(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableMap.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestUnmodifiableMap.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     //-------------------------------------------------------------------

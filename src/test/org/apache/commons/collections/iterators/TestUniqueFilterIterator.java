@@ -21,9 +21,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * Tests the UniqueFilterIterator class.
  *
@@ -41,10 +38,6 @@ public class TestUniqueFilterIterator<E> extends AbstractTestIterator<E> {
     };
 
     protected List<E> list1 = null;
-
-    public static Test suite() {
-        return new TestSuite(TestUniqueFilterIterator.class);
-    }
 
     public TestUniqueFilterIterator(String testName) {
         super(testName);

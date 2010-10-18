@@ -22,9 +22,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Properties;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * Tests some basic functions of the ExtendedProperties class.
@@ -43,15 +41,6 @@ public class TestExtendedProperties extends TestCase {
 
     public TestExtendedProperties(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestExtendedProperties.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestExtendedProperties.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     public void testRetrieve() {

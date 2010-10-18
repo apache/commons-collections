@@ -20,9 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.TransformerUtils;
@@ -41,15 +38,6 @@ public class TestTransformedMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     public TestTransformedMap(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestTransformedMap.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestTransformedMap.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     //-----------------------------------------------------------------------

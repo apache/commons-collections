@@ -19,9 +19,6 @@ package org.apache.commons.collections.buffer;
 import java.util.Arrays;
 import java.util.Collection;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.ArrayStack;
 import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.collection.AbstractTestCollection;
@@ -40,15 +37,6 @@ public class TestSynchronizedBuffer<E> extends AbstractTestCollection<E> {
 
     public TestSynchronizedBuffer(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestSynchronizedBuffer.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestSynchronizedBuffer.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     //-----------------------------------------------------------------------

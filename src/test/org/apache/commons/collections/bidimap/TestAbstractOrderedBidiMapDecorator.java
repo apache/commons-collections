@@ -19,9 +19,6 @@ package org.apache.commons.collections.bidimap;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.OrderedBidiMap;
 
 /**
@@ -34,10 +31,6 @@ public class TestAbstractOrderedBidiMapDecorator<K, V>
 
     public TestAbstractOrderedBidiMapDecorator(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestAbstractOrderedBidiMapDecorator.class);
     }
 
     /**

@@ -25,22 +25,10 @@ import java.util.Iterator;
 import java.util.Collections;
 import java.util.Arrays;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 public class TestBoundedBuffer<E> extends AbstractTestObject {
 
     public TestBoundedBuffer(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestBoundedBuffer.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestBoundedBuffer.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     @Override

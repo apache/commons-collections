@@ -23,9 +23,6 @@ import java.io.ObjectOutputStream;
 import java.math.BigInteger;
 import java.util.HashMap;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.Transformer;
@@ -63,15 +60,6 @@ public class TestTransformedMap extends BulkTest {
 
     public TestTransformedMap(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestTransformedMap.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestTransformedMap.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     // -----------------------------------------------------------------------

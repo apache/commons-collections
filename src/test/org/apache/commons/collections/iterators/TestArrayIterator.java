@@ -19,9 +19,6 @@ package org.apache.commons.collections.iterators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * Tests the ArrayIterator to ensure that the next() method will actually
  * perform the iteration rather than the hasNext() method.
@@ -37,10 +34,6 @@ import junit.framework.TestSuite;
 public class TestArrayIterator<E> extends AbstractTestIterator<E> {
 
     protected String[] testArray = { "One", "Two", "Three" };
-
-    public static Test suite() {
-        return new TestSuite(TestArrayIterator.class);
-    }
 
     public TestArrayIterator(String testName) {
         super(testName);

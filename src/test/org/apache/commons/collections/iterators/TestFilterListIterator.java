@@ -21,10 +21,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.Predicate;
 
 /**
@@ -37,15 +34,6 @@ import org.apache.commons.collections.Predicate;
 public class TestFilterListIterator extends TestCase {
     public TestFilterListIterator(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestFilterListIterator.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestFilterListIterator.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     private ArrayList<Integer> list = null;

@@ -19,9 +19,6 @@ package org.apache.commons.collections.iterators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * Tests the ArrayIterator with primitive type arrays.
  *
@@ -33,10 +30,6 @@ import junit.framework.TestSuite;
 public class TestArrayIterator2<E> extends AbstractTestIterator<E> {
 
     protected int[] testArray = { 2, 4, 6, 8 };
-
-    public static Test suite() {
-        return new TestSuite(TestArrayIterator2.class);
-    }
 
     public TestArrayIterator2(String testName) {
         super(testName);

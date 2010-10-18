@@ -42,11 +42,6 @@ public class TestFixedSizeSortedMap<K, V> extends AbstractTestSortedMap<K, V> {
         return BulkTest.makeSuite(TestFixedSizeSortedMap.class);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestFixedSizeSortedMap.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     //-----------------------------------------------------------------------
     @Override
     public SortedMap<K, V> makeObject() {

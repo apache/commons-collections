@@ -21,9 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * Tests the LoopingIterator class.
@@ -37,10 +35,6 @@ public class TestLoopingIterator extends TestCase {
 
     public TestLoopingIterator(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestLoopingIterator.class);
     }
 
     /**

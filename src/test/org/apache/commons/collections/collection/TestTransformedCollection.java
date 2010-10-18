@@ -21,9 +21,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.TransformerUtils;
 
@@ -49,15 +46,6 @@ public class TestTransformedCollection extends AbstractTestCollection<Object> {
 
     public TestTransformedCollection(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestTransformedCollection.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestTransformedCollection.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     //-----------------------------------------------------------------------

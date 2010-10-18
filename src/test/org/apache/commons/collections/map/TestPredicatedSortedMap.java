@@ -23,9 +23,6 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.functors.TruePredicate;
 
@@ -50,15 +47,6 @@ public class TestPredicatedSortedMap<K, V> extends AbstractTestSortedMap<K, V> {
 
     public TestPredicatedSortedMap(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestPredicatedSortedMap.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestPredicatedSortedMap.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     //-----------------------------------------------------------------------

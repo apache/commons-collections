@@ -18,9 +18,6 @@ package org.apache.commons.collections.keyvalue;
 
 import java.util.Map;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.KeyValue;
 import org.apache.commons.collections.Unmodifiable;
 
@@ -36,14 +33,6 @@ public class TestUnmodifiableMapEntry<K, V> extends AbstractTestMapEntry<K, V> {
 
     public TestUnmodifiableMapEntry(String testName) {
         super(testName);
-    }
-
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestUnmodifiableMapEntry.class);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableMapEntry.class);
     }
 
     //-----------------------------------------------------------------------

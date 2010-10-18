@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections.buffer;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.apache.commons.collections.AbstractTestObject;
 import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.BufferUnderflowException;
@@ -41,15 +39,6 @@ public class TestBlockingBuffer<E> extends AbstractTestObject {
 
     public TestBlockingBuffer(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestBlockingBuffer.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestBlockingBuffer.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     @Override

@@ -16,10 +16,7 @@
  */
 package org.apache.commons.collections.buffer;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.ArrayStack;
 import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.collection.TestTransformedCollection;
@@ -37,15 +34,6 @@ public class TestTransformedBuffer extends TestCase {
     
     public TestTransformedBuffer(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestTransformedBuffer.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestTransformedBuffer.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     public void testTransformedBuffer() {

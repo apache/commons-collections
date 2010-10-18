@@ -20,8 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import junit.framework.Test;
-import junit.textui.TestRunner;
-
 import org.apache.commons.collections.BidiMap;
 import org.apache.commons.collections.BulkTest;
 
@@ -33,10 +31,6 @@ import org.apache.commons.collections.BulkTest;
  * @author Stephen Colebourne
  */
 public class TestUnmodifiableBidiMap<K, V> extends AbstractTestBidiMap<K, V> {
-
-    public static void main(String[] args) {
-        TestRunner.run(suite());
-    }
 
     public static Test suite() {
         return BulkTest.makeSuite(TestUnmodifiableBidiMap.class);

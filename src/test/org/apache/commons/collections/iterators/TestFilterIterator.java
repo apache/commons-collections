@@ -25,9 +25,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.functors.NotNullPredicate;
 
@@ -66,13 +63,6 @@ public class TestFilterIterator<E> extends AbstractTestIterator<E> {
     @Override
     public void tearDown() throws Exception {
         iterator = null;
-    }
-
-    /**
-     * Return the tests included in this test suite.
-     */
-    public static Test suite() {
-        return (new TestSuite(TestFilterIterator.class));
     }
 
     /**

@@ -18,9 +18,6 @@ package org.apache.commons.collections;
 
 import java.util.ArrayList;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.list.AbstractTestList;
 
 /**
@@ -34,15 +31,6 @@ public abstract class TestArrayList<E> extends AbstractTestList<E> {
 
     public TestArrayList(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestArrayList.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestArrayList.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     /**

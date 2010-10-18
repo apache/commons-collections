@@ -48,11 +48,6 @@ public class TestUnmodifiableSortedSet<E> extends AbstractTestSortedSet<E> {
         return BulkTest.makeSuite(TestUnmodifiableSortedSet.class);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestUnmodifiableSortedSet.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     //-------------------------------------------------------------------
     @Override
     public SortedSet<E> makeObject() {

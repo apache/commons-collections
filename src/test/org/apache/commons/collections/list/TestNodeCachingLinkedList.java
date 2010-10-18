@@ -37,12 +37,6 @@ public class TestNodeCachingLinkedList<E> extends TestAbstractLinkedList<E> {
         super(testName);
     }
 
-    public static void main(String args[]) {
-        compareSpeed();
-        String[] testCaseName = { TestNodeCachingLinkedList.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     public static Test suite() {
         return BulkTest.makeSuite(TestNodeCachingLinkedList.class);
     }

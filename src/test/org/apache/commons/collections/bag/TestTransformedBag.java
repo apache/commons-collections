@@ -16,9 +16,6 @@
  */
 package org.apache.commons.collections.bag;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.collection.TestTransformedCollection;
@@ -36,15 +33,6 @@ public class TestTransformedBag<T> extends AbstractTestBag<T> {
 
     public TestTransformedBag(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestTransformedBag.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestTransformedBag.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     @Override

@@ -42,11 +42,6 @@ public class TestReferenceMap<K, V> extends AbstractTestIterableMap<K, V> {
         return BulkTest.makeSuite(TestReferenceMap.class);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestReferenceMap.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     @Override
     public ReferenceMap<K, V> makeObject() {
         return new ReferenceMap<K, V>(ReferenceStrength.WEAK, ReferenceStrength.WEAK);

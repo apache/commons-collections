@@ -20,9 +20,6 @@ import java.util.Arrays;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * Tests the ObjectArrayListIterator class.
  *
@@ -34,10 +31,6 @@ public class TestObjectArrayListIterator<E> extends TestObjectArrayIterator<E> {
 
     public TestObjectArrayListIterator(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestObjectArrayListIterator.class);
     }
 
     @Override

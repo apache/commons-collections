@@ -16,9 +16,6 @@
  */
 package org.apache.commons.collections.bag;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.Bag;
 
 /**
@@ -33,15 +30,6 @@ public class TestHashBag<T> extends AbstractTestBag<T> {
     
     public TestHashBag(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestHashBag.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestHashBag.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     @Override

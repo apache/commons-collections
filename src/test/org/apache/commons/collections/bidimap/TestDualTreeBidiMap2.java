@@ -27,8 +27,6 @@ import java.util.List;
 import java.util.TreeMap;
 
 import junit.framework.Test;
-import junit.textui.TestRunner;
-
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.SortedBidiMap;
 import org.apache.commons.collections.comparators.ComparableComparator;
@@ -44,10 +42,6 @@ import org.apache.commons.collections.comparators.ReverseComparator;
  * @author Jonas Van Poucke
  */
 public class TestDualTreeBidiMap2<K extends Comparable<K>, V extends Comparable<V>> extends AbstractTestSortedBidiMap<K, V> {
-
-    public static void main(String[] args) {
-        TestRunner.run(suite());
-    }
 
     public static Test suite() {
         return BulkTest.makeSuite(TestDualTreeBidiMap2.class);

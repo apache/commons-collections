@@ -19,8 +19,6 @@ package org.apache.commons.collections.map;
 import java.util.Map;
 
 import junit.framework.Test;
-import junit.textui.TestRunner;
-
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.keyvalue.MultiKey;
@@ -45,10 +43,6 @@ public class TestMultiKeyMap<K, V> extends AbstractTestIterableMap<MultiKey<? ex
 
     public TestMultiKeyMap(String testName) {
         super(testName);
-    }
-
-    public static void main(String[] args) {
-        TestRunner.run(suite());
     }
 
     public static Test suite() {

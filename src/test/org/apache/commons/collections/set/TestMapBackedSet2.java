@@ -19,9 +19,6 @@ package org.apache.commons.collections.set;
 import java.util.Iterator;
 import java.util.Set;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.map.LinkedMap;
 
 /**
@@ -36,15 +33,6 @@ public class TestMapBackedSet2<E> extends AbstractTestSet<E> {
 
     public TestMapBackedSet2(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestMapBackedSet2.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestMapBackedSet2.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     @Override

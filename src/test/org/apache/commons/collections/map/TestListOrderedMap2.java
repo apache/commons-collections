@@ -44,11 +44,6 @@ public class TestListOrderedMap2<K, V> extends AbstractTestOrderedMap<K, V> {
         return BulkTest.makeSuite(TestListOrderedMap2.class);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestListOrderedMap2.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     @Override
     public ListOrderedMap<K, V> makeObject() {
         return new ListOrderedMap<K, V>();

@@ -16,9 +16,6 @@
  */
 package org.apache.commons.collections.iterators;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * Tests the ObjectArrayListIterator class.
  *
@@ -32,10 +29,6 @@ public class TestObjectArrayListIterator2<E> extends AbstractTestListIterator<E>
 
     public TestObjectArrayListIterator2(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestObjectArrayListIterator2.class);
     }
 
     @Override

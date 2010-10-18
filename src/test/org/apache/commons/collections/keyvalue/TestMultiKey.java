@@ -27,9 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import junit.framework.Assert;
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * Unit tests for {@link org.apache.commons.collections.keyvalue.MultiKey}.
@@ -48,15 +46,6 @@ public class TestMultiKey extends TestCase {
 
     public TestMultiKey(String name) {
         super(name);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestMultiKey.class);
-    }
-
-    public static void main(String[] args) {
-        String[] testCaseName = { TestMultiKey.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     @Override

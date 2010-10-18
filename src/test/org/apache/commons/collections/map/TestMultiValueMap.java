@@ -25,9 +25,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.MultiMap;
 
@@ -44,15 +41,6 @@ public class TestMultiValueMap<K, V> extends AbstractTestObject {
 
     public TestMultiValueMap(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestMultiValueMap.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestMultiValueMap.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     public void testNoMappingReturnsNull() {

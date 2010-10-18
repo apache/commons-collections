@@ -20,9 +20,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * Tests for {@link BooleanComparator}.
  *
@@ -37,10 +34,6 @@ public class TestBooleanComparator extends AbstractTestComparator<Boolean> {
 
     public TestBooleanComparator(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestBooleanComparator.class);
     }
 
     // collections testing framework

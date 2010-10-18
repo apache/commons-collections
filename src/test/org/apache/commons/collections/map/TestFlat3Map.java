@@ -24,8 +24,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 import junit.framework.Test;
-import junit.textui.TestRunner;
-
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.MapIterator;
@@ -49,10 +47,6 @@ public class TestFlat3Map<K, V> extends AbstractTestIterableMap<K, V> {
 
     public TestFlat3Map(String testName) {
         super(testName);
-    }
-
-    public static void main(String[] args) {
-        TestRunner.run(suite());
     }
 
     public static Test suite() {

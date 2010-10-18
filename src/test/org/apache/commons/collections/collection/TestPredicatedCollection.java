@@ -21,9 +21,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.functors.TruePredicate;
 
@@ -40,15 +37,6 @@ public class TestPredicatedCollection<E> extends AbstractTestCollection<E> {
 
     public TestPredicatedCollection(String name) {
         super(name);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestPredicatedCollection.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestPredicatedCollection.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
    //------------------------------------------------------------------------

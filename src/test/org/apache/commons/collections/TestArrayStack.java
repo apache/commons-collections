@@ -37,11 +37,6 @@ public class TestArrayStack<E> extends TestArrayList<E> {
         return BulkTest.makeSuite(TestArrayStack.class);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestArrayStack.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     @Override
     public ArrayStack<E> makeObject() {
         return new ArrayStack<E>();

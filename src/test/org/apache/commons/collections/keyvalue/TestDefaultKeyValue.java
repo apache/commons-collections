@@ -19,9 +19,7 @@ package org.apache.commons.collections.keyvalue;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * Test the DefaultKeyValue class.
@@ -44,14 +42,6 @@ public class TestDefaultKeyValue<K, V> extends TestCase {
     public TestDefaultKeyValue(String testName) {
         super(testName);
 
-    }
-
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestDefaultKeyValue.class);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestDefaultKeyValue.class);
     }
 
     //-----------------------------------------------------------------------

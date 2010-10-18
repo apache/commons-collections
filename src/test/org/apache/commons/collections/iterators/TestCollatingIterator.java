@@ -19,9 +19,6 @@ package org.apache.commons.collections.iterators;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.comparators.ComparableComparator;
 
 /**
@@ -36,10 +33,6 @@ public class TestCollatingIterator extends AbstractTestIterator<Integer> {
 
     public TestCollatingIterator(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestCollatingIterator.class);
     }
 
     //--------------------------------------------------------------- Lifecycle

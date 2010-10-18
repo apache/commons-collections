@@ -18,9 +18,6 @@ package org.apache.commons.collections.map;
 
 import java.util.HashMap;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.OrderedMap;
 import org.apache.commons.collections.Unmodifiable;
 
@@ -37,15 +34,6 @@ public class TestUnmodifiableOrderedMap<K, V> extends AbstractTestOrderedMap<K, 
 
     public TestUnmodifiableOrderedMap(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableOrderedMap.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestUnmodifiableOrderedMap.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     //-------------------------------------------------------------------

@@ -43,11 +43,6 @@ public class TestLazyMap<K, V> extends AbstractTestIterableMap<K, V> {
         super(testName);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestLazyMap.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     @Override
     public LazyMap<K,V> makeObject() {
         return getLazyMap(new HashMap<K,V>(), FactoryUtils.<V>nullFactory());

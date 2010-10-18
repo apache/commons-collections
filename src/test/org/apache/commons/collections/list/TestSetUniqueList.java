@@ -25,10 +25,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
-
 /**
  * JUnit tests.
  *
@@ -39,14 +35,6 @@ import junit.textui.TestRunner;
  * @author Tom Dunham
  */
 public class TestSetUniqueList<E> extends AbstractTestList<E> {
-
-    public static void main(String[] args) {
-        TestRunner.run(suite());
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestSetUniqueList.class);
-    }
 
     public TestSetUniqueList(String testName) {
         super(testName);

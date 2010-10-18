@@ -20,8 +20,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import junit.framework.Test;
-import junit.textui.TestRunner;
-
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.SortedBidiMap;
 
@@ -33,10 +31,6 @@ import org.apache.commons.collections.SortedBidiMap;
  * @author Stephen Colebourne
  */
 public class TestUnmodifiableSortedBidiMap<K extends Comparable<K>, V extends Comparable<V>> extends AbstractTestSortedBidiMap<K, V> {
-
-    public static void main(String[] args) {
-        TestRunner.run(suite());
-    }
 
     public static Test suite() {
         return BulkTest.makeSuite(TestUnmodifiableSortedBidiMap.class);

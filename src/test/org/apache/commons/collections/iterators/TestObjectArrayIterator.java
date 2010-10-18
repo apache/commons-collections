@@ -19,9 +19,6 @@ package org.apache.commons.collections.iterators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * Tests the ObjectArrayIterator.
  *
@@ -35,10 +32,6 @@ import junit.framework.TestSuite;
 public class TestObjectArrayIterator<E> extends AbstractTestIterator<E> {
 
     protected String[] testArray = { "One", "Two", "Three" };
-
-    public static Test suite() {
-        return new TestSuite(TestObjectArrayIterator.class);
-    }
 
     public TestObjectArrayIterator(String testName) {
         super(testName);

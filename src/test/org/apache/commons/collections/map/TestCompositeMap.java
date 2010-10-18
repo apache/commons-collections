@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections.map;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import junit.framework.Assert;
 
 import java.util.Map;
@@ -41,19 +39,10 @@ public class TestCompositeMap<K, V> extends AbstractTestIterableMap<K, V> {
         super(testName);
     }
     
-    public static Test suite() {
-        return new TestSuite(TestCompositeMap.class);
-    }
-    
     @Override
     public void setUp() throws Exception {
         super.setUp();
         this.pass = false;
-    }
-    
-    public static void main(String args[]) {
-        String[] testCaseName = {TestCompositeMap.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
     
     @Override

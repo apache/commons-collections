@@ -20,9 +20,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.collection.TestTransformedCollection;
 
@@ -39,15 +36,6 @@ public class TestTransformedSet<E> extends AbstractTestSet<E> {
 
     public TestTransformedSet(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestTransformedSet.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestTransformedSet.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     @Override

@@ -19,9 +19,6 @@ package org.apache.commons.collections.set;
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.functors.TruePredicate;
 
@@ -38,15 +35,6 @@ public class TestPredicatedSet<E> extends AbstractTestSet<E> {
 
     public TestPredicatedSet(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestPredicatedSet.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestPredicatedSet.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
  //-------------------------------------------------------------------

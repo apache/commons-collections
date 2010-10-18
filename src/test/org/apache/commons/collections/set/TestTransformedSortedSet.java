@@ -46,11 +46,6 @@ public class TestTransformedSortedSet<E> extends AbstractTestSortedSet<E> {
         return BulkTest.makeSuite(TestTransformedSortedSet.class);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestTransformedSortedSet.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     //-----------------------------------------------------------------------
     @Override
     @SuppressWarnings("unchecked")

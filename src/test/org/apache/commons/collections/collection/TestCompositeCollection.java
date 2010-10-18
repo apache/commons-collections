@@ -23,9 +23,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * Extension of {@link AbstractTestCollection} for exercising the
  * {@link CompositeCollection} implementation.
@@ -40,15 +37,6 @@ public class TestCompositeCollection<E> extends AbstractTestCollection<E> {
 
     public TestCompositeCollection(String name) {
         super(name);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestCompositeCollection.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestCompositeCollection.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
  //-----------------------------------------------------------------------------

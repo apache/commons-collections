@@ -19,9 +19,6 @@ package org.apache.commons.collections.list;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * Extension of {@link AbstractTestList} for exercising the {@link SynchronizedList}
  * implementation.
@@ -35,15 +32,6 @@ public class TestSynchronizedList<E> extends AbstractTestList<E> {
 
     public TestSynchronizedList(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestSynchronizedList.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestSynchronizedList.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     @Override

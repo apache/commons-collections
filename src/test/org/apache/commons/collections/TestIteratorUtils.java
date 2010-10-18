@@ -44,10 +44,6 @@ public class TestIteratorUtils extends BulkTest {
         super(name);
     }
 
-    public static void main(String args[]) {
-        junit.textui.TestRunner.run(suite());
-    }
-
     public static Test suite() {
         return BulkTest.makeSuite(TestIteratorUtils.class);
     }

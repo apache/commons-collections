@@ -22,10 +22,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
-
 import org.apache.commons.collections.ResettableListIterator;
 
 /**
@@ -36,15 +32,6 @@ import org.apache.commons.collections.ResettableListIterator;
 public class TestReverseListIterator<E> extends AbstractTestListIterator<E> {
 
     protected String[] testArray = { "One", "Two", "Three", "Four" };
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestReverseListIterator.class.getName() };
-        TestRunner.main(testCaseName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestReverseListIterator.class);
-    }
 
     public TestReverseListIterator(String testName) {
         super(testName);

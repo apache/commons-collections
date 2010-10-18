@@ -24,9 +24,6 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Random;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.BufferUnderflowException;
 import org.apache.commons.collections.ComparatorUtils;
@@ -43,14 +40,6 @@ import org.apache.commons.collections.comparators.ReverseComparator;
  * @author Steve Phelps
  */
 public class TestPriorityBuffer<E> extends AbstractTestCollection<E> {
-
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(suite());
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestPriorityBuffer.class);
-    }
 
     public TestPriorityBuffer(String testName) {
         super(testName);

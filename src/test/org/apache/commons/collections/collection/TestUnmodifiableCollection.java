@@ -21,9 +21,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * Extension of {@link AbstractTestCollection} for exercising the
  * {@link UnmodifiableCollection} implementation.
@@ -38,15 +35,6 @@ public class TestUnmodifiableCollection<E> extends AbstractTestCollection<E> {
 
     public TestUnmodifiableCollection(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableCollection.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestUnmodifiableCollection.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     //-----------------------------------------------------------------------

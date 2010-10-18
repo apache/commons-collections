@@ -19,9 +19,6 @@ package org.apache.commons.collections.list;
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.functors.TruePredicate;
 
@@ -38,15 +35,6 @@ public class TestPredicatedList<E> extends AbstractTestList<E> {
 
     public TestPredicatedList(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestPredicatedList.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestPredicatedList.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
  //-------------------------------------------------------------------

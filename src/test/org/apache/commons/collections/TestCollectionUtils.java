@@ -50,10 +50,6 @@ import org.junit.Test;
  * @version $Revision$ $Date$
  */
 public class TestCollectionUtils extends MockTestCase {
-    public static void main(String args[]) {
-        String[] testCaseName = { TestCollectionUtils.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
 
     /**
      * Collection of {@link Integer}s

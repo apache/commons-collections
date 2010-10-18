@@ -19,9 +19,6 @@ package org.apache.commons.collections.keyvalue;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * Test the TiedMapEntry class.
  *
@@ -34,14 +31,6 @@ public class TestTiedMapEntry<K, V> extends AbstractTestMapEntry<K, V> {
 
     public TestTiedMapEntry(String testName) {
         super(testName);
-    }
-
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(TestTiedMapEntry.class);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestTiedMapEntry.class);
     }
 
     //-----------------------------------------------------------------------

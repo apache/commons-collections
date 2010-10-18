@@ -38,11 +38,6 @@ public class TestStaticBucketMap<K, V> extends AbstractTestIterableMap<K, V> {
         return BulkTest.makeSuite(TestStaticBucketMap.class);
     }
 
-    public static void main(String[] args) {
-        String[] testCaseName = { TestStaticBucketMap.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     @Override
     public StaticBucketMap<K, V> makeObject() {
         return new StaticBucketMap<K, V>(30);

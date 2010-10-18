@@ -26,8 +26,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import junit.framework.Test;
-import junit.textui.TestRunner;
-
 import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.BufferUnderflowException;
 import org.apache.commons.collections.BulkTest;
@@ -48,10 +46,6 @@ public class TestCircularFifoBuffer<E> extends AbstractTestCollection<E> {
 
     public static Test suite() {
         return BulkTest.makeSuite(TestCircularFifoBuffer.class);
-    }
-
-    public static void main(String args[]) {
-        TestRunner.run(TestCircularFifoBuffer.class);
     }
 
     //-----------------------------------------------------------------------

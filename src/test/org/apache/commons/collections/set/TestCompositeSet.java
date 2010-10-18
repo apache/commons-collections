@@ -21,9 +21,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.collection.CompositeCollection;
 
 /**
@@ -40,10 +37,6 @@ import org.apache.commons.collections.collection.CompositeCollection;
 public class TestCompositeSet<E> extends AbstractTestSet<E> {
     public TestCompositeSet(String name) {
         super(name);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestCompositeSet.class);
     }
 
     @Override

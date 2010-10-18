@@ -25,9 +25,6 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * Tests for ReverseComparator.
  *
@@ -39,10 +36,6 @@ public class TestReverseComparator extends AbstractTestComparator<Integer> {
 
     public TestReverseComparator(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestReverseComparator.class);
     }
 
     /**

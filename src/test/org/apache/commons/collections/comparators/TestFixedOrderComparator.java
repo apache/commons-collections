@@ -22,9 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 
 /**
  * Test class for FixedOrderComparator.
@@ -58,14 +56,6 @@ public class TestFixedOrderComparator extends TestCase {
 
     public TestFixedOrderComparator(String name) {
         super(name);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestFixedOrderComparator.class);
-    }
-
-    public static void main(String args[]) {
-        junit.textui.TestRunner.run(suite());
     }
 
     //

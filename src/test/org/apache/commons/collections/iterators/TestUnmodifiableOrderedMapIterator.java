@@ -20,9 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.OrderedMap;
 import org.apache.commons.collections.OrderedMapIterator;
 import org.apache.commons.collections.Unmodifiable;
@@ -36,10 +33,6 @@ import org.apache.commons.collections.map.ListOrderedMap;
  * @author Stephen Colebourne
  */
 public class TestUnmodifiableOrderedMapIterator<K, V> extends AbstractTestOrderedMapIterator<K, V> {
-
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableOrderedMapIterator.class);
-    }
 
     public TestUnmodifiableOrderedMapIterator(String testName) {
         super(testName);

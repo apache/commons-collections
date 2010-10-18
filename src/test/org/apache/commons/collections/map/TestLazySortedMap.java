@@ -46,11 +46,6 @@ public class TestLazySortedMap<K, V> extends AbstractTestSortedMap<K, V> {
         super(testName);
     }
     
-    public static void main(String args[]) {
-        String[] testCaseName = { TestLazySortedMap.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     @Override
     public SortedMap<K,V> makeObject() {
         return getLazySortedMap(new TreeMap<K,V>(), FactoryUtils.<V>nullFactory());

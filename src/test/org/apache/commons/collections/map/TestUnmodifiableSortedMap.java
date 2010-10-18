@@ -19,9 +19,6 @@ package org.apache.commons.collections.map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.Unmodifiable;
 
 /**
@@ -37,15 +34,6 @@ public class TestUnmodifiableSortedMap<K, V> extends AbstractTestSortedMap<K, V>
 
     public TestUnmodifiableSortedMap(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableSortedMap.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestUnmodifiableSortedMap.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     //-------------------------------------------------------------------

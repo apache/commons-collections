@@ -19,8 +19,6 @@ package org.apache.commons.collections.bidimap;
 import java.util.TreeMap;
 
 import junit.framework.Test;
-import junit.textui.TestRunner;
-
 import org.apache.commons.collections.BidiMap;
 import org.apache.commons.collections.BulkTest;
 
@@ -33,10 +31,6 @@ import org.apache.commons.collections.BulkTest;
  */
 public class TestTreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> extends AbstractTestOrderedBidiMap<K, V> {
 
-    public static void main(String[] args) {
-        TestRunner.run(suite());
-    }
-    
     public static Test suite() {
         return BulkTest.makeSuite(TestTreeBidiMap.class);
     }

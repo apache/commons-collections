@@ -42,11 +42,6 @@ public class TestSynchronizedSortedSet<E> extends AbstractTestSortedSet<E> {
         return BulkTest.makeSuite(TestSynchronizedSortedSet.class);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestSynchronizedSortedSet.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
    //-------------------------------------------------------------------
     @Override
     public SortedSet<E> makeObject() {

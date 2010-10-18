@@ -22,9 +22,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.Unmodifiable;
 
 /**
@@ -38,10 +35,6 @@ public class TestUnmodifiableListIterator<E> extends AbstractTestListIterator<E>
 
     protected String[] testArray = { "One", "Two", "Three" };
     protected List<E> testList;
-
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableListIterator.class);
-    }
 
     public TestUnmodifiableListIterator(String testName) {
         super(testName);

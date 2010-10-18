@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 import junit.framework.Test;
-import junit.textui.TestRunner;
-
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.OrderedMap;
@@ -41,10 +39,6 @@ public class TestLinkedMap<K, V> extends AbstractTestOrderedMap<K, V> {
 
     public TestLinkedMap(String testName) {
         super(testName);
-    }
-
-    public static void main(String[] args) {
-        TestRunner.run(suite());
     }
 
     public static Test suite() {

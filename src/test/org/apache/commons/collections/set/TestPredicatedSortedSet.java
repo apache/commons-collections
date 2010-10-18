@@ -27,7 +27,6 @@ import junit.framework.Test;
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.functors.TruePredicate;
-import org.apache.commons.collections.map.TestPredicatedSortedMap;
 
 /**
  * Extension of {@link AbstractTestSortedSet} for exercising the
@@ -46,11 +45,6 @@ public class TestPredicatedSortedSet<E> extends AbstractTestSortedSet<E> {
 
     public static Test suite() {
         return BulkTest.makeSuite(TestPredicatedSortedSet.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestPredicatedSortedMap.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
  //-------------------------------------------------------------------

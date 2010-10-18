@@ -45,11 +45,6 @@ public class TestCursorableLinkedList<E> extends TestAbstractLinkedList<E> {
         return BulkTest.makeSuite(TestCursorableLinkedList.class);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestCursorableLinkedList.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     private CursorableLinkedList<E> list;
 
     @Override

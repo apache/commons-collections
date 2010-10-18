@@ -50,11 +50,6 @@ public class TestReferenceIdentityMap<K, V> extends AbstractTestIterableMap<K, V
         return BulkTest.makeSuite(TestReferenceIdentityMap.class);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestReferenceIdentityMap.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     @Override
     public ReferenceIdentityMap<K, V> makeObject() {
         return new ReferenceIdentityMap<K, V>(ReferenceStrength.WEAK, ReferenceStrength.WEAK);

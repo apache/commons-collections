@@ -22,8 +22,6 @@ import java.util.Map;
 import java.util.Set;
 
 import junit.framework.Test;
-import junit.textui.TestRunner;
-
 import org.apache.commons.collections.BulkTest;
 
 /**
@@ -37,10 +35,6 @@ public class TestCaseInsensitiveMap<K, V> extends AbstractTestIterableMap<K, V> 
 
     public TestCaseInsensitiveMap(String testName) {
         super(testName);
-    }
-
-    public static void main(String[] args) {
-        TestRunner.run(suite());
     }
 
     public static Test suite() {

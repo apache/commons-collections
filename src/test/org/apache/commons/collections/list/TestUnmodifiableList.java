@@ -21,9 +21,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * Extension of {@link AbstractTestList} for exercising the
  * {@link UnmodifiableList} implementation.
@@ -37,15 +34,6 @@ public class TestUnmodifiableList<E> extends AbstractTestList<E> {
 
     public TestUnmodifiableList(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableList.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestUnmodifiableList.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     //-----------------------------------------------------------------------

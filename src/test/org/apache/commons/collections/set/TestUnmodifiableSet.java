@@ -43,11 +43,6 @@ public class TestUnmodifiableSet<E> extends AbstractTestSet<E> {
         return BulkTest.makeSuite(TestUnmodifiableSet.class);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestUnmodifiableSet.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     //-------------------------------------------------------------------
     @Override
     public Set<E> makeObject() {

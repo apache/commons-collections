@@ -21,8 +21,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
 import org.apache.commons.collections.ResettableListIterator;
 
 /**
@@ -39,10 +37,6 @@ public class TestListIteratorWrapper2<E> extends AbstractTestIterator<E> {
     };
 
     protected List<E> list1 = null;
-
-    public static Test suite() {
-        return new TestSuite(TestListIteratorWrapper2.class);
-    }
 
     public TestListIteratorWrapper2(String testName) {
         super(testName);

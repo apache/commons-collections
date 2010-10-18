@@ -21,9 +21,6 @@ import java.util.Map;
 
 import org.apache.commons.collections.IterableMap;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * Extension of {@link AbstractTestMap} for exercising the {@link FixedSizeMap}
  * implementation.
@@ -37,15 +34,6 @@ public class TestFixedSizeMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     public TestFixedSizeMap(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestFixedSizeMap.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestFixedSizeMap.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     @Override

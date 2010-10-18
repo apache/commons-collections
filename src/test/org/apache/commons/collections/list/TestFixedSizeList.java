@@ -20,9 +20,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * Extension of {@link AbstractTestList} for exercising the {@link FixedSizeList}
  * implementation.
@@ -36,15 +33,6 @@ public class TestFixedSizeList<E> extends AbstractTestList<E> {
 
     public TestFixedSizeList(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestFixedSizeList.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestFixedSizeList.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     @Override

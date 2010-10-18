@@ -21,9 +21,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.Predicate;
 
@@ -45,10 +42,6 @@ public class TestIteratorChain extends AbstractTestIterator<String> {
     protected List<String> list1 = null;
     protected List<String> list2 = null;
     protected List<String> list3 = null;
-
-    public static Test suite() {
-        return new TestSuite(TestIteratorChain.class);
-    }
 
     public TestIteratorChain(String testName) {
         super(testName);

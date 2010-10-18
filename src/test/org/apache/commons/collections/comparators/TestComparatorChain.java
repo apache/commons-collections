@@ -21,9 +21,6 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * Tests for ComparatorChain.
  *
@@ -35,10 +32,6 @@ public class TestComparatorChain extends AbstractTestComparator<TestComparatorCh
 
     public TestComparatorChain(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestComparatorChain.class);
     }
 
     @Override

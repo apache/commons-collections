@@ -19,8 +19,6 @@ package org.apache.commons.collections.map;
 import java.util.HashMap;
 
 import junit.framework.Test;
-import junit.textui.TestRunner;
-
 import org.apache.commons.collections.BoundedMap;
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.KeyValue;
@@ -41,10 +39,6 @@ public class TestSingletonMap<K, V> extends AbstractTestOrderedMap<K, V> {
 
     public TestSingletonMap(String testName) {
         super(testName);
-    }
-
-    public static void main(String[] args) {
-        TestRunner.run(suite());
     }
 
     public static Test suite() {

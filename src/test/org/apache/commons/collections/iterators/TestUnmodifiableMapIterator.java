@@ -19,9 +19,6 @@ package org.apache.commons.collections.iterators;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.Unmodifiable;
@@ -35,10 +32,6 @@ import org.apache.commons.collections.bidimap.DualHashBidiMap;
  * @author Stephen Colebourne
  */
 public class TestUnmodifiableMapIterator<K, V> extends AbstractTestMapIterator<K, V> {
-
-    public static Test suite() {
-        return new TestSuite(TestUnmodifiableMapIterator.class);
-    }
 
     public TestUnmodifiableMapIterator(String testName) {
         super(testName);

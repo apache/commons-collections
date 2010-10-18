@@ -22,9 +22,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * Extension of {@link AbstractTestSet} for exercising the {@link ListOrderedSet}
  * implementation.
@@ -44,15 +41,6 @@ public class TestListOrderedSet<E> extends AbstractTestSet<E> {
 
     public TestListOrderedSet(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestListOrderedSet.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestListOrderedSet.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     @Override

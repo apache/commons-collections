@@ -19,9 +19,6 @@ package org.apache.commons.collections.splitmap;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.MapIterator;
@@ -64,15 +61,6 @@ public class TestSplitMapUtils extends BulkTest {
         for (int i = 0; i < 10; i++) {
             transformedMap.put(String.valueOf(i), String.valueOf(i));
         }
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestSplitMapUtils.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestSplitMapUtils.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     // -----------------------------------------------------------------------

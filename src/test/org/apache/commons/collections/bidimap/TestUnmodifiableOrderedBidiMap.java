@@ -20,8 +20,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import junit.framework.Test;
-import junit.textui.TestRunner;
-
 import org.apache.commons.collections.BidiMap;
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.OrderedBidiMap;
@@ -34,10 +32,6 @@ import org.apache.commons.collections.OrderedBidiMap;
  * @author Stephen Colebourne
  */
 public class TestUnmodifiableOrderedBidiMap<K extends Comparable<K>, V extends Comparable<V>> extends AbstractTestOrderedBidiMap<K, V> {
-
-    public static void main(String[] args) {
-        TestRunner.run(suite());
-    }
 
     public static Test suite() {
         return BulkTest.makeSuite(TestUnmodifiableOrderedBidiMap.class);

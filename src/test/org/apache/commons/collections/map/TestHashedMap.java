@@ -17,8 +17,6 @@
 package org.apache.commons.collections.map;
 
 import junit.framework.Test;
-import junit.textui.TestRunner;
-
 import org.apache.commons.collections.BulkTest;
 
 /**
@@ -32,10 +30,6 @@ public class TestHashedMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     public TestHashedMap(String testName) {
         super(testName);
-    }
-
-    public static void main(String[] args) {
-        TestRunner.run(suite());
     }
 
     public static Test suite() {

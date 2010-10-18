@@ -16,9 +16,6 @@
  */
 package org.apache.commons.collections.iterators;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * Test the ArrayListIterator class with primitives.
  *
@@ -29,10 +26,6 @@ public class TestArrayListIterator2<E> extends TestArrayIterator2<E> {
 
     public TestArrayListIterator2(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestArrayListIterator2.class);
     }
 
     @Override

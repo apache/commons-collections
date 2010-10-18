@@ -47,11 +47,6 @@ public class TestTransformedSortedMap<K, V> extends AbstractTestSortedMap<K, V> 
         return BulkTest.makeSuite(TestTransformedSortedMap.class);
     }
 
-    public static void main(String args[]) {
-        String[] testCaseName = { TestTransformedSortedMap.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
     //-----------------------------------------------------------------------
     @Override
     @SuppressWarnings("unchecked")

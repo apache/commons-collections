@@ -20,9 +20,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.functors.TruePredicate;
@@ -48,15 +45,6 @@ public class TestPredicatedMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     public TestPredicatedMap(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestPredicatedMap.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestPredicatedMap.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     //-----------------------------------------------------------------------

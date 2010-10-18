@@ -20,9 +20,6 @@ import java.util.Arrays;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * Test the ArrayListIterator class.
  *
@@ -33,10 +30,6 @@ public class TestArrayListIterator<E> extends TestArrayIterator<E> {
 
     public TestArrayListIterator(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestArrayListIterator.class);
     }
 
     @Override

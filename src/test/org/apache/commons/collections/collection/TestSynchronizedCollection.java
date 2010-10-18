@@ -20,9 +20,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-
 /**
  * Extension of {@link AbstractTestCollection} for exercising the
  * {@link SynchronizedCollection} implementation.
@@ -37,15 +34,6 @@ public class TestSynchronizedCollection<E> extends AbstractTestCollection<E> {
 
     public TestSynchronizedCollection(String testName) {
         super(testName);
-    }
-
-    public static Test suite() {
-        return new TestSuite(TestSynchronizedCollection.class);
-    }
-
-    public static void main(String args[]) {
-        String[] testCaseName = { TestSynchronizedCollection.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
     }
 
     //-----------------------------------------------------------------------
