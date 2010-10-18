@@ -482,11 +482,11 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
         Object[] values = getSampleValues();
         Object[] newValues = getNewSampleValues();
 
-        assertTrue("failure in test: Must have keys returned from " +
-                 "getSampleKeys.", keys != null);
+        assertNotNull("failure in test: Must have keys returned from " +
+                 "getSampleKeys.", keys);
 
-        assertTrue("failure in test: Must have values returned from " +
-                 "getSampleValues.", values != null);
+        assertNotNull("failure in test: Must have values returned from " +
+                 "getSampleValues.", values);
 
         // verify keys and values have equivalent lengths (in case getSampleX are
         // overridden)
