@@ -387,7 +387,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         normalMap = new TreeMap(comparator);
-        reverseMap = new TreeMap(comparator);
+        reverseMap = new TreeMap(valueComparator);
         Map map = (Map) in.readObject();
         putAll(map);
     }

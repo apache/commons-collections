@@ -22,6 +22,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
@@ -41,6 +42,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
  * @author Stephen Colebourne
  * @author Jonas Van Poucke
  */
+@SuppressWarnings("boxing")
 public class TestDualTreeBidiMap2<K extends Comparable<K>, V extends Comparable<V>> extends AbstractTestSortedBidiMap<K, V> {
 
     public static Test suite() {
@@ -70,6 +72,16 @@ public class TestDualTreeBidiMap2<K extends Comparable<K>, V extends Comparable<
         assertTrue(bidi.comparator() instanceof ReverseComparator);
     }
 
+    public void testComparator2() {
+        DualTreeBidiMap<String, Integer> dtbm = new DualTreeBidiMap<String, Integer>(
+                String.CASE_INSENSITIVE_ORDER, null);
+        dtbm.put("two", 0);
+        dtbm.put("one", 1);
+        assertEquals("one", dtbm.firstKey());
+        assertEquals("two", dtbm.lastKey());
+        
+    }
+
     public void testSerializeDeserializeCheckComparator() throws Exception {
         SortedBidiMap<?, ?> obj = makeObject();
         if (obj instanceof Serializable && isTestSerialization()) {
@@ -82,11 +94,37 @@ public class TestDualTreeBidiMap2<K extends Comparable<K>, V extends Comparable<
             Object dest = in.readObject();
             in.close();
 
-            SortedBidiMap bidi = (SortedBidiMap) dest;
+            SortedBidiMap<?,?> bidi = (SortedBidiMap<?,?>) dest;
             assertNotNull(obj.comparator());
             assertNotNull(bidi.comparator());
             assertTrue(bidi.comparator() instanceof ReverseComparator);
         }
+    }
+
+    private static class IntegerComparator implements Comparator<Integer>, java.io.Serializable{
+        private static final long serialVersionUID = 1L;
+        public int compare(Integer o1, Integer o2) {
+            return o1.compareTo(o2);
+        }
+    }
+
+    public void testCollections364() throws Exception {
+        DualTreeBidiMap<String, Integer> original = new DualTreeBidiMap<String, Integer>(
+                String.CASE_INSENSITIVE_ORDER, new IntegerComparator());
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        ObjectOutputStream out = new ObjectOutputStream(buffer);
+        out.writeObject(original);
+        out.close();
+
+        ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
+        @SuppressWarnings("unchecked")
+        DualTreeBidiMap<String, Integer> deserialised = (DualTreeBidiMap<String, Integer>) in.readObject();
+        in.close();
+
+        assertNotNull(original.comparator());
+        assertNotNull(deserialised.comparator());
+        assertEquals(original.comparator().getClass(), deserialised.comparator().getClass());
+        assertEquals(original.valueComparator().getClass(), deserialised.valueComparator().getClass());
     }
 
     public void testSortOrder() throws Exception {
