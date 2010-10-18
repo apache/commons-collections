@@ -89,7 +89,8 @@ import org.apache.commons.collections.AbstractTestObject;
  * {@link #confirmed}, the {@link #verify()} method is invoked to compare
  * the results.  You may want to override {@link #verify()} to perform
  * additional verifications.  For instance, when testing the collection
- * views of a map, {@link AbstractTestMap} would override {@link #verify()} to make
+ * views of a map, {@link org.apache.commons.collections.map.AbstractTestMap AbstractTestMap} 
+ * would override {@link #verify()} to make
  * sure the map is changed after the collection view is changed.
  * <p>
  * If you're extending this class directly, you will have to provide
@@ -102,8 +103,10 @@ import org.apache.commons.collections.AbstractTestObject;
  * Those methods should provide a confirmed collection implementation
  * that's compatible with your collection implementation.
  * <p>
- * If you're extending {@link AbstractTestList}, {@link AbstractTestSet},
- * or {@link AbstractTestBag}, you probably don't have to worry about the
+ * If you're extending {@link org.apache.commons.collections.list.AbstractTestList AbstractTestList},
+ * {@link org.apache.commons.collections.set.AbstractTestSet AbstractTestSet},
+ * or {@link org.apache.commons.collections.bag.AbstractTestBag AbstractTestBag}, 
+ * you probably don't have to worry about the
  * above methods, because those three classes already override the methods
  * to provide standard JDK confirmed collections.<P>
  * <p>
@@ -189,7 +192,7 @@ public abstract class AbstractTestCollection<E> extends AbstractTestObject {
 
     /**
      *  Returns true if the collections produced by
-     *  {@link #makeCollection()} and {@link #makeFullCollection()}
+     *  {@link #makeObject()} and {@link #makeFullCollection()}
      *  support the <code>add</code> and <code>addAll</code>
      *  operations.<P>
      *  Default implementation returns true.  Override if your collection
@@ -201,7 +204,7 @@ public abstract class AbstractTestCollection<E> extends AbstractTestObject {
 
     /**
      *  Returns true if the collections produced by
-     *  {@link #makeCollection()} and {@link #makeFullCollection()}
+     *  {@link #makeObject()} and {@link #makeFullCollection()}
      *  support the <code>remove</code>, <code>removeAll</code>,
      *  <code>retainAll</code>, <code>clear</code> and
      *  <code>iterator().remove()</code> methods.
