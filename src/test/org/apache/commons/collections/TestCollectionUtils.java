@@ -49,6 +49,7 @@ import org.junit.Test;
  *
  * @version $Revision$ $Date$
  */
+@SuppressWarnings("boxing")
 public class TestCollectionUtils extends MockTestCase {
 
     /**
@@ -666,9 +667,9 @@ public class TestCollectionUtils extends MockTestCase {
     // -----------------------------------------------------------------------
     @Test
     public void testSize_List() {
-        List list = null;
+        List<String> list = null;
         assertEquals(0, CollectionUtils.size(list));
-        list = new ArrayList();
+        list = new ArrayList<String>();
         assertEquals(0, CollectionUtils.size(list));
         list.add("a");
         assertEquals(1, CollectionUtils.size(list));
@@ -732,13 +733,9 @@ public class TestCollectionUtils extends MockTestCase {
         assertEquals(2, CollectionUtils.size(list.iterator()));
     }
 
-    @Test
+    @Test(expected=IllegalArgumentException.class)
     public void testSize_Other() {
-        try {
-            CollectionUtils.size("not a list");
-            fail("Expecting IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-        }
+        CollectionUtils.size("not a list");
     }
 
     // -----------------------------------------------------------------------
@@ -746,6 +743,8 @@ public class TestCollectionUtils extends MockTestCase {
     public void testSizeIsEmpty_Null() {
         assertEquals(true, CollectionUtils.sizeIsEmpty(null));
     }
+
+    @Test
     public void testSizeIsEmpty_List() {
         List<String> list = new ArrayList<String>();
         assertEquals(true, CollectionUtils.sizeIsEmpty(list));
@@ -1359,26 +1358,23 @@ public class TestCollectionUtils extends MockTestCase {
         assertTrue(collectionA.contains(5));
     }
 
+    @Test(expected=IndexOutOfBoundsException.class)
+    public void getNegative() {
+        CollectionUtils.get((Object)collectionA, -3);
+    }
+
+    @Test(expected=IndexOutOfBoundsException.class)
+    public void getPositiveOutOfBounds() {
+        CollectionUtils.get((Object)collectionA.iterator(), 30);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void get1() {
+        CollectionUtils.get((Object)null, 0);
+    }
+
     @Test
     public void get() {
-        try {
-            CollectionUtils.get((Object)collectionA, -3);
-            fail();
-        } catch(IndexOutOfBoundsException e) {
-            ;
-        }
-        try {
-            CollectionUtils.get((Object)collectionA.iterator(), 30);
-            fail();
-        } catch(IndexOutOfBoundsException e) {
-            ;
-        }
-        try {
-            CollectionUtils.get((Object)null, 0);
-            fail();
-        } catch(IllegalArgumentException e) {
-            ;
-        }
         assertEquals(2, CollectionUtils.get((Object)collectionA, 2));
         assertEquals(2, CollectionUtils.get((Object)collectionA.iterator(), 2));
         Map<Integer, Integer> map = CollectionUtils.getCardinalityMap(collectionA);
