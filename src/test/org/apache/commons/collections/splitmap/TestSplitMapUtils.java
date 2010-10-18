@@ -38,6 +38,7 @@ import org.apache.commons.collections.map.HashedMap;
  * @author Stephen Colebourne
  * @author Matt Benson
  */
+@SuppressWarnings("boxing")
 public class TestSplitMapUtils extends BulkTest {
     private Map<String, Integer> backingMap;
     private TransformedMap<String, String, String, Integer> transformedMap;

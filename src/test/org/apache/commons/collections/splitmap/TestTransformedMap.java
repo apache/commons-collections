@@ -38,6 +38,7 @@ import org.apache.commons.collections.functors.NOPTransformer;
  * @author Stephen Colebourne
  * @author Matt Benson
  */
+@SuppressWarnings("boxing")
 public class TestTransformedMap extends BulkTest {
 
     private Transformer<Integer, String> intToString = new Transformer<Integer, String>() {

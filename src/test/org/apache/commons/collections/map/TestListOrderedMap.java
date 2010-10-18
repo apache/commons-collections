@@ -307,7 +307,7 @@ public class TestListOrderedMap<K, V> extends AbstractTestOrderedMap<K, V> {
 
     public void testPutAllWithIndex() {
         resetEmpty();
-        ListOrderedMap lom = (ListOrderedMap) map;
+        ListOrderedMap<String, String> lom = (ListOrderedMap<String, String>) map;
 
         // Create Initial Data
         lom.put("testInsert0", "testInsert0v");
@@ -318,7 +318,7 @@ public class TestListOrderedMap<K, V> extends AbstractTestOrderedMap<K, V> {
         assertEquals("testInsert2v", lom.getValue(2));
 
         // Create New Test Map and Add using putAll(int, Object, Object)
-        Map values = new ListOrderedMap();
+        Map<String, String> values = new ListOrderedMap<String, String>();
         values.put("NewInsert0", "NewInsert0v");
         values.put("NewInsert1", "NewInsert1v");
         lom.putAll(1, values);

@@ -28,6 +28,7 @@ class LocalTestNode<K extends Comparable<K>, V extends Comparable<V>> implements
     private K key;
     private V value;
 
+    @SuppressWarnings("boxing")
     static LocalTestNode<Integer, String> createLocalTestNode(final int key) {
         return new LocalTestNode<Integer, String>(key, String.valueOf(key));
     }
