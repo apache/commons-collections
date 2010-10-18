@@ -524,7 +524,7 @@ public abstract class AbstractTestBag<T> extends AbstractTestObject {
         bag.add((T) "B");
         bag.add((T) "C");
         if (bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
-            Bag bag2 = (Bag) readExternalFormFromDisk(getCanonicalFullCollectionName(bag));
+            Bag<?> bag2 = (Bag<?>) readExternalFormFromDisk(getCanonicalFullCollectionName(bag));
             assertEquals("Bag is the right size",bag.size(), bag2.size());
             assertEquals(bag, bag2);
         }
