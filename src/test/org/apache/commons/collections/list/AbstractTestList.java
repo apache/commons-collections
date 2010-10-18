@@ -39,7 +39,7 @@ import org.apache.commons.collections.iterators.AbstractTestListIterator;
  * Abstract test class for {@link java.util.List} methods and contracts.
  * <p>
  * To use, simply extend this class, and implement
- * the {@link #makeEmptyList} method.
+ * the {@link #makeObject} method.
  * <p>
  * If your {@link List} fails one of these tests by design,
  * you may still use this base set of cases.  Simply override the
@@ -67,7 +67,7 @@ public abstract class AbstractTestList<E> extends AbstractTestCollection<E> {
     //-----------------------------------------------------------------------
     /**
      *  Returns true if the collections produced by
-     *  {@link #makeCollection()} and {@link #makeFullCollection()}
+     *  {@link #makeObject()} and {@link #makeFullCollection()}
      *  support the <code>set operation.<p>
      *  Default implementation returns true.  Override if your collection
      *  class does not support set.
@@ -140,7 +140,7 @@ public abstract class AbstractTestList<E> extends AbstractTestCollection<E> {
     }
 
     /**
-     * Returns {@link #makeEmptyList()}.
+     * Returns {@link #makeObject()}.
      *
      * @return an empty list to be used for testing
      */

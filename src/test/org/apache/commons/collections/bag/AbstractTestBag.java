@@ -31,7 +31,7 @@ import org.apache.commons.collections.Bag;
  * Abstract test class for {@link org.apache.commons.collections.Bag Bag} methods and contracts.
  * <p>
  * To use, simply extend this class, and implement
- * the {@link #makeBag} method.
+ * the {@link #makeObject} method.
  * <p>
  * If your bag fails one of these tests by design,
  * you may still use this base set of cases.  Simply override the

@@ -37,7 +37,7 @@ import org.apache.commons.collections.set.AbstractTestSet;
  * The forces at work here are similar to those in {@link AbstractTestCollection}.
  * If your class implements the full Map interface, including optional
  * operations, simply extend this class, and implement the
- * {@link #makeEmptyMap()} method.
+ * {@link #makeObject()} method.
  * <p>
  * On the other hand, if your map implementation is weird, you may have to
  * override one or more of the other protected methods.  They're described
@@ -166,7 +166,7 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
 
     /**
      * Returns true if the maps produced by
-     * {@link #makeEmptyMap()} and {@link #makeFullMap()}
+     * {@link #makeObject()} and {@link #makeFullMap()}
      * support the <code>put</code> and <code>putAll</code> operations
      * adding new mappings.
      * <p>
@@ -179,7 +179,7 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
 
     /**
      * Returns true if the maps produced by
-     * {@link #makeEmptyMap()} and {@link #makeFullMap()}
+     * {@link #makeObject()} and {@link #makeFullMap()}
      * support the <code>put</code> and <code>putAll</code> operations
      * changing existing mappings.
      * <p>
@@ -192,7 +192,7 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
 
     /**
      * Returns true if the maps produced by
-     * {@link #makeEmptyMap()} and {@link #makeFullMap()}
+     * {@link #makeObject()} and {@link #makeFullMap()}
      * support the <code>setValue</code> operation on entrySet entries.
      * <p>
      * Default implementation returns isPutChangeSupported().
@@ -205,7 +205,7 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
 
     /**
      * Returns true if the maps produced by
-     * {@link #makeEmptyMap()} and {@link #makeFullMap()}
+     * {@link #makeObject()} and {@link #makeFullMap()}
      * support the <code>remove</code> and <code>clear</code> operations.
      * <p>
      * Default implementation returns true.
@@ -217,7 +217,7 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
 
     /**
      * Returns true if the maps produced by
-     * {@link #makeEmptyMap()} and {@link #makeFullMap()}
+     * {@link #makeObject()} and {@link #makeFullMap()}
      * can cause structural modification on a get(). The example is LRUMap.
      * <p>
      * Default implementation returns false.
@@ -240,7 +240,7 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
 
     /**
      * Returns true if the maps produced by
-     * {@link #makeEmptyMap()} and {@link #makeFullMap()}
+     * {@link #makeObject()} and {@link #makeFullMap()}
      * supports null keys.
      * <p>
      * Default implementation returns true.
@@ -252,7 +252,7 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
 
     /**
      * Returns true if the maps produced by
-     * {@link #makeEmptyMap()} and {@link #makeFullMap()}
+     * {@link #makeObject()} and {@link #makeFullMap()}
      * supports null values.
      * <p>
      * Default implementation returns true.
@@ -264,7 +264,7 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
 
     /**
      * Returns true if the maps produced by
-     * {@link #makeEmptyMap()} and {@link #makeFullMap()}
+     * {@link #makeObject()} and {@link #makeFullMap()}
      * supports duplicate values.
      * <p>
      * Default implementation returns true.
@@ -276,7 +276,7 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
 
     /**
      * Returns true if the maps produced by
-     * {@link #makeEmptyMap()} and {@link #makeFullMap()}
+     * {@link #makeObject()} and {@link #makeFullMap()}
      * provide fail-fast behavior on their various iterators.
      * <p>
      * Default implementation returns true.

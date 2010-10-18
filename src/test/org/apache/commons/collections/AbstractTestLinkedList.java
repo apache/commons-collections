@@ -28,7 +28,7 @@ import org.apache.commons.collections.list.AbstractTestList;
  * Tests base {@link java.util.LinkedList} methods and contracts.
  * <p>
  * To use, simply extend this class, and implement
- * the {@link #makeEmptyLinkedList()} method.
+ * the {@link #makeObject()} method.
  * <p>
  * If your {@link LinkedList} fails one of these tests by design,
  * you may still use this base set of cases.  Simply override the

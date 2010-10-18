@@ -116,7 +116,7 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
 	 * @param comparator  the comparator to use for comparison
 	 * @param criterion  the criterion to use to evaluate comparison
 	 * @return the predicate
-	 * @throws IllegalArgumentexception if comparator is null of criterion is invalid
+	 * @throws IllegalArgumentException if comparator is null of criterion is invalid
 	 */
 	public static <T> Predicate<T> getInstance(T object, Comparator<T> comparator, Criterion criterion) {
         if (comparator == null) {
@@ -155,7 +155,7 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
 	 * </ul>
 	 * 
 	 * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
-	 * @see java.util.Comparator.compare(java.lang.Object first, java.lang.Object second)
+	 * @see java.util.Comparator#compare(java.lang.Object first, java.lang.Object second)
 	 * 
 	 * @throws IllegalStateException if the criterion is invalid (really not possible)
 	 */

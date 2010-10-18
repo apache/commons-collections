@@ -92,9 +92,13 @@ public class ReferenceMap<K, V> extends AbstractReferenceMap<K, V> implements Se
      * use the specified types of references.
      *
      * @param keyType  the type of reference to use for keys;
-     *   must be {@link #HARD}, {@link #SOFT}, {@link #WEAK}
+     *   must be {@link AbstractReferenceMap.ReferenceStrength#HARD HARD}, 
+     *   {@link AbstractReferenceMap.ReferenceStrength#SOFT SOFT}, 
+     *   {@link AbstractReferenceMap.ReferenceStrength#WEAK WEAK}
      * @param valueType  the type of reference to use for values;
-     *   must be {@link #HARD}, {@link #SOFT}, {@link #WEAK}
+     *   must be {@link AbstractReferenceMap.ReferenceStrength#HARD HARD},
+     *   {@link AbstractReferenceMap.ReferenceStrength#SOFT SOFT},
+     *   {@link AbstractReferenceMap.ReferenceStrength#WEAK WEAK}
      */
     public ReferenceMap(ReferenceStrength keyType, ReferenceStrength valueType) {
         super(keyType, valueType, DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR, false);
@@ -105,9 +109,13 @@ public class ReferenceMap<K, V> extends AbstractReferenceMap<K, V> implements Se
      * use the specified types of references.
      *
      * @param keyType  the type of reference to use for keys;
-     *   must be {@link #HARD}, {@link #SOFT}, {@link #WEAK}
+     *   must be {@link AbstractReferenceMap.ReferenceStrength#HARD HARD}, 
+     *   {@link AbstractReferenceMap.ReferenceStrength#SOFT SOFT}, 
+     *   {@link AbstractReferenceMap.ReferenceStrength#WEAK WEAK}
      * @param valueType  the type of reference to use for values;
-     *   must be {@link #HARD}, {@link #SOFT}, {@link #WEAK}
+     *   must be {@link AbstractReferenceMap.ReferenceStrength#HARD HARD},
+     *   {@link AbstractReferenceMap.ReferenceStrength#SOFT SOFT},
+     *   {@link AbstractReferenceMap.ReferenceStrength#WEAK WEAK}
      * @param purgeValues should the value be automatically purged when the 
      *   key is garbage collected 
      */
@@ -121,9 +129,13 @@ public class ReferenceMap<K, V> extends AbstractReferenceMap<K, V> implements Se
      * capacity.
      *
      * @param keyType  the type of reference to use for keys;
-     *   must be {@link #HARD}, {@link #SOFT}, {@link #WEAK}
+     *   must be {@link AbstractReferenceMap.ReferenceStrength#HARD HARD}, 
+     *   {@link AbstractReferenceMap.ReferenceStrength#SOFT SOFT}, 
+     *   {@link AbstractReferenceMap.ReferenceStrength#WEAK WEAK}
      * @param valueType  the type of reference to use for values;
-     *   must be {@link #HARD}, {@link #SOFT}, {@link #WEAK}
+     *   must be {@link AbstractReferenceMap.ReferenceStrength#HARD HARD},
+     *   {@link AbstractReferenceMap.ReferenceStrength#SOFT SOFT},
+     *   {@link AbstractReferenceMap.ReferenceStrength#WEAK WEAK}
      * @param capacity  the initial capacity for the map
      * @param loadFactor  the load factor for the map
      */
@@ -138,9 +150,13 @@ public class ReferenceMap<K, V> extends AbstractReferenceMap<K, V> implements Se
      * capacity.
      *
      * @param keyType  the type of reference to use for keys;
-     *   must be {@link #HARD}, {@link #SOFT}, {@link #WEAK}
+     *   must be {@link AbstractReferenceMap.ReferenceStrength#HARD HARD}, 
+     *   {@link AbstractReferenceMap.ReferenceStrength#SOFT SOFT}, 
+     *   {@link AbstractReferenceMap.ReferenceStrength#WEAK WEAK}
      * @param valueType  the type of reference to use for values;
-     *   must be {@link #HARD}, {@link #SOFT}, {@link #WEAK}
+     *   must be {@link AbstractReferenceMap.ReferenceStrength#HARD HARD},
+     *   {@link AbstractReferenceMap.ReferenceStrength#SOFT SOFT},
+     *   {@link AbstractReferenceMap.ReferenceStrength#WEAK WEAK}
      * @param capacity  the initial capacity for the map
      * @param loadFactor  the load factor for the map
      * @param purgeValues  should the value be automatically purged when the 
