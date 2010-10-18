@@ -314,6 +314,7 @@ limitations under the License.
 
   <target name="instrument"
           depends="compile.tests"
+          unless="emma.norun"
           description="Instruments the compiled classes and moves them to the instrumentation directory">
     <emma>
       <instr instrpathref="build.path"
@@ -325,7 +326,7 @@ limitations under the License.
   </target>
 
   <!-- Runs all tests -->
-  <target name="-test-all" depends="instrument" unless="testcase">
+  <target name="-test-all" depends="compile.tests,instrument" unless="testcase">
 	<mkdir dir="${build.test.reports}" />
 
     <junit printsummary="yes" haltonfailure="${test.haltonfailure}" showoutput="yes">
@@ -345,17 +346,6 @@ limitations under the License.
       <batchtest fork="${test.fork}" todir="${build.test.reports}">
         <fileset dir="${source.test}">
           <include name="**/Test*.java"/>
-          <!-- Exclude groups of tests -->
-          <exclude name="**/TestAll.java"/>
-          <exclude name="**/TestAllPackages.java"/>
-          <!-- Exclude Asbtract classes -->
-          <exclude name="**/TestAbstract*"/>
-          <exclude name="**/TestArrayList.java"/>
-          <exclude name="**/TestLinkedList.java"/>
-          <exclude name="**/TestTreeMap.java"/>
-          <exclude name="**/TestTypedCollection.java"/>
-          <exclude name="**/TestAnyAllOnePredicate.java"/>
-          <exclude name="**/TestCompositePredicate.java"/>
           <exclude name="**/TestUtils.java"/>
         </fileset>
       </batchtest>
