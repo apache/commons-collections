@@ -74,11 +74,11 @@ public class TransformedBag<E>
      * @throws IllegalArgumentException if bag or transformer is null
      * @since Commons Collections 3.3
      */
-    // TODO: Generics
-    public static Bag decorateTransform(Bag bag, Transformer transformer) {
-        TransformedBag decorated = new TransformedBag(bag, transformer);
+    public static <E> Bag<E> decorateTransform(Bag<E> bag, Transformer<? super E, ? extends E> transformer) {
+        TransformedBag<E> decorated = new TransformedBag<E>(bag, transformer);
         if (transformer != null && bag != null && bag.size() > 0) {
-            Object[] values = bag.toArray();
+            @SuppressWarnings("unchecked") // Bag is of type E
+            E[] values = (E[]) bag.toArray();
             bag.clear();
             for(int i=0; i<values.length; i++) {
                 decorated.decorated().add(transformer.transform(values[i]));
