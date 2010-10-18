@@ -117,15 +117,15 @@ public class TestListUtils extends BulkTest {
      * Tests intersecting two lists in different orders.
      */
     public void testIntersectionOrderInsensitivity() {
-		List<String> one = new ArrayList<String>();
-		List<String> two = new ArrayList<String>();
-		one.add("a");
-		one.add("b");
-		two.add("a");
-		two.add("a");
-		two.add("b");
-		two.add("b");
-		assertEquals(ListUtils.intersection(one,two),ListUtils.intersection(two, one));
+        List<String> one = new ArrayList<String>();
+        List<String> two = new ArrayList<String>();
+        one.add("a");
+        one.add("b");
+        two.add("a");
+        two.add("a");
+        two.add("b");
+        two.add("b");
+        assertEquals(ListUtils.intersection(one,two),ListUtils.intersection(two, one));
     }
 
     public void testPredicatedList() {

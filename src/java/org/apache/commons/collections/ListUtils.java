@@ -75,8 +75,8 @@ public class ListUtils {
         List<? extends E> smaller = list1;
         List<? extends E> larger = list2;
         if (list1.size() > list2.size()) {
-        	smaller = list2;
-        	larger = list1;
+            smaller = list2;
+            larger = list1;
         }
         
         HashSet<E> hashSet = new HashSet<E>(smaller);
