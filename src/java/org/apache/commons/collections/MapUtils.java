@@ -877,7 +877,7 @@ public class MapUtils {
         Map<String, Object> map = new HashMap<String, Object>();
 
         while (enumeration.hasMoreElements()) {
-            String key = (String) enumeration.nextElement();
+            String key = enumeration.nextElement();
             Object value = resourceBundle.getObject(key);
             map.put(key, value);
         }
@@ -1183,8 +1183,7 @@ public class MapUtils {
      * @return true if empty or null
      * @since Commons Collections 3.2
      */
-    @SuppressWarnings("unchecked")
-    public static boolean isEmpty(Map map) {
+    public static boolean isEmpty(Map<?,?> map) {
         return (map == null || map.isEmpty());
     }
 
@@ -1197,8 +1196,7 @@ public class MapUtils {
      * @return true if non-null and non-empty
      * @since Commons Collections 3.2
      */
-    @SuppressWarnings("unchecked")
-    public static boolean isNotEmpty(Map map) {
+    public static boolean isNotEmpty(Map<?,?> map) {
         return !MapUtils.isEmpty(map);
     }
 
