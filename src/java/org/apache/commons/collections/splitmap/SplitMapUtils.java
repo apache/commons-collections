@@ -102,7 +102,7 @@ public class SplitMapUtils {
 
         public V put(K key, V value) {
             throw new UnsupportedOperationException();
-        };
+        }
 
         public void putAll(Map<? extends K, ? extends V> t) {
             throw new UnsupportedOperationException();
@@ -182,7 +182,7 @@ public class SplitMapUtils {
         @SuppressWarnings("unchecked")
         public V put(K key, V value) {
             return (V) put.put(key, value);
-        };
+        }
 
         public void putAll(Map<? extends K, ? extends V> t) {
             put.putAll(t);
