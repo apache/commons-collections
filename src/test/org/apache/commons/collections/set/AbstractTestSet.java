@@ -33,7 +33,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
  * {@link #verify()} that ensures elements do not appear more than once in the
  * set.
  * <p>
- * To use, subclass and override the {@link #makeEmptySet()}
+ * To use, subclass and override the {@link #makeObject()}
  * method.  You may have to override other protected methods if your
  * set is not modifiable, or if your set restricts what kinds of
  * elements may be added; see {@link AbstractTestCollection} for more details.

@@ -25,7 +25,7 @@ import org.apache.commons.collections.BulkTest;
 /**
  * Abstract test class for {@link SortedSet} methods and contracts.
  * <p>
- * To use, subclass and override the {@link #makeEmptySet()}
+ * To use, subclass and override the {@link #makeObject()}
  * method.  You may have to override other protected methods if your
  * set is not modifiable, or if your set restricts what kinds of
  * elements may be added; see {@link AbstractTestSet} for more details.
