@@ -27,6 +27,7 @@ import java.util.List;
  *
  * @author Rodney Waldhoff
  */
+@SuppressWarnings("boxing")
 public class TestBooleanComparator extends AbstractTestComparator<Boolean> {
 
     // conventional

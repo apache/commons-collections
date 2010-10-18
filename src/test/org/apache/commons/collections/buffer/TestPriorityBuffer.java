@@ -39,6 +39,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
  * @author Michael A. Smith
  * @author Steve Phelps
  */
+@SuppressWarnings("boxing")
 public class TestPriorityBuffer<E> extends AbstractTestCollection<E> {
 
     public TestPriorityBuffer(String testName) {

@@ -49,6 +49,7 @@ import org.junit.Test;
  * @author Stephen Colebourne
  * @author Matt Benson
  */
+@SuppressWarnings("boxing")
 public class TestPredicateUtils extends BasicPredicateTestBase {
     /**
      * Set up instance variables required by this test case.

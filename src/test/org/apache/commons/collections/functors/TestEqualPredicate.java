@@ -45,6 +45,7 @@ public class TestEqualPredicate extends BasicPredicateTestBase {
         assertTrue(equalPredicate(TRUE_OBJECT), TRUE_OBJECT);
     }
     
+    @SuppressWarnings("boxing")
     @Test
     public void testPredicateTypeCanBeSuperClassOfObject() throws Exception {
         Predicate<Number> predicate = equalPredicate((Number) 4);

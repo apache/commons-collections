@@ -27,6 +27,7 @@ import org.apache.commons.collections.comparators.ComparableComparator;
  * @version $Revision$ $Date$
  * @author Rodney Waldhoff
  */
+@SuppressWarnings("boxing")
 public class TestCollatingIterator extends AbstractTestIterator<Integer> {
 
     //------------------------------------------------------------ Conventional

@@ -38,6 +38,7 @@ import org.junit.Test;
  *
  * @author Phil Steitz
  */
+@SuppressWarnings("boxing")
 public class TestLazySortedMap<K, V> extends AbstractTestSortedMap<K, V> {
     
     private static final Factory<Integer> oneFactory = FactoryUtils.constantFactory(1);

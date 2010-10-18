@@ -73,6 +73,7 @@ public abstract class AbstractTestAnyAllOnePredicate<T> extends AbstractTestComp
      * Tests creating composite predicate instances with single predicates and verifies that the composite returns
      * the same value as the single predicate does. 
      */
+    @SuppressWarnings("boxing")
     public final void singleValues() {
         assertTrue(getPredicateInstance(true).evaluate(null));
         assertFalse(getPredicateInstance(false).evaluate(null));

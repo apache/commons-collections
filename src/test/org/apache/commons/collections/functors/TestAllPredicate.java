@@ -18,6 +18,7 @@ import java.util.Collections;
  *
  * @author Edwin Tellman
  */
+@SuppressWarnings("boxing")
 public class TestAllPredicate extends AbstractTestAnyAllOnePredicate<Integer> {
 
     /**

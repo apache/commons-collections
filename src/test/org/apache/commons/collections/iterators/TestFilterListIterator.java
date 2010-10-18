@@ -31,6 +31,7 @@ import org.apache.commons.collections.Predicate;
  *
  * @author Rodney Waldhoff
  */
+@SuppressWarnings("boxing")
 public class TestFilterListIterator extends TestCase {
     public TestFilterListIterator(String testName) {
         super(testName);

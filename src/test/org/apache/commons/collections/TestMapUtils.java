@@ -49,6 +49,7 @@ import org.apache.commons.collections.collection.TestTransformedCollection;
  * @author Janek Bogucki
  * @author Neil O'Toole
  */
+@SuppressWarnings("boxing")
 public class TestMapUtils extends BulkTest {
 
     public TestMapUtils(String name) {
@@ -744,7 +745,7 @@ public class TestMapUtils extends BulkTest {
 
     public void testPopulateMap() {
         // Setup Test Data
-        List list = new ArrayList();
+        List<String> list = new ArrayList<String>();
         list.add("1");
         list.add("3");
         list.add("5");
@@ -754,27 +755,27 @@ public class TestMapUtils extends BulkTest {
         list.add("6");
 
         // Now test key transform population
-        Map map = new HashMap();
+        Map<Object, Object> map = new HashMap<Object, Object>();
         MapUtils.populateMap(map, list, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(list.size(), map.size());
 
         for (int i = 0; i < list.size(); i++) {
-            assertEquals(true, map.containsKey(new Integer((String) list.get(i))));
+            assertEquals(true, map.containsKey(new Integer(list.get(i))));
             assertEquals(false, map.containsKey(list.get(i)));
             assertEquals(true, map.containsValue(list.get(i)));
-            assertEquals(list.get(i), map.get(new Integer((String) list.get(i))));
+            assertEquals(list.get(i), map.get(new Integer(list.get(i))));
         }
 
         // Now test both Key-Value transform population
-        map = new HashMap();
+        map = new HashMap<Object, Object>();
         MapUtils.populateMap(map, list, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
 
         assertEquals(list.size(), map.size());
         for (int i = 0; i < list.size(); i++) {
-            assertEquals(true, map.containsKey(new Integer((String) list.get(i))));
+            assertEquals(true, map.containsKey(new Integer(list.get(i))));
             assertEquals(false, map.containsKey(list.get(i)));
-            assertEquals(true, map.containsValue(new Integer((String) list.get(i))));
-            assertEquals(new Integer((String) list.get(i)), map.get(new Integer((String) list.get(i))));
+            assertEquals(true, map.containsValue(new Integer(list.get(i))));
+            assertEquals(new Integer(list.get(i)), map.get(new Integer(list.get(i))));
         }
     }
 

@@ -25,8 +25,8 @@ import java.util.List;
  *
  * @version $Revision$ $Date$
  *
- * @author Unknown
  */
+@SuppressWarnings("boxing")
 public class TestComparableComparator extends AbstractTestComparator<Integer> {
 
     public TestComparableComparator(String testName) {
