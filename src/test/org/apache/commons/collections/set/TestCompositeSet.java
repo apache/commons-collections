@@ -99,6 +99,8 @@ public class TestCompositeSet<E> extends AbstractTestSet<E> {
         Set<E> two = buildTwo();
         CompositeSet<E> set = new CompositeSet<E>(new Set[] { one, two });
         set.setMutator(new CompositeSet.SetMutator<E>() {
+            private static final long serialVersionUID = 1L;
+
             public void resolveCollision(CompositeSet<E> comp, Set<E> existing,
                 Set<E> added, Collection<E> intersects) {
                 //noop

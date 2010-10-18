@@ -135,6 +135,8 @@ public class TestCompositeMap<K, V> extends AbstractTestIterableMap<K, V> {
     public void testResolveCollision() {
         CompositeMap<K, V> map = new CompositeMap<K, V>(buildOne(), buildTwo(), 
             new CompositeMap.MapMutator<K, V>() {
+            private static final long serialVersionUID = 1L;
+
             public void resolveCollision(CompositeMap<K, V> composite,
             Map<K, V> existing,
             Map<K, V> added,
@@ -160,6 +162,7 @@ public class TestCompositeMap<K, V> extends AbstractTestIterableMap<K, V> {
     public void testPut() {
         CompositeMap<K, V> map = new CompositeMap<K, V>(buildOne(), buildTwo(), 
             new CompositeMap.MapMutator<K, V>() {
+            private static final long serialVersionUID = 1L;
             public void resolveCollision(CompositeMap<K, V> composite,
             Map<K, V> existing,
             Map<K, V> added,
@@ -185,6 +188,7 @@ public class TestCompositeMap<K, V> extends AbstractTestIterableMap<K, V> {
     public void testPutAll() {
         CompositeMap<K, V> map = new CompositeMap<K, V>(buildOne(), buildTwo(), 
             new CompositeMap.MapMutator<K, V>() {
+            private static final long serialVersionUID = 1L;
             public void resolveCollision(CompositeMap<K, V> composite,
             Map<K, V> existing,
             Map<K, V> added,
