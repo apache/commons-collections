@@ -70,11 +70,11 @@ public class TransformedBuffer<E> extends TransformedCollection<E> implements Bu
      * @throws IllegalArgumentException if buffer or transformer is null
      * @since Commons Collections 3.3
      */
-    // TODO: Generics
-    public static Buffer decorateTransform(Buffer buffer, Transformer transformer) {
-        TransformedBuffer decorated = new TransformedBuffer(buffer, transformer);
-        if (transformer != null && buffer != null && buffer.size() > 0) {
-            Object[] values = buffer.toArray();
+    public static <E> Buffer<E> decorateTransform(Buffer<E> buffer, Transformer<? super E, ? extends E> transformer) {
+        TransformedBuffer<E> decorated = new TransformedBuffer<E>(buffer, transformer); // throws IAE if buffer or transformer is null
+        if (buffer.size() > 0) {
+            @SuppressWarnings("unchecked") // buffer is type <E>
+            E[] values = (E[]) buffer.toArray();
             buffer.clear();
             for(int i=0; i<values.length; i++) {
                 decorated.decorated().add(transformer.transform(values[i]));
