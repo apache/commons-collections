@@ -1312,11 +1312,11 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         if (obj instanceof Map == false) {
             return false;
         }
-        Map map = (Map) obj;
+        Map<?,?> map = (Map<?,?>) obj;
         if (map.size() != size()) {
             return false;
         }
-        MapIterator it = mapIterator();
+        MapIterator<?,?> it = mapIterator();
         try {
             while (it.hasNext()) {
                 Object key = it.next();
