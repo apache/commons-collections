@@ -96,12 +96,12 @@ public class DualHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements 
         out.writeObject(normalMap);
     }
 
-    @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        normalMap = new HashMap();
-        reverseMap = new HashMap();
-        Map map = (Map) in.readObject();
+        normalMap = new HashMap<K, V>();
+        reverseMap = new HashMap<V, K>();
+        @SuppressWarnings("unchecked") // will fail at runtime if stream is incorrect
+        Map<K, V> map = (Map<K, V>) in.readObject();
         putAll(map);
     }
 
