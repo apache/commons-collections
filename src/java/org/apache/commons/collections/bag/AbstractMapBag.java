@@ -508,14 +508,15 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param in the input stream
      * @throws IOException
      * @throws ClassNotFoundException
+     * @throws ClassCastException if the stream does not contain the correct objects
      */
-    @SuppressWarnings("unchecked")
-    protected void doReadObject(Map map, ObjectInputStream in) throws IOException,
+    protected void doReadObject(Map<E, MutableInteger> map, ObjectInputStream in) throws IOException,
             ClassNotFoundException {
         this.map = map;
         int entrySize = in.readInt();
         for (int i = 0; i < entrySize; i++) {
-            Object obj = in.readObject();
+            @SuppressWarnings("unchecked") // This will fail at runtime if the stream is incorrect
+            E obj = (E) in.readObject();
             int count = in.readInt();
             map.put(obj, new MutableInteger(count));
             size += count;
