@@ -17,8 +17,6 @@
 package org.apache.commons.collections.functors;
 
 import static org.apache.commons.collections.functors.ComparatorPredicate.*;
-import static org.junit.Assert.assertSame;
-
 import java.util.Comparator;
 
 import org.apache.commons.collections.Predicate;
