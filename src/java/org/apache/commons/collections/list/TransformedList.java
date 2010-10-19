@@ -73,11 +73,11 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
      * @throws IllegalArgumentException if list or transformer is null
      * @since Commons Collections 3.3
      */
-    // TODO: Generics
-    public static List decorateTransform(List list, Transformer transformer) {
-        TransformedList decorated = new TransformedList(list, transformer);
+    public static <E> List<E> decorateTransform(List<E> list, Transformer<? super E, ? extends E> transformer) {
+        TransformedList<E> decorated = new TransformedList<E>(list, transformer);
         if (transformer != null && list != null && list.size() > 0) {
-            Object[] values = list.toArray();
+            @SuppressWarnings("unchecked") // list is of type E
+            E[] values = (E[]) list.toArray();
             list.clear();
             for(int i=0; i<values.length; i++) {
                 decorated.decorated().add(transformer.transform(values[i]));
