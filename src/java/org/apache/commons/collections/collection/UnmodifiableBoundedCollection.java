@@ -89,7 +89,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
         if (coll instanceof BoundedCollection == false) {
             throw new IllegalArgumentException("The collection is not a bounded collection");
         }
-        return new UnmodifiableBoundedCollection((BoundedCollection<E>) coll);
+        return new UnmodifiableBoundedCollection<E>((BoundedCollection<E>) coll);
     }
 
     /**
