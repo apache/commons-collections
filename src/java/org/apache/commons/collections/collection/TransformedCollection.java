@@ -76,11 +76,11 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * @throws IllegalArgumentException if collection or transformer is null
      * @since Commons Collections 3.3
      */
-    // TODO: Generics
-    public static Collection decorateTransform(Collection collection, Transformer transformer) {
-        TransformedCollection decorated = new TransformedCollection(collection, transformer);
+    public static <E> Collection<E> decorateTransform(Collection<E> collection, Transformer<? super E, ? extends E> transformer) {
+        TransformedCollection<E> decorated = new TransformedCollection<E>(collection, transformer);
         if (transformer != null && collection != null && collection.size() > 0) {
-            Object[] values = collection.toArray();
+            @SuppressWarnings("unchecked") // collection is of type E
+            E[] values = (E[]) collection.toArray();
             collection.clear();
             for(int i=0; i<values.length; i++) {
                 decorated.decorated().add(transformer.transform(values[i]));
