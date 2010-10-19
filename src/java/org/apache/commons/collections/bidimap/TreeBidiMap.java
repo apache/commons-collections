@@ -1791,12 +1791,12 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      */
     static class Node<K extends Comparable<K>, V extends Comparable<V>> implements Map.Entry<K, V>, KeyValue<K, V> {
 
-        private K key;
-        private V value;
-        private Node<K, V>[] leftNode;
-        private Node<K, V>[] rightNode;
-        private Node<K, V>[] parentNode;
-        private boolean[] blackColor;
+        private final K key;
+        private final V value;
+        private final Node<K, V>[] leftNode;
+        private final Node<K, V>[] rightNode;
+        private final Node<K, V>[] parentNode;
+        private final boolean[] blackColor;
         private int hashcodeValue;
         private boolean calculatedHashCode;
 
