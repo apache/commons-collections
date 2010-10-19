@@ -38,13 +38,13 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
     /**
      *  The comparator to use when comparing two non-<code>null</code> objects.
      **/
-    private Comparator<E> nonNullComparator;
+    private final Comparator<E> nonNullComparator;
 
     /**
      *  Specifies whether a <code>null</code> are compared as higher than
      *  non-<code>null</code> objects.
      **/
-    private boolean nullsAreHigh;
+    private final boolean nullsAreHigh;
 
     //-----------------------------------------------------------------------
     /**
