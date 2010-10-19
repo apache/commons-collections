@@ -70,11 +70,11 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      * @throws IllegalArgumentException if set or transformer is null
      * @since Commons Collections 3.3
      */
-     // TODO: Generics
-    public static SortedSet decorateTransform(SortedSet set, Transformer transformer) {
-        TransformedSortedSet decorated = new TransformedSortedSet(set, transformer);
+    public static <E> SortedSet<E> decorateTransform(SortedSet<E> set, Transformer<? super E, ? extends E> transformer) {
+        TransformedSortedSet<E> decorated = new TransformedSortedSet<E>(set, transformer);
         if (transformer != null && set != null && set.size() > 0) {
-            Object[] values = set.toArray();
+            @SuppressWarnings("unchecked") // set is type E
+            E[] values = (E[]) set.toArray();
             set.clear();
             for(int i=0; i<values.length; i++) {
                 decorated.decorated().add(transformer.transform(values[i]));
