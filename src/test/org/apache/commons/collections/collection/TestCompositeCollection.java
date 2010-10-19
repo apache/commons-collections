@@ -125,6 +125,7 @@ public class TestCompositeCollection<E> extends AbstractTestCollection<E> {
         two = new HashSet<E>();
     }
 
+    @SuppressWarnings("serial")
     protected void setUpMutatorTest() {
         setUpTest();
         c.setMutator(new CompositeCollection.CollectionMutator<E>() {
@@ -241,7 +242,7 @@ public class TestCompositeCollection<E> extends AbstractTestCollection<E> {
         assertTrue(one.contains("1"));
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "serial" })
     public void testAddAllMutator() {
         setUpTest();
         c.setMutator(new CompositeCollection.CollectionMutator<E>() {
@@ -274,7 +275,7 @@ public class TestCompositeCollection<E> extends AbstractTestCollection<E> {
         assertTrue(one.contains("foo"));
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "serial" })
     public void testAddMutator() {
         setUpTest();
         c.setMutator(new CompositeCollection.CollectionMutator<E>() {
