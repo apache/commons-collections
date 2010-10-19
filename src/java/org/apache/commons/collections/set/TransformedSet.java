@@ -70,11 +70,11 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
      * @throws IllegalArgumentException if set or transformer is null
      * @since Commons Collections 3.3
      */
-    // TODO: Generics
-    public static Set decorateTransform(Set set, Transformer transformer) {
-        TransformedSet decorated = new TransformedSet(set, transformer);
+    public static <E> Set<E> decorateTransform(Set<E> set, Transformer<? super E, ? extends E> transformer) {
+        TransformedSet<E> decorated = new TransformedSet<E>(set, transformer);
         if (transformer != null && set != null && set.size() > 0) {
-            Object[] values = set.toArray();
+            @SuppressWarnings("unchecked") // set is type E
+            E[] values = (E[]) set.toArray();
             set.clear();
             for(int i=0; i<values.length; i++) {
                 decorated.decorated().add(transformer.transform(values[i]));
