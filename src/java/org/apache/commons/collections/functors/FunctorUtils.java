@@ -95,12 +95,12 @@ class FunctorUtils {
      * @param predicates  the predicates to validate
      * @return predicate array
      */
-    @SuppressWarnings("unchecked")
     static <T> Predicate<T>[] validate(Collection<? extends Predicate<T>> predicates) {
         if (predicates == null) {
             throw new IllegalArgumentException("The predicate collection must not be null");
         }
         // convert to array like this to guarantee iterator() ordering
+        @SuppressWarnings("unchecked") // OK
         Predicate<T>[] preds = new Predicate[predicates.size()];
         int i = 0;
         for (Predicate<T> predicate : predicates) {
