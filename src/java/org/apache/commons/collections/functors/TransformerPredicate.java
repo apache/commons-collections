@@ -76,7 +76,7 @@ public final class TransformerPredicate<T> implements Predicate<T>, Serializable
             throw new FunctorException(
                     "Transformer must return an instanceof Boolean, it was a null object");
         }
-        return result;
+        return result.booleanValue();
     }
 
     /**
