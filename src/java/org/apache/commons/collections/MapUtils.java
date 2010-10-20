@@ -1618,9 +1618,8 @@ public class MapUtils {
      * @param keyTransformer the <code>Transformer</code> used to transform the collection value into a key value
      * @throws NullPointerException if the map, collection or transformer are null
      */
-    // TODO: Generics
-    public static void populateMap(Map map, Collection collection, Transformer keyTransformer) {
-        populateMap(map, collection, keyTransformer, TransformerUtils.nopTransformer());
+    public static <K, V> void populateMap(Map<K, V> map, Collection<? extends V> collection, Transformer<V, K> keyTransformer) {
+        populateMap(map, collection, keyTransformer, TransformerUtils.<V>nopTransformer());
     }
 
     /**
@@ -1634,11 +1633,12 @@ public class MapUtils {
      * @param valueTransformer the <code>Transformer</code> used to transform the collection value into a value
      * @throws NullPointerException if the map, collection or transformers are null
      */
-    // TODO: Generics
-    public static void populateMap(Map map, Collection collection, Transformer keyTransformer, Transformer valueTransformer) {
-        Iterator iter = collection.iterator();
+    public static <K, V, E> void populateMap(Map<K, V> map, Collection<? extends E> collection, 
+            Transformer<E, K> keyTransformer, 
+            Transformer<E, V> valueTransformer) {
+        Iterator<? extends E> iter = collection.iterator();
         while (iter.hasNext()) {
-            Object temp = iter.next();
+            E temp = iter.next();
             map.put(keyTransformer.transform(temp), valueTransformer.transform(temp));
         }
     }
