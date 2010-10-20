@@ -132,10 +132,10 @@ public class ListOrderedMap<K, V>
      * @throws ClassNotFoundException
      * @since Commons Collections 3.1
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        map = (Map) in.readObject();
+        map = (Map<K, V>) in.readObject(); // (1)
     }
 
     // Implement OrderedMap

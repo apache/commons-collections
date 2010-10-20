@@ -157,9 +157,10 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @throws ClassNotFoundException
      * @since Commons Collections 3.3
      */
+    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        map = (Map) in.readObject();
+        map = (Map<K, Object>) in.readObject(); // (1)
     }
 
     //-----------------------------------------------------------------------
