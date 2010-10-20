@@ -78,10 +78,10 @@ public final class UnmodifiableSortedSet<E>
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        collection = (Collection) in.readObject();
+        collection = (Collection<E>) in.readObject(); // (1)
     }
 
     //-----------------------------------------------------------------------

@@ -108,7 +108,8 @@ class LocalTestNode<K extends Comparable<K>, V extends Comparable<V>> implements
             return false;
         }
 
-        LocalTestNode node = (LocalTestNode) o;
+        @SuppressWarnings("unchecked") // o has the correct class - see above
+        LocalTestNode<K, V> node = (LocalTestNode<K, V>) o;
 
         return (getKey().equals(node.getKey())
                 && getValue().equals(node.getValue()));

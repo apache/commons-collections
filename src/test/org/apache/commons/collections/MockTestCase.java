@@ -34,7 +34,7 @@ public abstract class MockTestCase {
     private List<Object> mockObjects = new ArrayList<Object>();
 
     @SuppressWarnings("unchecked")
-    protected <T> T createMock(Class name) {
+    protected <T> T createMock(Class<?> name) {
         T mock = (T) EasyMock.createMock(name);
         return registerMock(mock);
     }
