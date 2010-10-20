@@ -147,7 +147,7 @@ import java.util.Vector;
  * @author Shinobu Kawai
  * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  */
-public class ExtendedProperties extends Hashtable {
+public class ExtendedProperties extends Hashtable<String, Object> {
 
     private static final long serialVersionUID = -4064305575636043822L;
 
@@ -192,7 +192,7 @@ public class ExtendedProperties extends Hashtable {
      * you wish to perform operations with configuration
      * information in a particular order.
      */
-    protected ArrayList keysAsListed = new ArrayList();
+    protected ArrayList<String> keysAsListed = new ArrayList<String>();
 
     protected final static String START_TOKEN="${";
     protected final static String END_TOKEN="}";
@@ -223,7 +223,7 @@ public class ExtendedProperties extends Hashtable {
      *
      * @return the string with the interpolation taken care of
      */
-    protected String interpolateHelper(String base, List priorVariables) {
+    protected String interpolateHelper(String base, List<String> priorVariables) {
         // COPIED from [configuration] 2003-12-29
         if (base == null) {
             return null;
@@ -232,7 +232,7 @@ public class ExtendedProperties extends Hashtable {
         // on the first call initialize priorVariables
         // and add base as the first element
         if (priorVariables == null) {
-            priorVariables = new ArrayList();
+            priorVariables = new ArrayList<String>();
             priorVariables.add(base);
         }
 
@@ -256,7 +256,7 @@ public class ExtendedProperties extends Hashtable {
 
                 // create a nice trace of interpolated variables like so:
                 // var1->var2->var3
-                for (Iterator it = priorVariables.iterator(); it.hasNext();) {
+                for (Iterator<?> it = priorVariables.iterator(); it.hasNext();) {
                     priorVariableSb.append(it.next());
                     if (it.hasNext()) {
                         priorVariableSb.append("->");
@@ -706,14 +706,16 @@ public class ExtendedProperties extends Hashtable {
 
         if (current instanceof String) {
             // one object already in map - convert it to a vector
-            List values = new Vector(2);
+            List<Object> values = new Vector<Object>(2);
             values.add(current);
             values.add(value);
             super.put(key, values);
             
         } else if (current instanceof List) {
             // already a list - just add the new token
-            ((List) current).add(value);
+            @SuppressWarnings("unchecked") // We only add Strings to the Lists
+            List<String> list = (List<String>) current;
+            list.add((String) value);
             
         } else {
             // brand new key - store in keysAsListed to retain order
@@ -755,9 +757,9 @@ public class ExtendedProperties extends Hashtable {
             theWrtr.println(header);
         }
         
-        Enumeration theKeys = keys();
+        Enumeration<String> theKeys = keys();
         while (theKeys.hasMoreElements()) {
-            String key = (String) theKeys.nextElement();
+            String key = theKeys.nextElement();
             Object value = get(key);
             if (value != null) {
                 if (value instanceof String) {
@@ -768,9 +770,10 @@ public class ExtendedProperties extends Hashtable {
                     theWrtr.println(currentOutput.toString());
                     
                 } else if (value instanceof List) {
-                    List values = (List) value;
-                    for (Iterator it = values.iterator(); it.hasNext(); ) {
-                        String currentElement = (String) it.next();
+                    @SuppressWarnings("unchecked") // we only add Strings to the Lists
+                    List<String> values = (List<String>) value;
+                    for (Iterator<String> it = values.iterator(); it.hasNext(); ) {
+                        String currentElement = it.next();
                         StringBuilder currentOutput = new StringBuilder();
                         currentOutput.append(key);
                         currentOutput.append("=");
@@ -792,8 +795,8 @@ public class ExtendedProperties extends Hashtable {
      * @param props  the properties to combine
      */
     public void combine(ExtendedProperties props) {
-        for (Iterator it = props.getKeys(); it.hasNext();) {
-            String key = (String) it.next();
+        for (Iterator<String> it = props.getKeys(); it.hasNext();) {
+            String key = it.next();
             clearProperty(key);
             addPropertyDirect(key, props.get(key));
         }
@@ -824,7 +827,7 @@ public class ExtendedProperties extends Hashtable {
      *
      * @return an Iterator over the keys
      */
-    public Iterator getKeys() {
+    public Iterator<String> getKeys() {
         return keysAsListed.iterator();
     }
 
@@ -835,14 +838,13 @@ public class ExtendedProperties extends Hashtable {
      * @param prefix  the prefix to match
      * @return an Iterator of keys that match the prefix
      */
-    public Iterator getKeys(String prefix) {
-        Iterator keys = getKeys();
-        ArrayList matchingKeys = new ArrayList();
+    public Iterator<String> getKeys(String prefix) {
+        Iterator<String> keys = getKeys();
+        ArrayList<String> matchingKeys = new ArrayList<String>();
 
         while (keys.hasNext()) {
-            Object key = keys.next();
-
-            if (key instanceof String && ((String) key).startsWith(prefix)) {
+            String key = keys.next();
+            if (key.startsWith(prefix)) {
                 matchingKeys.add(key);
             }
         }
@@ -856,16 +858,17 @@ public class ExtendedProperties extends Hashtable {
      *
      * @param prefix  the prefix to get a subset for
      * @return a new independent ExtendedProperties
+     * or {@code null} if no keys matched
      */
     public ExtendedProperties subset(String prefix) {
         ExtendedProperties c = new ExtendedProperties();
-        Iterator keys = getKeys();
+        Iterator<String> keys = getKeys();
         boolean validSubset = false;
 
         while (keys.hasNext()) {
-            Object key = keys.next();
+            String key = keys.next();
 
-            if (key instanceof String && ((String) key).startsWith(prefix)) {
+            if (key.startsWith(prefix)) {
                 if (!validSubset) {
                     validSubset = true;
                 }
@@ -877,10 +880,10 @@ public class ExtendedProperties extends Hashtable {
                  * subset but it is a valid subset.
                  */
                 String newKey = null;
-                if (((String) key).length() == prefix.length()) {
+                if (key.length() == prefix.length()) {
                     newKey = prefix;
                 } else {
-                    newKey = ((String) key).substring(prefix.length() + 1);
+                    newKey = key.substring(prefix.length() + 1);
                 }
 
                 /*
@@ -903,10 +906,10 @@ public class ExtendedProperties extends Hashtable {
      * Display the configuration for debugging purposes to System.out.
      */
     public void display() {
-        Iterator i = getKeys();
+        Iterator<String> i = getKeys();
 
         while (i.hasNext()) {
-            String key = (String) i.next();
+            String key = i.next();
             Object value = get(key);
             System.out.println(key + " => " + value);
         }
@@ -947,7 +950,9 @@ public class ExtendedProperties extends Hashtable {
                 return interpolate(defaultValue);
             }
         } else if (value instanceof List) {
-            return interpolate((String) ((List) value).get(0));
+            @SuppressWarnings("unchecked") // Must be OK as we only add Strings to Lists
+            List<String> entry = (List<String>) value;
+            return interpolate(entry.get(0));
         } else {
             throw new ClassCastException('\'' + key + "' doesn't map to a String object");
         }
@@ -1013,13 +1018,15 @@ public class ExtendedProperties extends Hashtable {
     public String[] getStringArray(String key) {
         Object value = get(key);
 
-        List values;
+        List<String> values;
         if (value instanceof String) {
-            values = new Vector(1);
-            values.add(value);
+            values = new Vector<String>(1);
+            values.add((String) value);
             
         } else if (value instanceof List) {
-            values = (List) value;
+            @SuppressWarnings("unchecked") // We only add Strings to the Lists
+            List<String> list = (List<String>) value;
+            values = list;
             
         } else if (value == null) {
             if (defaults != null) {
@@ -1033,7 +1040,7 @@ public class ExtendedProperties extends Hashtable {
 
         String[] tokens = new String[values.size()];
         for (int i = 0; i < tokens.length; i++) {
-            tokens[i] = (String) values.get(i);
+            tokens[i] = values.get(i);
         }
 
         return tokens;
@@ -1048,7 +1055,7 @@ public class ExtendedProperties extends Hashtable {
      * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Vector.
      */
-    public Vector getVector(String key) {
+    public Vector<String> getVector(String key) {
         return getVector(key, null);
     }
 
@@ -1064,15 +1071,17 @@ public class ExtendedProperties extends Hashtable {
      * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Vector.
      */
-    public Vector getVector(String key, Vector defaultValue) {
+    public Vector<String> getVector(String key, Vector<String> defaultValue) {
         Object value = get(key);
 
         if (value instanceof List) {
-            return new Vector((List) value);
+            @SuppressWarnings("unchecked") // our lists only contain Strings
+            List<String> list = (List<String>) value;
+            return new Vector<String>(list);
             
         } else if (value instanceof String) {
-            Vector values = new Vector(1);
-            values.add(value);
+            Vector<String> values = new Vector<String>(1);
+            values.add((String) value);
             super.put(key, values);
             return values;
             
@@ -1080,7 +1089,7 @@ public class ExtendedProperties extends Hashtable {
             if (defaults != null) {
                 return defaults.getVector(key, defaultValue);
             } else {
-                return ((defaultValue == null) ? new Vector() : defaultValue);
+                return ((defaultValue == null) ? new Vector<String>() : defaultValue);
             }
         } else {
             throw new ClassCastException('\'' + key + "' doesn't map to a Vector object");
@@ -1099,7 +1108,7 @@ public class ExtendedProperties extends Hashtable {
      * object that is not a List.
      * @since Commons Collections 3.2
      */
-    public List getList(String key) {
+    public List<String> getList(String key) {
         return getList(key, null);
     }
 
@@ -1116,15 +1125,17 @@ public class ExtendedProperties extends Hashtable {
      * object that is not a List.
      * @since Commons Collections 3.2
      */
-    public List getList(String key, List defaultValue) {
+    public List<String> getList(String key, List<String> defaultValue) {
         Object value = get(key);
 
         if (value instanceof List) {
-            return new ArrayList((List) value);
+            @SuppressWarnings("unchecked") // our lists only contain strings
+            List<String> list = (List<String>) value;
+            return new ArrayList<String>(list);
             
         } else if (value instanceof String) {
-            List values = new ArrayList(1);
-            values.add(value);
+            List<String> values = new ArrayList<String>(1);
+            values.add((String) value);
             super.put(key, values);
             return values;
             
@@ -1132,7 +1143,7 @@ public class ExtendedProperties extends Hashtable {
             if (defaults != null) {
                 return defaults.getList(key, defaultValue);
             } else {
-                return ((defaultValue == null) ? new ArrayList() : defaultValue);
+                return ((defaultValue == null) ? new ArrayList<String>() : defaultValue);
             }
         } else {
             throw new ClassCastException('\'' + key + "' doesn't map to a List object");
@@ -1693,8 +1704,9 @@ public class ExtendedProperties extends Hashtable {
     public static ExtendedProperties convertProperties(Properties props) {
         ExtendedProperties c = new ExtendedProperties();
 
-        for (Enumeration e = props.propertyNames(); e.hasMoreElements();) {
-            String s = (String) e.nextElement();
+        for (@SuppressWarnings("unchecked") // Properties are supposed to have string keys ...
+        Enumeration<String> e = (Enumeration<String>) props.propertyNames(); e.hasMoreElements();) {
+            String s = e.nextElement(); // ... if props does not, this line would fail anyway ...
             String value = props.getProperty(s);
             if(value != null) {
                 c.setProperty(s, value);
@@ -1713,10 +1725,9 @@ public class ExtendedProperties extends Hashtable {
      * @return old value of the property
      */
     @Override
-    public Object put(Object key, Object value) {
-        String strKey = String.valueOf(key);
-        Object ret = getProperty(strKey);
-        addProperty(strKey, value);
+    public Object put(String key, Object value) {
+        Object ret = getProperty(key);
+        addProperty(key, value);
         return ret;
     }
 
@@ -1728,15 +1739,17 @@ public class ExtendedProperties extends Hashtable {
      * @param map full of key/value pair data
      */
     @Override
-    public void putAll(Map map) {
+    public void putAll(Map<? extends String, ? extends Object> map) {
         if (map instanceof ExtendedProperties) {
-            for (Iterator it = ((ExtendedProperties) map).getKeys(); it.hasNext(); ) {
-                Object key = it.next();
+            for (Iterator<String> it = ((ExtendedProperties) map).getKeys(); it.hasNext(); ) {
+                String key = it.next();
                 put(key, map.get(key));
             }
         } else {
-            for (Iterator it = map.entrySet().iterator(); it.hasNext(); ) {
-                Map.Entry entry = (Map.Entry) it.next();
+            @SuppressWarnings("unchecked") // OK to downcast here
+            Map<String, Object> mapso = (Map<String,Object>) map;
+            for (Iterator<Map.Entry<String, Object>> it = mapso.entrySet().iterator(); it.hasNext(); ) {
+                Map.Entry<String,Object> entry = it.next();
                 put(entry.getKey(), entry.getValue());
             }
         }
