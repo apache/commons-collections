@@ -713,9 +713,9 @@ public class ExtendedProperties extends Hashtable<String, Object> {
             
         } else if (current instanceof List) {
             // already a list - just add the new token
-            @SuppressWarnings("unchecked") // We only add Strings to the Lists
-            List<String> list = (List<String>) current;
-            list.add((String) value);
+            @SuppressWarnings("unchecked") // OK to cast to Object
+            List<Object> list = (List<Object>) current;
+            list.add(value);
             
         } else {
             // brand new key - store in keysAsListed to retain order
@@ -950,9 +950,9 @@ public class ExtendedProperties extends Hashtable<String, Object> {
                 return interpolate(defaultValue);
             }
         } else if (value instanceof List) {
-            @SuppressWarnings("unchecked") // Must be OK as we only add Strings to Lists
+            @SuppressWarnings("unchecked") // Only expecting Strings here
             List<String> entry = (List<String>) value;
-            return interpolate(entry.get(0));
+            return interpolate(entry.get(0)); // requires a String
         } else {
             throw new ClassCastException('\'' + key + "' doesn't map to a String object");
         }
