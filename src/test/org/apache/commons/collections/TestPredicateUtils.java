@@ -213,10 +213,9 @@ public class TestPredicateUtils extends BasicPredicateTestBase {
         assertTrue(AllPredicate.allPredicate(coll), null);
     }
 
-    @SuppressWarnings("unchecked")
     @Test public void testAllPredicateEx1() {
         try {
-            AllPredicate.allPredicate((Predicate[]) null);
+            AllPredicate.allPredicate((Predicate<Object>[]) null);
         } catch (IllegalArgumentException ex) {
             return;
         }
@@ -302,7 +301,7 @@ public class TestPredicateUtils extends BasicPredicateTestBase {
                 FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate(), TruePredicate.truePredicate()}).evaluate(null));
         assertEquals(false, PredicateUtils.anyPredicate(new Predicate[] {
                 FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate()}).evaluate(null));
-        Collection coll = new ArrayList();
+        Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
         coll.add(TruePredicate.truePredicate());
         coll.add(TruePredicate.truePredicate());
         coll.add(TruePredicate.truePredicate());
@@ -332,10 +331,9 @@ public class TestPredicateUtils extends BasicPredicateTestBase {
         assertFalse(PredicateUtils.anyPredicate(coll), null);
     }
 
-    @SuppressWarnings("unchecked")
     @Test public void testAnyPredicateEx1() {
         try {
-            PredicateUtils.anyPredicate((Predicate[]) null);
+            PredicateUtils.anyPredicate((Predicate<Object>[]) null);
         } catch (IllegalArgumentException ex) {
             return;
         }
@@ -454,10 +452,9 @@ public class TestPredicateUtils extends BasicPredicateTestBase {
         assertFalse(PredicateUtils.onePredicate(coll), null);
     }
 
-    @SuppressWarnings("unchecked")
     @Test public void testOnePredicateEx1() {
         try {
-            PredicateUtils.onePredicate((Predicate[]) null);
+            PredicateUtils.onePredicate((Predicate<Object>[]) null);
         } catch (IllegalArgumentException ex) {
             return;
         }
@@ -484,10 +481,9 @@ public class TestPredicateUtils extends BasicPredicateTestBase {
         fail();
     }
 
-    @SuppressWarnings("unchecked")
     @Test public void testOnePredicateEx4() {
         try {
-            PredicateUtils.onePredicate((Collection) null);
+            PredicateUtils.onePredicate((Collection<Predicate<Object>>) null);
         } catch (IllegalArgumentException ex) {
             return;
         }
@@ -574,10 +570,9 @@ public class TestPredicateUtils extends BasicPredicateTestBase {
         assertTrue(PredicateUtils.nonePredicate(coll), null);
     }
 
-    @SuppressWarnings("unchecked")
     @Test public void testNonePredicateEx1() {
         try {
-            PredicateUtils.nonePredicate((Predicate[]) null);
+            PredicateUtils.nonePredicate((Predicate<Object>[]) null);
         } catch (IllegalArgumentException ex) {
             return;
         }
