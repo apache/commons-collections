@@ -1400,7 +1400,7 @@ public class TestCursorableLinkedList<E> extends AbstractTestLinkedList<E> {
         assertEquals("5", elts[4]);
         assertEquals(5, elts.length);
 
-        String[] elts2 = (String[]) (list.toArray(new String[0]));
+        String[] elts2 = (list.toArray(new String[0]));
         assertEquals("1", elts2[0]);
         assertEquals("2", elts2[1]);
         assertEquals("3", elts2[2]);
@@ -1418,7 +1418,7 @@ public class TestCursorableLinkedList<E> extends AbstractTestLinkedList<E> {
         assertEquals(5, elts3.length);
 
         String[] elts4 = new String[3];
-        String[] elts4b = (String[]) (list.toArray(elts4));
+        String[] elts4b = (list.toArray(elts4));
         assertTrue(elts4 != elts4b);
         assertEquals("1", elts4b[0]);
         assertEquals("2", elts4b[1]);
@@ -1520,7 +1520,7 @@ public class TestCursorableLinkedList<E> extends AbstractTestLinkedList<E> {
             list.add(prefix + bulk + ignored[i]);
             list.add(prefix + bulk + bulk + ignored[i]);
         }
-        return (String[]) list.toArray(new String[0]);
+        return list.toArray(new String[0]);
     }
 
     @Override

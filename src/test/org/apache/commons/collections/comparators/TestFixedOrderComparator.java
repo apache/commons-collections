@@ -76,7 +76,7 @@ public class TestFixedOrderComparator extends TestCase {
         for (int i = 0; i < topCities.length; i++) {
             comparator.add(topCities[i]);
         }
-        String[] keys = (String[]) topCities.clone();
+        String[] keys = topCities.clone();
         assertComparatorYieldsOrder(keys, comparator);
     }
 
@@ -84,8 +84,8 @@ public class TestFixedOrderComparator extends TestCase {
      * Tests that the array constructor compares items properly.
      */
     public void testArrayConstructor() {
-        String[] keys = (String[]) topCities.clone();
-        String[] topCitiesForTest = (String[]) topCities.clone();
+        String[] keys = topCities.clone();
+        String[] topCitiesForTest = topCities.clone();
         FixedOrderComparator<String> comparator = new FixedOrderComparator<String>(topCitiesForTest);
         assertComparatorYieldsOrder(keys, comparator);
         // test that changing input after constructor has no effect
@@ -97,7 +97,7 @@ public class TestFixedOrderComparator extends TestCase {
      * Tests the list constructor.
      */
     public void testListConstructor() {
-        String[] keys = (String[]) topCities.clone();
+        String[] keys = topCities.clone();
         List<String> topCitiesForTest = new LinkedList<String>(Arrays.asList(topCities));
         FixedOrderComparator<String> comparator = new FixedOrderComparator<String>(topCitiesForTest);
         assertComparatorYieldsOrder(keys, comparator);

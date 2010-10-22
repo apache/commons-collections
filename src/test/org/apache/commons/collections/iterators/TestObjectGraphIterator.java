@@ -382,7 +382,7 @@ public class TestObjectGraphIterator extends AbstractTestIterator<Object> {
         }
 
         Tree getTree(int index) {
-            return (Tree) trees.get(index);
+            return trees.get(index);
         }
 
         Iterator<Tree> treeIterator() {
@@ -399,7 +399,7 @@ public class TestObjectGraphIterator extends AbstractTestIterator<Object> {
         }
 
         Branch getBranch(int index) {
-            return (Branch) branches.get(index);
+            return branches.get(index);
         }
 
         Iterator<Branch> branchIterator() {
@@ -416,7 +416,7 @@ public class TestObjectGraphIterator extends AbstractTestIterator<Object> {
         }
 
         Leaf getLeaf(int index) {
-            return (Leaf) leaves.get(index);
+            return leaves.get(index);
         }
 
         Iterator<Leaf> leafIterator() {
