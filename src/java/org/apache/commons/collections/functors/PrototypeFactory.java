@@ -73,7 +73,7 @@ public class PrototypeFactory {
                     new Object[] { prototype });
             } catch (NoSuchMethodException ex2) {
                 if (prototype instanceof Serializable) {
-                    return new PrototypeSerializationFactory((Serializable) prototype);
+                    return (Factory<T>) new PrototypeSerializationFactory<Serializable>((Serializable) prototype);
                 }
             }
         }
