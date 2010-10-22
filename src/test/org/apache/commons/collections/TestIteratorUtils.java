@@ -71,7 +71,7 @@ public class TestIteratorUtils extends BulkTest {
         list.add("One");
         list.add("Two");
         list.add(null);
-        String[] result = (String[]) IteratorUtils.toArray(list.iterator(), String.class);
+        String[] result = IteratorUtils.toArray(list.iterator(), String.class);
         assertEquals(list, Arrays.asList(result));
     }
 
