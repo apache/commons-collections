@@ -40,7 +40,7 @@ public class TestTreeBag<T> extends AbstractTestSortedBag<T> {
 
    // TODO: Generics (for example... is this even needed?)
    public void testCollections265() {
-       Bag bag = new TreeBag();
+       Bag<Object> bag = new TreeBag<Object>();
        try {
            bag.add(new Object());
            fail("IllegalArgumentException expected");

@@ -433,9 +433,9 @@ public class TestUnboundedFifoBuffer<E> extends AbstractTestCollection<E> {
 
     //-----------------------------------------------------------------------
     public void testCollections220() throws Exception {
-         UnboundedFifoBuffer buffer = new UnboundedFifoBuffer();
+         UnboundedFifoBuffer<String> buffer = new UnboundedFifoBuffer<String>();
          
-         buffer = (UnboundedFifoBuffer) serializeDeserialize(buffer);
+         buffer = (UnboundedFifoBuffer<String>) serializeDeserialize(buffer);
 
          // test size() gets incremented
          buffer.add("Foo");
