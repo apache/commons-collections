@@ -24,23 +24,23 @@ import java.util.Collection;
  * the class has to be separate of TestCompositeMap, else the test 
  * class also has to be serialized. 
  */
-class EmptyMapMutator implements CompositeMap.MapMutator {
+class EmptyMapMutator<K,V> implements CompositeMap.MapMutator<K,V> {
     /** Serialization version */
     private static final long serialVersionUID = -2729718980002476794L;
 
-    public void resolveCollision(CompositeMap composite,
-    Map existing,
-    Map added,
-    Collection intersect) {
+    public void resolveCollision(CompositeMap<K,V> composite,
+    Map<K,V> existing,
+    Map<K,V> added,
+    Collection<K> intersect) {
         // Do nothing
     }
     
-    public Object put(CompositeMap map, Map[] composited, Object key, Object value) {
+    public V put(CompositeMap<K, V> map, Map<K, V>[] composited, K key, V value) {
         return composited[0].put(key, value);
     }
     
-    public void putAll(CompositeMap map, Map[] composited, Map t) {
+    public void putAll(CompositeMap<K, V> map, Map<K, V>[] composited, Map<? extends K, ? extends V> t) {
         composited[0].putAll(t);
     }
-    
+
 }

@@ -49,7 +49,7 @@ public class TestCompositeMap<K, V> extends AbstractTestIterableMap<K, V> {
     public CompositeMap<K, V> makeObject() {
         CompositeMap<K, V> map = new CompositeMap<K, V>();
         map.addComposited(new HashMap<K, V>());
-        map.setMutator( new EmptyMapMutator() );
+        map.setMutator( new EmptyMapMutator<K, V>() );
         return map;
     }
     
