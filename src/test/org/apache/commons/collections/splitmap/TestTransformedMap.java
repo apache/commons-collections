@@ -16,10 +16,7 @@
  */
 package org.apache.commons.collections.splitmap;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.math.BigInteger;
 import java.util.HashMap;
 
@@ -123,20 +120,57 @@ public class TestTransformedMap extends BulkTest {
         }
     }
 
-    public void TODOtestCollections363() throws Exception {
+    public void testEmptyMap() throws IOException, ClassNotFoundException {
         TransformedMap<String, String, String, String> map = TransformedMap.decorate(
-                new HashMap<String, String>(), 
-                NOPTransformer.<String> getInstance(), 
-                NOPTransformer.<String> getInstance());
-        
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        ObjectOutputStream out = new ObjectOutputStream(bytes);
-        out.writeObject(map);
-        out.close();
-        ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(bytes.toByteArray()));
+                new HashMap<String, String>(),
+                NOPTransformer.<String>getInstance(),
+                NOPTransformer.<String>getInstance() );
+
+        ObjectInputStream in = new ObjectInputStream( new FileInputStream( "data/test/TransformedMap.emptyCollection.version3.2.obj" ) );
         Object readObject = in.readObject();
         in.close();
-        assertEquals("deserializing class: " + map.getClass().getName(), map.getClass(), readObject
-                .getClass());
+
+        TransformedMap<?, ?, ?, ?> readMap = (TransformedMap<?, ?, ?, ?>) readObject;
+        assertTrue( "Map should be empty", readMap.size() == 0 );
+        assertEquals( map.entrySet(), readMap.entrySet() );
     }
+
+    public void testFullMap() throws IOException, ClassNotFoundException {
+        TransformedMap<String, String, String, String> map = TransformedMap.decorate(
+                new HashMap<String, String>(),
+                NOPTransformer.<String>getInstance(),
+                NOPTransformer.<String>getInstance() );
+        map.put( "a", "b" );
+        map.put( "c", "d" );
+        map.put( "e", "f" );
+        map.put( "g", "h" );
+
+        ObjectInputStream in = new ObjectInputStream( new FileInputStream( "data/test/TransformedMap.fullCollection.version3.2.obj" ) );
+        Object readObject = in.readObject();
+        in.close();
+
+        TransformedMap<?, ?, ?, ?> readMap = (TransformedMap<?, ?, ?, ?>) readObject;
+        assertFalse( "Map should not be empty", readMap.size() == 0 );
+        assertEquals( map.entrySet(), readMap.entrySet() );
+    }
+//
+//    public void testCreate() throws IOException {
+//        TransformedMap<String, String, String, String> map = TransformedMap.decorate(
+//                new HashMap<String, String>(),
+//                NOPTransformer.<String>getInstance(),
+//                NOPTransformer.<String>getInstance() );
+//
+//        ObjectOutputStream out = new ObjectOutputStream(
+//                new FileOutputStream( "data/test/TransformedMap.emptyCollection.version3.2.obj" ) );
+//        out.writeObject( map );
+//
+//        map.put( "a", "b" );
+//        map.put( "c", "d" );
+//        map.put( "e", "f" );
+//        map.put( "g", "h" );
+//
+//        out = new ObjectOutputStream(
+//                new FileOutputStream( "data/test/TransformedMap.fullCollection.version3.2.obj" ) );
+//        out.writeObject( map );
+//    }
 }
