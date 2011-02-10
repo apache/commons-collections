@@ -23,6 +23,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 import org.apache.commons.collections.BoundedMap;
+import org.apache.commons.collections.MapIterator;
 
 /**
  * A <code>Map</code> implementation with a fixed maximum size which removes
@@ -32,6 +33,13 @@ import org.apache.commons.collections.BoundedMap;
  * Iteration of any kind, including setting the value by iteration, does not
  * change the order. Queries such as containsKey and containsValue or access
  * via views also do not change the order.
+ * <p>
+ * A somewhat subtle ramification of the least recently used
+ * algorithm is that calls to {@link #get(Object)} stand a very good chance
+ * of modifying the map's iteration order and thus invalidating any
+ * iterators currently in use.  It is therefore suggested that iterations
+ * over an {@link LRUMap} instance access entry values only through a
+ * {@link MapIterator} or {@link #entrySet()} iterator.
  * <p>
  * The map implements <code>OrderedMap</code> and entries may be queried using
  * the bidirectional <code>OrderedMapIterator</code>. The order returned is
