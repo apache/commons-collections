@@ -475,8 +475,7 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
         } catch (IndexOutOfBoundsException ex) {}
     }
     
-    // TODO: COLLECTIONS-330
-    public void todoTestSynchronizedRemoveFromMapIterator() throws InterruptedException {
+    public void testSynchronizedRemoveFromMapIterator() throws InterruptedException {
 
         final LRUMap<Object, Thread> map = new LRUMap<Object, Thread>(10000);
         
@@ -511,8 +510,8 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
                         }
                         synchronized (map) {
                             for (MapIterator<Object, Thread> iter = map.mapIterator(); iter.hasNext();) {
-                                String name = (String)iter.next();
-                                if (map.get(name) == this) {
+                            	iter.next();
+                            	if (iter.getValue() == this) {
                                     iter.remove();
                                 }
                             }
@@ -642,8 +641,7 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
                 + counter[0] + " did succeed", counter[0] >= threads.length);
     }
     
-    // TODO: COLLECTIONS-330
-    public void todoTestSynchronizedRemoveFromKeySet() throws InterruptedException {
+    public void testSynchronizedRemoveFromKeySet() throws InterruptedException {
 
         final Map<Object, Thread> map = new LRUMap<Object, Thread>(10000);
         
@@ -678,8 +676,8 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
                         }
                         synchronized (map) {
                             for (Iterator<Object> iter = map.keySet().iterator(); iter.hasNext();) {
-                                String name = (String)iter.next();
-                                if (map.get(name) == this) {
+								String name = (String) iter.next();
+								if (name.substring(0, name.indexOf('[')).equals(getName())) {
                                     iter.remove();
                                 }
                             }
