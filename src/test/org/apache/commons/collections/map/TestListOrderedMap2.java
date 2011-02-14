@@ -224,7 +224,6 @@ public class TestListOrderedMap2<K, V> extends AbstractTestOrderedMap<K, V> {
      */
     @Override
     public ListOrderedMap<K, V> getMap() {
-        // TODO Auto-generated method stub
         return (ListOrderedMap<K, V>) super.getMap();
     }
 }
