@@ -18,17 +18,22 @@ package org.apache.commons.collections.map;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.commons.collections.AbstractTestObject;
 import org.apache.commons.collections.BulkTest;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.collection.AbstractTestCollection;
+import org.apache.commons.collections.keyvalue.DefaultMapEntry;
 import org.apache.commons.collections.set.AbstractTestSet;
 
 /**
@@ -1208,6 +1213,88 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
     }
 
     /**
+     * Tests values.removeAll.
+     */
+    public void testValuesRemoveAll() {
+    	resetFull();
+    	Collection<V> values = getMap().values();
+    	List<V> sampleValuesAsList = Arrays.asList(getSampleValues());
+    	if (!values.equals(sampleValuesAsList)) {
+    		return;
+    	}
+		try {
+			assertFalse(values.removeAll(Collections.<V> emptySet()));
+		} catch (UnsupportedOperationException e) {
+			// if values.removeAll is unsupported, just skip this test
+			return;
+		}
+    	assertEquals(sampleValuesAsList.size(), getMap().size());
+    	try {
+	    	assertTrue(values.removeAll(sampleValuesAsList));
+	    } catch (UnsupportedOperationException e) {
+	    	// if values.removeAll is unsupported, just skip this test
+	    	return;
+	    }
+	    assertTrue(getMap().isEmpty());
+    }
+
+    /**
+     * Test values.retainAll.
+     */
+    public void testValuesRetainAll() {
+    	resetFull();
+    	Collection<V> values = getMap().values();
+    	List<V> sampleValuesAsList = Arrays.asList(getSampleValues());
+    	if (!values.equals(sampleValuesAsList)) {
+    		return;
+    	}
+    	try {
+    		assertFalse(values.retainAll(sampleValuesAsList));
+    	} catch (UnsupportedOperationException e) {
+            // if values.retainAll is unsupported, just skip this test
+    		return;
+    	}
+    	assertEquals(sampleValuesAsList.size(), getMap().size());
+    	try {
+			assertTrue(values.retainAll(Collections.<V> emptySet()));
+		} catch (UnsupportedOperationException e) {
+			// if values.retainAll is unsupported, just skip this test
+			return;
+		}
+		assertTrue(getMap().isEmpty());
+    }
+
+    /**
+     * Verifies that values.iterator.remove changes the underlying map.
+     */
+    public void testValuesIteratorRemoveChangesMap() {
+    	resetFull();
+    	List<V> sampleValuesAsList = Arrays.asList(getSampleValues());
+    	Map<V, Integer> cardinality = CollectionUtils.getCardinalityMap(sampleValuesAsList);
+    	Collection<V> values = getMap().values();
+    	for (Iterator<V> iter = values.iterator(); iter.hasNext();) {
+    		V value = iter.next();
+    		Integer count = cardinality.get(value);
+    		if (count == null) {
+    			return;
+    		}
+    		try {
+				iter.remove();
+				cardinality.put(value, --count);
+    		} catch (UnsupportedOperationException e) {
+    			// if values.iterator.remove is unsupported, just skip this test
+    			return;
+    		}
+    		boolean expected = count > 0;
+    		StringBuilder msg = new StringBuilder("Value should ");
+    		msg.append(expected ? "yet " : "no longer ");
+    		msg.append("be present in the underlying map");
+    		assertEquals(msg.toString(), expected, getMap().containsValue(value));
+    	}
+    	assertTrue(getMap().isEmpty());
+    }
+
+    /**
      * Tests that the {@link Map#keySet} set is backed by
      * the underlying map by removing from the keySet set
      * and testing if the key was removed from the map.
@@ -1229,11 +1316,178 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
         }
     }
 
-    // TODO: Need:
-    //    testValuesRemovedFromEntrySetAreRemovedFromMap
-    //    same for EntrySet/KeySet/values's
-    //      Iterator.remove, removeAll, retainAll
+    /**
+     * Test keySet.removeAll.
+     */
+    public void testKeySetRemoveAll() {
+        resetFull();
+        Set<K> keys = getMap().keySet();
+        List<K> sampleKeysAsList = Arrays.asList(getSampleKeys());
+        if (!keys.equals(sampleKeysAsList)) {
+        	return;
+        }
+        try {
+        	assertFalse(keys.removeAll(Collections.<K> emptySet()));
+        } catch (UnsupportedOperationException e) {
+        	return;
+        }
+        assertEquals(sampleKeysAsList, keys);
+        try {
+        	assertTrue(keys.removeAll(sampleKeysAsList));
+        } catch (UnsupportedOperationException e) {
+        	return;
+        }
+        assertTrue(getMap().isEmpty());
+    }
 
+    /**
+     * Test keySet.retainAll.
+     */
+    public void testKeySetRetainAll() {
+        resetFull();
+        Set<K> keys = getMap().keySet();
+        List<K> sampleKeysAsList = Arrays.asList(getSampleKeys());
+        if (!keys.equals(sampleKeysAsList)) {
+        	return;
+        }
+        try {
+        	assertFalse(keys.retainAll(sampleKeysAsList));
+        } catch (UnsupportedOperationException e) {
+        	return;
+        }
+        assertEquals(sampleKeysAsList, keys);
+        try {
+        	assertTrue(keys.retainAll(Collections.<K> emptySet()));
+        } catch (UnsupportedOperationException e) {
+        	return;
+        }
+        assertTrue(getMap().isEmpty());
+    }
+
+    /**
+     * Verify that keySet.iterator.remove changes the underlying map.
+     */
+    public void testKeySetIteratorRemoveChangesMap() {
+        resetFull();
+        for (Iterator<K> iter = getMap().keySet().iterator(); iter.hasNext();) {
+        	K key = iter.next();
+        	try {
+        		iter.remove();
+        	} catch (UnsupportedOperationException e) {
+        		return;
+        	}
+        	assertFalse(getMap().containsKey(key));
+        }
+    }
+
+    /**
+     * Tests that the {@link Map#entrySet} set is backed by
+     * the underlying map by removing from the entrySet set
+     * and testing if the entry was removed from the map.
+     */
+    public void testEntrySetRemoveChangesMap() {
+    	resetFull();
+    	K[] sampleKeys = getSampleKeys();
+    	V[] sampleValues = getSampleValues();
+    	Set<Map.Entry<K, V>> entrySet = getMap().entrySet();
+    	for (int i = 0; i < sampleKeys.length; i++) {
+    		try {
+    			entrySet.remove(new DefaultMapEntry<K, V>(sampleKeys[i], sampleValues[i]));
+    		} catch (UnsupportedOperationException e) {
+    			// if entrySet removal is unsupported, just skip this test
+    			return;
+    		}
+    		assertTrue(
+    				"Entry should have been removed from the underlying map.",
+    				!getMap().containsKey(sampleKeys[i]));
+    	}
+    }
+
+    /**
+     * Test entrySet.removeAll.
+     */
+    public void testEntrySetRemoveAll() {
+    	resetFull();
+    	K[] sampleKeys = getSampleKeys();
+    	V[] sampleValues = getSampleValues();
+    	//verify map looks as expected:
+    	for (int i = 0; i < sampleKeys.length; i++) {
+    		if (!getMap().containsKey(sampleKeys[i])) {
+    			return;
+    		}
+    		V value = sampleValues[i];
+    		V test = getMap().get(sampleKeys[i]);
+    		if (value == test || value != null && value.equals(test)) {
+    			continue;
+    		}
+    		return;
+    	}
+    	Set<Map.Entry<K, V>> entrySet = getMap().entrySet();
+    	HashSet<Map.Entry<K, V>> comparisonSet = new HashSet<Map.Entry<K, V>>(entrySet);
+    	try {
+    		assertFalse(entrySet.removeAll(Collections.<Map.Entry<K, V>> emptySet()));
+    	} catch (UnsupportedOperationException e) {
+    		return;
+    	}
+    	assertEquals(sampleKeys.length, getMap().size());
+    	try {
+    		assertTrue(entrySet.removeAll(comparisonSet));
+    	} catch (UnsupportedOperationException e) {
+    		return;
+    	}
+    	assertTrue(getMap().isEmpty());
+    }
+
+    /**
+     * Test entrySet.retainAll.
+     */
+    public void testEntrySetRetainAll() {
+    	resetFull();
+    	K[] sampleKeys = getSampleKeys();
+    	V[] sampleValues = getSampleValues();
+    	//verify map looks as expected:
+    	for (int i = 0; i < sampleKeys.length; i++) {
+    		if (!getMap().containsKey(sampleKeys[i])) {
+    			return;
+    		}
+    		V value = sampleValues[i];
+    		V test = getMap().get(sampleKeys[i]);
+    		if (value == test || value != null && value.equals(test)) {
+    			continue;
+    		}
+    		return;
+    	}
+    	Set<Map.Entry<K, V>> entrySet = getMap().entrySet();
+    	HashSet<Map.Entry<K, V>> comparisonSet = new HashSet<Map.Entry<K, V>>(entrySet);
+    	try {
+    		assertFalse(entrySet.retainAll(comparisonSet));
+    	} catch (UnsupportedOperationException e) {
+    		return;
+    	}
+    	assertEquals(sampleKeys.length, getMap().size());
+    	try {
+    		assertTrue(entrySet.retainAll(Collections.<Map.Entry<K, V>> emptySet()));
+    	} catch (UnsupportedOperationException e) {
+    		return;
+    	}
+    	assertTrue(getMap().isEmpty());
+    }
+
+    /**
+     * Verify that entrySet.iterator.remove changes the underlying map.
+     */
+    public void testEntrySetIteratorRemoveChangesMap() {
+        resetFull();
+        for (Iterator<Map.Entry<K, V>> iter = getMap().entrySet().iterator(); iter.hasNext();) {
+        	K key = iter.next().getKey();
+        	try {
+        		iter.remove();
+        	} catch (UnsupportedOperationException e) {
+        		return;
+        	}
+        	assertFalse(getMap().containsKey(key));
+        }
+    }
 
     /**
      * Utility methods to create an array of Map.Entry objects
