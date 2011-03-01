@@ -392,7 +392,8 @@ public class TreeBidiMap implements OrderedBidiMap {
      */
     public Set entrySet() {
         if (entrySet == null) {
-            return new EntryView(this, KEY, MAPENTRY);
+            entrySet = new EntryView(this, KEY, MAPENTRY);
+            return entrySet;
         }
         return entrySet;
     }
