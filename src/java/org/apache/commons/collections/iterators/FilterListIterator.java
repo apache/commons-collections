@@ -236,6 +236,10 @@ public class FilterListIterator implements ListIterator {
             }
         }
 
+        if (iterator == null) {
+            return false;
+        }
+
         while(iterator.hasNext()) {
             Object object = iterator.next();
             if(predicate.evaluate(object)) {
@@ -266,6 +270,9 @@ public class FilterListIterator implements ListIterator {
             }
         }
 
+        if (iterator == null) {
+            return false;
+        }
         while(iterator.hasPrevious()) {
             Object object = iterator.previous();
             if(predicate.evaluate(object)) {
