@@ -182,7 +182,9 @@ public final class StaticBucketMap implements Map {
         int cnt = 0;
 
         for (int i = 0; i < buckets.length; i++) {
-            cnt += locks[i].size;
+            synchronized(locks[i]) {
+                cnt += locks[i].size;
+            }
         }
         return cnt;
     }
