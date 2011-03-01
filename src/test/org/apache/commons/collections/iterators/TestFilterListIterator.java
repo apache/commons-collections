@@ -17,12 +17,16 @@
 package org.apache.commons.collections.iterators;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Random;
 
 import junit.framework.TestCase;
 import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.PredicateUtils;
+import org.apache.commons.collections.list.GrowthList;
+import org.junit.Assert;
 
 /**
  * Tests the FilterListIterator class.
@@ -277,6 +281,18 @@ public class TestFilterListIterator extends TestCase {
         assertTrue(filtered.hasPrevious());
         assertTrue(!filtered.hasNext());
         assertEquals(expected.previous(), filtered.previous());
+    }
+
+    /**
+     * Test for {@link https://issues.apache.org/jira/browse/COLLECTIONS-360 COLLECTIONS-360}.
+     */
+    public void testCollections360() throws Throwable {
+        Collection<Predicate<Object>> var7 = new GrowthList<Predicate<Object>>();
+        Predicate<Object> var9 = PredicateUtils.anyPredicate(var7);
+        FilterListIterator<Object> var13 = new FilterListIterator<Object>(var9);
+        Assert.assertFalse(var13.hasNext());
+        FilterListIterator<Object> var14 = new FilterListIterator<Object>(var9);
+        Assert.assertFalse(var14.hasPrevious());
     }
 
     // Utilities
