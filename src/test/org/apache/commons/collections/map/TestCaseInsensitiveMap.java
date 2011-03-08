@@ -146,4 +146,11 @@ public class TestCaseInsensitiveMap<K, V> extends AbstractTestIterableMap<K, V> 
         }
     }
 
+    /**
+     * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
+     */
+    public void testInitialCapacityZero() {
+        final CaseInsensitiveMap<String,String> map = new CaseInsensitiveMap<String,String>(0);
+        assertEquals(1, map.data.length);
+    }
 }

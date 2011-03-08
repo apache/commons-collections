@@ -70,4 +70,12 @@ public class TestHashedMap<K, V> extends AbstractTestIterableMap<K, V> {
 //        resetFull();
 //        writeExternalFormToDisk((java.io.Serializable) map, "D:/dev/collections/data/test/HashedMap.fullCollection.version3.obj");
 //    }
+
+    /**
+     * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
+     */
+    public void testInitialCapacityZero() {
+        final HashedMap<String,String> map = new HashedMap<String,String>(0);
+        assertEquals(1, map.data.length);
+    }
 }

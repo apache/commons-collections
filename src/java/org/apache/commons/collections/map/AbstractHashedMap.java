@@ -124,7 +124,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * default load factor.
      *
      * @param initialCapacity  the initial capacity
-     * @throws IllegalArgumentException if the initial capacity is less than one
+     * @throws IllegalArgumentException if the initial capacity is negative
      */
     protected AbstractHashedMap(int initialCapacity) {
         this(initialCapacity, DEFAULT_LOAD_FACTOR);
@@ -136,14 +136,14 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      *
      * @param initialCapacity  the initial capacity
      * @param loadFactor  the load factor
-     * @throws IllegalArgumentException if the initial capacity is less than one
-     * @throws IllegalArgumentException if the load factor is less than or equal to zero
+     * @throws IlleagalArgumentException if the initial capacity is negative
+     * @throws IllegalArgumentException if the load factor is less than or equal to zero 
      */
     @SuppressWarnings("unchecked")
     protected AbstractHashedMap(int initialCapacity, float loadFactor) {
         super();
-        if (initialCapacity < 1) {
-            throw new IllegalArgumentException("Initial capacity must be greater than 0");
+        if (initialCapacity < 0) {
+            throw new IllegalArgumentException("Initial capacity must be a non negative number");  
         }
         if (loadFactor <= 0.0f || Float.isNaN(loadFactor)) {
             throw new IllegalArgumentException("Load factor must be greater than 0");

@@ -295,4 +295,12 @@ public class TestLinkedMap<K, V> extends AbstractTestOrderedMap<K, V> {
     public LinkedMap<K, V> getMap() {
         return (LinkedMap<K, V>) super.getMap();
     }
+
+    /**
+     * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
+     */
+    public void testInitialCapacityZero() {
+        final LinkedMap<String,String> map = new LinkedMap<String,String>(0);
+        assertEquals(1, map.data.length);
+    }
 }
