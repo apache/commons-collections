@@ -117,4 +117,12 @@ public class TestCaseInsensitiveMap extends AbstractTestIterableMap {
         writeExternalFormToDisk((java.io.Serializable) map, "/home/phil/jakarta-commons/collections/data/test/CaseInsensitiveMap.fullCollection.version3.obj");
     }
      */
+
+    /**
+     * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
+     */
+    public void testInitialCapacityZero() {
+        final CaseInsensitiveMap map = new CaseInsensitiveMap(0);
+        assertEquals(1, map.data.length);
+    }
 }

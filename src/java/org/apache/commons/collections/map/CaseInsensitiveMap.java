@@ -78,7 +78,7 @@ public class CaseInsensitiveMap extends AbstractHashedMap implements Serializabl
      * Constructs a new, empty map with the specified initial capacity. 
      *
      * @param initialCapacity  the initial capacity
-     * @throws IllegalArgumentException if the initial capacity is less than one
+     * @throws IllegalArgumentException if the initial capacity is negative
      */
     public CaseInsensitiveMap(int initialCapacity) {
         super(initialCapacity);
@@ -90,7 +90,7 @@ public class CaseInsensitiveMap extends AbstractHashedMap implements Serializabl
      *
      * @param initialCapacity  the initial capacity
      * @param loadFactor  the load factor
-     * @throws IllegalArgumentException if the initial capacity is less than one
+     * @throws IllegalArgumentException if the initial capacity is negative
      * @throws IllegalArgumentException if the load factor is less than zero
      */
     public CaseInsensitiveMap(int initialCapacity, float loadFactor) {

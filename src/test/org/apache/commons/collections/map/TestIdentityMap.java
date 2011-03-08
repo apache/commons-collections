@@ -143,4 +143,12 @@ public class TestIdentityMap extends AbstractTestObject {
 //        map.put(I2A, I2B);
 //        writeExternalFormToDisk((java.io.Serializable) map, "D:/dev/collections/data/test/IdentityMap.fullCollection.version3.obj");
 //    }
+
+    /**
+     * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
+     */
+    public void testInitialCapacityZero() {
+        final IdentityMap map = new IdentityMap(0);
+        assertEquals(1, map.data.length);
+    }
 }

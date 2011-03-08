@@ -272,4 +272,12 @@ public class TestLinkedMap extends AbstractTestOrderedMap {
 //        resetFull();
 //        writeExternalFormToDisk((java.io.Serializable) map, "D:/dev/collections/data/test/LinkedMap.fullCollection.version3.obj");
 //    }
+
+    /**
+     * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
+     */
+    public void testInitialCapacityZero() {
+        final LinkedMap map = new LinkedMap(0);
+        assertEquals(1, map.data.length);
+    }
 }
