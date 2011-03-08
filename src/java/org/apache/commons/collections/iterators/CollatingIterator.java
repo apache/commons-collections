@@ -60,8 +60,10 @@ public class CollatingIterator implements Iterator {
     // Constructors
     // ----------------------------------------------------------------------
     /**
-     * Constructs a new <code>CollatingIterator</code>.  Natural sort order
-     * will be used, and child iterators will have to be manually added 
+     * Constructs a new <code>CollatingIterator</code>. A comparator must be
+     * set by calling {@link #setComparator(Comparator)} before invoking
+     * {@link #hasNext()}, or {@link #next()} for the first time. Child
+     * iterators will have to be manually added using the
      * using the {@link #addIterator(Iterator)} method.
      */
     public CollatingIterator() {
@@ -73,7 +75,9 @@ public class CollatingIterator implements Iterator {
      * specified comparator for ordering.  Child iterators will have to be 
      * manually added using the {@link #addIterator(Iterator)} method.
      *
-     * @param comp  the comparator to use to sort, or null to use natural sort order
+     * @param comp the comparator to use to sort; must not be null,
+     *   unless you'll be invoking {@link #setComparator(Comparator)}
+     *   later on.
      */
     public CollatingIterator(final Comparator comp) {
         this(comp,2);
@@ -85,7 +89,9 @@ public class CollatingIterator implements Iterator {
      * capacity.  Child iterators will have to be 
      * manually added using the {@link #addIterator(Iterator)} method.
      *
-     * @param comp  the comparator to use to sort, or null to use natural sort order
+     * @param comp the comparator to use to sort; must not be null,
+     *   unless you'll be invoking {@link #setComparator(Comparator)}
+     *   later on.
      * @param initIterCapacity  the initial capacity for the internal list
      *    of child iterators
      */
@@ -99,7 +105,9 @@ public class CollatingIterator implements Iterator {
      * specified comparator to provide ordered iteration over the two
      * given iterators.
      *
-     * @param comp  the comparator to use to sort, or null to use natural sort order
+     * @param comp the comparator to use to sort; must not be null,
+     *   unless you'll be invoking {@link #setComparator(Comparator)}
+     *   later on.
      * @param a  the first child ordered iterator
      * @param b  the second child ordered iterator
      * @throws NullPointerException if either iterator is null
@@ -115,7 +123,9 @@ public class CollatingIterator implements Iterator {
      * specified comparator to provide ordered iteration over the array
      * of iterators.
      *
-     * @param comp  the comparator to use to sort, or null to use natural sort order
+     * @param comp the comparator to use to sort; must not be null,
+     *   unless you'll be invoking {@link #setComparator(Comparator)}
+     *   later on.
      * @param iterators  the array of iterators
      * @throws NullPointerException if iterators array is or contains null
      */
@@ -131,7 +141,9 @@ public class CollatingIterator implements Iterator {
      * specified comparator to provide ordered iteration over the collection
      * of iterators.
      *
-     * @param comp  the comparator to use to sort, or null to use natural sort order
+     * @param comp the comparator to use to sort; must not be null,
+     *   unless you'll be invoking {@link #setComparator(Comparator)}
+     *   later on.
      * @param iterators  the collection of iterators
      * @throws NullPointerException if the iterators collection is or contains null
      * @throws ClassCastException if the iterators collection contains an
@@ -196,7 +208,11 @@ public class CollatingIterator implements Iterator {
     }
 
     /**
-     * Sets the {@link Comparator} by which collation occurs.
+     * Sets the {@link Comparator} by which collation occurs. If you
+     * would like to use the natural sort order (or, in other words,
+     * if the elements in the iterators are implementing the
+     * {@link java.lang.Comparable} interface), then use the
+     * {@link org.apache.commons.collections.comparators.ComparableComparator}.
      * 
      * @throws IllegalStateException if iteration has started
      */
@@ -331,6 +347,9 @@ public class CollatingIterator implements Iterator {
                     leastObject = values.get(i);
                 } else {
                     Object curObject = values.get(i);
+                    if (comparator == null) {
+                        throw new NullPointerException("You must invoke setComparator() to set a compator first.");
+                    }
                     if (comparator.compare(curObject,leastObject) < 0) {
                         leastObject = curObject;
                         leastIndex = i;
