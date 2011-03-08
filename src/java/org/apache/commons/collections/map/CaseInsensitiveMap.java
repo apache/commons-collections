@@ -46,6 +46,11 @@ import java.util.Map;
  * returns <code>"Four".</code>  The <code>Set</code> returned by <code>keySet()</code>
  * equals <code>{"one", "two", null}.</code>
  * <p>
+ * <strong>This map will violate the detail of various Map and map view contracts.</note>
+ * As a general rule, don't compare this map to other maps. In particular, you can't
+ * use decorators like {@link ListOrderedMap} on it, which silently assume that these
+ * contracts are fulfilled.
+ * <p>
  * <strong>Note that CaseInsensitiveMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map

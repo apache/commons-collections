@@ -26,8 +26,10 @@ import java.util.Map;
  * A <code>Map</code> implementation that matches keys and values based
  * on <code>==</code> not <code>equals()</code>.
  * <p>
- * This map will violate the detail of various Map and map view contracts.
- * As a general rule, don't compare this map to other maps.
+ * <strong>This map will violate the detail of various Map and map view contracts.</note>
+ * As a general rule, don't compare this map to other maps. In particular, you can't
+ * use decorators like {@link ListOrderedMap} on it, which silently assume that these
+ * contracts are fulfilled.
  * <p>
  * <strong>Note that IdentityMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
