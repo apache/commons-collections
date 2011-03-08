@@ -17,7 +17,9 @@
 package org.apache.commons.collections.iterators;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 import org.apache.commons.collections.comparators.ComparableComparator;
 
@@ -237,5 +239,25 @@ public class TestCollatingIterator extends AbstractTestIterator<Integer> {
         assertEquals(expectedSize, (evens.size() + odds.size()));
     }
 
+    public void testNullComparator() {
+       List<Integer> l1 = Arrays.asList(1, 3, 5);
+       List<Integer> l2 = Arrays.asList(2, 4, 6);
+
+       CollatingIterator<Integer> collatingIterator1 = new CollatingIterator<Integer>(null, l1.iterator(), l2.iterator());
+       try {
+           collatingIterator1.next();
+       } catch (NullPointerException e) {
+           assertTrue(e.getMessage().startsWith("You must invoke setComparator"));
+       }
+
+       int i = 0;
+       CollatingIterator<Integer> collatingIterator2 = new CollatingIterator<Integer>(null, l1.iterator(), l2.iterator());
+       collatingIterator2.setComparator(new ComparableComparator<Integer>());
+       for ( ; collatingIterator2.hasNext(); i++ ) {
+          Integer n = (Integer)collatingIterator2.next();
+          assertEquals("wrong order", (int)n, i + 1);
+       }
+       assertEquals("wrong size", i, l1.size() + l2.size());
+    }
 }
 
