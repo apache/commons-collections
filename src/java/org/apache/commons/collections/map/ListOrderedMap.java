@@ -59,16 +59,6 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw 
  * exceptions when accessed by concurrent threads without synchronization.
  * <p>
- * <strong>Note that ListOrderedMap doesn't work with {@link IdentityMap},
- * {@link CaseInsensitiveMap}, or similar maps that violate the general
- * contract of {@link java.util.Map}.</strong> The <code>ListOrderedMap</code>
- * (or, more precisely, the underlying <code>List</code>) is relying on
- * {@link Object#java.lang.equals(Object) equals()}. This is fine, as long as the
- * decorated <code>Map</code> is also based on {@link Object#equals(Object) equals()},
- * and {@link Object#hashCode() hashCode()}, which {@link IdentityMap}, and
- * {@link CaseInsensitiveMap} don't: The former uses <code>==</code>, and
- * the latter uses {@link Object#equals(Object) equals()} on a lowercased
- * key.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
