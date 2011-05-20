@@ -42,18 +42,6 @@ public final class TruePredicate<T> implements Predicate<T>, Serializable {
      *
      * @return the singleton instance
      * @since Commons Collections 3.1
-     * @deprecated
-     */
-    @Deprecated
-    public static <T> Predicate<T> getInstance() {
-        return truePredicate();
-    }
-
-    /**
-     * Factory returning the singleton instance.
-     *
-     * @return the singleton instance
-     * @since Commons Collections 3.1
      */
     @SuppressWarnings("unchecked")
     public static <T> Predicate<T> truePredicate() {

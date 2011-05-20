@@ -45,22 +45,6 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
      * @param object  the object to compare to
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null
-     * @deprecated use {@link #equalPredicate(Object)} instead.
-     */
-    @Deprecated
-    public static <T> Predicate<T> getInstance(T object) {
-        if (object == null) {
-            return nullPredicate();
-        }
-        return new EqualPredicate<T>(object);
-    }
-
-    /**
-     * Factory to create the identity predicate.
-     * 
-     * @param object  the object to compare to
-     * @return the predicate
-     * @throws IllegalArgumentException if the predicate is null
      */
     public static <T> Predicate<T> equalPredicate(T object) {
         if (object == null) {

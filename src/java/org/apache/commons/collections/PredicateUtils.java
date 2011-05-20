@@ -21,9 +21,7 @@ import java.util.Collection;
 import org.apache.commons.collections.functors.AllPredicate;
 import org.apache.commons.collections.functors.AndPredicate;
 import org.apache.commons.collections.functors.AnyPredicate;
-import org.apache.commons.collections.functors.EqualPredicate;
 import org.apache.commons.collections.functors.ExceptionPredicate;
-import org.apache.commons.collections.functors.FalsePredicate;
 import org.apache.commons.collections.functors.IdentityPredicate;
 import org.apache.commons.collections.functors.InstanceofPredicate;
 import org.apache.commons.collections.functors.InvokerTransformer;
@@ -33,12 +31,10 @@ import org.apache.commons.collections.functors.NotPredicate;
 import org.apache.commons.collections.functors.NullIsExceptionPredicate;
 import org.apache.commons.collections.functors.NullIsFalsePredicate;
 import org.apache.commons.collections.functors.NullIsTruePredicate;
-import org.apache.commons.collections.functors.NullPredicate;
 import org.apache.commons.collections.functors.OnePredicate;
 import org.apache.commons.collections.functors.OrPredicate;
 import org.apache.commons.collections.functors.TransformedPredicate;
 import org.apache.commons.collections.functors.TransformerPredicate;
-import org.apache.commons.collections.functors.TruePredicate;
 import org.apache.commons.collections.functors.UniquePredicate;
 
 /**
@@ -97,45 +93,6 @@ public class PredicateUtils {
     }
 
     /**
-     * Gets a Predicate that always returns true.
-     *
-     * @see org.apache.commons.collections.functors.TruePredicate
-     *
-     * @return the predicate
-     * @deprecated use {@link TruePredicate#truePredicate()} instead.
-     */
-    @Deprecated
-    public static <T> Predicate<T> truePredicate() {
-        return TruePredicate.truePredicate();
-    }
-
-    /**
-     * Gets a Predicate that always returns false.
-     *
-     * @see org.apache.commons.collections.functors.FalsePredicate
-     *
-     * @return the predicate
-     * @deprecated use {@link FalsePredicate#falsePredicate()} instead.
-     */
-    @Deprecated
-    public static <T> Predicate<T> falsePredicate() {
-        return FalsePredicate.<T>getInstance();
-    }
-
-    /**
-     * Gets a Predicate that checks if the input object passed in is null.
-     *
-     * @see org.apache.commons.collections.functors.NullPredicate
-     *
-     * @return the predicate
-     * @deprecated use {@link NullPredicate#nullPredicate()} instead
-     */
-    @Deprecated
-    public static <T> Predicate<T> nullPredicate() {
-        return NullPredicate.nullPredicate();
-    }
-
-    /**
      * Gets a Predicate that checks if the input object passed in is not null.
      *
      * @see org.apache.commons.collections.functors.NotNullPredicate
@@ -144,21 +101,6 @@ public class PredicateUtils {
      */
     public static <T> Predicate<T> notNullPredicate() {
         return NotNullPredicate.<T>getInstance();
-    }
-
-    /**
-     * Creates a Predicate that checks if the input object is equal to the
-     * specified object using equals().
-     *
-     * @see org.apache.commons.collections.functors.EqualPredicate
-     *
-     * @param value  the value to compare against
-     * @return the predicate
-     * @deprecated use {@link EqualPredicate#equalPredicate(Object)} instead.
-     */
-    @Deprecated
-    public static <T> Predicate<T> equalPredicate(T value) {
-        return EqualPredicate.equalPredicate(value);
     }
 
     /**
@@ -268,24 +210,6 @@ public class PredicateUtils {
      */
     public static <T> Predicate<T> andPredicate(Predicate<? super T> predicate1, Predicate<? super T> predicate2) {
         return AndPredicate.<T>getInstance(predicate1, predicate2);
-    }
-
-    /**
-     * Create a new Predicate that returns true only if all of the specified
-     * predicates are true.
-     * If the array of predicates is empty, then this predicate returns true.
-     *
-     * @see org.apache.commons.collections.functors.AllPredicate
-     *
-     * @param predicates  an array of predicates to check, may not be null
-     * @return the <code>all</code> predicate
-     * @throws IllegalArgumentException if the predicates array is null
-     * @throws IllegalArgumentException if any predicate in the array is null
-     * @deprecated use {@link AllPredicate#allPredicate(Predicate...)} instead.
-     */
-    @Deprecated
-    public static <T> Predicate<T> allPredicate(Predicate<? super T>[] predicates) {
-        return AllPredicate.allPredicate(predicates);
     }
 
     /**

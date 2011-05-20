@@ -40,18 +40,6 @@ public final class FalsePredicate<T> implements Predicate<T>, Serializable {
      * Get a typed instance.
      *
      * @return the singleton instance
-     * @since Commons Collections 3.1
-     * @deprecated use {@link #falsePredicate()} instead.
-     */
-    @Deprecated
-    public static <T> Predicate<T> getInstance() {
-        return FalsePredicate.<T>falsePredicate();
-    }
-
-    /**
-     * Get a typed instance.
-     *
-     * @return the singleton instance
      * @since Commons Collections 5
      */
     @SuppressWarnings("unchecked")

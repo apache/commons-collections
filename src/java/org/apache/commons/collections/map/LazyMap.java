@@ -76,35 +76,9 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
      * @param map  the map to decorate, must not be null
      * @param factory  the factory to use, must not be null
      * @throws IllegalArgumentException if map or factory is null
-     * @deprecated use {@link #getLazyMap(Map, Factory)} instead.
-     */
-    @Deprecated
-    public static <K,V> Map<K,V> decorate(Map<K,V> map, Factory<? extends V> factory) {
-        return getLazyMap(map, factory);
-    }
-
-    /**
-     * Factory method to create a lazily instantiated map.
-     * 
-     * @param map  the map to decorate, must not be null
-     * @param factory  the factory to use, must not be null
-     * @throws IllegalArgumentException if map or factory is null
      */
     public static <K, V> LazyMap<K, V> getLazyMap(Map<K, V> map, Factory< ? extends V> factory) {
         return new LazyMap<K,V>(map, factory);
-    }
-
-    /**
-     * Factory method to create a lazily instantiated map.
-     * 
-     * @param map  the map to decorate, must not be null
-     * @param factory  the factory to use, must not be null
-     * @throws IllegalArgumentException if map or factory is null
-     * @deprecated use {@link #getLazyMap(Map, Transformer)} instead.
-     */
-    @Deprecated
-    public static <K,V> Map<K,V> decorate(Map<K,V> map, Transformer<? super K, ? extends V> factory) {
-        return getLazyMap(map, factory);
     }
 
     /**

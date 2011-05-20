@@ -58,23 +58,6 @@ public final class AllPredicate<T> implements Predicate<T>, PredicateDecorator<T
      * @return the <code>all</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
-     * @deprecated Use {@link #allPredicate(Predicate...)} instead
-     */
-    @Deprecated
-    public static <T> Predicate<T> getInstance(Predicate<? super T> ... predicates) {
-        return allPredicate(predicates);
-    }
-
-    /**
-     * Factory to create the predicate.
-     * <p>
-     * If the array is size zero, the predicate always returns true.
-     * If the array is size one, then that predicate is returned.
-     *
-     * @param predicates  the predicates to check, cloned, not null
-     * @return the <code>all</code> predicate
-     * @throws IllegalArgumentException if the predicates array is null
-     * @throws IllegalArgumentException if any predicate in the array is null
      */
     public static <T> Predicate<T> allPredicate(Predicate<? super T> ... predicates) {
         FunctorUtils.validate(predicates);
@@ -86,23 +69,6 @@ public final class AllPredicate<T> implements Predicate<T>, PredicateDecorator<T
         }
 
         return new AllPredicate<T>(FunctorUtils.copy(predicates));
-    }
-
-    /**
-     * Factory to create the predicate.
-     * <p>
-     * If the collection is size zero, the predicate always returns true.
-     * If the collection is size one, then that predicate is returned.
-     *
-     * @param predicates  the predicates to check, cloned, not null
-     * @return the <code>all</code> predicate
-     * @throws IllegalArgumentException if the predicates array is null
-     * @throws IllegalArgumentException if any predicate in the array is null
-     * @deprecated Use {@link #allPredicate(Collection)} instead
-     */
-    @Deprecated
-    public static <T> Predicate<T> getInstance(Collection<Predicate<T>> predicates) {
-        return allPredicate(predicates);
     }
 
     /**
