@@ -20,8 +20,8 @@ import static junit.framework.Assert.assertFalse;
 import static org.apache.commons.collections.functors.EqualPredicate.equalPredicate;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.*;
@@ -873,7 +873,7 @@ public class TestCollectionUtils extends MockTestCase {
         ints.add(3);
         ints.add(3);
         Iterable<Integer> iterable = ints;
-        CollectionUtils.filter(iterable, EQUALS_TWO);
+        assertTrue(CollectionUtils.filter(iterable, EQUALS_TWO));
         assertEquals(1, (int) ints.size());
         assertEquals(2, (int) ints.get(0));
     }
@@ -881,11 +881,11 @@ public class TestCollectionUtils extends MockTestCase {
     @Test
     public void filterNullParameters() throws Exception {
         List<Long> longs = Collections.nCopies(4, 10L);
-        CollectionUtils.filter(longs, null);
+        assertFalse(CollectionUtils.filter(longs, null));
         assertEquals(4, longs.size());
-        CollectionUtils.filter(null, EQUALS_TWO);
+        assertFalse(CollectionUtils.filter(null, EQUALS_TWO));
         assertEquals(4, longs.size());
-        CollectionUtils.filter(null, null);
+        assertFalse(CollectionUtils.filter(null, null));
         assertEquals(4, longs.size());
     }
 

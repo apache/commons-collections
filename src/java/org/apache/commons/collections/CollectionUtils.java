@@ -454,20 +454,24 @@ public class CollectionUtils {
      * predicate returns false, remove the element.
      * <p>
      * If the input collection or predicate is null, there is no change made.
-     *
+     * 
      * @param collection
      *            the collection to get the input from, may be null
      * @param predicate
      *            the predicate to use as a filter, may be null
+     * @return true if the collection is modified by this call, false otherwise.
      */
-    public static <T> void filter(Iterable<T> collection, Predicate<? super T> predicate) {
+    public static <T> boolean filter(Iterable<T> collection, Predicate<? super T> predicate) {
+        boolean result = false;
         if (collection != null && predicate != null) {
             for (Iterator<T> it = collection.iterator(); it.hasNext();) {
                 if (!predicate.evaluate(it.next())) {
                     it.remove();
+                    result = true;
                 }
             }
         }
+        return result;
     }
 
     /**
