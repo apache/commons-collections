@@ -33,6 +33,7 @@ import org.apache.commons.collections.collection.SynchronizedCollection;
 import org.apache.commons.collections.collection.TransformedCollection;
 import org.apache.commons.collections.collection.UnmodifiableBoundedCollection;
 import org.apache.commons.collections.collection.UnmodifiableCollection;
+import org.apache.commons.collections.functors.TruePredicate;
 
 /**
  * Provides utility methods and decorators for {@link Collection} instances.
@@ -235,10 +236,31 @@ public class CollectionUtils {
      * @see Collection#removeAll
      */
     public static <O> Collection<O> subtract(final Iterable<? extends O> a, final Iterable<? extends O> b) {
+        Predicate<O> p = TruePredicate.truePredicate();
+        return subtract(a, b, p);
+    }
+
+    /**
+     * Returns a new {@link Collection} containing <i>a</i> minus a subset of
+     * <i>b</i>.  Only the elements of <i>b</i> that satisfy the predicate
+     * condition, <i>p</i> are subtracted from <i>a</i>.
+     *
+     * @param a  the collection to subtract from, must not be null
+     * @param b  the collection to subtract, must not be null
+     * @param p  the condition used to determine which elements of <i>b</i> are
+     *        subtracted.
+     * @param <O> the generic type that is able to represent the types contained
+     *        in both input collections.
+     * @return a new collection with the results
+     * @see Collection#removeAll
+     */
+    public static <O> Collection<O> subtract(final Iterable<? extends O> a, final Iterable<? extends O> b, final Predicate<O> p) {
         ArrayList<O> list = new ArrayList<O>();
         addAll(list, a);
         for (O element : b) {
-            list.remove(element);
+            if (p.evaluate(element)) {
+                list.remove(element);
+            }
         }
         return list;
     }

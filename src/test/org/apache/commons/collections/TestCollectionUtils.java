@@ -362,6 +362,24 @@ public class TestCollectionUtils extends MockTestCase {
     }
 
     @Test
+    public void testSubtractWithPredicate() {
+        // greater than 3
+        Predicate<Number> predicate = new Predicate<Number>() {
+            public boolean evaluate(Number n) {
+                return n.longValue() > 3L;
+            }
+        };
+        
+        Collection<Number> col = CollectionUtils.subtract(iterableA, collectionC, predicate);
+        Map<Number, Integer> freq2 = CollectionUtils.getCardinalityMap(col);
+        assertEquals(Integer.valueOf(1), freq2.get(1));
+        assertEquals(Integer.valueOf(2), freq2.get(2));
+        assertEquals(Integer.valueOf(3), freq2.get(3));
+        assertEquals(Integer.valueOf(2), freq2.get(4));
+        assertNull(freq2.get(5));
+    }
+
+    @Test
     public void testIsSubCollectionOfSelf() {
         assertTrue(CollectionUtils.isSubCollection(collectionA, collectionA));
         assertTrue(CollectionUtils.isSubCollection(collectionB, collectionB));
