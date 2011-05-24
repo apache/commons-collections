@@ -252,6 +252,7 @@ public class CollectionUtils {
      * @param <O> the generic type that is able to represent the types contained
      *        in both input collections.
      * @return a new collection with the results
+     * @since 4.0
      * @see Collection#removeAll
      */
     public static <O> Collection<O> subtract(final Iterable<? extends O> a, final Iterable<? extends O> b, final Predicate<O> p) {
