@@ -48,6 +48,35 @@ public class TestIteratorUtils extends BulkTest {
         return BulkTest.makeSuite(TestIteratorUtils.class);
     }
 
+    public void testAsIterable() {
+        List<Integer> list = new ArrayList<Integer>();
+        list.add(Integer.valueOf(0));
+        list.add(Integer.valueOf(1));
+        list.add(Integer.valueOf(2));
+        Iterator<Integer> iterator = list.iterator();
+        
+        Iterable<Integer> iterable = IteratorUtils.asIterable(iterator);
+        int expected = 0;
+        for(Integer actual : iterable) {
+            assertEquals(expected, actual.intValue());
+            ++expected;
+        }
+
+        // single use iterator
+        for(Integer actual : iterable) {
+            fail("should not be able to iterate twice");
+        }
+    }
+
+    public void testAsIterableNull() {
+        try {
+            IteratorUtils.asIterable(null);
+            fail("Expecting NullPointerException");
+        } catch (NullPointerException ex) {
+            // success
+        }
+    }
+    
     public void testToList() {
         List<Object> list = new ArrayList<Object>();
         list.add(new Integer(1));

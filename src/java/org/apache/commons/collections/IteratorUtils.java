@@ -41,6 +41,7 @@ import org.apache.commons.collections.iterators.FilterIterator;
 import org.apache.commons.collections.iterators.FilterListIterator;
 import org.apache.commons.collections.iterators.IteratorChain;
 import org.apache.commons.collections.iterators.IteratorEnumeration;
+import org.apache.commons.collections.iterators.IteratorIterable;
 import org.apache.commons.collections.iterators.ListIteratorWrapper;
 import org.apache.commons.collections.iterators.LoopingIterator;
 import org.apache.commons.collections.iterators.LoopingListIterator;
@@ -755,6 +756,20 @@ public class IteratorUtils {
             throw new NullPointerException("Iterator must not be null");
         }
         return new IteratorEnumeration<E>(iterator);
+    }
+
+    /**
+     * Gets an iterable that wraps an iterator.
+     *
+     * @param iterator  the iterator to use, not null
+     * @return a new, single use iterable
+     * @throws NullPointerException if iterator is null
+     */
+    public static <E> Iterable<E> asIterable(Iterator<? extends E> iterator) {
+        if (iterator == null) {
+            throw new NullPointerException("Iterator must not be null");
+        }
+        return new IteratorIterable<E>(iterator);
     }
 
     /**
