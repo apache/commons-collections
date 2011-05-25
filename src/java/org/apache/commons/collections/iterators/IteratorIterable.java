@@ -15,11 +15,47 @@ package org.apache.commons.collections.iterators;
 
 import java.util.Iterator;
 
+import org.apache.commons.collections.ResettableIterator;
+
 /**
  * Adapter to make an {@link Iterator Iterator} instance appear to be an
- * {@link Iterable Iterable} instance. Unlike normal iterable instance, the
- * {@link #iterator()} method always returns the same iterator instance. This
- * prohibits this iterator to be only usable for one iterative operation.
+ * {@link Iterable Iterable} instance.  The iterable can be constructed in one
+ * of two variants:  single use, multiple use.
+ * 
+ * <p>
+ * In the single use iterable case, the iterable is only usable for one
+ * iterative operation over the source iterator.  Subsequent iterative
+ * operations use the same, exhausted source iterator.  To create a single use
+ * iterable, construct a new {@link IteratorIterable} using a {@link Iterator}
+ * that is NOT a {@link ResettableIterator} iterator:
+ * <pre>
+ *   Iterator<Integer> iterator = // some non-resettable iterator
+ *   Iterable<Integer> iterable = new IteratorIterable<Integer>(iterator);
+ * </pre>
+ * </p>
+ * 
+ * <p>
+ * In the multiple use iterable case, the iterable is usable for any number of
+ * iterative operations over the source iterator.  Of special note, even though
+ * the iterable supports multiple iterations, it does not support concurrent
+ * iterations. To implicitly create a multiple use iterable, construct a new
+ * {@link IteratorIterable} using a {@link ResettableIterator} iterator:
+ * <pre>
+ *   Integer[] array = {Integer.valueOf(1),Integer.valueOf(2),Integer.valueOf(3)};
+ *   Iterator<Integer> iterator = IteratorUtils.arrayIterator(array); // a resettable iterator
+ *   Iterable<Integer> iterable = new IteratorIterable<Integer>(iterator);
+ * </pre>
+ * </p>
+ * 
+ * <p>
+ * A multiple use iterable can also be explicitly constructed using any
+ * {@link Iterator} and specifying <code>true</code> for the
+ * <code>multipleUse</code> flag:
+ * <pre>
+ *   Iterator<Integer> iterator = // some non-resettable iterator
+ *   Iterable<Integer> iterable = new IteratorIterable<Integer>(iterator, true);
+ * </pre>
+ * </p>
  * 
  * @since Commons Collections 4.0
  * @version $Revision: $ $Date: $
@@ -47,9 +83,12 @@ public class IteratorIterable<E> implements Iterable<E> {
         };
     }
 
-    /** the iterator being used. */
-    private final Iterator<E> iterator;
-
+    /** the iterator being adapted into an iterable. */
+    private final Iterator<? extends E> iterator;
+    
+    /** the iterator parameterized as the {@link #iterator()} return type. */ 
+    private final Iterator<E> typeSafeIterator;
+    
     /**
      * Constructs a new <code>IteratorIterable</code> that will use the given
      * iterator.
@@ -57,8 +96,24 @@ public class IteratorIterable<E> implements Iterable<E> {
      * @param iterator the iterator to use.
      */
     public IteratorIterable(Iterator<? extends E> iterator) {
+        this(iterator, false);
+    }
+
+    /**
+     * Constructs a new <code>IteratorIterable</code> that will use the given
+     * iterator.
+     * 
+     * @param iterator the iterator to use.
+     * @param multipleUse <code>true</code> if the new iterable can be used in multiple iterations
+     */
+    public IteratorIterable(Iterator<? extends E> iterator, boolean multipleUse) {
         super();
-        this.iterator = createTypesafeIterator(iterator);
+        if (multipleUse && !(iterator instanceof ResettableIterator)) {
+            this.iterator = new ListIteratorWrapper<E>(iterator); 
+        } else {
+            this.iterator = iterator;
+        }
+        this.typeSafeIterator = createTypesafeIterator(this.iterator);
     }
 
     /**
@@ -67,6 +122,9 @@ public class IteratorIterable<E> implements Iterable<E> {
      * @return the iterator
      */
     public Iterator<E> iterator() {
-        return iterator;
+        if (iterator instanceof ResettableIterator) {
+            ((ResettableIterator<? extends E>)iterator).reset();
+        }
+        return typeSafeIterator;
     }
 }

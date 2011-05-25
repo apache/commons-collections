@@ -36,19 +36,47 @@ public class TestIteratorIterable extends BulkTest {
         super(name);
     }
 
-    public void testIterator() {
+    private Iterator<Integer> createIterator() {
         List<Integer> list = new ArrayList<Integer>();
         list.add(Integer.valueOf(0));
         list.add(Integer.valueOf(1));
         list.add(Integer.valueOf(2));
         Iterator<Integer> iter = list.iterator();
+        return iter;
+    }
 
+    public void testIterator() {
+        Iterator<Integer> iter = createIterator();
         Iterable<Number> iterable = new IteratorIterable<Number>(iter);
+        
+        // first use
+        verifyIteration(iterable);
+        
+        // second use
+        for (Number actual : iterable) {
+            fail("should not be able to iterate twice");
+        }
+    }
+
+    public void testMultipleUserIterator() {
+        Iterator<Integer> iter = createIterator();
+
+        Iterable<Number> iterable = new IteratorIterable<Number>(iter, true);
+        
+        // first use
+        verifyIteration(iterable);
+        
+        // second use
+        verifyIteration(iterable);
+    }
+
+    private void verifyIteration(Iterable<Number> iterable) {
         int expected = 0;
         for (Number actual : iterable) {
             assertEquals(expected, actual.intValue());
             ++expected;
         }
+        assertTrue(expected > 0);
     }
 }
 

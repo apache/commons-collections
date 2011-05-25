@@ -759,7 +759,8 @@ public class IteratorUtils {
     }
 
     /**
-     * Gets an iterable that wraps an iterator.
+     * Gets an iterable that wraps an iterator.  The returned iterable can be
+     * used for a single iteration.
      *
      * @param iterator  the iterator to use, not null
      * @return a new, single use iterable
@@ -769,7 +770,22 @@ public class IteratorUtils {
         if (iterator == null) {
             throw new NullPointerException("Iterator must not be null");
         }
-        return new IteratorIterable<E>(iterator);
+        return new IteratorIterable<E>(iterator, false);
+    }
+
+    /**
+     * Gets an iterable that wraps an iterator.  The returned iterable can be
+     * used for multiple iterations.
+     *
+     * @param iterator  the iterator to use, not null
+     * @return a new, multiple use iterable
+     * @throws NullPointerException if iterator is null
+     */
+    public static <E> Iterable<E> asMultipleUseIterable(Iterator<? extends E> iterator) {
+        if (iterator == null) {
+            throw new NullPointerException("Iterator must not be null");
+        }
+        return new IteratorIterable<E>(iterator, true);
     }
 
     /**

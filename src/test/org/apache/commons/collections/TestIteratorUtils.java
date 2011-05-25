@@ -61,6 +61,8 @@ public class TestIteratorUtils extends BulkTest {
             assertEquals(expected, actual.intValue());
             ++expected;
         }
+        // insure iteration occurred
+        assertTrue(expected > 0);
 
         // single use iterator
         for(Integer actual : iterable) {
@@ -71,6 +73,41 @@ public class TestIteratorUtils extends BulkTest {
     public void testAsIterableNull() {
         try {
             IteratorUtils.asIterable(null);
+            fail("Expecting NullPointerException");
+        } catch (NullPointerException ex) {
+            // success
+        }
+    }
+
+    public void testAsMultipleIterable() {
+        List<Integer> list = new ArrayList<Integer>();
+        list.add(Integer.valueOf(0));
+        list.add(Integer.valueOf(1));
+        list.add(Integer.valueOf(2));
+        Iterator<Integer> iterator = list.iterator();
+        
+        Iterable<Integer> iterable = IteratorUtils.asMultipleUseIterable(iterator);
+        int expected = 0;
+        for(Integer actual : iterable) {
+            assertEquals(expected, actual.intValue());
+            ++expected;
+        }
+        // insure iteration occurred
+        assertTrue(expected > 0);
+
+        // multiple use iterator
+        expected = 0;
+        for(Integer actual : iterable) {
+            assertEquals(expected, actual.intValue());
+            ++expected;
+        }
+        // insure iteration occurred
+        assertTrue(expected > 0);
+    }
+
+    public void testAsMultipleIterableNull() {
+        try {
+            IteratorUtils.asMultipleUseIterable(null);
             fail("Expecting NullPointerException");
         } catch (NullPointerException ex) {
             // success
