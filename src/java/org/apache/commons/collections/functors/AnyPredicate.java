@@ -55,7 +55,7 @@ public final class AnyPredicate<T> implements Predicate<T>, PredicateDecorator<T
      * @throws IllegalArgumentException if any predicate in the array is null
      */
     @SuppressWarnings("unchecked")
-    public static <T> Predicate<T> getInstance(Predicate<? super T>[] predicates) {
+    public static <T> Predicate<T> anyPredicate(Predicate<? super T>... predicates) {
         FunctorUtils.validate(predicates);
         if (predicates.length == 0) {
             return FalsePredicate.<T>falsePredicate();
@@ -78,7 +78,7 @@ public final class AnyPredicate<T> implements Predicate<T>, PredicateDecorator<T
      * @throws IllegalArgumentException if any predicate in the array is null
      */
     @SuppressWarnings("unchecked")
-    public static <T> Predicate<T> getInstance(Collection<? extends Predicate<T>> predicates) {
+    public static <T> Predicate<T> anyPredicate(Collection<? extends Predicate<T>> predicates) {
         Predicate<? super T>[] preds = FunctorUtils.validate(predicates);
         if (preds.length == 0) {
             return FalsePredicate.<T>falsePredicate();

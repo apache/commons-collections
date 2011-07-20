@@ -109,7 +109,7 @@ public class TestMultiValueMap<K, V> extends AbstractTestObject {
 
     @SuppressWarnings("unchecked")
     private <C extends Collection<V>> MultiValueMap<K, V> createTestMap(Class<C> collectionClass) {
-        final MultiValueMap<K, V> map = MultiValueMap.decorate(new HashMap<K, C>(), collectionClass);
+        final MultiValueMap<K, V> map = MultiValueMap.multiValueMap(new HashMap<K, C>(), collectionClass);
         map.put((K) "one", (V) "uno");
         map.put((K) "one", (V) "un");
         map.put((K) "two", (V) "dos");
@@ -254,7 +254,7 @@ public class TestMultiValueMap<K, V> extends AbstractTestObject {
 
     @SuppressWarnings("unchecked")
     public void testPutWithList() {
-        MultiValueMap<K, V> test = MultiValueMap.decorate(new HashMap<K, Collection>(), ArrayList.class);
+        MultiValueMap<K, V> test = MultiValueMap.multiValueMap(new HashMap<K, Collection>(), ArrayList.class);
         assertEquals("a", test.put((K) "A", "a"));
         assertEquals("b", test.put((K) "A", "b"));
         assertEquals(1, test.size());
@@ -264,7 +264,7 @@ public class TestMultiValueMap<K, V> extends AbstractTestObject {
 
     @SuppressWarnings("unchecked")
     public void testPutWithSet() {
-        MultiValueMap<K, V> test = MultiValueMap.decorate(new HashMap<K, HashSet>(), HashSet.class);
+        MultiValueMap<K, V> test = MultiValueMap.multiValueMap(new HashMap<K, HashSet>(), HashSet.class);
         assertEquals("a", test.put((K) "A", "a"));
         assertEquals("b", test.put((K) "A", "b"));
         assertEquals(null, test.put((K) "A", "a"));

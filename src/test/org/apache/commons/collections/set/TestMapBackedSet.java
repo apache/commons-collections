@@ -36,7 +36,7 @@ public class TestMapBackedSet<E> extends AbstractTestSet<E> {
 
     @Override
     public Set<E> makeObject() {
-        return MapBackedSet.decorate(new HashedMap<E, Object>());
+        return MapBackedSet.mapBackedSet(new HashedMap<E, Object>());
     }
 
     @Override

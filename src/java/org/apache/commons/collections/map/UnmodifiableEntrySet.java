@@ -49,7 +49,7 @@ public final class UnmodifiableEntrySet<K, V>
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    public static <K, V> Set<Map.Entry<K, V>> decorate(Set<Map.Entry<K, V>> set) {
+    public static <K, V> Set<Map.Entry<K, V>> unmodifiableEntrySet(Set<Map.Entry<K, V>> set) {
         if (set instanceof Unmodifiable) {
             return set;
         }

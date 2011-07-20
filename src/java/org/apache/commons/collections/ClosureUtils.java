@@ -71,7 +71,7 @@ public class ClosureUtils {
      * @return the closure
      */
     public static <E> Closure<E> exceptionClosure() {
-        return ExceptionClosure.<E>getInstance();
+        return ExceptionClosure.<E>exceptionClosure();
     }
 
     /**
@@ -83,7 +83,7 @@ public class ClosureUtils {
      * @return the closure
      */
     public static <E> Closure<E> nopClosure() {
-        return NOPClosure.<E>getInstance();
+        return NOPClosure.<E>nopClosure();
     }
 
     /**
@@ -97,7 +97,7 @@ public class ClosureUtils {
      * @return the closure
      */
     public static <E> Closure<E> asClosure(Transformer<? super E, ?> transformer) {
-        return TransformerClosure.getInstance(transformer);
+        return TransformerClosure.transformerClosure(transformer);
     }
 
     /**
@@ -112,7 +112,7 @@ public class ClosureUtils {
      * @return the <code>for</code> closure
      */
     public static <E> Closure<E> forClosure(int count, Closure<? super E> closure) {
-        return ForClosure.getInstance(count, closure);
+        return ForClosure.forClosure(count, closure);
     }
 
     /**
@@ -127,7 +127,7 @@ public class ClosureUtils {
      * @throws IllegalArgumentException if either argument is null
      */
     public static <E> Closure<E> whileClosure(Predicate<? super E> predicate, Closure<? super E> closure) {
-        return WhileClosure.<E>getInstance(predicate, closure, false);
+        return WhileClosure.<E>whileClosure(predicate, closure, false);
     }
 
     /**
@@ -142,7 +142,7 @@ public class ClosureUtils {
      * @throws IllegalArgumentException if either argument is null
      */
     public static <E> Closure<E> doWhileClosure(Closure<? super E> closure, Predicate<? super E> predicate) {
-        return WhileClosure.<E>getInstance(predicate, closure, true);
+        return WhileClosure.<E>whileClosure(predicate, closure, true);
     }
 
     /**
@@ -158,7 +158,7 @@ public class ClosureUtils {
      */
     public static <E> Closure<E> invokerClosure(String methodName) {
         // reuse transformer as it has caching - this is lazy really, should have inner class here
-        return asClosure(InvokerTransformer.<E, Object>getInstance(methodName));
+        return asClosure(InvokerTransformer.<E, Object>invokerTransformer(methodName));
     }
 
     /**
@@ -177,7 +177,7 @@ public class ClosureUtils {
      */
     public static <E> Closure<E> invokerClosure(String methodName, Class<?>[] paramTypes, Object[] args) {
         // reuse transformer as it has caching - this is lazy really, should have inner class here
-        return asClosure(InvokerTransformer.<E, Object>getInstance(methodName, paramTypes, args));
+        return asClosure(InvokerTransformer.<E, Object>invokerTransformer(methodName, paramTypes, args));
     }
 
     /**
@@ -192,7 +192,7 @@ public class ClosureUtils {
      * @throws IllegalArgumentException if either closure is null
      */
     public static <E> Closure<E> chainedClosure(Closure<? super E> closure1, Closure<? super E> closure2) {
-        return ChainedClosure.<E>getInstance(closure1, closure2);
+        return ChainedClosure.<E>chainedClosure(closure1, closure2);
     }
 
     /**
@@ -207,7 +207,7 @@ public class ClosureUtils {
      * @throws IllegalArgumentException if any closure in the array is null
      */
     public static <E> Closure<E> chainedClosure(Closure<? super E>[] closures) {
-        return ChainedClosure.getInstance(closures);
+        return ChainedClosure.chainedClosure(closures);
     }
 
     /**
@@ -224,7 +224,7 @@ public class ClosureUtils {
      * @throws IllegalArgumentException if any closure in the collection is null
      */
     public static <E> Closure<E> chainedClosure(Collection<Closure<E>> closures) {
-        return ChainedClosure.getInstance(closures);
+        return ChainedClosure.chainedClosure(closures);
     }
 
     /**
@@ -241,7 +241,7 @@ public class ClosureUtils {
      * @since Commons Collections 3.2
      */
     public static <E> Closure<E> ifClosure(Predicate<? super E> predicate, Closure<? super E> trueClosure) {
-        return IfClosure.<E>getInstance(predicate, trueClosure);
+        return IfClosure.<E>ifClosure(predicate, trueClosure);
     }
 
     /**
@@ -258,7 +258,7 @@ public class ClosureUtils {
      * @throws IllegalArgumentException if either closure is null
      */
     public static <E> Closure<E> ifClosure(Predicate<? super E> predicate, Closure<? super E> trueClosure, Closure<? super E> falseClosure) {
-        return IfClosure.<E>getInstance(predicate, trueClosure, falseClosure);
+        return IfClosure.<E>ifClosure(predicate, trueClosure, falseClosure);
     }
 
     /**
@@ -279,7 +279,7 @@ public class ClosureUtils {
      * @throws IllegalArgumentException if the arrays are different sizes
      */
     public static <E> Closure<E> switchClosure(Predicate<? super E>[] predicates, Closure<? super E>[] closures) {
-        return SwitchClosure.<E>getInstance(predicates, closures, null);
+        return SwitchClosure.<E>switchClosure(predicates, closures, null);
     }
 
     /**
@@ -302,7 +302,7 @@ public class ClosureUtils {
      * @throws IllegalArgumentException if the arrays are different sizes
      */
     public static <E> Closure<E> switchClosure(Predicate<? super E>[] predicates, Closure<? super E>[] closures, Closure<? super E> defaultClosure) {
-        return SwitchClosure.<E>getInstance(predicates, closures, defaultClosure);
+        return SwitchClosure.<E>switchClosure(predicates, closures, defaultClosure);
     }
     
     /**
@@ -326,7 +326,7 @@ public class ClosureUtils {
      * @throws ClassCastException  if the map elements are of the wrong type
      */
     public static <E> Closure<E> switchClosure(Map<Predicate<E>, Closure<E>> predicatesAndClosures) {
-        return SwitchClosure.getInstance(predicatesAndClosures);
+        return SwitchClosure.switchClosure(predicatesAndClosures);
     }
 
     /**

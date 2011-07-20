@@ -49,9 +49,9 @@ public class ForClosure<E> implements Closure<E>, Serializable {
      * @return the <code>for</code> closure
      */
     @SuppressWarnings("unchecked")
-    public static <E> Closure<E> getInstance(int count, Closure<? super E> closure) {
+    public static <E> Closure<E> forClosure(int count, Closure<? super E> closure) {
         if (count <= 0 || closure == null) {
-            return NOPClosure.<E>getInstance();
+            return NOPClosure.<E>nopClosure();
         }
         if (count == 1) {
             return (Closure<E>) closure;

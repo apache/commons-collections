@@ -51,7 +51,7 @@ public class WhileClosure<E> implements Closure<E>, Serializable {
      * @return the <code>while</code> closure
      * @throws IllegalArgumentException if the predicate or closure is null
      */
-    public static <E> Closure<E> getInstance(Predicate<? super E> predicate, Closure<? super E> closure, boolean doLoop) {
+    public static <E> Closure<E> whileClosure(Predicate<? super E> predicate, Closure<? super E> closure, boolean doLoop) {
         if (predicate == null) {
             throw new IllegalArgumentException("Predicate must not be null");
         }

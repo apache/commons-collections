@@ -45,7 +45,7 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
      * @return the <code>predicate</code> transformer
      * @throws IllegalArgumentException if the predicate is null
      */
-    public static <T> Transformer<T, Boolean> getInstance(Predicate<? super T> predicate) {
+    public static <T> Transformer<T, Boolean> predicateTransformer(Predicate<? super T> predicate) {
         if (predicate == null) {
             throw new IllegalArgumentException("Predicate must not be null");
         }

@@ -66,7 +66,7 @@ public class SetUtils {
      * An empty unmodifiable sorted set.
      * This is not provided in the JDK.
      */
-    public static final SortedSet<?> EMPTY_SORTED_SET = UnmodifiableSortedSet.decorate(new TreeSet<Object>());
+    public static final SortedSet<?> EMPTY_SORTED_SET = UnmodifiableSortedSet.unmodifiableSortedSet(new TreeSet<Object>());
 
     /**
      * Get a typed empty unmodifiable sorted set.
@@ -174,7 +174,7 @@ public class SetUtils {
      * @throws IllegalArgumentException  if the set is null
      */
     public static <T> Set<T> synchronizedSet(Set<T> set) {
-        return SynchronizedSet.decorate(set);
+        return SynchronizedSet.synchronizedSet(set);
     }
 
     /**
@@ -187,7 +187,7 @@ public class SetUtils {
      * @throws IllegalArgumentException  if the set is null
      */
     public static <E> Set<E> unmodifiableSet(Set<E> set) {
-        return UnmodifiableSet.decorate(set);
+        return UnmodifiableSet.unmodifiableSet(set);
     }
 
     /**
@@ -204,7 +204,7 @@ public class SetUtils {
      * @throws IllegalArgumentException  if the Set or Predicate is null
      */
     public static <T> Set<T> predicatedSet(Set<T> set, Predicate<? super T> predicate) {
-        return PredicatedSet.decorate(set, predicate);
+        return PredicatedSet.predicatedSet(set, predicate);
     }
 
     /**
@@ -223,7 +223,7 @@ public class SetUtils {
      * @throws IllegalArgumentException  if the Set or Transformer is null
      */
     public static <E> Set<E> transformedSet(Set<E> set, Transformer<? super E, ? extends E> transformer) {
-        return TransformedSet.decorate(set, transformer);
+        return TransformedSet.transformingSet(set, transformer);
     }
     
     /**
@@ -238,7 +238,7 @@ public class SetUtils {
      * @throws IllegalArgumentException  if the Set is null
      */
     public static <E> Set<E> orderedSet(Set<E> set) {
-        return ListOrderedSet.decorate(set);
+        return ListOrderedSet.listOrderedSet(set);
     }
     
     //-----------------------------------------------------------------------
@@ -265,7 +265,7 @@ public class SetUtils {
      * @throws IllegalArgumentException  if the set is null
      */
     public static <T> SortedSet<T> synchronizedSortedSet(SortedSet<T> set) {
-        return SynchronizedSortedSet.decorate(set);
+        return SynchronizedSortedSet.synchronizedSortedSet(set);
     }
 
     /**
@@ -278,7 +278,7 @@ public class SetUtils {
      * @throws IllegalArgumentException  if the set is null
      */
     public static <T> SortedSet<T> unmodifiableSortedSet(SortedSet<T> set) {
-        return UnmodifiableSortedSet.decorate(set);
+        return UnmodifiableSortedSet.unmodifiableSortedSet(set);
     }
 
     /**
@@ -295,7 +295,7 @@ public class SetUtils {
      * @throws IllegalArgumentException  if the Set or Predicate is null
      */
     public static <T> SortedSet<T> predicatedSortedSet(SortedSet<T> set, Predicate<? super T> predicate) {
-        return PredicatedSortedSet.decorate(set, predicate);
+        return PredicatedSortedSet.predicatedSortedSet(set, predicate);
     }
 
     /**
@@ -314,7 +314,7 @@ public class SetUtils {
      * @throws IllegalArgumentException  if the Set or Transformer is null
      */
     public static <E> SortedSet<E> transformedSortedSet(SortedSet<E> set, Transformer<? super E, ? extends E> transformer) {
-        return TransformedSortedSet.decorate(set, transformer);
+        return TransformedSortedSet.transformingSortedSet(set, transformer);
     }
     
 }

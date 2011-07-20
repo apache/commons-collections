@@ -48,7 +48,7 @@ public class SynchronizedSortedBag<E>
      * @return a new synchronized SortedBag
      * @throws IllegalArgumentException if bag is null
      */
-    public static <E> SortedBag<E> decorate(SortedBag<E> bag) {
+    public static <E> SortedBag<E> synchronizedSortedBag(SortedBag<E> bag) {
         return new SynchronizedSortedBag<E>(bag);
     }
     

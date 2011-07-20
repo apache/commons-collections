@@ -49,13 +49,14 @@ import org.apache.commons.collections.map.LinkedMap;
  * In practice this would often mean <code>&gt;Object, Object&gt;</code>, defeating
  * much of the usefulness of having parameterized types.
  * <p>
- * On the downside, this class is not a drop-in replacement for {@link java.util.Map}
+ * On the downside, this class is not drop-in compatible with {@link java.util.Map}
  * but is intended to be worked with either directly or by {@link Put} and {@link Get}
  * generalizations.
  *
- * @since Commons Collections 5
- * @TODO fix version
+ * @since Commons Collections 4.0
  * @version $Revision$ $Date$
+ * @see SplitMapUtils#readableMap(Get)
+ * @see SplitMapUtils#writableMap(Put)
  *
  * @author Stephen Colebourne
  * @author Matt Benson
@@ -84,7 +85,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      * means no transformation
      * @throws IllegalArgumentException if map is null
      */
-    public static <J, K, U, V> TransformedMap<J, K, U, V> decorate(Map<K, V> map,
+    public static <J, K, U, V> TransformedMap<J, K, U, V> transformingMap(Map<K, V> map,
             Transformer<? super J, ? extends K> keyTransformer,
             Transformer<? super U, ? extends V> valueTransformer) {
         return new TransformedMap<J, K, U, V>(map, keyTransformer, valueTransformer);

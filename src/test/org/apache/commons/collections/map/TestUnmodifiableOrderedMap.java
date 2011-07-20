@@ -40,7 +40,7 @@ public class TestUnmodifiableOrderedMap<K, V> extends AbstractTestOrderedMap<K, 
 
     @Override
     public OrderedMap<K, V> makeObject() {
-        return UnmodifiableOrderedMap.decorate(ListOrderedMap.decorate(new HashMap<K, V>()));
+        return UnmodifiableOrderedMap.unmodifiableOrderedMap(ListOrderedMap.listOrderedMap(new HashMap<K, V>()));
     }
 
     @Override
@@ -60,9 +60,9 @@ public class TestUnmodifiableOrderedMap<K, V> extends AbstractTestOrderedMap<K, 
 
     @Override
     public OrderedMap<K, V> makeFullMap() {
-        OrderedMap<K, V> m = ListOrderedMap.decorate(new HashMap<K, V>());
+        OrderedMap<K, V> m = ListOrderedMap.listOrderedMap(new HashMap<K, V>());
         addSampleMappings(m);
-        return UnmodifiableOrderedMap.decorate(m);
+        return UnmodifiableOrderedMap.unmodifiableOrderedMap(m);
     }
 
     //-----------------------------------------------------------------------
@@ -73,10 +73,10 @@ public class TestUnmodifiableOrderedMap<K, V> extends AbstractTestOrderedMap<K, 
 
     public void testDecorateFactory() {
         OrderedMap<K, V> map = makeFullMap();
-        assertSame(map, UnmodifiableOrderedMap.decorate(map));
+        assertSame(map, UnmodifiableOrderedMap.unmodifiableOrderedMap(map));
 
         try {
-            UnmodifiableOrderedMap.decorate(null);
+            UnmodifiableOrderedMap.unmodifiableOrderedMap(null);
             fail();
         } catch (IllegalArgumentException ex) {}
     }

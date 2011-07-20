@@ -99,17 +99,17 @@ public class TestBagUtils extends BulkTest {
     }
 
      public void testTransformedBag() {
-        Bag<Object> bag = BagUtils.transformedBag(new HashBag<Object>(), nopTransformer);
+        Bag<Object> bag = BagUtils.transformingBag(new HashBag<Object>(), nopTransformer);
         assertTrue("Returned object should be an TransformedBag.",
             bag instanceof TransformedBag);
         try {
-            bag = BagUtils.transformedBag(null, nopTransformer);
+            bag = BagUtils.transformingBag(null, nopTransformer);
             fail("Expecting IllegalArgumentException for null bag.");
         } catch (IllegalArgumentException ex) {
             // expected
         }
         try {
-            bag = BagUtils.transformedBag(new HashBag<Object>(), null);
+            bag = BagUtils.transformingBag(new HashBag<Object>(), null);
             fail("Expecting IllegalArgumentException for null transformer.");
         } catch (IllegalArgumentException ex) {
             // expected
@@ -159,17 +159,17 @@ public class TestBagUtils extends BulkTest {
     }
 
     public void testTransformedSortedBag() {
-        Bag<Object> bag = BagUtils.transformedSortedBag(new TreeBag<Object>(), nopTransformer);
+        Bag<Object> bag = BagUtils.transformingSortedBag(new TreeBag<Object>(), nopTransformer);
         assertTrue("Returned object should be an TransformedSortedBag",
             bag instanceof TransformedSortedBag);
         try {
-            bag = BagUtils.transformedSortedBag(null, nopTransformer);
+            bag = BagUtils.transformingSortedBag(null, nopTransformer);
             fail("Expecting IllegalArgumentException for null bag.");
         } catch (IllegalArgumentException ex) {
             // expected
         }
         try {
-            bag = BagUtils.transformedSortedBag(new TreeBag<Object>(), null);
+            bag = BagUtils.transformingSortedBag(new TreeBag<Object>(), null);
             fail("Expecting IllegalArgumentException for null transformer.");
         } catch (IllegalArgumentException ex) {
             // expected

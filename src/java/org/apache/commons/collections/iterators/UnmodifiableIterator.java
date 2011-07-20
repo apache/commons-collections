@@ -44,7 +44,7 @@ public final class UnmodifiableIterator<E> implements Iterator<E>, Unmodifiable 
      * @param iterator  the iterator to decorate
      * @throws IllegalArgumentException if the iterator is null
      */
-    public static <E> Iterator<E> decorate(Iterator<E> iterator) {
+    public static <E> Iterator<E> unmodifiableIterator(Iterator<E> iterator) {
         if (iterator == null) {
             throw new IllegalArgumentException("Iterator must not be null");
         }

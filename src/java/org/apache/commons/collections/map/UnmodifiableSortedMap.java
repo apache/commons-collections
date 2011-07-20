@@ -55,7 +55,7 @@ public final class UnmodifiableSortedMap<K, V>
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    public static <K, V> SortedMap<K, V> decorate(SortedMap<K, V> map) {
+    public static <K, V> SortedMap<K, V> unmodifiableSortedMap(SortedMap<K, V> map) {
         if (map instanceof Unmodifiable) {
             return map;
         }
@@ -123,17 +123,17 @@ public final class UnmodifiableSortedMap<K, V>
 
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
-        return UnmodifiableEntrySet.decorate(super.entrySet());
+        return UnmodifiableEntrySet.unmodifiableEntrySet(super.entrySet());
     }
 
     @Override
     public Set<K> keySet() {
-        return UnmodifiableSet.decorate(super.keySet());
+        return UnmodifiableSet.unmodifiableSet(super.keySet());
     }
 
     @Override
     public Collection<V> values() {
-        return UnmodifiableCollection.decorate(super.values());
+        return UnmodifiableCollection.unmodifiableCollection(super.values());
     }
 
     //-----------------------------------------------------------------------

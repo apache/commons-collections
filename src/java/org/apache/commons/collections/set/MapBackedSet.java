@@ -54,8 +54,8 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    public static <E, V> Set<E> decorate(Map<E, ? super V> map) {
-        return decorate(map, null);
+    public static <E, V> Set<E> mapBackedSet(Map<E, ? super V> map) {
+        return mapBackedSet(map, null);
     }
 
     /**
@@ -65,7 +65,7 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
      * @param dummyValue  the dummy value to use
      * @throws IllegalArgumentException if map is null
      */
-    public static <E, V> Set<E> decorate(Map<E, ? super V> map, V dummyValue) {
+    public static <E, V> Set<E> mapBackedSet(Map<E, ? super V> map, V dummyValue) {
         if (map == null) {
             throw new IllegalArgumentException("The map must not be null");
         }

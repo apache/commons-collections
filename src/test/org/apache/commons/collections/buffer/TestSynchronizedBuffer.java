@@ -42,14 +42,14 @@ public class TestSynchronizedBuffer<E> extends AbstractTestCollection<E> {
     //-----------------------------------------------------------------------
     @Override
     public Buffer<E> makeObject() {
-        return SynchronizedBuffer.decorate(new UnboundedFifoBuffer<E>());
+        return SynchronizedBuffer.synchronizedBuffer(new UnboundedFifoBuffer<E>());
     }
 
     @Override
     public Collection<E> makeFullCollection() {
         Buffer<E> buffer = new UnboundedFifoBuffer<E>();
         buffer.addAll(Arrays.asList(getFullElements()));
-        return SynchronizedBuffer.decorate(buffer);
+        return SynchronizedBuffer.synchronizedBuffer(buffer);
     }
 
     @Override

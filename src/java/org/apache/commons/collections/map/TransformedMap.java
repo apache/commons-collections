@@ -65,14 +65,14 @@ public class TransformedMap<K, V>
      * <p>
      * If there are any elements already in the map being decorated, they
      * are NOT transformed.
-     * Contrast this with {@link #decorateTransform}.
+     * Contrast this with {@link #transformedMap(Map, Transformer, Transformer)}.
      *
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no transformation
      * @param valueTransformer  the transformer to use for value conversion, null means no transformation
      * @throws IllegalArgumentException if map is null
      */
-    public static <K, V> IterableMap<K, V> decorate(Map<K, V> map,
+    public static <K, V> IterableMap<K, V> transformingMap(Map<K, V> map,
             Transformer<? super K, ? extends K> keyTransformer,
             Transformer<? super V, ? extends V> valueTransformer) {
         return new TransformedMap<K, V>(map, keyTransformer, valueTransformer);
@@ -84,7 +84,7 @@ public class TransformedMap<K, V>
      * <p>
      * If there are any elements already in the map being decorated, they
      * will be transformed by this method.
-     * Contrast this with {@link #decorate}.
+     * Contrast this with {@link #transformingMap(Map, Transformer, Transformer)}.
      *
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no transformation
@@ -92,7 +92,7 @@ public class TransformedMap<K, V>
      * @throws IllegalArgumentException if map is null
      * @since Commons Collections 3.2
      */
-    public static <K, V> Map<K, V> decorateTransform(Map<K, V> map,
+    public static <K, V> Map<K, V> transformedMap(Map<K, V> map,
             Transformer<? super K, ? extends K> keyTransformer,
             Transformer<? super V, ? extends V> valueTransformer) {
         TransformedMap<K, V> decorated = new TransformedMap<K, V>(map, keyTransformer, valueTransformer);

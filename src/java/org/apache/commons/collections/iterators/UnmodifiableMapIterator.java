@@ -41,7 +41,7 @@ public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, U
      * @param iterator  the iterator to decorate
      * @throws IllegalArgumentException if the iterator is null
      */
-    public static <K, V> MapIterator<K, V> decorate(MapIterator<K, V> iterator) {
+    public static <K, V> MapIterator<K, V> unmodifiableMapIterator(MapIterator<K, V> iterator) {
         if (iterator == null) {
             throw new IllegalArgumentException("MapIterator must not be null");
         }

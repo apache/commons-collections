@@ -45,7 +45,7 @@ public class TestListOrderedSet<E> extends AbstractTestSet<E> {
 
     @Override
     public ListOrderedSet<E> makeObject() {
-        return ListOrderedSet.decorate(new HashSet<E>());
+        return ListOrderedSet.listOrderedSet(new HashSet<E>());
     }
 
     @SuppressWarnings("unchecked")
@@ -198,23 +198,23 @@ public class TestListOrderedSet<E> extends AbstractTestSet<E> {
 
     public void testDecorator() {
         try {
-            ListOrderedSet.decorate((List<E>) null);
+            ListOrderedSet.listOrderedSet((List<E>) null);
             fail();
         } catch (IllegalArgumentException ex) {}
         try {
-            ListOrderedSet.decorate((Set<E>) null);
+            ListOrderedSet.listOrderedSet((Set<E>) null);
             fail();
         } catch (IllegalArgumentException ex) {}
         try {
-            ListOrderedSet.decorate(null, null);
+            ListOrderedSet.listOrderedSet(null, null);
             fail();
         } catch (IllegalArgumentException ex) {}
         try {
-            ListOrderedSet.decorate(new HashSet<E>(), null);
+            ListOrderedSet.listOrderedSet(new HashSet<E>(), null);
             fail();
         } catch (IllegalArgumentException ex) {}
         try {
-            ListOrderedSet.decorate(null, new ArrayList<E>());
+            ListOrderedSet.listOrderedSet(null, new ArrayList<E>());
             fail();
         } catch (IllegalArgumentException ex) {}
     }

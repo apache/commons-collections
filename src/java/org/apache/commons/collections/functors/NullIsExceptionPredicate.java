@@ -44,7 +44,7 @@ public final class NullIsExceptionPredicate<T> implements Predicate<T>, Predicat
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null
      */
-    public static <T> Predicate<T> getInstance(Predicate<? super T> predicate) {
+    public static <T> Predicate<T> nullIsExceptionPredicate(Predicate<? super T> predicate) {
         if (predicate == null) {
             throw new IllegalArgumentException("Predicate must not be null");
         }

@@ -51,14 +51,14 @@ public class TestUnmodifiableSortedSet<E> extends AbstractTestSortedSet<E> {
     //-------------------------------------------------------------------
     @Override
     public SortedSet<E> makeObject() {
-        return UnmodifiableSortedSet.decorate(new TreeSet<E>());
+        return UnmodifiableSortedSet.unmodifiableSortedSet(new TreeSet<E>());
     }
 
     @Override
     public UnmodifiableSortedSet<E> makeFullCollection() {
         TreeSet<E> set = new TreeSet<E>();
         set.addAll(Arrays.asList(getFullElements()));
-        return (UnmodifiableSortedSet<E>) UnmodifiableSortedSet.decorate(set);
+        return (UnmodifiableSortedSet<E>) UnmodifiableSortedSet.unmodifiableSortedSet(set);
     }
 
     @Override

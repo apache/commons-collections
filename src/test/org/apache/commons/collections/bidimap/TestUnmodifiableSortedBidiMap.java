@@ -43,14 +43,14 @@ public class TestUnmodifiableSortedBidiMap<K extends Comparable<K>, V extends Co
     //-----------------------------------------------------------------------
     @Override
     public SortedBidiMap<K, V> makeObject() {
-        return UnmodifiableSortedBidiMap.decorate(new DualTreeBidiMap<K, V>());
+        return UnmodifiableSortedBidiMap.unmodifiableSortedBidiMap(new DualTreeBidiMap<K, V>());
     }
 
     @Override
     public SortedBidiMap<K, V> makeFullMap() {
         SortedBidiMap<K, V> bidi = new DualTreeBidiMap<K, V>();
         addSampleMappings(bidi);
-        return UnmodifiableSortedBidiMap.decorate(bidi);
+        return UnmodifiableSortedBidiMap.unmodifiableSortedBidiMap(bidi);
     }
 
     @Override

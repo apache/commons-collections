@@ -38,13 +38,13 @@ public class TestTransformedBag<T> extends AbstractTestBag<T> {
     @Override
     @SuppressWarnings("unchecked")
     public Bag<T> makeObject() {
-        return TransformedBag.decorate(new HashBag<T>(), (Transformer<T, T>) TestTransformedCollection.NOOP_TRANSFORMER);
+        return TransformedBag.transformingBag(new HashBag<T>(), (Transformer<T, T>) TestTransformedCollection.NOOP_TRANSFORMER);
     }
 
     @SuppressWarnings("unchecked")
     public void testTransformedBag() {
         //T had better be Object!
-        Bag<T> bag = TransformedBag.decorate(new HashBag<T>(), (Transformer<T, T>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        Bag<T> bag = TransformedBag.transformingBag(new HashBag<T>(), (Transformer<T, T>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, bag.size());
         Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {
@@ -65,7 +65,7 @@ public class TestTransformedBag<T> extends AbstractTestBag<T> {
         for (int i = 0; i < els.length; i++) {
             originalBag.add(els[i]);
         }
-        Bag bag = TransformedBag.decorateTransform(originalBag, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        Bag bag = TransformedBag.transformedBag(originalBag, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, bag.size());
         for (int i = 0; i < els.length; i++) {
             assertEquals(true, bag.contains(new Integer((String) els[i])));

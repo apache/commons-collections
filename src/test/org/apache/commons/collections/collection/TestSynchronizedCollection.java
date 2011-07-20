@@ -39,7 +39,7 @@ public class TestSynchronizedCollection<E> extends AbstractTestCollection<E> {
     //-----------------------------------------------------------------------
     @Override
     public Collection<E> makeObject() {
-        return SynchronizedCollection.decorate(new ArrayList<E>());
+        return SynchronizedCollection.synchronizedCollection(new ArrayList<E>());
     }
 
     @Override

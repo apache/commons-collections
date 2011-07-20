@@ -60,7 +60,7 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
      * @throws IllegalArgumentException if list or predicate is null
      * @throws IllegalArgumentException if the list contains invalid elements
      */
-    public static <T> List<T> decorate(List<T> list, Predicate<? super T> predicate) {
+    public static <T> List<T> predicatedList(List<T> list, Predicate<? super T> predicate) {
         return new PredicatedList<T>(list, predicate);
     }
 

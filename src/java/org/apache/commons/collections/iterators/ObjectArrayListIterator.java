@@ -69,7 +69,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      * @param array the array to iterate over
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      */
-    public ObjectArrayListIterator(E[] array) {
+    public ObjectArrayListIterator(E... array) {
         super(array);
     }
 

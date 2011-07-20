@@ -37,7 +37,7 @@ public class TestMapBackedSet2<E> extends AbstractTestSet<E> {
 
     @Override
     public Set<E> makeObject() {
-        return MapBackedSet.decorate(new LinkedMap<E, Object>());
+        return MapBackedSet.mapBackedSet(new LinkedMap<E, Object>());
     }
 
     @SuppressWarnings("unchecked")

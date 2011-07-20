@@ -58,7 +58,7 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
     /**
      * Create a composite set with sets as the initial set of composited Sets
      */
-    public CompositeSet(Set<E>[] sets) {
+    public CompositeSet(Set<E>... sets) {
         super(sets);
     }
 

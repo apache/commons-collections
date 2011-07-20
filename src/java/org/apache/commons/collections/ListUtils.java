@@ -299,7 +299,7 @@ public class ListUtils {
      * @throws IllegalArgumentException  if the list is null
      */
     public static <E> List<E> synchronizedList(List<E> list) {
-        return SynchronizedList.decorate(list);
+        return SynchronizedList.synchronizedList(list);
     }
 
     /**
@@ -312,7 +312,7 @@ public class ListUtils {
      * @throws IllegalArgumentException  if the list is null
      */
     public static <E> List<E> unmodifiableList(List<E> list) {
-        return UnmodifiableList.decorate(list);
+        return UnmodifiableList.unmodifiableList(list);
     }
 
     /**
@@ -329,7 +329,7 @@ public class ListUtils {
      * @throws IllegalArgumentException  if the List or Predicate is null
      */
     public static <E> List<E> predicatedList(List<E> list, Predicate<E> predicate) {
-        return PredicatedList.decorate(list, predicate);
+        return PredicatedList.predicatedList(list, predicate);
     }
 
     /**
@@ -352,7 +352,7 @@ public class ListUtils {
      * @throws IllegalArgumentException  if the List or Transformer is null
      */
     public static <E> List<E> transformedList(List<E> list, Transformer<? super E, ? extends E> transformer) {
-        return TransformedList.decorate(list, transformer);
+        return TransformedList.transformingList(list, transformer);
     }
     
     /**
@@ -385,7 +385,7 @@ public class ListUtils {
      * @throws IllegalArgumentException  if the List or Factory is null
      */
     public static <E> List<E> lazyList(List<E> list, Factory<? extends E> factory) {
-        return LazyList.decorate(list, factory);
+        return LazyList.lazyList(list, factory);
     }
 
     /**
@@ -399,7 +399,7 @@ public class ListUtils {
      * @throws IllegalArgumentException  if the List is null
      */
     public static <E> List<E> fixedSizeList(List<E> list) {
-        return FixedSizeList.decorate(list);
+        return FixedSizeList.fixedSizeList(list);
     }
 
     /**

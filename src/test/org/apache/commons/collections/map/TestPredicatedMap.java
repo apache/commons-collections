@@ -50,7 +50,7 @@ public class TestPredicatedMap<K, V> extends AbstractTestIterableMap<K, V> {
     //-----------------------------------------------------------------------
     protected IterableMap<K, V> decorateMap(Map<K, V> map, Predicate<? super K> keyPredicate,
         Predicate<? super V> valuePredicate) {
-        return PredicatedMap.decorate(map, keyPredicate, valuePredicate);
+        return PredicatedMap.predicatedMap(map, keyPredicate, valuePredicate);
     }
 
     @Override

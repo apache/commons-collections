@@ -47,14 +47,14 @@ public class TransformedSortedBag<E>
      * <p>
      * If there are any elements already in the bag being decorated, they
      * are NOT transformed.
-     * Constrast this with {@link #decorateTransform}.
+     * Contrast this with {@link #transformedSortedBag(SortedBag, Transformer)}.
      * 
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed SortedBag
      * @throws IllegalArgumentException if bag or transformer is null
      */
-    public static <E> SortedBag<E> decorate(SortedBag<E> bag, Transformer<? super E, ? extends E> transformer) {
+    public static <E> SortedBag<E> transformingSortedBag(SortedBag<E> bag, Transformer<? super E, ? extends E> transformer) {
         return new TransformedSortedBag<E>(bag, transformer);
     }
     
@@ -64,7 +64,7 @@ public class TransformedSortedBag<E>
      * <p>
      * If there are any elements already in the bag being decorated, they
      * will be transformed by this method.
-     * Constrast this with {@link #decorate}.
+     * Contrast this with {@link #transformingSortedBag(SortedBag, Transformer)}.
      * 
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -72,7 +72,7 @@ public class TransformedSortedBag<E>
      * @throws IllegalArgumentException if bag or transformer is null
      * @since Commons Collections 3.3
      */
-    public static <E> SortedBag<E>  decorateTransform(SortedBag<E> bag, Transformer<? super E, ? extends E> transformer) {
+    public static <E> SortedBag<E> transformedSortedBag(SortedBag<E> bag, Transformer<? super E, ? extends E> transformer) {
         TransformedSortedBag<E>  decorated = new TransformedSortedBag<E>(bag, transformer);
         if (transformer != null && bag != null && bag.size() > 0) {
             @SuppressWarnings("unchecked") // bag is type E

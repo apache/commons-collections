@@ -45,12 +45,12 @@ public class BagUtils {
     /**
      * An empty unmodifiable bag.
      */
-    public static final Bag<Object> EMPTY_BAG = UnmodifiableBag.decorate(new HashBag<Object>());
+    public static final Bag<Object> EMPTY_BAG = UnmodifiableBag.unmodifiableBag(new HashBag<Object>());
 
     /**
      * An empty unmodifiable sorted bag.
      */
-    public static final Bag<Object> EMPTY_SORTED_BAG = UnmodifiableSortedBag.decorate(new TreeBag<Object>());
+    public static final Bag<Object> EMPTY_SORTED_BAG = UnmodifiableSortedBag.unmodifiableSortedBag(new TreeBag<Object>());
 
     /**
      * Instantiation of BagUtils is not intended or required. However, some
@@ -86,7 +86,7 @@ public class BagUtils {
      * @throws IllegalArgumentException if the Bag is null
      */
     public static <E> Bag<E> synchronizedBag(Bag<E> bag) {
-        return SynchronizedBag.decorate(bag);
+        return SynchronizedBag.synchronizedBag(bag);
     }
 
     /**
@@ -99,7 +99,7 @@ public class BagUtils {
      * @throws IllegalArgumentException if the Bag is null
      */
     public static <E> Bag<E> unmodifiableBag(Bag<E> bag) {
-        return UnmodifiableBag.decorate(bag);
+        return UnmodifiableBag.unmodifiableBag(bag);
     }
 
     /**
@@ -117,7 +117,7 @@ public class BagUtils {
      * @throws IllegalArgumentException if the Bag or Predicate is null
      */
     public static <E> Bag<E> predicatedBag(Bag<E> bag, Predicate<? super E> predicate) {
-        return PredicatedBag.decorate(bag, predicate);
+        return PredicatedBag.predicatedBag(bag, predicate);
     }
 
     /**
@@ -128,15 +128,15 @@ public class BagUtils {
      * as it is a backdoor for adding untransformed objects.
      * <p>
      * Existing entries in the specified bag will not be transformed.
-     * If you want that behaviour, see {@link TransformedBag#decorateTransform}.
+     * If you want that behaviour, see {@link TransformedBag#transformedBag(Bag, Transformer)}.
      * 
      * @param bag the bag to predicate, must not be null
      * @param transformer the transformer for the bag, must not be null
      * @return a transformed bag backed by the given bag
      * @throws IllegalArgumentException if the Bag or Transformer is null
      */
-    public static <E> Bag<E> transformedBag(Bag<E> bag, Transformer<? super E, ? extends E> transformer) {
-        return TransformedBag.decorate(bag, transformer);
+    public static <E> Bag<E> transformingBag(Bag<E> bag, Transformer<? super E, ? extends E> transformer) {
+        return TransformedBag.transformingBag(bag, transformer);
     }
 
     //-----------------------------------------------------------------------
@@ -166,7 +166,7 @@ public class BagUtils {
      * @throws IllegalArgumentException if the SortedBag is null
      */
     public static <E> SortedBag<E> synchronizedSortedBag(SortedBag<E> bag) {
-        return SynchronizedSortedBag.decorate(bag);
+        return SynchronizedSortedBag.synchronizedSortedBag(bag);
     }
 
     /**
@@ -180,7 +180,7 @@ public class BagUtils {
      * @throws IllegalArgumentException if the SortedBag is null
      */
     public static <E> SortedBag<E> unmodifiableSortedBag(SortedBag<E> bag) {
-        return UnmodifiableSortedBag.decorate(bag);
+        return UnmodifiableSortedBag.unmodifiableSortedBag(bag);
     }
 
     /**
@@ -200,7 +200,7 @@ public class BagUtils {
      */
     public static <E> SortedBag<E> predicatedSortedBag(SortedBag<E> bag,
             Predicate<? super E> predicate) {
-        return PredicatedSortedBag.decorate(bag, predicate);
+        return PredicatedSortedBag.predicatedSortedBag(bag, predicate);
     }
 
     /**
@@ -211,15 +211,15 @@ public class BagUtils {
      * as it is a backdoor for adding untransformed objects.
      * <p>
      * Existing entries in the specified bag will not be transformed.
-     * If you want that behaviour, see {@link TransformedSortedBag#decorateTransform}.
+     * If you want that behaviour, see {@link TransformedSortedBag#transformedSortedBag(SortedBag, Transformer)}.
      * 
      * @param bag the bag to predicate, must not be null
      * @param transformer the transformer for the bag, must not be null
      * @return a transformed bag backed by the given bag
      * @throws IllegalArgumentException if the Bag or Transformer is null
      */
-    public static <E> SortedBag<E> transformedSortedBag(SortedBag<E> bag, Transformer<? super E, ? extends E> transformer) {
-        return TransformedSortedBag.decorate(bag, transformer);
+    public static <E> SortedBag<E> transformingSortedBag(SortedBag<E> bag, Transformer<? super E, ? extends E> transformer) {
+        return TransformedSortedBag.transformingSortedBag(bag, transformer);
     }
 
     /**

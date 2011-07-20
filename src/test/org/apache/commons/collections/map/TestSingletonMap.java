@@ -50,7 +50,7 @@ public class TestSingletonMap<K, V> extends AbstractTestOrderedMap<K, V> {
     public OrderedMap<K, V> makeObject() {
         // need an empty singleton map, but thats not possible
         // use a ridiculous fake instead to make the tests pass
-        return UnmodifiableOrderedMap.decorate(ListOrderedMap.decorate(new HashMap<K, V>()));
+        return UnmodifiableOrderedMap.unmodifiableOrderedMap(ListOrderedMap.listOrderedMap(new HashMap<K, V>()));
     }
 
     @Override

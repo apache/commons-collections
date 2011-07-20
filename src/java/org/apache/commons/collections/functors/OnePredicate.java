@@ -55,7 +55,7 @@ public final class OnePredicate<T> implements Predicate<T>, PredicateDecorator<T
      * @throws IllegalArgumentException if any predicate in the array is null
      */
     @SuppressWarnings("unchecked")
-    public static <T> Predicate<T> getInstance(Predicate<? super T>[] predicates) {
+    public static <T> Predicate<T> onePredicate(Predicate<? super T>... predicates) {
         FunctorUtils.validate(predicates);
         if (predicates.length == 0) {
             return FalsePredicate.<T>falsePredicate();
@@ -75,7 +75,7 @@ public final class OnePredicate<T> implements Predicate<T>, PredicateDecorator<T
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static <T> Predicate<T> getInstance(Collection<? extends Predicate<T>> predicates) {
+    public static <T> Predicate<T> onePredicate(Collection<? extends Predicate<T>> predicates) {
         Predicate<? super T>[] preds = FunctorUtils.validate(predicates);
         return new OnePredicate<T>(preds);
     }

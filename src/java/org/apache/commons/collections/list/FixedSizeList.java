@@ -52,7 +52,7 @@ public class FixedSizeList<E>
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    public static <E> List<E> decorate(List<E> list) {
+    public static <E> List<E> fixedSizeList(List<E> list) {
         return new FixedSizeList<E>(list);
     }
 
@@ -105,7 +105,7 @@ public class FixedSizeList<E>
 
     @Override
     public Iterator<E> iterator() {
-        return UnmodifiableIterator.decorate(decorated().iterator());
+        return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
     }
 
     @Override

@@ -45,10 +45,10 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      * @throws IllegalArgumentException if the closures array is null
      * @throws IllegalArgumentException if any closure in the array is null
      */
-    public static <E> Closure<E> getInstance(Closure<? super E>[] closures) {
+    public static <E> Closure<E> chainedClosure(Closure<? super E>... closures) {
         FunctorUtils.validate(closures);
         if (closures.length == 0) {
-            return NOPClosure.<E>getInstance();
+            return NOPClosure.<E>nopClosure();
         }
         closures = FunctorUtils.copy(closures);
         return new ChainedClosure<E>(closures);
@@ -65,12 +65,12 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      * @throws IllegalArgumentException if any closure in the collection is null
      */
     @SuppressWarnings("unchecked")
-    public static <E> Closure<E> getInstance(Collection<Closure<E>> closures) {
+    public static <E> Closure<E> chainedClosure(Collection<Closure<E>> closures) {
         if (closures == null) {
             throw new IllegalArgumentException("Closure collection must not be null");
         }
         if (closures.size() == 0) {
-            return NOPClosure.<E>getInstance();
+            return NOPClosure.<E>nopClosure();
         }
         // convert to array like this to guarantee iterator() ordering
         Closure<? super E>[] cmds = new Closure[closures.size()];
@@ -80,23 +80,6 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
         }
         FunctorUtils.validate(cmds);
         return new ChainedClosure<E>(cmds);
-    }
-
-    /**
-     * Factory method that performs validation.
-     * 
-     * @param closure1  the first closure, not null
-     * @param closure2  the second closure, not null
-     * @return the <code>chained</code> closure
-     * @throws IllegalArgumentException if either closure is null
-     */
-    @SuppressWarnings("unchecked")
-    public static <E> Closure<E> getInstance(Closure<? super E> closure1, Closure<? super E> closure2) {
-        if (closure1 == null || closure2 == null) {
-            throw new IllegalArgumentException("Closures must not be null");
-        }
-        Closure<E>[] closures = new Closure[] { closure1, closure2 };
-        return new ChainedClosure<E>(closures);
     }
 
     /**

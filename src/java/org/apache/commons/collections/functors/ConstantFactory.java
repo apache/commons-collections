@@ -50,7 +50,7 @@ public class ConstantFactory<T> implements Factory<T>, Serializable {
      * @return the <code>constant</code> factory.
      */
     @SuppressWarnings("unchecked")
-    public static <T> Factory<T> getInstance(T constantToReturn) {
+    public static <T> Factory<T> constantFactory(T constantToReturn) {
         if (constantToReturn == null) {
             return (Factory<T>) NULL_INSTANCE;
         }

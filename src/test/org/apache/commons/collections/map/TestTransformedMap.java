@@ -43,7 +43,7 @@ public class TestTransformedMap<K, V> extends AbstractTestIterableMap<K, V> {
     //-----------------------------------------------------------------------
     @Override
     public IterableMap<K, V> makeObject() {
-        return TransformedMap.decorate(new HashMap<K, V>(), TransformerUtils.<K> nopTransformer(),
+        return TransformedMap.transformingMap(new HashMap<K, V>(), TransformerUtils.<K> nopTransformer(),
                 TransformerUtils.<V> nopTransformer());
     }
 
@@ -53,7 +53,7 @@ public class TestTransformedMap<K, V> extends AbstractTestIterableMap<K, V> {
         Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
 
         Map<K, V> map = TransformedMap
-                .decorate(
+                .transformingMap(
                         new HashMap<K, V>(),
                         (Transformer<? super K, ? extends K>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER,
                         null);
@@ -70,7 +70,7 @@ public class TestTransformedMap<K, V> extends AbstractTestIterableMap<K, V> {
         assertEquals(null, map.remove(els[0]));
         assertEquals(els[0], map.remove(new Integer((String) els[0])));
 
-        map = TransformedMap.decorate(new HashMap(), null, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        map = TransformedMap.transformingMap(new HashMap(), null, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, map.size());
         for (int i = 0; i < els.length; i++) {
             map.put((K) els[i], (V) els[i]);
@@ -104,7 +104,7 @@ public class TestTransformedMap<K, V> extends AbstractTestIterableMap<K, V> {
         base.put((K) "C", (V) "3");
 
         Map<K, V> trans = TransformedMap
-                .decorate(
+                .transformingMap(
                         base,
                         null,
                         (Transformer<? super V, ? extends V>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
@@ -124,7 +124,7 @@ public class TestTransformedMap<K, V> extends AbstractTestIterableMap<K, V> {
         base.put((K) "C", (V) "3");
 
         Map<K, V> trans = TransformedMap
-                .decorateTransform(
+                .transformedMap(
                         base,
                         null,
                         (Transformer<? super V, ? extends V>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);

@@ -45,7 +45,7 @@ public final class UniquePredicate<T> implements Predicate<T>, Serializable {
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null
      */
-    public static <E> Predicate<E> getInstance() {
+    public static <E> Predicate<E> uniquePredicate() {
         return new UniquePredicate<E>();
     }
 

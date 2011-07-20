@@ -53,7 +53,7 @@ public final class NonePredicate<T> implements Predicate<T>, PredicateDecorator<
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static <T> Predicate<T> getInstance(Predicate<? super T>[] predicates) {
+    public static <T> Predicate<T> nonePredicate(Predicate<? super T>... predicates) {
         FunctorUtils.validate(predicates);
         if (predicates.length == 0) {
             return TruePredicate.<T>truePredicate();
@@ -72,7 +72,7 @@ public final class NonePredicate<T> implements Predicate<T>, PredicateDecorator<
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static <T> Predicate<T> getInstance(Collection<? extends Predicate<T>> predicates) {
+    public static <T> Predicate<T> nonePredicate(Collection<? extends Predicate<T>> predicates) {
         Predicate<? super T>[] preds = FunctorUtils.validate(predicates);
         if (preds.length == 0) {
             return TruePredicate.<T>truePredicate();

@@ -43,13 +43,13 @@ public class TestBoundedBuffer<E> extends AbstractTestObject {
 
     @Override
     public Buffer<E> makeObject() {
-        return BoundedBuffer.decorate(new UnboundedFifoBuffer<E>(), 1);
+        return BoundedBuffer.boundedBuffer(new UnboundedFifoBuffer<E>(), 1);
     }
 
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testMaxSize() {
-        final Buffer<E> bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer<E>(), 2, 500);
+        final Buffer<E> bounded = BoundedBuffer.boundedBuffer(new UnboundedFifoBuffer<E>(), 2, 500);
         BoundedCollection<?> bc = (BoundedCollection<?>) bounded;
         assertEquals(2, bc.maxSize());
         assertEquals(false, bc.isFull());
@@ -60,11 +60,11 @@ public class TestBoundedBuffer<E> extends AbstractTestObject {
         bounded.remove();
         assertEquals(false, bc.isFull());
         try {
-            BoundedBuffer.decorate(new UnboundedFifoBuffer<E>(), 0);
+            BoundedBuffer.boundedBuffer(new UnboundedFifoBuffer<E>(), 0);
             fail();
         } catch (IllegalArgumentException ex) {}
         try {
-            BoundedBuffer.decorate(new UnboundedFifoBuffer<E>(), -1);
+            BoundedBuffer.boundedBuffer(new UnboundedFifoBuffer<E>(), -1);
             fail();
         } catch (IllegalArgumentException ex) {}
     }
@@ -103,7 +103,7 @@ public class TestBoundedBuffer<E> extends AbstractTestObject {
 
     @SuppressWarnings("unchecked")
     public void testAddToFullBufferRemoveViaIterator() {
-        final Buffer<E> bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer<E>(), 1, 500);
+        final Buffer<E> bounded = BoundedBuffer.boundedBuffer(new UnboundedFifoBuffer<E>(), 1, 500);
         bounded.add((E) "Hello");
         new DelayedIteratorRemove(bounded, 200).start();
         bounded.add((E) "World");
@@ -114,7 +114,7 @@ public class TestBoundedBuffer<E> extends AbstractTestObject {
 
     @SuppressWarnings("unchecked")
     public void testAddAllToFullBufferRemoveViaIterator() {
-        final Buffer<E> bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer<E>(), 2, 500);
+        final Buffer<E> bounded = BoundedBuffer.boundedBuffer(new UnboundedFifoBuffer<E>(), 2, 500);
         bounded.add((E) "Hello");
         bounded.add((E) "World");
         new DelayedIteratorRemove(bounded, 200, 2).start();
@@ -126,7 +126,7 @@ public class TestBoundedBuffer<E> extends AbstractTestObject {
 
     @SuppressWarnings("unchecked")
     public void testAddToFullBufferWithTimeout() {
-        final Buffer<E> bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer<E>(), 1, 500);
+        final Buffer<E> bounded = BoundedBuffer.boundedBuffer(new UnboundedFifoBuffer<E>(), 1, 500);
         bounded.add((E) "Hello");
         new DelayedRemove(bounded, 200).start();
         bounded.add((E) "World");
@@ -141,7 +141,7 @@ public class TestBoundedBuffer<E> extends AbstractTestObject {
 
     @SuppressWarnings("unchecked")
     public void testAddAllToFullBufferWithTimeout() {
-        final Buffer<E> bounded = BoundedBuffer.decorate(new UnboundedFifoBuffer<E>(), 2, 500);
+        final Buffer<E> bounded = BoundedBuffer.boundedBuffer(new UnboundedFifoBuffer<E>(), 2, 500);
         bounded.add((E) "Hello");
         bounded.add((E) "World");
         new DelayedRemove(bounded, 200, 2).start();

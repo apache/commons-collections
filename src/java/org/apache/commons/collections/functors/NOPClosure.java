@@ -43,7 +43,7 @@ public final class NOPClosure<E> implements Closure<E>, Serializable {
      * @since Commons Collections 3.1
      */
     @SuppressWarnings("unchecked")
-    public static <E> Closure<E> getInstance() {
+    public static <E> Closure<E> nopClosure() {
         return (Closure<E>) INSTANCE;
     }
 

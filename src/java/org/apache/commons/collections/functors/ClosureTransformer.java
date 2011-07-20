@@ -45,7 +45,7 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
      * @return the <code>closure</code> transformer
      * @throws IllegalArgumentException if the closure is null
      */
-    public static <T> Transformer<T, T> getInstance(Closure<? super T> closure) {
+    public static <T> Transformer<T, T> closureTransformer(Closure<? super T> closure) {
         if (closure == null) {
             throw new IllegalArgumentException("Closure must not be null");
         }

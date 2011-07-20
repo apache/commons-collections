@@ -48,7 +48,7 @@ public final class UnmodifiableSet<E>
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    public static <E> Set<E> decorate(Set<E> set) {
+    public static <E> Set<E> unmodifiableSet(Set<E> set) {
         if (set instanceof Unmodifiable) {
             return set;
         }
@@ -69,7 +69,7 @@ public final class UnmodifiableSet<E>
     //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
-        return UnmodifiableIterator.<E>decorate(decorated().iterator());
+        return UnmodifiableIterator.<E>unmodifiableIterator(decorated().iterator());
     }
 
     @Override

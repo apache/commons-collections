@@ -45,7 +45,7 @@ public class TestSynchronizedSortedSet<E> extends AbstractTestSortedSet<E> {
    //-------------------------------------------------------------------
     @Override
     public SortedSet<E> makeObject() {
-        return SynchronizedSortedSet.decorate(new TreeSet<E>());
+        return SynchronizedSortedSet.synchronizedSortedSet(new TreeSet<E>());
     }
 
     @Override

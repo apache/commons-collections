@@ -53,7 +53,7 @@ public final class UnmodifiableOrderedBidiMap<K, V>
      * @return an unmodifiable OrderedBidiMap
      * @throws IllegalArgumentException if map is null
      */
-    public static <K, V> OrderedBidiMap<K, V> decorate(OrderedBidiMap<K, V> map) {
+    public static <K, V> OrderedBidiMap<K, V> unmodifiableOrderedBidiMap(OrderedBidiMap<K, V> map) {
         if (map instanceof Unmodifiable) {
             return map;
         }
@@ -95,19 +95,19 @@ public final class UnmodifiableOrderedBidiMap<K, V>
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
         Set<Map.Entry<K, V>> set = super.entrySet();
-        return UnmodifiableEntrySet.decorate(set);
+        return UnmodifiableEntrySet.unmodifiableEntrySet(set);
     }
 
     @Override
     public Set<K> keySet() {
         Set<K> set = super.keySet();
-        return UnmodifiableSet.decorate(set);
+        return UnmodifiableSet.unmodifiableSet(set);
     }
 
     @Override
     public Collection<V> values() {
         Collection<V> coll = super.values();
-        return UnmodifiableCollection.decorate(coll);
+        return UnmodifiableCollection.unmodifiableCollection(coll);
     }
 
     //-----------------------------------------------------------------------
@@ -125,7 +125,7 @@ public final class UnmodifiableOrderedBidiMap<K, V>
     @Override
     public OrderedMapIterator<K, V> mapIterator() {
         OrderedMapIterator<K, V> it = decorated().mapIterator();
-        return UnmodifiableOrderedMapIterator.decorate(it);
+        return UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(it);
     }
 
     public OrderedBidiMap<V, K> inverseOrderedBidiMap() {

@@ -37,7 +37,7 @@ public class BufferUtils {
     /**
      * An empty unmodifiable buffer.
      */
-    public static final Buffer<Object> EMPTY_BUFFER = UnmodifiableBuffer.decorate(new ArrayStack<Object>(1));
+    public static final Buffer<Object> EMPTY_BUFFER = UnmodifiableBuffer.unmodifiableBuffer(new ArrayStack<Object>(1));
 
     /**
      * <code>BufferUtils</code> should not normally be instantiated.
@@ -67,7 +67,7 @@ public class BufferUtils {
      * @throws IllegalArgumentException  if the Buffer is null
      */
     public static <E> Buffer<E> synchronizedBuffer(Buffer<E> buffer) {
-        return SynchronizedBuffer.decorate(buffer);
+        return SynchronizedBuffer.synchronizedBuffer(buffer);
     }
 
     /**
@@ -83,7 +83,7 @@ public class BufferUtils {
      * @throws IllegalArgumentException  if the Buffer is null
      */
     public static <E> Buffer<E> blockingBuffer(Buffer<E> buffer) {
-        return BlockingBuffer.decorate(buffer);
+        return BlockingBuffer.blockingBuffer(buffer);
     }
 
     /**
@@ -101,7 +101,7 @@ public class BufferUtils {
      * @since Commons Collections 3.2
      */
     public static <E> Buffer<E> blockingBuffer(Buffer<E> buffer, long timeoutMillis) {
-        return BlockingBuffer.decorate(buffer, timeoutMillis);
+        return BlockingBuffer.blockingBuffer(buffer, timeoutMillis);
     }
 
     /**
@@ -118,7 +118,7 @@ public class BufferUtils {
      * @since Commons Collections 3.2
      */
     public static <E> Buffer<E> boundedBuffer(Buffer<E> buffer, int maximumSize) {
-        return BoundedBuffer.decorate(buffer, maximumSize);
+        return BoundedBuffer.boundedBuffer(buffer, maximumSize);
     }
 
     /**
@@ -136,7 +136,7 @@ public class BufferUtils {
      * @since Commons Collections 3.2
      */
     public static <E> Buffer<E> boundedBuffer(Buffer<E> buffer, int maximumSize, long timeoutMillis) {
-        return BoundedBuffer.decorate(buffer, maximumSize, timeoutMillis);
+        return BoundedBuffer.boundedBuffer(buffer, maximumSize, timeoutMillis);
     }
 
     /**
@@ -147,7 +147,7 @@ public class BufferUtils {
      * @throws IllegalArgumentException  if the Buffer is null
      */
     public static <E> Buffer<E> unmodifiableBuffer(Buffer<E> buffer) {
-        return UnmodifiableBuffer.decorate(buffer);
+        return UnmodifiableBuffer.unmodifiableBuffer(buffer);
     }
 
     /**
@@ -164,7 +164,7 @@ public class BufferUtils {
      * @throws IllegalArgumentException  if the Buffer or Predicate is null
      */
     public static <E> Buffer<E> predicatedBuffer(Buffer<E> buffer, Predicate<? super E> predicate) {
-        return PredicatedBuffer.decorate(buffer, predicate);
+        return PredicatedBuffer.predicatedBuffer(buffer, predicate);
     }
 
     /**
@@ -182,8 +182,8 @@ public class BufferUtils {
      * @return a transformed buffer backed by the given buffer
      * @throws IllegalArgumentException  if the Buffer or Transformer is null
      */
-    public static <E> Buffer<E> transformedBuffer(Buffer<E> buffer, Transformer<? super E, ? extends E> transformer) {
-        return TransformedBuffer.decorate(buffer, transformer);
+    public static <E> Buffer<E> transformingBuffer(Buffer<E> buffer, Transformer<? super E, ? extends E> transformer) {
+        return TransformedBuffer.transformingBuffer(buffer, transformer);
     }
 
     /**

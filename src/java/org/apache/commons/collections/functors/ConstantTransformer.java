@@ -50,7 +50,7 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
      * @return Transformer<I, O> that always returns null.
      */
     @SuppressWarnings("unchecked")
-    public static <I, O> Transformer<I, O> getNullInstance() {
+    public static <I, O> Transformer<I, O> nullTransformer() {
         return (Transformer<I, O>) NULL_INSTANCE;
     }
 
@@ -60,9 +60,9 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
      * @param constantToReturn  the constant object to return each time in the factory
      * @return the <code>constant</code> factory.
      */
-    public static <I, O> Transformer<I, O> getInstance(O constantToReturn) {
+    public static <I, O> Transformer<I, O> constantTransformer(O constantToReturn) {
         if (constantToReturn == null) {
-            return getNullInstance();
+            return nullTransformer();
         }
         return new ConstantTransformer<I, O>(constantToReturn);
     }

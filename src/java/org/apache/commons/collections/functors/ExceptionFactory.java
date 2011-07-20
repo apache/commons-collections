@@ -44,7 +44,7 @@ public final class ExceptionFactory<T> implements Factory<T>, Serializable {
      * @since Commons Collections 3.1
      */
     @SuppressWarnings("unchecked")
-    public static <T> Factory<T> getInstance() {
+    public static <T> Factory<T> exceptionFactory() {
         return (Factory<T>) INSTANCE;
     }
 

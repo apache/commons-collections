@@ -59,7 +59,7 @@ public class PredicatedBag<E>
      * @throws IllegalArgumentException if bag or predicate is null
      * @throws IllegalArgumentException if the bag contains invalid elements
      */
-    public static <T> Bag<T> decorate(Bag<T> bag, Predicate<? super T> predicate) {
+    public static <T> Bag<T> predicatedBag(Bag<T> bag, Predicate<? super T> predicate) {
         return new PredicatedBag<T>(bag, predicate);
     }
 

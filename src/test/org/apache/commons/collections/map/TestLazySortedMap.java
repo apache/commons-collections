@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections.map;
 
-import static org.apache.commons.collections.map.LazySortedMap.getLazySortedMap;
+import static org.apache.commons.collections.map.LazySortedMap.lazySortedMap;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -49,7 +49,7 @@ public class TestLazySortedMap<K, V> extends AbstractTestSortedMap<K, V> {
     
     @Override
     public SortedMap<K,V> makeObject() {
-        return getLazySortedMap(new TreeMap<K,V>(), FactoryUtils.<V>nullFactory());
+        return lazySortedMap(new TreeMap<K,V>(), FactoryUtils.<V>nullFactory());
     }
     
     @Override
@@ -72,13 +72,13 @@ public class TestLazySortedMap<K, V> extends AbstractTestSortedMap<K, V> {
     
     @Test
     public void mapGet() {
-        Map<Integer, Number> map = getLazySortedMap(new TreeMap<Integer,Number>(), oneFactory);
+        Map<Integer, Number> map = lazySortedMap(new TreeMap<Integer,Number>(), oneFactory);
         assertEquals(0, map.size());
         Number i1 = map.get(5);
         assertEquals(1, i1);
         assertEquals(1, map.size());
 
-        map = getLazySortedMap(new TreeMap<Integer,Number>(), FactoryUtils.<Number>nullFactory());
+        map = lazySortedMap(new TreeMap<Integer,Number>(), FactoryUtils.<Number>nullFactory());
         Number o = map.get(5);
         assertEquals(null,o);
         assertEquals(1, map.size());
@@ -87,7 +87,7 @@ public class TestLazySortedMap<K, V> extends AbstractTestSortedMap<K, V> {
     
     //-----------------------------------------------------------------------
     public void testSortOrder() {
-        SortedMap<String, Number> map = getLazySortedMap(new TreeMap<String,Number>(), oneFactory);
+        SortedMap<String, Number> map = lazySortedMap(new TreeMap<String,Number>(), oneFactory);
         map.put("A",  5);
         map.get("B"); // Entry with value "One" created
         map.put("C", 8);
@@ -107,16 +107,16 @@ public class TestLazySortedMap<K, V> extends AbstractTestSortedMap<K, V> {
     
     public void testTransformerDecorate() {
         Transformer<Object, Integer> transformer = TransformerUtils.asTransformer(oneFactory);
-        SortedMap<Integer, Number> map = getLazySortedMap(new TreeMap<Integer, Number>(), transformer);     
+        SortedMap<Integer, Number> map = lazySortedMap(new TreeMap<Integer, Number>(), transformer);     
         assertTrue(map instanceof LazySortedMap);  
          try {
-            map = getLazySortedMap(new TreeMap<Integer, Number>(), (Transformer<Integer, Number>) null);
+            map = lazySortedMap(new TreeMap<Integer, Number>(), (Transformer<Integer, Number>) null);
             fail("Expecting IllegalArgumentException for null transformer");
         } catch (IllegalArgumentException e) {
             // expected
         }
         try {
-            map = getLazySortedMap((SortedMap<Integer,Number>) null, transformer);
+            map = lazySortedMap((SortedMap<Integer,Number>) null, transformer);
             fail("Expecting IllegalArgumentException for null map");
         } catch (IllegalArgumentException e) {
             // expected

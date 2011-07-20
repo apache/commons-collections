@@ -44,7 +44,7 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
      * @return the <code>factory</code> transformer
      * @throws IllegalArgumentException if the factory is null
      */
-    public static <I, O> Transformer<I, O> getInstance(Factory<? extends O> factory) {
+    public static <I, O> Transformer<I, O> factoryTransformer(Factory<? extends O> factory) {
         if (factory == null) {
             throw new IllegalArgumentException("Factory must not be null");
         }

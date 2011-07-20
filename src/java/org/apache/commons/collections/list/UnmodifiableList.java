@@ -50,7 +50,7 @@ public final class UnmodifiableList<E>
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    public static <E> List<E> decorate(List<E> list) {
+    public static <E> List<E> unmodifiableList(List<E> list) {
         if (list instanceof Unmodifiable) {
             return list;
         }
@@ -72,7 +72,7 @@ public final class UnmodifiableList<E>
     //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
-        return UnmodifiableIterator.decorate(decorated().iterator());
+        return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
     }
 
     @Override
@@ -108,12 +108,12 @@ public final class UnmodifiableList<E>
     //-----------------------------------------------------------------------
     @Override
     public ListIterator<E> listIterator() {
-        return UnmodifiableListIterator.decorate(decorated().listIterator());
+        return UnmodifiableListIterator.umodifiableListIterator(decorated().listIterator());
     }
 
     @Override
     public ListIterator<E> listIterator(int index) {
-        return UnmodifiableListIterator.decorate(decorated().listIterator(index));
+        return UnmodifiableListIterator.umodifiableListIterator(decorated().listIterator(index));
     }
 
     @Override

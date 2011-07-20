@@ -105,8 +105,8 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
      * @return the predicate
      * @throws IllegalArgumentException if comparator is null
      */
-    public static <T> Predicate<T> getInstance(T object, Comparator<T> comparator) {
-        return getInstance(object, comparator, Criterion.EQUAL);
+    public static <T> Predicate<T> comparatorPredicate(T object, Comparator<T> comparator) {
+        return comparatorPredicate(object, comparator, Criterion.EQUAL);
     }
 
     /**
@@ -118,7 +118,7 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
      * @return the predicate
      * @throws IllegalArgumentException if comparator is null of criterion is invalid
      */
-    public static <T> Predicate<T> getInstance(T object, Comparator<T> comparator, Criterion criterion) {
+    public static <T> Predicate<T> comparatorPredicate(T object, Comparator<T> comparator, Criterion criterion) {
         if (comparator == null) {
             throw new IllegalArgumentException("Comparator must not be null.");
         }

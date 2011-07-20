@@ -60,7 +60,7 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
      * @return the singleton ComparableComparator
      */
     @SuppressWarnings("unchecked")
-    public static <E extends Comparable<? super E>> ComparableComparator<E> getInstance() {
+    public static <E extends Comparable<? super E>> ComparableComparator<E> comparableComparator() {
         return (ComparableComparator<E>) INSTANCE;
     }
 
@@ -68,7 +68,7 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
     /**
      * Constructor whose use should be avoided.
      * <p>
-     * Please use the {@link #getInstance()} method whenever possible.
+     * Please use the {@link #comparableComparator()} method whenever possible.
      */
     public ComparableComparator() {
         super();

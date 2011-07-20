@@ -163,7 +163,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      */
     public Iterator<E> iterator() {
         if (all.isEmpty()) {
-            return EmptyIterator.<E>getInstance();
+            return EmptyIterator.<E>emptyIterator();
         }
         IteratorChain<E> chain = new IteratorChain<E>();
         for (Collection<? extends E> item : all) {
@@ -419,7 +419,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @return Unmodifiable list of all collections in this composite.
      */
     public List<? extends Collection<E>> getCollections() {
-        return UnmodifiableList.decorate(all);
+        return UnmodifiableList.unmodifiableList(all);
     }
 
     /**

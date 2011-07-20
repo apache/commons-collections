@@ -42,14 +42,14 @@ public class TestUnmodifiableBuffer<E> extends AbstractTestCollection<E> {
     //-----------------------------------------------------------------------
     @Override
     public Collection<E> makeObject() {
-        return UnmodifiableBuffer.decorate(new UnboundedFifoBuffer<E>());
+        return UnmodifiableBuffer.unmodifiableBuffer(new UnboundedFifoBuffer<E>());
     }
 
     @Override
     public Collection<E> makeFullCollection() {
         Buffer<E> buffer = new UnboundedFifoBuffer<E>();
         buffer.addAll(Arrays.asList(getFullElements()));
-        return UnmodifiableBuffer.decorate(buffer);
+        return UnmodifiableBuffer.unmodifiableBuffer(buffer);
     }
 
     @Override

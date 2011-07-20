@@ -66,7 +66,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    public static <E> List<E> decorate(List<E> list) {
+    public static <E> List<E> growthList(List<E> list) {
         return new GrowthList<E>(list);
     }
 

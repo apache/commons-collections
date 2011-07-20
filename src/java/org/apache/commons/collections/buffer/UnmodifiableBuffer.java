@@ -55,7 +55,7 @@ public final class UnmodifiableBuffer<E>
      * @return an unmodifiable Buffer
      * @throws IllegalArgumentException if buffer is null
      */
-    public static <E> Buffer<E> decorate(Buffer<E> buffer) {
+    public static <E> Buffer<E> unmodifiableBuffer(Buffer<E> buffer) {
         if (buffer instanceof Unmodifiable) {
             return buffer;
         }
@@ -101,7 +101,7 @@ public final class UnmodifiableBuffer<E>
     //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
-        return UnmodifiableIterator.decorate(decorated().iterator());
+        return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
     }
 
     @Override

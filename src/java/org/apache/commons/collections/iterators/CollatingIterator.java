@@ -201,7 +201,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * @return the unmodifiable list of iterators added
      */
     public List<Iterator<? extends E>> getIterators() {
-        return UnmodifiableList.decorate(iterators);
+        return UnmodifiableList.unmodifiableList(iterators);
     }
 
     /**

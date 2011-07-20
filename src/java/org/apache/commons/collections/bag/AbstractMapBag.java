@@ -482,7 +482,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      */
     public Set<E> uniqueSet() {
         if (uniqueSet == null) {
-            uniqueSet = UnmodifiableSet.<E> decorate(map.keySet());
+            uniqueSet = UnmodifiableSet.<E> unmodifiableSet(map.keySet());
         }
         return uniqueSet;
     }

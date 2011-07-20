@@ -52,7 +52,7 @@ public final class UnmodifiableCollection<E>
      * @return an unmodifiable collection
      * @throws IllegalArgumentException if collection is null
      */
-    public static <T> Collection<T> decorate(Collection<T> coll) {
+    public static <T> Collection<T> unmodifiableCollection(Collection<T> coll) {
         if (coll instanceof Unmodifiable) {
             return coll;
         }
@@ -73,7 +73,7 @@ public final class UnmodifiableCollection<E>
     //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
-        return UnmodifiableIterator.decorate(decorated().iterator());
+        return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
     }
 
     @Override

@@ -56,7 +56,7 @@ public final class UnmodifiableBag<E>
      * @return an unmodifiable Bag
      * @throws IllegalArgumentException if bag is null
      */
-    public static <E> Bag<E> decorate(Bag<E> bag) {
+    public static <E> Bag<E> unmodifiableBag(Bag<E> bag) {
         if (bag instanceof Unmodifiable) {
             return bag;
         }
@@ -102,7 +102,8 @@ public final class UnmodifiableBag<E>
     //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
-        return UnmodifiableIterator.<E>decorate(decorated().iterator());
+		return UnmodifiableIterator.<E> unmodifiableIterator(decorated()
+				.iterator());
     }
 
     @Override
@@ -149,7 +150,7 @@ public final class UnmodifiableBag<E>
     @Override
     public Set<E> uniqueSet() {
         Set<E> set = decorated().uniqueSet();
-        return UnmodifiableSet.<E>decorate(set);
+		return UnmodifiableSet.<E> unmodifiableSet(set);
     }
 
 }

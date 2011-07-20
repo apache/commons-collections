@@ -127,7 +127,7 @@ public class IteratorUtils {
      * @return  an iterator over nothing
      */
     public static <E> ResettableIterator<E> emptyIterator() {
-        return EmptyIterator.<E>getResettableInstance();
+        return EmptyIterator.<E>resettableEmptyIterator();
     }
 
     /**
@@ -142,7 +142,7 @@ public class IteratorUtils {
      * @return  a list iterator over nothing
      */
     public static <E> ResettableListIterator<E> emptyListIterator() {
-        return EmptyListIterator.<E>getResettableInstance();
+        return EmptyListIterator.<E>resettableEmptyListIterator();
     }
 
     /**
@@ -154,7 +154,7 @@ public class IteratorUtils {
      * @return  an ordered iterator over nothing
      */
     public static <E> OrderedIterator<E> emptyOrderedIterator() {
-        return EmptyOrderedIterator.<E>getInstance();
+        return EmptyOrderedIterator.<E>emptyOrderedIterator();
     }
 
     /**
@@ -166,7 +166,7 @@ public class IteratorUtils {
      * @return  a map iterator over nothing
      */
     public static <K, V> MapIterator<K, V> emptyMapIterator() {
-        return EmptyMapIterator.<K, V>getInstance();
+        return EmptyMapIterator.<K, V>emptyMapIterator();
     }
 
     /**
@@ -178,7 +178,7 @@ public class IteratorUtils {
      * @return  a map iterator over nothing
      */
     public static <K, V> OrderedMapIterator<K, V> emptyOrderedMapIterator() {
-        return EmptyOrderedMapIterator.<K, V>getInstance();
+        return EmptyOrderedMapIterator.<K, V>emptyOrderedMapIterator();
     }
 
     // Singleton
@@ -417,7 +417,7 @@ public class IteratorUtils {
      * @return an immutable version of the iterator
      */
     public static <E> Iterator<E> unmodifiableIterator(Iterator<E> iterator) {
-        return UnmodifiableIterator.decorate(iterator);
+        return UnmodifiableIterator.unmodifiableIterator(iterator);
     }
 
     /**
@@ -430,7 +430,7 @@ public class IteratorUtils {
      * @return an immutable version of the iterator
      */
     public static <E> ListIterator<E> unmodifiableListIterator(ListIterator<E> listIterator) {
-        return UnmodifiableListIterator.decorate(listIterator);
+        return UnmodifiableListIterator.umodifiableListIterator(listIterator);
     }
 
     /**
@@ -442,7 +442,7 @@ public class IteratorUtils {
      * @return an immutable version of the iterator
      */
     public static <K, V> MapIterator<K, V> unmodifiableMapIterator(MapIterator<K, V> mapIterator) {
-        return UnmodifiableMapIterator.decorate(mapIterator);
+        return UnmodifiableMapIterator.unmodifiableMapIterator(mapIterator);
     }
 
     // Chained

@@ -46,13 +46,13 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
      * <p>
      * If there are any elements already in the set being decorated, they
      * are NOT transformed.
-     * Constrast this with {@link #decorateTransform}.
+     * Contrast this with {@link #transformedSet(Set, Transformer)}.
      * 
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if set or transformer is null
      */
-    public static <E> Set<E> decorate(Set<E> set, Transformer<? super E, ? extends E> transformer) {
+    public static <E> Set<E> transformingSet(Set<E> set, Transformer<? super E, ? extends E> transformer) {
         return new TransformedSet<E>(set, transformer);
     }
     
@@ -62,7 +62,7 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
      * <p>
      * If there are any elements already in the set being decorated, they
      * will be transformed by this method.
-     * Constrast this with {@link #decorate}.
+     * Contrast this with {@link #transformingSet(Set, Transformer)}.
      * 
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -70,7 +70,7 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
      * @throws IllegalArgumentException if set or transformer is null
      * @since Commons Collections 3.3
      */
-    public static <E> Set<E> decorateTransform(Set<E> set, Transformer<? super E, ? extends E> transformer) {
+    public static <E> Set<E> transformedSet(Set<E> set, Transformer<? super E, ? extends E> transformer) {
         TransformedSet<E> decorated = new TransformedSet<E>(set, transformer);
         if (transformer != null && set != null && set.size() > 0) {
             @SuppressWarnings("unchecked") // set is type E

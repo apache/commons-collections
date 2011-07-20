@@ -40,19 +40,19 @@ public class TestUnmodifiableOrderedMapIterator<K, V> extends AbstractTestOrdere
 
     @Override
     public OrderedMapIterator<K, V> makeEmptyIterator() {
-        return UnmodifiableOrderedMapIterator.decorate(
-                ListOrderedMap.decorate(new HashMap<K, V>()).mapIterator());
+        return UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(
+                ListOrderedMap.listOrderedMap(new HashMap<K, V>()).mapIterator());
     }
 
     @Override
     public OrderedMapIterator<K, V> makeObject() {
-        return UnmodifiableOrderedMapIterator.decorate(getMap().mapIterator());
+        return UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(getMap().mapIterator());
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public OrderedMap<K, V> getMap() {
-        OrderedMap<K, V> testMap = ListOrderedMap.decorate(new HashMap<K, V>());
+        OrderedMap<K, V> testMap = ListOrderedMap.listOrderedMap(new HashMap<K, V>());
         testMap.put((K) "A", (V) "a");
         testMap.put((K) "B", (V) "b");
         testMap.put((K) "C", (V) "c");
@@ -86,13 +86,13 @@ public class TestUnmodifiableOrderedMapIterator<K, V> extends AbstractTestOrdere
 
     public void testDecorateFactory() {
         OrderedMapIterator<K, V> it = makeObject();
-        assertSame(it, UnmodifiableOrderedMapIterator.decorate(it));
+        assertSame(it, UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(it));
 
         it = getMap().mapIterator() ;
-        assertTrue(it != UnmodifiableOrderedMapIterator.decorate(it));
+        assertTrue(it != UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(it));
 
         try {
-            UnmodifiableOrderedMapIterator.decorate(null);
+            UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(null);
             fail();
         } catch (IllegalArgumentException ex) {}
     }

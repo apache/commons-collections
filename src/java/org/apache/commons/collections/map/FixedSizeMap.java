@@ -69,7 +69,7 @@ public class FixedSizeMap<K, V>
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    public static <K, V> IterableMap<K, V> decorate(Map<K, V> map) {
+    public static <K, V> IterableMap<K, V> fixedSizeMap(Map<K, V> map) {
         return new FixedSizeMap<K, V>(map);
     }
 
@@ -144,19 +144,19 @@ public class FixedSizeMap<K, V>
     public Set<Map.Entry<K, V>> entrySet() {
         Set<Map.Entry<K, V>> set = map.entrySet();
         // unmodifiable set will still allow modification via Map.Entry objects
-        return UnmodifiableSet.decorate(set);
+        return UnmodifiableSet.unmodifiableSet(set);
     }
 
     @Override
     public Set<K> keySet() {
         Set<K> set = map.keySet();
-        return UnmodifiableSet.decorate(set);
+        return UnmodifiableSet.unmodifiableSet(set);
     }
 
     @Override
     public Collection<V> values() {
         Collection<V> coll = map.values();
-        return UnmodifiableCollection.decorate(coll);
+        return UnmodifiableCollection.unmodifiableCollection(coll);
     }
 
     public boolean isFull() {

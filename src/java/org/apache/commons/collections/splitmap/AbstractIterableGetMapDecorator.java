@@ -29,8 +29,7 @@ import org.apache.commons.collections.map.EntrySetToMapIteratorAdapter;
  * {@link IterableGet} that uses a {@link Map}<K, V> for the {@link Get}<K, V>
  * implementation.
  *
- * @since Commons Collections 5
- * @TODO fix version
+ * @since Commons Collections 4.0
  * @version $Revision$ $Date$
  *
  * @author Matt Benson

@@ -44,7 +44,7 @@ public class SynchronizedSet<E> extends SynchronizedCollection<E> implements Set
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    public static <T> Set<T> decorate(Set<T> set) {
+    public static <T> Set<T> synchronizedSet(Set<T> set) {
         return new SynchronizedSet<T>(set);
     }
     

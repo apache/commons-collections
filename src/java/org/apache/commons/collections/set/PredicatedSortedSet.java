@@ -57,7 +57,7 @@ public class PredicatedSortedSet<E> extends PredicatedSet<E> implements SortedSe
      * @throws IllegalArgumentException if set or predicate is null
      * @throws IllegalArgumentException if the set contains invalid elements
      */
-    public static <T> SortedSet<T> decorate(SortedSet<T> set, Predicate<? super T> predicate) {
+    public static <T> SortedSet<T> predicatedSortedSet(SortedSet<T> set, Predicate<? super T> predicate) {
         return new PredicatedSortedSet<T>(set, predicate);
     }
 

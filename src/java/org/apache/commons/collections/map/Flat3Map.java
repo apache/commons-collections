@@ -573,7 +573,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             return delegateMap.mapIterator();
         }
         if (size == 0) {
-            return EmptyMapIterator.<K, V>getInstance();
+            return EmptyMapIterator.<K, V>emptyMapIterator();
         }
         return new FlatMapIterator<K, V>(this);
     }
@@ -731,7 +731,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                 return parent.delegateMap.entrySet().iterator();
             }
             if (parent.size() == 0) {
-                return EmptyIterator.<Map.Entry<K, V>>getInstance();
+                return EmptyIterator.<Map.Entry<K, V>>emptyIterator();
             }
             return new EntrySetIterator<K, V>(parent);
         }
@@ -922,7 +922,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                 return parent.delegateMap.keySet().iterator();
             }
             if (parent.size() == 0) {
-                return EmptyIterator.<K>getInstance();
+                return EmptyIterator.<K>emptyIterator();
             }
             return new KeySetIterator<K>(parent);
         }
@@ -990,7 +990,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                 return parent.delegateMap.values().iterator();
             }
             if (parent.size() == 0) {
-                return EmptyIterator.<V>getInstance();
+                return EmptyIterator.<V>emptyIterator();
             }
             return new ValuesIterator<V>(parent);
         }

@@ -60,7 +60,7 @@ public class DefaultEquator<T> implements Equator<T> {
 	 * @return {@link DefaultEquator#INSTANCE}
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> DefaultEquator<T> instance() {
+	public static <T> DefaultEquator<T> defaultEquator() {
 		return (DefaultEquator<T>) DefaultEquator.INSTANCE;
 	}
 }

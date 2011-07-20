@@ -53,7 +53,7 @@ public final class UnmodifiableBidiMap<K, V>
      * @return an unmodifiable BidiMap
      * @throws IllegalArgumentException if map is null
      */
-    public static <K, V> BidiMap<K, V> decorate(BidiMap<K, V> map) {
+    public static <K, V> BidiMap<K, V> unmodifiableBidiMap(BidiMap<K, V> map) {
         if (map instanceof Unmodifiable) {
             return map;
         }
@@ -95,19 +95,19 @@ public final class UnmodifiableBidiMap<K, V>
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
         Set<Map.Entry<K, V>> set = super.entrySet();
-        return UnmodifiableEntrySet.decorate(set);
+        return UnmodifiableEntrySet.unmodifiableEntrySet(set);
     }
 
     @Override
     public Set<K> keySet() {
         Set<K> set = super.keySet();
-        return UnmodifiableSet.decorate(set);
+        return UnmodifiableSet.unmodifiableSet(set);
     }
 
     @Override
     public Collection<V> values() {
         Collection<V> coll = super.values();
-        return UnmodifiableCollection.decorate(coll);
+        return UnmodifiableCollection.unmodifiableCollection(coll);
     }
 
     //-----------------------------------------------------------------------
@@ -119,7 +119,7 @@ public final class UnmodifiableBidiMap<K, V>
     @Override
     public MapIterator<K, V> mapIterator() {
         MapIterator<K, V> it = decorated().mapIterator();
-        return UnmodifiableMapIterator.decorate(it);
+        return UnmodifiableMapIterator.unmodifiableMapIterator(it);
     }
 
     @Override

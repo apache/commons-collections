@@ -43,7 +43,7 @@ public class EmptyMapIterator<K, V> extends AbstractEmptyMapIterator<K, V> imple
      * @return {@link MapIterator}<K, V>
      */
     @SuppressWarnings("unchecked")
-    public static <K, V> MapIterator<K, V> getInstance() {
+    public static <K, V> MapIterator<K, V> emptyMapIterator() {
         return (MapIterator<K, V>) INSTANCE;
     }
 

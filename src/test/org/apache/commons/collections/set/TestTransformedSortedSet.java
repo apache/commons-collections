@@ -50,7 +50,7 @@ public class TestTransformedSortedSet<E> extends AbstractTestSortedSet<E> {
     @Override
     @SuppressWarnings("unchecked")
     public SortedSet<E> makeObject() {
-        return TransformedSortedSet.decorate(new TreeSet<E>(), (Transformer<E, E>) TestTransformedCollection.NOOP_TRANSFORMER);
+        return TransformedSortedSet.transformingSortedSet(new TreeSet<E>(), (Transformer<E, E>) TestTransformedCollection.NOOP_TRANSFORMER);
     }
 
     @Override
@@ -58,13 +58,13 @@ public class TestTransformedSortedSet<E> extends AbstractTestSortedSet<E> {
     public SortedSet<E> makeFullCollection() {
         SortedSet<E> set = new TreeSet<E>();
         set.addAll(Arrays.asList(getFullElements()));
-        return TransformedSortedSet.decorate(set, (Transformer<E, E>) TestTransformedCollection.NOOP_TRANSFORMER);
+        return TransformedSortedSet.transformingSortedSet(set, (Transformer<E, E>) TestTransformedCollection.NOOP_TRANSFORMER);
     }
 
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testTransformedSet() {
-        SortedSet<E> set = TransformedSortedSet.decorate(new TreeSet<E>(),
+        SortedSet<E> set = TransformedSortedSet.transformingSortedSet(new TreeSet<E>(),
                 (Transformer<E, E>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, set.size());
         E[] els = (E[]) new Object[] { "1", "3", "5", "7", "2", "4", "6" };
@@ -83,7 +83,7 @@ public class TestTransformedSortedSet<E> extends AbstractTestSortedSet<E> {
         for (int i = 0; i < els.length; i++) {
             originalSet.add(els[i]);
         }
-        Set<?> set = TransformedSortedSet.decorateTransform(originalSet, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        Set<?> set = TransformedSortedSet.transformedSet(originalSet, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, set.size());
         for (int i = 0; i < els.length; i++) {
             assertEquals(true, set.contains(new Integer((String) els[i])));

@@ -55,8 +55,8 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      * @throws IllegalArgumentException if either argument is null
      * @since Commons Collections 3.2
      */
-    public static <E> Closure<E> getInstance(Predicate<? super E> predicate, Closure<? super E> trueClosure) {
-        return IfClosure.<E>getInstance(predicate, trueClosure, NOPClosure.<E>getInstance());
+    public static <E> Closure<E> ifClosure(Predicate<? super E> predicate, Closure<? super E> trueClosure) {
+        return IfClosure.<E>ifClosure(predicate, trueClosure, NOPClosure.<E>nopClosure());
     }
 
     /**
@@ -68,7 +68,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      * @return the <code>if</code> closure
      * @throws IllegalArgumentException if any argument is null
      */
-    public static <E> Closure<E> getInstance(Predicate<? super E> predicate, Closure<? super E> trueClosure, Closure<? super E> falseClosure) {
+    public static <E> Closure<E> ifClosure(Predicate<? super E> predicate, Closure<? super E> trueClosure, Closure<? super E> falseClosure) {
         if (predicate == null) {
             throw new IllegalArgumentException("Predicate must not be null");
         }

@@ -56,13 +56,13 @@ public class TestDualTreeBidiMap2<K extends Comparable<K>, V extends Comparable<
     @Override
     public DualTreeBidiMap<K, V> makeObject() {
         return new DualTreeBidiMap<K, V>(
-                new ReverseComparator<K>(ComparableComparator.<K> getInstance()),
-                new ReverseComparator<V>(ComparableComparator.<V> getInstance()));
+                new ReverseComparator<K>(ComparableComparator.<K> comparableComparator()),
+                new ReverseComparator<V>(ComparableComparator.<V> comparableComparator()));
     }
 
     @Override
     public TreeMap<K, V> makeConfirmedMap() {
-        return new TreeMap<K, V>(new ReverseComparator<K>(ComparableComparator.<K>getInstance()));
+        return new TreeMap<K, V>(new ReverseComparator<K>(ComparableComparator.<K>comparableComparator()));
     }
 
     public void testComparator() {
@@ -132,7 +132,7 @@ public class TestDualTreeBidiMap2<K extends Comparable<K>, V extends Comparable<
 
         // Sort by the comparator used in the makeEmptyBidiMap() method
         List<K> newSortedKeys = getAsList(getSampleKeys());
-        Collections.sort(newSortedKeys, new ReverseComparator<K>(ComparableComparator.<K>getInstance()));
+        Collections.sort(newSortedKeys, new ReverseComparator<K>(ComparableComparator.<K>comparableComparator()));
         newSortedKeys = Collections.unmodifiableList(newSortedKeys);
 
         Iterator<K> mapIter = sm.keySet().iterator();

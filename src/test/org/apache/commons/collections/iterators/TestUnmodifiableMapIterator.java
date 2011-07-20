@@ -39,12 +39,12 @@ public class TestUnmodifiableMapIterator<K, V> extends AbstractTestMapIterator<K
 
     @Override
     public MapIterator<K, V> makeEmptyIterator() {
-        return UnmodifiableMapIterator.decorate(new DualHashBidiMap<K, V>().mapIterator());
+        return UnmodifiableMapIterator.unmodifiableMapIterator(new DualHashBidiMap<K, V>().mapIterator());
     }
 
     @Override
     public MapIterator<K, V> makeObject() {
-        return UnmodifiableMapIterator.decorate(getMap().mapIterator());
+        return UnmodifiableMapIterator.unmodifiableMapIterator(getMap().mapIterator());
     }
 
     @Override
@@ -84,13 +84,13 @@ public class TestUnmodifiableMapIterator<K, V> extends AbstractTestMapIterator<K
 
     public void testDecorateFactory() {
         MapIterator<K, V> it = makeObject();
-        assertSame(it, UnmodifiableMapIterator.decorate(it));
+        assertSame(it, UnmodifiableMapIterator.unmodifiableMapIterator(it));
 
         it = getMap().mapIterator() ;
-        assertTrue(it != UnmodifiableMapIterator.decorate(it));
+        assertTrue(it != UnmodifiableMapIterator.unmodifiableMapIterator(it));
 
         try {
-            UnmodifiableMapIterator.decorate(null);
+            UnmodifiableMapIterator.unmodifiableMapIterator(null);
             fail();
         } catch (IllegalArgumentException ex) {}
     }

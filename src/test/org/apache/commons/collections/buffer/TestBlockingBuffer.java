@@ -43,7 +43,7 @@ public class TestBlockingBuffer<E> extends AbstractTestObject {
 
     @Override
     public Buffer<E> makeObject() {
-        return BlockingBuffer.decorate(new MyBuffer<E>());
+        return BlockingBuffer.blockingBuffer(new MyBuffer<E>());
     }
 
     @Override
@@ -72,7 +72,7 @@ public class TestBlockingBuffer<E> extends AbstractTestObject {
     }
 
     public void testGetWithAddTimeout() {
-        Buffer<E> blockingBuffer = BlockingBuffer.decorate(new MyBuffer<E>(), 500);
+        Buffer<E> blockingBuffer = BlockingBuffer.blockingBuffer(new MyBuffer<E>(), 500);
         E obj = makeElement();
         new DelayedAdd<E>(blockingBuffer, obj, 100).start();
 
@@ -96,7 +96,7 @@ public class TestBlockingBuffer<E> extends AbstractTestObject {
     }
 
     public void testGetWithAddAllTimeout() {
-        Buffer<E> blockingBuffer = BlockingBuffer.decorate(new MyBuffer<E>(), 500);
+        Buffer<E> blockingBuffer = BlockingBuffer.blockingBuffer(new MyBuffer<E>(), 500);
         E obj = makeElement();
         new DelayedAddAll<E>(blockingBuffer, obj, 100).start();
 
@@ -120,7 +120,7 @@ public class TestBlockingBuffer<E> extends AbstractTestObject {
     }
 
     public void testRemoveWithAddTimeout() {
-        Buffer<E> blockingBuffer = BlockingBuffer.decorate(new MyBuffer<E>(), 100);
+        Buffer<E> blockingBuffer = BlockingBuffer.blockingBuffer(new MyBuffer<E>(), 100);
         E obj = makeElement();
         new DelayedAdd<E>(blockingBuffer, obj, 500).start();
         try {
@@ -145,7 +145,7 @@ public class TestBlockingBuffer<E> extends AbstractTestObject {
     }
 
     public void testRemoveWithAddAllTimeout() {
-        Buffer<E> blockingBuffer = BlockingBuffer.decorate(new MyBuffer<E>(), 100);
+        Buffer<E> blockingBuffer = BlockingBuffer.blockingBuffer(new MyBuffer<E>(), 100);
         E obj = makeElement();
         new DelayedAddAll<E>(blockingBuffer, obj, 500).start();
         try {

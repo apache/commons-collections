@@ -42,7 +42,7 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
      * @param iterator  the iterator to decorate
      * @throws IllegalArgumentException if the iterator is null
      */
-    public static <E> ListIterator<E> decorate(ListIterator<E> iterator) {
+    public static <E> ListIterator<E> umodifiableListIterator(ListIterator<E> iterator) {
         if (iterator == null) {
             throw new IllegalArgumentException("ListIterator must not be null");
         }

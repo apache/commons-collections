@@ -45,7 +45,7 @@ import org.apache.commons.collections.comparators.ComparableComparator;
  * <p>
  * Note that this implementation is not synchronized.  Use 
  * {@link org.apache.commons.collections.BufferUtils#synchronizedBuffer(Buffer)} or
- * {@link org.apache.commons.collections.buffer.SynchronizedBuffer#decorate(Buffer)}
+ * {@link org.apache.commons.collections.buffer.SynchronizedBuffer#synchronizedBuffer(Buffer)}
  * to provide synchronized access to a <code>PriorityBuffer</code>:
  * <pre>
  * Buffer heap = SynchronizedBuffer.decorate(new PriorityBuffer());

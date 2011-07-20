@@ -70,7 +70,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    public static <E> SetUniqueList<E> decorate(List<E> list) {
+    public static <E> SetUniqueList<E> setUniqueList(List<E> list) {
         if (list == null) {
             throw new IllegalArgumentException("List must not be null");
         }
@@ -109,7 +109,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * @return an unmodifiable set view
      */
     public Set<E> asSet() {
-        return UnmodifiableSet.decorate(set);
+        return UnmodifiableSet.unmodifiableSet(set);
     }
 
     //-----------------------------------------------------------------------

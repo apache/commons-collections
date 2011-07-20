@@ -49,7 +49,7 @@ public class TestListOrderedMap<K, V> extends AbstractTestOrderedMap<K, V> {
 
     @Override
     public ListOrderedMap<K, V> makeObject() {
-        return (ListOrderedMap<K, V>) ListOrderedMap.decorate(new HashMap<K, V>());
+        return (ListOrderedMap<K, V>) ListOrderedMap.listOrderedMap(new HashMap<K, V>());
     }
 
     /**

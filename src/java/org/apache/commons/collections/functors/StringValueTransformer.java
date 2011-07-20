@@ -44,7 +44,7 @@ public final class StringValueTransformer<T> implements Transformer<T, String>, 
      * @since Commons Collections 3.1
      */
     @SuppressWarnings("unchecked")
-    public static <T> Transformer<T, String> getInstance() {
+    public static <T> Transformer<T, String> stringValueTransformer() {
         return (Transformer<T, String>) INSTANCE;
     }
 

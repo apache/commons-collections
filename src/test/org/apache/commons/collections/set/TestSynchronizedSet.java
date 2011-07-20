@@ -45,7 +45,7 @@ public class TestSynchronizedSet<E> extends AbstractTestSet<E> {
    //-------------------------------------------------------------------
     @Override
     public Set<E> makeObject() {
-        return SynchronizedSet.decorate(new HashSet<E>());
+        return SynchronizedSet.synchronizedSet(new HashSet<E>());
     }
 
     @Override

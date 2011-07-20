@@ -37,14 +37,14 @@ public class TestFixedSizeList<E> extends AbstractTestList<E> {
 
     @Override
     public List<E> makeObject() {
-        return FixedSizeList.decorate(new ArrayList<E>());
+        return FixedSizeList.fixedSizeList(new ArrayList<E>());
     }
 
     @Override
     public List<E> makeFullCollection() {
         List<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
-        return FixedSizeList.decorate(list);
+        return FixedSizeList.fixedSizeList(list);
     }
 
     @Override

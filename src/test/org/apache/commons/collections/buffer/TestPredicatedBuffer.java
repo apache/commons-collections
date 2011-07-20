@@ -42,7 +42,7 @@ public class TestPredicatedBuffer<E> extends TestPredicatedCollection<E> {
     //---------------------------------------------------------------
 
     protected Buffer<E> decorateCollection(Buffer<E> buffer, Predicate<E> predicate) {
-        return PredicatedBuffer.decorate(buffer, predicate);
+        return PredicatedBuffer.predicatedBuffer(buffer, predicate);
     }
 
     @Override

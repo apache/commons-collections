@@ -419,7 +419,7 @@ public class TestMultiKeyMap<K, V> extends AbstractTestIterableMap<MultiKey<? ex
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testLRUMultiKeyMap() {
-        MultiKeyMap<K, V> map = MultiKeyMap.decorate(new LRUMap<MultiKey<? extends K>, V>(2));
+        MultiKeyMap<K, V> map = MultiKeyMap.multiKeyMap(new LRUMap<MultiKey<? extends K>, V>(2));
         map.put((K) I1, (K) I2, (V) "1-2");
         map.put((K) I1, (K) I3, (V) "1-1");
         assertEquals(2, map.size());

@@ -39,12 +39,12 @@ public class TestTransformedSortedBag<T> extends AbstractTestSortedBag<T> {
     @Override
     @SuppressWarnings("unchecked")
     public SortedBag<T> makeObject() {
-        return TransformedSortedBag.decorate(new TreeBag<T>(), (Transformer<T, T>) TestTransformedCollection.NOOP_TRANSFORMER);
+        return TransformedSortedBag.transformingSortedBag(new TreeBag<T>(), (Transformer<T, T>) TestTransformedCollection.NOOP_TRANSFORMER);
     }
 
     @SuppressWarnings("unchecked")
     public void testTransformedBag() {
-        SortedBag<T> bag = TransformedSortedBag.decorate(new TreeBag<T>(), (Transformer<T, T>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        SortedBag<T> bag = TransformedSortedBag.transformingSortedBag(new TreeBag<T>(), (Transformer<T, T>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, bag.size());
         Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {
@@ -63,7 +63,7 @@ public class TestTransformedSortedBag<T> extends AbstractTestSortedBag<T> {
         for (int i = 0; i < els.length; i++) {
             originalBag.add(els[i]);
         }
-        Bag<?> bag = TransformedBag.decorateTransform(originalBag, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        Bag<?> bag = TransformedBag.transformedBag(originalBag, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, bag.size());
         for (int i = 0; i < els.length; i++) {
             assertEquals(true, bag.contains(new Integer((String) els[i])));

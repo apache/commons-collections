@@ -44,7 +44,7 @@ public final class ExceptionClosure<E> implements Closure<E>, Serializable {
      * @since Commons Collections 3.1
      */
     @SuppressWarnings("unchecked")
-    public static <E> Closure<E> getInstance() {
+    public static <E> Closure<E> exceptionClosure() {
         return (Closure<E>) INSTANCE;
     }
 

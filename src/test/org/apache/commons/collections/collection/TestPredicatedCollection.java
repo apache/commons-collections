@@ -44,7 +44,7 @@ public class TestPredicatedCollection<E> extends AbstractTestCollection<E> {
 
     protected Collection<E> decorateCollection(
                 Collection<E> collection, Predicate<E> predicate) {
-        return PredicatedCollection.decorate(collection, predicate);
+        return PredicatedCollection.predicatedCollection(collection, predicate);
     }
 
     @Override

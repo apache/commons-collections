@@ -128,7 +128,7 @@ public class CollectionUtils {
      * this purpose. However they could be cast to Set or List which might be
      * undesirable. This implementation only implements Collection.
      */
-    public static final Collection EMPTY_COLLECTION = UnmodifiableCollection.decorate(new ArrayList<Object>());
+    public static final Collection EMPTY_COLLECTION = UnmodifiableCollection.unmodifiableCollection(new ArrayList<Object>());
 
     /**
      * <code>CollectionUtils</code> should not normally be instantiated.
@@ -1167,7 +1167,7 @@ public class CollectionUtils {
             return ((BoundedCollection<?>) coll).isFull();
         }
         try {
-            BoundedCollection<?> bcoll = UnmodifiableBoundedCollection.decorateUsing((Collection<Object>) coll);
+            BoundedCollection<?> bcoll = UnmodifiableBoundedCollection.unmodifiableBoundedCollection((Collection<Object>) coll);
             return bcoll.isFull();
         } catch (IllegalArgumentException ex) {
             return false;
@@ -1198,7 +1198,7 @@ public class CollectionUtils {
             return ((BoundedCollection<?>) coll).maxSize();
         }
         try {
-            BoundedCollection<?> bcoll = UnmodifiableBoundedCollection.decorateUsing((Collection<Object>) coll);
+            BoundedCollection<?> bcoll = UnmodifiableBoundedCollection.unmodifiableBoundedCollection((Collection<Object>) coll);
             return bcoll.maxSize();
         } catch (IllegalArgumentException ex) {
             return -1;
@@ -1269,7 +1269,7 @@ public class CollectionUtils {
      * @throws IllegalArgumentException  if the collection is null
      */
     public static <C> Collection<C> synchronizedCollection(Collection<C> collection) {
-        return SynchronizedCollection.decorate(collection);
+        return SynchronizedCollection.synchronizedCollection(collection);
     }
 
     /**
@@ -1282,7 +1282,7 @@ public class CollectionUtils {
      * @throws IllegalArgumentException  if the collection is null
      */
     public static <C> Collection<C> unmodifiableCollection(Collection<C> collection) {
-        return UnmodifiableCollection.decorate(collection);
+        return UnmodifiableCollection.unmodifiableCollection(collection);
     }
 
     /**
@@ -1300,7 +1300,7 @@ public class CollectionUtils {
      * @throws IllegalArgumentException  if the Collection is null
      */
     public static <C> Collection<C> predicatedCollection(Collection<C> collection, Predicate<? super C> predicate) {
-        return PredicatedCollection.decorate(collection, predicate);
+        return PredicatedCollection.predicatedCollection(collection, predicate);
     }
 
     /**
@@ -1318,8 +1318,8 @@ public class CollectionUtils {
      * @return a transformed collection backed by the given collection
      * @throws IllegalArgumentException  if the Collection or Transformer is null
      */
-    public static <E> Collection<E> transformedCollection(Collection<E> collection, Transformer<? super E, ? extends E> transformer) {
-        return TransformedCollection.decorate(collection, transformer);
+    public static <E> Collection<E> transformingCollection(Collection<E> collection, Transformer<? super E, ? extends E> transformer) {
+        return TransformedCollection.transformingCollection(collection, transformer);
     }
 
     /**

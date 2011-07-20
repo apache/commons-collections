@@ -45,14 +45,14 @@ public class TransformedBuffer<E> extends TransformedCollection<E> implements Bu
      * <p>
      * If there are any elements already in the buffer being decorated, they
      * are NOT transformed.
-     * Constrast this with {@link #decorateTransform}.
+     * Contrast this with {@link #transformedBuffer(Buffer, Transformer)}.
      * 
      * @param buffer  the buffer to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed Buffer
      * @throws IllegalArgumentException if buffer or transformer is null
      */
-    public static <E> Buffer<E> decorate(Buffer<E> buffer, Transformer<? super E, ? extends E> transformer) {
+    public static <E> Buffer<E> transformingBuffer(Buffer<E> buffer, Transformer<? super E, ? extends E> transformer) {
         return new TransformedBuffer<E>(buffer, transformer);
     }
     
@@ -62,7 +62,7 @@ public class TransformedBuffer<E> extends TransformedCollection<E> implements Bu
      * <p>
      * If there are any elements already in the buffer being decorated, they
      * will be transformed by this method.
-     * Constrast this with {@link #decorate}.
+     * Contrast this with {@link #transformingBuffer(Buffer, Transformer)}.
      * 
      * @param buffer  the buffer to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -70,7 +70,7 @@ public class TransformedBuffer<E> extends TransformedCollection<E> implements Bu
      * @throws IllegalArgumentException if buffer or transformer is null
      * @since Commons Collections 3.3
      */
-    public static <E> Buffer<E> decorateTransform(Buffer<E> buffer, Transformer<? super E, ? extends E> transformer) {
+    public static <E> Buffer<E> transformedBuffer(Buffer<E> buffer, Transformer<? super E, ? extends E> transformer) {
         TransformedBuffer<E> decorated = new TransformedBuffer<E>(buffer, transformer); // throws IAE if buffer or transformer is null
         if (buffer.size() > 0) {
             @SuppressWarnings("unchecked") // buffer is type <E>

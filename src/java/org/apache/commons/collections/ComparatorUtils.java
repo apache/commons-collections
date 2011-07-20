@@ -55,7 +55,7 @@ public class ComparatorUtils {
      * @see ComparableComparator#getInstance
      */
     @SuppressWarnings("unchecked")
-    public static final Comparator NATURAL_COMPARATOR = ComparableComparator.<Comparable>getInstance();
+    public static final Comparator NATURAL_COMPARATOR = ComparableComparator.<Comparable>comparableComparator();
 
     /**
      * Gets a comparator that uses the natural order of the objects.
@@ -145,7 +145,7 @@ public class ComparatorUtils {
      * @return  a comparator that sorts booleans
      */
     public static Comparator<Boolean> booleanComparator(boolean trueFirst) {
-        return BooleanComparator.getBooleanComparator(trueFirst);
+        return BooleanComparator.booleanComparator(trueFirst);
     }
     
     /**

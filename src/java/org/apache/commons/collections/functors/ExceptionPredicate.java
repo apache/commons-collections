@@ -44,7 +44,7 @@ public final class ExceptionPredicate<T> implements Predicate<T>, Serializable {
      * @since Commons Collections 3.1
      */
     @SuppressWarnings("unchecked")
-    public static <T> Predicate<T> getInstance() {
+    public static <T> Predicate<T> exceptionPredicate() {
         return (Predicate<T>) INSTANCE;
     }
 

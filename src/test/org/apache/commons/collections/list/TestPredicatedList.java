@@ -42,7 +42,7 @@ public class TestPredicatedList<E> extends AbstractTestList<E> {
     protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
 
     protected List<E> decorateList(List<E> list, Predicate<E> predicate) {
-        return PredicatedList.decorate(list, predicate);
+        return PredicatedList.predicatedList(list, predicate);
     }
 
     @Override

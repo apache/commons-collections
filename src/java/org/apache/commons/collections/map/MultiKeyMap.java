@@ -92,7 +92,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param map  the map to decorate, not null
      * @throws IllegalArgumentException if the map is null or not empty
      */
-    public static <K, V> MultiKeyMap<K, V> decorate(AbstractHashedMap<MultiKey<? extends K>, V> map) {
+    public static <K, V> MultiKeyMap<K, V> multiKeyMap(AbstractHashedMap<MultiKey<? extends K>, V> map) {
         if (map == null) {
             throw new IllegalArgumentException("Map must not be null");
         }
@@ -112,7 +112,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Constructor that decorates the specified map and is called from
-     * {@link #decorate(AbstractHashedMap)}.
+     * {@link #multiKeyMap(AbstractHashedMap)}.
      * The map must not be null and should be empty or only contain valid keys.
      * This constructor performs no validation.
      *

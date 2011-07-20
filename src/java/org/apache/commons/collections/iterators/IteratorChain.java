@@ -127,7 +127,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * @param iteratorChain the array of iterators, not null
      * @throws NullPointerException if iterators array is or contains null
      */
-    public IteratorChain(Iterator<? extends E>[] iteratorChain) {
+    public IteratorChain(Iterator<? extends E>... iteratorChain) {
         super();
         for (int i = 0; i < iteratorChain.length; i++) {
             addIterator(iteratorChain[i]);
@@ -193,7 +193,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * @return the unmodifiable list of iterators added
      */
     public List<Iterator<? extends E>> getIterators() {
-        return UnmodifiableList.decorate(iteratorChain);
+        return UnmodifiableList.unmodifiableList(iteratorChain);
     }
 
     /**
@@ -243,7 +243,7 @@ public class IteratorChain<E> implements Iterator<E> {
     protected void updateCurrentIterator() {
         if (currentIterator == null) {
             if (iteratorChain.isEmpty()) {
-                currentIterator = EmptyIterator.<E> getInstance();
+                currentIterator = EmptyIterator.<E> emptyIterator();
             } else {
                 currentIterator = iteratorChain.get(0);
             }

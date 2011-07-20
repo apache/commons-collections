@@ -63,14 +63,14 @@ public class TestTransformedCollection extends AbstractTestCollection<Object> {
     
     @Override
     public Collection<Object> makeObject() {
-        return TransformedCollection.decorate(new ArrayList<Object>(), NOOP_TRANSFORMER);
+        return TransformedCollection.transformingCollection(new ArrayList<Object>(), NOOP_TRANSFORMER);
     }
 
     @Override
     public Collection<Object> makeFullCollection() {
         List<Object> list = new ArrayList<Object>();
         list.addAll(Arrays.asList(getFullElements()));
-        return TransformedCollection.decorate(list, NOOP_TRANSFORMER);
+        return TransformedCollection.transformingCollection(list, NOOP_TRANSFORMER);
     }
     
     //-----------------------------------------------------------------------
@@ -86,7 +86,7 @@ public class TestTransformedCollection extends AbstractTestCollection<Object> {
 
     //-----------------------------------------------------------------------
     public void testTransformedCollection() {
-        Collection<Object> coll = TransformedCollection.decorate(new ArrayList<Object>(), STRING_TO_INTEGER_TRANSFORMER);
+        Collection<Object> coll = TransformedCollection.transformingCollection(new ArrayList<Object>(), STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, coll.size());
         Object[] els = getFullElements();
         for (int i = 0; i < els.length; i++) {
@@ -105,7 +105,7 @@ public class TestTransformedCollection extends AbstractTestCollection<Object> {
         for (int i = 0; i < els.length; i++) {
             originalCollection.add(els[i]);
         }
-        Collection collection = TransformedCollection.decorateTransform(originalCollection, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        Collection collection = TransformedCollection.transformedCollection(originalCollection, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, collection.size());
         for (int i = 0; i < els.length; i++) {
             assertEquals(true, collection.contains(new Integer((String) els[i])));

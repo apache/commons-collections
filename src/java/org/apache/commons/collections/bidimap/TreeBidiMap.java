@@ -422,7 +422,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      */
     public OrderedMapIterator<K, V> mapIterator() {
         if (isEmpty()) {
-            return EmptyOrderedMapIterator.<K, V>getInstance();
+            return EmptyOrderedMapIterator.<K, V>emptyOrderedMapIterator();
         }
         return new ViewMapIterator(KEY);
     }
@@ -2110,7 +2110,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
 
         public OrderedMapIterator<V, K> mapIterator() {
             if (isEmpty()) {
-                return EmptyOrderedMapIterator.<V, K>getInstance();
+                return EmptyOrderedMapIterator.<V, K>emptyOrderedMapIterator();
             }
             return new InverseViewMapIterator(VALUE);
         }

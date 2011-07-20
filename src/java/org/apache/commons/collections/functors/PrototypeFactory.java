@@ -56,9 +56,9 @@ public class PrototypeFactory {
      * @throws IllegalArgumentException if the prototype cannot be cloned
      */
     @SuppressWarnings("unchecked")
-    public static <T> Factory<T> getInstance(T prototype) {
+    public static <T> Factory<T> prototypeFactory(T prototype) {
         if (prototype == null) {
-            return ConstantFactory.<T>getInstance(null);
+            return ConstantFactory.<T>constantFactory(null);
         }
         try {
             Method method = prototype.getClass().getMethod("clone", (Class[]) null);

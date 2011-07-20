@@ -54,7 +54,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * @throws IllegalArgumentException if any element in the array is null
      */
     @SuppressWarnings("unchecked")
-    public static <I, O> Transformer<I, O> getInstance(Predicate<? super I>[] predicates,
+    public static <I, O> Transformer<I, O> switchTransformer(Predicate<? super I>[] predicates,
             Transformer<? super I, ? extends O>[] transformers,
             Transformer<? super I, ? extends O> defaultTransformer) {
         FunctorUtils.validate(predicates);
@@ -63,7 +63,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
             throw new IllegalArgumentException("The predicate and transformer arrays must be the same size");
         }
         if (predicates.length == 0) {
-            return (Transformer<I, O>) (defaultTransformer == null ? ConstantTransformer.<I, O>getNullInstance() : defaultTransformer);
+            return (Transformer<I, O>) (defaultTransformer == null ? ConstantTransformer.<I, O>nullTransformer() : defaultTransformer);
         }
         predicates = FunctorUtils.copy(predicates);
         transformers = FunctorUtils.copy(transformers);
@@ -88,19 +88,19 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * @throws ClassCastException  if the map elements are of the wrong type
      */
     @SuppressWarnings("unchecked")
-    public static <I, O> Transformer<I, O> getInstance(
+    public static <I, O> Transformer<I, O> switchTransformer(
             Map<? extends Predicate<? super I>, ? extends Transformer<? super I, ? extends O>> predicatesAndTransformers) {
         if (predicatesAndTransformers == null) {
             throw new IllegalArgumentException("The predicate and transformer map must not be null");
         }
         if (predicatesAndTransformers.size() == 0) {
-            return ConstantTransformer.<I, O>getNullInstance();
+            return ConstantTransformer.<I, O>nullTransformer();
         }
         // convert to array like this to guarantee iterator() ordering
         Transformer<? super I, ? extends O> defaultTransformer = predicatesAndTransformers.remove(null);
         int size = predicatesAndTransformers.size();
         if (size == 0) {
-            return (Transformer<I, O>) (defaultTransformer == null ? ConstantTransformer.<I, O>getNullInstance() : defaultTransformer);
+            return (Transformer<I, O>) (defaultTransformer == null ? ConstantTransformer.<I, O>nullTransformer() : defaultTransformer);
         }
         Transformer<? super I, ? extends O>[] transformers = new Transformer[size];
         Predicate<? super I>[] preds = new Predicate[size];
@@ -128,7 +128,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
         super();
         iPredicates = predicates;
         iTransformers = transformers;
-        iDefault = (Transformer<? super I, ? extends O>) (defaultTransformer == null ? ConstantTransformer.<I, O>getNullInstance() : defaultTransformer);
+        iDefault = (Transformer<? super I, ? extends O>) (defaultTransformer == null ? ConstantTransformer.<I, O>nullTransformer() : defaultTransformer);
     }
 
     /**

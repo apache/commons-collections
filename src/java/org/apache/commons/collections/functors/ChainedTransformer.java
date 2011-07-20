@@ -48,10 +48,10 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
      * @throws IllegalArgumentException if the transformers array is null
      * @throws IllegalArgumentException if any transformer in the array is null
      */
-    public static <T> Transformer<T, T> getInstance(Transformer<? super T, ? extends T>[] transformers) {
+    public static <T> Transformer<T, T> chainedTransformer(Transformer<? super T, ? extends T>... transformers) {
         FunctorUtils.validate(transformers);
         if (transformers.length == 0) {
-            return NOPTransformer.<T>getInstance();
+            return NOPTransformer.<T>nopTransformer();
         }
         transformers = FunctorUtils.copy(transformers);
         return new ChainedTransformer<T>(transformers);
@@ -68,34 +68,17 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
      * @throws IllegalArgumentException if any transformer in the collection is null
      */
     @SuppressWarnings("unchecked")
-    public static <T> Transformer<T, T> getInstance(Collection<? extends Transformer<T, T>> transformers) {
+    public static <T> Transformer<T, T> chainedTransformer(Collection<? extends Transformer<T, T>> transformers) {
         if (transformers == null) {
             throw new IllegalArgumentException("Transformer collection must not be null");
         }
         if (transformers.size() == 0) {
-            return NOPTransformer.<T>getInstance();
+            return NOPTransformer.<T>nopTransformer();
         }
         // convert to array like this to guarantee iterator() ordering
         Transformer<T, T>[] cmds = transformers.toArray(new Transformer[transformers.size()]);
         FunctorUtils.validate(cmds);
         return new ChainedTransformer<T>(cmds);
-    }
-
-    /**
-     * Factory method that performs validation.
-     * 
-     * @param transformer1  the first transformer, not null
-     * @param transformer2  the second transformer, not null
-     * @return the <code>chained</code> transformer
-     * @throws IllegalArgumentException if either transformer is null
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> Transformer<T, T> getInstance(Transformer<? super T, ? extends T> transformer1, Transformer<? super T, ? extends T> transformer2) {
-        if (transformer1 == null || transformer2 == null) {
-            throw new IllegalArgumentException("Transformers must not be null");
-        }
-        Transformer<? super T, ? extends T>[] transformers = new Transformer[] { transformer1, transformer2 };
-        return new ChainedTransformer<T>(transformers);
     }
 
     /**

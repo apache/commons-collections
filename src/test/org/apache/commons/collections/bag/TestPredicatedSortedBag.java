@@ -52,7 +52,7 @@ public class TestPredicatedSortedBag<T> extends AbstractTestSortedBag<T> {
     protected Predicate<T> truePredicate = TruePredicate.<T>truePredicate();
 
     protected SortedBag<T> decorateBag(SortedBag<T> bag, Predicate<T> predicate) {
-        return PredicatedSortedBag.decorate(bag, predicate);
+        return PredicatedSortedBag.predicatedSortedBag(bag, predicate);
     }
 
     @Override

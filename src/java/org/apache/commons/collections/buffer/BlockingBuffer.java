@@ -64,7 +64,7 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
      * @return a new blocking Buffer
      * @throws IllegalArgumentException if buffer is null
      */
-    public static <T> Buffer<T> decorate(Buffer<T> buffer) {
+    public static <T> Buffer<T> blockingBuffer(Buffer<T> buffer) {
         return new BlockingBuffer<T>(buffer);
     }
 
@@ -77,7 +77,7 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
      * @throws IllegalArgumentException if the buffer is null
      * @since Commons Collections 3.2
      */
-    public static <T> Buffer<T> decorate(Buffer<T> buffer, long timeoutMillis) {
+    public static <T> Buffer<T> blockingBuffer(Buffer<T> buffer, long timeoutMillis) {
         return new BlockingBuffer<T>(buffer, timeoutMillis);
     }
 

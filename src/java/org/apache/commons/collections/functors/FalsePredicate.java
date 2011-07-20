@@ -40,7 +40,7 @@ public final class FalsePredicate<T> implements Predicate<T>, Serializable {
      * Get a typed instance.
      *
      * @return the singleton instance
-     * @since Commons Collections 5
+     * @since Commons Collections 4.0
      */
     @SuppressWarnings("unchecked")
     public static <T> Predicate<T> falsePredicate() {

@@ -49,7 +49,7 @@ public class SynchronizedBag<E>
      * @return a new synchronized Bag
      * @throws IllegalArgumentException if bag is null
      */
-    public static <T> Bag<T> decorate(Bag<T> bag) {
+    public static <T> Bag<T> synchronizedBag(Bag<T> bag) {
         return new SynchronizedBag<T>(bag);
     }
     

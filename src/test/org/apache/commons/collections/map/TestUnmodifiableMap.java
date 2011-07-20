@@ -41,7 +41,7 @@ public class TestUnmodifiableMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     @Override
     public IterableMap<K, V> makeObject() {
-        return (IterableMap<K, V>) UnmodifiableMap.decorate(new HashMap<K, V>());
+        return (IterableMap<K, V>) UnmodifiableMap.unmodifiableMap(new HashMap<K, V>());
     }
 
     @Override
@@ -63,7 +63,7 @@ public class TestUnmodifiableMap<K, V> extends AbstractTestIterableMap<K, V> {
     public IterableMap<K, V> makeFullMap() {
         Map<K, V> m = new HashMap<K, V>();
         addSampleMappings(m);
-        return (IterableMap<K, V>) UnmodifiableMap.decorate(m);
+        return (IterableMap<K, V>) UnmodifiableMap.unmodifiableMap(m);
     }
 
     //-----------------------------------------------------------------------
@@ -74,10 +74,10 @@ public class TestUnmodifiableMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     public void testDecorateFactory() {
         Map<K, V> map = makeFullMap();
-        assertSame(map, UnmodifiableMap.decorate(map));
+        assertSame(map, UnmodifiableMap.unmodifiableMap(map));
 
         try {
-            UnmodifiableMap.decorate(null);
+            UnmodifiableMap.unmodifiableMap(null);
             fail();
         } catch (IllegalArgumentException ex) {}
     }

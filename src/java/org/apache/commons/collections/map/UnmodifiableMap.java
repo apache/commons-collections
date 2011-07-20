@@ -57,7 +57,7 @@ public final class UnmodifiableMap<K, V>
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    public static <K, V> Map<K, V> decorate(Map<K, V> map) {
+    public static <K, V> Map<K, V> unmodifiableMap(Map<K, V> map) {
         if (map instanceof Unmodifiable) {
             return map;
         }
@@ -127,28 +127,28 @@ public final class UnmodifiableMap<K, V>
     public MapIterator<K, V> mapIterator() {
         if (map instanceof IterableMap) {
             MapIterator<K, V> it = ((IterableMap<K, V>) map).mapIterator();
-            return UnmodifiableMapIterator.decorate(it);
+            return UnmodifiableMapIterator.unmodifiableMapIterator(it);
         }
         MapIterator<K, V> it = new EntrySetMapIterator<K, V>(map);
-        return UnmodifiableMapIterator.decorate(it);
+        return UnmodifiableMapIterator.unmodifiableMapIterator(it);
     }
 
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
         Set<Map.Entry<K, V>> set = super.entrySet();
-        return UnmodifiableEntrySet.decorate(set);
+        return UnmodifiableEntrySet.unmodifiableEntrySet(set);
     }
 
     @Override
     public Set<K> keySet() {
         Set<K> set = super.keySet();
-        return UnmodifiableSet.decorate(set);
+        return UnmodifiableSet.unmodifiableSet(set);
     }
 
     @Override
     public Collection<V> values() {
         Collection<V> coll = super.values();
-        return UnmodifiableCollection.decorate(coll);
+        return UnmodifiableCollection.unmodifiableCollection(coll);
     }
 
 }

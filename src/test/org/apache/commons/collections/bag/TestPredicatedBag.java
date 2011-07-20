@@ -50,7 +50,7 @@ public class TestPredicatedBag<T> extends AbstractTestBag<T> {
     protected Predicate<T> truePredicate = TruePredicate.<T>truePredicate();
 
     protected Bag<T> decorateBag(HashBag<T> bag, Predicate<T> predicate) {
-        return PredicatedBag.decorate(bag, predicate);
+        return PredicatedBag.predicatedBag(bag, predicate);
     }
 
     @Override

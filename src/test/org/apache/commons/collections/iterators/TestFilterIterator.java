@@ -145,7 +145,7 @@ public class TestFilterIterator<E> extends AbstractTestIterator<E> {
         assertEquals(true, filterIterator.hasNext());
 
         // this predicate doesn't match
-        filterIterator.setPredicate(NotNullPredicate.getInstance());
+        filterIterator.setPredicate(NotNullPredicate.notNullPredicate());
         assertEquals(false, filterIterator.hasNext());
     }
 

@@ -53,14 +53,14 @@ public class TestPredicatedSortedSet<E> extends AbstractTestSortedSet<E> {
 
     @Override
     public SortedSet<E> makeObject() {
-        return PredicatedSortedSet.decorate(new TreeSet<E>(), truePredicate);
+        return PredicatedSortedSet.predicatedSortedSet(new TreeSet<E>(), truePredicate);
     }
 
     @Override
     public SortedSet<E> makeFullCollection() {
         TreeSet<E> set = new TreeSet<E>();
         set.addAll(Arrays.asList(getFullElements()));
-        return PredicatedSortedSet.decorate(set, truePredicate);
+        return PredicatedSortedSet.predicatedSortedSet(set, truePredicate);
     }
 
 //--------------------------------------------------------------------
@@ -72,7 +72,7 @@ public class TestPredicatedSortedSet<E> extends AbstractTestSortedSet<E> {
         };
 
     protected PredicatedSortedSet<E> makeTestSet() {
-        return (PredicatedSortedSet<E>) PredicatedSortedSet.decorate(new TreeSet<E>(), testPredicate);
+        return (PredicatedSortedSet<E>) PredicatedSortedSet.predicatedSortedSet(new TreeSet<E>(), testPredicate);
     }
 
     public void testGetSet() {

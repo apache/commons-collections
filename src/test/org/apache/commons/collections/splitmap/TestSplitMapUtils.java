@@ -57,7 +57,7 @@ public class TestSplitMapUtils extends BulkTest {
     protected void setUp() throws Exception {
         super.setUp();
         backingMap = new HashMap<String, Integer>();
-        transformedMap = TransformedMap.decorate(backingMap, NOPTransformer.<String> getInstance(),
+        transformedMap = TransformedMap.transformingMap(backingMap, NOPTransformer.<String> nopTransformer(),
                 stringToInt);
         for (int i = 0; i < 10; i++) {
             transformedMap.put(String.valueOf(i), String.valueOf(i));

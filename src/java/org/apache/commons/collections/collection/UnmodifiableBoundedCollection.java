@@ -54,8 +54,8 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
      * @return a new unmodifiable bounded collection
      * @throws IllegalArgumentException if bag is null
      */
-    public static <E> BoundedCollection<E> decorate(BoundedCollection<E> coll) {
-        return new UnmodifiableBoundedCollection<E>(coll);
+    public static <E> BoundedCollection<E> unmodifiableBoundedCollection(BoundedCollection<E> coll) {
+        return unmodifiableBoundedCollection(coll);
     }
 
     /**
@@ -69,7 +69,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
      * @throws IllegalArgumentException if bag is null
      */
     @SuppressWarnings("unchecked")
-    public static <E> BoundedCollection<E> decorateUsing(Collection<? super E> coll) {
+	public static <E> BoundedCollection<E> unmodifiableBoundedCollection(Collection<? extends E> coll) {
         if (coll == null) {
             throw new IllegalArgumentException("The collection must not be null");
         }
@@ -105,7 +105,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
     //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
-        return UnmodifiableIterator.decorate(decorated().iterator());
+        return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
     }
 
     @Override

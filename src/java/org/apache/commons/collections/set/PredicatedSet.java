@@ -57,7 +57,7 @@ public class PredicatedSet<E> extends PredicatedCollection<E> implements Set<E> 
      * @throws IllegalArgumentException if set or predicate is null
      * @throws IllegalArgumentException if the set contains invalid elements
      */
-    public static <T> Set<T> decorate(Set<T> set, Predicate<? super T> predicate) {
+    public static <T> Set<T> predicatedSet(Set<T> set, Predicate<? super T> predicate) {
         return new PredicatedSet<T>(set, predicate);
     }
 

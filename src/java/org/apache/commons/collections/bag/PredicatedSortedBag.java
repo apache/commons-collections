@@ -58,7 +58,7 @@ public class PredicatedSortedBag<E>
      * @throws IllegalArgumentException if bag or predicate is null
      * @throws IllegalArgumentException if the bag contains invalid elements
      */
-    public static <T> SortedBag<T> decorate(SortedBag<T> bag, Predicate<? super T> predicate) {
+    public static <T> SortedBag<T> predicatedSortedBag(SortedBag<T> bag, Predicate<? super T> predicate) {
         return new PredicatedSortedBag<T>(bag, predicate);
     }
 

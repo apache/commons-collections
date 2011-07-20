@@ -52,7 +52,7 @@ public class TestPredicatedSortedMap<K, V> extends AbstractTestSortedMap<K, V> {
     //-----------------------------------------------------------------------
     protected SortedMap<K, V> decorateMap(SortedMap<K, V> map, Predicate<? super K> keyPredicate,
         Predicate<? super V> valuePredicate) {
-        return PredicatedSortedMap.decorate(map, keyPredicate, valuePredicate);
+        return PredicatedSortedMap.predicatedSortedMap(map, keyPredicate, valuePredicate);
     }
 
     @Override

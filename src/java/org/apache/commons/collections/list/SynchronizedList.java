@@ -46,7 +46,7 @@ public class SynchronizedList<E> extends SynchronizedCollection<E> implements Li
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    public static <T> List<T> decorate(List<T> list) {
+    public static <T> List<T> synchronizedList(List<T> list) {
         return new SynchronizedList<T>(list);
     }
     

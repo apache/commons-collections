@@ -56,7 +56,7 @@ public class PredicatedBuffer<E> extends PredicatedCollection<E> implements Buff
      * @throws IllegalArgumentException if buffer or predicate is null
      * @throws IllegalArgumentException if the buffer contains invalid elements
      */
-    public static <T> Buffer<T> decorate(Buffer<T> buffer, Predicate<? super T> predicate) {
+    public static <T> Buffer<T> predicatedBuffer(Buffer<T> buffer, Predicate<? super T> predicate) {
         return new PredicatedBuffer<T>(buffer, predicate);
     }
     

@@ -341,7 +341,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     @Override
     public OrderedMapIterator<K, V> mapIterator() {
         if (size == 0) {
-            return EmptyOrderedMapIterator.<K, V>getInstance();
+            return EmptyOrderedMapIterator.<K, V>emptyOrderedMapIterator();
         }
         return new LinkMapIterator<K, V>(this);
     }
@@ -399,7 +399,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     @Override
     protected Iterator<Map.Entry<K, V>> createEntrySetIterator() {
         if (size() == 0) {
-            return EmptyOrderedIterator.<Map.Entry<K, V>>getInstance();
+            return EmptyOrderedIterator.<Map.Entry<K, V>>emptyOrderedIterator();
         }
         return new EntrySetIterator<K, V>(this);
     }
@@ -433,7 +433,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     @Override
     protected Iterator<K> createKeySetIterator() {
         if (size() == 0) {
-            return EmptyOrderedIterator.<K>getInstance();
+            return EmptyOrderedIterator.<K>emptyOrderedIterator();
         }
         return new KeySetIterator<K>(this);
     }
@@ -468,7 +468,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     @Override
     protected Iterator<V> createValuesIterator() {
         if (size() == 0) {
-            return EmptyOrderedIterator.<V>getInstance();
+            return EmptyOrderedIterator.<V>emptyOrderedIterator();
         }
         return new ValuesIterator<V>(this);
     }

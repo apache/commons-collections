@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections.map;
 
-import static org.apache.commons.collections.map.LazyMap.getLazyMap;
+import static org.apache.commons.collections.map.LazyMap.lazyMap;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,7 +46,7 @@ public class TestLazyMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     @Override
     public LazyMap<K,V> makeObject() {
-        return getLazyMap(new HashMap<K,V>(), FactoryUtils.<V>nullFactory());
+        return lazyMap(new HashMap<K,V>(), FactoryUtils.<V>nullFactory());
     }
 
     //-----------------------------------------------------------------------
@@ -57,7 +57,7 @@ public class TestLazyMap<K, V> extends AbstractTestIterableMap<K, V> {
 
     @Test
     public void mapGetWithFactory() {
-        Map<Integer, Number> map = getLazyMap(new HashMap<Integer,Number>(), oneFactory);
+        Map<Integer, Number> map = lazyMap(new HashMap<Integer,Number>(), oneFactory);
         assertEquals(0, map.size());
         Number i1 = map.get("Five");
         assertEquals(1, i1);
@@ -67,7 +67,7 @@ public class TestLazyMap<K, V> extends AbstractTestIterableMap<K, V> {
         assertEquals(1, map.size());
         assertSame(i1, i2);
 
-        map = getLazyMap(new HashMap<Integer,Number>(), FactoryUtils.<Long>nullFactory());
+        map = lazyMap(new HashMap<Integer,Number>(), FactoryUtils.<Long>nullFactory());
         Object o = map.get("Five");
         assertEquals(null,o);
         assertEquals(1, map.size());
@@ -80,7 +80,7 @@ public class TestLazyMap<K, V> extends AbstractTestIterableMap<K, V> {
                 return input.intValue();
             }
         };
-        Map<Long, Number> map = getLazyMap(new HashMap<Long,Number>(), intConverter );
+        Map<Long, Number> map = lazyMap(new HashMap<Long,Number>(), intConverter );
         assertEquals(0, map.size());
         Number i1 = map.get(123L);
         assertEquals(123, i1);

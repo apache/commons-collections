@@ -96,7 +96,7 @@ public class ListOrderedMap<K, V>
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    public static <K, V> OrderedMap<K, V> decorate(Map<K, V> map) {
+    public static <K, V> OrderedMap<K, V> listOrderedMap(Map<K, V> map) {
         return new ListOrderedMap<K, V>(map);
     }
 
@@ -285,7 +285,7 @@ public class ListOrderedMap<K, V>
      * @since Commons Collections 3.2
      */
     public List<K> keyList() {
-        return UnmodifiableList.decorate(insertOrder);
+        return UnmodifiableList.unmodifiableList(insertOrder);
     }
 
     /**

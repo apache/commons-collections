@@ -45,7 +45,7 @@ public class CloneTransformer<T> implements Transformer<T, T>, Serializable {
      * @since Commons Collections 3.1
      */
     @SuppressWarnings("unchecked")
-    public static <T> Transformer<T, T> getInstance() {
+    public static <T> Transformer<T, T> cloneTransformer() {
         return (Transformer<T, T>) INSTANCE;
     }
 
@@ -66,7 +66,7 @@ public class CloneTransformer<T> implements Transformer<T, T>, Serializable {
         if (input == null) {
             return null;
         }
-        return PrototypeFactory.getInstance(input).create();
+        return PrototypeFactory.prototypeFactory(input).create();
     }
 
     private Object readResolve() {

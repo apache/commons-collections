@@ -41,7 +41,7 @@ public class EmptyOrderedIterator<E> extends AbstractEmptyIterator<E> implements
      * @return OrderedIterator<E>
      */
     @SuppressWarnings("unchecked")
-    public static <E> OrderedIterator<E> getInstance() {
+    public static <E> OrderedIterator<E> emptyOrderedIterator() {
         return (OrderedIterator<E>) INSTANCE;
     }
 

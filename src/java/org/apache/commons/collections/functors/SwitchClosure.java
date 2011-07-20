@@ -54,14 +54,14 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * @throws IllegalArgumentException if any element in the array is null
      */
     @SuppressWarnings("unchecked")
-    public static <E> Closure<E> getInstance(Predicate<? super E>[] predicates, Closure<? super E>[] closures, Closure<? super E> defaultClosure) {
+    public static <E> Closure<E> switchClosure(Predicate<? super E>[] predicates, Closure<? super E>[] closures, Closure<? super E> defaultClosure) {
         FunctorUtils.validate(predicates);
         FunctorUtils.validate(closures);
         if (predicates.length != closures.length) {
             throw new IllegalArgumentException("The predicate and closure arrays must be the same size");
         }
         if (predicates.length == 0) {
-            return (Closure<E>) (defaultClosure == null ? NOPClosure.<E>getInstance(): defaultClosure);
+            return (Closure<E>) (defaultClosure == null ? NOPClosure.<E>nopClosure(): defaultClosure);
         }
         predicates = FunctorUtils.copy(predicates);
         closures = FunctorUtils.copy(closures);
@@ -86,7 +86,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * @throws ClassCastException  if the map elements are of the wrong type
      */
     @SuppressWarnings("unchecked")
-    public static <E> Closure<E> getInstance(Map<Predicate<E>, Closure<E>> predicatesAndClosures) {
+    public static <E> Closure<E> switchClosure(Map<Predicate<E>, Closure<E>> predicatesAndClosures) {
         if (predicatesAndClosures == null) {
             throw new IllegalArgumentException("The predicate and closure map must not be null");
         }
@@ -94,7 +94,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
         Closure<? super E> defaultClosure = predicatesAndClosures.remove(null);
         int size = predicatesAndClosures.size();
         if (size == 0) {
-            return (Closure<E>) (defaultClosure == null ? NOPClosure.<E>getInstance() : defaultClosure);
+            return (Closure<E>) (defaultClosure == null ? NOPClosure.<E>nopClosure() : defaultClosure);
         }
         Closure<E>[] closures = new Closure[size];
         Predicate<E>[] preds = new Predicate[size];
@@ -120,7 +120,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
         super();
         iPredicates = predicates;
         iClosures = closures;
-        iDefault = (Closure<? super E>) (defaultClosure == null ? NOPClosure.<E>getInstance() : defaultClosure);
+        iDefault = (Closure<? super E>) (defaultClosure == null ? NOPClosure.<E>nopClosure() : defaultClosure);
     }
 
     /**

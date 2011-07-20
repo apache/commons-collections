@@ -70,7 +70,7 @@ public class FixedSizeSortedMap<K, V>
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    public static <K, V> SortedMap<K, V> decorate(SortedMap<K, V> map) {
+    public static <K, V> SortedMap<K, V> fixedSizeSortedMap(SortedMap<K, V> map) {
         return new FixedSizeSortedMap<K, V>(map);
     }
 
@@ -141,17 +141,17 @@ public class FixedSizeSortedMap<K, V>
 
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
-        return UnmodifiableSet.decorate(map.entrySet());
+        return UnmodifiableSet.unmodifiableSet(map.entrySet());
     }
 
     @Override
     public Set<K> keySet() {
-        return UnmodifiableSet.decorate(map.keySet());
+        return UnmodifiableSet.unmodifiableSet(map.keySet());
     }
 
     @Override
     public Collection<V> values() {
-        return UnmodifiableCollection.decorate(map.values());
+        return UnmodifiableCollection.unmodifiableCollection(map.values());
     }
 
     //-----------------------------------------------------------------------

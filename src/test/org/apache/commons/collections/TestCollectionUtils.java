@@ -1261,16 +1261,16 @@ public class TestCollectionUtils extends MockTestCase {
     @Test
     public void testTransformedCollection() {
         Transformer<Object, Object> transformer = TransformerUtils.nopTransformer();
-        Collection<Object> collection = CollectionUtils.transformedCollection(new ArrayList<Object>(), transformer);
+        Collection<Object> collection = CollectionUtils.transformingCollection(new ArrayList<Object>(), transformer);
         assertTrue("returned object should be a TransformedCollection", collection instanceof TransformedCollection);
         try {
-            collection = CollectionUtils.transformedCollection(new ArrayList<Object>(), null);
+            collection = CollectionUtils.transformingCollection(new ArrayList<Object>(), null);
             fail("Expecting IllegalArgumentException for null transformer.");
         } catch (IllegalArgumentException ex) {
             // expected
         }
         try {
-            collection = CollectionUtils.transformedCollection(null, transformer);
+            collection = CollectionUtils.transformingCollection(null, transformer);
             fail("Expecting IllegalArgumentException for null collection.");
         } catch (IllegalArgumentException ex) {
             // expected
@@ -1283,7 +1283,7 @@ public class TestCollectionUtils extends MockTestCase {
         list.add("1");
         list.add("2");
         list.add("3");
-        Collection<Object> result = CollectionUtils.transformedCollection(list, TRANSFORM_TO_INTEGER);
+        Collection<Object> result = CollectionUtils.transformingCollection(list, TRANSFORM_TO_INTEGER);
         assertEquals(true, result.contains("1")); // untransformed
         assertEquals(true, result.contains("2")); // untransformed
         assertEquals(true, result.contains("3")); // untransformed

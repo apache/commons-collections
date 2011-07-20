@@ -92,13 +92,13 @@ public class MapUtils {
      * An empty unmodifiable map.
      * This was not provided in JDK1.2.
      */
-    public static final Map<Object, Object> EMPTY_MAP = UnmodifiableMap.decorate(new HashMap<Object, Object>(1));
+    public static final Map<Object, Object> EMPTY_MAP = UnmodifiableMap.unmodifiableMap(new HashMap<Object, Object>(1));
 
     /**
      * An empty unmodifiable sorted map.
      * This is not provided in the JDK.
      */
-    public static final SortedMap<Object, Object> EMPTY_SORTED_MAP = UnmodifiableSortedMap.decorate(new TreeMap<Object, Object>());
+    public static final SortedMap<Object, Object> EMPTY_SORTED_MAP = UnmodifiableSortedMap.unmodifiableSortedMap(new TreeMap<Object, Object>());
 
     /**
      * String used to indent the verbose and debug Map prints.
@@ -1239,7 +1239,7 @@ public class MapUtils {
      * @throws IllegalArgumentException  if the map is null
      */
     public static <K, V> Map<K, V> unmodifiableMap(Map<K, V> map) {
-        return UnmodifiableMap.decorate(map);
+        return UnmodifiableMap.unmodifiableMap(map);
     }
 
     /**
@@ -1258,7 +1258,7 @@ public class MapUtils {
      * @throws IllegalArgumentException  if the Map is null
      */
     public static <K, V> IterableMap<K, V> predicatedMap(Map<K, V> map, Predicate<? super K> keyPred, Predicate<? super V> valuePred) {
-        return PredicatedMap.decorate(map, keyPred, valuePred);
+        return PredicatedMap.predicatedMap(map, keyPred, valuePred);
     }
 
     /**
@@ -1285,7 +1285,7 @@ public class MapUtils {
     public static <K, V> IterableMap<K, V> transformedMap(Map<K, V> map,
             Transformer<? super K, ? extends K> keyTransformer,
             Transformer<? super V, ? extends V> valueTransformer) {
-        return TransformedMap.decorate(map, keyTransformer, valueTransformer);
+        return TransformedMap.transformingMap(map, keyTransformer, valueTransformer);
     }
 
     /**
@@ -1299,7 +1299,7 @@ public class MapUtils {
      * @throws IllegalArgumentException  if the Map is null
      */
     public static <K, V> IterableMap<K, V> fixedSizeMap(Map<K, V> map) {
-        return FixedSizeMap.decorate(map);
+        return FixedSizeMap.fixedSizeMap(map);
     }
 
     /**
@@ -1331,7 +1331,7 @@ public class MapUtils {
      * @throws IllegalArgumentException  if the Map or Factory is null
      */
     public static <K, V> IterableMap<K, V> lazyMap(Map<K, V> map, Factory<? extends V> factory) {
-        return LazyMap.getLazyMap(map, factory);
+        return LazyMap.lazyMap(map, factory);
     }
 
     /**
@@ -1370,7 +1370,7 @@ public class MapUtils {
      * @throws IllegalArgumentException  if the Map or Transformer is null
      */
     public static <K, V> IterableMap<K, V> lazyMap(Map<K, V> map, Transformer<? super K, ? extends V> transformerFactory) {
-        return LazyMap.getLazyMap(map, transformerFactory);
+        return LazyMap.lazyMap(map, transformerFactory);
     }
 
     /**
@@ -1385,7 +1385,7 @@ public class MapUtils {
      * @throws IllegalArgumentException  if the Map is null
      */
     public static <K, V> OrderedMap<K, V> orderedMap(Map<K, V> map) {
-        return ListOrderedMap.decorate(map);
+        return ListOrderedMap.listOrderedMap(map);
     }
 
     /**
@@ -1398,7 +1398,7 @@ public class MapUtils {
      * @since Commons Collections 3.2
      */
     public static <K, V> MultiValueMap<K, V> multiValueMap(Map<K, ? super Collection<V>> map) {
-        return MultiValueMap.<K, V>decorate(map);
+        return MultiValueMap.<K, V>multiValueMap(map);
     }
 
     /**
@@ -1413,7 +1413,7 @@ public class MapUtils {
      * @since Commons Collections 3.2
      */
     public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(Map<K, C> map, Class<C> collectionClass) {
-        return MultiValueMap.decorate(map, collectionClass);
+        return MultiValueMap.multiValueMap(map, collectionClass);
     }
 
     /**
@@ -1428,7 +1428,7 @@ public class MapUtils {
      * @since Commons Collections 3.2
      */
     public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(Map<K, C> map, Factory<C> collectionFactory) {
-        return MultiValueMap.decorate(map, collectionFactory);
+        return MultiValueMap.multiValueMap(map, collectionFactory);
     }
 
     // SortedMap decorators
@@ -1470,7 +1470,7 @@ public class MapUtils {
      * @throws IllegalArgumentException  if the map is null
      */
     public static <K, V> SortedMap<K, V> unmodifiableSortedMap(SortedMap<K, V> map) {
-        return UnmodifiableSortedMap.decorate(map);
+        return UnmodifiableSortedMap.unmodifiableSortedMap(map);
     }
 
     /**
@@ -1490,7 +1490,7 @@ public class MapUtils {
      */
     public static <K, V> SortedMap<K, V> predicatedSortedMap(SortedMap<K, V> map,
             Predicate<? super K> keyPred, Predicate<? super V> valuePred) {
-        return PredicatedSortedMap.decorate(map, keyPred, valuePred);
+        return PredicatedSortedMap.predicatedSortedMap(map, keyPred, valuePred);
     }
 
     /**
@@ -1517,7 +1517,7 @@ public class MapUtils {
     public static <K, V> SortedMap<K, V> transformedSortedMap(SortedMap<K, V> map,
             Transformer<? super K, ? extends K> keyTransformer,
             Transformer<? super V, ? extends V> valueTransformer) {
-        return TransformedSortedMap.decorate(map, keyTransformer, valueTransformer);
+        return TransformedSortedMap.transformingSortedMap(map, keyTransformer, valueTransformer);
     }
 
     /**
@@ -1531,7 +1531,7 @@ public class MapUtils {
      * @throws IllegalArgumentException  if the SortedMap is null
      */
     public static <K, V> SortedMap<K, V> fixedSizeSortedMap(SortedMap<K, V> map) {
-        return FixedSizeSortedMap.decorate(map);
+        return FixedSizeSortedMap.fixedSizeSortedMap(map);
     }
 
     /**
@@ -1565,7 +1565,7 @@ public class MapUtils {
      */
     public static <K, V> SortedMap<K, V> lazySortedMap(SortedMap<K, V> map,
             Factory<? extends V> factory) {
-        return LazySortedMap.getLazySortedMap(map, factory);
+        return LazySortedMap.lazySortedMap(map, factory);
     }
 
     /**
@@ -1605,7 +1605,7 @@ public class MapUtils {
      */
     public static <K, V> SortedMap<K, V> lazySortedMap(SortedMap<K, V> map,
             Transformer<? super K, ? extends V> transformerFactory) {
-        return LazySortedMap.getLazySortedMap(map, transformerFactory);
+        return LazySortedMap.lazySortedMap(map, transformerFactory);
     }
 
     /**

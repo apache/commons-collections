@@ -44,7 +44,7 @@ public final class IdentityPredicate<T> implements Predicate<T>, Serializable {
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null
      */
-    public static <T> Predicate<T> getInstance(T object) {
+    public static <T> Predicate<T> identityPredicate(T object) {
         if (object == null) {
             return NullPredicate.<T>nullPredicate();
         }

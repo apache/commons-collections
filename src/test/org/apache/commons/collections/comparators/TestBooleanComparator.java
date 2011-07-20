@@ -73,20 +73,20 @@ public class TestBooleanComparator extends AbstractTestComparator<Boolean> {
 
     public void testStaticFactoryMethods() {
         allTests(false,BooleanComparator.getFalseFirstComparator());
-        allTests(false,BooleanComparator.getBooleanComparator(false));
+        allTests(false,BooleanComparator.booleanComparator(false));
         allTests(true,BooleanComparator.getTrueFirstComparator());
-        allTests(true,BooleanComparator.getBooleanComparator(true));
+        allTests(true,BooleanComparator.booleanComparator(true));
     }
 
     public void testEqualsCompatibleInstance() {
         assertEquals(new BooleanComparator(),new BooleanComparator(false));
         assertEquals(new BooleanComparator(false),new BooleanComparator(false));
         assertEquals(new BooleanComparator(false),BooleanComparator.getFalseFirstComparator());
-        assertSame(BooleanComparator.getFalseFirstComparator(),BooleanComparator.getBooleanComparator(false));
+        assertSame(BooleanComparator.getFalseFirstComparator(),BooleanComparator.booleanComparator(false));
 
         assertEquals(new BooleanComparator(true),new BooleanComparator(true));
         assertEquals(new BooleanComparator(true),BooleanComparator.getTrueFirstComparator());
-        assertSame(BooleanComparator.getTrueFirstComparator(),BooleanComparator.getBooleanComparator(true));
+        assertSame(BooleanComparator.getTrueFirstComparator(),BooleanComparator.booleanComparator(true));
 
         assertTrue(!(new BooleanComparator().equals(new BooleanComparator(true))));
         assertTrue(!(new BooleanComparator(true).equals(new BooleanComparator(false))));

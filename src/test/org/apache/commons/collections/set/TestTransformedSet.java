@@ -53,7 +53,7 @@ public class TestTransformedSet<E> extends AbstractTestSet<E> {
     @Override
     @SuppressWarnings("unchecked")
     public Set<E> makeObject() {
-        return TransformedSet.decorate(new HashSet<E>(),
+        return TransformedSet.transformingSet(new HashSet<E>(),
                 (Transformer<E, E>) TestTransformedCollection.NOOP_TRANSFORMER);
     }
 
@@ -62,13 +62,13 @@ public class TestTransformedSet<E> extends AbstractTestSet<E> {
     public Set<E> makeFullCollection() {
         Set<E> list = new HashSet<E>();
         list.addAll(Arrays.asList(getFullElements()));
-        return TransformedSet.decorate(list,
+        return TransformedSet.transformingSet(list,
                 (Transformer<E, E>) TestTransformedCollection.NOOP_TRANSFORMER);
     }
 
     @SuppressWarnings("unchecked")
     public void testTransformedSet() {
-        Set<E> set = TransformedSet.decorate(new HashSet<E>(),
+        Set<E> set = TransformedSet.transformingSet(new HashSet<E>(),
                 (Transformer<E, E>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, set.size());
         E[] els = (E[]) new Object[] { "1", "3", "5", "7", "2", "4", "6" };
@@ -90,7 +90,7 @@ public class TestTransformedSet<E> extends AbstractTestSet<E> {
         for (int i = 0; i < els.length; i++) {
             originalSet.add(els[i]);
         }
-        Set<?> set = TransformedSet.decorateTransform(originalSet, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        Set<?> set = TransformedSet.transformedSet(originalSet, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, set.size());
         for (int i = 0; i < els.length; i++) {
             assertEquals(true, set.contains(new Integer((String) els[i])));

@@ -52,12 +52,12 @@ public class TestUnmodifiableListIterator<E> extends AbstractTestListIterator<E>
 
     @Override
     public ListIterator<E> makeEmptyIterator() {
-        return UnmodifiableListIterator.decorate(Collections.<E>emptyList().listIterator());
+        return UnmodifiableListIterator.umodifiableListIterator(Collections.<E>emptyList().listIterator());
     }
 
     @Override
     public ListIterator<E> makeObject() {
-        return UnmodifiableListIterator.decorate(testList.listIterator());
+        return UnmodifiableListIterator.umodifiableListIterator(testList.listIterator());
     }
 
     @Override
@@ -82,13 +82,13 @@ public class TestUnmodifiableListIterator<E> extends AbstractTestListIterator<E>
 
     public void testDecorateFactory() {
         ListIterator<E> it = makeObject();
-        assertSame(it, UnmodifiableListIterator.decorate(it));
+        assertSame(it, UnmodifiableListIterator.umodifiableListIterator(it));
 
         it = testList.listIterator();
-        assertTrue(it != UnmodifiableListIterator.decorate(it));
+        assertTrue(it != UnmodifiableListIterator.umodifiableListIterator(it));
 
         try {
-            UnmodifiableListIterator.decorate(null);
+            UnmodifiableListIterator.umodifiableListIterator(null);
             fail();
         } catch (IllegalArgumentException ex) {}
     }

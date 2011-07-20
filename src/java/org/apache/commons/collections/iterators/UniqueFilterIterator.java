@@ -40,7 +40,7 @@ public class UniqueFilterIterator<E> extends FilterIterator<E> {
      *  @param iterator  the iterator to use
      */
     public UniqueFilterIterator(Iterator<E> iterator) {
-        super(iterator, UniquePredicate.getInstance());
+        super(iterator, UniquePredicate.uniquePredicate());
     }
 
 }

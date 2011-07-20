@@ -214,7 +214,7 @@ public class TestSetUniqueList<E> extends AbstractTestList<E> {
     public void testFactory() {
         Integer[] array = new Integer[] { new Integer(1), new Integer(2), new Integer(1) };
         ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(array));
-        final SetUniqueList<Integer> lset = SetUniqueList.decorate(list);
+        final SetUniqueList<Integer> lset = SetUniqueList.setUniqueList(list);
 
         assertEquals("Duplicate element was added.", 2, lset.size());
         assertEquals(new Integer(1), lset.get(0));
@@ -311,7 +311,7 @@ public class TestSetUniqueList<E> extends AbstractTestList<E> {
 
     @SuppressWarnings("unchecked")
     public void testUniqueListReInsert() {
-        List<E> l = SetUniqueList.decorate(new LinkedList<E>());
+        List<E> l = SetUniqueList.setUniqueList(new LinkedList<E>());
         l.add((E) new Object());
         l.add((E) new Object());
 
@@ -328,7 +328,7 @@ public class TestSetUniqueList<E> extends AbstractTestList<E> {
 
     @SuppressWarnings("unchecked")
     public void testUniqueListDoubleInsert() {
-        List<E> l = SetUniqueList.decorate(new LinkedList<E>());
+        List<E> l = SetUniqueList.setUniqueList(new LinkedList<E>());
         l.add((E) new Object());
         l.add((E) new Object());
 
@@ -458,7 +458,7 @@ public class TestSetUniqueList<E> extends AbstractTestList<E> {
     // TODO: Generics
     public void testCollections304() {
         List list = new LinkedList();
-        SetUniqueList decoratedList = SetUniqueList.decorate(list);
+        SetUniqueList decoratedList = SetUniqueList.setUniqueList(list);
         String s1 = "Apple";
         String s2 = "Lemon";
         String s3 = "Orange";
@@ -486,7 +486,7 @@ public class TestSetUniqueList<E> extends AbstractTestList<E> {
     @SuppressWarnings("unchecked")
     public void testCollections307() {
         List<E> list = new ArrayList<E>();
-        List<E> uniqueList = SetUniqueList.decorate(list);
+        List<E> uniqueList = SetUniqueList.setUniqueList(list);
 
         String hello = "Hello";
         String world = "World";

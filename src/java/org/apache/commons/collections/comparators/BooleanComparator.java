@@ -25,7 +25,7 @@ import java.util.Comparator;
  * <p>
  * @see #getTrueFirstComparator()
  * @see #getFalseFirstComparator()
- * @see #getBooleanComparator(boolean)
+ * @see #booleanComparator(boolean)
  *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
@@ -94,7 +94,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      * <code>true</code> <code>Boolean</code>s before <code>false</code>
      * @return a singleton BooleanComparator instance
      */
-    public static BooleanComparator getBooleanComparator(boolean trueFirst) {
+    public static BooleanComparator booleanComparator(boolean trueFirst) {
         return trueFirst ? TRUE_FIRST : FALSE_FIRST;
     }
 

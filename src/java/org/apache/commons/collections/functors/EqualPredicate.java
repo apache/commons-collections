@@ -38,7 +38,7 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
 
     /** The value to compare to */
     private final Object iValue;
-    
+
     /**
      * Factory to create the identity predicate.
      * 

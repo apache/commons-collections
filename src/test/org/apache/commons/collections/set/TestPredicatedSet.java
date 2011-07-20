@@ -42,7 +42,7 @@ public class TestPredicatedSet<E> extends AbstractTestSet<E> {
     protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
 
     protected PredicatedSet<E> decorateSet(Set<E> set, Predicate<? super E> predicate) {
-        return (PredicatedSet<E>) PredicatedSet.decorate(set, predicate);
+        return (PredicatedSet<E>) PredicatedSet.predicatedSet(set, predicate);
     }
 
     @Override

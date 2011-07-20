@@ -51,14 +51,14 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * <p>
      * If there are any elements already in the collection being decorated, they
      * are NOT transformed.
-     * Constrast this with {@link #decorateTransform}.
+     * Contrast this with {@link #transformedCollection(Collection, Transformer)}.
      * 
      * @param coll  the collection to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed collection
      * @throws IllegalArgumentException if collection or transformer is null
      */
-    public static <E> Collection<E> decorate(Collection<E> coll, Transformer<? super E, ? extends E> transformer) {
+    public static <E> Collection<E> transformingCollection(Collection<E> coll, Transformer<? super E, ? extends E> transformer) {
         return new TransformedCollection<E>(coll, transformer);
     }
 
@@ -68,7 +68,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * <p>
      * If there are any elements already in the collection being decorated, they
      * will be transformed by this method.
-     * Constrast this with {@link #decorate}.
+     * Contrast this with {@link #transformingCollection(Collection, Transformer)}.
      * 
      * @param collection  the collection to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -76,7 +76,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * @throws IllegalArgumentException if collection or transformer is null
      * @since Commons Collections 3.3
      */
-    public static <E> Collection<E> decorateTransform(Collection<E> collection, Transformer<? super E, ? extends E> transformer) {
+    public static <E> Collection<E> transformedCollection(Collection<E> collection, Transformer<? super E, ? extends E> transformer) {
         TransformedCollection<E> decorated = new TransformedCollection<E>(collection, transformer);
         // null collection & transformer are disallowed by the constructor call above 
         if (collection.size() > 0) {

@@ -40,14 +40,14 @@ public class TestUnmodifiableCollection<E> extends AbstractTestCollection<E> {
     //-----------------------------------------------------------------------
     @Override
     public Collection<E> makeObject() {
-        return UnmodifiableCollection.decorate(new ArrayList<E>());
+        return UnmodifiableCollection.unmodifiableCollection(new ArrayList<E>());
     }
 
     @Override
     public Collection<E> makeFullCollection() {
         List<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
-        return UnmodifiableCollection.decorate(list);
+        return UnmodifiableCollection.unmodifiableCollection(list);
     }
 
     @Override

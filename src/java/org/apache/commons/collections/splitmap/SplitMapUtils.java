@@ -37,8 +37,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * Utilities for working with "split maps:" objects that implement {@link Put}
  * and/or {@link Get} but not {@link Map}.
  *
- * @since Commons Collections 5
- * @TODO fix version
+ * @since Commons Collections 4.0
  * @version $Revision$ $Date$
  * @see Get
  * @see Put
@@ -53,7 +52,7 @@ public class SplitMapUtils {
     }
 
     private static class WrappedGet<K, V> implements IterableMap<K, V>, Unmodifiable {
-        private Get<K, V> get;
+        private final Get<K, V> get;
 
         private WrappedGet(Get<K, V> get) {
             this.get = get;
@@ -72,7 +71,7 @@ public class SplitMapUtils {
         }
 
         public Set<java.util.Map.Entry<K, V>> entrySet() {
-            return UnmodifiableEntrySet.decorate(get.entrySet());
+            return UnmodifiableEntrySet.unmodifiableEntrySet(get.entrySet());
         }
 
         @Override
@@ -97,7 +96,7 @@ public class SplitMapUtils {
         }
 
         public Set<K> keySet() {
-            return UnmodifiableSet.decorate(get.keySet());
+            return UnmodifiableSet.unmodifiableSet(get.keySet());
         }
 
         public V put(K key, V value) {
@@ -117,7 +116,7 @@ public class SplitMapUtils {
         }
 
         public Collection<V> values() {
-            return UnmodifiableCollection.decorate(get.values());
+            return UnmodifiableCollection.unmodifiableCollection(get.values());
         }
 
         public MapIterator<K, V> mapIterator() {
@@ -127,12 +126,12 @@ public class SplitMapUtils {
             } else {
                 it = new EntrySetToMapIteratorAdapter<K, V>(get.entrySet());
             }
-            return UnmodifiableMapIterator.decorate(it);
+            return UnmodifiableMapIterator.unmodifiableMapIterator(it);
         }
     }
 
     private static class WrappedPut<K, V> implements Map<K, V>, Put<K, V> {
-        private Put<K, V> put;
+        private final Put<K, V> put;
 
         private WrappedPut(Put<K, V> put) {
             this.put = put;

@@ -49,7 +49,7 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
      * @param <T>
      * @return Transformer<Class<? extends T>, T>
      */
-    public static <T> Transformer<Class<? extends T>, T> getInstance() {
+    public static <T> Transformer<Class<? extends T>, T> instantiateTransformer() {
         return new InstantiateTransformer<T>();
     }
 
@@ -60,7 +60,7 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
      * @param args  the constructor arguments
      * @return an instantiate transformer
      */
-    public static <T> Transformer<Class<? extends T>, T> getInstance(Class<?>[] paramTypes, Object[] args) {
+    public static <T> Transformer<Class<? extends T>, T> instantiateTransformer(Class<?>[] paramTypes, Object[] args) {
         if (((paramTypes == null) && (args != null))
             || ((paramTypes != null) && (args == null))
             || ((paramTypes != null) && (args != null) && (paramTypes.length != args.length))) {

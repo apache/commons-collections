@@ -45,7 +45,7 @@ public class SynchronizedSortedSet<E> extends SynchronizedCollection<E> implemen
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    public static <T> SortedSet<T> decorate(SortedSet<T> set) {
+    public static <T> SortedSet<T> synchronizedSortedSet(SortedSet<T> set) {
         return new SynchronizedSortedSet<T>(set);
     }
 

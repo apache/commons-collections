@@ -61,7 +61,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * @throws IllegalArgumentException if collection or predicate is null
      * @throws IllegalArgumentException if the collection contains invalid elements
      */
-    public static <T> Collection<T> decorate(Collection<T> coll, Predicate<? super T> predicate) {
+    public static <T> Collection<T> predicatedCollection(Collection<T> coll, Predicate<? super T> predicate) {
         return new PredicatedCollection<T>(coll, predicate);
     }
 

@@ -50,7 +50,7 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
      * @return an invoker transformer
      * @since Commons Collections 3.1
      */
-    public static <I, O> Transformer<I, O> getInstance(String methodName) {
+    public static <I, O> Transformer<I, O> invokerTransformer(String methodName) {
         if (methodName == null) {
             throw new IllegalArgumentException("The method to invoke must not be null");
         }
@@ -65,7 +65,7 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
      * @param args  the arguments to pass to the method
      * @return an invoker transformer
      */
-    public static <I, O> Transformer<I, O> getInstance(String methodName, Class<?>[] paramTypes, Object[] args) {
+    public static <I, O> Transformer<I, O> invokerTransformer(String methodName, Class<?>[] paramTypes, Object[] args) {
         if (methodName == null) {
             throw new IllegalArgumentException("The method to invoke must not be null");
         }

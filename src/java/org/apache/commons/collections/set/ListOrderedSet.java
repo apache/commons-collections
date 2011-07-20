@@ -71,7 +71,7 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
      * @throws IllegalArgumentException if either the set or list is not empty
      * @since Commons Collections 3.1
      */
-    public static <E> ListOrderedSet<E> decorate(Set<E> set, List<E> list) {
+    public static <E> ListOrderedSet<E> listOrderedSet(Set<E> set, List<E> list) {
         if (set == null) {
             throw new IllegalArgumentException("Set must not be null");
         }
@@ -92,7 +92,7 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    public static <E> ListOrderedSet<E> decorate(Set<E> set) {
+    public static <E> ListOrderedSet<E> listOrderedSet(Set<E> set) {
         return new ListOrderedSet<E>(set);
     }
 
@@ -107,7 +107,7 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    public static <E> ListOrderedSet<E> decorate(List<E> list) {
+    public static <E> ListOrderedSet<E> listOrderedSet(List<E> list) {
         if (list == null) {
             throw new IllegalArgumentException("List must not be null");
         }
@@ -164,7 +164,7 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
      * @return an unmodifiable list view
      */
     public List<E> asList() {
-        return UnmodifiableList.decorate(setOrder);
+        return UnmodifiableList.unmodifiableList(setOrder);
     }
 
     //-----------------------------------------------------------------------

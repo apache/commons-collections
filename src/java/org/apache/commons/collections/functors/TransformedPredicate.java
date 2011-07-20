@@ -49,7 +49,7 @@ public final class TransformedPredicate<T> implements Predicate<T>, PredicateDec
      * @return the predicate
      * @throws IllegalArgumentException if the transformer or the predicate is null
      */
-    public static <T> Predicate<T> getInstance(Transformer<? super T, ? extends T> transformer, Predicate<? super T> predicate) {
+    public static <T> Predicate<T> transformedPredicate(Transformer<? super T, ? extends T> transformer, Predicate<? super T> predicate) {
         if (transformer == null) {
             throw new IllegalArgumentException("The transformer to call must not be null");
         }

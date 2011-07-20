@@ -41,7 +41,7 @@ public class TestSynchronizedList<E> extends AbstractTestList<E> {
 
     @Override
     public List<E> makeObject() {
-        return SynchronizedList.decorate(new ArrayList<E>());
+        return SynchronizedList.synchronizedList(new ArrayList<E>());
     }
 
     @Override

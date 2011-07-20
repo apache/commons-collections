@@ -44,7 +44,7 @@ public final class ExceptionTransformer<I, O> implements Transformer<I, O>, Seri
      * @since Commons Collections 3.1
      */
     @SuppressWarnings("unchecked")
-    public static <I, O> Transformer<I, O> getInstance() {
+    public static <I, O> Transformer<I, O> exceptionTransformer() {
         return (Transformer<I, O>) INSTANCE;
     }
 

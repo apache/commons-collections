@@ -48,7 +48,7 @@ public class SynchronizedBuffer<E>
      * @return a new synchronized Buffer
      * @throws IllegalArgumentException if buffer is null
      */
-    public static <T> Buffer<T> decorate(Buffer<T> buffer) {
+    public static <T> Buffer<T> synchronizedBuffer(Buffer<T> buffer) {
         return new SynchronizedBuffer<T>(buffer);
     }
 

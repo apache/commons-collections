@@ -49,14 +49,14 @@ public class TransformedBag<E>
      * <p>
      * If there are any elements already in the bag being decorated, they
      * are NOT transformed.
-     * Constrast this with {@link #decorateTransform}.
+     * Contrast this with {@link #transformedBag(Bag, Transformer)}.
      * 
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed Bag
      * @throws IllegalArgumentException if bag or transformer is null
      */
-    public static <E> Bag<E> decorate(Bag<E> bag, Transformer<? super E, ? extends E> transformer) {
+    public static <E> Bag<E> transformingBag(Bag<E> bag, Transformer<? super E, ? extends E> transformer) {
         return new TransformedBag<E>(bag, transformer);
     }
     
@@ -66,7 +66,7 @@ public class TransformedBag<E>
      * <p>
      * If there are any elements already in the bag being decorated, they
      * will be transformed by this method.
-     * Constrast this with {@link #decorate}.
+     * Contrast this with {@link #transformingBag(Bag, Transformer)}.
      * 
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -74,13 +74,13 @@ public class TransformedBag<E>
      * @throws IllegalArgumentException if bag or transformer is null
      * @since Commons Collections 3.3
      */
-    public static <E> Bag<E> decorateTransform(Bag<E> bag, Transformer<? super E, ? extends E> transformer) {
+    public static <E> Bag<E> transformedBag(Bag<E> bag, Transformer<? super E, ? extends E> transformer) {
         TransformedBag<E> decorated = new TransformedBag<E>(bag, transformer);
         if (transformer != null && bag != null && bag.size() > 0) {
             @SuppressWarnings("unchecked") // Bag is of type E
             E[] values = (E[]) bag.toArray();
             bag.clear();
-            for(int i=0; i<values.length; i++) {
+			for (int i = 0; i < values.length; i++) {
                 decorated.decorated().add(transformer.transform(values[i]));
             }
         }
@@ -127,7 +127,7 @@ public class TransformedBag<E>
 
     public Set<E> uniqueSet() {
         Set<E> set = getBag().uniqueSet();
-        return TransformedSet.<E>decorate(set, transformer);
+        return TransformedSet.<E>transformingSet(set, transformer);
     }
 
 }

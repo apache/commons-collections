@@ -46,14 +46,14 @@ public class TestUnmodifiableSet<E> extends AbstractTestSet<E> {
     //-------------------------------------------------------------------
     @Override
     public Set<E> makeObject() {
-        return UnmodifiableSet.decorate(new HashSet<E>());
+        return UnmodifiableSet.unmodifiableSet(new HashSet<E>());
     }
 
     @Override
     public Set<E> makeFullCollection() {
         HashSet<E> set = new HashSet<E>();
         set.addAll(Arrays.asList(getFullElements()));
-        return UnmodifiableSet.decorate(set);
+        return UnmodifiableSet.unmodifiableSet(set);
     }
 
     @Override

@@ -46,9 +46,9 @@ public class TransformerClosure<E> implements Closure<E>, Serializable {
      * @param transformer  the transformer to call, null means nop
      * @return the <code>transformer</code> closure
      */
-    public static <E> Closure<E> getInstance(Transformer<? super E, ?> transformer) {
+    public static <E> Closure<E> transformerClosure(Transformer<? super E, ?> transformer) {
         if (transformer == null) {
-            return NOPClosure.<E>getInstance();
+            return NOPClosure.<E>nopClosure();
         }
         return new TransformerClosure<E>(transformer);
     }

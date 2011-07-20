@@ -45,7 +45,7 @@ public final class TransformerPredicate<T> implements Predicate<T>, Serializable
      * @return the predicate
      * @throws IllegalArgumentException if the transformer is null
      */
-    public static <T> Predicate<T> getInstance(Transformer<? super T, Boolean> transformer) {
+    public static <T> Predicate<T> transformerPredicate(Transformer<? super T, Boolean> transformer) {
         if (transformer == null) {
             throw new IllegalArgumentException("The transformer to call must not be null");
         }

@@ -49,13 +49,13 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
      * <p>
      * If there are any elements already in the list being decorated, they
      * are NOT transformed.
-     * Constrast this with {@link #decorateTransform}.
+     * Contrast this with {@link #transformedList(List, Transformer)}.
      * 
      * @param list  the list to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if list or transformer is null
      */
-    public static <E> List<E> decorate(List<E> list, Transformer<? super E, ? extends E> transformer) {
+    public static <E> List<E> transformingList(List<E> list, Transformer<? super E, ? extends E> transformer) {
         return new TransformedList<E>(list, transformer);
     }
     
@@ -65,7 +65,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
      * <p>
      * If there are any elements already in the list being decorated, they
      * will be transformed by this method.
-     * Constrast this with {@link #decorate}.
+     * Contrast this with {@link #transformingList(List, Transformer)}.
      * 
      * @param list  the list to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -73,7 +73,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
      * @throws IllegalArgumentException if list or transformer is null
      * @since Commons Collections 3.3
      */
-    public static <E> List<E> decorateTransform(List<E> list, Transformer<? super E, ? extends E> transformer) {
+    public static <E> List<E> transformedList(List<E> list, Transformer<? super E, ? extends E> transformer) {
         TransformedList<E> decorated = new TransformedList<E>(list, transformer);
         if (transformer != null && list != null && list.size() > 0) {
             @SuppressWarnings("unchecked") // list is of type E

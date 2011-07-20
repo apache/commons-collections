@@ -69,7 +69,7 @@ public class ObjectArrayIterator<E>
      * @param array the array to iterate over
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      */
-    public ObjectArrayIterator(E[] array) {
+    public ObjectArrayIterator(E... array) {
         this(array, 0, array.length);
     }
 

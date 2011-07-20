@@ -55,14 +55,14 @@ public class TransformedSortedMap<K, V>
      * <p>
      * If there are any elements already in the map being decorated, they
      * are NOT transformed.
-     * Constrast this with {@link #decorateTransform}.
+     * Contrast this with {@link #transformedSortedMap(SortedMap, Transformer, Transformer)}.
      * 
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the predicate to validate the keys, null means no transformation
      * @param valueTransformer  the predicate to validate to values, null means no transformation
      * @throws IllegalArgumentException if the map is null
      */
-    public static <K, V> SortedMap<K, V> decorate(SortedMap<K, V> map,
+    public static <K, V> SortedMap<K, V> transformingSortedMap(SortedMap<K, V> map,
             Transformer<? super K, ? extends K> keyTransformer,
             Transformer<? super V, ? extends V> valueTransformer) {
         return new TransformedSortedMap<K, V>(map, keyTransformer, valueTransformer);
@@ -74,7 +74,7 @@ public class TransformedSortedMap<K, V>
      * <p>
      * If there are any elements already in the map being decorated, they
      * will be transformed by this method.
-     * Constrast this with {@link #decorate}.
+     * Contrast this with {@link #transformingSortedMap(SortedMap, Transformer, Transformer)}.
      * 
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no transformation
@@ -82,7 +82,7 @@ public class TransformedSortedMap<K, V>
      * @throws IllegalArgumentException if map is null
      * @since Commons Collections 3.2
      */
-    public static <K, V> SortedMap<K, V> decorateTransform(SortedMap<K, V> map,
+    public static <K, V> SortedMap<K, V> transformedSortedMap(SortedMap<K, V> map,
             Transformer<? super K, ? extends K> keyTransformer,
             Transformer<? super V, ? extends V> valueTransformer) {
         TransformedSortedMap<K, V> decorated = new TransformedSortedMap<K, V>(map, keyTransformer, valueTransformer);

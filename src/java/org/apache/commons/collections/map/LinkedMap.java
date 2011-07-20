@@ -283,22 +283,22 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
 
         @Override
         public Iterator<K> iterator() {
-            return UnmodifiableIterator.decorate(parent.keySet().iterator());
+            return UnmodifiableIterator.unmodifiableIterator(parent.keySet().iterator());
         }
 
         @Override
         public ListIterator<K> listIterator() {
-            return UnmodifiableListIterator.decorate(super.listIterator());
+            return UnmodifiableListIterator.umodifiableListIterator(super.listIterator());
         }
 
         @Override
         public ListIterator<K> listIterator(int fromIndex) {
-            return UnmodifiableListIterator.decorate(super.listIterator(fromIndex));
+            return UnmodifiableListIterator.umodifiableListIterator(super.listIterator(fromIndex));
         }
 
         @Override
         public List<K> subList(int fromIndexInclusive, int toIndexExclusive) {
-            return UnmodifiableList.decorate(super.subList(fromIndexInclusive, toIndexExclusive));
+            return UnmodifiableList.unmodifiableList(super.subList(fromIndexInclusive, toIndexExclusive));
         }
     }
 

@@ -83,9 +83,9 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      *
      * @param map  the map to wrap
      */
-    @SuppressWarnings("unchecked")
-    public static <K, V> MultiValueMap<K, V> decorate(Map<K, ? super Collection<V>> map) {
-        return MultiValueMap.<K, V, ArrayList>decorate((Map<K, ? super Collection>) map, ArrayList.class);
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static <K, V> MultiValueMap<K, V> multiValueMap(Map<K, ? super Collection<V>> map) {
+        return MultiValueMap.<K, V, ArrayList> multiValueMap((Map<K, ? super Collection>) map, ArrayList.class);
     }
 
     /**
@@ -95,7 +95,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @param map  the map to wrap
      * @param collectionClass  the type of the collection class
      */
-    public static <K, V, C extends Collection<V>> MultiValueMap<K, V> decorate(Map<K, ? super C> map, Class<C> collectionClass) {
+    public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(Map<K, ? super C> map, Class<C> collectionClass) {
         return new MultiValueMap<K, V>(map, new ReflectionFactory<C>(collectionClass));
     }
 
@@ -106,7 +106,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @param map  the map to decorate
      * @param collectionFactory  the collection factory (must return a Collection object).
      */
-    public static <K, V, C extends Collection<V>> MultiValueMap<K, V> decorate(Map<K, ? super C> map, Factory<C> collectionFactory) {
+    public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(Map<K, ? super C> map, Factory<C> collectionFactory) {
         return new MultiValueMap<K, V>(map, collectionFactory);
     }
 
@@ -115,9 +115,9 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * Creates a MultiValueMap based on a <code>HashMap</code> and
      * storing the multiple values in an <code>ArrayList</code>.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public MultiValueMap() {
-        this(new HashMap(), new ReflectionFactory(ArrayList.class));
+        this(new HashMap<K, V>(), new ReflectionFactory(ArrayList.class));
     }
 
     /**
@@ -375,7 +375,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      */
     public Iterator<V> iterator(Object key) {
         if (!containsKey(key)) {
-            return EmptyIterator.<V>getInstance();
+            return EmptyIterator.<V>emptyIterator();
         }
         return new ValuesIterator(key);
     }

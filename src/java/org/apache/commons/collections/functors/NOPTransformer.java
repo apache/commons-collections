@@ -43,7 +43,7 @@ public class NOPTransformer<T> implements Transformer<T, T>, Serializable {
      * @since Commons Collections 3.1
      */
     @SuppressWarnings("unchecked")
-    public static <T> Transformer<T, T> getInstance() {
+    public static <T> Transformer<T, T> nopTransformer() {
         return (Transformer<T, T>) INSTANCE;
     }
 

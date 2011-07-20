@@ -46,9 +46,9 @@ public final class MapTransformer<I, O> implements Transformer<I, O>, Serializab
      * @param map the map, not cloned
      * @return the transformer
      */
-    public static <I, O> Transformer<I, O> getInstance(Map<? super I, ? extends O> map) {
+    public static <I, O> Transformer<I, O> mapTransformer(Map<? super I, ? extends O> map) {
         if (map == null) {
-            return ConstantTransformer.<I, O>getNullInstance();
+            return ConstantTransformer.<I, O>nullTransformer();
         }
         return new MapTransformer<I, O>(map);
     }

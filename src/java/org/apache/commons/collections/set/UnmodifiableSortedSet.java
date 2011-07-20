@@ -52,7 +52,7 @@ public final class UnmodifiableSortedSet<E>
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    public static <T> SortedSet<T> decorate(SortedSet<T> set) {
+    public static <T> SortedSet<T> unmodifiableSortedSet(SortedSet<T> set) {
         if (set instanceof Unmodifiable) {
             return set;
         }
@@ -98,7 +98,7 @@ public final class UnmodifiableSortedSet<E>
     //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
-        return UnmodifiableIterator.decorate(decorated().iterator());
+        return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
     }
 
     @Override

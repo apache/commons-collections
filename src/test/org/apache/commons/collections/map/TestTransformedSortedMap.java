@@ -51,7 +51,7 @@ public class TestTransformedSortedMap<K, V> extends AbstractTestSortedMap<K, V> 
     @Override
     @SuppressWarnings("unchecked")
     public SortedMap<K, V> makeObject() {
-        return TransformedSortedMap.decorate(new TreeMap<K, V>(),
+        return TransformedSortedMap.transformingSortedMap(new TreeMap<K, V>(),
                 (Transformer<? super K, ? extends K>) TransformerUtils.nopTransformer(),
                 (Transformer<? super V, ? extends V>) TransformerUtils.nopTransformer());
     }
@@ -68,7 +68,7 @@ public class TestTransformedSortedMap<K, V> extends AbstractTestSortedMap<K, V> 
         Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
 
         SortedMap<K, V> map = TransformedSortedMap
-                .decorate(
+                .transformingSortedMap(
                         new TreeMap<K, V>(),
                         (Transformer<? super K, ? extends K>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER,
                         null);
@@ -92,7 +92,7 @@ public class TestTransformedSortedMap<K, V> extends AbstractTestSortedMap<K, V> 
         assertEquals(els[0], map.remove(new Integer((String) els[0])));
 
         map = TransformedSortedMap
-                .decorate(
+                .transformingSortedMap(
                         new TreeMap<K, V>(),
                         null,
                         (Transformer<? super V, ? extends V>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
@@ -129,7 +129,7 @@ public class TestTransformedSortedMap<K, V> extends AbstractTestSortedMap<K, V> 
         base.put((K) "C", (V) "3");
 
         SortedMap<K, V> trans = TransformedSortedMap
-                .decorate(
+                .transformingSortedMap(
                         base,
                         null,
                         (Transformer<? super V, ? extends V>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
@@ -149,7 +149,7 @@ public class TestTransformedSortedMap<K, V> extends AbstractTestSortedMap<K, V> 
         base.put((K) "C", (V) "3");
 
         SortedMap<K, V> trans = TransformedSortedMap
-                .decorateTransform(
+                .transformedSortedMap(
                         base,
                         null,
                         (Transformer<? super V, ? extends V>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
