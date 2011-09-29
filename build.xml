@@ -151,7 +151,8 @@ limitations under the License.
            destdir="${build.classes}"
              debug="${compile.debug}"
        deprecation="${compile.deprecation}"
-          optimize="${compile.optimize}">
+          optimize="${compile.optimize}"
+ includeantruntime="false">
     </javac>
   </target>
 
@@ -294,7 +295,8 @@ limitations under the License.
            destdir="${build.tests}"
              debug="true"
        deprecation="false"
-          optimize="false">
+          optimize="false"
+ includeantruntime="false">
       <classpath>
         <pathelement location="${build.classes}"/>
         <path refid="test.support.path"/>
@@ -476,7 +478,8 @@ limitations under the License.
             destdir="${tf.build.tf}"
             debug="true"
             deprecation="false"
-            optimize="false">
+            optimize="false"
+            includeantruntime="false">
       <patternset refid="tf.patternset.validate" />
       <classpath>
         <path refid="test.support.path"/>
