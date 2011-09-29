@@ -105,10 +105,9 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
      */
     public T transform(Class<? extends T> input) {
         try {
-            if (input instanceof Class == false) {
+            if (input == null) {
                 throw new FunctorException(
-                    "InstantiateTransformer: Input object was not an instanceof Class, it was a "
-                        + (input == null ? "null object" : input.getClass().getName()));
+                    "InstantiateTransformer: Input object was not an instanceof Class, it was a null object");
             }
             Constructor<? extends T> con = input.getConstructor(iParamTypes);
             return con.newInstance(iArgs);
