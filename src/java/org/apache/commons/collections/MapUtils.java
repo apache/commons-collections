@@ -1223,7 +1223,6 @@ public class MapUtils {
      *
      * @param map  the map to synchronize, must not be null
      * @return a synchronized map backed by the given map
-     * @throws IllegalArgumentException  if the map is null
      */
     public static <K, V> Map<K, V> synchronizedMap(Map<K, V> map) {
         return Collections.synchronizedMap(map);
