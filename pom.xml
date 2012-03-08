@@ -19,7 +19,7 @@
   <parent>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-parent</artifactId>
-    <version>15</version>
+    <version>23</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>commons-collections</groupId>
@@ -361,7 +361,7 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>4.8.2</version>
+      <version>4.10</version>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -371,6 +371,14 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <distributionManagement>
+    <site>
+      <id>apache.website</id>
+      <name>Apache Commons Site</name>
+      <url>${commons.deployment.protocol}://people.apache.org/www/commons.apache.org/${commons.componentid}</url>
+    </site>
+  </distributionManagement>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -453,17 +461,6 @@
   <reporting>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.5</version>
-        <configuration>
-          <linksource>true</linksource>
-          <links>
-            <link>http://download.oracle.com/javase/6/docs/api</link>
-          </links>
-        </configuration>
-      </plugin>
-      <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>2.1</version>
         <configuration>
@@ -488,18 +485,6 @@
         <artifactId>cobertura-maven-plugin</artifactId>
         <version>2.2</version>
       </plugin>
-      <!-- Fails with Exception -->
-      <!--
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>clirr-maven-plugin</artifactId>
-        <version>2.2.2</version>
-        <configuration>
-          <comparisonVersion>3.2</comparisonVersion>
-          <minSeverity>info</minSeverity>
-        </configuration>
-      </plugin>
-      -->
       <plugin>
         <artifactId>maven-pmd-plugin</artifactId>
         <version>2.3</version>
@@ -515,42 +500,7 @@
           </reportSet>
         </reportSets>
       </plugin>
-      <!-- Override Javadoc config in parent pom to add default manifest entries -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <configuration> 
-          <archive>
-            <manifest>
-              <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-              <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-            </manifest>
-          </archive>
-          <aggregate>false</aggregate>
-          <source>${maven.compile.source}</source>
-          <encoding>${commons.encoding}</encoding>
-          <docEncoding>${commons.docEncoding}</docEncoding>
-          <linksource>true</linksource>
-          <links>
-            <link>http://download.oracle.com/javase/6/docs/api/</link>
-          </links>
-        </configuration> 
-      </plugin>
     </plugins>
   </reporting>
-
-  <profiles>
-    <profile>
-      <id>rc</id>
-      <distributionManagement>
-        <!-- Cannot define in parent ATM, see COMMONSSITE-26 -->
-        <site>
-          <id>apache.website</id>
-          <name>Apache Commons Release Candidate Staging Site</name>
-          <url>${commons.deployment.protocol}://people.apache.org/www/people.apache.org/builds/commons/${commons.componentid}/${commons.release.version}/${commons.rc.version}/site</url>
-        </site>
-      </distributionManagement>
-    </profile>
-  </profiles>
 
 </project>
