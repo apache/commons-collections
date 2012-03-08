@@ -389,8 +389,6 @@
 
 
   <build>
-    <sourceDirectory>src/java</sourceDirectory>
-    <testSourceDirectory>src/test</testSourceDirectory>
       <plugins>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
@@ -431,8 +429,8 @@
           <artifactId>maven-assembly-plugin</artifactId>
           <configuration>
             <descriptors>
-              <descriptor>src/assembly/bin.xml</descriptor>
-              <descriptor>src/assembly/src.xml</descriptor>
+              <descriptor>src/main/assembly/bin.xml</descriptor>
+              <descriptor>src/main/assembly/src.xml</descriptor>
             </descriptors>
             <tarLongFileMode>gnu</tarLongFileMode>
           </configuration>

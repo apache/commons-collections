@@ -44,16 +44,16 @@ limitations under the License.
   <property name="component.title.full"    value="Apache Commons Collections"/>
 
   <!-- The current version number of this component -->
-  <property name="component.version"       value="3.3"/>
+  <property name="component.version"       value="4.0-SNAPSHOT"/>
 
   <!-- The base directory for component configuration files -->
   <property name="source.conf"               value="src/conf"/>
 
   <!-- The base directory for component sources -->
-  <property name="source.java"             value="src/java"/>
+  <property name="source.java"             value="src/main/java"/>
 
   <!-- The base directory for unit test sources -->
-  <property name="source.test"             value="src/test"/>
+  <property name="source.test"             value="src/test/java"/>
 
   <!-- The directories for compilation targets -->
   <property name="build.home"              value="build"/>
