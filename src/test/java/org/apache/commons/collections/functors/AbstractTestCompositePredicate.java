@@ -30,7 +30,7 @@ import java.util.List;
  * Base class for tests of composite predicates.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 468603 $
+ * @version $Revision$
  *
  * @author Edwin Tellman
  */

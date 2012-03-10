@@ -28,7 +28,7 @@ import java.util.Collections;
  * Base class for tests of AnyPredicate, AllPredicate, and OnePredicate.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 468603 $
+ * @version $Revision$
  *
  * @author Edwin Tellman
  */

@@ -31,7 +31,7 @@ import java.util.List;
  * provides methods to create and verify mock predicates to which to delegate.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 468603 $
+ * @version $Revision$
  *
  * @author Edwin Tellman
  */

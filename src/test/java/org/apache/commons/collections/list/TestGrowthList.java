@@ -25,7 +25,7 @@ import java.util.List;
  * Extension of {@link AbstractTestList} for exercising the {@link GrowthList}.
  *
  * @since Commons Collections 3.2
- * @version $Revision: 155406 $
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */
