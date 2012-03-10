@@ -233,7 +233,7 @@ public abstract class AbstractTestObject extends BulkTest {
 
     protected String getCanonicalEmptyCollectionName(Object object) {
         StringBuilder retval = new StringBuilder();
-        retval.append("data/test/");
+        retval.append(TEST_DATA_PATH);
         String colName = object.getClass().getName();
         colName = colName.substring(colName.lastIndexOf(".") + 1, colName.length());
         retval.append(colName);
@@ -245,7 +245,7 @@ public abstract class AbstractTestObject extends BulkTest {
 
     protected String getCanonicalFullCollectionName(Object object) {
         StringBuilder retval = new StringBuilder();
-        retval.append("data/test/");
+        retval.append(TEST_DATA_PATH);
         String colName = object.getClass().getName();
         colName = colName.substring(colName.lastIndexOf(".") + 1, colName.length());
         retval.append(colName);

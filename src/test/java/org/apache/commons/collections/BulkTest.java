@@ -148,6 +148,9 @@ public class BulkTest extends TestCase implements Cloneable {
     // method name for every simple test it defines.  
 
 
+    /** Path to test data resources */
+    protected static final String TEST_DATA_PATH = "src/test/resources/data/test/";
+
     /**
      *  The full name of this bulk test instance.  This is the full name
      *  that is compared to {@link #ignoredTests} to see if this

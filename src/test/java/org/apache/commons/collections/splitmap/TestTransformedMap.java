@@ -126,7 +126,7 @@ public class TestTransformedMap extends BulkTest {
                 NOPTransformer.<String>nopTransformer(),
                 NOPTransformer.<String>nopTransformer() );
 
-        ObjectInputStream in = new ObjectInputStream( new FileInputStream( "data/test/TransformedMap.emptyCollection.version3.2.obj" ) );
+        ObjectInputStream in = new ObjectInputStream( new FileInputStream( TEST_DATA_PATH+"/TransformedMap.emptyCollection.version3.2.obj" ) );
         Object readObject = in.readObject();
         in.close();
 
@@ -145,7 +145,7 @@ public class TestTransformedMap extends BulkTest {
         map.put( "e", "f" );
         map.put( "g", "h" );
 
-        ObjectInputStream in = new ObjectInputStream( new FileInputStream( "data/test/TransformedMap.fullCollection.version3.2.obj" ) );
+        ObjectInputStream in = new ObjectInputStream( new FileInputStream( TEST_DATA_PATH+"TransformedMap.fullCollection.version3.2.obj" ) );
         Object readObject = in.readObject();
         in.close();
 
