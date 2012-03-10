@@ -69,7 +69,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
      * @throws IllegalArgumentException if bag is null
      */
     @SuppressWarnings("unchecked")
-	public static <E> BoundedCollection<E> unmodifiableBoundedCollection(Collection<? extends E> coll) {
+    public static <E> BoundedCollection<E> unmodifiableBoundedCollection(Collection<? extends E> coll) {
         if (coll == null) {
             throw new IllegalArgumentException("The collection must not be null");
         }

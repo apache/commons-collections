@@ -510,8 +510,8 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
                         }
                         synchronized (map) {
                             for (MapIterator<Object, Thread> iter = map.mapIterator(); iter.hasNext();) {
-                            	iter.next();
-                            	if (iter.getValue() == this) {
+                                iter.next();
+                                if (iter.getValue() == this) {
                                     iter.remove();
                                 }
                             }
@@ -676,8 +676,8 @@ public class TestLRUMap<K, V> extends AbstractTestOrderedMap<K, V> {
                         }
                         synchronized (map) {
                             for (Iterator<Object> iter = map.keySet().iterator(); iter.hasNext();) {
-								String name = (String) iter.next();
-								if (name.substring(0, name.indexOf('[')).equals(getName())) {
+                                String name = (String) iter.next();
+                                if (name.substring(0, name.indexOf('[')).equals(getName())) {
                                     iter.remove();
                                 }
                             }

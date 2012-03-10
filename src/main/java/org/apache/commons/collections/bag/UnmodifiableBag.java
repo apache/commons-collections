@@ -102,8 +102,8 @@ public final class UnmodifiableBag<E>
     //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
-		return UnmodifiableIterator.<E> unmodifiableIterator(decorated()
-				.iterator());
+        return UnmodifiableIterator.<E> unmodifiableIterator(decorated()
+                .iterator());
     }
 
     @Override
@@ -150,7 +150,7 @@ public final class UnmodifiableBag<E>
     @Override
     public Set<E> uniqueSet() {
         Set<E> set = decorated().uniqueSet();
-		return UnmodifiableSet.<E> unmodifiableSet(set);
+        return UnmodifiableSet.<E> unmodifiableSet(set);
     }
 
 }

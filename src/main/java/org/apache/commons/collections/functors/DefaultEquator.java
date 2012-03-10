@@ -24,43 +24,43 @@ package org.apache.commons.collections.functors;
  * @version $Revision$
  */
 public class DefaultEquator<T> implements Equator<T> {
-	/** Static instance */
-	public static final DefaultEquator<Object> INSTANCE = new DefaultEquator<Object>();
+    /** Static instance */
+    public static final DefaultEquator<Object> INSTANCE = new DefaultEquator<Object>();
 
-	/**
-	 * Hashcode used for <code>null</code> objects.
-	 */
-	public static final int HASHCODE_NULL = -1;
+    /**
+     * Hashcode used for <code>null</code> objects.
+     */
+    public static final int HASHCODE_NULL = -1;
 
-	/**
-	 * {@inheritDoc} Delegates to {@link Object#equals(Object)}.
-	 */
-	public boolean equate(T o1, T o2) {
-		return o1 == o2 || o1 != null && o1.equals(o2);
-	}
+    /**
+     * {@inheritDoc} Delegates to {@link Object#equals(Object)}.
+     */
+    public boolean equate(T o1, T o2) {
+        return o1 == o2 || o1 != null && o1.equals(o2);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @return <code>o.hashCode()</code> if <code>o</code> is non-
-	 *         <code>null</code>, else {@link #HASHCODE_NULL}.
-	 */
-	public int hash(T o) {
-		return o == null ? HASHCODE_NULL : o.hashCode();
-	}
+    /**
+     * {@inheritDoc}
+     * 
+     * @return <code>o.hashCode()</code> if <code>o</code> is non-
+     *         <code>null</code>, else {@link #HASHCODE_NULL}.
+     */
+    public int hash(T o) {
+        return o == null ? HASHCODE_NULL : o.hashCode();
+    }
 
-	private Object readResolve() {
-		return INSTANCE;
-	}
+    private Object readResolve() {
+        return INSTANCE;
+    }
 
-	/**
-	 * Get a typed {@link DefaultEquator} instance.
-	 * 
-	 * @param <T>
-	 * @return {@link DefaultEquator#INSTANCE}
-	 */
-	@SuppressWarnings("unchecked")
-	public static <T> DefaultEquator<T> defaultEquator() {
-		return (DefaultEquator<T>) DefaultEquator.INSTANCE;
-	}
+    /**
+     * Get a typed {@link DefaultEquator} instance.
+     * 
+     * @param <T>
+     * @return {@link DefaultEquator#INSTANCE}
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> DefaultEquator<T> defaultEquator() {
+        return (DefaultEquator<T>) DefaultEquator.INSTANCE;
+    }
 }

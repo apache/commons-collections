@@ -192,7 +192,7 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if either transformer is null
      */
     @SuppressWarnings("unchecked")
-	public static <T> Transformer<T, T> chainedTransformer(
+    public static <T> Transformer<T, T> chainedTransformer(
             Transformer<? super T, ? extends T> transformer1,
             Transformer<? super T, ? extends T> transformer2) {
         return ChainedTransformer.<T> chainedTransformer(transformer1, transformer2);

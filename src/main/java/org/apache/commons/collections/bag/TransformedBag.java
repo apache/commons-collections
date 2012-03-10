@@ -80,7 +80,7 @@ public class TransformedBag<E>
             @SuppressWarnings("unchecked") // Bag is of type E
             E[] values = (E[]) bag.toArray();
             bag.clear();
-			for (int i = 0; i < values.length; i++) {
+            for (int i = 0; i < values.length; i++) {
                 decorated.decorated().add(transformer.transform(values[i]));
             }
         }
