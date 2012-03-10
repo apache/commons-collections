@@ -29,7 +29,7 @@ import org.apache.commons.collections.functors.NOPTransformer;
  * Tests for {@link TransformedMap}
  *
  * @since Commons Collections 5
- * @TODO fix version, add Serialization tests
+ * TODO fix version, add Serialization tests
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne

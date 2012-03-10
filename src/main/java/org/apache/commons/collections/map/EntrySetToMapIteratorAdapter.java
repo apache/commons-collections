@@ -27,7 +27,7 @@ import org.apache.commons.collections.ResettableIterator;
  * Adapts a Map entrySet to the MapIterator interface.
  *
  * @since Commons Collections 5
- * @TODO fix version
+ * TODO fix version
  * @version $Revision$ $Date$
  *
  * @author Matt Benson

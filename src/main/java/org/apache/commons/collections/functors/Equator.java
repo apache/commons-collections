@@ -38,8 +38,8 @@ public interface Equator<T> {
 
     /**
      * Calculates the hash for the object, based on the method of equality used in the equate
-     * method. This is used for classes that delegate their {@link #equals(Object)} method to an
-     * Equator (and so must also delegate their {@link #hashCode()} method), or for implementations
+     * method. This is used for classes that delegate their {@link Object#equals(Object) equals(Object)} method to an
+     * Equator (and so must also delegate their {@link Object#hashCode() hashCode()} method), or for implementations
      * of {@link HashedMap} that use an Equator for the key objects.
      * 
      * @param o the object to calculate the hash for.

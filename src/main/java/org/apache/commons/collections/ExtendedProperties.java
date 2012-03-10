@@ -44,7 +44,7 @@ import java.util.Vector;
  * instead of overwriting them.
  * <p>
  * <b>Please consider using the
- * {@link org.apache.commons.configuration.PropertiesConfiguration} class in
+ * {@code org.apache.commons.configuration.PropertiesConfiguration} class in
  * <a href="http://commons.apache.org/configuration">Commons Configuration</a>.
  * It's an evolution of <code>ExtendedProperties</code> supporting more
  * features like automatic reloading, advanced interpolation, more type

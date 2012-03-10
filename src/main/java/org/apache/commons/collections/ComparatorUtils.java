@@ -52,7 +52,7 @@ public class ComparatorUtils {
     /**
      * Comparator for natural sort order.
      *
-     * @see ComparableComparator#getInstance
+     * @see ComparableComparator#comparableComparator()
      */
     @SuppressWarnings("unchecked")
     public static final Comparator NATURAL_COMPARATOR = ComparableComparator.<Comparable>comparableComparator();

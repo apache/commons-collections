@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * The "write" subset of the {@link Map} interface.
  * @since Commons Collections 5
- * @TODO fix version
+ * TODO fix version
  * @version $Revision$ $Date$
  * @see Get
  * @author Matt Benson

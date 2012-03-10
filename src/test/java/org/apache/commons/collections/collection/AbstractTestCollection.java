@@ -41,8 +41,9 @@ import org.apache.commons.collections.AbstractTestObject;
  * <p>
  * You should create a concrete subclass of this class to test any custom
  * {@link Collection} implementation.  At minimum, you'll have to
- * implement the {@link #makeCollection()} method.  You might want to
- * override some of the additional public methods as well:
+ * implement the @{@link #makeObject()}, {@link #makeConfirmedCollection()}
+ * and {@link #makeConfirmedFullCollection()} methods.
+ * You might want to override some of the additional public methods as well:
  * <p>
  * <b>Element Population Methods</b>
  * <p>

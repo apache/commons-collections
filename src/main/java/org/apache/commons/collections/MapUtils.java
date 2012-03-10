@@ -1649,7 +1649,7 @@ public class MapUtils {
      * @param map to wrap if necessary.
      * @return IterableMap<K, V>
      * @since Commons Collections 5
-     * @TODO fix version
+     * TODO fix version
      */
     public static <K, V> IterableMap<K, V> iterableMap(Map<K, V> map) {
         if (map == null) {
@@ -1667,7 +1667,7 @@ public class MapUtils {
      * @param sortedMap to wrap if necessary
      * @return {@link IterableSortedMap}<K, V>
      * @since Commons Collections 5
-     * @TODO fix version
+     * TODO fix version
      */
     public static <K, V> IterableSortedMap<K, V> iterableSortedMap(SortedMap<K, V> sortedMap) {
         if (sortedMap == null) {

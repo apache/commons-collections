@@ -52,7 +52,7 @@ public abstract class CatchAndRethrowClosure<E> implements Closure<E> {
      * Execute this closure on the specified input object.
      * 
      * @param input the input to execute on
-     * @throws ClosureException (runtime) if the closure execution resulted in a
+     * @throws FunctorException (runtime) if the closure execution resulted in a
      *             checked exception.
      */
     public void execute(E input) {

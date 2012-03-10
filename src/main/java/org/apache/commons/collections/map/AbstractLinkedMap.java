@@ -258,7 +258,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * This implementation adds the entry to the data storage table and
      * to the end of the linked list.
      * 
-     * @param link  the entry to add
+     * @param entry  the entry to add
      * @param hashIndex  the index into the data array to store at
      */
     @Override

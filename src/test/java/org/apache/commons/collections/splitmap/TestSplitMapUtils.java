@@ -32,7 +32,7 @@ import org.apache.commons.collections.map.HashedMap;
  * Tests for {@link TransformedMap}
  *
  * @since Commons Collections 5
- * @TODO fix version
+ * TODO fix version
  * @version $Revision$ $Date$
  *
  * @author Stephen Colebourne

@@ -284,7 +284,7 @@ public class TestFilterListIterator extends TestCase {
     }
 
     /**
-     * Test for {@link https://issues.apache.org/jira/browse/COLLECTIONS-360 COLLECTIONS-360}.
+     * Test for {@link "https://issues.apache.org/jira/browse/COLLECTIONS-360 COLLECTIONS-360"}
      */
     public void testCollections360() throws Throwable {
         Collection<Predicate<Object>> var7 = new GrowthList<Predicate<Object>>();
