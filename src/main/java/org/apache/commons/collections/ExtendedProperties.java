@@ -1704,8 +1704,14 @@ public class ExtendedProperties extends Hashtable<String, Object> {
     public static ExtendedProperties convertProperties(Properties props) {
         ExtendedProperties c = new ExtendedProperties();
 
-        for (@SuppressWarnings("unchecked") // Properties are supposed to have string keys ...
-        Enumeration<String> e = (Enumeration<String>) props.propertyNames(); e.hasMoreElements();) {
+        @SuppressWarnings("unchecked") // Properties are supposed to have string keys ...
+        Enumeration<String> e = (Enumeration<String>) props.propertyNames();
+        // Unfortunately PMD 4.3 cannot handle the original code where the @Suppress
+        // was in the for loop:
+        //    for (@SuppressWarnings("unchecked") // Properties are supposed to have string keys ...
+        //    Enumeration<String> e = (Enumeration<String>) props.propertyNames(); e.hasMoreElements();) {
+        //        String s = e.nextElement(); // ... if props does not, this line would fail anyway ...
+        while (e.hasMoreElements()) {
             String s = e.nextElement(); // ... if props does not, this line would fail anyway ...
             String value = props.getProperty(s);
             if(value != null) {
