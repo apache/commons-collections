@@ -28,7 +28,7 @@ import org.apache.commons.collections.iterators.AbstractTestMapIterator;
 /**
  * Abstract test class for {@link IterableMap} methods and contracts.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

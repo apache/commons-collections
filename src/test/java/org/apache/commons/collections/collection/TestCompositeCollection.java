@@ -28,7 +28,7 @@ import java.util.List;
  * {@link CompositeCollection} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Brian McCallister
  * @author Phil Steitz

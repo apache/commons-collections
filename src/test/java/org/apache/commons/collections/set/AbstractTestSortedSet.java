@@ -31,7 +31,7 @@ import org.apache.commons.collections.BulkTest;
  * elements may be added; see {@link AbstractTestSet} for more details.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  * @author Dieter Wimberger

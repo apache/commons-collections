@@ -24,7 +24,7 @@ import org.apache.commons.collections.OrderedBidiMap;
 /**
  * Test class for AbstractOrderedBidiMapDecorator.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  */
 public class TestAbstractOrderedBidiMapDecorator<K, V>
         extends AbstractTestOrderedBidiMap<K, V> {

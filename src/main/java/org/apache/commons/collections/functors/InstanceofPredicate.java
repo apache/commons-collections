@@ -25,7 +25,7 @@ import org.apache.commons.collections.Predicate;
  * the type stored in this predicate.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

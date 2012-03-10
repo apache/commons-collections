@@ -24,7 +24,7 @@ import org.apache.commons.collections.Predicate;
  * This interface enables tools to access the decorated predicates.
  *
  * @since Commons Collections 3.1
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  * @author Stephen Kestle

@@ -23,7 +23,7 @@ import org.apache.commons.collections.buffer.PredicatedBuffer;
 /**
  * Tests for BufferUtils.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Unknown
  */

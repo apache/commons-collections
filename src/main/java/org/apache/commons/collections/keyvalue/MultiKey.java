@@ -40,7 +40,7 @@ import java.util.Arrays;
  * </pre>
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Howard Lewis Ship
  * @author Stephen Colebourne

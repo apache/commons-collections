@@ -25,7 +25,7 @@ import org.apache.commons.collections.KeyValue;
  * added to a {@link java.util.Map.Entry Map.Entry}.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

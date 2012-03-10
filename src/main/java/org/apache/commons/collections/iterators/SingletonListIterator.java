@@ -26,7 +26,7 @@ import org.apache.commons.collections.ResettableListIterator;
  * object instance.
  *
  * @since Commons Collections 2.1
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  * @author Rodney Waldhoff

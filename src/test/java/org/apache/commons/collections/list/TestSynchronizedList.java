@@ -24,7 +24,7 @@ import java.util.List;
  * implementation.
  *
  * @since Commons Collections 3.1
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

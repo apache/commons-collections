@@ -29,7 +29,7 @@ import org.apache.commons.collections.collection.TestPredicatedCollection;
  * {@link PredicatedBuffer} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Phil Steitz
  */

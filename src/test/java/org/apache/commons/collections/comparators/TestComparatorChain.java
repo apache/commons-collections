@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Tests for ComparatorChain.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Unknown
  */

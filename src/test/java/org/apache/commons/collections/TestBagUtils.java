@@ -33,7 +33,7 @@ import org.apache.commons.collections.functors.TruePredicate;
 /**
  * Tests for BagUtils factory methods.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Phil Steitz
  */

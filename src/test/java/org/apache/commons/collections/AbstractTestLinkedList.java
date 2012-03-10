@@ -34,7 +34,7 @@ import org.apache.commons.collections.list.AbstractTestList;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link List} fails.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Rich Dougherty
  */

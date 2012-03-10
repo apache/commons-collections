@@ -26,7 +26,7 @@ package org.apache.commons.collections;
  * @param <K> the type of the key
  * @param <V> the type of the value
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

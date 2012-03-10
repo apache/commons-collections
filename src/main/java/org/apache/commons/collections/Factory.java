@@ -29,7 +29,7 @@ package org.apache.commons.collections;
  * @param <T> the type that the factory creates
  *
  * @since Commons Collections 2.1
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Arron Bates
  * @author Stephen Colebourne

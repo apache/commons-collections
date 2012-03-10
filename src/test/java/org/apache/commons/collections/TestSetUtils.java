@@ -28,7 +28,7 @@ import org.apache.commons.collections.set.PredicatedSet;
 /**
  * Tests for SetUtils.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  * @author Neil O'Toole

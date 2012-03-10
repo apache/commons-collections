@@ -33,7 +33,7 @@ import org.apache.commons.collections.ResettableIterator;
  * the iterator back to the start if required.
  *
  * @since Commons Collections 1.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author James Strachan
  * @author Mauricio S. Moura

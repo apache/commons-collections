@@ -27,7 +27,7 @@ import org.apache.commons.collections.Predicate;
 /**
  * Tests the IteratorChain class.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author James Strachan
  * @author Mauricio S. Moura

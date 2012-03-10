@@ -26,7 +26,7 @@ import org.apache.commons.collections.Transformer;
  * and ignore the result.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

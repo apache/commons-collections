@@ -24,7 +24,7 @@ import org.apache.commons.collections.ResettableListIterator;
 /**
  * Tests the SingletonListIterator.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

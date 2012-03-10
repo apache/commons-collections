@@ -30,7 +30,7 @@ import org.apache.commons.collections.map.EntrySetToMapIteratorAdapter;
  * implementation.
  *
  * @since Commons Collections 4.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Matt Benson
  */

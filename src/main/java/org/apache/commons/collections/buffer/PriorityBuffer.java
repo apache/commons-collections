@@ -54,7 +54,7 @@ import org.apache.commons.collections.comparators.ComparableComparator;
  * This class is Serializable from Commons Collections 3.2.
  *
  * @since Commons Collections 3.0 (previously BinaryHeap v1.0)
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Peter Donald
  * @author Ram Chidambaram

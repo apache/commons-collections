@@ -29,7 +29,7 @@ import org.apache.commons.collections.IterableMap;
 /**
  * JUnit tests.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

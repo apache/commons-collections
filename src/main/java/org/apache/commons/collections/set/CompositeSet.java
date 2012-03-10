@@ -31,7 +31,7 @@ import org.apache.commons.collections.collection.CompositeCollection;
  * If no strategy is provided then add is unsupported.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Brian McCallister
  */

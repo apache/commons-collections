@@ -26,7 +26,7 @@ import org.apache.commons.collections.functors.UniquePredicate;
  * and duplicate Objects are skipped.
  *
  * @since Commons Collections 2.1
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Morgan Delagrange
  */

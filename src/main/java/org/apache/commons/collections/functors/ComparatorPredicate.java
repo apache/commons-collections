@@ -74,7 +74,7 @@ import org.apache.commons.collections.Predicate;
  * return <code>true</code> if the comparator returns a value greater than <code>0</code>.
  *
  * @since Commons Collections 4.0
- * @version $Revision: $ $Date: $
+ * @version $Revision: $
  *
  * @author Rune Peter Bjørnstad.
  */

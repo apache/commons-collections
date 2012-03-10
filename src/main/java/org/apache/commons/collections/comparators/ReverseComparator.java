@@ -26,7 +26,7 @@ import org.apache.commons.collections.ComparatorUtils;
  * to its {@link #compare(Object, Object) compare} method.
  *
  * @since Commons Collections 2.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Michael A. Smith
  *

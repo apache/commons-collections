@@ -26,7 +26,7 @@ import org.apache.commons.collections.Unmodifiable;
  * UnsupportedOperationException when <code>setValue</code> is called.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

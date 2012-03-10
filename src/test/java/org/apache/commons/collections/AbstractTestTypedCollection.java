@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Tests TypedCollection.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

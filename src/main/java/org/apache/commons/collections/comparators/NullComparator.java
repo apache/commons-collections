@@ -26,7 +26,7 @@ import org.apache.commons.collections.ComparatorUtils;
  * other objects.
  *
  * @since Commons Collections 2.0
- * @version $Revision$ $Date$ 
+ * @version $Revision$
  *
  * @author Michael A. Smith
  */

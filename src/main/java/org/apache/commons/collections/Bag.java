@@ -40,7 +40,7 @@ import java.util.Set;
  *
  * @param <E> the type held in the bag
  * @since Commons Collections 2.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Chuck Burdick
  * @author Stephen Colebourne

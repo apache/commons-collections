@@ -30,7 +30,7 @@ import org.apache.commons.collections.list.AbstractTestList;
  * implementation.
  *
  * @since Commons Collections 3.1
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

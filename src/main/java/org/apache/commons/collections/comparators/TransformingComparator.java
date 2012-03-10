@@ -27,7 +27,7 @@ import org.apache.commons.collections.Transformer;
  * {@link Comparator#compare(Object,Object) compare} method.
  *
  * @since Commons Collections 2.0 (?)
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @see org.apache.commons.collections.Transformer
  * @see org.apache.commons.collections.comparators.ComparableComparator

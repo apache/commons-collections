@@ -31,7 +31,7 @@ import org.apache.commons.collections.map.AbstractTestIterableMap;
 /**
  * Abstract test class for {@link BidiMap} methods and contracts.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Matthew Hawthorne
  * @author Stephen Colebourne

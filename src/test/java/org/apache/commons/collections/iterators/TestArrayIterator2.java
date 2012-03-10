@@ -22,7 +22,7 @@ import java.util.NoSuchElementException;
 /**
  * Tests the ArrayIterator with primitive type arrays.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Morgan Delagrange
  * @author James Strachan

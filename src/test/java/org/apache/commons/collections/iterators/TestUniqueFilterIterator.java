@@ -24,7 +24,7 @@ import java.util.NoSuchElementException;
 /**
  * Tests the UniqueFilterIterator class.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author James Strachan
  * @author Mauricio S. Moura

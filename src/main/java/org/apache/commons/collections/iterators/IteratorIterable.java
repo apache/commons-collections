@@ -58,7 +58,7 @@ import org.apache.commons.collections.ResettableIterator;
  * </p>
  * 
  * @since Commons Collections 4.0
- * @version $Revision: $ $Date: $
+ * @version $Revision: $
  */
 public class IteratorIterable<E> implements Iterable<E> {
 

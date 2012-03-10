@@ -24,7 +24,7 @@ import org.apache.commons.collections.Closure;
  * Closure implementation that calls another closure n times, like a for loop.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

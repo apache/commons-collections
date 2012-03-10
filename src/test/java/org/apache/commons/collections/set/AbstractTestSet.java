@@ -39,7 +39,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
  * elements may be added; see {@link AbstractTestCollection} for more details.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Paul Jack
  */

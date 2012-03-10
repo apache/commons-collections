@@ -38,7 +38,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * and/or {@link Get} but not {@link Map}.
  *
  * @since Commons Collections 4.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  * @see Get
  * @see Put
  * @author Matt Benson

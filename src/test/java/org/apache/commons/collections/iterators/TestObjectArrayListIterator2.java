@@ -19,7 +19,7 @@ package org.apache.commons.collections.iterators;
 /**
  * Tests the ObjectArrayListIterator class.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

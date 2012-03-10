@@ -41,7 +41,7 @@ import org.apache.commons.collections.SortedBag;
  * interface specification.
  *
  * @since Commons Collections 3.0 (previously in main package v2.0)
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Chuck Burdick
  * @author Stephen Colebourne

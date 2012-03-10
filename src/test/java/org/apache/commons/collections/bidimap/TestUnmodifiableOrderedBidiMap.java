@@ -27,7 +27,7 @@ import org.apache.commons.collections.OrderedBidiMap;
 /**
  * JUnit tests.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

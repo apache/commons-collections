@@ -27,7 +27,7 @@ import org.apache.commons.collections.BulkTest;
 /**
  * Tests for the {@link CaseInsensitiveMap} implementation.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Commons-Collections team
  */

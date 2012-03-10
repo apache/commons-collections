@@ -22,7 +22,7 @@ import java.util.Map;
  * The "read" subset of the {@link Map} interface.
  * @since Commons Collections 5
  * TODO fix version
- * @version $Revision$ $Date$
+ * @version $Revision$
  * @see Put
  * @author Matt Benson
  */

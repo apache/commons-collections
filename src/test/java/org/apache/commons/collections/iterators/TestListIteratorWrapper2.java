@@ -26,7 +26,7 @@ import org.apache.commons.collections.ResettableListIterator;
 /**
  * Tests the ListIteratorWrapper to insure that it behaves as expected when wrapping a ListIterator.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Morgan Delagrange
  */

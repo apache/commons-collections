@@ -37,7 +37,7 @@ import org.apache.commons.collections.Bag;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your bag fails.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Chuck Burdick
  * @author Stephen Colebourne

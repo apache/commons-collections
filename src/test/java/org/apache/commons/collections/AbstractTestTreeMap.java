@@ -23,7 +23,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
 /**
  * Tests TreeMap.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Jason van Zyl
  */

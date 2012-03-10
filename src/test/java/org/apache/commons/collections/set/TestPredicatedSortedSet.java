@@ -33,7 +33,7 @@ import org.apache.commons.collections.functors.TruePredicate;
  * {@link PredicatedSortedSet} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Phil Steitz
  */

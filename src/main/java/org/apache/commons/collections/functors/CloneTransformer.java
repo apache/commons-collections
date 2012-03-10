@@ -26,7 +26,7 @@ import org.apache.commons.collections.Transformer;
  * Clone is performed using <code>PrototypeFactory.getInstance(input).create()</code>.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

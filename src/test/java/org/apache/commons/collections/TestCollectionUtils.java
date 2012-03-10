@@ -47,7 +47,7 @@ import org.junit.Test;
  * @author Stephen Smith
  * @author Stephen Kestle
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  */
 @SuppressWarnings("boxing")
 public class TestCollectionUtils extends MockTestCase {

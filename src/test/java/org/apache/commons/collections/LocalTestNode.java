@@ -19,7 +19,7 @@ package org.apache.commons.collections;
 /**
  * Class LocalTestNode, a helper class for TestDoubleOrderedMap
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Marc Johnson (marcj at users dot sourceforge dot net)
  */

@@ -21,7 +21,7 @@ import java.util.Arrays;
 /**
  * Test case for {@link AbstractLinkedList}.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Rich Dougherty
  * @author David Hay

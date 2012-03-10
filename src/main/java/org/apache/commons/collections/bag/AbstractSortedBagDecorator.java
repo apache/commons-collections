@@ -26,7 +26,7 @@ import org.apache.commons.collections.SortedBag;
  * Methods are forwarded directly to the decorated bag.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

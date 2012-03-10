@@ -14,7 +14,7 @@ import java.util.Collections;
  * Tests the org.apache.commons.collections.functors.AllPredicate class.
  *
  * @since Commons Collections 3.0
- * @version $Revision: 468603 $ $Date: 2006-10-27 17:52:37 -0700 (Fri, 27 Oct 2006) $
+ * @version $Revision: 468603 $
  *
  * @author Edwin Tellman
  */

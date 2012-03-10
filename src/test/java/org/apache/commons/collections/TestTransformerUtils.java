@@ -37,7 +37,7 @@ import org.apache.commons.collections.functors.TruePredicate;
  * Tests the org.apache.commons.collections.TransformerUtils class.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  * @author James Carman

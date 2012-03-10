@@ -33,7 +33,7 @@ import org.apache.commons.collections.iterators.UnmodifiableListIterator;
  * Attempts to modify it will result in an UnsupportedOperationException. 
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

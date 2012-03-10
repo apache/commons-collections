@@ -29,7 +29,7 @@ import org.apache.commons.collections.TransformerUtils;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

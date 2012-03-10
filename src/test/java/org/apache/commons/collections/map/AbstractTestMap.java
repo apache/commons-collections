@@ -123,7 +123,7 @@ import org.apache.commons.collections.set.AbstractTestSet;
  * @author Rodney Waldhoff
  * @author Paul Jack
  * @author Stephen Colebourne
- * @version $Revision$ $Date$
+ * @version $Revision$
  */
 public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
 

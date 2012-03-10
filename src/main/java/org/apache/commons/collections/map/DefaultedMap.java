@@ -58,7 +58,7 @@ import org.apache.commons.collections.functors.FactoryTransformer;
  * exceptions when accessed by concurrent threads without synchronization.
  *
  * @since Commons Collections 3.2
- * @version $Revision: 1.7 $ $Date$
+ * @version $Revision: 1.7 $
  *
  * @author Stephen Colebourne
  * @author Rafael U.C. Afonso

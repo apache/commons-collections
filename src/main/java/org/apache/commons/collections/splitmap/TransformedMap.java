@@ -54,7 +54,7 @@ import org.apache.commons.collections.map.LinkedMap;
  * generalizations.
  *
  * @since Commons Collections 4.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  * @see SplitMapUtils#readableMap(Get)
  * @see SplitMapUtils#writableMap(Put)
  *

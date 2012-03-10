@@ -24,7 +24,7 @@ import org.apache.commons.collections.map.HashedMap;
  * @param <T> the types of object this {@link Equator} can evaluate.
  * @author Stephen Kestle
  * @since Commons Collections 4.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  */
 public interface Equator<T> {
     /**

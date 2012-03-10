@@ -26,7 +26,7 @@ import org.apache.commons.collections.comparators.ComparableComparator;
 /**
  * Unit test suite for {@link CollatingIterator}.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  * @author Rodney Waldhoff
  */
 @SuppressWarnings("boxing")

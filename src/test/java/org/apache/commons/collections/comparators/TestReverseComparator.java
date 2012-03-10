@@ -28,7 +28,7 @@ import java.util.List;
 /**
  * Tests for ReverseComparator.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Unknown
  */

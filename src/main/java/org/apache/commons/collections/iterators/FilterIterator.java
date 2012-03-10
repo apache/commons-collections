@@ -28,7 +28,7 @@ import org.apache.commons.collections.Predicate;
  * those elements that match the specified {@link Predicate Predicate}.
  *
  * @since Commons Collections 1.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author James Strachan
  * @author Jan Sorensen

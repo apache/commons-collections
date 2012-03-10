@@ -26,7 +26,7 @@ import org.apache.commons.collections.Predicate;
  * like a do-while or while loop.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

@@ -32,7 +32,7 @@ import junit.framework.TestCase;
 /**
  * Unit tests for {@link org.apache.commons.collections.keyvalue.MultiKey}.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

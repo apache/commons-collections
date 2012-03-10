@@ -31,7 +31,7 @@ import org.apache.commons.collections.functors.NotNullPredicate;
 /**
  * Test the filter iterator.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Jan Sorensen
  * @author Ralph Wagner

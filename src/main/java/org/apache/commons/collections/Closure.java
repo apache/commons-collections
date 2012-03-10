@@ -27,7 +27,7 @@ package org.apache.commons.collections;
  *
  * @param <T> the type that the closure acts on
  * @since Commons Collections 1.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author James Strachan
  * @author Nicola Ken Barozzi

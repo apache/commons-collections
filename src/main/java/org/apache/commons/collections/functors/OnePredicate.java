@@ -30,7 +30,7 @@ import org.apache.commons.collections.Predicate;
  * threw an exception.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  * @author Matt Benson

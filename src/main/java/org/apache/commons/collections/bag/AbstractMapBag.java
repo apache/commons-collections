@@ -38,7 +38,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * number of occurrences of that element in the bag.
  *
  * @since Commons Collections 3.0 (previously DefaultMapBag v2.0)
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Chuck Burdick
  * @author Michael A. Smith

@@ -24,7 +24,7 @@ import org.apache.commons.collections.MapIterator;
  * All methods are forwarded to the decorated map iterator.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

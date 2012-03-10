@@ -28,7 +28,7 @@ import org.apache.commons.collections.Transformer;
  * is passed to the second transformer and so on.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

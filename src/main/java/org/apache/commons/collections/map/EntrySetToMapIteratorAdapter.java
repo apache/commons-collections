@@ -28,7 +28,7 @@ import org.apache.commons.collections.ResettableIterator;
  *
  * @since Commons Collections 5
  * TODO fix version
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Matt Benson
  */

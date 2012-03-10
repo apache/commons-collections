@@ -27,7 +27,7 @@ import junit.framework.TestCase;
 /**
  * Tests some basic functions of the ExtendedProperties class.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Geir Magnusson Jr.
  * @author Mohan Kishore

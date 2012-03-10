@@ -31,7 +31,7 @@ package org.apache.commons.collections;
  * then the interface won't be there.
  *  
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

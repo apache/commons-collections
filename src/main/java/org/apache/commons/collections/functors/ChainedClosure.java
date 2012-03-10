@@ -25,7 +25,7 @@ import org.apache.commons.collections.Closure;
  * Closure implementation that chains the specified closures together.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

@@ -37,7 +37,7 @@ import java.util.Collection;
  * <b>Note that this implementation is not synchronized.</b>
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Jeff Varszegi
  * @author Rich Dougherty

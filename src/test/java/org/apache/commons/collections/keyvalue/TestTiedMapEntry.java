@@ -23,7 +23,7 @@ import java.util.Map;
  * Test the TiedMapEntry class.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

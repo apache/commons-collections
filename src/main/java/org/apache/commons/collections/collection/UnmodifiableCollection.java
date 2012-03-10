@@ -31,7 +31,7 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
  *
  * @param <E> the type of the elements in the collection
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

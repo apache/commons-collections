@@ -26,7 +26,7 @@ import junit.framework.TestSuite;
 /**
  * Test the NullComparator.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Michael A. Smith
  */

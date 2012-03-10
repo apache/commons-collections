@@ -27,7 +27,7 @@ import java.util.NoSuchElementException;
  *
  * @param <E> the type to iterate over
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

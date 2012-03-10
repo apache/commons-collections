@@ -36,7 +36,7 @@ import java.util.Comparator;
  * {@link #compare(Object, Object) compare} for details.
  *
  * @since Commons Collections 2.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @see java.util.Collections#reverseOrder()
  */

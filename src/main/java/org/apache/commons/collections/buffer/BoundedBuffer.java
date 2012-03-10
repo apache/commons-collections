@@ -42,7 +42,7 @@ import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
  *
  * @author James Carman
  * @author Stephen Colebourne
- * @version $Revision$ $Date$
+ * @version $Revision$
  * @since Commons Collections 3.2
  */
 public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCollection<E> {

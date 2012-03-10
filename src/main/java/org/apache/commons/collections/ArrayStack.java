@@ -36,7 +36,7 @@ import java.util.EmptyStackException;
  *
  * @see java.util.Stack
  * @since Commons Collections 1.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Craig R. McClanahan
  * @author Paul Jack

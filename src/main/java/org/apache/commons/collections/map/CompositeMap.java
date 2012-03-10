@@ -40,7 +40,7 @@ import org.apache.commons.collections.set.CompositeSet;
  * exceptions when accessed by concurrent threads without synchronization.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Brian McCallister
  */

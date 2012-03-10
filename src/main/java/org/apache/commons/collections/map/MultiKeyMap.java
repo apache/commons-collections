@@ -70,7 +70,7 @@ import org.apache.commons.collections.keyvalue.MultiKey;
  * by concurrent threads without synchronization.
  *
  * @since Commons Collections 3.1
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

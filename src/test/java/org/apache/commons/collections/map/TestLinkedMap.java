@@ -31,7 +31,7 @@ import org.apache.commons.collections.list.AbstractTestList;
 /**
  * JUnit tests.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

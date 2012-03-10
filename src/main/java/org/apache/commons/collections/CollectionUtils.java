@@ -40,7 +40,7 @@ import org.apache.commons.collections.functors.TruePredicate;
  * Method parameters will take {@link Iterable} objects when possible.
  *
  * @since Commons Collections 1.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Rodney Waldhoff
  * @author Paul Jack

@@ -55,7 +55,7 @@ import org.apache.commons.collections.Factory;
  *
  * @see GrowthList
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  * @author Arron Bates

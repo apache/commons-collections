@@ -43,7 +43,7 @@ import org.apache.commons.collections.ResettableListIterator;
  * This class implements ResettableListIterator from Commons Collections 3.2.
  *
  * @since Commons Collections 2.1
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Morgan Delagrange
  * @author Stephen Colebourne

@@ -58,7 +58,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * exceptions when accessed by concurrent threads without synchronization.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

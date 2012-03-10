@@ -39,7 +39,7 @@ import java.util.Collection;
  * @param <D> the type of the elements in the decorated collection
  * @param <E> the element type of the Collection implementation
  * @since Commons Collections 5
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  * @author Paul Jack

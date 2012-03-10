@@ -33,7 +33,7 @@ package org.apache.commons.collections;
  * @param <O> the output type from the transformer
  *
  * @since Commons Collections 1.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author James Strachan
  * @author Stephen Colebourne

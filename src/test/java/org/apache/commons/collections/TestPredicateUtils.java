@@ -44,7 +44,7 @@ import org.junit.Test;
  * Tests the org.apache.commons.collections.PredicateUtils class.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  * @author Matt Benson

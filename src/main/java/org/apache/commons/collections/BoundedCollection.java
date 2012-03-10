@@ -29,7 +29,7 @@ import java.util.Collection;
  * @see CollectionUtils#maxSize
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Herve Quiroz
  * @author Stephen Colebourne

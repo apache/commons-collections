@@ -29,7 +29,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
 /**
  * Test cases for UnboundedFifoBuffer.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Unknown
  */

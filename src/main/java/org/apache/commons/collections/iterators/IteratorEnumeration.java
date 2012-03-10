@@ -24,7 +24,7 @@ import java.util.Iterator;
  * {@link Enumeration Enumeration} instance.
  *
  * @since Commons Collections 1.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
  */

@@ -64,7 +64,7 @@ import org.apache.commons.collections.iterators.IteratorChain;
  * @author Stephen Colebourne
  * @author Julien Buret
  * @author Serhiy Yevtushenko
- * @version $Revision$ $Date$
+ * @version $Revision$
  * @since Commons Collections 3.2
  */
 public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> implements MultiMap<K, V>, Serializable {

@@ -31,7 +31,7 @@ import org.junit.Assert;
 /**
  * Tests the FilterListIterator class.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Rodney Waldhoff
  */

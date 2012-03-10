@@ -56,7 +56,7 @@ import org.apache.commons.collections.MapIterator;
  * <code>NullPointerException</code>'s when accessed by concurrent threads.
  *
  * @since Commons Collections 3.0 (previously in main package v1.0)
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author James Strachan
  * @author Morgan Delagrange

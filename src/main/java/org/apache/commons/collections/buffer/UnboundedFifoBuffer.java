@@ -52,7 +52,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Avalon
  * @author Federico Barbieri

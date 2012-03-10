@@ -23,7 +23,7 @@ import org.apache.commons.collections.MapIterator;
  * Provide a basic {@link IterableMap} implementation.
  * @since Commons Collections 5
  * TODO fix version
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Matt Benson
  */

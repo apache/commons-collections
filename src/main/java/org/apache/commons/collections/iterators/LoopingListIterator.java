@@ -35,7 +35,7 @@ import org.apache.commons.collections.ResettableListIterator;
  * ConcurrentModificationException.
  *
  * @since Commons Collections 3.2
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Eric Crampton <ccesc@eonomine.com>
  */

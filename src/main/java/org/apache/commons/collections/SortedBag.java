@@ -24,7 +24,7 @@ import java.util.Comparator;
  *
  * @param <E> the type to iterate over
  * @since Commons Collections 2.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Chuck Burdick
  */

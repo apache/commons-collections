@@ -38,7 +38,7 @@ import org.apache.commons.collections.ResettableListIterator;
  * @see java.util.ListIterator
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Neil O'Toole
  * @author Stephen Colebourne

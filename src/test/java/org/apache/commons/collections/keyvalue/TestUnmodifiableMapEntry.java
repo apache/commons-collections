@@ -25,7 +25,7 @@ import org.apache.commons.collections.Unmodifiable;
  * Test the UnmodifiableMapEntry class.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Neil O'Toole
  */

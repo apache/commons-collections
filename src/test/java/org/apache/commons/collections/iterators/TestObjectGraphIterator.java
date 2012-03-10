@@ -27,7 +27,7 @@ import org.apache.commons.collections.Transformer;
 /**
  * Testcase.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

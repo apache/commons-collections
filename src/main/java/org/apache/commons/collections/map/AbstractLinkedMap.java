@@ -57,7 +57,7 @@ import org.apache.commons.collections.iterators.EmptyOrderedMapIterator;
  * methods exposed.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author java util LinkedHashMap
  * @author Stephen Colebourne

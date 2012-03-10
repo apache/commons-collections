@@ -23,7 +23,7 @@ import org.apache.commons.collections.list.AbstractTestList;
 /**
  * Abstract test class for ArrayList.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Jason van Zyl
  */

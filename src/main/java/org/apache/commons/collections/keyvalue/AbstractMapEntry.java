@@ -23,7 +23,7 @@ import java.util.Map;
  * {@link java.util.Map.Entry Map.Entry} implementations.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author James Strachan
  * @author Michael A. Smith

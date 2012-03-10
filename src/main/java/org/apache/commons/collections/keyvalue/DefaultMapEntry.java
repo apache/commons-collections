@@ -25,7 +25,7 @@ import org.apache.commons.collections.KeyValue;
  * the <code>Map.Entry</code> contract from being broken.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author James Strachan
  * @author Michael A. Smith

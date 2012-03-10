@@ -23,7 +23,7 @@ import junit.framework.Test;
 /**
  * Tests ArrayStack.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Craig McClanahan
  */

@@ -28,7 +28,7 @@ import java.util.Comparator;
  * @see #booleanComparator(boolean)
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Rodney Waldhoff
  */

@@ -41,7 +41,7 @@ import org.apache.commons.collections.collection.TestTransformedCollection;
 /**
  * Tests for MapUtils.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  * @author Arun Mammen Thomas

@@ -32,7 +32,7 @@ import org.apache.commons.collections.bag.UnmodifiableSortedBag;
  * instances.
  *
  * @since Commons Collections 2.1
- * @version $Revision$ $Date: 2007-07-13 05:39:24 -0500 (Fri, 13 Jul
+ * @version $Revision$
  * 2007) $
  *
  * @author Paul Jack

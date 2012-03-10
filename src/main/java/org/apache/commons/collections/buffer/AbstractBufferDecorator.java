@@ -26,7 +26,7 @@ import org.apache.commons.collections.collection.AbstractCollectionDecorator;
  *
  * @param <E> the type of the elements in the buffer
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

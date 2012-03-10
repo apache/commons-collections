@@ -31,7 +31,7 @@ import org.apache.commons.collections.BulkTest;
 /**
  * Test class.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Rodney Waldhoff
  * @author Simon Kitching

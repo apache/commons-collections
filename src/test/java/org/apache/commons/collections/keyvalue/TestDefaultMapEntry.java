@@ -24,7 +24,7 @@ import org.apache.commons.collections.KeyValue;
  * Test the DefaultMapEntry class.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Neil O'Toole
  */

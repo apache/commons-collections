@@ -50,7 +50,7 @@ import java.util.List;
  *
  * @see LazyList
  * @since Commons Collections 3.2
- * @version $Revision: 155406 $ $Date$
+ * @version $Revision: 155406 $
  *
  * @author Stephen Colebourne
  * @author Paul Legato

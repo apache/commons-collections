@@ -27,7 +27,7 @@ import org.apache.commons.collections.Unmodifiable;
 /**
  * Tests the UnmodifiableListIterator.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

@@ -29,7 +29,7 @@ import java.util.Set;
  * JUnit tests.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Matthew Hawthorne
  * @author Tom Dunham

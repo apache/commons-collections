@@ -28,7 +28,7 @@ import org.apache.commons.collections.Factory;
  * use the prototype factory.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

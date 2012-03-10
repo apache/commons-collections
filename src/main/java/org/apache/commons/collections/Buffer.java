@@ -37,7 +37,7 @@ import java.util.Collection;
  *
  * @param <E> the type of the elements in the buffer
  * @since Commons Collections 2.1
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Avalon
  * @author Berin Loritsch

@@ -21,7 +21,7 @@ package org.apache.commons.collections;
  * If required, a root cause error can be wrapped within this one.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

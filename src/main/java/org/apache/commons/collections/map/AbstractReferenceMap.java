@@ -77,7 +77,7 @@ import org.apache.commons.collections.keyvalue.DefaultMapEntry;
  *
  * @see java.lang.ref.Reference
  * @since Commons Collections 3.1 (extracted from ReferenceMap in 3.0)
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Paul Jack
  * @author Stephen Colebourne

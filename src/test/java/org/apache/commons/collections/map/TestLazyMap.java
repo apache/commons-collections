@@ -31,7 +31,7 @@ import org.junit.Test;
  * {@link LazyMap} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Phil Steitz
  */

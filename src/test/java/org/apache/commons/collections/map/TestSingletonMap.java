@@ -27,7 +27,7 @@ import org.apache.commons.collections.OrderedMap;
 /**
  * JUnit tests.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

@@ -31,7 +31,7 @@ import org.apache.commons.collections.collection.TransformedCollection;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

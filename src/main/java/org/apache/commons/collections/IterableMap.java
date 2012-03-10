@@ -37,7 +37,7 @@ import java.util.Map;
  * @param <V> the type of the values in the map
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

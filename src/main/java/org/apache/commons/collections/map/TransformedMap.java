@@ -44,7 +44,7 @@ import org.apache.commons.collections.Transformer;
  * @see org.apache.commons.collections.splitmap.TransformedMap
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

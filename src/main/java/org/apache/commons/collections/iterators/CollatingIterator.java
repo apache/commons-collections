@@ -36,7 +36,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * lesser of <code>A.next()</code> and <code>B.next()</code>.
  *
  * @since Commons Collections 2.1
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Rodney Waldhoff
  * @author Stephen Colebourne

@@ -23,7 +23,7 @@ import java.util.NoSuchElementException;
 /**
  * Test the ArrayListIterator class.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  * @author Neil O'Toole
  */
 public class TestArrayListIterator<E> extends TestArrayIterator<E> {

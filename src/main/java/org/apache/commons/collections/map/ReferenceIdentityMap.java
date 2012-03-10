@@ -66,7 +66,7 @@ import java.lang.ref.Reference;
  * @see java.lang.ref.Reference
  *
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

@@ -24,7 +24,7 @@ package org.apache.commons.collections;
  * associated with the maximum number of elements.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

@@ -53,7 +53,7 @@ import org.apache.commons.collections.iterators.EmptyMapIterator;
  * This extends clause will be removed in v4.0.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author java util HashMap
  * @author Stephen Colebourne

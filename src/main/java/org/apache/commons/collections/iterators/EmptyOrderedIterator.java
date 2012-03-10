@@ -23,7 +23,7 @@ import org.apache.commons.collections.ResettableIterator;
  * Provides an implementation of an empty ordered iterator.
  *
  * @since Commons Collections 3.1
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

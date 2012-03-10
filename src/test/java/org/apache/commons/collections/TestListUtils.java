@@ -30,7 +30,7 @@ import org.apache.commons.collections.list.PredicatedList;
 /**
  * Tests for ListUtils.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  * @author Neil O'Toole

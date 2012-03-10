@@ -25,7 +25,7 @@ import java.util.Iterator;
  * All methods are forwarded to the decorated iterator.
  *
  * @since Commons Collections 5
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author James Strachan
  * @author Stephen Colebourne

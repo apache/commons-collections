@@ -28,7 +28,7 @@ import org.apache.commons.collections.collection.CompositeCollection;
  * {@link CompositeSet} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Brian McCallister
  * @author Phil Steitz

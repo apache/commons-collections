@@ -30,7 +30,7 @@ import org.apache.commons.collections.functors.NOPTransformer;
  *
  * @since Commons Collections 5
  * TODO fix version, add Serialization tests
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  * @author Matt Benson

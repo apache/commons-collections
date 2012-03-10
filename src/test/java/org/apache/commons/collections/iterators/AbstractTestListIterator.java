@@ -29,7 +29,7 @@ import java.util.NoSuchElementException;
  * overriding the supportsXxx() methods if necessary.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Rodney Waldhoff
  * @author Stephen Colebourne

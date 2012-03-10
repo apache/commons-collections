@@ -29,7 +29,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
 /**
  * Test cases for BoundedFifoBuffer.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Paul Jack
  */

@@ -34,7 +34,7 @@ import org.apache.commons.collections.iterators.AbstractTestOrderedMapIterator;
 /**
  * Abstract test class for {@link OrderedMap} methods and contracts.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */

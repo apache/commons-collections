@@ -26,7 +26,7 @@ import java.util.List;
  * {@link UnmodifiableList} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Phil Steitz
  */

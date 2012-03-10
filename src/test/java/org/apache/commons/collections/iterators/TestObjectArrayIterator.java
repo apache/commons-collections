@@ -22,7 +22,7 @@ import java.util.NoSuchElementException;
 /**
  * Tests the ObjectArrayIterator.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author James Strachan
  * @author Mauricio S. Moura

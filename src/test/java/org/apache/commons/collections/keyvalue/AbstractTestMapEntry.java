@@ -29,7 +29,7 @@ import junit.framework.TestCase;
  * type being tested.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Neil O'Toole
  */

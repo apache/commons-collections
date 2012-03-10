@@ -28,7 +28,7 @@ import org.apache.commons.collections.BulkTest;
  * Runs tests against a full BoundedFifoBuffer, since many of the algorithms
  * differ depending on whether the fifo is full or not.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Unknown
  */

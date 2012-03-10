@@ -52,7 +52,7 @@ import java.util.List;
  *
  * @since Commons Collections 2.0
  * @author Morgan Delagrange
- * @version $Revision$ $Date$
+ * @version $Revision$
  */
 public class ComparatorChain<E> implements Comparator<E>, Serializable {
 

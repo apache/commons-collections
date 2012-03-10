@@ -27,7 +27,7 @@ import java.util.Collection;
  * {@link CompositeMap} implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Brian McCallister
  */

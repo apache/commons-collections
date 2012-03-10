@@ -46,7 +46,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * @author Phil Steitz
  * @author James Carman
  * @param <E> the type of the elements in the buffer
- * @version $Revision$ $Date$
+ * @version $Revision$
  * @since Commons Collections 3.0
  */
 public class BlockingBuffer<E> extends SynchronizedBuffer<E> {

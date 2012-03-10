@@ -24,7 +24,7 @@ import org.apache.commons.collections.BulkTest;
  * Unit tests.
  * {@link StaticBucketMap}.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Michael A. Smith
  */

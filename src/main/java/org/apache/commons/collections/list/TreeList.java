@@ -51,7 +51,7 @@ import org.apache.commons.collections.OrderedIterator;
  * does use slightly more memory.
  *
  * @since Commons Collections 3.1
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Joerg Schmuecker
  * @author Stephen Colebourne

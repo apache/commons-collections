@@ -25,7 +25,7 @@ import java.util.SortedMap;
  * @param <V> the type of the values in the map
  * @since Commons Collections 5
  * TODO fix version
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Matt Benson
  */

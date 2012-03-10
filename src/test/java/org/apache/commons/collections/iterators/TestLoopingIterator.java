@@ -26,7 +26,7 @@ import junit.framework.TestCase;
 /**
  * Tests the LoopingIterator class.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Jonathan Carlson
  * @author Stephen Colebourne

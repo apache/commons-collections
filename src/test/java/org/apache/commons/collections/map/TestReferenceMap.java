@@ -27,7 +27,7 @@ import org.apache.commons.collections.map.AbstractReferenceMap.ReferenceStrength
 /**
  * Tests for ReferenceMap.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Paul Jack
  * @author Guilhem Lavaux

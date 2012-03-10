@@ -24,7 +24,7 @@ import org.apache.commons.collections.Transformer;
  * Decorates an iterator such that each element returned is transformed.
  *
  * @since Commons Collections 1.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author James Strachan
  * @author Stephen Colebourne

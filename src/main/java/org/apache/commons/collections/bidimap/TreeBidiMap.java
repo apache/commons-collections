@@ -68,7 +68,7 @@ import static org.apache.commons.collections.bidimap.TreeBidiMap.DataElement.*;
  * UnsupportedOperationException on attempts to call that method.
  *
  * @since Commons Collections 3.0 (previously DoubleOrderedMap v2.0)
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Marc Johnson
  * @author Stephen Colebourne

@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Tests for {@link BooleanComparator}.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Rodney Waldhoff
  */

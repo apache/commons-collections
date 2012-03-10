@@ -27,7 +27,7 @@ import java.util.Set;
  * implementation.
  *
  * @since Commons Collections 3.0
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Henning P. Schmiedehausen
  * @author Stephen Colebourne

@@ -20,7 +20,7 @@ package org.apache.commons.collections.iterators;
  * Provides an implementation of an empty map iterator.
  *
  * @since Commons Collections 5
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  * @author Matt Benson

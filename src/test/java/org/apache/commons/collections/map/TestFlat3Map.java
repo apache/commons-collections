@@ -32,7 +32,7 @@ import org.apache.commons.collections.iterators.AbstractTestMapIterator;
 /**
  * JUnit tests.
  *
- * @version $Revision$ $Date$
+ * @version $Revision$
  *
  * @author Stephen Colebourne
  */
