@@ -128,6 +128,7 @@ public class CollectionUtils {
      * this purpose. However they could be cast to Set or List which might be
      * undesirable. This implementation only implements Collection.
      */
+    @SuppressWarnings("rawtypes") // we deliberately use the raw type here
     public static final Collection EMPTY_COLLECTION = UnmodifiableCollection.unmodifiableCollection(new ArrayList<Object>());
 
     /**
