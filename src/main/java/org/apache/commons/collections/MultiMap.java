@@ -97,7 +97,7 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * @throws ClassCastException if the key is of an invalid type
      * @throws NullPointerException if the key is null and null keys are invalid
      */
-    Object get(K key);
+    Object get(Object key); // Cannot use get(K key) as that does not properly implement Map#get
 
     /**
      * Checks whether the map contains the value specified.
@@ -143,7 +143,7 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * @throws ClassCastException if the key is of an invalid type
      * @throws NullPointerException if the key is null and null keys are invalid
      */
-    Object remove(K key);
+    Object remove(Object key); // Cannot use remove(K key) as that does not properly implement Map#remove
 
     /**
      * Gets a collection containing all the values in the map.
