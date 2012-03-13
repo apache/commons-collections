@@ -17,6 +17,7 @@
 package org.apache.commons.collections;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -939,7 +940,13 @@ public class IteratorUtils {
                     return it;
                 }
             }
-        } catch (Exception ex) {
+        } catch (RuntimeException e) {
+            // ignore
+        } catch (NoSuchMethodException e) {
+            // ignore
+        } catch (IllegalAccessException e) {
+            // ignore
+        } catch (InvocationTargetException e) {
             // ignore
         }
         return singletonIterator(obj);
