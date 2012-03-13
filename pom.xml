@@ -393,7 +393,7 @@
     <commons.jira.pid>12310465</commons.jira.pid>
     <!-- The RC version used in the staging repository URL. -->
     <commons.rc.version>RC2</commons.rc.version>
-    <checkstyle.version>2.7</checkstyle.version>
+    <checkstyle.version>2.9</checkstyle.version>
   </properties> 
 
 
@@ -423,25 +423,13 @@
           </configuration>
         </plugin>
         <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-source-plugin</artifactId>
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <version>${checkstyle.version}</version>
           <configuration>
-            <archive>
-              <manifest>
-                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
-              </manifest>
-            </archive>
+            <configLocation>${basedir}/checkstyle.xml</configLocation>
+            <enableRulesSummary>false</enableRulesSummary>
           </configuration>
         </plugin>
-      <plugin>
-        <artifactId>maven-checkstyle-plugin</artifactId>
-        <version>${checkstyle.version}</version>
-        <configuration>
-          <configLocation>${basedir}/checkstyle.xml</configLocation>
-          <enableRulesSummary>false</enableRulesSummary>
-        </configuration>
-      </plugin>
       </plugins>
     </build>
 
@@ -457,16 +445,16 @@
       </plugin>
       <!-- Requires setting 'export MAVEN_OPTS="-Xmx512m" ' - and still fails -->
       <!--
+      -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>findbugs-maven-plugin</artifactId>
-        <version>1.2</version>
+        <version>2.3.2</version>
         <configuration>
           <threshold>Normal</threshold>
           <effort>Default</effort>
        </configuration>
       </plugin>
-      -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>cobertura-maven-plugin</artifactId>
