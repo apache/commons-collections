@@ -1179,7 +1179,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * object that is not a Boolean.
      */
     public boolean getBoolean(String key, boolean defaultValue) {
-        return getBoolean(key, new Boolean(defaultValue)).booleanValue();
+        return getBoolean(key, Boolean.valueOf(defaultValue)).booleanValue();
     }
 
     /**
@@ -1273,7 +1273,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * by the key has not a valid number format.
      */
     public byte getByte(String key, byte defaultValue) {
-        return getByte(key, new Byte(defaultValue)).byteValue();
+        return getByte(key, Byte.valueOf(defaultValue)).byteValue();
     }
 
     /**
@@ -1343,7 +1343,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * by the key has not a valid number format.
      */
     public short getShort(String key, short defaultValue) {
-        return getShort(key, new Short(defaultValue)).shortValue();
+        return getShort(key, Short.valueOf(defaultValue)).shortValue();
     }
 
     /**
