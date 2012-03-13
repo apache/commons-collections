@@ -413,28 +413,6 @@
           </configuration>
         </plugin>
         <plugin>
-          <artifactId>maven-antrun-plugin</artifactId>
-          <executions>
-            <execution>
-              <phase>package</phase>
-              <configuration>
-                <tasks>
-                  <ant antfile="build-testframework.xml" target="jar">
-                    <property name="component.version" value="${project.version}" />
-                    <property name="test.classes" value="${project.build.directory}/test-classes" />
-                    <property name="dist.home" value="${project.build.directory}" />
-                    <property name="maven.compile.source" value="${maven.compile.source}" />
-                    <property name="maven.compile.target" value="${maven.compile.target}" />
-                  </ant>
-                </tasks>
-              </configuration>
-              <goals>
-                <goal>run</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
           <artifactId>maven-assembly-plugin</artifactId>
           <configuration>
             <descriptors>
