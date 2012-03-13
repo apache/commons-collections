@@ -344,7 +344,7 @@ public class ListUtils {
      * method, as it is a backdoor for adding untransformed objects.
      * <p>
      * Existing entries in the specified list will not be transformed.
-     * If you want that behaviour, see {@link TransformedList#decorateTransform}.
+     * If you want that behaviour, see {@link TransformedList#transformedList}.
      *
      * @param list  the list to predicate, must not be null
      * @param transformer  the transformer for the list, must not be null

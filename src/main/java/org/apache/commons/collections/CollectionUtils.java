@@ -1311,7 +1311,7 @@ public class CollectionUtils {
      * method, as it is a backdoor for adding untransformed objects.
      * <p>
      * Existing entries in the specified collection will not be transformed.
-     * If you want that behaviour, see {@link TransformedCollection#decorateTransform}.
+     * If you want that behaviour, see {@link TransformedCollection#transformedCollection}.
      *
      * @param collection  the collection to predicate, must not be null
      * @param transformer  the transformer for the collection, must not be null

@@ -215,7 +215,7 @@ public class SetUtils {
      * method, as it is a backdoor for adding untransformed objects.
      * <p>
      * Existing entries in the specified set will not be transformed.
-     * If you want that behaviour, see {@link TransformedSet#decorateTransform}.
+     * If you want that behaviour, see {@link TransformedSet#transformedSet}.
      *
      * @param set  the set to transform, must not be null
      * @param transformer  the transformer for the set, must not be null
@@ -306,7 +306,7 @@ public class SetUtils {
      * method, as it is a backdoor for adding untransformed objects.
      * <p>
      * Existing entries in the specified set will not be transformed.
-     * If you want that behaviour, see {@link TransformedSortedSet#decorateTransform}.
+     * If you want that behaviour, see {@link TransformedSortedSet#transformedSortedSet}.
      *
      * @param set  the set to transform, must not be null
      * @param transformer  the transformer for the set, must not be null

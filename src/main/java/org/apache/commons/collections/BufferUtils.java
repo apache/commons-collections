@@ -175,7 +175,7 @@ public class BufferUtils {
      * method, as it is a backdoor for adding untransformed objects.
      * <p>
      * Existing entries in the specified buffer will not be transformed.
-     * If you want that behaviour, see {@link TransformedBuffer#decorateTransform}.
+     * If you want that behaviour, see {@link TransformedBuffer#transformedBuffer}.
      *
      * @param buffer  the buffer to predicate, must not be null
      * @param transformer  the transformer for the buffer, must not be null

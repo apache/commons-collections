@@ -1266,7 +1266,7 @@ public class MapUtils {
      * This method returns a new map (decorating the specified map) that
      * will transform any new entries added to it.
      * Existing entries in the specified map will not be transformed.
-     * If you want that behaviour, see {@link TransformedMap#decorateTransform}.
+     * If you want that behaviour, see {@link TransformedMap#transformedMap}.
      * <p>
      * Each object is passed through the transformers as it is added to the
      * Map. It is important not to use the original map after invoking this
@@ -1498,7 +1498,7 @@ public class MapUtils {
      * This method returns a new sorted map (decorating the specified map) that
      * will transform any new entries added to it.
      * Existing entries in the specified map will not be transformed.
-     * If you want that behaviour, see {@link TransformedSortedMap#decorateTransform}.
+     * If you want that behaviour, see {@link TransformedSortedMap#transformedSortedMap}.
      * <p>
      * Each object is passed through the transformers as it is added to the
      * Map. It is important not to use the original map after invoking this
