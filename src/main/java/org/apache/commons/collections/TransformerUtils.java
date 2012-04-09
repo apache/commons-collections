@@ -393,8 +393,7 @@ public class TransformerUtils {
      * @see org.apache.commons.collections.functors.MapTransformer
      * 
      * @param map  the map to use to transform the objects
-     * @return the transformer
-     * @throws IllegalArgumentException if the map is null
+     * @return the transformer, or a {@link ConstantTransformer#NULL_INSTANCE} if the {@code map} is {@code null}
      */
     public static <I, O> Transformer<I, O> mapTransformer(Map<? super I, ? extends O> map) {
         return MapTransformer.mapTransformer(map);
