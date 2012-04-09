@@ -52,10 +52,10 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
      *
      * @param coll  the <code>BoundedCollection</code> to decorate, must not be null
      * @return a new unmodifiable bounded collection
-     * @throws IllegalArgumentException if bag is null
+     * @throws IllegalArgumentException if {@code coll} is {@code null}
      */
     public static <E> BoundedCollection<E> unmodifiableBoundedCollection(BoundedCollection<E> coll) {
-        return unmodifiableBoundedCollection(coll);
+        return new UnmodifiableBoundedCollection<E>(coll);
     }
 
     /**
@@ -66,7 +66,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
      *
      * @param coll  the <code>BoundedCollection</code> to decorate, must not be null
      * @return a new unmodifiable bounded collection
-     * @throws IllegalArgumentException if bag is null
+     * @throws IllegalArgumentException if {@code coll} is {@code null}
      */
     @SuppressWarnings("unchecked")
     public static <E> BoundedCollection<E> unmodifiableBoundedCollection(Collection<? extends E> coll) {
@@ -139,10 +139,16 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
     }
 
     //-----------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     */
     public boolean isFull() {
         return decorated().isFull();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int maxSize() {
         return decorated().maxSize();
     }
