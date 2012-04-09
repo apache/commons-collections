@@ -99,8 +99,8 @@ public class FactoryUtils {
      * @see org.apache.commons.collections.functors.PrototypeFactory
      * 
      * @param prototype  the object to clone each time in the factory
-     * @return the <code>prototype</code> factory
-     * @throws IllegalArgumentException if the prototype is null
+     * @return the <code>prototype</code> factory, or a {@link ConstantFactory#NULL_INSTANCE} if
+     * the {@code prototype} is {@code null}
      * @throws IllegalArgumentException if the prototype cannot be cloned
      */
     public static <T> Factory<T> prototypeFactory(T  prototype) {
