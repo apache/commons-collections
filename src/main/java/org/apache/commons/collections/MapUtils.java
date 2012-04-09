@@ -849,7 +849,7 @@ public class MapUtils {
      * Gets a new Properties object initialised with the values from a Map.
      * A null input will return an empty properties object.
      *
-     * @param map  the map to convert to a Properties object, may not be null
+     * @param map  the map to convert to a Properties object
      * @return the properties object
      */
     public static <K, V> Properties toProperties(final Map<K, V> map) {
