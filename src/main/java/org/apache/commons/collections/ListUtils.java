@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections.bag.HashBag;
 import org.apache.commons.collections.list.FixedSizeList;
 import org.apache.commons.collections.list.LazyList;
 import org.apache.commons.collections.list.PredicatedList;
@@ -106,9 +107,12 @@ public class ListUtils {
      * @throws NullPointerException if either list is null
      */
     public static <E> List<E> subtract(final List<E> list1, final List<? extends E> list2) {
-        final ArrayList<E> result = new ArrayList<E>(list1);
-        for (E e : list2) {
-            result.remove(e);
+        final ArrayList<E> result = new ArrayList<E>();
+        final HashBag<E> bag = new HashBag<E>(list2);
+        for (final E e : list1) {
+            if (!bag.remove(e, 1)) {
+                result.add(e);
+            }
         }
         return result;
     }
