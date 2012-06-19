@@ -42,7 +42,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * the set can be obtained via <code>asList()</code>.
  * <p>
  * This class cannot implement the <code>List</code> interface directly as
- * various interface methods (notably equals/hashCode) are incompatable with a set.
+ * various interface methods (notably equals/hashCode) are incompatible with a set.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
@@ -200,7 +200,9 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
     @Override
     public boolean remove(Object object) {
         boolean result = collection.remove(object);
-        setOrder.remove(object);
+        if (result) {
+            setOrder.remove(object);
+        }
         return result;
     }
 
