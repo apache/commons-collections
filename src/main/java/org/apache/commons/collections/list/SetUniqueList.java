@@ -67,7 +67,9 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * If the list contains duplicates, these are removed (first indexed one kept).
      * A <code>HashSet</code> is used for the set behaviour.
      *
-     * @param list  the list to decorate, must not be null
+     * @param <E> the element type
+     * @param list the list to decorate, must not be null
+     * @return a new {@link SetUniqueList}
      * @throws IllegalArgumentException if list is null
      */
     public static <E> SetUniqueList<E> setUniqueList(List<E> list) {
@@ -236,8 +238,10 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
 
     @Override
     public boolean remove(Object object) {
-        boolean result = super.remove(object);
-        set.remove(object);
+        boolean result = set.remove(object);
+        if (result) {
+            super.remove(object);
+        }
         return result;
     }
 
@@ -250,8 +254,10 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
 
     @Override
     public boolean removeAll(Collection<?> coll) {
-        boolean result = super.removeAll(coll);
-        set.removeAll(coll);
+        boolean result = false;
+        for (Iterator<?> it = coll.iterator(); it.hasNext();) {
+            result |= remove(it.next());
+        }
         return result;
     }
 
@@ -300,6 +306,14 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         return new SetUniqueList<E>(superSubList, subSet);
     }
 
+    /**
+     * Create a new {@link Set} with the same type as the provided {@code set}
+     * and populate it with all elements of {@code list}.
+     *
+     * @param set the {@link Set} to be used as return type, must not be null
+     * @param list the {@link List} to populate the {@link Set}
+     * @return a new {@link Set} populated with all elements of the provided {@link List}
+     */
     @SuppressWarnings("unchecked")
     protected Set<E> createSetBasedOnList(Set<E> set, List<E> list) {
         Set<E> subSet;
