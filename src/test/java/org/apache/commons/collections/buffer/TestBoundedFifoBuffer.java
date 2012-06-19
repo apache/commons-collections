@@ -19,6 +19,7 @@ package org.apache.commons.collections.buffer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import junit.framework.Test;
 
@@ -170,6 +171,44 @@ public class TestBoundedFifoBuffer<E> extends AbstractTestCollection<E> {
             return;
         }
         fail();
+    }
+    
+    /**
+     * Tests that the get(index) method correctly throws an exception.
+     */
+    public void testGetException() {
+        resetFull();
+        try {
+            getCollection().get(-1);
+            fail();
+        } catch (NoSuchElementException ex) {
+            // expected
+        }
+        
+        try {
+            getCollection().get(getCollection().size());
+            fail();
+        } catch (NoSuchElementException ex) {
+            // expected
+        }
+    }
+
+    public void testGetIndex() {
+        resetFull();
+        
+        BoundedFifoBuffer<E> buffer = getCollection();
+        List<E> confirmed = getConfirmed();
+        for (int i = 0; i < confirmed.size(); i++) {
+            assertEquals(confirmed.get(i), buffer.get(i));
+        }
+
+        // remove the first two elements and check again
+        buffer.remove();
+        buffer.remove();
+        
+        for (int i = 0; i < buffer.size(); i++) {
+            assertEquals(confirmed.get(i + 2), buffer.get(i));
+        }        
     }
 
     @Override

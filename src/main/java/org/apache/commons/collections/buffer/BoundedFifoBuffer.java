@@ -131,7 +131,7 @@ public class BoundedFifoBuffer<E> extends AbstractCollection<E>
      * Write the buffer out using a custom routine.
      *
      * @param out  the output stream
-     * @throws IOException
+     * @throws IOException if an I/O error occurs while writing to the output stream
      */
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -145,8 +145,8 @@ public class BoundedFifoBuffer<E> extends AbstractCollection<E>
      * Read the buffer in using a custom routine.
      *
      * @param in  the input stream
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException if an I/O error occurs while writing to the output stream
+     * @throws ClassNotFoundException if the class of a serialized object can not be found
      */
     @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
@@ -269,6 +269,22 @@ public class BoundedFifoBuffer<E> extends AbstractCollection<E>
         return elements[start];
     }
 
+    /**
+     * Returns the element at the specified position in this buffer.
+     *
+     * @param index the position of the element in the buffer
+     * @return the element at position {@code index}
+     * @throws NoSuchElementException if the requested position is outside the range [0, size)
+     */
+    public E get(int index) {
+        if (index < 0 || index >= size()) {
+            throw new NoSuchElementException();
+        }
+        
+        final int idx = (start + index) % maxElements;
+        return elements[idx];
+    }
+ 
     /**
      * Removes the least recently inserted element from this buffer.
      *

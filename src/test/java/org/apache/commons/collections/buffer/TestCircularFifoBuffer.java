@@ -415,6 +415,24 @@ public class TestCircularFifoBuffer<E> extends AbstractTestCollection<E> {
         assertEquals(true, b3.contains("c"));
     }
 
+    public void testGetIndex() {
+        resetFull();
+        
+        CircularFifoBuffer<E> buffer = getCollection();
+        List<E> confirmed = getConfirmed();
+        for (int i = 0; i < confirmed.size(); i++) {
+            assertEquals(confirmed.get(i), buffer.get(i));
+        }
+
+        // remove the first two elements and check again
+        buffer.remove();
+        buffer.remove();
+        
+        for (int i = 0; i < buffer.size(); i++) {
+            assertEquals(confirmed.get(i + 2), buffer.get(i));
+        }        
+    }
+
     @Override
     public String getCompatibilityVersion() {
         return "3.1";
