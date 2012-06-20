@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import junit.framework.Test;
 
@@ -342,9 +343,9 @@ public class TestListOrderedMap<K, V> extends AbstractTestOrderedMap<K, V> {
             lom.put((K) Integer.valueOf(i), (V) Boolean.valueOf(true));
         }
 
-        HashMap<K, V> map = new HashMap<K, V>();
+        Map<K, V> map = new TreeMap<K, V>();
         for (int i = 0; i < size; i++) {
-            map.put((K) Integer.valueOf(i), (V) Boolean.valueOf(true));
+            map.put((K) Integer.valueOf(i), (V) Boolean.valueOf(false));
         }
 
         lom.putAll(3, map);
