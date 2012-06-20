@@ -242,8 +242,14 @@ public class ListOrderedMap<K, V>
      */
     public void putAll(int index, Map<? extends K, ? extends V> map) {
         for (Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
-            put(index, entry.getKey(), entry.getValue());
-            index++;
+            V old = put(index, entry.getKey(), entry.getValue());
+            if (old == null) {
+                // if no key was replaced, increment the index
+                index++;
+            } else {
+                // otherwise put the next item after the currently inserted key
+                index = indexOf(entry.getKey()) + 1;
+            }
         }
     }
 
@@ -416,7 +422,7 @@ public class ListOrderedMap<K, V>
      * <p>
      * Thus the steps are: (1) remove the existing key-value mapping,
      * then (2) insert the new key-value mapping at the position it
-     * would have been inserted had the remove not ocurred.
+     * would have been inserted had the remove not occurred.
      *
      * @param index  the index at which the mapping should be inserted
      * @param key  the key

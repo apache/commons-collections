@@ -25,6 +25,7 @@ import junit.framework.Test;
 
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.MapIterator;
+import org.apache.commons.collections.OrderedMapIterator;
 import org.apache.commons.collections.list.AbstractTestList;
 
 /**
@@ -331,6 +332,29 @@ public class TestListOrderedMap<K, V> extends AbstractTestOrderedMap<K, V> {
         assertEquals("testInsert2v", lom.getValue(4));
     }
 
+    public void testPutAllWithIndexBug441() {
+        // see COLLECTIONS-441
+        resetEmpty();
+        ListOrderedMap<Integer, Boolean> lom = (ListOrderedMap<Integer, Boolean>) map;
+
+        int size = 5;
+        for (int i = 0; i < size; i++) {
+            lom.put(i, true);
+        }
+
+        HashMap<Integer, Boolean> map = new HashMap<Integer, Boolean>();
+        for (int i = 0; i < size; i++) {
+            map.put(i, true);
+        }
+
+        lom.putAll(3, map);
+        
+        List<Integer> orderedList = lom.asList();
+        for (int i = 0; i < size; i++) {
+            assertEquals(i, orderedList.get(i).intValue());
+        }
+    }
+    
     //-----------------------------------------------------------------------
     public void testValueList_getByIndex() {
         resetFull();
