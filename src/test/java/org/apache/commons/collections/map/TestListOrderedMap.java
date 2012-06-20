@@ -335,23 +335,23 @@ public class TestListOrderedMap<K, V> extends AbstractTestOrderedMap<K, V> {
     public void testPutAllWithIndexBug441() {
         // see COLLECTIONS-441
         resetEmpty();
-        ListOrderedMap<Integer, Boolean> lom = (ListOrderedMap<Integer, Boolean>) map;
+        ListOrderedMap<K, V> lom = getMap();
 
         int size = 5;
         for (int i = 0; i < size; i++) {
-            lom.put(i, true);
+            lom.put((K) Integer.valueOf(i), (V) Boolean.valueOf(true));
         }
 
-        HashMap<Integer, Boolean> map = new HashMap<Integer, Boolean>();
+        HashMap<K, V> map = new HashMap<K, V>();
         for (int i = 0; i < size; i++) {
-            map.put(i, true);
+            map.put((K) Integer.valueOf(i), (V) Boolean.valueOf(true));
         }
 
         lom.putAll(3, map);
         
-        List<Integer> orderedList = lom.asList();
+        List<K> orderedList = lom.asList();
         for (int i = 0; i < size; i++) {
-            assertEquals(i, orderedList.get(i).intValue());
+            assertEquals(i, orderedList.get(i));
         }
     }
     
