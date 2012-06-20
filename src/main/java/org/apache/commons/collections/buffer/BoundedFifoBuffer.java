@@ -277,8 +277,11 @@ public class BoundedFifoBuffer<E> extends AbstractCollection<E>
      * @throws NoSuchElementException if the requested position is outside the range [0, size)
      */
     public E get(int index) {
-        if (index < 0 || index >= size()) {
-            throw new NoSuchElementException();
+        final int sz = size();
+        if (index < 0 || index >= sz) {
+            throw new NoSuchElementException(
+                    String.format("The specified index (%1$d) is outside the available range [0, %2$d)",
+                                  index, sz));
         }
         
         final int idx = (start + index) % maxElements;
