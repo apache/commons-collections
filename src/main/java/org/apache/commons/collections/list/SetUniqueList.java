@@ -192,18 +192,13 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      */
     @Override
     public boolean addAll(int index, Collection<? extends E> coll) {
-        HashSet<E> temp = new HashSet<E>(coll);
-        temp.removeAll(set);
-        if (temp.isEmpty()) {
-            return false;
-        }
+        final List<E> temp = new ArrayList<E>();
         for (E e : coll) {
-            if (temp.contains(e)) {
-                add(index, e);
-                index++;
+            if (set.add(e)) {
+                temp.add(e);
             }
         }
-        return true;
+        return super.addAll(index, temp);
     }
 
     //-----------------------------------------------------------------------
