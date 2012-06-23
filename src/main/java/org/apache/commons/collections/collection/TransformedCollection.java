@@ -53,12 +53,14 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * are NOT transformed.
      * Contrast this with {@link #transformedCollection(Collection, Transformer)}.
      * 
+     * @param <E> the type of the elements in the collection
      * @param coll  the collection to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed collection
      * @throws IllegalArgumentException if collection or transformer is null
      */
-    public static <E> Collection<E> transformingCollection(Collection<E> coll, Transformer<? super E, ? extends E> transformer) {
+    public static <E> TransformedCollection<E> transformingCollection(Collection<E> coll,
+                                                                      Transformer<? super E, ? extends E> transformer) {
         return new TransformedCollection<E>(coll, transformer);
     }
 
@@ -70,13 +72,15 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * will be transformed by this method.
      * Contrast this with {@link #transformingCollection(Collection, Transformer)}.
      * 
+     * @param <E> the type of the elements in the collection
      * @param collection  the collection to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed Collection
      * @throws IllegalArgumentException if collection or transformer is null
      * @since Commons Collections 3.3
      */
-    public static <E> Collection<E> transformedCollection(Collection<E> collection, Transformer<? super E, ? extends E> transformer) {
+    public static <E> TransformedCollection<E> transformedCollection(Collection<E> collection,
+                                                                     Transformer<? super E, ? extends E> transformer) {
         TransformedCollection<E> decorated = new TransformedCollection<E>(collection, transformer);
         // null collection & transformer are disallowed by the constructor call above 
         if (collection.size() > 0) {

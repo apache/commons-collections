@@ -58,7 +58,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
      * @return a new synchronized collection
      * @throws IllegalArgumentException if collection is null
      */
-    public static <T> Collection<T> synchronizedCollection(Collection<T> coll) {
+    public static <T> SynchronizedCollection<T> synchronizedCollection(Collection<T> coll) {
         return new SynchronizedCollection<T>(coll);
     }
 

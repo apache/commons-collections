@@ -61,7 +61,8 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * @throws IllegalArgumentException if collection or predicate is null
      * @throws IllegalArgumentException if the collection contains invalid elements
      */
-    public static <T> Collection<T> predicatedCollection(Collection<T> coll, Predicate<? super T> predicate) {
+    public static <T> PredicatedCollection<T> predicatedCollection(Collection<T> coll,
+                                                                   Predicate<? super T> predicate) {
         return new PredicatedCollection<T>(coll, predicate);
     }
 
@@ -99,7 +100,8 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      */
     protected void validate(E object) {
         if (predicate.evaluate(object) == false) {
-            throw new IllegalArgumentException("Cannot add Object '" + object + "' - Predicate '" + predicate + "' rejected it");
+            throw new IllegalArgumentException("Cannot add Object '" + object + "' - Predicate '" +
+                                               predicate + "' rejected it");
         }
     }
 
