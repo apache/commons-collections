@@ -23,7 +23,7 @@ import java.util.Collection;
  * <p>
  * A <code>MultiMap</code> is a Map with slightly different semantics.
  * Putting a value into the map will add the value to a Collection at that key.
- * Getting a value will return a Collection, holding all the values put to that key.</p>
+ * Getting a value will return a Collection, holding all the values put to that key.
  * <p>
  * For example:
  * <pre>
@@ -31,13 +31,13 @@ import java.util.Collection;
  * mhm.put(key, "A");
  * mhm.put(key, "B");
  * mhm.put(key, "C");
- * Collection coll = (Collection) mhm.get(key);</pre></p>
+ * Collection coll = (Collection) mhm.get(key);</pre>
  * <p>
- * <code>coll</code> will be a collection containing "A", "B", "C".</p>
+ * <code>coll</code> will be a collection containing "A", "B", "C".
  * <p>
  * NOTE: Additional methods were added to this interface in Commons Collections 3.1.
  * These were added solely for documentation purposes and do not change the interface
- * as they were defined in the superinterface <code>Map</code> anyway.</p>
+ * as they were defined in the superinterface <code>Map</code> anyway.
  *
  * @since Commons Collections 2.0
  * @version $Revision$
