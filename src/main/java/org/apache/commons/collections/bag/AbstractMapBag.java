@@ -35,7 +35,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * <p>
  * Subclasses specify a Map implementation to use as the internal storage. The
  * map will be used to map bag elements to a number; the number represents the
- * number of occurrences of that element in the bag.</p>
+ * number of occurrences of that element in the bag.
  *
  * @since Commons Collections 3.0 (previously DefaultMapBag v2.0)
  * @version $Revision$

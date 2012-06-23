@@ -23,7 +23,7 @@ import org.apache.commons.collections.SortedBag;
 /**
  * Decorates another <code>SortedBag</code> to provide additional behaviour.
  * <p>
- * Methods are forwarded directly to the decorated bag.</p>
+ * Methods are forwarded directly to the decorated bag.
  *
  * @since Commons Collections 3.0
  * @version $Revision$

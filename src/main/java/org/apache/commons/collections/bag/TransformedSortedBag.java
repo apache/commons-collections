@@ -27,9 +27,9 @@ import org.apache.commons.collections.Transformer;
  * The add methods are affected by this class.
  * Thus objects must be removed or searched for using their transformed form.
  * For example, if the transformation converts Strings to Integers, you must
- * use the Integer form to remove objects.</p>
+ * use the Integer form to remove objects.
  * <p>
- * This class is Serializable from Commons Collections 3.1.</p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
  * @version $Revision$
@@ -46,7 +46,7 @@ public class TransformedSortedBag<E>
      * Factory method to create a transforming sorted bag.
      * <p>
      * If there are any elements already in the bag being decorated, they
-     * are NOT transformed. Contrast this with {@link #transformedSortedBag(SortedBag, Transformer)}.</p>
+     * are NOT transformed. Contrast this with {@link #transformedSortedBag(SortedBag, Transformer)}.
      * 
      * @param <E> the type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
@@ -65,7 +65,7 @@ public class TransformedSortedBag<E>
      * <p>
      * If there are any elements already in the bag being decorated, they
      * will be transformed by this method.
-     * Contrast this with {@link #transformingSortedBag(SortedBag, Transformer)}.</p>
+     * Contrast this with {@link #transformingSortedBag(SortedBag, Transformer)}.
      * 
      * @param <E> the type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
@@ -93,7 +93,7 @@ public class TransformedSortedBag<E>
      * Constructor that wraps (not copies).
      * <p>
      * If there are any elements already in the bag being decorated, they
-     * are NOT transformed.</p>
+     * are NOT transformed.
      * 
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null

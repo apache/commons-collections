@@ -28,12 +28,12 @@ import org.apache.commons.collections.collection.PredicatedCollection;
  * <p>
  * This bag exists to provide validation for the decorated bag.
  * It is normally created to decorate an empty bag.
- * If an object cannot be added to the bag, an IllegalArgumentException is thrown.</p>
+ * If an object cannot be added to the bag, an IllegalArgumentException is thrown.
  * <p>
  * One usage would be to ensure that no null entries are added to the bag.
- * <pre>Bag bag = PredicatedBag.decorate(new HashBag(), NotNullPredicate.INSTANCE);</pre></p>
+ * <pre>Bag bag = PredicatedBag.decorate(new HashBag(), NotNullPredicate.INSTANCE);</pre>
  * <p>
- * This class is Serializable from Commons Collections 3.1.</p>
+ * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
  * @version $Revision$
@@ -51,7 +51,7 @@ public class PredicatedBag<E>
      * Factory method to create a predicated (validating) bag.
      * <p>
      * If there are any elements already in the bag being decorated, they
-     * are validated.</p>
+     * are validated.
      * 
      * @param <E> the type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
@@ -69,7 +69,7 @@ public class PredicatedBag<E>
      * Constructor that wraps (not copies).
      * <p>
      * If there are any elements already in the bag being decorated, they
-     * are validated.</p>
+     * are validated.
      * 
      * @param bag  the bag to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
