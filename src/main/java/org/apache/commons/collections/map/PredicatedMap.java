@@ -23,7 +23,6 @@ import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.Predicate;
 
 /**

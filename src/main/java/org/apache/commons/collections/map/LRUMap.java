@@ -23,7 +23,6 @@ import java.io.Serializable;
 import java.util.Map;
 
 import org.apache.commons.collections.BoundedMap;
-import org.apache.commons.collections.MapIterator;
 
 /**
  * A <code>Map</code> implementation with a fixed maximum size which removes

@@ -22,7 +22,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Map;
 
-import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.Transformer;
 
 /**
