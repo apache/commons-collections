@@ -47,12 +47,14 @@ public class TransformedBuffer<E> extends TransformedCollection<E> implements Bu
      * are NOT transformed.
      * Contrast this with {@link #transformedBuffer(Buffer, Transformer)}.
      * 
+     * @param <E> the type of the elements in the buffer
      * @param buffer  the buffer to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed Buffer
      * @throws IllegalArgumentException if buffer or transformer is null
      */
-    public static <E> Buffer<E> transformingBuffer(Buffer<E> buffer, Transformer<? super E, ? extends E> transformer) {
+    public static <E> TransformedBuffer<E> transformingBuffer(Buffer<E> buffer,
+                                                              Transformer<? super E, ? extends E> transformer) {
         return new TransformedBuffer<E>(buffer, transformer);
     }
     
@@ -64,14 +66,17 @@ public class TransformedBuffer<E> extends TransformedCollection<E> implements Bu
      * will be transformed by this method.
      * Contrast this with {@link #transformingBuffer(Buffer, Transformer)}.
      * 
+     * @param <E> the type of the elements in the buffer
      * @param buffer  the buffer to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed Buffer
      * @throws IllegalArgumentException if buffer or transformer is null
      * @since Commons Collections 3.3
      */
-    public static <E> Buffer<E> transformedBuffer(Buffer<E> buffer, Transformer<? super E, ? extends E> transformer) {
-        TransformedBuffer<E> decorated = new TransformedBuffer<E>(buffer, transformer); // throws IAE if buffer or transformer is null
+    public static <E> TransformedBuffer<E> transformedBuffer(Buffer<E> buffer,
+                                                             Transformer<? super E, ? extends E> transformer) {
+        // throws IAE if buffer or transformer is null
+        final TransformedBuffer<E> decorated = new TransformedBuffer<E>(buffer, transformer); 
         if (buffer.size() > 0) {
             @SuppressWarnings("unchecked") // buffer is type <E>
             E[] values = (E[]) buffer.toArray();
@@ -108,10 +113,17 @@ public class TransformedBuffer<E> extends TransformedCollection<E> implements Bu
     }
 
     //-----------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
     public E get() {
         return getBuffer().get();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public E remove() {
         return getBuffer().remove();
     }

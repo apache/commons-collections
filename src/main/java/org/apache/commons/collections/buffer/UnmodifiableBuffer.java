@@ -51,6 +51,7 @@ public final class UnmodifiableBuffer<E>
      * <p>
      * If the buffer passed in is already unmodifiable, it is returned.
      * 
+     * @param <E> the type of the elements in the buffer
      * @param buffer  the buffer to decorate, must not be null
      * @return an unmodifiable Buffer
      * @throws IllegalArgumentException if buffer is null

@@ -59,26 +59,27 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
     /**
      * Factory method to create a blocking buffer.
      *
-     * @param <T> the type of the elements in the buffer
+     * @param <E> the type of the elements in the buffer
      * @param buffer the buffer to decorate, must not be null
      * @return a new blocking Buffer
      * @throws IllegalArgumentException if buffer is null
      */
-    public static <T> Buffer<T> blockingBuffer(Buffer<T> buffer) {
-        return new BlockingBuffer<T>(buffer);
+    public static <E> BlockingBuffer<E> blockingBuffer(Buffer<E> buffer) {
+        return new BlockingBuffer<E>(buffer);
     }
 
     /**
      * Factory method to create a blocking buffer with a timeout value.
      *
+     * @param <E> the type of the elements in the buffer
      * @param buffer  the buffer to decorate, must not be null
      * @param timeoutMillis  the timeout value in milliseconds, zero or less for no timeout
      * @return a new blocking buffer
      * @throws IllegalArgumentException if the buffer is null
      * @since Commons Collections 3.2
      */
-    public static <T> Buffer<T> blockingBuffer(Buffer<T> buffer, long timeoutMillis) {
-        return new BlockingBuffer<T>(buffer, timeoutMillis);
+    public static <E> BlockingBuffer<E> blockingBuffer(Buffer<E> buffer, long timeoutMillis) {
+        return new BlockingBuffer<E>(buffer, timeoutMillis);
     }
 
     //-----------------------------------------------------------------------    
@@ -131,6 +132,7 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
      * set in the constructor.
      *
      * @throws BufferUnderflowException if an interrupt is received
+     * {@inheritDoc}
      */
     @Override
     public E get() {
@@ -157,6 +159,7 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
      * added for up to the specified timeout value if the buffer is empty.
      *
      * @param timeout  the timeout value in milliseconds
+     * @return the next object in the buffer
      * @throws BufferUnderflowException if an interrupt is received
      * @throws BufferUnderflowException if the timeout expires
      * @since Commons Collections 3.2
@@ -188,6 +191,7 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
      * set in the constructor.
      *
      * @throws BufferUnderflowException if an interrupt is received
+     * {@inheritDoc}
      */
     @Override
     public E remove() {
@@ -214,6 +218,7 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
      * added for up to the specified timeout value if the buffer is empty.
      *
      * @param timeout  the timeout value in milliseconds
+     * @return the next object in the buffer, which is also removed
      * @throws BufferUnderflowException if an interrupt is received
      * @throws BufferUnderflowException if the timeout expires
      * @since Commons Collections 3.2

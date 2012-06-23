@@ -61,6 +61,7 @@ public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCo
      * When the buffer is full, it will immediately throw a
      * <code>BufferOverflowException</code> on calling <code>add()</code>.
      *
+     * @param <E> the type of the elements in the buffer
      * @param buffer  the buffer to decorate, must not be null
      * @param maximumSize  the maximum size, must be size one or greater
      * @return a new bounded buffer
@@ -75,6 +76,7 @@ public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCo
      * Factory method to create a bounded buffer that blocks for a maximum
      * amount of time.
      *
+     * @param <E> the type of the elements in the buffer
      * @param buffer  the buffer to decorate, must not be null
      * @param maximumSize  the maximum size, must be size one or greater
      * @param timeout  the maximum amount of time to wait in milliseconds
@@ -169,11 +171,17 @@ public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCo
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean isFull() {
         // size() is synchronized
         return (size() == maxSize());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int maxSize() {
         return maximumSize;
     }

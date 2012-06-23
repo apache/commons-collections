@@ -43,13 +43,13 @@ public class SynchronizedBuffer<E>
     /**
      * Factory method to create a synchronized buffer.
      * 
-     * @param <T> the type of the elements in the buffer
+     * @param <E> the type of the elements in the buffer
      * @param buffer  the buffer to decorate, must not be null
      * @return a new synchronized Buffer
      * @throws IllegalArgumentException if buffer is null
      */
-    public static <T> Buffer<T> synchronizedBuffer(Buffer<T> buffer) {
-        return new SynchronizedBuffer<T>(buffer);
+    public static <E> SynchronizedBuffer<E> synchronizedBuffer(Buffer<E> buffer) {
+        return new SynchronizedBuffer<E>(buffer);
     }
 
     //-----------------------------------------------------------------------
@@ -85,12 +85,19 @@ public class SynchronizedBuffer<E>
     }
 
     //-----------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
     public E get() {
         synchronized (lock) {
             return decorated().get();
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public E remove() {
         synchronized (lock) {
             return decorated().remove();

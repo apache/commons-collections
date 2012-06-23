@@ -65,10 +65,17 @@ public abstract class AbstractBufferDecorator<E> extends AbstractCollectionDecor
     }
 
     //-----------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
     public E get() {
         return decorated().get();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public E remove() {
         return decorated().remove();
     }

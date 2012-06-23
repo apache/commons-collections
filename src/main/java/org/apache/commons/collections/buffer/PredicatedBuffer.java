@@ -50,14 +50,15 @@ public class PredicatedBuffer<E> extends PredicatedCollection<E> implements Buff
      * If there are any elements already in the buffer being decorated, they
      * are validated.
      * 
+     * @param <E> the type of the elements in the buffer
      * @param buffer  the buffer to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
      * @return a new predicated Buffer
      * @throws IllegalArgumentException if buffer or predicate is null
      * @throws IllegalArgumentException if the buffer contains invalid elements
      */
-    public static <T> Buffer<T> predicatedBuffer(Buffer<T> buffer, Predicate<? super T> predicate) {
-        return new PredicatedBuffer<T>(buffer, predicate);
+    public static <E> PredicatedBuffer<E> predicatedBuffer(Buffer<E> buffer, Predicate<? super E> predicate) {
+        return new PredicatedBuffer<E>(buffer, predicate);
     }
     
     //-----------------------------------------------------------------------
@@ -87,10 +88,17 @@ public class PredicatedBuffer<E> extends PredicatedCollection<E> implements Buff
     }
 
     //-----------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
     public E get() {
         return decorated().get();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public E remove() {
         return decorated().remove();
     }

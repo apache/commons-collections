@@ -67,7 +67,7 @@ public class UnboundedFifoBuffer<E> extends AbstractCollection<E> implements Buf
     // invariant: buffer.length > size()
     //   ie.buffer always has at least one empty entry
 
-    /** Serialization vesrion */
+    /** Serialization version */
     private static final long serialVersionUID = -3482960336579541419L;
 
     /** The array of objects in the buffer. */
