@@ -32,9 +32,9 @@ import org.apache.commons.collections.set.UnmodifiableSet;
 /**
  * Decorates another <code>SortedBag</code> to ensure it can't be altered.
  * <p>
- * This class is Serializable from Commons Collections 3.1.
+ * This class is Serializable from Commons Collections 3.1.</p>
  * <p>
- * Attempts to modify it will result in an UnsupportedOperationException. 
+ * Attempts to modify it will result in an UnsupportedOperationException.</p> 
  *
  * @since Commons Collections 3.0
  * @version $Revision$
@@ -50,8 +50,9 @@ public final class UnmodifiableSortedBag<E>
     /**
      * Factory method to create an unmodifiable bag.
      * <p>
-     * If the bag passed in is already unmodifiable, it is returned.
+     * If the bag passed in is already unmodifiable, it is returned.</p>
      * 
+     * @param <E> the type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @return an unmodifiable SortedBag
      * @throws IllegalArgumentException if bag is null

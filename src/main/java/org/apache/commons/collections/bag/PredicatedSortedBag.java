@@ -27,12 +27,12 @@ import org.apache.commons.collections.SortedBag;
  * <p>
  * This bag exists to provide validation for the decorated bag.
  * It is normally created to decorate an empty bag.
- * If an object cannot be added to the bag, an IllegalArgumentException is thrown.
+ * If an object cannot be added to the bag, an IllegalArgumentException is thrown.</p>
  * <p>
  * One usage would be to ensure that no null entries are added to the bag.
- * <pre>SortedBag bag = PredicatedSortedBag.decorate(new TreeBag(), NotNullPredicate.INSTANCE);</pre>
+ * <pre>SortedBag bag = PredicatedSortedBag.decorate(new TreeBag(), NotNullPredicate.INSTANCE);</pre></p>
  * <p>
- * This class is Serializable from Commons Collections 3.1.
+ * This class is Serializable from Commons Collections 3.1.</p>
  *
  * @since Commons Collections 3.0
  * @version $Revision$
@@ -50,24 +50,24 @@ public class PredicatedSortedBag<E>
      * Factory method to create a predicated (validating) bag.
      * <p>
      * If there are any elements already in the bag being decorated, they
-     * are validated.
+     * are validated.</p>
      * 
+     * @param <E> the type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
      * @return a new predicated SortedBag
      * @throws IllegalArgumentException if bag or predicate is null
      * @throws IllegalArgumentException if the bag contains invalid elements
      */
-    public static <T> SortedBag<T> predicatedSortedBag(SortedBag<T> bag, Predicate<? super T> predicate) {
-        return new PredicatedSortedBag<T>(bag, predicate);
+    public static <E> PredicatedSortedBag<E> predicatedSortedBag(SortedBag<E> bag, Predicate<? super E> predicate) {
+        return new PredicatedSortedBag<E>(bag, predicate);
     }
 
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * <p>
-     * If there are any elements already in the bag being decorated, they
-     * are validated.
+     * <p>If there are any elements already in the bag being decorated, they
+     * are validated.</p>
      * 
      * @param bag  the bag to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
@@ -89,14 +89,24 @@ public class PredicatedSortedBag<E>
     }
     
     //-----------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
     public E first() {
         return decorated().first();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public E last() {
         return decorated().last();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Comparator<? super E> comparator() {
         return decorated().comparator();
     }

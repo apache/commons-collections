@@ -27,9 +27,9 @@ import org.apache.commons.collections.set.SynchronizedSet;
  * for a multi-threaded environment.
  * <p>
  * Methods are synchronized, then forwarded to the decorated bag.
- * Iterators must be separately synchronized around the loop.
+ * Iterators must be separately synchronized around the loop.</p>
  * <p>
- * This class is Serializable from Commons Collections 3.1.
+ * This class is Serializable from Commons Collections 3.1.</p>
  *
  * @since Commons Collections 3.0
  * @version $Revision$
@@ -45,12 +45,13 @@ public class SynchronizedBag<E>
     /**
      * Factory method to create a synchronized bag.
      * 
+     * @param <E> the type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @return a new synchronized Bag
      * @throws IllegalArgumentException if bag is null
      */
-    public static <T> Bag<T> synchronizedBag(Bag<T> bag) {
-        return new SynchronizedBag<T>(bag);
+    public static <E> SynchronizedBag<E> synchronizedBag(Bag<E> bag) {
+        return new SynchronizedBag<E>(bag);
     }
     
     //-----------------------------------------------------------------------
@@ -85,18 +86,28 @@ public class SynchronizedBag<E>
     }
     
     //-----------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
     public boolean add(E object, int count) {
         synchronized (lock) {
             return getBag().add(object, count);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean remove(Object object, int count) {
         synchronized (lock) {
             return getBag().remove(object, count);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Set<E> uniqueSet() {
         synchronized (lock) {
             Set<E> set = getBag().uniqueSet();
@@ -104,6 +115,9 @@ public class SynchronizedBag<E>
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int getCount(Object object) {
         synchronized (lock) {
             return getBag().getCount(object);

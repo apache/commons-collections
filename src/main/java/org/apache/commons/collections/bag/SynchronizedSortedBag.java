@@ -26,9 +26,9 @@ import org.apache.commons.collections.SortedBag;
  * for a multi-threaded environment.
  * <p>
  * Methods are synchronized, then forwarded to the decorated bag.
- * Iterators must be separately synchronized around the loop.
+ * Iterators must be separately synchronized around the loop.</p>
  * <p>
- * This class is Serializable from Commons Collections 3.1.
+ * This class is Serializable from Commons Collections 3.1.</p>
  *
  * @since Commons Collections 3.0
  * @version $Revision$
@@ -44,11 +44,12 @@ public class SynchronizedSortedBag<E>
     /**
      * Factory method to create a synchronized sorted bag.
      * 
+     * @param <E> the type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @return a new synchronized SortedBag
      * @throws IllegalArgumentException if bag is null
      */
-    public static <E> SortedBag<E> synchronizedSortedBag(SortedBag<E> bag) {
+    public static <E> SynchronizedSortedBag<E> synchronizedSortedBag(SortedBag<E> bag) {
         return new SynchronizedSortedBag<E>(bag);
     }
     
@@ -84,18 +85,28 @@ public class SynchronizedSortedBag<E>
     }
     
     //-----------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
     public synchronized E first() {
         synchronized (lock) {
             return getSortedBag().first();
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public synchronized E last() {
         synchronized (lock) {
             return getSortedBag().last();
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public synchronized Comparator<? super E> comparator() {
         synchronized (lock) {
             return getSortedBag().comparator();

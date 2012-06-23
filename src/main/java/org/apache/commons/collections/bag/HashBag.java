@@ -33,7 +33,7 @@ import org.apache.commons.collections.Bag;
  * count of occurrences. Extra methods on the interface allow multiple copies
  * of an object to be added or removed at once. It is important to read the
  * interface javadoc carefully as several methods violate the
- * <code>Collection</code> interface specification.
+ * <code>Collection</code> interface specification.</p>
  *
  * @since Commons Collections 3.0 (previously in main package v2.0)
  * @version $Revision$

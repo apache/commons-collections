@@ -29,9 +29,9 @@ import org.apache.commons.collections.set.TransformedSet;
  * The add methods are affected by this class.
  * Thus objects must be removed or searched for using their transformed form.
  * For example, if the transformation converts Strings to Integers, you must
- * use the Integer form to remove objects.
+ * use the Integer form to remove objects.</p>
  * <p>
- * This class is Serializable from Commons Collections 3.1.
+ * This class is Serializable from Commons Collections 3.1.</p>
  *
  * @since Commons Collections 3.0
  * @version $Revision$
@@ -48,9 +48,9 @@ public class TransformedBag<E>
      * Factory method to create a transforming bag.
      * <p>
      * If there are any elements already in the bag being decorated, they
-     * are NOT transformed.
-     * Contrast this with {@link #transformedBag(Bag, Transformer)}.
+     * are NOT transformed. Contrast this with {@link #transformedBag(Bag, Transformer)}.</p>
      * 
+     * @param <E> the type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed Bag
@@ -66,8 +66,9 @@ public class TransformedBag<E>
      * <p>
      * If there are any elements already in the bag being decorated, they
      * will be transformed by this method.
-     * Contrast this with {@link #transformingBag(Bag, Transformer)}.
+     * Contrast this with {@link #transformingBag(Bag, Transformer)}.</p>
      * 
+     * @param <E> the type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed Bag
@@ -92,7 +93,7 @@ public class TransformedBag<E>
      * Constructor that wraps (not copies).
      * <p>
      * If there are any elements already in the bag being decorated, they
-     * are NOT transformed.
+     * are NOT transformed.</p>
      * 
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -112,19 +113,33 @@ public class TransformedBag<E>
     }
 
     //-----------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
     public int getCount(Object object) {
         return getBag().getCount(object);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean remove(Object object, int nCopies) {
         return getBag().remove(object, nCopies);
     }
 
     //-----------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
     public boolean add(E object, int nCopies) {
         return getBag().add(transform(object), nCopies);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Set<E> uniqueSet() {
         Set<E> set = getBag().uniqueSet();
         return TransformedSet.<E>transformingSet(set, transformer);
