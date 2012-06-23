@@ -522,7 +522,8 @@ public class TestCollectionUtils extends MockTestCase {
         Closure<List<? extends Number>> resultClosure = CollectionUtils.forAllDo(col, testClosure);
         assertSame(testClosure, resultClosure);
         assertTrue(collectionA.isEmpty() && collectionB.isEmpty());
-        resultClosure = CollectionUtils.forAllDo(col, null);
+        // this is a work-around for issue COLLECTIONS-414, casting should not be necessary
+        resultClosure = CollectionUtils.forAllDo(col, (Closure<List<? extends Number>>) null);
         assertNull(resultClosure);
         assertTrue(collectionA.isEmpty() && collectionB.isEmpty());
         resultClosure = CollectionUtils.forAllDo(null, testClosure);
