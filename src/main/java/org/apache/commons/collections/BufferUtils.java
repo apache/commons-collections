@@ -62,6 +62,7 @@ public class BufferUtils {
      * }
      * </pre>
      *
+     * @param <E> the type of the elements in the buffer
      * @param buffer  the buffer to synchronize, must not be null
      * @return a synchronized buffer backed by that buffer
      * @throws IllegalArgumentException  if the Buffer is null
@@ -78,6 +79,7 @@ public class BufferUtils {
      * are added to the buffer, rather than immediately throwing a
      * <code>BufferUnderflowException</code>.
      *
+     * @param <E> the type of the elements in the buffer
      * @param buffer  the buffer to synchronize, must not be null
      * @return a blocking buffer backed by that buffer
      * @throws IllegalArgumentException  if the Buffer is null
@@ -94,6 +96,7 @@ public class BufferUtils {
      * until new elements are added to the buffer, rather than immediately
      * throwing a <code>BufferUnderflowException</code>.
      *
+     * @param <E> the type of the elements in the buffer
      * @param buffer  the buffer to synchronize, must not be null
      * @param timeoutMillis  the timeout value in milliseconds, zero or less for no timeout
      * @return a blocking buffer backed by that buffer
@@ -111,6 +114,7 @@ public class BufferUtils {
      * removed from the buffer to allow the object(s) to be added and still
      * maintain the maximum size.
      *
+     * @param <E> the type of the elements in the buffer
      * @param buffer  the buffer to make bounded,  must not be null
      * @param maximumSize  the maximum size
      * @return a bounded buffer backed by the given buffer
@@ -128,6 +132,7 @@ public class BufferUtils {
      * removed from the buffer to allow the object(s) to be added and still
      * maintain the maximum size or the timeout expires.
      *
+     * @param <E> the type of the elements in the buffer
      * @param buffer the buffer to make bounded, must not be null
      * @param maximumSize the maximum size
      * @param timeoutMillis  the timeout value in milliseconds, zero or less for no timeout
@@ -142,6 +147,7 @@ public class BufferUtils {
     /**
      * Returns an unmodifiable buffer backed by the given buffer.
      *
+     * @param <E> the type of the elements in the buffer
      * @param buffer  the buffer to make unmodifiable, must not be null
      * @return an unmodifiable buffer backed by that buffer
      * @throws IllegalArgumentException  if the Buffer is null
@@ -158,6 +164,7 @@ public class BufferUtils {
      * It is important not to use the original buffer after invoking this method,
      * as it is a backdoor for adding invalid objects.
      *
+     * @param <E> the type of the elements in the buffer
      * @param buffer  the buffer to predicate, must not be null
      * @param predicate  the predicate used to evaluate new elements, must not be null
      * @return a predicated buffer
@@ -177,6 +184,7 @@ public class BufferUtils {
      * Existing entries in the specified buffer will not be transformed.
      * If you want that behaviour, see {@link TransformedBuffer#transformedBuffer}.
      *
+     * @param <E> the type of the elements in the buffer
      * @param buffer  the buffer to predicate, must not be null
      * @param transformer  the transformer for the buffer, must not be null
      * @return a transformed buffer backed by the given buffer
@@ -188,8 +196,9 @@ public class BufferUtils {
 
     /**
      * Get an empty <code>Buffer</code>.
-     * @param <E>
-     * @return Buffer<E>
+     *
+     * @param <E> the type of the elements in the buffer
+     * @return an empty {@link Buffer<E>}
      */
     @SuppressWarnings("unchecked")
     public static <E> Buffer<E> emptyBuffer() {

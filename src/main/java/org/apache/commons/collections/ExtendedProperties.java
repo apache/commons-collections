@@ -157,8 +157,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
     private ExtendedProperties defaults;
 
     /**
-     * The file connected to this repository (holding comments and
-     * such).
+     * The file connected to this repository (holding comments and such).
      *
      * @serial
      */

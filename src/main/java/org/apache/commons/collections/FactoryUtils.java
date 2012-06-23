@@ -53,6 +53,7 @@ public class FactoryUtils {
      *
      * @see org.apache.commons.collections.functors.ExceptionFactory
      * 
+     * @param <T> the type that the factory creates
      * @return the factory
      */
     public static <T> Factory<T> exceptionFactory() {
@@ -79,6 +80,7 @@ public class FactoryUtils {
      *
      * @see org.apache.commons.collections.functors.ConstantFactory
      * 
+     * @param <T> the type that the factory creates
      * @param constantToReturn  the constant object to return each time in the factory
      * @return the <code>constant</code> factory.
      */
@@ -98,12 +100,13 @@ public class FactoryUtils {
      *
      * @see org.apache.commons.collections.functors.PrototypeFactory
      * 
+     * @param <T> the type that the factory creates
      * @param prototype  the object to clone each time in the factory
      * @return the <code>prototype</code> factory, or a {@link ConstantFactory#NULL_INSTANCE} if
      * the {@code prototype} is {@code null}
      * @throws IllegalArgumentException if the prototype cannot be cloned
      */
-    public static <T> Factory<T> prototypeFactory(T  prototype) {
+    public static <T> Factory<T> prototypeFactory(T prototype) {
         return PrototypeFactory.<T>prototypeFactory(prototype);
     }
 
@@ -113,6 +116,7 @@ public class FactoryUtils {
      *
      * @see org.apache.commons.collections.functors.InstantiateFactory
      * 
+     * @param <T> the type that the factory creates
      * @param classToInstantiate  the Class to instantiate each time in the factory
      * @return the <code>reflection</code> factory
      * @throws IllegalArgumentException if the classToInstantiate is null
@@ -127,6 +131,7 @@ public class FactoryUtils {
      *
      * @see org.apache.commons.collections.functors.InstantiateFactory
      * 
+     * @param <T> the type that the factory creates
      * @param classToInstantiate  the Class to instantiate each time in the factory
      * @param paramTypes  parameter types for the constructor, can be null
      * @param args  the arguments to pass to the constructor, can be null
