@@ -75,7 +75,9 @@ public class PredicatedMap<K, V>
      * @param valuePredicate  the predicate to validate to values, null means no check
      * @throws IllegalArgumentException if the map is null
      */
-    public static <K, V> IterableMap<K, V> predicatedMap(Map<K, V> map, Predicate<? super K> keyPredicate, Predicate<? super V> valuePredicate) {
+    public static <K, V> PredicatedMap<K, V> predicatedMap(Map<K, V> map,
+                                                           Predicate<? super K> keyPredicate,
+                                                           Predicate<? super V> valuePredicate) {
         return new PredicatedMap<K, V>(map, keyPredicate, valuePredicate);
     }
 

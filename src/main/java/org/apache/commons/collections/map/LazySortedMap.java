@@ -72,7 +72,7 @@ public class LazySortedMap<K,V>
      * @param factory  the factory to use, must not be null
      * @throws IllegalArgumentException if map or factory is null
      */
-    public static <K, V> SortedMap<K, V> lazySortedMap(SortedMap<K, V> map, Factory<? extends V> factory) {
+    public static <K, V> LazySortedMap<K, V> lazySortedMap(SortedMap<K, V> map, Factory<? extends V> factory) {
         return new LazySortedMap<K,V>(map, factory);
     }
 
@@ -83,7 +83,8 @@ public class LazySortedMap<K,V>
      * @param factory  the factory to use, must not be null
      * @throws IllegalArgumentException if map or factory is null
      */
-    public static <K, V> SortedMap<K, V> lazySortedMap(SortedMap<K, V> map, Transformer<? super K, ? extends V> factory) {
+    public static <K, V> LazySortedMap<K, V> lazySortedMap(SortedMap<K, V> map,
+                                                           Transformer<? super K, ? extends V> factory) {
         return new LazySortedMap<K,V>(map, factory);
     }
 

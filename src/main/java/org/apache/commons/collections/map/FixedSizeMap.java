@@ -69,7 +69,7 @@ public class FixedSizeMap<K, V>
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    public static <K, V> IterableMap<K, V> fixedSizeMap(Map<K, V> map) {
+    public static <K, V> FixedSizeMap<K, V> fixedSizeMap(Map<K, V> map) {
         return new FixedSizeMap<K, V>(map);
     }
 

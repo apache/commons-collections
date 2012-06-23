@@ -95,7 +95,8 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @param map  the map to wrap
      * @param collectionClass  the type of the collection class
      */
-    public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(Map<K, ? super C> map, Class<C> collectionClass) {
+    public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(Map<K, ? super C> map,
+                                                                                    Class<C> collectionClass) {
         return new MultiValueMap<K, V>(map, new ReflectionFactory<C>(collectionClass));
     }
 
@@ -106,7 +107,8 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @param map  the map to decorate
      * @param collectionFactory  the collection factory (must return a Collection object).
      */
-    public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(Map<K, ? super C> map, Factory<C> collectionFactory) {
+    public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(Map<K, ? super C> map,
+                                                                                    Factory<C> collectionFactory) {
         return new MultiValueMap<K, V>(map, collectionFactory);
     }
 

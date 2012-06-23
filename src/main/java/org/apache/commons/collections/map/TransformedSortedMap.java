@@ -62,7 +62,7 @@ public class TransformedSortedMap<K, V>
      * @param valueTransformer  the predicate to validate to values, null means no transformation
      * @throws IllegalArgumentException if the map is null
      */
-    public static <K, V> SortedMap<K, V> transformingSortedMap(SortedMap<K, V> map,
+    public static <K, V> TransformedSortedMap<K, V> transformingSortedMap(SortedMap<K, V> map,
             Transformer<? super K, ? extends K> keyTransformer,
             Transformer<? super V, ? extends V> valueTransformer) {
         return new TransformedSortedMap<K, V>(map, keyTransformer, valueTransformer);
@@ -82,7 +82,7 @@ public class TransformedSortedMap<K, V>
      * @throws IllegalArgumentException if map is null
      * @since Commons Collections 3.2
      */
-    public static <K, V> SortedMap<K, V> transformedSortedMap(SortedMap<K, V> map,
+    public static <K, V> TransformedSortedMap<K, V> transformedSortedMap(SortedMap<K, V> map,
             Transformer<? super K, ? extends K> keyTransformer,
             Transformer<? super V, ? extends V> valueTransformer) {
         TransformedSortedMap<K, V> decorated = new TransformedSortedMap<K, V>(map, keyTransformer, valueTransformer);

@@ -70,7 +70,7 @@ public class FixedSizeSortedMap<K, V>
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    public static <K, V> SortedMap<K, V> fixedSizeSortedMap(SortedMap<K, V> map) {
+    public static <K, V> FixedSizeSortedMap<K, V> fixedSizeSortedMap(SortedMap<K, V> map) {
         return new FixedSizeSortedMap<K, V>(map);
     }
 

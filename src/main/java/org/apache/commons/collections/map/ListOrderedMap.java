@@ -96,7 +96,7 @@ public class ListOrderedMap<K, V>
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    public static <K, V> OrderedMap<K, V> listOrderedMap(Map<K, V> map) {
+    public static <K, V> ListOrderedMap<K, V> listOrderedMap(Map<K, V> map) {
         return new ListOrderedMap<K, V>(map);
     }
 
