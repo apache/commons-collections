@@ -49,10 +49,12 @@ public class FixedSizeList<E>
     /**
      * Factory method to create a fixed size list.
      * 
+     * @param <E> the type of the elements in the list
      * @param list  the list to decorate, must not be null
+     * @return a new fixed size list
      * @throws IllegalArgumentException if list is null
      */
-    public static <E> List<E> fixedSizeList(List<E> list) {
+    public static <E> FixedSizeList<E> fixedSizeList(List<E> list) {
         return new FixedSizeList<E>(list);
     }
 

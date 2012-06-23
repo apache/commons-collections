@@ -47,7 +47,9 @@ public final class UnmodifiableList<E>
     /**
      * Factory method to create an unmodifiable list.
      * 
+     * @param <E> the type of the elements in the list
      * @param list  the list to decorate, must not be null
+     * @return a new unmodifiable list
      * @throws IllegalArgumentException if list is null
      */
     public static <E> List<E> unmodifiableList(List<E> list) {

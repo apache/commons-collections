@@ -54,13 +54,14 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
      * If there are any elements already in the list being decorated, they
      * are validated.
      * 
+     * @param <T> the type of the elements in the list
      * @param list  the list to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
-     * @return the decorated list
+     * @return a new predicated list
      * @throws IllegalArgumentException if list or predicate is null
      * @throws IllegalArgumentException if the list contains invalid elements
      */
-    public static <T> List<T> predicatedList(List<T> list, Predicate<? super T> predicate) {
+    public static <T> PredicatedList<T> predicatedList(List<T> list, Predicate<? super T> predicate) {
         return new PredicatedList<T>(list, predicate);
     }
 

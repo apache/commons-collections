@@ -43,10 +43,12 @@ public class SynchronizedList<E> extends SynchronizedCollection<E> implements Li
     /**
      * Factory method to create a synchronized list.
      * 
+     * @param <T> the type of the elements in the list
      * @param list  the list to decorate, must not be null
+     * @return a new synchronized list
      * @throws IllegalArgumentException if list is null
      */
-    public static <T> List<T> synchronizedList(List<T> list) {
+    public static <T> SynchronizedList<T> synchronizedList(List<T> list) {
         return new SynchronizedList<T>(list);
     }
     

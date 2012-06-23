@@ -72,11 +72,13 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
     /**
      * Factory method to create a lazily instantiating list.
      * 
+     * @param <E> the type of the elements in the list
      * @param list  the list to decorate, must not be null
      * @param factory  the factory to use for creation, must not be null
+     * @return a new lazy list
      * @throws IllegalArgumentException if list or factory is null
      */
-    public static <E> List<E> lazyList(List<E> list, Factory<? extends E> factory) {
+    public static <E> LazyList<E> lazyList(List<E> list, Factory<? extends E> factory) {
         return new LazyList<E>(list, factory);
     }
     
@@ -106,6 +108,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
      * placeholder that is replaced with a factory object when requested.
      * 
      * @param index  the index to retrieve
+     * {@inheritDoc}
      */
     @Override
     public E get(int index) {

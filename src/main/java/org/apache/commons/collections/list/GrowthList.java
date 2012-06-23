@@ -63,10 +63,12 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
     /**
      * Factory method to create a growth list.
      *
+     * @param <E> the type of the elements in the list
      * @param list  the list to decorate, must not be null
+     * @return a new growth list
      * @throws IllegalArgumentException if list is null
      */
-    public static <E> List<E> growthList(List<E> list) {
+    public static <E> GrowthList<E> growthList(List<E> list) {
         return new GrowthList<E>(list);
     }
 
