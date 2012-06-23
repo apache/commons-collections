@@ -49,14 +49,16 @@ public final class UnmodifiableSortedSet<E>
     /**
      * Factory method to create an unmodifiable set.
      * 
+     * @param <E> the element type
      * @param set  the set to decorate, must not be null
+     * @return a new unmodifiable {@link SortedSet}
      * @throws IllegalArgumentException if set is null
      */
-    public static <T> SortedSet<T> unmodifiableSortedSet(SortedSet<T> set) {
+    public static <E> SortedSet<E> unmodifiableSortedSet(SortedSet<E> set) {
         if (set instanceof Unmodifiable) {
             return set;
         }
-        return new UnmodifiableSortedSet<T>(set);
+        return new UnmodifiableSortedSet<E>(set);
     }
 
     //-----------------------------------------------------------------------

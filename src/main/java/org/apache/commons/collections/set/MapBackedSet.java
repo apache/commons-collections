@@ -51,21 +51,27 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
     /**
      * Factory method to create a set from a map.
      * 
+     * @param <E> the element type
+     * @param <V> the dummy value type in the map
      * @param map  the map to decorate, must not be null
+     * @return a new map backed set
      * @throws IllegalArgumentException if set is null
      */
-    public static <E, V> Set<E> mapBackedSet(Map<E, ? super V> map) {
+    public static <E, V> MapBackedSet<E, V> mapBackedSet(Map<E, ? super V> map) {
         return mapBackedSet(map, null);
     }
 
     /**
      * Factory method to create a set from a map.
      * 
+     * @param <E> the element type
+     * @param <V> the dummy value type in the map
      * @param map  the map to decorate, must not be null
      * @param dummyValue  the dummy value to use
+     * @return a new map backed set
      * @throws IllegalArgumentException if map is null
      */
-    public static <E, V> Set<E> mapBackedSet(Map<E, ? super V> map, V dummyValue) {
+    public static <E, V> MapBackedSet<E, V> mapBackedSet(Map<E, ? super V> map, V dummyValue) {
         if (map == null) {
             throw new IllegalArgumentException("The map must not be null");
         }

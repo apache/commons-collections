@@ -48,11 +48,14 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      * are NOT transformed.
      * Contrast this with {@link #transformedSortedSet(SortedSet, Transformer)}.
      * 
+     * @param <E> the element type
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
+     * @return a new transformed {@link SortedSet}
      * @throws IllegalArgumentException if set or transformer is null
      */
-    public static <E> SortedSet<E> transformingSortedSet(SortedSet<E> set, Transformer<? super E, ? extends E> transformer) {
+    public static <E> TransformedSortedSet<E> transformingSortedSet(SortedSet<E> set,
+                                                                    Transformer<? super E, ? extends E> transformer) {
         return new TransformedSortedSet<E>(set, transformer);
     }
     
@@ -64,13 +67,15 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      * will be transformed by this method.
      * Contrast this with {@link #transformingSortedSet(SortedSet, Transformer)}.
      * 
+     * @param <E> the element type
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed SortedSet
+     * @return a new transformed {@link SortedSet}
      * @throws IllegalArgumentException if set or transformer is null
      * @since Commons Collections 3.3
      */
-    public static <E> SortedSet<E> transformedSortedSet(SortedSet<E> set, Transformer<? super E, ? extends E> transformer) {
+    public static <E> TransformedSortedSet<E> transformedSortedSet(SortedSet<E> set,
+                                                                   Transformer<? super E, ? extends E> transformer) {
         TransformedSortedSet<E> decorated = new TransformedSortedSet<E>(set, transformer);
         if (transformer != null && set != null && set.size() > 0) {
             @SuppressWarnings("unchecked") // set is type E

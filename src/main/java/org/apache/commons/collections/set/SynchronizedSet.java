@@ -41,11 +41,13 @@ public class SynchronizedSet<E> extends SynchronizedCollection<E> implements Set
     /**
      * Factory method to create a synchronized set.
      * 
+     * @param <E> the element type
      * @param set  the set to decorate, must not be null
+     * @return a new synchronized set
      * @throws IllegalArgumentException if set is null
      */
-    public static <T> Set<T> synchronizedSet(Set<T> set) {
-        return new SynchronizedSet<T>(set);
+    public static <E> SynchronizedSet<E> synchronizedSet(Set<E> set) {
+        return new SynchronizedSet<E>(set);
     }
     
     //-----------------------------------------------------------------------

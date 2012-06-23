@@ -45,7 +45,9 @@ public final class UnmodifiableSet<E>
     /**
      * Factory method to create an unmodifiable set.
      * 
+     * @param <E> the element type
      * @param set  the set to decorate, must not be null
+     * @return a new unmodifiable set
      * @throws IllegalArgumentException if set is null
      */
     public static <E> Set<E> unmodifiableSet(Set<E> set) {

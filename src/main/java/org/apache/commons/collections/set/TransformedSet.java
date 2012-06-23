@@ -48,11 +48,13 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
      * are NOT transformed.
      * Contrast this with {@link #transformedSet(Set, Transformer)}.
      * 
+     * @param <E> the element type
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
+     * @return a new transformed set
      * @throws IllegalArgumentException if set or transformer is null
      */
-    public static <E> Set<E> transformingSet(Set<E> set, Transformer<? super E, ? extends E> transformer) {
+    public static <E> TransformedSet<E> transformingSet(Set<E> set, Transformer<? super E, ? extends E> transformer) {
         return new TransformedSet<E>(set, transformer);
     }
     
@@ -64,9 +66,10 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
      * will be transformed by this method.
      * Contrast this with {@link #transformingSet(Set, Transformer)}.
      * 
+     * @param <E> the element type
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
-     * @return a new transformed Set
+     * @return a new transformed set
      * @throws IllegalArgumentException if set or transformer is null
      * @since Commons Collections 3.3
      */

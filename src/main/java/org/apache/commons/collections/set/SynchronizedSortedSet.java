@@ -42,11 +42,13 @@ public class SynchronizedSortedSet<E> extends SynchronizedCollection<E> implemen
     /**
      * Factory method to create a synchronized set.
      *
+     * @param <E> the element type
      * @param set  the set to decorate, must not be null
+     * @return a new synchronized sorted set
      * @throws IllegalArgumentException if set is null
      */
-    public static <T> SortedSet<T> synchronizedSortedSet(SortedSet<T> set) {
-        return new SynchronizedSortedSet<T>(set);
+    public static <E> SynchronizedSortedSet<E> synchronizedSortedSet(SortedSet<E> set) {
+        return new SynchronizedSortedSet<E>(set);
     }
 
     //-----------------------------------------------------------------------
