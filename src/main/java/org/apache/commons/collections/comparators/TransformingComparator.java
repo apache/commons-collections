@@ -35,9 +35,9 @@ import org.apache.commons.collections.Transformer;
 public class TransformingComparator<E> implements Comparator<E> {
     
     /** The decorated comparator. */
-    protected Comparator<E> decorated;
+    protected final Comparator<E> decorated;
     /** The transformer being used. */    
-    protected Transformer<? super E, ? extends E> transformer;
+    protected final Transformer<? super E, ? extends E> transformer;
 
     //-----------------------------------------------------------------------
     /**
