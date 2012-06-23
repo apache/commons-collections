@@ -58,8 +58,7 @@ public final class NonePredicate<T> implements Predicate<T>, PredicateDecorator<
         if (predicates.length == 0) {
             return TruePredicate.<T>truePredicate();
         }
-        predicates = FunctorUtils.copy(predicates);
-        return new NonePredicate<T>(predicates);
+        return new NonePredicate<T>(FunctorUtils.copy(predicates));
     }
 
     /**

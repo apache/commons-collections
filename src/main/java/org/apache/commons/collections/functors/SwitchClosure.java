@@ -63,9 +63,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
         if (predicates.length == 0) {
             return (Closure<E>) (defaultClosure == null ? NOPClosure.<E>nopClosure(): defaultClosure);
         }
-        predicates = FunctorUtils.copy(predicates);
-        closures = FunctorUtils.copy(closures);
-        return new SwitchClosure<E>(predicates, closures, defaultClosure);
+        return new SwitchClosure<E>(FunctorUtils.copy(predicates), FunctorUtils.copy(closures), defaultClosure);
     }
 
     /**

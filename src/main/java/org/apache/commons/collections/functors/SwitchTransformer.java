@@ -65,9 +65,9 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
         if (predicates.length == 0) {
             return (Transformer<I, O>) (defaultTransformer == null ? ConstantTransformer.<I, O>nullTransformer() : defaultTransformer);
         }
-        predicates = FunctorUtils.copy(predicates);
-        transformers = FunctorUtils.copy(transformers);
-        return new SwitchTransformer<I, O>(predicates, transformers, defaultTransformer);
+        return new SwitchTransformer<I, O>(FunctorUtils.copy(predicates),
+                                           FunctorUtils.copy(transformers),
+                                           defaultTransformer);
     }
 
     /**

@@ -63,8 +63,7 @@ public final class OnePredicate<T> implements Predicate<T>, PredicateDecorator<T
         if (predicates.length == 1) {
             return (Predicate<T>) predicates[0];
         }
-        predicates = FunctorUtils.copy(predicates);
-        return new OnePredicate<T>(predicates);
+        return new OnePredicate<T>(FunctorUtils.copy(predicates));
     }
 
     /**

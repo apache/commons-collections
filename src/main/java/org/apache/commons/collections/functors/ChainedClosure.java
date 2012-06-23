@@ -50,8 +50,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
         if (closures.length == 0) {
             return NOPClosure.<E>nopClosure();
         }
-        closures = FunctorUtils.copy(closures);
-        return new ChainedClosure<E>(closures);
+        return new ChainedClosure<E>(FunctorUtils.copy(closures));
     }
 
     /**

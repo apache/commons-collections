@@ -53,8 +53,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
         if (transformers.length == 0) {
             return NOPTransformer.<T>nopTransformer();
         }
-        transformers = FunctorUtils.copy(transformers);
-        return new ChainedTransformer<T>(transformers);
+        return new ChainedTransformer<T>(FunctorUtils.copy(transformers));
     }
     
     /**
