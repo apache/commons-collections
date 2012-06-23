@@ -136,7 +136,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      *
      * @param initialCapacity  the initial capacity
      * @param loadFactor  the load factor
-     * @throws IlleagalArgumentException if the initial capacity is negative
+     * @throws IllegalArgumentException if the initial capacity is negative
      * @throws IllegalArgumentException if the load factor is less than or equal to zero 
      */
     @SuppressWarnings("unchecked")
