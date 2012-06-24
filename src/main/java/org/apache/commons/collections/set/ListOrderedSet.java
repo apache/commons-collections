@@ -258,7 +258,7 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
      *
      * @param index the position of the element in the ordered {@link Set}.
      * @return the element at position {@code index}
-     * @see {@link List#get(int)}
+     * @see List#get(int)
      */
     public E get(int index) {
         return setOrder.get(index);
@@ -270,7 +270,7 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
      * @param object the element to search for
      * @return the index of the first occurrence of the object, or {@code -1} if this
      * ordered set does not contain this object
-     * @see {@link List#indexOf(Object)}
+     * @see List#indexOf(Object)
      */
     public int indexOf(Object object) {
         return setOrder.indexOf(object);
@@ -283,7 +283,7 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
      *
      * @param index the index at which the element is to be inserted
      * @param object the element to be inserted
-     * @see {@link List#add(int, Object)}
+     * @see List#add(int, Object)
      */
     public void add(int index, E object) {
         if (!contains(object)) {
@@ -300,7 +300,7 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
      * @param index the position to insert the elements
      * @param coll the collection containing the elements to be inserted
      * @return {@code true} if this ordered set changed as a result of the call
-     * @see {@link List#addAll(int, Collection)}
+     * @see List#addAll(int, Collection)
      */
     public boolean addAll(int index, Collection<? extends E> coll) {
         boolean changed = false;
@@ -328,7 +328,7 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
      * 
      * @param index the index of the element to be removed
      * @return the element that has been remove from the ordered set
-     * @see {@link List#remove(int)}
+     * @see List#remove(int)
      */
     public Object remove(int index) {
         Object obj = setOrder.remove(index);

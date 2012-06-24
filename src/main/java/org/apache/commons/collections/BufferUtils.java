@@ -198,7 +198,7 @@ public class BufferUtils {
      * Get an empty <code>Buffer</code>.
      *
      * @param <E> the type of the elements in the buffer
-     * @return an empty {@link Buffer<E>}
+     * @return an empty {@link Buffer}
      */
     @SuppressWarnings("unchecked")
     public static <E> Buffer<E> emptyBuffer() {
