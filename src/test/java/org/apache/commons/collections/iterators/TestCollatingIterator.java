@@ -254,7 +254,7 @@ public class TestCollatingIterator extends AbstractTestIterator<Integer> {
        CollatingIterator<Integer> collatingIterator2 = new CollatingIterator<Integer>(null, l1.iterator(), l2.iterator());
        collatingIterator2.setComparator(new ComparableComparator<Integer>());
        for ( ; collatingIterator2.hasNext(); i++ ) {
-          Integer n = (Integer)collatingIterator2.next();
+          Integer n = collatingIterator2.next();
           assertEquals("wrong order", (int)n, i + 1);
        }
        assertEquals("wrong size", i, l1.size() + l2.size());

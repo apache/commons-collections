@@ -72,7 +72,7 @@ public class TestPredicatedSortedSet<E> extends AbstractTestSortedSet<E> {
         };
 
     protected PredicatedSortedSet<E> makeTestSet() {
-        return (PredicatedSortedSet<E>) PredicatedSortedSet.predicatedSortedSet(new TreeSet<E>(), testPredicate);
+        return PredicatedSortedSet.predicatedSortedSet(new TreeSet<E>(), testPredicate);
     }
 
     public void testGetSet() {
