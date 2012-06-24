@@ -141,17 +141,16 @@ public class TestSetUniqueList<E> extends AbstractTestList<E> {
                 size + elements.length, getCollection().size());
     }
 
-    // TODO: Generics
     public void testIntCollectionAddAll() {
       // make a SetUniqueList with one element
-      List list = new SetUniqueList(new ArrayList(), new HashSet());
+      List<Integer> list = new SetUniqueList<Integer>(new ArrayList<Integer>(), new HashSet<Integer>());
       final Integer existingElement = new Integer(1);
       list.add(existingElement);
 
       // add two new unique elements at index 0
       final Integer firstNewElement = new Integer(2);
       final Integer secondNewElement = new Integer(3);
-      Collection collection = Arrays.asList(new Integer[] {firstNewElement, secondNewElement});
+      Collection<Integer> collection = Arrays.asList(new Integer[] {firstNewElement, secondNewElement});
       list.addAll(0, collection);
       assertEquals("Unique elements should be added.", 3, list.size());
       assertEquals("First new element should be at index 0", firstNewElement, list.get(0));
@@ -457,8 +456,8 @@ public class TestSetUniqueList<E> extends AbstractTestList<E> {
 
     // TODO: Generics
     public void testCollections304() {
-        List list = new LinkedList();
-        SetUniqueList decoratedList = SetUniqueList.setUniqueList(list);
+        List<String> list = new LinkedList<String>();
+        SetUniqueList<String> decoratedList = SetUniqueList.setUniqueList(list);
         String s1 = "Apple";
         String s2 = "Lemon";
         String s3 = "Orange";

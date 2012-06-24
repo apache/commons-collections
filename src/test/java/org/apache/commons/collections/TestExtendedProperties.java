@@ -326,10 +326,10 @@ public class TestExtendedProperties extends TestCase {
             p.addProperty("b", "bar");
             p.addProperty("c", "bar");
 
-            Iterator it = p.getKeys();
-            assertEquals("a", (String) it.next());
-            assertEquals("b", (String) it.next());
-            assertEquals("c", (String) it.next());
+            Iterator<String> it = p.getKeys();
+            assertEquals("a", it.next());
+            assertEquals("b", it.next());
+            assertEquals("c", it.next());
             assertFalse(it.hasNext());
     }
 
@@ -339,10 +339,10 @@ public class TestExtendedProperties extends TestCase {
         p.put("b", "bar");
         p.put("c", "bar");
 
-        Iterator it = p.getKeys();
-        assertEquals("a", (String) it.next());
-        assertEquals("b", (String) it.next());
-        assertEquals("c", (String) it.next());
+        Iterator<String> it = p.getKeys();
+        assertEquals("a", it.next());
+        assertEquals("b", it.next());
+        assertEquals("c", it.next());
         assertFalse(it.hasNext());
     }
 
@@ -356,10 +356,10 @@ public class TestExtendedProperties extends TestCase {
         ExtendedProperties p = new ExtendedProperties();
         p.putAll(q);
 
-        Iterator it = p.getKeys();
-        assertEquals("a", (String) it.next());
-        assertEquals("b", (String) it.next());
-        assertEquals("c", (String) it.next());
+        Iterator<String> it = p.getKeys();
+        assertEquals("a", it.next());
+        assertEquals("b", it.next());
+        assertEquals("c", it.next());
         assertFalse(it.hasNext());
     }
 
@@ -371,9 +371,9 @@ public class TestExtendedProperties extends TestCase {
 
         q.remove("b");
 
-        Iterator it = q.getKeys();
-        assertEquals("a", (String) it.next());
-        assertEquals("c", (String) it.next());
+        Iterator<String> it = q.getKeys();
+        assertEquals("a", it.next());
+        assertEquals("c", it.next());
         assertFalse(it.hasNext());
     }
 
