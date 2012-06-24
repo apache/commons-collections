@@ -19,7 +19,6 @@ package org.apache.commons.collections.collection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import org.apache.commons.collections.ArrayStack;
 import org.apache.commons.collections.Buffer;
