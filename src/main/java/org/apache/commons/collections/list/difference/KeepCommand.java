@@ -52,6 +52,7 @@ public class KeepCommand<T> extends EditCommand<T> {
      * its {@link CommandVisitor#visitKeepCommand visitKeepCommand} method.
      * @param visitor the visitor to be accepted
      */    
+    @Override
     public void accept(CommandVisitor<T> visitor) {
         visitor.visitKeepCommand(object);
     }

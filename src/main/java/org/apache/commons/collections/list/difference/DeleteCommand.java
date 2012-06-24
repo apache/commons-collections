@@ -50,6 +50,7 @@ public class DeleteCommand<T> extends EditCommand<T> {
      * visitDeleteCommand} method.
      * @param visitor the visitor to be accepted
      */    
+    @Override
     public void accept(CommandVisitor<T> visitor) {
         visitor.visitDeleteCommand(object);
     }    

@@ -50,6 +50,7 @@ public class InsertCommand<T> extends EditCommand<T> {
      * visitInsertCommand} method.
      * @param visitor the visitor to be accepted
      */    
+    @Override
     public void accept(CommandVisitor<T> visitor) {
         visitor.visitInsertCommand(object);
     }
