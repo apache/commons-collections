@@ -27,9 +27,7 @@ import org.apache.commons.collections.collection.AbstractCollectionDecorator;
  * Methods are forwarded directly to the decorated bag.
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public abstract class AbstractBagDecorator<E>
         extends AbstractCollectionDecorator<E> implements Bag<E> {

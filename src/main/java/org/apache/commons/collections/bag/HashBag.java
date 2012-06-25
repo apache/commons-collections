@@ -26,20 +26,17 @@ import java.util.HashMap;
 import org.apache.commons.collections.Bag;
 
 /**
- * Implements <code>Bag</code>, using a <code>HashMap</code> to provide the
+ * Implements {@link Bag}, using a {@link HashMap} to provide the
  * data storage. This is the standard implementation of a bag.
  * <p>
- * A <code>Bag</code> stores each object in the collection together with a
+ * A {@link Bag} stores each object in the collection together with a
  * count of occurrences. Extra methods on the interface allow multiple copies
  * of an object to be added or removed at once. It is important to read the
  * interface javadoc carefully as several methods violate the
- * <code>Collection</code> interface specification.
+ * {@link Collection} interface specification.
  *
  * @since Commons Collections 3.0 (previously in main package v2.0)
- * @version $Revision$
- *
- * @author Chuck Burdick
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class HashBag<E>
         extends AbstractMapBag<E> implements Bag<E>, Serializable {
@@ -48,7 +45,7 @@ public class HashBag<E>
     private static final long serialVersionUID = -6561115435802554013L;
     
     /**
-     * Constructs an empty <code>HashBag</code>.
+     * Constructs an empty {@link HashBag}.
      */
     public HashBag() {
         super(new HashMap<E, MutableInteger>());

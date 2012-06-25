@@ -22,7 +22,7 @@ import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.SortedBag;
 
 /**
- * Decorates another <code>SortedBag</code> to synchronize its behaviour
+ * Decorates another {@link SortedBag} to synchronize its behaviour
  * for a multi-threaded environment.
  * <p>
  * Methods are synchronized, then forwarded to the decorated bag.
@@ -31,9 +31,7 @@ import org.apache.commons.collections.SortedBag;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class SynchronizedSortedBag<E>
         extends SynchronizedBag<E> implements SortedBag<E> {

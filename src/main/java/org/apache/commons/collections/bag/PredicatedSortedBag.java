@@ -22,12 +22,12 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.SortedBag;
 
 /**
- * Decorates another <code>SortedBag</code> to validate that additions
+ * Decorates another {@link SortedBag} to validate that additions
  * match a specified predicate.
  * <p>
  * This bag exists to provide validation for the decorated bag.
  * It is normally created to decorate an empty bag.
- * If an object cannot be added to the bag, an IllegalArgumentException is thrown.
+ * If an object cannot be added to the bag, an {@link IllegalArgumentException} is thrown.
  * <p>
  * One usage would be to ensure that no null entries are added to the bag.
  * <pre>SortedBag bag = PredicatedSortedBag.decorate(new TreeBag(), NotNullPredicate.INSTANCE);</pre>
@@ -35,10 +35,7 @@ import org.apache.commons.collections.SortedBag;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Paul Jack
+ * @version $Id$
  */
 public class PredicatedSortedBag<E>
         extends PredicatedBag<E> implements SortedBag<E> {

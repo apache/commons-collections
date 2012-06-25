@@ -22,7 +22,7 @@ import org.apache.commons.collections.SortedBag;
 import org.apache.commons.collections.Transformer;
 
 /**
- * Decorates another <code>SortedBag</code> to transform objects that are added.
+ * Decorates another {@link SortedBag} to transform objects that are added.
  * <p>
  * The add methods are affected by this class.
  * Thus objects must be removed or searched for using their transformed form.
@@ -32,9 +32,7 @@ import org.apache.commons.collections.Transformer;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class TransformedSortedBag<E>
         extends TransformedBag<E> implements SortedBag<E> {

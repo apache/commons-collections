@@ -23,7 +23,7 @@ import org.apache.commons.collections.collection.SynchronizedCollection;
 import org.apache.commons.collections.set.SynchronizedSet;
 
 /**
- * Decorates another <code>Bag</code> to synchronize its behaviour
+ * Decorates another {@link Bag} to synchronize its behaviour
  * for a multi-threaded environment.
  * <p>
  * Methods are synchronized, then forwarded to the decorated bag.
@@ -32,9 +32,7 @@ import org.apache.commons.collections.set.SynchronizedSet;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class SynchronizedBag<E>
         extends SynchronizedCollection<E> implements Bag<E> {

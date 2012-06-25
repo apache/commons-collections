@@ -28,23 +28,20 @@ import java.util.TreeMap;
 import org.apache.commons.collections.SortedBag;
 
 /**
- * Implements <code>SortedBag</code>, using a <code>TreeMap</code> to provide
+ * Implements {@link SortedBag}, using a {@link TreeMap} to provide
  * the data storage. This is the standard implementation of a sorted bag.
  * <p>
  * Order will be maintained among the bag members and can be viewed through the
  * iterator.
  * <p>
- * A <code>Bag</code> stores each object in the collection together with a count
+ * A {@link Bag} stores each object in the collection together with a count
  * of occurrences. Extra methods on the interface allow multiple copies of an
  * object to be added or removed at once. It is important to read the interface
- * javadoc carefully as several methods violate the <code>Collection</code>
+ * javadoc carefully as several methods violate the {@link Collection}
  * interface specification.
  *
  * @since Commons Collections 3.0 (previously in main package v2.0)
- * @version $Revision$
- *
- * @author Chuck Burdick
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Serializable {
 
@@ -52,7 +49,7 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
     private static final long serialVersionUID = -7740146511091606676L;
 
     /**
-     * Constructs an empty <code>TreeBag</code>.
+     * Constructs an empty {@link TreeBag}.
      */
     public TreeBag() {
         super(new TreeMap<E, MutableInteger>());
@@ -69,7 +66,7 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
     }
 
     /**
-     * Constructs a <code>TreeBag</code> containing all the members of the
+     * Constructs a {@link TreeBag} containing all the members of the
      * specified collection.
      * 
      * @param coll the collection to copy into the bag
@@ -91,14 +88,24 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
     }
 
     //-----------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
     public E first() {
         return getMap().firstKey();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public E last() {
         return getMap().lastKey();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Comparator<? super E> comparator() {
         return getMap().comparator();
     }
@@ -107,9 +114,8 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
      * {@inheritDoc}
      */
     @Override
-    protected SortedMap<E, org.apache.commons.collections.bag.AbstractMapBag.MutableInteger> getMap() {
-        return (SortedMap<E, org.apache.commons.collections.bag.AbstractMapBag.MutableInteger>) super
-                .getMap();
+    protected SortedMap<E, AbstractMapBag.MutableInteger> getMap() {
+        return (SortedMap<E, AbstractMapBag.MutableInteger>) super.getMap();
     }
 
     //-----------------------------------------------------------------------

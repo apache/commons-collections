@@ -26,9 +26,7 @@ import org.apache.commons.collections.SortedBag;
  * Methods are forwarded directly to the decorated bag.
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public abstract class AbstractSortedBagDecorator<E>
         extends AbstractBagDecorator<E> implements SortedBag<E> {
@@ -65,14 +63,24 @@ public abstract class AbstractSortedBagDecorator<E>
     }
 
     //-----------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
     public E first() {
         return decorated().first();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public E last() {
         return decorated().last();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Comparator<? super E> comparator() {
         return decorated().comparator();
     }

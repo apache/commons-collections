@@ -38,13 +38,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * number of occurrences of that element in the bag.
  *
  * @since Commons Collections 3.0 (previously DefaultMapBag v2.0)
- * @version $Revision$
- *
- * @author Chuck Burdick
- * @author Michael A. Smith
- * @author Stephen Colebourne
- * @author Janek Bogucki
- * @author Steve Clark
+ * @version $Id$
  */
 public abstract class AbstractMapBag<E> implements Bag<E> {
 
@@ -59,7 +53,6 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
 
     /**
      * Constructor needed for subclass serialisation.
-     * 
      */
     protected AbstractMapBag() {
         super();
@@ -198,10 +191,12 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
             this.canRemove = false;
         }
 
+        /** {@inheritDoc} */
         public boolean hasNext() {
             return (itemCount > 0 || entryIterator.hasNext());
         }
 
+        /** {@inheritDoc} */
         public E next() {
             if (parent.modCount != mods) {
                 throw new ConcurrentModificationException();
@@ -215,6 +210,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
             return current.getKey();
         }
 
+        /** {@inheritDoc} */
         public void remove() {
             if (parent.modCount != mods) {
                 throw new ConcurrentModificationException();
@@ -451,6 +447,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     /**
      * Returns an array of all of this bag's elements.
      * 
+     * @param <T> the type of the array elements
      * @param array the array to populate
      * @return an array of all of this bag's elements
      */
