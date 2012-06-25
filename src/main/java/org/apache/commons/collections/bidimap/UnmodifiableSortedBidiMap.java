@@ -31,14 +31,12 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
 import org.apache.commons.collections.set.UnmodifiableSet;
 
 /**
- * Decorates another <code>SortedBidiMap</code> to ensure it can't be altered.
+ * Decorates another {@link SortedBidiMap} to ensure it can't be altered.
  * <p>
- * Attempts to modify it will result in an UnsupportedOperationException. 
+ * Attempts to modify it will result in an {@link UnsupportedOperationException}. 
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public final class UnmodifiableSortedBidiMap<K, V>
         extends AbstractSortedBidiMapDecorator<K, V> implements Unmodifiable {
@@ -51,6 +49,8 @@ public final class UnmodifiableSortedBidiMap<K, V>
      * <p>
      * If the map passed in is already unmodifiable, it is returned.
      *
+     * @param <K> the key type
+     * @param <V> the value type
      * @param map  the map to decorate, must not be null
      * @return an unmodifiable SortedBidiMap
      * @throws IllegalArgumentException if map is null

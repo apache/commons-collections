@@ -33,12 +33,10 @@ import org.apache.commons.collections.map.AbstractMapDecorator;
  * But, you might want that loophole, so this class is kept simple.
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public abstract class AbstractBidiMapDecorator<K, V> extends AbstractMapDecorator<K, V> implements
-        BidiMap<K, V> {
+public abstract class AbstractBidiMapDecorator<K, V>
+        extends AbstractMapDecorator<K, V> implements BidiMap<K, V> {
 
     /**
      * Constructor that wraps (not copies).
@@ -66,14 +64,23 @@ public abstract class AbstractBidiMapDecorator<K, V> extends AbstractMapDecorato
         return decorated().mapIterator();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public K getKey(Object value) {
         return decorated().getKey(value);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public K removeValue(Object value) {
         return decorated().removeValue(value);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public BidiMap<V, K> inverseBidiMap() {
         return decorated().inverseBidiMap();
     }

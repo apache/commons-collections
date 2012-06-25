@@ -34,12 +34,10 @@ import org.apache.commons.collections.SortedBidiMap;
  * But, you might want that loophole, so this class is kept simple.
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public abstract class AbstractSortedBidiMapDecorator<K, V> extends
-        AbstractOrderedBidiMapDecorator<K, V> implements SortedBidiMap<K, V> {
+public abstract class AbstractSortedBidiMapDecorator<K, V>
+        extends AbstractOrderedBidiMapDecorator<K, V> implements SortedBidiMap<K, V> {
 
     /**
      * Constructor that wraps (not copies).
@@ -67,22 +65,37 @@ public abstract class AbstractSortedBidiMapDecorator<K, V> extends
         return decorated().inverseBidiMap();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Comparator<? super K> comparator() {
         return decorated().comparator();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Comparator<? super V> valueComparator() {
         return decorated().valueComparator();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public SortedMap<K, V> subMap(K fromKey, K toKey) {
         return decorated().subMap(fromKey, toKey);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public SortedMap<K, V> headMap(K toKey) {
         return decorated().headMap(toKey);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public SortedMap<K, V> tailMap(K fromKey) {
         return decorated().tailMap(fromKey);
     }

@@ -32,9 +32,7 @@ import org.apache.commons.collections.OrderedMapIterator;
  * But, you might want that loophole, so this class is kept simple.
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public abstract class AbstractOrderedBidiMapDecorator<K, V>
         extends AbstractBidiMapDecorator<K, V>
@@ -66,18 +64,30 @@ public abstract class AbstractOrderedBidiMapDecorator<K, V>
         return decorated().mapIterator();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public K firstKey() {
         return decorated().firstKey();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public K lastKey() {
         return decorated().lastKey();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public K nextKey(K key) {
         return decorated().nextKey(key);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public K previousKey(K key) {
         return decorated().previousKey(key);
     }

@@ -26,21 +26,18 @@ import java.util.Map;
 import org.apache.commons.collections.BidiMap;
 
 /**
- * Implementation of <code>BidiMap</code> that uses two <code>HashMap</code> instances.
+ * Implementation of {@link BidiMap} that uses two {@link HashMap} instances.
  * <p>
- * Two <code>HashMap</code> instances are used in this class.
+ * Two {@link HashMap} instances are used in this class.
  * This provides fast lookups at the expense of storing two sets of map entries.
  * Commons Collections would welcome the addition of a direct hash-based
- * implementation of the <code>BidiMap</code> interface.
+ * implementation of the {@link BidiMap} interface.
  * <p>
- * NOTE: From Commons Collections 3.1, all subclasses will use <code>HashMap</code>
+ * NOTE: From Commons Collections 3.1, all subclasses will use {@link HashMap}
  * and the flawed <code>createMap</code> method is ignored.
  *
  * @since Commons Collections 3.0
  * @version $Id$
- *
- * @author Matthew Hawthorne
- * @author Stephen Colebourne
  */
 public class DualHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements Serializable {
 

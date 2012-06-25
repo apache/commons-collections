@@ -37,7 +37,7 @@ import org.apache.commons.collections.SortedBidiMap;
 import org.apache.commons.collections.map.AbstractSortedMapDecorator;
 
 /**
- * Implementation of <code>BidiMap</code> that uses two <code>TreeMap</code> instances.
+ * Implementation of {@link BidiMap} that uses two {@link TreeMap} instances.
  * <p>
  * The setValue() method on iterators will succeed only if the new value being set is
  * not already in the bidimap.
@@ -46,17 +46,14 @@ import org.apache.commons.collections.map.AbstractSortedMapDecorator;
  * also be considered. It implements the interface using a dedicated design, and does
  * not store each object twice, which can save on memory use.
  * <p>
- * NOTE: From Commons Collections 3.1, all subclasses will use <code>TreeMap</code>
+ * NOTE: From Commons Collections 3.1, all subclasses will use {@link TreeMap}
  * and the flawed <code>createMap</code> method is ignored.
  *
  * @since Commons Collections 3.0
  * @version $Id$
- *
- * @author Matthew Hawthorne
- * @author Stephen Colebourne
  */
-public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements
-        SortedBidiMap<K, V>, Serializable {
+public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
+        implements SortedBidiMap<K, V>, Serializable {
 
     /** Ensure serialization compatibility */
     private static final long serialVersionUID = 721969328361809L;
@@ -90,9 +87,10 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements
     }
 
     /**
-     * Constructs a <code>DualTreeBidiMap</code> using the specified Comparator.
+     * Constructs a {@link DualTreeBidiMap} using the specified {@link Comparator}.
      *
-     * @param keyComparator  the Comparator
+     * @param keyComparator  the comparator
+     * @param valueComparator  the values comparator to use
      */
     public DualTreeBidiMap(Comparator<? super K> keyComparator, Comparator<? super V> valueComparator) {
         super(new TreeMap<K, V>(keyComparator), new TreeMap<V, K>(valueComparator));
@@ -101,7 +99,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements
     }
 
     /**
-     * Constructs a <code>DualTreeBidiMap</code> that decorates the specified maps.
+     * Constructs a {@link DualTreeBidiMap} that decorates the specified maps.
      *
      * @param normalMap  the normal direction map
      * @param reverseMap  the reverse direction map
@@ -127,23 +125,39 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements
     }
 
     //-----------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
     public Comparator<? super K> comparator() {
         return ((SortedMap<K, V>) normalMap).comparator();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Comparator<? super V> valueComparator() {
         return ((SortedMap<V, K>) reverseMap).comparator();
         
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public K firstKey() {
         return ((SortedMap<K, V>) normalMap).firstKey();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public K lastKey() {
         return ((SortedMap<K, V>) normalMap).lastKey();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public K nextKey(K key) {
         if (isEmpty()) {
             return null;
@@ -160,6 +174,9 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public K previousKey(K key) {
         if (isEmpty()) {
             return null;
@@ -189,25 +206,41 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements
         return new BidiOrderedMapIterator<K, V>(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public SortedBidiMap<V, K> inverseSortedBidiMap() {
         return inverseBidiMap();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public OrderedBidiMap<V, K> inverseOrderedBidiMap() {
         return inverseBidiMap();
     }
 
     //-----------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
     public SortedMap<K, V> headMap(K toKey) {
         SortedMap<K, V> sub = ((SortedMap<K, V>) normalMap).headMap(toKey);
         return new ViewMap<K, V>(this, sub);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public SortedMap<K, V> tailMap(K fromKey) {
         SortedMap<K, V> sub = ((SortedMap<K, V>) normalMap).tailMap(fromKey);
         return new ViewMap<K, V>(this, sub);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public SortedMap<K, V> subMap(K fromKey, K toKey) {
         SortedMap<K, V> sub = ((SortedMap<K, V>) normalMap).subMap(fromKey, toKey);
         return new ViewMap<K, V>(this, sub);
@@ -313,55 +346,68 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements
             iterator = new ArrayList<Map.Entry<K, V>>(parent.entrySet()).listIterator();
         }
 
+        /** {@inheritDoc} */
         public boolean hasNext() {
             return iterator.hasNext();
         }
 
+        /** {@inheritDoc} */
         public K next() {
             last = iterator.next();
             return last.getKey();
         }
 
+        /** {@inheritDoc} */
         public boolean hasPrevious() {
             return iterator.hasPrevious();
         }
 
+        /** {@inheritDoc} */
         public K previous() {
             last = iterator.previous();
             return last.getKey();
         }
 
+        /** {@inheritDoc} */
         public void remove() {
             iterator.remove();
             parent.remove(last.getKey());
             last = null;
         }
 
+        /** {@inheritDoc} */
         public K getKey() {
             if (last == null) {
-                throw new IllegalStateException("Iterator getKey() can only be called after next() and before remove()");
+                throw new IllegalStateException(
+                        "Iterator getKey() can only be called after next() and before remove()");
             }
             return last.getKey();
         }
 
+        /** {@inheritDoc} */
         public V getValue() {
             if (last == null) {
-                throw new IllegalStateException("Iterator getValue() can only be called after next() and before remove()");
+                throw new IllegalStateException(
+                        "Iterator getValue() can only be called after next() and before remove()");
             }
             return last.getValue();
         }
 
+        /** {@inheritDoc} */
         public V setValue(V value) {
             if (last == null) {
-                throw new IllegalStateException("Iterator setValue() can only be called after next() and before remove()");
+                throw new IllegalStateException(
+                        "Iterator setValue() can only be called after next() and before remove()");
             }
             if (parent.reverseMap.containsKey(value) &&
                 parent.reverseMap.get(value) != last.getKey()) {
-                throw new IllegalArgumentException("Cannot use setValue() when the object being set is already in the map");
+                throw new IllegalArgumentException(
+                        "Cannot use setValue() when the object being set is already in the map");
             }
             return parent.put(last.getKey(), value);
         }
 
+        /** {@inheritDoc} */
         public void reset() {
             iterator = new ArrayList<Map.Entry<K, V>>(parent.entrySet()).listIterator();
             last = null;

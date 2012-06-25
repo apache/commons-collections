@@ -29,18 +29,15 @@ import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
 import org.apache.commons.collections.keyvalue.AbstractMapEntryDecorator;
 
 /**
- * Abstract <code>BidiMap</code> implemented using two maps.
+ * Abstract {@link BidiMap} implemented using two maps.
  * <p>
  * An implementation can be written simply by implementing the
- * <code>createMap</code> method.
+ * {@link #createBidiMap(Map, Map, BidiMap)} method.
  *
  * @see DualHashBidiMap
  * @see DualTreeBidiMap
  * @since Commons Collections 3.0
  * @version $Id$
- *
- * @author Matthew Hawthorne
- * @author Stephen Colebourne
  */
 public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
@@ -132,18 +129,31 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
     // Map delegation
     //-----------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
     public V get(Object key) {
         return normalMap.get(key);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public int size() {
         return normalMap.size();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean isEmpty() {
         return normalMap.isEmpty();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean containsKey(Object key) {
         return normalMap.containsKey(key);
     }
@@ -165,6 +175,10 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
     // BidiMap changes
     //-----------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
     public V put(K key, V value) {
         if (normalMap.containsKey(key)) {
             reverseMap.remove(normalMap.get(key));
@@ -177,12 +191,18 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         return obj;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void putAll(Map<? extends K, ? extends V> map) {
         for (Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
             put(entry.getKey(), entry.getValue());
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public V remove(Object key) {
         V value = null;
         if (normalMap.containsKey(key)) {
@@ -192,11 +212,17 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         return value;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void clear() {
         normalMap.clear();
         reverseMap.clear();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean containsValue(Object value) {
         return reverseMap.containsKey(value);
     }
@@ -218,10 +244,16 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         return new BidiMapIterator<K, V>(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public K getKey(Object value) {
         return reverseMap.get(value);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public K removeValue(Object value) {
         K key = null;
         if (reverseMap.containsKey(value)) {
@@ -231,6 +263,9 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         return key;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public BidiMap<V, K> inverseBidiMap() {
         if (inverseBidiMap == null) {
             inverseBidiMap = createBidiMap(reverseMap, normalMap, this);
@@ -657,7 +692,8 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             K key = MapEntry.this.getKey();
             if (parent.reverseMap.containsKey(value) &&
                 parent.reverseMap.get(value) != key) {
-                throw new IllegalArgumentException("Cannot use setValue() when the object being set is already in the map");
+                throw new IllegalArgumentException(
+                        "Cannot use setValue() when the object being set is already in the map");
             }
             parent.put(key, value);
             final V oldValue = super.setValue(value);
@@ -692,16 +728,19 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             this.iterator = parent.normalMap.entrySet().iterator();
         }
 
+        /** {@inheritDoc} */
         public boolean hasNext() {
             return iterator.hasNext();
         }
 
+        /** {@inheritDoc} */
         public K next() {
             last = iterator.next();
             canRemove = true;
             return last.getKey();
         }
 
+        /** {@inheritDoc} */
         public void remove() {
             if (canRemove == false) {
                 throw new IllegalStateException("Iterator remove() can only be called once after next()");
@@ -714,31 +753,39 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             canRemove = false;
         }
 
+        /** {@inheritDoc} */
         public K getKey() {
             if (last == null) {
-                throw new IllegalStateException("Iterator getKey() can only be called after next() and before remove()");
+                throw new IllegalStateException(
+                        "Iterator getKey() can only be called after next() and before remove()");
             }
             return last.getKey();
         }
 
+        /** {@inheritDoc} */
         public V getValue() {
             if (last == null) {
-                throw new IllegalStateException("Iterator getValue() can only be called after next() and before remove()");
+                throw new IllegalStateException(
+                        "Iterator getValue() can only be called after next() and before remove()");
             }
             return last.getValue();
         }
 
+        /** {@inheritDoc} */
         public V setValue(V value) {
             if (last == null) {
-                throw new IllegalStateException("Iterator setValue() can only be called after next() and before remove()");
+                throw new IllegalStateException(
+                        "Iterator setValue() can only be called after next() and before remove()");
             }
             if (parent.reverseMap.containsKey(value) &&
                 parent.reverseMap.get(value) != last.getKey()) {
-                throw new IllegalArgumentException("Cannot use setValue() when the object being set is already in the map");
+                throw new IllegalArgumentException(
+                        "Cannot use setValue() when the object being set is already in the map");
             }
             return parent.put(last.getKey(), value);
         }
 
+        /** {@inheritDoc} */
         public void reset() {
             iterator = parent.normalMap.entrySet().iterator();
             last = null;

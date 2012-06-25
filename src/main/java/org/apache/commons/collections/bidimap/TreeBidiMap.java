@@ -31,7 +31,9 @@ import org.apache.commons.collections.OrderedIterator;
 import org.apache.commons.collections.OrderedMapIterator;
 import org.apache.commons.collections.iterators.EmptyOrderedMapIterator;
 import org.apache.commons.collections.keyvalue.UnmodifiableMapEntry;
-import static org.apache.commons.collections.bidimap.TreeBidiMap.DataElement.*;
+
+import static org.apache.commons.collections.bidimap.TreeBidiMap.DataElement.KEY;
+import static org.apache.commons.collections.bidimap.TreeBidiMap.DataElement.VALUE;
 
 /**
  * Red-Black tree-based implementation of BidiMap where all objects added
@@ -55,7 +57,7 @@ import static org.apache.commons.collections.bidimap.TreeBidiMap.DataElement.*;
  * {@link DualHashBidiMap} implementations use this approach.
  * <p>
  * This solution keeps minimizes the data storage by holding data only once.
- * The red-black algorithm is based on java util TreeMap, but has been modified
+ * The red-black algorithm is based on {@link java.util.TreeMap}, but has been modified
  * to simultaneously map a tree node by key and by value. This doubles the
  * cost of put operations (but so does using two TreeMaps), and nearly doubles
  * the cost of remove operations (there is a savings in that the lookup of the
@@ -68,11 +70,7 @@ import static org.apache.commons.collections.bidimap.TreeBidiMap.DataElement.*;
  * UnsupportedOperationException on attempts to call that method.
  *
  * @since Commons Collections 3.0 (previously DoubleOrderedMap v2.0)
- * @version $Revision$
- *
- * @author Marc Johnson
- * @author Stephen Colebourne
- * @author Matt Benson
+ * @version $Id$
  */
 public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> implements OrderedBidiMap<K, V> {
 
@@ -83,6 +81,8 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
 
         /**
          * Create a new TreeBidiMap.DataElement.
+         * 
+         * @param description  the description for the element
          */
         private DataElement(String description) {
             this.description = description;
