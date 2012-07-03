@@ -23,12 +23,7 @@ import org.apache.commons.collections.KeyValue;
  * and {@link java.util.Map.Entry Map.Entry} implementations.
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author James Strachan
- * @author Michael A. Smith
- * @author Neil O'Toole
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
 

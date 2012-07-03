@@ -21,16 +21,11 @@ import java.util.Map;
 import org.apache.commons.collections.KeyValue;
 
 /**
- * A restricted implementation of {@link java.util.Map.Entry} that prevents
- * the <code>Map.Entry</code> contract from being broken.
+ * A restricted implementation of {@link Map.Entry} that prevents
+ * the {@link Map.Entry} contract from being broken.
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author James Strachan
- * @author Michael A. Smith
- * @author Neil O'Toole
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public final class DefaultMapEntry<K, V> extends AbstractMapEntry<K, V> {
 

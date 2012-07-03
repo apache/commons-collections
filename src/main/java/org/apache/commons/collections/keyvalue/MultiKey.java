@@ -40,10 +40,7 @@ import java.util.Arrays;
  * </pre>
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Howard Lewis Ship
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class MultiKey<K> implements Serializable {
     // This class could implement List, but that would confuse it's purpose
@@ -258,7 +255,7 @@ public class MultiKey<K> implements Serializable {
 
     /**
      * Calculate the hash code of the instance using the provided keys.
-     * @param keys
+     * @param keys the keys to calculate the hash code for
      */
     private void calculateHashCode(Object[] keys)
     {

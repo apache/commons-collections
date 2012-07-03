@@ -25,9 +25,7 @@ import org.apache.commons.collections.KeyValue;
  * added to a {@link java.util.Map.Entry Map.Entry}.
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public abstract class AbstractMapEntryDecorator<K, V> implements Map.Entry<K, V>, KeyValue<K, V> {
     
