@@ -14,19 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections.splitmap;
+package org.apache.commons.collections;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.collections.BulkTest;
-import org.apache.commons.collections.IterableMap;
-import org.apache.commons.collections.MapIterator;
-import org.apache.commons.collections.Put;
-import org.apache.commons.collections.Transformer;
-import org.apache.commons.collections.Unmodifiable;
 import org.apache.commons.collections.functors.NOPTransformer;
 import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.collections.splitmap.TransformedMap;
 
 /**
  * Tests for {@link TransformedMap}
