@@ -67,10 +67,7 @@ import org.apache.commons.collections.functors.UniquePredicate;
  * All the supplied predicates are Serializable.
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Ola Berg
+ * @version $Id$
  */
 public class PredicateUtils {
 
@@ -284,7 +281,7 @@ public class PredicateUtils {
      * @deprecated use {@link AllPredicate#allPredicate(Predicate...)} instead.
      */
     @Deprecated
-    public static <T> Predicate<T> allPredicate(Predicate<? super T>[] predicates) {
+    public static <T> Predicate<T> allPredicate(Predicate<? super T>... predicates) {
         return AllPredicate.allPredicate(predicates);
     }
 
@@ -331,7 +328,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static <T> Predicate<T> anyPredicate(Predicate<? super T>[] predicates) {
+    public static <T> Predicate<T> anyPredicate(Predicate<? super T>... predicates) {
         return AnyPredicate.anyPredicate(predicates);
     }
 
@@ -362,9 +359,10 @@ public class PredicateUtils {
      * @return the <code>either</code> predicate
      * @throws IllegalArgumentException if either predicate is null
      */
-    @SuppressWarnings("unchecked")
     public static <T> Predicate<T> eitherPredicate(Predicate<? super T> predicate1, Predicate<? super T> predicate2) {
-        return onePredicate(new Predicate[] { predicate1, predicate2 });
+        @SuppressWarnings("unchecked")
+        Predicate<T> onePredicate = onePredicate(predicate1, predicate2);
+        return onePredicate;
     }
 
     /**
@@ -379,7 +377,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static <T> Predicate<T> onePredicate(Predicate<? super T>[] predicates) {
+    public static <T> Predicate<T> onePredicate(Predicate<? super T>... predicates) {
         return OnePredicate.onePredicate(predicates);
     }
 
@@ -410,9 +408,10 @@ public class PredicateUtils {
      * @return the <code>neither</code> predicate
      * @throws IllegalArgumentException if either predicate is null
      */
-    @SuppressWarnings("unchecked")
     public static <T> Predicate<T> neitherPredicate(Predicate<? super T> predicate1, Predicate<? super T> predicate2) {
-        return nonePredicate(new Predicate[] { predicate1, predicate2 });
+        @SuppressWarnings("unchecked")
+        Predicate<T> nonePredicate = nonePredicate(predicate1, predicate2);
+        return nonePredicate;
     }
 
     /**
@@ -427,7 +426,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static <T> Predicate<T> nonePredicate(Predicate<? super T>[] predicates) {
+    public static <T> Predicate<T> nonePredicate(Predicate<? super T>... predicates) {
         return NonePredicate.nonePredicate(predicates);
     }
 
