@@ -31,12 +31,8 @@ import org.apache.commons.collections.map.HashedMap;
 /**
  * Tests for {@link TransformedMap}
  *
- * @since Commons Collections 5
- * TODO fix version
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Matt Benson
+ * @since Commons Collections 4.0
+ * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class TestSplitMapUtils extends BulkTest {
