@@ -28,16 +28,14 @@ import org.apache.commons.collections.Unmodifiable;
 import org.apache.commons.collections.iterators.UnmodifiableIterator;
 
 /**
- * Decorates another <code>Buffer</code> to ensure it can't be altered.
+ * Decorates another {@link Buffer} to ensure it can't be altered.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  * <p>
  * Attempts to modify it will result in an UnsupportedOperationException. 
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public final class UnmodifiableBuffer<E>
         extends AbstractBufferDecorator<E>
@@ -79,7 +77,7 @@ public final class UnmodifiableBuffer<E>
      * Write the collection out using a custom routine.
      * 
      * @param out  the output stream
-     * @throws IOException
+     * @throws IOException if an I/O error occurs while writing to the output stream
      */
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -90,8 +88,8 @@ public final class UnmodifiableBuffer<E>
      * Read the collection in using a custom routine.
      * 
      * @param in  the input stream
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException if an I/O error occurs while reading from the input stream
+     * @throws ClassNotFoundException if the class of a serialized object can not be found
      */
     @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {

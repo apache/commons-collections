@@ -45,8 +45,20 @@
 
   <developers>
     <developer>
+      <name>Matt Benson</name>
+      <id>mbenson</id>
+    </developer>
+    <developer>
+      <name>James Carman</name>
+      <id>jcarman</id>
+    </developer>
+    <developer>
       <name>Stephen Colebourne</name>
       <id>scolebourne</id>
+    </developer>
+    <developer>
+      <name>Robert Burrell Donkin</name>
+      <id>rdonkin</id>
     </developer>
     <developer>
       <name>Morgan Delagrange</name>
@@ -65,6 +77,10 @@
       <id>craigmcc</id>
     </developer>
     <developer>
+      <name>Phil Steitz</name>
+      <id>psteitz</id>
+    </developer>
+    <developer>
       <name>Arun M. Thomas</name>
       <id>amamment</id>
     </developer>
@@ -75,18 +91,6 @@
     <developer>
       <name>Henri Yandell</name>
       <id>bayard</id>
-    </developer>
-    <developer>
-      <name>James Carman</name>
-      <id>jcarman</id>
-    </developer>
-    <developer>
-      <name>Robert Burrell Donkin</name>
-      <id>rdonkin</id>
-    </developer>
-    <developer>
-      <name>Matt Benson</name>
-      <id>mbenson</id>
     </developer>
   </developers>
   
@@ -431,7 +435,7 @@
           </configuration>
         </plugin>
       </plugins>
-    </build>
+  </build>
 
   <reporting>
     <plugins>

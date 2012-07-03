@@ -20,18 +20,16 @@ import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.collection.AbstractCollectionDecorator;
 
 /**
- * Decorates another <code>Buffer</code> to provide additional behaviour.
+ * Decorates another {@link Buffer} to provide additional behaviour.
  * <p>
  * Methods are forwarded directly to the decorated buffer.
  *
  * @param <E> the type of the elements in the buffer
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public abstract class AbstractBufferDecorator<E> extends AbstractCollectionDecorator<E> implements
-        Buffer<E> {
+public abstract class AbstractBufferDecorator<E> extends AbstractCollectionDecorator<E>
+        implements Buffer<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = -2629815475789577029L;

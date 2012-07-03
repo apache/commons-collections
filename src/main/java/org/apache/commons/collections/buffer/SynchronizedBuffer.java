@@ -20,7 +20,7 @@ import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.collection.SynchronizedCollection;
 
 /**
- * Decorates another <code>Buffer</code> to synchronize its behaviour
+ * Decorates another {@link Buffer} to synchronize its behaviour
  * for a multi-threaded environment.
  * <p>
  * Methods are synchronized, then forwarded to the decorated buffer.
@@ -29,9 +29,7 @@ import org.apache.commons.collections.collection.SynchronizedCollection;
  *
  * @param <E> the type of the elements in the buffer
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class SynchronizedBuffer<E>
         extends SynchronizedCollection<E>

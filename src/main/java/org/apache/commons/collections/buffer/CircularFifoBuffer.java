@@ -22,7 +22,7 @@ import java.util.Collection;
  * CircularFifoBuffer is a first in first out buffer with a fixed size that
  * replaces its oldest element if full.
  * <p>
- * The removal order of a <code>CircularFifoBuffer</code> is based on the
+ * The removal order of a {@link CircularFifoBuffer} is based on the
  * insertion order; elements are removed in the same order in which they
  * were added.  The iteration order is the same as the removal order.
  * <p>
@@ -41,10 +41,7 @@ import java.util.Collection;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stefano Fornari
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class CircularFifoBuffer<E> extends BoundedFifoBuffer<E> {
 

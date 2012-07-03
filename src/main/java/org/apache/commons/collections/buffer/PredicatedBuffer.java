@@ -21,7 +21,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.collection.PredicatedCollection;
 
 /**
- * Decorates another <code>Buffer</code> to validate that additions
+ * Decorates another {@link Buffer} to validate that additions
  * match a specified predicate.
  * <p>
  * This buffer exists to provide validation for the decorated buffer.
@@ -34,10 +34,7 @@ import org.apache.commons.collections.collection.PredicatedCollection;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Paul Jack
+ * @version $Id$
  */
 public class PredicatedBuffer<E> extends PredicatedCollection<E> implements Buffer<E> {
 

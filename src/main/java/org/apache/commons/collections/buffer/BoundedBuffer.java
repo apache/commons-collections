@@ -28,7 +28,7 @@ import org.apache.commons.collections.BufferUnderflowException;
 import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
 
 /**
- * Decorates another <code>Buffer</code> to ensure a fixed maximum size.
+ * Decorates another {@link Buffer} to ensure a fixed maximum size.
  * <p>
  * Note: This class should only be used if you need to add bounded
  * behaviour to another buffer. If you just want a bounded buffer then
@@ -40,10 +40,8 @@ import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
  * With a timeout, the add methods will wait for up to the timeout period
  * to try and add the elements.
  *
- * @author James Carman
- * @author Stephen Colebourne
- * @version $Revision$
  * @since Commons Collections 3.2
+ * @version $Id$
  */
 public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCollection<E> {
 
@@ -59,7 +57,7 @@ public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCo
      * Factory method to create a bounded buffer.
      * <p>
      * When the buffer is full, it will immediately throw a
-     * <code>BufferOverflowException</code> on calling <code>add()</code>.
+     * <code>BufferOverflowException</code> on calling {@link #add(Object)}.
      *
      * @param <E> the type of the elements in the buffer
      * @param buffer  the buffer to decorate, must not be null
@@ -139,6 +137,14 @@ public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCo
         return new NotifyingIterator(collection.iterator());
     }
 
+    /**
+     * Waits up to the specified timeout period that the given number of additions
+     * can be made to the buffer.
+     *
+     * @param nAdditions the number of additions
+     * @throws BufferOverflowException if the number of additions would overflow the buffer,
+     * or the timeout has expired
+     */
     private void timeoutWait(final int nAdditions) {
         // method synchronized by callers
         if (nAdditions > maximumSize) {
@@ -192,6 +198,11 @@ public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCo
      */
     private class NotifyingIterator extends AbstractIteratorDecorator<E> {
 
+        /**
+         * Create a new {@link NotifyingIterator}.
+         * 
+         * @param it the decorated {@link Iterator}
+         */
         public NotifyingIterator(Iterator<E> it) {
             super(it);
         }

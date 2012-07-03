@@ -27,7 +27,7 @@ import org.apache.commons.collections.BufferUnderflowException;
 import org.apache.commons.collections.comparators.ComparableComparator;
 
 /**
- * Binary heap implementation of <code>Buffer</code> that provides for
+ * Binary heap implementation of {@link Buffer} that provides for
  * removal based on <code>Comparator</code> ordering.
  * <p>
  * The removal order of a binary heap is based on either the natural sort
@@ -54,14 +54,7 @@ import org.apache.commons.collections.comparators.ComparableComparator;
  * This class is Serializable from Commons Collections 3.2.
  *
  * @since Commons Collections 3.0 (previously BinaryHeap v1.0)
- * @version $Revision$
- *
- * @author Peter Donald
- * @author Ram Chidambaram
- * @author Michael A. Smith
- * @author Paul Jack
- * @author Stephen Colebourne
- * @author Steve Phelps
+ * @version $Id$
  */
 public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E>, Serializable {
 

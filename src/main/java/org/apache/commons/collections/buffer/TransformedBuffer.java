@@ -21,7 +21,7 @@ import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.collection.TransformedCollection;
 
 /**
- * Decorates another <code>Buffer</code> to transform objects that are added.
+ * Decorates another {@link Buffer} to transform objects that are added.
  * <p>
  * The add methods are affected by this class.
  * Thus objects must be removed or searched for using their transformed form.
@@ -31,9 +31,7 @@ import org.apache.commons.collections.collection.TransformedCollection;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class TransformedBuffer<E> extends TransformedCollection<E> implements Buffer<E> {
 

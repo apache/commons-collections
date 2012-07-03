@@ -29,11 +29,11 @@ import org.apache.commons.collections.BufferUnderflowException;
 
 /**
  * UnboundedFifoBuffer is a very efficient implementation of
- * <code>Buffer</code> that can grow to any size.
+ * {@link Buffer} that can grow to any size.
  * According to performance testing, it exhibits a constant access time, but it
  * also outperforms ArrayList when used for the same purpose.
  * <p>
- * The removal order of an <code>UnboundedFifoBuffer</code> is based on the insertion
+ * The removal order of an {@link UnboundedFifoBuffer} is based on the insertion
  * order; elements are removed in the same order in which they were added.
  * The iteration order is the same as the removal order.
  * <p>
@@ -52,16 +52,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision$
- *
- * @author Avalon
- * @author Federico Barbieri
- * @author Berin Loritsch
- * @author Paul Jack
- * @author Stephen Colebourne
- * @author Andreas Schlosser
- * @author Thomas Knych
- * @author Jordan Krey
+ * @version $Id$
  */
 public class UnboundedFifoBuffer<E> extends AbstractCollection<E> implements Buffer<E>, Serializable {
     // invariant: buffer.length > size()
@@ -113,7 +104,7 @@ public class UnboundedFifoBuffer<E> extends AbstractCollection<E> implements Buf
      * Write the buffer out using a custom routine.
      *
      * @param out  the output stream
-     * @throws IOException
+     * @throws IOException if an I/O error occurs while writing to the output stream
      */
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -128,8 +119,8 @@ public class UnboundedFifoBuffer<E> extends AbstractCollection<E> implements Buf
      * Read the buffer in using a custom routine.
      *
      * @param in  the input stream
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException if an I/O error occurs while reading from the input stream
+     * @throws ClassNotFoundException if the class of a serialized object can not be found
      */
     @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {

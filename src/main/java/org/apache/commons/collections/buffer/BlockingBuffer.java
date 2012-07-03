@@ -24,14 +24,14 @@ import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.BufferUnderflowException;
 
 /**
- * Decorates another <code>Buffer</code> to make {@link #get()} and
+ * Decorates another {@link Buffer} to make {@link #get()} and
  * {@link #remove()} block when the <code>Buffer</code> is empty.
  * <p>
  * If either <code>get</code> or <code>remove</code> is called on an empty
- * <code>Buffer</code>, the calling thread waits for notification that
+ * {@link Buffer}, the calling thread waits for notification that
  * an <code>add</code> or <code>addAll</code> operation has completed.
  * <p>
- * When one or more entries are added to an empty <code>Buffer</code>,
+ * When one or more entries are added to an empty {@link Buffer},
  * all threads blocked in <code>get</code> or <code>remove</code> are notified.
  * There is no guarantee that concurrent blocked <code>get</code> or
  * <code>remove</code> requests will be "unblocked" and receive data in the
@@ -41,10 +41,6 @@ import org.apache.commons.collections.BufferUnderflowException;
  * This class contains an extra field in 3.2, however the serialization
  * specification will handle this gracefully.
  *
- * @author Stephen Colebourne
- * @author Janek Bogucki
- * @author Phil Steitz
- * @author James Carman
  * @param <E> the type of the elements in the buffer
  * @version $Revision$
  * @since Commons Collections 3.0

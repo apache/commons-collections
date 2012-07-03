@@ -32,10 +32,10 @@ import org.apache.commons.collections.BufferOverflowException;
 import org.apache.commons.collections.BufferUnderflowException;
 
 /**
- * The BoundedFifoBuffer is a very efficient implementation of
- * <code>Buffer</code> that is of a fixed size.
+ * The {@link BoundedFifoBuffer} is a very efficient implementation of a
+ * {@link Buffer} with a fixed size.
  * <p>
- * The removal order of a <code>BoundedFifoBuffer</code> is based on the
+ * The removal order of a {@link BoundedFifoBuffer} is based on the
  * insertion order; elements are removed in the same order in which they
  * were added.  The iteration order is the same as the removal order.
  * <p>
@@ -54,13 +54,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0 (previously in main package v2.1)
- * @version $Revision$
- *
- * @author Avalon
- * @author Berin Loritsch
- * @author Paul Jack
- * @author Stephen Colebourne
- * @author Herve Quiroz
+ * @version $Id$
  */
 public class BoundedFifoBuffer<E> extends AbstractCollection<E>
         implements Buffer<E>, BoundedCollection<E>, Serializable {
