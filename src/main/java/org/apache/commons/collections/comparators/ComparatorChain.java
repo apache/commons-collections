@@ -24,35 +24,28 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * <p>A ComparatorChain is a Comparator that wraps one or
- * more Comparators in sequence.  The ComparatorChain
- * calls each Comparator in sequence until either 1)
- * any single Comparator returns a non-zero result
- * (and that result is then returned),
- * or 2) the ComparatorChain is exhausted (and zero is
- * returned).  This type of sorting is very similar
- * to multi-column sorting in SQL, and this class
- * allows Java classes to emulate that kind of behaviour
- * when sorting a List.</p>
- *
- * <p>To further facilitate SQL-like sorting, the order of
- * any single Comparator in the list can be reversed.</p>
- *
- * <p>Calling a method that adds new Comparators or
- * changes the ascend/descend sort <i>after compare(Object,
- * Object) has been called</i> will result in an
- * UnsupportedOperationException.  However, <i>take care</i>
- * to not alter the underlying List of Comparators
- * or the BitSet that defines the sort order.</p>
- *
- * <p>Instances of ComparatorChain are not synchronized.
- * The class is not thread-safe at construction time, but
- * it <i>is</i> thread-safe to perform multiple comparisons
- * after all the setup operations are complete.</p>
- *
+ * A ComparatorChain is a Comparator that wraps one or more Comparators in
+ * sequence. The ComparatorChain calls each Comparator in sequence until either
+ * 1) any single Comparator returns a non-zero result (and that result is then
+ * returned), or 2) the ComparatorChain is exhausted (and zero is returned).
+ * This type of sorting is very similar to multi-column sorting in SQL, and this
+ * class allows Java classes to emulate that kind of behaviour when sorting a
+ * List.
+ * <p>
+ * To further facilitate SQL-like sorting, the order of any single Comparator in
+ * the list can be reversed.
+ * <p>
+ * Calling a method that adds new Comparators or changes the ascend/descend sort
+ * <i>after compare(Object, Object) has been called</i> will result in an
+ * UnsupportedOperationException. However, <i>take care</i> to not alter the
+ * underlying List of Comparators or the BitSet that defines the sort order.
+ * <p>
+ * Instances of ComparatorChain are not synchronized. The class is not
+ * thread-safe at construction time, but it <i>is</i> thread-safe to perform
+ * multiple comparisons after all the setup operations are complete.
+ * 
  * @since Commons Collections 2.0
- * @author Morgan Delagrange
- * @version $Revision$
+ * @version $Id$
  */
 public class ComparatorChain<E> implements Comparator<E>, Serializable {
 
@@ -237,13 +230,23 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         return isLocked;
     }
 
-    // throw an exception if the ComparatorChain is locked
+    /**
+     * Throws an exception if the {@link ComparatorChain} is locked.
+     * 
+     * @throws UnsupportedOperationException if the {@link ComparatorChain} is locked
+     */
     private void checkLocked() {
         if (isLocked == true) {
-            throw new UnsupportedOperationException("Comparator ordering cannot be changed after the first comparison is performed");
+            throw new UnsupportedOperationException(
+                    "Comparator ordering cannot be changed after the first comparison is performed");
         }
     }
 
+    /**
+     * Throws an exception if the {@link ComparatorChain} is empty.
+     * 
+     * @throws UnsupportedOperationException if the {@link ComparatorChain} is empty
+     */
     private void checkChainIntegrity() {
         if (comparatorChain.size() == 0) {
             throw new UnsupportedOperationException("ComparatorChains must contain at least one Comparator");

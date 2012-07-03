@@ -28,9 +28,7 @@ import java.util.Comparator;
  * @see #booleanComparator(boolean)
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Rodney Waldhoff
+ * @version $Id$
  */
 public final class BooleanComparator implements Comparator<Boolean>, Serializable {
 

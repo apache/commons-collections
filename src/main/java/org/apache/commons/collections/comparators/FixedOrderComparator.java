@@ -41,17 +41,13 @@ import java.util.Map;
  * multiple comparisons  after all the setup operations are complete.
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author David Leppik
- * @author Stephen Colebourne
- * @author Janek Bogucki
+ * @version $Id$
  */
 public class FixedOrderComparator<T> implements Comparator<T> {
 
     /**
      * Unknown object behavior enum.
-     * @since Commons Collections 5
+     * @since Commons Collections 4.0
      */
     public static enum UnknownObjectBehavior {
         BEFORE, AFTER, EXCEPTION;

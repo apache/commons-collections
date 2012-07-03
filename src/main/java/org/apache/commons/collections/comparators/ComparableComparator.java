@@ -20,24 +20,23 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 /**
- * A {@link Comparator Comparator} that compares 
- * {@link Comparable Comparable} objects.
- * <p />
- * This Comparator is useful, for example,
- * for enforcing the natural order in custom implementations
- * of SortedSet and SortedMap.
- * <p />
- * Note: In the 2.0 and 2.1 releases of Commons Collections, 
- * this class would throw a {@link ClassCastException} if
- * either of the arguments to {@link #compare(Object, Object) compare}
- * were <code>null</code>, not {@link Comparable Comparable},
- * or for which {@link Comparable#compareTo(Object) compareTo} gave
- * inconsistent results.  This is no longer the case.  See
- * {@link #compare(Object, Object) compare} for details.
- *
+ * A {@link Comparator Comparator} that compares {@link Comparable Comparable}
+ * objects.
+ * <p>
+ * This Comparator is useful, for example, for enforcing the natural order in
+ * custom implementations of {@link SortedSet} and {@link SortedMap}.
+ * <p>
+ * Note: In the 2.0 and 2.1 releases of Commons Collections, this class would
+ * throw a {@link ClassCastException} if either of the arguments to
+ * {@link #compare(Object, Object) compare} were <code>null</code>, not
+ * {@link Comparable Comparable}, or for which
+ * {@link Comparable#compareTo(Object) compareTo} gave inconsistent results.
+ * This is no longer the case. See {@link #compare(Object, Object) compare} for
+ * details.
+ * 
  * @since Commons Collections 2.0
- * @version $Revision$
- *
+ * @version $Id$
+ * 
  * @see java.util.Collections#reverseOrder()
  */
 public class ComparableComparator<E extends Comparable<? super E>> implements Comparator<E>, Serializable {
@@ -57,6 +56,7 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
      * instead of constructing a new instance to reduce allocation and GC overhead
      * when multiple comparable comparators may be used in the same VM.
      * 
+     * @param <E>  the element type
      * @return the singleton ComparableComparator
      */
     @SuppressWarnings("unchecked")
@@ -83,9 +83,9 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
      * @param obj1  the first object to compare
      * @param obj2  the second object to compare
      * @return negative if obj1 is less, positive if greater, zero if equal
-     * @throws NullPointerException when <i>obj1</i> is <code>null</code>, 
+     * @throws NullPointerException if <i>obj1</i> is <code>null</code>, 
      *         or when <code>((Comparable)obj1).compareTo(obj2)</code> does
-     * @throws ClassCastException when <i>obj1</i> is not a <code>Comparable</code>,
+     * @throws ClassCastException if <i>obj1</i> is not a <code>Comparable</code>,
      *         or when <code>((Comparable)obj1).compareTo(obj2)</code> does
      */
     public int compare(E obj1, E obj2) {
@@ -106,18 +106,16 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
     }
 
     /**
-     * Returns <code>true</code> iff <i>that</i> Object is 
-     * is a {@link Comparator Comparator} whose ordering is 
-     * known to be equivalent to mine.
+     * Returns {@code true} iff <i>that</i> Object is is a {@link Comparator Comparator}
+     * whose ordering is known to be equivalent to mine.
      * <p>
-     * This implementation returns <code>true</code>
-     * iff <code><i>object</i>.{@link Object#getClass() getClass()}</code>
-     * equals <code>this.getClass()</code>.
-     * Subclasses may want to override this behavior to remain consistent
-     * with the {@link Comparator#equals(Object)} contract.
+     * This implementation returns {@code true} iff
+     * <code><i>object</i>.{@link Object#getClass() getClass()}</code> equals
+     * <code>this.getClass()</code>. Subclasses may want to override this behavior to remain
+     * consistent with the {@link Comparator#equals(Object)} contract.
      * 
      * @param object  the object to compare with
-     * @return true if equal
+     * @return {@code true} if equal
      * @since Commons Collections 3.0
      */
     @Override

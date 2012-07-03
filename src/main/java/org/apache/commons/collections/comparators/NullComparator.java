@@ -26,9 +26,7 @@ import org.apache.commons.collections.ComparatorUtils;
  * other objects.
  *
  * @since Commons Collections 2.0
- * @version $Revision$
- *
- * @author Michael A. Smith
+ * @version $Id$
  */
 public class NullComparator<E> implements Comparator<E>, Serializable {
 
