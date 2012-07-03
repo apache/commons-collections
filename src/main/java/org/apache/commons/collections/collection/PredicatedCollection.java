@@ -21,7 +21,7 @@ import java.util.Collection;
 import org.apache.commons.collections.Predicate;
 
 /**
- * Decorates another <code>Collection</code> to validate that additions
+ * Decorates another {@link Collection} to validate that additions
  * match a specified predicate.
  * <p>
  * This collection exists to provide validation for the decorated collection.
@@ -35,10 +35,7 @@ import org.apache.commons.collections.Predicate;
  *
  * @param <E> the type of the elements in the collection
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Paul Jack
+ * @version $Id$
  */
 public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
 

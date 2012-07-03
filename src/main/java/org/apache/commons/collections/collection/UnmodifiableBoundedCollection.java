@@ -23,8 +23,8 @@ import org.apache.commons.collections.BoundedCollection;
 import org.apache.commons.collections.iterators.UnmodifiableIterator;
 
 /**
- * <code>UnmodifiableBoundedCollection</code> decorates another
- * <code>BoundedCollection</code> to ensure it can't be altered.
+ * {@link UnmodifiableBoundedCollection} decorates another
+ * {@link BoundedCollection} to ensure it can't be altered.
  * <p>
  * If a BoundedCollection is first wrapped in some other collection decorator,
  * such as synchronized or predicated, the BoundedCollection methods are no
@@ -37,9 +37,7 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
  * Attempts to modify it will result in an UnsupportedOperationException. 
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDecorator<E>
         implements BoundedCollection<E> {

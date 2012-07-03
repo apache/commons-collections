@@ -37,11 +37,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  *
  * @param <E> the type of the elements in the collection
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Brian McCallister
- * @author Stephen Colebourne
- * @author Phil Steitz
+ * @version $Id$
  */
 public class CompositeCollection<E> implements Collection<E>, Serializable {
 
@@ -190,6 +186,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * Returns an object array, populating the supplied array if possible.
      * See <code>Collection</code> interface for full details.
      *
+     * @param <T>  the type of the elements in the collection
      * @param array  the array to use, populating if possible
      * @return an array of all the elements in the collection
      */
@@ -220,7 +217,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * unless a CollectionMutator strategy is specified.
      *
      * @param obj  the object to add
-     * @return true if the collection was modified
+     * @return {@code true} if the collection was modified
      * @throws UnsupportedOperationException if CollectionMutator hasn't been set
      * @throws UnsupportedOperationException if add is unsupported
      * @throws ClassCastException if the object cannot be added due to its type
@@ -464,7 +461,9 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
          * @throws NullPointerException if the object cannot be added because its null
          * @throws IllegalArgumentException if the object cannot be added
          */
-        public boolean addAll(CompositeCollection<E> composite, List<Collection<E>> collections, Collection<? extends E> coll);
+        public boolean addAll(CompositeCollection<E> composite,
+                              List<Collection<E>> collections,
+                              Collection<? extends E> coll);
 
         /**
          * Called when an object is to be removed to the composite.

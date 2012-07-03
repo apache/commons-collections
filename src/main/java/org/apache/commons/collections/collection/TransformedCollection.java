@@ -23,7 +23,7 @@ import java.util.List;
 import org.apache.commons.collections.Transformer;
 
 /**
- * Decorates another <code>Collection</code> to transform objects that are added.
+ * Decorates another {@link Collection} to transform objects that are added.
  * <p>
  * The add methods are affected by this class.
  * Thus objects must be removed or searched for using their transformed form.
@@ -34,9 +34,7 @@ import org.apache.commons.collections.Transformer;
  *
  * @param <E> the type of the elements in the collection
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
 

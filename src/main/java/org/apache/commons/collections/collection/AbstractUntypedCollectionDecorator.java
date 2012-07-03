@@ -38,12 +38,8 @@ import java.util.Collection;
  *
  * @param <D> the type of the elements in the decorated collection
  * @param <E> the element type of the Collection implementation
- * @since Commons Collections 5
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Paul Jack
- * @author Matt Benson
+ * @since Commons Collections 4.0
+ * @version $Id$
  */
 public abstract class AbstractUntypedCollectionDecorator<E, D> implements Collection<E>, Serializable {
 

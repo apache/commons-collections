@@ -37,10 +37,7 @@ import java.util.Iterator;
  *
  * @param <E> the type of the elements in the collection
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Paul Jack
+ * @version $Id$
  */
 public abstract class AbstractCollectionDecorator<E>
         implements Collection<E>, Serializable {

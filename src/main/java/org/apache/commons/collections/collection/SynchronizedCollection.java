@@ -21,7 +21,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 /**
- * Decorates another <code>Collection</code> to synchronize its behaviour
+ * Decorates another {@link Collection} to synchronize its behaviour
  * for a multi-threaded environment.
  * <p>
  * Iterators must be manually synchronized:
@@ -36,9 +36,7 @@ import java.util.Iterator;
  *
  * @param <E> the type of the elements in the collection
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class SynchronizedCollection<E> implements Collection<E>, Serializable {
 
