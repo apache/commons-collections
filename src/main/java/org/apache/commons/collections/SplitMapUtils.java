@@ -14,19 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections.splitmap;
+package org.apache.commons.collections;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections.Get;
-import org.apache.commons.collections.IterableGet;
-import org.apache.commons.collections.IterableMap;
-import org.apache.commons.collections.MapIterator;
-import org.apache.commons.collections.MapUtils;
-import org.apache.commons.collections.Put;
-import org.apache.commons.collections.Unmodifiable;
 import org.apache.commons.collections.collection.UnmodifiableCollection;
 import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
 import org.apache.commons.collections.map.EntrySetToMapIteratorAdapter;
