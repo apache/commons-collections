@@ -27,7 +27,7 @@ import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.map.LinkedMap;
 
 /**
- * Decorates another <code>Map</code> to transform objects that are added.
+ * Decorates another {@link Map} to transform objects that are added.
  * <p>
  * The Map put methods and Map.Entry setValue method are affected by this class.
  * Thus objects must be removed or searched for using their transformed form.
@@ -53,15 +53,13 @@ import org.apache.commons.collections.map.LinkedMap;
  * generalizations.
  *
  * @since Commons Collections 4.0
- * @version $Revision$
+ * @version $Id$
+ *
  * @see SplitMapUtils#readableMap(Get)
  * @see SplitMapUtils#writableMap(Put)
- *
- * @author Stephen Colebourne
- * @author Matt Benson
  */
-public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<K, V> implements
-        Put<J, U>, Serializable {
+public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<K, V>
+        implements Put<J, U>, Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = 5966875321133456994L;
@@ -150,7 +148,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      * The transformer itself may throw an exception if necessary.
      *
      * @param object the object to transform
-     * @throws the transformed object
+     * @return the transformed object
      */
     protected K transformKey(J object) {
         return keyTransformer.transform(object);
@@ -162,7 +160,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      * The transformer itself may throw an exception if necessary.
      *
      * @param object the object to transform
-     * @throws the transformed object
+     * @return the transformed object
      */
     protected V transformValue(U object) {
         return valueTransformer.transform(object);
@@ -174,7 +172,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      * The transformer itself may throw an exception if necessary.
      *
      * @param map the map to transform
-     * @throws the transformed object
+     * @return the transformed object
      */
     @SuppressWarnings("unchecked")
     protected Map<K, V> transformMap(Map<? extends J, ? extends U> map) {

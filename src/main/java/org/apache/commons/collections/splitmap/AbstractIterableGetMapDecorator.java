@@ -20,21 +20,19 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections.Get;
 import org.apache.commons.collections.IterableGet;
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.map.EntrySetToMapIteratorAdapter;
 
 /**
- * {@link IterableGet} that uses a {@link Map}<K, V> for the {@link Get}<K, V>
- * implementation.
+ * {@link IterableGet} that uses a {@link Map}<K, V> for the
+ * {@link org.apache.commons.collections.Get Get}<K, V> implementation.
  *
  * @since Commons Collections 4.0
- * @version $Revision$
- *
- * @author Matt Benson
+ * @version $Id$
  */
 public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> {
+
     /** The map to decorate */
     protected transient Map<K, V> map;
 
