@@ -33,16 +33,16 @@ import org.apache.commons.collections.Factory;
  * For instance:
  *
  * <pre>
- * Factory factory = new Factory() {
- *     public Object create() {
+ * Factory&lt;Date&gt; factory = new Factory&lt;Date&gt;() {
+ *     public Date create() {
  *         return new Date();
  *     }
  * }
- * List lazy = LazyList.decorate(new ArrayList(), factory);
- * Object obj = lazy.get(3);
+ * List&lt;Date&gt; lazy = LazyList.decorate(new ArrayList&lt;Date&gt;(), factory);
+ * Date date = lazy.get(3);
  * </pre>
  *
- * After the above code is executed, <code>obj</code> will contain
+ * After the above code is executed, <code>date</code> will contain
  * a new <code>Date</code> instance.  Furthermore, that <code>Date</code>
  * instance is the fourth element in the list.  The first, second, 
  * and third element are all set to <code>null</code>.
@@ -55,11 +55,7 @@ import org.apache.commons.collections.Factory;
  *
  * @see GrowthList
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Arron Bates
- * @author Paul Jack
+ * @version $Id$
  */
 public class LazyList<E> extends AbstractSerializableListDecorator<E> {
 
@@ -108,7 +104,6 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
      * placeholder that is replaced with a factory object when requested.
      * 
      * @param index  the index to retrieve
-     * {@inheritDoc}
      */
     @Override
     public E get(int index) {

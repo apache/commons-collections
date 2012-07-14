@@ -26,8 +26,8 @@ import java.util.List;
 /**
  * Serializable subclass of AbstractListDecorator.
  *
- * @author Stephen Colebourne
  * @since Commons Collections 3.1
+ * @version $Id$
  */
 public abstract class AbstractSerializableListDecorator<E>
         extends AbstractListDecorator<E>
@@ -37,7 +37,10 @@ public abstract class AbstractSerializableListDecorator<E>
     private static final long serialVersionUID = 2684959196747496299L;
 
     /**
-     * Constructor.
+     * Constructor that wraps (not copies).
+     *
+     * @param list  the list to decorate, must not be null
+     * @throws IllegalArgumentException if list is null
      */
     protected AbstractSerializableListDecorator(List<E> list) {
         super(list);

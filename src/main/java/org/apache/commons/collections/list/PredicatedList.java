@@ -38,10 +38,7 @@ import java.util.ListIterator;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Paul Jack
+ * @version $Id$
  */
 public class PredicatedList<E> extends PredicatedCollection<E> implements List<E> {
 

@@ -23,18 +23,16 @@ import java.util.ListIterator;
 import org.apache.commons.collections.collection.AbstractCollectionDecorator;
 
 /**
- * Decorates another <code>List</code> to provide additional behaviour.
+ * Decorates another {@link List} to provide additional behaviour.
  * <p>
  * Methods are forwarded directly to the decorated list.
  *
  * @param <E> the type of the elements in the list
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorator<E> implements
-        List<E> {
+public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorator<E>
+        implements List<E> {
 
     /** Serialization version--necessary in an abstract class? */
     private static final long serialVersionUID = 4500739654952315623L;

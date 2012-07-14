@@ -50,10 +50,7 @@ import java.util.List;
  *
  * @see LazyList
  * @since Commons Collections 3.2
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Paul Legato
+ * @version $Id$
  */
 public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
 

@@ -39,11 +39,7 @@ import org.apache.commons.collections.OrderedIterator;
  * is here.
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Rich Dougherty
- * @author Phil Steitz
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public abstract class AbstractLinkedList<E> implements List<E> {
 
