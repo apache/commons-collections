@@ -35,15 +35,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * Provides utility methods and decorators for {@link List} instances.
  *
  * @since Commons Collections 1.0
- * @version $Revision$
- *
- * @author Federico Barbieri
- * @author Peter Donald
- * @author Paul Jack
- * @author Stephen Colebourne
- * @author Neil O'Toole
- * @author Matthew Hawthorne
- * @author Dave Meikle
+ * @version $Id$
  */
 public class ListUtils {
 
@@ -65,6 +57,7 @@ public class ListUtils {
      * Returns a new list containing all elements that are contained in
      * both given lists.
      *
+     * @param <E>  the element type
      * @param list1  the first list
      * @param list2  the second list
      * @return  the intersection of those two lists
@@ -101,6 +94,7 @@ public class ListUtils {
      * contains one occurrence, then the returned list will still contain
      * one occurrence.
      *
+     * @param <E>  the element type
      * @param list1  the list to subtract from
      * @param list2  the list to subtract
      * @return  a new list containing the results
@@ -121,6 +115,7 @@ public class ListUtils {
      * Returns the sum of the given lists.  This is their intersection
      * subtracted from their union.
      *
+     * @param <E>  the element type
      * @param list1  the first list 
      * @param list2  the second list
      * @return  a new list containing the sum of those lists
@@ -135,6 +130,7 @@ public class ListUtils {
      * first list.  The {@link List#addAll(Collection)} operation is
      * used to append the two given lists into a new list.
      *
+     * @param <E>  the element type
      * @param list1  the first list 
      * @param list2  the second list
      * @return  a new list containing the union of those lists
@@ -212,15 +208,15 @@ public class ListUtils {
      * @param list  the list to generate the hashCode for, may be null
      * @return the hash code
      */
-    public static <E> int hashCodeForList(final Collection<E> list) {
+    public static int hashCodeForList(final Collection<?> list) {
         if (list == null) {
             return 0;
         }
         int hashCode = 1;
-        Iterator<E> it = list.iterator();
+        Iterator<?> it = list.iterator();
         
         while (it.hasNext()) {
-            E obj = it.next();
+            Object obj = it.next();
             hashCode = 31 * hashCode + (obj == null ? 0 : obj.hashCode());
         }
         return hashCode;
@@ -235,6 +231,7 @@ public class ListUtils {
      * case the cardinality is zero. This method is useful if you do not wish to modify
      * the collection <code>c</code> and thus cannot call <code>collection.retainAll(retain);</code>.
      * 
+     * @param <E>  the element type
      * @param collection  the collection whose contents are the target of the #retailAll operation
      * @param retain  the collection containing the elements to be retained in the returned collection
      * @return a <code>List</code> containing all the elements of <code>c</code>
@@ -262,6 +259,7 @@ public class ListUtils {
      * case the cardinality is zero. This method is useful if you do not wish to modify
      * <code>collection</code> and thus cannot call <code>collection.removeAll(remove);</code>.
      * 
+     * @param <E>  the element type
      * @param collection  the collection from which items are removed (in the returned collection)
      * @param remove  the items to be removed from the returned <code>collection</code>
      * @return a <code>List</code> containing all the elements of <code>c</code> except
@@ -298,6 +296,7 @@ public class ListUtils {
      * 
      * This method uses the implementation in the decorators subpackage.
      * 
+     * @param <E>  the element type
      * @param list  the list to synchronize, must not be null
      * @return a synchronized list backed by the given list
      * @throws IllegalArgumentException  if the list is null
@@ -311,6 +310,7 @@ public class ListUtils {
      * <p>
      * This method uses the implementation in the decorators subpackage.
      *
+     * @param <E>  the element type
      * @param list  the list to make unmodifiable, must not be null
      * @return an unmodifiable list backed by the given list
      * @throws IllegalArgumentException  if the list is null
@@ -327,6 +327,7 @@ public class ListUtils {
      * It is important not to use the original list after invoking this method,
      * as it is a backdoor for adding invalid objects.
      *
+     * @param <E>  the element type
      * @param list  the list to predicate, must not be null
      * @param predicate  the predicate for the list, must not be null
      * @return a predicated list backed by the given list
@@ -350,6 +351,7 @@ public class ListUtils {
      * Existing entries in the specified list will not be transformed.
      * If you want that behaviour, see {@link TransformedList#transformedList}.
      *
+     * @param <E>  the element type
      * @param list  the list to predicate, must not be null
      * @param transformer  the transformer for the list, must not be null
      * @return a transformed list backed by the given list
@@ -369,20 +371,21 @@ public class ListUtils {
      * For instance:
      *
      * <pre>
-     * Factory factory = new Factory() {
-     *     public Object create() {
+     * Factory&lt;Date&gt; factory = new Factory&lt;Date&gt;() {
+     *     public Date create() {
      *         return new Date();
      *     }
      * }
-     * List lazy = ListUtils.lazyList(new ArrayList(), factory);
-     * Object obj = lazy.get(3);
+     * List&lt;Date&gt; lazy = ListUtils.lazyList(new ArrayList&lt;Date&gt;(), factory);
+     * Date date = lazy.get(3);
      * </pre>
      *
-     * After the above code is executed, <code>obj</code> will contain
+     * After the above code is executed, <code>date</code> will contain
      * a new <code>Date</code> instance.  Furthermore, that <code>Date</code>
      * instance is the fourth element in the list.  The first, second, 
      * and third element are all set to <code>null</code>.
      *
+     * @param <E>  the element type
      * @param list  the list to make lazy, must not be null
      * @param factory  the factory for creating new objects, must not be null
      * @return a lazy list backed by the given list
@@ -396,8 +399,9 @@ public class ListUtils {
      * Returns a fixed-sized list backed by the given list.
      * Elements may not be added or removed from the returned list, but 
      * existing elements can be changed (for instance, via the 
-     * {@link List#set(int,Object)} method).
+     * {@link List#set(int,E)} method).
      *
+     * @param <E>  the element type
      * @param list  the list whose size to fix, must not be null
      * @return a fixed-size list backed by that list
      * @throws IllegalArgumentException  if the List is null
@@ -412,6 +416,7 @@ public class ListUtils {
      * If the input List or predicate is null, or no element of the List
      * matches the predicate, -1 is returned.
      *
+     * @param <E>  the element type
      * @param list the List to search, may be null
      * @param predicate  the predicate to use, may be null
      * @return the first index of an Object in the List which matches the predicate or -1 if none could be found
