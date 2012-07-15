@@ -14,25 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections;
-
-import java.util.Iterator;
-
-/** 
- * Defines an iterator that can be reset back to an initial state.
+/**
+ * This package contains the interfaces and utilities shared across all the subpackages of this component.
  * <p>
- * This interface allows an iterator to be repeatedly reused.
+ * The following collection implementations are provided in the package:
+ * <ul>
+ *   <li>ArrayStack - a non synchronized Stack that follows the same API as {@code java.util Stack}
+ *   <li>ExtendedProperties - extends the Properties class to add extra functionality
+ * </ul>
  *
- * @param <E> the type to iterate over
- * @since 3.0
  * @version $Id$
  */
-public interface ResettableIterator<E> extends Iterator<E> {
-
-    /**
-     * Resets the iterator back to the position at which the iterator
-     * was created.
-     */
-    public void reset();
-
-}
+package org.apache.commons.collections;

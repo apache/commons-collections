@@ -29,10 +29,7 @@ package org.apache.commons.collections;
  * @param <T> the type that the factory creates
  *
  * @since 2.1
- * @version $Revision$
- *
- * @author Arron Bates
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public interface Factory<T> {
 

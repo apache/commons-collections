@@ -21,13 +21,7 @@ package org.apache.commons.collections;
  * exceeded.
  *
  * @since 2.1
- * @version $Revision$
- *
- * @author Avalon
- * @author <a href="mailto:bloritsch@apache.org">Berin Loritsch</a>
- * @author <a href="mailto:jefft@apache.org">Jeff Turner</a>
- * @author Paul Jack
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class BufferOverflowException extends RuntimeException {
     

@@ -31,10 +31,7 @@ package org.apache.commons.collections;
  * @param <T> the type that the predicate queries
  *
  * @since 1.0
- * @version $Revision$
- *
- * @author James Strachan
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public interface Predicate<T> {
 

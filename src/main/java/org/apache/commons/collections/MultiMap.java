@@ -40,11 +40,7 @@ import java.util.Collection;
  * as they were defined in the superinterface <code>Map</code> anyway.
  *
  * @since 2.0
- * @version $Revision$
- *
- * @author Christopher Berry
- * @author James Strachan
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public interface MultiMap<K, V> extends IterableMap<K, Object> {
 

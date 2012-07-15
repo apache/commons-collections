@@ -24,9 +24,7 @@ package org.apache.commons.collections;
  * associated with the maximum number of elements.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public interface BoundedMap<K, V> extends IterableMap<K, V> {
 

@@ -33,10 +33,7 @@ package org.apache.commons.collections;
  * @param <O> the output type from the transformer
  *
  * @since 1.0
- * @version $Revision$
- *
- * @author James Strachan
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public interface Transformer<I, O> {
 

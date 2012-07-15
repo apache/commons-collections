@@ -17,8 +17,6 @@
 package org.apache.commons.collections;
 
 import java.util.Iterator;
-import java.util.ListIterator;
-import java.util.NoSuchElementException;
 
 /**
  * Defines an iterator that operates over an ordered container. Subset of {@link ListIterator}.
@@ -27,9 +25,7 @@ import java.util.NoSuchElementException;
  *
  * @param <E> the type to iterate over
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public interface OrderedIterator<E> extends Iterator<E> {
 
@@ -44,7 +40,7 @@ public interface OrderedIterator<E> extends Iterator<E> {
      * Gets the previous element from the container.
      *
      * @return the previous element in the iteration
-     * @throws NoSuchElementException if the iteration is finished
+     * @throws java.util.NoSuchElementException if the iteration is finished
      */
     E previous();
 

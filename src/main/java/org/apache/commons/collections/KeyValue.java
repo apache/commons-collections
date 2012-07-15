@@ -26,9 +26,7 @@ package org.apache.commons.collections;
  * @param <K> the type of the key
  * @param <V> the type of the value
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public interface KeyValue<K, V> {
 

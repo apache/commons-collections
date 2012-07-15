@@ -36,10 +36,7 @@ import org.apache.commons.collections.comparators.TransformingComparator;
  * in the <code>comparators</code> subpackage.
  *
  * @since 2.1
- * @version $Revision$
- *
- * @author Paul Jack
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class ComparatorUtils {
 
@@ -54,7 +51,7 @@ public class ComparatorUtils {
      *
      * @see ComparableComparator#comparableComparator()
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public static final Comparator NATURAL_COMPARATOR = ComparableComparator.<Comparable>comparableComparator();
 
     /**
@@ -79,7 +76,8 @@ public class ComparatorUtils {
      * @see ComparatorChain
      */
     @SuppressWarnings("unchecked")
-    public static <E extends Comparable<? super E>> Comparator<E> chainedComparator(Comparator<E> comparator1, Comparator<E> comparator2) {
+    public static <E extends Comparable<? super E>> Comparator<E> chainedComparator(Comparator<E> comparator1,
+                                                                                    Comparator<E> comparator2) {
         return chainedComparator(new Comparator[] {comparator1, comparator2});
     }
 

@@ -37,12 +37,7 @@ import org.apache.commons.collections.set.UnmodifiableSortedSet;
  * {@link Set} and {@link SortedSet} instances.
  *
  * @since 2.1
- * @version $Revision$
- *
- * @author Paul Jack
- * @author Stephen Colebourne
- * @author Neil O'Toole
- * @author Matthew Hawthorne
+ * @version $Id$
  */
 public class SetUtils {
 

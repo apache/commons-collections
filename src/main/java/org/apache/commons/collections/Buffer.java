@@ -37,12 +37,7 @@ import java.util.Collection;
  *
  * @param <E> the type of the elements in the buffer
  * @since 2.1
- * @version $Revision$
- *
- * @author Avalon
- * @author Berin Loritsch
- * @author Paul Jack
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public interface Buffer<E> extends Collection<E> {
 

@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections;
 
-import java.util.NoSuchElementException;
-
 /**
  * Defines an iterator that operates over an ordered <code>Map</code>.
  * <p>
@@ -26,9 +24,7 @@ import java.util.NoSuchElementException;
  * @param <K> the type of the keys in the map
  * @param <V> the type of the values in the map
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public interface OrderedMapIterator<K, V> extends MapIterator<K, V>, OrderedIterator<K> {
 
@@ -43,7 +39,7 @@ public interface OrderedMapIterator<K, V> extends MapIterator<K, V>, OrderedIter
      * Gets the previous <em>key</em> from the <code>Map</code>.
      *
      * @return the previous key in the iteration
-     * @throws NoSuchElementException if the iteration is finished
+     * @throws java.util.NoSuchElementException if the iteration is finished
      */
     K previous();
 

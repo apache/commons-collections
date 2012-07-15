@@ -40,10 +40,7 @@ import java.util.Set;
  *
  * @param <E> the type held in the bag
  * @since 2.0
- * @version $Revision$
- *
- * @author Chuck Burdick
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public interface Bag<E> extends Collection<E> {
 

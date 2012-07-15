@@ -48,10 +48,7 @@ import org.apache.commons.collections.functors.WhileClosure;
  * All the supplied closures are Serializable.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Matt Benson
+ * @version $Id$
  */
 public class ClosureUtils {
 
@@ -206,7 +203,7 @@ public class ClosureUtils {
      * @throws IllegalArgumentException if the closures array is null
      * @throws IllegalArgumentException if any closure in the array is null
      */
-    public static <E> Closure<E> chainedClosure(Closure<? super E>[] closures) {
+    public static <E> Closure<E> chainedClosure(Closure<? super E>... closures) {
         return ChainedClosure.chainedClosure(closures);
     }
 
@@ -257,7 +254,9 @@ public class ClosureUtils {
      * @throws IllegalArgumentException if the predicate is null
      * @throws IllegalArgumentException if either closure is null
      */
-    public static <E> Closure<E> ifClosure(Predicate<? super E> predicate, Closure<? super E> trueClosure, Closure<? super E> falseClosure) {
+    public static <E> Closure<E> ifClosure(Predicate<? super E> predicate,
+                                           Closure<? super E> trueClosure,
+                                           Closure<? super E> falseClosure) {
         return IfClosure.<E>ifClosure(predicate, trueClosure, falseClosure);
     }
 
@@ -301,7 +300,9 @@ public class ClosureUtils {
      * @throws IllegalArgumentException if any element in the arrays is null
      * @throws IllegalArgumentException if the arrays are different sizes
      */
-    public static <E> Closure<E> switchClosure(Predicate<? super E>[] predicates, Closure<? super E>[] closures, Closure<? super E> defaultClosure) {
+    public static <E> Closure<E> switchClosure(Predicate<? super E>[] predicates,
+                                               Closure<? super E>[] closures,
+                                               Closure<? super E> defaultClosure) {
         return SwitchClosure.<E>switchClosure(predicates, closures, defaultClosure);
     }
     

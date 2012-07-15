@@ -35,7 +35,9 @@ import org.apache.commons.collections.collection.AbstractCollectionDecorator;
  *
  * @param <K> the type of object in the index.
  * @param <C> the type of object in the collection.
- * @author Stephen Kestle
+ * 
+ * @since 4.0
+ * @version $Id$
  */
 // TODO support MultiMap/non-unique index behavior
 // TODO add support for remove and clear
@@ -54,7 +56,8 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      * @param keyTransformer the {@link Transformer} for generating index keys.
      * @return the created {@link IndexedCollection}.
      */
-    public static <K, C> IndexedCollection<K, C> uniqueIndexedCollection(final Collection<C> coll, final Transformer<C, K> keyTransformer) {
+    public static <K, C> IndexedCollection<K, C> uniqueIndexedCollection(final Collection<C> coll,
+                                                                         final Transformer<C, K> keyTransformer) {
         return new IndexedCollection<K, C>(coll, keyTransformer, new HashMap<K, C>());
     }
 

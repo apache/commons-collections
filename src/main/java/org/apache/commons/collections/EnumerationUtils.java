@@ -28,8 +28,6 @@ import org.apache.commons.collections.iterators.EnumerationIterator;
  *
  * @since 3.0
  * @version $Id$
- *
- * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  */
 public class EnumerationUtils {
 
@@ -56,7 +54,8 @@ public class EnumerationUtils {
     /**
      * Override toList(Enumeration) for StringTokenizer as it implements Enumeration<String>
      * for the sake of backward compatibility.
-     * @param stringTokenizer
+     *
+     * @param stringTokenizer  the tokenizer to convert to a {@link List(String)}
      * @return List<String>
      */
     public static List<String> toList(StringTokenizer stringTokenizer) {

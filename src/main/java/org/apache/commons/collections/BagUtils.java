@@ -28,17 +28,10 @@ import org.apache.commons.collections.bag.UnmodifiableBag;
 import org.apache.commons.collections.bag.UnmodifiableSortedBag;
 
 /**
- * Provides utility methods and decorators for {@link Bag} and {@link SortedBag}
- * instances.
+ * Provides utility methods and decorators for {@link Bag} and {@link SortedBag} instances.
  *
  * @since 2.1
- * @version $Revision$
- * 2007) $
- *
- * @author Paul Jack
- * @author Stephen Colebourne
- * @author Andrew Freeman
- * @author Matthew Hawthorne
+ * @version $Id$
  */
 public class BagUtils {
 

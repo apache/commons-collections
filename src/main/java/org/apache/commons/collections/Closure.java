@@ -27,11 +27,7 @@ package org.apache.commons.collections;
  *
  * @param <T> the type that the closure acts on
  * @since 1.0
- * @version $Revision$
- *
- * @author James Strachan
- * @author Nicola Ken Barozzi
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public interface Closure<T> {
 

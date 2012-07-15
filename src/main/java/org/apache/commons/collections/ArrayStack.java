@@ -36,11 +36,7 @@ import java.util.EmptyStackException;
  *
  * @see java.util.Stack
  * @since 1.0
- * @version $Revision$
- *
- * @author Craig R. McClanahan
- * @author Paul Jack
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class ArrayStack<E> extends ArrayList<E> implements Buffer<E> {
 

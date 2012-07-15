@@ -57,10 +57,7 @@ import org.apache.commons.collections.functors.SwitchTransformer;
  * All the supplied transformers are Serializable.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author James Carman
+ * @version $Id$
  */
 public class TransformerUtils {
 

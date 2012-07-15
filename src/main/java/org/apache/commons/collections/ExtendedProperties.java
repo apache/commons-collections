@@ -130,22 +130,7 @@ import java.util.Vector;
  * it, go ahead and tune it up!
  *
  * @since 1.0
- * @version $Revision$
- *
- * @author <a href="mailto:stefano@apache.org">Stefano Mazzocchi</a>
- * @author <a href="mailto:jon@latchkey.com">Jon S. Stevens</a>
- * @author <a href="mailto:daveb@miceda-data">Dave Bryson</a>
- * @author <a href="mailto:jvanzyl@periapt.com">Jason van Zyl</a>
- * @author <a href="mailto:geirm@optonline.net">Geir Magnusson Jr.</a>
- * @author <a href="mailto:leon@opticode.co.za">Leon Messerschmidt</a>
- * @author <a href="mailto:kjohnson@transparent.com">Kent Johnson</a>
- * @author <a href="mailto:dlr@finemaltcoding.com">Daniel Rall</a>
- * @author <a href="mailto:ipriha@surfeu.fi">Ilkka Priha</a>
- * @author Janek Bogucki
- * @author Mohan Kishore
- * @author Stephen Colebourne
- * @author Shinobu Kawai
- * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
+ * @version $Id$
  */
 public class ExtendedProperties extends Hashtable<String, Object> {
 

@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections;
 
-import java.util.Map;
-
 /**
  * The "read" subset of the {@link Map} interface.
  *

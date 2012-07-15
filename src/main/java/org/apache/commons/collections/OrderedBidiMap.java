@@ -27,9 +27,7 @@ package org.apache.commons.collections;
  * @param <V> the type of the values in the map
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public interface OrderedBidiMap<K, V> extends BidiMap<K, V>, OrderedMap<K, V> {
 

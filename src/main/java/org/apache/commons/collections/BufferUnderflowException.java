@@ -24,13 +24,7 @@ import java.util.NoSuchElementException;
  * NOTE: From version 3.0, this exception extends NoSuchElementException.
  *
  * @since 2.1
- * @version $Revision$
- *
- * @author Avalon
- * @author Berin Loritsch
- * @author Jeff Turner
- * @author Paul Jack
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class BufferUnderflowException extends NoSuchElementException {
     

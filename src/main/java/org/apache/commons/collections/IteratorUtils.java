@@ -60,7 +60,7 @@ import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
  * Provides static utility methods and decorators for {@link Iterator}
  * instances. The implementations are provided in the iterators subpackage.
  * <p>
- * WARNING: Due to human error certain binary incompatabilities were introduced
+ * WARNING: Due to human error certain binary incompatibilities were introduced
  * between Commons Collections 2.1 and 3.0. The class remained source and test
  * compatible, so if you can recompile all your classes and dependencies
  * everything is OK. Those methods which are binary incompatible are marked as
@@ -68,10 +68,7 @@ import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
  * against versions 2.1.1 and 3.1.
  *
  * @since 2.1
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Phil Steitz
+ * @version $Id$
  */
 public class IteratorUtils {
     // validation is done in this class in certain cases because the
@@ -81,7 +78,7 @@ public class IteratorUtils {
      * An iterator over no elements.
      * <p>
      * WARNING: This constant is binary incompatible with Commons Collections 2.1 and 2.1.1.
-     * Use <code>EmptyIterator.INSTANCE</code> for compatability with Commons Collections 2.1.1.
+     * Use <code>EmptyIterator.INSTANCE</code> for compatibility with Commons Collections 2.1.1.
      */
     public static final ResettableIterator<Object> EMPTY_ITERATOR = EmptyIterator.RESETTABLE_INSTANCE;
 
@@ -89,7 +86,7 @@ public class IteratorUtils {
      * A list iterator over no elements.
      * <p>
      * WARNING: This constant is binary incompatible with Commons Collections 2.1 and 2.1.1.
-     * Use <code>EmptyListIterator.INSTANCE</code> for compatability with Commons Collections 2.1.1.
+     * Use <code>EmptyListIterator.INSTANCE</code> for compatibility with Commons Collections 2.1.1.
      */
     public static final ResettableListIterator<Object> EMPTY_LIST_ITERATOR = EmptyListIterator.RESETTABLE_INSTANCE;
 
@@ -123,7 +120,7 @@ public class IteratorUtils {
      * nothing.
      * <p>
      * WARNING: This method is binary incompatible with Commons Collections 2.1 and 2.1.1.
-     * Use <code>EmptyIterator.INSTANCE</code> for compatability with Commons Collections 2.1.1.
+     * Use <code>EmptyIterator.INSTANCE</code> for compatibility with Commons Collections 2.1.1.
      *
      * @return  an iterator over nothing
      */
@@ -138,7 +135,7 @@ public class IteratorUtils {
      * over nothing.
      * <p>
      * WARNING: This method is binary incompatible with Commons Collections 2.1 and 2.1.1.
-     * Use <code>EmptyListIterator.INSTANCE</code> for compatability with Commons Collections 2.1.1.
+     * Use <code>EmptyListIterator.INSTANCE</code> for compatibility with Commons Collections 2.1.1.
      *
      * @return  a list iterator over nothing
      */
@@ -191,7 +188,7 @@ public class IteratorUtils {
      * the specified object.
      * <p>
      * WARNING: This method is binary incompatible with Commons Collections 2.1 and 2.1.1.
-     * Use <code>new SingletonIterator(object)</code> for compatability.
+     * Use <code>new SingletonIterator(object)</code> for compatibility.
      *
      * @param object  the single object over which to iterate
      * @return  a singleton iterator over the object
@@ -219,7 +216,7 @@ public class IteratorUtils {
      * Gets an iterator over an object array.
      * <p>
      * WARNING: This method is binary incompatible with Commons Collections 2.1 and 2.1.1.
-     * Use <code>new ArrayIterator(array)</code> for compatability.
+     * Use <code>new ArrayIterator(array)</code> for compatibility.
      *
      * @param array  the array over which to iterate
      * @return  an iterator over the array
@@ -248,7 +245,7 @@ public class IteratorUtils {
      * Gets an iterator over the end part of an object array.
      * <p>
      * WARNING: This method is binary incompatible with Commons Collections 2.1 and 2.1.1.
-     * Use <code>new ArrayIterator(array,start)</code> for compatability.
+     * Use <code>new ArrayIterator(array,start)</code> for compatibility.
      *
      * @param array  the array over which to iterate
      * @param start  the index to start iterating at
@@ -283,7 +280,7 @@ public class IteratorUtils {
      * Gets an iterator over part of an object array.
      * <p>
      * WARNING: This method is binary incompatible with Commons Collections 2.1 and 2.1.1.
-     * Use <code>new ArrayIterator(array,start,end)</code> for compatability.
+     * Use <code>new ArrayIterator(array,start,end)</code> for compatibility.
      *
      * @param array  the array over which to iterate
      * @param start  the index to start iterating at

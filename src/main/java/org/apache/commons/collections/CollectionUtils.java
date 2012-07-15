@@ -41,22 +41,7 @@ import org.apache.commons.collections.functors.TruePredicate;
  * Method parameters will take {@link Iterable} objects when possible.
  *
  * @since 1.0
- * @version $Revision$
- *
- * @author Rodney Waldhoff
- * @author Paul Jack
- * @author Stephen Colebourne
- * @author Steve Downey
- * @author Herve Quiroz
- * @author Peter KoBek
- * @author Matthew Hawthorne
- * @author Janek Bogucki
- * @author Phil Steitz
- * @author Steven Melzer
- * @author Jon Schewe
- * @author Neil O'Toole
- * @author Stephen Smith
- * @author Stephen Kestle
+ * @version $Id$
  */
 //TODO - note generic types for review in wiki - especially <?> ones
 //TODO - doc Cardinality Helpers

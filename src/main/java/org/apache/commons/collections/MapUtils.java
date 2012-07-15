@@ -71,20 +71,7 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
  *  </ul>
  *
  * @since 1.0
- * @version $Revision$
- *
- * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
- * @author <a href="mailto:nissim@nksystems.com">Nissim Karpenstein</a>
- * @author <a href="mailto:knielsen@apache.org">Kasper Nielsen</a>
- * @author Paul Jack
- * @author Stephen Colebourne
- * @author Matthew Hawthorne
- * @author Arun Mammen Thomas
- * @author Janek Bogucki
- * @author Max Rydahl Andersen
- * @author <a href="mailto:equinus100@hotmail.com">Ashwin S</a>
- * @author <a href="mailto:jcarman@apache.org">James Carman</a>
- * @author Neil O'Toole
+ * @version $Id$
  */
 public class MapUtils {
 
