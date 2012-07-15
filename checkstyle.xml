@@ -50,6 +50,7 @@
 		<!-- Require method javadocs, allow undeclared RTE -->
 		<module name="JavadocMethod">
 			<property name="allowUndeclaredRTE" value="true" />
+			<property name="scope" value="protected" />
 		</module>
 
 		<!-- Require hash code override when equals is -->
