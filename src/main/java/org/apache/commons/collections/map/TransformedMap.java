@@ -43,9 +43,7 @@ import org.apache.commons.collections.Transformer;
  * @see org.apache.commons.collections.splitmap.TransformedMap
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class TransformedMap<K, V>
         extends AbstractInputCheckedMapDecorator<K, V>

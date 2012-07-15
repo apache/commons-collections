@@ -35,16 +35,16 @@ import org.apache.commons.collections.functors.FactoryTransformer;
  * <p>
  * For instance:
  * <pre>
- * Factory factory = new Factory() {
- *     public Object create() {
+ * Factory&lt;Date&gt; factory = new Factory&lt;Date&gt;() {
+ *     public Date create() {
  *         return new Date();
  *     }
  * }
- * Map lazy = Lazy.map(new HashMap(), factory);
- * Object obj = lazy.get("NOW");
+ * Map&lt;String, Date&gt; lazy = LazyMap.lazyMap(new HashMap&lt;String, Date&gt;(), factory);
+ * Date date = lazy.get("NOW");
  * </pre>
  *
- * After the above code is executed, <code>obj</code> will contain
+ * After the above code is executed, <code>date</code> will refer to
  * a new <code>Date</code> instance. Furthermore, that <code>Date</code>
  * instance is mapped to the "NOW" key in the map.
  * <p>
@@ -57,10 +57,7 @@ import org.apache.commons.collections.functors.FactoryTransformer;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Paul Jack
+ * @version $Id$
  */
 public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, V>, Serializable {
 
@@ -155,23 +152,13 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
     public V get(Object key) {
         // create value for key if key is not currently in the map
         if (map.containsKey(key) == false) {
-            K castKey = cast(key);
+            @SuppressWarnings("unchecked")
+            K castKey = (K) key;
             V value = factory.transform(castKey);
             map.put(castKey, value);
             return value;
         }
         return map.get(key);
-    }
-
-    /**
-     * Method just to cast {@link Object}s to K where necessary.  This is done to ensure that the SuppressWarnings does not 
-     * cover other stuff that it shouldn't
-     * @param key .
-     * @return the cast key.
-     */
-    @SuppressWarnings("unchecked")
-    private K cast(Object key) {
-        return (K) key;
     }
 
     // no need to wrap keySet, entrySet or values as they are views of

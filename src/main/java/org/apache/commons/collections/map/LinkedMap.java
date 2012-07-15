@@ -58,9 +58,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * exceptions when accessed by concurrent threads without synchronization.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializable, Cloneable {
 

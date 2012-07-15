@@ -31,16 +31,17 @@ import org.apache.commons.collections.Transformer;
  * <p>
  * For instance:
  * <pre>
- * Factory factory = new Factory() {
- *     public Object create() {
+ * Factory&lt;Date&gt; factory = new Factory&lt;Date&gt;() {
+ *     public Date create() {
  *         return new Date();
  *     }
  * }
- * SortedMap lazy = Lazy.sortedMap(new HashMap(), factory);
- * Object obj = lazy.get("NOW");
+ * SortedMap&lt;String, Date&gt; lazy =
+ *     LazySortedMap.lazySortedMap(new HashMap&lt;String, Date&gt;(), factory);
+ * Date date = lazy.get("NOW");
  * </pre>
  *
- * After the above code is executed, <code>obj</code> will contain
+ * After the above code is executed, <code>date</code> will refer to
  * a new <code>Date</code> instance. Furthermore, that <code>Date</code>
  * instance is mapped to the "NOW" key in the map.
  * <p>
@@ -53,10 +54,7 @@ import org.apache.commons.collections.Transformer;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Paul Jack
+ * @version $Id$
  */
 public class LazySortedMap<K,V>
         extends LazyMap<K,V>

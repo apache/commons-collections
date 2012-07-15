@@ -42,9 +42,7 @@ import org.apache.commons.collections.iterators.ListIteratorWrapper;
  * @param <K> the type of the keys in the map
  * @param <V> the type of the values in the map
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecorator<K, V> implements
         IterableSortedMap<K, V> {

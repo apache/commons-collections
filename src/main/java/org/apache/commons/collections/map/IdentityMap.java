@@ -38,10 +38,7 @@ import java.util.Map;
  * exceptions when accessed by concurrent threads without synchronization.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author java util HashMap
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class IdentityMap<K, V>
         extends AbstractHashedMap<K, V> implements Serializable, Cloneable {

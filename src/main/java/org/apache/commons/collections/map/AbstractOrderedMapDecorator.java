@@ -32,9 +32,7 @@ import org.apache.commons.collections.OrderedMapIterator;
  * But, you might want that loophole, so this class is kept simple.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public abstract class AbstractOrderedMapDecorator<K, V> extends AbstractMapDecorator<K, V>
         implements OrderedMap<K, V> {

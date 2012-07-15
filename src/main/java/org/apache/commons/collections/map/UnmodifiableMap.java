@@ -40,9 +40,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * Attempts to modify it will result in an UnsupportedOperationException. 
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public final class UnmodifiableMap<K, V>
         extends AbstractMapDecorator<K, V>

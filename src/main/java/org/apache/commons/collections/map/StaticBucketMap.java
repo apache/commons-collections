@@ -91,15 +91,7 @@ import org.apache.commons.collections.KeyValue;
  * operations will affect the map.<p>
  *
  * @since 3.0 (previously in main package v2.1)
- * @version $Revision$
- *
- * @author Berin Loritsch
- * @author Gerhard Froehlich
- * @author Michael A. Smith
- * @author Paul Jack
- * @author Leo Sutic
- * @author Janek Bogucki
- * @author Kazuya Ujihara
+ * @version $Id$
  */
 public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
 

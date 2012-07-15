@@ -38,9 +38,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * Attempts to modify it will result in an UnsupportedOperationException. 
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public final class UnmodifiableSortedMap<K, V>
         extends AbstractSortedMapDecorator<K, V>

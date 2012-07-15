@@ -66,9 +66,7 @@ import java.lang.ref.Reference;
  * @see java.lang.ref.Reference
  *
  * @since 3.0 (previously in main package v2.1)
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> implements Serializable {
 

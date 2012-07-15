@@ -57,10 +57,8 @@ import org.apache.commons.collections.functors.FactoryTransformer;
  * exceptions when accessed by concurrent threads without synchronization.
  *
  * @since 3.2
- * @version $Revision$
+ * @version $Id$
  *
- * @author Stephen Colebourne
- * @author Rafael U.C. Afonso
  * @see LazyMap
  */
 public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Serializable {

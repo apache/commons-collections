@@ -57,15 +57,8 @@ import org.apache.commons.collections.iterators.IteratorChain;
  * appropriate synchronization. This class may throw exceptions when accessed
  * by concurrent threads without synchronization.
  *
- * @author James Carman
- * @author Christopher Berry
- * @author James Strachan
- * @author Steve Downey
- * @author Stephen Colebourne
- * @author Julien Buret
- * @author Serhiy Yevtushenko
- * @version $Revision$
  * @since 3.2
+ * @version $Id$
  */
 public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> implements MultiMap<K, V>, Serializable {
 

@@ -53,11 +53,7 @@ import org.apache.commons.collections.iterators.EmptyMapIterator;
  * This extends clause will be removed in v4.0.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author java util HashMap
- * @author Stephen Colebourne
- * @author Christian Siefkes
+ * @version $Id$
  */
 public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements IterableMap<K, V> {
 

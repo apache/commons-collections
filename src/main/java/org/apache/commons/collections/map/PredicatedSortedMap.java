@@ -41,10 +41,7 @@ import org.apache.commons.collections.Predicate;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Paul Jack
+ * @version $Id$
  */
 public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements SortedMap<K, V> {
 

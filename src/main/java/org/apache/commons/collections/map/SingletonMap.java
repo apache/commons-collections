@@ -54,9 +54,7 @@ import org.apache.commons.collections.keyvalue.TiedMapEntry;
  * </ul>
  *
  * @since 3.1
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class SingletonMap<K, V>
         implements OrderedMap<K, V>, BoundedMap<K, V>, KeyValue<K, V>, Serializable, Cloneable {

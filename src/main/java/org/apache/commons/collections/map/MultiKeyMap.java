@@ -52,7 +52,7 @@ import org.apache.commons.collections.keyvalue.MultiKey;
  * As an example, consider a least recently used cache that uses a String airline code
  * and a Locale to lookup the airline's name:
  * <pre>
- * private MultiKeyMap cache = MultiKeyMap.decorate(new LRUMap(50));
+ * private MultiKeyMap cache = MultiKeyMap.multiKeyMap(new LRUMap(50));
  *
  * public String getAirlineName(String code, String locale) {
  *   String name = (String) cache.get(code, locale);
@@ -70,9 +70,7 @@ import org.apache.commons.collections.keyvalue.MultiKey;
  * by concurrent threads without synchronization.
  *
  * @since 3.1
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K>, V>
         implements IterableMap<MultiKey<? extends K>, V>, Serializable {
@@ -133,7 +131,8 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      */
     public V get(Object key1, Object key2) {
         int hashCode = hash(key1, key2);
-        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry = decorated().data[decorated().hashIndex(hashCode, decorated().data.length)];
+        AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry =
+                decorated().data[decorated().hashIndex(hashCode, decorated().data.length)];
         while (entry != null) {
             if (entry.hashCode == hashCode && isEqualKey(entry, key1, key2)) {
                 return entry.getValue();
