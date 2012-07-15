@@ -42,7 +42,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * specification will handle this gracefully.
  *
  * @param <E> the type of the elements in the buffer
- * @version $Revision$
+ * @version $Id$
  * @since 3.0
  */
 public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
