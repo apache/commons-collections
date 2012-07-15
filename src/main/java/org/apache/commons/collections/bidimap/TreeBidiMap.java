@@ -953,8 +953,8 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
                 swapPosition(nextGreater(deletedNode, dataElement), deletedNode, dataElement);
             }
 
-            Node<K, V> replacement =
-                ((deletedNode.getLeft(dataElement) != null) ? deletedNode.getLeft(dataElement) : deletedNode.getRight(dataElement));
+            Node<K, V> replacement = ((deletedNode.getLeft(dataElement) != null) ?
+                    deletedNode.getLeft(dataElement) : deletedNode.getRight(dataElement));
 
             if (replacement != null) {
                 replacement.setParent(deletedNode.getParent(dataElement), dataElement);
@@ -1103,8 +1103,10 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         Node<K, V> yFormerParent = y.getParent(dataElement);
         Node<K, V> yFormerLeftChild = y.getLeft(dataElement);
         Node<K, V> yFormerRightChild = y.getRight(dataElement);
-        boolean xWasLeftChild = (x.getParent(dataElement) != null) && (x == x.getParent(dataElement).getLeft(dataElement));
-        boolean yWasLeftChild = (y.getParent(dataElement) != null) && (y == y.getParent(dataElement).getLeft(dataElement));
+        boolean xWasLeftChild =
+                (x.getParent(dataElement) != null) && (x == x.getParent(dataElement).getLeft(dataElement));
+        boolean yWasLeftChild =
+                (y.getParent(dataElement) != null) && (y == y.getParent(dataElement).getLeft(dataElement));
 
         // Swap, handling special cases of one being the other's parent.
         if (x == yFormerParent) { // x was y's parent
@@ -1674,14 +1676,16 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
 
         public K getKey() {
             if (lastReturnedNode == null) {
-                throw new IllegalStateException("Iterator getKey() can only be called after next() and before remove()");
+                throw new IllegalStateException(
+                        "Iterator getKey() can only be called after next() and before remove()");
             }
             return lastReturnedNode.getKey();
         }
 
         public V getValue() {
             if (lastReturnedNode == null) {
-                throw new IllegalStateException("Iterator getValue() can only be called after next() and before remove()");
+                throw new IllegalStateException(
+                        "Iterator getValue() can only be called after next() and before remove()");
             }
             return lastReturnedNode.getValue();
         }
@@ -1713,14 +1717,16 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
 
         public V getKey() {
             if (lastReturnedNode == null) {
-                throw new IllegalStateException("Iterator getKey() can only be called after next() and before remove()");
+                throw new IllegalStateException(
+                        "Iterator getKey() can only be called after next() and before remove()");
             }
             return lastReturnedNode.getValue();
         }
 
         public K getValue() {
             if (lastReturnedNode == null) {
-                throw new IllegalStateException("Iterator getValue() can only be called after next() and before remove()");
+                throw new IllegalStateException(
+                        "Iterator getValue() can only be called after next() and before remove()");
             }
             return lastReturnedNode.getKey();
         }
