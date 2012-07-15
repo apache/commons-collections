@@ -65,6 +65,10 @@
       <id>morgand</id>
     </developer>
     <developer>
+      <name>Gary D. Gregory</name>
+      <id>ggregory</id>
+    </developer>
+    <developer>
       <name>Matthew Hawthorne</name>
       <id>matth</id>
     </developer>
@@ -104,6 +108,9 @@
     </contributor>
     <contributor>
       <name>Max Rydahl Andersen</name>
+    </contributor>
+    <contributor>
+      <name>Avalon</name>
     </contributor>
     <contributor>
       <name>Federico Barbieri</name>
@@ -200,6 +207,9 @@
     </contributor>
     <contributor>
       <name>Shinobu Kawai</name>
+    </contributor>
+    <contributor>
+      <name>Stephen Kestle</name>
     </contributor>
     <contributor>
       <name>Mohan Kishore</name>
@@ -304,6 +314,9 @@
       <name>Joe Raysa</name>
     </contributor>
     <contributor>
+      <name>Ashwin S</name>
+    </contributor>
+    <contributor>
       <name>Jordane Sarda</name>
     </contributor>
     <contributor>
@@ -328,7 +341,7 @@
       <name>Jan Sorensen</name>
     </contributor>
     <contributor>
-      <name>Jon S. Stevens </name>
+      <name>Jon S. Stevens</name>
     </contributor>
     <contributor>
       <name>James Strachan</name>
