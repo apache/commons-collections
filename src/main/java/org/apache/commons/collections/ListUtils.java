@@ -380,7 +380,7 @@ public class ListUtils {
      * Date date = lazy.get(3);
      * </pre>
      *
-     * After the above code is executed, <code>date</code> will contain
+     * After the above code is executed, <code>date</code> will refer to
      * a new <code>Date</code> instance.  Furthermore, that <code>Date</code>
      * instance is the fourth element in the list.  The first, second, 
      * and third element are all set to <code>null</code>.
