@@ -25,7 +25,7 @@ import org.apache.commons.collections.ResettableListIterator;
  * <code>SingletonIterator</code> is an {@link ListIterator} over a single 
  * object instance.
  *
- * @since Commons Collections 2.1
+ * @since 2.1
  * @version $Revision$
  *
  * @author Stephen Colebourne

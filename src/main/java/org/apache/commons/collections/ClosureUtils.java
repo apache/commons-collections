@@ -47,7 +47,7 @@ import org.apache.commons.collections.functors.WhileClosure;
  * </ul>
  * All the supplied closures are Serializable.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -238,7 +238,7 @@ public class ClosureUtils {
      * @return the <code>if</code> closure
      * @throws IllegalArgumentException if the predicate is null
      * @throws IllegalArgumentException if the closure is null
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public static <E> Closure<E> ifClosure(Predicate<? super E> predicate, Closure<? super E> trueClosure) {
         return IfClosure.<E>ifClosure(predicate, trueClosure);

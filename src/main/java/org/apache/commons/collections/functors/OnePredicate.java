@@ -29,7 +29,7 @@ import org.apache.commons.collections.Predicate;
  * NOTE: In versions prior to 3.2 an array size of zero or one
  * threw an exception.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -114,7 +114,7 @@ public final class OnePredicate<T> implements Predicate<T>, PredicateDecorator<T
      * Gets the predicates, do not modify the array.
      * 
      * @return the predicates
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public Predicate<? super T>[] getPredicates() {
         return iPredicates;

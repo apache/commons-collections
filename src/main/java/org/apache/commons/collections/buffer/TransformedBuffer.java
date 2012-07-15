@@ -30,7 +30,7 @@ import org.apache.commons.collections.collection.TransformedCollection;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public class TransformedBuffer<E> extends TransformedCollection<E> implements Buffer<E> {
@@ -69,7 +69,7 @@ public class TransformedBuffer<E> extends TransformedCollection<E> implements Bu
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed Buffer
      * @throws IllegalArgumentException if buffer or transformer is null
-     * @since Commons Collections 3.3
+     * @since 3.3
      */
     public static <E> TransformedBuffer<E> transformedBuffer(Buffer<E> buffer,
                                                              Transformer<? super E, ? extends E> transformer) {

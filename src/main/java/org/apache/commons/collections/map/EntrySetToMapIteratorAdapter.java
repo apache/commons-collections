@@ -26,11 +26,8 @@ import org.apache.commons.collections.ResettableIterator;
 /**
  * Adapts a Map entrySet to the MapIterator interface.
  *
- * @since Commons Collections 5
- * TODO fix version
- * @version $Revision$
- *
- * @author Matt Benson
+ * @since 4.0
+ * @version $Id$
  */
 public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, ResettableIterator<K> {
     /** The adapted Map entry Set. */

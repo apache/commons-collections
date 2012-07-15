@@ -33,7 +33,7 @@ import org.apache.commons.collections.set.TransformedSet;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public class TransformedBag<E>
@@ -71,7 +71,7 @@ public class TransformedBag<E>
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed Bag
      * @throws IllegalArgumentException if bag or transformer is null
-     * @since Commons Collections 3.3
+     * @since 3.3
      */
     public static <E> Bag<E> transformedBag(Bag<E> bag, Transformer<? super E, ? extends E> transformer) {
         TransformedBag<E> decorated = new TransformedBag<E>(bag, transformer);

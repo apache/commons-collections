@@ -30,7 +30,7 @@ package org.apache.commons.collections;
  * in this library. If you use the JDK unmodifiable class via java util Collections
  * then the interface won't be there.
  *  
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne

@@ -31,7 +31,7 @@ import org.apache.commons.collections.OrderedMapIterator;
  * it would provide a loophole around the validation.
  * But, you might want that loophole, so this class is kept simple.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -41,7 +41,7 @@ public abstract class AbstractOrderedMapDecorator<K, V> extends AbstractMapDecor
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     protected AbstractOrderedMapDecorator() {
         super();

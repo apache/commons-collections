@@ -27,7 +27,7 @@ import org.apache.commons.collections.KeyValue;
  * This can be used to enable a map entry to make changes on the underlying
  * map, however this will probably mess up any iterators.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Serializable {

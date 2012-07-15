@@ -34,7 +34,7 @@ import org.apache.commons.collections.ResettableListIterator;
  * collection implementations will throw a
  * ConcurrentModificationException.
  *
- * @since Commons Collections 3.2
+ * @since 3.2
  * @version $Revision$
  *
  * @author Eric Crampton <ccesc@eonomine.com>

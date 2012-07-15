@@ -54,7 +54,7 @@ import org.apache.commons.collections.Factory;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @see GrowthList
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public class LazyList<E> extends AbstractSerializableListDecorator<E> {

@@ -56,7 +56,7 @@ import org.apache.commons.collections.iterators.EmptyOrderedMapIterator;
  * The implementation is also designed to be subclassed, with lots of useful
  * methods exposed.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author java util LinkedHashMap
@@ -315,7 +315,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @param entry  the entry to query, must not be null
      * @return the <code>before</code> field of the entry
      * @throws NullPointerException if the entry is null
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     protected LinkEntry<K, V> entryBefore(LinkEntry<K, V> entry) {
         return entry.before;
@@ -328,7 +328,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @param entry  the entry to query, must not be null
      * @return the <code>after</code> field of the entry
      * @throws NullPointerException if the entry is null
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     protected LinkEntry<K, V> entryAfter(LinkEntry<K, V> entry) {
         return entry.after;

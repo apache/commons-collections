@@ -26,7 +26,7 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation calls the transformer whose predicate returns true,
  * like a switch statement.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -151,7 +151,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * Gets the predicates, do not modify the array.
      * 
      * @return the predicates
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public Predicate<? super I>[] getPredicates() {
         return iPredicates;
@@ -161,7 +161,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * Gets the transformers, do not modify the array.
      * 
      * @return the transformers
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public Transformer<? super I, ? extends O>[] getTransformers() {
         return iTransformers;
@@ -171,7 +171,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * Gets the default transformer.
      * 
      * @return the default transformer
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public Transformer<? super I, ? extends O> getDefaultTransformer() {
         return iDefault;

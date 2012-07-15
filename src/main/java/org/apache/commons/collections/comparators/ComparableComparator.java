@@ -34,7 +34,7 @@ import java.util.Comparator;
  * This is no longer the case. See {@link #compare(Object, Object) compare} for
  * details.
  * 
- * @since Commons Collections 2.0
+ * @since 2.0
  * @version $Id$
  * 
  * @see java.util.Collections#reverseOrder()
@@ -98,7 +98,7 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
      * {@link #equals(Object) equals}.
      *
      * @return a hash code for this comparator.
-     * @since Commons Collections 3.0
+     * @since 3.0
      */
     @Override
     public int hashCode() {
@@ -116,7 +116,7 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
      * 
      * @param object  the object to compare with
      * @return {@code true} if equal
-     * @since Commons Collections 3.0
+     * @since 3.0
      */
     @Override
     public boolean equals(Object object) {

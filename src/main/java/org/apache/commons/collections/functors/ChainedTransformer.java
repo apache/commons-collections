@@ -27,7 +27,7 @@ import org.apache.commons.collections.Transformer;
  * The input object is passed to the first transformer. The transformed result
  * is passed to the second transformer and so on.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -107,7 +107,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
     /**
      * Gets the transformers, do not modify the array.
      * @return the transformers
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public Transformer<? super T, ? extends T>[] getTransformers() {
         return iTransformers;

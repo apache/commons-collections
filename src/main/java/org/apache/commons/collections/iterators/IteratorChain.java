@@ -43,7 +43,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * NOTE: As from version 3.0, the IteratorChain may contain no iterators. In
  * this case the class will function as an empty iterator.
  *
- * @since Commons Collections 2.1
+ * @since 2.1
  * @version $Revision$
  * 2006) $
  *

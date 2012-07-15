@@ -35,7 +35,7 @@ import org.apache.commons.collections.Bag;
  * interface javadoc carefully as several methods violate the
  * {@link Collection} interface specification.
  *
- * @since Commons Collections 3.0 (previously in main package v2.0)
+ * @since 3.0 (previously in main package v2.0)
  * @version $Id$
  */
 public class HashBag<E>

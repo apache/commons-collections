@@ -25,7 +25,7 @@ import org.apache.commons.collections.functors.UniquePredicate;
  * the Iterator maintains a Set of objects it has already encountered,
  * and duplicate Objects are skipped.
  *
- * @since Commons Collections 2.1
+ * @since 2.1
  * @version $Revision$
  *
  * @author Morgan Delagrange

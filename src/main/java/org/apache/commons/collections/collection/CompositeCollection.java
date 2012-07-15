@@ -36,7 +36,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * strategy is provided then add and remove are unsupported.
  *
  * @param <E> the type of the elements in the collection
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public class CompositeCollection<E> implements Collection<E>, Serializable {

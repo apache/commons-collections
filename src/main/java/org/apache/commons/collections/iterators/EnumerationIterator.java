@@ -24,7 +24,7 @@ import java.util.Iterator;
  * Adapter to make {@link Enumeration Enumeration} instances appear
  * to be {@link Iterator Iterator} instances.
  *
- * @since Commons Collections 1.0
+ * @since 1.0
  * @version $Revision$
  *
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>

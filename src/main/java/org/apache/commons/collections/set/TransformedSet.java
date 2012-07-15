@@ -31,7 +31,7 @@ import org.apache.commons.collections.collection.TransformedCollection;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public class TransformedSet<E> extends TransformedCollection<E> implements Set<E> {
@@ -69,7 +69,7 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed set
      * @throws IllegalArgumentException if set or transformer is null
-     * @since Commons Collections 3.3
+     * @since 3.3
      */
     public static <E> Set<E> transformedSet(Set<E> set, Transformer<? super E, ? extends E> transformer) {
         TransformedSet<E> decorated = new TransformedSet<E>(set, transformer);

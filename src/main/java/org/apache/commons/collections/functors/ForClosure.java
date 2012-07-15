@@ -23,7 +23,7 @@ import org.apache.commons.collections.Closure;
 /**
  * Closure implementation that calls another closure n times, like a for loop.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -87,7 +87,7 @@ public class ForClosure<E> implements Closure<E>, Serializable {
      * Gets the closure.
      * 
      * @return the closure
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public Closure<? super E> getClosure() {
         return iClosure;
@@ -97,7 +97,7 @@ public class ForClosure<E> implements Closure<E>, Serializable {
      * Gets the count.
      * 
      * @return the count
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public int getCount() {
         return iCount;

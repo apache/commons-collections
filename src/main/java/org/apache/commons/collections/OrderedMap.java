@@ -23,7 +23,7 @@ package org.apache.commons.collections;
  * @param <K> the type of the keys in the map
  * @param <V> the type of the values in the map
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne

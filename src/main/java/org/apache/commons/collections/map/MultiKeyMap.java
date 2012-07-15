@@ -69,7 +69,7 @@ import org.apache.commons.collections.keyvalue.MultiKey;
  * appropriate synchronization. This class may throw exceptions when accessed
  * by concurrent threads without synchronization.
  *
- * @since Commons Collections 3.1
+ * @since 3.1
  * @version $Revision$
  *
  * @author Stephen Colebourne

@@ -33,7 +33,7 @@ import org.apache.commons.collections.SortedBidiMap;
  * it would provide a loophole around the validation.
  * But, you might want that loophole, so this class is kept simple.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public abstract class AbstractSortedBidiMapDecorator<K, V>

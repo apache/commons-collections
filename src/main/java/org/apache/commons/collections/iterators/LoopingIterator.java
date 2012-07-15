@@ -32,7 +32,7 @@ import org.apache.commons.collections.ResettableIterator;
  * Concurrent modifications are not directly supported, and for most collection
  * implementations will throw a ConcurrentModificationException. 
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author <a href="mailto:joncrlsn@users.sf.net">Jonathan Carlson</a>

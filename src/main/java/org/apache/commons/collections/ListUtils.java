@@ -34,7 +34,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
 /**
  * Provides utility methods and decorators for {@link List} instances.
  *
- * @since Commons Collections 1.0
+ * @since 1.0
  * @version $Id$
  */
 public class ListUtils {
@@ -237,7 +237,7 @@ public class ListUtils {
      * @return a <code>List</code> containing all the elements of <code>c</code>
      * that occur at least once in <code>retain</code>.
      * @throws NullPointerException if either parameter is null
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public static <E> List<E> retainAll(Collection<E> collection, Collection<?> retain) {
         List<E> list = new ArrayList<E>(Math.min(collection.size(), retain.size()));
@@ -265,7 +265,7 @@ public class ListUtils {
      * @return a <code>List</code> containing all the elements of <code>c</code> except
      * any elements that also occur in <code>remove</code>.
      * @throws NullPointerException if either parameter is null
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public static <E> List<E> removeAll(Collection<E> collection, Collection<?> remove) {
         List<E> list = new ArrayList<E>();

@@ -23,7 +23,7 @@ import java.util.Iterator;
  * <p>
  * All methods are forwarded to the decorated iterator.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author James Strachan

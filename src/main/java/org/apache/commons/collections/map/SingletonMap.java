@@ -53,7 +53,7 @@ import org.apache.commons.collections.keyvalue.TiedMapEntry;
  * <li>the <code>KeyValue</code> interface (just cast - no object creation)
  * </ul>
  *
- * @since Commons Collections 3.1
+ * @since 3.1
  * @version $Revision$
  *
  * @author Stephen Colebourne

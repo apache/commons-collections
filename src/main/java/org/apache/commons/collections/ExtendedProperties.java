@@ -129,7 +129,7 @@ import java.util.Vector;
  * much time to improve it), I wrote it this way.  If you don't like
  * it, go ahead and tune it up!
  *
- * @since Commons Collections 1.0
+ * @since 1.0
  * @version $Revision$
  *
  * @author <a href="mailto:stefano@apache.org">Stefano Mazzocchi</a>
@@ -1105,7 +1105,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @return The associated List object.
      * @throws ClassCastException is thrown if the key maps to an
      * object that is not a List.
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public List<String> getList(String key) {
         return getList(key, null);
@@ -1122,7 +1122,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @return The associated List.
      * @throws ClassCastException is thrown if the key maps to an
      * object that is not a List.
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public List<String> getList(String key, List<String> defaultValue) {
         Object value = get(key);

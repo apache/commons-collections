@@ -32,7 +32,7 @@ import java.util.Set;
  * Most map implementation can be used to create a set by passing in dummy values.
  * Exceptions include <code>BidiMap</code> implementations, as they require unique values.
  *
- * @since Commons Collections 3.1
+ * @since 3.1
  * @version $Id$
  */
 public final class MapBackedSet<E, V> implements Set<E>, Serializable {

@@ -32,7 +32,7 @@ import org.apache.commons.collections.ResettableIterator;
  * The iterator implements a {@link #reset} method, allowing the reset of 
  * the iterator back to the start if required.
  *
- * @since Commons Collections 1.0
+ * @since 1.0
  * @version $Revision$
  *
  * @author James Strachan

@@ -39,7 +39,7 @@ import org.apache.commons.collections.set.CompositeSet;
  * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Brian McCallister

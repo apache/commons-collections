@@ -25,7 +25,7 @@ import org.apache.commons.collections.SortedBag;
  * <p>
  * Methods are forwarded directly to the decorated bag.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public abstract class AbstractSortedBagDecorator<E>
@@ -36,7 +36,7 @@ public abstract class AbstractSortedBagDecorator<E>
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     protected AbstractSortedBagDecorator() {
         super();

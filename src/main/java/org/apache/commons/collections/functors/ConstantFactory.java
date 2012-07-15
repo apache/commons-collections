@@ -27,7 +27,7 @@ import org.apache.commons.collections.Factory;
  * objects should use the constant factory. Mutable objects should
  * use the prototype factory.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -81,7 +81,7 @@ public class ConstantFactory<T> implements Factory<T>, Serializable {
      * Gets the constant.
      * 
      * @return the constant
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public T getConstant() {
         return iConstant;

@@ -27,7 +27,7 @@ import org.apache.commons.collections.Predicate;
  * This iterator decorates the underlying iterator, only allowing through
  * those elements that match the specified {@link Predicate Predicate}.
  *
- * @since Commons Collections 2.0
+ * @since 2.0
  * @version $Revision$
  *
  * @author Rodney Waldhoff

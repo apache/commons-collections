@@ -35,7 +35,7 @@ import java.util.Iterator;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @param <E> the type of the elements in the collection
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public class SynchronizedCollection<E> implements Collection<E>, Serializable {

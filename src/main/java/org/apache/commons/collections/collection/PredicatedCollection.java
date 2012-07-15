@@ -34,7 +34,7 @@ import org.apache.commons.collections.Predicate;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @param <E> the type of the elements in the collection
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {

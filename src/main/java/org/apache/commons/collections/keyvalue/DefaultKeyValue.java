@@ -27,7 +27,7 @@ import org.apache.commons.collections.KeyValue;
  * Note that a <code>DefaultKeyValue</code> instance may not contain
  * itself as a key or value.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {

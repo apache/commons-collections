@@ -51,7 +51,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
- * @since Commons Collections 3.0 (previously in main package v2.1)
+ * @since 3.0 (previously in main package v2.1)
  * @version $Id$
  */
 public class UnboundedFifoBuffer<E> extends AbstractCollection<E> implements Buffer<E>, Serializable {

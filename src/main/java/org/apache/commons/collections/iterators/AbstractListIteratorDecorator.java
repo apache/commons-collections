@@ -23,7 +23,7 @@ import java.util.ListIterator;
  * <p>
  * All methods are forwarded to the decorated list iterator.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Rodney Waldhoff

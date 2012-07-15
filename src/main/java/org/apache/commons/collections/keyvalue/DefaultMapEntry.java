@@ -24,7 +24,7 @@ import org.apache.commons.collections.KeyValue;
  * A restricted implementation of {@link Map.Entry} that prevents
  * the {@link Map.Entry} contract from being broken.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public final class DefaultMapEntry<K, V> extends AbstractMapEntry<K, V> {

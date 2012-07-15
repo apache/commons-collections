@@ -28,7 +28,7 @@ package org.apache.commons.collections;
  *
  * @param <T> the type that the factory creates
  *
- * @since Commons Collections 2.1
+ * @since 2.1
  * @version $Revision$
  *
  * @author Arron Bates

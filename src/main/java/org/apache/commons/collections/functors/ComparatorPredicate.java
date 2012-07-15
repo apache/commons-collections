@@ -73,7 +73,7 @@ import org.apache.commons.collections.Predicate;
  * using the <code>GREATER</code> evaluation criterion constant. This instructs the predicate to
  * return <code>true</code> if the comparator returns a value greater than <code>0</code>.
  *
- * @since Commons Collections 4.0
+ * @since 4.0
  * @version $Revision$
  *
  * @author Rune Peter Bjørnstad.

@@ -36,7 +36,7 @@ import org.apache.commons.collections.set.UnmodifiableSortedSet;
  * Provides utility methods and decorators for
  * {@link Set} and {@link SortedSet} instances.
  *
- * @since Commons Collections 2.1
+ * @since 2.1
  * @version $Revision$
  *
  * @author Paul Jack

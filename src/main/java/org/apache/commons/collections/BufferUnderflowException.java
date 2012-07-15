@@ -23,7 +23,7 @@ import java.util.NoSuchElementException;
  * <p>
  * NOTE: From version 3.0, this exception extends NoSuchElementException.
  *
- * @since Commons Collections 2.1
+ * @since 2.1
  * @version $Revision$
  *
  * @author Avalon

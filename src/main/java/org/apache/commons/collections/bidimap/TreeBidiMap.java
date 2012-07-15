@@ -69,7 +69,7 @@ import static org.apache.commons.collections.bidimap.TreeBidiMap.DataElement.VAL
  * not allow setValue() and will throw an
  * UnsupportedOperationException on attempts to call that method.
  *
- * @since Commons Collections 3.0 (previously DoubleOrderedMap v2.0)
+ * @since 3.0 (previously DoubleOrderedMap v2.0)
  * @version $Id$
  */
 public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> implements OrderedBidiMap<K, V> {

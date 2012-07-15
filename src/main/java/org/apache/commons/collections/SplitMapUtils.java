@@ -30,7 +30,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * Utilities for working with "split maps:" objects that implement {@link Put}
  * and/or {@link Get} but not {@link Map}.
  *
- * @since Commons Collections 4.0
+ * @since 4.0
  * @version $Id$
  *
  * @see Get

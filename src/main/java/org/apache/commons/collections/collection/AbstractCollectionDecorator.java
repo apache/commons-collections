@@ -36,7 +36,7 @@ import java.util.Iterator;
  * to write an unmodifiable implementation it might provide a loophole.
  *
  * @param <E> the type of the elements in the collection
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public abstract class AbstractCollectionDecorator<E>
@@ -50,7 +50,7 @@ public abstract class AbstractCollectionDecorator<E>
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     protected AbstractCollectionDecorator() {
         super();

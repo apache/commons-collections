@@ -46,7 +46,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> implements Set<E> {
@@ -68,7 +68,7 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
      * @return a new ordered set
      * @throws IllegalArgumentException if set or list is null
      * @throws IllegalArgumentException if either the set or list is not empty
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public static <E> ListOrderedSet<E> listOrderedSet(Set<E> set, List<E> list) {
         if (set == null) {
@@ -125,7 +125,7 @@ public class ListOrderedSet<E> extends AbstractSerializableSetDecorator<E> imple
      * Constructs a new empty <code>ListOrderedSet</code> using
      * a <code>HashSet</code> and an <code>ArrayList</code> internally.
      *
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public ListOrderedSet() {
         super(new HashSet<E>());

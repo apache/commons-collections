@@ -65,7 +65,7 @@ import org.apache.commons.collections.iterators.IteratorChain;
  * @author Julien Buret
  * @author Serhiy Yevtushenko
  * @version $Revision$
- * @since Commons Collections 3.2
+ * @since 3.2
  */
 public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> implements MultiMap<K, V>, Serializable {
 
@@ -144,7 +144,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * 
      * @param out  the output stream
      * @throws IOException
-     * @since Commons Collections 3.3
+     * @since 3.3
      */
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -157,7 +157,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException
-     * @since Commons Collections 3.3
+     * @since 3.3
      */
     @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {

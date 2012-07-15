@@ -23,7 +23,7 @@ import org.apache.commons.collections.Predicate;
 /**
  * Predicate implementation that returns true if both the predicates return true.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -80,7 +80,7 @@ public final class AndPredicate<T> implements Predicate<T>, PredicateDecorator<T
      * Gets the two predicates being decorated as an array.
      *
      * @return the predicates
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     @SuppressWarnings("unchecked")
     public Predicate<? super T>[] getPredicates() {

@@ -40,7 +40,7 @@ import org.apache.commons.collections.iterators.AbstractIteratorDecorator;
  * With a timeout, the add methods will wait for up to the timeout period
  * to try and add the elements.
  *
- * @since Commons Collections 3.2
+ * @since 3.2
  * @version $Id$
  */
 public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCollection<E> {

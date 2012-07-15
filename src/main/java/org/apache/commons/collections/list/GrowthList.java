@@ -49,7 +49,7 @@ import java.util.List;
  * can be used together by decorating twice.
  *
  * @see LazyList
- * @since Commons Collections 3.2
+ * @since 3.2
  * @version $Id$
  */
 public class GrowthList<E> extends AbstractSerializableListDecorator<E> {

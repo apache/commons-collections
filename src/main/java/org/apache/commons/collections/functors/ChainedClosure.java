@@ -24,7 +24,7 @@ import org.apache.commons.collections.Closure;
 /**
  * Closure implementation that chains the specified closures together.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -106,7 +106,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
     /**
      * Gets the closures, do not modify the array.
      * @return the closures
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public Closure<? super E>[] getClosures() {
         return iClosures;

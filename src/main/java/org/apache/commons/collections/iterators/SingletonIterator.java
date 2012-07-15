@@ -25,7 +25,7 @@ import org.apache.commons.collections.ResettableIterator;
  * <code>SingletonIterator</code> is an {@link Iterator} over a single 
  * object instance.
  *
- * @since Commons Collections 2.0
+ * @since 2.0
  * @version $Revision$
  *
  * @author James Strachan
@@ -60,7 +60,7 @@ public class SingletonIterator<E>
      *
      * @param object  the single object to return from the iterator
      * @param removeAllowed  true if remove is allowed
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public SingletonIterator(E object, boolean removeAllowed) {
         super();

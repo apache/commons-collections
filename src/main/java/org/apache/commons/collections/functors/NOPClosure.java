@@ -23,7 +23,7 @@ import org.apache.commons.collections.Closure;
 /**
  * Closure implementation that does nothing.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -40,7 +40,7 @@ public final class NOPClosure<E> implements Closure<E>, Serializable {
      * Factory returning the singleton instance.
      *
      * @return the singleton instance
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     @SuppressWarnings("unchecked")
     public static <E> Closure<E> nopClosure() {

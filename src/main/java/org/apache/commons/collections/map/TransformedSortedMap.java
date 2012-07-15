@@ -38,7 +38,7 @@ import org.apache.commons.collections.Transformer;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -80,7 +80,7 @@ public class TransformedSortedMap<K, V>
      * @param keyTransformer  the transformer to use for key conversion, null means no transformation
      * @param valueTransformer  the transformer to use for value conversion, null means no transformation
      * @throws IllegalArgumentException if map is null
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public static <K, V> TransformedSortedMap<K, V> transformedSortedMap(SortedMap<K, V> map,
             Transformer<? super K, ? extends K> keyTransformer,

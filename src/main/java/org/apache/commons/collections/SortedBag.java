@@ -23,7 +23,7 @@ import java.util.Comparator;
  * its unique representative members.
  *
  * @param <E> the type to iterate over
- * @since Commons Collections 2.0
+ * @since 2.0
  * @version $Revision$
  *
  * @author Chuck Burdick

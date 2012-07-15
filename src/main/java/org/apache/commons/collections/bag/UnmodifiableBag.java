@@ -36,7 +36,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * <p>
  * Attempts to modify it will result in an UnsupportedOperationException. 
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public final class UnmodifiableBag<E>

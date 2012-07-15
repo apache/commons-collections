@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * Serializable subclass of AbstractListDecorator.
  *
- * @since Commons Collections 3.1
+ * @since 3.1
  * @version $Id$
  */
 public abstract class AbstractSerializableListDecorator<E>

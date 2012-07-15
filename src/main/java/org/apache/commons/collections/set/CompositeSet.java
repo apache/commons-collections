@@ -30,7 +30,7 @@ import org.apache.commons.collections.collection.CompositeCollection;
  * Add operations require the use of a pluggable strategy.
  * If no strategy is provided then add is unsupported.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {

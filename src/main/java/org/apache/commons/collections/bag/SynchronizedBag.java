@@ -31,7 +31,7 @@ import org.apache.commons.collections.set.SynchronizedSet;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public class SynchronizedBag<E>

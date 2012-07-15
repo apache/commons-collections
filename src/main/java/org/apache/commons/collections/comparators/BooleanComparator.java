@@ -27,7 +27,7 @@ import java.util.Comparator;
  * @see #getFalseFirstComparator()
  * @see #booleanComparator(boolean)
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public final class BooleanComparator implements Comparator<Boolean>, Serializable {

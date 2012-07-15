@@ -24,7 +24,7 @@ import java.util.ListIterator;
  * This interface allows an iterator to be repeatedly reused.
  *
  * @param <E> the type to iterate over
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne

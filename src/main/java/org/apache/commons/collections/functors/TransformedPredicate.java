@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
  * Predicate implementation that transforms the given object before invoking
  * another <code>Predicate</code>.
  *
- * @since Commons Collections 3.1
+ * @since 3.1
  * @version $Revision$
  * @author Alban Peignier
  * @author Stephen Colebourne
@@ -87,7 +87,7 @@ public final class TransformedPredicate<T> implements Predicate<T>, PredicateDec
      * Gets the predicate being decorated.
      *
      * @return the predicate as the only element in an array
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     @SuppressWarnings("unchecked")
     public Predicate<? super T>[] getPredicates() {

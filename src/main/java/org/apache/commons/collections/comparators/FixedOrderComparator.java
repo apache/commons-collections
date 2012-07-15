@@ -40,14 +40,14 @@ import java.util.Map;
  * thread-safe at construction time, but it is thread-safe to perform
  * multiple comparisons  after all the setup operations are complete.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public class FixedOrderComparator<T> implements Comparator<T> {
 
     /**
      * Unknown object behavior enum.
-     * @since Commons Collections 4.0
+     * @since 4.0
      */
     public static enum UnknownObjectBehavior {
         BEFORE, AFTER, EXCEPTION;

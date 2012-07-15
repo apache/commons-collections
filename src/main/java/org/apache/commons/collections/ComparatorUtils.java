@@ -35,7 +35,7 @@ import org.apache.commons.collections.comparators.TransformingComparator;
  * convenient central place if you have use for more than one class
  * in the <code>comparators</code> subpackage.
  *
- * @since Commons Collections 2.1
+ * @since 2.1
  * @version $Revision$
  *
  * @author Paul Jack

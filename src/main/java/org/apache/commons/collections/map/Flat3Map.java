@@ -67,7 +67,7 @@ import org.apache.commons.collections.iterators.EmptyMapIterator;
  * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -384,7 +384,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * would be poor choices.
      *
      * @return a new AbstractHashedMap or subclass
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     protected AbstractHashedMap<K, V> createDelegateMap() {
         return new HashedMap<K, V>();
@@ -1045,7 +1045,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * Clones the map without cloning the keys or values.
      *
      * @return a shallow clone
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     @Override
     @SuppressWarnings("unchecked")

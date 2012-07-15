@@ -23,7 +23,7 @@ import org.apache.commons.collections.OrderedMapIterator;
  * <p>
  * All methods are forwarded to the decorated map iterator.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne

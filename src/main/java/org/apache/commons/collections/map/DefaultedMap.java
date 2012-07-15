@@ -56,7 +56,7 @@ import org.apache.commons.collections.functors.FactoryTransformer;
  * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw 
  * exceptions when accessed by concurrent threads without synchronization.
  *
- * @since Commons Collections 3.2
+ * @since 3.2
  * @version $Revision$
  *
  * @author Stephen Colebourne

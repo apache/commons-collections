@@ -26,7 +26,7 @@ import org.apache.commons.collections.Transformer;
 /**
  * Transformer implementation that creates a new object instance by reflection.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -48,7 +48,7 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
      * 
      * @param methodName  the method name to call
      * @return an invoker transformer
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public static <I, O> Transformer<I, O> invokerTransformer(String methodName) {
         if (methodName == null) {

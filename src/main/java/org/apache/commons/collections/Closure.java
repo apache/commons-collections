@@ -26,7 +26,7 @@ package org.apache.commons.collections;
  * {@link ClosureUtils}. These include method invocation and for/while loops.
  *
  * @param <T> the type that the closure acts on
- * @since Commons Collections 1.0
+ * @since 1.0
  * @version $Revision$
  *
  * @author James Strachan

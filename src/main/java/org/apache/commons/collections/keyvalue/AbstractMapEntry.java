@@ -22,7 +22,7 @@ import java.util.Map;
  * Abstract Pair class to assist with creating correct
  * {@link java.util.Map.Entry Map.Entry} implementations.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> implements Map.Entry<K, V> {

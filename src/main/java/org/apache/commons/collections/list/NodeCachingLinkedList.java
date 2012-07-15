@@ -36,7 +36,7 @@ import java.util.Collection;
  * <p>
  * <b>Note that this implementation is not synchronized.</b>
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements Serializable {

@@ -25,7 +25,7 @@ import org.apache.commons.collections.ComparatorUtils;
  * Reverses the order of another comparator by reversing the arguments
  * to its {@link #compare(Object, Object) compare} method.
  *
- * @since Commons Collections 2.0
+ * @since 2.0
  * @version $Id$
  *
  * @see java.util.Collections#reverseOrder()
@@ -83,7 +83,7 @@ public class ReverseComparator<E> implements Comparator<E>, Serializable {
      * {@link #equals(Object) equals}.
      * 
      * @return a suitable hash code
-     * @since Commons Collections 3.0
+     * @since 3.0
      */
     @Override
     public int hashCode() {
@@ -104,7 +104,7 @@ public class ReverseComparator<E> implements Comparator<E>, Serializable {
      * 
      * @param object  the object to compare to
      * @return true if equal
-     * @since Commons Collections 3.0
+     * @since 3.0
      */
     @Override
     public boolean equals(Object object) {

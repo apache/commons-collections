@@ -36,7 +36,7 @@ import java.util.Collection;
  * {@link Bag}.
  *
  * @param <E> the type of the elements in the buffer
- * @since Commons Collections 2.1
+ * @since 2.1
  * @version $Revision$
  *
  * @author Avalon

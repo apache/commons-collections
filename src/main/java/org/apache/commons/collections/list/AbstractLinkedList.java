@@ -38,7 +38,7 @@ import org.apache.commons.collections.OrderedIterator;
  * nodes are added to and removed. Hopefully, all you need for unusual subclasses
  * is here.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public abstract class AbstractLinkedList<E> implements List<E> {
@@ -640,7 +640,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
          * Gets the value of the node.
          *
          * @return the value
-         * @since Commons Collections 3.1
+         * @since 3.1
          */
         protected E getValue() {
             return value;
@@ -650,7 +650,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
          * Sets the value of the node.
          *
          * @param value  the value
-         * @since Commons Collections 3.1
+         * @since 3.1
          */
         protected void setValue(E value) {
             this.value = value;
@@ -660,7 +660,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
          * Gets the previous node.
          *
          * @return the previous node
-         * @since Commons Collections 3.1
+         * @since 3.1
          */
         protected Node<E> getPreviousNode() {
             return previous;
@@ -670,7 +670,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
          * Sets the previous node.
          *
          * @param previous  the previous node
-         * @since Commons Collections 3.1
+         * @since 3.1
          */
         protected void setPreviousNode(Node<E> previous) {
             this.previous = previous;
@@ -680,7 +680,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
          * Gets the next node.
          *
          * @return the next node
-         * @since Commons Collections 3.1
+         * @since 3.1
          */
         protected Node<E> getNextNode() {
             return next;
@@ -690,7 +690,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
          * Sets the next node.
          *
          * @param next  the next node
-         * @since Commons Collections 3.1
+         * @since 3.1
          */
         protected void setNextNode(Node<E> next) {
             this.next = next;

@@ -35,7 +35,7 @@ import java.util.EmptyStackException;
  * Unlike <code>Stack</code>, <code>ArrayStack</code> accepts null entries.
  *
  * @see java.util.Stack
- * @since Commons Collections 1.0
+ * @since 1.0
  * @version $Revision$
  *
  * @author Craig R. McClanahan

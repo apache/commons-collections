@@ -26,7 +26,7 @@ import java.util.NoSuchElementException;
  * This iterator allows both forward and reverse iteration through the container.
  *
  * @param <E> the type to iterate over
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne

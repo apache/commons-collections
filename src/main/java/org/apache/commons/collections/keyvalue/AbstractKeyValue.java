@@ -22,7 +22,7 @@ import org.apache.commons.collections.KeyValue;
  * Abstract pair class to assist with creating <code>KeyValue</code>
  * and {@link java.util.Map.Entry Map.Entry} implementations.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {

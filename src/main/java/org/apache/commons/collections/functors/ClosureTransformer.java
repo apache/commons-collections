@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation that calls a Closure using the input object
  * and then returns the input.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -78,7 +78,7 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
      * Gets the closure.
      * 
      * @return the closure
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public Closure<? super T> getClosure() {
         return iClosure;

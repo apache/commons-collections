@@ -23,7 +23,7 @@ import org.apache.commons.collections.Predicate;
 /**
  * Predicate implementation that always returns false.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -40,7 +40,7 @@ public final class FalsePredicate<T> implements Predicate<T>, Serializable {
      * Get a typed instance.
      *
      * @return the singleton instance
-     * @since Commons Collections 4.0
+     * @since 4.0
      */
     @SuppressWarnings("unchecked")
     public static <T> Predicate<T> falsePredicate() {

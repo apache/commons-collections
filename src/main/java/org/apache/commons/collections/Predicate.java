@@ -30,7 +30,7 @@ package org.apache.commons.collections;
  *
  * @param <T> the type that the predicate queries
  *
- * @since Commons Collections 1.0
+ * @since 1.0
  * @version $Revision$
  *
  * @author James Strachan

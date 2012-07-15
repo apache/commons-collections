@@ -67,7 +67,7 @@ import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
  * such, together with alternate solutions that are binary compatible
  * against versions 2.1.1 and 3.1.
  *
- * @since Commons Collections 2.1
+ * @since 2.1
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -601,7 +601,7 @@ public class IteratorUtils {
      * @param root  the root object to start iterating from, null results in an empty iterator
      * @param transformer  the transformer to use, see above, null uses no effect transformer
      * @return a new object graph iterator
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public static <E> Iterator<E> objectGraphIterator(E root, Transformer<? super E, ? extends E> transformer) {
         return new ObjectGraphIterator<E>(root, transformer);
@@ -703,7 +703,7 @@ public class IteratorUtils {
      * @param list  the list to iterate over, not null
      * @return a new looping iterator
      * @throws NullPointerException if the list is null
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public static <E> ResettableListIterator<E> loopingListIterator(List<E> list) {
         if (list == null) {

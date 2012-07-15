@@ -53,7 +53,7 @@ import org.apache.commons.collections.comparators.ComparableComparator;
  * <p>
  * This class is Serializable from Commons Collections 3.2.
  *
- * @since Commons Collections 3.0 (previously BinaryHeap v1.0)
+ * @since 3.0 (previously BinaryHeap v1.0)
  * @version $Id$
  */
 public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E>, Serializable {

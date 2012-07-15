@@ -52,7 +52,7 @@ import java.util.ListIterator;
  * <b>Note that this implementation is not synchronized.</b>
  *
  * @see java.util.LinkedList
- * @since Commons Collections 1.0
+ * @since 1.0
  * @version $Id$
  */
 public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Serializable {
@@ -567,7 +567,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
     /**
      * A cursor for the sublist based on LinkedSubListIterator.
      *
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     protected static class SubCursor<E> extends Cursor<E> {
 

@@ -52,7 +52,7 @@ import org.apache.commons.collections.iterators.EmptyMapIterator;
  * This is to provide backwards compatibility for ReferenceMap between v3.0 and v3.1.
  * This extends clause will be removed in v4.0.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author java util HashMap
@@ -698,7 +698,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @param entry  the entry to query, must not be null
      * @return the <code>next</code> field of the entry
      * @throws NullPointerException if the entry is null
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     protected HashEntry<K, V> entryNext(HashEntry<K, V> entry) {
         return entry.next;
@@ -711,7 +711,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @param entry  the entry to query, must not be null
      * @return the <code>hashCode</code> field of the entry
      * @throws NullPointerException if the entry is null
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     protected int entryHashCode(HashEntry<K, V> entry) {
         return entry.hashCode;
@@ -724,7 +724,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @param entry  the entry to query, must not be null
      * @return the <code>key</code> field of the entry
      * @throws NullPointerException if the entry is null
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     protected K entryKey(HashEntry<K, V> entry) {
         return entry.getKey();
@@ -737,7 +737,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @param entry  the entry to query, must not be null
      * @return the <code>value</code> field of the entry
      * @throws NullPointerException if the entry is null
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     protected V entryValue(HashEntry<K, V> entry) {
         return entry.getValue();

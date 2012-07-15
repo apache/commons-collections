@@ -33,7 +33,7 @@ import org.apache.commons.collections.functors.PrototypeFactory;
  * </ul>
  * All the supplied factories are Serializable.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne

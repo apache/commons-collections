@@ -44,7 +44,7 @@ import java.util.List;
  * thread-safe at construction time, but it <i>is</i> thread-safe to perform
  * multiple comparisons after all the setup operations are complete.
  * 
- * @since Commons Collections 2.0
+ * @since 2.0
  * @version $Id$
  */
 public class ComparatorChain<E> implements Comparator<E>, Serializable {
@@ -300,7 +300,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      * {@link #equals(Object) equals}.
      *
      * @return a suitable hash code
-     * @since Commons Collections 3.0
+     * @since 3.0
      */
     @Override
     public int hashCode() {
@@ -328,7 +328,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      *
      * @param object  the object to compare with
      * @return true if equal
-     * @since Commons Collections 3.0
+     * @since 3.0
      */
     @Override
     public boolean equals(Object object) {

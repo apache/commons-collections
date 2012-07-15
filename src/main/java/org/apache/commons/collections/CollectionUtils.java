@@ -40,7 +40,7 @@ import org.apache.commons.collections.functors.TruePredicate;
  * Provides utility methods and decorators for {@link Collection} instances.
  * Method parameters will take {@link Iterable} objects when possible.
  *
- * @since Commons Collections 1.0
+ * @since 1.0
  * @version $Revision$
  *
  * @author Rodney Waldhoff
@@ -793,7 +793,7 @@ public class CollectionUtils {
      * @param object  the object to add, if null it will not be added
      * @return true if the collection changed
      * @throws NullPointerException if the collection is null
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public static <T> boolean addIgnoreNull(Collection<T> collection, T object) {
         if (collection == null) {
@@ -1037,7 +1037,7 @@ public class CollectionUtils {
      * @param object  the object to get the size of, may be null
      * @return the size of the specified collection or 0 if the object was null
      * @throws IllegalArgumentException thrown if object is not recognised
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public static int size(Object object) {
         if (object == null) {
@@ -1090,7 +1090,7 @@ public class CollectionUtils {
      * @param object  the object to get the size of, may be null
      * @return true if empty or null
      * @throws IllegalArgumentException thrown if object is not recognised
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public static boolean sizeIsEmpty(Object object) {
         if (object == null) {
@@ -1122,7 +1122,7 @@ public class CollectionUtils {
      *
      * @param coll  the collection to check, may be null
      * @return true if empty or null
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public static boolean isEmpty(Collection<?> coll) {
         return (coll == null || coll.isEmpty());
@@ -1135,7 +1135,7 @@ public class CollectionUtils {
      *
      * @param coll  the collection to check, may be null
      * @return true if non-null and non-empty
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public static boolean isNotEmpty(Collection<?> coll) {
         return !isEmpty(coll);
@@ -1237,7 +1237,7 @@ public class CollectionUtils {
      * @return a <code>Collection</code> containing all the elements of <code>collection</code>
      * that occur at least once in <code>retain</code>.
      * @throws NullPointerException if either parameter is null
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public static <C> Collection<C> retainAll(Collection<C> collection, Collection<?> retain) {
         return ListUtils.retainAll(collection, retain);
@@ -1257,7 +1257,7 @@ public class CollectionUtils {
      * @return a <code>Collection</code> containing all the elements of <code>collection</code> except
      * any elements that also occur in <code>remove</code>.
      * @throws NullPointerException if either parameter is null
-     * @since Commons Collections 3.3 (method existed in 3.2 but was completely broken)
+     * @since 3.3 (method existed in 3.2 but was completely broken)
      */
     public static <E> Collection<E> removeAll(Collection<E> collection, Collection<?> remove) {
         return ListUtils.removeAll(collection, remove);

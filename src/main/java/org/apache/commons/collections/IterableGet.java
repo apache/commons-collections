@@ -20,11 +20,11 @@ import java.util.Map;
 
 /**
  * The "read" subset of the {@link Map} interface.
- * @since Commons Collections 5
- * TODO fix version
- * @version $Revision$
+ *
+ * @since 4.0
+ * @version $Id$
+ *
  * @see Put
- * @author Matt Benson
  */
 public interface IterableGet<K, V> extends Get<K, V> {
     /**

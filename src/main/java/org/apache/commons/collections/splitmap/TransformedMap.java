@@ -52,7 +52,7 @@ import org.apache.commons.collections.map.LinkedMap;
  * but is intended to be worked with either directly or by {@link Put} and {@link Get}
  * generalizations.
  *
- * @since Commons Collections 4.0
+ * @since 4.0
  * @version $Id$
  *
  * @see SplitMapUtils#readableMap(Get)
@@ -133,7 +133,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      * @param in the input stream
      * @throws IOException
      * @throws ClassNotFoundException
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {

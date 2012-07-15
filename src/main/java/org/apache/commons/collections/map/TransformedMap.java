@@ -42,7 +42,7 @@ import org.apache.commons.collections.Transformer;
  * <p>
  * @see org.apache.commons.collections.splitmap.TransformedMap
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -89,7 +89,7 @@ public class TransformedMap<K, V>
      * @param keyTransformer  the transformer to use for key conversion, null means no transformation
      * @param valueTransformer  the transformer to use for value conversion, null means no transformation
      * @throws IllegalArgumentException if map is null
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public static <K, V> TransformedMap<K, V> transformedMap(Map<K, V> map,
             Transformer<? super K, ? extends K> keyTransformer,
@@ -128,7 +128,7 @@ public class TransformedMap<K, V>
      *
      * @param out  the output stream
      * @throws IOException
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -141,7 +141,7 @@ public class TransformedMap<K, V>
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
@@ -206,7 +206,7 @@ public class TransformedMap<K, V>
      *
      * @param value  the value to transform
      * @return the transformed value
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     @Override
     protected V checkSetValue(V value) {
@@ -217,7 +217,7 @@ public class TransformedMap<K, V>
      * Override to only return true when there is a value transformer.
      *
      * @return true if a value transformer is in use
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     @Override
     protected boolean isSetValueChecking() {

@@ -37,7 +37,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * map will be used to map bag elements to a number; the number represents the
  * number of occurrences of that element in the bag.
  *
- * @since Commons Collections 3.0 (previously DefaultMapBag v2.0)
+ * @since 3.0 (previously DefaultMapBag v2.0)
  * @version $Id$
  */
 public abstract class AbstractMapBag<E> implements Bag<E> {

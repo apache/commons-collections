@@ -90,7 +90,7 @@ import org.apache.commons.collections.KeyValue;
  * iterations, or if you can make your own guarantees about how bulk 
  * operations will affect the map.<p>
  *
- * @since Commons Collections 3.0 (previously in main package v2.1)
+ * @since 3.0 (previously in main package v2.1)
  * @version $Revision$
  *
  * @author Berin Loritsch

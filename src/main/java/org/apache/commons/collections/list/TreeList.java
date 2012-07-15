@@ -50,7 +50,7 @@ import org.apache.commons.collections.OrderedIterator;
  * <code>TreeList</code> is almost always a good replacement for it, although it
  * does use slightly more memory.
  *
- * @since Commons Collections 3.1
+ * @since 3.1
  * @version $Id$
  */
 public class TreeList<E> extends AbstractList<E> {

@@ -39,7 +39,7 @@ import org.apache.commons.collections.set.AbstractSetDecorator;
  * This class is package-scoped, and may be withdrawn or replaced in future
  * versions of Commons Collections.
  *
- * @since Commons Collections 3.1
+ * @since 3.1
  * @version $Revision$
  *
  * @author Stephen Colebourne

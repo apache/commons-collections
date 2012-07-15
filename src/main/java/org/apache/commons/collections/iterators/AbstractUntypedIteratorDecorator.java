@@ -24,12 +24,8 @@ import java.util.Iterator;
  * <p>
  * All methods are forwarded to the decorated iterator.
  *
- * @since Commons Collections 5
- * @version $Revision$
- *
- * @author James Strachan
- * @author Stephen Colebourne
- * @author Matt Benson
+ * @since 4.0
+ * @version $Id$
  */
 public abstract class AbstractUntypedIteratorDecorator<I, O> implements Iterator<O> {
 

@@ -26,7 +26,7 @@ import org.apache.commons.collections.collection.AbstractCollectionDecorator;
  * Methods are forwarded directly to the decorated set.
  *
  * @param <E> the type of the elements in the set
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public abstract class AbstractSetDecorator<E> extends AbstractCollectionDecorator<E> implements
@@ -37,7 +37,7 @@ public abstract class AbstractSetDecorator<E> extends AbstractCollectionDecorato
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     protected AbstractSetDecorator() {
         super();

@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation that calls a Predicate using the input object
  * and then returns the result.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -77,7 +77,7 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
      * Gets the predicate.
      * 
      * @return the predicate
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public Predicate<? super T> getPredicate() {
         return iPredicate;

@@ -42,7 +42,7 @@ import org.apache.commons.collections.ResettableListIterator;
  * <p>
  * This class implements ResettableListIterator from Commons Collections 3.2.
  *
- * @since Commons Collections 2.1
+ * @since 2.1
  * @version $Revision$
  *
  * @author Morgan Delagrange
@@ -248,7 +248,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
      * Resets this iterator back to the position at which the iterator
      * was created.
      *
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public void reset()  {
         if (iterator instanceof ListIterator) {

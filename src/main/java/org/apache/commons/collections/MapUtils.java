@@ -70,7 +70,7 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
  *  <li>{@link #multiValueMap( Map, Factory )}
  *  </ul>
  *
- * @since Commons Collections 1.0
+ * @since 1.0
  * @version $Revision$
  *
  * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
@@ -1138,7 +1138,7 @@ public class MapUtils {
      * @throws IllegalArgumentException  if sub-array or entry matching used and an
      *  entry is invalid
      * @throws ClassCastException if the array contents is mixed
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     @SuppressWarnings("unchecked")
     public static <K, V> Map<K, V> putAll(Map<K, V> map, Object[] array) {
@@ -1181,7 +1181,7 @@ public class MapUtils {
      *
      * @param map  the map to check, may be null
      * @return true if empty or null
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public static boolean isEmpty(Map<?,?> map) {
         return (map == null || map.isEmpty());
@@ -1194,7 +1194,7 @@ public class MapUtils {
      *
      * @param map  the map to check, may be null
      * @return true if non-null and non-empty
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public static boolean isNotEmpty(Map<?,?> map) {
         return !MapUtils.isEmpty(map);
@@ -1394,7 +1394,7 @@ public class MapUtils {
      * @param map  the map to decorate
      * @return a multi-value map backed by the given map which returns ArrayLists of values.
      * @see MultiValueMap
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public static <K, V> MultiValueMap<K, V> multiValueMap(Map<K, ? super Collection<V>> map) {
         return MultiValueMap.<K, V>multiValueMap(map);
@@ -1409,7 +1409,7 @@ public class MapUtils {
      *  and extend Collection).
      * @return a multi-value map backed by the given map which returns collections of the specified type
      * @see MultiValueMap
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(Map<K, C> map, Class<C> collectionClass) {
         return MultiValueMap.multiValueMap(map, collectionClass);
@@ -1424,7 +1424,7 @@ public class MapUtils {
      * @return a multi-value map backed by the given map which returns collections
      * created by the specified collection factory
      * @see MultiValueMap
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(Map<K, C> map, Factory<C> collectionFactory) {
         return MultiValueMap.multiValueMap(map, collectionFactory);
@@ -1648,8 +1648,7 @@ public class MapUtils {
      * @param <V>
      * @param map to wrap if necessary.
      * @return IterableMap<K, V>
-     * @since Commons Collections 5
-     * TODO fix version
+     * @since 4.0
      */
     public static <K, V> IterableMap<K, V> iterableMap(Map<K, V> map) {
         if (map == null) {
@@ -1666,8 +1665,7 @@ public class MapUtils {
      * @param <V>
      * @param sortedMap to wrap if necessary
      * @return {@link IterableSortedMap}<K, V>
-     * @since Commons Collections 5
-     * TODO fix version
+     * @since 4.0
      */
     public static <K, V> IterableSortedMap<K, V> iterableSortedMap(SortedMap<K, V> sortedMap) {
         if (sortedMap == null) {

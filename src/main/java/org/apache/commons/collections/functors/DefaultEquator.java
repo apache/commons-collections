@@ -20,7 +20,7 @@ package org.apache.commons.collections.functors;
  * Default {@link Equator} implementation.
  * 
  * @param <T>
- * @since Commons Collections 4.0
+ * @since 4.0
  * @version $Revision$
  */
 public class DefaultEquator<T> implements Equator<T> {

@@ -25,7 +25,7 @@ import org.apache.commons.collections.Predicate;
  * Closure implementation acts as an if statement calling one or other closure
  * based on a predicate.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -53,7 +53,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      * @param trueClosure  closure used if true
      * @return the <code>if</code> closure
      * @throws IllegalArgumentException if either argument is null
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public static <E> Closure<E> ifClosure(Predicate<? super E> predicate, Closure<? super E> trueClosure) {
         return IfClosure.<E>ifClosure(predicate, trueClosure, NOPClosure.<E>nopClosure());
@@ -87,7 +87,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      * 
      * @param predicate  predicate to switch on, not null
      * @param trueClosure  closure used if true, not null
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public IfClosure(Predicate<? super E> predicate, Closure<? super E> trueClosure) {
         this(predicate, trueClosure, NOPClosure.INSTANCE);
@@ -125,7 +125,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      * Gets the predicate.
      * 
      * @return the predicate
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public Predicate<? super E> getPredicate() {
         return iPredicate;
@@ -135,7 +135,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      * Gets the closure called when true.
      * 
      * @return the closure
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public Closure<? super E> getTrueClosure() {
         return iTrueClosure;
@@ -145,7 +145,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      * Gets the closure called when false.
      * 
      * @return the closure
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public Closure<? super E> getFalseClosure() {
         return iFalseClosure;

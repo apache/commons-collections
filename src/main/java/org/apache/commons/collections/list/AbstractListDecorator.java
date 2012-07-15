@@ -28,7 +28,7 @@ import org.apache.commons.collections.collection.AbstractCollectionDecorator;
  * Methods are forwarded directly to the decorated list.
  *
  * @param <E> the type of the elements in the list
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorator<E>
@@ -39,7 +39,7 @@ public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorat
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     protected AbstractListDecorator() {
         super();

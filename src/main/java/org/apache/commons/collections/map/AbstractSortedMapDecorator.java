@@ -41,7 +41,7 @@ import org.apache.commons.collections.iterators.ListIteratorWrapper;
  *
  * @param <K> the type of the keys in the map
  * @param <V> the type of the values in the map
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -51,7 +51,7 @@ public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecora
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     protected AbstractSortedMapDecorator() {
         super();

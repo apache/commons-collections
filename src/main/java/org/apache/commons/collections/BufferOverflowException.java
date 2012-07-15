@@ -20,7 +20,7 @@ package org.apache.commons.collections;
  * The BufferOverflowException is used when the buffer's capacity has been
  * exceeded.
  *
- * @since Commons Collections 2.1
+ * @since 2.1
  * @version $Revision$
  *
  * @author Avalon

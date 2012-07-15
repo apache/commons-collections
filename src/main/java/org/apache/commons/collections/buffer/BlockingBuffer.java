@@ -43,7 +43,7 @@ import org.apache.commons.collections.BufferUnderflowException;
  *
  * @param <E> the type of the elements in the buffer
  * @version $Revision$
- * @since Commons Collections 3.0
+ * @since 3.0
  */
 public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
 
@@ -72,7 +72,7 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
      * @param timeoutMillis  the timeout value in milliseconds, zero or less for no timeout
      * @return a new blocking buffer
      * @throws IllegalArgumentException if the buffer is null
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public static <E> BlockingBuffer<E> blockingBuffer(Buffer<E> buffer, long timeoutMillis) {
         return new BlockingBuffer<E>(buffer, timeoutMillis);
@@ -96,7 +96,7 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
      * @param buffer  the buffer to decorate, must not be null
      * @param timeoutMillis  the timeout value in milliseconds, zero or less for no timeout
      * @throws IllegalArgumentException if the buffer is null
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     protected BlockingBuffer(Buffer<E> buffer, long timeoutMillis) {
         super(buffer);
@@ -158,7 +158,7 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
      * @return the next object in the buffer
      * @throws BufferUnderflowException if an interrupt is received
      * @throws BufferUnderflowException if the timeout expires
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public E get(final long timeout) {
         synchronized (lock) {
@@ -217,7 +217,7 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
      * @return the next object in the buffer, which is also removed
      * @throws BufferUnderflowException if an interrupt is received
      * @throws BufferUnderflowException if the timeout expires
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public E remove(final long timeout) {
         synchronized (lock) {

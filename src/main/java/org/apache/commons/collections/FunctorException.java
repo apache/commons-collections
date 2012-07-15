@@ -20,7 +20,7 @@ package org.apache.commons.collections;
  * Runtime exception thrown from functors.
  * If required, a root cause error can be wrapped within this one.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne

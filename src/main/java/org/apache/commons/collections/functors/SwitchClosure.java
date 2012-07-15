@@ -26,7 +26,7 @@ import org.apache.commons.collections.Predicate;
  * Closure implementation calls the closure whose predicate returns true,
  * like a switch statement.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -140,7 +140,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * Gets the predicates, do not modify the array.
      *
      * @return the predicates
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public Predicate<? super E>[] getPredicates() {
         return iPredicates;
@@ -150,7 +150,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * Gets the closures, do not modify the array.
      *
      * @return the closures
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public Closure<? super E>[] getClosures() {
         return iClosures;
@@ -160,7 +160,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * Gets the default closure.
      *
      * @return the default closure
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public Closure<? super E> getDefaultClosure() {
         return iDefault;

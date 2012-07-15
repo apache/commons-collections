@@ -31,7 +31,7 @@ import org.apache.commons.collections.Transformer;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public class TransformedSortedSet<E> extends TransformedSet<E> implements SortedSet<E> {
@@ -70,7 +70,7 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed {@link SortedSet}
      * @throws IllegalArgumentException if set or transformer is null
-     * @since Commons Collections 3.3
+     * @since 3.3
      */
     public static <E> TransformedSortedSet<E> transformedSortedSet(SortedSet<E> set,
                                                                    Transformer<? super E, ? extends E> transformer) {

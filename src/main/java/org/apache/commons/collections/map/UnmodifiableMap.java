@@ -39,7 +39,7 @@ import org.apache.commons.collections.set.UnmodifiableSet;
  * <p>
  * Attempts to modify it will result in an UnsupportedOperationException. 
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -81,7 +81,7 @@ public final class UnmodifiableMap<K, V>
      * 
      * @param out  the output stream
      * @throws IOException
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -94,7 +94,7 @@ public final class UnmodifiableMap<K, V>
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     @SuppressWarnings("unchecked")
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {

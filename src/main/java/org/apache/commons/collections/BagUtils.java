@@ -31,7 +31,7 @@ import org.apache.commons.collections.bag.UnmodifiableSortedBag;
  * Provides utility methods and decorators for {@link Bag} and {@link SortedBag}
  * instances.
  *
- * @since Commons Collections 2.1
+ * @since 2.1
  * @version $Revision$
  * 2007) $
  *

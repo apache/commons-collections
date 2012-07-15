@@ -35,7 +35,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * <code>B</code>, the {@link #next} method on this iterator will return the
  * lesser of <code>A.next()</code> and <code>B.next()</code>.
  *
- * @since Commons Collections 2.1
+ * @since 2.1
  * @version $Revision$
  *
  * @author Rodney Waldhoff

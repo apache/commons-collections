@@ -23,7 +23,7 @@ import org.apache.commons.collections.Predicate;
 /**
  * Predicate implementation that returns false if the input is null.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -79,7 +79,7 @@ public final class NullIsFalsePredicate<T> implements Predicate<T>, PredicateDec
      * Gets the predicate being decorated.
      *
      * @return the predicate as the only element in an array
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     @SuppressWarnings("unchecked")
     public Predicate<? super T>[] getPredicates() {

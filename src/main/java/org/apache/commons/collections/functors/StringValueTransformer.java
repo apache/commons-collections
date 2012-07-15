@@ -24,7 +24,7 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation that returns the result of calling
  * <code>String.valueOf</code> on the input object.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -41,7 +41,7 @@ public final class StringValueTransformer<T> implements Transformer<T, String>, 
      * Factory returning the singleton instance.
      *
      * @return the singleton instance
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     @SuppressWarnings("unchecked")
     public static <T> Transformer<T, String> stringValueTransformer() {

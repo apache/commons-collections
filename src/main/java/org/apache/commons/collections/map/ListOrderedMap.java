@@ -71,7 +71,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -105,7 +105,7 @@ public class ListOrderedMap<K, V>
      * Constructs a new empty <code>ListOrderedMap</code> that decorates
      * a <code>HashMap</code>.
      * 
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public ListOrderedMap() {
         this(new HashMap<K, V>());
@@ -128,7 +128,7 @@ public class ListOrderedMap<K, V>
      * 
      * @param out  the output stream
      * @throws IOException
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -141,7 +141,7 @@ public class ListOrderedMap<K, V>
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
@@ -288,7 +288,7 @@ public class ListOrderedMap<K, V>
      *
      * @see #keySet()
      * @return the unmodifiable list view over the keys
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public List<K> keyList() {
         return UnmodifiableList.unmodifiableList(insertOrder);
@@ -318,7 +318,7 @@ public class ListOrderedMap<K, V>
      *
      * @see #values()
      * @return the partially modifiable list view over the values
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public List<V> valueList() {
         return new ValuesView<V>(this);
@@ -405,7 +405,7 @@ public class ListOrderedMap<K, V>
      * @param index  the index of the value to set
      * @return the previous value at that index
      * @throws IndexOutOfBoundsException if the index is invalid
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public V setValue(int index, V value) {
         K key = insertOrder.get(index);
@@ -429,7 +429,7 @@ public class ListOrderedMap<K, V>
      * @param value  the value
      * @return the value previously mapped to the key
      * @throws IndexOutOfBoundsException if the index is out of range
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public V put(int index, K key, V value) {
         Map<K, V> m = decorated();

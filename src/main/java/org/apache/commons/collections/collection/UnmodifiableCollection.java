@@ -30,7 +30,7 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
  * Attempts to modify it will result in an UnsupportedOperationException. 
  *
  * @param <E> the type of the elements in the collection
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public final class UnmodifiableCollection<E>

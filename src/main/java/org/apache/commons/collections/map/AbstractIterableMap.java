@@ -21,11 +21,9 @@ import org.apache.commons.collections.MapIterator;
 
 /**
  * Provide a basic {@link IterableMap} implementation.
- * @since Commons Collections 5
- * TODO fix version
- * @version $Revision$
  *
- * @author Matt Benson
+ * @since 4.0
+ * @version $Id$
  */
 public abstract class AbstractIterableMap<K, V> implements IterableMap<K, V> {
 

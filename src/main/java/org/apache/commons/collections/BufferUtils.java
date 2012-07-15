@@ -26,7 +26,7 @@ import org.apache.commons.collections.buffer.UnmodifiableBuffer;
 /**
  * Provides utility methods and decorators for {@link Buffer} instances.
  *
- * @since Commons Collections 2.1
+ * @since 2.1
  * @version $Revision$
  *
  * @author Paul Jack
@@ -101,7 +101,7 @@ public class BufferUtils {
      * @param timeoutMillis  the timeout value in milliseconds, zero or less for no timeout
      * @return a blocking buffer backed by that buffer
      * @throws IllegalArgumentException  if the Buffer is null
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public static <E> Buffer<E> blockingBuffer(Buffer<E> buffer, long timeoutMillis) {
         return BlockingBuffer.blockingBuffer(buffer, timeoutMillis);
@@ -119,7 +119,7 @@ public class BufferUtils {
      * @param maximumSize  the maximum size
      * @return a bounded buffer backed by the given buffer
      * @throws IllegalArgumentException if the given buffer is null
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public static <E> Buffer<E> boundedBuffer(Buffer<E> buffer, int maximumSize) {
         return BoundedBuffer.boundedBuffer(buffer, maximumSize);
@@ -138,7 +138,7 @@ public class BufferUtils {
      * @param timeoutMillis  the timeout value in milliseconds, zero or less for no timeout
      * @return a bounded buffer backed by the given buffer
      * @throws IllegalArgumentException if the given buffer is null
-     * @since Commons Collections 3.2
+     * @since 3.2
      */
     public static <E> Buffer<E> boundedBuffer(Buffer<E> buffer, int maximumSize, long timeoutMillis) {
         return BoundedBuffer.boundedBuffer(buffer, maximumSize, timeoutMillis);

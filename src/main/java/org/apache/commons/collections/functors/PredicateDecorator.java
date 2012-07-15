@@ -23,7 +23,7 @@ import org.apache.commons.collections.Predicate;
  * <p>
  * This interface enables tools to access the decorated predicates.
  *
- * @since Commons Collections 3.1
+ * @since 3.1
  * @version $Revision$
  *
  * @author Stephen Colebourne

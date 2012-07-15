@@ -26,7 +26,7 @@ import java.util.SortedSet;
  * Methods are forwarded directly to the decorated set.
  *
  * @param <E> the type of the elements in the sorted set
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public abstract class AbstractSortedSetDecorator<E>
@@ -38,7 +38,7 @@ public abstract class AbstractSortedSetDecorator<E>
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     protected AbstractSortedSetDecorator() {
         super();

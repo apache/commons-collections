@@ -44,7 +44,7 @@ import org.apache.commons.collections.Predicate;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -107,7 +107,7 @@ public class PredicatedMap<K, V>
      * 
      * @param out  the output stream
      * @throws IOException
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -120,7 +120,7 @@ public class PredicatedMap<K, V>
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
@@ -150,7 +150,7 @@ public class PredicatedMap<K, V>
      * 
      * @param value  the value to validate
      * @throws IllegalArgumentException if invalid
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     @Override
     protected V checkSetValue(V value) {
@@ -164,7 +164,7 @@ public class PredicatedMap<K, V>
      * Override to only return true when there is a value transformer.
      * 
      * @return true if a value predicate is in use
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     @Override
     protected boolean isSetValueChecking() {

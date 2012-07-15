@@ -27,7 +27,7 @@ import org.apache.commons.collections.ResettableListIterator;
  * provides for binary compatability between Commons Collections 2.1.1 and 3.1
  * due to issues with <code>IteratorUtils</code>.
  *
- * @since Commons Collections 2.1.1 and 3.1
+ * @since 2.1.1 and 3.1
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -37,13 +37,13 @@ public class EmptyListIterator<E> extends AbstractEmptyIterator<E> implements
 
     /**
      * Singleton instance of the iterator.
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public static final ResettableListIterator<Object> RESETTABLE_INSTANCE = new EmptyListIterator<Object>();
 
     /**
      * Singleton instance of the iterator.
-     * @since Commons Collections 2.1.1 and 3.1
+     * @since 2.1.1 and 3.1
      */
     public static final ListIterator<Object> INSTANCE = RESETTABLE_INSTANCE;
 

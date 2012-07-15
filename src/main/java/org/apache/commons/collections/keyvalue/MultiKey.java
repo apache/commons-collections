@@ -39,7 +39,7 @@ import java.util.Arrays;
  * String localizedText = (String) map.get(multiKey);
  * </pre>
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Id$
  */
 public class MultiKey<K> implements Serializable {
@@ -152,7 +152,7 @@ public class MultiKey<K> implements Serializable {
      * @param keys  the array of keys, not null
      * @param makeClone  true to clone the array, false to assign it
      * @throws IllegalArgumentException if the key array is null
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public MultiKey(K[] keys, boolean makeClone) {
         super();
@@ -190,7 +190,7 @@ public class MultiKey<K> implements Serializable {
      * @param index  the index to retrieve
      * @return the key at the index
      * @throws IndexOutOfBoundsException if the index is invalid
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public K getKey(int index) {
         return keys[index];
@@ -200,7 +200,7 @@ public class MultiKey<K> implements Serializable {
      * Gets the size of the list of keys.
      * 
      * @return the size of the list of keys
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public int size() {
         return keys.length;

@@ -23,7 +23,7 @@ import org.apache.commons.collections.Predicate;
 /**
  * Predicate implementation that returns true if the input is not null.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -40,7 +40,7 @@ public final class NotNullPredicate<T> implements Predicate<T>, Serializable {
      * Factory returning the singleton instance.
      *
      * @return the singleton instance
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     @SuppressWarnings("unchecked")
     public static <T> Predicate<T> notNullPredicate() {

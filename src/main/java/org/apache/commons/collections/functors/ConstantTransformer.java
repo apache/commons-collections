@@ -27,7 +27,7 @@ import org.apache.commons.collections.Transformer;
  * objects should use the constant factory. Mutable objects should
  * use the prototype factory.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -92,7 +92,7 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
      * Gets the constant.
      * 
      * @return the constant
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public O getConstant() {
         return iConstant;

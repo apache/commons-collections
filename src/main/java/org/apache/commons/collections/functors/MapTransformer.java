@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation that returns the value held in a specified map
  * using the input parameter as a key.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -78,7 +78,7 @@ public final class MapTransformer<I, O> implements Transformer<I, O>, Serializab
      * Gets the map to lookup in.
      *
      * @return the map
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public Map<? super I, ? extends O> getMap() {
         return iMap;

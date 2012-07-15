@@ -24,7 +24,7 @@ import org.apache.commons.collections.Transformer;
 /**
  * Transformer implementation that always throws an exception.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -41,7 +41,7 @@ public final class ExceptionTransformer<I, O> implements Transformer<I, O>, Seri
      * Factory returning the singleton instance.
      *
      * @return the singleton instance
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     @SuppressWarnings("unchecked")
     public static <I, O> Transformer<I, O> exceptionTransformer() {

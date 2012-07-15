@@ -23,7 +23,7 @@ package org.apache.commons.collections;
  * maximum number of elements. This interface allows the querying of details
  * associated with the maximum number of elements.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne

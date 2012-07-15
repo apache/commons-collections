@@ -54,7 +54,7 @@ import org.apache.commons.collections.BoundedMap;
  * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * <code>NullPointerException</code>'s when accessed by concurrent threads.
  *
- * @since Commons Collections 3.0 (previously in main package v1.0)
+ * @since 3.0 (previously in main package v1.0)
  * @version $Revision$
  *
  * @author James Strachan
@@ -99,7 +99,7 @@ public class LRUMap<K, V>
      * @param maxSize  the maximum size of the map
      * @param scanUntilRemovable  scan until a removeable entry is found, default false
      * @throws IllegalArgumentException if the maximum size is less than one
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public LRUMap(int maxSize, boolean scanUntilRemovable) {
         this(maxSize, DEFAULT_LOAD_FACTOR, scanUntilRemovable);
@@ -127,7 +127,7 @@ public class LRUMap<K, V>
      * @param scanUntilRemovable  scan until a removeable entry is found, default false
      * @throws IllegalArgumentException if the maximum size is less than one
      * @throws IllegalArgumentException if the load factor is less than zero
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public LRUMap(int maxSize, float loadFactor, boolean scanUntilRemovable) {
         super((maxSize < 1 ? DEFAULT_CAPACITY : maxSize), loadFactor);
@@ -160,7 +160,7 @@ public class LRUMap<K, V>
      * @param scanUntilRemovable  scan until a removeable entry is found, default false
      * @throws NullPointerException if the map is null
      * @throws IllegalArgumentException if the map is empty
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public LRUMap(Map<K, V> map, boolean scanUntilRemovable) {
         this(map.size(), DEFAULT_LOAD_FACTOR, scanUntilRemovable);
@@ -395,7 +395,7 @@ public class LRUMap<K, V>
      * map is full.
      *
      * @return true if this map scans
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public boolean isScanUntilRemovable() {
         return scanUntilRemovable;

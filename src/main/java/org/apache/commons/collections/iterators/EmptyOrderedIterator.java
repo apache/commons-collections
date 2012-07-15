@@ -22,7 +22,7 @@ import org.apache.commons.collections.ResettableIterator;
 /** 
  * Provides an implementation of an empty ordered iterator.
  *
- * @since Commons Collections 3.1
+ * @since 3.1
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -31,7 +31,7 @@ public class EmptyOrderedIterator<E> extends AbstractEmptyIterator<E> implements
 
     /**
      * Singleton instance of the iterator.
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public static final OrderedIterator<Object> INSTANCE = new EmptyOrderedIterator<Object>();
 

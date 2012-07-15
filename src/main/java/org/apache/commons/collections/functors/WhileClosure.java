@@ -25,7 +25,7 @@ import org.apache.commons.collections.Predicate;
  * Closure implementation that executes a closure repeatedly until a condition is met,
  * like a do-while or while loop.
  *
- * @since Commons Collections 3.0
+ * @since 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
@@ -94,7 +94,7 @@ public class WhileClosure<E> implements Closure<E>, Serializable {
      * Gets the predicate in use.
      * 
      * @return the predicate
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public Predicate<? super E> getPredicate() {
         return iPredicate;
@@ -104,7 +104,7 @@ public class WhileClosure<E> implements Closure<E>, Serializable {
      * Gets the closure.
      * 
      * @return the closure
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public Closure<? super E> getClosure() {
         return iClosure;
@@ -114,7 +114,7 @@ public class WhileClosure<E> implements Closure<E>, Serializable {
      * Is the loop a do-while loop.
      * 
      * @return true is do-while, false if while
-     * @since Commons Collections 3.1
+     * @since 3.1
      */
     public boolean isDoLoop() {
         return iDoLoop;

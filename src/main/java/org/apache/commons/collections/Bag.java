@@ -39,7 +39,7 @@ import java.util.Set;
  * it has been decided to maintain backwards compatibility instead.
  *
  * @param <E> the type held in the bag
- * @since Commons Collections 2.0
+ * @since 2.0
  * @version $Revision$
  *
  * @author Chuck Burdick
