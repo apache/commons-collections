@@ -361,7 +361,7 @@ public class PredicateUtils {
      */
     public static <T> Predicate<T> eitherPredicate(Predicate<? super T> predicate1, Predicate<? super T> predicate2) {
         @SuppressWarnings("unchecked")
-        Predicate<T> onePredicate = onePredicate(predicate1, predicate2);
+        Predicate<T> onePredicate = PredicateUtils.<T>onePredicate(predicate1, predicate2);
         return onePredicate;
     }
 
@@ -410,7 +410,7 @@ public class PredicateUtils {
      */
     public static <T> Predicate<T> neitherPredicate(Predicate<? super T> predicate1, Predicate<? super T> predicate2) {
         @SuppressWarnings("unchecked")
-        Predicate<T> nonePredicate = nonePredicate(predicate1, predicate2);
+        Predicate<T> nonePredicate = PredicateUtils.<T>nonePredicate(predicate1, predicate2);
         return nonePredicate;
     }
 
