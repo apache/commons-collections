@@ -26,8 +26,8 @@ import java.util.Set;
 /**
  * Serializable subclass of AbstractSetDecorator.
  *
- * @author Stephen Colebourne
  * @since Commons Collections 3.1
+ * @version $Id$
  */
 public abstract class AbstractSerializableSetDecorator<E>
         extends AbstractSetDecorator<E>
@@ -38,6 +38,9 @@ public abstract class AbstractSerializableSetDecorator<E>
 
     /**
      * Constructor.
+     * 
+     * @param set  the list to decorate, must not be null
+     * @throws IllegalArgumentException if set is null
      */
     protected AbstractSerializableSetDecorator(Set<E> set) {
         super(set);

@@ -27,9 +27,7 @@ import org.apache.commons.collections.collection.AbstractCollectionDecorator;
  *
  * @param <E> the type of the elements in the set
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public abstract class AbstractSetDecorator<E> extends AbstractCollectionDecorator<E> implements
         Set<E> {

@@ -31,9 +31,7 @@ import org.apache.commons.collections.iterators.UnmodifiableIterator;
  * Attempts to modify it will result in an UnsupportedOperationException. 
  *
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public final class UnmodifiableSet<E>
         extends AbstractSerializableSetDecorator<E>

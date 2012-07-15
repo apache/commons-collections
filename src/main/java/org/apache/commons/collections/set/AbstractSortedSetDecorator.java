@@ -27,9 +27,7 @@ import java.util.SortedSet;
  *
  * @param <E> the type of the elements in the sorted set
  * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public abstract class AbstractSortedSetDecorator<E>
         extends AbstractSetDecorator<E>
