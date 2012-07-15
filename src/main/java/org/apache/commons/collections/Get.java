@@ -17,16 +17,15 @@
 package org.apache.commons.collections;
 
 import java.util.Collection;
-import java.util.Map;
 import java.util.Set;
 
 /**
  * The "read" subset of the {@link Map} interface.
- * @since Commons Collections 5
- * TODO fix version
- * @version $Revision$
+ * 
+ * @since Commons Collections 4.0
+ * @version $Id$
+ *
  * @see Put
- * @author Matt Benson
  */
 public interface Get<K, V> {
 
@@ -74,4 +73,5 @@ public interface Get<K, V> {
      * @see Map#values()
      */
     public Collection<V> values();
+
 }
