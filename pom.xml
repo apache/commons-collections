@@ -73,6 +73,10 @@
       <id>geirm</id>
     </developer>
     <developer>
+      <name>Luc Maisonobe</name>
+      <id>luc</id>
+    </developer>
+    <developer>
       <name>Craig McClanahan</name>
       <id>craigmcc</id>
     </developer>
@@ -298,6 +302,9 @@
     </contributor>
     <contributor>
       <name>Joe Raysa</name>
+    </contributor>
+    <contributor>
+      <name>Jordane Sarda</name>
     </contributor>
     <contributor>
       <name>Thomas Schapitz</name>

@@ -14,20 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections.list.difference;
+package org.apache.commons.collections.comparators.sequence;
 
 /**
  * This class is a simple placeholder to hold the end part of a path
- * under construction in a {@link SequencesComparator
- * SequencesComparator}.
-
- * <p>A snake is an internal structure used in Eugene W. Myers
- * algorithm (<a
- * href="http://www.cis.upenn.edu/~bcpierce/courses/dd/papers/diff.ps">An
- * O(ND) Difference Algorithm and Its Variations</a>).</p>
-
+ * under construction in a {@link SequencesComparator SequencesComparator}.
+ * <p>
+ * A snake is an internal structure used in Eugene W. Myers algorithm
+ * (<a href="http://www.cis.upenn.edu/~bcpierce/courses/dd/papers/diff.ps">
+ * An O(ND) Difference Algorithm and Its Variations</a>).
+ *
  * @since 4.0
- * @author Jordane Sarda
  * @version $Id$
  */
 public class Snake {
@@ -41,8 +38,8 @@ public class Snake {
     /** Diagonal number. */
     private int diag;
 
-    /** Simple constructor.
-     * Creates a new instance of Snake with default indices
+    /**
+     * Simple constructor. Creates a new instance of Snake with default indices.
      */
     public Snake() {
         start = -1;
@@ -50,11 +47,12 @@ public class Snake {
         diag  =  0;
     }
 
-    /** Simple constructor.
-     * Creates a new instance of Snake with specified indices
-     * @param start start index of the snake
-     * @param end end index of the snake
-     * @param diag diagonal number
+    /**
+     * Simple constructor. Creates a new instance of Snake with specified indices.
+     *
+     * @param start  start index of the snake
+     * @param end  end index of the snake
+     * @param diag  diagonal number
      */ 
     public Snake(int start, int end, int diag) {
         this.start = start;
@@ -62,21 +60,27 @@ public class Snake {
         this.diag  = diag;
     }
 
-    /** Get the start index of the snake.
+    /**
+     * Get the start index of the snake.
+     *
      * @return start index of the snake
      */
     public int getStart() {
         return start;
     }
 
-    /** Get the end index of the snake.
+    /**
+     * Get the end index of the snake.
+     *
      * @return end index of the snake
      */
     public int getEnd() {
         return end;
     }
 
-    /** Get the diagonal number of the snake.
+    /**
+     * Get the diagonal number of the snake.
+     *
      * @return diagonal number of the snake
      */  
     public int getDiag() {

@@ -14,25 +14,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections.list.difference;
+package org.apache.commons.collections.comparators.sequence;
 
-
-/** This interface should be implemented by user object to walk
+/** 
+ * This interface should be implemented by user object to walk
  * through {@link EditScript EditScript} objects.
-
- * <p>Users should implement this interface in order to walk through
+ * <p>
+ * Users should implement this interface in order to walk through
  * the {@link EditScript EditScript} object created by the comparison
  * of two sequences. This is a direct application of the visitor
  * design pattern. The {@link EditScript#visit EditScript.visit}
  * method takes an object implementing this interface as an argument,
  * it will perform the loop over all commands in the script and the
  * proper methods of the user class will be called as the commands are
- * encountered.</p>
-
- * <p>The implementation of the user visitor class will depend on the
+ * encountered.
+ * <p>
+ * The implementation of the user visitor class will depend on the
  * need. Here are two examples.
- * </p>
- * 
  * <p>
  * The first example is a visitor that build the longest common
  * subsequence:
@@ -65,8 +63,6 @@ package org.apache.commons.collections.list.difference;
  * 
  * }
  * </pre>
- * </p>
- * 
  * <p>
  * The second example is a visitor that shows the commands and the way
  * they transform the first sequence into the second one:
@@ -117,31 +113,30 @@ package org.apache.commons.collections.list.difference;
  * 
  * }
  * </pre>
- * </p>
-
+ *
  * @since 4.0
- * @author Jordane Sarda
- * @author Luc Maisonobe
  * @version $Id$
-
  */
 public interface CommandVisitor<T> {
 
-    /** Method called when an insert command is encountered.
-     * @param object object to insert (this object comes from the
-     * second sequence)
+    /** 
+     * Method called when an insert command is encountered.
+     *
+     * @param object object to insert (this object comes from the second sequence)
      */
     void visitInsertCommand(T object);
 
-    /** Method called when a keep command is encountered.
-     * @param object object to keep (this object comes from the
-     * first sequence)
+    /** 
+     * Method called when a keep command is encountered.
+     *
+     * @param object object to keep (this object comes from the first sequence)
      */
     void visitKeepCommand(T object);
 
-    /** Method called when a delete command is encountered.
-     * @param object object to delete (this object comes from the
-     * first sequence)
+    /** 
+     * Method called when a delete command is encountered.
+     *
+     * @param object object to delete (this object comes from the first sequence)
      */
     void visitDeleteCommand(T object);
 

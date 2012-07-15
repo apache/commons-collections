@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections.list.difference;
+package org.apache.commons.collections.comparators.sequence;
 
 import java.util.ArrayList;
 import java.util.Arrays;

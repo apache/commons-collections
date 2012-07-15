@@ -14,42 +14,41 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections.list.difference;
+package org.apache.commons.collections.comparators.sequence;
 
-
-/** Command representing the insertion of one object of the second sequence.
-
- * When one object of the second sequence has no corresponding object
- * in the first sequence at the right place, the {@link EditScript
- * edit script} transforming the first sequence into the second
- * sequence uses an instance of this class to represent the insertion
- * of this object. The objects embedded in these type of commands
- * always come from the second sequence.
-
+/**
+ * Command representing the insertion of one object of the second sequence.
+ * <p>
+ * When one object of the second sequence has no corresponding object in the
+ * first sequence at the right place, the {@link EditScript edit script}
+ * transforming the first sequence into the second sequence uses an instance of
+ * this class to represent the insertion of this object. The objects embedded in
+ * these type of commands always come from the second sequence.
+ * 
  * @see SequencesComparator
  * @see EditScript
-
+ * 
  * @since 4.0
- * @author Jordane Sarda
- * @author Luc Maisonobe
  * @version $Id$
  */
 public class InsertCommand<T> extends EditCommand<T> {
 
-    /** Simple constructor.
-     * Creates a new instance of InsertCommand
-     * @param object the object of the second sequence that should be inserted
+    /**
+     * Simple constructor. Creates a new instance of InsertCommand
+     * 
+     * @param object  the object of the second sequence that should be inserted
      */
     public InsertCommand(T object) {
         super(object);
     }
 
-    /** Accept a visitor.
-     * When an <code>InsertCommand</code> accepts a visitor, it calls
-     * its {@link CommandVisitor#visitInsertCommand
-     * visitInsertCommand} method.
-     * @param visitor the visitor to be accepted
-     */    
+    /**
+     * Accept a visitor. When an <code>InsertCommand</code> accepts a visitor,
+     * it calls its {@link CommandVisitor#visitInsertCommand visitInsertCommand}
+     * method.
+     * 
+     * @param visitor  the visitor to be accepted
+     */
     @Override
     public void accept(CommandVisitor<T> visitor) {
         visitor.visitInsertCommand(object);

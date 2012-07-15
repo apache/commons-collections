@@ -14,49 +14,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections.list.difference;
+package org.apache.commons.collections.comparators.sequence;
 
 import java.util.List;
 
-
 /**
-
  * This class allows to compare two objects sequences.
-
- * <p>The two sequences can hold any object type, as only the
- * <code>equals</code> method is used to compare the elements of the
- * sequences. It is guaranteed that the comparisons will always be
- * done as <code>o1.equals(o2)</code> where <code>o1</code> belongs to
- * the first sequence and <code>o2</code> belongs to the second
- * sequence. This can be important if subclassing is used for some
- * elements in the first sequence and the <code>equals</code> method
- * is specialized.</p>
-
- * <p>Comparison can be seen from two points of view: either as
- * giving the smallest modification allowing to transform the first
- * sequence into the second one, or as giving the longest sequence
- * which is a subsequence of both initial sequences. The
- * <code>equals</code> method is used to compare objects, so any
- * object can be put into sequences. Modifications include deleting,
- * inserting or keeping one object, starting from the beginning of the
- * first sequence.</p>
-
- * <p>This class implements the comparison algorithm, which is the
- * very efficient algorithm from Eugene W. Myers <a
- * href="http://www.cis.upenn.edu/~bcpierce/courses/dd/papers/diff.ps">An
- * O(ND) Difference Algorithm and Its Variations</a>. This algorithm
- * produces the shortest possible {@link
- * org.apache.commons.collections.list.difference.EditScript edit script}
- * containing all the {@link
- * org.apache.commons.collections.list.difference.EditCommand commands} needed to
- * transform the first sequence into the second one.</p>
-
+ * <p>
+ * The two sequences can hold any object type, as only the <code>equals</code>
+ * method is used to compare the elements of the sequences. It is guaranteed
+ * that the comparisons will always be done as <code>o1.equals(o2)</code> where
+ * <code>o1</code> belongs to the first sequence and <code>o2</code> belongs to
+ * the second sequence. This can be important if subclassing is used for some
+ * elements in the first sequence and the <code>equals</code> method is
+ * specialized.
+ * <p>
+ * Comparison can be seen from two points of view: either as giving the smallest
+ * modification allowing to transform the first sequence into the second one, or
+ * as giving the longest sequence which is a subsequence of both initial
+ * sequences. The <code>equals</code> method is used to compare objects, so any
+ * object can be put into sequences. Modifications include deleting, inserting
+ * or keeping one object, starting from the beginning of the first sequence.
+ * <p>
+ * This class implements the comparison algorithm, which is the very efficient
+ * algorithm from Eugene W. Myers
+ * <a href="http://www.cis.upenn.edu/~bcpierce/courses/dd/papers/diff.ps">
+ * An O(ND) Difference Algorithm and Its Variations</a>. This algorithm produces
+ * the shortest possible
+ * {@link org.apache.commons.collections.list.difference.EditScript edit script}
+ * containing all the
+ * {@link org.apache.commons.collections.list.difference.EditCommand commands}
+ * needed to transform the first sequence into the second one.
+ * 
  * @see EditScript
  * @see EditCommand
  * @see CommandVisitor
-
+ * 
  * @since 4.0
- * @author Jordane Sarda
  * @version $Id$
  */
 public class SequencesComparator<T> {
@@ -71,16 +65,21 @@ public class SequencesComparator<T> {
     private int[] vDown;
     private int[] vUp;
 
-    /** Simple constructor.
-     * <p>Creates a new instance of SequencesComparator</p>
-     * <p>It is <em>guaranteed</em> that the comparisons will always be
-     * done as <code>o1.equals(o2)</code> where <code>o1</code> belongs
-     * to the first sequence and <code>o2</code> belongs to the second
-     * sequence. This can be important if subclassing is used for some
-     * elements in the first sequence and the <code>equals</code> method
-     * is specialized.</p>
-     * @param sequence1 first sequence to be compared
-     * @param sequence2 second sequence to be compared
+    /**
+     * Simple constructor.
+     * <p>
+     * Creates a new instance of SequencesComparator.
+     * <p>
+     * It is <em>guaranteed</em> that the comparisons will always be done as
+     * <code>o1.equals(o2)</code> where <code>o1</code> belongs to the first
+     * sequence and <code>o2</code> belongs to the second sequence. This can be
+     * important if subclassing is used for some elements in the first sequence
+     * and the <code>equals</code> method is specialized.
+     * 
+     * @param sequence1
+     *            first sequence to be compared
+     * @param sequence2
+     *            second sequence to be compared
      */
     public SequencesComparator(List<T> sequence1, List<T> sequence2) {
         this.sequence1 = sequence1;
@@ -89,14 +88,15 @@ public class SequencesComparator<T> {
         int size = sequence1.size() + sequence2.size() + 2;
         vDown = new int[size];
         vUp   = new int[size];
-
     }
 
-    /** Build a snake.
-     * @param start the value of the start of the snake
-     * @param diag the value of the diagonal of the snake
-     * @param end1 the value of the end of the first sequence to be compared
-     * @param end2 the value of the end of the second sequence to be compared
+    /**
+     * Build a snake.
+     *
+     * @param start  the value of the start of the snake
+     * @param diag  the value of the diagonal of the snake
+     * @param end1  the value of the end of the first sequence to be compared
+     * @param end2  the value of the end of the second sequence to be compared
      * @return the snake built
      */
     private Snake buildSnake(int start, int diag, int end1, int end2) {
@@ -109,22 +109,25 @@ public class SequencesComparator<T> {
         return new Snake(start, end, diag);
     }
 
-    /** Get the middle snake corresponding to two subsequences of the
+    /** 
+     * Get the middle snake corresponding to two subsequences of the
      * main sequences.
+     * <p>
      * The snake is found using the MYERS Algorithm (this algorithms has
      * also been implemented in the GNU diff program). This algorithm is
-     * explained in Eugene Myers article: <a
-     * href="http://www.cs.arizona.edu/people/gene/PAPERS/diff.ps">An
-     * O(ND) Difference Algorithm and Its Variations</a>.
-     * @param start1 the begin of the first sequence to be compared
-     * @param end1 the end of the first sequence to be compared
-     * @param start2 the begin of the second sequence to be compared
+     * explained in Eugene Myers article: 
+     * <a href="http://www.cs.arizona.edu/people/gene/PAPERS/diff.ps">
+     * An O(ND) Difference Algorithm and Its Variations</a>.
+     *
+     * @param start1  the begin of the first sequence to be compared
+     * @param end1  the end of the first sequence to be compared
+     * @param start2  the begin of the second sequence to be compared
      * @param end2  the end of the second sequence to be compared
      * @return the middle snake
      */
     private Snake getMiddleSnake(int start1, int end1, int start2, int end2) {
         // Myers Algorithm
-        //Initialisations
+        // Initialisations
         int m = end1 - start1;
         int n = end2 - start2;
         if ((m == 0) || (n == 0)) {
@@ -193,14 +196,15 @@ public class SequencesComparator<T> {
 
         // this should not happen
         throw new RuntimeException("Internal Error");
-
     }
 
 
-    /** Build an edit script.
-     * @param start1 the begin of the first sequence to be compared
-     * @param end1 the end of the first sequence to be compared
-     * @param start2 the begin of the second sequence to be compared
+    /**
+     * Build an edit script.
+     *
+     * @param start1  the begin of the first sequence to be compared
+     * @param end1  the end of the first sequence to be compared
+     * @param start2  the begin of the second sequence to be compared
      * @param end2  the end of the second sequence to be compared
      * @param script the edited script
      */
@@ -245,16 +249,18 @@ public class SequencesComparator<T> {
         }
     }
 
-    /** Get the edit script script.
-     * <p>It is guaranteed that the objects embedded in the {@link
-     * InsertCommand insert commands} come from the second sequence and
-     * that the objects embedded in either the {@link DeleteCommand
-     * delete commands} or {@link KeepCommand keep commands} come from
-     * the first sequence. This can be important if subclassing is used
-     * for some elements in the first sequence and the
-     * <code>equals</code> method is specialized.</p>
+    /**
+     * Get the edit script script.
+     * <p>
+     * It is guaranteed that the objects embedded in the {@link InsertCommand
+     * insert commands} come from the second sequence and that the objects
+     * embedded in either the {@link DeleteCommand delete commands} or
+     * {@link KeepCommand keep commands} come from the first sequence. This can
+     * be important if subclassing is used for some elements in the first
+     * sequence and the <code>equals</code> method is specialized.
+     * 
      * @return the edit script resulting from the comparison of the two
-     * sequences
+     *         sequences
      */
     public EditScript<T> getScript() {
         EditScript<T> script = new EditScript<T>();

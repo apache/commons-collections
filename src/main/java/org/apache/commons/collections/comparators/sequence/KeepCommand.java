@@ -14,44 +14,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections.list.difference;
+package org.apache.commons.collections.comparators.sequence;
 
-
-/** Command representing the keeping of one object present in both sequences.
-
- * When one object of the first sequence <code>equals</code> another
- * objects in the second sequence at the right place, the {@link
- * EditScript edit script} transforming the first sequence into the
- * second sequence uses an instance of this class to represent the
- * keeping of this object. The objects embedded in these type of
- * commands always come from the first sequence.
-
+/**
+ * Command representing the keeping of one object present in both sequences.
+ * <p>
+ * When one object of the first sequence <code>equals</code> another objects in
+ * the second sequence at the right place, the {@link EditScript edit script}
+ * transforming the first sequence into the second sequence uses an instance of
+ * this class to represent the keeping of this object. The objects embedded in
+ * these type of commands always come from the first sequence.
+ * 
  * @see SequencesComparator
  * @see EditScript
-
+ * 
  * @since 4.0
- * @author Jordane Sarda
- * @author Luc Maisonobe
  * @version $Id$
  */
 public class KeepCommand<T> extends EditCommand<T> {
 
-    /** Simple constructor.
-     * Creates a new instance of KeepCommand
-     * @param object the object belonging to both sequences (the
-     * object is a reference to the instance in the first sequence
-     * which is known to be equal to an instance in the second
-     * sequence)
+    /**
+     * Simple constructor. Creates a new instance of KeepCommand
+     * 
+     * @param object  the object belonging to both sequences (the object is a
+     *   reference to the instance in the first sequence which is known
+     *   to be equal to an instance in the second sequence)
      */
     public KeepCommand(T object) {
         super(object);
     }
 
-    /** Accept a visitor.
-     * When a <code>KeepCommand</code> accepts a visitor, it calls
-     * its {@link CommandVisitor#visitKeepCommand visitKeepCommand} method.
-     * @param visitor the visitor to be accepted
-     */    
+    /**
+     * Accept a visitor. When a <code>KeepCommand</code> accepts a visitor, it
+     * calls its {@link CommandVisitor#visitKeepCommand visitKeepCommand} method.
+     * 
+     * @param visitor  the visitor to be accepted
+     */
     @Override
     public void accept(CommandVisitor<T> visitor) {
         visitor.visitKeepCommand(object);
