@@ -9,6 +9,7 @@ import java.util.Set;
 import java.util.SortedMap;
 
 import org.apache.commons.collections.Trie;
+import org.apache.commons.collections.Unmodifiable;
 
 /**
  * An unmodifiable {@link Trie}.
@@ -16,7 +17,7 @@ import org.apache.commons.collections.Trie;
  * @since 4.0
  * @version $Id$
  */
-public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable {
+public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodifiable {
     
     private static final long serialVersionUID = -7156426030315945159L;
     
