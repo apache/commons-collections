@@ -252,12 +252,18 @@ public class ListUtils {
 
     /**
      * Removes the elements in <code>remove</code> from <code>collection</code>. That is, this
-     * method returns a list containing all the elements in <code>c</code>
+     * method returns a list containing all the elements in <code>collection</code>
      * that are not in <code>remove</code>. The cardinality of an element <code>e</code>
      * in the returned collection is the same as the cardinality of <code>e</code>
      * in <code>collection</code> unless <code>remove</code> contains <code>e</code>, in which
      * case the cardinality is zero. This method is useful if you do not wish to modify
      * <code>collection</code> and thus cannot call <code>collection.removeAll(remove);</code>.
+     * <p> 
+     * This implementation iterates over <code>collection</code>, checking each element in
+     * turn to see if it's contained in <code>remove</code>. If it's not contained, it's added
+     * to the returned list. As a consequence, it is advised to use a collection type for
+     * <code>remove</code> that provides a fast (e.g. O(1)) implementation of
+     * {@link Collection#contains(Object)}.
      * 
      * @param <E>  the element type
      * @param collection  the collection from which items are removed (in the returned collection)
