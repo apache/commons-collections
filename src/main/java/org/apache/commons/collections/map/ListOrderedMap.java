@@ -251,8 +251,11 @@ public class ListOrderedMap<K, V>
 
     @Override
     public V remove(Object key) {
-        V result = decorated().remove(key);
-        insertOrder.remove(key);
+        V result = null;
+        if (decorated().containsKey(key)) {
+            result = decorated().remove(key);
+            insertOrder.remove(key);
+        }
         return result;
     }
 

@@ -22,7 +22,9 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
-    <action issue="COLLECTIONS-XXX" type="fix">Dummy</action>
+    <action issue="COLLECTIONS-425" type="fix" due-to="Adrian Nistor">
+      Improved performance of ListOrderedMap#remove(Object) method.
+    </action>
   </release>
   </body>
 </document>
