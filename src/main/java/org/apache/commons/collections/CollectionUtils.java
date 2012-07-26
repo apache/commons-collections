@@ -610,8 +610,9 @@ public class CollectionUtils {
      * @param predicate
      *            the predicate to use, may be null
      * @param outputCollection
-     *            the collection to output into, may not be null
-     * @return outputCollection
+     *            the collection to output into, may not be null if the inputCollection
+     *            and predicate or not null
+     * @return the outputCollection
      */
     public static <O, R extends Collection<? super O>> R select(Collection<? extends O> inputCollection,
             Predicate<? super O> predicate, R outputCollection) {
@@ -657,7 +658,8 @@ public class CollectionUtils {
      * @param predicate
      *            the predicate to use, may be null
      * @param outputCollection
-     *            the collection to output into, may not be null
+     *            the collection to output into, may not be null if the inputCollection
+     *            and predicate or not null
      * @return outputCollection
      */
     public static <O, R extends Collection<? super O>> R selectRejected(
@@ -726,12 +728,14 @@ public class CollectionUtils {
      *
      * @param inputCollection  the collection to get the input from, may be null
      * @param transformer  the transformer to use, may be null
-     * @param outputCollection  the collection to output into, may not be null
+     * @param outputCollection  the collection to output into, may not be null if the inputCollection
+     *   and transformer are not null
      * @param <I> the type of object in the input collection
      * @param <O> the type of object in the output collection
      * @param <R> the output type of the transformer - this extends O.
      * @return the outputCollection with the transformed input added
-     * @throws NullPointerException if the output collection is null
+     * @throws NullPointerException if the output collection is null and both, inputCollection and
+     *   transformer are not null
      */
     public static <I, O, R extends Collection<? super O>> R collect(Iterable<? extends I> inputCollection,
             final Transformer<? super I, ? extends O> transformer, final R outputCollection) {
@@ -750,12 +754,14 @@ public class CollectionUtils {
      *
      * @param inputIterator  the iterator to get the input from, may be null
      * @param transformer  the transformer to use, may be null
-     * @param outputCollection  the collection to output into, may not be null
+     * @param outputCollection  the collection to output into, may not be null if the inputCollection
+     *   and transformer are not null
      * @param <I> the type of object in the input collection
      * @param <O> the type of object in the output collection
      * @param <R> the output type of the transformer - this extends O.
      * @return the outputCollection with the transformed input added
-     * @throws NullPointerException if the output collection is null
+     * @throws NullPointerException if the output collection is null and both, inputCollection and
+     *   transformer are not null
      */
     //TODO - deprecate and replace with IteratorIterable
     public static <I, O, R extends Collection<? super O>> R collect(Iterator<? extends I> inputIterator,

@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action dev="luc" issue="COLLECTIONS-379" type="fix" due-to="Shin Hwei Tan">
+      Fixed javadoc for several methods wrt expected NullPointerExceptions.
+    </action>
     <action dev="luc" issue="COLLECTIONS-404" type="add" due-to="Jordane Sarda">
       Added an implementation of Eugene Myers difference algorithm.
     </action>
