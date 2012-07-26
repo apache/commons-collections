@@ -35,11 +35,15 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
     private static final long serialVersionUID = 5633766978029907089L;
 
     /** The value to compare to */
-    private final Object iValue;
+    private final T iValue;
+    
+    /** The equator to use for comparison */
+    private final Equator<T> equator;
 
     /**
-     * Factory to create the identity predicate.
+     * Factory to create the predicate.
      * 
+     * @param <T> the type that the predicate queries
      * @param object  the object to compare to
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null
@@ -52,14 +56,44 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
     }
 
     /**
+     * Factory to create the identity predicate.
+     * 
+     * @param <T> the type that the predicate queries
+     * @param object  the object to compare to
+     * @param equator  the equator to use for comparison
+     * @return the predicate
+     * @throws IllegalArgumentException if the predicate is null
+     * @since 4.0
+     */
+    public static <T> Predicate<T> equalPredicate(T object, Equator<T> equator) {
+        if (object == null) {
+            return nullPredicate();
+        }
+        return new EqualPredicate<T>(object, equator);
+    }
+
+    /**
      * Constructor that performs no validation.
      * Use <code>getInstance</code> if you want that.
      * 
      * @param object  the object to compare to
      */
-    public EqualPredicate(Object object) {
+    public EqualPredicate(T object) {
+        this(object, new DefaultEquator<T>());
+    }
+
+    /**
+     * Constructor that performs no validation.
+     * Use <code>getInstance</code> if you want that.
+     * 
+     * @param object  the object to compare to
+     * @param equator  the equator to use for comparison
+     * @since 4.0
+     */
+    public EqualPredicate(T object, Equator<T> equator) {
         super();
         iValue = object;
+        this.equator = equator;
     }
 
     /**
@@ -68,8 +102,8 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
      * @param object  the input object
      * @return true if input object equals stored value
      */
-    public boolean evaluate(Object object) {
-        return (iValue.equals(object));
+    public boolean evaluate(T object) {
+        return equator.equate(iValue, object);
     }
 
     /**
