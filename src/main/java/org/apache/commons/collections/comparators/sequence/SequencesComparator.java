@@ -250,7 +250,7 @@ public class SequencesComparator<T> {
     }
 
     /**
-     * Get the edit script script.
+     * Get the {@link EditScript} object.
      * <p>
      * It is guaranteed that the objects embedded in the {@link InsertCommand
      * insert commands} come from the second sequence and that the objects
