@@ -25,9 +25,7 @@ import org.apache.commons.collections.Predicate;
  * as the one stored in this predicate.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public final class IdentityPredicate<T> implements Predicate<T>, Serializable {
 

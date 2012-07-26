@@ -26,9 +26,7 @@ import org.apache.commons.collections.Predicate;
  * like a do-while or while loop.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class WhileClosure<E> implements Closure<E>, Serializable {
 
@@ -45,13 +43,15 @@ public class WhileClosure<E> implements Closure<E>, Serializable {
     /**
      * Factory method that performs validation.
      * 
+     * @param <E> the type that the closure acts on
      * @param predicate  the predicate used to evaluate when the loop terminates, not null
      * @param closure  the closure the execute, not null
      * @param doLoop  true to act as a do-while loop, always executing the closure once
      * @return the <code>while</code> closure
      * @throws IllegalArgumentException if the predicate or closure is null
      */
-    public static <E> Closure<E> whileClosure(Predicate<? super E> predicate, Closure<? super E> closure, boolean doLoop) {
+    public static <E> Closure<E> whileClosure(Predicate<? super E> predicate,
+                                              Closure<? super E> closure, boolean doLoop) {
         if (predicate == null) {
             throw new IllegalArgumentException("Predicate must not be null");
         }

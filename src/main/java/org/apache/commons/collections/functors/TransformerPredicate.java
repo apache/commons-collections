@@ -26,9 +26,7 @@ import org.apache.commons.collections.Transformer;
  * Predicate implementation that returns the result of a transformer.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public final class TransformerPredicate<T> implements Predicate<T>, Serializable {
 

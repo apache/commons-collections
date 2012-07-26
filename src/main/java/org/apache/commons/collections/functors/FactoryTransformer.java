@@ -25,9 +25,7 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation that calls a Factory and returns the result.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable {
 

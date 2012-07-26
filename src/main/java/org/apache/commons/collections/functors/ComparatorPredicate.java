@@ -74,9 +74,7 @@ import org.apache.commons.collections.Predicate;
  * return <code>true</code> if the comparator returns a value greater than <code>0</code>.
  *
  * @since 4.0
- * @version $Revision$
- *
- * @author Rune Peter Bjørnstad.
+ * @version $Id$
  */
 public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
 
@@ -100,6 +98,7 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
     /**
      * Factory to create the comparator predicate
      *
+     * @param <T> the type that the predicate queries
      * @param object  the object to compare to
      * @param comparator  the comparator to use for comparison
      * @return the predicate
@@ -112,6 +111,7 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
     /**
      * Factory to create the comparator predicate
      *
+     * @param <T> the type that the predicate queries
      * @param object  the object to compare to
      * @param comparator  the comparator to use for comparison
      * @param criterion  the criterion to use to evaluate comparison
@@ -156,7 +156,7 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
      *
      * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
      * @see java.util.Comparator#compare(java.lang.Object first, java.lang.Object second)
-     *
+     * 
      * @throws IllegalStateException if the criterion is invalid (really not possible)
      */
     public boolean evaluate(T target) {

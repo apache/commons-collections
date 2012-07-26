@@ -25,9 +25,7 @@ import org.apache.commons.collections.Transformer;
  * <code>String.valueOf</code> on the input object.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public final class StringValueTransformer<T> implements Transformer<T, String>, Serializable {
 

@@ -32,9 +32,7 @@ import org.apache.commons.collections.FunctorException;
  * Factory implementation that creates a new instance each time based on a prototype.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class PrototypeFactory {
 

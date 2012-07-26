@@ -28,9 +28,7 @@ import org.apache.commons.collections.Transformer;
  * is passed to the second transformer and so on.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
 

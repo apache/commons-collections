@@ -24,9 +24,7 @@ import org.apache.commons.collections.Predicate;
  * Predicate implementation that returns true if the input is not null.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public final class NotNullPredicate<T> implements Predicate<T>, Serializable {
 

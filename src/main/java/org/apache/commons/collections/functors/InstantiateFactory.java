@@ -27,9 +27,7 @@ import org.apache.commons.collections.FunctorException;
  * Factory implementation that creates a new object instance by reflection.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class InstantiateFactory<T> implements Factory<T>, Serializable {
 

@@ -25,9 +25,7 @@ import org.apache.commons.collections.Closure;
  * Closure implementation that chains the specified closures together.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class ChainedClosure<E> implements Closure<E>, Serializable {
 
@@ -40,6 +38,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
     /**
      * Factory method that performs validation and copies the parameter array.
      * 
+     * @param <E> the type that the closure acts on
      * @param closures  the closures to chain, copied, no nulls
      * @return the <code>chained</code> closure
      * @throws IllegalArgumentException if the closures array is null
@@ -58,6 +57,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      * result into the next closure. The ordering is that of the iterator()
      * method on the collection.
      * 
+     * @param <E> the type that the closure acts on
      * @param closures  a collection of closures to chain
      * @return the <code>chained</code> closure
      * @throws IllegalArgumentException if the closures collection is null

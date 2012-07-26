@@ -27,9 +27,7 @@ import org.apache.commons.collections.Transformer;
  * like a switch statement.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable {
 

@@ -10,8 +10,6 @@
  */
 package org.apache.commons.collections.functors;
 
-import org.apache.commons.collections.map.HashedMap;
-
 /**
  * <p>
  * An equation function, which determines equality between objects of type T.
@@ -22,9 +20,8 @@ import org.apache.commons.collections.map.HashedMap;
  * </p>
  * 
  * @param <T> the types of object this {@link Equator} can evaluate.
- * @author Stephen Kestle
  * @since 4.0
- * @version $Revision$
+ * @version $Id$
  */
 public interface Equator<T> {
     /**
@@ -40,7 +37,7 @@ public interface Equator<T> {
      * Calculates the hash for the object, based on the method of equality used in the equate
      * method. This is used for classes that delegate their {@link Object#equals(Object) equals(Object)} method to an
      * Equator (and so must also delegate their {@link Object#hashCode() hashCode()} method), or for implementations
-     * of {@link HashedMap} that use an Equator for the key objects.
+     * of {@link org.apache.commons.collections.map.HashedMap} that use an Equator for the key objects.
      * 
      * @param o the object to calculate the hash for.
      * @return the hash of the object.

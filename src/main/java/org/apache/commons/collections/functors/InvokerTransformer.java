@@ -27,9 +27,7 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation that creates a new object instance by reflection.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable {
 
@@ -126,11 +124,14 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
             Method method = cls.getMethod(iMethodName, iParamTypes);
             return (O) method.invoke(input, iArgs);
         } catch (NoSuchMethodException ex) {
-            throw new FunctorException("InvokerTransformer: The method '" + iMethodName + "' on '" + input.getClass() + "' does not exist");
+            throw new FunctorException("InvokerTransformer: The method '" + iMethodName + "' on '" +
+                                       input.getClass() + "' does not exist");
         } catch (IllegalAccessException ex) {
-            throw new FunctorException("InvokerTransformer: The method '" + iMethodName + "' on '" + input.getClass() + "' cannot be accessed");
+            throw new FunctorException("InvokerTransformer: The method '" + iMethodName + "' on '" +
+                                       input.getClass() + "' cannot be accessed");
         } catch (InvocationTargetException ex) {
-            throw new FunctorException("InvokerTransformer: The method '" + iMethodName + "' on '" + input.getClass() + "' threw an exception", ex);
+            throw new FunctorException("InvokerTransformer: The method '" + iMethodName + "' on '" +
+                                       input.getClass() + "' threw an exception", ex);
         }
     }
 

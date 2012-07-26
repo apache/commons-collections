@@ -34,11 +34,7 @@ import org.apache.commons.collections.Predicate;
  * threw an exception.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Matt Benson
- * @author Stephen Kestle
+ * @version $Id$
  */
 public final class AllPredicate<T> implements Predicate<T>, PredicateDecorator<T>, Serializable {
 
@@ -54,6 +50,7 @@ public final class AllPredicate<T> implements Predicate<T>, PredicateDecorator<T
      * If the array is size zero, the predicate always returns true.
      * If the array is size one, then that predicate is returned.
      *
+     * @param <T> the type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null
      * @return the <code>all</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
@@ -77,6 +74,7 @@ public final class AllPredicate<T> implements Predicate<T>, PredicateDecorator<T
      * If the collection is size zero, the predicate always returns true.
      * If the collection is size one, then that predicate is returned.
      *
+     * @param <T> the type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null
      * @return the <code>all</code> predicate
      * @throws IllegalArgumentException if the predicates array is null

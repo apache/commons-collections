@@ -24,9 +24,7 @@ import org.apache.commons.collections.Predicate;
  * Predicate implementation that returns true if both the predicates return true.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public final class AndPredicate<T> implements Predicate<T>, PredicateDecorator<T>, Serializable {
 
@@ -41,6 +39,7 @@ public final class AndPredicate<T> implements Predicate<T>, PredicateDecorator<T
     /**
      * Factory to create the predicate.
      *
+     * @param <T> the type that the predicate queries
      * @param predicate1  the first predicate to check, not null
      * @param predicate2  the second predicate to check, not null
      * @return the <code>and</code> predicate

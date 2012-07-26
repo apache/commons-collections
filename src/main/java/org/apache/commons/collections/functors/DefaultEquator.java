@@ -21,7 +21,7 @@ package org.apache.commons.collections.functors;
  * 
  * @param <T>
  * @since 4.0
- * @version $Revision$
+ * @version $Id$
  */
 public class DefaultEquator<T> implements Equator<T> {
     /** Static instance */

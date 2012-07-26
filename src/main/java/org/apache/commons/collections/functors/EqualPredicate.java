@@ -27,9 +27,7 @@ import org.apache.commons.collections.Predicate;
  * as the one stored in this predicate by equals.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public final class EqualPredicate<T> implements Predicate<T>, Serializable {
 

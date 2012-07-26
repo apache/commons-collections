@@ -24,10 +24,7 @@ import org.apache.commons.collections.Predicate;
  * Predicate implementation that always returns true.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Stephen Kestle
+ * @version $Id$
  */
 public final class TruePredicate<T> implements Predicate<T>, Serializable {
 

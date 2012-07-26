@@ -27,9 +27,7 @@ import org.apache.commons.collections.Predicate;
  * like a switch statement.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class SwitchClosure<E> implements Closure<E>, Serializable {
 
@@ -46,6 +44,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
     /**
      * Factory method that performs validation and copies the parameter arrays.
      *
+     * @param <E> the type that the closure acts on
      * @param predicates  array of predicates, cloned, no nulls
      * @param closures  matching array of closures, cloned, no nulls
      * @param defaultClosure  the closure to use if no match, null means nop
@@ -54,7 +53,9 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * @throws IllegalArgumentException if any element in the array is null
      */
     @SuppressWarnings("unchecked")
-    public static <E> Closure<E> switchClosure(Predicate<? super E>[] predicates, Closure<? super E>[] closures, Closure<? super E> defaultClosure) {
+    public static <E> Closure<E> switchClosure(Predicate<? super E>[] predicates,
+                                               Closure<? super E>[] closures,
+                                               Closure<? super E> defaultClosure) {
         FunctorUtils.validate(predicates);
         FunctorUtils.validate(closures);
         if (predicates.length != closures.length) {
@@ -77,6 +78,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * null key. The ordering is that of the iterator() method on the entryset
      * collection of the map.
      *
+     * @param <E> the type that the closure acts on
      * @param predicatesAndClosures  a map of predicates to closures
      * @return the <code>switch</code> closure
      * @throws IllegalArgumentException if the map is null
@@ -114,7 +116,8 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * @param defaultClosure  the closure to use if no match, null means nop
      */
     @SuppressWarnings("unchecked")
-    public SwitchClosure(Predicate<? super E>[] predicates, Closure<? super E>[] closures, Closure<? super E> defaultClosure) {
+    public SwitchClosure(Predicate<? super E>[] predicates, Closure<? super E>[] closures,
+                         Closure<? super E> defaultClosure) {
         super();
         iPredicates = predicates;
         iClosures = closures;

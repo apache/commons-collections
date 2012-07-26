@@ -26,10 +26,7 @@ import org.apache.commons.collections.Transformer;
  * Internal utilities for functors.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Matt Benson
+ * @version $Id$
  */
 class FunctorUtils {
 
@@ -84,7 +81,8 @@ class FunctorUtils {
         }
         for (int i = 0; i < predicates.length; i++) {
             if (predicates[i] == null) {
-                throw new IllegalArgumentException("The predicate array must not contain a null predicate, index " + i + " was null");
+                throw new IllegalArgumentException(
+                        "The predicate array must not contain a null predicate, index " + i + " was null");
             }
         }
     }

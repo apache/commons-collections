@@ -26,10 +26,7 @@ import org.apache.commons.collections.Predicate;
  * based on a predicate.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Matt Benson
+ * @version $Id$
  */
 public class IfClosure<E> implements Closure<E>, Serializable {
 
@@ -49,6 +46,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      * This factory creates a closure that performs no action when
      * the predicate is false.
      * 
+     * @param <E> the type that the closure acts on
      * @param predicate  predicate to switch on
      * @param trueClosure  closure used if true
      * @return the <code>if</code> closure
@@ -62,13 +60,16 @@ public class IfClosure<E> implements Closure<E>, Serializable {
     /**
      * Factory method that performs validation.
      * 
+     * @param <E> the type that the closure acts on
      * @param predicate  predicate to switch on
      * @param trueClosure  closure used if true
      * @param falseClosure  closure used if false
      * @return the <code>if</code> closure
      * @throws IllegalArgumentException if any argument is null
      */
-    public static <E> Closure<E> ifClosure(Predicate<? super E> predicate, Closure<? super E> trueClosure, Closure<? super E> falseClosure) {
+    public static <E> Closure<E> ifClosure(Predicate<? super E> predicate,
+                                           Closure<? super E> trueClosure,
+                                           Closure<? super E> falseClosure) {
         if (predicate == null) {
             throw new IllegalArgumentException("Predicate must not be null");
         }

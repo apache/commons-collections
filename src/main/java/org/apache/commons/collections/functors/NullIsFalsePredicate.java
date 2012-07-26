@@ -24,9 +24,7 @@ import org.apache.commons.collections.Predicate;
  * Predicate implementation that returns false if the input is null.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public final class NullIsFalsePredicate<T> implements Predicate<T>, PredicateDecorator<T>, Serializable {
 

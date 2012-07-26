@@ -30,10 +30,7 @@ import org.apache.commons.collections.Predicate;
  * threw an exception.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Matt Benson
+ * @version $Id$
  */
 public final class OnePredicate<T> implements Predicate<T>, PredicateDecorator<T>, Serializable {
 

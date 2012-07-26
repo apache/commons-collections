@@ -28,9 +28,7 @@ import org.apache.commons.collections.Transformer;
  * use the prototype factory.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializable {
 

@@ -24,9 +24,7 @@ import org.apache.commons.collections.Closure;
  * Closure implementation that calls another closure n times, like a for loop.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class ForClosure<E> implements Closure<E>, Serializable {
 
@@ -44,6 +42,7 @@ public class ForClosure<E> implements Closure<E>, Serializable {
      * A null closure or zero count returns the <code>NOPClosure</code>.
      * A count of one returns the specified closure.
      * 
+     * @param <E> the type that the closure acts on
      * @param count  the number of times to execute the closure
      * @param closure  the closure to execute, not null
      * @return the <code>for</code> closure

@@ -44,7 +44,7 @@ import org.apache.commons.collections.FunctorException;
  * </pre>
  * 
  * @since 4.0
- * @version $Revision$
+ * @version $Id$
  */
 public abstract class CatchAndRethrowClosure<E> implements Closure<E> {
 

@@ -26,9 +26,7 @@ import org.apache.commons.collections.Transformer;
  * and then returns the input.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
 

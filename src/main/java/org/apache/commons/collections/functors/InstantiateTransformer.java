@@ -27,9 +27,7 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation that creates a new object instance by reflection.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class InstantiateTransformer<T> implements Transformer<Class<? extends T>, T>, Serializable {
 

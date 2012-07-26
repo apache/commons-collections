@@ -26,9 +26,7 @@ import org.apache.commons.collections.Transformer;
  * Clone is performed using <code>PrototypeFactory.getInstance(input).create()</code>.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class CloneTransformer<T> implements Transformer<T, T>, Serializable {
 

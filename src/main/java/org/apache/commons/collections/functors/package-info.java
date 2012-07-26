@@ -14,28 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections.functors;
-
-import org.apache.commons.collections.Predicate;
-
 /**
- * Defines a predicate that decorates one or more other predicates.
- * <p>
- * This interface enables tools to access the decorated predicates.
- *
- * @since 3.1
+ * This package contains implementations of the
+ * {@link org.apache.commons.collections.Closure Closure},
+ * {@link org.apache.commons.collections.Predicate Predicate},
+ * {@link org.apache.commons.collections.Transformer Transformer} and
+ * {@link org.apache.commons.collections.Factory Factory} interfaces.
+ * These provide simple callbacks for processing with collections.
+ * 
  * @version $Id$
  */
-public interface PredicateDecorator<T> extends Predicate<T> {
-
-    /**
-     * Gets the predicates being decorated as an array.
-     * <p>
-     * The array may be the internal data structure of the predicate and thus
-     * should not be altered.
-     * 
-     * @return the predicates being decorated
-     */
-    Predicate<? super T>[] getPredicates();
-
-}
+package org.apache.commons.collections.functors;

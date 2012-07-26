@@ -25,9 +25,7 @@ import org.apache.commons.collections.FunctorException;
  * Closure implementation that always throws an exception.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public final class ExceptionClosure<E> implements Closure<E>, Serializable {
 
@@ -40,6 +38,7 @@ public final class ExceptionClosure<E> implements Closure<E>, Serializable {
     /**
      * Factory returning the singleton instance.
      * 
+     * @param <E> the type that the closure acts on
      * @return the singleton instance
      * @since 3.1
      */

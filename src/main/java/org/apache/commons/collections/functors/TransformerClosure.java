@@ -26,9 +26,7 @@ import org.apache.commons.collections.Transformer;
  * and ignore the result.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class TransformerClosure<E> implements Closure<E>, Serializable {
 
@@ -43,6 +41,7 @@ public class TransformerClosure<E> implements Closure<E>, Serializable {
      * <p>
      * A null transformer will return the <code>NOPClosure</code>.
      * 
+     * @param <E> the type that the closure acts on
      * @param transformer  the transformer to call, null means nop
      * @return the <code>transformer</code> closure
      */
