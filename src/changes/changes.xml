@@ -31,6 +31,10 @@
     <action dev="tn" issue="COLLECTIONS-425" type="fix" due-to="Adrian Nistor">
       Improved performance of "ListOrderedMap#remove(Object)" method.
     </action>
+    <action dev="jochen" issue="COLLECTIONS-323" type="fix" due-to="Maarten Brak">
+      Changed behavior of "CaseInsensitiveMap" constructor to be compliant with "HashMap"
+      in case the initial capacity is set to zero.
+    </action>
   </release>
   </body>
 </document>
