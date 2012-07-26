@@ -346,7 +346,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * Returns the index of the least element in {@link #values},
      * {@link #set(int) setting} any uninitialized values.
      * 
-     * @throws IllegalStateException
+     * @throws NullPointerException if no comparator is set
      */
     private int least() {
         int leastIndex = -1;
@@ -362,7 +362,7 @@ public class CollatingIterator<E> implements Iterator<E> {
                 } else {
                     E curObject = values.get(i);
                     if (comparator == null) {
-                        throw new NullPointerException("You must invoke setComparator() to set a compator first.");
+                        throw new NullPointerException("You must invoke setComparator() to set a comparator first.");
                     }
                     if (comparator.compare(curObject, leastObject) < 0) {
                         leastObject = curObject;
