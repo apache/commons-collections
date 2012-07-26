@@ -25,7 +25,7 @@
     <action dev="luc" issue="COLLECTIONS-404" type="add" due-to="Jordane Sarda">
       Added an implementation of Eugene Myers difference algorithm.
     </action>
-    <action dev="tn" issue="COLLECTIONS-239" type="add" due-to="Stephen Kestle">
+    <action dev="tn" issue="COLLECTIONS-293" type="add" due-to="Stephen Kestle">
       Added support for using custom "Equator" objects in "EqualPredicate".
     </action>
     <action dev="tn" issue="COLLECTIONS-425" type="fix" due-to="Adrian Nistor">
