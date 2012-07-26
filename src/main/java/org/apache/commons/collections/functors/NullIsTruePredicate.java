@@ -37,6 +37,7 @@ public final class NullIsTruePredicate<T> implements Predicate<T>, PredicateDeco
     /**
      * Factory to create the null true predicate.
      * 
+     * @param <T> the type that the predicate queries
      * @param predicate  the predicate to decorate, not null
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null

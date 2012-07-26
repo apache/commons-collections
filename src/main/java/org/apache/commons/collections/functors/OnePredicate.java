@@ -46,6 +46,7 @@ public final class OnePredicate<T> implements Predicate<T>, PredicateDecorator<T
      * If the array is size zero, the predicate always returns false.
      * If the array is size one, then that predicate is returned.
      *
+     * @param <T> the type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null
      * @return the <code>any</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
@@ -66,6 +67,7 @@ public final class OnePredicate<T> implements Predicate<T>, PredicateDecorator<T
     /**
      * Factory to create the predicate.
      *
+     * @param <T> the type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null
      * @return the <code>one</code> predicate
      * @throws IllegalArgumentException if the predicates array is null

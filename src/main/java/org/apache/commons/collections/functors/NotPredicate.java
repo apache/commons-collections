@@ -37,6 +37,7 @@ public final class NotPredicate<T> implements Predicate<T>, PredicateDecorator<T
     /**
      * Factory to create the not predicate.
      * 
+     * @param <T> the type that the predicate queries
      * @param predicate  the predicate to decorate, not null
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null

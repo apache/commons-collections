@@ -37,6 +37,7 @@ public final class FalsePredicate<T> implements Predicate<T>, Serializable {
     /**
      * Get a typed instance.
      *
+     * @param <T> the type that the predicate queries
      * @return the singleton instance
      * @since 4.0
      */

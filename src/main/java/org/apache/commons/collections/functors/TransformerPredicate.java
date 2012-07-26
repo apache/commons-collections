@@ -39,6 +39,7 @@ public final class TransformerPredicate<T> implements Predicate<T>, Serializable
     /**
      * Factory to create the predicate.
      *
+     * @param <T> the type that the predicate queries
      * @param transformer  the transformer to decorate
      * @return the predicate
      * @throws IllegalArgumentException if the transformer is null

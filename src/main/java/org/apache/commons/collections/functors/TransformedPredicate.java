@@ -42,12 +42,14 @@ public final class TransformedPredicate<T> implements Predicate<T>, PredicateDec
     /**
      * Factory to create the predicate.
      *
+     * @param <T> the type that the predicate queries
      * @param transformer  the transformer to call
      * @param predicate  the predicate to call with the result of the transform
      * @return the predicate
      * @throws IllegalArgumentException if the transformer or the predicate is null
      */
-    public static <T> Predicate<T> transformedPredicate(Transformer<? super T, ? extends T> transformer, Predicate<? super T> predicate) {
+    public static <T> Predicate<T> transformedPredicate(Transformer<? super T, ? extends T> transformer,
+                                                        Predicate<? super T> predicate) {
         if (transformer == null) {
             throw new IllegalArgumentException("The transformer to call must not be null");
         }

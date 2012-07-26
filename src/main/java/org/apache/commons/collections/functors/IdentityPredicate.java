@@ -38,6 +38,7 @@ public final class IdentityPredicate<T> implements Predicate<T>, Serializable {
     /**
      * Factory to create the identity predicate.
      *
+     * @param <T> the type that the predicate queries
      * @param object  the object to compare to
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null

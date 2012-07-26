@@ -37,6 +37,7 @@ public final class NotNullPredicate<T> implements Predicate<T>, Serializable {
     /**
      * Factory returning the singleton instance.
      *
+     * @param <T> the type that the predicate queries
      * @return the singleton instance
      * @since 3.1
      */

@@ -38,6 +38,7 @@ public final class NullIsExceptionPredicate<T> implements Predicate<T>, Predicat
     /**
      * Factory to create the null exception predicate.
      * 
+     * @param <T> the type that the predicate queries
      * @param predicate  the predicate to decorate, not null
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null

@@ -37,6 +37,7 @@ public final class NullPredicate<T> implements Predicate<T>, Serializable {
     /**
      * Factory returning the singleton instance.
      *
+     * @param <T> the type that the predicate queries
      * @return the singleton instance
      * @since 3.1
      */
@@ -58,7 +59,7 @@ public final class NullPredicate<T> implements Predicate<T>, Serializable {
      * @param object  the input object
      * @return true if input is null
      */
-    public boolean evaluate(Object object) {
+    public boolean evaluate(T object) {
         return (object == null);
     }
 

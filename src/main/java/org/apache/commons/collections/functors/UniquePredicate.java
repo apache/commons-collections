@@ -40,11 +40,12 @@ public final class UniquePredicate<T> implements Predicate<T>, Serializable {
     /**
      * Factory to create the predicate.
      *
+     * @param <T> the type that the predicate queries
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null
      */
-    public static <E> Predicate<E> uniquePredicate() {
-        return new UniquePredicate<E>();
+    public static <T> Predicate<T> uniquePredicate() {
+        return new UniquePredicate<T>();
     }
 
     /**

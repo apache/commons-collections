@@ -37,6 +37,7 @@ public final class NullIsFalsePredicate<T> implements Predicate<T>, PredicateDec
     /**
      * Factory to create the null false predicate.
      *
+     * @param <T> the type that the predicate queries
      * @param predicate  the predicate to decorate, not null
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null

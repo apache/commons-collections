@@ -39,6 +39,7 @@ public final class OrPredicate<T> implements Predicate<T>, PredicateDecorator<T>
     /**
      * Factory to create the predicate.
      *
+     * @param <T> the type that the predicate queries
      * @param predicate1  the first predicate to check, not null
      * @param predicate2  the second predicate to check, not null
      * @return the <code>and</code> predicate
