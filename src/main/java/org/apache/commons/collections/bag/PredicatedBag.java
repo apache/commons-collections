@@ -38,8 +38,7 @@ import org.apache.commons.collections.collection.PredicatedCollection;
  * @since 3.0
  * @version $Id$
  */
-public class PredicatedBag<E>
-        extends PredicatedCollection<E> implements Bag<E> {
+public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = -2575833140344736876L;

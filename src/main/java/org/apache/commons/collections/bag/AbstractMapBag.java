@@ -488,7 +488,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     /**
      * Write the map out using a custom routine.
      * @param out the output stream
-     * @throws IOException
+     * @throws IOException any of the usual I/O related exceptions
      */
     protected void doWriteObject(ObjectOutputStream out) throws IOException {
         out.writeInt(map.size());
@@ -503,12 +503,12 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * Read the map in using a custom routine.
      * @param map the map to use
      * @param in the input stream
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException any of the usual I/O related exceptions
+     * @throws ClassNotFoundException if the stream contains an object which class can not be loaded
      * @throws ClassCastException if the stream does not contain the correct objects
      */
-    protected void doReadObject(Map<E, MutableInteger> map, ObjectInputStream in) throws IOException,
-            ClassNotFoundException {
+    protected void doReadObject(Map<E, MutableInteger> map, ObjectInputStream in)
+            throws IOException, ClassNotFoundException {
         this.map = map;
         int entrySize = in.readInt();
         for (int i = 0; i < entrySize; i++) {

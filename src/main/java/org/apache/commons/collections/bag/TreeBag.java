@@ -77,7 +77,12 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
     }
 
     //-----------------------------------------------------------------------
-    // TODO: Generics - should this be E<? extends Comparable> or some such?
+    /**
+     * {@inheritDoc}
+     * 
+     * @throws IllegalArgumentException if the object to be added does not implement
+     * {@link Comparable} and the {@link TreeBag} is using natural ordering
+     */
     @Override
     public boolean add(E object) {
         if(comparator() == null && !(object instanceof Comparable)) {

@@ -33,8 +33,7 @@ import org.apache.commons.collections.SortedBag;
  * @since 3.0
  * @version $Id$
  */
-public class SynchronizedSortedBag<E>
-        extends SynchronizedBag<E> implements SortedBag<E> {
+public class SynchronizedSortedBag<E> extends SynchronizedBag<E> implements SortedBag<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = 722374056718497858L;

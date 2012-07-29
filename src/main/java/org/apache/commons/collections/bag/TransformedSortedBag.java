@@ -34,8 +34,7 @@ import org.apache.commons.collections.Transformer;
  * @since 3.0
  * @version $Id$
  */
-public class TransformedSortedBag<E>
-        extends TransformedBag<E> implements SortedBag<E> {
+public class TransformedSortedBag<E> extends TransformedBag<E> implements SortedBag<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = -251737742649401930L;

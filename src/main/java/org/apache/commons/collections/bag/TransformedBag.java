@@ -36,8 +36,7 @@ import org.apache.commons.collections.set.TransformedSet;
  * @since 3.0
  * @version $Id$
  */
-public class TransformedBag<E>
-        extends TransformedCollection<E> implements Bag<E> {
+public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = 5421170911299074185L;

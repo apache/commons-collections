@@ -37,8 +37,7 @@ import org.apache.commons.collections.SortedBag;
  * @since 3.0
  * @version $Id$
  */
-public class PredicatedSortedBag<E>
-        extends PredicatedBag<E> implements SortedBag<E> {
+public class PredicatedSortedBag<E> extends PredicatedBag<E> implements SortedBag<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = 3448581314086406616L;

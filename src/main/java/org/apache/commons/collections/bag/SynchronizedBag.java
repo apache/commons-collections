@@ -34,8 +34,7 @@ import org.apache.commons.collections.set.SynchronizedSet;
  * @since 3.0
  * @version $Id$
  */
-public class SynchronizedBag<E>
-        extends SynchronizedCollection<E> implements Bag<E> {
+public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = 8084674570753837109L;
