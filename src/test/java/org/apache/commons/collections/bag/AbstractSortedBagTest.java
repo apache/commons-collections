@@ -23,14 +23,12 @@ import org.apache.commons.collections.SortedBag;
  * {@link org.apache.commons.collections.SortedBag SortedBag}
  * methods and contracts.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @since 3.0
+ * @version $Id$
  */
-public abstract class AbstractTestSortedBag<T> extends AbstractTestBag<T> {
+public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
 
-    public AbstractTestSortedBag(String testName) {
+    public AbstractSortedBagTest(String testName) {
         super(testName);
     }
 

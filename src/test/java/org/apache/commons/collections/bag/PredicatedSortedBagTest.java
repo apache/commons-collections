@@ -23,19 +23,17 @@ import org.apache.commons.collections.SortedBag;
 import org.apache.commons.collections.functors.TruePredicate;
 
 /**
- * Extension of {@link AbstractTestSortedBag} for exercising the {@link PredicatedSortedBag}
+ * Extension of {@link AbstractSortedBagTest} for exercising the {@link PredicatedSortedBag}
  * implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Phil Steitz
+ * @since 3.0
+ * @version $Id$
  */
-public class TestPredicatedSortedBag<T> extends AbstractTestSortedBag<T> {
+public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
     private SortedBag<T> nullBag = null;
 
-    public TestPredicatedSortedBag(String testName) {
+    public PredicatedSortedBagTest(String testName) {
         super(testName);
     }
 

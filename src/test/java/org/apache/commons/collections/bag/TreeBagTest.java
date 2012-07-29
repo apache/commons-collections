@@ -20,16 +20,14 @@ import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.SortedBag;
 
 /**
- * Extension of {@link AbstractTestBag} for exercising the {@link TreeBag}
+ * Extension of {@link AbstractBagTest} for exercising the {@link TreeBag}
  * implementation.
  *
- * @version $Revision$
- *
- * @author Chuck Burdick
+ * @version $Id$
  */
-public class TestTreeBag<T> extends AbstractTestSortedBag<T> {
+public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
 
-    public TestTreeBag(String testName) {
+    public TreeBagTest(String testName) {
         super(testName);
     }
 

@@ -447,10 +447,12 @@
             <configuration>
               <includes>
                 <include>**/Test*.java</include>
+                <include>**/*Test.java</include>
               </includes>
               <excludes>
                 <exclude>**/*$*</exclude>
-                <exclude >**/TestUtils.java</exclude>
+                <exclude>**/TestUtils.java</exclude>
+                <exclude>**/Abstract*.java</exclude>
               </excludes>
           </configuration>
         </plugin>

@@ -19,16 +19,14 @@ package org.apache.commons.collections.bag;
 import org.apache.commons.collections.Bag;
 
 /**
- * Extension of {@link AbstractTestBag} for exercising the {@link HashBag}
+ * Extension of {@link AbstractBagTest} for exercising the {@link HashBag}
  * implementation.
  *
- * @version $Revision$
- *
- * @author Chuck Burdick
+ * @version $Id$
  */
-public class TestHashBag<T> extends AbstractTestBag<T> {
+public class HashBagTest<T> extends AbstractBagTest<T> {
     
-    public TestHashBag(String testName) {
+    public HashBagTest(String testName) {
         super(testName);
     }
 

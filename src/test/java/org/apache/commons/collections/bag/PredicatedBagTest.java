@@ -23,17 +23,15 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.functors.TruePredicate;
 
 /**
- * Extension of {@link AbstractTestBag} for exercising the {@link PredicatedBag}
+ * Extension of {@link AbstractBagTest} for exercising the {@link PredicatedBag}
  * implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Phil Steitz
+ * @since 3.0
+ * @version $Id$
  */
-public class TestPredicatedBag<T> extends AbstractTestBag<T> {
+public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 
-    public TestPredicatedBag(String testName) {
+    public PredicatedBagTest(String testName) {
         super(testName);
     }
 

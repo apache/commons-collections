@@ -106,7 +106,7 @@ import org.apache.commons.collections.AbstractTestObject;
  * <p>
  * If you're extending {@link org.apache.commons.collections.list.AbstractTestList AbstractTestList},
  * {@link org.apache.commons.collections.set.AbstractTestSet AbstractTestSet},
- * or {@link org.apache.commons.collections.bag.AbstractTestBag AbstractTestBag}, 
+ * or {@link org.apache.commons.collections.bag.AbstractBagTest AbstractTestBag}, 
  * you probably don't have to worry about the
  * above methods, because those three classes already override the methods
  * to provide standard JDK confirmed collections.<P>

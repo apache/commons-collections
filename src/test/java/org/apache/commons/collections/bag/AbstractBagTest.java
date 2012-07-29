@@ -37,12 +37,9 @@ import org.apache.commons.collections.Bag;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your bag fails.
  *
- * @version $Revision$
- *
- * @author Chuck Burdick
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public abstract class AbstractTestBag<T> extends AbstractTestObject {
+public abstract class AbstractBagTest<T> extends AbstractTestObject {
 //  TODO: this class should really extend from TestCollection, but the bag
 //  implementations currently do not conform to the Collection interface.  Once
 //  those are fixed or at least a strategy is made for resolving the issue, this
@@ -53,7 +50,7 @@ public abstract class AbstractTestBag<T> extends AbstractTestObject {
      * 
      * @param testName  the test class name
      */
-    public AbstractTestBag(String testName) {
+    public AbstractBagTest(String testName) {
         super(testName);
     }
 

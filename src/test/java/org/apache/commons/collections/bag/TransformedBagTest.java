@@ -17,58 +17,60 @@
 package org.apache.commons.collections.bag;
 
 import org.apache.commons.collections.Bag;
-import org.apache.commons.collections.SortedBag;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.collection.TestTransformedCollection;
 
 /**
- * Extension of {@link AbstractTestSortedBag} for exercising the {@link TransformedSortedBag}
+ * Extension of {@link AbstractBagTest} for exercising the {@link TransformedBag}
  * implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @since 3.0
+ * @version $Id$
  */
-public class TestTransformedSortedBag<T> extends AbstractTestSortedBag<T> {
+public class TransformedBagTest<T> extends AbstractBagTest<T> {
 
-    public TestTransformedSortedBag(String testName) {
+    public TransformedBagTest(String testName) {
         super(testName);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public SortedBag<T> makeObject() {
-        return TransformedSortedBag.transformingSortedBag(new TreeBag<T>(), (Transformer<T, T>) TestTransformedCollection.NOOP_TRANSFORMER);
+    public Bag<T> makeObject() {
+        return TransformedBag.transformingBag(new HashBag<T>(), (Transformer<T, T>) TestTransformedCollection.NOOP_TRANSFORMER);
     }
 
     @SuppressWarnings("unchecked")
     public void testTransformedBag() {
-        SortedBag<T> bag = TransformedSortedBag.transformingSortedBag(new TreeBag<T>(), (Transformer<T, T>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        //T had better be Object!
+        Bag<T> bag = TransformedBag.transformingBag(new HashBag<T>(), (Transformer<T, T>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, bag.size());
         Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {
             bag.add((T) els[i]);
             assertEquals(i + 1, bag.size());
             assertEquals(true, bag.contains(new Integer((String) els[i])));
+            assertEquals(false, bag.contains(els[i]));
         }
 
+        assertEquals(false, bag.remove(els[0]));
         assertEquals(true, bag.remove(new Integer((String) els[0])));
-
     }
 
+    // TODO: Generics
     public void testTransformedBag_decorateTransform() {
-        Bag<Object> originalBag = new TreeBag<Object>();
+        Bag originalBag = new HashBag();
         Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {
             originalBag.add(els[i]);
         }
-        Bag<?> bag = TransformedBag.transformedBag(originalBag, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        Bag bag = TransformedBag.transformedBag(originalBag, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, bag.size());
         for (int i = 0; i < els.length; i++) {
             assertEquals(true, bag.contains(new Integer((String) els[i])));
+            assertEquals(false, bag.contains(els[i]));
         }
         
+        assertEquals(false, bag.remove(els[0]));
         assertEquals(true, bag.remove(new Integer((String) els[0])));
     }
 
@@ -79,14 +81,14 @@ public class TestTransformedSortedBag<T> extends AbstractTestSortedBag<T> {
 
 //    public void testCreate() throws Exception {
 //        Bag bag = makeBag();
-//        writeExternalFormToDisk((java.io.Serializable) bag, "D:/dev/collections/data/test/TransformedSortedBag.emptyCollection.version3.1.obj");
+//        writeExternalFormToDisk((java.io.Serializable) bag, "D:/dev/collections/data/test/TransformedBag.emptyCollection.version3.1.obj");
 //        bag = makeBag();
 //        bag.add("A");
 //        bag.add("A");
 //        bag.add("B");
 //        bag.add("B");
 //        bag.add("C");
-//        writeExternalFormToDisk((java.io.Serializable) bag, "D:/dev/collections/data/test/TransformedSortedBag.fullCollection.version3.1.obj");
+//        writeExternalFormToDisk((java.io.Serializable) bag, "D:/dev/collections/data/test/TransformedBag.fullCollection.version3.1.obj");
 //    }
 
 }
