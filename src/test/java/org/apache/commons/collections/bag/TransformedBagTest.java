@@ -36,13 +36,15 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
     @Override
     @SuppressWarnings("unchecked")
     public Bag<T> makeObject() {
-        return TransformedBag.transformingBag(new HashBag<T>(), (Transformer<T, T>) TestTransformedCollection.NOOP_TRANSFORMER);
+        return TransformedBag.transformingBag(new HashBag<T>(),
+                (Transformer<T, T>) TestTransformedCollection.NOOP_TRANSFORMER);
     }
 
     @SuppressWarnings("unchecked")
     public void testTransformedBag() {
         //T had better be Object!
-        Bag<T> bag = TransformedBag.transformingBag(new HashBag<T>(), (Transformer<T, T>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        Bag<T> bag = TransformedBag.transformingBag(new HashBag<T>(),
+                (Transformer<T, T>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, bag.size());
         Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {
@@ -56,14 +58,15 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
         assertEquals(true, bag.remove(new Integer((String) els[0])));
     }
 
-    // TODO: Generics
+    @SuppressWarnings("unchecked")
     public void testTransformedBag_decorateTransform() {
-        Bag originalBag = new HashBag();
+        Bag<T> originalBag = new HashBag<T>();
         Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {
-            originalBag.add(els[i]);
+            originalBag.add((T) els[i]);
         }
-        Bag bag = TransformedBag.transformedBag(originalBag, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        Bag<T> bag = TransformedBag.transformedBag(originalBag,
+                (Transformer<T, T>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, bag.size());
         for (int i = 0; i < els.length; i++) {
             assertEquals(true, bag.contains(new Integer((String) els[i])));
