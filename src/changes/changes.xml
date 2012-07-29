@@ -22,37 +22,37 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
-    <action dev="luc" issue="COLLECTIONS-379" type="fix" due-to="Shin Hwei Tan">
+    <action issue="COLLECTIONS-379" dev="tn" type="fix" due-to="Shin Hwei Tan">
       Fixed javadoc for several methods wrt expected NullPointerExceptions.
     </action>
-    <action dev="luc" issue="COLLECTIONS-404" type="add" due-to="Jordane Sarda">
+    <action issue="COLLECTIONS-404" dev="luc" type="add" due-to="Jordane Sarda">
       Added an implementation of Eugene Myers difference algorithm.
     </action>
-    <action dev="tn" issue="COLLECTIONS-293" type="add" due-to="Stephen Kestle">
+    <action issue="COLLECTIONS-293" dev="tn" type="add" due-to="Stephen Kestle">
       Added support for using custom "Equator" objects in "EqualPredicate".
     </action>
-    <action dev="tn" issue="COLLECTIONS-425" type="fix" due-to="Adrian Nistor">
+    <action issue="COLLECTIONS-425" dev="tn" type="fix" due-to="Adrian Nistor">
       Improved performance of "ListOrderedMap#remove(Object)" method.
     </action>
-    <action dev="jochen" issue="COLLECTIONS-323" type="fix" due-to="Maarten Brak">
+    <action issue="COLLECTIONS-323" dev="jochen" type="fix" due-to="Maarten Brak">
       Changed behavior of "CaseInsensitiveMap" constructor to be compliant with "HashMap"
       in case the initial capacity is set to zero.
     </action>
-    <action dev="jochen" issue="COLLECTIONS-334" type="fix" due-to="sebb">
+    <action issue="COLLECTIONS-334" dev="jochen" type="fix" due-to="sebb">
       Synchronized access to lock in "StaticBucketMap#size()".
     </action>
-    <action dev="jochen" issue="COLLECTIONS-335" type="fix" due-to="sebb">
+    <action issue="COLLECTIONS-335" dev="jochen" type="fix" due-to="sebb">
       Fixed cache assignment for "TreeBidiMap#entrySet".
     </action>
-    <action dev="jochen" issue="COLLECTIONS-332" type="fix" due-to="Tom Parker">
+    <action issue="COLLECTIONS-332" dev="jochen" type="fix" due-to="Tom Parker">
       Added clarification to javadoc of "ListOrderedMap" that "IdentityMap" and
       "CaseInsensitiveMap" are not supported.
     </action>
-    <action dev="jochen" issue="COLLECTIONS-360" type="fix" due-to="Sai Zhang">
+    <action issue="COLLECTIONS-360" dev="jochen" type="fix" due-to="Sai Zhang">
       "FilterListIterator#hasNext" does not throw a NullPointerException anymore
       to comply to the Java iterator specification.
     </action>
-    <action dev="jochen" issue="COLLECTIONS-331" type="fix" due-to="Michael Krkoska">
+    <action issue="COLLECTIONS-331" dev="jochen" type="fix" due-to="Michael Krkoska">
       Improve javadoc of "CollatingIterator" wrt the used "Comparator" and throw a
       NullPointerException in "CollatingIterator#least" if no comparator is set.
     </action>
