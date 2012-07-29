@@ -453,6 +453,7 @@
                 <exclude>**/*$*</exclude>
                 <exclude>**/TestUtils.java</exclude>
                 <exclude>**/Abstract*.java</exclude>
+                <exclude>**/BulkTest.java</exclude>
               </excludes>
           </configuration>
         </plugin>
