@@ -14,31 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections.iterators;
-
-import java.util.Iterator;
-
-import org.apache.commons.collections.functors.UniquePredicate;
-
 /**
- * A FilterIterator which only returns "unique" Objects.  Internally,
- * the Iterator maintains a Set of objects it has already encountered,
- * and duplicate Objects are skipped.
+ * This package contains implementations of the
+ * {@link java.util.Iterator Iterator} interface.
+ * <p>
+ * You may also consider using 
+ * {@link org.apache.commons.collections.IteratorUtils IteratorUtils},
+ * which is a single class that uses static methods to construct instances
+ * of the classes in this package.
  *
- * @since 2.1
  * @version $Id$
  */
-public class UniqueFilterIterator<E> extends FilterIterator<E> {
-
-    //-------------------------------------------------------------------------
-
-    /**
-     *  Constructs a new <code>UniqueFilterIterator</code>.
-     *
-     *  @param iterator  the iterator to use
-     */
-    public UniqueFilterIterator(Iterator<E> iterator) {
-        super(iterator, UniquePredicate.uniquePredicate());
-    }
-
-}
+package org.apache.commons.collections.iterators;

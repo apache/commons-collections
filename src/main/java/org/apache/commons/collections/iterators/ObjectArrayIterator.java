@@ -31,14 +31,7 @@ import org.apache.commons.collections.ResettableIterator;
  * back to the start if required.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author James Strachan
- * @author Mauricio S. Moura
- * @author Michael A. Smith
- * @author Neil O'Toole
- * @author Stephen Colebourne
- * @author Phil Steitz
+ * @version $Id$
  */
 public class ObjectArrayIterator<E>
         implements Iterator<E>, ResettableIterator<E> {

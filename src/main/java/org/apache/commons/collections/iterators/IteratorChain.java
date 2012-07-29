@@ -44,11 +44,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * this case the class will function as an empty iterator.
  *
  * @since 2.1
- * @version $Revision$
- * 2006) $
- *
- * @author Morgan Delagrange
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class IteratorChain<E> implements Iterator<E> {
 

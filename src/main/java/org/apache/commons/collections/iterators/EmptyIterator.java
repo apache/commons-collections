@@ -28,9 +28,7 @@ import org.apache.commons.collections.ResettableIterator;
  * 2.1.1 and 3.1 due to issues with <code>IteratorUtils</code>.
  *
  * @since 2.1.1 and 3.1
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class EmptyIterator<E> extends AbstractEmptyIterator<E> implements ResettableIterator<E> {
 

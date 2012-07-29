@@ -35,11 +35,7 @@ import org.apache.commons.collections.ResettableListIterator;
  * @see java.util.ListIterator
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Neil O'Toole
- * @author Stephen Colebourne
- * @author Phil Steitz
+ * @version $Id$
  */
 public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
         implements ListIterator<E>, ResettableListIterator<E> {

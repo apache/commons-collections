@@ -23,9 +23,7 @@ import org.apache.commons.collections.ResettableIterator;
  * Provides an implementation of an empty map iterator.
  *
  * @since 3.1
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class EmptyMapIterator<K, V> extends AbstractEmptyMapIterator<K, V> implements
         MapIterator<K, V>, ResettableIterator<K> {

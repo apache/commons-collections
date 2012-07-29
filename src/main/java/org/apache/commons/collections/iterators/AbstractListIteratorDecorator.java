@@ -24,10 +24,7 @@ import java.util.ListIterator;
  * All methods are forwarded to the decorated list iterator.
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Rodney Waldhoff
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
 

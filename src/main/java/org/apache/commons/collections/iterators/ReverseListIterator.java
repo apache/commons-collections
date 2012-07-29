@@ -33,10 +33,8 @@ import org.apache.commons.collections.ResettableListIterator;
  * index in the list, thus it starts high and reduces as the iteration
  * continues. The previous methods work similarly.
  *
- * @author Serge Knystautas
- * @author Stephen Colebourne
  * @since 3.2
- * @version $Revision$
+ * @version $Id$
  */
 public class ReverseListIterator<E> implements ResettableListIterator<E> {
 

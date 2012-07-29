@@ -26,11 +26,7 @@ import org.apache.commons.collections.ResettableIterator;
  * object instance.
  *
  * @since 2.0
- * @version $Revision$
- *
- * @author James Strachan
- * @author Stephen Colebourne
- * @author Rodney Waldhoff
+ * @version $Id$
  */
 public class SingletonIterator<E>
         implements Iterator<E>, ResettableIterator<E> {

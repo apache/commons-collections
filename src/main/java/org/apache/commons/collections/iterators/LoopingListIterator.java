@@ -35,9 +35,7 @@ import org.apache.commons.collections.ResettableListIterator;
  * ConcurrentModificationException.
  *
  * @since 3.2
- * @version $Revision$
- *
- * @author Eric Crampton <ccesc@eonomine.com>
+ * @version $Id$
  */
 public class LoopingListIterator<E> implements ResettableListIterator<E> {
 

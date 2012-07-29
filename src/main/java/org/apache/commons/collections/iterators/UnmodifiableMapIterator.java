@@ -25,9 +25,7 @@ import org.apache.commons.collections.Unmodifiable;
  * Attempts to modify it will result in an UnsupportedOperationException. 
  *
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, Unmodifiable {
 

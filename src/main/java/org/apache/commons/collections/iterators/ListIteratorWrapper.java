@@ -23,7 +23,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections.ResettableIterator;
 import org.apache.commons.collections.ResettableListIterator;
 
 /**
@@ -43,11 +42,7 @@ import org.apache.commons.collections.ResettableListIterator;
  * This class implements ResettableListIterator from Commons Collections 3.2.
  *
  * @since 2.1
- * @version $Revision$
- *
- * @author Morgan Delagrange
- * @author Stephen Colebourne
- * @author Matt Benson
+ * @version $Id$
  */
 public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
 

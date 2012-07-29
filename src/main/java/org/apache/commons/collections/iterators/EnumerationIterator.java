@@ -25,10 +25,7 @@ import java.util.Iterator;
  * to be {@link Iterator Iterator} instances.
  *
  * @since 1.0
- * @version $Revision$
- *
- * @author <a href="mailto:jstrachan@apache.org">James Strachan</a>
- * @author <a href="mailto:dlr@finemaltcoding.com">Daniel Rall</a>
+ * @version $Id$
  */
 public class EnumerationIterator<E> implements Iterator<E> {
     

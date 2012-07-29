@@ -28,12 +28,7 @@ import org.apache.commons.collections.Predicate;
  * those elements that match the specified {@link Predicate Predicate}.
  *
  * @since 1.0
- * @version $Revision$
- *
- * @author James Strachan
- * @author Jan Sorensen
- * @author Ralph Wagner
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class FilterIterator<E> implements Iterator<E> {
 

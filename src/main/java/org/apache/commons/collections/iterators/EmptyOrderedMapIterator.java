@@ -23,12 +23,10 @@ import org.apache.commons.collections.ResettableIterator;
  * Provides an implementation of an empty ordered map iterator.
  *
  * @since 3.1
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public class EmptyOrderedMapIterator<K, V> extends AbstractEmptyMapIterator<K, V> implements
-        OrderedMapIterator<K, V>, ResettableIterator<K> {
+public class EmptyOrderedMapIterator<K, V> extends AbstractEmptyMapIterator<K, V>
+        implements OrderedMapIterator<K, V>, ResettableIterator<K> {
 
     /**
      * Singleton instance of the iterator.

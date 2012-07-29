@@ -35,9 +35,7 @@ import org.apache.commons.collections.ResettableIterator;
  * </pre>
  *  
  * @since 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableIterator<K> {
     
