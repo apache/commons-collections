@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-383" dev="tn" type="add" due-to="Adrian Cumiskey">
+      Added "CollectionUtils#forAllDo" implementation which takes an "Iterator" as input.
+    </action>
     <action issue="COLLECTIONS-231" dev="tn" type="fix" due-to="Torsten Curdt">
       Return concrete class in static factory methods instead of base class interface
       (except for Unmodifiable decorators).

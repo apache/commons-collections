@@ -513,8 +513,9 @@ public class TestCollectionUtils extends MockTestCase {
         assertNull(CollectionUtils.find(collectionA, null));
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
-    public void forAllDo() {
+    public void forAllDoCollection() {
         Closure<List<? extends Number>> testClosure = ClosureUtils.invokerClosure("clear");
         Collection<List<? extends Number>> col = new ArrayList<List<? extends Number>>();
         col.add(collectionA);
@@ -522,15 +523,34 @@ public class TestCollectionUtils extends MockTestCase {
         Closure<List<? extends Number>> resultClosure = CollectionUtils.forAllDo(col, testClosure);
         assertSame(testClosure, resultClosure);
         assertTrue(collectionA.isEmpty() && collectionB.isEmpty());
-        resultClosure = CollectionUtils.<List<? extends Number>,Closure<List<? extends Number>>>forAllDo(col, null);
+        resultClosure = CollectionUtils.forAllDo(col, null);
         assertNull(resultClosure);
         assertTrue(collectionA.isEmpty() && collectionB.isEmpty());
-        resultClosure = CollectionUtils.forAllDo(null, testClosure);
+        resultClosure = CollectionUtils.forAllDo((Collection) null, testClosure);
         col.add(null);
         // null should be OK
         CollectionUtils.forAllDo(col, testClosure);
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Test
+    public void forAllDoIterator() {
+        Closure<List<? extends Number>> testClosure = ClosureUtils.invokerClosure("clear");
+        Collection<List<? extends Number>> col = new ArrayList<List<? extends Number>>();
+        col.add(collectionA);
+        col.add(collectionB);
+        Closure<List<? extends Number>> resultClosure = CollectionUtils.forAllDo(col.iterator(), testClosure);
+        assertSame(testClosure, resultClosure);
+        assertTrue(collectionA.isEmpty() && collectionB.isEmpty());
+        resultClosure = CollectionUtils.forAllDo(col.iterator(), null);
+        assertNull(resultClosure);
+        assertTrue(collectionA.isEmpty() && collectionB.isEmpty());
+        resultClosure = CollectionUtils.forAllDo((Iterator) null, testClosure);
+        col.add(null);
+        // null should be OK
+        CollectionUtils.forAllDo(col.iterator(), testClosure);
+    }
+    
     @Test(expected = FunctorException.class)
     public void forAllDoFailure() {
         Closure<String> testClosure = ClosureUtils.invokerClosure("clear");

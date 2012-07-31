@@ -473,6 +473,27 @@ public class CollectionUtils {
     }
 
     /**
+     * Executes the given closure on each element in the collection.
+     * <p>
+     * If the input collection or closure is null, there is no change made.
+     *
+     * @param iterator
+     *            the iterator to get the input from, may be null
+     * @param closure
+     *            the closure to perform, may be null
+     * @return closure
+     * @since 4.0
+     */
+    public static <T, C extends Closure<? super T>> C forAllDo(Iterator<T> iterator, C closure) {
+        if (iterator != null && closure != null) {
+            while (iterator.hasNext()) {
+                closure.execute(iterator.next());
+            }
+        }
+        return closure;
+    }
+
+    /**
      * Filter the collection by applying a Predicate to each element. If the
      * predicate returns false, remove the element.
      * <p>
