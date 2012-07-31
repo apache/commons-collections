@@ -20,22 +20,33 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * Tests for ComparableComparator.
- *
- * @version $Revision$
- *
- */
-@SuppressWarnings("boxing")
-public class TestComparableComparator extends AbstractTestComparator<Integer> {
+import org.apache.commons.collections.TransformerUtils;
 
-    public TestComparableComparator(String testName) {
-        super(testName);
+/**
+ * Test class for TransformingComparator.
+ *
+ * @version $Id$
+ */
+public class TransformingComparatorTest extends AbstractComparatorTest<Integer> {
+
+    //
+    // Initialization and busywork
+    //
+
+    public TransformingComparatorTest(String name) {
+        super(name);
     }
+
+    //
+    // Set up and tear down
+    //
 
     @Override
     public Comparator<Integer> makeObject() {
-        return new ComparableComparator<Integer>();
+       Comparator<Integer> decorated = new ComparableComparator<Integer>();
+       TransformingComparator<Integer> comparator =
+               new TransformingComparator<Integer>(TransformerUtils.<Integer>nopTransformer(), decorated);
+       return comparator;
     }
 
     @Override
@@ -48,5 +59,14 @@ public class TestComparableComparator extends AbstractTestComparator<Integer> {
         list.add(5);
         return list;
     }
+
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+    //
+    // The tests
+    //
 
 }

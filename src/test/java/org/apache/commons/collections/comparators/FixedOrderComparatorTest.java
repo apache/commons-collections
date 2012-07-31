@@ -22,17 +22,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Test class for FixedOrderComparator.
  *
- * @version $Revision$
- *
- * @author David Leppik
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public class TestFixedOrderComparator extends TestCase {
+public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
 
     /**
      * Top cities of the world, by population including metro areas.
@@ -54,7 +51,7 @@ public class TestFixedOrderComparator extends TestCase {
     // Initialization and busywork
     //
 
-    public TestFixedOrderComparator(String name) {
+    public FixedOrderComparatorTest(String name) {
         super(name);
     }
 
@@ -62,7 +59,21 @@ public class TestFixedOrderComparator extends TestCase {
     // Set up and tear down
     //
 
+    @Override
+    public Comparator<String> makeObject() {
+        FixedOrderComparator<String> comparator = new FixedOrderComparator<String>(topCities);
+        return comparator;
+    }
 
+    @Override
+    public List<String> getComparableObjectsOrdered() {
+        return Arrays.asList(topCities);
+    }
+
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
 
     //
     // The tests
@@ -71,6 +82,7 @@ public class TestFixedOrderComparator extends TestCase {
     /**
      * Tests that the constructor plus add method compares items properly.
      */
+    @Test
     public void testConstructorPlusAdd() {
         FixedOrderComparator<String> comparator = new FixedOrderComparator<String>();
         for (int i = 0; i < topCities.length; i++) {
@@ -83,6 +95,7 @@ public class TestFixedOrderComparator extends TestCase {
     /**
      * Tests that the array constructor compares items properly.
      */
+    @Test
     public void testArrayConstructor() {
         String[] keys = topCities.clone();
         String[] topCitiesForTest = topCities.clone();
@@ -96,6 +109,7 @@ public class TestFixedOrderComparator extends TestCase {
     /**
      * Tests the list constructor.
      */
+    @Test
     public void testListConstructor() {
         String[] keys = topCities.clone();
         List<String> topCitiesForTest = new LinkedList<String>(Arrays.asList(topCities));
@@ -109,6 +123,7 @@ public class TestFixedOrderComparator extends TestCase {
     /**
      * Tests addAsEqual method.
      */
+    @Test
     public void testAddAsEqual() {
         FixedOrderComparator<String> comparator = new FixedOrderComparator<String>(topCities);
         comparator.addAsEqual("New York", "Minneapolis");
@@ -120,6 +135,7 @@ public class TestFixedOrderComparator extends TestCase {
     /**
      * Tests whether or not updates are disabled after a comparison is made.
      */
+    @Test
     public void testLock() {
         FixedOrderComparator<String> comparator = new FixedOrderComparator<String>(topCities);
         assertEquals(false, comparator.isLocked());
@@ -140,6 +156,7 @@ public class TestFixedOrderComparator extends TestCase {
         }
     }
 
+    @Test
     public void testUnknownObjectBehavior() {
         FixedOrderComparator<String> comparator = new FixedOrderComparator<String>(topCities);
         try {
@@ -186,7 +203,6 @@ public class TestFixedOrderComparator extends TestCase {
     /** Shuffles the keys and asserts that the comparator sorts them back to
      * their original order.
      */
-    @SuppressWarnings("unused")
     private void assertComparatorYieldsOrder(String[] orderedObjects,
                                              Comparator<String> comparator) {
         String[] keys = orderedObjects.clone();

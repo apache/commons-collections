@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections.comparators;
 
+import java.io.Serializable;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
@@ -39,11 +40,16 @@ import java.util.Map;
  * Instances of FixedOrderComparator are not synchronized.  The class is not
  * thread-safe at construction time, but it is thread-safe to perform
  * multiple comparisons  after all the setup operations are complete.
+ * <p>
+ * This class is Serializable from Commons Collections 4.0.
  *
  * @since 3.0
  * @version $Id$
  */
-public class FixedOrderComparator<T> implements Comparator<T> {
+public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
+
+    /** Serialization version from Collections 4.0. */
+    private static final long serialVersionUID = 82794675842863201L;
 
     /**
      * Unknown object behavior enum.
@@ -238,6 +244,55 @@ public class FixedOrderComparator<T> implements Comparator<T> {
             }
         }
         return position1.compareTo(position2);
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Implement a hash code for this comparator that is consistent with
+     * {@link #equals(Object) equals}.
+     *
+     * @return a hash code for this comparator.
+     */
+    @Override
+    public int hashCode() {
+        int total = 17;
+        total = total*37 + (map == null ? 0 : map.hashCode());
+        total = total*37 + (unknownObjectBehavior == null ? 0 : unknownObjectBehavior.hashCode());
+        total = total*37 + counter;
+        total = total*37 + (isLocked ? 0 : 1);
+        return total;
+    }
+
+    /**
+     * Returns <code>true</code> iff <i>that</i> Object is 
+     * is a {@link Comparator} whose ordering is known to be 
+     * equivalent to mine.
+     * <p>
+     * This implementation returns <code>true</code>
+     * iff <code><i>that</i></code> is a {@link FixedOrderComparator} 
+     * whose attributes are equal to mine.
+     * 
+     * @param object  the object to compare to
+     * @return true if equal
+     */
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (null == object) {
+            return false;
+        }
+        if (object.getClass().equals(this.getClass())) {
+            FixedOrderComparator<?> comp = (FixedOrderComparator<?>) object;
+            return (null == map ? null == comp.map : map.equals(comp.map) &&
+                    null == unknownObjectBehavior ? null == comp.unknownObjectBehavior :
+                        unknownObjectBehavior == comp.unknownObjectBehavior &&
+                    counter == comp.counter &&
+                    isLocked == comp.isLocked &&
+                    unknownObjectBehavior == comp.unknownObjectBehavior);
+        }
+        return false;
     }
 
 }

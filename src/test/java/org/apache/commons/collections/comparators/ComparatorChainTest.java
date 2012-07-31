@@ -21,16 +21,16 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.junit.Test;
+
 /**
  * Tests for ComparatorChain.
  *
- * @version $Revision$
- *
- * @author Unknown
+ * @version $Id$
  */
-public class TestComparatorChain extends AbstractTestComparator<TestComparatorChain.PseudoRow> {
+public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainTest.PseudoRow> {
 
-    public TestComparatorChain(String testName) {
+    public ComparatorChainTest(String testName) {
         super(testName);
     }
 
@@ -42,6 +42,7 @@ public class TestComparatorChain extends AbstractTestComparator<TestComparatorCh
         return chain;
     }
 
+    @Test
     public void testNoopComparatorChain() {
         ComparatorChain<Integer> chain = new ComparatorChain<Integer>();
         Integer i1 = new Integer(4);
@@ -52,6 +53,7 @@ public class TestComparatorChain extends AbstractTestComparator<TestComparatorCh
         assertTrue("Comparison returns the right order", chain.compare(i1, i2) == correctValue);
     }
 
+    @Test
     public void testBadNoopComparatorChain() {
         ComparatorChain<Integer> chain = new ComparatorChain<Integer>();
         Integer i1 = new Integer(4);
@@ -63,6 +65,7 @@ public class TestComparatorChain extends AbstractTestComparator<TestComparatorCh
         }
     }
 
+    @Test
     public void testListComparatorChain() {
         List<Comparator<Integer>> list = new LinkedList<Comparator<Integer>>();
         list.add(new ComparableComparator<Integer>());
@@ -74,6 +77,7 @@ public class TestComparatorChain extends AbstractTestComparator<TestComparatorCh
         assertTrue("Comparison returns the right order", chain.compare(i1, i2) == correctValue);
     }
 
+    @Test
     public void testBadListComparatorChain() {
         List<Comparator<Integer>> list = new LinkedList<Comparator<Integer>>();
         ComparatorChain<Integer> chain = new ComparatorChain<Integer>(list);
@@ -86,6 +90,7 @@ public class TestComparatorChain extends AbstractTestComparator<TestComparatorCh
         }
     }
 
+    @Test
     public void testComparatorChainOnMinvaluedCompatator() {
         // -1 * Integer.MIN_VALUE is less than 0,
         // test that ComparatorChain handles this edge case correctly

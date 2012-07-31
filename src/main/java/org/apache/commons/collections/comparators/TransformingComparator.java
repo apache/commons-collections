@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections.comparators;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
 import org.apache.commons.collections.ComparatorUtils;
@@ -25,6 +26,8 @@ import org.apache.commons.collections.Transformer;
  * Decorates another Comparator with transformation behavior. That is, the
  * return value from the transform operation will be passed to the decorated
  * {@link Comparator#compare(Object,Object) compare} method.
+ * <p>
+ * This class is Serializable from Commons Collections 4.0.
  *
  * @since 2.1
  * @version $Id$
@@ -32,8 +35,11 @@ import org.apache.commons.collections.Transformer;
  * @see org.apache.commons.collections.Transformer
  * @see org.apache.commons.collections.comparators.ComparableComparator
  */
-public class TransformingComparator<E> implements Comparator<E> {
+public class TransformingComparator<E> implements Comparator<E>, Serializable {
     
+    /** Serialization version from Collections 4.0. */
+    private static final long serialVersionUID = 3456940356043606220L;
+
     /** The decorated comparator. */
     protected final Comparator<E> decorated;
     /** The transformer being used. */    
@@ -74,6 +80,49 @@ public class TransformingComparator<E> implements Comparator<E> {
         E value1 = this.transformer.transform(obj1);
         E value2 = this.transformer.transform(obj2);
         return this.decorated.compare(value1, value2);
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Implement a hash code for this comparator that is consistent with
+     * {@link #equals(Object) equals}.
+     *
+     * @return a hash code for this comparator.
+     */
+    @Override
+    public int hashCode() {
+        int total = 17;
+        total = total*37 + (decorated == null ? 0 : decorated.hashCode());
+        total = total*37 + (transformer == null ? 0 : transformer.hashCode());
+        return total;
+    }
+
+    /**
+     * Returns <code>true</code> iff <i>that</i> Object is 
+     * is a {@link Comparator} whose ordering is known to be 
+     * equivalent to mine.
+     * <p>
+     * This implementation returns <code>true</code>
+     * iff <code><i>that</i></code> is a {@link TransformingComparator} 
+     * whose attributes are equal to mine.
+     * 
+     * @param object  the object to compare to
+     * @return true if equal
+     */
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (null == object) {
+            return false;
+        }
+        if (object.getClass().equals(this.getClass())) {
+            TransformingComparator<?> comp = (TransformingComparator<?>) object;
+            return (null == decorated ? null == comp.decorated : decorated.equals(comp.decorated) &&
+                    null == transformer ? null == comp.transformer : transformer.equals(comp.transformer));
+        }
+        return false;
     }
 
 }

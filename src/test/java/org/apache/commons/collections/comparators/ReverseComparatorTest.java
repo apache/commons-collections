@@ -25,16 +25,16 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.junit.Test;
+
 /**
  * Tests for ReverseComparator.
  *
- * @version $Revision$
- *
- * @author Unknown
+ * @version $Id$
  */
-public class TestReverseComparator extends AbstractTestComparator<Integer> {
+public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
 
-    public TestReverseComparator(String testName) {
+    public ReverseComparatorTest(String testName) {
         super(testName);
     }
 
@@ -71,6 +71,7 @@ public class TestReverseComparator extends AbstractTestComparator<Integer> {
      */
     @Override
     @SuppressWarnings("unchecked")
+    @Test
     public void testSerializeDeserializeThenCompare() throws Exception {
         Comparator comp = new ReverseComparator(new ComparableComparator());
 

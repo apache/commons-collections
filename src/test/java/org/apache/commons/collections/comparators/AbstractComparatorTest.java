@@ -25,23 +25,22 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.collections.AbstractTestObject;
+import org.junit.Test;
 
 /**
  * Abstract test class for testing the Comparator interface.
  * <p>
  * Concrete subclasses declare the comparator to be tested.
  * They also declare certain aspects of the tests.
- *
- * @author Stephen Colebourne
  */
-public abstract class AbstractTestComparator<T> extends AbstractTestObject {
+public abstract class AbstractComparatorTest<T> extends AbstractTestObject {
 
     /**
      * JUnit constructor.
      * 
      * @param testName  the test class name
      */
-    public AbstractTestComparator(String testName) {
+    public AbstractComparatorTest(String testName) {
         super(testName);
     }
 
@@ -114,6 +113,7 @@ public abstract class AbstractTestComparator<T> extends AbstractTestObject {
     /**
      * Test sorting an empty list
      */
+    @Test
     public void testEmptyListSort() {
         List<T> list = new LinkedList<T>();
         sortObjects(list, makeObject());
@@ -126,6 +126,7 @@ public abstract class AbstractTestComparator<T> extends AbstractTestObject {
     /**
      * Test sorting a reversed list.
      */
+    @Test
     public void testReverseListSort() {
         Comparator<T> comparator = makeObject();
 
@@ -142,6 +143,7 @@ public abstract class AbstractTestComparator<T> extends AbstractTestObject {
     /**
      * Test sorting a random list.
      */
+    @Test
     public void testRandomListSort() {
         Comparator<T> comparator = makeObject();
 
@@ -166,6 +168,7 @@ public abstract class AbstractTestComparator<T> extends AbstractTestObject {
     /**
      * Nearly all Comparators should be Serializable.
      */
+    @Test
     public void testComparatorIsSerializable() {
         Comparator<T> comparator = makeObject();
         assertTrue("This comparator should be Serializable.",
@@ -189,6 +192,7 @@ public abstract class AbstractTestComparator<T> extends AbstractTestObject {
      * against the canonical version in SVN.
      */
     @SuppressWarnings("unchecked")
+    @Test
     public void testComparatorCompatibility() throws IOException, ClassNotFoundException {
         if (!skipSerializedCanonicalTests()) {
             Comparator<T> comparator = null;
@@ -201,7 +205,7 @@ public abstract class AbstractTestComparator<T> extends AbstractTestObject {
                 boolean autoCreateSerialized = false;
     
                 if (autoCreateSerialized) {
-                      comparator = makeObject();
+                    comparator = makeObject();
                     String fileName = getCanonicalComparatorName(comparator);
                     writeExternalFormToDisk((Serializable) comparator, fileName);
                     fail("Serialized form could not be found.  A serialized version "

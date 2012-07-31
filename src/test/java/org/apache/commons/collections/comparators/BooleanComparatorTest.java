@@ -20,20 +20,20 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+import org.junit.Test;
+
 /**
  * Tests for {@link BooleanComparator}.
  *
- * @version $Revision$
- *
- * @author Rodney Waldhoff
+ * @version $Id$
  */
 @SuppressWarnings("boxing")
-public class TestBooleanComparator extends AbstractTestComparator<Boolean> {
+public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
 
     // conventional
     // ------------------------------------------------------------------------
 
-    public TestBooleanComparator(String testName) {
+    public BooleanComparatorTest(String testName) {
         super(testName);
     }
 
@@ -65,11 +65,14 @@ public class TestBooleanComparator extends AbstractTestComparator<Boolean> {
     // tests
     // ------------------------------------------------------------------------
 
+    @Test
     public void testConstructors() {
         allTests(false,new BooleanComparator());
         allTests(false,new BooleanComparator(false));
         allTests(true,new BooleanComparator(true));
     }
+
+    @Test
 
     public void testStaticFactoryMethods() {
         allTests(false,BooleanComparator.getFalseFirstComparator());
@@ -78,6 +81,7 @@ public class TestBooleanComparator extends AbstractTestComparator<Boolean> {
         allTests(true,BooleanComparator.booleanComparator(true));
     }
 
+    @Test
     public void testEqualsCompatibleInstance() {
         assertEquals(new BooleanComparator(),new BooleanComparator(false));
         assertEquals(new BooleanComparator(false),new BooleanComparator(false));

@@ -26,18 +26,16 @@ import junit.framework.TestSuite;
 /**
  * Test the NullComparator.
  *
- * @version $Revision$
- *
- * @author Michael A. Smith
+ * @version $Id$
  */
-public abstract class AbstractTestNullComparator extends AbstractTestComparator<Integer> {
+public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<Integer> {
 
-    public AbstractTestNullComparator(String testName) {
+    public AbstractNullComparatorTest(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        TestSuite suite = new TestSuite(AbstractTestNullComparator.class.getName());
+        TestSuite suite = new TestSuite(AbstractNullComparatorTest.class.getName());
         suite.addTest(new TestSuite(TestNullComparator1.class));
         suite.addTest(new TestSuite(TestNullComparator2.class));
         return suite;
@@ -46,7 +44,7 @@ public abstract class AbstractTestNullComparator extends AbstractTestComparator<
     /**
      *  Test the NullComparator with nulls high, using comparable comparator
      **/
-    public static class TestNullComparator1 extends AbstractTestNullComparator {
+    public static class TestNullComparator1 extends AbstractNullComparatorTest {
 
         public TestNullComparator1(String testName) {
             super(testName);
@@ -78,7 +76,7 @@ public abstract class AbstractTestNullComparator extends AbstractTestComparator<
     /**
      *  Test the NullComparator with nulls low using the comparable comparator
      **/
-    public static class TestNullComparator2 extends AbstractTestNullComparator {
+    public static class TestNullComparator2 extends AbstractNullComparatorTest {
 
         public TestNullComparator2(String testName) {
             super(testName);
