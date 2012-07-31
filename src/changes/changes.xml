@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-272" dev="tn" type="add" due-to="Chaitanya Mutyala">
+      Added serialization support for "FixedOrderComparator" and "TransformingComparator".
+    </action>
     <action issue="COLLECTIONS-383" dev="tn" type="add" due-to="Adrian Cumiskey">
       Added "CollectionUtils#forAllDo" implementation which takes an "Iterator" as input.
     </action>
