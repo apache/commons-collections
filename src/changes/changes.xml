@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-231" dev="tn" type="fix" due-to="Torsten Curdt">
+      Return concrete class in static factory methods instead of base class interface
+      (except for Unmodifiable decorators).
+    </action>
     <action issue="COLLECTIONS-379" dev="tn" type="fix" due-to="Shin Hwei Tan">
       Fixed javadoc for several methods wrt expected NullPointerExceptions.
     </action>
