@@ -520,7 +520,7 @@ public class TestCollectionUtils extends MockTestCase {
         Collection<List<? extends Number>> col = new ArrayList<List<? extends Number>>();
         col.add(collectionA);
         col.add(collectionB);
-        Closure<List<? extends Number>> resultClosure = CollectionUtils.forAllDo(col, testClosure);
+        Closure<List<? extends Number>> resultClosure = CollectionUtils.<List<? extends Number>,Closure<List<? extends Number>>>forAllDo(col, testClosure);
         assertSame(testClosure, resultClosure);
         assertTrue(collectionA.isEmpty() && collectionB.isEmpty());
         resultClosure = CollectionUtils.forAllDo(col, null);
@@ -542,7 +542,7 @@ public class TestCollectionUtils extends MockTestCase {
         Closure<List<? extends Number>> resultClosure = CollectionUtils.forAllDo(col.iterator(), testClosure);
         assertSame(testClosure, resultClosure);
         assertTrue(collectionA.isEmpty() && collectionB.isEmpty());
-        resultClosure = CollectionUtils.forAllDo(col.iterator(), null);
+        resultClosure = CollectionUtils.<List<? extends Number>,Closure<List<? extends Number>>>forAllDo(col.iterator(), null);
         assertNull(resultClosure);
         assertTrue(collectionA.isEmpty() && collectionB.isEmpty());
         resultClosure = CollectionUtils.forAllDo((Iterator) null, testClosure);
