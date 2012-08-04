@@ -523,8 +523,8 @@ public class TestCollectionUtils extends MockTestCase {
         Closure<List<? extends Number>> resultClosure = CollectionUtils.forAllDo(col, testClosure);
         assertSame(testClosure, resultClosure);
         assertTrue(collectionA.isEmpty() && collectionB.isEmpty());
-        // fix for various java 1.6 versions: keep the specialization
-        resultClosure = CollectionUtils.<List<? extends Number>,Closure<List<? extends Number>>>forAllDo(col, null);
+        // fix for various java 1.6 versions: keep the cast
+        resultClosure = CollectionUtils.forAllDo(col, (Closure<List<? extends Number>>) null);
         assertNull(resultClosure);
         assertTrue(collectionA.isEmpty() && collectionB.isEmpty());
         resultClosure = CollectionUtils.forAllDo((Collection) null, testClosure);
@@ -543,8 +543,8 @@ public class TestCollectionUtils extends MockTestCase {
         Closure<List<? extends Number>> resultClosure = CollectionUtils.forAllDo(col.iterator(), testClosure);
         assertSame(testClosure, resultClosure);
         assertTrue(collectionA.isEmpty() && collectionB.isEmpty());
-        // fix for various java 1.6 versions: keep the specialization
-        resultClosure = CollectionUtils.<List<? extends Number>,Closure<List<? extends Number>>>forAllDo(col.iterator(), null);
+        // fix for various java 1.6 versions: keep the cast
+        resultClosure = CollectionUtils.forAllDo(col.iterator(), (Closure<List<? extends Number>>) null);
         assertNull(resultClosure);
         assertTrue(collectionA.isEmpty() && collectionB.isEmpty());
         resultClosure = CollectionUtils.forAllDo((Iterator) null, testClosure);
