@@ -66,42 +66,52 @@ public abstract class AbstractUntypedCollectionDecorator<E, D> implements Collec
         return collection;
     }
 
+    /** {@inheritDoc} */
     public void clear() {
         decorated().clear();
     }
 
+    /** {@inheritDoc} */
     public boolean contains(Object object) {
         return decorated().contains(object);
     }
 
+    /** {@inheritDoc} */
     public boolean isEmpty() {
         return decorated().isEmpty();
     }
 
+    /** {@inheritDoc} */
     public boolean remove(Object object) {
         return decorated().remove(object);
     }
 
+    /** {@inheritDoc} */
     public int size() {
         return decorated().size();
     }
 
+    /** {@inheritDoc} */
     public Object[] toArray() {
         return decorated().toArray();
     }
 
+    /** {@inheritDoc} */
     public <T> T[] toArray(T[] object) {
         return decorated().toArray(object);
     }
 
+    /** {@inheritDoc} */
     public boolean containsAll(Collection<?> coll) {
         return decorated().containsAll(coll);
     }
 
+    /** {@inheritDoc} */
     public boolean removeAll(Collection<?> coll) {
         return decorated().removeAll(coll);
     }
 
+    /** {@inheritDoc} */
     public boolean retainAll(Collection<?> coll) {
         return decorated().retainAll(coll);
     }

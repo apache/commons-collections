@@ -128,6 +128,11 @@ public final class UnmodifiableOrderedBidiMap<K, V>
         return UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(it);
     }
 
+    /**
+     * Gets an unmodifiable view of this map where the keys and values are reversed.
+     *
+     * @return an inverted unmodifiable bidirectional map
+     */
     public OrderedBidiMap<V, K> inverseOrderedBidiMap() {
         if (inverse == null) {
             inverse = new UnmodifiableOrderedBidiMap<V, K>(decorated().inverseBidiMap());
