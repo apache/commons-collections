@@ -23,7 +23,7 @@ import junit.framework.Test;
 
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.MapIterator;
-import org.apache.commons.collections.list.AbstractTestList;
+import org.apache.commons.collections.list.AbstractListTest;
 
 /**
  * Extension of {@link AbstractTestOrderedMap} for exercising the {@link ListOrderedMap}
@@ -161,7 +161,7 @@ public class TestListOrderedMap2<K, V> extends AbstractTestOrderedMap<K, V> {
         return new TestListView();
     }
 
-    public class TestListView extends AbstractTestList<K> {
+    public class TestListView extends AbstractListTest<K> {
 
         TestListView() {
             super("TestListView");

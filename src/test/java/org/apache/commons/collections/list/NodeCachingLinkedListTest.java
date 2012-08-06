@@ -31,14 +31,14 @@ import org.apache.commons.collections.BulkTest;
  * @author Jeff Varszegi
  * @author Phil Steitz
  */
-public class TestNodeCachingLinkedList<E> extends AbstractTestLinkedList<E> {
+public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
-    public TestNodeCachingLinkedList(String testName) {
+    public NodeCachingLinkedListTest(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestNodeCachingLinkedList.class);
+        return BulkTest.makeSuite(NodeCachingLinkedListTest.class);
     }
 
     //-----------------------------------------------------------------------

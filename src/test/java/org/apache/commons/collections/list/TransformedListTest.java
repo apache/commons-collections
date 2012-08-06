@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.collection.TransformedCollectionTest;
 
 /**
- * Extension of {@link AbstractTestList} for exercising the {@link TransformedList}
+ * Extension of {@link AbstractListTest} for exercising the {@link TransformedList}
  * implementation.
  *
  * @since Commons Collections 3.0
@@ -33,9 +33,9 @@ import org.apache.commons.collections.collection.TransformedCollectionTest;
  *
  * @author Stephen Colebourne
  */
-public class TestTransformedList<E> extends AbstractTestList<E> {
+public class TransformedListTest<E> extends AbstractListTest<E> {
 
-    public TestTransformedList(String testName) {
+    public TransformedListTest(String testName) {
         super(testName);
     }
 

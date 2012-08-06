@@ -27,7 +27,7 @@ import junit.framework.Test;
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.OrderedMapIterator;
-import org.apache.commons.collections.list.AbstractTestList;
+import org.apache.commons.collections.list.AbstractListTest;
 
 /**
  * Extension of {@link AbstractTestOrderedMap} for exercising the {@link ListOrderedMap}
@@ -398,7 +398,7 @@ public class TestListOrderedMap<K, V> extends AbstractTestOrderedMap<K, V> {
     }
 
     //-----------------------------------------------------------------------
-    public class TestKeyListView extends AbstractTestList<K> {
+    public class TestKeyListView extends AbstractListTest<K> {
         TestKeyListView() {
             super("TestKeyListView");
         }
@@ -439,7 +439,7 @@ public class TestListOrderedMap<K, V> extends AbstractTestOrderedMap<K, V> {
     }
 
     //-----------------------------------------------------------------------
-    public class TestValueListView extends AbstractTestList<V> {
+    public class TestValueListView extends AbstractListTest<V> {
         TestValueListView() {
             super("TestValueListView");
         }

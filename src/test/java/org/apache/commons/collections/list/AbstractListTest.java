@@ -53,14 +53,14 @@ import org.apache.commons.collections.iterators.AbstractTestListIterator;
  * @author Stephen Colebourne
  * @author Neil O'Toole
  */
-public abstract class AbstractTestList<E> extends AbstractCollectionTest<E> {
+public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
     /**
      * JUnit constructor.
      *
      * @param testName  the test class name
      */
-    public AbstractTestList(String testName) {
+    public AbstractListTest(String testName) {
         super(testName);
     }
 
@@ -1117,11 +1117,11 @@ public abstract class AbstractTestList<E> extends AbstractCollectionTest<E> {
         return new BulkTestSubList<E>(this);
     }
 
-   public static class BulkTestSubList<E> extends AbstractTestList<E> {
+   public static class BulkTestSubList<E> extends AbstractListTest<E> {
 
-       private AbstractTestList<E> outer;
+       private AbstractListTest<E> outer;
 
-       public BulkTestSubList(AbstractTestList<E> outer) {
+       public BulkTestSubList(AbstractListTest<E> outer) {
            super("");
            this.outer = outer;
        }
@@ -1322,34 +1322,34 @@ public abstract class AbstractTestList<E> extends AbstractCollectionTest<E> {
 
        @Override
        public E addSetValue() {
-           return AbstractTestList.this.getOtherElements()[0];
+           return AbstractListTest.this.getOtherElements()[0];
        }
 
        @Override
        public boolean supportsRemove() {
-           return AbstractTestList.this.isRemoveSupported();
+           return AbstractListTest.this.isRemoveSupported();
        }
 
        @Override
        public boolean supportsAdd() {
-           return AbstractTestList.this.isAddSupported();
+           return AbstractListTest.this.isAddSupported();
        }
 
        @Override
        public boolean supportsSet() {
-           return AbstractTestList.this.isSetSupported();
+           return AbstractListTest.this.isSetSupported();
        }
 
        @Override
        public ListIterator<E> makeEmptyIterator() {
            resetEmpty();
-           return AbstractTestList.this.getCollection().listIterator();
+           return AbstractListTest.this.getCollection().listIterator();
        }
 
        @Override
        public ListIterator<E> makeObject() {
            resetFull();
-           return AbstractTestList.this.getCollection().listIterator();
+           return AbstractListTest.this.getCollection().listIterator();
        }
    }
 

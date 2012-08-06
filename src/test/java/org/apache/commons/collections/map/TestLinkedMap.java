@@ -26,7 +26,7 @@ import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.OrderedMap;
 import org.apache.commons.collections.ResettableIterator;
-import org.apache.commons.collections.list.AbstractTestList;
+import org.apache.commons.collections.list.AbstractListTest;
 
 /**
  * JUnit tests.
@@ -230,7 +230,7 @@ public class TestLinkedMap<K, V> extends AbstractTestOrderedMap<K, V> {
         return new TestListView();
     }
 
-    public class TestListView extends AbstractTestList<K> {
+    public class TestListView extends AbstractListTest<K> {
 
         TestListView() {
             super("TestListView");

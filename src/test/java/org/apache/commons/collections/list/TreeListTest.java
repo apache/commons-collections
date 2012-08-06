@@ -31,14 +31,14 @@ import org.apache.commons.collections.BulkTest;
  *
  * @author Joerg Schmuecker
  */
-public class TestTreeList<E> extends AbstractTestList<E> {
+public class TreeListTest<E> extends AbstractListTest<E> {
 
-    public TestTreeList(String name) {
+    public TreeListTest(String name) {
         super(name);
     }
 
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(suite());
+//    public static void main(String[] args) {
+//        junit.textui.TestRunner.run(suite());
 //        System.out.println("         add; toArray; iterator; insert; get; indexOf; remove");
 //        System.out.print("   TreeList = ");
 //        benchmark(new TreeList());
@@ -47,10 +47,10 @@ public class TestTreeList<E> extends AbstractTestList<E> {
 //        System.out.print("\n LinkedList = ");
 //        benchmark(new java.util.LinkedList());
 //        benchmark(new NodeCachingLinkedList());
-    }
+//    }
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestTreeList.class);
+        return BulkTest.makeSuite(TreeListTest.class);
     }
 
     public static void benchmark(List<? super Integer> l) {

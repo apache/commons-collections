@@ -22,7 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Extension of {@link AbstractTestList} for exercising the
+ * Extension of {@link AbstractListTest} for exercising the
  * {@link UnmodifiableList} implementation.
  *
  * @since Commons Collections 3.0
@@ -30,9 +30,9 @@ import java.util.List;
  *
  * @author Phil Steitz
  */
-public class TestUnmodifiableList<E> extends AbstractTestList<E> {
+public class UnmodifiableListTest<E> extends AbstractListTest<E> {
 
-    public TestUnmodifiableList(String testName) {
+    public UnmodifiableListTest(String testName) {
         super(testName);
     }
 

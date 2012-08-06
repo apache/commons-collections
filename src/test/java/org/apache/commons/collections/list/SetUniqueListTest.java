@@ -34,9 +34,9 @@ import java.util.Set;
  * @author Matthew Hawthorne
  * @author Tom Dunham
  */
-public class TestSetUniqueList<E> extends AbstractTestList<E> {
+public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
-    public TestSetUniqueList(String testName) {
+    public SetUniqueListTest(String testName) {
         super(testName);
     }
 

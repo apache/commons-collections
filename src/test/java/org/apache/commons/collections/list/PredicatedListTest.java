@@ -23,7 +23,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.functors.TruePredicate;
 
 /**
- * Extension of {@link AbstractTestList} for exercising the 
+ * Extension of {@link AbstractListTest} for exercising the 
  * {@link PredicatedList} implementation.
  *
  * @since Commons Collections 3.0
@@ -31,9 +31,9 @@ import org.apache.commons.collections.functors.TruePredicate;
  *
  * @author Phil Steitz
  */
-public class TestPredicatedList<E> extends AbstractTestList<E> {
+public class PredicatedListTest<E> extends AbstractListTest<E> {
 
-    public TestPredicatedList(String testName) {
+    public PredicatedListTest(String testName) {
         super(testName);
     }
 

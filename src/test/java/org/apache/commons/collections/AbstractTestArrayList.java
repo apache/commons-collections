@@ -18,7 +18,7 @@ package org.apache.commons.collections;
 
 import java.util.ArrayList;
 
-import org.apache.commons.collections.list.AbstractTestList;
+import org.apache.commons.collections.list.AbstractListTest;
 
 /**
  * Abstract test class for ArrayList.
@@ -27,7 +27,7 @@ import org.apache.commons.collections.list.AbstractTestList;
  *
  * @author Jason van Zyl
  */
-public abstract class AbstractTestArrayList<E> extends AbstractTestList<E> {
+public abstract class AbstractTestArrayList<E> extends AbstractListTest<E> {
 
     public AbstractTestArrayList(String testName) {
         super(testName);

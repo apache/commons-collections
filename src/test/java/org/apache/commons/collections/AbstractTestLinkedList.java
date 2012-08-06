@@ -22,7 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections.list.AbstractTestList;
+import org.apache.commons.collections.list.AbstractListTest;
 
 /**
  * Tests base {@link java.util.LinkedList} methods and contracts.
@@ -38,7 +38,7 @@ import org.apache.commons.collections.list.AbstractTestList;
  *
  * @author Rich Dougherty
  */
-public abstract class AbstractTestLinkedList<T> extends AbstractTestList<T> {
+public abstract class AbstractTestLinkedList<T> extends AbstractListTest<T> {
 
     public AbstractTestLinkedList(String testName) {
         super(testName);

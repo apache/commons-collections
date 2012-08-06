@@ -17,31 +17,44 @@
 package org.apache.commons.collections.list;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
- * Extension of {@link AbstractTestList} for exercising the {@link SynchronizedList}
+ * Extension of {@link AbstractListTest} for exercising the {@link FixedSizeList}
  * implementation.
  *
- * @since Commons Collections 3.1
+ * @since Commons Collections 3.0
  * @version $Revision$
  *
  * @author Stephen Colebourne
  */
-public class TestSynchronizedList<E> extends AbstractTestList<E> {
+public class FixedSizeListTest<E> extends AbstractListTest<E> {
 
-    public TestSynchronizedList(String testName) {
+    public FixedSizeListTest(String testName) {
         super(testName);
     }
 
     @Override
-    public List<E> makeConfirmedCollection() {
-        return new ArrayList<E>();
+    public List<E> makeObject() {
+        return FixedSizeList.fixedSizeList(new ArrayList<E>());
     }
 
     @Override
-    public List<E> makeObject() {
-        return SynchronizedList.synchronizedList(new ArrayList<E>());
+    public List<E> makeFullCollection() {
+        List<E> list = new ArrayList<E>();
+        list.addAll(Arrays.asList(getFullElements()));
+        return FixedSizeList.fixedSizeList(list);
+    }
+
+    @Override
+    public boolean isAddSupported() {
+        return false;
+    }
+
+    @Override
+    public boolean isRemoveSupported() {
+        return false;
     }
 
     @Override
@@ -51,9 +64,9 @@ public class TestSynchronizedList<E> extends AbstractTestList<E> {
 
 //    public void testCreate() throws Exception {
 //        resetEmpty();
-//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/SynchronizedList.emptyCollection.version3.1.obj");
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/FixedSizeList.emptyCollection.version3.1.obj");
 //        resetFull();
-//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/SynchronizedList.fullCollection.version3.1.obj");
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/FixedSizeList.fullCollection.version3.1.obj");
 //    }
 
 }

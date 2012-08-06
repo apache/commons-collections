@@ -22,16 +22,16 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Extension of {@link AbstractTestList} for exercising the {@link GrowthList}.
+ * Extension of {@link AbstractListTest} for exercising the {@link GrowthList}.
  *
  * @since Commons Collections 3.2
  * @version $Revision$
  *
  * @author Stephen Colebourne
  */
-public class TestGrowthList<E> extends AbstractTestList<E> {
+public class GrowthListTest<E> extends AbstractListTest<E> {
 
-    public TestGrowthList(String testName) {
+    public GrowthListTest(String testName) {
         super(testName);
     }
 

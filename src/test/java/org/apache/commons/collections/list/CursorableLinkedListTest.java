@@ -36,13 +36,13 @@ import org.apache.commons.collections.BulkTest;
  * @author Rodney Waldhoff
  * @author Simon Kitching
  */
-public class TestCursorableLinkedList<E> extends AbstractTestLinkedList<E> {
-    public TestCursorableLinkedList(String testName) {
+public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
+    public CursorableLinkedListTest(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestCursorableLinkedList.class);
+        return BulkTest.makeSuite(CursorableLinkedListTest.class);
     }
 
     private CursorableLinkedList<E> list;
