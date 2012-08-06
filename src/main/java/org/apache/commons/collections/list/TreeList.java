@@ -146,6 +146,7 @@ public class TreeList<E> extends AbstractList<E> {
     /**
      * Searches for the index of an object in the list.
      *
+     * @param object  the object to search
      * @return the index of the object, -1 if not found
      */
     @Override
@@ -160,6 +161,7 @@ public class TreeList<E> extends AbstractList<E> {
     /**
      * Searches for the presence of an object in the list.
      *
+     * @param object  the object to check
      * @return true if the object is found
      */
     @Override

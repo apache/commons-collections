@@ -66,42 +66,53 @@ public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorat
     }
 
     //-----------------------------------------------------------------------
+    
+    /** {@inheritDoc} */
     public void add(int index, E object) {
         decorated().add(index, object);
     }
 
+    /** {@inheritDoc} */
     public boolean addAll(int index, Collection<? extends E> coll) {
         return decorated().addAll(index, coll);
     }
 
+    /** {@inheritDoc} */
     public E get(int index) {
         return decorated().get(index);
     }
 
+    /** {@inheritDoc} */
     public int indexOf(Object object) {
         return decorated().indexOf(object);
     }
 
+    /** {@inheritDoc} */
     public int lastIndexOf(Object object) {
         return decorated().lastIndexOf(object);
     }
 
+    /** {@inheritDoc} */
     public ListIterator<E> listIterator() {
         return decorated().listIterator();
     }
 
+    /** {@inheritDoc} */
     public ListIterator<E> listIterator(int index) {
         return decorated().listIterator(index);
     }
 
+    /** {@inheritDoc} */
     public E remove(int index) {
         return decorated().remove(index);
     }
 
+    /** {@inheritDoc} */
     public E set(int index, E object) {
         return decorated().set(index, object);
     }
 
+    /** {@inheritDoc} */
     public List<E> subList(int fromIndex, int toIndex) {
         return decorated().subList(fromIndex, toIndex);
     }

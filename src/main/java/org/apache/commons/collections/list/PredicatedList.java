@@ -89,28 +89,36 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
     }
 
     //-----------------------------------------------------------------------
+    
+    /** {@inheritDoc} */
     public E get(int index) {
         return decorated().get(index);
     }
 
+    /** {@inheritDoc} */
     public int indexOf(Object object) {
         return decorated().indexOf(object);
     }
 
+    /** {@inheritDoc} */
     public int lastIndexOf(Object object) {
         return decorated().lastIndexOf(object);
     }
 
+    /** {@inheritDoc} */
     public E remove(int index) {
         return decorated().remove(index);
     }
 
     //-----------------------------------------------------------------------
+    
+    /** {@inheritDoc} */
     public void add(int index, E object) {
         validate(object);
         decorated().add(index, object);
     }
 
+    /** {@inheritDoc} */
     public boolean addAll(int index, Collection<? extends E> coll) {
         for (E aColl : coll) {
             validate(aColl);
@@ -118,19 +126,23 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
         return decorated().addAll(index, coll);
     }
 
+    /** {@inheritDoc} */
     public ListIterator<E> listIterator() {
         return listIterator(0);
     }
 
+    /** {@inheritDoc} */
     public ListIterator<E> listIterator(int i) {
         return new PredicatedListIterator(decorated().listIterator(i));
     }
 
+    /** {@inheritDoc} */
     public E set(int index, E object) {
         validate(object);
         return decorated().set(index, object);
     }
 
+    /** {@inheritDoc} */
     public List<E> subList(int fromIndex, int toIndex) {
         List<E> sub = decorated().subList(fromIndex, toIndex);
         return new PredicatedList<E>(sub, predicate);
@@ -141,6 +153,11 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
      */
     protected class PredicatedListIterator extends AbstractListIteratorDecorator<E> {
         
+        /**
+         * Create a new predicated list iterator.
+         * 
+         * @param iterator  the list iterator to decorate
+         */
         protected PredicatedListIterator(ListIterator<E> iterator) {
             super(iterator);
         }

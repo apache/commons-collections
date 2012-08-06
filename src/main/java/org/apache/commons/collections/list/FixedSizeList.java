@@ -170,10 +170,12 @@ public class FixedSizeList<E>
         }
     }
 
+    /** {@inheritDoc} */
     public boolean isFull() {
         return true;
     }
 
+    /** {@inheritDoc} */
     public int maxSize() {
         return size();
     }

@@ -82,30 +82,36 @@ public class SynchronizedList<E> extends SynchronizedCollection<E> implements Li
     }
 
     //-----------------------------------------------------------------------
+    
+    /** {@inheritDoc} */
     public void add(int index, E object) {
         synchronized (lock) {
             getList().add(index, object);
         }
     }
 
+    /** {@inheritDoc} */
     public boolean addAll(int index, Collection<? extends E> coll) {
         synchronized (lock) {
             return getList().addAll(index, coll);
         }
     }
 
+    /** {@inheritDoc} */
     public E get(int index) {
         synchronized (lock) {
             return getList().get(index);
         }
     }
 
+    /** {@inheritDoc} */
     public int indexOf(Object object) {
         synchronized (lock) {
             return getList().indexOf(object);
         }
     }
 
+    /** {@inheritDoc} */
     public int lastIndexOf(Object object) {
         synchronized (lock) {
             return getList().lastIndexOf(object);
@@ -134,24 +140,28 @@ public class SynchronizedList<E> extends SynchronizedCollection<E> implements Li
      *   // do stuff with iterator
      * }
      * 
+     * @param index  index of first element to be returned by this list iterator
      * @return an iterator that must be manually synchronized on the collection
      */
     public ListIterator<E> listIterator(int index) {
         return getList().listIterator(index);
     }
 
+    /** {@inheritDoc} */
     public E remove(int index) {
         synchronized (lock) {
             return getList().remove(index);
         }
     }
 
+    /** {@inheritDoc} */
     public E set(int index, E object) {
         synchronized (lock) {
             return getList().set(index, object);
         }
     }
 
+    /** {@inheritDoc} */
     public List<E> subList(int fromIndex, int toIndex) {
         synchronized (lock) {
             List<E> list = getList().subList(fromIndex, toIndex);

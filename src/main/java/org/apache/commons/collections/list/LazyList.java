@@ -104,6 +104,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
      * placeholder that is replaced with a factory object when requested.
      * 
      * @param index  the index to retrieve
+     * @return the element at the given index
      */
     @Override
     public E get(int index) {

@@ -383,6 +383,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * 
      * @param subList  the sublist to get an iterator for
      * @param fromIndex  the index to start from, relative to the sublist
+     * @return the list iterator for the sublist
      */
     @Override
     protected ListIterator<E> createSubListListIterator(LinkedSubList<E> subList, int fromIndex) {
@@ -407,6 +408,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
         /**
          * Constructs a new cursor.
          * 
+         * @param parent  the parent list
          * @param index  the index to start from
          */
         protected Cursor(CursorableLinkedList<E> parent, int index) {
@@ -577,6 +579,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
         /**
          * Constructs a new cursor.
          * 
+         * @param sub  the sub list
          * @param index  the index to start from
          */
         protected SubCursor(LinkedSubList<E> sub, int index) {
