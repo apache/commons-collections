@@ -21,7 +21,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.commons.collections.Transformer;
-import org.apache.commons.collections.collection.TestTransformedCollection;
+import org.apache.commons.collections.collection.TransformedCollectionTest;
 
 /**
  * Extension of {@link AbstractTestSet} for exercising the {@link TransformedSet}
@@ -54,7 +54,7 @@ public class TestTransformedSet<E> extends AbstractTestSet<E> {
     @SuppressWarnings("unchecked")
     public Set<E> makeObject() {
         return TransformedSet.transformingSet(new HashSet<E>(),
-                (Transformer<E, E>) TestTransformedCollection.NOOP_TRANSFORMER);
+                (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
     @Override
@@ -63,13 +63,13 @@ public class TestTransformedSet<E> extends AbstractTestSet<E> {
         Set<E> list = new HashSet<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return TransformedSet.transformingSet(list,
-                (Transformer<E, E>) TestTransformedCollection.NOOP_TRANSFORMER);
+                (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
     @SuppressWarnings("unchecked")
     public void testTransformedSet() {
         Set<E> set = TransformedSet.transformingSet(new HashSet<E>(),
-                (Transformer<E, E>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+                (Transformer<E, E>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, set.size());
         E[] els = (E[]) new Object[] { "1", "3", "5", "7", "2", "4", "6" };
         for (int i = 0; i < els.length; i++) {
@@ -90,7 +90,7 @@ public class TestTransformedSet<E> extends AbstractTestSet<E> {
         for (int i = 0; i < els.length; i++) {
             originalSet.add(els[i]);
         }
-        Set<?> set = TransformedSet.transformedSet(originalSet, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        Set<?> set = TransformedSet.transformedSet(originalSet, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, set.size());
         for (int i = 0; i < els.length; i++) {
             assertEquals(true, set.contains(new Integer((String) els[i])));

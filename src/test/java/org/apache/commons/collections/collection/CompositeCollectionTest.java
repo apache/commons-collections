@@ -24,7 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Extension of {@link AbstractTestCollection} for exercising the
+ * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link CompositeCollection} implementation.
  *
  * @since Commons Collections 3.0
@@ -33,9 +33,9 @@ import java.util.List;
  * @author Brian McCallister
  * @author Phil Steitz
  */
-public class TestCompositeCollection<E> extends AbstractTestCollection<E> {
+public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
-    public TestCompositeCollection(String name) {
+    public CompositeCollectionTest(String name) {
         super(name);
     }
 

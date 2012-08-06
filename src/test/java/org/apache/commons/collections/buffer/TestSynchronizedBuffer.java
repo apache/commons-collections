@@ -21,10 +21,10 @@ import java.util.Collection;
 
 import org.apache.commons.collections.ArrayStack;
 import org.apache.commons.collections.Buffer;
-import org.apache.commons.collections.collection.AbstractTestCollection;
+import org.apache.commons.collections.collection.AbstractCollectionTest;
 
 /**
- * Extension of {@link AbstractTestCollection} for exercising the
+ * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link SynchronizedBuffer} implementation.
  *
  * @since Commons Collections 3.1
@@ -33,7 +33,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
  * @author Phil Steitz
  * @author Stephen Colebourne
  */
-public class TestSynchronizedBuffer<E> extends AbstractTestCollection<E> {
+public class TestSynchronizedBuffer<E> extends AbstractCollectionTest<E> {
 
     public TestSynchronizedBuffer(String testName) {
         super(testName);

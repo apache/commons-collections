@@ -19,7 +19,7 @@ package org.apache.commons.collections.buffer;
 import junit.framework.TestCase;
 import org.apache.commons.collections.ArrayStack;
 import org.apache.commons.collections.Buffer;
-import org.apache.commons.collections.collection.TestTransformedCollection;
+import org.apache.commons.collections.collection.TransformedCollectionTest;
 
 /**
  * Extension of {@link TestCase} for exercising the {@link TransformedBuffer}
@@ -37,7 +37,7 @@ public class TestTransformedBuffer extends TestCase {
     }
 
     public void testTransformedBuffer() {
-        Buffer<Object> buffer = TransformedBuffer.transformingBuffer(new ArrayStack<Object>(), TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        Buffer<Object> buffer = TransformedBuffer.transformingBuffer(new ArrayStack<Object>(), TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, buffer.size());
         Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
         for (int i = 0; i < els.length; i++) {
@@ -58,7 +58,7 @@ public class TestTransformedBuffer extends TestCase {
         for (int i = 0; i < els.length; i++) {
             originalBuffer.add(els[i]);
         }
-        Buffer buffer = TransformedBuffer.transformedBuffer(originalBuffer, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        Buffer buffer = TransformedBuffer.transformedBuffer(originalBuffer, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, buffer.size());
         for (int i = 0; i < els.length; i++) {
             assertEquals(true, buffer.contains(new Integer((String) els[i])));

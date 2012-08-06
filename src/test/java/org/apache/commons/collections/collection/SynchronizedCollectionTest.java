@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 /**
- * Extension of {@link AbstractTestCollection} for exercising the
+ * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link SynchronizedCollection} implementation.
  *
  * @since Commons Collections 3.1
@@ -30,9 +30,9 @@ import java.util.Collection;
  * @author Phil Steitz
  * @author Stephen Colebourne
  */
-public class TestSynchronizedCollection<E> extends AbstractTestCollection<E> {
+public class SynchronizedCollectionTest<E> extends AbstractCollectionTest<E> {
 
-    public TestSynchronizedCollection(String testName) {
+    public SynchronizedCollectionTest(String testName) {
         super(testName);
     }
 

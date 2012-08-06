@@ -18,7 +18,7 @@ package org.apache.commons.collections.bag;
 
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.Transformer;
-import org.apache.commons.collections.collection.TestTransformedCollection;
+import org.apache.commons.collections.collection.TransformedCollectionTest;
 
 /**
  * Extension of {@link AbstractBagTest} for exercising the {@link TransformedBag}
@@ -37,14 +37,14 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
     @SuppressWarnings("unchecked")
     public Bag<T> makeObject() {
         return TransformedBag.transformingBag(new HashBag<T>(),
-                (Transformer<T, T>) TestTransformedCollection.NOOP_TRANSFORMER);
+                (Transformer<T, T>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
     @SuppressWarnings("unchecked")
     public void testTransformedBag() {
         //T had better be Object!
         Bag<T> bag = TransformedBag.transformingBag(new HashBag<T>(),
-                (Transformer<T, T>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+                (Transformer<T, T>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, bag.size());
         Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {
@@ -66,7 +66,7 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
             originalBag.add((T) els[i]);
         }
         Bag<T> bag = TransformedBag.transformedBag(originalBag,
-                (Transformer<T, T>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+                (Transformer<T, T>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, bag.size());
         for (int i = 0; i < els.length; i++) {
             assertEquals(true, bag.contains(new Integer((String) els[i])));

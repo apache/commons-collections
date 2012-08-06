@@ -36,7 +36,7 @@ import org.apache.commons.collections.keyvalue.DefaultMapEntry;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.collections.map.LazyMap;
 import org.apache.commons.collections.map.PredicatedMap;
-import org.apache.commons.collections.collection.TestTransformedCollection;
+import org.apache.commons.collections.collection.TransformedCollectionTest;
 
 /**
  * Tests for MapUtils.
@@ -756,7 +756,7 @@ public class TestMapUtils extends BulkTest {
 
         // Now test key transform population
         Map<Object, Object> map = new HashMap<Object, Object>();
-        MapUtils.populateMap(map, list, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        MapUtils.populateMap(map, list, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(list.size(), map.size());
 
         for (int i = 0; i < list.size(); i++) {
@@ -768,7 +768,7 @@ public class TestMapUtils extends BulkTest {
 
         // Now test both Key-Value transform population
         map = new HashMap<Object, Object>();
-        MapUtils.populateMap(map, list, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        MapUtils.populateMap(map, list, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
 
         assertEquals(list.size(), map.size());
         for (int i = 0; i < list.size(); i++) {

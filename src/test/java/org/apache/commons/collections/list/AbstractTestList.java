@@ -32,7 +32,7 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections.BulkTest;
-import org.apache.commons.collections.collection.AbstractTestCollection;
+import org.apache.commons.collections.collection.AbstractCollectionTest;
 import org.apache.commons.collections.iterators.AbstractTestListIterator;
 
 /**
@@ -53,7 +53,7 @@ import org.apache.commons.collections.iterators.AbstractTestListIterator;
  * @author Stephen Colebourne
  * @author Neil O'Toole
  */
-public abstract class AbstractTestList<E> extends AbstractTestCollection<E> {
+public abstract class AbstractTestList<E> extends AbstractCollectionTest<E> {
 
     /**
      * JUnit constructor.

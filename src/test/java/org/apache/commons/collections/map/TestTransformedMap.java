@@ -23,7 +23,7 @@ import java.util.Set;
 import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.TransformerUtils;
-import org.apache.commons.collections.collection.TestTransformedCollection;
+import org.apache.commons.collections.collection.TransformedCollectionTest;
 
 /**
  * Extension of {@link AbstractTestMap} for exercising the {@link TransformedMap}
@@ -55,7 +55,7 @@ public class TestTransformedMap<K, V> extends AbstractTestIterableMap<K, V> {
         Map<K, V> map = TransformedMap
                 .transformingMap(
                         new HashMap<K, V>(),
-                        (Transformer<? super K, ? extends K>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER,
+                        (Transformer<? super K, ? extends K>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER,
                         null);
         assertEquals(0, map.size());
         for (int i = 0; i < els.length; i++) {
@@ -70,7 +70,7 @@ public class TestTransformedMap<K, V> extends AbstractTestIterableMap<K, V> {
         assertEquals(null, map.remove(els[0]));
         assertEquals(els[0], map.remove(new Integer((String) els[0])));
 
-        map = TransformedMap.transformingMap(new HashMap(), null, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        map = TransformedMap.transformingMap(new HashMap(), null, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, map.size());
         for (int i = 0; i < els.length; i++) {
             map.put((K) els[i], (V) els[i]);
@@ -107,7 +107,7 @@ public class TestTransformedMap<K, V> extends AbstractTestIterableMap<K, V> {
                 .transformingMap(
                         base,
                         null,
-                        (Transformer<? super V, ? extends V>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+                        (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(3, trans.size());
         assertEquals("1", trans.get("A"));
         assertEquals("2", trans.get("B"));
@@ -127,7 +127,7 @@ public class TestTransformedMap<K, V> extends AbstractTestIterableMap<K, V> {
                 .transformedMap(
                         base,
                         null,
-                        (Transformer<? super V, ? extends V>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+                        (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(3, trans.size());
         assertEquals(new Integer(1), trans.get("A"));
         assertEquals(new Integer(2), trans.get("B"));

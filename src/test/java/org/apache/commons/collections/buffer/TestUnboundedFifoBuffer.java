@@ -24,7 +24,7 @@ import java.util.List;
 import junit.framework.Test;
 
 import org.apache.commons.collections.BulkTest;
-import org.apache.commons.collections.collection.AbstractTestCollection;
+import org.apache.commons.collections.collection.AbstractCollectionTest;
 
 /**
  * Test cases for UnboundedFifoBuffer.
@@ -33,7 +33,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
  *
  * @author Unknown
  */
-public class TestUnboundedFifoBuffer<E> extends AbstractTestCollection<E> {
+public class TestUnboundedFifoBuffer<E> extends AbstractCollectionTest<E> {
 
     public TestUnboundedFifoBuffer(String n) {
         super(n);

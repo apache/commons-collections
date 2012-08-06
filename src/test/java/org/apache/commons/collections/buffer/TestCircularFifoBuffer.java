@@ -29,7 +29,7 @@ import junit.framework.Test;
 import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.BufferUnderflowException;
 import org.apache.commons.collections.BulkTest;
-import org.apache.commons.collections.collection.AbstractTestCollection;
+import org.apache.commons.collections.collection.AbstractCollectionTest;
 
 /**
  * Test cases for CircularFifoBuffer.
@@ -38,7 +38,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
  *
  * @author Stephen Colebourne
  */
-public class TestCircularFifoBuffer<E> extends AbstractTestCollection<E> {
+public class TestCircularFifoBuffer<E> extends AbstractCollectionTest<E> {
 
     public TestCircularFifoBuffer(String n) {
         super(n);

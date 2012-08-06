@@ -22,7 +22,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.apache.commons.collections.collection.AbstractTestCollection;
+import org.apache.commons.collections.collection.AbstractCollectionTest;
 
 /**
  * Abstract test class for {@link Set} methods and contracts.
@@ -36,14 +36,14 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
  * To use, subclass and override the {@link #makeObject()}
  * method.  You may have to override other protected methods if your
  * set is not modifiable, or if your set restricts what kinds of
- * elements may be added; see {@link AbstractTestCollection} for more details.
+ * elements may be added; see {@link AbstractCollectionTest} for more details.
  *
  * @since Commons Collections 3.0
  * @version $Revision$
  *
  * @author Paul Jack
  */
-public abstract class AbstractTestSet<E> extends AbstractTestCollection<E> {
+public abstract class AbstractTestSet<E> extends AbstractCollectionTest<E> {
 
     /**
      * JUnit constructor.
@@ -128,7 +128,7 @@ public abstract class AbstractTestSet<E> extends AbstractTestCollection<E> {
 
     //-----------------------------------------------------------------------
     /**
-     * Return the {@link AbstractTestCollection#collection} fixture, but cast as a Set.  
+     * Return the {@link AbstractCollectionTest#collection} fixture, but cast as a Set.  
      */
     @Override
     public Set<E> getCollection() {
@@ -136,7 +136,7 @@ public abstract class AbstractTestSet<E> extends AbstractTestCollection<E> {
     }
 
     /**
-     * Return the {@link AbstractTestCollection#confirmed} fixture, but cast as a Set.
+     * Return the {@link AbstractCollectionTest#confirmed} fixture, but cast as a Set.
      */
     @Override
     public Set<E> getConfirmed() {

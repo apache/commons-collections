@@ -27,7 +27,7 @@ import java.util.Random;
 import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.BufferUnderflowException;
 import org.apache.commons.collections.ComparatorUtils;
-import org.apache.commons.collections.collection.AbstractTestCollection;
+import org.apache.commons.collections.collection.AbstractCollectionTest;
 import org.apache.commons.collections.comparators.ComparableComparator;
 import org.apache.commons.collections.comparators.ReverseComparator;
 
@@ -40,7 +40,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
  * @author Steve Phelps
  */
 @SuppressWarnings("boxing")
-public class TestPriorityBuffer<E> extends AbstractTestCollection<E> {
+public class TestPriorityBuffer<E> extends AbstractCollectionTest<E> {
 
     public TestPriorityBuffer(String testName) {
         super(testName);

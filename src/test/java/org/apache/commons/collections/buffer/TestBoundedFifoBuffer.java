@@ -25,7 +25,7 @@ import junit.framework.Test;
 
 import org.apache.commons.collections.BufferUnderflowException;
 import org.apache.commons.collections.BulkTest;
-import org.apache.commons.collections.collection.AbstractTestCollection;
+import org.apache.commons.collections.collection.AbstractCollectionTest;
 
 /**
  * Test cases for BoundedFifoBuffer.
@@ -34,7 +34,7 @@ import org.apache.commons.collections.collection.AbstractTestCollection;
  *
  * @author Paul Jack
  */
-public class TestBoundedFifoBuffer<E> extends AbstractTestCollection<E> {
+public class TestBoundedFifoBuffer<E> extends AbstractCollectionTest<E> {
 
     public TestBoundedFifoBuffer(String n) {
         super(n);

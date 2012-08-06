@@ -25,7 +25,7 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.functors.TruePredicate;
 
 /**
- * Extension of {@link AbstractTestCollection} for exercising the 
+ * Extension of {@link AbstractCollectionTest} for exercising the 
  * {@link PredicatedCollection} implementation.
  *
  * @since Commons Collections 3.0
@@ -33,9 +33,9 @@ import org.apache.commons.collections.functors.TruePredicate;
  *
  * @author Phil Steitz
  */
-public class TestPredicatedCollection<E> extends AbstractTestCollection<E> {
+public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
 
-    public TestPredicatedCollection(String name) {
+    public PredicatedCollectionTest(String name) {
         super(name);
     }
 

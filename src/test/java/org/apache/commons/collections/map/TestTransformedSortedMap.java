@@ -26,7 +26,7 @@ import junit.framework.Test;
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.TransformerUtils;
-import org.apache.commons.collections.collection.TestTransformedCollection;
+import org.apache.commons.collections.collection.TransformedCollectionTest;
 
 /**
  * Extension of {@link AbstractTestSortedMap} for exercising the {@link TransformedSortedMap}
@@ -70,7 +70,7 @@ public class TestTransformedSortedMap<K, V> extends AbstractTestSortedMap<K, V> 
         SortedMap<K, V> map = TransformedSortedMap
                 .transformingSortedMap(
                         new TreeMap<K, V>(),
-                        (Transformer<? super K, ? extends K>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER,
+                        (Transformer<? super K, ? extends K>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER,
                         null);
         assertEquals(0, map.size());
         for (int i = 0; i < els.length; i++) {
@@ -95,7 +95,7 @@ public class TestTransformedSortedMap<K, V> extends AbstractTestSortedMap<K, V> 
                 .transformingSortedMap(
                         new TreeMap<K, V>(),
                         null,
-                        (Transformer<? super V, ? extends V>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+                        (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, map.size());
         for (int i = 0; i < els.length; i++) {
             map.put((K) els[i], (V) els[i]);
@@ -132,7 +132,7 @@ public class TestTransformedSortedMap<K, V> extends AbstractTestSortedMap<K, V> 
                 .transformingSortedMap(
                         base,
                         null,
-                        (Transformer<? super V, ? extends V>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+                        (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(3, trans.size());
         assertEquals("1", trans.get("A"));
         assertEquals("2", trans.get("B"));
@@ -152,7 +152,7 @@ public class TestTransformedSortedMap<K, V> extends AbstractTestSortedMap<K, V> 
                 .transformedSortedMap(
                         base,
                         null,
-                        (Transformer<? super V, ? extends V>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+                        (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(3, trans.size());
         assertEquals(new Integer(1), trans.get("A"));
         assertEquals(new Integer(2), trans.get("B"));

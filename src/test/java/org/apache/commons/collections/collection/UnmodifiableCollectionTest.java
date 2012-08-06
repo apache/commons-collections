@@ -22,7 +22,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * Extension of {@link AbstractTestCollection} for exercising the
+ * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link UnmodifiableCollection} implementation.
  *
  * @since Commons Collections 3.0
@@ -31,9 +31,9 @@ import java.util.List;
  * @author Phil Steitz
  * @author Stephen Colebourne
  */
-public class TestUnmodifiableCollection<E> extends AbstractTestCollection<E> {
+public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
 
-    public TestUnmodifiableCollection(String testName) {
+    public UnmodifiableCollectionTest(String testName) {
         super(testName);
     }
 

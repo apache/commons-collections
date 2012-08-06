@@ -22,10 +22,10 @@ import org.apache.commons.collections.ArrayStack;
 import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.BufferUnderflowException;
 import org.apache.commons.collections.Predicate;
-import org.apache.commons.collections.collection.TestPredicatedCollection;
+import org.apache.commons.collections.collection.PredicatedCollectionTest;
 
 /**
- * Extension of {@link TestPredicatedCollection} for exercising the
+ * Extension of {@link PredicatedCollectionTest} for exercising the
  * {@link PredicatedBuffer} implementation.
  *
  * @since Commons Collections 3.0
@@ -33,7 +33,7 @@ import org.apache.commons.collections.collection.TestPredicatedCollection;
  *
  * @author Phil Steitz
  */
-public class TestPredicatedBuffer<E> extends TestPredicatedCollection<E> {
+public class TestPredicatedBuffer<E> extends PredicatedCollectionTest<E> {
 
     public TestPredicatedBuffer(String testName) {
         super(testName);

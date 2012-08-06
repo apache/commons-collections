@@ -25,7 +25,7 @@ import junit.framework.Test;
 
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.Transformer;
-import org.apache.commons.collections.collection.TestTransformedCollection;
+import org.apache.commons.collections.collection.TransformedCollectionTest;
 
 /**
  * Extension of {@link AbstractTestSortedSet} for exercising the {@link TransformedSortedSet}
@@ -50,7 +50,7 @@ public class TestTransformedSortedSet<E> extends AbstractTestSortedSet<E> {
     @Override
     @SuppressWarnings("unchecked")
     public SortedSet<E> makeObject() {
-        return TransformedSortedSet.transformingSortedSet(new TreeSet<E>(), (Transformer<E, E>) TestTransformedCollection.NOOP_TRANSFORMER);
+        return TransformedSortedSet.transformingSortedSet(new TreeSet<E>(), (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
     @Override
@@ -58,14 +58,14 @@ public class TestTransformedSortedSet<E> extends AbstractTestSortedSet<E> {
     public SortedSet<E> makeFullCollection() {
         SortedSet<E> set = new TreeSet<E>();
         set.addAll(Arrays.asList(getFullElements()));
-        return TransformedSortedSet.transformingSortedSet(set, (Transformer<E, E>) TestTransformedCollection.NOOP_TRANSFORMER);
+        return TransformedSortedSet.transformingSortedSet(set, (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testTransformedSet() {
         SortedSet<E> set = TransformedSortedSet.transformingSortedSet(new TreeSet<E>(),
-                (Transformer<E, E>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+                (Transformer<E, E>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, set.size());
         E[] els = (E[]) new Object[] { "1", "3", "5", "7", "2", "4", "6" };
         for (int i = 0; i < els.length; i++) {
@@ -83,7 +83,7 @@ public class TestTransformedSortedSet<E> extends AbstractTestSortedSet<E> {
         for (int i = 0; i < els.length; i++) {
             originalSet.add(els[i]);
         }
-        Set<?> set = TransformedSortedSet.transformedSet(originalSet, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        Set<?> set = TransformedSortedSet.transformedSet(originalSet, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, set.size());
         for (int i = 0; i < els.length; i++) {
             assertEquals(true, set.contains(new Integer((String) els[i])));

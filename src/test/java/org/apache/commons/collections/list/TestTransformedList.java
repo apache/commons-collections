@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.apache.commons.collections.Transformer;
-import org.apache.commons.collections.collection.TestTransformedCollection;
+import org.apache.commons.collections.collection.TransformedCollectionTest;
 
 /**
  * Extension of {@link AbstractTestList} for exercising the {@link TransformedList}
@@ -54,7 +54,7 @@ public class TestTransformedList<E> extends AbstractTestList<E> {
     @Override
     @SuppressWarnings("unchecked")
     public List<E> makeObject() {
-        return TransformedList.transformingList(new ArrayList<E>(), (Transformer<E, E>) TestTransformedCollection.NOOP_TRANSFORMER);
+        return TransformedList.transformingList(new ArrayList<E>(), (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
     @Override
@@ -62,12 +62,12 @@ public class TestTransformedList<E> extends AbstractTestList<E> {
     public List<E> makeFullCollection() {
         List<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
-        return TransformedList.transformingList(list, (Transformer<E, E>) TestTransformedCollection.NOOP_TRANSFORMER);
+        return TransformedList.transformingList(list, (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
     @SuppressWarnings("unchecked")
     public void testTransformedList() {
-        List<E> list = TransformedList.transformingList(new ArrayList<E>(), (Transformer<E, E>) TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        List<E> list = TransformedList.transformingList(new ArrayList<E>(), (Transformer<E, E>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, list.size());
         E[] els = (E[]) new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {
@@ -119,7 +119,7 @@ public class TestTransformedList<E> extends AbstractTestList<E> {
         for (int i = 0; i < els.length; i++) {
             originalList.add(els[i]);
         }
-        List<?> list = TransformedList.transformedList(originalList, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        List<?> list = TransformedList.transformedList(originalList, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, list.size());
         for (int i = 0; i < els.length; i++) {
             assertEquals(true, list.contains(new Integer((String) els[i])));

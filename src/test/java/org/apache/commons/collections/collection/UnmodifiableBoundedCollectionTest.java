@@ -26,12 +26,12 @@ import org.apache.commons.collections.BufferUtils;
 import org.apache.commons.collections.buffer.BoundedBuffer;
 
 /**
- * Extension of {@link AbstractTestCollection} for exercising the
+ * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link UnmodifiableBoundedCollection} implementation.
  */
-public class TestUnmodifiableBoundedCollection<E> extends AbstractTestCollection<E> {
+public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest<E> {
 
-    public TestUnmodifiableBoundedCollection(String testName) {
+    public UnmodifiableBoundedCollectionTest(String testName) {
         super(testName);
     }
 

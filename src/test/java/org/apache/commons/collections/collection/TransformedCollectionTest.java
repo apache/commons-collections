@@ -25,7 +25,7 @@ import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.TransformerUtils;
 
 /**
- * Extension of {@link AbstractTestCollection} for exercising the {@link TransformedCollection}
+ * Extension of {@link AbstractCollectionTest} for exercising the {@link TransformedCollection}
  * implementation.
  *
  * @since Commons Collections 3.0
@@ -33,7 +33,7 @@ import org.apache.commons.collections.TransformerUtils;
  *
  * @author Stephen Colebourne
  */
-public class TestTransformedCollection extends AbstractTestCollection<Object> {
+public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
     
     private static class StringToInteger implements Transformer<Object, Object> {
         public Object transform(Object input) {
@@ -44,7 +44,7 @@ public class TestTransformedCollection extends AbstractTestCollection<Object> {
     public static final Transformer<Object, Object> NOOP_TRANSFORMER = TransformerUtils.nopTransformer();
     public static final Transformer<Object, Object> STRING_TO_INTEGER_TRANSFORMER = new StringToInteger();
 
-    public TestTransformedCollection(String testName) {
+    public TransformedCollectionTest(String testName) {
         super(testName);
     }
 
@@ -105,7 +105,7 @@ public class TestTransformedCollection extends AbstractTestCollection<Object> {
         for (int i = 0; i < els.length; i++) {
             originalCollection.add(els[i]);
         }
-        Collection collection = TransformedCollection.transformedCollection(originalCollection, TestTransformedCollection.STRING_TO_INTEGER_TRANSFORMER);
+        Collection<Object> collection = TransformedCollection.transformedCollection(originalCollection, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, collection.size());
         for (int i = 0; i < els.length; i++) {
             assertEquals(true, collection.contains(new Integer((String) els[i])));

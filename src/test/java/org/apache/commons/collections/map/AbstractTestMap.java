@@ -32,14 +32,14 @@ import java.util.Set;
 import org.apache.commons.collections.AbstractTestObject;
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.collection.AbstractTestCollection;
+import org.apache.commons.collections.collection.AbstractCollectionTest;
 import org.apache.commons.collections.keyvalue.DefaultMapEntry;
 import org.apache.commons.collections.set.AbstractTestSet;
 
 /**
  * Abstract test class for {@link java.util.Map} methods and contracts.
  * <p>
- * The forces at work here are similar to those in {@link AbstractTestCollection}.
+ * The forces at work here are similar to those in {@link AbstractCollectionTest}.
  * If your class implements the full Map interface, including optional
  * operations, simply extend this class, and implement the
  * {@link #makeObject()} method.
@@ -1778,18 +1778,18 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
 
     /**
      * Bulk test {@link Map#values()}.  This method runs through all of
-     * the tests in {@link AbstractTestCollection}.
+     * the tests in {@link AbstractCollectionTest}.
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the map and the other collection views are still valid.
      *
-     * @return a {@link AbstractTestCollection} instance for testing the map's
+     * @return a {@link AbstractCollectionTest} instance for testing the map's
      *    values collection
      */
     public BulkTest bulkTestMapValues() {
         return new TestMapValues();
     }
 
-    public class TestMapValues extends AbstractTestCollection<V> {
+    public class TestMapValues extends AbstractCollectionTest<V> {
         public TestMapValues() {
             super("");
         }

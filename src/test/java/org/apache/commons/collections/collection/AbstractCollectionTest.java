@@ -125,7 +125,7 @@ import org.apache.commons.collections.AbstractTestObject;
  * @author Neil O'Toole
  * @author Stephen Colebourne
  */
-public abstract class AbstractTestCollection<E> extends AbstractTestObject {
+public abstract class AbstractCollectionTest<E> extends AbstractTestObject {
 
     //
     // NOTE:
@@ -160,7 +160,7 @@ public abstract class AbstractTestCollection<E> extends AbstractTestObject {
      *
      * @param testName  the test class name
      */
-    public AbstractTestCollection(String testName) {
+    public AbstractCollectionTest(String testName) {
         super(testName);
     }
 
