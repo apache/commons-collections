@@ -43,5 +43,4 @@ public abstract class AbstractEmptyMapIterator<K, V> extends AbstractEmptyIterat
         throw new IllegalStateException("Iterator contains no elements");
     }
 
-
 }

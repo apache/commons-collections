@@ -113,7 +113,8 @@ public class CollatingIterator<E> implements Iterator<E> {
      * @param b the second child ordered iterator
      * @throws NullPointerException if either iterator is null
      */
-    public CollatingIterator(final Comparator<? super E> comp, final Iterator<? extends E> a, final Iterator<? extends E> b) {
+    public CollatingIterator(final Comparator<? super E> comp, final Iterator<? extends E> a,
+                             final Iterator<? extends E> b) {
         this(comp, 2);
         addIterator(a);
         addIterator(b);
@@ -203,6 +204,8 @@ public class CollatingIterator<E> implements Iterator<E> {
 
     /**
      * Gets the {@link Comparator} by which collatation occurs.
+     * 
+     * @return the {@link Comparator}
      */
     public Comparator<? super E> getComparator() {
         return comparator;
@@ -215,6 +218,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * {@link java.lang.Comparable} interface), then use the
      * {@link org.apache.commons.collections.comparators.ComparableComparator}.
      * 
+     * @param comp the {@link Comparator} to set
      * @throws IllegalStateException if iteration has started
      */
     public void setComparator(final Comparator<? super E> comp) {

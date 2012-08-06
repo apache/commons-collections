@@ -39,6 +39,7 @@ public abstract class AbstractIteratorDecorator<E> extends AbstractUntypedIterat
         super(iterator);
     }
 
+    /** {@inheritDoc} */
     public E next() {
         return getIterator().next();
     }

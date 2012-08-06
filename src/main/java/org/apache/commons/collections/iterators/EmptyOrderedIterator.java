@@ -36,7 +36,7 @@ public class EmptyOrderedIterator<E> extends AbstractEmptyIterator<E>
 
     /**
      * Typed instance of the iterator.
-     * @param <E>
+     * @param <E> the element type
      * @return OrderedIterator<E>
      */
     @SuppressWarnings("unchecked")

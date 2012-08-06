@@ -56,38 +56,48 @@ public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
     }
 
     //-----------------------------------------------------------------------
+    
+    /** {@inheritDoc} */
     public boolean hasNext() {
         return iterator.hasNext();
     }
 
+    /** {@inheritDoc} */
     public E next() {
         return iterator.next();
     }
 
+    /** {@inheritDoc} */
     public int nextIndex() {
         return iterator.nextIndex();
     }
 
+    /** {@inheritDoc} */
     public boolean hasPrevious() {
         return iterator.hasPrevious();
     }
 
+    /** {@inheritDoc} */
     public E previous() {
         return iterator.previous();
     }
 
+    /** {@inheritDoc} */
     public int previousIndex() {
         return iterator.previousIndex();
     }
 
+    /** {@inheritDoc} */
     public void remove() {
         iterator.remove();
     }
 
+    /** {@inheritDoc} */
     public void set(E obj) {
         iterator.set(obj);
     }
 
+    /** {@inheritDoc} */
     public void add(E obj) {
         iterator.add(obj);
     }

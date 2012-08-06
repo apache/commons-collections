@@ -142,6 +142,7 @@ public class SingletonListIterator<E> implements ListIterator<E>, ResettableList
     /**
      * Add always throws {@link UnsupportedOperationException}.
      *
+     * @param obj  the object to add
      * @throws UnsupportedOperationException always
      */
     public void add(E obj) {

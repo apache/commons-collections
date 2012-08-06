@@ -56,26 +56,33 @@ public class AbstractMapIteratorDecorator<K, V> implements MapIterator<K, V> {
     }
 
     //-----------------------------------------------------------------------
+    
+    /** {@inheritDoc} */
     public boolean hasNext() {
         return iterator.hasNext();
     }
 
+    /** {@inheritDoc} */
     public K next() {
         return iterator.next();
     }
 
+    /** {@inheritDoc} */
     public void remove() {
         iterator.remove();
     }
-    
+
+    /** {@inheritDoc} */
     public K getKey() {
         return iterator.getKey();
     }
 
+    /** {@inheritDoc} */
     public V getValue() {
         return iterator.getValue();
     }
 
+    /** {@inheritDoc} */
     public V setValue(V obj) {
         return iterator.setValue(obj);
     }

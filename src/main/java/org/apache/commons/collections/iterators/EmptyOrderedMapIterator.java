@@ -36,8 +36,8 @@ public class EmptyOrderedMapIterator<K, V> extends AbstractEmptyMapIterator<K, V
 
     /**
      * Get a typed instance of the iterator.
-     * @param <K>
-     * @param <V>
+     * @param <K> the key type
+     * @param <V> the value type
      * @return {@link OrderedMapIterator}<K, V>
      */
     @SuppressWarnings("unchecked")

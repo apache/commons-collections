@@ -76,6 +76,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
      * <p>
      * If at the end of the collection, return the first element.
      * 
+     * @return the next object
      * @throws NoSuchElementException if there are no elements
      *         at all.  Use {@link #hasNext} to avoid this error.
      */
