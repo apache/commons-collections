@@ -85,6 +85,10 @@
       <id>craigmcc</id>
     </developer>
     <developer>
+      <name>Adrian Nistor</name>
+      <id>adriannistor</id>
+    </developer>
+    <developer>
       <name>Phil Steitz</name>
       <id>psteitz</id>
     </developer>
@@ -279,9 +283,6 @@
     </contributor>
     <contributor>
       <name>Kasper Nielsen</name>
-    </contributor>
-    <contributor>
-      <name>Adrian Nistor</name>
     </contributor>
     <contributor>
       <name>Stanislaw Osinski</name>
