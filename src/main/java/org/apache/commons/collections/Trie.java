@@ -44,8 +44,9 @@ public interface Trie<K, V> extends SortedMap<K, V> {
      * return 'L', because the XOR distance between D &amp; L is smaller 
      * than the XOR distance between D &amp; H. 
      * 
-     * @return The {@link Entry} whose key is closest in a bitwise XOR metric
-     * to the provided key.
+     * @param key  the key to use in the search
+     * @return the {@link Entry} whose key is closest in a bitwise XOR metric
+     *   to the provided key
      */
     public Map.Entry<K, V> select(K key);
     
@@ -65,7 +66,8 @@ public interface Trie<K, V> extends SortedMap<K, V> {
      * return 'L', because the XOR distance between D &amp; L is smaller 
      * than the XOR distance between D &amp; H. 
      * 
-     * @return The key that is closest in a bitwise XOR metric to the provided key.
+     * @param key  the key to use in the search
+     * @return the key that is closest in a bitwise XOR metric to the provided key
      */
     public K selectKey(K key);
     
@@ -85,8 +87,9 @@ public interface Trie<K, V> extends SortedMap<K, V> {
      * return 'L', because the XOR distance between D &amp; L is smaller 
      * than the XOR distance between D &amp; H. 
      * 
-     * @return The value whose key is closest in a bitwise XOR metric
-     * to the provided key.
+     * @param key  the key to use in the search
+     * @return the value whose key is closest in a bitwise XOR metric
+     * to the provided key
      */
     public V selectValue(K key);
     
@@ -96,90 +99,119 @@ public interface Trie<K, V> extends SortedMap<K, V> {
      * entry is found, the {@link Trie} will call select on that entry and continue
      * calling select for each entry (traversing in order of XOR closeness,
      * NOT lexicographically) until the cursor returns {@link Decision#EXIT}.
-     * 
-     * <p>The cursor can return {@link Decision#CONTINUE} to continue traversing.
-     * 
-     * <p>{@link Decision#REMOVE_AND_EXIT} is used to remove the current element
+     * <p>
+     * The cursor can return {@link Decision#CONTINUE} to continue traversing.
+     * <p>
+     * {@link Decision#REMOVE_AND_EXIT} is used to remove the current element
      * and stop traversing.
+     * <p>
+     * Note: The {@link Decision#REMOVE} operation is not supported.
      * 
-     * <p>Note: The {@link Decision#REMOVE} operation is not supported.
-     * 
-     * @return The entry the cursor returned {@link Decision#EXIT} on, or null 
-     * if it continued till the end.
+     * @param key  the key to use in the search
+     * @param cursor  the cursor used throughout the search
+     * @return the entry the cursor returned {@link Decision#EXIT} on, or null 
+     * if it continued till the end
      */
     public Map.Entry<K,V> select(K key, Cursor<? super K, ? super V> cursor);
     
     /**
      * Traverses the {@link Trie} in lexicographical order. 
      * {@link Cursor#select(java.util.Map.Entry)} will be called on each entry.
-     * 
-     * <p>The traversal will stop when the cursor returns {@link Decision#EXIT}, 
+     * <p>
+     * The traversal will stop when the cursor returns {@link Decision#EXIT}, 
      * {@link Decision#CONTINUE} is used to continue traversing and 
      * {@link Decision#REMOVE} is used to remove the element that was selected 
      * and continue traversing.
-     * 
-     * <p>{@link Decision#REMOVE_AND_EXIT} is used to remove the current element
+     * <p>
+     * {@link Decision#REMOVE_AND_EXIT} is used to remove the current element
      * and stop traversing.
      *   
-     * @return The entry the cursor returned {@link Decision#EXIT} on, or null 
-     * if it continued till the end.
+     * @param cursor  the cursor used while traversing the {@link Trie}
+     * @return the entry the cursor returned {@link Decision#EXIT} on, or null 
+     * if it continued till the end
      */
     public Map.Entry<K,V> traverse(Cursor<? super K, ? super V> cursor);
     
     /**
-     * Returns a view of this {@link SortedTrie} of all elements that are prefixed 
+     * Returns a view of this {@link Trie} of all elements that are prefixed 
      * by the given key.
-     * 
-     * <p>In a {@link SortedTrie} with fixed size keys, this is essentially a 
+     * <p>
+     * In a {@link Trie} with fixed size keys, this is essentially a 
      * {@link #get(Object)} operation.
-     * 
-     * <p>For example, if the {@link SortedTrie} contains 'Anna', 'Anael', 
+     * <p>
+     * For example, if the {@link Trie} contains 'Anna', 'Anael', 
      * 'Analu', 'Andreas', 'Andrea', 'Andres', and 'Anatole', then
      * a lookup of 'And' would return 'Andreas', 'Andrea', and 'Andres'.
+     * 
+     * @param key  the key used in the search
+     * @return a {@link SortedMap} view of this {@link Trie} with all elements whose
+     *   key is prefixed by the search key
      */
     public SortedMap<K, V> getPrefixedBy(K key);
     
     /**
-     * Returns a view of this {@link SortedTrie} of all elements that are prefixed 
+     * Returns a view of this {@link Trie} of all elements that are prefixed 
      * by the length of the key.
-     * 
-     * <p>{@link SortedTrie}s with fixed size keys will not support this operation 
+     * <p>
+     * {@link Trie}s with fixed size keys will not support this operation 
      * (because all keys are the same length).
-     * 
-     * <p>For example, if the {@link SortedTrie} contains 'Anna', 'Anael', 'Analu', 
+     * <p>
+     * For example, if the {@link Trie} contains 'Anna', 'Anael', 'Analu', 
      * 'Andreas', 'Andrea', 'Andres', and 'Anatole', then a lookup for 'Andrey' 
      * and a length of 4 would return 'Andreas', 'Andrea', and 'Andres'.
+     * 
+     * @param key  the key used in the search
+     * @param length  the length of the prefix
+     * @return a {@link SortedMap} view of this {@link Trie} with all elements whose
+     *   key is prefixed by the search key
      */
     public SortedMap<K, V> getPrefixedBy(K key, int length);
     
     /**
-     * Returns a view of this {@link SortedTrie} of all elements that are prefixed
+     * Returns a view of this {@link Trie} of all elements that are prefixed
      * by the key, starting at the given offset and for the given length.
-     * 
-     * <p>{@link SortedTrie}s with fixed size keys will not support this operation 
+     * <p>
+     * {@link Trie}s with fixed size keys will not support this operation 
      * (because all keys are the same length).
-     * 
-     * <p>For example, if the {@link SortedTrie} contains 'Anna', 'Anael', 'Analu', 
+     * <p>
+     * For example, if the {@link Trie} contains 'Anna', 'Anael', 'Analu', 
      * 'Andreas', 'Andrea', 'Andres', and 'Anatole', then a lookup for 
      * 'Hello Andrey Smith', an offset of 6 and a length of 4 would return 
      * 'Andreas', 'Andrea', and 'Andres'.
+     * 
+     * @param key  the key used in the search
+     * @param offset  the prefix start
+     * @param length  the length of the prefix
+     * @return a {@link SortedMap} view of this {@link Trie} with all elements whose
+     *   key is prefixed by the search key
      */
     public SortedMap<K, V> getPrefixedBy(K key, int offset, int length);
     
     /**
-     * Returns a view of this {@link SortedTrie} of all elements that are prefixed
+     * Returns a view of this {@link Trie} of all elements that are prefixed
      * by the number of bits in the given Key.
-     * 
-     * <p>In {@link SortedTrie}s with fixed size keys like IP addresses this method
+     * <p>
+     * In {@link Trie}s with fixed size keys like IP addresses this method
      * can be used to lookup partial keys. That is you can lookup all addresses
      * that begin with '192.168' by providing the key '192.168.X.X' and a 
      * length of 16.
+     * 
+     * @param key  the key to use in the search
+     * @param lengthInBits  the number of significant key bits
+     * @return a {@link SortedMap} view of this {@link Trie} with all elements whose
+     *   key is prefixed by the search key
      */
     public SortedMap<K, V> getPrefixedByBits(K key, int lengthInBits);
     
     /**
-     * Returns a view of this {@link SortedTrie} of all elements that are prefixed
+     * Returns a view of this {@link Trie} of all elements that are prefixed
      * by the number of bits in the given Key.
+     * 
+     * @param key  the key to use in the search
+     * @param offsetInBits  the prefix offset
+     * @param lengthInBits  the number of significant prefix bits
+     * @return a {@link SortedMap} view of this {@link Trie} with all elements whose
+     *   key is prefixed by the search key
      */
     public SortedMap<K, V> getPrefixedByBits(K key, int offsetInBits, int lengthInBits);
     
@@ -230,8 +262,11 @@ public interface Trie<K, V> extends SortedMap<K, V> {
          * {@link Decision#REMOVE} to remove the {@link Entry} and
          * continue iterating or {@link Decision#REMOVE_AND_EXIT} to
          * remove the {@link Entry} and stop iterating.
-         * 
+         * <p>
          * Note: Not all operations support {@link Decision#REMOVE}.
+         * 
+         * @param entry  the current entry
+         * @return the {@link Decision} based on the current entry
          */
         public Decision select(Map.Entry<? extends K, ? extends V> entry);
     }
