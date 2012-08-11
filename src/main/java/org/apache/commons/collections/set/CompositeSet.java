@@ -102,9 +102,6 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
         super.addComposited(c);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @SuppressWarnings("unchecked")
     @Override
     public List<? extends Set<E>> getCollections() {
@@ -197,9 +194,6 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
         return code;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected SetMutator<E> getMutator() {
         return (SetMutator<E>) super.getMutator();
