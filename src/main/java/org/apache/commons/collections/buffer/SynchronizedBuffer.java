@@ -84,18 +84,12 @@ public class SynchronizedBuffer<E>
 
     //-----------------------------------------------------------------------
     
-    /**
-     * {@inheritDoc}
-     */
     public E get() {
         synchronized (lock) {
             return decorated().get();
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public E remove() {
         synchronized (lock) {
             return decorated().remove();

@@ -86,16 +86,10 @@ public class PredicatedBuffer<E> extends PredicatedCollection<E> implements Buff
 
     //-----------------------------------------------------------------------
     
-    /**
-     * {@inheritDoc}
-     */
     public E get() {
         return decorated().get();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public E remove() {
         return decorated().remove();
     }

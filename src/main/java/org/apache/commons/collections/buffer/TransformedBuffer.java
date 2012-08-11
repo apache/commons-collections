@@ -112,16 +112,10 @@ public class TransformedBuffer<E> extends TransformedCollection<E> implements Bu
 
     //-----------------------------------------------------------------------
     
-    /**
-     * {@inheritDoc}
-     */
     public E get() {
         return getBuffer().get();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public E remove() {
         return getBuffer().remove();
     }

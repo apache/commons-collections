@@ -177,17 +177,11 @@ public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCo
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public boolean isFull() {
         // size() is synchronized
         return (size() == maxSize());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int maxSize() {
         return maximumSize;
     }
