@@ -64,23 +64,14 @@ public abstract class AbstractBidiMapDecorator<K, V>
         return decorated().mapIterator();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public K getKey(Object value) {
         return decorated().getKey(value);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public K removeValue(Object value) {
         return decorated().removeValue(value);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public BidiMap<V, K> inverseBidiMap() {
         return decorated().inverseBidiMap();
     }

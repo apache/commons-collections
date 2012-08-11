@@ -126,38 +126,23 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
 
     //-----------------------------------------------------------------------
     
-    /**
-     * {@inheritDoc}
-     */
     public Comparator<? super K> comparator() {
         return ((SortedMap<K, V>) normalMap).comparator();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public Comparator<? super V> valueComparator() {
         return ((SortedMap<V, K>) reverseMap).comparator();
         
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public K firstKey() {
         return ((SortedMap<K, V>) normalMap).firstKey();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public K lastKey() {
         return ((SortedMap<K, V>) normalMap).lastKey();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public K nextKey(K key) {
         if (isEmpty()) {
             return null;
@@ -174,9 +159,6 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public K previousKey(K key) {
         if (isEmpty()) {
             return null;
@@ -206,49 +188,31 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
         return new BidiOrderedMapIterator<K, V>(this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public SortedBidiMap<V, K> inverseSortedBidiMap() {
         return inverseBidiMap();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public OrderedBidiMap<V, K> inverseOrderedBidiMap() {
         return inverseBidiMap();
     }
 
     //-----------------------------------------------------------------------
     
-    /**
-     * {@inheritDoc}
-     */
     public SortedMap<K, V> headMap(K toKey) {
         SortedMap<K, V> sub = ((SortedMap<K, V>) normalMap).headMap(toKey);
         return new ViewMap<K, V>(this, sub);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public SortedMap<K, V> tailMap(K fromKey) {
         SortedMap<K, V> sub = ((SortedMap<K, V>) normalMap).tailMap(fromKey);
         return new ViewMap<K, V>(this, sub);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public SortedMap<K, V> subMap(K fromKey, K toKey) {
         SortedMap<K, V> sub = ((SortedMap<K, V>) normalMap).subMap(fromKey, toKey);
         return new ViewMap<K, V>(this, sub);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public SortedBidiMap<V, K> inverseBidiMap() {
         return (SortedBidiMap<V, K>) super.inverseBidiMap();
@@ -346,36 +310,30 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
             iterator = new ArrayList<Map.Entry<K, V>>(parent.entrySet()).listIterator();
         }
 
-        /** {@inheritDoc} */
         public boolean hasNext() {
             return iterator.hasNext();
         }
 
-        /** {@inheritDoc} */
         public K next() {
             last = iterator.next();
             return last.getKey();
         }
 
-        /** {@inheritDoc} */
         public boolean hasPrevious() {
             return iterator.hasPrevious();
         }
 
-        /** {@inheritDoc} */
         public K previous() {
             last = iterator.previous();
             return last.getKey();
         }
 
-        /** {@inheritDoc} */
         public void remove() {
             iterator.remove();
             parent.remove(last.getKey());
             last = null;
         }
 
-        /** {@inheritDoc} */
         public K getKey() {
             if (last == null) {
                 throw new IllegalStateException(
@@ -384,7 +342,6 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
             return last.getKey();
         }
 
-        /** {@inheritDoc} */
         public V getValue() {
             if (last == null) {
                 throw new IllegalStateException(
@@ -393,7 +350,6 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
             return last.getValue();
         }
 
-        /** {@inheritDoc} */
         public V setValue(V value) {
             if (last == null) {
                 throw new IllegalStateException(
@@ -407,7 +363,6 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
             return parent.put(last.getKey(), value);
         }
 
-        /** {@inheritDoc} */
         public void reset() {
             iterator = new ArrayList<Map.Entry<K, V>>(parent.entrySet()).listIterator();
             last = null;

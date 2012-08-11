@@ -65,37 +65,22 @@ public abstract class AbstractSortedBidiMapDecorator<K, V>
         return decorated().inverseBidiMap();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public Comparator<? super K> comparator() {
         return decorated().comparator();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public Comparator<? super V> valueComparator() {
         return decorated().valueComparator();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public SortedMap<K, V> subMap(K fromKey, K toKey) {
         return decorated().subMap(fromKey, toKey);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public SortedMap<K, V> headMap(K toKey) {
         return decorated().headMap(toKey);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public SortedMap<K, V> tailMap(K fromKey) {
         return decorated().tailMap(fromKey);
     }

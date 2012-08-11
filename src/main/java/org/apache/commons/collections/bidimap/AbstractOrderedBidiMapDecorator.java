@@ -64,30 +64,18 @@ public abstract class AbstractOrderedBidiMapDecorator<K, V>
         return decorated().mapIterator();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public K firstKey() {
         return decorated().firstKey();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public K lastKey() {
         return decorated().lastKey();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public K nextKey(K key) {
         return decorated().nextKey(key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public K previousKey(K key) {
         return decorated().previousKey(key);
     }

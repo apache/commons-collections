@@ -88,9 +88,6 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
             this.description = description;
         }
 
-        /**
-         * {@inheritDoc}
-         */
         @Override
         public String toString() {
             return description;
@@ -417,9 +414,6 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
     }
 
     //-----------------------------------------------------------------------
-    /**
-     * {@inheritDoc}
-     */
     public OrderedMapIterator<K, V> mapIterator() {
         if (isEmpty()) {
             return EmptyOrderedMapIterator.<K, V>emptyOrderedMapIterator();
