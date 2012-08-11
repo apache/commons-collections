@@ -88,31 +88,19 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
     
     //-----------------------------------------------------------------------
     
-    /**
-     * {@inheritDoc}
-     */
     public boolean add(E object, int count) {
         validate(object);
         return decorated().add(object, count);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public boolean remove(Object object, int count) {
         return decorated().remove(object, count);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public Set<E> uniqueSet() {
         return decorated().uniqueSet();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int getCount(Object object) {
         return decorated().getCount(object);
     }

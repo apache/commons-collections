@@ -86,23 +86,14 @@ public class PredicatedSortedBag<E> extends PredicatedBag<E> implements SortedBa
     
     //-----------------------------------------------------------------------
     
-    /**
-     * {@inheritDoc}
-     */
     public E first() {
         return decorated().first();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public E last() {
         return decorated().last();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public Comparator<? super E> comparator() {
         return decorated().comparator();
     }

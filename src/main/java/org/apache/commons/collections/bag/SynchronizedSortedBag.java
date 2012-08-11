@@ -83,27 +83,18 @@ public class SynchronizedSortedBag<E> extends SynchronizedBag<E> implements Sort
     
     //-----------------------------------------------------------------------
     
-    /**
-     * {@inheritDoc}
-     */
     public synchronized E first() {
         synchronized (lock) {
             return getSortedBag().first();
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized E last() {
         synchronized (lock) {
             return getSortedBag().last();
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized Comparator<? super E> comparator() {
         synchronized (lock) {
             return getSortedBag().comparator();

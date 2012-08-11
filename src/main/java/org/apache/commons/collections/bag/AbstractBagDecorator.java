@@ -65,30 +65,18 @@ public abstract class AbstractBagDecorator<E>
 
     //-----------------------------------------------------------------------
     
-    /**
-     * {@inheritDoc}
-     */
     public int getCount(Object object) {
         return decorated().getCount(object);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public boolean add(E object, int count) {
         return decorated().add(object, count);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public boolean remove(Object object, int count) {
         return decorated().remove(object, count);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public Set<E> uniqueSet() {
         return decorated().uniqueSet();
     }

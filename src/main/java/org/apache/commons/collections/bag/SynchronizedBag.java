@@ -84,27 +84,18 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
     
     //-----------------------------------------------------------------------
     
-    /**
-     * {@inheritDoc}
-     */
     public boolean add(E object, int count) {
         synchronized (lock) {
             return getBag().add(object, count);
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public boolean remove(Object object, int count) {
         synchronized (lock) {
             return getBag().remove(object, count);
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public Set<E> uniqueSet() {
         synchronized (lock) {
             Set<E> set = getBag().uniqueSet();
@@ -112,9 +103,6 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int getCount(Object object) {
         synchronized (lock) {
             return getBag().getCount(object);

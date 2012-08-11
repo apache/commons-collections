@@ -111,32 +111,20 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
 
     //-----------------------------------------------------------------------
     
-    /**
-     * {@inheritDoc}
-     */
     public int getCount(Object object) {
         return getBag().getCount(object);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public boolean remove(Object object, int nCopies) {
         return getBag().remove(object, nCopies);
     }
 
     //-----------------------------------------------------------------------
     
-    /**
-     * {@inheritDoc}
-     */
     public boolean add(E object, int nCopies) {
         return getBag().add(transform(object), nCopies);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public Set<E> uniqueSet() {
         Set<E> set = getBag().uniqueSet();
         return TransformedSet.<E>transformingSet(set, transformer);

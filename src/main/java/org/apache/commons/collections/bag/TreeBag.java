@@ -94,30 +94,18 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
 
     //-----------------------------------------------------------------------
     
-    /**
-     * {@inheritDoc}
-     */
     public E first() {
         return getMap().firstKey();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public E last() {
         return getMap().lastKey();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public Comparator<? super E> comparator() {
         return getMap().comparator();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected SortedMap<E, AbstractMapBag.MutableInteger> getMap() {
         return (SortedMap<E, AbstractMapBag.MutableInteger>) super.getMap();
