@@ -101,42 +101,36 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
 
     //-----------------------------------------------------------------------
     
-    /** {@inheritDoc} */
     public boolean add(E object) {
         synchronized (lock) {
             return decorated().add(object);
         }
     }
 
-    /** {@inheritDoc} */
     public boolean addAll(Collection<? extends E> coll) {
         synchronized (lock) {
             return decorated().addAll(coll);
         }
     }
 
-    /** {@inheritDoc} */
     public void clear() {
         synchronized (lock) {
             decorated().clear();
         }
     }
 
-    /** {@inheritDoc} */
     public boolean contains(Object object) {
         synchronized (lock) {
             return decorated().contains(object);
         }
     }
 
-    /** {@inheritDoc} */
     public boolean containsAll(Collection<?> coll) {
         synchronized (lock) {
             return decorated().containsAll(coll);
         }
     }
 
-    /** {@inheritDoc} */
     public boolean isEmpty() {
         synchronized (lock) {
             return decorated().isEmpty();
@@ -157,42 +151,36 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
         return decorated().iterator();
     }
 
-    /** {@inheritDoc} */
     public Object[] toArray() {
         synchronized (lock) {
             return decorated().toArray();
         }
     }
 
-    /** {@inheritDoc} */
     public <T> T[] toArray(T[] object) {
         synchronized (lock) {
             return decorated().toArray(object);
         }
     }
 
-    /** {@inheritDoc} */
     public boolean remove(Object object) {
         synchronized (lock) {
             return decorated().remove(object);
         }
     }
 
-    /** {@inheritDoc} */
     public boolean removeAll(Collection<?> coll) {
         synchronized (lock) {
             return decorated().removeAll(coll);
         }
     }
 
-    /** {@inheritDoc} */
     public boolean retainAll(Collection<?> coll) {
         synchronized (lock) {
             return decorated().retainAll(coll);
         }
     }
 
-    /** {@inheritDoc} */
     public int size() {
         synchronized (lock) {
             return decorated().size();

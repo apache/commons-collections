@@ -139,23 +139,14 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
     }
 
     //-----------------------------------------------------------------------
-    /**
-     * {@inheritDoc}
-     */
     public boolean isFull() {
         return decorated().isFull();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int maxSize() {
         return decorated().maxSize();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected BoundedCollection<E> decorated() {
         return (BoundedCollection<E>) super.decorated();
