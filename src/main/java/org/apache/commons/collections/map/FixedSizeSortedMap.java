@@ -65,6 +65,7 @@ public class FixedSizeSortedMap<K, V>
      * Factory method to create a fixed size sorted map.
      * 
      * @param map  the map to decorate, must not be null
+     * @return a new fixed size sorted map
      * @throws IllegalArgumentException if map is null
      */
     public static <K, V> FixedSizeSortedMap<K, V> fixedSizeSortedMap(SortedMap<K, V> map) {

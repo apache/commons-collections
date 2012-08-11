@@ -63,6 +63,7 @@ public class FixedSizeMap<K, V>
      * Factory method to create a fixed size map.
      * 
      * @param map  the map to decorate, must not be null
+     * @return a new fixed size map
      * @throws IllegalArgumentException if map is null
      */
     public static <K, V> FixedSizeMap<K, V> fixedSizeMap(Map<K, V> map) {

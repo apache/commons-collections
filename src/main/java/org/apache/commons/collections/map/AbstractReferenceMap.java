@@ -92,7 +92,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
 
         /**
          * Resolve enum from int.
-         * @param value
+         * @param value  the int value
          * @return ReferenceType
          * @throws IllegalArgumentException if the specified value is invalid.
          */
@@ -695,11 +695,13 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
          * Constructs a reference of the given type to the given referent.
          * The reference is registered with the queue for later purging.
          *
+         * @param <T> the type of the referenced object
          * @param type  HARD, SOFT or WEAK
          * @param referent  the object to refer to
          * @param hash  the hash code of the <i>key</i> of the mapping;
          *    this number might be different from referent.hashCode() if
          *    the referent represents a value and not a key
+         * @return the reference to the object
          */
         protected <T> Object toReference(ReferenceStrength type, T referent, int hash) {
             if (type == ReferenceStrength.HARD) {
@@ -845,7 +847,8 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     /**
      * The EntrySet iterator.
      */
-    static class ReferenceEntrySetIterator<K, V> extends ReferenceBaseIterator<K, V> implements Iterator<Map.Entry<K, V>> {
+    static class ReferenceEntrySetIterator<K, V>
+            extends ReferenceBaseIterator<K, V> implements Iterator<Map.Entry<K, V>> {
 
         public ReferenceEntrySetIterator(AbstractReferenceMap<K, V> parent) {
             super(parent);
@@ -1001,7 +1004,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     }
 
     /**
-     * Replaces the superclassm method to read the state of this class.
+     * Replaces the superclass method to read the state of this class.
      * <p>
      * Serialization is not one of the JDK's nicest topics. Normal serialization will
      * initialise the superclass before the subclass. Sometimes however, this isn't
