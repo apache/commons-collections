@@ -100,17 +100,14 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
     //-----------------------------------------------------------------------
     
-    /** {@inheritDoc} */
     public int size() {
         return size;
     }
 
-    /** {@inheritDoc} */
     public boolean isEmpty() {
         return (size() == 0);
     }
 
-    /** {@inheritDoc} */
     public E get(int index) {
         Node<E> node = getNode(index, false);
         return node.getValue();
@@ -118,24 +115,20 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
     //-----------------------------------------------------------------------
     
-    /** {@inheritDoc} */
     public Iterator<E> iterator() {
         return listIterator();
     }
 
-    /** {@inheritDoc} */
     public ListIterator<E> listIterator() {
         return new LinkedListIterator<E>(this, 0);
     }
 
-    /** {@inheritDoc} */
     public ListIterator<E> listIterator(int fromIndex) {
         return new LinkedListIterator<E>(this, fromIndex);
     }
 
     //-----------------------------------------------------------------------
     
-    /** {@inheritDoc} */
     public int indexOf(Object value) {
         int i = 0;
         for (Node<E> node = header.next; node != header; node = node.next) {
@@ -147,7 +140,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return -1;
     }
 
-    /** {@inheritDoc} */
     public int lastIndexOf(Object value) {
         int i = size - 1;
         for (Node<E> node = header.previous; node != header; node = node.previous) {
@@ -159,12 +151,10 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return -1;
     }
 
-    /** {@inheritDoc} */
     public boolean contains(Object value) {
         return indexOf(value) != -1;
     }
 
-    /** {@inheritDoc} */
     public boolean containsAll(Collection<?> coll) {
         for (Object o : coll) {
             if (!contains(o)) {
@@ -176,12 +166,10 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
     //-----------------------------------------------------------------------
     
-    /** {@inheritDoc} */
     public Object[] toArray() {
         return toArray(new Object[size]);
     }
 
-    /** {@inheritDoc} */
     @SuppressWarnings("unchecked")
     public <T> T[] toArray(T[] array) {
         // Extend the array if needed
@@ -214,24 +202,20 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
     //-----------------------------------------------------------------------
     
-    /** {@inheritDoc} */
     public boolean add(E value) {
         addLast(value);
         return true;
     }
 
-    /** {@inheritDoc} */
     public void add(int index, E value) {
         Node<E> node = getNode(index, true);
         addNodeBefore(node, value);
     }
 
-    /** {@inheritDoc} */
     public boolean addAll(Collection<? extends E> coll) {
         return addAll(size, coll);
     }
 
-    /** {@inheritDoc} */
     public boolean addAll(int index, Collection<? extends E> coll) {
         Node<E> node = getNode(index, true);
         for (E e : coll) {
@@ -242,7 +226,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
     //-----------------------------------------------------------------------
     
-    /** {@inheritDoc} */
     public E remove(int index) {
         Node<E> node = getNode(index, false);
         E oldValue = node.getValue();
@@ -250,7 +233,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return oldValue;
     }
 
-    /** {@inheritDoc} */
     public boolean remove(Object value) {
         for (Node<E> node = header.next; node != header; node = node.next) {
             if (isEqualValue(node.getValue(), value)) {
@@ -261,7 +243,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return false;
     }
 
-    /** {@inheritDoc} */
     public boolean removeAll(Collection<?> coll) {
         boolean modified = false;
         Iterator<E> it = iterator();
@@ -276,7 +257,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
     //-----------------------------------------------------------------------
     
-    /** {@inheritDoc} */
     public boolean retainAll(Collection<?> coll) {
         boolean modified = false;
         Iterator<E> it = iterator();
@@ -289,7 +269,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return modified;
     }
 
-    /** {@inheritDoc} */
     public E set(int index, E value) {
         Node<E> node = getNode(index, false);
         E oldValue = node.getValue();
@@ -297,7 +276,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return oldValue;
     }
 
-    /** {@inheritDoc} */
     public void clear() {
         removeAllNodes();
     }

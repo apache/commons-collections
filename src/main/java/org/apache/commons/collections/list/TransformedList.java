@@ -115,57 +115,47 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
 
     //-----------------------------------------------------------------------
     
-    /** {@inheritDoc} */
     public E get(int index) {
         return getList().get(index);
     }
 
-    /** {@inheritDoc} */
     public int indexOf(Object object) {
         return getList().indexOf(object);
     }
 
-    /** {@inheritDoc} */
     public int lastIndexOf(Object object) {
         return getList().lastIndexOf(object);
     }
 
-    /** {@inheritDoc} */
     public E remove(int index) {
         return getList().remove(index);
     }
 
     //-----------------------------------------------------------------------
     
-    /** {@inheritDoc} */
     public void add(int index, E object) {
         object = transform(object);
         getList().add(index, object);
     }
 
-    /** {@inheritDoc} */
     public boolean addAll(int index, Collection<? extends E> coll) {
         coll = transform(coll);
         return getList().addAll(index, coll);
     }
 
-    /** {@inheritDoc} */
     public ListIterator<E> listIterator() {
         return listIterator(0);
     }
 
-    /** {@inheritDoc} */
     public ListIterator<E> listIterator(int i) {
         return new TransformedListIterator(getList().listIterator(i));
     }
 
-    /** {@inheritDoc} */
     public E set(int index, E object) {
         object = transform(object);
         return getList().set(index, object);
     }
 
-    /** {@inheritDoc} */
     public List<E> subList(int fromIndex, int toIndex) {
         List<E> sub = getList().subList(fromIndex, toIndex);
         return new TransformedList<E>(sub, transformer);
