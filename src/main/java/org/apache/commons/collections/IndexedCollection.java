@@ -42,9 +42,8 @@ import org.apache.commons.collections.collection.AbstractCollectionDecorator;
 // TODO support MultiMap/non-unique index behavior
 // TODO add support for remove and clear
 public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
-    /**
-     * .
-     */
+
+    /** Serialization version */
     private static final long serialVersionUID = -5512610452568370038L;
 
     /**
