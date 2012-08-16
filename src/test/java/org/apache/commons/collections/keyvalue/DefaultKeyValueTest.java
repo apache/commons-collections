@@ -24,12 +24,10 @@ import junit.framework.TestCase;
 /**
  * Test the DefaultKeyValue class.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Neil O'Toole
+ * @since 3.0
+ * @version $Id$
  */
-public class TestDefaultKeyValue<K, V> extends TestCase {
+public class DefaultKeyValueTest<K, V> extends TestCase {
     
     private final String key = "name";
     private final String value = "duke";
@@ -39,7 +37,7 @@ public class TestDefaultKeyValue<K, V> extends TestCase {
      * 
      * @param testName  the test name
      */
-    public TestDefaultKeyValue(String testName) {
+    public DefaultKeyValueTest(String testName) {
         super(testName);
 
     }

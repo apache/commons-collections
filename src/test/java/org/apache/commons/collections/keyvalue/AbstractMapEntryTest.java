@@ -28,12 +28,10 @@ import junit.framework.TestCase;
  * {@link #testConstructors()} to test the constructors of the Map.Entry
  * type being tested.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Neil O'Toole
+ * @since 3.0
+ * @version $Id$
  */
-public abstract class AbstractTestMapEntry<K, V> extends TestCase {
+public abstract class AbstractMapEntryTest<K, V> extends TestCase {
     
     protected final String key = "name";
     protected final String value = "duke";
@@ -43,7 +41,7 @@ public abstract class AbstractTestMapEntry<K, V> extends TestCase {
      * 
      * @param testName  the test name
      */
-    public AbstractTestMapEntry(String testName) {
+    public AbstractMapEntryTest(String testName) {
         super(testName);
     }
 

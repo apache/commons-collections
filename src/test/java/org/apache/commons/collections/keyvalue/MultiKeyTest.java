@@ -32,11 +32,9 @@ import junit.framework.TestCase;
 /**
  * Unit tests for {@link org.apache.commons.collections.keyvalue.MultiKey}.
  *
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public class TestMultiKey extends TestCase {
+public class MultiKeyTest extends TestCase {
 
     Integer ONE = new Integer(1);
     Integer TWO = new Integer(2);
@@ -44,7 +42,7 @@ public class TestMultiKey extends TestCase {
     Integer FOUR = new Integer(4);
     Integer FIVE = new Integer(5);
 
-    public TestMultiKey(String name) {
+    public MultiKeyTest(String name) {
         super(name);
     }
 

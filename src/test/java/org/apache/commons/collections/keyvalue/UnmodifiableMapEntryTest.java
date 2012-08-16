@@ -19,18 +19,17 @@ package org.apache.commons.collections.keyvalue;
 import java.util.Map;
 
 import org.apache.commons.collections.KeyValue;
+import org.apache.commons.collections.Unmodifiable;
 
 /**
- * Test the DefaultMapEntry class.
+ * Test the UnmodifiableMapEntry class.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Neil O'Toole
+ * @since 3.0
+ * @version $Id$
  */
-public class TestDefaultMapEntry<K, V> extends AbstractTestMapEntry<K, V> {
+public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 
-    public TestDefaultMapEntry(String testName) {
+    public UnmodifiableMapEntryTest(String testName) {
         super(testName);
     }
 
@@ -42,7 +41,7 @@ public class TestDefaultMapEntry<K, V> extends AbstractTestMapEntry<K, V> {
      */
     @Override
     public Map.Entry<K, V> makeMapEntry() {
-        return new DefaultMapEntry<K, V>(null, null);
+        return new UnmodifiableMapEntry<K, V>(null, null);
     }
 
     /**
@@ -52,7 +51,7 @@ public class TestDefaultMapEntry<K, V> extends AbstractTestMapEntry<K, V> {
      */
     @Override
     public Map.Entry<K, V> makeMapEntry(K key, V value) {
-        return new DefaultMapEntry<K, V>(key, value);
+        return new UnmodifiableMapEntry<K, V>(key, value);
     }
 
     //-----------------------------------------------------------------------
@@ -64,37 +63,49 @@ public class TestDefaultMapEntry<K, V> extends AbstractTestMapEntry<K, V> {
     @SuppressWarnings("unchecked")
     public void testConstructors() {
         // 1. test key-value constructor
-        Map.Entry<K, V> entry = new DefaultMapEntry<K, V>((K) key, (V) value);
+        Map.Entry<K, V> entry = new UnmodifiableMapEntry<K, V>((K) key, (V) value);
         assertSame(key, entry.getKey());
         assertSame(value, entry.getValue());
 
         // 2. test pair constructor
         KeyValue<K, V> pair = new DefaultKeyValue<K, V>((K) key, (V) value);
-        assertSame(key, pair.getKey());
-        assertSame(value, pair.getValue());
+        entry = new UnmodifiableMapEntry<K, V>(pair);
+        assertSame(key, entry.getKey());
+        assertSame(value, entry.getValue());
 
         // 3. test copy constructor
-        Map.Entry<K, V> entry2 = new DefaultMapEntry<K, V>(entry);
+        Map.Entry<K, V> entry2 = new UnmodifiableMapEntry<K, V>(entry);
         assertSame(key, entry2.getKey());
         assertSame(value, entry2.getValue());
 
-        // test that the objects are independent
-        entry.setValue(null);
-        assertSame(value, entry2.getValue());
+        assertTrue(entry instanceof Unmodifiable);
     }
 
     @Override
     @SuppressWarnings("unchecked")
+    public void testAccessorsAndMutators() {
+        Map.Entry<K, V> entry = makeMapEntry((K) key, (V) value);
+
+        assertSame(key, entry.getKey());
+        assertSame(value, entry.getValue());
+
+        // check that null doesn't do anything funny
+        entry = makeMapEntry(null, null);
+        assertSame(null, entry.getKey());
+        assertSame(null, entry.getValue());
+    }
+
+    @Override
     public void testSelfReferenceHandling() {
+        // block
+    }
+
+    public void testUnmodifiable() {
         Map.Entry<K, V> entry = makeMapEntry();
-
         try {
-            entry.setValue((V) entry);
-            assertSame(entry, entry.getValue());
-
-        } catch (Exception e) {
-            fail("This Map.Entry implementation supports value self-reference.");
-        }
+            entry.setValue(null);
+            fail();
+        } catch (UnsupportedOperationException ex) {}
     }
 
 }

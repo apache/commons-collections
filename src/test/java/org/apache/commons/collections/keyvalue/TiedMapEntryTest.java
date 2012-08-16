@@ -22,14 +22,12 @@ import java.util.Map;
 /**
  * Test the TiedMapEntry class.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @since 3.0
+ * @version $Id$
  */
-public class TestTiedMapEntry<K, V> extends AbstractTestMapEntry<K, V> {
+public class TiedMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 
-    public TestTiedMapEntry(String testName) {
+    public TiedMapEntryTest(String testName) {
         super(testName);
     }
 
