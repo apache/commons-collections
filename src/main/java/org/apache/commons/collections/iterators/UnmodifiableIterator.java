@@ -40,6 +40,7 @@ public final class UnmodifiableIterator<E> implements Iterator<E>, Unmodifiable 
      * If the iterator is already unmodifiable it is returned directly.
      *
      * @param iterator  the iterator to decorate
+     * @return a new unmodifiable iterator
      * @throws IllegalArgumentException if the iterator is null
      */
     public static <E> Iterator<E> unmodifiableIterator(Iterator<E> iterator) {

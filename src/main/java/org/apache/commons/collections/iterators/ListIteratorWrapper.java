@@ -89,7 +89,8 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
      * unless the underlying <code>Iterator</code> is a <code>ListIterator</code>.
      *
      * @param obj  the object to add
-     * @throws UnsupportedOperationException
+     * @throws UnsupportedOperationException if the underlying iterator is not of
+     * type {@link ListIterator}
      */
     public void add(E obj) throws UnsupportedOperationException {
         if (iterator instanceof ListIterator) {
@@ -225,7 +226,8 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
      * unless the underlying <code>Iterator</code> is a <code>ListIterator</code>.
      *
      * @param obj  the object to set
-     * @throws UnsupportedOperationException
+     * @throws UnsupportedOperationException if the underlying iterator is not of
+     * type {@link ListIterator}
      */
     public void set(E obj) throws UnsupportedOperationException {
         if (iterator instanceof ListIterator) {

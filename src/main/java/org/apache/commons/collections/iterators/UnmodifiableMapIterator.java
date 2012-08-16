@@ -37,6 +37,7 @@ public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, U
      * Decorates the specified iterator such that it cannot be modified.
      *
      * @param iterator  the iterator to decorate
+     * @return a new unmodifiable map iterator
      * @throws IllegalArgumentException if the iterator is null
      */
     public static <K, V> MapIterator<K, V> unmodifiableMapIterator(MapIterator<K, V> iterator) {
