@@ -22,6 +22,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import junit.framework.Assert;
 import junit.framework.Test;
 
 import org.apache.commons.collections.functors.EqualPredicate;
@@ -30,12 +31,7 @@ import org.apache.commons.collections.list.PredicatedList;
 /**
  * Tests for ListUtils.
  *
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Neil O'Toole
- * @author Matthew Hawthorne
- * @author Dave Meikle
+ * @version $Id$
  */
 public class TestListUtils extends BulkTest {
 
@@ -297,4 +293,32 @@ public class TestListUtils extends BulkTest {
         assertEquals(ListUtils.indexOf(fullList, null), -1);
     }
     
+    public void testPartition() {
+        List<Integer> strings = new ArrayList<Integer>();
+        for (int i = 0; i <= 6; i++) {
+            strings.add(i);
+        }
+        
+        final List<List<Integer>> partition = ListUtils.partition(strings, 3);
+
+        assertNotNull(partition);
+        assertEquals(3, partition.size());
+        assertEquals(1, partition.get(2).size());
+        
+        try {
+            ListUtils.partition(null, 3);
+            Assert.fail("failed to check for null argument");
+        } catch (IllegalArgumentException e) {}
+        
+        try {
+            ListUtils.partition(strings, 0);
+            Assert.fail("failed to check for size argument");
+        } catch (IllegalArgumentException e) {}
+        
+        try {
+            ListUtils.partition(strings, -10);
+            Assert.fail("failed to check for size argument");
+        } catch (IllegalArgumentException e) {}
+        
+    }    
 }
