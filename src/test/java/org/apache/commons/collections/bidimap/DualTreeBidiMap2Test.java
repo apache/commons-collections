@@ -36,20 +36,16 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 /**
  * JUnit tests.
  *
- * @version $Revision$
- *
- * @author Matthew Hawthorne
- * @author Stephen Colebourne
- * @author Jonas Van Poucke
+ * @version $Id$
  */
 @SuppressWarnings("boxing")
-public class TestDualTreeBidiMap2<K extends Comparable<K>, V extends Comparable<V>> extends AbstractTestSortedBidiMap<K, V> {
+public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<V>> extends AbstractSortedBidiMapTest<K, V> {
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestDualTreeBidiMap2.class);
+        return BulkTest.makeSuite(DualTreeBidiMap2Test.class);
     }
 
-    public TestDualTreeBidiMap2(String testName) {
+    public DualTreeBidiMap2Test(String testName) {
         super(testName);
     }
 
@@ -156,7 +152,7 @@ public class TestDualTreeBidiMap2<K extends Comparable<K>, V extends Comparable<
      */
     @Override
     public String[] ignoredTests() {
-        return new String[] {"TestDualTreeBidiMap2.bulkTestInverseMap.bulkTestInverseMap"};
+        return new String[] {"DualTreeBidiMap2Test.bulkTestInverseMap.bulkTestInverseMap"};
     }
 
 //    public void testCreate() throws Exception {

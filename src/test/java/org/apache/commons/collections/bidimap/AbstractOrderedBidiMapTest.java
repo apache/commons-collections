@@ -31,18 +31,15 @@ import org.apache.commons.collections.iterators.AbstractTestMapIterator;
 /**
  * Abstract test class for {@link OrderedBidiMap} methods and contracts.
  *
- * @version $Revision$
- *
- * @author Matthew Hawthorne
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public abstract class AbstractTestOrderedBidiMap<K, V> extends AbstractTestBidiMap<K, V> {
+public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
 
-    public AbstractTestOrderedBidiMap(String testName) {
+    public AbstractOrderedBidiMapTest(String testName) {
         super(testName);
     }
 
-    public AbstractTestOrderedBidiMap() {
+    public AbstractOrderedBidiMapTest() {
         super();
     }
 
@@ -167,47 +164,47 @@ public abstract class AbstractTestOrderedBidiMap<K, V> extends AbstractTestBidiM
 
         @Override
         public V[] addSetValues() {
-            return AbstractTestOrderedBidiMap.this.getNewSampleValues();
+            return AbstractOrderedBidiMapTest.this.getNewSampleValues();
         }
 
         @Override
         public boolean supportsRemove() {
-            return AbstractTestOrderedBidiMap.this.isRemoveSupported();
+            return AbstractOrderedBidiMapTest.this.isRemoveSupported();
         }
 
         @Override
         public boolean supportsSetValue() {
-            return AbstractTestOrderedBidiMap.this.isSetValueSupported();
+            return AbstractOrderedBidiMapTest.this.isSetValueSupported();
         }
 
         @Override
         public MapIterator<K, V> makeEmptyIterator() {
             resetEmpty();
-            return AbstractTestOrderedBidiMap.this.getMap().mapIterator();
+            return AbstractOrderedBidiMapTest.this.getMap().mapIterator();
         }
 
         @Override
         public MapIterator<K, V> makeObject() {
             resetFull();
-            return AbstractTestOrderedBidiMap.this.getMap().mapIterator();
+            return AbstractOrderedBidiMapTest.this.getMap().mapIterator();
         }
 
         @Override
         public Map<K, V> getMap() {
             // assumes makeFullMapIterator() called first
-            return AbstractTestOrderedBidiMap.this.map;
+            return AbstractOrderedBidiMapTest.this.map;
         }
 
         @Override
         public Map<K, V> getConfirmedMap() {
             // assumes makeFullMapIterator() called first
-            return AbstractTestOrderedBidiMap.this.confirmed;
+            return AbstractOrderedBidiMapTest.this.confirmed;
         }
 
         @Override
         public void verify() {
             super.verify();
-            AbstractTestOrderedBidiMap.this.verify();
+            AbstractOrderedBidiMapTest.this.verify();
         }
     }
 

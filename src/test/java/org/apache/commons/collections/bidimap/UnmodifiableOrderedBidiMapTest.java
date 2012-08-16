@@ -16,61 +16,54 @@
  */
 package org.apache.commons.collections.bidimap;
 
-import java.util.SortedMap;
+import java.util.Map;
 import java.util.TreeMap;
 
 import junit.framework.Test;
+import org.apache.commons.collections.BidiMap;
 import org.apache.commons.collections.BulkTest;
-import org.apache.commons.collections.SortedBidiMap;
+import org.apache.commons.collections.OrderedBidiMap;
 
 /**
  * JUnit tests.
  *
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public class TestUnmodifiableSortedBidiMap<K extends Comparable<K>, V extends Comparable<V>> extends AbstractTestSortedBidiMap<K, V> {
+public class UnmodifiableOrderedBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractOrderedBidiMapTest<K, V> {
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestUnmodifiableSortedBidiMap.class);
+        return BulkTest.makeSuite(UnmodifiableOrderedBidiMapTest.class);
     }
 
-    public TestUnmodifiableSortedBidiMap(String testName) {
+    public UnmodifiableOrderedBidiMapTest(String testName) {
         super(testName);
     }
 
-    //-----------------------------------------------------------------------
     @Override
-    public SortedBidiMap<K, V> makeObject() {
-        return UnmodifiableSortedBidiMap.unmodifiableSortedBidiMap(new DualTreeBidiMap<K, V>());
+    public OrderedBidiMap<K, V> makeObject() {
+        return UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(new TreeBidiMap<K, V>());
     }
 
     @Override
-    public SortedBidiMap<K, V> makeFullMap() {
-        SortedBidiMap<K, V> bidi = new DualTreeBidiMap<K, V>();
+    public BidiMap<K, V> makeFullMap() {
+        OrderedBidiMap<K, V> bidi = new TreeBidiMap<K, V>();
         addSampleMappings(bidi);
-        return UnmodifiableSortedBidiMap.unmodifiableSortedBidiMap(bidi);
+        return UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(bidi);
     }
 
     @Override
-    public SortedMap<K, V> makeConfirmedMap() {
+    public Map<K, V> makeConfirmedMap() {
         return new TreeMap<K, V>();
     }
 
-    @Override
-    public boolean isSubMapViewsSerializable() {
-        // TreeMap sub map views have a bug in deserialization.
-        return false;
-    }
-
+    /**
+     * Override to prevent infinite recursion of tests.
+     */
     @Override
     public String[] ignoredTests() {
-        // Override to prevent infinite recursion of tests.
-        return new String[] {"TestUnmodifiableSortedBidiMap.bulkTestInverseMap.bulkTestInverseMap"};
+        return new String[] {"UnmodifiableOrderedBidiMapTest.bulkTestInverseMap.bulkTestInverseMap"};
     }
 
-    //-----------------------------------------------------------------------
     @Override
     public boolean isAllowNullKey() {
         return false;

@@ -22,18 +22,15 @@ import org.apache.commons.collections.BulkTest;
 /**
  * JUnit tests.
  *
- * @version $Revision$
- *
- * @author Matthew Hawthorne
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public class TestDualHashBidiMap<K, V> extends AbstractTestBidiMap<K, V> {
+public class DualHashBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestDualHashBidiMap.class);
+        return BulkTest.makeSuite(DualHashBidiMapTest.class);
     }
 
-    public TestDualHashBidiMap(String testName) {
+    public DualHashBidiMapTest(String testName) {
         super(testName);
     }
 
@@ -50,7 +47,7 @@ public class TestDualHashBidiMap<K, V> extends AbstractTestBidiMap<K, V> {
      */
     @Override
     public String[] ignoredTests() {
-        return new String[] { "TestDualHashBidiMap.bulkTestInverseMap.bulkTestInverseMap" };
+        return new String[] { "DualHashBidiMapTest.bulkTestInverseMap.bulkTestInverseMap" };
     }
     
 //    public void testCreate() throws Exception {

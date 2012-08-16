@@ -26,17 +26,15 @@ import org.apache.commons.collections.BulkTest;
 /**
  * JUnit tests.
  *
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public class TestUnmodifiableBidiMap<K, V> extends AbstractTestBidiMap<K, V> {
+public class UnmodifiableBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestUnmodifiableBidiMap.class);
+        return BulkTest.makeSuite(UnmodifiableBidiMapTest.class);
     }
 
-    public TestUnmodifiableBidiMap(String testName) {
+    public UnmodifiableBidiMapTest(String testName) {
         super(testName);
     }
 
@@ -62,7 +60,7 @@ public class TestUnmodifiableBidiMap<K, V> extends AbstractTestBidiMap<K, V> {
      */
     @Override
     public String[] ignoredTests() {
-        return new String[] {"TestUnmodifiableBidiMap.bulkTestInverseMap.bulkTestInverseMap"};
+        return new String[] {"UnmodifiableBidiMapTest.bulkTestInverseMap.bulkTestInverseMap"};
     }
 
     @Override

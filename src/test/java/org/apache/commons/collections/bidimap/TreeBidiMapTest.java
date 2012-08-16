@@ -16,45 +16,34 @@
  */
 package org.apache.commons.collections.bidimap;
 
-import java.util.Map;
 import java.util.TreeMap;
 
 import junit.framework.Test;
 import org.apache.commons.collections.BidiMap;
 import org.apache.commons.collections.BulkTest;
-import org.apache.commons.collections.OrderedBidiMap;
 
 /**
  * JUnit tests.
  *
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public class TestUnmodifiableOrderedBidiMap<K extends Comparable<K>, V extends Comparable<V>> extends AbstractTestOrderedBidiMap<K, V> {
+public class TreeBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractOrderedBidiMapTest<K, V> {
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestUnmodifiableOrderedBidiMap.class);
+        return BulkTest.makeSuite(TreeBidiMapTest.class);
     }
 
-    public TestUnmodifiableOrderedBidiMap(String testName) {
+    public TreeBidiMapTest(String testName) {
         super(testName);
     }
 
     @Override
-    public OrderedBidiMap<K, V> makeObject() {
-        return UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(new TreeBidiMap<K, V>());
+    public BidiMap<K, V> makeObject() {
+        return new TreeBidiMap<K, V>();
     }
-
+    
     @Override
-    public BidiMap<K, V> makeFullMap() {
-        OrderedBidiMap<K, V> bidi = new TreeBidiMap<K, V>();
-        addSampleMappings(bidi);
-        return UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(bidi);
-    }
-
-    @Override
-    public Map<K, V> makeConfirmedMap() {
+    public TreeMap<K, V> makeConfirmedMap() {
         return new TreeMap<K, V>();
     }
 
@@ -63,32 +52,34 @@ public class TestUnmodifiableOrderedBidiMap<K extends Comparable<K>, V extends C
      */
     @Override
     public String[] ignoredTests() {
-        return new String[] {"TestUnmodifiableOrderedBidiMap.bulkTestInverseMap.bulkTestInverseMap"};
+        return new String[] {"TreeBidiMapTest.bulkTestInverseMap.bulkTestInverseMap"};
     }
-
+    
     @Override
     public boolean isAllowNullKey() {
         return false;
     }
-
+    
     @Override
     public boolean isAllowNullValue() {
         return false;
     }
-
+    
     @Override
-    public boolean isPutAddSupported() {
+    public boolean isSetValueSupported() {
         return false;
     }
-
+    
     @Override
-    public boolean isPutChangeSupported() {
-        return false;
+    public String getCompatibilityVersion() {
+        return "3.3";
     }
 
-    @Override
-    public boolean isRemoveSupported() {
-        return false;
-    }
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) map, "/tmp/TreeBidiMap.emptyCollection.version3.3.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) map, "/tmp/TreeBidiMap.fullCollection.version3.3.obj");
+//    }
 
 }

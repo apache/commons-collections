@@ -24,12 +24,12 @@ import org.apache.commons.collections.OrderedBidiMap;
 /**
  * Test class for AbstractOrderedBidiMapDecorator.
  *
- * @version $Revision$
+ * @version $Id$
  */
-public class TestAbstractOrderedBidiMapDecorator<K, V>
-        extends AbstractTestOrderedBidiMap<K, V> {
+public class AbstractOrderedBidiMapDecoratorTest<K, V>
+        extends AbstractOrderedBidiMapTest<K, V> {
 
-    public TestAbstractOrderedBidiMapDecorator(String testName) {
+    public AbstractOrderedBidiMapDecoratorTest(String testName) {
         super(testName);
     }
 

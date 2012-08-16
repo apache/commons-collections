@@ -34,18 +34,15 @@ import org.apache.commons.collections.map.AbstractTestSortedMap;
 /**
  * Abstract test class for {@link SortedBidiMap} methods and contracts.
  *
- * @version $Revision$
- *
- * @author Matthew Hawthorne
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public abstract class AbstractTestSortedBidiMap<K extends Comparable<K>, V extends Comparable<V>> extends AbstractTestOrderedBidiMap<K, V> {
+public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractOrderedBidiMapTest<K, V> {
 
     protected List<K> sortedKeys;
     protected List<V> sortedValues = new ArrayList<V>();
     protected SortedSet<V> sortedNewValues = new TreeSet<V>();
 
-    public AbstractTestSortedBidiMap(String testName) {
+    public AbstractSortedBidiMapTest(String testName) {
         super(testName);
         sortedKeys = getAsList(getSampleKeys());
         Collections.sort(sortedKeys);

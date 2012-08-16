@@ -28,15 +28,13 @@ import org.apache.commons.collections.functors.NOPTransformer;
 /**
  * Tests for {@link TransformedMap}
  *
- * @since Commons Collections 5
  * TODO fix version, add Serialization tests
- * @version $Revision$
  *
- * @author Stephen Colebourne
- * @author Matt Benson
+ * @since 4.0
+ * @version $Id$
  */
 @SuppressWarnings("boxing")
-public class TestTransformedMap extends BulkTest {
+public class TransformedMapTest extends BulkTest {
 
     private Transformer<Integer, String> intToString = new Transformer<Integer, String>() {
         public String transform(Integer input) {
@@ -56,7 +54,7 @@ public class TestTransformedMap extends BulkTest {
         }
     };
 
-    public TestTransformedMap(String testName) {
+    public TransformedMapTest(String testName) {
         super(testName);
     }
 
