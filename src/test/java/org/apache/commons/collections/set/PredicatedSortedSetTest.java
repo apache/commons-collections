@@ -29,22 +29,20 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.functors.TruePredicate;
 
 /**
- * Extension of {@link AbstractTestSortedSet} for exercising the
+ * Extension of {@link AbstractSortedSetTest} for exercising the
  * {@link PredicatedSortedSet} implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Phil Steitz
+ * @since 3.0
+ * @version $Id$
  */
-public class TestPredicatedSortedSet<E> extends AbstractTestSortedSet<E> {
+public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
-    public TestPredicatedSortedSet(String testName) {
+    public PredicatedSortedSetTest(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestPredicatedSortedSet.class);
+        return BulkTest.makeSuite(PredicatedSortedSetTest.class);
     }
 
  //-------------------------------------------------------------------

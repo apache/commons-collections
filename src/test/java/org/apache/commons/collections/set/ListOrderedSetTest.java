@@ -17,33 +17,32 @@
 package org.apache.commons.collections.set;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /**
- * Extension of {@link AbstractTestSet} for exercising the {@link ListOrderedSet}
+ * Extension of {@link AbstractSetTest} for exercising the {@link ListOrderedSet}
  * implementation.
  *
- * @since Commons Collections 3.1
- * @version $Revision$
- *
- * @author Henning P. Schmiedehausen
- * @author Stephen Colebourne
+ * @since 3.0
+ * @version $Id$
  */
-public class TestListOrderedSet2<E> extends AbstractTestSet<E> {
+public class ListOrderedSetTest<E> extends AbstractSetTest<E> {
 
     private static final Integer ZERO = new Integer(0);
     private static final Integer ONE = new Integer(1);
     private static final Integer TWO = new Integer(2);
     private static final Integer THREE = new Integer(3);
 
-    public TestListOrderedSet2(String testName) {
+    public ListOrderedSetTest(String testName) {
         super(testName);
     }
 
     @Override
     public ListOrderedSet<E> makeObject() {
-        return new ListOrderedSet<E>();
+        return ListOrderedSet.listOrderedSet(new HashSet<E>());
     }
 
     @SuppressWarnings("unchecked")
@@ -155,6 +154,66 @@ public class TestListOrderedSet2<E> extends AbstractTestSet<E> {
         assertSame(THREE, set.get(1));
         assertSame(TWO, set.get(2));
         assertSame(ONE, set.get(3));
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testListAddReplacing() {
+        ListOrderedSet<E> set = makeObject();
+        A a = new A();
+        B b = new B();
+        set.add((E) a);
+        assertEquals(1, set.size());
+        set.add((E) b);  // will match but not replace A as equal
+        assertEquals(1, set.size());
+        assertSame(a, set.decorated().iterator().next());
+        assertSame(a, set.iterator().next());
+        assertSame(a, set.get(0));
+        assertSame(a, set.asList().get(0));
+    }
+
+    static class A {
+        @Override
+        public boolean equals(Object obj) {
+            return (obj instanceof A || obj instanceof B);
+        }
+        @Override
+        public int hashCode() {
+            return 1;
+        }
+    }
+
+    static class B {
+        @Override
+        public boolean equals(Object obj) {
+            return (obj instanceof A || obj instanceof B);
+        }
+        @Override
+        public int hashCode() {
+            return 1;
+        }
+    }
+
+    public void testDecorator() {
+        try {
+            ListOrderedSet.listOrderedSet((List<E>) null);
+            fail();
+        } catch (IllegalArgumentException ex) {}
+        try {
+            ListOrderedSet.listOrderedSet((Set<E>) null);
+            fail();
+        } catch (IllegalArgumentException ex) {}
+        try {
+            ListOrderedSet.listOrderedSet(null, null);
+            fail();
+        } catch (IllegalArgumentException ex) {}
+        try {
+            ListOrderedSet.listOrderedSet(new HashSet<E>(), null);
+            fail();
+        } catch (IllegalArgumentException ex) {}
+        try {
+            ListOrderedSet.listOrderedSet(null, new ArrayList<E>());
+            fail();
+        } catch (IllegalArgumentException ex) {}
     }
 
     @Override

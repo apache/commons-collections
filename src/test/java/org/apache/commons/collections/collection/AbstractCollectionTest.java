@@ -105,7 +105,7 @@ import org.apache.commons.collections.AbstractTestObject;
  * that's compatible with your collection implementation.
  * <p>
  * If you're extending {@link org.apache.commons.collections.list.AbstractListTest AbstractListTest},
- * {@link org.apache.commons.collections.set.AbstractTestSet AbstractTestSet},
+ * {@link org.apache.commons.collections.set.AbstractSetTest AbstractTestSet},
  * or {@link org.apache.commons.collections.bag.AbstractBagTest AbstractBagTest}, 
  * you probably don't have to worry about the
  * above methods, because those three classes already override the methods

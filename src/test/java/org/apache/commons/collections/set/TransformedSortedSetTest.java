@@ -17,58 +17,52 @@
 package org.apache.commons.collections.set;
 
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.TreeSet;
 import java.util.Set;
+import java.util.SortedSet;
 
+import junit.framework.Test;
+
+import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.collection.TransformedCollectionTest;
 
 /**
- * Extension of {@link AbstractTestSet} for exercising the {@link TransformedSet}
+ * Extension of {@link AbstractSortedSetTest} for exercising the {@link TransformedSortedSet}
  * implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @since 3.0
+ * @version $Id$
  */
-public class TestTransformedSet<E> extends AbstractTestSet<E> {
+public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
-    public TestTransformedSet(String testName) {
+    public TransformedSortedSetTest(String testName) {
         super(testName);
     }
 
+    public static Test suite() {
+        return BulkTest.makeSuite(TransformedSortedSetTest.class);
+    }
+
+    //-----------------------------------------------------------------------
     @Override
-    public Set<E> makeConfirmedCollection() {
-        return new HashSet<E>();
+    @SuppressWarnings("unchecked")
+    public SortedSet<E> makeObject() {
+        return TransformedSortedSet.transformingSortedSet(new TreeSet<E>(), (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
     @Override
-    public Set<E> makeConfirmedFullCollection() {
-        Set<E> set = new HashSet<E>();
+    @SuppressWarnings("unchecked")
+    public SortedSet<E> makeFullCollection() {
+        SortedSet<E> set = new TreeSet<E>();
         set.addAll(Arrays.asList(getFullElements()));
-        return set;
+        return TransformedSortedSet.transformingSortedSet(set, (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public Set<E> makeObject() {
-        return TransformedSet.transformingSet(new HashSet<E>(),
-                (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public Set<E> makeFullCollection() {
-        Set<E> list = new HashSet<E>();
-        list.addAll(Arrays.asList(getFullElements()));
-        return TransformedSet.transformingSet(list,
-                (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
-    }
-
+    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testTransformedSet() {
-        Set<E> set = TransformedSet.transformingSet(new HashSet<E>(),
+        SortedSet<E> set = TransformedSortedSet.transformingSortedSet(new TreeSet<E>(),
                 (Transformer<E, E>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, set.size());
         E[] els = (E[]) new Object[] { "1", "3", "5", "7", "2", "4", "6" };
@@ -76,28 +70,23 @@ public class TestTransformedSet<E> extends AbstractTestSet<E> {
             set.add(els[i]);
             assertEquals(i + 1, set.size());
             assertEquals(true, set.contains(new Integer((String) els[i])));
-            assertEquals(false, set.contains(els[i]));
         }
 
-        assertEquals(false, set.remove(els[0]));
         assertEquals(true, set.remove(new Integer((String) els[0])));
-
     }
 
     public void testTransformedSet_decorateTransform() {
-        Set<Object> originalSet = new HashSet<Object>();
+        Set<Object> originalSet = new TreeSet<Object>();
         Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {
             originalSet.add(els[i]);
         }
-        Set<?> set = TransformedSet.transformedSet(originalSet, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
+        Set<?> set = TransformedSortedSet.transformedSet(originalSet, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, set.size());
         for (int i = 0; i < els.length; i++) {
             assertEquals(true, set.contains(new Integer((String) els[i])));
-            assertEquals(false, set.contains(els[i]));
         }
         
-        assertEquals(false, set.remove(els[0]));
         assertEquals(true, set.remove(new Integer((String) els[0])));
     }
 
@@ -108,9 +97,9 @@ public class TestTransformedSet<E> extends AbstractTestSet<E> {
 
 //    public void testCreate() throws Exception {
 //        resetEmpty();
-//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/TransformedSet.emptyCollection.version3.1.obj");
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/TransformedSortedSet.emptyCollection.version3.1.obj");
 //        resetFull();
-//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/TransformedSet.fullCollection.version3.1.obj");
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/TransformedSortedSet.fullCollection.version3.1.obj");
 //    }
 
 }

@@ -16,27 +16,34 @@
  */
 package org.apache.commons.collections.set;
 
+import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.commons.collections.map.HashedMap;
+import junit.framework.Test;
+
+import org.apache.commons.collections.BulkTest;
 
 /**
- * JUnit test.
+ * Extension of {@link AbstractSetTest} for exercising the
+ * {@link SynchronizedSet} implementation.
  *
- * @since Commons Collections 3.1
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @since 3.1
+ * @version $Id$
  */
-public class TestMapBackedSet<E> extends AbstractTestSet<E> {
+public class SynchronizedSetTest<E> extends AbstractSetTest<E> {
 
-    public TestMapBackedSet(String testName) {
+    public SynchronizedSetTest(String testName) {
         super(testName);
     }
 
+    public static Test suite() {
+        return BulkTest.makeSuite(SynchronizedSetTest.class);
+    }
+
+   //-------------------------------------------------------------------
     @Override
     public Set<E> makeObject() {
-        return MapBackedSet.mapBackedSet(new HashedMap<E, Object>());
+        return SynchronizedSet.synchronizedSet(new HashSet<E>());
     }
 
     @Override
@@ -46,9 +53,9 @@ public class TestMapBackedSet<E> extends AbstractTestSet<E> {
 
 //    public void testCreate() throws Exception {
 //        resetEmpty();
-//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/MapBackedSet.emptyCollection.version3.1.obj");
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/SynchronizedSet.emptyCollection.version3.1.obj");
 //        resetFull();
-//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/MapBackedSet.fullCollection.version3.1.obj");
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/SynchronizedSet.fullCollection.version3.1.obj");
 //    }
 
 }

@@ -24,18 +24,14 @@ import java.util.Set;
 import org.apache.commons.collections.collection.CompositeCollection;
 
 /**
- * Extension of {@link AbstractTestSet} for exercising the
+ * Extension of {@link AbstractSetTest} for exercising the
  * {@link CompositeSet} implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Brian McCallister
- * @author Phil Steitz
+ * @since 3.0
+ * @version $Id$
  */
-
-public class TestCompositeSet<E> extends AbstractTestSet<E> {
-    public TestCompositeSet(String name) {
+public class CompositeSetTest<E> extends AbstractSetTest<E> {
+    public CompositeSetTest(String name) {
         super(name);
     }
 

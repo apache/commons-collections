@@ -28,24 +28,22 @@ import junit.framework.Test;
 import org.apache.commons.collections.BulkTest;
 
 /**
- * Extension of {@link AbstractTestSortedSet} for exercising the
+ * Extension of {@link AbstractSortedSetTest} for exercising the
  * {@link UnmodifiableSortedSet} implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Phil Steitz
+ * @since 3.0
+ * @version $Id$
  */
-public class TestUnmodifiableSortedSet<E> extends AbstractTestSortedSet<E> {
+public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
     protected UnmodifiableSortedSet<E> set = null;
     protected ArrayList<E> array = null;
 
-    public TestUnmodifiableSortedSet(String testName) {
+    public UnmodifiableSortedSetTest(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestUnmodifiableSortedSet.class);
+        return BulkTest.makeSuite(UnmodifiableSortedSetTest.class);
     }
 
     //-------------------------------------------------------------------

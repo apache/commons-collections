@@ -24,14 +24,12 @@ import org.apache.commons.collections.map.LinkedMap;
 /**
  * JUnit test.
  *
- * @since Commons Collections 3.1
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @since 3.1
+ * @version $Id$
  */
-public class TestMapBackedSet2<E> extends AbstractTestSet<E> {
+public class MapBackedSet2Test<E> extends AbstractSetTest<E> {
 
-    public TestMapBackedSet2(String testName) {
+    public MapBackedSet2Test(String testName) {
         super(testName);
     }
 

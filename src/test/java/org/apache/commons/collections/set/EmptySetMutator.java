@@ -23,8 +23,8 @@ import java.util.Set;
 import org.apache.commons.collections.collection.CompositeCollection;
 
 /**
- * This class is used in TestCompositeSet. When testing serialization, 
- * the class has to be separate of TestCompositeSet, else the test 
+ * This class is used in CompositeSetTest. When testing serialization, 
+ * the class has to be separate of CompositeSetTest, else the test 
  * class also has to be serialized. 
  */
 class EmptySetMutator<E> implements CompositeSet.SetMutator<E> {

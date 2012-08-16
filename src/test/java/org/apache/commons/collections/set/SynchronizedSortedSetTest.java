@@ -16,36 +16,34 @@
  */
 package org.apache.commons.collections.set;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import junit.framework.Test;
 
 import org.apache.commons.collections.BulkTest;
 
 /**
- * Extension of {@link AbstractTestSet} for exercising the
- * {@link SynchronizedSet} implementation.
+ * Extension of {@link AbstractSetTest} for exercising the
+ * {@link SynchronizedSortedSet} implementation.
  *
- * @since Commons Collections 3.1
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @since 3.1
+ * @version $Id$
  */
-public class TestSynchronizedSet<E> extends AbstractTestSet<E> {
+public class SynchronizedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
-    public TestSynchronizedSet(String testName) {
+    public SynchronizedSortedSetTest(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestSynchronizedSet.class);
+        return BulkTest.makeSuite(SynchronizedSortedSetTest.class);
     }
 
    //-------------------------------------------------------------------
     @Override
-    public Set<E> makeObject() {
-        return SynchronizedSet.synchronizedSet(new HashSet<E>());
+    public SortedSet<E> makeObject() {
+        return SynchronizedSortedSet.synchronizedSortedSet(new TreeSet<E>());
     }
 
     @Override
@@ -55,9 +53,9 @@ public class TestSynchronizedSet<E> extends AbstractTestSet<E> {
 
 //    public void testCreate() throws Exception {
 //        resetEmpty();
-//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/SynchronizedSet.emptyCollection.version3.1.obj");
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/SynchronizedSortedSet.emptyCollection.version3.1.obj");
 //        resetFull();
-//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/SynchronizedSet.fullCollection.version3.1.obj");
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/SynchronizedSortedSet.fullCollection.version3.1.obj");
 //    }
 
 }

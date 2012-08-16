@@ -16,36 +16,52 @@
  */
 package org.apache.commons.collections.set;
 
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import junit.framework.Test;
 
 import org.apache.commons.collections.BulkTest;
 
 /**
- * Extension of {@link AbstractTestSet} for exercising the
- * {@link SynchronizedSortedSet} implementation.
+ * Extension of {@link AbstractSetTest} for exercising the
+ * {@link UnmodifiableSet} implementation.
  *
- * @since Commons Collections 3.1
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @since 3.0
+ * @version $Id$
  */
-public class TestSynchronizedSortedSet<E> extends AbstractTestSortedSet<E> {
+public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
 
-    public TestSynchronizedSortedSet(String testName) {
+    public UnmodifiableSetTest(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestSynchronizedSortedSet.class);
+        return BulkTest.makeSuite(UnmodifiableSetTest.class);
     }
 
-   //-------------------------------------------------------------------
+    //-------------------------------------------------------------------
     @Override
-    public SortedSet<E> makeObject() {
-        return SynchronizedSortedSet.synchronizedSortedSet(new TreeSet<E>());
+    public Set<E> makeObject() {
+        return UnmodifiableSet.unmodifiableSet(new HashSet<E>());
+    }
+
+    @Override
+    public Set<E> makeFullCollection() {
+        HashSet<E> set = new HashSet<E>();
+        set.addAll(Arrays.asList(getFullElements()));
+        return UnmodifiableSet.unmodifiableSet(set);
+    }
+
+    @Override
+    public boolean isAddSupported() {
+        return false;
+    }
+
+    @Override
+    public boolean isRemoveSupported() {
+        return false;
     }
 
     @Override
@@ -55,9 +71,9 @@ public class TestSynchronizedSortedSet<E> extends AbstractTestSortedSet<E> {
 
 //    public void testCreate() throws Exception {
 //        resetEmpty();
-//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/SynchronizedSortedSet.emptyCollection.version3.1.obj");
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/UnmodifiableSet.emptyCollection.version3.1.obj");
 //        resetFull();
-//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/SynchronizedSortedSet.fullCollection.version3.1.obj");
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/UnmodifiableSet.fullCollection.version3.1.obj");
 //    }
 
 }

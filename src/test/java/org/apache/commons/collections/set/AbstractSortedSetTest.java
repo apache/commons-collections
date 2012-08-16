@@ -28,22 +28,19 @@ import org.apache.commons.collections.BulkTest;
  * To use, subclass and override the {@link #makeObject()}
  * method.  You may have to override other protected methods if your
  * set is not modifiable, or if your set restricts what kinds of
- * elements may be added; see {@link AbstractTestSet} for more details.
+ * elements may be added; see {@link AbstractSetTest} for more details.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Dieter Wimberger
+ * @since 3.0
+ * @version $Id$
  */
-public abstract class AbstractTestSortedSet<E> extends AbstractTestSet<E> {
+public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
 
     /**
      * JUnit constructor.
      *
      * @param name  name for test
      */
-    public AbstractTestSortedSet(String name) {
+    public AbstractSortedSetTest(String name) {
         super(name);
     }
 
@@ -147,11 +144,11 @@ public abstract class AbstractTestSortedSet<E> extends AbstractTestSet<E> {
     //-----------------------------------------------------------------------
     /**
      * Bulk test {@link SortedSet#subSet(Object, Object)}.  This method runs through all of
-     * the tests in {@link AbstractTestSortedSet}.
+     * the tests in {@link AbstractSortedSetTest}.
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the set and the other collection views are still valid.
      *
-     * @return a {@link AbstractTestSet} instance for testing a subset.
+     * @return a {@link AbstractSetTest} instance for testing a subset.
      */
     public BulkTest bulkTestSortedSetSubSet() {
         int length = getFullElements().length;
@@ -164,11 +161,11 @@ public abstract class AbstractTestSortedSet<E> extends AbstractTestSet<E> {
 
     /**
      * Bulk test {@link SortedSet#headSet(Object)}.  This method runs through all of
-     * the tests in {@link AbstractTestSortedSet}.
+     * the tests in {@link AbstractSortedSetTest}.
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the set and the other collection views are still valid.
      *
-     * @return a {@link AbstractTestSet} instance for testing a headset.
+     * @return a {@link AbstractSetTest} instance for testing a headset.
      */
     public BulkTest bulkTestSortedSetHeadSet() {
         int length = getFullElements().length;
@@ -181,11 +178,11 @@ public abstract class AbstractTestSortedSet<E> extends AbstractTestSet<E> {
 
     /**
      * Bulk test {@link SortedSet#tailSet(Object)}.  This method runs through all of
-     * the tests in {@link AbstractTestSortedSet}.
+     * the tests in {@link AbstractSortedSetTest}.
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the set and the other collection views are still valid.
      *
-     * @return a {@link AbstractTestSet} instance for testing a tailset.
+     * @return a {@link AbstractSetTest} instance for testing a tailset.
      */
     public BulkTest bulkTestSortedSetTailSet() {
         int length = getFullElements().length;
@@ -193,7 +190,7 @@ public abstract class AbstractTestSortedSet<E> extends AbstractTestSet<E> {
         return new TestSortedSetSubSet(lobound, false);
     }
 
-    public class TestSortedSetSubSet extends AbstractTestSortedSet<E> {
+    public class TestSortedSetSubSet extends AbstractSortedSetTest<E> {
 
         private int m_Type;
         private int m_LowBound;
@@ -209,23 +206,23 @@ public abstract class AbstractTestSortedSet<E> extends AbstractTestSet<E> {
                 m_Type = TYPE_HEADSET;
                 m_HighBound = bound;
                 m_FullElements = (E[]) new Object[bound];
-                System.arraycopy(AbstractTestSortedSet.this.getFullElements(), 0, m_FullElements, 0, bound);
+                System.arraycopy(AbstractSortedSetTest.this.getFullElements(), 0, m_FullElements, 0, bound);
                 m_OtherElements = (E[]) new Object[bound - 1];
                 System.arraycopy(//src src_pos dst dst_pos length
-                AbstractTestSortedSet.this.getOtherElements(), 0, m_OtherElements, 0, bound - 1);
+                AbstractSortedSetTest.this.getOtherElements(), 0, m_OtherElements, 0, bound - 1);
                 //System.out.println(new TreeSet(Arrays.asList(m_FullElements)));
                 //System.out.println(new TreeSet(Arrays.asList(m_OtherElements)));
             } else {
                 //System.out.println("TAILSET");
                 m_Type = TYPE_TAILSET;
                 m_LowBound = bound;
-                Object[] allelements = AbstractTestSortedSet.this.getFullElements();
+                Object[] allelements = AbstractSortedSetTest.this.getFullElements();
                 //System.out.println("bound = "+bound +"::length="+allelements.length);
                 m_FullElements = (E[]) new Object[allelements.length - bound];
                 System.arraycopy(allelements, bound, m_FullElements, 0, allelements.length - bound);
                 m_OtherElements = (E[]) new Object[allelements.length - bound - 1];
                 System.arraycopy(//src src_pos dst dst_pos length
-                AbstractTestSortedSet.this.getOtherElements(), bound, m_OtherElements, 0, allelements.length - bound - 1);
+                AbstractSortedSetTest.this.getOtherElements(), bound, m_OtherElements, 0, allelements.length - bound - 1);
                 //System.out.println(new TreeSet(Arrays.asList(m_FullElements)));
                 //System.out.println(new TreeSet(Arrays.asList(m_OtherElements)));
                 //resetFull();
@@ -246,10 +243,10 @@ public abstract class AbstractTestSortedSet<E> extends AbstractTestSet<E> {
             int length = hibound - lobound;
             //System.out.println("Low=" + lobound + "::High=" + hibound + "::Length=" + length);
             m_FullElements = (E[]) new Object[length];
-            System.arraycopy(AbstractTestSortedSet.this.getFullElements(), lobound, m_FullElements, 0, length);
+            System.arraycopy(AbstractSortedSetTest.this.getFullElements(), lobound, m_FullElements, 0, length);
             m_OtherElements = (E[]) new Object[length - 1];
             System.arraycopy(//src src_pos dst dst_pos length
-            AbstractTestSortedSet.this.getOtherElements(), lobound, m_OtherElements, 0, length - 1);
+            AbstractSortedSetTest.this.getOtherElements(), lobound, m_OtherElements, 0, length - 1);
 
             //System.out.println(new TreeSet(Arrays.asList(m_FullElements)));
             //System.out.println(new TreeSet(Arrays.asList(m_OtherElements)));
@@ -258,19 +255,19 @@ public abstract class AbstractTestSortedSet<E> extends AbstractTestSet<E> {
 
         @Override
         public boolean isNullSupported() {
-            return AbstractTestSortedSet.this.isNullSupported();
+            return AbstractSortedSetTest.this.isNullSupported();
         }
         @Override
         public boolean isAddSupported() {
-            return AbstractTestSortedSet.this.isAddSupported();
+            return AbstractSortedSetTest.this.isAddSupported();
         }
         @Override
         public boolean isRemoveSupported() {
-            return AbstractTestSortedSet.this.isRemoveSupported();
+            return AbstractSortedSetTest.this.isRemoveSupported();
         }
         @Override
         public boolean isFailFastSupported() {
-            return AbstractTestSortedSet.this.isFailFastSupported();
+            return AbstractSortedSetTest.this.isFailFastSupported();
         }
 
         @Override
@@ -283,7 +280,7 @@ public abstract class AbstractTestSortedSet<E> extends AbstractTestSet<E> {
         }
 
         private SortedSet<E> getSubSet(SortedSet<E> set) {
-            E[] elements = AbstractTestSortedSet.this.getFullElements();
+            E[] elements = AbstractSortedSetTest.this.getFullElements();
             switch (m_Type) {
                 case TYPE_SUBSET :
                     return set.subSet(elements[m_LowBound], elements[m_HighBound]);
@@ -298,12 +295,12 @@ public abstract class AbstractTestSortedSet<E> extends AbstractTestSet<E> {
 
         @Override
         public SortedSet<E> makeObject() {
-            return getSubSet(AbstractTestSortedSet.this.makeObject());
+            return getSubSet(AbstractSortedSetTest.this.makeObject());
         }
 
         @Override
         public SortedSet<E> makeFullCollection() {
-            return getSubSet(AbstractTestSortedSet.this.makeFullCollection());
+            return getSubSet(AbstractSortedSetTest.this.makeFullCollection());
         }
         
         @Override

@@ -23,17 +23,15 @@ import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.functors.TruePredicate;
 
 /**
- * Extension of {@link AbstractTestSet} for exercising the 
+ * Extension of {@link AbstractSetTest} for exercising the 
  * {@link PredicatedSet} implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Phil Steitz
+ * @since 3.0
+ * @version $Id$
  */
-public class TestPredicatedSet<E> extends AbstractTestSet<E> {
+public class PredicatedSetTest<E> extends AbstractSetTest<E> {
 
-    public TestPredicatedSet(String testName) {
+    public PredicatedSetTest(String testName) {
         super(testName);
     }
 

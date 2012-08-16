@@ -34,7 +34,7 @@ import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.collection.AbstractCollectionTest;
 import org.apache.commons.collections.keyvalue.DefaultMapEntry;
-import org.apache.commons.collections.set.AbstractTestSet;
+import org.apache.commons.collections.set.AbstractSetTest;
 
 /**
  * Abstract test class for {@link java.util.Map} methods and contracts.
@@ -106,7 +106,7 @@ import org.apache.commons.collections.set.AbstractTestSet;
  * {@link #verify} method calls separate methods to verify the map and its three
  * collection views ({@link #verifyMap}, {@link #verifyEntrySet},
  * {@link #verifyKeySet}, and {@link #verifyValues}).  You may want to override
- * one of the verification methodsto perform additional verifications.  For
+ * one of the verification methods to perform additional verifications.  For
  * instance, TestDoubleOrderedMap would want override its
  * {@link #verifyValues()} method to verify that the values are unique and in
  * ascending order.<P>
@@ -1510,17 +1510,17 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
 
     /**
      * Bulk test {@link Map#entrySet()}.  This method runs through all of
-     * the tests in {@link AbstractTestSet}.
+     * the tests in {@link AbstractSetTest}.
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the map and the other collection views are still valid.
      *
-     * @return a {@link AbstractTestSet} instance for testing the map's entry set
+     * @return a {@link AbstractSetTest} instance for testing the map's entry set
      */
     public BulkTest bulkTestMapEntrySet() {
         return new TestMapEntrySet();
     }
 
-    public class TestMapEntrySet extends AbstractTestSet<Map.Entry<K, V>> {
+    public class TestMapEntrySet extends AbstractSetTest<Map.Entry<K, V>> {
         public TestMapEntrySet() {
             super("MapEntrySet");
         }
@@ -1700,17 +1700,17 @@ public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
 
     /**
      * Bulk test {@link Map#keySet()}.  This method runs through all of
-     * the tests in {@link AbstractTestSet}.
+     * the tests in {@link AbstractSetTest}.
      * After modification operations, {@link #verify()} is invoked to ensure
      * that the map and the other collection views are still valid.
      *
-     * @return a {@link AbstractTestSet} instance for testing the map's key set
+     * @return a {@link AbstractSetTest} instance for testing the map's key set
      */
     public BulkTest bulkTestMapKeySet() {
         return new TestMapKeySet();
     }
 
-    public class TestMapKeySet extends AbstractTestSet<K> {
+    public class TestMapKeySet extends AbstractSetTest<K> {
         public TestMapKeySet() {
             super("");
         }
