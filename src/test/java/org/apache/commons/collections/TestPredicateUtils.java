@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.collections.functors.AllPredicate;
-import org.apache.commons.collections.functors.BasicPredicateTestBase;
+import org.apache.commons.collections.functors.AbstractPredicateTest;
 import org.apache.commons.collections.functors.EqualPredicate;
 import org.apache.commons.collections.functors.ExceptionPredicate;
 import org.apache.commons.collections.functors.FalsePredicate;
@@ -50,7 +50,7 @@ import org.junit.Test;
  * @author Matt Benson
  */
 @SuppressWarnings("boxing")
-public class TestPredicateUtils extends BasicPredicateTestBase {
+public class TestPredicateUtils extends AbstractPredicateTest {
     /**
      * Set up instance variables required by this test case.
      */

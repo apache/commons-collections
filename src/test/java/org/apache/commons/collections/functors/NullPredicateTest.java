@@ -16,20 +16,27 @@
  */
 package org.apache.commons.collections.functors;
 
-import org.apache.commons.collections.Closure;
-import org.junit.Assert;
+import static org.apache.commons.collections.functors.NullPredicate.nullPredicate;
+import static org.junit.Assert.assertSame;
+
+import org.apache.commons.collections.Predicate;
 import org.junit.Test;
 
-public abstract class BasicClosureTestBase {
 
+public class NullPredicateTest extends AbstractPredicateTest {
     @Test
-    public void closureSanityTests() throws Exception {
-        Closure<?> closure = generateClosure();
-        Assert.assertNotNull(closure);
+    public void testNullPredicate() {
+        assertSame(NullPredicate.nullPredicate(), NullPredicate.nullPredicate());
+        assertTrue(nullPredicate(), null);
+    }
+    
+    public void ensurePredicateCanBeTypedWithoutWarning() throws Exception {
+        Predicate<String> predicate = NullPredicate.nullPredicate();
+        assertFalse(predicate, cString);
     }
 
-    /**
-     * @return a closure for general sanity tests.
-     */
-    protected abstract <T> Closure<T> generateClosure();
+    @Override
+    protected Predicate<?> generatePredicate() {
+        return nullPredicate();
+    }    
 }

@@ -23,7 +23,7 @@ import org.apache.commons.collections.FunctorException;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class TestCatchAndRethrowClosure extends BasicClosureTestBase {
+public class CatchAndRethrowClosureTest extends AbstractClosureTest {
 
     private static <T> Closure<T> generateIOExceptionClosure() {
         return new CatchAndRethrowClosure<T>() {

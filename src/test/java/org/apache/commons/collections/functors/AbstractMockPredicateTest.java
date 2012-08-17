@@ -30,12 +30,10 @@ import java.util.List;
  * Base class for tests of predicates which delegate to other predicates when evaluating an object.  This class
  * provides methods to create and verify mock predicates to which to delegate.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Edwin Tellman
+ * @since 3.0
+ * @version $Id$
  */
-public abstract class MockPredicateTestBase<T> {
+public abstract class AbstractMockPredicateTest<T> {
     /**
      * Mock predicates created by a single test case which need to be verified after the test completes.
      */
@@ -51,7 +49,7 @@ public abstract class MockPredicateTestBase<T> {
      *
      * @param testValue the value to pass to mock predicates.
      */
-    protected MockPredicateTestBase(final T testValue) {
+    protected AbstractMockPredicateTest(final T testValue) {
         this.testValue = testValue;
     }
 

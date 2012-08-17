@@ -13,18 +13,16 @@ import java.util.Collections;
 /**
  * Tests the org.apache.commons.collections.functors.AllPredicate class.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Edwin Tellman
+ * @since 3.0
+ * @version $Id$
  */
 @SuppressWarnings("boxing")
-public class TestAllPredicate extends AbstractTestAnyAllOnePredicate<Integer> {
+public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
 
     /**
      * Creates a new <code>TestAllPredicate</code>.
      */
-    public TestAllPredicate() {
+    public AllPredicateTest() {
         super(42);
     }
 

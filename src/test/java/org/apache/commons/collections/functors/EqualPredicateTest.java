@@ -24,7 +24,7 @@ import org.apache.commons.collections.Predicate;
 import org.junit.Test;
 
 
-public class TestEqualPredicate extends BasicPredicateTestBase {
+public class EqualPredicateTest extends AbstractPredicateTest {
     private static final EqualsTestObject FALSE_OBJECT = new EqualsTestObject(false);
     private static final EqualsTestObject TRUE_OBJECT = new EqualsTestObject(true);
 

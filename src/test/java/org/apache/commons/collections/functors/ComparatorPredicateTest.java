@@ -23,7 +23,7 @@ import org.apache.commons.collections.Predicate;
 import org.junit.Test;
 
 
-public class TestComparatorPredicate extends BasicPredicateTestBase {
+public class ComparatorPredicateTest extends AbstractPredicateTest {
     private class TestComparator<T extends Comparable<T>> implements Comparator<T> {
         public int compare(T first, T second) {
             return first.compareTo(second);

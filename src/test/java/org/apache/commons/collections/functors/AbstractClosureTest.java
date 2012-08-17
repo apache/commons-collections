@@ -16,39 +16,20 @@
  */
 package org.apache.commons.collections.functors;
 
-import org.apache.commons.collections.Predicate;
+import org.apache.commons.collections.Closure;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
-public abstract class BasicPredicateTestBase {
-    protected Object cObject;
-    protected String cString;
-    protected Integer cInteger;
+public abstract class AbstractClosureTest {
 
-    @Before
-    public void initialiseTestObjects() throws Exception {
-        cObject = new Object();
-        cString = "Hello";
-        cInteger = new Integer(6);
-    }
-    
     @Test
-    public void predicateSanityTests() throws Exception {
-        Predicate<?> predicate = generatePredicate();
-        Assert.assertNotNull(predicate);
+    public void closureSanityTests() throws Exception {
+        Closure<?> closure = generateClosure();
+        Assert.assertNotNull(closure);
     }
 
     /**
-     * @return a predicate for general sanity tests.
+     * @return a closure for general sanity tests.
      */
-    protected abstract Predicate<?> generatePredicate();
-
-    protected <T> void assertFalse(Predicate<T> predicate, T testObject) {
-        Assert.assertFalse(predicate.evaluate(testObject));
-    }
-
-    protected <T> void assertTrue(Predicate<T> predicate, T testObject) {
-        Assert.assertTrue(predicate.evaluate(testObject));
-    }
+    protected abstract <T> Closure<T> generateClosure();
 }

@@ -27,19 +27,17 @@ import java.util.Collections;
 /**
  * Base class for tests of AnyPredicate, AllPredicate, and OnePredicate.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Edwin Tellman
+ * @since 3.0
+ * @version $Id$
  */
-public abstract class AbstractTestAnyAllOnePredicate<T> extends AbstractTestCompositePredicate<T> {
+public abstract class AbstractAnyAllOnePredicateTest<T> extends AbstractCompositePredicateTest<T> {
 
     /**
      * Creates a new <code>TestCompositePredicate</code>.
      *
      * @param testValue the value which the mock predicates should expect to see (may be null).
      */
-    protected AbstractTestAnyAllOnePredicate(final T testValue) {
+    protected AbstractAnyAllOnePredicateTest(final T testValue) {
         super(testValue);
     }
 

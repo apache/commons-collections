@@ -16,27 +16,39 @@
  */
 package org.apache.commons.collections.functors;
 
-import static org.apache.commons.collections.functors.NullPredicate.nullPredicate;
-import static org.junit.Assert.assertSame;
-
 import org.apache.commons.collections.Predicate;
+import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
+public abstract class AbstractPredicateTest {
+    protected Object cObject;
+    protected String cString;
+    protected Integer cInteger;
 
-public class TestNullPredicate extends BasicPredicateTestBase {
-    @Test
-    public void testNullPredicate() {
-        assertSame(NullPredicate.nullPredicate(), NullPredicate.nullPredicate());
-        assertTrue(nullPredicate(), null);
+    @Before
+    public void initialiseTestObjects() throws Exception {
+        cObject = new Object();
+        cString = "Hello";
+        cInteger = new Integer(6);
     }
     
-    public void ensurePredicateCanBeTypedWithoutWarning() throws Exception {
-        Predicate<String> predicate = NullPredicate.nullPredicate();
-        assertFalse(predicate, cString);
+    @Test
+    public void predicateSanityTests() throws Exception {
+        Predicate<?> predicate = generatePredicate();
+        Assert.assertNotNull(predicate);
     }
 
-    @Override
-    protected Predicate<?> generatePredicate() {
-        return nullPredicate();
-    }    
+    /**
+     * @return a predicate for general sanity tests.
+     */
+    protected abstract Predicate<?> generatePredicate();
+
+    protected <T> void assertFalse(Predicate<T> predicate, T testObject) {
+        Assert.assertFalse(predicate.evaluate(testObject));
+    }
+
+    protected <T> void assertTrue(Predicate<T> predicate, T testObject) {
+        Assert.assertTrue(predicate.evaluate(testObject));
+    }
 }

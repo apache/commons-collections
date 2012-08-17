@@ -29,19 +29,17 @@ import java.util.List;
 /**
  * Base class for tests of composite predicates.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Edwin Tellman
+ * @since 3.0
+ * @version $Id$
  */
-public abstract class AbstractTestCompositePredicate<T> extends MockPredicateTestBase<T> {
+public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPredicateTest<T> {
 
     /**
      * Creates a new <code>TestCompositePredicate</code>.
      *
      * @param testValue the value which the mock predicates should expect to see (may be null).
      */
-    protected AbstractTestCompositePredicate(final T testValue) {
+    protected AbstractCompositePredicateTest(final T testValue) {
         super(testValue);
     }
 
