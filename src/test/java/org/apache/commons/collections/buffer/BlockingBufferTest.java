@@ -30,14 +30,12 @@ import java.util.Set;
  * Extension of {@link AbstractTestObject} for exercising the
  * {@link BlockingBuffer} implementation.
  *
- * @author Janek Bogucki
- * @author Phil Steitz
- * @version $Revision$
- * @since Commons Collections 3.0
+ * @since 3.0
+ * @version $Id$
  */
-public class TestBlockingBuffer<E> extends AbstractTestObject {
+public class BlockingBufferTest<E> extends AbstractTestObject {
 
-    public TestBlockingBuffer(String testName) {
+    public BlockingBufferTest(String testName) {
         super(testName);
     }
 

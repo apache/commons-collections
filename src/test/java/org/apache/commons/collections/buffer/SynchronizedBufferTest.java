@@ -25,31 +25,28 @@ import org.apache.commons.collections.collection.AbstractCollectionTest;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
- * {@link UnmodifiableBuffer} implementation.
+ * {@link SynchronizedBuffer} implementation.
  *
- * @since Commons Collections 3.1
- * @version $Revision$
- *
- * @author Phil Steitz
- * @author Stephen Colebourne
+ * @since 3.1
+ * @version $Id$
  */
-public class TestUnmodifiableBuffer<E> extends AbstractCollectionTest<E> {
+public class SynchronizedBufferTest<E> extends AbstractCollectionTest<E> {
 
-    public TestUnmodifiableBuffer(String testName) {
+    public SynchronizedBufferTest(String testName) {
         super(testName);
     }
 
     //-----------------------------------------------------------------------
     @Override
-    public Collection<E> makeObject() {
-        return UnmodifiableBuffer.unmodifiableBuffer(new UnboundedFifoBuffer<E>());
+    public Buffer<E> makeObject() {
+        return SynchronizedBuffer.synchronizedBuffer(new UnboundedFifoBuffer<E>());
     }
 
     @Override
     public Collection<E> makeFullCollection() {
         Buffer<E> buffer = new UnboundedFifoBuffer<E>();
         buffer.addAll(Arrays.asList(getFullElements()));
-        return UnmodifiableBuffer.unmodifiableBuffer(buffer);
+        return SynchronizedBuffer.synchronizedBuffer(buffer);
     }
 
     @Override
@@ -65,26 +62,8 @@ public class TestUnmodifiableBuffer<E> extends AbstractCollectionTest<E> {
     }
 
     @Override
-    public boolean isAddSupported() {
-        return false;
-    }
-
-    @Override
-    public boolean isRemoveSupported() {
-        return false;
-    }
-
-    @Override
     public boolean isNullSupported() {
         return false;
-    }
-
-    public void testBufferRemove() {
-        resetEmpty();
-        try {
-            getCollection().remove();
-            fail();
-        } catch (UnsupportedOperationException ex) {}
     }
 
     @Override
@@ -94,16 +73,9 @@ public class TestUnmodifiableBuffer<E> extends AbstractCollectionTest<E> {
 
 //    public void testCreate() throws Exception {
 //        resetEmpty();
-//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/UnmodifiableBuffer.emptyCollection.version3.1.obj");
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/SynchronizedBuffer.emptyCollection.version3.1.obj");
 //        resetFull();
-//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/UnmodifiableBuffer.fullCollection.version3.1.obj");
+//        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/SynchronizedBuffer.fullCollection.version3.1.obj");
 //    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Buffer<E> getCollection() {
-        return (Buffer<E>) super.getCollection();
-    }
 }

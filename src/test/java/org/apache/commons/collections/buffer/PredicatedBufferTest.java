@@ -28,14 +28,12 @@ import org.apache.commons.collections.collection.PredicatedCollectionTest;
  * Extension of {@link PredicatedCollectionTest} for exercising the
  * {@link PredicatedBuffer} implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Phil Steitz
+ * @since 3.0
+ * @version $Id$
  */
-public class TestPredicatedBuffer<E> extends PredicatedCollectionTest<E> {
+public class PredicatedBufferTest<E> extends PredicatedCollectionTest<E> {
 
-    public TestPredicatedBuffer(String testName) {
+    public PredicatedBufferTest(String testName) {
         super(testName);
     }
 

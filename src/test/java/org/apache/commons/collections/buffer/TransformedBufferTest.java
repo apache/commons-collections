@@ -25,14 +25,12 @@ import org.apache.commons.collections.collection.TransformedCollectionTest;
  * Extension of {@link TestCase} for exercising the {@link TransformedBuffer}
  * implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @since 3.0
+ * @version $Id$
  */
-public class TestTransformedBuffer extends TestCase {
+public class TransformedBufferTest extends TestCase {
     
-    public TestTransformedBuffer(String testName) {
+    public TransformedBufferTest(String testName) {
         super(testName);
     }
 

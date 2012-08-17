@@ -34,18 +34,16 @@ import org.apache.commons.collections.collection.AbstractCollectionTest;
 /**
  * Test cases for CircularFifoBuffer.
  *
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public class TestCircularFifoBuffer<E> extends AbstractCollectionTest<E> {
+public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
 
-    public TestCircularFifoBuffer(String n) {
+    public CircularFifoBufferTest(String n) {
         super(n);
     }
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestCircularFifoBuffer.class);
+        return BulkTest.makeSuite(CircularFifoBufferTest.class);
     }
 
     //-----------------------------------------------------------------------

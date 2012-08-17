@@ -25,9 +25,9 @@ import java.util.Iterator;
 import java.util.Collections;
 import java.util.Arrays;
 
-public class TestBoundedBuffer<E> extends AbstractTestObject {
+public class BoundedBufferTest<E> extends AbstractTestObject {
 
-    public TestBoundedBuffer(String testName) {
+    public BoundedBufferTest(String testName) {
         super(testName);
     }
 

@@ -34,15 +34,12 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 /**
  * Tests the PriorityBuffer.
  *
- * @version $Revision$
- *
- * @author Michael A. Smith
- * @author Steve Phelps
+ * @version $Id$ 
  */
 @SuppressWarnings("boxing")
-public class TestPriorityBuffer<E> extends AbstractCollectionTest<E> {
+public class PriorityBufferTest<E> extends AbstractCollectionTest<E> {
 
-    public TestPriorityBuffer(String testName) {
+    public PriorityBufferTest(String testName) {
         super(testName);
     }
 

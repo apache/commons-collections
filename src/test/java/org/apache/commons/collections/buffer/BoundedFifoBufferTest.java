@@ -30,18 +30,16 @@ import org.apache.commons.collections.collection.AbstractCollectionTest;
 /**
  * Test cases for BoundedFifoBuffer.
  *
- * @version $Revision$
- *
- * @author Paul Jack
+ * @version $Id$
  */
-public class TestBoundedFifoBuffer<E> extends AbstractCollectionTest<E> {
+public class BoundedFifoBufferTest<E> extends AbstractCollectionTest<E> {
 
-    public TestBoundedFifoBuffer(String n) {
+    public BoundedFifoBufferTest(String n) {
         super(n);
     }
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestBoundedFifoBuffer.class);
+        return BulkTest.makeSuite(BoundedFifoBufferTest.class);
     }
 
     //-----------------------------------------------------------------------

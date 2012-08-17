@@ -28,18 +28,16 @@ import org.apache.commons.collections.BulkTest;
  * Runs tests against a full BoundedFifoBuffer, since many of the algorithms
  * differ depending on whether the fifo is full or not.
  *
- * @version $Revision$
- *
- * @author Unknown
+ * @version $Id$
  */
-public class TestBoundedFifoBuffer2<E> extends TestBoundedFifoBuffer<E> {
+public class BoundedFifoBuffer2Test<E> extends BoundedFifoBufferTest<E> {
 
-    public TestBoundedFifoBuffer2(String n) {
+    public BoundedFifoBuffer2Test(String n) {
         super(n);
     }
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestBoundedFifoBuffer2.class);
+        return BulkTest.makeSuite(BoundedFifoBuffer2Test.class);
     }
 
     /**

@@ -29,18 +29,16 @@ import org.apache.commons.collections.collection.AbstractCollectionTest;
 /**
  * Test cases for UnboundedFifoBuffer.
  *
- * @version $Revision$
- *
- * @author Unknown
+ * @version $Id$
  */
-public class TestUnboundedFifoBuffer<E> extends AbstractCollectionTest<E> {
+public class UnboundedFifoBufferTest<E> extends AbstractCollectionTest<E> {
 
-    public TestUnboundedFifoBuffer(String n) {
+    public UnboundedFifoBufferTest(String n) {
         super(n);
     }
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestUnboundedFifoBuffer.class);
+        return BulkTest.makeSuite(UnboundedFifoBufferTest.class);
     }
 
     //-----------------------------------------------------------------------
