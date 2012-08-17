@@ -14,12 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.collection;
 
 import java.util.Collection;
 import java.util.HashMap;
 
-import org.apache.commons.collections.collection.AbstractCollectionDecorator;
+import org.apache.commons.collections.Transformer;
 
 /**
  * An IndexedCollection is a Map-like view onto a Collection. It accepts a

@@ -14,17 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections;
+package org.apache.commons.collections.collection;
 
 import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 
+import org.apache.commons.collections.AbstractDecoratedCollectionTest;
+import org.apache.commons.collections.Transformer;
+import org.apache.commons.collections.collection.IndexedCollection;
 import org.junit.Before;
 import org.junit.Test;
 
 @SuppressWarnings("boxing")
-public class TestIndexedCollection extends AbstractDecoratedCollectionTest<String> {
+public class IndexedCollectionTest extends AbstractDecoratedCollectionTest<String> {
     private IndexedCollection<Integer, String> indexed;
 
     @Before
