@@ -18,6 +18,7 @@ package org.apache.commons.collections.collection;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.commons.collections.Transformer;
 
@@ -40,11 +41,16 @@ import org.apache.commons.collections.Transformer;
  * @version $Id$
  */
 // TODO support MultiMap/non-unique index behavior
-// TODO add support for remove and clear
 public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
 
     /** Serialization version */
     private static final long serialVersionUID = -5512610452568370038L;
+
+    /** The {@link Transformer} for generating index keys. */
+    private final Transformer<C, K> keyTransformer;
+
+    /** The map of indexes to collected objects. */
+    private final Map<K, C> index;
 
     /**
      * Create an {@link IndexedCollection} for a unique index.
@@ -61,26 +67,77 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     }
 
     /**
-     * The {@link Transformer} for generating index keys.
-     */
-    private final Transformer<C, K> keyTransformer;
-
-    /**
-     * The map of indexes to collected objects.
-     */
-    private final HashMap<K, C> index;
-
-    /**
      * Create a {@link IndexedCollection} for a unique index.
      *
-     * @param coll the decorated {@link Collection}.
-     * @param keyTransformer the {@link Transformer} for generating index keys.
+     * @param coll  decorated {@link Collection}
+     * @param keyTransformer  {@link Transformer} for generating index keys
+     * @param map  map to use as index
      */
     public IndexedCollection(Collection<C> coll, Transformer<C, K> keyTransformer, HashMap<K, C> map) {
         super(coll);
         this.keyTransformer = keyTransformer;
-        this.index = map;
+        this.index = new HashMap<K, C>();
         reindex();
+    }
+
+    @Override
+    public boolean add(C object) {
+        final boolean added = super.add(object);
+        if (added) {
+            addToIndex(object);
+        }
+        return added;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends C> coll) {
+        boolean changed = false;
+        for (C c: coll) {
+            changed |= add(c);
+        }
+        return changed;
+    }
+
+    @Override
+    public void clear() {
+        super.clear();
+        index.clear();
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Note: uses the index for fast lookup
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean contains(Object object) {
+        return index.containsKey(keyTransformer.transform((C) object));
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Note: uses the index for fast lookup
+     */
+    @Override
+    public boolean containsAll(Collection<?> coll) {
+        for (Object o : coll) {
+            if (!contains(o)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Get the element associated with the given key.
+     *
+     * @param key  key to look up
+     * @return element found
+     */
+    public C get(K key) {
+        return index.get(key);
     }
 
     /**
@@ -89,38 +146,46 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     public void reindex() {
         index.clear();
         for (C c : decorated()) {
-            addIndex(c);
+            addToIndex(c);
         }
     }
 
-    /**
-     * Adds an object to the collection and index.
-     */
+    @SuppressWarnings("unchecked")
     @Override
-    // TODO: Add error handling for when super.add() fails
-    public boolean add(C object) {
-        addIndex(object);
-        return super.add(object);
+    public boolean remove(Object object) {
+        final boolean removed = super.remove(object);
+        if (removed) {
+            removeFromIndex((C) object);
+        }
+        return removed;
     }
 
-    /**
-     * Adds an entire collection to the collection and index.
-     */
     @Override
-    // TODO: Add error handling for when super.addAll() fails
-    public boolean addAll(Collection<? extends C> coll) {
-        for (C c : coll) {
-            addIndex(c);
+    public boolean removeAll(Collection<?> coll) {
+        boolean changed = false;
+        for (Object o : coll) {
+            changed |= remove(o);
         }
-        return super.addAll(coll);
+        return changed;
     }
+
+    @Override
+    public boolean retainAll(Collection<?> coll) {
+        final boolean changed = super.retainAll(coll);
+        if (changed) {
+            reindex();
+        }
+        return changed;
+    }
+
+    //-----------------------------------------------------------------------
 
     /**
      * Provides checking for adding the index.
      *
-     * @param object the object to index.
+     * @param object the object to index
      */
-    private void addIndex(C object) {
+    private void addToIndex(C object) {
         final C existingObject = index.put(keyTransformer.transform(object), object);
         if (existingObject != null) {
             throw new IllegalArgumentException("Duplicate key in uniquely indexed collection.");
@@ -128,11 +193,12 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     }
 
     /**
-     * Get the element associated with the given key.
-     * @param key to look up
-     * @return element found
+     * Removes an object from the index.
+     *
+     * @param object the object to remove
      */
-    public C get(K key) {
-        return index.get(key);
+    private void removeFromIndex(C object) {
+        index.remove(keyTransformer.transform(object));
     }
+
 }
