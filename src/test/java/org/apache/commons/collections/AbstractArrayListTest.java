@@ -27,9 +27,9 @@ import org.apache.commons.collections.list.AbstractListTest;
  *
  * @author Jason van Zyl
  */
-public abstract class AbstractTestArrayList<E> extends AbstractListTest<E> {
+public abstract class AbstractArrayListTest<E> extends AbstractListTest<E> {
 
-    public AbstractTestArrayList(String testName) {
+    public AbstractArrayListTest(String testName) {
         super(testName);
     }
 

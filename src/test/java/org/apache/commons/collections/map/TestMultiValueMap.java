@@ -28,7 +28,7 @@ import java.util.Map;
 import org.apache.commons.collections.IteratorUtils;
 import org.apache.commons.collections.MultiMap;
 
-import org.apache.commons.collections.AbstractTestObject;
+import org.apache.commons.collections.AbstractObjectTest;
 
 /**
  * TestMultiValueMap.
@@ -37,7 +37,7 @@ import org.apache.commons.collections.AbstractTestObject;
  * @author Stephen Colebourne
  * @since Commons Collections 3.2
  */
-public class TestMultiValueMap<K, V> extends AbstractTestObject {
+public class TestMultiValueMap<K, V> extends AbstractObjectTest {
 
     public TestMultiValueMap(String testName) {
         super(testName);

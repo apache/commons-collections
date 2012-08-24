@@ -38,14 +38,14 @@ import org.apache.commons.collections.iterators.EmptyOrderedMapIterator;
  *
  * @author Unknown
  */
-public class TestIteratorUtils extends BulkTest {
+public class IteratorUtilsTest extends BulkTest {
 
-    public TestIteratorUtils(String name) {
+    public IteratorUtilsTest(String name) {
         super(name);
     }
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestIteratorUtils.class);
+        return BulkTest.makeSuite(IteratorUtilsTest.class);
     }
 
     public void testAsIterable() {

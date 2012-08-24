@@ -42,7 +42,7 @@ import org.apache.commons.collections.functors.TruePredicate;
  * @author Stephen Colebourne
  * @author James Carman
  */
-public class TestTransformerUtils extends junit.framework.TestCase {
+public class TransformerUtilsTest extends junit.framework.TestCase {
 
     private static final Object cObject = new Object();
     private static final Object cString = "Hello";
@@ -51,7 +51,7 @@ public class TestTransformerUtils extends junit.framework.TestCase {
     /**
      * Construct
      */
-    public TestTransformerUtils(String name) {
+    public TransformerUtilsTest(String name) {
         super(name);
     }
 

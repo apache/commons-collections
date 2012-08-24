@@ -50,7 +50,7 @@ import org.junit.Test;
  * @version $Revision$
  */
 @SuppressWarnings("boxing")
-public class TestCollectionUtils extends MockTestCase {
+public class CollectionUtilsTest extends MockTestCase {
 
     /**
      * Collection of {@link Integer}s

@@ -23,7 +23,7 @@ import java.util.Map;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.commons.collections.AbstractTestObject;
+import org.apache.commons.collections.AbstractObjectTest;
 import org.apache.commons.collections.IterableMap;
 
 /**
@@ -33,7 +33,7 @@ import org.apache.commons.collections.IterableMap;
  *
  * @author Stephen Colebourne
  */
-public class TestIdentityMap<K, V> extends AbstractTestObject {
+public class TestIdentityMap<K, V> extends AbstractObjectTest {
 
     private static final Integer I1A = new Integer(1);
     private static final Integer I1B = new Integer(1);

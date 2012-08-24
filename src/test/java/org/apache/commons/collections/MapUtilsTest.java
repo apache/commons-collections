@@ -50,14 +50,14 @@ import org.apache.commons.collections.collection.TransformedCollectionTest;
  * @author Neil O'Toole
  */
 @SuppressWarnings("boxing")
-public class TestMapUtils extends BulkTest {
+public class MapUtilsTest extends BulkTest {
 
-    public TestMapUtils(String name) {
+    public MapUtilsTest(String name) {
         super(name);
     }
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestMapUtils.class);
+        return BulkTest.makeSuite(MapUtilsTest.class);
     }
 
     public Predicate<Object> getPredicate() {

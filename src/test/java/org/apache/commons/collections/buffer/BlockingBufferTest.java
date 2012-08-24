@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections.buffer;
 
-import org.apache.commons.collections.AbstractTestObject;
+import org.apache.commons.collections.AbstractObjectTest;
 import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.BufferUnderflowException;
 
@@ -27,13 +27,13 @@ import java.util.LinkedList;
 import java.util.Set;
 
 /**
- * Extension of {@link AbstractTestObject} for exercising the
+ * Extension of {@link AbstractObjectTest} for exercising the
  * {@link BlockingBuffer} implementation.
  *
  * @since 3.0
  * @version $Id$
  */
-public class BlockingBufferTest<E> extends AbstractTestObject {
+public class BlockingBufferTest<E> extends AbstractObjectTest {
 
     public BlockingBufferTest(String testName) {
         super(testName);

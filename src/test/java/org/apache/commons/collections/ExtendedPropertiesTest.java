@@ -35,11 +35,11 @@ import junit.framework.TestCase;
  * @author Shinobu Kawai
  * @author <a href="mailto:hps@intermeta.de">Henning P. Schmiedehausen</a>
  */
-public class TestExtendedProperties extends TestCase {
+public class ExtendedPropertiesTest extends TestCase {
     
     protected ExtendedProperties eprop = new ExtendedProperties();
 
-    public TestExtendedProperties(String testName) {
+    public ExtendedPropertiesTest(String testName) {
         super(testName);
     }
 

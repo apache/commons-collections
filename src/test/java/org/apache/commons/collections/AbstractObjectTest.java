@@ -44,7 +44,7 @@ import java.io.Serializable;
  * @author Stephen Colebourne
  * @author Anonymous
  */
-public abstract class AbstractTestObject extends BulkTest {
+public abstract class AbstractObjectTest extends BulkTest {
 
     /** Current major release for Collections */
     public static final int COLLECTIONS_MAJOR_VERSION = 3;
@@ -54,7 +54,7 @@ public abstract class AbstractTestObject extends BulkTest {
      * 
      * @param testName  the test class name
      */
-    public AbstractTestObject(String testName) {
+    public AbstractObjectTest(String testName) {
         super(testName);
     }
 

@@ -50,7 +50,7 @@ import org.junit.Test;
  * @author Matt Benson
  */
 @SuppressWarnings("boxing")
-public class TestPredicateUtils extends AbstractPredicateTest {
+public class PredicateUtilsTest extends AbstractPredicateTest {
     /**
      * Set up instance variables required by this test case.
      */

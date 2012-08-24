@@ -38,14 +38,14 @@ import org.apache.commons.collections.functors.TruePredicate;
  *
  * @author Stephen Colebourne
  */
-public class TestClosureUtils extends TestCase {
+public class ClosureUtilsTest extends TestCase {
 
     private static final Object cString = "Hello";
 
     /**
      * Construct
      */
-    public TestClosureUtils(String name) {
+    public ClosureUtilsTest(String name) {
         super(name);
     }
 

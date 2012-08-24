@@ -34,14 +34,14 @@ import org.apache.commons.collections.set.PredicatedSet;
  * @author Neil O'Toole
  * @author Matthew Hawthorne
  */
-public class TestSetUtils extends BulkTest {
+public class SetUtilsTest extends BulkTest {
 
-    public TestSetUtils(String name) {
+    public SetUtilsTest(String name) {
         super(name);
     }
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestSetUtils.class);
+        return BulkTest.makeSuite(SetUtilsTest.class);
     }
 
     public void testNothing() {

@@ -19,7 +19,7 @@ package org.apache.commons.collections.iterators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections.AbstractTestObject;
+import org.apache.commons.collections.AbstractObjectTest;
 
 /**
  * Abstract class for testing the Iterator interface.
@@ -35,7 +35,7 @@ import org.apache.commons.collections.AbstractTestObject;
  * @author Morgan Delagrange
  * @author Stephen Colebourne
  */
-public abstract class AbstractTestIterator<E> extends AbstractTestObject {
+public abstract class AbstractTestIterator<E> extends AbstractObjectTest {
 
     /**
      * JUnit constructor.

@@ -24,7 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections.AbstractTestObject;
+import org.apache.commons.collections.AbstractObjectTest;
 import org.apache.commons.collections.Bag;
 
 /**
@@ -39,7 +39,7 @@ import org.apache.commons.collections.Bag;
  *
  * @version $Id$
  */
-public abstract class AbstractBagTest<T> extends AbstractTestObject {
+public abstract class AbstractBagTest<T> extends AbstractObjectTest {
 //  TODO: this class should really extend from TestCollection, but the bag
 //  implementations currently do not conform to the Collection interface.  Once
 //  those are fixed or at least a strategy is made for resolving the issue, this

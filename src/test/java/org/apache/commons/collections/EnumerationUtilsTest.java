@@ -30,9 +30,9 @@ import junit.framework.Test;
  * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @version $Id$
  */
-public class TestEnumerationUtils extends BulkTest {
+public class EnumerationUtilsTest extends BulkTest {
 
-    public TestEnumerationUtils(String name) {
+    public EnumerationUtilsTest(String name) {
         super(name);
     }
 
@@ -86,7 +86,7 @@ public class TestEnumerationUtils extends BulkTest {
     }
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestEnumerationUtils.class);
+        return BulkTest.makeSuite(EnumerationUtilsTest.class);
     }
 
 }

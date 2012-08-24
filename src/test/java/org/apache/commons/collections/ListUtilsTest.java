@@ -33,7 +33,7 @@ import org.apache.commons.collections.list.PredicatedList;
  *
  * @version $Id$
  */
-public class TestListUtils extends BulkTest {
+public class ListUtilsTest extends BulkTest {
 
     private static final String a = "a";
     private static final String b = "b";
@@ -45,12 +45,12 @@ public class TestListUtils extends BulkTest {
     private String[] fullArray;
     private List<String> fullList;
 
-    public TestListUtils(String name) {
+    public ListUtilsTest(String name) {
         super(name);
     }
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestListUtils.class);
+        return BulkTest.makeSuite(ListUtilsTest.class);
     }
 
     @Override

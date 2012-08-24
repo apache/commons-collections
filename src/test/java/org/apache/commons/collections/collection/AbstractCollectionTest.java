@@ -34,7 +34,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections.AbstractTestObject;
+import org.apache.commons.collections.AbstractObjectTest;
 
 /**
  * Abstract test class for {@link java.util.Collection} methods and contracts.
@@ -125,7 +125,7 @@ import org.apache.commons.collections.AbstractTestObject;
  * @author Neil O'Toole
  * @author Stephen Colebourne
  */
-public abstract class AbstractCollectionTest<E> extends AbstractTestObject {
+public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
     //
     // NOTE:

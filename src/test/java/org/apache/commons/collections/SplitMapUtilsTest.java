@@ -30,7 +30,7 @@ import org.apache.commons.collections.splitmap.TransformedMap;
  * @version $Id$
  */
 @SuppressWarnings("boxing")
-public class TestSplitMapUtils extends BulkTest {
+public class SplitMapUtilsTest extends BulkTest {
     private Map<String, Integer> backingMap;
     private TransformedMap<String, String, String, Integer> transformedMap;
 
@@ -40,7 +40,7 @@ public class TestSplitMapUtils extends BulkTest {
         }
     };
 
-    public TestSplitMapUtils(String testName) {
+    public SplitMapUtilsTest(String testName) {
         super(testName);
     }
 

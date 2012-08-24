@@ -29,7 +29,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.commons.collections.AbstractTestObject;
+import org.apache.commons.collections.AbstractObjectTest;
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.collection.AbstractCollectionTest;
@@ -125,7 +125,7 @@ import org.apache.commons.collections.set.AbstractSetTest;
  * @author Stephen Colebourne
  * @version $Revision$
  */
-public abstract class AbstractTestMap<K, V> extends AbstractTestObject {
+public abstract class AbstractTestMap<K, V> extends AbstractObjectTest {
 
     /**
      * JDK1.2 has bugs in null handling of Maps, especially HashMap.Entry.toString

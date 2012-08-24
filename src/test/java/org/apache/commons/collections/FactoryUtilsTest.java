@@ -38,12 +38,12 @@ import org.junit.Test;
  *
  * @author Stephen Colebourne
  */
-public class TestFactoryUtils extends junit.framework.TestCase {
+public class FactoryUtilsTest extends junit.framework.TestCase {
 
     /**
      * Construct
      */
-    public TestFactoryUtils(String name) {
+    public FactoryUtilsTest(String name) {
         super(name);
     }
 

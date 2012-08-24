@@ -27,15 +27,15 @@ import org.apache.commons.collections.buffer.PredicatedBuffer;
  *
  * @author Unknown
  */
-public class TestBufferUtils extends BulkTest {
+public class BufferUtilsTest extends BulkTest {
 
-    public TestBufferUtils(String name) {
+    public BufferUtilsTest(String name) {
         super(name);
     }
 
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestBufferUtils.class);
+        return BulkTest.makeSuite(BufferUtilsTest.class);
     }
 
     public void testNothing() {

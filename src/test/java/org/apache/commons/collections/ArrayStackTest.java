@@ -27,14 +27,14 @@ import junit.framework.Test;
  *
  * @author Craig McClanahan
  */
-public class TestArrayStack<E> extends AbstractTestArrayList<E> {
+public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
     
-    public TestArrayStack(String testName) {
+    public ArrayStackTest(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestArrayStack.class);
+        return BulkTest.makeSuite(ArrayStackTest.class);
     }
 
     @Override

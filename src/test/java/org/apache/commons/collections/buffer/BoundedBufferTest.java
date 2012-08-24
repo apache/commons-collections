@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections.buffer;
 
-import org.apache.commons.collections.AbstractTestObject;
+import org.apache.commons.collections.AbstractObjectTest;
 import org.apache.commons.collections.BoundedCollection;
 import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.BufferOverflowException;
@@ -25,7 +25,7 @@ import java.util.Iterator;
 import java.util.Collections;
 import java.util.Arrays;
 
-public class BoundedBufferTest<E> extends AbstractTestObject {
+public class BoundedBufferTest<E> extends AbstractObjectTest {
 
     public BoundedBufferTest(String testName) {
         super(testName);

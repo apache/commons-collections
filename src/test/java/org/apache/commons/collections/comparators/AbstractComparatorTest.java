@@ -24,7 +24,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.collections.AbstractTestObject;
+import org.apache.commons.collections.AbstractObjectTest;
 import org.junit.Test;
 
 /**
@@ -33,7 +33,7 @@ import org.junit.Test;
  * Concrete subclasses declare the comparator to be tested.
  * They also declare certain aspects of the tests.
  */
-public abstract class AbstractComparatorTest<T> extends AbstractTestObject {
+public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
 
     /**
      * JUnit constructor.

@@ -27,9 +27,9 @@ import org.apache.commons.collections.map.AbstractTestMap;
  *
  * @author Jason van Zyl
  */
-public abstract class AbstractTestTreeMap<K, V> extends AbstractTestMap<K, V> {
+public abstract class AbstractTreeMapTest<K, V> extends AbstractTestMap<K, V> {
 
-    public AbstractTestTreeMap(String testName) {
+    public AbstractTreeMapTest(String testName) {
         super(testName);
     }
 

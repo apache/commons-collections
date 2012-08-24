@@ -37,15 +37,15 @@ import org.apache.commons.collections.functors.TruePredicate;
  *
  * @author Phil Steitz
  */
-public class TestBagUtils extends BulkTest {
+public class BagUtilsTest extends BulkTest {
 
-    public TestBagUtils(String name) {
+    public BagUtilsTest(String name) {
         super(name);
     }
 
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestBagUtils.class);
+        return BulkTest.makeSuite(BagUtilsTest.class);
     }
 
     //----------------------------------------------------------------------
