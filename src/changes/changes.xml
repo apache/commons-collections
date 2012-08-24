@@ -69,6 +69,9 @@
       Improve javadoc of "CollatingIterator" wrt the used "Comparator" and throw a
       NullPointerException in "CollatingIterator#least" if no comparator is set.
     </action>
+    <action issue="COLLECTIONS-241" dev="brentworden" type="add" due-to="Elifarley Callado Coelho">
+      Added "PassiveExpiringMap" map decorator.
+    </action>
   </release>
   </body>
 </document>
