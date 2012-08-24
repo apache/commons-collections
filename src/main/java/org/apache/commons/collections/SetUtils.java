@@ -50,8 +50,8 @@ public class SetUtils {
 
     /**
      * Get a typed empty unmodifiable Set.
-     * @param <E>
-     * @return Set<E>
+     * @param <E> the element type
+     * @return an empty Set
      */
     public static <E> Set<E> emptySet() {
         return Collections.<E>emptySet();
@@ -61,12 +61,13 @@ public class SetUtils {
      * An empty unmodifiable sorted set.
      * This is not provided in the JDK.
      */
-    public static final SortedSet<?> EMPTY_SORTED_SET = UnmodifiableSortedSet.unmodifiableSortedSet(new TreeSet<Object>());
+    public static final SortedSet<?> EMPTY_SORTED_SET =
+            UnmodifiableSortedSet.unmodifiableSortedSet(new TreeSet<Object>());
 
     /**
      * Get a typed empty unmodifiable sorted set.
-     * @param <E>
-     * @return SortedSet<E>
+     * @param <E> the element type
+     * @return an empty sorted Set
      */
     @SuppressWarnings("unchecked")
     public static <E> SortedSet<E> emptySortedSet() {
@@ -127,6 +128,7 @@ public class SetUtils {
      * extend AbstractSet. The method takes Collection instances to enable other
      * collection types to use the Set implementation algorithm.
      * 
+     * @param <T> the element type
      * @see java.util.Set#hashCode()
      * @param set  the set to calculate the hash code for, may be null
      * @return the hash code
@@ -164,11 +166,12 @@ public class SetUtils {
      * 
      * This method uses the implementation in the decorators subpackage.
      * 
+     * @param <E> the element type
      * @param set  the set to synchronize, must not be null
      * @return a synchronized set backed by the given set
      * @throws IllegalArgumentException  if the set is null
      */
-    public static <T> Set<T> synchronizedSet(Set<T> set) {
+    public static <E> Set<E> synchronizedSet(Set<E> set) {
         return SynchronizedSet.synchronizedSet(set);
     }
 
@@ -177,6 +180,7 @@ public class SetUtils {
      * <p>
      * This method uses the implementation in the decorators subpackage.
      *
+     * @param <E> the element type
      * @param set  the set to make unmodifiable, must not be null
      * @return an unmodifiable set backed by the given set
      * @throws IllegalArgumentException  if the set is null
@@ -193,12 +197,13 @@ public class SetUtils {
      * It is important not to use the original set after invoking this method,
      * as it is a backdoor for adding invalid objects.
      *
+     * @param <E> the element type
      * @param set  the set to predicate, must not be null
      * @param predicate  the predicate for the set, must not be null
      * @return a predicated set backed by the given set
      * @throws IllegalArgumentException  if the Set or Predicate is null
      */
-    public static <T> Set<T> predicatedSet(Set<T> set, Predicate<? super T> predicate) {
+    public static <E> Set<E> predicatedSet(Set<E> set, Predicate<? super E> predicate) {
         return PredicatedSet.predicatedSet(set, predicate);
     }
 
@@ -212,6 +217,7 @@ public class SetUtils {
      * Existing entries in the specified set will not be transformed.
      * If you want that behaviour, see {@link TransformedSet#transformedSet}.
      *
+     * @param <E> the element type
      * @param set  the set to transform, must not be null
      * @param transformer  the transformer for the set, must not be null
      * @return a transformed set backed by the given set
@@ -228,6 +234,7 @@ public class SetUtils {
      * If an element is added twice, the order is determined by the first add.
      * The order is observed through the iterator or toArray.
      *
+     * @param <E> the element type
      * @param set  the set to order, must not be null
      * @return an ordered set backed by the given set
      * @throws IllegalArgumentException  if the Set is null
@@ -255,11 +262,12 @@ public class SetUtils {
      * 
      * This method uses the implementation in the decorators subpackage.
      * 
+     * @param <E> the element type
      * @param set  the sorted set to synchronize, must not be null
      * @return a synchronized set backed by the given set
      * @throws IllegalArgumentException  if the set is null
      */
-    public static <T> SortedSet<T> synchronizedSortedSet(SortedSet<T> set) {
+    public static <E> SortedSet<E> synchronizedSortedSet(SortedSet<E> set) {
         return SynchronizedSortedSet.synchronizedSortedSet(set);
     }
 
@@ -268,11 +276,12 @@ public class SetUtils {
      * <p>
      * This method uses the implementation in the decorators subpackage.
      *
+     * @param <E> the element type
      * @param set  the sorted set to make unmodifiable, must not be null
      * @return an unmodifiable set backed by the given set
      * @throws IllegalArgumentException  if the set is null
      */
-    public static <T> SortedSet<T> unmodifiableSortedSet(SortedSet<T> set) {
+    public static <E> SortedSet<E> unmodifiableSortedSet(SortedSet<E> set) {
         return UnmodifiableSortedSet.unmodifiableSortedSet(set);
     }
 
@@ -284,12 +293,13 @@ public class SetUtils {
      * It is important not to use the original set after invoking this method,
      * as it is a backdoor for adding invalid objects.
      *
+     * @param <E> the element type
      * @param set  the sorted set to predicate, must not be null
      * @param predicate  the predicate for the sorted set, must not be null
      * @return a predicated sorted set backed by the given sorted set
      * @throws IllegalArgumentException  if the Set or Predicate is null
      */
-    public static <T> SortedSet<T> predicatedSortedSet(SortedSet<T> set, Predicate<? super T> predicate) {
+    public static <E> SortedSet<E> predicatedSortedSet(SortedSet<E> set, Predicate<? super E> predicate) {
         return PredicatedSortedSet.predicatedSortedSet(set, predicate);
     }
 
@@ -303,12 +313,14 @@ public class SetUtils {
      * Existing entries in the specified set will not be transformed.
      * If you want that behaviour, see {@link TransformedSortedSet#transformedSortedSet}.
      *
+     * @param <E> the element type
      * @param set  the set to transform, must not be null
      * @param transformer  the transformer for the set, must not be null
      * @return a transformed set backed by the given set
      * @throws IllegalArgumentException  if the Set or Transformer is null
      */
-    public static <E> SortedSet<E> transformedSortedSet(SortedSet<E> set, Transformer<? super E, ? extends E> transformer) {
+    public static <E> SortedSet<E> transformedSortedSet(SortedSet<E> set,
+                                                        Transformer<? super E, ? extends E> transformer) {
         return TransformedSortedSet.transformingSortedSet(set, transformer);
     }
     

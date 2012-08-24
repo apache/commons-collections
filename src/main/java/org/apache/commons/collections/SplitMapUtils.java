@@ -198,8 +198,8 @@ public class SplitMapUtils {
      * If <code>get</code> implements {@link IterableMap} directly, no conversion will take place.
      * If <code>get</code> implements {@link Map} but not {@link IterableMap} it will be decorated.
      * Otherwise an {@link Unmodifiable} {@link IterableMap} will be returned.
-     * @param <K>
-     * @param <V>
+     * @param <K> the key type
+     * @param <V> the value type
      * @param get to wrap, must not be null
      * @return {@link IterableMap}
      */
@@ -222,8 +222,8 @@ public class SplitMapUtils {
      * it is recommended that the result of #put(K, V) be discarded as it likely will not
      * match <code>V</code> at runtime.
      *
-     * @param <K>
-     * @param <V>
+     * @param <K> the key type
+     * @param <V> the element type
      * @param put to wrap, must not be null
      * @return {@link Map}
      */

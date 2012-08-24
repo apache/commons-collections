@@ -44,7 +44,9 @@ public class EnumerationUtils {
      * <p>As the enumeration is traversed, an ArrayList of its values is
      * created. The new list is returned.</p>
      *
+     * @param <E> the element type
      * @param enumeration  the enumeration to traverse, which should not be <code>null</code>.
+     * @return a list containing all elements of the given enumeration
      * @throws NullPointerException if the enumeration parameter is <code>null</code>.
      */
     public static <E> List<E> toList(Enumeration<E> enumeration) {
