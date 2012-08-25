@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -320,5 +321,45 @@ public class ListUtilsTest extends BulkTest {
             Assert.fail("failed to check for size argument");
         } catch (IllegalArgumentException e) {}
         
-    }    
+    }
+    
+    private static Predicate<Number> EQUALS_TWO = new Predicate<Number>() {
+        public boolean evaluate(Number input) {
+            return (input.intValue() == 2);
+        }
+    };
+
+    public void testSelect() {
+        List<Integer> list = new ArrayList<Integer>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        // Ensure that the collection is the input type or a super type
+        List<Integer> output1 = ListUtils.select(list, EQUALS_TWO);
+        List<Number> output2 = ListUtils.<Number>select(list, EQUALS_TWO);
+        HashSet<Number> output3 = CollectionUtils.select(list, EQUALS_TWO, new HashSet<Number>());
+        Assert.assertTrue(CollectionUtils.isEqualCollection(output1, output3));
+        Assert.assertEquals(4, list.size());
+        Assert.assertEquals(1, output1.size());
+        Assert.assertEquals(2, output2.iterator().next());
+    }
+
+    public void testSelectRejected() {
+        List<Long> list = new ArrayList<Long>();
+        list.add(1L);
+        list.add(2L);
+        list.add(3L);
+        list.add(4L);
+        List<Long> output1 = ListUtils.selectRejected(list, EQUALS_TWO);
+        List<? extends Number> output2 = ListUtils.selectRejected(list, EQUALS_TWO);
+        HashSet<Number> output3 = CollectionUtils.selectRejected(list, EQUALS_TWO, new HashSet<Number>());
+        Assert.assertTrue(CollectionUtils.isEqualCollection(output1, output2));
+        Assert.assertTrue(CollectionUtils.isEqualCollection(output1, output3));
+        Assert.assertEquals(4, list.size());
+        Assert.assertEquals(3, output1.size());
+        Assert.assertTrue(output1.contains(1L));
+        Assert.assertTrue(output1.contains(3L));
+        Assert.assertTrue(output1.contains(4L));
+    }
 }

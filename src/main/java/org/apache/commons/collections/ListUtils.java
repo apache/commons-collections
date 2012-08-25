@@ -144,6 +144,51 @@ public class ListUtils {
     }
 
     /**
+     * Selects all elements from input collection which match the given
+     * predicate into an output list.
+     * <p>
+     * A <code>null</code> predicate matches no elements.
+     *
+     * @param inputCollection
+     *            the collection to get the input from, may not be null
+     * @param predicate
+     *            the predicate to use, may be null
+     * @return the elements matching the predicate (new list)
+     * @throws NullPointerException
+     *             if the input list is null
+     *          
+     * @since 4.0
+     * @see CollectionUtils#select(Collection, Predicate)
+     */
+    public static <O> List<O> select(Collection<? extends O> inputCollection,
+            Predicate<? super O> predicate) {
+        return CollectionUtils.select(inputCollection, predicate, new ArrayList<O>(inputCollection.size()));
+    }
+
+    /**
+     * Selects all elements from inputCollection which don't match the given
+     * predicate into an output collection.
+     * <p>
+     * If the input predicate is <code>null</code>, the result is an empty
+     * list.
+     *
+     * @param inputCollection
+     *            the collection to get the input from, may not be null
+     * @param predicate
+     *            the predicate to use, may be null
+     * @return the elements <b>not</b> matching the predicate (new list)
+     * @throws NullPointerException
+     *             if the input collection is null
+     *          
+     * @since 4.0
+     * @see CollectionUtils#selectRejected(Collection, Predicate)
+     */
+    public static <O> List<O> selectRejected(Collection<? extends O> inputCollection,
+            Predicate<? super O> predicate) {
+        return CollectionUtils.selectRejected(inputCollection, predicate, new ArrayList<O>(inputCollection.size()));
+    }
+
+    /**
      * Tests two lists for value-equality as per the equality contract in
      * {@link java.util.List#equals(java.lang.Object)}.
      * <p>

@@ -72,6 +72,9 @@
     <action issue="COLLECTIONS-241" dev="brentworden" type="add" due-to="Elifarley Callado Coelho">
       Added "PassiveExpiringMap" map decorator.
     </action>
+    <action issue="COLLECTIONS-405" dev="brentworden" type="add" due-to="Adam Dyga">
+      Added "ListUtils#select" and "ListUtils#selectRejected" methods.
+    </action>
   </release>
   </body>
 </document>
