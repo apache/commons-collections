@@ -75,6 +75,9 @@
     <action issue="COLLECTIONS-405" dev="brentworden" type="add" due-to="Adam Dyga">
       Added "ListUtils#select" and "ListUtils#selectRejected" methods.
     </action>
+    <action issue="COLLECTIONS-427" dev="brentworden" type="fix" due-to="Mert Guldur">
+      Fixed performance issue in "SetUniqueList#retainAll" method for large collections.
+    </action>
   </release>
   </body>
 </document>
