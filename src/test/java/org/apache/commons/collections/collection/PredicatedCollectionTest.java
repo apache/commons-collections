@@ -28,10 +28,8 @@ import org.apache.commons.collections.functors.TruePredicate;
  * Extension of {@link AbstractCollectionTest} for exercising the 
  * {@link PredicatedCollection} implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Phil Steitz
+ * @since 3.0
+ * @version $Id$
  */
 public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
 

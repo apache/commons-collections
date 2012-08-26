@@ -28,6 +28,8 @@ import org.apache.commons.collections.buffer.BoundedBuffer;
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link UnmodifiableBoundedCollection} implementation.
+ * 
+ * @version $Id$
  */
 public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest<E> {
 

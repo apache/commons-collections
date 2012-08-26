@@ -117,13 +117,7 @@ import org.apache.commons.collections.AbstractObjectTest;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Collection} fails.
  *
- * @version $Revision$
- *
- * @author Rodney Waldhoff
- * @author Paul Jack
- * @author Michael A. Smith
- * @author Neil O'Toole
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 

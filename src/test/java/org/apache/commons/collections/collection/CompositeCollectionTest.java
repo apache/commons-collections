@@ -27,11 +27,8 @@ import java.util.List;
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link CompositeCollection} implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Brian McCallister
- * @author Phil Steitz
+ * @since 3.0
+ * @version $Id$
  */
 public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 

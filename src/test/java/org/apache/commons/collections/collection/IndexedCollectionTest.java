@@ -28,6 +28,13 @@ import org.apache.commons.collections.Transformer;
 import org.apache.commons.collections.collection.IndexedCollection;
 import org.junit.Test;
 
+/**
+ * Extension of {@link AbstractCollectionTest} for exercising the 
+ * {@link IndexedCollection} implementation.
+ *
+ * @since 4.0
+ * @version $Id$
+ */
 @SuppressWarnings("boxing")
 public class IndexedCollectionTest extends AbstractCollectionTest<String> {
 
