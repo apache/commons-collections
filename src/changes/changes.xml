@@ -78,6 +78,9 @@
     <action issue="COLLECTIONS-427" dev="brentworden" type="fix" due-to="Mert Guldur">
       Fixed performance issue in "SetUniqueList#retainAll" method for large collections.
     </action>
+    <action issue="COLLECTIONS-426" dev="brentworden" type="fix" due-to="Adrian Nistor">
+      Fixed performance issue in "ListOrderedSet#retainAll" method for large collections.
+    </action>
   </release>
   </body>
 </document>
