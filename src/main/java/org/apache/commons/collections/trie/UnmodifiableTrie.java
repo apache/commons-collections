@@ -26,6 +26,8 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
     /**
      * Factory method to create a unmodifiable trie.
      * 
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param trie  the trie to decorate, must not be null
      * @return a new unmodifiable trie
      * @throws IllegalArgumentException if trie is null
@@ -39,18 +41,15 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
      * Constructor that wraps (not copies).
      * 
      * @param trie  the trie to decorate, must not be null
-     * @throws IllegalArgumentException if set is null
+     * @throws IllegalArgumentException if trie is null
      */
     public UnmodifiableTrie(Trie<K, V> trie) {
         if (trie == null) {
-            throw new IllegalArgumentException("Collection must not be null");
+            throw new IllegalArgumentException("Trie must not be null");
         }
         this.delegate = trie;
     }
     
-    /**
-     * {@inheritDoc}
-     */
     public Entry<K, V> select(K key, final Cursor<? super K, ? super V> cursor) {
         Cursor<K, V> c = new Cursor<K, V>() {
             public Decision select(Map.Entry<? extends K, ? extends V> entry) {
@@ -71,30 +70,18 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
         return delegate.select(key, c);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public Entry<K, V> select(K key) {
         return delegate.select(key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public K selectKey(K key) {
         return delegate.selectKey(key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public V selectValue(K key) {
         return delegate.selectValue(key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public Entry<K, V> traverse(final Cursor<? super K, ? super V> cursor) {
         Cursor<K, V> c = new Cursor<K, V>() {
             public Decision select(Map.Entry<? extends K, ? extends V> entry) {
@@ -115,177 +102,103 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
         return delegate.traverse(c);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public Set<Entry<K, V>> entrySet() {
         return Collections.unmodifiableSet(delegate.entrySet());
     }
     
-    /**
-     * {@inheritDoc}
-     */
     public Set<K> keySet() {
         return Collections.unmodifiableSet(delegate.keySet());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public Collection<V> values() {
         return Collections.unmodifiableCollection(delegate.values());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public void clear() {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public boolean containsKey(Object key) {
         return delegate.containsKey(key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public boolean containsValue(Object value) {
         return delegate.containsValue(value);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public V get(Object key) {
         return delegate.get(key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public boolean isEmpty() {
         return delegate.isEmpty();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public V put(K key, V value) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public void putAll(Map<? extends K, ? extends V> m) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public V remove(Object key) {
         throw new UnsupportedOperationException();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public K firstKey() {
         return delegate.firstKey();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public SortedMap<K, V> headMap(K toKey) {
         return Collections.unmodifiableSortedMap(delegate.headMap(toKey));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public K lastKey() {
         return delegate.lastKey();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public SortedMap<K, V> subMap(K fromKey, K toKey) {
         return Collections.unmodifiableSortedMap(
                 delegate.subMap(fromKey, toKey));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public SortedMap<K, V> tailMap(K fromKey) {
         return Collections.unmodifiableSortedMap(delegate.tailMap(fromKey));
     }
     
-    /**
-     * {@inheritDoc}
-     */
     public SortedMap<K, V> getPrefixedBy(K key, int offset, int length) {
         return Collections.unmodifiableSortedMap(
                 delegate.getPrefixedBy(key, offset, length));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public SortedMap<K, V> getPrefixedBy(K key, int length) {
         return Collections.unmodifiableSortedMap(
                 delegate.getPrefixedBy(key, length));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public SortedMap<K, V> getPrefixedBy(K key) {
         return Collections.unmodifiableSortedMap(
                 delegate.getPrefixedBy(key));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public SortedMap<K, V> getPrefixedByBits(K key, int lengthInBits) {
         return Collections.unmodifiableSortedMap(
                 delegate.getPrefixedByBits(key, lengthInBits));
     }
     
-    /**
-     * {@inheritDoc}
-     */
-    public SortedMap<K, V> getPrefixedByBits(K key, int offsetInBits,
-            int lengthInBits) {
-        return Collections.unmodifiableSortedMap(
-                delegate.getPrefixedByBits(key, offsetInBits, lengthInBits));
+    public SortedMap<K, V> getPrefixedByBits(K key, int offsetInBits, int lengthInBits) {
+        return Collections.unmodifiableSortedMap(delegate.getPrefixedByBits(key, offsetInBits, lengthInBits));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public Comparator<? super K> comparator() {
         return delegate.comparator();
     }
     
-    /**
-     * {@inheritDoc}
-     */
     public int size() {
         return delegate.size();
     }
     
-    /**
-     * {@inheritDoc}
-     */
     public int hashCode() {
         return delegate.hashCode();
     }

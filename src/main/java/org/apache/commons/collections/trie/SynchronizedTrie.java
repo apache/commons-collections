@@ -43,6 +43,8 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
     /**
      * Factory method to create a synchronized trie.
      * 
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param trie  the trie to decorate, must not be null
      * @return a new synchronized trie
      * @throws IllegalArgumentException if trie is null
@@ -65,200 +67,115 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
         this.delegate = trie;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public synchronized Entry<K, V> select(K key, 
-            Cursor<? super K, ? super V> cursor) {
+    public synchronized Entry<K, V> select(K key, Cursor<? super K, ? super V> cursor) {
         return delegate.select(key, cursor);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized Entry<K, V> select(K key) {
         return delegate.select(key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized K selectKey(K key) {
         return delegate.selectKey(key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized V selectValue(K key) {
         return delegate.selectValue(key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized Entry<K, V> traverse(Cursor<? super K, ? super V> cursor) {
         return delegate.traverse(cursor);
     }
     
-    /**
-     * {@inheritDoc}
-     */
     public synchronized Set<Entry<K, V>> entrySet() {
         return SynchronizedSet.synchronizedSet(delegate.entrySet());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized Set<K> keySet() {
         return SynchronizedSet.synchronizedSet(delegate.keySet());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized Collection<V> values() {
         return SynchronizedCollection.synchronizedCollection(delegate.values());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized void clear() {
         delegate.clear();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized boolean containsKey(Object key) {
         return delegate.containsKey(key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized boolean containsValue(Object value) {
         return delegate.containsValue(value);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized V get(Object key) {
         return delegate.get(key);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized boolean isEmpty() {
         return delegate.isEmpty();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized V put(K key, V value) {
         return delegate.put(key, value);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized void putAll(Map<? extends K, ? extends V> m) {
         delegate.putAll(m);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized V remove(Object key) {
         return delegate.remove(key);
     }
     
-    /**
-     * {@inheritDoc}
-     */
     public synchronized K lastKey() {
         return delegate.lastKey();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized SortedMap<K, V> subMap(K fromKey, K toKey) {
         return Collections.synchronizedSortedMap(delegate.subMap(fromKey, toKey));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized SortedMap<K, V> tailMap(K fromKey) {
         return Collections.synchronizedSortedMap(delegate.tailMap(fromKey));
     }
     
-    /**
-     * {@inheritDoc}
-     */
     public synchronized Comparator<? super K> comparator() {
         return delegate.comparator();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized K firstKey() {
         return delegate.firstKey();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized SortedMap<K, V> headMap(K toKey) {
         return Collections.synchronizedSortedMap(delegate.headMap(toKey));
     }
     
-    /**
-     * {@inheritDoc}
-     */
     public synchronized SortedMap<K, V> getPrefixedBy(K key, int offset, int length) {
         return Collections.synchronizedSortedMap(delegate.getPrefixedBy(key, offset, length));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized SortedMap<K, V> getPrefixedBy(K key, int length) {
         return Collections.synchronizedSortedMap(delegate.getPrefixedBy(key, length));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized SortedMap<K, V> getPrefixedBy(K key) {
         return Collections.synchronizedSortedMap(delegate.getPrefixedBy(key));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized SortedMap<K, V> getPrefixedByBits(K key, int lengthInBits) {
         return Collections.synchronizedSortedMap(delegate.getPrefixedByBits(key, lengthInBits));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized SortedMap<K, V> getPrefixedByBits(K key, 
             int offsetInBits, int lengthInBits) {
         return Collections.synchronizedSortedMap(delegate.getPrefixedByBits(key, offsetInBits, lengthInBits));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public synchronized int size() {
         return delegate.size();
     }
