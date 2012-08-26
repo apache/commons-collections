@@ -26,7 +26,7 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.MapIterator;
 import org.apache.commons.collections.OrderedBidiMap;
-import org.apache.commons.collections.iterators.AbstractTestMapIterator;
+import org.apache.commons.collections.iterators.AbstractMapIteratorTest;
 
 /**
  * Abstract test class for {@link OrderedBidiMap} methods and contracts.
@@ -157,7 +157,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         return (OrderedBidiMap<K, V>) super.getMap();
     }
 
-    public class TestBidiOrderedMapIterator extends AbstractTestMapIterator<K, V> {
+    public class TestBidiOrderedMapIterator extends AbstractMapIteratorTest<K, V> {
         public TestBidiOrderedMapIterator() {
             super("TestBidiOrderedMapIterator");
         }

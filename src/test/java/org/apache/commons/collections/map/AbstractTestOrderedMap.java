@@ -29,7 +29,7 @@ import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.OrderedMap;
 import org.apache.commons.collections.OrderedMapIterator;
 import org.apache.commons.collections.comparators.NullComparator;
-import org.apache.commons.collections.iterators.AbstractTestOrderedMapIterator;
+import org.apache.commons.collections.iterators.AbstractOrderedMapIteratorTest;
 
 /**
  * Abstract test class for {@link OrderedMap} methods and contracts.
@@ -194,7 +194,7 @@ public abstract class AbstractTestOrderedMap<K, V> extends AbstractTestIterableM
         return new InnerTestOrderedMapIterator();
     }
 
-    public class InnerTestOrderedMapIterator extends AbstractTestOrderedMapIterator<K, V> {
+    public class InnerTestOrderedMapIterator extends AbstractOrderedMapIteratorTest<K, V> {
         public InnerTestOrderedMapIterator() {
             super("InnerTestOrderedMapIterator");
         }

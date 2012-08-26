@@ -25,7 +25,7 @@ import java.util.Set;
 import org.apache.commons.collections.BidiMap;
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.MapIterator;
-import org.apache.commons.collections.iterators.AbstractTestMapIterator;
+import org.apache.commons.collections.iterators.AbstractMapIteratorTest;
 import org.apache.commons.collections.map.AbstractTestIterableMap;
 
 /**
@@ -475,7 +475,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractTestIterableMap<
         return new TestBidiMapIterator();
     }
 
-    public class TestBidiMapIterator extends AbstractTestMapIterator<K, V> {
+    public class TestBidiMapIterator extends AbstractMapIteratorTest<K, V> {
         public TestBidiMapIterator() {
             super("TestBidiMapIterator");
         }

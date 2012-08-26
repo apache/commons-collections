@@ -23,7 +23,7 @@ import java.util.Map;
 import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.MapIterator;
-import org.apache.commons.collections.iterators.AbstractTestMapIterator;
+import org.apache.commons.collections.iterators.AbstractMapIteratorTest;
 
 /**
  * Abstract test class for {@link IterableMap} methods and contracts.
@@ -129,7 +129,7 @@ public abstract class AbstractTestIterableMap<K, V> extends AbstractTestMap<K, V
         return new InnerTestMapIterator();
     }
 
-    public class InnerTestMapIterator extends AbstractTestMapIterator<K, V> {
+    public class InnerTestMapIterator extends AbstractMapIteratorTest<K, V> {
         public InnerTestMapIterator() {
             super("InnerTestMapIterator");
         }

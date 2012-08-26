@@ -27,7 +27,7 @@ import junit.framework.Test;
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.IterableMap;
 import org.apache.commons.collections.MapIterator;
-import org.apache.commons.collections.iterators.AbstractTestMapIterator;
+import org.apache.commons.collections.iterators.AbstractMapIteratorTest;
 
 /**
  * JUnit tests.
@@ -343,7 +343,7 @@ public class TestFlat3Map<K, V> extends AbstractTestIterableMap<K, V> {
         return new TestFlatMapIterator();
     }
 
-    public class TestFlatMapIterator extends AbstractTestMapIterator<K, V> {
+    public class TestFlatMapIterator extends AbstractMapIteratorTest<K, V> {
         public TestFlatMapIterator() {
             super("TestFlatMapIterator");
         }

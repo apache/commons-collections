@@ -33,7 +33,7 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.collection.AbstractCollectionTest;
-import org.apache.commons.collections.iterators.AbstractTestListIterator;
+import org.apache.commons.collections.iterators.AbstractListIteratorTest;
 
 /**
  * Abstract test class for {@link java.util.List} methods and contracts.
@@ -1315,7 +1315,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
        return new TestListIterator();
    }
 
-   public class TestListIterator extends AbstractTestListIterator<E> {
+   public class TestListIterator extends AbstractListIteratorTest<E> {
        public TestListIterator() {
            super("TestListIterator");
        }
