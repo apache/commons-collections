@@ -29,20 +29,17 @@ import org.apache.commons.collections.AbstractObjectTest;
  * They must also specify certain details of how the iterator operates by
  * overriding the supportsXxx() methods if necessary.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Morgan Delagrange
- * @author Stephen Colebourne
+ * @since 3.0
+ * @version $Id$
  */
-public abstract class AbstractTestIterator<E> extends AbstractObjectTest {
+public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
 
     /**
      * JUnit constructor.
      * 
      * @param testName  the test class name
      */
-    public AbstractTestIterator(String testName) {
+    public AbstractIteratorTest(String testName) {
         super(testName);
     }
 

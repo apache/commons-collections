@@ -27,16 +27,14 @@ import org.apache.commons.collections.Unmodifiable;
 /**
  * Tests the UnmodifiableIterator.
  *
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public class TestUnmodifiableIterator<E> extends AbstractTestIterator<E> {
+public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
 
     protected String[] testArray = { "One", "Two", "Three" };
     protected List<E> testList;
 
-    public TestUnmodifiableIterator(String testName) {
+    public UnmodifiableIteratorTest(String testName) {
         super(testName);
     }
 

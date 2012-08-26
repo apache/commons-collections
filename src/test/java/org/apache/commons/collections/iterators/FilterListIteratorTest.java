@@ -31,13 +31,11 @@ import org.junit.Assert;
 /**
  * Tests the FilterListIterator class.
  *
- * @version $Revision$
- *
- * @author Rodney Waldhoff
+ * @version $Id$
  */
 @SuppressWarnings("boxing")
-public class TestFilterListIterator extends TestCase {
-    public TestFilterListIterator(String testName) {
+public class FilterListIteratorTest extends TestCase {
+    public FilterListIteratorTest(String testName) {
         super(testName);
     }
 

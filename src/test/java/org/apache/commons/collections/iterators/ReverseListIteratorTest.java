@@ -27,13 +27,13 @@ import org.apache.commons.collections.ResettableListIterator;
 /**
  * Tests the ReverseListIterator.
  *
- * @version $Revision$
+ * @version $Id$
  */
-public class TestReverseListIterator<E> extends AbstractTestListIterator<E> {
+public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
 
     protected String[] testArray = { "One", "Two", "Three", "Four" };
 
-    public TestReverseListIterator(String testName) {
+    public ReverseListIteratorTest(String testName) {
         super(testName);
     }
 

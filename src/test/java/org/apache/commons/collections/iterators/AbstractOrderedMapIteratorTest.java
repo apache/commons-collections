@@ -34,19 +34,17 @@ import org.apache.commons.collections.OrderedMapIterator;
  * They must also specify certain details of how the list iterator operates by
  * overriding the supportsXxx() methods if necessary.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @since 3.0
+ * @version $Id$
  */
-public abstract class AbstractTestOrderedMapIterator<K, V> extends AbstractTestMapIterator<K, V> {
+public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIteratorTest<K, V> {
 
     /**
      * JUnit constructor.
      *
      * @param testName  the test class name
      */
-    public AbstractTestOrderedMapIterator(String testName) {
+    public AbstractOrderedMapIteratorTest(String testName) {
         super(testName);
     }
 

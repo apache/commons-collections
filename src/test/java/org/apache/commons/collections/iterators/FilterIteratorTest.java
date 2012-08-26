@@ -31,16 +31,12 @@ import org.apache.commons.collections.functors.NotNullPredicate;
 /**
  * Test the filter iterator.
  *
- * @version $Revision$
- *
- * @author Jan Sorensen
- * @author Ralph Wagner
- * @author Huw Roberts
+ * @version $Id$
  */
-public class TestFilterIterator<E> extends AbstractTestIterator<E> {
+public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
     /** Creates new TestFilterIterator */
-    public TestFilterIterator(String name) {
+    public FilterIteratorTest(String name) {
         super(name);
     }
 

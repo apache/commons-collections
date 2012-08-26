@@ -19,15 +19,13 @@ package org.apache.commons.collections.iterators;
 /**
  * Tests the ObjectArrayListIterator class.
  *
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public class TestObjectArrayListIterator2<E> extends AbstractTestListIterator<E> {
+public class ObjectArrayListIterator2Test<E> extends AbstractListIteratorTest<E> {
 
     protected String[] testArray = { "One", "Two", "Three" };
 
-    public TestObjectArrayListIterator2(String testName) {
+    public ObjectArrayListIterator2Test(String testName) {
         super(testName);
     }
 

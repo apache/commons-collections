@@ -27,11 +27,9 @@ import org.apache.commons.collections.Transformer;
 /**
  * Testcase.
  *
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public class TestObjectGraphIterator extends AbstractTestIterator<Object> {
+public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
 
     protected String[] testArray = { "One", "Two", "Three", "Four", "Five", "Six" };
 
@@ -40,7 +38,7 @@ public class TestObjectGraphIterator extends AbstractTestIterator<Object> {
     protected List<String> list3 = null;
     protected List<Iterator<String>> iteratorList = null;
 
-    public TestObjectGraphIterator(String testName) {
+    public ObjectGraphIteratorTest(String testName) {
         super(testName);
     }
 

@@ -31,19 +31,17 @@ import org.apache.commons.collections.MapIterator;
  * They must also specify certain details of how the list iterator operates by
  * overriding the supportsXxx() methods if necessary.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @since 3.0
+ * @version $Id$
  */
-public abstract class AbstractTestMapIterator<K, V> extends AbstractTestIterator<K> {
+public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest<K> {
 
     /**
      * JUnit constructor.
      *
      * @param testName  the test class name
      */
-    public AbstractTestMapIterator(String testName) {
+    public AbstractMapIteratorTest(String testName) {
         super(testName);
     }
 

@@ -19,12 +19,11 @@ package org.apache.commons.collections.iterators;
 /**
  * Test the ArrayListIterator class with primitives.
  *
- * @version $Revision$
- * @author Neil O'Toole
+ * @version $Id$
  */
-public class TestArrayListIterator2<E> extends TestArrayIterator2<E> {
+public class ArrayListIterator2Test<E> extends ArrayIterator2Test<E> {
 
-    public TestArrayListIterator2(String testName) {
+    public ArrayListIterator2Test(String testName) {
         super(testName);
     }
 

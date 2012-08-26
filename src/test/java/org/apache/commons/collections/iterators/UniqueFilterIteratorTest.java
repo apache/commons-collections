@@ -24,14 +24,9 @@ import java.util.NoSuchElementException;
 /**
  * Tests the UniqueFilterIterator class.
  *
- * @version $Revision$
- *
- * @author James Strachan
- * @author Mauricio S. Moura
- * @author Morgan Delagrange
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public class TestUniqueFilterIterator<E> extends AbstractTestIterator<E> {
+public class UniqueFilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
     protected String[] testArray = {
         "One", "Two", "Three", "Four", "Five", "Six"
@@ -39,7 +34,7 @@ public class TestUniqueFilterIterator<E> extends AbstractTestIterator<E> {
 
     protected List<E> list1 = null;
 
-    public TestUniqueFilterIterator(String testName) {
+    public UniqueFilterIteratorTest(String testName) {
         super(testName);
     }
 

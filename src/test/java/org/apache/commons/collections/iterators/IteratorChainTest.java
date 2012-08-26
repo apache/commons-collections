@@ -27,13 +27,9 @@ import org.apache.commons.collections.Predicate;
 /**
  * Tests the IteratorChain class.
  *
- * @version $Revision$
- *
- * @author James Strachan
- * @author Mauricio S. Moura
- * @author Morgan Delagrange
+ * @version $Id$
  */
-public class TestIteratorChain extends AbstractTestIterator<String> {
+public class IteratorChainTest extends AbstractIteratorTest<String> {
 
     protected String[] testArray = {
         "One", "Two", "Three", "Four", "Five", "Six"
@@ -43,7 +39,7 @@ public class TestIteratorChain extends AbstractTestIterator<String> {
     protected List<String> list2 = null;
     protected List<String> list3 = null;
 
-    public TestIteratorChain(String testName) {
+    public IteratorChainTest(String testName) {
         super(testName);
     }
 

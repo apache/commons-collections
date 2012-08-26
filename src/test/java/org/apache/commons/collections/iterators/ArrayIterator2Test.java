@@ -22,16 +22,13 @@ import java.util.NoSuchElementException;
 /**
  * Tests the ArrayIterator with primitive type arrays.
  *
- * @version $Revision$
- *
- * @author Morgan Delagrange
- * @author James Strachan
+ * @version $Id$
  */
-public class TestArrayIterator2<E> extends AbstractTestIterator<E> {
+public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
 
     protected int[] testArray = { 2, 4, 6, 8 };
 
-    public TestArrayIterator2(String testName) {
+    public ArrayIterator2Test(String testName) {
         super(testName);
     }
 

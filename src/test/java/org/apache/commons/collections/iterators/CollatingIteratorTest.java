@@ -26,15 +26,14 @@ import org.apache.commons.collections.comparators.ComparableComparator;
 /**
  * Unit test suite for {@link CollatingIterator}.
  *
- * @version $Revision$
- * @author Rodney Waldhoff
+ * @version $Id$
  */
 @SuppressWarnings("boxing")
-public class TestCollatingIterator extends AbstractTestIterator<Integer> {
+public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
 
     //------------------------------------------------------------ Conventional
 
-    public TestCollatingIterator(String testName) {
+    public CollatingIteratorTest(String testName) {
         super(testName);
     }
 

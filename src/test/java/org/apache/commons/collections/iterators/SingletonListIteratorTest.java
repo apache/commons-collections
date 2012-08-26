@@ -24,15 +24,13 @@ import org.apache.commons.collections.ResettableListIterator;
 /**
  * Tests the SingletonListIterator.
  *
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public class TestSingletonListIterator<E> extends AbstractTestListIterator<E> {
+public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
 
     private static final Object testValue = "foo";
     
-    public TestSingletonListIterator(String testName) {
+    public SingletonListIteratorTest(String testName) {
         super(testName);
     }
     

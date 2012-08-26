@@ -28,13 +28,11 @@ import org.apache.commons.collections.map.ListOrderedMap;
 /**
  * Tests the UnmodifiableOrderedMapIterator.
  *
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public class TestUnmodifiableOrderedMapIterator<K, V> extends AbstractTestOrderedMapIterator<K, V> {
+public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMapIteratorTest<K, V> {
 
-    public TestUnmodifiableOrderedMapIterator(String testName) {
+    public UnmodifiableOrderedMapIteratorTest(String testName) {
         super(testName);
     }
 

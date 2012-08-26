@@ -21,32 +21,33 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 /**
- * Tests the ObjectArrayListIterator class.
+ * Test the ArrayListIterator class.
  *
- * @version $Revision$
- *
- * @author Neil O'Toole
+ * @version $Id$
  */
-public class TestObjectArrayListIterator<E> extends TestObjectArrayIterator<E> {
+public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
 
-    public TestObjectArrayListIterator(String testName) {
+    public ArrayListIteratorTest(String testName) {
         super(testName);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public ObjectArrayListIterator<E> makeEmptyIterator() {
-        return new ObjectArrayListIterator<E>((E[]) new Object[0]);
+    public ArrayListIterator<E> makeEmptyIterator() {
+        return new ArrayListIterator<E>(new Object[0]);
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public ObjectArrayListIterator<E> makeObject() {
-        return new ObjectArrayListIterator<E>((E[]) testArray);
+    public ArrayListIterator<E> makeObject() {
+        return new ArrayListIterator<E>(testArray);
     }
 
-    public ObjectArrayListIterator<E> makeArrayListIterator(E[] array) {
-        return new ObjectArrayListIterator<E>(array);
+    public ArrayListIterator<E> makeArrayListIterator(Object array) {
+        return new ArrayListIterator<E>(array);
+    }
+
+    @Override
+    public boolean supportsRemove() {
+        return false;
     }
 
     /**
@@ -92,7 +93,7 @@ public class TestObjectArrayListIterator<E> extends TestObjectArrayIterator<E> {
 
         String[] result = new String[] { "0", "1", "2" };
 
-        ListIterator<E> iter = makeArrayListIterator((E[]) testData);
+        ListIterator<E> iter = makeArrayListIterator(testData);
         int x = 0;
 
         while (iter.hasNext()) {
@@ -104,7 +105,7 @@ public class TestObjectArrayListIterator<E> extends TestObjectArrayIterator<E> {
         assertTrue("The two arrays should have the same value, i.e. {0,1,2}", Arrays.equals(testData, result));
 
         // a call to set() before a call to next() or previous() should throw an IllegalStateException
-        iter = makeArrayListIterator((E[]) testArray);
+        iter = makeArrayListIterator(testArray);
 
         try {
             iter.set((E) "should fail");

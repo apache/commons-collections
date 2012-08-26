@@ -28,20 +28,17 @@ import java.util.NoSuchElementException;
  * They must also specify certain details of how the list iterator operates by
  * overriding the supportsXxx() methods if necessary.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Rodney Waldhoff
- * @author Stephen Colebourne
+ * @since 3.0
+ * @version $Id$
  */
-public abstract class AbstractTestListIterator<E> extends AbstractTestIterator<E> {
+public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E> {
 
     /**
      * JUnit constructor.
      *
      * @param testName  the test class name
      */
-    public AbstractTestListIterator(String testName) {
+    public AbstractListIteratorTest(String testName) {
         super(testName);
     }
 

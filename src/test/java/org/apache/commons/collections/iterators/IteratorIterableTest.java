@@ -24,15 +24,15 @@ import org.apache.commons.collections.BulkTest;
 /**
  * Tests for IteratorIterable.
  * 
- * @version $Revision$
+ * @version $Id$
  */
-public class TestIteratorIterable extends BulkTest {
+public class IteratorIterableTest extends BulkTest {
 
     public static Test suite() {
-        return BulkTest.makeSuite(TestIteratorIterable.class);
+        return BulkTest.makeSuite(IteratorIterableTest.class);
     }
 
-    public TestIteratorIterable(String name) {
+    public IteratorIterableTest(String name) {
         super(name);
     }
 
@@ -53,7 +53,7 @@ public class TestIteratorIterable extends BulkTest {
         verifyIteration(iterable);
         
         // second use
-        for (Number actual : iterable) {
+        for (@SuppressWarnings("unused") Number actual : iterable) {
             fail("should not be able to iterate twice");
         }
     }

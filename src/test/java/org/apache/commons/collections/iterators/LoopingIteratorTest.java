@@ -26,14 +26,11 @@ import junit.framework.TestCase;
 /**
  * Tests the LoopingIterator class.
  *
- * @version $Revision$
- *
- * @author Jonathan Carlson
- * @author Stephen Colebourne
+ * @version $Id$
  */
-public class TestLoopingIterator extends TestCase {
+public class LoopingIteratorTest extends TestCase {
 
-    public TestLoopingIterator(String testName) {
+    public LoopingIteratorTest(String testName) {
         super(testName);
     }
 
