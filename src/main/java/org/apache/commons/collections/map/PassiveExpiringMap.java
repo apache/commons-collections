@@ -58,7 +58,7 @@ import java.util.concurrent.TimeUnit;
  * @param <K> the type of the keys in the map
  * @param <V> the type of the values in the map
  * @since 4.0
- * @version $Id: $
+ * @version $Id$
  */
 public class PassiveExpiringMap<K, V>
     extends AbstractMapDecorator<K, V>
@@ -71,7 +71,7 @@ public class PassiveExpiringMap<K, V>
      * @param <K> the type of the keys in the map
      * @param <V> the type of the values in the map
      * @since 4.0
-     * @version $Id: $
+     * @version $Id$
      */
     public static class ConstantTimeToLiveExpirationPolicy<K, V>
         implements ExpirationPolicy<K, V> {
@@ -158,7 +158,7 @@ public class PassiveExpiringMap<K, V>
      * @param <K> the key object type.
      * @param <V> the value object type
      * @since 4.0
-     * @version $Id: $
+     * @version $Id$
      */
     public static interface ExpirationPolicy<K, V>
         extends Serializable {
