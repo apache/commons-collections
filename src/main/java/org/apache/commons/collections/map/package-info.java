@@ -43,7 +43,6 @@
  * <ul>
  *   <li>Unmodifiable - ensures the collection cannot be altered
  *   <li>Predicated - ensures that only elements that are valid according to a predicate can be added
- *   <li>Typed - ensures that only elements that are of a specific type can be added
  *   <li>Transformed - transforms each element added
  *   <li>FixedSize - ensures that the size of the map cannot change
  *   <li>Defaulted - provides default values for non-existing keys

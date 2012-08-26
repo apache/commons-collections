@@ -29,7 +29,6 @@
  *   <li>Synchronized - synchronizes method access for multi-threaded environments</li>
  *   <li>Unmodifiable - ensures the collection cannot be altered</li>
  *   <li>Predicated - ensures that only elements that are valid according to a predicate can be added</li>
- *   <li>Typed - ensures that only elements that are of a specific type can be added</li>
  *   <li>Transformed - transforms each element added</li>
  *   <li>FixedSize - ensures that the size of the list cannot change</li>
  *   <li>Lazy - creates objects in the list on demand</li>
