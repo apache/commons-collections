@@ -136,9 +136,8 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
     }
 
     /**
-     * Constructs a new empty <code>DefaultedMap</code> that decorates
-     * a <code>HashMap</code>.
-     * <p>
+     * Constructs a new empty <code>DefaultedMap</code> that decorates a <code>HashMap</code>.
+     *
      * @param defaultValueTransformer transformer to use to generate missing values.
      */
     public DefaultedMap(Transformer<? super K, ? extends V> defaultValueTransformer) {
@@ -151,10 +150,12 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @param map  the map to decorate, must not be null
      * @param defaultValueTransformer  the value transformer to use
      * @throws IllegalArgumentException if map or transformer is null
-     * TODO does not check for null transformer: fix code or Javadoc
      */
     protected DefaultedMap(Map<K, V> map, Transformer<? super K, ? extends V> defaultValueTransformer) {
         super(map);
+        if (defaultValueTransformer == null) {
+            throw new IllegalArgumentException("transformer must not be null");
+        }
         this.value = defaultValueTransformer;
     }
 
