@@ -494,7 +494,9 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
         private Map.Entry<K, V> last;
 
         public boolean hasNext() {
-            if (current.size() > 0) return true;
+            if (current.size() > 0) {
+                return true;
+            }
             while (bucket < buckets.length) {
                 synchronized (locks[bucket]) {
                     Node<K, V> n = buckets[bucket];
@@ -503,20 +505,26 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
                         n = n.next;
                     }
                     bucket++;
-                    if (current.size() > 0) return true;
+                    if (current.size() > 0) {
+                        return true;
+                    }
                 }
             }
             return false;
         }
 
         protected Map.Entry<K, V> nextEntry() {
-            if (!hasNext()) throw new NoSuchElementException();
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
             last = current.remove(current.size() - 1);
             return last;
         }
 
         public void remove() {
-            if (last == null) throw new IllegalStateException();
+            if (last == null) {
+                throw new IllegalStateException();
+            }
             StaticBucketMap.this.remove(last.getKey());
             last = null;
         }
@@ -569,7 +577,9 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
             int hash = getHash(entry.getKey());
             synchronized (locks[hash]) {
                 for (Node<K, V> n = buckets[hash]; n != null; n = n.next) {
-                    if (n.equals(entry)) return true;
+                    if (n.equals(entry)) {
+                        return true;
+                    }
                 }
             }
             return false;
@@ -689,7 +699,9 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      *  @param r  the code to execute atomically
      */
     public void atomic(Runnable r) {
-        if (r == null) throw new NullPointerException();
+        if (r == null) {
+            throw new NullPointerException();
+        }
         atomic(r, 0);
     }
 
