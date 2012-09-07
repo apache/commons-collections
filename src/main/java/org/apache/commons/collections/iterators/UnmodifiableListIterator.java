@@ -37,6 +37,7 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
     /**
      * Decorates the specified iterator such that it cannot be modified.
      *
+     * @param <E>  the element type
      * @param iterator  the iterator to decorate
      * @return a new unmodifiable list iterator
      * @throws IllegalArgumentException if the iterator is null

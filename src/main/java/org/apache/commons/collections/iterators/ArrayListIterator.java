@@ -172,6 +172,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      * This iterator does not support modification of its backing collection, and so will
      * always throw an {@link UnsupportedOperationException} when this method is invoked.
      *
+     * @param o  the element to add
      * @throws UnsupportedOperationException always thrown.
      * @see java.util.ListIterator#set
      */
@@ -192,6 +193,9 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      * not support <code>add()</code> or <code>remove()</code>, <code>set()</code> may be
      * called as often as desired.
      *
+     * @param o  the element to set
+     * @throws IllegalStateException if {@link #next()} or {@link #previous()} has not been called
+     * before {@link #set(Object)}
      * @see java.util.ListIterator#set
      */
     public void set(Object o) {

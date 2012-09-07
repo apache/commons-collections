@@ -427,6 +427,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * Subclasses can override this to create a different class.
      *
      * @param value  value of the new node
+     * @return a new node containing the value
      */
     protected Node<E> createNode(E value) {
         return new Node<E>(value);
@@ -509,6 +510,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @param index  the index, starting from 0
      * @param endMarkerAllowed  whether or not the end marker can be returned if
      * startIndex is set to the list's size
+     * @return the node at the given index
      * @throws IndexOutOfBoundsException if the index is less than 0; equal to
      * the size of the list and endMakerAllowed is false; or greater than the
      * size of the list
@@ -551,6 +553,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * Creates an iterator for the sublist.
      *
      * @param subList  the sublist to get an iterator for
+     * @return a new iterator on the given sublist
      */
     protected Iterator<E> createSubListIterator(LinkedSubList<E> subList) {
         return createSubListListIterator(subList, 0);
@@ -561,6 +564,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      *
      * @param subList  the sublist to get an iterator for
      * @param fromIndex  the index to start from, relative to the sublist
+     * @return a new list iterator on the given sublist
      */
     protected ListIterator<E> createSubListListIterator(LinkedSubList<E> subList, int fromIndex) {
         return new LinkedSubListIterator<E>(subList, fromIndex);
@@ -749,6 +753,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
          *
          * @param parent  the parent list
          * @param fromIndex  the index to start at
+         * @throws IndexOutOfBoundsException if fromIndex is less than 0 or greater than the size of the list
          */
         protected LinkedListIterator(AbstractLinkedList<E> parent, int fromIndex) throws IndexOutOfBoundsException {
             super();
@@ -774,9 +779,9 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         /**
          * Gets the last node returned.
          *
-         * @throws IllegalStateException If {@link #next()} or
-         * {@link #previous()} haven't been called, or if the node has been removed
-         * with {@link #remove()} or a new node added with {@link #add(Object)}.
+         * @return the last node returned
+         * @throws IllegalStateException If {@link #next()} or {@link #previous()} haven't been called,
+         * or if the node has been removed with {@link #remove()} or a new node added with {@link #add(Object)}.
          */
         protected Node<E> getLastNodeReturned() throws IllegalStateException {
             if (current == null) {

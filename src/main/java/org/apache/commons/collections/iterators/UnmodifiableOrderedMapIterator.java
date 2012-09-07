@@ -37,6 +37,8 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
     /**
      * Decorates the specified iterator such that it cannot be modified.
      *
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param iterator  the iterator to decorate
      * @return a new unmodifiable ordered map iterator
      * @throws IllegalArgumentException if the iterator is null

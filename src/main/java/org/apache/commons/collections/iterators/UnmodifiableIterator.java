@@ -39,6 +39,7 @@ public final class UnmodifiableIterator<E> implements Iterator<E>, Unmodifiable 
      * <p>
      * If the iterator is already unmodifiable it is returned directly.
      *
+     * @param <E>  the element type
      * @param iterator  the iterator to decorate
      * @return a new unmodifiable iterator
      * @throws IllegalArgumentException if the iterator is null
