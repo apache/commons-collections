@@ -149,6 +149,7 @@ public class ListUtils {
      * <p>
      * A <code>null</code> predicate matches no elements.
      *
+     * @param <E>  the element type
      * @param inputCollection
      *            the collection to get the input from, may not be null
      * @param predicate
@@ -160,9 +161,9 @@ public class ListUtils {
      * @since 4.0
      * @see CollectionUtils#select(Collection, Predicate)
      */
-    public static <O> List<O> select(Collection<? extends O> inputCollection,
-            Predicate<? super O> predicate) {
-        return CollectionUtils.select(inputCollection, predicate, new ArrayList<O>(inputCollection.size()));
+    public static <E> List<E> select(Collection<? extends E> inputCollection,
+            Predicate<? super E> predicate) {
+        return CollectionUtils.select(inputCollection, predicate, new ArrayList<E>(inputCollection.size()));
     }
 
     /**
@@ -172,6 +173,7 @@ public class ListUtils {
      * If the input predicate is <code>null</code>, the result is an empty
      * list.
      *
+     * @param <E>  the element type
      * @param inputCollection
      *            the collection to get the input from, may not be null
      * @param predicate
@@ -183,9 +185,9 @@ public class ListUtils {
      * @since 4.0
      * @see CollectionUtils#selectRejected(Collection, Predicate)
      */
-    public static <O> List<O> selectRejected(Collection<? extends O> inputCollection,
-            Predicate<? super O> predicate) {
-        return CollectionUtils.selectRejected(inputCollection, predicate, new ArrayList<O>(inputCollection.size()));
+    public static <E> List<E> selectRejected(Collection<? extends E> inputCollection,
+            Predicate<? super E> predicate) {
+        return CollectionUtils.selectRejected(inputCollection, predicate, new ArrayList<E>(inputCollection.size()));
     }
 
     /**
