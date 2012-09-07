@@ -50,7 +50,10 @@ public final class UnmodifiableSortedMap<K, V>
     /**
      * Factory method to create an unmodifiable sorted map.
      * 
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param map  the map to decorate, must not be null
+     * @return a new unmodifiable sorted map
      * @throws IllegalArgumentException if map is null
      */
     public static <K, V> SortedMap<K, V> unmodifiableSortedMap(SortedMap<K, V> map) {

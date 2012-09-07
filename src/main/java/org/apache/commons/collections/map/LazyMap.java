@@ -70,6 +70,8 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
     /**
      * Factory method to create a lazily instantiated map.
      * 
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @param factory  the factory to use, must not be null
      * @return a new lazy map
@@ -82,6 +84,8 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
     /**
      * Factory method to create a lazily instantiated map.
      * 
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @param factory  the factory to use, must not be null
      * @return a new lazy map

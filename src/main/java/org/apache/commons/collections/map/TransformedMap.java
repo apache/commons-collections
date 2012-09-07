@@ -64,9 +64,12 @@ public class TransformedMap<K, V>
      * are NOT transformed.
      * Contrast this with {@link #transformedMap(Map, Transformer, Transformer)}.
      *
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no transformation
      * @param valueTransformer  the transformer to use for value conversion, null means no transformation
+     * @return a new transformed map
      * @throws IllegalArgumentException if map is null
      */
     public static <K, V> TransformedMap<K, V> transformingMap(Map<K, V> map,
@@ -83,9 +86,12 @@ public class TransformedMap<K, V>
      * will be transformed by this method.
      * Contrast this with {@link #transformingMap(Map, Transformer, Transformer)}.
      *
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no transformation
      * @param valueTransformer  the transformer to use for value conversion, null means no transformation
+     * @return a new transformed map
      * @throws IllegalArgumentException if map is null
      * @since 3.2
      */
@@ -154,7 +160,7 @@ public class TransformedMap<K, V>
      * The transformer itself may throw an exception if necessary.
      *
      * @param object  the object to transform
-     * @throws the transformed object
+     * @return the transformed object
      */
     protected K transformKey(K object) {
         if (keyTransformer == null) {
@@ -169,7 +175,7 @@ public class TransformedMap<K, V>
      * The transformer itself may throw an exception if necessary.
      *
      * @param object  the object to transform
-     * @throws the transformed object
+     * @return the transformed object
      */
     protected V transformValue(V object) {
         if (valueTransformer == null) {
@@ -184,7 +190,7 @@ public class TransformedMap<K, V>
      * The transformer itself may throw an exception if necessary.
      *
      * @param map  the map to transform
-     * @throws the transformed object
+     * @return the transformed object
      */
     @SuppressWarnings("unchecked")
     protected Map<K, V> transformMap(Map<? extends K, ? extends V> map) {

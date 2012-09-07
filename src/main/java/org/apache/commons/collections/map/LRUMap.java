@@ -360,6 +360,7 @@ public class LRUMap<K, V>
      * This is fixed in version 3.1 onwards.
      *
      * @param entry  the entry to be removed
+     * @return {@code true}
      */
     protected boolean removeLRU(LinkEntry<K, V> entry) {
         return true;

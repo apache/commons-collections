@@ -66,9 +66,12 @@ public class PredicatedMap<K, V>
      * If there are any elements already in the list being decorated, they
      * are validated.
      * 
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @param keyPredicate  the predicate to validate the keys, null means no check
      * @param valuePredicate  the predicate to validate to values, null means no check
+     * @return a new predicated map
      * @throws IllegalArgumentException if the map is null
      */
     public static <K, V> PredicatedMap<K, V> predicatedMap(Map<K, V> map,
@@ -146,6 +149,7 @@ public class PredicatedMap<K, V>
      * Override to validate an object set into the map via <code>setValue</code>.
      * 
      * @param value  the value to validate
+     * @return the value itself
      * @throws IllegalArgumentException if invalid
      * @since 3.1
      */

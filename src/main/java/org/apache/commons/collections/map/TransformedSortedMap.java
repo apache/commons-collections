@@ -51,13 +51,15 @@ public class TransformedSortedMap<K, V>
     /**
      * Factory method to create a transforming sorted map.
      * <p>
-     * If there are any elements already in the map being decorated, they
-     * are NOT transformed.
+     * If there are any elements already in the map being decorated, they are NOT transformed.
      * Contrast this with {@link #transformedSortedMap(SortedMap, Transformer, Transformer)}.
      * 
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the predicate to validate the keys, null means no transformation
      * @param valueTransformer  the predicate to validate to values, null means no transformation
+     * @return a new transformed sorted map
      * @throws IllegalArgumentException if the map is null
      */
     public static <K, V> TransformedSortedMap<K, V> transformingSortedMap(SortedMap<K, V> map,
@@ -74,9 +76,12 @@ public class TransformedSortedMap<K, V>
      * will be transformed by this method.
      * Contrast this with {@link #transformingSortedMap(SortedMap, Transformer, Transformer)}.
      * 
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no transformation
      * @param valueTransformer  the transformer to use for value conversion, null means no transformation
+     * @return a new transformed sorted map
      * @throws IllegalArgumentException if map is null
      * @since 3.2
      */

@@ -66,8 +66,11 @@ public class LazySortedMap<K,V>
     /**
      * Factory method to create a lazily instantiated sorted map.
      * 
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @param factory  the factory to use, must not be null
+     * @return a new lazy sorted map
      * @throws IllegalArgumentException if map or factory is null
      */
     public static <K, V> LazySortedMap<K, V> lazySortedMap(SortedMap<K, V> map, Factory<? extends V> factory) {
@@ -77,8 +80,11 @@ public class LazySortedMap<K,V>
     /**
      * Factory method to create a lazily instantiated sorted map.
      * 
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @param factory  the factory to use, must not be null
+     * @return a new lazy sorted map
      * @throws IllegalArgumentException if map or factory is null
      */
     public static <K, V> LazySortedMap<K, V> lazySortedMap(SortedMap<K, V> map,

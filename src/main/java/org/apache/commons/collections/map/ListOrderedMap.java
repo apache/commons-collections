@@ -89,7 +89,10 @@ public class ListOrderedMap<K, V>
      * <p>
      * An <code>ArrayList</code> is used to retain order.
      * 
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param map  the map to decorate, must not be null
+     * @return a new list ordered map
      * @throws IllegalArgumentException if map is null
      */
     public static <K, V> ListOrderedMap<K, V> listOrderedMap(Map<K, V> map) {
@@ -402,6 +405,7 @@ public class ListOrderedMap<K, V>
      * Sets the value at the specified index.
      *
      * @param index  the index of the value to set
+     * @param value  the new value to set
      * @return the previous value at that index
      * @throws IndexOutOfBoundsException if the index is invalid
      * @since 3.2

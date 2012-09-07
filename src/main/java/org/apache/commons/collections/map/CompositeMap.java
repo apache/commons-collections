@@ -472,6 +472,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
 
     /**
      * Gets a hash code for the Map as per the Map specification.
+     * {@inheritDoc}
      */
     @Override
     public int hashCode() {

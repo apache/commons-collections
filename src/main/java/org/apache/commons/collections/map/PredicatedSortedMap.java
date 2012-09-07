@@ -54,9 +54,12 @@ public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements So
      * If there are any elements already in the list being decorated, they
      * are validated.
      * 
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @param keyPredicate  the predicate to validate the keys, null means no check
      * @param valuePredicate  the predicate to validate to values, null means no check
+     * @return a new predicated sorted map
      * @throws IllegalArgumentException if the map is null
      */
     public static <K, V> PredicatedSortedMap<K, V> predicatedSortedMap(SortedMap<K, V> map,

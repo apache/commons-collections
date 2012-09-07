@@ -339,6 +339,7 @@ public class PassiveExpiringMap<K, V>
     /**
      * All expired entries are removed from the map prior to determining the
      * contains result.
+     * {@inheritDoc}
      */
     @Override
     public boolean containsKey(Object key) {
@@ -349,6 +350,7 @@ public class PassiveExpiringMap<K, V>
     /**
      * All expired entries are removed from the map prior to determining the
      * contains result.
+     * {@inheritDoc}
      */
     @Override
     public boolean containsValue(Object value) {
@@ -357,8 +359,8 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * All expired entries are removed from the map prior to returning the entry
-     * set.
+     * All expired entries are removed from the map prior to returning the entry set.
+     * {@inheritDoc}
      */
     @Override
     public Set<Entry<K, V>> entrySet() {
@@ -367,8 +369,8 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * All expired entries are removed from the map prior to returning the entry
-     * value.
+     * All expired entries are removed from the map prior to returning the entry value.
+     * {@inheritDoc}
      */
     @Override
     public V get(Object key) {
@@ -377,8 +379,8 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * All expired entries are removed from the map prior to determining if it
-     * is empty.
+     * All expired entries are removed from the map prior to determining if it is empty.
+     * {@inheritDoc}
      */
     @Override
     public boolean isEmpty() {
@@ -387,7 +389,7 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * Determines if the given expiration time is less than <code>now</code>
+     * Determines if the given expiration time is less than <code>now</code>.
      * 
      * @param now the time in milliseconds used to compare against the
      *        expiration time.
@@ -406,8 +408,8 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * All expired entries are removed from the map prior to returning the key
-     * set.
+     * All expired entries are removed from the map prior to returning the key set.
+     * {@inheritDoc}
      */
     @Override
     public Set<K> keySet() {
@@ -428,9 +430,8 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * Add the given key-value pair to this map as well as recording the entry's
-     * expiration time based on the current time in milliseconds,
-     * <code>now</code> and this map's {@link #expiringPolicy}.
+     * Add the given key-value pair to this map as well as recording the entry's expiration time based on
+     * the current time in milliseconds, <code>now</code> and this map's {@link #expiringPolicy}.
      */
     private V put(K key, V value, long now) {
         // record expiration time of new entry
@@ -450,6 +451,7 @@ public class PassiveExpiringMap<K, V>
     /**
      * Normal {@link Map#remove(Object)} behavior with the addition of removing
      * any expiration entry as well.
+     * {@inheritDoc}
      */
     @Override
     public V remove(Object key) {
@@ -492,6 +494,7 @@ public class PassiveExpiringMap<K, V>
 
     /**
      * All expired entries are removed from the map prior to returning the size.
+     * {@inheritDoc}
      */
     @Override
     public int size() {
@@ -527,8 +530,8 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * All expired entries are removed from the map prior to returning the value
-     * collection.
+     * All expired entries are removed from the map prior to returning the value collection.
+     * {@inheritDoc}
      */
     @Override
     public Collection<V> values() {

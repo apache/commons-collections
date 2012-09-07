@@ -75,6 +75,8 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * <p>
      * The value specified is returned when a missing key is found.
      * 
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @param defaultValue  the default value to return when the key is not found
      * @return a new defaulting map
@@ -90,6 +92,8 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * The factory specified is called when a missing key is found.
      * The result will be returned as the result of the map get(key) method.
      * 
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @param factory  the factory to use to create entries, must not be null
      * @return a new defaulting map
@@ -109,6 +113,8 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * The key is passed to the transformer as the input, and the result
      * will be returned as the result of the map get(key) method.
      * 
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @param transformer  the transformer to use as a factory to create entries, must not be null
      * @return a new defaulting map

@@ -74,7 +74,10 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * Creates a map which wraps the given map and
      * maps keys to ArrayLists.
      *
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param map  the map to wrap
+     * @return a new multi-value map
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static <K, V> MultiValueMap<K, V> multiValueMap(Map<K, ? super Collection<V>> map) {
@@ -85,8 +88,11 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * Creates a map which decorates the given <code>map</code> and
      * maps keys to collections of type <code>collectionClass</code>.
      *
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param map  the map to wrap
      * @param collectionClass  the type of the collection class
+     * @return a new multi-value map
      */
     public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(Map<K, ? super C> map,
                                                                                     Class<C> collectionClass) {
@@ -97,8 +103,11 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * Creates a map which decorates the given <code>map</code> and
      * creates the value collections using the supplied <code>collectionFactory</code>.
      *
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param map  the map to decorate
      * @param collectionFactory  the collection factory (must return a Collection object).
+     * @return a new multi-value map
      */
     public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(Map<K, ? super C> map,
                                                                                     Factory<C> collectionFactory) {

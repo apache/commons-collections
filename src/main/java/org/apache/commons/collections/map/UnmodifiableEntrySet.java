@@ -44,7 +44,10 @@ public final class UnmodifiableEntrySet<K, V>
     /**
      * Factory method to create an unmodifiable set of Map Entry objects.
      * 
+     * @param <K>  the key type
+     * @param <V>  the value type
      * @param set  the set to decorate, must not be null
+     * @return a new unmodifiable entry set
      * @throws IllegalArgumentException if set is null
      */
     public static <K, V> Set<Map.Entry<K, V>> unmodifiableEntrySet(Set<Map.Entry<K, V>> set) {
