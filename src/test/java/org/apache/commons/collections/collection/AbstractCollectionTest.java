@@ -1149,7 +1149,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
         try {
             getCollection().retainAll(null);
-            fail("removeAll should raise UnsupportedOperationException");
+            fail("retainAll should raise UnsupportedOperationException");
         } catch (UnsupportedOperationException e) {
             // expected
         }
