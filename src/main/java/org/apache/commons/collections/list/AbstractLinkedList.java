@@ -243,6 +243,15 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p> 
+     * This implementation iterates over the elements of this list, checking each element in
+     * turn to see if it's contained in <code>coll</code>. If it's contained, it's removed
+     * from this list. As a consequence, it is advised to use a collection type for
+     * <code>coll</code> that provides a fast (e.g. O(1)) implementation of
+     * {@link Collection#contains(Object)}.
+     */
     public boolean removeAll(Collection<?> coll) {
         boolean modified = false;
         Iterator<E> it = iterator();
@@ -257,6 +266,15 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
     //-----------------------------------------------------------------------
     
+    /**
+     * {@inheritDoc}
+     * <p> 
+     * This implementation iterates over the elements of this list, checking each element in
+     * turn to see if it's contained in <code>coll</code>. If it's not contained, it's removed
+     * from this list. As a consequence, it is advised to use a collection type for
+     * <code>coll</code> that provides a fast (e.g. O(1)) implementation of
+     * {@link Collection#contains(Object)}.
+     */
     public boolean retainAll(Collection<?> coll) {
         boolean modified = false;
         Iterator<E> it = iterator();
