@@ -29,7 +29,7 @@ import java.util.TreeSet;
 
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.SortedBidiMap;
-import org.apache.commons.collections.map.AbstractTestSortedMap;
+import org.apache.commons.collections.map.AbstractSortedMapTest;
 
 /**
  * Abstract test class for {@link SortedBidiMap} methods and contracts.
@@ -628,15 +628,15 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 
     //-----------------------------------------------------------------------
     public BulkTest bulkTestHeadMap() {
-        return new AbstractTestSortedMap.TestHeadMap<K, V>(this);
+        return new AbstractSortedMapTest.TestHeadMap<K, V>(this);
     }
 
     public BulkTest bulkTestTailMap() {
-        return new AbstractTestSortedMap.TestTailMap<K, V>(this);
+        return new AbstractSortedMapTest.TestTailMap<K, V>(this);
     }
 
     public BulkTest bulkTestSubMap() {
-        return new AbstractTestSortedMap.TestSubMap<K, V>(this);
+        return new AbstractSortedMapTest.TestSubMap<K, V>(this);
     }
 
 }

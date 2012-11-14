@@ -18,7 +18,7 @@ package org.apache.commons.collections;
 
 import java.util.TreeMap;
 
-import org.apache.commons.collections.map.AbstractTestMap;
+import org.apache.commons.collections.map.AbstractMapTest;
 
 /**
  * Tests TreeMap.
@@ -27,7 +27,7 @@ import org.apache.commons.collections.map.AbstractTestMap;
  *
  * @author Jason van Zyl
  */
-public abstract class AbstractTreeMapTest<K, V> extends AbstractTestMap<K, V> {
+public abstract class AbstractTreeMapTest<K, V> extends AbstractMapTest<K, V> {
 
     public AbstractTreeMapTest(String testName) {
         super(testName);

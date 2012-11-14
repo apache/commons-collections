@@ -90,7 +90,7 @@ import org.apache.commons.collections.AbstractObjectTest;
  * {@link #confirmed}, the {@link #verify()} method is invoked to compare
  * the results.  You may want to override {@link #verify()} to perform
  * additional verifications.  For instance, when testing the collection
- * views of a map, {@link org.apache.commons.collections.map.AbstractTestMap AbstractTestMap} 
+ * views of a map, {@link org.apache.commons.collections.map.AbstractMapTest AbstractTestMap} 
  * would override {@link #verify()} to make
  * sure the map is changed after the collection view is changed.
  * <p>
