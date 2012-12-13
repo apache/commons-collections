@@ -115,7 +115,8 @@ public class CollectionUtils {
      * undesirable. This implementation only implements Collection.
      */
     @SuppressWarnings("rawtypes") // we deliberately use the raw type here
-    public static final Collection EMPTY_COLLECTION = UnmodifiableCollection.unmodifiableCollection(new ArrayList<Object>());
+    public static final Collection EMPTY_COLLECTION =
+        UnmodifiableCollection.unmodifiableCollection(new ArrayList<Object>());
 
     /**
      * <code>CollectionUtils</code> should not normally be instantiated.
@@ -128,11 +129,25 @@ public class CollectionUtils {
      *
      * @see #EMPTY_COLLECTION
      * @since 4.0
+     * @param <T> the element type
      * @return immutable empty collection
      */
     @SuppressWarnings("unchecked")
     public static <T> Collection<T> emptyCollection() {
         return EMPTY_COLLECTION;
+    }
+
+    /**
+     * Returns an immutable empty collection if the argument is <code>null</code>,
+     * or the argument itself otherwise.
+     * 
+     * @param <T> the element type
+     * @param collection the collection, possibly <code>null</code>
+     * @return an empty collection if the argument is <code>null</code>
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> Collection<T> emptyIfNull(Collection<T> collection) {
+        return collection == null ? EMPTY_COLLECTION : collection;
     }
 
     /**
@@ -188,7 +203,8 @@ public class CollectionUtils {
      * <p>
      * The cardinality of each element <i>e</i> in the returned
      * {@link Collection} will be equal to
-     * <tt>max(cardinality(<i>e</i>,<i>a</i>),cardinality(<i>e</i>,<i>b</i>)) - min(cardinality(<i>e</i>,<i>a</i>),cardinality(<i>e</i>,<i>b</i>))</tt>.
+     * <tt>max(cardinality(<i>e</i>,<i>a</i>),cardinality(<i>e</i>,<i>b</i>)) - min(cardinality(<i>e</i>,<i>a</i>),
+     * cardinality(<i>e</i>,<i>b</i>))</tt>.
      * <p>
      * This is equivalent to
      * <tt>{@link #subtract subtract}({@link #union union(a,b)},{@link #intersection intersection(a,b)})</tt>

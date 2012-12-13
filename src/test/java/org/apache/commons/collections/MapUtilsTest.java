@@ -711,6 +711,14 @@ public class MapUtilsTest extends BulkTest {
     }
 
     //-----------------------------------------------------------------------
+    
+    public void testEmptyIfNull() {
+        assertTrue(MapUtils.emptyIfNull(null).isEmpty());
+        
+        Map<Long, Long> map = new HashMap<Long, Long>();
+        assertSame(map, MapUtils.emptyIfNull(map));
+    }
+    
     public void testIsEmptyWithEmptyMap() {
         Map<Object, Object> map = new HashMap<Object, Object>();
         assertEquals(true, MapUtils.isEmpty(map));

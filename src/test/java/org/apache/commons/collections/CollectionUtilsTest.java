@@ -1341,6 +1341,13 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(CollectionUtils.EMPTY_COLLECTION, coll);
     }
 
+    @Test
+    public void emptyIfNull() {
+        assertTrue(CollectionUtils.emptyIfNull(null).isEmpty());
+        Collection<Object> collection = new ArrayList<Object>();
+        assertSame(collection, CollectionUtils.emptyIfNull(collection));
+    }
+    
     /**
      * This test ensures that {@link Iterable}s are supported by {@link CollectionUtils}.
      * Specifically, it uses mocks to ensure that if the passed in

@@ -85,7 +85,8 @@ public class MapUtils {
      * An empty unmodifiable sorted map.
      * This is not provided in the JDK.
      */
-    public static final SortedMap<Object, Object> EMPTY_SORTED_MAP = UnmodifiableSortedMap.unmodifiableSortedMap(new TreeMap<Object, Object>());
+    public static final SortedMap<Object, Object> EMPTY_SORTED_MAP =
+            UnmodifiableSortedMap.unmodifiableSortedMap(new TreeMap<Object, Object>());
 
     /**
      * String used to indent the verbose and debug Map prints.
@@ -1161,6 +1162,20 @@ public class MapUtils {
     }
 
     //-----------------------------------------------------------------------
+    
+    /**
+     * Returns an immutable empty map if the argument is <code>null</code>,
+     * or the argument itself otherwise.
+     * 
+     * @param <K> the key type
+     * @param <V> the value type
+     * @param map the map, possibly <code>null</code>
+     * @return an empty map if the argument is <code>null</code>
+     */
+    public static <K,V> Map<K,V> emptyIfNull(Map<K,V> map) {
+        return map == null ? Collections.<K,V>emptyMap() : map;
+    }
+    
     /**
      * Null-safe check if the specified map is empty.
      * <p>

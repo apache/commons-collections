@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-436" dev="tn" type="add" due-to="Arman Sharif">
+      Added "emptyIfNull" methods to classes "CollectionUtils", "ListUtils", "SetUtils"
+      and "MapUtils".
+    </action>
     <action issue="COLLECTIONS-415" dev="tn" type="add" due-to="Adrian Nistor">
       Added clarifying javadoc wrt runtime complexity of "AbstrictLinkedList#removeAll".
     </action>

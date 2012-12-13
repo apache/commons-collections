@@ -165,6 +165,13 @@ public class ListUtilsTest extends BulkTest {
         assertEquals(6, list.size());
     }
 
+    public void testEmptyIfNull() {
+        assertTrue(ListUtils.emptyIfNull(null).isEmpty());
+        
+        List<Long> list = new ArrayList<Long>();
+        assertSame(list, ListUtils.emptyIfNull(list));
+    }
+    
     public void testEquals() {
         Collection<String> data = Arrays.asList( new String[] { "a", "b", "c" });
 

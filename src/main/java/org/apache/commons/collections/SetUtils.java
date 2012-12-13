@@ -81,6 +81,19 @@ public class SetUtils {
     }
 
     //-----------------------------------------------------------------------
+    
+    /**
+     * Returns an immutable empty set if the argument is <code>null</code>,
+     * or the argument itself otherwise.
+     * 
+     * @param <T> the element type
+     * @param set the set, possibly <code>null</code>
+     * @return an empty set if the argument is <code>null</code>
+     */
+    public static <T> Set<T> emptyIfNull(Set<T> set) {
+        return set == null ? Collections.<T>emptySet() : set;
+    }
+    
     /**
      * Tests two sets for equality as per the <code>equals()</code> contract
      * in {@link java.util.Set#equals(java.lang.Object)}.

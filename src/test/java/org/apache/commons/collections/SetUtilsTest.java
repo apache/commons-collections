@@ -69,6 +69,13 @@ public class SetUtilsTest extends BulkTest {
         }
     }
 
+    public void testEmptyIfNull() {
+        assertTrue(SetUtils.emptyIfNull(null).isEmpty());
+        
+        Set<Long> set = new HashSet<Long>();
+        assertSame(set, SetUtils.emptyIfNull(set));
+    }
+    
     public void testEquals() {
         Collection<String> data = Arrays.asList( new String[] { "a", "b", "c" });
 

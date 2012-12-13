@@ -54,6 +54,19 @@ public class ListUtils {
     }
 
     //-----------------------------------------------------------------------
+    
+    /**
+     * Returns an immutable empty list if the argument is <code>null</code>,
+     * or the argument itself otherwise.
+     * 
+     * @param <T> the element type
+     * @param list the list, possibly <code>null</code>
+     * @return an empty list if the argument is <code>null</code>
+     */
+    public static <T> List<T> emptyIfNull(List<T> list) {
+        return list == null ? Collections.<T>emptyList() : list;
+    }
+    
     /**
      * Returns a new list containing all elements that are contained in
      * both given lists.
