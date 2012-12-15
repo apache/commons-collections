@@ -483,6 +483,7 @@
           <ignorePathsToDelete>
             <ignorePathsToDelete>
               <ignorePathToDelete>api-release**</ignorePathToDelete>
+              <ignorePathToDelete>api-2.1.1**</ignorePathToDelete>
             </ignorePathsToDelete>
           </ignorePathsToDelete>
         </configuration>
