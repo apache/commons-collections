@@ -481,10 +481,8 @@
         <artifactId>maven-scm-publish-plugin</artifactId>
         <configuration>
           <ignorePathsToDelete>
-            <ignorePathsToDelete>
-              <ignorePathToDelete>api-release**</ignorePathToDelete>
-              <ignorePathToDelete>api-2.1.1**</ignorePathToDelete>
-            </ignorePathsToDelete>
+            <ignorePathToDelete>api-release**</ignorePathToDelete>
+            <ignorePathToDelete>api-2.1.1**</ignorePathToDelete>
           </ignorePathsToDelete>
         </configuration>
       </plugin>
