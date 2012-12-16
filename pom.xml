@@ -437,7 +437,7 @@
     <!-- The RC version used in the staging repository URL. -->
     <commons.rc.version>RC2</commons.rc.version>
     <checkstyle.version>2.9.1</checkstyle.version>
-    <maven.site.path>collections</maven.site.path>
+    <commons.site.path>collections</commons.site.path>
   </properties> 
 
 
@@ -481,8 +481,7 @@
         <artifactId>maven-scm-publish-plugin</artifactId>
         <configuration>
           <ignorePathsToDelete>
-            <ignorePathToDelete>api-release**</ignorePathToDelete>
-            <ignorePathToDelete>api-2.1.1**</ignorePathToDelete>
+            <ignorePathToDelete>javadocs</ignorePathToDelete>
           </ignorePathsToDelete>
         </configuration>
       </plugin>
@@ -530,5 +529,52 @@
       </plugin>
     </plugins>
   </reporting>
+
+  <profiles>
+    <profile>
+      <id>setup-checkout</id>
+      <activation>
+        <file>
+          <missing>${scmPubCheckoutDirectory}</missing>
+        </file>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-antrun-plugin</artifactId>
+            <version>1.7</version>
+            <executions>
+              <execution>
+                <id>prepare-checkout</id>
+                <phase>pre-site</phase>
+                <goals>
+                  <goal>run</goal>
+                </goals>
+                <configuration>
+                  <tasks>
+                    <exec executable="svn">
+                      <arg line="checkout --depth immediates ${maven.scmPubUrl} ${maven.scmPubCheckoutDirectory}" />
+                    </exec>
+
+                    <exec executable="svn">
+                      <arg line="update --set-depth exclude ${maven.scmPubCheckoutDirectory}/javadocs" />
+                    </exec>
+
+                    <pathconvert pathsep=" " property="dirs">
+                      <dirset dir="${maven.scmPubCheckoutDirectory}" includes="*" />
+                    </pathconvert>
+                    <exec executable="svn">
+                      <arg line="update --set-depth infinity ${dirs}" />
+                    </exec>
+                  </tasks>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
 </project>
