@@ -60,8 +60,8 @@ as are various <a href="project-reports.html">project reports</a>.
 The JavaDoc API documents are available online:
 </p>
 <ul>
-<li>The <a href="api-release/index.html">current release 3.3</a></li>
-<li>The latest 2.x release - <a href="api-2.1.1/index.html">version 2.1.1</a></li>
+<li>The <a href="javadocs/api-release/index.html">current release 3.3</a></li>
+<li>The latest 2.x release - <a href="javadocs/api-2.1.1/index.html">version 2.1.1</a></li>
 <li>The <a href="apidocs/index.html">latest SVN</a></li>
 </ul>
 <p>
