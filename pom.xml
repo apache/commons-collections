@@ -535,7 +535,7 @@
       <id>setup-checkout</id>
       <activation>
         <file>
-          <missing>${scmPubCheckoutDirectory}</missing>
+          <missing>${commons.scmPubCheckoutDirectory}</missing>
         </file>
       </activation>
       <build>
