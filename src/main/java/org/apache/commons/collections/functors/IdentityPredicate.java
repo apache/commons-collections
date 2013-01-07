@@ -69,7 +69,7 @@ public final class IdentityPredicate<T> implements Predicate<T>, Serializable {
      * @return true if input is the same object as the stored value
      */
     public boolean evaluate(T object) {
-        return (iValue == object);
+        return iValue == object;
     }
 
     /**

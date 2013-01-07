@@ -74,7 +74,7 @@ public class SingletonListIterator<E> implements ListIterator<E>, ResettableList
      * @return 0 or 1 depending on current state. 
      */
     public int nextIndex() {
-        return (beforeFirst ? 0 : 1);
+        return beforeFirst ? 0 : 1;
     }
 
     /**
@@ -85,7 +85,7 @@ public class SingletonListIterator<E> implements ListIterator<E>, ResettableList
      * @return 0 or -1 depending on current state. 
      */
     public int previousIndex() {
-        return (beforeFirst ? -1 : 0);
+        return beforeFirst ? -1 : 0;
     }
 
     /**

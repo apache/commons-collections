@@ -194,7 +194,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
 
         /** {@inheritDoc} */
         public boolean hasNext() {
-            return (itemCount > 0 || entryIterator.hasNext());
+            return itemCount > 0 || entryIterator.hasNext();
         }
 
         /** {@inheritDoc} */

@@ -161,7 +161,7 @@ public class UnboundedFifoBuffer<E> extends AbstractCollection<E> implements Buf
      */
     @Override
     public boolean isEmpty() {
-        return (size() == 0);
+        return size() == 0;
     }
 
     /**
@@ -180,7 +180,7 @@ public class UnboundedFifoBuffer<E> extends AbstractCollection<E> implements Buf
 
         if (size() + 1 >= buffer.length) {
             // copy contents to a new buffer array
-            E[] tmp = (E[]) new Object[((buffer.length - 1) * 2) + 1];
+            E[] tmp = (E[]) new Object[(buffer.length - 1) * 2 + 1];
             int j = 0;
             // move head to element zero in the new array
             for (int i = head; i != tail;) {

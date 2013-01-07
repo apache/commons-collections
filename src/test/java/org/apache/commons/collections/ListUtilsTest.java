@@ -332,7 +332,7 @@ public class ListUtilsTest extends BulkTest {
     
     private static Predicate<Number> EQUALS_TWO = new Predicate<Number>() {
         public boolean evaluate(Number input) {
-            return (input.intValue() == 2);
+            return input.intValue() == 2;
         }
     };
 

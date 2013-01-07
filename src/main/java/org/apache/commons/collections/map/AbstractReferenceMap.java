@@ -214,7 +214,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         if (entry == null) {
             return false;
         }
-        return (entry.getValue() != null);
+        return entry.getValue() != null;
     }
 
     /**
@@ -453,8 +453,8 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     @Override
     @SuppressWarnings("unchecked")
     protected boolean isEqualKey(Object key1, Object key2) {
-        key2 = (keyType == ReferenceStrength.HARD ? key2 : ((Reference<K>) key2).get());
-        return (key1 == key2 || key1.equals(key2));
+        key2 = keyType == ReferenceStrength.HARD ? key2 : ((Reference<K>) key2).get();
+        return key1 == key2 || key1.equals(key2);
     }
 
     /**
@@ -617,7 +617,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         @Override
         @SuppressWarnings("unchecked")
         public K getKey() {
-            return (K) ((parent.keyType == ReferenceStrength.HARD) ? key : ((Reference<K>) key).get());
+            return (K) (parent.keyType == ReferenceStrength.HARD ? key : ((Reference<K>) key).get());
         }
 
         /**
@@ -629,7 +629,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         @Override
         @SuppressWarnings("unchecked")
         public V getValue() {
-            return (V) ((parent.valueType == ReferenceStrength.HARD) ? value : ((Reference<V>) value).get());
+            return (V) (parent.valueType == ReferenceStrength.HARD ? value : ((Reference<V>) value).get());
         }
 
         /**
@@ -670,7 +670,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
             Map.Entry<?, ?> entry = (Map.Entry<?, ?>)obj;
             Object entryKey = entry.getKey();  // convert to hard reference
             Object entryValue = entry.getValue();  // convert to hard reference
-            if ((entryKey == null) || (entryValue == null)) {
+            if (entryKey == null || entryValue == null) {
                 return false;
             }
             // compare using map methods, aiding identity subclass
@@ -722,8 +722,8 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
          * @return true or false
          */
         boolean purge(Reference<?> ref) {
-            boolean r = (parent.keyType != ReferenceStrength.HARD) && (key == ref);
-            r = r || ((parent.valueType != ReferenceStrength.HARD) && (value == ref));
+            boolean r = parent.keyType != ReferenceStrength.HARD && key == ref;
+            r = r || parent.valueType != ReferenceStrength.HARD && value == ref;
             if (r) {
                 if (parent.keyType != ReferenceStrength.HARD) {
                     ((Reference<?>) key).clear();
@@ -771,7 +771,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         public ReferenceBaseIterator(AbstractReferenceMap<K, V> parent) {
             super();
             this.parent = parent;
-            index = (parent.size() != 0 ? parent.data.length : 0);
+            index = parent.size() != 0 ? parent.data.length : 0;
             // have to do this here!  size() invocation above
             // may have altered the modCount.
             expectedModCount = parent.modCount;
@@ -782,7 +782,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
             while (nextNull()) {
                 ReferenceEntry<K, V> e = entry;
                 int i = index;
-                while ((e == null) && (i > 0)) {
+                while (e == null && i > 0) {
                     i--;
                     e = (ReferenceEntry<K, V>) parent.data[i];
                 }
@@ -809,7 +809,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         }
 
         private boolean nextNull() {
-            return (nextKey == null) || (nextValue == null);
+            return nextKey == null || nextValue == null;
         }
 
         protected ReferenceEntry<K, V> nextEntry() {

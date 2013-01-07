@@ -305,7 +305,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             "hello", "goodbye", "we'll", "see", "you", "all", "again",
             "key",
             "key2",
-            (isAllowNullKey() && !JDK12) ? null : "nonnullkey"
+            isAllowNullKey() && !JDK12 ? null : "nonnullkey"
         };
         return (K[]) result;
     }
@@ -358,9 +358,9 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         Object[] result = new Object[] {
             "blahv", "foov", "barv", "bazv", "tmpv", "goshv", "gollyv", "geev",
             "hellov", "goodbyev", "we'llv", "seev", "youv", "allv", "againv",
-            (isAllowNullValue() && !JDK12) ? null : "nonnullvalue",
+            isAllowNullValue() && !JDK12 ? null : "nonnullvalue",
             "value",
-            (isAllowDuplicateValues()) ? "value" : "value2",
+            isAllowDuplicateValues() ? "value" : "value2",
         };
         return (V[]) result;
     }
@@ -379,9 +379,9 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     @SuppressWarnings("unchecked")
     public V[] getNewSampleValues() {
         Object[] result = new Object[] {
-            (isAllowNullValue() && !JDK12 && isAllowDuplicateValues()) ? null : "newnonnullvalue",
+            isAllowNullValue() && !JDK12 && isAllowDuplicateValues() ? null : "newnonnullvalue",
             "newvalue",
-            (isAllowDuplicateValues()) ? "newvalue" : "newvalue2",
+            isAllowDuplicateValues() ? "newvalue" : "newvalue2",
             "newblahv", "newfoov", "newbarv", "newbazv", "newtmpv", "newgoshv",
             "newgollyv", "newgeev", "newhellov", "newgoodbyev", "newwe'llv",
             "newseev", "newyouv", "newallv", "newagainv",
@@ -505,11 +505,11 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         for (int i = 0; i < keys.length - 1; i++) {
             for (int j = i + 1; j < keys.length; j++) {
                 assertTrue("failure in test: duplicate null keys.",
-                        (keys[i] != null || keys[j] != null));
+                        keys[i] != null || keys[j] != null);
                 assertTrue(
                         "failure in test: duplicate non-null key.",
-                        (keys[i] == null || keys[j] == null || (!keys[i].equals(keys[j]) && !keys[j]
-                                .equals(keys[i]))));
+                        keys[i] == null || keys[j] == null || !keys[i].equals(keys[j]) && !keys[j]
+                                .equals(keys[i]));
             }
             assertTrue("failure in test: found null key, but isNullKeySupported " + "is false.",
                     keys[i] != null || isAllowNullKey());
@@ -1627,9 +1627,9 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
 
         public void testMapEntrySetIteratorEntrySetValue() {
             K key1 = getSampleKeys()[0];
-            K key2 = (getSampleKeys().length == 1 ? getSampleKeys()[0] : getSampleKeys()[1]);
+            K key2 = getSampleKeys().length == 1 ? getSampleKeys()[0] : getSampleKeys()[1];
             V newValue1 = getNewSampleValues()[0];
-            V newValue2 = (getNewSampleValues().length ==1 ? getNewSampleValues()[0] : getNewSampleValues()[1]);
+            V newValue2 = getNewSampleValues().length ==1 ? getNewSampleValues()[0] : getNewSampleValues()[1];
 
             resetFull();
             // explicitly get entries as sample values/keys are connected for some maps

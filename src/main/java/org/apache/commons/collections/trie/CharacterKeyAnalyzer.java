@@ -90,7 +90,7 @@ public class CharacterKeyAnalyzer extends AbstractKeyAnalyzer<Character> {
             other = Character.MIN_VALUE;
         }
         
-        char otherValue = (other != null ? other.charValue() : Character.MIN_VALUE);
+        char otherValue = other != null ? other.charValue() : Character.MIN_VALUE;
         
         if (keyValue != otherValue) {
             int xorValue = keyValue ^ otherValue;
@@ -110,12 +110,12 @@ public class CharacterKeyAnalyzer extends AbstractKeyAnalyzer<Character> {
     public boolean isPrefix(Character prefix, int offsetInBits, 
             int lengthInBits, Character key) {
         
-        int value1 = (prefix.charValue() << offsetInBits);
+        int value1 = prefix.charValue() << offsetInBits;
         int value2 = key.charValue();
         
         int mask = 0;
         for(int i = 0; i < lengthInBits; i++) {
-            mask |= (0x1 << i);
+            mask |= 0x1 << i;
         }
         
         return (value1 & mask) == (value2 & mask);

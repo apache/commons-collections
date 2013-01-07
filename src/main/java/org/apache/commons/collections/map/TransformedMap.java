@@ -225,7 +225,7 @@ public class TransformedMap<K, V>
      */
     @Override
     protected boolean isSetValueChecking() {
-        return (valueTransformer != null);
+        return valueTransformer != null;
     }
 
     //-----------------------------------------------------------------------

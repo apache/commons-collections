@@ -92,8 +92,8 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
         assertEquals(new BooleanComparator(true),BooleanComparator.getTrueFirstComparator());
         assertSame(BooleanComparator.getTrueFirstComparator(),BooleanComparator.booleanComparator(true));
 
-        assertTrue(!(new BooleanComparator().equals(new BooleanComparator(true))));
-        assertTrue(!(new BooleanComparator(true).equals(new BooleanComparator(false))));
+        assertTrue(!new BooleanComparator().equals(new BooleanComparator(true)));
+        assertTrue(!new BooleanComparator(true).equals(new BooleanComparator(false)));
     }
 
     // utilities

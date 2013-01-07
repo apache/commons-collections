@@ -189,7 +189,7 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
     public int hashCode() {
         int code = 0;
         for (E e : this) {
-            code += (e == null ? 0 : e.hashCode());
+            code += e == null ? 0 : e.hashCode();
         }
         return code;
     }

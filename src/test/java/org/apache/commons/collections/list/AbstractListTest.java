@@ -625,9 +625,9 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
         for (int i = 0; i < elements.length; i++) {
             E n = other[i % other.length];
-            E v = (getCollection()).set(i, n);
+            E v = getCollection().set(i, n);
             assertEquals("Set should return correct element", elements[i], v);
-            (getConfirmed()).set(i, n);
+            getConfirmed().set(i, n);
             verify();
         }
     }
@@ -643,7 +643,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
 
         resetFull();
         try {
-            (getCollection()).set(0, getFullElements()[0]);
+            getCollection().set(0, getFullElements()[0]);
             fail("Emtpy collection should not support set.");
         } catch (UnsupportedOperationException e) {
             // expected
@@ -754,8 +754,8 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         int max = getFullElements().length;
         for (int i = 0; i < max; i++) {
             resetFull();
-            E o1 = (getCollection()).remove(i);
-            E o2 = (getConfirmed()).remove(i);
+            E o1 = getCollection().remove(i);
+            E o2 = getConfirmed().remove(i);
             assertEquals("remove should return correct element", o1, o2);
             verify();
         }

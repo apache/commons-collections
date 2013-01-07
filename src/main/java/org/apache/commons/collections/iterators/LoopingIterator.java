@@ -68,7 +68,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
      * @return <code>true</code> if there are more elements
      */
     public boolean hasNext() {
-        return (collection.size() > 0);
+        return collection.size() > 0;
     }
 
     /**

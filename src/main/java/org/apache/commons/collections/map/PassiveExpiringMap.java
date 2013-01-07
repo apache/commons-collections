@@ -402,7 +402,7 @@ public class PassiveExpiringMap<K, V>
     private boolean isExpired(long now, Long expirationTimeObject) {
         if (expirationTimeObject != null) {
             long expirationTime = expirationTimeObject.longValue();
-            return (expirationTime >= 0 && now >= expirationTime);
+            return expirationTime >= 0 && now >= expirationTime;
         }
         return false;
     }

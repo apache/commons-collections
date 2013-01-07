@@ -151,7 +151,7 @@ public class BoundedFifoBuffer<E> extends AbstractCollection<E>
             elements[i] = (E) in.readObject();
         }
         start = 0;
-        full = (size == maxElements);
+        full = size == maxElements;
         if (full) {
             end = 0;
         } else {
@@ -172,7 +172,7 @@ public class BoundedFifoBuffer<E> extends AbstractCollection<E>
         if (end < start) {
             size = maxElements - start + end;
         } else if (end == start) {
-            size = (full ? maxElements : 0);
+            size = full ? maxElements : 0;
         } else {
             size = end - start;
         }
@@ -348,7 +348,7 @@ public class BoundedFifoBuffer<E> extends AbstractCollection<E>
             private boolean isFirst = full;
 
             public boolean hasNext() {
-                return isFirst || (index != end);
+                return isFirst || index != end;
             }
 
             public E next() {

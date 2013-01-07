@@ -85,7 +85,7 @@ public class ShortKeyAnalyzer implements KeyAnalyzer<Short> {
             return NULL_BIT_KEY;
         }
 
-        int otherValue = (other != null ? other.shortValue() : 0);
+        int otherValue = other != null ? other.shortValue() : 0;
         
         if (keyValue != otherValue) {
             int xorValue = keyValue ^ otherValue;
@@ -112,12 +112,12 @@ public class ShortKeyAnalyzer implements KeyAnalyzer<Short> {
     public boolean isPrefix(Short prefix, int offsetInBits, 
             int lengthInBits, Short key) {
         
-        int value1 = (prefix.shortValue() << offsetInBits);
+        int value1 = prefix.shortValue() << offsetInBits;
         int value2 = key.shortValue();
         
         int mask = 0;
         for (int i = 0; i < lengthInBits; i++) {
-            mask |= (0x1 << i);
+            mask |= 0x1 << i;
         }
         
         return (value1 & mask) == (value2 & mask);

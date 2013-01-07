@@ -1050,7 +1050,7 @@ public class PatriciaTrie<K, V> extends PatriciaTrieBase<K, V> implements Trie<K
                     TrieEntry<K,V> last) {
                 super(first);
                 
-                this.excludedKey = (last != null ? last.getKey() : null);
+                this.excludedKey = last != null ? last.getKey() : null;
             }
 
             /**

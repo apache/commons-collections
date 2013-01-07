@@ -55,9 +55,9 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
         if (classToInstantiate == null) {
             throw new IllegalArgumentException("Class to instantiate must not be null");
         }
-        if (((paramTypes == null) && (args != null))
-            || ((paramTypes != null) && (args == null))
-            || ((paramTypes != null) && (args != null) && (paramTypes.length != args.length))) {
+        if (paramTypes == null && args != null
+            || paramTypes != null && args == null
+            || paramTypes != null && args != null && paramTypes.length != args.length) {
             throw new IllegalArgumentException("Parameter types must match the arguments");
         }
 

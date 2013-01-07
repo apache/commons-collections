@@ -555,7 +555,7 @@ abstract class PatriciaTrieBase<K, V> extends AbstractTrie<K, V> {
         } 
         
         TrieEntry<K, V> parent = h.parent;
-        TrieEntry<K, V> child = (h.left == h) ? h.right : h.left;
+        TrieEntry<K, V> child = h.left == h ? h.right : h.left;
         
         if (parent.left == h) {
             parent.left = child;
@@ -594,7 +594,7 @@ abstract class PatriciaTrieBase<K, V> extends AbstractTrie<K, V> {
         // Fix P's parent, predecessor and child Nodes
         {
             TrieEntry<K, V> parent = p.parent;
-            TrieEntry<K, V> child = (p.left == h) ? p.right : p.left;
+            TrieEntry<K, V> child = p.left == h ? p.right : p.left;
             
             // if it was looping to itself previously,
             // it will now be pointed from it's parent

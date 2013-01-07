@@ -59,7 +59,7 @@ public class CharArrayKeyAnalyzer extends AbstractKeyAnalyzer<char[]> {
      * {@inheritDoc}
      */
     public int lengthInBits(char[] key) {
-        return (key != null ? key.length * LENGTH : 0);
+        return key != null ? key.length * LENGTH : 0;
     }
 
     /**
@@ -106,7 +106,7 @@ public class CharArrayKeyAnalyzer extends AbstractKeyAnalyzer<char[]> {
 
             if (k != f) {
                int x = k ^ f;
-               return i * LENGTH + (Integer.numberOfLeadingZeros(x) - LENGTH);
+               return i * LENGTH + Integer.numberOfLeadingZeros(x) - LENGTH;
             }
 
             if (k != 0) {

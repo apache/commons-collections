@@ -109,7 +109,7 @@ public class IdentityMap<K, V>
      */
     @Override
     protected boolean isEqualKey(Object key1, Object key2) {
-        return (key1 == key2);
+        return key1 == key2;
     }
 
     /**
@@ -122,7 +122,7 @@ public class IdentityMap<K, V>
      */
     @Override
     protected boolean isEqualValue(Object value1, Object value2) {
-        return (value1 == value2);
+        return value1 == value2;
     }
 
     /**
@@ -160,8 +160,8 @@ public class IdentityMap<K, V>
             }
             Map.Entry<?, ?> other = (Map.Entry<?, ?>) obj;
             return
-                (getKey() == other.getKey()) &&
-                (getValue() == other.getValue());
+                getKey() == other.getKey() &&
+                getValue() == other.getValue();
         }
 
         @Override

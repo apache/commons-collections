@@ -80,7 +80,7 @@ public class UniqueFilterIteratorTest<E> extends AbstractIteratorTest<E> {
             iter.next();
         } catch (Exception e) {
             assertTrue("NoSuchElementException must be thrown", 
-                       e.getClass().equals((new NoSuchElementException()).getClass()));
+                       e.getClass().equals(new NoSuchElementException().getClass()));
         }
     }
 

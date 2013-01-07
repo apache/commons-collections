@@ -184,7 +184,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * @return true if the map is currently size zero
      */
     public boolean isEmpty() {
-        return (size() == 0);
+        return size() == 0;
     }
 
     //-----------------------------------------------------------------------
@@ -346,17 +346,17 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                 delegateMap.put(key, value);
                 return null;
             case 2:
-                hash3 = (key == null ? 0 : key.hashCode());
+                hash3 = key == null ? 0 : key.hashCode();
                 key3 = key;
                 value3 = value;
                 break;
             case 1:
-                hash2 = (key == null ? 0 : key.hashCode());
+                hash2 = key == null ? 0 : key.hashCode();
                 key2 = key;
                 value2 = value;
                 break;
             case 0:
-                hash1 = (key == null ? 0 : key.hashCode());
+                hash1 = key == null ? 0 : key.hashCode();
                 key1 = key;
                 value1 = value;
                 break;
@@ -626,7 +626,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         }
 
         public boolean hasNext() {
-            return (nextIndex < parent.size);
+            return nextIndex < parent.size;
         }
 
         public K next() {
@@ -784,7 +784,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         }
 
         public boolean hasNext() {
-            return (nextIndex < parent.size);
+            return nextIndex < parent.size;
         }
 
         public Map.Entry<K, V> nextEntry() {
@@ -1161,11 +1161,11 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         int total = 0;
         switch (size) {  // drop through
             case 3:
-                total += (hash3 ^ (value3 == null ? 0 : value3.hashCode()));
+                total += hash3 ^ (value3 == null ? 0 : value3.hashCode());
             case 2:
-                total += (hash2 ^ (value2 == null ? 0 : value2.hashCode()));
+                total += hash2 ^ (value2 == null ? 0 : value2.hashCode());
             case 1:
-                total += (hash1 ^ (value1 == null ? 0 : value1.hashCode()));
+                total += hash1 ^ (value1 == null ? 0 : value1.hashCode());
         }
         return total;
     }
@@ -1187,19 +1187,19 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         buf.append('{');
         switch (size) {  // drop through
             case 3:
-                buf.append((key3 == this ? "(this Map)" : key3));
+                buf.append(key3 == this ? "(this Map)" : key3);
                 buf.append('=');
-                buf.append((value3 == this ? "(this Map)" : value3));
+                buf.append(value3 == this ? "(this Map)" : value3);
                 buf.append(',');
             case 2:
-                buf.append((key2 == this ? "(this Map)" : key2));
+                buf.append(key2 == this ? "(this Map)" : key2);
                 buf.append('=');
-                buf.append((value2 == this ? "(this Map)" : value2));
+                buf.append(value2 == this ? "(this Map)" : value2);
                 buf.append(',');
             case 1:
-                buf.append((key1 == this ? "(this Map)" : key1));
+                buf.append(key1 == this ? "(this Map)" : key1);
                 buf.append('=');
-                buf.append((value1 == this ? "(this Map)" : value1));
+                buf.append(value1 == this ? "(this Map)" : value1);
         }
         buf.append('}');
         return buf.toString();

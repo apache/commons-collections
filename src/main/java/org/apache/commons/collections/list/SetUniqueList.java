@@ -137,7 +137,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         add(size(), object);
 
         // compares sizes to detect if collection changed
-        return (sizeBefore != size());
+        return sizeBefore != size();
     }
 
     /**

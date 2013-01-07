@@ -60,28 +60,28 @@ public class ExtendedPropertiesTest extends TestCase {
          * now add another and get a Vector/list
          */
         eprop.addProperty("number", "2");
-        assertTrue("This returns array", (eprop.getVector("number") instanceof java.util.Vector));
-        assertTrue("This returns array", (eprop.getList("number") instanceof java.util.List));
+        assertTrue("This returns array", eprop.getVector("number") instanceof java.util.Vector);
+        assertTrue("This returns array", eprop.getList("number") instanceof java.util.List);
 
         /*
          *  now test dan's new fix where we get the first scalar 
          *  when we access a vector/list valued
          *  property
          */
-        assertTrue("This returns scalar", (eprop.getString("number") instanceof String));
+        assertTrue("This returns scalar", eprop.getString("number") instanceof String);
 
         /*
          * test comma separated string properties
          */
         String prop = "hey, that's a test";
         eprop.setProperty("prop.string", prop);
-        assertTrue("This returns vector", (eprop.getVector("prop.string") instanceof java.util.Vector));
-        assertTrue("This returns list", (eprop.getList("prop.string") instanceof java.util.List));
+        assertTrue("This returns vector", eprop.getVector("prop.string") instanceof java.util.Vector);
+        assertTrue("This returns list", eprop.getList("prop.string") instanceof java.util.List);
 
         String prop2 = "hey\\, that's a test";
         eprop.remove("prop.string");
         eprop.setProperty("prop.string", prop2);
-        assertTrue("This returns array", (eprop.getString("prop.string") instanceof java.lang.String));
+        assertTrue("This returns array", eprop.getString("prop.string") instanceof java.lang.String);
 
         /*
          * test subset : we want to make sure that the EP doesn't reprocess the data 
@@ -91,9 +91,9 @@ public class ExtendedPropertiesTest extends TestCase {
         ExtendedProperties subEprop = eprop.subset("prop");
 
         assertTrue("Returns the full string", subEprop.getString("string").equals(prop));
-        assertTrue("This returns string for subset", (subEprop.getString("string") instanceof java.lang.String));
-        assertTrue("This returns array for subset", (subEprop.getVector("string") instanceof java.util.Vector));
-        assertTrue("This returns array for subset", (subEprop.getList("string") instanceof java.util.List));
+        assertTrue("This returns string for subset", subEprop.getString("string") instanceof java.lang.String);
+        assertTrue("This returns array for subset", subEprop.getVector("string") instanceof java.util.Vector);
+        assertTrue("This returns array for subset", subEprop.getList("string") instanceof java.util.List);
 
     }
 

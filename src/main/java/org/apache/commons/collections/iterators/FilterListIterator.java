@@ -154,7 +154,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
     }
 
     public int previousIndex() {
-        return (nextIndex-1);
+        return nextIndex-1;
     }
 
     /** Not supported. */

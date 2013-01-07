@@ -124,7 +124,7 @@ public class LRUMap<K, V>
      * @since 3.1
      */
     public LRUMap(int maxSize, float loadFactor, boolean scanUntilRemovable) {
-        super((maxSize < 1 ? DEFAULT_CAPACITY : maxSize), loadFactor);
+        super(maxSize < 1 ? DEFAULT_CAPACITY : maxSize, loadFactor);
         if (maxSize < 1) {
             throw new IllegalArgumentException("LRUMap max size must be greater than 0");
         }
@@ -373,7 +373,7 @@ public class LRUMap<K, V>
      * @return <code>true</code> if the map is full
      */
     public boolean isFull() {
-        return (size >= maxSize);
+        return size >= maxSize;
     }
 
     /**

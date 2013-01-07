@@ -316,7 +316,7 @@ public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E
         final E element = elements[index];
         int hole = index;
 
-        while ((hole * 2) <= size) {
+        while (hole * 2 <= size) {
             int child = hole * 2;
 
             // if we have a right child and that child can not be percolated
@@ -348,7 +348,7 @@ public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E
         final E element = elements[index];
         int hole = index;
 
-        while ((hole * 2) <= size) {
+        while (hole * 2 <= size) {
             int child = hole * 2;
 
             // if we have a right child and that child can not be percolated

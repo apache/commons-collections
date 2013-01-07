@@ -87,7 +87,7 @@ public class ByteArrayKeyAnalyzer extends AbstractKeyAnalyzer<byte[]> {
      * {@inheritDoc}
      */
     public int lengthInBits(byte[] key) {
-        return (key != null ? key.length * bitsPerElement() : 0);
+        return key != null ? key.length * bitsPerElement() : 0;
     }
     
     /**
@@ -129,14 +129,14 @@ public class ByteArrayKeyAnalyzer extends AbstractKeyAnalyzer<byte[]> {
         }
         
         for (int i = 0; i < length; i++) {
-            int index = prefix + (offsetInBits + i);
+            int index = prefix + offsetInBits + i;
             boolean value = isBitSet(key, index, lengthInBits);
                 
             if (value) {
                 allNull = false;
             }
             
-            int otherIndex = prefix + (otherOffsetInBits + i);
+            int otherIndex = prefix + otherOffsetInBits + i;
             boolean otherValue = isBitSet(other, otherIndex, otherLengthInBits);
             
             if (value != otherValue) {
@@ -179,9 +179,9 @@ public class ByteArrayKeyAnalyzer extends AbstractKeyAnalyzer<byte[]> {
     @Override
     public int compare(byte[] o1, byte[] o2) {
         if (o1 == null) {
-            return (o2 == null) ? 0 : -1;
+            return o2 == null ? 0 : -1;
         } else if (o2 == null) {
-            return (o1 == null) ? 0 : 1;
+            return o1 == null ? 0 : 1;
         }
         
         if (o1.length != o2.length) {

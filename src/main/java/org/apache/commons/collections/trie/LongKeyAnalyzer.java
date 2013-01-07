@@ -85,7 +85,7 @@ public class LongKeyAnalyzer extends AbstractKeyAnalyzer<Long> {
             return NULL_BIT_KEY;
         }
 
-        long otherValue = (other != null ? other.longValue() : 0L);
+        long otherValue = other != null ? other.longValue() : 0L;
         
         if (keyValue != otherValue) {
             long xorValue = keyValue ^ otherValue;
@@ -105,12 +105,12 @@ public class LongKeyAnalyzer extends AbstractKeyAnalyzer<Long> {
     public boolean isPrefix(Long prefix, int offsetInBits, 
             int lengthInBits, Long key) {
         
-        long value1 = (prefix.longValue() << offsetInBits);
+        long value1 = prefix.longValue() << offsetInBits;
         long value2 = key.longValue();
         
         long mask = 0L;
         for (int i = 0; i < lengthInBits; i++) {
-            mask |= (0x1L << i);
+            mask |= 0x1L << i;
         }
         
         return (value1 & mask) == (value2 & mask);

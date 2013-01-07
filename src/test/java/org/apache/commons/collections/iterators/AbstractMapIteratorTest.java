@@ -193,7 +193,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         }
 
         V newValue = addSetValues()[0];
-        V newValue2 = (addSetValues().length == 1 ? addSetValues()[0] : addSetValues()[1]);
+        V newValue2 = addSetValues().length == 1 ? addSetValues()[0] : addSetValues()[1];
         MapIterator<K, V> it = makeObject();
         Map<K, V> map = getMap();
         Map<K, V> confirmed = getConfirmedMap();

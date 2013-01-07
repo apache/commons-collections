@@ -60,7 +60,7 @@ public final class NullPredicate<T> implements Predicate<T>, Serializable {
      * @return true if input is null
      */
     public boolean evaluate(T object) {
-        return (object == null);
+        return object == null;
     }
 
     private Object readResolve() {

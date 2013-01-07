@@ -114,7 +114,7 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
     public boolean add(E obj) {
         int size = map.size();
         map.put(obj, dummyValue);
-        return (map.size() != size);
+        return map.size() != size;
     }
 
     public boolean addAll(Collection<? extends E> coll) {
@@ -122,13 +122,13 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
         for (E e : coll) {
             map.put(e, dummyValue);
         }
-        return (map.size() != size);
+        return map.size() != size;
     }
 
     public boolean remove(Object obj) {
         int size = map.size();
         map.remove(obj);
-        return (map.size() != size);
+        return map.size() != size;
     }
 
     public boolean removeAll(Collection<?> coll) {

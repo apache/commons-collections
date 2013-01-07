@@ -101,8 +101,8 @@ public class SequencesComparator<T> {
      */
     private Snake buildSnake(int start, int diag, int end1, int end2) {
         int end = start;
-        while (((end - diag) < end2)
-                && (end < end1)
+        while (end - diag < end2
+                && end < end1
                 && sequence1.get(end).equals(sequence2.get(end - diag))) {
             ++end;
         }
@@ -130,13 +130,13 @@ public class SequencesComparator<T> {
         // Initialisations
         int m = end1 - start1;
         int n = end2 - start2;
-        if ((m == 0) || (n == 0)) {
+        if (m == 0 || n == 0) {
             return null;
         }
 
         int delta  = m - n;
         int sum    = n + m;
-        int offset = ((sum % 2 == 0) ? sum : (sum + 1)) / 2;
+        int offset = (sum % 2 == 0 ? sum : sum + 1) / 2;
         vDown[1+offset] = start1;
         vUp[1+offset]   = end1 + 1;
 
@@ -146,7 +146,7 @@ public class SequencesComparator<T> {
                 // First step
 
                 int i = k + offset;
-                if ((k == -d) || ((k != d) && (vDown[i-1] < vDown[i+1]))) {
+                if (k == -d || k != d && vDown[i-1] < vDown[i+1]) {
                     vDown[i] = vDown[i+1];
                 } else {
                     vDown[i] = vDown[i-1] + 1;
@@ -155,12 +155,12 @@ public class SequencesComparator<T> {
                 int x = vDown[i];
                 int y = x - start1 + start2 - k;
 
-                while ((x < end1) && (y < end2) && (sequence1.get(x).equals(sequence2.get(y)))) {
+                while (x < end1 && y < end2 && sequence1.get(x).equals(sequence2.get(y))) {
                     vDown[i] = ++x;
                     ++y;
                 }
                 // Second step
-                if (((delta % 2) != 0 ) && ((delta - d) <= k) && (k <= (delta + d))) {
+                if (delta % 2 != 0 && delta - d <= k && k <= delta + d) {
                     if (vUp[i-delta] <= vDown[i]) {
                         return buildSnake(vUp[i-delta], k + start1 - start2, end1, end2);
                     }
@@ -168,11 +168,11 @@ public class SequencesComparator<T> {
             }
 
             // Up
-            for (int k = (delta - d); k <= (delta + d); k += 2) {
+            for (int k = delta - d; k <= delta + d; k += 2) {
                 // First step
                 int i = k + offset - delta;
-                if ((k == (delta - d))
-                        || ((k != (delta + d)) && (vUp[i+1] <= vUp[i-1]))) {
+                if (k == delta - d
+                        || k != delta + d && vUp[i+1] <= vUp[i-1]) {
                     vUp[i] = vUp[i+1] - 1;
                 } else {
                     vUp[i] = vUp[i-1];
@@ -180,13 +180,13 @@ public class SequencesComparator<T> {
 
                 int x = vUp[i] - 1;
                 int y = x - start1 + start2 - k;
-                while ((x >= start1) && (y >= start2)
+                while (x >= start1 && y >= start2
                         && sequence1.get(x).equals(sequence2.get(y))) {
                     vUp[i] = x--;
                     y--;
                 }
                 // Second step
-                if (((delta % 2) == 0) && (-d <= k) && (k <= d) ) {
+                if (delta % 2 == 0 && -d <= k && k <= d ) {
                     if (vUp[i] <= vDown[i + delta]) {
                         return buildSnake(vUp[i], k + start1 - start2, end1, end2);
                     }
@@ -213,19 +213,19 @@ public class SequencesComparator<T> {
 
         Snake middle = getMiddleSnake(start1, end1, start2, end2);
 
-        if ((middle == null)
-                || ((middle.getStart() == end1) && (middle.getDiag() == (end1 - end2)))
-                || ((middle.getEnd() == start1) && (middle.getDiag() == (start1 - start2)))) {
+        if (middle == null
+                || middle.getStart() == end1 && middle.getDiag() == end1 - end2
+                || middle.getEnd() == start1 && middle.getDiag() == start1 - start2) {
 
             int i = start1;
             int j = start2;
-            while ((i < end1) || (j < end2)) {
-                if ((i < end1) && (j < end2) && sequence1.get(i).equals(sequence2.get(j))) {
+            while (i < end1 || j < end2) {
+                if (i < end1 && j < end2 && sequence1.get(i).equals(sequence2.get(j))) {
                     script.append(new KeepCommand<T>(sequence1.get(i)));
                     ++i;
                     ++j;
                 } else {
-                    if ((end1 - start1) > (end2 - start2)) {
+                    if (end1 - start1 > end2 - start2) {
                         script.append(new DeleteCommand<T>(sequence1.get(i)));
                         ++i;
                     } else {

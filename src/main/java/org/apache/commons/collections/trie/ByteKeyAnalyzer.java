@@ -85,7 +85,7 @@ public class ByteKeyAnalyzer extends AbstractKeyAnalyzer<Byte> {
             return NULL_BIT_KEY;
         }
 
-        byte otherValue = (other != null ? other.byteValue() : 0);
+        byte otherValue = other != null ? other.byteValue() : 0;
         
         if (keyValue != otherValue) {
             int xorValue = keyValue ^ otherValue;
@@ -105,12 +105,12 @@ public class ByteKeyAnalyzer extends AbstractKeyAnalyzer<Byte> {
     public boolean isPrefix(Byte prefix, int offsetInBits, 
             int lengthInBits, Byte key) {
         
-        int value1 = (prefix.byteValue() << offsetInBits);
+        int value1 = prefix.byteValue() << offsetInBits;
         int value2 = key.byteValue();
         
         int mask = 0;
         for (int i = 0; i < lengthInBits; i++) {
-            mask |= (0x1 << i);
+            mask |= 0x1 << i;
         }
         
         return (value1 & mask) == (value2 & mask);

@@ -85,7 +85,7 @@ public class IntegerKeyAnalyzer extends AbstractKeyAnalyzer<Integer> {
             return NULL_BIT_KEY;
         }
 
-        int otherValue = (other != null ? other.intValue() : 0);
+        int otherValue = other != null ? other.intValue() : 0;
         
         if (keyValue != otherValue) {
             int xorValue = keyValue ^ otherValue;
@@ -105,12 +105,12 @@ public class IntegerKeyAnalyzer extends AbstractKeyAnalyzer<Integer> {
     public boolean isPrefix(Integer prefix, int offsetInBits, 
             int lengthInBits, Integer key) {
         
-        int value1 = (prefix.intValue() << offsetInBits);
+        int value1 = prefix.intValue() << offsetInBits;
         int value2 = key.intValue();
         
         int mask = 0;
         for (int i = 0; i < lengthInBits; i++) {
-            mask |= (0x1 << i);
+            mask |= 0x1 << i;
         }
         
         return (value1 & mask) == (value2 & mask);

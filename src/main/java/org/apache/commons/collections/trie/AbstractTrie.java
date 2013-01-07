@@ -148,9 +148,9 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
      */
     final boolean compareKeys(K key, K other) {
         if (key == null) {
-            return (other == null);
+            return other == null;
         } else if (other == null) {
-            return (key == null);
+            return key == null;
         }
         
         return keyAnalyzer.compare(key, other) == 0;
@@ -160,7 +160,7 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
      * Returns true if both values are either null or equal
      */
     static boolean compare(Object a, Object b) {
-        return (a == null ? b == null : a.equals(b));
+        return a == null ? b == null : a.equals(b);
     }
     
     /**
@@ -178,7 +178,7 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
         
         public BasicEntry(K key) {
             this.key = key;
-            this.hashCode = (key != null ? key.hashCode() : 0);
+            this.hashCode = key != null ? key.hashCode() : 0;
         }
         
         public BasicEntry(K key, V value) {

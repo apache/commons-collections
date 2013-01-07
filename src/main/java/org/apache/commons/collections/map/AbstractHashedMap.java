@@ -206,7 +206,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      */
     @Override
     public boolean isEmpty() {
-        return (size == 0);
+        return size == 0;
     }
 
     //-----------------------------------------------------------------------
@@ -379,7 +379,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @return the converted key
      */
     protected Object convertKey(Object key) {
-        return (key == null ? NULL : key);
+        return key == null ? NULL : key;
     }
 
     /**
@@ -394,9 +394,9 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         // same as JDK 1.4
         int h = key.hashCode();
         h += ~(h << 9);
-        h ^=  (h >>> 14);
-        h +=  (h << 4);
-        h ^=  (h >>> 10);
+        h ^=  h >>> 14;
+        h +=  h << 4;
+        h ^=  h >>> 10;
         return h;
     }
 
@@ -410,7 +410,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @return true if equal
      */
     protected boolean isEqualKey(Object key1, Object key2) {
-        return (key1 == key2 || key1.equals(key2));
+        return key1 == key2 || key1.equals(key2);
     }
 
     /**
@@ -423,7 +423,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @return true if equal
      */
     protected boolean isEqualValue(Object value1, Object value2) {
-        return (value1 == value2 || value1.equals(value2));
+        return value1 == value2 || value1.equals(value2);
     }
 
     /**
@@ -436,7 +436,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @return the bucket index
      */
     protected int hashIndex(int hashCode, int dataSize) {
-        return hashCode & (dataSize - 1);
+        return hashCode & dataSize - 1;
     }
 
     //-----------------------------------------------------------------------
@@ -852,7 +852,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
             if (entry instanceof Map.Entry) {
                 Map.Entry<?, ?> e = (Map.Entry<?, ?>) entry;
                 Entry<K, V> match = parent.getEntry(e.getKey());
-                return (match != null && match.equals(e));
+                return match != null && match.equals(e);
             }
             return false;
         }
@@ -1155,7 +1155,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         }
 
         public boolean hasNext() {
-            return (next != null);
+            return next != null;
         }
 
         protected HashEntry<K, V> nextEntry() {

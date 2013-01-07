@@ -190,7 +190,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      */
     protected String interpolate(String base) {
         // COPIED from [configuration] 2003-12-29
-        return (interpolateHelper(base, null));
+        return interpolateHelper(base, null);
     }
 
     /**
@@ -227,8 +227,8 @@ public class ExtendedProperties extends Hashtable<String, Object> {
         StringBuilder result = new StringBuilder();
 
         // FIXME: we should probably allow the escaping of the start token
-        while (((begin = base.indexOf(START_TOKEN, prec + END_TOKEN.length())) > -1)
-            && ((end = base.indexOf(END_TOKEN, begin)) > -1)) {
+        while ((begin = base.indexOf(START_TOKEN, prec + END_TOKEN.length())) > -1
+            && (end = base.indexOf(END_TOKEN, begin)) > -1) {
             result.append(base.substring(prec + END_TOKEN.length(), begin));
             variable = base.substring(begin + START_TOKEN.length(), end);
 
@@ -329,7 +329,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
         if (!line.endsWith("\\")) {
             return false;
         }
-        return (countPreceding(line, line.length() - 1, '\\') % 2 == 0);
+        return countPreceding(line, line.length() - 1, '\\') % 2 == 0;
     }
 
     /**
@@ -359,7 +359,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
             String line = readLine();
             while (line != null) {
                 line = line.trim();
-                if ((line.length() != 0) && (line.charAt(0) != '#')) {
+                if (line.length() != 0 && line.charAt(0) != '#') {
                     if (endsWithSlash(line)) {
                         line = line.substring(0, line.length() - 1);
                         buffer.append(line);
@@ -795,7 +795,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
             // we also need to rebuild the keysAsListed or else
             // things get *very* confusing
             for (int i = 0; i < keysAsListed.size(); i++) {
-                if (( keysAsListed.get(i)).equals(key)) {
+                if (keysAsListed.get(i).equals(key)) {
                     keysAsListed.remove(i);
                     break;
                 }
@@ -1071,7 +1071,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
             if (defaults != null) {
                 return defaults.getVector(key, defaultValue);
             } else {
-                return ((defaultValue == null) ? new Vector<String>() : defaultValue);
+                return defaultValue == null ? new Vector<String>() : defaultValue;
             }
         } else {
             throw new ClassCastException('\'' + key + "' doesn't map to a Vector object");
@@ -1125,7 +1125,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
             if (defaults != null) {
                 return defaults.getList(key, defaultValue);
             } else {
-                return ((defaultValue == null) ? new ArrayList<String>() : defaultValue);
+                return defaultValue == null ? new ArrayList<String>() : defaultValue;
             }
         } else {
             throw new ClassCastException('\'' + key + "' doesn't map to a List object");

@@ -116,7 +116,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      * @return true if there is a previous element to return
      */
     public boolean hasPrevious() {
-        return (this.index > this.startIndex);
+        return this.index > this.startIndex;
     }
 
     /**

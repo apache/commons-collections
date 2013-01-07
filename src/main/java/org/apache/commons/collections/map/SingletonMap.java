@@ -219,7 +219,7 @@ public class SingletonMap<K, V>
      * @return true if the map contains the key
      */
     public boolean containsKey(Object key) {
-        return (isEqualKey(key));
+        return isEqualKey(key);
     }
 
     /**
@@ -229,7 +229,7 @@ public class SingletonMap<K, V>
      * @return true if the map contains the key
      */
     public boolean containsValue(Object value) {
-        return (isEqualValue(value));
+        return isEqualValue(value);
     }
 
     //-----------------------------------------------------------------------
@@ -383,7 +383,7 @@ public class SingletonMap<K, V>
      * @return true if equal
      */
     protected boolean isEqualKey(Object key) {
-        return (key == null ? getKey() == null : key.equals(getKey()));
+        return key == null ? getKey() == null : key.equals(getKey());
     }
 
     /**
@@ -393,7 +393,7 @@ public class SingletonMap<K, V>
      * @return true if equal
      */
     protected boolean isEqualValue(Object value) {
-        return (value == null ? getValue() == null : value.equals(getValue()));
+        return value == null ? getValue() == null : value.equals(getValue());
     }
 
     //-----------------------------------------------------------------------
@@ -424,7 +424,7 @@ public class SingletonMap<K, V>
         }
 
         public boolean hasPrevious() {
-            return (hasNext == false);
+            return hasNext == false;
         }
 
         public K previous() {
@@ -566,9 +566,9 @@ public class SingletonMap<K, V>
     public String toString() {
         return new StringBuilder(128)
             .append('{')
-            .append((getKey() == this ? "(this Map)" : getKey()))
+            .append(getKey() == this ? "(this Map)" : getKey())
             .append('=')
-            .append((getValue() == this ? "(this Map)" : getValue()))
+            .append(getValue() == this ? "(this Map)" : getValue())
             .append('}')
             .toString();
     }

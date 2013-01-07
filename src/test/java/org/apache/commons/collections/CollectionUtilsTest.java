@@ -899,7 +899,7 @@ public class CollectionUtilsTest extends MockTestCase {
     // -----------------------------------------------------------------------
     private static Predicate<Number> EQUALS_TWO = new Predicate<Number>() {
         public boolean evaluate(Number input) {
-            return (input.intValue() == 2);
+            return input.intValue() == 2;
         }
     };
 
@@ -1203,7 +1203,7 @@ public class CollectionUtilsTest extends MockTestCase {
         // or eltb, although this isn't strictly part of the
         // contract.
         Object eltc = intersection.iterator().next();
-        assertTrue((eltc == elta && eltc != eltb) || (eltc != elta && eltc == eltb));
+        assertTrue(eltc == elta && eltc != eltb || eltc != elta && eltc == eltb);
 
         // In any event, this element remains equal,
         // to both elta and eltb.

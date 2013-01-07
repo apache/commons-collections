@@ -465,7 +465,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
     public boolean equals(Object obj) {
         if (obj instanceof Map) {
             Map<?, ?> map = (Map<?, ?>) obj;
-            return (this.entrySet().equals(map.entrySet()));
+            return this.entrySet().equals(map.entrySet());
         }
         return false;
     }

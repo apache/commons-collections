@@ -143,7 +143,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      * @return true if there is a next element to return
      */
     public boolean hasNext() {
-        return (index < endIndex);
+        return index < endIndex;
     }
 
     /**

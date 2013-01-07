@@ -220,7 +220,7 @@ public class ComparatorUtils {
             comparator = NATURAL_COMPARATOR;
         }
         int c = comparator.compare(o1, o2);
-        return (c < 0) ? o1 : o2;
+        return c < 0 ? o1 : o2;
     }
 
     /**
@@ -239,7 +239,7 @@ public class ComparatorUtils {
             comparator = NATURAL_COMPARATOR;
         }
         int c = comparator.compare(o1, o2);
-        return (c > 0) ? o1 : o2;
+        return c > 0 ? o1 : o2;
     }
     
 }

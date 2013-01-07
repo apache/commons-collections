@@ -166,7 +166,7 @@ public class TreeList<E> extends AbstractList<E> {
      */
     @Override
     public boolean contains(Object object) {
-        return (indexOf(object) >= 0);
+        return indexOf(object) >= 0;
     }
 
     /**
@@ -336,7 +336,7 @@ public class TreeList<E> extends AbstractList<E> {
                 return this;
             }
 
-            AVLNode<E> nextNode = ((indexRelativeToMe < 0) ? getLeftSubTree() : getRightSubTree());
+            AVLNode<E> nextNode = indexRelativeToMe < 0 ? getLeftSubTree() : getRightSubTree();
             if (nextNode == null) {
                 return null;
             }
@@ -456,14 +456,14 @@ public class TreeList<E> extends AbstractList<E> {
          * Gets the left node, returning null if its a faedelung.
          */
         private AVLNode<E> getLeftSubTree() {
-            return (leftIsPrevious ? null : left);
+            return leftIsPrevious ? null : left;
         }
 
         /**
          * Gets the right node, returning null if its a faedelung.
          */
         private AVLNode<E> getRightSubTree() {
-            return (rightIsNext ? null : right);
+            return rightIsNext ? null : right;
         }
 
         /**
@@ -472,7 +472,7 @@ public class TreeList<E> extends AbstractList<E> {
          * @return the rightmost child (greatest index)
          */
         private AVLNode<E> max() {
-            return (getRightSubTree() == null) ? this : right.max();
+            return getRightSubTree() == null ? this : right.max();
         }
 
         /**
@@ -481,7 +481,7 @@ public class TreeList<E> extends AbstractList<E> {
          * @return the leftmost child (smallest index)
          */
         private AVLNode<E> min() {
-            return (getLeftSubTree() == null) ? this : left.min();
+            return getLeftSubTree() == null ? this : left.min();
         }
 
         /**
@@ -651,7 +651,7 @@ public class TreeList<E> extends AbstractList<E> {
          * Returns the height of the node or -1 if the node is null.
          */
         private int getHeight(AVLNode<E> node) {
-            return (node == null ? -1 : node.height);
+            return node == null ? -1 : node.height;
         }
 
         /**
@@ -702,8 +702,8 @@ public class TreeList<E> extends AbstractList<E> {
          * @param previous  the previous node in the linked list
          */
         private void setLeft(AVLNode<E> node, AVLNode<E> previous) {
-            leftIsPrevious = (node == null);
-            left = (leftIsPrevious ? previous : node);
+            leftIsPrevious = node == null;
+            left = leftIsPrevious ? previous : node;
             recalcHeight();
         }
 
@@ -714,8 +714,8 @@ public class TreeList<E> extends AbstractList<E> {
          * @param next  the next node in the linked list
          */
         private void setRight(AVLNode<E> node, AVLNode<E> next) {
-            rightIsNext = (node == null);
-            right = (rightIsNext ? next : node);
+            rightIsNext = node == null;
+            right = rightIsNext ? next : node;
             recalcHeight();
         }
 
@@ -822,7 +822,7 @@ public class TreeList<E> extends AbstractList<E> {
             super();
             this.parent = parent;
             this.expectedModCount = parent.modCount;
-            this.next = (parent.root == null ? null : parent.root.get(fromIndex));
+            this.next = parent.root == null ? null : parent.root.get(fromIndex);
             this.nextIndex = fromIndex;
             this.currentIndex = -1;
         }
@@ -841,7 +841,7 @@ public class TreeList<E> extends AbstractList<E> {
         }
 
         public boolean hasNext() {
-            return (nextIndex < parent.size());
+            return nextIndex < parent.size();
         }
 
         public E next() {
@@ -860,7 +860,7 @@ public class TreeList<E> extends AbstractList<E> {
         }
 
         public boolean hasPrevious() {
-            return (nextIndex > 0);
+            return nextIndex > 0;
         }
 
         public E previous() {

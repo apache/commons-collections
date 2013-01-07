@@ -73,7 +73,7 @@ public class SingletonIterator<E>
      * @return true if the single object hasn't been returned yet
      */
     public boolean hasNext() {
-        return (beforeFirst && !removed);
+        return beforeFirst && !removed;
     }
 
     /**

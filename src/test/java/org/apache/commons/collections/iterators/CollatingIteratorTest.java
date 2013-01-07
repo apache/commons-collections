@@ -121,7 +121,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
         for (int i = 0; i < 20; i++) {
             assertTrue(iter.hasNext());
             assertEquals(new Integer(i),iter.next());
-            assertEquals((i % 2) == 0 ? 1 : 0,iter.getIteratorIndex());
+            assertEquals(i % 2 == 0 ? 1 : 0,iter.getIteratorIndex());
         }
         assertTrue(!iter.hasNext());
     }
@@ -235,7 +235,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
                 iter.remove();
             }
         }
-        assertEquals(expectedSize, (evens.size() + odds.size()));
+        assertEquals(expectedSize, evens.size() + odds.size());
     }
 
     public void testNullComparator() {

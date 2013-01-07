@@ -354,9 +354,9 @@ public abstract class AbstractBagTest<T> extends AbstractObjectTest {
         Object[] array = bag.toArray();
         int a = 0, b = 0, c = 0;
         for (Object element : array) {
-            a += (element.equals("A") ? 1 : 0);
-            b += (element.equals("B") ? 1 : 0);
-            c += (element.equals("C") ? 1 : 0);
+            a += element.equals("A") ? 1 : 0;
+            b += element.equals("B") ? 1 : 0;
+            c += element.equals("C") ? 1 : 0;
         }
         assertEquals(2, a);
         assertEquals(2, b);
@@ -374,9 +374,9 @@ public abstract class AbstractBagTest<T> extends AbstractObjectTest {
         String[] array = bag.toArray(new String[0]);
         int a = 0, b = 0, c = 0;
         for (String element : array) {
-            a += (element.equals("A") ? 1 : 0);
-            b += (element.equals("B") ? 1 : 0);
-            c += (element.equals("C") ? 1 : 0);
+            a += element.equals("A") ? 1 : 0;
+            b += element.equals("B") ? 1 : 0;
+            c += element.equals("C") ? 1 : 0;
         }
         assertEquals(2, a);
         assertEquals(2, b);
@@ -444,9 +444,9 @@ public abstract class AbstractBagTest<T> extends AbstractObjectTest {
         assertEquals(bag.hashCode(), bag2.hashCode());
         
         int total = 0;
-        total += ("A".hashCode() ^ 2);
-        total += ("B".hashCode() ^ 2);
-        total += ("C".hashCode() ^ 1);
+        total += "A".hashCode() ^ 2;
+        total += "B".hashCode() ^ 2;
+        total += "C".hashCode() ^ 1;
         assertEquals(total, bag.hashCode());
         assertEquals(total, bag2.hashCode());
     }

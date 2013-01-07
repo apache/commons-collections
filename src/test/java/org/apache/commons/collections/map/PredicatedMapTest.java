@@ -39,7 +39,7 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     protected static final Predicate<Object> testPredicate = new Predicate<Object>() {
         public boolean evaluate(Object o) {
-            return (o instanceof String);
+            return o instanceof String;
         }
     };
 

@@ -229,9 +229,9 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
             h ^= key2.hashCode();
         }
         h += ~(h << 9);
-        h ^=  (h >>> 14);
-        h +=  (h << 4);
-        h ^=  (h >>> 10);
+        h ^=  h >>> 14;
+        h +=  h << 4;
+        h ^=  h >>> 10;
         return h;
     }
 
@@ -365,9 +365,9 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
             h ^= key3.hashCode();
         }
         h += ~(h << 9);
-        h ^=  (h >>> 14);
-        h +=  (h << 4);
-        h ^=  (h >>> 10);
+        h ^=  h >>> 14;
+        h +=  h << 4;
+        h ^=  h >>> 10;
         return h;
     }
 
@@ -511,9 +511,9 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
             h ^= key4.hashCode();
         }
         h += ~(h << 9);
-        h ^=  (h >>> 14);
-        h +=  (h << 4);
-        h ^=  (h >>> 10);
+        h ^=  h >>> 14;
+        h +=  h << 4;
+        h ^=  h >>> 10;
         return h;
     }
 
@@ -667,9 +667,9 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
             h ^= key5.hashCode();
         }
         h += ~(h << 9);
-        h ^=  (h >>> 14);
-        h +=  (h << 4);
-        h ^=  (h >>> 10);
+        h ^=  h >>> 14;
+        h +=  h << 4;
+        h ^=  h >>> 10;
         return h;
     }
 

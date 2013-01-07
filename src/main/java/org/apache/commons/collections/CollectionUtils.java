@@ -384,7 +384,7 @@ public class CollectionUtils {
      * @see Collection#containsAll
      */
     public static boolean isProperSubCollection(final Collection<?> a, final Collection<?> b) {
-        return (a.size() < b.size()) && CollectionUtils.isSubCollection(a, b);
+        return a.size() < b.size() && CollectionUtils.isSubCollection(a, b);
     }
 
     /**
@@ -425,7 +425,7 @@ public class CollectionUtils {
      */
     public static <O> int cardinality(O obj, final Iterable<? super O> coll) {
         if (coll instanceof Set<?>) {
-            return (((Set<? super O>) coll).contains(obj) ? 1 : 0);
+            return ((Set<? super O>) coll).contains(obj) ? 1 : 0;
         }
         if (coll instanceof Bag<?>) {
             return ((Bag<? super O>) coll).getCount(obj);
@@ -827,7 +827,7 @@ public class CollectionUtils {
         if (collection == null) {
             throw new NullPointerException("The collection must not be null");
         }
-        return (object != null && collection.add(object));
+        return object != null && collection.add(object);
     }
 
     /**
@@ -1153,7 +1153,7 @@ public class CollectionUtils {
      * @since 3.2
      */
     public static boolean isEmpty(Collection<?> coll) {
-        return (coll == null || coll.isEmpty());
+        return coll == null || coll.isEmpty();
     }
 
     /**

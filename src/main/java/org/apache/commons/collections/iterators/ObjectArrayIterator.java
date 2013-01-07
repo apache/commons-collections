@@ -119,7 +119,7 @@ public class ObjectArrayIterator<E>
      * @return true if there is a next element to return
      */
     public boolean hasNext() {
-        return (this.index < this.endIndex);
+        return this.index < this.endIndex;
     }
 
     /**

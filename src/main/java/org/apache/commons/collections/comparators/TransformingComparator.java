@@ -119,8 +119,8 @@ public class TransformingComparator<E> implements Comparator<E>, Serializable {
         }
         if (object.getClass().equals(this.getClass())) {
             TransformingComparator<?> comp = (TransformingComparator<?>) object;
-            return (null == decorated ? null == comp.decorated : decorated.equals(comp.decorated) &&
-                    null == transformer ? null == comp.transformer : transformer.equals(comp.transformer));
+            return null == decorated ? null == comp.decorated : decorated.equals(comp.decorated) &&
+                    null == transformer ? null == comp.transformer : transformer.equals(comp.transformer);
         }
         return false;
     }

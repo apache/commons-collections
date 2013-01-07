@@ -182,7 +182,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
     public boolean add(T obj) {
         checkLocked();
         Integer position = map.put(obj, new Integer(counter++));
-        return (position == null);
+        return position == null;
     }
 
     /**
@@ -205,7 +205,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
             throw new IllegalArgumentException(existingObj + " not known to " + this);
         }
         Integer result = map.put(newObj, position);
-        return (result == null);
+        return result == null;
     }
 
     // Comparator methods
@@ -235,7 +235,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
             case AFTER:
                 return position1 == null ? position2 == null ? 0 : 1 : -1;
             case EXCEPTION:
-                Object unknownObj = (position1 == null) ? obj1 : obj2;
+                Object unknownObj = position1 == null ? obj1 : obj2;
                 throw new IllegalArgumentException("Attempting to compare unknown object "
                         + unknownObj);
             default: //could be null
@@ -285,12 +285,12 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
         }
         if (object.getClass().equals(this.getClass())) {
             FixedOrderComparator<?> comp = (FixedOrderComparator<?>) object;
-            return (null == map ? null == comp.map : map.equals(comp.map) &&
+            return null == map ? null == comp.map : map.equals(comp.map) &&
                     null == unknownObjectBehavior ? null == comp.unknownObjectBehavior :
                         unknownObjectBehavior == comp.unknownObjectBehavior &&
                     counter == comp.counter &&
                     isLocked == comp.isLocked &&
-                    unknownObjectBehavior == comp.unknownObjectBehavior);
+                    unknownObjectBehavior == comp.unknownObjectBehavior;
         }
         return false;
     }

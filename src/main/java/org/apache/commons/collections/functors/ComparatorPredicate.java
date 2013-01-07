@@ -165,19 +165,19 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
         int comparison = comparator.compare(object, target);
         switch (criterion) {
         case EQUAL:
-            result = (comparison == 0);
+            result = comparison == 0;
             break;
         case GREATER:
-            result = (comparison > 0);
+            result = comparison > 0;
             break;
         case LESS:
-            result = (comparison < 0);
+            result = comparison < 0;
             break;
         case GREATER_OR_EQUAL:
-            result = (comparison >= 0);
+            result = comparison >= 0;
             break;
         case LESS_OR_EQUAL:
-            result = (comparison <= 0);
+            result = comparison <= 0;
             break;
         default:
             throw new IllegalStateException("The current criterion '" + criterion + "' is invalid.");

@@ -67,7 +67,7 @@ public final class NotPredicate<T> implements Predicate<T>, PredicateDecorator<T
      * @return true if predicate returns false
      */
     public boolean evaluate(T object) {
-        return !(iPredicate.evaluate(object));
+        return !iPredicate.evaluate(object);
     }
 
     /**

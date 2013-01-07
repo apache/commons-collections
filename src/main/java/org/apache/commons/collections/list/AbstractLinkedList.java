@@ -105,7 +105,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     }
 
     public boolean isEmpty() {
-        return (size() == 0);
+        return size() == 0;
     }
 
     public E get(int index) {
@@ -413,7 +413,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @return true if equal
      */
     protected boolean isEqualValue(Object value1, Object value2) {
-        return (value1 == value2 || (value1 == null ? false : value1.equals(value2)));
+        return value1 == value2 || (value1 == null ? false : value1.equals(value2));
     }
 
     /**
@@ -550,7 +550,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         }
         // Search the list and get the node
         Node<E> node;
-        if (index < (size / 2)) {
+        if (index < size / 2) {
             // Search forwards
             node = header.next;
             for (int currentIndex = 0; currentIndex < index; currentIndex++) {
@@ -895,17 +895,17 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
         @Override
         public boolean hasNext() {
-            return (nextIndex() < sub.size);
+            return nextIndex() < sub.size;
         }
 
         @Override
         public boolean hasPrevious() {
-            return (previousIndex() >= 0);
+            return previousIndex() >= 0;
         }
 
         @Override
         public int nextIndex() {
-            return (super.nextIndex() - sub.offset);
+            return super.nextIndex() - sub.offset;
         }
 
         @Override

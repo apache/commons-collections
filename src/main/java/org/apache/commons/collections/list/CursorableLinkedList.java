@@ -589,17 +589,17 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
 
         @Override
         public boolean hasNext() {
-            return (nextIndex() < sub.size);
+            return nextIndex() < sub.size;
         }
 
         @Override
         public boolean hasPrevious() {
-            return (previousIndex() >= 0);
+            return previousIndex() >= 0;
         }
 
         @Override
         public int nextIndex() {
-            return (super.nextIndex() - sub.offset);
+            return super.nextIndex() - sub.offset;
         }
 
         @Override

@@ -198,7 +198,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      */
     public K nextKey(Object key) {
         LinkEntry<K, V> entry = getEntry(key);
-        return (entry == null || entry.after == header ? null : entry.after.getKey());
+        return entry == null || entry.after == header ? null : entry.after.getKey();
     }
 
     @Override
@@ -214,7 +214,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      */
     public K previousKey(Object key) {
         LinkEntry<K, V> entry = getEntry(key);
-        return (entry == null || entry.before == header ? null : entry.before.getKey());
+        return entry == null || entry.before == header ? null : entry.before.getKey();
     }
 
     //-----------------------------------------------------------------------    
@@ -233,7 +233,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
             throw new IndexOutOfBoundsException("Index " + index + " is invalid for size " + size);
         }
         LinkEntry<K, V> entry;
-        if (index < (size / 2)) {
+        if (index < size / 2) {
             // Search forwards
             entry = header.after;
             for (int currentIndex = 0; currentIndex < index; currentIndex++) {
@@ -540,11 +540,11 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         }
 
         public boolean hasNext() {
-            return (next != parent.header);
+            return next != parent.header;
         }
 
         public boolean hasPrevious() {
-            return (next.before != parent.header);
+            return next.before != parent.header;
         }
 
         protected LinkEntry<K, V> nextEntry() {

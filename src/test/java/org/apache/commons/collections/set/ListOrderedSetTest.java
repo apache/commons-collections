@@ -223,14 +223,14 @@ public class ListOrderedSetTest<E>
         // make sure retainAll completes under 5 seconds
         // TODO if test is migrated to JUnit 4, add a Timeout rule.
         // http://kentbeck.github.com/junit/javadoc/latest/org/junit/rules/Timeout.html
-        assertTrue((stop - start) < 5000);
+        assertTrue(stop - start < 5000);
     }
 
     static class A {
 
         @Override
         public boolean equals(Object obj) {
-            return (obj instanceof A || obj instanceof B);
+            return obj instanceof A || obj instanceof B;
         }
 
         @Override
@@ -243,7 +243,7 @@ public class ListOrderedSetTest<E>
 
         @Override
         public boolean equals(Object obj) {
-            return (obj instanceof A || obj instanceof B);
+            return obj instanceof A || obj instanceof B;
         }
 
         @Override

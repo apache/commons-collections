@@ -161,7 +161,7 @@ public class MapUtils {
                 }
                 if (answer instanceof Number) {
                     Number n = (Number) answer;
-                    return (n.intValue() != 0) ? Boolean.TRUE : Boolean.FALSE;
+                    return n.intValue() != 0 ? Boolean.TRUE : Boolean.FALSE;
                 }
             }
         }
@@ -986,7 +986,7 @@ public class MapUtils {
             if (childValue instanceof Map && !lineage.contains(childValue)) {
                 verbosePrintInternal(
                     out,
-                    (childKey == null ? "null" : childKey),
+                    childKey == null ? "null" : childKey,
                     (Map<?, ?>) childValue,
                     lineage,
                     debug);
@@ -1186,7 +1186,7 @@ public class MapUtils {
      * @since 3.2
      */
     public static boolean isEmpty(Map<?,?> map) {
-        return (map == null || map.isEmpty());
+        return map == null || map.isEmpty();
     }
 
     /**

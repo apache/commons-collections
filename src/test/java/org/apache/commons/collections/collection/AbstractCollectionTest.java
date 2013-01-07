@@ -282,7 +282,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
                     // skip values already matched
                     continue;
                 }
-                if (o == confirmedValues[i] || (o != null && o.equals(confirmedValues[i]))) {
+                if (o == confirmedValues[i] || o != null && o.equals(confirmedValues[i])) {
                     // values matched
                     matched[i] = true;
                     match = true;
@@ -703,9 +703,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         // make sure calls to "containsAll" don't change anything
         verify();
 
-        int min = (getFullElements().length < 2 ? 0 : 2);
-        int max = (getFullElements().length == 1 ? 1 :
-                (getFullElements().length <= 5 ? getFullElements().length - 1 : 5));
+        int min = getFullElements().length < 2 ? 0 : 2;
+        int max = getFullElements().length == 1 ? 1 :
+                getFullElements().length <= 5 ? getFullElements().length - 1 : 5;
         col = Arrays.asList(getFullElements()).subList(min, max);
         assertTrue("Full collection should containAll partial full elements",
                 getCollection().containsAll(col));
@@ -931,9 +931,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
         resetFull();
         int size = getCollection().size();
-        int min = (getFullElements().length < 2 ? 0 : 2);
-        int max = (getFullElements().length == 1 ? 1 :
-                (getFullElements().length <= 5 ? getFullElements().length - 1 : 5));
+        int min = getFullElements().length < 2 ? 0 : 2;
+        int max = getFullElements().length == 1 ? 1 :
+                getFullElements().length <= 5 ? getFullElements().length - 1 : 5;
         Collection<E> all = Arrays.asList(getFullElements()).subList(min, max);
         assertTrue("Full collection removeAll should work", getCollection().removeAll(all));
         getConfirmed().removeAll(all);
@@ -987,8 +987,8 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         if (getFullElements().length > 1) {
             resetFull();
             size = getCollection().size();
-            int min = (getFullElements().length < 2 ? 0 : 2);
-            int max = (getFullElements().length <= 5 ? getFullElements().length - 1 : 5);
+            int min = getFullElements().length < 2 ? 0 : 2;
+            int max = getFullElements().length <= 5 ? getFullElements().length - 1 : 5;
             assertTrue("Collection should changed by partial retainAll",
                     getCollection().retainAll(elements.subList(min, max)));
             getConfirmed().retainAll(elements.subList(min, max));
@@ -1051,7 +1051,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
                     continue;
                 }
                 if (array[i] == confirmedArray[j]
-                        || (array[i] != null && array[i].equals(confirmedArray[j]))) {
+                        || array[i] != null && array[i].equals(confirmedArray[j])) {
                     matched[j] = true;
                     match = true;
                     break;
@@ -1105,7 +1105,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         // TODO: It'd be nicer to detect a common superclass
         HashSet<Class<?>> classes = new HashSet<Class<?>>();
         for (Object element : array) {
-            classes.add((element == null) ? null : element.getClass());
+            classes.add(element == null ? null : element.getClass());
         }
         if (classes.size() > 1) {
             return;

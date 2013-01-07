@@ -100,7 +100,7 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
      */
     protected BlockingBuffer(Buffer<E> buffer, long timeoutMillis) {
         super(buffer);
-        this.timeout = (timeoutMillis < 0 ? 0 : timeoutMillis);
+        this.timeout = timeoutMillis < 0 ? 0 : timeoutMillis;
     }
 
     //-----------------------------------------------------------------------

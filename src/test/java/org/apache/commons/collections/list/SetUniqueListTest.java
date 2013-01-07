@@ -593,7 +593,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         // make sure retainAll completes under 5 seconds
         // TODO if test is migrated to JUnit 4, add a Timeout rule.
         // http://kentbeck.github.com/junit/javadoc/latest/org/junit/rules/Timeout.html
-        assertTrue((stop - start) < 5000);
+        assertTrue(stop - start < 5000);
     }
     
     @SuppressWarnings("serial")

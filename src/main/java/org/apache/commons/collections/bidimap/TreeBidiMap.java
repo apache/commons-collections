@@ -141,7 +141,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      * @return true if the map is empty
      */
     public boolean isEmpty() {
-        return (nodeCount == 0);
+        return nodeCount == 0;
     }
 
     /**
@@ -156,7 +156,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      */
     public boolean containsKey(final Object key) {
         checkKey(key);
-        return (lookupKey(key) != null);
+        return lookupKey(key) != null;
     }
 
     /**
@@ -171,7 +171,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      */
     public boolean containsValue(final Object value) {
         checkValue(value);
-        return (lookupValue(value) != null);
+        return lookupValue(value) != null;
     }
 
     /**
@@ -566,7 +566,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
                 rval = node;
                 break;
             } else {
-                node = (cmp < 0) ? node.getLeft(dataElement) : node.getRight(dataElement);
+                node = cmp < 0 ? node.getLeft(dataElement) : node.getRight(dataElement);
             }
         }
 
@@ -606,7 +606,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
             Node<K, V> parent = node.getParent(dataElement);
             Node<K, V> child = node;
 
-            while ((parent != null) && (child == parent.getRight(dataElement))) {
+            while (parent != null && child == parent.getRight(dataElement)) {
                 child = parent;
                 parent = parent.getParent(dataElement);
             }
@@ -640,7 +640,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
             Node<K, V> parent = node.getParent(dataElement);
             Node<K, V> child = node;
 
-            while ((parent != null) && (child == parent.getLeft(dataElement))) {
+            while (parent != null && child == parent.getLeft(dataElement)) {
                 child = parent;
                 parent = parent.getParent(dataElement);
             }
@@ -874,9 +874,9 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         Node<K, V> currentNode = insertedNode;
         makeRed(currentNode, dataElement);
 
-        while ((currentNode != null)
-            && (currentNode != rootNode[dataElement.ordinal()])
-            && (isRed(currentNode.getParent(dataElement), dataElement))) {
+        while (currentNode != null
+            && currentNode != rootNode[dataElement.ordinal()]
+            && isRed(currentNode.getParent(dataElement), dataElement)) {
             if (currentNode.isLeftChild(dataElement)) {
                 Node<K, V> y = getRightChild(getGrandParent(currentNode, dataElement), dataElement);
 
@@ -943,12 +943,12 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         for (DataElement dataElement : DataElement.values()) {
             // if deleted node has both left and children, swap with
             // the next greater node
-            if ((deletedNode.getLeft(dataElement) != null) && (deletedNode.getRight(dataElement) != null)) {
+            if (deletedNode.getLeft(dataElement) != null && deletedNode.getRight(dataElement) != null) {
                 swapPosition(nextGreater(deletedNode, dataElement), deletedNode, dataElement);
             }
 
-            Node<K, V> replacement = ((deletedNode.getLeft(dataElement) != null) ?
-                    deletedNode.getLeft(dataElement) : deletedNode.getRight(dataElement));
+            Node<K, V> replacement = deletedNode.getLeft(dataElement) != null ?
+                    deletedNode.getLeft(dataElement) : deletedNode.getRight(dataElement);
 
             if (replacement != null) {
                 replacement.setParent(deletedNode.getParent(dataElement), dataElement);
@@ -1009,7 +1009,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
     private void doRedBlackDeleteFixup(final Node<K, V> replacementNode, final DataElement dataElement) {
         Node<K, V> currentNode = replacementNode;
 
-        while ((currentNode != rootNode[dataElement.ordinal()]) && (isBlack(currentNode, dataElement))) {
+        while (currentNode != rootNode[dataElement.ordinal()] && isBlack(currentNode, dataElement)) {
             if (currentNode.isLeftChild(dataElement)) {
                 Node<K, V> siblingNode = getRightChild(getParent(currentNode, dataElement), dataElement);
 
@@ -1098,9 +1098,9 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         Node<K, V> yFormerLeftChild = y.getLeft(dataElement);
         Node<K, V> yFormerRightChild = y.getRight(dataElement);
         boolean xWasLeftChild =
-                (x.getParent(dataElement) != null) && (x == x.getParent(dataElement).getLeft(dataElement));
+                x.getParent(dataElement) != null && x == x.getParent(dataElement).getLeft(dataElement);
         boolean yWasLeftChild =
-                (y.getParent(dataElement) != null) && (y == y.getParent(dataElement).getLeft(dataElement));
+                y.getParent(dataElement) != null && y == y.getParent(dataElement).getLeft(dataElement);
 
         // Swap, handling special cases of one being the other's parent.
         if (x == yFormerParent) { // x was y's parent
@@ -1355,7 +1355,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
             for (MapIterator<?, ?> it = getMapIterator(dataElement); it.hasNext(); ) {
                 Object key = it.next();
                 Object value = it.getValue();
-                total += (key.hashCode() ^ value.hashCode());
+                total += key.hashCode() ^ value.hashCode();
             }
         }
         return total;
@@ -1450,7 +1450,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         @Override
         public boolean contains(final Object obj) {
             checkNonNullComparable(obj, KEY);
-            return (lookupKey(obj) != null);
+            return lookupKey(obj) != null;
         }
 
         @Override
@@ -1477,7 +1477,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         @Override
         public boolean contains(final Object obj) {
             checkNonNullComparable(obj, VALUE);
-            return (lookupValue(obj) != null);
+            return lookupValue(obj) != null;
         }
 
         @Override

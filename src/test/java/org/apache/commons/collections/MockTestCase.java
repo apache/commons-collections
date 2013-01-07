@@ -59,7 +59,7 @@ public abstract class MockTestCase {
             try {
                 EasyMock.verify(i.next());
             } catch (AssertionError e) {
-                throw new AssertionError((i.previousIndex() + 1) + ""
+                throw new AssertionError(i.previousIndex() + 1 + ""
                         + e.getMessage());
             }
         }

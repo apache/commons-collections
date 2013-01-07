@@ -86,7 +86,7 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
             iter.next();
         } catch (Exception e) {
             assertTrue("NoSuchElementException must be thrown", 
-                       e.getClass().equals((new NoSuchElementException()).getClass()));
+                       e.getClass().equals(new NoSuchElementException().getClass()));
         }
     }
 

@@ -72,7 +72,7 @@ public final class OrPredicate<T> implements Predicate<T>, PredicateDecorator<T>
      * @return true if either decorated predicate returns true
      */
     public boolean evaluate(T object) {
-       return (iPredicate1.evaluate(object) || iPredicate2.evaluate(object));
+       return iPredicate1.evaluate(object) || iPredicate2.evaluate(object);
     }
 
     /**

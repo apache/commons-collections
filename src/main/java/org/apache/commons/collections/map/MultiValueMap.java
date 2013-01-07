@@ -261,7 +261,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
         } else {
             result = coll.add((V) value);
         }
-        return (result ? value : null);
+        return result ? value : null;
     }
 
     /**
