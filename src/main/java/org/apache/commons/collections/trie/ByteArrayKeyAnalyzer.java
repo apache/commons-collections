@@ -105,8 +105,8 @@ public class ByteArrayKeyAnalyzer extends AbstractKeyAnalyzer<byte[]> {
             return false;
         }
         
-        int index = (int)(keyBitIndex / LENGTH);
-        int bit = (int)(keyBitIndex % LENGTH);
+        int index = keyBitIndex / LENGTH;
+        int bit = keyBitIndex % LENGTH;
         return (key[index] & mask(bit)) != 0;
     }
 

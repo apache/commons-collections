@@ -914,7 +914,7 @@ public class CollectionUtilsTest extends MockTestCase {
         ints.add(3);
         Iterable<Integer> iterable = ints;
         assertTrue(CollectionUtils.filter(iterable, EQUALS_TWO));
-        assertEquals(1, (int) ints.size());
+        assertEquals(1, ints.size());
         assertEquals(2, (int) ints.get(0));
     }
 

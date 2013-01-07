@@ -131,8 +131,8 @@ public class CharArrayKeyAnalyzer extends AbstractKeyAnalyzer<char[]> {
             return false;
         }
 
-        int index = (int)(bitIndex / LENGTH);
-        int bit = (int)(bitIndex % LENGTH);
+        int index = bitIndex / LENGTH;
+        int bit = bitIndex % LENGTH;
 
         return (key[index] & mask(bit)) != 0;
     }

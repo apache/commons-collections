@@ -78,13 +78,13 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     @SuppressWarnings("unchecked")
     public void testKeyContainsValue() {
         final MultiValueMap<K, V> map = createTestMap(HashSet.class);
-        assertTrue(map.containsValue((K) "one", "uno"));
-        assertTrue(map.containsValue((K) "one", "un"));
-        assertTrue(map.containsValue((K) "two", "dos"));
-        assertTrue(map.containsValue((K) "two", "deux"));
-        assertTrue(map.containsValue((K) "three", "tres"));
-        assertTrue(map.containsValue((K) "three", "trois"));
-        assertFalse(map.containsValue((K) "four", "quatro"));
+        assertTrue(map.containsValue("one", "uno"));
+        assertTrue(map.containsValue("one", "un"));
+        assertTrue(map.containsValue("two", "dos"));
+        assertTrue(map.containsValue("two", "deux"));
+        assertTrue(map.containsValue("three", "tres"));
+        assertTrue(map.containsValue("three", "trois"));
+        assertFalse(map.containsValue("four", "quatro"));
     }
 
     @SuppressWarnings("unchecked")

@@ -131,8 +131,8 @@ public class StringKeyAnalyzer extends AbstractKeyAnalyzer<String> {
             return false;
         }
         
-        int index = (int)(bitIndex / LENGTH);
-        int bit = (int)(bitIndex % LENGTH);
+        int index = bitIndex / LENGTH;
+        int bit = bitIndex % LENGTH;
         
         return (key.charAt(index) & mask(bit)) != 0;
     }

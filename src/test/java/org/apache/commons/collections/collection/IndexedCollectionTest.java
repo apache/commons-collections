@@ -68,7 +68,7 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
 
     @Override
     public String[] getFullElements() {
-        return (String[]) new String[] { "1", "3", "5", "7", "2", "4", "6" };
+        return new String[] { "1", "3", "5", "7", "2", "4", "6" };
     }
 
     @Override
