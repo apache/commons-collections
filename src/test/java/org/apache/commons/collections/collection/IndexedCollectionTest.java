@@ -98,6 +98,7 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
 
     //------------------------------------------------------------------------
 
+    @Override
     public void testCollectionAddAll() {
         // FIXME: does not work as we do not support multi-keys yet
     }

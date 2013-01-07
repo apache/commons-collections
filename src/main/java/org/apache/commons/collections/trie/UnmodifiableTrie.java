@@ -199,6 +199,7 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
         return delegate.size();
     }
     
+    @Override
     public int hashCode() {
         return delegate.hashCode();
     }
