@@ -497,7 +497,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests {@link Collection#add(Object)}.
      */
     public void testCollectionAdd() {
-        if (!isAddSupported()) return;
+        if (!isAddSupported()) {
+            return;
+        }
 
         E[] elements = getFullElements();
         for (E element : elements) {
@@ -515,7 +517,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
             boolean r = getCollection().add(element);
             getConfirmed().add(element);
             verify();
-            if (r) size++;
+            if (r) {
+                size++;
+            }
             assertEquals("Collection size should grow after add", size, getCollection().size());
             assertTrue("Collection should contain added element", getCollection().contains(element));
         }
@@ -525,7 +529,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests {@link Collection#addAll(Collection)}.
      */
     public void testCollectionAddAll() {
-        if (!isAddSupported()) return;
+        if (!isAddSupported()) {
+            return;
+        }
 
         resetEmpty();
         E[] elements = getFullElements();
@@ -567,7 +573,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  raise <code>UnsupportedOperationException.
      */
     public void testUnsupportedAdd() {
-        if (isAddSupported()) return;
+        if (isAddSupported()) {
+            return;
+        }
 
         resetEmpty();
         try {
@@ -616,7 +624,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Test {@link Collection#clear()}.
      */
     public void testCollectionClear() {
-        if (!isRemoveSupported()) return;
+        if (!isRemoveSupported()) {
+            return;
+        }
 
         resetEmpty();
         getCollection().clear(); // just to make sure it doesn't raise anything
@@ -776,7 +786,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      */
     @SuppressWarnings("unchecked")
     public void testCollectionIteratorRemove() {
-        if (!isRemoveSupported()) return;
+        if (!isRemoveSupported()) {
+            return;
+        }
 
         resetEmpty();
         try {
@@ -844,7 +856,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests {@link Collection#remove(Object)}.
      */
     public void testCollectionRemove() {
-        if (!isRemoveSupported()) return;
+        if (!isRemoveSupported()) {
+            return;
+        }
 
         resetEmpty();
         E[] elements = getFullElements();
@@ -888,7 +902,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests {@link Collection#removeAll(Collection)}.
      */
     public void testCollectionRemoveAll() {
-        if (!isRemoveSupported()) return;
+        if (!isRemoveSupported()) {
+            return;
+        }
 
         resetEmpty();
         assertTrue("Empty collection removeAll should return false for empty input",
@@ -935,7 +951,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests {@link Collection#retainAll(Collection)}.
      */
     public void testCollectionRetainAll() {
-        if (!isRemoveSupported()) return;
+        if (!isRemoveSupported()) {
+            return;
+        }
 
         resetEmpty();
         List<E> elements = Arrays.asList(getFullElements());
@@ -1029,8 +1047,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
             // find a match in the confirmed array
             for (int j = 0; j < array.length; j++) {
                 // skip already matched
-                if (matched[j])
+                if (matched[j]) {
                     continue;
+                }
                 if (array[i] == confirmedArray[j]
                         || (array[i] != null && array[i].equals(confirmedArray[j]))) {
                     matched[j] = true;
@@ -1088,7 +1107,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         for (Object element : array) {
             classes.add((element == null) ? null : element.getClass());
         }
-        if (classes.size() > 1) return;
+        if (classes.size() > 1) {
+            return;
+        }
 
         Class<?> cl = classes.iterator().next();
         if (Map.Entry.class.isAssignableFrom(cl)) {  // check needed for protective cases like Predicated/Unmod map entrySet
@@ -1120,7 +1141,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  operations raise an UnsupportedOperationException.
      */
     public void testUnsupportedRemove() {
-        if (isRemoveSupported()) return;
+        if (isRemoveSupported()) {
+            return;
+        }
 
         resetEmpty();
         try {
@@ -1172,7 +1195,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Tests that the collection's iterator is fail-fast.
      */
     public void testCollectionIteratorFailFast() {
-        if (!isFailFastSupported()) return;
+        if (!isFailFastSupported()) {
+            return;
+        }
 
         if (isAddSupported()) {
             resetFull();
@@ -1201,7 +1226,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
             verify();
         }
 
-        if (!isRemoveSupported()) return;
+        if (!isRemoveSupported()) {
+            return;
+        }
 
         resetFull();
         try {

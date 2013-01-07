@@ -572,7 +572,9 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      *  full list.
      */
     public void testListSetByIndexBoundsChecking2() {
-        if (!isSetSupported()) return;
+        if (!isSetSupported()) {
+            return;
+        }
 
         List<E> list = makeFullCollection();
         E element = getOtherElements()[0];
@@ -613,7 +615,9 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      *  Test {@link List#set(int,Object)}.
      */
     public void testListSetByIndex() {
-        if (!isSetSupported()) return;
+        if (!isSetSupported()) {
+            return;
+        }
 
         resetFull();
         E[] elements = getFullElements();
@@ -633,7 +637,9 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      *  raises <Code>UnsupportedOperationException.
      */
     public void testUnsupportedSet() {
-        if (isSetSupported()) return;
+        if (isSetSupported()) {
+            return;
+        }
 
         resetFull();
         try {
@@ -652,7 +658,9 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      *  empty list.
      */
     public void testListRemoveByIndexBoundsChecking() {
-        if (!isRemoveSupported()) return;
+        if (!isRemoveSupported()) {
+            return;
+        }
 
         List<E> list = makeObject();
 
@@ -697,7 +705,9 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      *  full list.
      */
     public void testListRemoveByIndexBoundsChecking2() {
-        if (!isRemoveSupported()) return;
+        if (!isRemoveSupported()) {
+            return;
+        }
 
         List<E> list = makeFullCollection();
 
@@ -737,7 +747,9 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      *  Tests {@link List#remove(int)}.
      */
     public void testListRemoveByIndex() {
-        if (!isRemoveSupported()) return;
+        if (!isRemoveSupported()) {
+            return;
+        }
 
         int max = getFullElements().length;
         for (int i = 0; i < max; i++) {
@@ -786,9 +798,13 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      * Tests remove on list iterator is correct.
      */
     public void testListListIteratorPreviousRemoveNext() {
-        if (isRemoveSupported() == false) return;
+        if (isRemoveSupported() == false) {
+            return;
+        }
         resetFull();
-        if (getCollection().size() < 4) return;
+        if (getCollection().size() < 4) {
+            return;
+        }
         ListIterator<E> it = getCollection().listIterator();
         E zero = it.next();
         E one = it.next();
@@ -814,9 +830,13 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      * Tests remove on list iterator is correct.
      */
     public void testListListIteratorPreviousRemovePrevious() {
-        if (isRemoveSupported() == false) return;
+        if (isRemoveSupported() == false) {
+            return;
+        }
         resetFull();
-        if (getCollection().size() < 4) return;
+        if (getCollection().size() < 4) {
+            return;
+        }
         ListIterator<E> it = getCollection().listIterator();
         E zero = it.next();
         E one = it.next();
@@ -842,9 +862,13 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      * Tests remove on list iterator is correct.
      */
     public void testListListIteratorNextRemoveNext() {
-        if (isRemoveSupported() == false) return;
+        if (isRemoveSupported() == false) {
+            return;
+        }
         resetFull();
-        if (getCollection().size() < 4) return;
+        if (getCollection().size() < 4) {
+            return;
+        }
         ListIterator<E> it = getCollection().listIterator();
         E zero = it.next();
         E one = it.next();
@@ -867,9 +891,13 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      * Tests remove on list iterator is correct.
      */
     public void testListListIteratorNextRemovePrevious() {
-        if (isRemoveSupported() == false) return;
+        if (isRemoveSupported() == false) {
+            return;
+        }
         resetFull();
-        if (getCollection().size() < 4) return;
+        if (getCollection().size() < 4) {
+            return;
+        }
         ListIterator<E> it = getCollection().listIterator();
         E zero = it.next();
         E one = it.next();
@@ -964,7 +992,9 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      *  iterator.
      */
     public void testListIteratorAdd() {
-        if (!isAddSupported()) return;
+        if (!isAddSupported()) {
+            return;
+        }
 
         resetEmpty();
         List<E> list1 = getCollection();
@@ -997,7 +1027,9 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      *  iterator.
      */
     public void testListIteratorSet() {
-        if (!isSetSupported()) return;
+        if (!isSetSupported()) {
+            return;
+        }
 
         E[] elements = getFullElements();
 
@@ -1016,7 +1048,9 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     @SuppressWarnings("unchecked")
     public void testEmptyListSerialization() throws IOException, ClassNotFoundException {
         List<E> list = makeObject();
-        if (!(list instanceof Serializable && isTestSerialization())) return;
+        if (!(list instanceof Serializable && isTestSerialization())) {
+            return;
+        }
 
         byte[] objekt = writeExternalFormToBytes((Serializable) list);
         List<E> list2 = (List<E>) readExternalFormFromBytes(objekt);
@@ -1029,7 +1063,9 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     public void testFullListSerialization() throws IOException, ClassNotFoundException {
         List<E> list = makeFullCollection();
         int size = getFullElements().length;
-        if (!(list instanceof Serializable && isTestSerialization())) return;
+        if (!(list instanceof Serializable && isTestSerialization())) {
+            return;
+        }
 
         byte[] objekt = writeExternalFormToBytes((Serializable) list);
         List<E> list2 = (List<E>) readExternalFormFromBytes(objekt);
@@ -1113,7 +1149,9 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      *  modified when the sublist is.
      */
     public BulkTest bulkTestSubList() {
-        if (getFullElements().length - 6 < 10) return null;
+        if (getFullElements().length - 6 < 10) {
+            return null;
+        }
         return new BulkTestSubList<E>(this);
     }
 
@@ -1196,8 +1234,12 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     *  if elements are added to the original list.
     */
    public void testListSubListFailFastOnAdd() {
-       if (!isFailFastSupported()) return;
-       if (!isAddSupported()) return;
+       if (!isFailFastSupported()) {
+        return;
+    }
+       if (!isAddSupported()) {
+        return;
+    }
 
        resetFull();
        int size = getCollection().size();
@@ -1226,8 +1268,12 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     *  if elements are removed from the original list.
     */
    public void testListSubListFailFastOnRemove() {
-       if (!isFailFastSupported()) return;
-       if (!isRemoveSupported()) return;
+       if (!isFailFastSupported()) {
+        return;
+    }
+       if (!isRemoveSupported()) {
+        return;
+    }
 
        resetFull();
        int size = getCollection().size();
@@ -1280,7 +1326,9 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     *  @param m     the method to invoke
     */
    protected void failFastMethod(List<E> list, Method m) {
-       if (m.getName().equals("equals")) return;
+       if (m.getName().equals("equals")) {
+        return;
+    }
 
        E element = getOtherElements()[0];
        Collection<E> c = Collections.singleton(element);
@@ -1288,10 +1336,15 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
        Class<?>[] types = m.getParameterTypes();
        Object[] params = new Object[types.length];
        for (int i = 0; i < params.length; i++) {
-           if (types[i] == Integer.TYPE) params[i] = new Integer(0);
-           else if (types[i] == Collection.class) params[i] = c;
-           else if (types[i] == Object.class) params[i] = element;
-           else if (types[i] == Object[].class) params[i] = new Object[0];
+           if (types[i] == Integer.TYPE) {
+            params[i] = new Integer(0);
+        } else if (types[i] == Collection.class) {
+            params[i] = c;
+        } else if (types[i] == Object.class) {
+            params[i] = element;
+        } else if (types[i] == Object[].class) {
+            params[i] = new Object[0];
+        }
        }
 
        try {

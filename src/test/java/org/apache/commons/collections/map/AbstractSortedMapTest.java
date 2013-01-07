@@ -238,7 +238,9 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
             return ((SortedMap<K, V>) main.makeFullMap()).headMap(toKey);
         }
         public void testHeadMapOutOfRange() {
-            if (isPutAddSupported() == false) return;
+            if (isPutAddSupported() == false) {
+                return;
+            }
             resetEmpty();
             try {
                 getMap().put(toKey, subSortedValues.get(0));
@@ -291,7 +293,9 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
             return ((SortedMap<K, V>) main.makeFullMap()).tailMap(fromKey);
         }
         public void testTailMapOutOfRange() {
-            if (isPutAddSupported() == false) return;
+            if (isPutAddSupported() == false) {
+                return;
+            }
             resetEmpty();
             try {
                 getMap().put(invalidKey, subSortedValues.get(0));
@@ -351,7 +355,9 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
             return ((SortedMap<K, V>) main.makeFullMap()).subMap(fromKey, toKey);
         }
         public void testSubMapOutOfRange() {
-            if (isPutAddSupported() == false) return;
+            if (isPutAddSupported() == false) {
+                return;
+            }
             resetEmpty();
             try {
                 getMap().put(toKey, subSortedValues.get(0));

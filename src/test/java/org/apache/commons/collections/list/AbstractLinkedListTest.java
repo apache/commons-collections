@@ -115,7 +115,9 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
     @SuppressWarnings("unchecked")
     public void testRemoveNode() {
         resetEmpty();
-        if (isAddSupported() == false || isRemoveSupported() == false) return;
+        if (isAddSupported() == false || isRemoveSupported() == false) {
+            return;
+        }
         AbstractLinkedList<E> list = getCollection();
 
         list.addAll(Arrays.asList((E[]) new String[] { "value1", "value2" }));

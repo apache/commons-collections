@@ -70,7 +70,9 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     //-----------------------------------------------------------------------
     public void testLRU() {
-        if (isPutAddSupported() == false || isPutChangeSupported() == false) return;
+        if (isPutAddSupported() == false || isPutChangeSupported() == false) {
+            return;
+        }
         K[] keys = getSampleKeys();
         V[] values = getSampleValues();
         Iterator<K> kit;
@@ -150,7 +152,9 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     //-----------------------------------------------------------------------
     public void testAccessOrder() {
-        if (isPutAddSupported() == false || isPutChangeSupported() == false) return;
+        if (isPutAddSupported() == false || isPutChangeSupported() == false) {
+            return;
+        }
         K[] keys = getSampleKeys();
         V[] values = getSampleValues();
         Iterator<K> kit = null;
@@ -364,7 +368,9 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testInternalState_Buckets() {
-        if (isPutAddSupported() == false || isPutChangeSupported() == false) return;
+        if (isPutAddSupported() == false || isPutChangeSupported() == false) {
+            return;
+        }
         SingleHashCode one = new SingleHashCode("1");
         SingleHashCode two = new SingleHashCode("2");
         SingleHashCode three = new SingleHashCode("3");
@@ -452,7 +458,9 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testInternalState_getEntry_int() {
-        if (isPutAddSupported() == false || isPutChangeSupported() == false) return;
+        if (isPutAddSupported() == false || isPutChangeSupported() == false) {
+            return;
+        }
         SingleHashCode one = new SingleHashCode("1");
         SingleHashCode two = new SingleHashCode("2");
         SingleHashCode three = new SingleHashCode("3");

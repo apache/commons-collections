@@ -329,8 +329,9 @@ public class PriorityBufferTest<E> extends AbstractCollectionTest<E> {
         StringBuilder buffer = new StringBuilder();
         for (int offset = 1; count < h.size() + 1; offset *= 2) {
             for (int i = offset; i < offset * 2; i++) {
-                if (i < h.elements.length && h.elements[i] != null)
+                if (i < h.elements.length && h.elements[i] != null) {
                     buffer.append(h.elements[i] + " ");
+                }
                 count++;
             }
             buffer.append('\n');

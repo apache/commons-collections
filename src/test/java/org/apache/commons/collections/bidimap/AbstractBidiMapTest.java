@@ -80,7 +80,9 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testBidiPut() {
-        if (isPutAddSupported() == false || isPutChangeSupported() == false) return;
+        if (isPutAddSupported() == false || isPutChangeSupported() == false) {
+            return;
+        }
 
         BidiMap<K, V> map = makeObject();
         BidiMap<V, K> inverse = map.inverseBidiMap();
@@ -179,7 +181,9 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
     //-----------------------------------------------------------------------
     public void testBidiModifyEntrySet() {
-        if (isSetValueSupported() == false) return;
+        if (isSetValueSupported() == false) {
+            return;
+        }
 
         modifyEntrySet(makeFullMap());
         modifyEntrySet(makeFullMap().inverseBidiMap());
@@ -282,7 +286,9 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveByKeySet() {
-        if (isRemoveSupported() == false) return;
+        if (isRemoveSupported() == false) {
+            return;
+        }
 
         removeByKeySet(makeFullMap(), getSampleKeys()[0], getSampleValues()[0]);
         removeByKeySet(makeFullMap().inverseBidiMap(), getSampleValues()[0], getSampleKeys()[0]);
@@ -304,7 +310,9 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveByEntrySet() {
-        if (isRemoveSupported() == false) return;
+        if (isRemoveSupported() == false) {
+            return;
+        }
 
         removeByEntrySet(makeFullMap(), getSampleKeys()[0], getSampleValues()[0]);
         removeByEntrySet(makeFullMap().inverseBidiMap(), getSampleValues()[0], getSampleKeys()[0]);

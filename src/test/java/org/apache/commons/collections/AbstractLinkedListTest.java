@@ -71,7 +71,9 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
      */
     @SuppressWarnings("unchecked")
     public void testLinkedListAddFirst() {
-        if (!isAddSupported()) return;
+        if (!isAddSupported()) {
+            return;
+        }
         T o = (T) "hello";
 
         resetEmpty();
@@ -90,7 +92,9 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
      */
     @SuppressWarnings("unchecked")
     public void testLinkedListAddLast() {
-        if (!isAddSupported()) return;
+        if (!isAddSupported()) {
+            return;
+        }
         T o = (T) "hello";
 
         resetEmpty();
@@ -152,7 +156,9 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
      *  Tests {@link LinkedList#removeFirst()}.
      */
     public void testLinkedListRemoveFirst() {
-        if (!isRemoveSupported()) return;
+        if (!isRemoveSupported()) {
+            return;
+        }
 
         resetEmpty();
         try {
@@ -176,7 +182,9 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
      *  Tests {@link LinkedList#removeLast()}.
      */
     public void testLinkedListRemoveLast() {
-        if (!isRemoveSupported()) return;
+        if (!isRemoveSupported()) {
+            return;
+        }
 
         resetEmpty();
         try {

@@ -82,7 +82,9 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     //-----------------------------------------------------------------------
     public void testInsertionOrder() {
-        if (isPutAddSupported() == false || isPutChangeSupported() == false) return;
+        if (isPutAddSupported() == false || isPutChangeSupported() == false) {
+            return;
+        }
         K[] keys = getSampleKeys();
         V[] values = getSampleValues();
         Iterator<K> keyIter;

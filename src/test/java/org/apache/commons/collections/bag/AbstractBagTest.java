@@ -454,7 +454,9 @@ public abstract class AbstractBagTest<T> extends AbstractObjectTest {
     //-----------------------------------------------------------------------
     public void testEmptyBagSerialization() throws IOException, ClassNotFoundException {
         Bag<T> bag = makeObject();
-        if (!(bag instanceof Serializable && isTestSerialization())) return;
+        if (!(bag instanceof Serializable && isTestSerialization())) {
+            return;
+        }
         
         byte[] objekt = writeExternalFormToBytes((Serializable) bag);
         Bag<?> bag2 = (Bag<?>) readExternalFormFromBytes(objekt);
@@ -472,7 +474,9 @@ public abstract class AbstractBagTest<T> extends AbstractObjectTest {
         bag.add((T) "B");
         bag.add((T) "C");
         int size = bag.size();
-        if (!(bag instanceof Serializable && isTestSerialization())) return;
+        if (!(bag instanceof Serializable && isTestSerialization())) {
+            return;
+        }
         
         byte[] objekt = writeExternalFormToBytes((Serializable) bag);
         Bag<?> bag2 = (Bag<?>) readExternalFormFromBytes(objekt);

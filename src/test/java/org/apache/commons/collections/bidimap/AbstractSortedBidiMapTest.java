@@ -129,7 +129,9 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 
     //-----------------------------------------------------------------------
     public void testBidiClearByHeadMap() {
-        if (isRemoveSupported() == false) return;
+        if (isRemoveSupported() == false) {
+            return;
+        }
 
         // extra test as other tests get complex
         SortedBidiMap<K, V> sm = makeFullMap();
@@ -174,7 +176,9 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveByHeadMap() {
-        if (isRemoveSupported() == false) return;
+        if (isRemoveSupported() == false) {
+            return;
+        }
 
         // extra test as other tests get complex
         SortedBidiMap<K, V> sm = makeFullMap();
@@ -216,7 +220,9 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveByHeadMapEntrySet() {
-        if (isRemoveSupported() == false) return;
+        if (isRemoveSupported() == false) {
+            return;
+        }
 
         // extra test as other tests get complex
         SortedBidiMap<K, V> sm = makeFullMap();
@@ -297,7 +303,9 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 
     //-----------------------------------------------------------------------
     public void testBidiClearByTailMap() {
-        if (isRemoveSupported() == false) return;
+        if (isRemoveSupported() == false) {
+            return;
+        }
 
         // extra test as other tests get complex
         SortedBidiMap<K, V> sm = makeFullMap();
@@ -344,7 +352,9 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveByTailMap() {
-        if (isRemoveSupported() == false) return;
+        if (isRemoveSupported() == false) {
+            return;
+        }
 
         // extra test as other tests get complex
         SortedBidiMap<K, V> sm = makeFullMap();
@@ -387,7 +397,9 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveByTailMapEntrySet() {
-        if (isRemoveSupported() == false) return;
+        if (isRemoveSupported() == false) {
+            return;
+        }
 
         // extra test as other tests get complex
         SortedBidiMap<K, V> sm = makeFullMap();
@@ -475,7 +487,9 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 
     //-----------------------------------------------------------------------
     public void testBidiClearBySubMap() {
-        if (isRemoveSupported() == false) return;
+        if (isRemoveSupported() == false) {
+            return;
+        }
 
         // extra test as other tests get complex
         SortedBidiMap<K, V> sm = makeFullMap();
@@ -530,7 +544,9 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveBySubMap() {
-        if (isRemoveSupported() == false) return;
+        if (isRemoveSupported() == false) {
+            return;
+        }
 
         // extra test as other tests get complex
         SortedBidiMap<K, V> sm = makeFullMap();
@@ -574,7 +590,9 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveBySubMapEntrySet() {
-        if (isRemoveSupported() == false) return;
+        if (isRemoveSupported() == false) {
+            return;
+        }
 
         // extra test as other tests get complex
         SortedBidiMap<K, V> sm = makeFullMap();

@@ -1028,7 +1028,9 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * the underlying map for clear().
      */
     public void testValuesClearChangesMap() {
-        if (!isRemoveSupported()) return;
+        if (!isRemoveSupported()) {
+            return;
+        }
 
         // clear values, reflected in map
         resetFull();
@@ -1054,7 +1056,9 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * the underlying map for clear().
      */
     public void testKeySetClearChangesMap() {
-        if (!isRemoveSupported()) return;
+        if (!isRemoveSupported()) {
+            return;
+        }
 
         // clear values, reflected in map
         resetFull();
@@ -1080,7 +1084,9 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * the underlying map for clear().
      */
     public void testEntrySetClearChangesMap() {
-        if (!isRemoveSupported()) return;
+        if (!isRemoveSupported()) {
+            return;
+        }
 
         // clear values, reflected in map
         resetFull();
@@ -1129,7 +1135,9 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     public void testEntrySetRemove1() {
-        if (!isRemoveSupported()) return;
+        if (!isRemoveSupported()) {
+            return;
+        }
         resetFull();
         int size = getMap().size();
         Set<Map.Entry<K, V>> entrySet = getMap().entrySet();
@@ -1142,7 +1150,9 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     public void testEntrySetRemove2() {
-        if (!isRemoveSupported()) return;
+        if (!isRemoveSupported()) {
+            return;
+        }
         resetFull();
         int size = getMap().size();
         Set<Map.Entry<K, V>> entrySet = getMap().entrySet();
@@ -1157,7 +1167,9 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
 
     @SuppressWarnings("unchecked")
     public void testEntrySetRemove3() {
-        if (!isRemoveSupported()) return;
+        if (!isRemoveSupported()) {
+            return;
+        }
         resetFull();
         int size = getMap().size();
         Set<Map.Entry<K, V>> entrySet = getMap().entrySet();
@@ -1684,7 +1696,9 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         }
 
         public void testMapEntrySetRemoveNonMapEntry() {
-            if (isRemoveSupported() == false) return;
+            if (isRemoveSupported() == false) {
+                return;
+            }
             resetFull();
             assertEquals(false, getCollection().remove(null));
             assertEquals(false, getCollection().remove(new Object()));

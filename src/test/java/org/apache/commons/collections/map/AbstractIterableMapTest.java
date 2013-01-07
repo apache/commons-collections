@@ -59,8 +59,12 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
 
     //-----------------------------------------------------------------------
     public void testFailFastEntrySet() {
-        if (isRemoveSupported() == false) return;
-        if (isFailFastExpected() == false) return;
+        if (isRemoveSupported() == false) {
+            return;
+        }
+        if (isFailFastExpected() == false) {
+            return;
+        }
         resetFull();
         Iterator<Map.Entry<K, V>> it = getMap().entrySet().iterator();
         Map.Entry<K, V> val = it.next();
@@ -81,8 +85,12 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
     }
 
     public void testFailFastKeySet() {
-        if (isRemoveSupported() == false) return;
-        if (isFailFastExpected() == false) return;
+        if (isRemoveSupported() == false) {
+            return;
+        }
+        if (isFailFastExpected() == false) {
+            return;
+        }
         resetFull();
         Iterator<K> it = getMap().keySet().iterator();
         K val = it.next();
@@ -103,8 +111,12 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
     }
 
     public void testFailFastValues() {
-        if (isRemoveSupported() == false) return;
-        if (isFailFastExpected() == false) return;
+        if (isRemoveSupported() == false) {
+            return;
+        }
+        if (isFailFastExpected() == false) {
+            return;
+        }
         resetFull();
         Iterator<V> it = getMap().values().iterator();
         it.next();

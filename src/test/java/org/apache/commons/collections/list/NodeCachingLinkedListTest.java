@@ -55,7 +55,9 @@ public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testShrinkCache() {
-        if (isRemoveSupported() == false || isAddSupported() == false) return;
+        if (isRemoveSupported() == false || isAddSupported() == false) {
+            return;
+        }
         resetEmpty();
         NodeCachingLinkedList<E> list = getCollection();
 

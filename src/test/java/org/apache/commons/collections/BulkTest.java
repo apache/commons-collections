@@ -324,8 +324,12 @@ class BulkTestSuiteMaker {
         Class<? extends BulkTest> c = bulk.getClass();
         Method[] all = c.getMethods();
         for (Method element : all) {
-            if (isTest(element)) addTest(bulk, element);
-            if (isBulk(element)) addBulk(bulk, element);
+            if (isTest(element)) {
+                addTest(bulk, element);
+            }
+            if (isBulk(element)) {
+                addBulk(bulk, element);
+            }
         }
     }
 
@@ -341,7 +345,9 @@ class BulkTestSuiteMaker {
         BulkTest bulk2 = (BulkTest)bulk.clone();
         bulk2.setName(m.getName());
         bulk2.verboseName = prefix + "." + m.getName();
-        if (ignored.contains(bulk2.verboseName)) return;
+        if (ignored.contains(bulk2.verboseName)) {
+            return;
+        }
         result.addTest(bulk2);
     }
 
@@ -356,12 +362,16 @@ class BulkTestSuiteMaker {
      */
     void addBulk(BulkTest bulk, Method m) {
         String verboseName = prefix + "." + m.getName();
-        if (ignored.contains(verboseName)) return;
+        if (ignored.contains(verboseName)) {
+            return;
+        }
         
         BulkTest bulk2;
         try {
             bulk2 = (BulkTest)m.invoke(bulk, (Object[]) null);
-            if (bulk2 == null) return;
+            if (bulk2 == null) {
+                return;
+            }
         } catch (InvocationTargetException ex) {
             ex.getTargetException().printStackTrace();
             throw new Error(); // FIXME;
@@ -432,7 +442,9 @@ class BulkTestSuiteMaker {
     private static <T extends BulkTest> BulkTest makeFirstTestCase(Class<T> c) {
         Method[] all = c.getMethods();
         for (Method element : all) {
-            if (isTest(element)) return makeTestCase(c, element);
+            if (isTest(element)) {
+                return makeTestCase(c, element);
+            }
         }
         throw new IllegalArgumentException(c.getName() + " must provide " 
           + " at least one test method.");
@@ -442,12 +454,22 @@ class BulkTestSuiteMaker {
      *  Returns true if the given method is a simple test method.
      */
     private static boolean isTest(Method m) {
-        if (!m.getName().startsWith("test")) return false;
-        if (m.getReturnType() != Void.TYPE) return false;
-        if (m.getParameterTypes().length != 0) return false;
+        if (!m.getName().startsWith("test")) {
+            return false;
+        }
+        if (m.getReturnType() != Void.TYPE) {
+            return false;
+        }
+        if (m.getParameterTypes().length != 0) {
+            return false;
+        }
         int mods = m.getModifiers();
-        if (Modifier.isStatic(mods)) return false;
-        if (Modifier.isAbstract(mods)) return false;
+        if (Modifier.isStatic(mods)) {
+            return false;
+        }
+        if (Modifier.isAbstract(mods)) {
+            return false;
+        }
         return true;
     }
 
@@ -455,12 +477,22 @@ class BulkTestSuiteMaker {
      *  Returns true if the given method is a bulk test method.
      */
     private static boolean isBulk(Method m) {
-        if (!m.getName().startsWith("bulkTest")) return false;
-        if (m.getReturnType() != BulkTest.class) return false;
-        if (m.getParameterTypes().length != 0) return false;
+        if (!m.getName().startsWith("bulkTest")) {
+            return false;
+        }
+        if (m.getReturnType() != BulkTest.class) {
+            return false;
+        }
+        if (m.getParameterTypes().length != 0) {
+            return false;
+        }
         int mods = m.getModifiers();
-        if (Modifier.isStatic(mods)) return false;
-        if (Modifier.isAbstract(mods)) return false;
+        if (Modifier.isStatic(mods)) {
+            return false;
+        }
+        if (Modifier.isAbstract(mods)) {
+            return false;
+        }
         return true;
     }
 

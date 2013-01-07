@@ -131,11 +131,17 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             switch (size) {
                 // drop through
                 case 3:
-                    if (key3 == null) return value3;
+                    if (key3 == null) {
+                        return value3;
+                    }
                 case 2:
-                    if (key2 == null) return value2;
+                    if (key2 == null) {
+                        return value2;
+                    }
                 case 1:
-                    if (key1 == null) return value1;
+                    if (key1 == null) {
+                        return value1;
+                    }
             }
         } else {
             if (size > 0) {
@@ -143,11 +149,17 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                 switch (size) {
                     // drop through
                     case 3:
-                        if (hash3 == hashCode && key.equals(key3)) return value3;
+                        if (hash3 == hashCode && key.equals(key3)) {
+                            return value3;
+                        }
                     case 2:
-                        if (hash2 == hashCode && key.equals(key2)) return value2;
+                        if (hash2 == hashCode && key.equals(key2)) {
+                            return value2;
+                        }
                     case 1:
-                        if (hash1 == hashCode && key.equals(key1)) return value1;
+                        if (hash1 == hashCode && key.equals(key1)) {
+                            return value1;
+                        }
                 }
             }
         }
@@ -189,22 +201,34 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         if (key == null) {
             switch (size) {  // drop through
                 case 3:
-                    if (key3 == null) return true;
+                    if (key3 == null) {
+                        return true;
+                    }
                 case 2:
-                    if (key2 == null) return true;
+                    if (key2 == null) {
+                        return true;
+                    }
                 case 1:
-                    if (key1 == null) return true;
+                    if (key1 == null) {
+                        return true;
+                    }
             }
         } else {
             if (size > 0) {
                 int hashCode = key.hashCode();
                 switch (size) {  // drop through
                     case 3:
-                        if (hash3 == hashCode && key.equals(key3)) return true;
+                        if (hash3 == hashCode && key.equals(key3)) {
+                            return true;
+                        }
                     case 2:
-                        if (hash2 == hashCode && key.equals(key2)) return true;
+                        if (hash2 == hashCode && key.equals(key2)) {
+                            return true;
+                        }
                     case 1:
-                        if (hash1 == hashCode && key.equals(key1)) return true;
+                        if (hash1 == hashCode && key.equals(key1)) {
+                            return true;
+                        }
                 }
             }
         }
@@ -224,20 +248,32 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         if (value == null) {  // drop through
             switch (size) {
                 case 3:
-                    if (value3 == null) return true;
+                    if (value3 == null) {
+                        return true;
+                    }
                 case 2:
-                    if (value2 == null) return true;
+                    if (value2 == null) {
+                        return true;
+                    }
                 case 1:
-                    if (value1 == null) return true;
+                    if (value1 == null) {
+                        return true;
+                    }
             }
         } else {
             switch (size) {  // drop through
                 case 3:
-                    if (value.equals(value3)) return true;
+                    if (value.equals(value3)) {
+                        return true;
+                    }
                 case 2:
-                    if (value.equals(value2)) return true;
+                    if (value.equals(value2)) {
+                        return true;
+                    }
                 case 1:
-                    if (value.equals(value1)) return true;
+                    if (value.equals(value1)) {
+                        return true;
+                    }
             }
         }
         return false;
