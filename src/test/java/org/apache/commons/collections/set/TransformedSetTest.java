@@ -85,14 +85,14 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
     public void testTransformedSet_decorateTransform() {
         Set<Object> originalSet = new HashSet<Object>();
         Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
-        for (int i = 0; i < els.length; i++) {
-            originalSet.add(els[i]);
+        for (Object el : els) {
+            originalSet.add(el);
         }
         Set<?> set = TransformedSet.transformedSet(originalSet, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, set.size());
-        for (int i = 0; i < els.length; i++) {
-            assertEquals(true, set.contains(new Integer((String) els[i])));
-            assertEquals(false, set.contains(els[i]));
+        for (Object el : els) {
+            assertEquals(true, set.contains(new Integer((String) el)));
+            assertEquals(false, set.contains(el));
         }
         
         assertEquals(false, set.remove(els[0]));

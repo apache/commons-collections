@@ -130,8 +130,8 @@ public class BoundedFifoBuffer<E> extends AbstractCollection<E>
     private void writeObject(ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeInt(size());
-        for (Iterator<E> it = iterator(); it.hasNext();) {
-            out.writeObject(it.next());
+        for (E e : this) {
+            out.writeObject(e);
         }
     }
 

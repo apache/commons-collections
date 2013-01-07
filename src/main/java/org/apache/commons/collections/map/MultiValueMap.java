@@ -419,8 +419,8 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
         @Override
         public Iterator<V> iterator() {
             final IteratorChain<V> chain = new IteratorChain<V>();
-            for (Iterator<K> it = keySet().iterator(); it.hasNext();) {
-                chain.addIterator(new ValuesIterator(it.next()));
+            for (K k : keySet()) {
+                chain.addIterator(new ValuesIterator(k));
             }
             return chain;
         }

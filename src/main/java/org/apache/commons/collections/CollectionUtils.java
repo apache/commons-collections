@@ -896,8 +896,8 @@ public class CollectionUtils {
      */
     public static <C> boolean addAll(Collection<C> collection, C[] elements) {
         boolean changed = false;
-        for (int i = 0, size = elements.length; i < size; i++) {
-            changed |= collection.add(elements[i]);
+        for (C element : elements) {
+            changed |= collection.add(element);
         }
         return changed;
     }

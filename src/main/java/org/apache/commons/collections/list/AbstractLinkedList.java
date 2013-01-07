@@ -598,8 +598,8 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     protected void doWriteObject(ObjectOutputStream outputStream) throws IOException {
         // Write the size so we know how many nodes to read back
         outputStream.writeInt(size());
-        for (Iterator<E> itr = iterator(); itr.hasNext();) {
-            outputStream.writeObject(itr.next());
+        for (E e : this) {
+            outputStream.writeObject(e);
         }
     }
 

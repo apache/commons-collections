@@ -74,8 +74,7 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
 
     public void testIterator() {
         Iterator<String> iter = makeObject();
-        for (int i = 0; i < testArray.length; i++) {
-            Object testValue = testArray[i];            
+        for (String testValue : testArray) {
             Object iterValue = iter.next();
 
             assertEquals( "Iteration value is correct", testValue, iterValue );
@@ -130,8 +129,7 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
 
         }
 
-        for (int i = 0; i < testArray.length; i++) {
-            String testValue = testArray[i];            
+        for (String testValue : testArray) {
             String iterValue = iter.next();
 
             assertEquals("Iteration value is correct", testValue, iterValue);

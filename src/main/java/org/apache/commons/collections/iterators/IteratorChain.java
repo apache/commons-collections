@@ -125,8 +125,8 @@ public class IteratorChain<E> implements Iterator<E> {
      */
     public IteratorChain(Iterator<? extends E>... iteratorChain) {
         super();
-        for (int i = 0; i < iteratorChain.length; i++) {
-            addIterator(iteratorChain[i]);
+        for (Iterator<? extends E> element : iteratorChain) {
+            addIterator(element);
         }
     }
 

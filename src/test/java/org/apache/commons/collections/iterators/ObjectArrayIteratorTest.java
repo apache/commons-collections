@@ -67,8 +67,7 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 
     public void testIterator() {
         Iterator<E> iter = makeObject();
-        for (int i = 0; i < testArray.length; i++) {
-            Object testValue = testArray[i];
+        for (String testValue : testArray) {
             E iterValue = iter.next();
 
             assertEquals("Iteration value is correct", testValue, iterValue);

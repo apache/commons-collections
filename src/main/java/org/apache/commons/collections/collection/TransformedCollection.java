@@ -85,8 +85,8 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
             @SuppressWarnings("unchecked") // collection is of type E
             E[] values = (E[]) collection.toArray();
             collection.clear();
-            for(int i=0; i<values.length; i++) {
-                decorated.decorated().add(transformer.transform(values[i]));
+            for (E value : values) {
+                decorated.decorated().add(transformer.transform(value));
             }
         }
         return decorated;

@@ -407,8 +407,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
         Map<?,?> map = (Map<?,?>) makeObject();
         Map<?,?> map2 = (Map<?,?>) readExternalFormFromDisk(getCanonicalFullCollectionName(map));
         assertEquals("Map is the right size", map.size(), map2.size());
-        for (Iterator<?> it = map.keySet().iterator(); it.hasNext();) {
-            Object key = it.next();
+        for (Object key : map.keySet()) {
             assertEquals( "Map had inequal elements", map.get(key), map2.get(key) );
             map2.remove(key);
         }

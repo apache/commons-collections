@@ -100,14 +100,14 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
     public void testTransformedCollection_decorateTransform() {
         Collection originalCollection = new ArrayList();
         Object[] els = getFullElements();
-        for (int i = 0; i < els.length; i++) {
-            originalCollection.add(els[i]);
+        for (Object el : els) {
+            originalCollection.add(el);
         }
         Collection<Object> collection = TransformedCollection.transformedCollection(originalCollection, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, collection.size());
-        for (int i = 0; i < els.length; i++) {
-            assertEquals(true, collection.contains(new Integer((String) els[i])));
-            assertEquals(false, collection.contains(els[i]));
+        for (Object el : els) {
+            assertEquals(true, collection.contains(new Integer((String) el)));
+            assertEquals(false, collection.contains(el));
         }
         
         assertEquals(false, collection.remove(els[0]));

@@ -756,8 +756,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
                 } else if (value instanceof List) {
                     @SuppressWarnings("unchecked") // we only add Strings to the Lists
                     List<String> values = (List<String>) value;
-                    for (Iterator<String> it = values.iterator(); it.hasNext(); ) {
-                        String currentElement = it.next();
+                    for (String currentElement : values) {
                         StringBuilder currentOutput = new StringBuilder();
                         currentOutput.append(key);
                         currentOutput.append("=");
@@ -976,8 +975,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
 
         // Each token is of the form 'key=value'.
         Properties props = new Properties(defaults);
-        for (int i = 0; i < tokens.length; i++) {
-            String token = tokens[i];
+        for (String token : tokens) {
             int equalSign = token.indexOf('=');
             if (equalSign > 0) {
                 String pkey = token.substring(0, equalSign).trim();
@@ -1738,8 +1736,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
         } else {
             @SuppressWarnings("unchecked") // OK to downcast here
             Map<String, Object> mapso = (Map<String,Object>) map;
-            for (Iterator<Map.Entry<String, Object>> it = mapso.entrySet().iterator(); it.hasNext(); ) {
-                Map.Entry<String,Object> entry = it.next();
+            for (java.util.Map.Entry<String, Object> entry : mapso.entrySet()) {
                 put(entry.getKey(), entry.getValue());
             }
         }

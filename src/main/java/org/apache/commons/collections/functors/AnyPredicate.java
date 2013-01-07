@@ -106,8 +106,8 @@ public final class AnyPredicate<T> implements Predicate<T>, PredicateDecorator<T
      * @return true if any decorated predicate return true
      */
     public boolean evaluate(T object) {
-        for (int i = 0; i < iPredicates.length; i++) {
-            if (iPredicates[i].evaluate(object)) {
+        for (Predicate<? super T> iPredicate : iPredicates) {
+            if (iPredicate.evaluate(object)) {
                 return true;
             }
         }

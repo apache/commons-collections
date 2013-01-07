@@ -239,8 +239,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     @Override
     public boolean containsValue(Object value) {
         if (value == null) {
-            for (int i = 0, isize = data.length; i < isize; i++) {
-                HashEntry<K, V> entry = data[i];
+            for (HashEntry<K, V> element : data) {
+                HashEntry<K, V> entry = element;
                 while (entry != null) {
                     if (entry.getValue() == null) {
                         return true;
@@ -249,8 +249,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
                 }
             }
         } else {
-            for (int i = 0, isize = data.length; i < isize; i++) {
-                HashEntry<K, V> entry = data[i];
+            for (HashEntry<K, V> element : data) {
+                HashEntry<K, V> entry = element;
                 while (entry != null) {
                     if (isEqualValue(value, entry.getValue())) {
                         return true;

@@ -1516,9 +1516,9 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
                 ".testCanonicalFullCollectionExists",
                 ".testSerializeDeserializeThenCompare"
         };
-        for (int i = 0; i < ignored.length; i++) {
-            list.add(prefix + bulk + ignored[i]);
-            list.add(prefix + bulk + bulk + ignored[i]);
+        for (String element : ignored) {
+            list.add(prefix + bulk + element);
+            list.add(prefix + bulk + bulk + element);
         }
         return list.toArray(new String[0]);
     }

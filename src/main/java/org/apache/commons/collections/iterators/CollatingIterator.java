@@ -133,8 +133,8 @@ public class CollatingIterator<E> implements Iterator<E> {
      */
     public CollatingIterator(final Comparator<? super E> comp, final Iterator<? extends E>[] iterators) {
         this(comp, iterators.length);
-        for (int i = 0; i < iterators.length; i++) {
-            addIterator(iterators[i]);
+        for (Iterator<? extends E> iterator : iterators) {
+            addIterator(iterator);
         }
     }
 

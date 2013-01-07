@@ -632,9 +632,9 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         verify();
 
         resetFull();
-        for(int i = 0; i < keys.length; i++) {
+        for (Object key : keys) {
             assertTrue("Map must contain key for a mapping in the map. " +
-                       "Missing: " + keys[i], getMap().containsKey(keys[i]));
+                       "Missing: " + key, getMap().containsKey(key));
         }
         verify();
     }
@@ -655,9 +655,9 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         verify();
 
         resetFull();
-        for(int i = 0; i < values.length; i++) {
+        for (Object value : values) {
             assertTrue("Map must contain value for a mapping in the map.",
-                    getMap().containsValue(values[i]));
+                    getMap().containsValue(value));
         }
         verify();
     }
@@ -699,9 +699,9 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         Object[] keys = getSampleKeys();
         Object[] values = getSampleValues();
 
-        for (int i = 0; i < keys.length; i++) {
+        for (Object key : keys) {
             assertTrue("Empty map.get() should return null.",
-                    getMap().get(keys[i]) == null);
+                    getMap().get(key) == null);
         }
         verify();
 
@@ -992,8 +992,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
 
         Object[] keys = getSampleKeys();
         Object[] values = getSampleValues();
-        for (int i = 0; i < keys.length; i++) {
-            Object o = getMap().remove(keys[i]);
+        for (Object key : keys) {
+            Object o = getMap().remove(key);
             assertTrue("First map.remove should return null", o == null);
         }
         verify();
@@ -1013,8 +1013,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
 
         resetFull();
         int size = getMap().size();
-        for (int i = 0; i < other.length; i++) {
-            Object o = getMap().remove(other[i]);
+        for (Object element : other) {
+            Object o = getMap().remove(element);
             assertNull("map.remove for nonexistent key should return null", o);
             assertEquals("map.remove for nonexistent key should not " +
                          "shrink map", size, getMap().size());
@@ -2004,8 +2004,8 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                    "\nTest: " + test + "\nReal: " + known,
                    known.containsAll(test));
         // originally coded to use a HashBag, but now separate jar so...
-        for (Iterator<V> it = known.iterator(); it.hasNext();) {
-            boolean removed = test.remove(it.next());
+        for (V v : known) {
+            boolean removed = test.remove(v);
             assertTrue("Map's values should still equal HashMap's", removed);
         }
         assertTrue("Map's values should still equal HashMap's", test.isEmpty());

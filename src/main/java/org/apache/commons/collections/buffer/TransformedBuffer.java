@@ -79,8 +79,8 @@ public class TransformedBuffer<E> extends TransformedCollection<E> implements Bu
             @SuppressWarnings("unchecked") // buffer is type <E>
             E[] values = (E[]) buffer.toArray();
             buffer.clear();
-            for(int i=0; i<values.length; i++) {
-                decorated.decorated().add(transformer.transform(values[i]));
+            for (E value : values) {
+                decorated.decorated().add(transformer.transform(value));
             }
         }
         return decorated;

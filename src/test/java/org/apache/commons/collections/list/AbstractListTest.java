@@ -487,9 +487,9 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         }
 
         E[] other = getOtherElements();
-        for (int i = 0; i < other.length; i++) {
+        for (E element : other) {
             assertEquals("indexOf should return -1 for nonexistent element",
-                -1, list1.indexOf(other[i]));
+                -1, list1.indexOf(element));
             verify();
         }
     }
@@ -511,9 +511,9 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         }
 
         E[] other = getOtherElements();
-        for (int i = 0; i < other.length; i++) {
+        for (E element : other) {
             assertEquals("lastIndexOf should return -1 for nonexistent " +
-                "element", -1, list1.lastIndexOf(other[i]));
+                "element", -1, list1.lastIndexOf(element));
             verify();
         }
     }
@@ -974,20 +974,20 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         ListIterator<E> iter1 = list1.listIterator();
         ListIterator<E> iter2 = list2.listIterator();
 
-        for (int i = 0; i < elements.length; i++) {
-            iter1.add(elements[i]);
-            iter2.add(elements[i]);
+        for (E element : elements) {
+            iter1.add(element);
+            iter2.add(element);
             verify();
         }
 
         resetFull();
         iter1 = getCollection().listIterator();
         iter2 = getConfirmed().listIterator();
-        for (int i = 0; i < elements.length; i++) {
+        for (E element : elements) {
             iter1.next();
             iter2.next();
-            iter1.add(elements[i]);
-            iter2.add(elements[i]);
+            iter1.add(element);
+            iter2.add(element);
             verify();
         }
     }
@@ -1004,11 +1004,11 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         resetFull();
         ListIterator<E> iter1 = getCollection().listIterator();
         ListIterator<E> iter2 = getConfirmed().listIterator();
-        for (int i = 0; i < elements.length; i++) {
+        for (E element : elements) {
             iter1.next();
             iter2.next();
-            iter1.set(elements[i]);
-            iter2.set(elements[i]);
+            iter1.set(element);
+            iter2.set(element);
             verify();
         }
     }
@@ -1262,8 +1262,8 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
     */
    protected void failFastAll(List<E> list) {
        Method[] methods = List.class.getMethods();
-       for (int i = 0; i < methods.length; i++) {
-           failFastMethod(list, methods[i]);
+       for (Method method : methods) {
+           failFastMethod(list, method);
        }
    }
 

@@ -259,8 +259,8 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     @Override
     public boolean removeAll(Collection<?> coll) {
         boolean result = false;
-        for (Iterator<?> it = coll.iterator(); it.hasNext();) {
-            result |= remove(it.next());
+        for (Object name : coll) {
+            result |= remove(name);
         }
         return result;
     }
@@ -268,8 +268,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     @Override
     public boolean retainAll(Collection<?> coll) {
         Set<Object> setRetainAll = new HashSet<Object>();
-        for (Iterator<?> it = coll.iterator(); it.hasNext();) {
-            Object next = it.next();
+        for (Object next : coll) {
             if (set.contains(next)) {
                 setRetainAll.add(next);
             }

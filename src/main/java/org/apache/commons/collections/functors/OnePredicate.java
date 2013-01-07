@@ -98,8 +98,8 @@ public final class OnePredicate<T> implements Predicate<T>, PredicateDecorator<T
      */
     public boolean evaluate(T object) {
         boolean match = false;
-        for (int i = 0; i < iPredicates.length; i++) {
-            if (iPredicates[i].evaluate(object)) {
+        for (Predicate<? super T> iPredicate : iPredicates) {
+            if (iPredicate.evaluate(object)) {
                 if (match) {
                     return false;
                 }

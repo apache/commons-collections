@@ -218,8 +218,8 @@ public class ListOrderedSet<E>
     @Override
     public boolean removeAll(Collection<?> coll) {
         boolean result = false;
-        for (Iterator<?> it = coll.iterator(); it.hasNext();) {
-            result |= remove(it.next());
+        for (Object name : coll) {
+            result |= remove(name);
         }
         return result;
     }
@@ -227,8 +227,7 @@ public class ListOrderedSet<E>
     @Override
     public boolean retainAll(Collection<?> coll) {
         Set<Object> collectionRetainAll = new HashSet<Object>();
-        for (Iterator<?> it = coll.iterator(); it.hasNext();) {
-            Object next = it.next();
+        for (Object next : coll) {
             if (collection.contains(next)) {
                 collectionRetainAll.add(next);
             }

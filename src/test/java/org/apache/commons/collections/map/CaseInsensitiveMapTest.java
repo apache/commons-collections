@@ -132,8 +132,8 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
         };
 
         try {
-            for (int i = 0; i < locales.length; i++) {
-                Locale.setDefault(locales[i]);
+            for (Locale locale : locales) {
+                Locale.setDefault(locale);
                 for (int j = 0; j < data.length; j++) {
                     assertTrue("Test data corrupt: " + j, data[j][0].equalsIgnoreCase(data[j][1]));
                     CaseInsensitiveMap<String, String> map = new CaseInsensitiveMap<String, String>();

@@ -96,8 +96,8 @@ public final class NonePredicate<T> implements Predicate<T>, PredicateDecorator<
      * @return true if none of decorated predicates return true
      */
     public boolean evaluate(T object) {
-        for (int i = 0; i < iPredicates.length; i++) {
-            if (iPredicates[i].evaluate(object)) {
+        for (Predicate<? super T> iPredicate : iPredicates) {
+            if (iPredicate.evaluate(object)) {
                 return false;
             }
         }

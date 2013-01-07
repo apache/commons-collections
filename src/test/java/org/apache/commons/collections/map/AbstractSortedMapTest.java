@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
@@ -218,8 +219,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
         public TestHeadMap(AbstractMapTest<K, V> main) {
             super("SortedMap.HeadMap", main);
             Map<K, V> sm = main.makeFullMap();
-            for (Iterator<Map.Entry<K, V>> it = sm.entrySet().iterator(); it.hasNext();) {
-                Map.Entry<K, V> entry = it.next();
+            for (Entry<K, V> entry : sm.entrySet()) {
                 this.subSortedKeys.add(entry.getKey());
                 this.subSortedValues.add(entry.getValue());
             }
@@ -271,8 +271,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
         public TestTailMap(AbstractMapTest<K, V> main) {
             super("SortedMap.TailMap", main);
             Map<K, V> sm = main.makeFullMap();
-            for (Iterator<Map.Entry<K, V>> it = sm.entrySet().iterator(); it.hasNext();) {
-                Map.Entry<K, V> entry = it.next();
+            for (Entry<K, V> entry : sm.entrySet()) {
                 this.subSortedKeys.add(entry.getKey());
                 this.subSortedValues.add(entry.getValue());
             }
@@ -325,8 +324,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
         public TestSubMap(AbstractMapTest<K, V> main) {
             super("SortedMap.SubMap", main);
             Map<K, V> sm = main.makeFullMap();
-            for (Iterator<Map.Entry<K, V>> it = sm.entrySet().iterator(); it.hasNext();) {
-                Map.Entry<K, V> entry = it.next();
+            for (Entry<K, V> entry : sm.entrySet()) {
                 this.subSortedKeys.add(entry.getKey());
                 this.subSortedValues.add(entry.getValue());
             }

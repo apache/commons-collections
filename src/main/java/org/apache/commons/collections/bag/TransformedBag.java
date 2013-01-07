@@ -78,8 +78,8 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
             @SuppressWarnings("unchecked") // Bag is of type E
             E[] values = (E[]) bag.toArray();
             bag.clear();
-            for (int i = 0; i < values.length; i++) {
-                decorated.decorated().add(transformer.transform(values[i]));
+            for (E value : values) {
+                decorated.decorated().add(transformer.transform(value));
             }
         }
         return decorated;

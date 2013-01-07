@@ -323,9 +323,9 @@ class BulkTestSuiteMaker {
     void make(BulkTest bulk) {
         Class<? extends BulkTest> c = bulk.getClass();
         Method[] all = c.getMethods();
-        for (int i = 0; i < all.length; i++) {
-            if (isTest(all[i])) addTest(bulk, all[i]);
-            if (isBulk(all[i])) addBulk(bulk, all[i]);
+        for (Method element : all) {
+            if (isTest(element)) addTest(bulk, element);
+            if (isBulk(element)) addBulk(bulk, element);
         }
     }
 
@@ -431,8 +431,8 @@ class BulkTestSuiteMaker {
 
     private static <T extends BulkTest> BulkTest makeFirstTestCase(Class<T> c) {
         Method[] all = c.getMethods();
-        for (int i = 0; i < all.length; i++) {
-            if (isTest(all[i])) return makeTestCase(c, all[i]);
+        for (Method element : all) {
+            if (isTest(element)) return makeTestCase(c, element);
         }
         throw new IllegalArgumentException(c.getName() + " must provide " 
           + " at least one test method.");

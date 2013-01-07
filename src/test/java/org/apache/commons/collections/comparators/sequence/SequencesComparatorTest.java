@@ -117,10 +117,10 @@ public class SequencesComparatorTest {
         for (int lg=0; lg<lgMax; ++lg) {
             List<List<String>> newTab = new ArrayList<List<String>>();
             newTab.add(new ArrayList<String>());
-            for (int k = 0; k < shadokAlph.length; k++) {
+            for (String element : shadokAlph) {
                 for (List<String> sentence : shadokSentences) {
                     List<String> newSentence = new ArrayList<String>(sentence);
-                    newSentence.add(shadokAlph[k]);
+                    newSentence.add(element);
                     newTab.add(newSentence);
                 }
             }

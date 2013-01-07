@@ -94,20 +94,20 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         ListIterator<E> iter1 = list1.listIterator();
         ListIterator<E> iter2 = list2.listIterator();
 
-        for (int i = 0; i < elements.length; i++) {
-            iter1.add(elements[i]);
-            iter2.add(elements[i]);
+        for (E element : elements) {
+            iter1.add(element);
+            iter2.add(element);
             super.verify();  // changed here
         }
 
         resetFull();
         iter1 = getCollection().listIterator();
         iter2 = getConfirmed().listIterator();
-        for (int i = 0; i < elements.length; i++) {
+        for (E element : elements) {
             iter1.next();
             iter2.next();
-            iter1.add(elements[i]);
-            iter2.add(elements[i]);
+            iter1.add(element);
+            iter2.add(element);
             super.verify();  // changed here
         }
     }
@@ -121,9 +121,9 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         getConfirmed().addAll(Arrays.asList(elements));
         verify();
         assertTrue("Empty collection should change after addAll", r);
-        for (int i = 0; i < elements.length; i++) {
+        for (E element : elements) {
             assertTrue("Collection should contain added element",
-                    getCollection().contains(elements[i]));
+                    getCollection().contains(element));
         }
 
         resetFull();

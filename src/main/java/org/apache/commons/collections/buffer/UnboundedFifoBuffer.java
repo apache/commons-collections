@@ -110,8 +110,8 @@ public class UnboundedFifoBuffer<E> extends AbstractCollection<E> implements Buf
         out.defaultWriteObject();
         out.writeInt(size());
         out.writeInt(buffer.length);
-        for (Iterator<E> it = iterator(); it.hasNext();) {
-            out.writeObject(it.next());
+        for (E e : this) {
+            out.writeObject(e);
         }
     }
 

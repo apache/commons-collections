@@ -96,8 +96,8 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
      * @return the transformed result
      */
     public T transform(T object) {
-        for (int i = 0; i < iTransformers.length; i++) {
-            object = iTransformers[i].transform(object);
+        for (Transformer<? super T, ? extends T> iTransformer : iTransformers) {
+            object = iTransformer.transform(object);
         }
         return object;
     }

@@ -65,8 +65,7 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
 
     public void testIterator() {
         ListIterator<E> iter = makeObject();
-        for (int i = 0; i < testArray.length; i++) {
-            Object testValue = testArray[i];
+        for (String testValue : testArray) {
             Object iterValue = iter.next();
 
             assertEquals("Iteration value is correct", testValue, iterValue);
@@ -97,8 +96,7 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
         }
 
         // now, read it forwards again
-        for (int i = 0; i < testArray.length; i++) {
-            Object testValue = testArray[i];
+        for (String testValue : testArray) {
             Object iterValue = iter.next();
 
             assertEquals("Iteration value is correct", testValue, iterValue);

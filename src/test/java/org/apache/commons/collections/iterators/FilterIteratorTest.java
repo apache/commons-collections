@@ -92,7 +92,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     public void testRepeatedNext() {
-        for (int i = 0; i < array.length; i++) {
+        for (String element : array) {
             iterator.next();
         }
         verifyNoMoreElements();
@@ -159,8 +159,8 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     private void verifyElementsInPredicate(final String[] elements) {
         Predicate<E> pred = new Predicate<E>() {
             public boolean evaluate(E x) {
-                for (int i = 0; i < elements.length; i++) {
-                    if (elements[i].equals(x)) {
+                for (String element : elements) {
+                    if (element.equals(x)) {
                         return true;
                     }
                 }

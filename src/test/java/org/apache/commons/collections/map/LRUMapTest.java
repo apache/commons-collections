@@ -529,27 +529,27 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
             };
         }
 
-        for (int i = 0; i < threads.length; ++i) {
-            synchronized (threads[i]) {
-                threads[i].start();
-                threads[i].wait();
+        for (Thread thread : threads) {
+            synchronized (thread) {
+                thread.start();
+                thread.wait();
             }
         }
 
-        for (int i = 0; i < threads.length; ++i) {
-            synchronized (threads[i]) {
-                threads[i].notifyAll();
+        for (Thread thread : threads) {
+            synchronized (thread) {
+                thread.notifyAll();
             }
         }
 
         Thread.sleep(1000);
 
-        for (int i = 0; i < threads.length; ++i) {
-            threads[i].interrupt();
+        for (Thread thread : threads) {
+            thread.interrupt();
         }
-        for (int i = 0; i < threads.length; ++i) {
-            synchronized (threads[i]) {
-                threads[i].join();
+        for (Thread thread : threads) {
+            synchronized (thread) {
+                thread.join();
             }
         }
 
@@ -612,27 +612,27 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
             };
         }
 
-        for (int i = 0; i < threads.length; ++i) {
-            synchronized (threads[i]) {
-                threads[i].start();
-                threads[i].wait();
+        for (Thread thread : threads) {
+            synchronized (thread) {
+                thread.start();
+                thread.wait();
             }
         }
 
-        for (int i = 0; i < threads.length; ++i) {
-            synchronized (threads[i]) {
-                threads[i].notifyAll();
+        for (Thread thread : threads) {
+            synchronized (thread) {
+                thread.notifyAll();
             }
         }
 
         Thread.sleep(1000);
 
-        for (int i = 0; i < threads.length; ++i) {
-            threads[i].interrupt();
+        for (Thread thread : threads) {
+            thread.interrupt();
         }
-        for (int i = 0; i < threads.length; ++i) {
-            synchronized (threads[i]) {
-                threads[i].join();
+        for (Thread thread : threads) {
+            synchronized (thread) {
+                thread.join();
             }
         }
 
@@ -695,27 +695,27 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
             };
         }
 
-        for (int i = 0; i < threads.length; ++i) {
-            synchronized (threads[i]) {
-                threads[i].start();
-                threads[i].wait();
+        for (Thread thread : threads) {
+            synchronized (thread) {
+                thread.start();
+                thread.wait();
             }
         }
 
-        for (int i = 0; i < threads.length; ++i) {
-            synchronized (threads[i]) {
-                threads[i].notifyAll();
+        for (Thread thread : threads) {
+            synchronized (thread) {
+                thread.notifyAll();
             }
         }
 
         Thread.sleep(1000);
 
-        for (int i = 0; i < threads.length; ++i) {
-            threads[i].interrupt();
+        for (Thread thread : threads) {
+            thread.interrupt();
         }
-        for (int i = 0; i < threads.length; ++i) {
-            synchronized (threads[i]) {
-                threads[i].join();
+        for (Thread thread : threads) {
+            synchronized (thread) {
+                thread.join();
             }
         }
 
@@ -777,27 +777,27 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
             };
         }
 
-        for (int i = 0; i < threads.length; ++i) {
-            synchronized (threads[i]) {
-                threads[i].start();
-                threads[i].wait();
+        for (Thread thread : threads) {
+            synchronized (thread) {
+                thread.start();
+                thread.wait();
             }
         }
 
-        for (int i = 0; i < threads.length; ++i) {
-            synchronized (threads[i]) {
-                threads[i].notifyAll();
+        for (Thread thread : threads) {
+            synchronized (thread) {
+                thread.notifyAll();
             }
         }
 
         Thread.sleep(1000);
 
-        for (int i = 0; i < threads.length; ++i) {
-            threads[i].interrupt();
+        for (Thread thread : threads) {
+            thread.interrupt();
         }
-        for (int i = 0; i < threads.length; ++i) {
-            synchronized (threads[i]) {
-                threads[i].join();
+        for (Thread thread : threads) {
+            synchronized (thread) {
+                thread.join();
             }
         }
 

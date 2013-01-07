@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.collections.Bag;
@@ -492,8 +493,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      */
     protected void doWriteObject(ObjectOutputStream out) throws IOException {
         out.writeInt(map.size());
-        for (Iterator<Map.Entry<E, MutableInteger>> it = map.entrySet().iterator(); it.hasNext();) {
-            Map.Entry<E, MutableInteger> entry = it.next();
+        for (Entry<E, MutableInteger> entry : map.entrySet()) {
             out.writeObject(entry.getKey());
             out.writeInt(entry.getValue().value);
         }
@@ -540,8 +540,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         if (other.size() != size()) {
             return false;
         }
-        for (Iterator<E> it = map.keySet().iterator(); it.hasNext();) {
-            E element = it.next();
+        for (E element : map.keySet()) {
             if (other.getCount(element) != getCount(element)) {
                 return false;
             }
@@ -561,8 +560,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     @Override
     public int hashCode() {
         int total = 0;
-        for (Iterator<Map.Entry<E, MutableInteger>> it = map.entrySet().iterator(); it.hasNext();) {
-            Map.Entry<E, MutableInteger> entry = it.next();
+        for (Entry<E, MutableInteger> entry : map.entrySet()) {
             E element = entry.getKey();
             MutableInteger count = entry.getValue();
             total += (element == null ? 0 : element.hashCode()) ^ count.value;

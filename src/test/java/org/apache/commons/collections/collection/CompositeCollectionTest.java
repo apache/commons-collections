@@ -76,9 +76,9 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     public Collection<E> makeFullCollection() {
         CompositeCollection<E> compositeCollection = new CompositeCollection<E>();
         E[] elements = getFullElements();
-        for (int i = 0; i < elements.length; i++) {
+        for (E element : elements) {
             Collection<E> summand = new HashSet<E>();
-            summand.add(elements[i]);
+            summand.add(element);
             compositeCollection.addComposited(summand);
         }
         return compositeCollection;

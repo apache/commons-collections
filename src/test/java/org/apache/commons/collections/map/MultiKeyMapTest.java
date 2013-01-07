@@ -196,9 +196,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
         MultiKeyMap<K, V> multimap = getMap();
         MultiKey<K>[] keys = getMultiKeyKeys();
 
-        for (int i = 0; i < keys.length; i++) {
-            MultiKey<K> key = keys[i];
-
+        for (MultiKey<K> key : keys) {
             switch (key.size()) {
                 case 2:
                 assertEquals(true, multimap.containsKey(key.getKey(0), key.getKey(1)));

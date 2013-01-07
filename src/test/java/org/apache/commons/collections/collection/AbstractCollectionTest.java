@@ -500,10 +500,10 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         if (!isAddSupported()) return;
 
         E[] elements = getFullElements();
-        for (int i = 0; i < elements.length; i++) {
+        for (E element : elements) {
             resetEmpty();
-            boolean r = getCollection().add(elements[i]);
-            getConfirmed().add(elements[i]);
+            boolean r = getCollection().add(element);
+            getConfirmed().add(element);
             verify();
             assertTrue("Empty collection changed after add", r);
             assertEquals("Collection size is 1 after first add", 1, getCollection().size());
@@ -511,13 +511,13 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
         resetEmpty();
         int size = 0;
-        for (int i = 0; i < elements.length; i++) {
-            boolean r = getCollection().add(elements[i]);
-            getConfirmed().add(elements[i]);
+        for (E element : elements) {
+            boolean r = getCollection().add(element);
+            getConfirmed().add(element);
             verify();
             if (r) size++;
             assertEquals("Collection size should grow after add", size, getCollection().size());
-            assertTrue("Collection should contain added element", getCollection().contains(elements[i]));
+            assertTrue("Collection should contain added element", getCollection().contains(element));
         }
     }
 
@@ -533,8 +533,8 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         getConfirmed().addAll(Arrays.asList(elements));
         verify();
         assertTrue("Empty collection should change after addAll", r);
-        for (int i = 0; i < elements.length; i++) {
-            assertTrue("Collection should contain added element", getCollection().contains(elements[i]));
+        for (E element : elements) {
+            assertTrue("Collection should contain added element", getCollection().contains(element));
         }
 
         resetFull();
@@ -544,9 +544,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         getConfirmed().addAll(Arrays.asList(elements));
         verify();
         assertTrue("Full collection should change after addAll", r);
-        for (int i = 0; i < elements.length; i++) {
+        for (E element : elements) {
             assertTrue("Full collection should contain added element",
-                    getCollection().contains(elements[i]));
+                    getCollection().contains(element));
         }
         assertEquals("Size should increase after addAll", size + elements.length, getCollection().size());
 
@@ -862,10 +862,10 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         }
 
         int size = getCollection().size();
-        for (int i = 0; i < elements.length; i++) {
+        for (E element : elements) {
             resetFull();
-            assertTrue("Collection should remove extant element: " + elements[i],
-                    getCollection().remove(elements[i]));
+            assertTrue("Collection should remove extant element: " + element,
+                    getCollection().remove(element));
 
             // if the elements aren't distinguishable, we can just remove a
             // matching element from the confirmed collection and verify
@@ -876,7 +876,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
             //
             // see areEqualElementsDistinguishable()
             if (!areEqualElementsDistinguishable()) {
-                getConfirmed().remove(elements[i]);
+                getConfirmed().remove(element);
                 verify();
             }
 
@@ -1043,9 +1043,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
                         + "in the confirmed collection's array");
             }
         }
-        for (int i = 0; i < matched.length; i++) {
+        for (boolean element : matched) {
             assertEquals("Collection should return all its elements in " + "toArray", true,
-                    matched[i]);
+                    element);
         }
     }
 
@@ -1085,8 +1085,8 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         // Figure out if they're all the same class
         // TODO: It'd be nicer to detect a common superclass
         HashSet<Class<?>> classes = new HashSet<Class<?>>();
-        for (int i = 0; i < array.length; i++) {
-            classes.add((array[i] == null) ? null : array[i].getClass());
+        for (Object element : array) {
+            classes.add((element == null) ? null : element.getClass());
         }
         if (classes.size() > 1) return;
 

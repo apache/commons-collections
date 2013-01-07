@@ -116,14 +116,14 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
     public void testTransformedList_decorateTransform() {
         List<Object> originalList = new ArrayList<Object>();
         Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
-        for (int i = 0; i < els.length; i++) {
-            originalList.add(els[i]);
+        for (Object el : els) {
+            originalList.add(el);
         }
         List<?> list = TransformedList.transformedList(originalList, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, list.size());
-        for (int i = 0; i < els.length; i++) {
-            assertEquals(true, list.contains(new Integer((String) els[i])));
-            assertEquals(false, list.contains(els[i]));
+        for (Object el : els) {
+            assertEquals(true, list.contains(new Integer((String) el)));
+            assertEquals(false, list.contains(el));
         }
         
         assertEquals(false, list.remove(els[0]));

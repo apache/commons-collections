@@ -25,6 +25,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.SortedMap;
@@ -843,8 +844,8 @@ public class MapUtils {
     public static <K, V> Properties toProperties(final Map<K, V> map) {
         Properties answer = new Properties();
         if (map != null) {
-            for (Iterator<Map.Entry<K, V>> iter = map.entrySet().iterator(); iter.hasNext();) {
-                Map.Entry<?, ?> entry = iter.next();
+            for (Entry<K, V> entry2 : map.entrySet()) {
+                Map.Entry<?, ?> entry = entry2;
                 Object key = entry.getKey();
                 Object value = entry.getValue();
                 answer.put(key, value);
@@ -1049,8 +1050,7 @@ public class MapUtils {
      */
     public static <K, V> Map<V, K> invertMap(Map<K, V> map) {
         Map<V, K> out = new HashMap<V, K>(map.size());
-        for (Iterator<Map.Entry<K, V>> it = map.entrySet().iterator(); it.hasNext();) {
-            Map.Entry<K, V> entry = it.next();
+        for (Entry<K, V> entry : map.entrySet()) {
             out.put(entry.getValue(), entry.getKey());
         }
         return out;
@@ -1136,13 +1136,13 @@ public class MapUtils {
         }
         Object obj = array[0];
         if (obj instanceof Map.Entry) {
-            for (int i = 0; i < array.length; i++) {
-                Map.Entry<K, V> entry = (Map.Entry<K, V>) array[i];
+            for (Object element : array) {
+                Map.Entry<K, V> entry = (Map.Entry<K, V>) element;
                 map.put(entry.getKey(), entry.getValue());
             }
         } else if (obj instanceof KeyValue) {
-            for (int i = 0; i < array.length; i++) {
-                KeyValue<K, V> keyval = (KeyValue<K, V>) array[i];
+            for (Object element : array) {
+                KeyValue<K, V> keyval = (KeyValue<K, V>) element;
                 map.put(keyval.getKey(), keyval.getValue());
             }
         } else if (obj instanceof Object[]) {

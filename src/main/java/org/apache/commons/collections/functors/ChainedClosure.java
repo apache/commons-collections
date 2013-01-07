@@ -98,8 +98,8 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      * @param input  the input object passed to each closure
      */
     public void execute(E input) {
-        for (int i = 0; i < iClosures.length; i++) {
-            iClosures[i].execute(input);
+        for (Closure<? super E> iClosure : iClosures) {
+            iClosure.execute(input);
         }
     }
 

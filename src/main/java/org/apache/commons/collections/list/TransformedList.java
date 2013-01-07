@@ -82,8 +82,8 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
             @SuppressWarnings("unchecked") // list is of type E
             E[] values = (E[]) list.toArray();
             list.clear();
-            for(int i=0; i<values.length; i++) {
-                decorated.decorated().add(transformer.transform(values[i]));
+            for (E value : values) {
+                decorated.decorated().add(transformer.transform(value));
             }
         }
         return decorated;

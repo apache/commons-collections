@@ -79,8 +79,8 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
             @SuppressWarnings("unchecked") // set is type E
             E[] values = (E[]) set.toArray();
             set.clear();
-            for(int i=0; i<values.length; i++) {
-                decorated.decorated().add(transformer.transform(values[i]));
+            for (E value : values) {
+                decorated.decorated().add(transformer.transform(value));
             }
         }
         return decorated;
