@@ -45,7 +45,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
      *
      * @param testName  the test name
      */
-    public AbstractOrderedMapTest(String testName) {
+    public AbstractOrderedMapTest(final String testName) {
         super(testName);
     }
 
@@ -81,7 +81,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
     @Override
     @SuppressWarnings("unchecked")
     public K[] getSampleKeys() {
-        List<K> list = new ArrayList<K>(Arrays.asList(super.getSampleKeys()));
+        final List<K> list = new ArrayList<K>(Arrays.asList(super.getSampleKeys()));
         Collections.sort(list, new NullComparator<K>());
         return (K[]) list.toArray();
     }
@@ -93,11 +93,11 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         try {
             ordered.firstKey();
             fail();
-        } catch (NoSuchElementException ex) {}
+        } catch (final NoSuchElementException ex) {}
 
         resetFull();
         ordered = getMap();
-        K confirmedFirst = confirmed.keySet().iterator().next();
+        final K confirmedFirst = confirmed.keySet().iterator().next();
         assertEquals(confirmedFirst, ordered.firstKey());
     }
 
@@ -107,12 +107,12 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         try {
             ordered.lastKey();
             fail();
-        } catch (NoSuchElementException ex) {}
+        } catch (final NoSuchElementException ex) {}
 
         resetFull();
         ordered = getMap();
         K confirmedLast = null;
-        for (Iterator<K> it = confirmed.keySet().iterator(); it.hasNext();) {
+        for (final Iterator<K> it = confirmed.keySet().iterator(); it.hasNext();) {
             confirmedLast = it.next();
         }
         assertEquals(confirmedLast, ordered.lastKey());
@@ -126,17 +126,17 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         if (!isAllowNullKey()) {
             try {
                 assertEquals(null, ordered.nextKey(null)); // this is allowed too
-            } catch (NullPointerException ex) {}
+            } catch (final NullPointerException ex) {}
         } else {
             assertEquals(null, ordered.nextKey(null));
         }
 
         resetFull();
         ordered = getMap();
-        Iterator<K> it = confirmed.keySet().iterator();
+        final Iterator<K> it = confirmed.keySet().iterator();
         K confirmedLast = it.next();
         while (it.hasNext()) {
-            K confirmedObject = it.next();
+            final K confirmedObject = it.next();
             assertEquals(confirmedObject, ordered.nextKey(confirmedLast));
             confirmedLast = confirmedObject;
         }
@@ -146,7 +146,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
             try {
                 ordered.nextKey(null);
                 fail();
-            } catch (NullPointerException ex) {}
+            } catch (final NullPointerException ex) {}
         } else {
             assertEquals(null, ordered.nextKey(null));
         }
@@ -159,19 +159,19 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         if (isAllowNullKey() == false) {
             try {
                 assertEquals(null, ordered.previousKey(null)); // this is allowed too
-            } catch (NullPointerException ex) {}
+            } catch (final NullPointerException ex) {}
         } else {
             assertEquals(null, ordered.previousKey(null));
         }
 
         resetFull();
         ordered = getMap();
-        List<K> list = new ArrayList<K>(confirmed.keySet());
+        final List<K> list = new ArrayList<K>(confirmed.keySet());
         Collections.reverse(list);
-        Iterator<K> it = list.iterator();
+        final Iterator<K> it = list.iterator();
         K confirmedLast = it.next();
         while (it.hasNext()) {
-            K confirmedObject = it.next();
+            final K confirmedObject = it.next();
             assertEquals(confirmedObject, ordered.previousKey(confirmedLast));
             confirmedLast = confirmedObject;
         }
@@ -181,7 +181,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
             try {
                 ordered.previousKey(null);
                 fail();
-            } catch (NullPointerException ex) {}
+            } catch (final NullPointerException ex) {}
         } else {
             if (isAllowNullKey() == false) {
                 assertEquals(null, ordered.previousKey(null));

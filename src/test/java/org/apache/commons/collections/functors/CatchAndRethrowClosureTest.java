@@ -29,7 +29,7 @@ public class CatchAndRethrowClosureTest extends AbstractClosureTest {
         return new CatchAndRethrowClosure<T>() {
 
             @Override
-            protected void executeAndThrow(T input) throws IOException  {
+            protected void executeAndThrow(final T input) throws IOException  {
                 throw new IOException();
             }
         };
@@ -39,7 +39,7 @@ public class CatchAndRethrowClosureTest extends AbstractClosureTest {
         return new CatchAndRethrowClosure<T>() {
 
             @Override
-            protected void executeAndThrow(T input) {
+            protected void executeAndThrow(final T input) {
                 throw new NullPointerException();
             }
         };
@@ -49,7 +49,7 @@ public class CatchAndRethrowClosureTest extends AbstractClosureTest {
         return new CatchAndRethrowClosure<T>() {
 
             @Override
-            protected void executeAndThrow(T input) {
+            protected void executeAndThrow(final T input) {
             }
         };
     }
@@ -64,9 +64,9 @@ public class CatchAndRethrowClosureTest extends AbstractClosureTest {
         Closure<Integer> closure = generateNoExceptionClosure();
         try {
             closure.execute(Integer.valueOf(0));
-        } catch (FunctorException ex) {
+        } catch (final FunctorException ex) {
             Assert.fail();
-        } catch (RuntimeException ex) {
+        } catch (final RuntimeException ex) {
             Assert.fail();
         }
         
@@ -74,9 +74,9 @@ public class CatchAndRethrowClosureTest extends AbstractClosureTest {
         try {
             closure.execute(Integer.valueOf(0));
             Assert.fail();
-        } catch (FunctorException ex) {
+        } catch (final FunctorException ex) {
             Assert.assertTrue(ex.getCause() instanceof IOException);
-        } catch (RuntimeException ex) {
+        } catch (final RuntimeException ex) {
             Assert.fail();
         }
 
@@ -84,9 +84,9 @@ public class CatchAndRethrowClosureTest extends AbstractClosureTest {
         try {
             closure.execute(Integer.valueOf(0));
             Assert.fail();
-        } catch (FunctorException ex) {
+        } catch (final FunctorException ex) {
             Assert.fail();
-        } catch (RuntimeException ex) {
+        } catch (final RuntimeException ex) {
             Assert.assertTrue(ex instanceof NullPointerException);
         }
     }

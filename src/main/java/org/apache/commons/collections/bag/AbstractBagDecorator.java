@@ -49,7 +49,7 @@ public abstract class AbstractBagDecorator<E>
      * @param bag  the bag to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    protected AbstractBagDecorator(Bag<E> bag) {
+    protected AbstractBagDecorator(final Bag<E> bag) {
         super(bag);
     }
 
@@ -65,15 +65,15 @@ public abstract class AbstractBagDecorator<E>
 
     //-----------------------------------------------------------------------
     
-    public int getCount(Object object) {
+    public int getCount(final Object object) {
         return decorated().getCount(object);
     }
 
-    public boolean add(E object, int count) {
+    public boolean add(final E object, final int count) {
         return decorated().add(object, count);
     }
 
-    public boolean remove(Object object, int count) {
+    public boolean remove(final Object object, final int count) {
         return decorated().remove(object, count);
     }
 

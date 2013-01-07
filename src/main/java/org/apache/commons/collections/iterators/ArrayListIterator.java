@@ -72,7 +72,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      * @throws IllegalArgumentException if <code>array</code> is not an array.
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      */
-    public ArrayListIterator(Object array) {
+    public ArrayListIterator(final Object array) {
         super(array);
     }
 
@@ -86,7 +86,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      * @throws IndexOutOfBoundsException if the start index is out of bounds
      */
-    public ArrayListIterator(Object array, int startIndex) {
+    public ArrayListIterator(final Object array, final int startIndex) {
         super(array, startIndex);
         this.startIndex = startIndex;
     }
@@ -103,7 +103,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      * @throws IllegalArgumentException if end index is before the start
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      */
-    public ArrayListIterator(Object array, int startIndex, int endIndex) {
+    public ArrayListIterator(final Object array, final int startIndex, final int endIndex) {
         super(array, startIndex, endIndex);
         this.startIndex = startIndex;
     }
@@ -176,7 +176,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      * @throws UnsupportedOperationException always thrown.
      * @see java.util.ListIterator#set
      */
-    public void add(Object o) {
+    public void add(final Object o) {
         throw new UnsupportedOperationException("add() method is not supported");
     }
 
@@ -198,7 +198,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      * before {@link #set(Object)}
      * @see java.util.ListIterator#set
      */
-    public void set(Object o) {
+    public void set(final Object o) {
         if (this.lastItemIndex == -1) {
             throw new IllegalStateException("must call next() or previous() before a call to set()");
         }

@@ -38,7 +38,7 @@ import org.apache.commons.collections.ResettableIterator;
 public class LoopingIterator<E> implements ResettableIterator<E> {
     
     /** The collection to base the iterator on */
-    private Collection<? extends E> collection;
+    private final Collection<? extends E> collection;
     /** The current iterator */
     private Iterator<? extends E> iterator;
 
@@ -51,7 +51,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
      * @param coll  the collection to wrap
      * @throws NullPointerException if the collection is null
      */
-    public LoopingIterator(Collection<? extends E> coll) {
+    public LoopingIterator(final Collection<? extends E> coll) {
         if (coll == null) {
             throw new NullPointerException("The collection must not be null");
         }

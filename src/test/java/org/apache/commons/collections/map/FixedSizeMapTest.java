@@ -32,7 +32,7 @@ import org.apache.commons.collections.IterableMap;
  */
 public class FixedSizeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public FixedSizeMapTest(String testName) {
+    public FixedSizeMapTest(final String testName) {
         super(testName);
     }
 
@@ -43,7 +43,7 @@ public class FixedSizeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Override
     public IterableMap<K, V> makeFullMap() {
-        Map<K, V> map = new HashMap<K, V>();
+        final Map<K, V> map = new HashMap<K, V>();
         addSampleMappings(map);
         return FixedSizeMap.fixedSizeMap(map);
     }

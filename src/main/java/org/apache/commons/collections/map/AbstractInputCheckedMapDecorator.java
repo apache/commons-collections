@@ -58,7 +58,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    protected AbstractInputCheckedMapDecorator(Map<K, V> map) {
+    protected AbstractInputCheckedMapDecorator(final Map<K, V> map) {
         super(map);
     }
 
@@ -112,7 +112,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
         /** The parent map */
         private final AbstractInputCheckedMapDecorator<K, V> parent;
 
-        protected EntrySet(Set<Map.Entry<K, V>> set, AbstractInputCheckedMapDecorator<K, V> parent) {
+        protected EntrySet(final Set<Map.Entry<K, V>> set, final AbstractInputCheckedMapDecorator<K, V> parent) {
             super(set);
             this.parent = parent;
         }
@@ -125,7 +125,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
         @Override
         @SuppressWarnings("unchecked")
         public Object[] toArray() {
-            Object[] array = collection.toArray();
+            final Object[] array = collection.toArray();
             for (int i = 0; i < array.length; i++) {
                 array[i] = new MapEntry((Map.Entry<K, V>) array[i], parent);
             }
@@ -134,7 +134,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
         
         @Override
         @SuppressWarnings("unchecked")
-        public <T> T[] toArray(T[] array) {
+        public <T> T[] toArray(final T[] array) {
             Object[] result = array;
             if (array.length > 0) {
                 // we must create a new array to handle multi-threaded situations
@@ -168,14 +168,14 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
         /** The parent map */
         private final AbstractInputCheckedMapDecorator<K, V> parent;
 
-        protected EntrySetIterator(Iterator<Map.Entry<K, V>> iterator, AbstractInputCheckedMapDecorator<K, V> parent) {
+        protected EntrySetIterator(final Iterator<Map.Entry<K, V>> iterator, final AbstractInputCheckedMapDecorator<K, V> parent) {
             super(iterator);
             this.parent = parent;
         }
 
         @Override
         public Map.Entry<K, V> next() {
-            Map.Entry<K, V> entry = iterator.next();
+            final Map.Entry<K, V> entry = iterator.next();
             return new MapEntry(entry, parent);
         }
     }
@@ -188,7 +188,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
         /** The parent map */
         private final AbstractInputCheckedMapDecorator<K, V> parent;
 
-        protected MapEntry(Map.Entry<K, V> entry, AbstractInputCheckedMapDecorator<K, V> parent) {
+        protected MapEntry(final Map.Entry<K, V> entry, final AbstractInputCheckedMapDecorator<K, V> parent) {
             super(entry);
             this.parent = parent;
         }

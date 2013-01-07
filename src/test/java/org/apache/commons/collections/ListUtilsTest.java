@@ -46,7 +46,7 @@ public class ListUtilsTest extends BulkTest {
     private String[] fullArray;
     private List<String> fullList;
 
-    public ListUtilsTest(String name) {
+    public ListUtilsTest(final String name) {
         super(name);
     }
 
@@ -114,8 +114,8 @@ public class ListUtilsTest extends BulkTest {
      * Tests intersecting two lists in different orders.
      */
     public void testIntersectionOrderInsensitivity() {
-        List<String> one = new ArrayList<String>();
-        List<String> two = new ArrayList<String>();
+        final List<String> one = new ArrayList<String>();
+        final List<String> two = new ArrayList<String>();
         one.add("a");
         one.add("b");
         two.add("a");
@@ -126,8 +126,8 @@ public class ListUtilsTest extends BulkTest {
     }
 
     public void testPredicatedList() {
-        Predicate<Object> predicate = new Predicate<Object>() {
-            public boolean evaluate(Object o) {
+        final Predicate<Object> predicate = new Predicate<Object>() {
+            public boolean evaluate(final Object o) {
                 return o instanceof String;
             }
         };
@@ -136,19 +136,19 @@ public class ListUtilsTest extends BulkTest {
         try {
             list = ListUtils.predicatedList(new ArrayStack<Object>(), null);
             fail("Expecting IllegalArgumentException for null predicate.");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
         try {
             list = ListUtils.predicatedList(null, predicate);
             fail("Expecting IllegalArgumentException for null list.");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
     }
 
     public void testLazyList() {
-        List<Integer> list = ListUtils.lazyList(new ArrayList<Integer>(), new Factory<Integer>() {
+        final List<Integer> list = ListUtils.lazyList(new ArrayList<Integer>(), new Factory<Integer>() {
 
             private int index;
 
@@ -168,15 +168,15 @@ public class ListUtilsTest extends BulkTest {
     public void testEmptyIfNull() {
         assertTrue(ListUtils.emptyIfNull(null).isEmpty());
         
-        List<Long> list = new ArrayList<Long>();
+        final List<Long> list = new ArrayList<Long>();
         assertSame(list, ListUtils.emptyIfNull(list));
     }
     
     public void testEquals() {
-        Collection<String> data = Arrays.asList( new String[] { "a", "b", "c" });
+        final Collection<String> data = Arrays.asList( new String[] { "a", "b", "c" });
 
-        List<String> a = new ArrayList<String>( data );
-        List<String> b = new ArrayList<String>( data );
+        final List<String> a = new ArrayList<String>( data );
+        final List<String> b = new ArrayList<String>( data );
 
         assertEquals(true, a.equals(b));
         assertEquals(true, ListUtils.isEqualList(a, b));
@@ -188,10 +188,10 @@ public class ListUtilsTest extends BulkTest {
     }
 
     public void testHashCode() {
-        Collection<String> data = Arrays.asList( new String[] { "a", "b", "c" });
+        final Collection<String> data = Arrays.asList( new String[] { "a", "b", "c" });
 
-        List<String> a = new ArrayList<String>(data);
-        List<String> b = new ArrayList<String>(data);
+        final List<String> a = new ArrayList<String>(data);
+        final List<String> b = new ArrayList<String>(data);
 
         assertEquals(true, a.hashCode() == b.hashCode());
         assertEquals(true, a.hashCode() == ListUtils.hashCodeForList(a));
@@ -203,12 +203,12 @@ public class ListUtilsTest extends BulkTest {
     }
 
     public void testRetainAll() {
-        List<String> sub = new ArrayList<String>();
+        final List<String> sub = new ArrayList<String>();
         sub.add(a);
         sub.add(b);
         sub.add(x);
 
-        List<String> retained = ListUtils.retainAll(fullList, sub);
+        final List<String> retained = ListUtils.retainAll(fullList, sub);
         assertTrue(retained.size() == 2);
         sub.remove(x);
         assertTrue(retained.equals(sub));
@@ -218,16 +218,16 @@ public class ListUtilsTest extends BulkTest {
         try {
             ListUtils.retainAll(null, null);
             fail("expecting NullPointerException");
-        } catch(NullPointerException npe){} // this is what we want
+        } catch(final NullPointerException npe){} // this is what we want
     }
 
     public void testRemoveAll() {
-        List<String> sub = new ArrayList<String>();
+        final List<String> sub = new ArrayList<String>();
         sub.add(a);
         sub.add(b);
         sub.add(x);
 
-        List<String> remainder = ListUtils.removeAll(fullList, sub);
+        final List<String> remainder = ListUtils.removeAll(fullList, sub);
         assertTrue(remainder.size() == 3);
         fullList.removeAll(sub);
         assertTrue(remainder.equals(fullList));
@@ -235,23 +235,23 @@ public class ListUtilsTest extends BulkTest {
         try {
             ListUtils.removeAll(null, null);
             fail("expecting NullPointerException");
-        } catch(NullPointerException npe) {} // this is what we want
+        } catch(final NullPointerException npe) {} // this is what we want
     }
 
     public void testSubtract() {
-        List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<String>();
         list.add(a);
         list.add(b);
         list.add(a);
         list.add(x);
 
-        List<String> sub = new ArrayList<String>();
+        final List<String> sub = new ArrayList<String>();
         sub.add(a);
 
-        List<String> result = ListUtils.subtract(list, sub);
+        final List<String> result = ListUtils.subtract(list, sub);
         assertTrue(result.size() == 3);
         
-        List<String> expected = new ArrayList<String>();
+        final List<String> expected = new ArrayList<String>();
         expected.add(b);
         expected.add(a);
         expected.add(x);
@@ -261,23 +261,23 @@ public class ListUtilsTest extends BulkTest {
         try {
             ListUtils.subtract(list, null);
             fail("expecting NullPointerException");
-        } catch(NullPointerException npe) {} // this is what we want
+        } catch(final NullPointerException npe) {} // this is what we want
     }
 
     public void testSubtractNullElement() {
-        List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<String>();
         list.add(a);
         list.add(null);
         list.add(null);
         list.add(x);
 
-        List<String> sub = new ArrayList<String>();
+        final List<String> sub = new ArrayList<String>();
         sub.add(null);
 
-        List<String> result = ListUtils.subtract(list, sub);
+        final List<String> result = ListUtils.subtract(list, sub);
         assertTrue(result.size() == 3);
         
-        List<String> expected = new ArrayList<String>();
+        final List<String> expected = new ArrayList<String>();
         expected.add(a);
         expected.add(null);
         expected.add(x);
@@ -302,7 +302,7 @@ public class ListUtilsTest extends BulkTest {
     }
     
     public void testPartition() {
-        List<Integer> strings = new ArrayList<Integer>();
+        final List<Integer> strings = new ArrayList<Integer>();
         for (int i = 0; i <= 6; i++) {
             strings.add(i);
         }
@@ -316,36 +316,36 @@ public class ListUtilsTest extends BulkTest {
         try {
             ListUtils.partition(null, 3);
             Assert.fail("failed to check for null argument");
-        } catch (IllegalArgumentException e) {}
+        } catch (final IllegalArgumentException e) {}
         
         try {
             ListUtils.partition(strings, 0);
             Assert.fail("failed to check for size argument");
-        } catch (IllegalArgumentException e) {}
+        } catch (final IllegalArgumentException e) {}
         
         try {
             ListUtils.partition(strings, -10);
             Assert.fail("failed to check for size argument");
-        } catch (IllegalArgumentException e) {}
+        } catch (final IllegalArgumentException e) {}
         
     }
     
     private static Predicate<Number> EQUALS_TWO = new Predicate<Number>() {
-        public boolean evaluate(Number input) {
+        public boolean evaluate(final Number input) {
             return input.intValue() == 2;
         }
     };
 
     public void testSelect() {
-        List<Integer> list = new ArrayList<Integer>();
+        final List<Integer> list = new ArrayList<Integer>();
         list.add(1);
         list.add(2);
         list.add(3);
         list.add(4);
         // Ensure that the collection is the input type or a super type
-        List<Integer> output1 = ListUtils.select(list, EQUALS_TWO);
-        List<Number> output2 = ListUtils.<Number>select(list, EQUALS_TWO);
-        HashSet<Number> output3 = CollectionUtils.select(list, EQUALS_TWO, new HashSet<Number>());
+        final List<Integer> output1 = ListUtils.select(list, EQUALS_TWO);
+        final List<Number> output2 = ListUtils.<Number>select(list, EQUALS_TWO);
+        final HashSet<Number> output3 = CollectionUtils.select(list, EQUALS_TWO, new HashSet<Number>());
         Assert.assertTrue(CollectionUtils.isEqualCollection(output1, output3));
         Assert.assertEquals(4, list.size());
         Assert.assertEquals(1, output1.size());
@@ -353,14 +353,14 @@ public class ListUtilsTest extends BulkTest {
     }
 
     public void testSelectRejected() {
-        List<Long> list = new ArrayList<Long>();
+        final List<Long> list = new ArrayList<Long>();
         list.add(1L);
         list.add(2L);
         list.add(3L);
         list.add(4L);
-        List<Long> output1 = ListUtils.selectRejected(list, EQUALS_TWO);
-        List<? extends Number> output2 = ListUtils.selectRejected(list, EQUALS_TWO);
-        HashSet<Number> output3 = CollectionUtils.selectRejected(list, EQUALS_TWO, new HashSet<Number>());
+        final List<Long> output1 = ListUtils.selectRejected(list, EQUALS_TWO);
+        final List<? extends Number> output2 = ListUtils.selectRejected(list, EQUALS_TWO);
+        final HashSet<Number> output3 = CollectionUtils.selectRejected(list, EQUALS_TWO, new HashSet<Number>());
         Assert.assertTrue(CollectionUtils.isEqualCollection(output1, output2));
         Assert.assertTrue(CollectionUtils.isEqualCollection(output1, output3));
         Assert.assertEquals(4, list.size());

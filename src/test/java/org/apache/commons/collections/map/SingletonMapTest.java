@@ -37,7 +37,7 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     private static final Integer TWO = new Integer(2);
     private static final String TEN = "10";
 
-    public SingletonMapTest(String testName) {
+    public SingletonMapTest(final String testName) {
         super(testName);
     }
 
@@ -99,16 +99,16 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     //-----------------------------------------------------------------------
     public void testClone() {
-        SingletonMap<K, V> map = makeFullMap();
+        final SingletonMap<K, V> map = makeFullMap();
         assertEquals(1, map.size());
-        SingletonMap<K, V> cloned = map.clone();
+        final SingletonMap<K, V> cloned = map.clone();
         assertEquals(1, cloned.size());
         assertEquals(true, cloned.containsKey(ONE));
         assertEquals(true, cloned.containsValue(TWO));
     }
 
     public void testKeyValue() {
-        SingletonMap<K, V> map = makeFullMap();
+        final SingletonMap<K, V> map = makeFullMap();
         assertEquals(1, map.size());
         assertEquals(ONE, map.getKey());
         assertEquals(TWO, map.getValue());
@@ -116,7 +116,7 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     }
 
     public void testBoundedMap() {
-        SingletonMap<K, V> map = makeFullMap();
+        final SingletonMap<K, V> map = makeFullMap();
         assertEquals(1, map.size());
         assertEquals(true, map.isFull());
         assertEquals(1, map.maxSize());

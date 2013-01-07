@@ -36,7 +36,7 @@ import org.apache.commons.collections.collection.TransformedCollectionTest;
  */
 public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
-    public TransformedSortedSetTest(String testName) {
+    public TransformedSortedSetTest(final String testName) {
         super(testName);
     }
 
@@ -54,7 +54,7 @@ public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public SortedSet<E> makeFullCollection() {
-        SortedSet<E> set = new TreeSet<E>();
+        final SortedSet<E> set = new TreeSet<E>();
         set.addAll(Arrays.asList(getFullElements()));
         return TransformedSortedSet.transformingSortedSet(set, (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
@@ -62,10 +62,10 @@ public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testTransformedSet() {
-        SortedSet<E> set = TransformedSortedSet.transformingSortedSet(new TreeSet<E>(),
+        final SortedSet<E> set = TransformedSortedSet.transformingSortedSet(new TreeSet<E>(),
                 (Transformer<E, E>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, set.size());
-        E[] els = (E[]) new Object[] { "1", "3", "5", "7", "2", "4", "6" };
+        final E[] els = (E[]) new Object[] { "1", "3", "5", "7", "2", "4", "6" };
         for (int i = 0; i < els.length; i++) {
             set.add(els[i]);
             assertEquals(i + 1, set.size());
@@ -76,14 +76,14 @@ public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
     }
 
     public void testTransformedSet_decorateTransform() {
-        Set<Object> originalSet = new TreeSet<Object>();
-        Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
-        for (Object el : els) {
+        final Set<Object> originalSet = new TreeSet<Object>();
+        final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        for (final Object el : els) {
             originalSet.add(el);
         }
-        Set<?> set = TransformedSortedSet.transformedSet(originalSet, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
+        final Set<?> set = TransformedSortedSet.transformedSet(originalSet, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, set.size());
-        for (Object el : els) {
+        for (final Object el : els) {
             assertEquals(true, set.contains(new Integer((String) el)));
         }
         

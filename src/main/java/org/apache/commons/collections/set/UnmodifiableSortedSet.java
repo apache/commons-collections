@@ -52,7 +52,7 @@ public final class UnmodifiableSortedSet<E>
      * @return a new unmodifiable {@link SortedSet}
      * @throws IllegalArgumentException if set is null
      */
-    public static <E> SortedSet<E> unmodifiableSortedSet(SortedSet<E> set) {
+    public static <E> SortedSet<E> unmodifiableSortedSet(final SortedSet<E> set) {
         if (set instanceof Unmodifiable) {
             return set;
         }
@@ -66,7 +66,7 @@ public final class UnmodifiableSortedSet<E>
      * @param out  the output stream
      * @throws IOException
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(collection);
     }
@@ -79,7 +79,7 @@ public final class UnmodifiableSortedSet<E>
      * @throws ClassNotFoundException
      */
     @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         collection = (Collection<E>) in.readObject(); // (1)
     }
@@ -91,7 +91,7 @@ public final class UnmodifiableSortedSet<E>
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    private UnmodifiableSortedSet(SortedSet<E> set) {
+    private UnmodifiableSortedSet(final SortedSet<E> set) {
         super(set);
     }
 
@@ -102,12 +102,12 @@ public final class UnmodifiableSortedSet<E>
     }
 
     @Override
-    public boolean add(E object) {
+    public boolean add(final E object) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> coll) {
+    public boolean addAll(final Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -117,36 +117,36 @@ public final class UnmodifiableSortedSet<E>
     }
 
     @Override
-    public boolean remove(Object object) {
+    public boolean remove(final Object object) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean removeAll(Collection<?> coll) {
+    public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean retainAll(Collection<?> coll) {
+    public boolean retainAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     //-----------------------------------------------------------------------
     @Override
-    public SortedSet<E> subSet(E fromElement, E toElement) {
-        SortedSet<E> sub = decorated().subSet(fromElement, toElement);
+    public SortedSet<E> subSet(final E fromElement, final E toElement) {
+        final SortedSet<E> sub = decorated().subSet(fromElement, toElement);
         return new UnmodifiableSortedSet<E>(sub);
     }
 
     @Override
-    public SortedSet<E> headSet(E toElement) {
-        SortedSet<E> sub = decorated().headSet(toElement);
+    public SortedSet<E> headSet(final E toElement) {
+        final SortedSet<E> sub = decorated().headSet(toElement);
         return new UnmodifiableSortedSet<E>(sub);
     }
 
     @Override
-    public SortedSet<E> tailSet(E fromElement) {
-        SortedSet<E> sub = decorated().tailSet(fromElement);
+    public SortedSet<E> tailSet(final E fromElement) {
+        final SortedSet<E> sub = decorated().tailSet(fromElement);
         return new UnmodifiableSortedSet<E>(sub);
     }
 

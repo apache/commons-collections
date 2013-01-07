@@ -45,7 +45,7 @@ public final class AndPredicate<T> implements Predicate<T>, PredicateDecorator<T
      * @return the <code>and</code> predicate
      * @throws IllegalArgumentException if either predicate is null
      */
-    public static <T> Predicate<T> andPredicate(Predicate<? super T> predicate1, Predicate<? super T> predicate2) {
+    public static <T> Predicate<T> andPredicate(final Predicate<? super T> predicate1, final Predicate<? super T> predicate2) {
         if (predicate1 == null || predicate2 == null) {
             throw new IllegalArgumentException("Predicate must not be null");
         }
@@ -59,7 +59,7 @@ public final class AndPredicate<T> implements Predicate<T>, PredicateDecorator<T
      * @param predicate1  the first predicate to check, not null
      * @param predicate2  the second predicate to check, not null
      */
-    public AndPredicate(Predicate<? super T> predicate1, Predicate<? super T> predicate2) {
+    public AndPredicate(final Predicate<? super T> predicate1, final Predicate<? super T> predicate2) {
         super();
         iPredicate1 = predicate1;
         iPredicate2 = predicate2;
@@ -71,7 +71,7 @@ public final class AndPredicate<T> implements Predicate<T>, PredicateDecorator<T
      * @param object  the input object
      * @return true if both decorated predicates return true
      */
-    public boolean evaluate(T object) {
+    public boolean evaluate(final T object) {
        return iPredicate1.evaluate(object) && iPredicate2.evaluate(object);
     }
 

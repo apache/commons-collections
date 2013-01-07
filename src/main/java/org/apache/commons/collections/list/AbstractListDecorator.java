@@ -51,7 +51,7 @@ public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorat
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    protected AbstractListDecorator(List<E> list) {
+    protected AbstractListDecorator(final List<E> list) {
         super(list);
     }
 
@@ -67,23 +67,23 @@ public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorat
 
     //-----------------------------------------------------------------------
     
-    public void add(int index, E object) {
+    public void add(final int index, final E object) {
         decorated().add(index, object);
     }
 
-    public boolean addAll(int index, Collection<? extends E> coll) {
+    public boolean addAll(final int index, final Collection<? extends E> coll) {
         return decorated().addAll(index, coll);
     }
 
-    public E get(int index) {
+    public E get(final int index) {
         return decorated().get(index);
     }
 
-    public int indexOf(Object object) {
+    public int indexOf(final Object object) {
         return decorated().indexOf(object);
     }
 
-    public int lastIndexOf(Object object) {
+    public int lastIndexOf(final Object object) {
         return decorated().lastIndexOf(object);
     }
 
@@ -91,19 +91,19 @@ public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorat
         return decorated().listIterator();
     }
 
-    public ListIterator<E> listIterator(int index) {
+    public ListIterator<E> listIterator(final int index) {
         return decorated().listIterator(index);
     }
 
-    public E remove(int index) {
+    public E remove(final int index) {
         return decorated().remove(index);
     }
 
-    public E set(int index, E object) {
+    public E set(final int index, final E object) {
         return decorated().set(index, object);
     }
 
-    public List<E> subList(int fromIndex, int toIndex) {
+    public List<E> subList(final int fromIndex, final int toIndex) {
         return decorated().subList(fromIndex, toIndex);
     }
 

@@ -82,9 +82,9 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      * means no transformation
      * @throws IllegalArgumentException if map is null
      */
-    public static <J, K, U, V> TransformedMap<J, K, U, V> transformingMap(Map<K, V> map,
-            Transformer<? super J, ? extends K> keyTransformer,
-            Transformer<? super U, ? extends V> valueTransformer) {
+    public static <J, K, U, V> TransformedMap<J, K, U, V> transformingMap(final Map<K, V> map,
+            final Transformer<? super J, ? extends K> keyTransformer,
+            final Transformer<? super U, ? extends V> valueTransformer) {
         return new TransformedMap<J, K, U, V>(map, keyTransformer, valueTransformer);
     }
 
@@ -102,8 +102,8 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      * means no conversion
      * @throws IllegalArgumentException if map is null
      */
-    protected TransformedMap(Map<K, V> map, Transformer<? super J, ? extends K> keyTransformer,
-            Transformer<? super U, ? extends V> valueTransformer) {
+    protected TransformedMap(final Map<K, V> map, final Transformer<? super J, ? extends K> keyTransformer,
+            final Transformer<? super U, ? extends V> valueTransformer) {
         super(map);
         if (keyTransformer == null) {
             throw new IllegalArgumentException("keyTransformer cannot be null");
@@ -122,7 +122,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      * @param out the output stream
      * @throws IOException
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(decorated());
     }
@@ -136,7 +136,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      * @since 3.1
      */
     @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map<K, V>) in.readObject(); // (1)
     }
@@ -150,7 +150,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      * @param object the object to transform
      * @return the transformed object
      */
-    protected K transformKey(J object) {
+    protected K transformKey(final J object) {
         return keyTransformer.transform(object);
     }
 
@@ -162,7 +162,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      * @param object the object to transform
      * @return the transformed object
      */
-    protected V transformValue(U object) {
+    protected V transformValue(final U object) {
         return valueTransformer.transform(object);
     }
 
@@ -175,13 +175,13 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      * @return the transformed object
      */
     @SuppressWarnings("unchecked")
-    protected Map<K, V> transformMap(Map<? extends J, ? extends U> map) {
+    protected Map<K, V> transformMap(final Map<? extends J, ? extends U> map) {
         if (map.isEmpty()) {
             return (Map<K, V>) map;
         }
-        Map<K, V> result = new LinkedMap<K, V>(map.size());
+        final Map<K, V> result = new LinkedMap<K, V>(map.size());
 
-        for (Map.Entry<? extends J, ? extends U> entry : map.entrySet()) {
+        for (final Map.Entry<? extends J, ? extends U> entry : map.entrySet()) {
             result.put(transformKey(entry.getKey()), transformValue(entry.getValue()));
         }
         return result;
@@ -193,7 +193,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      * @param value the value to transform
      * @return the transformed value
      */
-    protected V checkSetValue(U value) {
+    protected V checkSetValue(final U value) {
         return valueTransformer.transform(value);
     }
 
@@ -201,14 +201,14 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
     /**
      * {@inheritDoc}
      */
-    public V put(J key, U value) {
+    public V put(final J key, final U value) {
         return decorated().put(transformKey(key), transformValue(value));
     }
 
     /**
      * {@inheritDoc}
      */
-    public void putAll(Map<? extends J, ? extends U> mapToCopy) {
+    public void putAll(final Map<? extends J, ? extends U> mapToCopy) {
         decorated().putAll(transformMap(mapToCopy));
     }
 

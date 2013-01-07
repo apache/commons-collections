@@ -60,7 +60,7 @@ public class CloneTransformer<T> implements Transformer<T, T>, Serializable {
      * @param input  the input object to transform
      * @return the transformed result
      */
-    public T transform(T input) {
+    public T transform(final T input) {
         if (input == null) {
             return null;
         }

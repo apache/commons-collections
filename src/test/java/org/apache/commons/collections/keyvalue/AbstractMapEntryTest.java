@@ -41,7 +41,7 @@ public abstract class AbstractMapEntryTest<K, V> extends TestCase {
      * 
      * @param testName  the test name
      */
-    public AbstractMapEntryTest(String testName) {
+    public AbstractMapEntryTest(final String testName) {
         super(testName);
     }
 
@@ -72,10 +72,10 @@ public abstract class AbstractMapEntryTest<K, V> extends TestCase {
     /**
      * Makes a Map.Entry of a type that's known to work correctly.
      */
-    public Map.Entry<K, V> makeKnownMapEntry(K key, V value) {
-        Map<K, V> map = new HashMap<K, V>(1);
+    public Map.Entry<K, V> makeKnownMapEntry(final K key, final V value) {
+        final Map<K, V> map = new HashMap<K, V>(1);
         map.put(key, value);
-        Map.Entry<K, V> entry = map.entrySet().iterator().next();
+        final Map.Entry<K, V> entry = map.entrySet().iterator().next();
         return entry;
     }
 
@@ -110,12 +110,12 @@ public abstract class AbstractMapEntryTest<K, V> extends TestCase {
         //  the MapEntry to contain itself (and thus cause infinite recursion
         //  in #hashCode and #toString)
 
-        Map.Entry<K, V> entry = makeMapEntry();
+        final Map.Entry<K, V> entry = makeMapEntry();
 
         try {
             entry.setValue((V) entry);
             fail("Should throw an IllegalArgumentException");
-        } catch (IllegalArgumentException iae) {
+        } catch (final IllegalArgumentException iae) {
             // expected to happen...
 
             // check that the KVP's state has not changed

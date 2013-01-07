@@ -44,7 +44,7 @@ public final class MapTransformer<I, O> implements Transformer<I, O>, Serializab
      * @param map the map, not cloned
      * @return the transformer
      */
-    public static <I, O> Transformer<I, O> mapTransformer(Map<? super I, ? extends O> map) {
+    public static <I, O> Transformer<I, O> mapTransformer(final Map<? super I, ? extends O> map) {
         if (map == null) {
             return ConstantTransformer.<I, O>nullTransformer();
         }
@@ -57,7 +57,7 @@ public final class MapTransformer<I, O> implements Transformer<I, O>, Serializab
      *
      * @param map  the map to use for lookup, not cloned
      */
-    private MapTransformer(Map<? super I, ? extends O> map) {
+    private MapTransformer(final Map<? super I, ? extends O> map) {
         super();
         iMap = map;
     }
@@ -68,7 +68,7 @@ public final class MapTransformer<I, O> implements Transformer<I, O>, Serializab
      * @param input  the input object to transform
      * @return the transformed result
      */
-    public O transform(I input) {
+    public O transform(final I input) {
         return iMap.get(input);
     }
 

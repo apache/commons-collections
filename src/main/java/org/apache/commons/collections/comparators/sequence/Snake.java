@@ -30,13 +30,13 @@ package org.apache.commons.collections.comparators.sequence;
 public class Snake {
 
     /** Start index. */
-    private int start;
+    private final int start;
 
     /** End index. */
-    private int end;
+    private final int end;
 
     /** Diagonal number. */
-    private int diag;
+    private final int diag;
 
     /**
      * Simple constructor. Creates a new instance of Snake with default indices.
@@ -54,7 +54,7 @@ public class Snake {
      * @param end  end index of the snake
      * @param diag  diagonal number
      */ 
-    public Snake(int start, int end, int diag) {
+    public Snake(final int start, final int end, final int diag) {
         this.start = start;
         this.end   = end;
         this.diag  = diag;

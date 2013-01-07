@@ -33,7 +33,7 @@ import org.apache.commons.collections.BulkTest;
  */
 public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
 
-    public UnmodifiableSetTest(String testName) {
+    public UnmodifiableSetTest(final String testName) {
         super(testName);
     }
 
@@ -49,7 +49,7 @@ public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
 
     @Override
     public Set<E> makeFullCollection() {
-        HashSet<E> set = new HashSet<E>();
+        final HashSet<E> set = new HashSet<E>();
         set.addAll(Arrays.asList(getFullElements()));
         return UnmodifiableSet.unmodifiableSet(set);
     }

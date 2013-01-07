@@ -56,7 +56,7 @@ public class FilterIterator<E> implements Iterator<E> {
      *
      * @param iterator  the iterator to use
      */
-    public FilterIterator(Iterator<? extends E> iterator) {
+    public FilterIterator(final Iterator<? extends E> iterator) {
         super();
         this.iterator = iterator;
     }
@@ -68,7 +68,7 @@ public class FilterIterator<E> implements Iterator<E> {
      * @param iterator  the iterator to use
      * @param predicate  the predicate to use
      */
-    public FilterIterator(Iterator<? extends E> iterator, Predicate<? super E> predicate) {
+    public FilterIterator(final Iterator<? extends E> iterator, final Predicate<? super E> predicate) {
         super();
         this.iterator = iterator;
         this.predicate = predicate;
@@ -138,7 +138,7 @@ public class FilterIterator<E> implements Iterator<E> {
      *
      * @param iterator  the iterator to use
      */
-    public void setIterator(Iterator<? extends E> iterator) {
+    public void setIterator(final Iterator<? extends E> iterator) {
         this.iterator = iterator;
         nextObject = null;
         nextObjectSet = false;
@@ -159,7 +159,7 @@ public class FilterIterator<E> implements Iterator<E> {
      *
      * @param predicate  the predicate to use
      */
-    public void setPredicate(Predicate<? super E> predicate) {
+    public void setPredicate(final Predicate<? super E> predicate) {
         this.predicate = predicate;
         nextObject = null;
         nextObjectSet = false;
@@ -172,7 +172,7 @@ public class FilterIterator<E> implements Iterator<E> {
      */
     private boolean setNextObject() {
         while (iterator.hasNext()) {
-            E object = iterator.next();
+            final E object = iterator.next();
             if (predicate.evaluate(object)) {
                 nextObject = object;
                 nextObjectSet = true;

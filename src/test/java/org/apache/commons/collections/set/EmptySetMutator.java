@@ -32,25 +32,25 @@ class EmptySetMutator<E> implements CompositeSet.SetMutator<E> {
     /** Serialization version */
     private static final long serialVersionUID = 5321193666420238910L;
 
-    private Set<E> contained;
+    private final Set<E> contained;
 
-    public EmptySetMutator(Set<E> set) {
+    public EmptySetMutator(final Set<E> set) {
         this.contained = set;
     }
 
-    public void resolveCollision(CompositeSet<E> comp, Set<E> existing, Set<E> added, Collection<E> intersects) {
+    public void resolveCollision(final CompositeSet<E> comp, final Set<E> existing, final Set<E> added, final Collection<E> intersects) {
         throw new IllegalArgumentException();
     }
     
-    public boolean add(CompositeCollection<E> composite, List<Collection<E>> collections, E obj) {
+    public boolean add(final CompositeCollection<E> composite, final List<Collection<E>> collections, final E obj) {
         return contained.add(obj);
     }
     
-    public boolean addAll(CompositeCollection<E> composite, List<Collection<E>> collections, Collection<? extends E> coll) {
+    public boolean addAll(final CompositeCollection<E> composite, final List<Collection<E>> collections, final Collection<? extends E> coll) {
         return contained.addAll(coll);
     }
     
-    public boolean remove(CompositeCollection<E> composite, List<Collection<E>> collections, Object obj) {
+    public boolean remove(final CompositeCollection<E> composite, final List<Collection<E>> collections, final Object obj) {
         return contained.remove(obj);
     }
 }

@@ -33,7 +33,7 @@ import org.apache.commons.collections.BulkTest;
  */
 public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public CaseInsensitiveMapTest(String testName) {
+    public CaseInsensitiveMapTest(final String testName) {
         super(testName);
     }
 
@@ -55,7 +55,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
 
     @SuppressWarnings("unchecked")
     public void testCaseInsensitive() {
-        Map<K, V> map = makeObject();
+        final Map<K, V> map = makeObject();
         map.put((K) "One", (V) "One");
         map.put((K) "Two", (V) "Two");
         assertEquals("One", map.get("one"));
@@ -66,14 +66,14 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
 
     @SuppressWarnings("unchecked")
     public void testNullHandling() {
-        Map<K, V> map = makeObject();
+        final Map<K, V> map = makeObject();
         map.put((K) "One", (V) "One");
         map.put((K) "Two", (V) "Two");
         map.put(null, (V) "Three");
         assertEquals("Three", map.get(null));
         map.put(null, (V) "Four");
         assertEquals("Four", map.get(null));
-        Set<K> keys = map.keySet();
+        final Set<K> keys = map.keySet();
         assertTrue(keys.contains("one"));
         assertTrue(keys.contains("two"));
         assertTrue(keys.contains(null));
@@ -81,15 +81,15 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
     }
 
     public void testPutAll() {
-        Map<Object, String> map = new HashMap<Object, String>();
+        final Map<Object, String> map = new HashMap<Object, String>();
         map.put("One", "One");
         map.put("Two", "Two");
         map.put("one", "Three");
         map.put(null, "Four");
         map.put(new Integer(20), "Five");
-        Map<Object, String> caseInsensitiveMap = new CaseInsensitiveMap<Object, String>(map);
+        final Map<Object, String> caseInsensitiveMap = new CaseInsensitiveMap<Object, String>(map);
         assertEquals(4, caseInsensitiveMap.size()); // ones collapsed
-        Set<Object> keys = caseInsensitiveMap.keySet();
+        final Set<Object> keys = caseInsensitiveMap.keySet();
         assertTrue(keys.contains("one"));
         assertTrue(keys.contains("two"));
         assertTrue(keys.contains(null));
@@ -102,9 +102,9 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
 
     @SuppressWarnings("unchecked")
     public void testClone() {
-        CaseInsensitiveMap<K, V> map = new CaseInsensitiveMap<K, V>(10);
+        final CaseInsensitiveMap<K, V> map = new CaseInsensitiveMap<K, V>(10);
         map.put((K) "1", (V) "1");
-        CaseInsensitiveMap<K, V> cloned = map.clone();
+        final CaseInsensitiveMap<K, V> cloned = map.clone();
         assertEquals(map.size(), cloned.size());
         assertSame(map.get("1"), cloned.get("1"));
     }
@@ -120,11 +120,11 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
 
     // COLLECTIONS-294
     public void testLocaleIndependence() {
-        Locale orig = Locale.getDefault();
+        final Locale orig = Locale.getDefault();
 
-        Locale[] locales = { Locale.ENGLISH, new Locale("tr", "", ""), Locale.getDefault() };
+        final Locale[] locales = { Locale.ENGLISH, new Locale("tr", "", ""), Locale.getDefault() };
 
-        String[][] data = { 
+        final String[][] data = { 
             { "i", "I" },
             { "\u03C2", "\u03C3" },
             { "\u03A3", "\u03C2" },
@@ -132,11 +132,11 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
         };
 
         try {
-            for (Locale locale : locales) {
+            for (final Locale locale : locales) {
                 Locale.setDefault(locale);
                 for (int j = 0; j < data.length; j++) {
                     assertTrue("Test data corrupt: " + j, data[j][0].equalsIgnoreCase(data[j][1]));
-                    CaseInsensitiveMap<String, String> map = new CaseInsensitiveMap<String, String>();
+                    final CaseInsensitiveMap<String, String> map = new CaseInsensitiveMap<String, String>();
                     map.put(data[j][0], "value");
                     assertEquals(Locale.getDefault() + ": " + j, "value", map.get(data[j][1]));
                 }

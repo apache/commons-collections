@@ -29,7 +29,7 @@ import org.apache.commons.collections.Unmodifiable;
  */
 public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 
-    public UnmodifiableMapEntryTest(String testName) {
+    public UnmodifiableMapEntryTest(final String testName) {
         super(testName);
     }
 
@@ -50,7 +50,7 @@ public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
      * of the type being tested.
      */
     @Override
-    public Map.Entry<K, V> makeMapEntry(K key, V value) {
+    public Map.Entry<K, V> makeMapEntry(final K key, final V value) {
         return new UnmodifiableMapEntry<K, V>(key, value);
     }
 
@@ -68,13 +68,13 @@ public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
         assertSame(value, entry.getValue());
 
         // 2. test pair constructor
-        KeyValue<K, V> pair = new DefaultKeyValue<K, V>((K) key, (V) value);
+        final KeyValue<K, V> pair = new DefaultKeyValue<K, V>((K) key, (V) value);
         entry = new UnmodifiableMapEntry<K, V>(pair);
         assertSame(key, entry.getKey());
         assertSame(value, entry.getValue());
 
         // 3. test copy constructor
-        Map.Entry<K, V> entry2 = new UnmodifiableMapEntry<K, V>(entry);
+        final Map.Entry<K, V> entry2 = new UnmodifiableMapEntry<K, V>(entry);
         assertSame(key, entry2.getKey());
         assertSame(value, entry2.getValue());
 
@@ -101,11 +101,11 @@ public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
     }
 
     public void testUnmodifiable() {
-        Map.Entry<K, V> entry = makeMapEntry();
+        final Map.Entry<K, V> entry = makeMapEntry();
         try {
             entry.setValue(null);
             fail();
-        } catch (UnsupportedOperationException ex) {}
+        } catch (final UnsupportedOperationException ex) {}
     }
 
 }

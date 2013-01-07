@@ -45,7 +45,7 @@ public class SynchronizedSortedSet<E> extends SynchronizedCollection<E> implemen
      * @return a new synchronized sorted set
      * @throws IllegalArgumentException if set is null
      */
-    public static <E> SynchronizedSortedSet<E> synchronizedSortedSet(SortedSet<E> set) {
+    public static <E> SynchronizedSortedSet<E> synchronizedSortedSet(final SortedSet<E> set) {
         return new SynchronizedSortedSet<E>(set);
     }
 
@@ -56,7 +56,7 @@ public class SynchronizedSortedSet<E> extends SynchronizedCollection<E> implemen
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    protected SynchronizedSortedSet(SortedSet<E> set) {
+    protected SynchronizedSortedSet(final SortedSet<E> set) {
         super(set);
     }
 
@@ -67,7 +67,7 @@ public class SynchronizedSortedSet<E> extends SynchronizedCollection<E> implemen
      * @param lock  the lock object to use, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    protected SynchronizedSortedSet(SortedSet<E> set, Object lock) {
+    protected SynchronizedSortedSet(final SortedSet<E> set, final Object lock) {
         super(set, lock);
     }
 
@@ -81,27 +81,27 @@ public class SynchronizedSortedSet<E> extends SynchronizedCollection<E> implemen
     }
 
     //-----------------------------------------------------------------------
-    public SortedSet<E> subSet(E fromElement, E toElement) {
+    public SortedSet<E> subSet(final E fromElement, final E toElement) {
         synchronized (lock) {
-            SortedSet<E> set = getSortedSet().subSet(fromElement, toElement);
+            final SortedSet<E> set = getSortedSet().subSet(fromElement, toElement);
             // the lock is passed into the constructor here to ensure that the
             // subset is synchronized on the same lock as the parent
             return new SynchronizedSortedSet<E>(set, lock);
         }
     }
 
-    public SortedSet<E> headSet(E toElement) {
+    public SortedSet<E> headSet(final E toElement) {
         synchronized (lock) {
-            SortedSet<E> set = getSortedSet().headSet(toElement);
+            final SortedSet<E> set = getSortedSet().headSet(toElement);
             // the lock is passed into the constructor here to ensure that the
             // headset is synchronized on the same lock as the parent
             return new SynchronizedSortedSet<E>(set, lock);
         }
     }
 
-    public SortedSet<E> tailSet(E fromElement) {
+    public SortedSet<E> tailSet(final E fromElement) {
         synchronized (lock) {
-            SortedSet<E> set = getSortedSet().tailSet(fromElement);
+            final SortedSet<E> set = getSortedSet().tailSet(fromElement);
             // the lock is passed into the constructor here to ensure that the
             // tailset is synchronized on the same lock as the parent
             return new SynchronizedSortedSet<E>(set, lock);

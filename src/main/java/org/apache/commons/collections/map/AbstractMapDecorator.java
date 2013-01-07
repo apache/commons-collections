@@ -57,7 +57,7 @@ public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, 
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    protected AbstractMapDecorator(Map<K, V> map) {
+    protected AbstractMapDecorator(final Map<K, V> map) {
         if (map == null) {
             throw new IllegalArgumentException("Map must not be null");
         }
@@ -78,11 +78,11 @@ public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, 
         decorated().clear();
     }
 
-    public boolean containsKey(Object key) {
+    public boolean containsKey(final Object key) {
         return decorated().containsKey(key);
     }
 
-    public boolean containsValue(Object value) {
+    public boolean containsValue(final Object value) {
         return decorated().containsValue(value);
     }
 
@@ -90,7 +90,7 @@ public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, 
         return decorated().entrySet();
     }
 
-    public V get(Object key) {
+    public V get(final Object key) {
         return decorated().get(key);
     }
 
@@ -102,15 +102,15 @@ public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, 
         return decorated().keySet();
     }
 
-    public V put(K key, V value) {
+    public V put(final K key, final V value) {
         return decorated().put(key, value);
     }
 
-    public void putAll(Map<? extends K, ? extends V> mapToCopy) {
+    public void putAll(final Map<? extends K, ? extends V> mapToCopy) {
         decorated().putAll(mapToCopy);
     }
 
-    public V remove(Object key) {
+    public V remove(final Object key) {
         return decorated().remove(key);
     }
 
@@ -123,7 +123,7 @@ public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, 
     }
    
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         if (object == this) {
             return true;
         }

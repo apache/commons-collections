@@ -38,7 +38,7 @@ public class AbstractOrderedMapIteratorDecorator<K, V> implements OrderedMapIter
      * @param iterator  the iterator to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    public AbstractOrderedMapIteratorDecorator(OrderedMapIterator<K, V> iterator) {
+    public AbstractOrderedMapIteratorDecorator(final OrderedMapIterator<K, V> iterator) {
         super();
         if (iterator == null) {
             throw new IllegalArgumentException("OrderedMapIterator must not be null");
@@ -93,7 +93,7 @@ public class AbstractOrderedMapIteratorDecorator<K, V> implements OrderedMapIter
     }
 
     /** {@inheritDoc} */
-    public V setValue(V obj) {
+    public V setValue(final V obj) {
         return iterator.setValue(obj);
     }
 

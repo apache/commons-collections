@@ -65,7 +65,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * 
      * @param map the map to assign
      */
-    protected AbstractMapBag(Map<E, MutableInteger> map) {
+    protected AbstractMapBag(final Map<E, MutableInteger> map) {
         super();
         this.map = map;
     }
@@ -106,8 +106,8 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param object the object to search for
      * @return the number of occurrences of the object, zero if not found
      */
-    public int getCount(Object object) {
-        MutableInteger count = map.get(object);
+    public int getCount(final Object object) {
+        final MutableInteger count = map.get(object);
         if (count != null) {
             return count.value;
         }
@@ -122,7 +122,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param object the object to search for
      * @return true if the bag contains the given element
      */
-    public boolean contains(Object object) {
+    public boolean contains(final Object object) {
         return map.containsKey(object);
     }
 
@@ -132,7 +132,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param coll the collection to check against
      * @return <code>true</code> if the Bag contains all the collection
      */
-    public boolean containsAll(Collection<?> coll) {
+    public boolean containsAll(final Collection<?> coll) {
         if (coll instanceof Bag) {
             return containsAll((Bag<?>) coll);
         }
@@ -146,12 +146,12 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param other the bag to check against
      * @return <code>true</code> if the Bag contains all the collection
      */
-    boolean containsAll(Bag<?> other) {
+    boolean containsAll(final Bag<?> other) {
         boolean result = true;
-        Iterator<?> it = other.uniqueSet().iterator();
+        final Iterator<?> it = other.uniqueSet().iterator();
         while (it.hasNext()) {
-            Object current = it.next();
-            boolean contains = getCount(current) >= other.getCount(current);
+            final Object current = it.next();
+            final boolean contains = getCount(current) >= other.getCount(current);
             result = result && contains;
         }
         return result;
@@ -184,7 +184,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
          * 
          * @param parent the parent bag
          */
-        public BagIterator(AbstractMapBag<E> parent) {
+        public BagIterator(final AbstractMapBag<E> parent) {
             this.parent = parent;
             this.entryIterator = parent.map.entrySet().iterator();
             this.current = null;
@@ -219,7 +219,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
             if (canRemove == false) {
                 throw new IllegalStateException();
             }
-            MutableInteger mut = current.getValue();
+            final MutableInteger mut = current.getValue();
             if (mut.value > 1) {
                 mut.value--;
             } else {
@@ -239,7 +239,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @return <code>true</code> if the object was not already in the
      * <code>uniqueSet</code>
      */
-    public boolean add(E object) {
+    public boolean add(final E object) {
         return add(object, 1);
     }
 
@@ -251,10 +251,10 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @return <code>true</code> if the object was not already in the
      * <code>uniqueSet</code>
      */
-    public boolean add(E object, int nCopies) {
+    public boolean add(final E object, final int nCopies) {
         modCount++;
         if (nCopies > 0) {
-            MutableInteger mut = map.get(object);
+            final MutableInteger mut = map.get(object);
             size += nCopies;
             if (mut == null) {
                 map.put(object, new MutableInteger(nCopies));
@@ -272,11 +272,11 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param coll the collection to add
      * @return <code>true</code> if this call changed the bag
      */
-    public boolean addAll(Collection<? extends E> coll) {
+    public boolean addAll(final Collection<? extends E> coll) {
         boolean changed = false;
-        Iterator<? extends E> i = coll.iterator();
+        final Iterator<? extends E> i = coll.iterator();
         while (i.hasNext()) {
-            boolean added = add(i.next());
+            final boolean added = add(i.next());
             changed = changed || added;
         }
         return changed;
@@ -298,8 +298,8 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param object the object to remove
      * @return true if the bag changed
      */
-    public boolean remove(Object object) {
-        MutableInteger mut = map.get(object);
+    public boolean remove(final Object object) {
+        final MutableInteger mut = map.get(object);
         if (mut == null) {
             return false;
         }
@@ -316,8 +316,8 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param nCopies the number of copies to remove
      * @return true if the bag changed
      */
-    public boolean remove(Object object, int nCopies) {
-        MutableInteger mut = map.get(object);
+    public boolean remove(final Object object, final int nCopies) {
+        final MutableInteger mut = map.get(object);
         if (mut == null) {
             return false;
         }
@@ -342,12 +342,12 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param coll the collection to use
      * @return true if the bag changed
      */
-    public boolean removeAll(Collection<?> coll) {
+    public boolean removeAll(final Collection<?> coll) {
         boolean result = false;
         if (coll != null) {
-            Iterator<?> i = coll.iterator();
+            final Iterator<?> i = coll.iterator();
             while (i.hasNext()) {
-                boolean changed = remove(i.next(), 1);
+                final boolean changed = remove(i.next(), 1);
                 result = result || changed;
             }
         }
@@ -361,7 +361,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param coll the collection to retain
      * @return true if this call changed the collection
      */
-    public boolean retainAll(Collection<?> coll) {
+    public boolean retainAll(final Collection<?> coll) {
         if (coll instanceof Bag) {
             return retainAll((Bag<?>) coll);
         }
@@ -376,14 +376,14 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param other the bag to retain
      * @return <code>true</code> if this call changed the collection
      */
-    boolean retainAll(Bag<?> other) {
+    boolean retainAll(final Bag<?> other) {
         boolean result = false;
-        Bag<E> excess = new HashBag<E>();
-        Iterator<E> i = uniqueSet().iterator();
+        final Bag<E> excess = new HashBag<E>();
+        final Iterator<E> i = uniqueSet().iterator();
         while (i.hasNext()) {
-            E current = i.next();
-            int myCount = getCount(current);
-            int otherCount = other.getCount(current);
+            final E current = i.next();
+            final int myCount = getCount(current);
+            final int otherCount = other.getCount(current);
             if (1 <= otherCount && otherCount <= myCount) {
                 excess.add(current, myCount - otherCount);
             } else {
@@ -408,12 +408,12 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
          * Constructor.
          * @param value the initial value
          */
-        MutableInteger(int value) {
+        MutableInteger(final int value) {
             this.value = value;
         }
 
         @Override
-        public boolean equals(Object obj) {
+        public boolean equals(final Object obj) {
             if (obj instanceof MutableInteger == false) {
                 return false;
             }
@@ -433,11 +433,11 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @return an array of all of this bag's elements
      */
     public Object[] toArray() {
-        Object[] result = new Object[size()];
+        final Object[] result = new Object[size()];
         int i = 0;
-        Iterator<E> it = map.keySet().iterator();
+        final Iterator<E> it = map.keySet().iterator();
         while (it.hasNext()) {
-            E current = it.next();
+            final E current = it.next();
             for (int index = getCount(current); index > 0; index--) {
                 result[i++] = current;
             }
@@ -454,15 +454,15 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      */
     @SuppressWarnings("unchecked")
     public <T> T[] toArray(T[] array) {
-        int size = size();
+        final int size = size();
         if (array.length < size) {
             array = (T[]) Array.newInstance(array.getClass().getComponentType(), size);
         }
 
         int i = 0;
-        Iterator<E> it = map.keySet().iterator();
+        final Iterator<E> it = map.keySet().iterator();
         while (it.hasNext()) {
-            E current = it.next();
+            final E current = it.next();
             for (int index = getCount(current); index > 0; index--) {
                 array[i++] = (T) current;
             }
@@ -491,9 +491,9 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param out the output stream
      * @throws IOException any of the usual I/O related exceptions
      */
-    protected void doWriteObject(ObjectOutputStream out) throws IOException {
+    protected void doWriteObject(final ObjectOutputStream out) throws IOException {
         out.writeInt(map.size());
-        for (Entry<E, MutableInteger> entry : map.entrySet()) {
+        for (final Entry<E, MutableInteger> entry : map.entrySet()) {
             out.writeObject(entry.getKey());
             out.writeInt(entry.getValue().value);
         }
@@ -507,14 +507,15 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @throws ClassNotFoundException if the stream contains an object which class can not be loaded
      * @throws ClassCastException if the stream does not contain the correct objects
      */
-    protected void doReadObject(Map<E, MutableInteger> map, ObjectInputStream in)
+    protected void doReadObject(final Map<E, MutableInteger> map, final ObjectInputStream in)
             throws IOException, ClassNotFoundException {
         this.map = map;
-        int entrySize = in.readInt();
+        final int entrySize = in.readInt();
         for (int i = 0; i < entrySize; i++) {
             @SuppressWarnings("unchecked") // This will fail at runtime if the stream is incorrect
+            final
             E obj = (E) in.readObject();
-            int count = in.readInt();
+            final int count = in.readInt();
             map.put(obj, new MutableInteger(count));
             size += count;
         }
@@ -529,18 +530,18 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @return true if equal
      */
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         if (object == this) {
             return true;
         }
         if (object instanceof Bag == false) {
             return false;
         }
-        Bag<?> other = (Bag<?>) object;
+        final Bag<?> other = (Bag<?>) object;
         if (other.size() != size()) {
             return false;
         }
-        for (E element : map.keySet()) {
+        for (final E element : map.keySet()) {
             if (other.getCount(element) != getCount(element)) {
                 return false;
             }
@@ -560,9 +561,9 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     @Override
     public int hashCode() {
         int total = 0;
-        for (Entry<E, MutableInteger> entry : map.entrySet()) {
-            E element = entry.getKey();
-            MutableInteger count = entry.getValue();
+        for (final Entry<E, MutableInteger> entry : map.entrySet()) {
+            final E element = entry.getKey();
+            final MutableInteger count = entry.getValue();
             total += (element == null ? 0 : element.hashCode()) ^ count.value;
         }
         return total;
@@ -578,12 +579,12 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         if (size() == 0) {
             return "[]";
         }
-        StringBuilder buf = new StringBuilder();
+        final StringBuilder buf = new StringBuilder();
         buf.append('[');
-        Iterator<E> it = uniqueSet().iterator();
+        final Iterator<E> it = uniqueSet().iterator();
         while (it.hasNext()) {
-            Object current = it.next();
-            int count = getCount(current);
+            final Object current = it.next();
+            final int count = getCount(current);
             buf.append(count);
             buf.append(':');
             buf.append(current);

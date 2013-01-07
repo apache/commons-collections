@@ -65,7 +65,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
      * @return a new growth list
      * @throws IllegalArgumentException if list is null
      */
-    public static <E> GrowthList<E> growthList(List<E> list) {
+    public static <E> GrowthList<E> growthList(final List<E> list) {
         return new GrowthList<E>(list);
     }
 
@@ -83,7 +83,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
      * @param initialSize  the initial size of the ArrayList
      * @throws IllegalArgumentException if initial size is invalid
      */
-    public GrowthList(int initialSize) {
+    public GrowthList(final int initialSize) {
         super(new ArrayList<E>(initialSize));
     }
 
@@ -93,7 +93,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    protected GrowthList(List<E> list) {
+    protected GrowthList(final List<E> list) {
         super(list);
     }
 
@@ -117,8 +117,8 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
      * @throws IllegalArgumentException if the underlying list rejects the element
      */
     @Override
-    public void add(int index, E element) {
-        int size = decorated().size();
+    public void add(final int index, final E element) {
+        final int size = decorated().size();
         if (index > size) {
             decorated().addAll(Collections.<E>nCopies(index - size, null));
         }
@@ -146,8 +146,8 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
      * @throws IllegalArgumentException if the underlying list rejects the element
      */
     @Override
-    public boolean addAll(int index, Collection<? extends E> coll) {
-        int size = decorated().size();
+    public boolean addAll(final int index, final Collection<? extends E> coll) {
+        final int size = decorated().size();
         boolean result = false;
         if (index > size) {
             decorated().addAll(Collections.<E>nCopies(index - size, null));
@@ -177,8 +177,8 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
      * @throws IllegalArgumentException if the underlying list rejects the element
      */
     @Override
-    public E set(int index, E element) {
-        int size = decorated().size();
+    public E set(final int index, final E element) {
+        final int size = decorated().size();
         if (index >= size) {
             decorated().addAll(Collections.<E>nCopies(index - size + 1, null));
         }

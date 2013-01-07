@@ -50,8 +50,8 @@ public class WhileClosure<E> implements Closure<E>, Serializable {
      * @return the <code>while</code> closure
      * @throws IllegalArgumentException if the predicate or closure is null
      */
-    public static <E> Closure<E> whileClosure(Predicate<? super E> predicate,
-                                              Closure<? super E> closure, boolean doLoop) {
+    public static <E> Closure<E> whileClosure(final Predicate<? super E> predicate,
+                                              final Closure<? super E> closure, final boolean doLoop) {
         if (predicate == null) {
             throw new IllegalArgumentException("Predicate must not be null");
         }
@@ -69,7 +69,7 @@ public class WhileClosure<E> implements Closure<E>, Serializable {
      * @param closure  the closure the execute, not null
      * @param doLoop  true to act as a do-while loop, always executing the closure once
      */
-    public WhileClosure(Predicate<? super E> predicate, Closure<? super E> closure, boolean doLoop) {
+    public WhileClosure(final Predicate<? super E> predicate, final Closure<? super E> closure, final boolean doLoop) {
         super();
         iPredicate = predicate;
         iClosure = closure;
@@ -81,7 +81,7 @@ public class WhileClosure<E> implements Closure<E>, Serializable {
      * 
      * @param input  the input object
      */
-    public void execute(E input) {
+    public void execute(final E input) {
         if (iDoLoop) {
             iClosure.execute(input);
         }

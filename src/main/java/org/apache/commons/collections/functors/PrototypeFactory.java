@@ -54,22 +54,22 @@ public class PrototypeFactory {
      * @throws IllegalArgumentException if the prototype cannot be cloned
      */
     @SuppressWarnings("unchecked")
-    public static <T> Factory<T> prototypeFactory(T prototype) {
+    public static <T> Factory<T> prototypeFactory(final T prototype) {
         if (prototype == null) {
             return ConstantFactory.<T>constantFactory(null);
         }
         try {
-            Method method = prototype.getClass().getMethod("clone", (Class[]) null);
+            final Method method = prototype.getClass().getMethod("clone", (Class[]) null);
             return new PrototypeCloneFactory<T>(prototype, method);
 
-        } catch (NoSuchMethodException ex) {
+        } catch (final NoSuchMethodException ex) {
             try {
                 prototype.getClass().getConstructor(new Class<?>[] { prototype.getClass() });
                 return new InstantiateFactory<T>(
                     (Class<T>) prototype.getClass(),
                     new Class<?>[] { prototype.getClass() },
                     new Object[] { prototype });
-            } catch (NoSuchMethodException ex2) {
+            } catch (final NoSuchMethodException ex2) {
                 if (prototype instanceof Serializable) {
                     return (Factory<T>) new PrototypeSerializationFactory<Serializable>((Serializable) prototype);
                 }
@@ -104,7 +104,7 @@ public class PrototypeFactory {
         /**
          * Constructor to store prototype.
          */
-        private PrototypeCloneFactory(T prototype, Method method) {
+        private PrototypeCloneFactory(final T prototype, final Method method) {
             super();
             iPrototype = prototype;
             iCloneMethod = method;
@@ -116,7 +116,7 @@ public class PrototypeFactory {
         private void findCloneMethod() {
             try {
                 iCloneMethod = iPrototype.getClass().getMethod("clone", (Class[]) null);
-            } catch (NoSuchMethodException ex) {
+            } catch (final NoSuchMethodException ex) {
                 throw new IllegalArgumentException("PrototypeCloneFactory: The clone method must exist and be public ");
             }
         }
@@ -135,9 +135,9 @@ public class PrototypeFactory {
 
             try {
                 return (T) iCloneMethod.invoke(iPrototype, (Object[]) null);
-            } catch (IllegalAccessException ex) {
+            } catch (final IllegalAccessException ex) {
                 throw new FunctorException("PrototypeCloneFactory: Clone method must be public", ex);
-            } catch (InvocationTargetException ex) {
+            } catch (final InvocationTargetException ex) {
                 throw new FunctorException("PrototypeCloneFactory: Clone method threw an exception", ex);
             }
         }
@@ -159,7 +159,7 @@ public class PrototypeFactory {
         /**
          * Constructor to store prototype
          */
-        private PrototypeSerializationFactory(T prototype) {
+        private PrototypeSerializationFactory(final T prototype) {
             super();
             iPrototype = prototype;
         }
@@ -171,31 +171,31 @@ public class PrototypeFactory {
          */
         @SuppressWarnings("unchecked")
         public T create() {
-            ByteArrayOutputStream baos = new ByteArrayOutputStream(512);
+            final ByteArrayOutputStream baos = new ByteArrayOutputStream(512);
             ByteArrayInputStream bais = null;
             try {
-                ObjectOutputStream out = new ObjectOutputStream(baos);
+                final ObjectOutputStream out = new ObjectOutputStream(baos);
                 out.writeObject(iPrototype);
 
                 bais = new ByteArrayInputStream(baos.toByteArray());
-                ObjectInputStream in = new ObjectInputStream(bais);
+                final ObjectInputStream in = new ObjectInputStream(bais);
                 return (T) in.readObject();
 
-            } catch (ClassNotFoundException ex) {
+            } catch (final ClassNotFoundException ex) {
                 throw new FunctorException(ex);
-            } catch (IOException ex) {
+            } catch (final IOException ex) {
                 throw new FunctorException(ex);
             } finally {
                 try {
                     if (bais != null) {
                         bais.close();
                     }
-                } catch (IOException ex) {
+                } catch (final IOException ex) {
                     // ignore
                 }
                 try {
                     baos.close();
-                } catch (IOException ex) {
+                } catch (final IOException ex) {
                     // ignore
                 }
             }

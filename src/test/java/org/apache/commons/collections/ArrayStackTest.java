@@ -29,7 +29,7 @@ import junit.framework.Test;
  */
 public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
     
-    public ArrayStackTest(String testName) {
+    public ArrayStackTest(final String testName) {
         super(testName);
     }
 
@@ -44,21 +44,21 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
 
     //-----------------------------------------------------------------------
     public void testNewStack() {
-        ArrayStack<E> stack = makeObject();
+        final ArrayStack<E> stack = makeObject();
         assertTrue("New stack is empty", stack.empty());
         assertEquals("New stack has size zero", 0, stack.size());
 
         try {
             stack.peek();
             fail("peek() should have thrown EmptyStackException");
-        } catch (EmptyStackException e) {
+        } catch (final EmptyStackException e) {
             // Expected result
         }
 
         try {
             stack.pop();
             fail("pop() should have thrown EmptyStackException");
-        } catch (EmptyStackException e) {
+        } catch (final EmptyStackException e) {
             // Expected result
         }
 
@@ -66,7 +66,7 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
 
     @SuppressWarnings("unchecked")
     public void testPushPeekPop() {
-        ArrayStack<E> stack = makeObject();
+        final ArrayStack<E> stack = makeObject();
 
         stack.push((E) "First Item");
         assertTrue("Stack is not empty", !stack.empty());
@@ -96,7 +96,7 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public void testSearch() {
-        ArrayStack<E> stack = makeObject();
+        final ArrayStack<E> stack = makeObject();
 
         stack.push((E) "First Item");
         stack.push((E) "Second Item");

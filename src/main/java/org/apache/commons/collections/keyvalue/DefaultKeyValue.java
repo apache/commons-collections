@@ -133,7 +133,7 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
             return false;
         }
 
-        DefaultKeyValue<?, ?> other = (DefaultKeyValue<?, ?>) obj;
+        final DefaultKeyValue<?, ?> other = (DefaultKeyValue<?, ?>) obj;
         return 
             (getKey() == null ? other.getKey() == null : getKey().equals(other.getKey())) &&
             (getValue() == null ? other.getValue() == null : getValue().equals(other.getValue()));

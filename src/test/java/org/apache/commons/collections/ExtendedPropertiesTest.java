@@ -39,7 +39,7 @@ public class ExtendedPropertiesTest extends TestCase {
     
     protected ExtendedProperties eprop = new ExtendedProperties();
 
-    public ExtendedPropertiesTest(String testName) {
+    public ExtendedPropertiesTest(final String testName) {
         super(testName);
     }
 
@@ -73,12 +73,12 @@ public class ExtendedPropertiesTest extends TestCase {
         /*
          * test comma separated string properties
          */
-        String prop = "hey, that's a test";
+        final String prop = "hey, that's a test";
         eprop.setProperty("prop.string", prop);
         assertTrue("This returns vector", eprop.getVector("prop.string") instanceof java.util.Vector);
         assertTrue("This returns list", eprop.getList("prop.string") instanceof java.util.List);
 
-        String prop2 = "hey\\, that's a test";
+        final String prop2 = "hey\\, that's a test";
         eprop.remove("prop.string");
         eprop.setProperty("prop.string", prop2);
         assertTrue("This returns array", eprop.getString("prop.string") instanceof java.lang.String);
@@ -88,7 +88,7 @@ public class ExtendedPropertiesTest extends TestCase {
          *  elements when generating the subset
          */
 
-        ExtendedProperties subEprop = eprop.subset("prop");
+        final ExtendedProperties subEprop = eprop.subset("prop");
 
         assertTrue("Returns the full string", subEprop.getString("string").equals(prop));
         assertTrue("This returns string for subset", subEprop.getString("string") instanceof java.lang.String);
@@ -100,13 +100,13 @@ public class ExtendedPropertiesTest extends TestCase {
     public void testInterpolation() {
         eprop.setProperty("applicationRoot", "/home/applicationRoot");
         eprop.setProperty("db", "${applicationRoot}/db/hypersonic");
-        String dbProp = "/home/applicationRoot/db/hypersonic";
+        final String dbProp = "/home/applicationRoot/db/hypersonic";
         assertTrue("Checking interpolated variable", eprop.getString("db").equals(dbProp));
     }
 
     public void testSaveAndLoad() {
-        ExtendedProperties ep1 = new ExtendedProperties();
-        ExtendedProperties ep2 = new ExtendedProperties();
+        final ExtendedProperties ep1 = new ExtendedProperties();
+        final ExtendedProperties ep2 = new ExtendedProperties();
 
         try {
             /* initialize value:
@@ -114,7 +114,7 @@ public class ExtendedPropertiesTest extends TestCase {
             two=Hello\,World
             three=Hello,World
             */
-            String s1 = "one=Hello\\World\ntwo=Hello\\,World\nthree=Hello,World";
+            final String s1 = "one=Hello\\World\ntwo=Hello\\,World\nthree=Hello,World";
             byte[] bytes = s1.getBytes();
             ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
             ep1.load(bais);
@@ -136,7 +136,7 @@ public class ExtendedPropertiesTest extends TestCase {
             assertEquals("Commas not interpreted properly", 
                     "World", ep1.getList("three").get(1));
                     
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ep1.save(baos, null);
             bytes = baos.toByteArray();
             bais = new ByteArrayInputStream(bytes);
@@ -147,13 +147,13 @@ public class ExtendedPropertiesTest extends TestCase {
                     ep1.getString("two"), ep2.getString("two"));
             assertEquals("Comma not same after being saved and loaded",
                     ep1.getString("three"), ep2.getString("three"));
-        } catch (IOException ioe) {
+        } catch (final IOException ioe) {
             fail("There was an exception saving and loading the EP");
         }
     }
 
     public void testTrailingBackSlash() {
-        ExtendedProperties ep1 = new ExtendedProperties();
+        final ExtendedProperties ep1 = new ExtendedProperties();
 
         try {
             /*
@@ -162,30 +162,30 @@ public class ExtendedPropertiesTest extends TestCase {
             two=TWO \\
             three=THREE
             */
-            String s1 = "one=ONE\ntwo=TWO \\\\\nthree=THREE";
-            byte[] bytes = s1.getBytes();
-            ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+            final String s1 = "one=ONE\ntwo=TWO \\\\\nthree=THREE";
+            final byte[] bytes = s1.getBytes();
+            final ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
             ep1.load(bais);
             assertEquals("Trailing back-slashes not interpreted properly", 
                     3, ep1.size());
             assertEquals("Back-slash not escaped properly", 
                     "TWO \\", ep1.getString("two"));
-        } catch (IOException ioe) {
+        } catch (final IOException ioe) {
             fail("There was an exception loading the EP");
         }
     }
     
     public void testMultipleSameKey1() throws Exception {
-        ExtendedProperties ep1 = new ExtendedProperties();
+        final ExtendedProperties ep1 = new ExtendedProperties();
 
         /*
         initialize using:
         one=a
         one=b,c
         */
-        String s1 = "one=a\none=b,c\n";
-        byte[] bytes = s1.getBytes();
-        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+        final String s1 = "one=a\none=b,c\n";
+        final byte[] bytes = s1.getBytes();
+        final ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
         ep1.load(bais);
         assertEquals(1, ep1.size());
 
@@ -201,16 +201,16 @@ public class ExtendedPropertiesTest extends TestCase {
     }
     
     public void testMultipleSameKey2() throws Exception {
-        ExtendedProperties ep1 = new ExtendedProperties();
+        final ExtendedProperties ep1 = new ExtendedProperties();
 
         /*
         initialize using:
         one=a,b
         one=c,d
         */
-        String s1 = "one=a,b\none=c,d\n";
-        byte[] bytes = s1.getBytes();
-        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+        final String s1 = "one=a,b\none=c,d\n";
+        final byte[] bytes = s1.getBytes();
+        final ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
         ep1.load(bais);
         assertEquals(1, ep1.size());
 
@@ -228,16 +228,16 @@ public class ExtendedPropertiesTest extends TestCase {
     }
     
     public void testMultipleSameKey3() throws Exception {
-        ExtendedProperties ep1 = new ExtendedProperties();
+        final ExtendedProperties ep1 = new ExtendedProperties();
 
         /*
         initialize using:
         one=a,b
         one=c
         */
-        String s1 = "one=a,b\none=c\n";
-        byte[] bytes = s1.getBytes();
-        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+        final String s1 = "one=a,b\none=c\n";
+        final byte[] bytes = s1.getBytes();
+        final ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
         ep1.load(bais);
         assertEquals(1, ep1.size());
 
@@ -253,7 +253,7 @@ public class ExtendedPropertiesTest extends TestCase {
     }
     
     public void testMultipleSameKeyByCode() throws Exception {
-        ExtendedProperties ep1 = new ExtendedProperties();
+        final ExtendedProperties ep1 = new ExtendedProperties();
 
         ep1.addProperty("one", "a");
         assertEquals(1, ep1.size());
@@ -292,21 +292,21 @@ public class ExtendedPropertiesTest extends TestCase {
     }
 
     public void testInheritDefaultProperties() {
-        Properties defaults = new Properties();
+        final Properties defaults = new Properties();
         defaults.setProperty("resource.loader", "class");
 
-        Properties properties = new Properties(defaults);
+        final Properties properties = new Properties(defaults);
         properties.setProperty("test", "foo");
 
-        ExtendedProperties extended = ExtendedProperties.convertProperties(properties);
+        final ExtendedProperties extended = ExtendedProperties.convertProperties(properties);
 
         assertEquals("foo", extended.getString("test"));
         assertEquals("class", extended.getString("resource.loader"));
     }
 
     public void testInclude() {
-        ExtendedProperties a = new ExtendedProperties();
-        ExtendedProperties b = new ExtendedProperties();
+        final ExtendedProperties a = new ExtendedProperties();
+        final ExtendedProperties b = new ExtendedProperties();
         
         assertEquals("include", a.getInclude());
         assertEquals("include", b.getInclude());
@@ -321,12 +321,12 @@ public class ExtendedPropertiesTest extends TestCase {
     }
 
     public void testKeySet1() {
-            ExtendedProperties p = new ExtendedProperties();
+            final ExtendedProperties p = new ExtendedProperties();
             p.addProperty("a", "foo");
             p.addProperty("b", "bar");
             p.addProperty("c", "bar");
 
-            Iterator<String> it = p.getKeys();
+            final Iterator<String> it = p.getKeys();
             assertEquals("a", it.next());
             assertEquals("b", it.next());
             assertEquals("c", it.next());
@@ -334,12 +334,12 @@ public class ExtendedPropertiesTest extends TestCase {
     }
 
     public void testKeySet2() {
-        ExtendedProperties p = new ExtendedProperties();
+        final ExtendedProperties p = new ExtendedProperties();
         p.put("a", "foo");
         p.put("b", "bar");
         p.put("c", "bar");
 
-        Iterator<String> it = p.getKeys();
+        final Iterator<String> it = p.getKeys();
         assertEquals("a", it.next());
         assertEquals("b", it.next());
         assertEquals("c", it.next());
@@ -348,15 +348,15 @@ public class ExtendedPropertiesTest extends TestCase {
 
 
     public void testKeySet3() {
-        ExtendedProperties q = new ExtendedProperties();
+        final ExtendedProperties q = new ExtendedProperties();
         q.addProperty("a", "foo");
         q.addProperty("b", "bar");
         q.addProperty("c", "bar");
 
-        ExtendedProperties p = new ExtendedProperties();
+        final ExtendedProperties p = new ExtendedProperties();
         p.putAll(q);
 
-        Iterator<String> it = p.getKeys();
+        final Iterator<String> it = p.getKeys();
         assertEquals("a", it.next());
         assertEquals("b", it.next());
         assertEquals("c", it.next());
@@ -364,44 +364,44 @@ public class ExtendedPropertiesTest extends TestCase {
     }
 
     public void testKeySet4() {
-        ExtendedProperties q = new ExtendedProperties();
+        final ExtendedProperties q = new ExtendedProperties();
         q.addProperty("a", "foo");
         q.addProperty("b", "bar");
         q.addProperty("c", "bar");
 
         q.remove("b");
 
-        Iterator<String> it = q.getKeys();
+        final Iterator<String> it = q.getKeys();
         assertEquals("a", it.next());
         assertEquals("c", it.next());
         assertFalse(it.hasNext());
     }
 
     public void testCollections271() {
-        ExtendedProperties props = new ExtendedProperties();
+        final ExtendedProperties props = new ExtendedProperties();
         props.setProperty("test", "\\\\\\\\192.168.1.91\\\\test");
         props.getProperty("test");
         assertEquals( "\\\\192.168.1.91\\test", props.getProperty("test") );
 
-        ExtendedProperties props2 = new ExtendedProperties();
+        final ExtendedProperties props2 = new ExtendedProperties();
         props2.combine(props);
         assertEquals( "\\\\192.168.1.91\\test", props2.getProperty("test") );
 
-        ExtendedProperties props3 = new ExtendedProperties();
+        final ExtendedProperties props3 = new ExtendedProperties();
         props3.setProperty("sub.test", "foo");
         props2.combine(props3);
         assertEquals("foo", props2.getProperty("sub.test"));
 
-        ExtendedProperties subs = props2.subset("sub");
+        final ExtendedProperties subs = props2.subset("sub");
         assertNotNull(subs);
         assertEquals("foo", subs.getProperty("test"));
     }
 
     public void testCollections238() throws IOException {
-        ExtendedProperties props = new ExtendedProperties();
-        String txt = "x=1\ny=\nz=3";
-        byte[] bytes = txt.getBytes();
-        ByteArrayInputStream in = new ByteArrayInputStream(bytes);
+        final ExtendedProperties props = new ExtendedProperties();
+        final String txt = "x=1\ny=\nz=3";
+        final byte[] bytes = txt.getBytes();
+        final ByteArrayInputStream in = new ByteArrayInputStream(bytes);
         props.load(in);
         assertEquals("1", props.getProperty("x"));
         assertEquals("3", props.getProperty("z"));
@@ -410,13 +410,13 @@ public class ExtendedPropertiesTest extends TestCase {
     }
 
     public void testCollections299() {
-        Properties defaults = new Properties();
+        final Properties defaults = new Properties();
         defaults.put("objectTrue", Boolean.TRUE);
 
-        Properties properties = new Properties(defaults);
+        final Properties properties = new Properties(defaults);
         properties.put("objectFalse", Boolean.FALSE);
 
-        ExtendedProperties extended = ExtendedProperties.convertProperties(properties);
+        final ExtendedProperties extended = ExtendedProperties.convertProperties(properties);
 
         assertNull(extended.getString("objectTrue"));
         assertNull(extended.getString("objectFalse"));

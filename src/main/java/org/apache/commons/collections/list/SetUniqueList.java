@@ -70,16 +70,16 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * @throws IllegalArgumentException
      *             if list is null
      */
-    public static <E> SetUniqueList<E> setUniqueList(List<E> list) {
+    public static <E> SetUniqueList<E> setUniqueList(final List<E> list) {
         if (list == null) {
             throw new IllegalArgumentException("List must not be null");
         }
         if (list.isEmpty()) {
             return new SetUniqueList<E>(list, new HashSet<E>());
         }
-        List<E> temp = new ArrayList<E>(list);
+        final List<E> temp = new ArrayList<E>(list);
         list.clear();
-        SetUniqueList<E> sl = new SetUniqueList<E>(list, new HashSet<E>());
+        final SetUniqueList<E> sl = new SetUniqueList<E>(list, new HashSet<E>());
         sl.addAll(temp);
         return sl;
     }
@@ -98,7 +98,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * @throws IllegalArgumentException
      *             if set or list is null
      */
-    protected SetUniqueList(List<E> list, Set<E> set) {
+    protected SetUniqueList(final List<E> list, final Set<E> set) {
         super(list);
         if (set == null) {
             throw new IllegalArgumentException("Set must not be null");
@@ -129,7 +129,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * @return true if object was added
      */
     @Override
-    public boolean add(E object) {
+    public boolean add(final E object) {
         // gets initial size
         final int sizeBefore = size();
 
@@ -154,7 +154,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      *            the object to add
      */
     @Override
-    public void add(int index, E object) {
+    public void add(final int index, final E object) {
         // adds element if it is not contained already
         if (set.contains(object) == false) {
             super.add(index, object);
@@ -177,7 +177,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * @return true if this collection changed
      */
     @Override
-    public boolean addAll(Collection<? extends E> coll) {
+    public boolean addAll(final Collection<? extends E> coll) {
         return addAll(size(), coll);
     }
 
@@ -199,9 +199,9 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * @return true if this collection changed
      */
     @Override
-    public boolean addAll(int index, Collection<? extends E> coll) {
+    public boolean addAll(final int index, final Collection<? extends E> coll) {
         final List<E> temp = new ArrayList<E>();
-        for (E e : coll) {
+        for (final E e : coll) {
             if (set.add(e)) {
                 temp.add(e);
             }
@@ -224,9 +224,9 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * @return the previous object
      */
     @Override
-    public E set(int index, E object) {
-        int pos = indexOf(object);
-        E removed = super.set(index, object);
+    public E set(final int index, final E object) {
+        final int pos = indexOf(object);
+        final E removed = super.set(index, object);
 
         if (pos != -1 && pos != index) {
             // the object is already in the uniq list
@@ -241,8 +241,8 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     }
 
     @Override
-    public boolean remove(Object object) {
-        boolean result = set.remove(object);
+    public boolean remove(final Object object) {
+        final boolean result = set.remove(object);
         if (result) {
             super.remove(object);
         }
@@ -250,25 +250,25 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     }
 
     @Override
-    public E remove(int index) {
-        E result = super.remove(index);
+    public E remove(final int index) {
+        final E result = super.remove(index);
         set.remove(result);
         return result;
     }
 
     @Override
-    public boolean removeAll(Collection<?> coll) {
+    public boolean removeAll(final Collection<?> coll) {
         boolean result = false;
-        for (Object name : coll) {
+        for (final Object name : coll) {
             result |= remove(name);
         }
         return result;
     }
 
     @Override
-    public boolean retainAll(Collection<?> coll) {
-        Set<Object> setRetainAll = new HashSet<Object>();
-        for (Object next : coll) {
+    public boolean retainAll(final Collection<?> coll) {
+        final Set<Object> setRetainAll = new HashSet<Object>();
+        for (final Object next : coll) {
             if (set.contains(next)) {
                 setRetainAll.add(next);
             }
@@ -279,7 +279,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         if (setRetainAll.size() == 0) {
             clear();
         } else {
-            for (Iterator<E> it = iterator(); it.hasNext();) {
+            for (final Iterator<E> it = iterator(); it.hasNext();) {
                 if (!setRetainAll.contains(it.next())) {
                     it.remove();
                 }
@@ -295,12 +295,12 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     }
 
     @Override
-    public boolean contains(Object object) {
+    public boolean contains(final Object object) {
         return set.contains(object);
     }
 
     @Override
-    public boolean containsAll(Collection<?> coll) {
+    public boolean containsAll(final Collection<?> coll) {
         return set.containsAll(coll);
     }
 
@@ -315,14 +315,14 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     }
 
     @Override
-    public ListIterator<E> listIterator(int index) {
+    public ListIterator<E> listIterator(final int index) {
         return new SetListListIterator<E>(super.listIterator(index), set);
     }
 
     @Override
-    public List<E> subList(int fromIndex, int toIndex) {
-        List<E> superSubList = super.subList(fromIndex, toIndex);
-        Set<E> subSet = createSetBasedOnList(set, superSubList);
+    public List<E> subList(final int fromIndex, final int toIndex) {
+        final List<E> superSubList = super.subList(fromIndex, toIndex);
+        final Set<E> subSet = createSetBasedOnList(set, superSubList);
         return new SetUniqueList<E>(superSubList, subSet);
     }
 
@@ -338,16 +338,16 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      *         {@link List}
      */
     @SuppressWarnings("unchecked")
-    protected Set<E> createSetBasedOnList(Set<E> set, List<E> list) {
+    protected Set<E> createSetBasedOnList(final Set<E> set, final List<E> list) {
         Set<E> subSet;
         if (set.getClass().equals(HashSet.class)) {
             subSet = new HashSet<E>(list.size());
         } else {
             try {
                 subSet = set.getClass().newInstance();
-            } catch (InstantiationException ie) {
+            } catch (final InstantiationException ie) {
                 subSet = new HashSet<E>();
-            } catch (IllegalAccessException iae) {
+            } catch (final IllegalAccessException iae) {
                 subSet = new HashSet<E>();
             }
         }
@@ -364,7 +364,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         protected final Set<E> set;
         protected E last = null;
 
-        protected SetListIterator(Iterator<E> it, Set<E> set) {
+        protected SetListIterator(final Iterator<E> it, final Set<E> set) {
             super(it);
             this.set = set;
         }
@@ -392,7 +392,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         protected final Set<E> set;
         protected E last = null;
 
-        protected SetListListIterator(ListIterator<E> it, Set<E> set) {
+        protected SetListListIterator(final ListIterator<E> it, final Set<E> set) {
             super(it);
             this.set = set;
         }
@@ -417,7 +417,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         }
 
         @Override
-        public void add(E object) {
+        public void add(final E object) {
             if (set.contains(object) == false) {
                 super.add(object);
                 set.add(object);
@@ -425,7 +425,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         }
 
         @Override
-        public void set(E object) {
+        public void set(final E object) {
             throw new UnsupportedOperationException("ListIterator does not support set");
         }
     }

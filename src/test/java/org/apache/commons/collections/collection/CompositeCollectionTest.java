@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 
-    public CompositeCollectionTest(String name) {
+    public CompositeCollectionTest(final String name) {
         super(name);
     }
 
@@ -74,10 +74,10 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
      */
     @Override
     public Collection<E> makeFullCollection() {
-        CompositeCollection<E> compositeCollection = new CompositeCollection<E>();
-        E[] elements = getFullElements();
-        for (E element : elements) {
-            Collection<E> summand = new HashSet<E>();
+        final CompositeCollection<E> compositeCollection = new CompositeCollection<E>();
+        final E[] elements = getFullElements();
+        for (final E element : elements) {
+            final Collection<E> summand = new HashSet<E>();
             summand.add(element);
             compositeCollection.addComposited(summand);
         }
@@ -89,7 +89,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
      */
     @Override
     public Collection<E> makeConfirmedFullCollection() {
-        Collection<E> collection = new HashSet<E>();
+        final Collection<E> collection = new HashSet<E>();
         collection.addAll(Arrays.asList(getFullElements()));
         return collection;
     }
@@ -104,7 +104,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         try {
             getCollection().remove(null);
             fail("remove should raise UnsupportedOperationException");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // expected
         }
         verify();
@@ -126,25 +126,25 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     protected void setUpMutatorTest() {
         setUpTest();
         c.setMutator(new CompositeCollection.CollectionMutator<E>() {
-            public boolean add(CompositeCollection<E> composite,
-                    List<Collection<E>> collections, E obj) {
-                for (Collection<E> collection : collections) {
+            public boolean add(final CompositeCollection<E> composite,
+                    final List<Collection<E>> collections, final E obj) {
+                for (final Collection<E> collection : collections) {
                     collection.add(obj);
                 }
                 return true;
             }
 
-            public boolean addAll(CompositeCollection<E> composite,
-                    List<Collection<E>> collections, Collection<? extends E> coll) {
-                for (Collection<E> collection : collections) {
+            public boolean addAll(final CompositeCollection<E> composite,
+                    final List<Collection<E>> collections, final Collection<? extends E> coll) {
+                for (final Collection<E> collection : collections) {
                     collection.addAll(coll);
                 }
                 return true;
             }
 
-            public boolean remove(CompositeCollection<E> composite,
-                    List<Collection<E>> collections, Object obj) {
-                for (Collection<E> collection : collections) {
+            public boolean remove(final CompositeCollection<E> composite,
+                    final List<Collection<E>> collections, final Object obj) {
+                for (final Collection<E> collection : collections) {
                     collection.remove(obj);
                 }
                 return true;
@@ -155,7 +155,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     @SuppressWarnings("unchecked")
     public void testSize() {
         setUpTest();
-        HashSet<E> set = new HashSet<E>();
+        final HashSet<E> set = new HashSet<E>();
         set.add((E) "a");
         set.add((E) "b");
         c.addComposited(set);
@@ -165,11 +165,11 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     @SuppressWarnings("unchecked")
     public void testMultipleCollectionsSize() {
         setUpTest();
-        HashSet<E> set = new HashSet<E>();
+        final HashSet<E> set = new HashSet<E>();
         set.add((E) "a");
         set.add((E) "b");
         c.addComposited(set);
-        HashSet<E> other = new HashSet<E>();
+        final HashSet<E> other = new HashSet<E>();
         other.add((E) "c");
         c.addComposited(other);
         assertEquals(set.size() + other.size(), c.size());
@@ -179,7 +179,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     public void testIsEmpty() {
         setUpTest();
         assertTrue(c.isEmpty());
-        HashSet<E> empty = new HashSet<E>();
+        final HashSet<E> empty = new HashSet<E>();
         c.addComposited(empty);
         assertTrue(c.isEmpty());
         empty.add((E) "a");
@@ -194,7 +194,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         two.add((E) "2");
         c.addComposited(one);
         c.addComposited(two);
-        Iterator<E> i = c.iterator();
+        final Iterator<E> i = c.iterator();
         E next = i.next();
         assertTrue(c.contains(next));
         assertTrue(one.contains(next));
@@ -243,24 +243,24 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     public void testAddAllMutator() {
         setUpTest();
         c.setMutator(new CompositeCollection.CollectionMutator<E>() {
-            public boolean add(CompositeCollection<E> composite,
-                    List<Collection<E>> collections, E obj) {
-                for (Collection<E> collection : collections) {
+            public boolean add(final CompositeCollection<E> composite,
+                    final List<Collection<E>> collections, final E obj) {
+                for (final Collection<E> collection : collections) {
                     collection.add(obj);
                 }
                 return true;
             }
 
-            public boolean addAll(CompositeCollection<E> composite,
-                    List<Collection<E>> collections, Collection<? extends E> coll) {
-                for (Collection<E> collection : collections) {
+            public boolean addAll(final CompositeCollection<E> composite,
+                    final List<Collection<E>> collections, final Collection<? extends E> coll) {
+                for (final Collection<E> collection : collections) {
                     collection.addAll(coll);
                 }
                 return true;
             }
 
-            public boolean remove(CompositeCollection<E> composite,
-                    List<Collection<E>> collections, Object obj) {
+            public boolean remove(final CompositeCollection<E> composite,
+                    final List<Collection<E>> collections, final Object obj) {
                 return false;
             }
         });
@@ -276,24 +276,24 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     public void testAddMutator() {
         setUpTest();
         c.setMutator(new CompositeCollection.CollectionMutator<E>() {
-            public boolean add(CompositeCollection<E> composite,
-                    List<Collection<E>> collections, E obj) {
-                for (Collection<E> collection : collections) {
+            public boolean add(final CompositeCollection<E> composite,
+                    final List<Collection<E>> collections, final E obj) {
+                for (final Collection<E> collection : collections) {
                     collection.add(obj);
                 }
                 return true;
             }
 
-            public boolean addAll(CompositeCollection<E> composite,
-                    List<Collection<E>> collections, Collection<? extends E> coll) {
-                for (Collection<E> collection : collections) {
+            public boolean addAll(final CompositeCollection<E> composite,
+                    final List<Collection<E>> collections, final Collection<? extends E> coll) {
+                for (final Collection<E> collection : collections) {
                     collection.addAll(coll);
                 }
                 return true;
             }
 
-            public boolean remove(CompositeCollection<E> composite,
-                    List<Collection<E>> collections, Object obj) {
+            public boolean remove(final CompositeCollection<E> composite,
+                    final List<Collection<E>> collections, final Object obj) {
                 return false;
             }
         });
@@ -310,7 +310,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         one.add((E) "1");
         two.add((E) "2");
         c.addComposited(one, two);
-        Collection<E> foo = c.toCollection();
+        final Collection<E> foo = c.toCollection();
         assertTrue(foo.containsAll(c));
         assertEquals(c.size(), foo.size());
         one.add((E) "3");
@@ -323,7 +323,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         one.add((E) "1");
         two.add((E) "2");
         c.addComposited(one, two);
-        Collection<E> toCollection = new HashSet<E>();
+        final Collection<E> toCollection = new HashSet<E>();
         toCollection.addAll(c);
         assertTrue(toCollection.containsAll(c));
         assertEquals(c.size(), toCollection.size());
@@ -349,7 +349,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         two.add((E) "2");
         two.add((E) "1");
         // need separate list to remove, as otherwise one clears itself
-        Collection<E> removing = new ArrayList<E>(one);
+        final Collection<E> removing = new ArrayList<E>(one);
         c.addComposited(one, two);
         c.removeAll(removing);
         assertTrue(!c.contains("1"));

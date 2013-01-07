@@ -38,7 +38,7 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
     protected UnmodifiableSortedSet<E> set = null;
     protected ArrayList<E> array = null;
 
-    public UnmodifiableSortedSetTest(String testName) {
+    public UnmodifiableSortedSetTest(final String testName) {
         super(testName);
     }
 
@@ -54,7 +54,7 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
     @Override
     public UnmodifiableSortedSet<E> makeFullCollection() {
-        TreeSet<E> set = new TreeSet<E>();
+        final TreeSet<E> set = new TreeSet<E>();
         set.addAll(Arrays.asList(getFullElements()));
         return (UnmodifiableSortedSet<E>) UnmodifiableSortedSet.unmodifiableSortedSet(set);
     }
@@ -93,48 +93,48 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
      * Verifies that a set is not modifiable
      */
     @SuppressWarnings("unchecked")
-    public void verifyUnmodifiable(Set<E> set) {
+    public void verifyUnmodifiable(final Set<E> set) {
         try {
             set.add((E) "value");
             fail("Expecting UnsupportedOperationException.");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             set.addAll(new TreeSet<E>());
             fail("Expecting UnsupportedOperationException.");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             set.clear();
             fail("Expecting UnsupportedOperationException.");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             set.remove("x");
             fail("Expecting UnsupportedOperationException.");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             set.removeAll(array);
             fail("Expecting UnsupportedOperationException.");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             set.retainAll(array);
             fail("Expecting UnsupportedOperationException.");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // expected
         }
     }
 
     public void testComparator() {
         setupSet();
-        Comparator<? super E> c = set.comparator();
+        final Comparator<? super E> c = set.comparator();
         assertTrue("natural order, so comparator should be null", c == null);
     }
 

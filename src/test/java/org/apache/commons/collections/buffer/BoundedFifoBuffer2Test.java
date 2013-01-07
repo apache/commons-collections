@@ -32,7 +32,7 @@ import org.apache.commons.collections.BulkTest;
  */
 public class BoundedFifoBuffer2Test<E> extends BoundedFifoBufferTest<E> {
 
-    public BoundedFifoBuffer2Test(String n) {
+    public BoundedFifoBuffer2Test(final String n) {
         super(n);
     }
 
@@ -79,7 +79,7 @@ public class BoundedFifoBuffer2Test<E> extends BoundedFifoBufferTest<E> {
         try {
             getCollection().add(getOtherElements()[0]);
             fail("add should raise BufferOverflow.");
-        } catch (BufferOverflowException e) {
+        } catch (final BufferOverflowException e) {
             // expected
         }
         verify();
@@ -87,7 +87,7 @@ public class BoundedFifoBuffer2Test<E> extends BoundedFifoBufferTest<E> {
         try {
             getCollection().addAll(Arrays.asList(getOtherElements()));
             fail("addAll should raise BufferOverflow.");
-        } catch (BufferOverflowException e) {
+        } catch (final BufferOverflowException e) {
             // expected
         }
         verify();

@@ -120,7 +120,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      * @param numBuckets  the number of buckets for this map
      */
     @SuppressWarnings("unchecked")
-    public StaticBucketMap(int numBuckets) {
+    public StaticBucketMap(final int numBuckets) {
         int size = Math.max(17, numBuckets);
 
         // Ensure that bucketSize is never a power of 2 (to ensure maximal distribution)
@@ -150,7 +150,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      *   the number of buckets.
      * </p>
      */
-    private final int getHash(Object key) {
+    private final int getHash(final Object key) {
         if (key == null) {
             return 0;
         }
@@ -198,7 +198,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      * @return the associated value
      */
     public V get(final Object key) {
-        int hash = getHash(key);
+        final int hash = getHash(key);
 
         synchronized (locks[hash]) {
             Node<K, V> n = buckets[hash];
@@ -221,7 +221,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      * @return true if found
      */
     public boolean containsKey(final Object key) {
-        int hash = getHash(key);
+        final int hash = getHash(key);
 
         synchronized (locks[hash]) {
             Node<K, V> n = buckets[hash];
@@ -269,7 +269,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      * @return the previous mapping for the key
      */
     public V put(final K key, final V value) {
-        int hash = getHash(key);
+        final int hash = getHash(key);
 
         synchronized (locks[hash]) {
             Node<K, V> n = buckets[hash];
@@ -290,7 +290,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
                 n = next;
 
                 if (n.key == key || (n.key != null && n.key.equals(key))) {
-                    V returnVal = n.value;
+                    final V returnVal = n.value;
                     n.value = value;
                     return returnVal;
                 }
@@ -298,7 +298,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
 
             // The key was not found in the current list of nodes, add it to the end
             //  in a new node.
-            Node<K, V> newNode = new Node<K, V>();
+            final Node<K, V> newNode = new Node<K, V>();
             newNode.key = key;
             newNode.value = value;
             n.next = newNode;
@@ -313,8 +313,8 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      * @param key  the key to remove
      * @return the previous value at this key
      */
-    public V remove(Object key) {
-        int hash = getHash(key);
+    public V remove(final Object key) {
+        final int hash = getHash(key);
 
         synchronized (locks[hash]) {
             Node<K, V> n = buckets[hash];
@@ -376,8 +376,8 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      * 
      * @param map  the map of entries to add
      */
-    public void putAll(Map<? extends K, ? extends V> map) {
-        for (Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
+    public void putAll(final Map<? extends K, ? extends V> map) {
+        for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
             put(entry.getKey(), entry.getValue());
         }
     }
@@ -387,7 +387,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      */
     public void clear() {
         for (int i = 0; i < buckets.length; i++) {
-            Lock lock = locks[i];
+            final Lock lock = locks[i];
             synchronized (lock) {
                 buckets[i] = null;
                 lock.size = 0;
@@ -402,14 +402,14 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      * @return true if equal
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == this) {
             return true;
         }
         if (obj instanceof Map<?, ?> == false) {
             return false;
         }
-        Map<?, ?> other = (Map<?, ?>) obj;
+        final Map<?, ?> other = (Map<?, ?>) obj;
         return entrySet().equals(other.entrySet());
     }
 
@@ -459,7 +459,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
         }
 
         @Override
-        public boolean equals(Object obj) {
+        public boolean equals(final Object obj) {
             if (obj == this) {
                 return true;
             }
@@ -467,14 +467,14 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
                 return false;
             }
 
-            Map.Entry<?, ?> e2 = (Map.Entry<?, ?>) obj;
+            final Map.Entry<?, ?> e2 = (Map.Entry<?, ?>) obj;
             return (
                 (key == null ? e2.getKey() == null : key.equals(e2.getKey())) &&
                 (value == null ? e2.getValue() == null : value.equals(e2.getValue())));
         }
 
-        public V setValue(V obj) {
-            V retVal = value;
+        public V setValue(final V obj) {
+            final V retVal = value;
             value = obj;
             return retVal;
         }
@@ -489,7 +489,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
 
     //-----------------------------------------------------------------------
     private class BaseIterator {
-        private ArrayList<Map.Entry<K, V>> current = new ArrayList<Map.Entry<K,V>>();
+        private final ArrayList<Map.Entry<K, V>> current = new ArrayList<Map.Entry<K,V>>();
         private int bucket;
         private Map.Entry<K, V> last;
 
@@ -572,9 +572,9 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
         }
 
         @Override
-        public boolean contains(Object obj) {
-            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
-            int hash = getHash(entry.getKey());
+        public boolean contains(final Object obj) {
+            final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
+            final int hash = getHash(entry.getKey());
             synchronized (locks[hash]) {
                 for (Node<K, V> n = buckets[hash]; n != null; n = n.next) {
                     if (n.equals(entry)) {
@@ -586,12 +586,12 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
         }
 
         @Override
-        public boolean remove(Object obj) {
+        public boolean remove(final Object obj) {
             if (obj instanceof Map.Entry<?, ?> == false) {
                 return false;
             }
-            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
-            int hash = getHash(entry.getKey());
+            final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
+            final int hash = getHash(entry.getKey());
             synchronized (locks[hash]) {
                 for (Node<K, V> n = buckets[hash]; n != null; n = n.next) {
                     if (n.equals(entry)) {
@@ -623,16 +623,16 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
         }
 
         @Override
-        public boolean contains(Object obj) {
+        public boolean contains(final Object obj) {
             return StaticBucketMap.this.containsKey(obj);
         }
 
         @Override
-        public boolean remove(Object obj) {
-            int hash = getHash(obj);
+        public boolean remove(final Object obj) {
+            final int hash = getHash(obj);
             synchronized (locks[hash]) {
                 for (Node<K, V> n = buckets[hash]; n != null; n = n.next) {
-                    Object k = n.getKey();
+                    final Object k = n.getKey();
                     if ((k == obj) || ((k != null) && k.equals(obj))) {
                         StaticBucketMap.this.remove(k);
                         return true;
@@ -698,14 +698,14 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      *
      *  @param r  the code to execute atomically
      */
-    public void atomic(Runnable r) {
+    public void atomic(final Runnable r) {
         if (r == null) {
             throw new NullPointerException();
         }
         atomic(r, 0);
     }
 
-    private void atomic(Runnable r, int bucket) {
+    private void atomic(final Runnable r, final int bucket) {
         if (bucket >= buckets.length) {
             r.run();
             return;

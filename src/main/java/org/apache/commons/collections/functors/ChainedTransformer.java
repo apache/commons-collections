@@ -46,7 +46,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
      * @throws IllegalArgumentException if the transformers array is null
      * @throws IllegalArgumentException if any transformer in the array is null
      */
-    public static <T> Transformer<T, T> chainedTransformer(Transformer<? super T, ? extends T>... transformers) {
+    public static <T> Transformer<T, T> chainedTransformer(final Transformer<? super T, ? extends T>... transformers) {
         FunctorUtils.validate(transformers);
         if (transformers.length == 0) {
             return NOPTransformer.<T>nopTransformer();
@@ -65,7 +65,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
      * @throws IllegalArgumentException if any transformer in the collection is null
      */
     @SuppressWarnings("unchecked")
-    public static <T> Transformer<T, T> chainedTransformer(Collection<? extends Transformer<T, T>> transformers) {
+    public static <T> Transformer<T, T> chainedTransformer(final Collection<? extends Transformer<T, T>> transformers) {
         if (transformers == null) {
             throw new IllegalArgumentException("Transformer collection must not be null");
         }
@@ -73,7 +73,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
             return NOPTransformer.<T>nopTransformer();
         }
         // convert to array like this to guarantee iterator() ordering
-        Transformer<T, T>[] cmds = transformers.toArray(new Transformer[transformers.size()]);
+        final Transformer<T, T>[] cmds = transformers.toArray(new Transformer[transformers.size()]);
         FunctorUtils.validate(cmds);
         return new ChainedTransformer<T>(cmds);
     }
@@ -84,7 +84,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
      * 
      * @param transformers  the transformers to chain, not copied, no nulls
      */
-    public ChainedTransformer(Transformer<? super T, ? extends T>[] transformers) {
+    public ChainedTransformer(final Transformer<? super T, ? extends T>[] transformers) {
         super();
         iTransformers = transformers;
     }
@@ -96,7 +96,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
      * @return the transformed result
      */
     public T transform(T object) {
-        for (Transformer<? super T, ? extends T> iTransformer : iTransformers) {
+        for (final Transformer<? super T, ? extends T> iTransformer : iTransformers) {
             object = iTransformer.transform(object);
         }
         return object;

@@ -62,7 +62,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      *
      * @param compositeCollection  the Collection to be appended to the composite
      */
-    public CompositeCollection(Collection<E> compositeCollection) {
+    public CompositeCollection(final Collection<E> compositeCollection) {
         super();
         addComposited(compositeCollection);
     }
@@ -73,7 +73,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @param compositeCollection1  the Collection to be appended to the composite
      * @param compositeCollection2  the Collection to be appended to the composite
      */
-    public CompositeCollection(Collection<E> compositeCollection1, Collection<E> compositeCollection2) {
+    public CompositeCollection(final Collection<E> compositeCollection1, final Collection<E> compositeCollection2) {
         super();
         addComposited(compositeCollection1, compositeCollection2);
     }
@@ -83,7 +83,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      *
      * @param compositeCollections  the collections to composite
      */
-    public CompositeCollection(Collection<E>[] compositeCollections) {
+    public CompositeCollection(final Collection<E>[] compositeCollections) {
         super();
         addComposited(compositeCollections);
     }
@@ -108,7 +108,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      */
     public int size() {
         int size = 0;
-        for (Collection<E> item : all) {
+        for (final Collection<E> item : all) {
             size += item.size();
         }
         return size;
@@ -122,7 +122,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @return true if all of the contained collections are empty
      */
     public boolean isEmpty() {
-        for (Collection<? extends E> item : all) {
+        for (final Collection<? extends E> item : all) {
             if (item.isEmpty() == false) {
                 return false;
             }
@@ -138,8 +138,8 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @param obj  the object to search for
      * @return true if obj is contained in any of the contained collections
      */
-    public boolean contains(Object obj) {
-        for (Collection<? extends E> item : all) {
+    public boolean contains(final Object obj) {
+        for (final Collection<? extends E> item : all) {
             if (item.contains(obj)) {
                 return true;
             }
@@ -161,8 +161,8 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
         if (all.isEmpty()) {
             return EmptyIterator.<E>emptyIterator();
         }
-        IteratorChain<E> chain = new IteratorChain<E>();
-        for (Collection<? extends E> item : all) {
+        final IteratorChain<E> chain = new IteratorChain<E>();
+        for (final Collection<? extends E> item : all) {
             chain.addIterator(item.iterator());
         }
         return chain;
@@ -176,7 +176,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
     public Object[] toArray() {
         final Object[] result = new Object[size()];
         int i = 0;
-        for (Iterator<E> it = iterator(); it.hasNext(); i++) {
+        for (final Iterator<E> it = iterator(); it.hasNext(); i++) {
             result[i] = it.next();
         }
         return result;
@@ -191,8 +191,8 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @return an array of all the elements in the collection
      */
     @SuppressWarnings("unchecked")
-    public <T> T[] toArray(T[] array) {
-        int size = size();
+    public <T> T[] toArray(final T[] array) {
+        final int size = size();
         Object[] result = null;
         if (array.length >= size) {
             result = array;
@@ -201,8 +201,8 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
         }
 
         int offset = 0;
-        for (Collection<? extends E> item : all) {
-            for (E e : item) {
+        for (final Collection<? extends E> item : all) {
+            for (final E e : item) {
                 result[offset++] = e;
             }
         }
@@ -224,7 +224,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @throws NullPointerException if the object cannot be added because its null
      * @throws IllegalArgumentException if the object cannot be added
      */
-    public boolean add(E obj) {
+    public boolean add(final E obj) {
         if (mutator == null) {
            throw new UnsupportedOperationException(
                "add() is not supported on CompositeCollection without a CollectionMutator strategy");
@@ -243,7 +243,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @throws NullPointerException if the object cannot be removed because its null
      * @throws IllegalArgumentException if the object cannot be removed
      */
-    public boolean remove(Object obj) {
+    public boolean remove(final Object obj) {
         if (mutator == null) {
             throw new UnsupportedOperationException(
                 "remove() is not supported on CompositeCollection without a CollectionMutator strategy");
@@ -260,8 +260,8 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @param coll  the collection to check for
      * @return true if all elements contained
      */
-    public boolean containsAll(Collection<?> coll) {
-        for (Object item : coll) {
+    public boolean containsAll(final Collection<?> coll) {
+        for (final Object item : coll) {
             if (contains(item) == false) {
                 return false;
             }
@@ -281,7 +281,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @throws NullPointerException if the object cannot be added because its null
      * @throws IllegalArgumentException if the object cannot be added
      */
-    public boolean addAll(Collection<? extends E> coll) {
+    public boolean addAll(final Collection<? extends E> coll) {
         if (mutator == null) {
             throw new UnsupportedOperationException(
                 "addAll() is not supported on CompositeCollection without a CollectionMutator strategy");
@@ -298,12 +298,12 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @return true if the collection was modified
      * @throws UnsupportedOperationException if removeAll is unsupported
      */
-    public boolean removeAll(Collection<?> coll) {
+    public boolean removeAll(final Collection<?> coll) {
         if (coll.size() == 0) {
             return false;
         }
         boolean changed = false;
-        for (Collection<? extends E> item : all) {
+        for (final Collection<? extends E> item : all) {
             changed |= item.removeAll(coll);
         }
         return changed;
@@ -321,7 +321,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      */
     public boolean retainAll(final Collection<?> coll) {
         boolean changed = false;
-        for (Collection<? extends E> item : all) {
+        for (final Collection<? extends E> item : all) {
             changed |= item.retainAll(coll);
         }
         return changed;
@@ -335,7 +335,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @throws UnsupportedOperationException if clear is unsupported
      */
     public void clear() {
-        for (Collection<? extends E> coll : all) {
+        for (final Collection<? extends E> coll : all) {
             coll.clear();
         }
     }
@@ -346,7 +346,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      *
      * @param mutator  the mutator to use
      */
-    public void setMutator(CollectionMutator<E> mutator) {
+    public void setMutator(final CollectionMutator<E> mutator) {
         this.mutator = mutator;
     }
 
@@ -355,7 +355,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      *
      * @param compositeCollection  the Collection to be appended to the composite
      */
-    public void addComposited(Collection<E> compositeCollection) {
+    public void addComposited(final Collection<E> compositeCollection) {
         all.add(compositeCollection);
     }
 
@@ -365,7 +365,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @param compositeCollection1  the Collection to be appended to the composite
      * @param compositeCollection2  the Collection to be appended to the composite
      */
-    public void addComposited(Collection<E> compositeCollection1, Collection<E> compositeCollection2) {
+    public void addComposited(final Collection<E> compositeCollection1, final Collection<E> compositeCollection2) {
         all.add(compositeCollection1);
         all.add(compositeCollection2);
     }
@@ -375,7 +375,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      *
      * @param compositeCollections  the Collections to be appended to the composite
      */
-    public void addComposited(Collection<E>[] compositeCollections) {
+    public void addComposited(final Collection<E>[] compositeCollections) {
         all.addAll(Arrays.asList(compositeCollections));
     }
 
@@ -395,7 +395,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      *
      * @param coll  collection to be removed
      */
-    public void removeComposited(Collection<E> coll) {
+    public void removeComposited(final Collection<E> coll) {
         all.remove(coll);
     }
 

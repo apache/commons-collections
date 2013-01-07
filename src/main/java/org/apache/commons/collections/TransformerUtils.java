@@ -131,7 +131,7 @@ public class TransformerUtils {
      * @param constantToReturn  the constant object to return each time in the transformer
      * @return the transformer.
      */
-    public static <I, O> Transformer<I, O> constantTransformer(O constantToReturn) {
+    public static <I, O> Transformer<I, O> constantTransformer(final O constantToReturn) {
         return ConstantTransformer.constantTransformer(constantToReturn);
     }
 
@@ -145,7 +145,7 @@ public class TransformerUtils {
      * @return the transformer
      * @throws IllegalArgumentException if the closure is null
      */
-    public static <T> Transformer<T, T> asTransformer(Closure<? super T> closure) {
+    public static <T> Transformer<T, T> asTransformer(final Closure<? super T> closure) {
         return ClosureTransformer.closureTransformer(closure);
     }
 
@@ -159,7 +159,7 @@ public class TransformerUtils {
      * @return the transformer
      * @throws IllegalArgumentException if the predicate is null
      */
-    public static <T> Transformer<T, Boolean> asTransformer(Predicate<? super T> predicate) {
+    public static <T> Transformer<T, Boolean> asTransformer(final Predicate<? super T> predicate) {
         return PredicateTransformer.predicateTransformer(predicate);
     }
 
@@ -173,7 +173,7 @@ public class TransformerUtils {
      * @return the transformer
      * @throws IllegalArgumentException if the factory is null
      */
-    public static <I, O> Transformer<I, O> asTransformer(Factory<? extends O> factory) {
+    public static <I, O> Transformer<I, O> asTransformer(final Factory<? extends O> factory) {
         return FactoryTransformer.factoryTransformer(factory);
     }
 
@@ -190,8 +190,8 @@ public class TransformerUtils {
      */
     @SuppressWarnings("unchecked")
     public static <T> Transformer<T, T> chainedTransformer(
-            Transformer<? super T, ? extends T> transformer1,
-            Transformer<? super T, ? extends T> transformer2) {
+            final Transformer<? super T, ? extends T> transformer1,
+            final Transformer<? super T, ? extends T> transformer2) {
         return ChainedTransformer.<T> chainedTransformer(transformer1, transformer2);
     }
 
@@ -206,7 +206,7 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if the transformers array is null
      * @throws IllegalArgumentException if any transformer in the array is null
      */
-    public static <T> Transformer<T, T> chainedTransformer(Transformer<? super T, ? extends T>[] transformers) {
+    public static <T> Transformer<T, T> chainedTransformer(final Transformer<? super T, ? extends T>[] transformers) {
         return ChainedTransformer.chainedTransformer(transformers);
     }
 
@@ -223,7 +223,7 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if any transformer in the collection is null
      */
     public static <T> Transformer<T, T> chainedTransformer(
-            Collection<? extends Transformer<T, T>> transformers) {
+            final Collection<? extends Transformer<T, T>> transformers) {
         return ChainedTransformer.chainedTransformer(transformers);
     }
 
@@ -241,9 +241,9 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if either transformer is null
      */
     @SuppressWarnings("unchecked")
-    public static <I, O> Transformer<I, O> switchTransformer(Predicate<? super I> predicate,
-            Transformer<? super I, ? extends O> trueTransformer,
-            Transformer<? super I, ? extends O> falseTransformer) {
+    public static <I, O> Transformer<I, O> switchTransformer(final Predicate<? super I> predicate,
+            final Transformer<? super I, ? extends O> trueTransformer,
+            final Transformer<? super I, ? extends O> falseTransformer) {
         return SwitchTransformer.switchTransformer(new Predicate[] { predicate },
                 new Transformer[] { trueTransformer }, falseTransformer);
     }
@@ -264,8 +264,8 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if any element in the arrays is null
      * @throws IllegalArgumentException if the arrays are different sizes
      */
-    public static <I, O> Transformer<I, O> switchTransformer(Predicate<? super I>[] predicates,
-            Transformer<? super I, ? extends O>[] transformers) {
+    public static <I, O> Transformer<I, O> switchTransformer(final Predicate<? super I>[] predicates,
+            final Transformer<? super I, ? extends O>[] transformers) {
         return SwitchTransformer.<I, O>switchTransformer(predicates, transformers, null);
     }
 
@@ -287,9 +287,9 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if any element in the arrays is null
      * @throws IllegalArgumentException if the arrays are different sizes
      */
-    public static <I, O> Transformer<I, O> switchTransformer(Predicate<? super I>[] predicates,
-            Transformer<? super I, ? extends O>[] transformers,
-            Transformer<? super I, ? extends O> defaultTransformer) {
+    public static <I, O> Transformer<I, O> switchTransformer(final Predicate<? super I>[] predicates,
+            final Transformer<? super I, ? extends O>[] transformers,
+            final Transformer<? super I, ? extends O> defaultTransformer) {
         return SwitchTransformer.<I, O>switchTransformer(predicates, transformers, defaultTransformer);
     }
 
@@ -315,7 +315,7 @@ public class TransformerUtils {
      * @throws ClassCastException  if the map elements are of the wrong type
      */
     public static <I, O> Transformer<I, O> switchTransformer(
-            Map<Predicate<I>, Transformer<I, O>> predicatesAndTransformers) {
+            final Map<Predicate<I>, Transformer<I, O>> predicatesAndTransformers) {
         return SwitchTransformer.<I, O>switchTransformer(predicatesAndTransformers);
     }
 
@@ -337,18 +337,18 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if any transformer in the map is null
      */
     @SuppressWarnings("unchecked")
-    public static <I, O> Transformer<I, O> switchMapTransformer(Map<I, Transformer<I, O>> objectsAndTransformers) {
+    public static <I, O> Transformer<I, O> switchMapTransformer(final Map<I, Transformer<I, O>> objectsAndTransformers) {
         Transformer<? super I, ? extends O>[] trs = null;
         Predicate<I>[] preds = null;
         if (objectsAndTransformers == null) {
             throw new IllegalArgumentException("The object and transformer map must not be null");
         }
-        Transformer<? super I, ? extends O> def = objectsAndTransformers.remove(null);
-        int size = objectsAndTransformers.size();
+        final Transformer<? super I, ? extends O> def = objectsAndTransformers.remove(null);
+        final int size = objectsAndTransformers.size();
         trs = new Transformer[size];
         preds = new Predicate[size];
         int i = 0;
-        for (Map.Entry<I, Transformer<I, O>> entry : objectsAndTransformers.entrySet()) {
+        for (final Map.Entry<I, Transformer<I, O>> entry : objectsAndTransformers.entrySet()) {
             preds[i] = EqualPredicate.<I>equalPredicate(entry.getKey());
             trs[i++] = entry.getValue();
         }
@@ -379,7 +379,7 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if the paramTypes and args don't match
      */
     public static <T> Transformer<Class<? extends T>, T> instantiateTransformer(
-            Class<?>[] paramTypes, Object[] args) {
+            final Class<?>[] paramTypes, final Object[] args) {
         return InstantiateTransformer.<T>instantiateTransformer(paramTypes, args);
     }
 
@@ -392,7 +392,7 @@ public class TransformerUtils {
      * @param map  the map to use to transform the objects
      * @return the transformer, or a {@link ConstantTransformer#NULL_INSTANCE} if the {@code map} is {@code null}
      */
-    public static <I, O> Transformer<I, O> mapTransformer(Map<? super I, ? extends O> map) {
+    public static <I, O> Transformer<I, O> mapTransformer(final Map<? super I, ? extends O> map) {
         return MapTransformer.mapTransformer(map);
     }
 
@@ -411,7 +411,7 @@ public class TransformerUtils {
      * @return the transformer
      * @throws IllegalArgumentException if the methodName is null.
      */
-    public static <I, O> Transformer<I, O> invokerTransformer(String methodName){
+    public static <I, O> Transformer<I, O> invokerTransformer(final String methodName){
         return InvokerTransformer.<I, O>invokerTransformer(methodName, null, null);
     }
 
@@ -429,7 +429,7 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if the method name is null
      * @throws IllegalArgumentException if the paramTypes and args don't match
      */
-    public static <I, O> Transformer<I, O> invokerTransformer(String methodName, Class<?>[] paramTypes, Object[] args){
+    public static <I, O> Transformer<I, O> invokerTransformer(final String methodName, final Class<?>[] paramTypes, final Object[] args){
         return InvokerTransformer.<I, O>invokerTransformer(methodName, paramTypes, args);
     }
 

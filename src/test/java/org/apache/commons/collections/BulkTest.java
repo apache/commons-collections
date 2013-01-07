@@ -166,7 +166,7 @@ public class BulkTest extends TestCase implements Cloneable {
      *
      *  @param name  the name of the simple test method to run
      */
-    public BulkTest(String name) {
+    public BulkTest(final String name) {
         super(name);
         this.verboseName = getClass().getName();
     }
@@ -181,7 +181,7 @@ public class BulkTest extends TestCase implements Cloneable {
     public Object clone() {
         try {
             return super.clone();
-        } catch (CloneNotSupportedException e) {
+        } catch (final CloneNotSupportedException e) {
             throw new Error(); // should never happen
         }
     }
@@ -251,7 +251,7 @@ public class BulkTest extends TestCase implements Cloneable {
      *  @return  a {@link TestSuite} containing all the simple and bulk tests
      *    defined by that class
      */
-    public static TestSuite makeSuite(Class<? extends BulkTest> c) {
+    public static TestSuite makeSuite(final Class<? extends BulkTest> c) {
         if (Modifier.isAbstract(c.getModifiers())) {
             throw new IllegalArgumentException("Class must not be abstract.");
         }
@@ -270,7 +270,7 @@ public class BulkTest extends TestCase implements Cloneable {
 class BulkTestSuiteMaker {
 
     /** The class that defines simple and bulk tests methods. */
-    private Class<? extends BulkTest> startingClass;
+    private final Class<? extends BulkTest> startingClass;
 
     /** List of ignored simple test names. */
     private List<String> ignored;
@@ -289,7 +289,7 @@ class BulkTestSuiteMaker {
      *
      *  @param startingClass  the starting class
      */     
-    public BulkTestSuiteMaker(Class<? extends BulkTest> startingClass) {
+    public BulkTestSuiteMaker(final Class<? extends BulkTest> startingClass) {
         this.startingClass = startingClass;
     }
 
@@ -303,9 +303,9 @@ class BulkTestSuiteMaker {
          this.prefix = getBaseName(startingClass);
          result.setName(prefix);
 
-         BulkTest bulk = makeFirstTestCase(startingClass);
+         final BulkTest bulk = makeFirstTestCase(startingClass);
          ignored = new ArrayList<String>();
-         String[] s = bulk.ignoredTests();
+         final String[] s = bulk.ignoredTests();
          if (s != null) {
              ignored.addAll(Arrays.asList(s));
          }
@@ -320,10 +320,10 @@ class BulkTestSuiteMaker {
      *  @param bulk  An instance of the class that defines simple and bulk
      *    tests for us to append
      */
-    void make(BulkTest bulk) {
-        Class<? extends BulkTest> c = bulk.getClass();
-        Method[] all = c.getMethods();
-        for (Method element : all) {
+    void make(final BulkTest bulk) {
+        final Class<? extends BulkTest> c = bulk.getClass();
+        final Method[] all = c.getMethods();
+        for (final Method element : all) {
             if (isTest(element)) {
                 addTest(bulk, element);
             }
@@ -341,8 +341,8 @@ class BulkTestSuiteMaker {
      *   and not have to worry about constructors.)
      *  @param m  The simple test method
      */
-    void addTest(BulkTest bulk, Method m) {
-        BulkTest bulk2 = (BulkTest)bulk.clone();
+    void addTest(final BulkTest bulk, final Method m) {
+        final BulkTest bulk2 = (BulkTest)bulk.clone();
         bulk2.setName(m.getName());
         bulk2.verboseName = prefix + "." + m.getName();
         if (ignored.contains(bulk2.verboseName)) {
@@ -360,8 +360,8 @@ class BulkTestSuiteMaker {
      *  @param bulk  The instance of the class that defined the method
      *  @param m  The bulk test method
      */
-    void addBulk(BulkTest bulk, Method m) {
-        String verboseName = prefix + "." + m.getName();
+    void addBulk(final BulkTest bulk, final Method m) {
+        final String verboseName = prefix + "." + m.getName();
         if (ignored.contains(verboseName)) {
             return;
         }
@@ -372,17 +372,17 @@ class BulkTestSuiteMaker {
             if (bulk2 == null) {
                 return;
             }
-        } catch (InvocationTargetException ex) {
+        } catch (final InvocationTargetException ex) {
             ex.getTargetException().printStackTrace();
             throw new Error(); // FIXME;
-        } catch (IllegalAccessException ex) {
+        } catch (final IllegalAccessException ex) {
             ex.printStackTrace();
             throw new Error(); // FIXME;
         }
 
         // Save current state on the stack.
-        String oldPrefix = prefix;
-        TestSuite oldResult = result;
+        final String oldPrefix = prefix;
+        final TestSuite oldResult = result;
 
         prefix = prefix + "." + m.getName();
         result = new TestSuite();
@@ -403,9 +403,9 @@ class BulkTestSuiteMaker {
      *  @param c  the class
      *  @return the name of that class, minus any package names
      */
-    private static String getBaseName(Class<?> c) {
+    private static String getBaseName(final Class<?> c) {
         String name = c.getName();
-        int p = name.lastIndexOf('.');
+        final int p = name.lastIndexOf('.');
         if (p > 0) {
             name = name.substring(p + 1);
         }
@@ -416,32 +416,32 @@ class BulkTestSuiteMaker {
     // These three methods are used to create a valid BulkTest instance
     // from a class.
 
-    private static <T> Constructor<T> getTestCaseConstructor(Class<T> c) {
+    private static <T> Constructor<T> getTestCaseConstructor(final Class<T> c) {
         try {
             return c.getConstructor(new Class[] { String.class });
-        } catch (NoSuchMethodException e) {
+        } catch (final NoSuchMethodException e) {
             throw new IllegalArgumentException(c + " must provide " +
              "a (String) constructor");
         }
     }
 
-    private static <T extends BulkTest> BulkTest makeTestCase(Class<T> c, Method m) {
-        Constructor<T> con = getTestCaseConstructor(c);
+    private static <T extends BulkTest> BulkTest makeTestCase(final Class<T> c, final Method m) {
+        final Constructor<T> con = getTestCaseConstructor(c);
         try {
             return con.newInstance(new Object[] { m.getName() });
-        } catch (InvocationTargetException e) {
+        } catch (final InvocationTargetException e) {
             e.printStackTrace();
             throw new RuntimeException(); // FIXME;
-        } catch (IllegalAccessException e) {
+        } catch (final IllegalAccessException e) {
             throw new Error(); // should never occur
-        } catch (InstantiationException e) {
+        } catch (final InstantiationException e) {
             throw new RuntimeException(); // FIXME;
         }
     }
 
-    private static <T extends BulkTest> BulkTest makeFirstTestCase(Class<T> c) {
-        Method[] all = c.getMethods();
-        for (Method element : all) {
+    private static <T extends BulkTest> BulkTest makeFirstTestCase(final Class<T> c) {
+        final Method[] all = c.getMethods();
+        for (final Method element : all) {
             if (isTest(element)) {
                 return makeTestCase(c, element);
             }
@@ -453,7 +453,7 @@ class BulkTestSuiteMaker {
     /**
      *  Returns true if the given method is a simple test method.
      */
-    private static boolean isTest(Method m) {
+    private static boolean isTest(final Method m) {
         if (!m.getName().startsWith("test")) {
             return false;
         }
@@ -463,7 +463,7 @@ class BulkTestSuiteMaker {
         if (m.getParameterTypes().length != 0) {
             return false;
         }
-        int mods = m.getModifiers();
+        final int mods = m.getModifiers();
         if (Modifier.isStatic(mods)) {
             return false;
         }
@@ -476,7 +476,7 @@ class BulkTestSuiteMaker {
     /**
      *  Returns true if the given method is a bulk test method.
      */
-    private static boolean isBulk(Method m) {
+    private static boolean isBulk(final Method m) {
         if (!m.getName().startsWith("bulkTest")) {
             return false;
         }
@@ -486,7 +486,7 @@ class BulkTestSuiteMaker {
         if (m.getParameterTypes().length != 0) {
             return false;
         }
-        int mods = m.getModifiers();
+        final int mods = m.getModifiers();
         if (Modifier.isStatic(mods)) {
             return false;
         }

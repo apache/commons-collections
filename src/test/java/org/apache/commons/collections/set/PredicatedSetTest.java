@@ -31,7 +31,7 @@ import org.apache.commons.collections.functors.TruePredicate;
  */
 public class PredicatedSetTest<E> extends AbstractSetTest<E> {
 
-    public PredicatedSetTest(String testName) {
+    public PredicatedSetTest(final String testName) {
         super(testName);
     }
 
@@ -39,7 +39,7 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
 
     protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
 
-    protected PredicatedSet<E> decorateSet(Set<E> set, Predicate<? super E> predicate) {
+    protected PredicatedSet<E> decorateSet(final Set<E> set, final Predicate<? super E> predicate) {
         return PredicatedSet.predicatedSet(set, predicate);
     }
 
@@ -58,7 +58,7 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
 
     protected Predicate<E> testPredicate =
         new Predicate<E>() {
-            public boolean evaluate(E o) {
+            public boolean evaluate(final E o) {
                 return o instanceof String;
             }
         };
@@ -68,18 +68,18 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
     }
 
     public void testGetSet() {
-        PredicatedSet<E> set = makeTestSet();
+        final PredicatedSet<E> set = makeTestSet();
         assertTrue("returned set should not be null", set.decorated() != null);
     }
 
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
-        Set<E> set = makeTestSet();
-        Integer i = new Integer(3);
+        final Set<E> set = makeTestSet();
+        final Integer i = new Integer(3);
         try {
             set.add((E) i);
             fail("Integer should fail string predicate.");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
         assertTrue("Collection shouldn't contain illegal element",
@@ -88,8 +88,8 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
 
     @SuppressWarnings("unchecked")
     public void testIllegalAddAll() {
-        Set<E> set = makeTestSet();
-        Set<E> elements = new HashSet<E>();
+        final Set<E> set = makeTestSet();
+        final Set<E> elements = new HashSet<E>();
         elements.add((E) "one");
         elements.add((E) "two");
         elements.add((E) new Integer(3));
@@ -97,7 +97,7 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         try {
             set.addAll(elements);
             fail("Integer should fail string predicate.");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
         assertTrue("Set shouldn't contain illegal element",

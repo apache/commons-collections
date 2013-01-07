@@ -63,7 +63,7 @@ public class MultiKey<K> implements Serializable {
      * @param key2  the second key
      */
     @SuppressWarnings("unchecked")
-    public MultiKey(K key1, K key2) {
+    public MultiKey(final K key1, final K key2) {
         this((K[]) new Object[] { key1, key2 }, false);
     }
 
@@ -78,7 +78,7 @@ public class MultiKey<K> implements Serializable {
      * @param key3  the third key
      */
     @SuppressWarnings("unchecked")
-    public MultiKey(K key1, K key2, K key3) {
+    public MultiKey(final K key1, final K key2, final K key3) {
         this((K[]) new Object[] {key1, key2, key3}, false);
     }
 
@@ -94,7 +94,7 @@ public class MultiKey<K> implements Serializable {
      * @param key4  the fourth key
      */
     @SuppressWarnings("unchecked")
-    public MultiKey(K key1, K key2, K key3, K key4) {
+    public MultiKey(final K key1, final K key2, final K key3, final K key4) {
         this((K[]) new Object[] {key1, key2, key3, key4}, false);
     }
 
@@ -111,7 +111,7 @@ public class MultiKey<K> implements Serializable {
      * @param key5  the fifth key
      */
     @SuppressWarnings("unchecked")
-    public MultiKey(K key1, K key2, K key3, K key4, K key5) {
+    public MultiKey(final K key1, final K key2, final K key3, final K key4, final K key5) {
         this((K[]) new Object[] {key1, key2, key3, key4, key5}, false);
     }
 
@@ -126,7 +126,7 @@ public class MultiKey<K> implements Serializable {
      * @param keys  the array of keys, not null
      * @throws IllegalArgumentException if the key array is null
      */
-    public MultiKey(K[] keys) {
+    public MultiKey(final K[] keys) {
         this(keys, true);
     }
 
@@ -154,7 +154,7 @@ public class MultiKey<K> implements Serializable {
      * @throws IllegalArgumentException if the key array is null
      * @since 3.1
      */
-    public MultiKey(K[] keys, boolean makeClone) {
+    public MultiKey(final K[] keys, final boolean makeClone) {
         super();
         if (keys == null) {
             throw new IllegalArgumentException("The array of keys must not be null");
@@ -192,7 +192,7 @@ public class MultiKey<K> implements Serializable {
      * @throws IndexOutOfBoundsException if the index is invalid
      * @since 3.1
      */
-    public K getKey(int index) {
+    public K getKey(final int index) {
         return keys[index];
     }
 
@@ -217,12 +217,12 @@ public class MultiKey<K> implements Serializable {
      * @return true if equal
      */
     @Override
-    public boolean equals(Object other) {
+    public boolean equals(final Object other) {
         if (other == this) {
             return true;
         }
         if (other instanceof MultiKey) {
-            MultiKey<?> otherMulti = (MultiKey<?>) other;
+            final MultiKey<?> otherMulti = (MultiKey<?>) other;
             return Arrays.equals(keys, otherMulti.keys);
         }
         return false;
@@ -257,10 +257,10 @@ public class MultiKey<K> implements Serializable {
      * Calculate the hash code of the instance using the provided keys.
      * @param keys the keys to calculate the hash code for
      */
-    private void calculateHashCode(Object[] keys)
+    private void calculateHashCode(final Object[] keys)
     {
         int total = 0;
-        for (Object key : keys) {
+        for (final Object key : keys) {
             if (key != null) {
                 total ^= key.hashCode();
             }

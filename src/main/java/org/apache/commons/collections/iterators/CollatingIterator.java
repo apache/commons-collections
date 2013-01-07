@@ -133,7 +133,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      */
     public CollatingIterator(final Comparator<? super E> comp, final Iterator<? extends E>[] iterators) {
         this(comp, iterators.length);
-        for (Iterator<? extends E> iterator : iterators) {
+        for (final Iterator<? extends E> iterator : iterators) {
             addIterator(iterator);
         }
     }
@@ -154,7 +154,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      */
     public CollatingIterator(final Comparator<? super E> comp, final Collection<Iterator<? extends E>> iterators) {
         this(comp, iterators.size());
-        for (Iterator<? extends E> iterator : iterators) {
+        for (final Iterator<? extends E> iterator : iterators) {
             addIterator(iterator);
         }
     }
@@ -248,11 +248,11 @@ public class CollatingIterator<E> implements Iterator<E> {
         if (hasNext() == false) {
             throw new NoSuchElementException();
         }
-        int leastIndex = least();
+        final int leastIndex = least();
         if (leastIndex == -1) {
             throw new NoSuchElementException();
         }
-        E val = values.get(leastIndex);
+        final E val = values.get(leastIndex);
         clear(leastIndex);
         lastReturned = leastIndex;
         return val;
@@ -310,8 +310,8 @@ public class CollatingIterator<E> implements Iterator<E> {
      * 
      * @return <tt>false</tt> iff there was no value to set
      */
-    private boolean set(int i) {
-        Iterator<? extends E> it = iterators.get(i);
+    private boolean set(final int i) {
+        final Iterator<? extends E> it = iterators.get(i);
         if (it.hasNext()) {
             values.set(i, it.next());
             valueSet.set(i);
@@ -326,7 +326,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * Clears the {@link #values} and {@link #valueSet} attributes at position
      * <i>i</i>.
      */
-    private void clear(int i) {
+    private void clear(final int i) {
         values.set(i, null);
         valueSet.clear(i);
     }
@@ -361,7 +361,7 @@ public class CollatingIterator<E> implements Iterator<E> {
                     leastIndex = i;
                     leastObject = values.get(i);
                 } else {
-                    E curObject = values.get(i);
+                    final E curObject = values.get(i);
                     if (comparator == null) {
                         throw new NullPointerException("You must invoke setComparator() to set a comparator first.");
                     }
@@ -379,7 +379,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * Returns <code>true</code> iff any bit in the given set is
      * <code>true</code>.
      */
-    private boolean anyValueSet(BitSet set) {
+    private boolean anyValueSet(final BitSet set) {
         for (int i = 0; i < set.size(); i++) {
             if (set.get(i)) {
                 return true;
@@ -392,8 +392,8 @@ public class CollatingIterator<E> implements Iterator<E> {
      * Returns <code>true</code> iff any {@link Iterator} in the given list has
      * a next value.
      */
-    private boolean anyHasNext(ArrayList<Iterator<? extends E>> iters) {
-        for (Iterator<? extends E> iterator : iters) {
+    private boolean anyHasNext(final ArrayList<Iterator<? extends E>> iters) {
+        for (final Iterator<? extends E> iterator : iters) {
             if (iterator.hasNext()) {
                 return true;
             }

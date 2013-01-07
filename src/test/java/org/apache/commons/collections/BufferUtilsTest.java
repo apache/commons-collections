@@ -29,7 +29,7 @@ import org.apache.commons.collections.buffer.PredicatedBuffer;
  */
 public class BufferUtilsTest extends BulkTest {
 
-    public BufferUtilsTest(String name) {
+    public BufferUtilsTest(final String name) {
         super(name);
     }
 
@@ -42,8 +42,8 @@ public class BufferUtilsTest extends BulkTest {
     }
 
     public void testpredicatedBuffer() {
-        Predicate<Object> predicate = new Predicate<Object>() {
-            public boolean evaluate(Object o) {
+        final Predicate<Object> predicate = new Predicate<Object>() {
+            public boolean evaluate(final Object o) {
                 return o instanceof String;
             }
         };
@@ -53,13 +53,13 @@ public class BufferUtilsTest extends BulkTest {
         try {
             buffer = BufferUtils.predicatedBuffer(new ArrayStack<Object>(), null);
             fail("Expecting IllegalArgumentException for null predicate.");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
         try {
             buffer = BufferUtils.predicatedBuffer(null, predicate);
             fail("Expecting IllegalArgumentException for null buffer.");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
     }

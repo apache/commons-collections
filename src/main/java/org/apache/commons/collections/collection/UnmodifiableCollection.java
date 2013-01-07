@@ -50,7 +50,7 @@ public final class UnmodifiableCollection<E>
      * @return an unmodifiable collection
      * @throws IllegalArgumentException if collection is null
      */
-    public static <T> Collection<T> unmodifiableCollection(Collection<T> coll) {
+    public static <T> Collection<T> unmodifiableCollection(final Collection<T> coll) {
         if (coll instanceof Unmodifiable) {
             return coll;
         }
@@ -64,7 +64,7 @@ public final class UnmodifiableCollection<E>
      * @param coll  the collection to decorate, must not be null
      * @throws IllegalArgumentException if collection is null
      */
-    private UnmodifiableCollection(Collection<E> coll) {
+    private UnmodifiableCollection(final Collection<E> coll) {
         super(coll);
     }
 
@@ -75,12 +75,12 @@ public final class UnmodifiableCollection<E>
     }
 
     @Override
-    public boolean add(E object) {
+    public boolean add(final E object) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> coll) {
+    public boolean addAll(final Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -90,17 +90,17 @@ public final class UnmodifiableCollection<E>
     }
 
     @Override
-    public boolean remove(Object object) {
+    public boolean remove(final Object object) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean removeAll(Collection<?> coll) {
+    public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean retainAll(Collection<?> coll) {
+    public boolean retainAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 

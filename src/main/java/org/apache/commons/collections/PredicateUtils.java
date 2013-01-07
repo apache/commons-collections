@@ -154,7 +154,7 @@ public class PredicateUtils {
      * @deprecated use {@link EqualPredicate#equalPredicate(Object)} instead.
      */
     @Deprecated
-    public static <T> Predicate<T> equalPredicate(T value) {
+    public static <T> Predicate<T> equalPredicate(final T value) {
         return EqualPredicate.equalPredicate(value);
     }
 
@@ -167,7 +167,7 @@ public class PredicateUtils {
      * @param value  the value to compare against
      * @return the predicate
      */
-    public static <T> Predicate<T> identityPredicate(T value) {
+    public static <T> Predicate<T> identityPredicate(final T value) {
         return IdentityPredicate.<T>identityPredicate(value);
     }
 
@@ -182,7 +182,7 @@ public class PredicateUtils {
      * @return the predicate
      * @throws IllegalArgumentException if the class is null
      */
-    public static Predicate<Object> instanceofPredicate(Class<?> type) {
+    public static Predicate<Object> instanceofPredicate(final Class<?> type) {
         return InstanceofPredicate.instanceOfPredicate(type);
     }
 
@@ -219,7 +219,7 @@ public class PredicateUtils {
      * @return the predicate
      * @throws IllegalArgumentException if the methodName is null.
      */
-    public static <T> Predicate<T> invokerPredicate(String methodName){
+    public static <T> Predicate<T> invokerPredicate(final String methodName){
         // reuse transformer as it has caching - this is lazy really, should have inner class here
         return asPredicate(InvokerTransformer.<Object, Boolean>invokerTransformer(methodName));
     }
@@ -244,7 +244,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if the method name is null
      * @throws IllegalArgumentException if the paramTypes and args don't match
      */
-    public static <T> Predicate<T> invokerPredicate(String methodName, Class<?>[] paramTypes, Object[] args){
+    public static <T> Predicate<T> invokerPredicate(final String methodName, final Class<?>[] paramTypes, final Object[] args){
         // reuse transformer as it has caching - this is lazy really, should have inner class here
         return asPredicate(InvokerTransformer.<Object, Boolean>invokerTransformer(methodName, paramTypes, args));
     }
@@ -263,7 +263,7 @@ public class PredicateUtils {
      * @return the <code>and</code> predicate
      * @throws IllegalArgumentException if either predicate is null
      */
-    public static <T> Predicate<T> andPredicate(Predicate<? super T> predicate1, Predicate<? super T> predicate2) {
+    public static <T> Predicate<T> andPredicate(final Predicate<? super T> predicate1, final Predicate<? super T> predicate2) {
         return AndPredicate.<T>andPredicate(predicate1, predicate2);
     }
 
@@ -281,7 +281,7 @@ public class PredicateUtils {
      * @deprecated use {@link AllPredicate#allPredicate(Predicate...)} instead.
      */
     @Deprecated
-    public static <T> Predicate<T> allPredicate(Predicate<? super T>... predicates) {
+    public static <T> Predicate<T> allPredicate(final Predicate<? super T>... predicates) {
         return AllPredicate.allPredicate(predicates);
     }
 
@@ -297,7 +297,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if the predicates collection is null
      * @throws IllegalArgumentException if any predicate in the collection is null
      */
-    public static <T> Predicate<T> allPredicate(Collection<? extends Predicate<T>> predicates) {
+    public static <T> Predicate<T> allPredicate(final Collection<? extends Predicate<T>> predicates) {
         return AllPredicate.allPredicate(predicates);
     }
 
@@ -312,7 +312,7 @@ public class PredicateUtils {
      * @return the <code>or</code> predicate
      * @throws IllegalArgumentException if either predicate is null
      */
-    public static <T> Predicate<T> orPredicate(Predicate<? super T> predicate1, Predicate<? super T> predicate2) {
+    public static <T> Predicate<T> orPredicate(final Predicate<? super T> predicate1, final Predicate<? super T> predicate2) {
         return OrPredicate.<T>orPredicate(predicate1, predicate2);
     }
 
@@ -328,7 +328,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static <T> Predicate<T> anyPredicate(Predicate<? super T>... predicates) {
+    public static <T> Predicate<T> anyPredicate(final Predicate<? super T>... predicates) {
         return AnyPredicate.anyPredicate(predicates);
     }
 
@@ -344,7 +344,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if the predicates collection is null
      * @throws IllegalArgumentException if any predicate in the collection is null
      */
-    public static <T> Predicate<T> anyPredicate(Collection<? extends Predicate<T>> predicates) {
+    public static <T> Predicate<T> anyPredicate(final Collection<? extends Predicate<T>> predicates) {
         return AnyPredicate.anyPredicate(predicates);
     }
 
@@ -359,8 +359,9 @@ public class PredicateUtils {
      * @return the <code>either</code> predicate
      * @throws IllegalArgumentException if either predicate is null
      */
-    public static <T> Predicate<T> eitherPredicate(Predicate<? super T> predicate1, Predicate<? super T> predicate2) {
+    public static <T> Predicate<T> eitherPredicate(final Predicate<? super T> predicate1, final Predicate<? super T> predicate2) {
         @SuppressWarnings("unchecked")
+        final
         Predicate<T> onePredicate = PredicateUtils.<T>onePredicate(predicate1, predicate2);
         return onePredicate;
     }
@@ -377,7 +378,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static <T> Predicate<T> onePredicate(Predicate<? super T>... predicates) {
+    public static <T> Predicate<T> onePredicate(final Predicate<? super T>... predicates) {
         return OnePredicate.onePredicate(predicates);
     }
 
@@ -393,7 +394,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if the predicates collection is null
      * @throws IllegalArgumentException if any predicate in the collection is null
      */
-    public static <T> Predicate<T> onePredicate(Collection<Predicate<T>> predicates) {
+    public static <T> Predicate<T> onePredicate(final Collection<Predicate<T>> predicates) {
         return OnePredicate.onePredicate(predicates);
     }
 
@@ -408,8 +409,9 @@ public class PredicateUtils {
      * @return the <code>neither</code> predicate
      * @throws IllegalArgumentException if either predicate is null
      */
-    public static <T> Predicate<T> neitherPredicate(Predicate<? super T> predicate1, Predicate<? super T> predicate2) {
+    public static <T> Predicate<T> neitherPredicate(final Predicate<? super T> predicate1, final Predicate<? super T> predicate2) {
         @SuppressWarnings("unchecked")
+        final
         Predicate<T> nonePredicate = PredicateUtils.<T>nonePredicate(predicate1, predicate2);
         return nonePredicate;
     }
@@ -426,7 +428,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static <T> Predicate<T> nonePredicate(Predicate<? super T>... predicates) {
+    public static <T> Predicate<T> nonePredicate(final Predicate<? super T>... predicates) {
         return NonePredicate.nonePredicate(predicates);
     }
 
@@ -442,7 +444,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if the predicates collection is null
      * @throws IllegalArgumentException if any predicate in the collection is null
      */
-    public static <T> Predicate<T> nonePredicate(Collection<? extends Predicate<T>> predicates) {
+    public static <T> Predicate<T> nonePredicate(final Collection<? extends Predicate<T>> predicates) {
         return NonePredicate.nonePredicate(predicates);
     }
 
@@ -456,7 +458,7 @@ public class PredicateUtils {
      * @return the <code>not</code> predicate
      * @throws IllegalArgumentException if the predicate is null
      */
-    public static <T> Predicate<T> notPredicate(Predicate<? super T> predicate) {
+    public static <T> Predicate<T> notPredicate(final Predicate<? super T> predicate) {
         return NotPredicate.notPredicate(predicate);
     }
 
@@ -474,7 +476,7 @@ public class PredicateUtils {
      * @return the transformer wrapping predicate
      * @throws IllegalArgumentException if the transformer is null
      */
-    public static <T> Predicate<T> asPredicate(Transformer<? super T, Boolean> transformer) {
+    public static <T> Predicate<T> asPredicate(final Transformer<? super T, Boolean> transformer) {
         return TransformerPredicate.transformerPredicate(transformer);
     }
 
@@ -492,7 +494,7 @@ public class PredicateUtils {
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null.
      */
-    public static <T> Predicate<T> nullIsExceptionPredicate(Predicate<? super T> predicate){
+    public static <T> Predicate<T> nullIsExceptionPredicate(final Predicate<? super T> predicate){
         return NullIsExceptionPredicate.nullIsExceptionPredicate(predicate);
     }
 
@@ -507,7 +509,7 @@ public class PredicateUtils {
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null.
      */
-    public static <T> Predicate<T> nullIsFalsePredicate(Predicate<? super T> predicate){
+    public static <T> Predicate<T> nullIsFalsePredicate(final Predicate<? super T> predicate){
         return NullIsFalsePredicate.nullIsFalsePredicate(predicate);
     }
 
@@ -522,7 +524,7 @@ public class PredicateUtils {
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null.
      */
-    public static <T> Predicate<T> nullIsTruePredicate(Predicate<? super T> predicate){
+    public static <T> Predicate<T> nullIsTruePredicate(final Predicate<? super T> predicate){
         return NullIsTruePredicate.nullIsTruePredicate(predicate);
     }
 
@@ -541,7 +543,7 @@ public class PredicateUtils {
      * @since 3.1
      */
     public static <T> Predicate<T> transformedPredicate(
-            Transformer<? super T, ? extends T> transformer, Predicate<? super T> predicate) {
+            final Transformer<? super T, ? extends T> transformer, final Predicate<? super T> predicate) {
         return TransformedPredicate.<T>transformedPredicate(transformer, predicate);
     }
 

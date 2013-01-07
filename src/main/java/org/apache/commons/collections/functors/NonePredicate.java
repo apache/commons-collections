@@ -51,7 +51,7 @@ public final class NonePredicate<T> implements Predicate<T>, PredicateDecorator<
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static <T> Predicate<T> nonePredicate(Predicate<? super T>... predicates) {
+    public static <T> Predicate<T> nonePredicate(final Predicate<? super T>... predicates) {
         FunctorUtils.validate(predicates);
         if (predicates.length == 0) {
             return TruePredicate.<T>truePredicate();
@@ -70,8 +70,8 @@ public final class NonePredicate<T> implements Predicate<T>, PredicateDecorator<
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static <T> Predicate<T> nonePredicate(Collection<? extends Predicate<T>> predicates) {
-        Predicate<? super T>[] preds = FunctorUtils.validate(predicates);
+    public static <T> Predicate<T> nonePredicate(final Collection<? extends Predicate<T>> predicates) {
+        final Predicate<? super T>[] preds = FunctorUtils.validate(predicates);
         if (preds.length == 0) {
             return TruePredicate.<T>truePredicate();
         }
@@ -84,7 +84,7 @@ public final class NonePredicate<T> implements Predicate<T>, PredicateDecorator<
      *
      * @param predicates  the predicates to check, not cloned, not null
      */
-    public NonePredicate(Predicate<? super T>[] predicates) {
+    public NonePredicate(final Predicate<? super T>[] predicates) {
         super();
         iPredicates = predicates;
     }
@@ -95,8 +95,8 @@ public final class NonePredicate<T> implements Predicate<T>, PredicateDecorator<
      * @param object  the input object
      * @return true if none of decorated predicates return true
      */
-    public boolean evaluate(T object) {
-        for (Predicate<? super T> iPredicate : iPredicates) {
+    public boolean evaluate(final T object) {
+        for (final Predicate<? super T> iPredicate : iPredicates) {
             if (iPredicate.evaluate(object)) {
                 return false;
             }

@@ -57,7 +57,7 @@ public class DualHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements 
      *
      * @param map  the map whose mappings are to be placed in this map
      */
-    public DualHashBidiMap(Map<K, V> map) {
+    public DualHashBidiMap(final Map<K, V> map) {
         super(new HashMap<K, V>(), new HashMap<V, K>());
         putAll(map);
     }
@@ -69,7 +69,7 @@ public class DualHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements 
      * @param reverseMap  the reverse direction map
      * @param inverseBidiMap  the inverse BidiMap
      */
-    protected DualHashBidiMap(Map<K, V> normalMap, Map<V, K> reverseMap, BidiMap<V, K> inverseBidiMap) {
+    protected DualHashBidiMap(final Map<K, V> normalMap, final Map<V, K> reverseMap, final BidiMap<V, K> inverseBidiMap) {
         super(normalMap, reverseMap, inverseBidiMap);
     }
 
@@ -82,22 +82,23 @@ public class DualHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements 
      * @return new bidi map
      */
     @Override
-    protected BidiMap<V, K> createBidiMap(Map<V, K> normalMap, Map<K, V> reverseMap, BidiMap<K, V> inverseBidiMap) {
+    protected BidiMap<V, K> createBidiMap(final Map<V, K> normalMap, final Map<K, V> reverseMap, final BidiMap<K, V> inverseBidiMap) {
         return new DualHashBidiMap<V, K>(normalMap, reverseMap, inverseBidiMap);
     }
 
     // Serialization
     //-----------------------------------------------------------------------
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(normalMap);
     }
 
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         normalMap = new HashMap<K, V>();
         reverseMap = new HashMap<V, K>();
         @SuppressWarnings("unchecked") // will fail at runtime if stream is incorrect
+        final
         Map<K, V> map = (Map<K, V>) in.readObject();
         putAll(map);
     }

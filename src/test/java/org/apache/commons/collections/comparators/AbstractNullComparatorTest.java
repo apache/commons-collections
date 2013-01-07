@@ -30,12 +30,12 @@ import junit.framework.TestSuite;
  */
 public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<Integer> {
 
-    public AbstractNullComparatorTest(String testName) {
+    public AbstractNullComparatorTest(final String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        TestSuite suite = new TestSuite(AbstractNullComparatorTest.class.getName());
+        final TestSuite suite = new TestSuite(AbstractNullComparatorTest.class.getName());
         suite.addTest(new TestSuite(TestNullComparator1.class));
         suite.addTest(new TestSuite(TestNullComparator2.class));
         return suite;
@@ -46,7 +46,7 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
      **/
     public static class TestNullComparator1 extends AbstractNullComparatorTest {
 
-        public TestNullComparator1(String testName) {
+        public TestNullComparator1(final String testName) {
             super(testName);
         }
 
@@ -57,7 +57,7 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
 
         @Override
         public List<Integer> getComparableObjectsOrdered() {
-            List<Integer> list = new LinkedList<Integer>();
+            final List<Integer> list = new LinkedList<Integer>();
             list.add(new Integer(1));
             list.add(new Integer(2));
             list.add(new Integer(3));
@@ -68,7 +68,7 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
         }
 
         @Override
-        public String getCanonicalComparatorName(Object object) {
+        public String getCanonicalComparatorName(final Object object) {
             return super.getCanonicalComparatorName(object) + "1";
         }
     }
@@ -78,7 +78,7 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
      **/
     public static class TestNullComparator2 extends AbstractNullComparatorTest {
 
-        public TestNullComparator2(String testName) {
+        public TestNullComparator2(final String testName) {
             super(testName);
         }
 
@@ -89,7 +89,7 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
 
         @Override
         public List<Integer> getComparableObjectsOrdered() {
-            List<Integer> list = new LinkedList<Integer>();
+            final List<Integer> list = new LinkedList<Integer>();
             list.add(null);
             list.add(new Integer(1));
             list.add(new Integer(2));
@@ -100,7 +100,7 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
         }
 
         @Override
-        public String getCanonicalComparatorName(Object object) {
+        public String getCanonicalComparatorName(final Object object) {
             return super.getCanonicalComparatorName(object) + "2";
         }
     }

@@ -51,8 +51,8 @@ public class TransformedBuffer<E> extends TransformedCollection<E> implements Bu
      * @return a new transformed Buffer
      * @throws IllegalArgumentException if buffer or transformer is null
      */
-    public static <E> TransformedBuffer<E> transformingBuffer(Buffer<E> buffer,
-                                                              Transformer<? super E, ? extends E> transformer) {
+    public static <E> TransformedBuffer<E> transformingBuffer(final Buffer<E> buffer,
+                                                              final Transformer<? super E, ? extends E> transformer) {
         return new TransformedBuffer<E>(buffer, transformer);
     }
     
@@ -71,15 +71,16 @@ public class TransformedBuffer<E> extends TransformedCollection<E> implements Bu
      * @throws IllegalArgumentException if buffer or transformer is null
      * @since 3.3
      */
-    public static <E> TransformedBuffer<E> transformedBuffer(Buffer<E> buffer,
-                                                             Transformer<? super E, ? extends E> transformer) {
+    public static <E> TransformedBuffer<E> transformedBuffer(final Buffer<E> buffer,
+                                                             final Transformer<? super E, ? extends E> transformer) {
         // throws IAE if buffer or transformer is null
         final TransformedBuffer<E> decorated = new TransformedBuffer<E>(buffer, transformer); 
         if (buffer.size() > 0) {
             @SuppressWarnings("unchecked") // buffer is type <E>
+            final
             E[] values = (E[]) buffer.toArray();
             buffer.clear();
-            for (E value : values) {
+            for (final E value : values) {
                 decorated.decorated().add(transformer.transform(value));
             }
         }
@@ -97,7 +98,7 @@ public class TransformedBuffer<E> extends TransformedCollection<E> implements Bu
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if buffer or transformer is null
      */
-    protected TransformedBuffer(Buffer<E> buffer, Transformer<? super E, ? extends E> transformer) {
+    protected TransformedBuffer(final Buffer<E> buffer, final Transformer<? super E, ? extends E> transformer) {
         super(buffer, transformer);
     }
 

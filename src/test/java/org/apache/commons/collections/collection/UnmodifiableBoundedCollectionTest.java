@@ -33,21 +33,21 @@ import org.apache.commons.collections.buffer.BoundedBuffer;
  */
 public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest<E> {
 
-    public UnmodifiableBoundedCollectionTest(String testName) {
+    public UnmodifiableBoundedCollectionTest(final String testName) {
         super(testName);
     }
 
     //-----------------------------------------------------------------------
     @Override
     public Collection<E> makeObject() {
-        BoundedBuffer<E> buffer = BoundedBuffer.<E>boundedBuffer(new ArrayStack<E>(), 10);
+        final BoundedBuffer<E> buffer = BoundedBuffer.<E>boundedBuffer(new ArrayStack<E>(), 10);
         return UnmodifiableBoundedCollection.unmodifiableBoundedCollection(buffer);
     }
 
     @Override
     public Collection<E> makeFullCollection() {
-        E[] allElements = getFullElements();
-        Buffer<E> buffer = BufferUtils.boundedBuffer(new ArrayStack<E>(), allElements.length);
+        final E[] allElements = getFullElements();
+        final Buffer<E> buffer = BufferUtils.boundedBuffer(new ArrayStack<E>(), allElements.length);
         buffer.addAll(Arrays.asList(allElements));
         return UnmodifiableBoundedCollection.unmodifiableBoundedCollection(buffer);
     }
@@ -59,7 +59,7 @@ public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest
 
     @Override
     public Collection<E> makeConfirmedFullCollection() {
-        ArrayList<E> list = new ArrayList<E>();
+        final ArrayList<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }

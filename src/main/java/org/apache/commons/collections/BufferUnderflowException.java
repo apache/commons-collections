@@ -43,7 +43,7 @@ public class BufferUnderflowException extends NoSuchElementException {
      * 
      * @param message  the detail message for this exception
      */
-    public BufferUnderflowException(String message) {
+    public BufferUnderflowException(final String message) {
         super(message);
     }
 
@@ -53,7 +53,7 @@ public class BufferUnderflowException extends NoSuchElementException {
      * @param message  the detail message for this exception
      * @param exception  the root cause of the exception
      */
-    public BufferUnderflowException(String message, Throwable exception) {
+    public BufferUnderflowException(final String message, final Throwable exception) {
         super(message);
         initCause(exception);
     }

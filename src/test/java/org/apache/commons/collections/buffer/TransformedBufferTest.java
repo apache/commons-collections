@@ -30,14 +30,14 @@ import org.apache.commons.collections.collection.TransformedCollectionTest;
  */
 public class TransformedBufferTest extends TestCase {
     
-    public TransformedBufferTest(String testName) {
+    public TransformedBufferTest(final String testName) {
         super(testName);
     }
 
     public void testTransformedBuffer() {
-        Buffer<Object> buffer = TransformedBuffer.transformingBuffer(new ArrayStack<Object>(), TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
+        final Buffer<Object> buffer = TransformedBuffer.transformingBuffer(new ArrayStack<Object>(), TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, buffer.size());
-        Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
+        final Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
         for (int i = 0; i < els.length; i++) {
             buffer.add(els[i]);
             assertEquals(i + 1, buffer.size());
@@ -51,14 +51,14 @@ public class TransformedBufferTest extends TestCase {
     }
 
     public void testTransformedBuffer_decorateTransform() {
-        Buffer originalBuffer = new ArrayStack();
-        Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
-        for (Object el : els) {
+        final Buffer originalBuffer = new ArrayStack();
+        final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        for (final Object el : els) {
             originalBuffer.add(el);
         }
-        Buffer buffer = TransformedBuffer.transformedBuffer(originalBuffer, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
+        final Buffer buffer = TransformedBuffer.transformedBuffer(originalBuffer, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, buffer.size());
-        for (Object el : els) {
+        for (final Object el : els) {
             assertEquals(true, buffer.contains(new Integer((String) el)));
             assertEquals(false, buffer.contains(el));
         }

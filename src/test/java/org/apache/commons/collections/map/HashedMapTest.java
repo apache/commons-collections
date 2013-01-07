@@ -28,7 +28,7 @@ import org.apache.commons.collections.BulkTest;
  */
 public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public HashedMapTest(String testName) {
+    public HashedMapTest(final String testName) {
         super(testName);
     }
 
@@ -48,15 +48,15 @@ public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testClone() {
-        HashedMap<K, V> map = new HashedMap<K, V>(10);
+        final HashedMap<K, V> map = new HashedMap<K, V>(10);
         map.put((K) "1", (V) "1");
-        HashedMap<K, V> cloned = map.clone();
+        final HashedMap<K, V> cloned = map.clone();
         assertEquals(map.size(), cloned.size());
         assertSame(map.get("1"), cloned.get("1"));
     }
 
     public void testInternalState() {
-        HashedMap<K, V> map = new HashedMap<K, V>(42, 0.75f);
+        final HashedMap<K, V> map = new HashedMap<K, V>(42, 0.75f);
         assertEquals(0.75f, map.loadFactor, 0.1f);
         assertEquals(0, map.size);
         assertEquals(64, map.data.length);

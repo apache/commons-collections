@@ -31,7 +31,7 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
         Unmodifiable {
 
     /** The iterator being decorated */
-    private OrderedMapIterator<K, V> iterator;
+    private final OrderedMapIterator<K, V> iterator;
 
     //-----------------------------------------------------------------------
     /**
@@ -43,7 +43,7 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
      * @return a new unmodifiable ordered map iterator
      * @throws IllegalArgumentException if the iterator is null
      */
-    public static <K, V> OrderedMapIterator<K, V> unmodifiableOrderedMapIterator(OrderedMapIterator<K, V> iterator) {
+    public static <K, V> OrderedMapIterator<K, V> unmodifiableOrderedMapIterator(final OrderedMapIterator<K, V> iterator) {
         if (iterator == null) {
             throw new IllegalArgumentException("OrderedMapIterator must not be null");
         }
@@ -59,7 +59,7 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
      *
      * @param iterator  the iterator to decorate
      */
-    private UnmodifiableOrderedMapIterator(OrderedMapIterator<K, V> iterator) {
+    private UnmodifiableOrderedMapIterator(final OrderedMapIterator<K, V> iterator) {
         super();
         this.iterator = iterator;
     }
@@ -89,7 +89,7 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
         return iterator.getValue();
     }
 
-    public V setValue(V value) {
+    public V setValue(final V value) {
         throw new UnsupportedOperationException("setValue() is not supported");
     }
 

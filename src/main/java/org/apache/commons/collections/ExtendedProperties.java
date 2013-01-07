@@ -188,7 +188,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @param base string to interpolate
      * @return returns the key name with the ${key} substituted
      */
-    protected String interpolate(String base) {
+    protected String interpolate(final String base) {
         // COPIED from [configuration] 2003-12-29
         return interpolateHelper(base, null);
     }
@@ -207,7 +207,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      *
      * @return the string with the interpolation taken care of
      */
-    protected String interpolateHelper(String base, List<String> priorVariables) {
+    protected String interpolateHelper(final String base, List<String> priorVariables) {
         // COPIED from [configuration] 2003-12-29
         if (base == null) {
             return null;
@@ -224,7 +224,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
         int end = -1;
         int prec = 0 - END_TOKEN.length();
         String variable = null;
-        StringBuilder result = new StringBuilder();
+        final StringBuilder result = new StringBuilder();
 
         // FIXME: we should probably allow the escaping of the start token
         while ((begin = base.indexOf(START_TOKEN, prec + END_TOKEN.length())) > -1
@@ -234,13 +234,13 @@ public class ExtendedProperties extends Hashtable<String, Object> {
 
             // if we've got a loop, create a useful exception message and throw
             if (priorVariables.contains(variable)) {
-                String initialBase = priorVariables.remove(0).toString();
+                final String initialBase = priorVariables.remove(0).toString();
                 priorVariables.add(variable);
-                StringBuilder priorVariableSb = new StringBuilder();
+                final StringBuilder priorVariableSb = new StringBuilder();
 
                 // create a nice trace of interpolated variables like so:
                 // var1->var2->var3
-                for (Iterator<?> it = priorVariables.iterator(); it.hasNext();) {
+                for (final Iterator<?> it = priorVariables.iterator(); it.hasNext();) {
                     priorVariableSb.append(it.next());
                     if (it.hasNext()) {
                         priorVariableSb.append("->");
@@ -256,7 +256,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
             }
 
             //QUESTION: getProperty or getPropertyDirect
-            Object value = getProperty(variable);
+            final Object value = getProperty(variable);
             if (value != null) {
                 result.append(interpolateHelper(value.toString(), priorVariables));
 
@@ -281,10 +281,10 @@ public class ExtendedProperties extends Hashtable<String, Object> {
     /**
      * Inserts a backslash before every comma and backslash. 
      */
-    private static String escape(String s) {
-        StringBuilder buf = new StringBuilder(s);
+    private static String escape(final String s) {
+        final StringBuilder buf = new StringBuilder(s);
         for (int i = 0; i < buf.length(); i++) {
-            char c = buf.charAt(i);
+            final char c = buf.charAt(i);
             if (c == ',' || c == '\\') {
                 buf.insert(i, '\\');
                 i++;
@@ -296,11 +296,11 @@ public class ExtendedProperties extends Hashtable<String, Object> {
     /**
      * Removes a backslash from every pair of backslashes. 
      */
-    private static String unescape(String s) {
-        StringBuilder buf = new StringBuilder(s);
+    private static String unescape(final String s) {
+        final StringBuilder buf = new StringBuilder(s);
         for (int i = 0; i < buf.length() - 1; i++) {
-            char c1 = buf.charAt(i);
-            char c2 = buf.charAt(i + 1);
+            final char c1 = buf.charAt(i);
+            final char c2 = buf.charAt(i + 1);
             if (c1 == '\\' && c2 == '\\') {
                 buf.deleteCharAt(i);
             }
@@ -312,7 +312,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * Counts the number of successive times 'ch' appears in the
      * 'line' before the position indicated by the 'index'.
      */
-    private static int countPreceding(String line, int index, char ch) {
+    private static int countPreceding(final String line, final int index, final char ch) {
         int i;
         for (i = index - 1; i >= 0; i--) {
             if (line.charAt(i) != ch) {
@@ -325,7 +325,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
     /**
      * Checks if the line ends with odd number of backslashes 
      */
-    private static boolean endsWithSlash(String line) {
+    private static boolean endsWithSlash(final String line) {
         if (!line.endsWith("\\")) {
             return false;
         }
@@ -344,7 +344,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
          *
          * @param reader A Reader.
          */
-        public PropertiesReader(Reader reader) {
+        public PropertiesReader(final Reader reader) {
             super(reader);
         }
 
@@ -355,7 +355,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
          * @throws IOException if there is difficulty reading the source.
          */
         public String readProperty() throws IOException {
-            StringBuilder buffer = new StringBuilder();
+            final StringBuilder buffer = new StringBuilder();
             String line = readLine();
             while (line != null) {
                 line = line.trim();
@@ -390,7 +390,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
          *
          * @param string A String.
          */
-        public PropertiesTokenizer(String string) {
+        public PropertiesTokenizer(final String string) {
             super(string, DELIMITER);
         }
 
@@ -411,10 +411,10 @@ public class ExtendedProperties extends Hashtable<String, Object> {
          */
         @Override
         public String nextToken() {
-            StringBuilder buffer = new StringBuilder();
+            final StringBuilder buffer = new StringBuilder();
 
             while (hasMoreTokens()) {
-                String token = super.nextToken();
+                final String token = super.nextToken();
                 if (endsWithSlash(token)) {
                     buffer.append(token.substring(0, token.length() - 1));
                     buffer.append(DELIMITER);
@@ -441,7 +441,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @param file  the filename to load
      * @throws IOException if a file error occurs
      */
-    public ExtendedProperties(String file) throws IOException {
+    public ExtendedProperties(final String file) throws IOException {
         this(file, null);
     }
 
@@ -452,7 +452,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @param defaultFile  a second filename to load default values from
      * @throws IOException if a file error occurs
      */
-    public ExtendedProperties(String file, String defaultFile) throws IOException {
+    public ExtendedProperties(final String file, final String defaultFile) throws IOException {
         this.file = file;
 
         basePath = new File(file).getAbsolutePath();
@@ -467,7 +467,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
                 if (in != null) {
                     in.close();
                 }
-            } catch (IOException ex) {}
+            } catch (final IOException ex) {}
         }
 
         if (defaultFile != null) {
@@ -499,7 +499,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      *
      * @param inc  the property name which includes another property, empty converted to null
      */
-    public void setInclude(String inc) {
+    public void setInclude(final String inc) {
         includePropertyName = inc;
     }
 
@@ -509,7 +509,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @param input  the InputStream to load from
      * @throws IOException if an IO error occurs
      */
-    public void load(InputStream input) throws IOException {
+    public void load(final InputStream input) throws IOException {
         load(input, null);
     }
 
@@ -521,13 +521,13 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @param enc  the encoding to use
      * @throws IOException if an IO error occurs
      */
-    public synchronized void load(InputStream input, String enc) throws IOException {
+    public synchronized void load(final InputStream input, final String enc) throws IOException {
         PropertiesReader reader = null;
         if (enc != null) {
             try {
                 reader = new PropertiesReader(new InputStreamReader(input, enc));
                 
-            } catch (UnsupportedEncodingException ex) {
+            } catch (final UnsupportedEncodingException ex) {
                 // Another try coming up....
             }
         }
@@ -536,7 +536,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
             try {
                 reader = new PropertiesReader(new InputStreamReader(input, "8859_1"));
                 
-            } catch (UnsupportedEncodingException ex) {
+            } catch (final UnsupportedEncodingException ex) {
                 // ISO8859-1 support is required on java platforms but....
                 // If it's not supported, use the system default encoding
                 reader = new PropertiesReader(new InputStreamReader(input));
@@ -544,16 +544,16 @@ public class ExtendedProperties extends Hashtable<String, Object> {
         }
 
         try {
-            String includeProperty = getInclude();
+            final String includeProperty = getInclude();
             while (true) {
-                String line = reader.readProperty();
+                final String line = reader.readProperty();
                 if (line == null) {
                     return;  // EOF
                 }
-                int equalSign = line.indexOf('=');
+                final int equalSign = line.indexOf('=');
 
                 if (equalSign > 0) {
-                    String key = line.substring(0, equalSign).trim();
+                    final String key = line.substring(0, equalSign).trim();
                     String value = line.substring(equalSign + 1).trim();
 
                     /* COLLECTIONS-238 allows empty properties to exist by commenting this out
@@ -603,7 +603,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @return value as object. Will return user value if exists,
      *        if not then default value if exists, otherwise null
      */
-    public Object getProperty(String key) {
+    public Object getProperty(final String key) {
         // first, try to get from the 'user value' store
         Object obj = super.get(key);
 
@@ -637,14 +637,14 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @param key  the key to add
      * @param value  the value to add
      */
-    public void addProperty(String key, Object value) {
+    public void addProperty(final String key, final Object value) {
         if (value instanceof String) {
-            String str = (String) value;
+            final String str = (String) value;
             if (str.indexOf(PropertiesTokenizer.DELIMITER) > 0) {
                 // token contains commas, so must be split apart then added
-                PropertiesTokenizer tokenizer = new PropertiesTokenizer(str);
+                final PropertiesTokenizer tokenizer = new PropertiesTokenizer(str);
                 while (tokenizer.hasMoreTokens()) {
-                    String token = tokenizer.nextToken();
+                    final String token = tokenizer.nextToken();
                     addPropertyInternal(key, unescape(token));
                 }
             } else {
@@ -666,7 +666,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @param key  the key to store at
      * @param value  the decoded object to store
      */
-    private void addPropertyDirect(String key, Object value) {
+    private void addPropertyDirect(final String key, final Object value) {
         // safety check
         if (!containsKey(key)) {
             keysAsListed.add(key);
@@ -685,12 +685,12 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @param key  the key to store at
      * @param value  the decoded object to store
      */
-    private void addPropertyInternal(String key, Object value) {
-        Object current = this.get(key);
+    private void addPropertyInternal(final String key, final Object value) {
+        final Object current = this.get(key);
 
         if (current instanceof String) {
             // one object already in map - convert it to a vector
-            List<Object> values = new Vector<Object>(2);
+            final List<Object> values = new Vector<Object>(2);
             values.add(current);
             values.add(value);
             super.put(key, values);
@@ -698,6 +698,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
         } else if (current instanceof List) {
             // already a list - just add the new token
             @SuppressWarnings("unchecked") // OK to cast to Object
+            final
             List<Object> list = (List<Object>) current;
             list.add(value);
             
@@ -718,7 +719,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @param key  the key to set
      * @param value  the value to set
      */
-    public void setProperty(String key, Object value) {
+    public void setProperty(final String key, final Object value) {
         clearProperty(key);
         addProperty(key, value);
     }
@@ -732,22 +733,22 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @param header  a textual comment to act as a file header
      * @throws IOException if an IO error occurs
      */
-    public synchronized void save(OutputStream output, String header) throws IOException {
+    public synchronized void save(final OutputStream output, final String header) throws IOException {
         if (output == null) {
             return;
         }
-        PrintWriter theWrtr = new PrintWriter(output);
+        final PrintWriter theWrtr = new PrintWriter(output);
         if (header != null) {
             theWrtr.println(header);
         }
         
-        Enumeration<String> theKeys = keys();
+        final Enumeration<String> theKeys = keys();
         while (theKeys.hasMoreElements()) {
-            String key = theKeys.nextElement();
-            Object value = get(key);
+            final String key = theKeys.nextElement();
+            final Object value = get(key);
             if (value != null) {
                 if (value instanceof String) {
-                    StringBuilder currentOutput = new StringBuilder();
+                    final StringBuilder currentOutput = new StringBuilder();
                     currentOutput.append(key);
                     currentOutput.append("=");
                     currentOutput.append(escape((String) value));
@@ -755,9 +756,10 @@ public class ExtendedProperties extends Hashtable<String, Object> {
                     
                 } else if (value instanceof List) {
                     @SuppressWarnings("unchecked") // we only add Strings to the Lists
+                    final
                     List<String> values = (List<String>) value;
-                    for (String currentElement : values) {
-                        StringBuilder currentOutput = new StringBuilder();
+                    for (final String currentElement : values) {
+                        final StringBuilder currentOutput = new StringBuilder();
                         currentOutput.append(key);
                         currentOutput.append("=");
                         currentOutput.append(escape(currentElement));
@@ -777,9 +779,9 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      *
      * @param props  the properties to combine
      */
-    public void combine(ExtendedProperties props) {
-        for (Iterator<String> it = props.getKeys(); it.hasNext();) {
-            String key = it.next();
+    public void combine(final ExtendedProperties props) {
+        for (final Iterator<String> it = props.getKeys(); it.hasNext();) {
+            final String key = it.next();
             clearProperty(key);
             addPropertyDirect(key, props.get(key));
         }
@@ -790,7 +792,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      *
      * @param key  the property key to remove along with corresponding value
      */
-    public void clearProperty(String key) {
+    public void clearProperty(final String key) {
         if (containsKey(key)) {
             // we also need to rebuild the keysAsListed or else
             // things get *very* confusing
@@ -821,12 +823,12 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @param prefix  the prefix to match
      * @return an Iterator of keys that match the prefix
      */
-    public Iterator<String> getKeys(String prefix) {
-        Iterator<String> keys = getKeys();
-        ArrayList<String> matchingKeys = new ArrayList<String>();
+    public Iterator<String> getKeys(final String prefix) {
+        final Iterator<String> keys = getKeys();
+        final ArrayList<String> matchingKeys = new ArrayList<String>();
 
         while (keys.hasNext()) {
-            String key = keys.next();
+            final String key = keys.next();
             if (key.startsWith(prefix)) {
                 matchingKeys.add(key);
             }
@@ -843,13 +845,13 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @return a new independent ExtendedProperties
      * or {@code null} if no keys matched
      */
-    public ExtendedProperties subset(String prefix) {
-        ExtendedProperties c = new ExtendedProperties();
-        Iterator<String> keys = getKeys();
+    public ExtendedProperties subset(final String prefix) {
+        final ExtendedProperties c = new ExtendedProperties();
+        final Iterator<String> keys = getKeys();
         boolean validSubset = false;
 
         while (keys.hasNext()) {
-            String key = keys.next();
+            final String key = keys.next();
 
             if (key.startsWith(prefix)) {
                 if (!validSubset) {
@@ -889,11 +891,11 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * Display the configuration for debugging purposes to System.out.
      */
     public void display() {
-        Iterator<String> i = getKeys();
+        final Iterator<String> i = getKeys();
 
         while (i.hasNext()) {
-            String key = i.next();
-            Object value = get(key);
+            final String key = i.next();
+            final Object value = get(key);
             System.out.println(key + " => " + value);
         }
     }
@@ -906,7 +908,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws ClassCastException is thrown if the key maps to an
      * object that is not a String.
      */
-    public String getString(String key) {
+    public String getString(final String key) {
         return getString(key, null);
     }
 
@@ -920,8 +922,8 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws ClassCastException is thrown if the key maps to an
      * object that is not a String.
      */
-    public String getString(String key, String defaultValue) {
-        Object value = get(key);
+    public String getString(final String key, final String defaultValue) {
+        final Object value = get(key);
 
         if (value instanceof String) {
             return interpolate((String) value);
@@ -934,6 +936,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
             }
         } else if (value instanceof List) {
             @SuppressWarnings("unchecked") // Only expecting Strings here
+            final
             List<String> entry = (List<String>) value;
             return interpolate(entry.get(0)); // requires a String
         } else {
@@ -952,7 +955,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws IllegalArgumentException if one of the tokens is
      * malformed (does not contain an equals sign).
      */
-    public Properties getProperties(String key) {
+    public Properties getProperties(final String key) {
         return getProperties(key, new Properties());
     }
 
@@ -967,19 +970,19 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws IllegalArgumentException if one of the tokens is
      * malformed (does not contain an equals sign).
      */
-    public Properties getProperties(String key, Properties defaults) {
+    public Properties getProperties(final String key, final Properties defaults) {
         /*
          * Grab an array of the tokens for this key.
          */
-        String[] tokens = getStringArray(key);
+        final String[] tokens = getStringArray(key);
 
         // Each token is of the form 'key=value'.
-        Properties props = new Properties(defaults);
-        for (String token : tokens) {
-            int equalSign = token.indexOf('=');
+        final Properties props = new Properties(defaults);
+        for (final String token : tokens) {
+            final int equalSign = token.indexOf('=');
             if (equalSign > 0) {
-                String pkey = token.substring(0, equalSign).trim();
-                String pvalue = token.substring(equalSign + 1).trim();
+                final String pkey = token.substring(0, equalSign).trim();
+                final String pvalue = token.substring(equalSign + 1).trim();
                 props.setProperty(pkey, pvalue);
             } else {
                 throw new IllegalArgumentException('\'' + token + "' does not contain " + "an equals sign");
@@ -997,8 +1000,8 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws ClassCastException is thrown if the key maps to an
      * object that is not a String/List.
      */
-    public String[] getStringArray(String key) {
-        Object value = get(key);
+    public String[] getStringArray(final String key) {
+        final Object value = get(key);
 
         List<String> values;
         if (value instanceof String) {
@@ -1007,6 +1010,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
             
         } else if (value instanceof List) {
             @SuppressWarnings("unchecked") // We only add Strings to the Lists
+            final
             List<String> list = (List<String>) value;
             values = list;
             
@@ -1020,7 +1024,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
             throw new ClassCastException('\'' + key + "' doesn't map to a String/List object");
         }
 
-        String[] tokens = new String[values.size()];
+        final String[] tokens = new String[values.size()];
         for (int i = 0; i < tokens.length; i++) {
             tokens[i] = values.get(i);
         }
@@ -1037,7 +1041,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Vector.
      */
-    public Vector<String> getVector(String key) {
+    public Vector<String> getVector(final String key) {
         return getVector(key, null);
     }
 
@@ -1053,16 +1057,17 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Vector.
      */
-    public Vector<String> getVector(String key, Vector<String> defaultValue) {
-        Object value = get(key);
+    public Vector<String> getVector(final String key, final Vector<String> defaultValue) {
+        final Object value = get(key);
 
         if (value instanceof List) {
             @SuppressWarnings("unchecked") // our lists only contain Strings
+            final
             List<String> list = (List<String>) value;
             return new Vector<String>(list);
             
         } else if (value instanceof String) {
-            Vector<String> values = new Vector<String>(1);
+            final Vector<String> values = new Vector<String>(1);
             values.add((String) value);
             super.put(key, values);
             return values;
@@ -1090,7 +1095,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * object that is not a List.
      * @since 3.2
      */
-    public List<String> getList(String key) {
+    public List<String> getList(final String key) {
         return getList(key, null);
     }
 
@@ -1107,16 +1112,17 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * object that is not a List.
      * @since 3.2
      */
-    public List<String> getList(String key, List<String> defaultValue) {
-        Object value = get(key);
+    public List<String> getList(final String key, final List<String> defaultValue) {
+        final Object value = get(key);
 
         if (value instanceof List) {
             @SuppressWarnings("unchecked") // our lists only contain strings
+            final
             List<String> list = (List<String>) value;
             return new ArrayList<String>(list);
             
         } else if (value instanceof String) {
-            List<String> values = new ArrayList<String>(1);
+            final List<String> values = new ArrayList<String>(1);
             values.add((String) value);
             super.put(key, values);
             return values;
@@ -1142,8 +1148,8 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Boolean.
      */
-    public boolean getBoolean(String key) {
-        Boolean b = getBoolean(key, null);
+    public boolean getBoolean(final String key) {
+        final Boolean b = getBoolean(key, null);
         if (b != null) {
             return b.booleanValue();
         } else {
@@ -1160,7 +1166,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Boolean.
      */
-    public boolean getBoolean(String key, boolean defaultValue) {
+    public boolean getBoolean(final String key, final boolean defaultValue) {
         return getBoolean(key, Boolean.valueOf(defaultValue)).booleanValue();
     }
 
@@ -1174,16 +1180,16 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws ClassCastException is thrown if the key maps to an
      * object that is not a Boolean.
      */
-    public Boolean getBoolean(String key, Boolean defaultValue) {
+    public Boolean getBoolean(final String key, final Boolean defaultValue) {
 
-        Object value = get(key);
+        final Object value = get(key);
 
         if (value instanceof Boolean) {
             return (Boolean) value;
             
         } else if (value instanceof String) {
-            String s = testBoolean((String) value);
-            Boolean b = Boolean.valueOf(s);
+            final String s = testBoolean((String) value);
+            final Boolean b = Boolean.valueOf(s);
             super.put(key, b);
             return b;
             
@@ -1210,8 +1216,8 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @return <code>true</code> or <code>false</code> if the supplied
      * text maps to a boolean value, or <code>null</code> otherwise.
      */
-    public String testBoolean(String value) {
-        String s = value.toLowerCase(Locale.ENGLISH);
+    public String testBoolean(final String value) {
+        final String s = value.toLowerCase(Locale.ENGLISH);
 
         if (s.equals("true") || s.equals("on") || s.equals("yes")) {
             return "true";
@@ -1234,8 +1240,8 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public byte getByte(String key) {
-        Byte b = getByte(key, null);
+    public byte getByte(final String key) {
+        final Byte b = getByte(key, null);
         if (b != null) {
             return b.byteValue();
         } else {
@@ -1254,7 +1260,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public byte getByte(String key, byte defaultValue) {
+    public byte getByte(final String key, final byte defaultValue) {
         return getByte(key, Byte.valueOf(defaultValue)).byteValue();
     }
 
@@ -1270,14 +1276,14 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public Byte getByte(String key, Byte defaultValue) {
-        Object value = get(key);
+    public Byte getByte(final String key, final Byte defaultValue) {
+        final Object value = get(key);
 
         if (value instanceof Byte) {
             return (Byte) value;
             
         } else if (value instanceof String) {
-            Byte b = new Byte((String) value);
+            final Byte b = new Byte((String) value);
             super.put(key, b);
             return b;
             
@@ -1304,8 +1310,8 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public short getShort(String key) {
-        Short s = getShort(key, null);
+    public short getShort(final String key) {
+        final Short s = getShort(key, null);
         if (s != null) {
             return s.shortValue();
         } else {
@@ -1324,7 +1330,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public short getShort(String key, short defaultValue) {
+    public short getShort(final String key, final short defaultValue) {
         return getShort(key, Short.valueOf(defaultValue)).shortValue();
     }
 
@@ -1340,14 +1346,14 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public Short getShort(String key, Short defaultValue) {
-        Object value = get(key);
+    public Short getShort(final String key, final Short defaultValue) {
+        final Object value = get(key);
 
         if (value instanceof Short) {
             return (Short) value;
             
         } else if (value instanceof String) {
-            Short s = new Short((String) value);
+            final Short s = new Short((String) value);
             super.put(key, s);
             return s;
             
@@ -1369,7 +1375,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @param name The resource name.
      * @return The value of the resource as an integer.
      */
-    public int getInt(String name) {
+    public int getInt(final String name) {
         return getInteger(name);
     }
 
@@ -1381,7 +1387,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @param def The default value of the resource.
      * @return The value of the resource as an integer.
      */
-    public int getInt(String name, int def) {
+    public int getInt(final String name, final int def) {
         return getInteger(name, def);
     }
 
@@ -1397,8 +1403,8 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public int getInteger(String key) {
-        Integer i = getInteger(key, null);
+    public int getInteger(final String key) {
+        final Integer i = getInteger(key, null);
         if (i != null) {
             return i.intValue();
         } else {
@@ -1417,8 +1423,8 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public int getInteger(String key, int defaultValue) {
-        Integer i = getInteger(key, null);
+    public int getInteger(final String key, final int defaultValue) {
+        final Integer i = getInteger(key, null);
 
         if (i == null) {
             return defaultValue;
@@ -1438,14 +1444,14 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public Integer getInteger(String key, Integer defaultValue) {
-        Object value = get(key);
+    public Integer getInteger(final String key, final Integer defaultValue) {
+        final Object value = get(key);
 
         if (value instanceof Integer) {
             return (Integer) value;
             
         } else if (value instanceof String) {
-            Integer i = new Integer((String) value);
+            final Integer i = new Integer((String) value);
             super.put(key, i);
             return i;
             
@@ -1472,8 +1478,8 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public long getLong(String key) {
-        Long l = getLong(key, null);
+    public long getLong(final String key) {
+        final Long l = getLong(key, null);
         if (l != null) {
             return l.longValue();
         } else {
@@ -1492,7 +1498,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public long getLong(String key, long defaultValue) {
+    public long getLong(final String key, final long defaultValue) {
         return getLong(key, new Long(defaultValue)).longValue();
     }
 
@@ -1508,14 +1514,14 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public Long getLong(String key, Long defaultValue) {
-        Object value = get(key);
+    public Long getLong(final String key, final Long defaultValue) {
+        final Object value = get(key);
 
         if (value instanceof Long) {
             return (Long) value;
             
         } else if (value instanceof String) {
-            Long l = new Long((String) value);
+            final Long l = new Long((String) value);
             super.put(key, l);
             return l;
             
@@ -1542,8 +1548,8 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public float getFloat(String key) {
-        Float f = getFloat(key, null);
+    public float getFloat(final String key) {
+        final Float f = getFloat(key, null);
         if (f != null) {
             return f.floatValue();
         } else {
@@ -1562,7 +1568,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public float getFloat(String key, float defaultValue) {
+    public float getFloat(final String key, final float defaultValue) {
         return getFloat(key, new Float(defaultValue)).floatValue();
     }
 
@@ -1578,14 +1584,14 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public Float getFloat(String key, Float defaultValue) {
-        Object value = get(key);
+    public Float getFloat(final String key, final Float defaultValue) {
+        final Object value = get(key);
 
         if (value instanceof Float) {
             return (Float) value;
             
         } else if (value instanceof String) {
-            Float f = new Float((String) value);
+            final Float f = new Float((String) value);
             super.put(key, f);
             return f;
             
@@ -1612,8 +1618,8 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public double getDouble(String key) {
-        Double d = getDouble(key, null);
+    public double getDouble(final String key) {
+        final Double d = getDouble(key, null);
         if (d != null) {
             return d.doubleValue();
         } else {
@@ -1632,7 +1638,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public double getDouble(String key, double defaultValue) {
+    public double getDouble(final String key, final double defaultValue) {
         return getDouble(key, new Double(defaultValue)).doubleValue();
     }
 
@@ -1648,14 +1654,14 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @throws NumberFormatException is thrown if the value mapped
      * by the key has not a valid number format.
      */
-    public Double getDouble(String key, Double defaultValue) {
-        Object value = get(key);
+    public Double getDouble(final String key, final Double defaultValue) {
+        final Object value = get(key);
 
         if (value instanceof Double) {
             return (Double) value;
             
         } else if (value instanceof String) {
-            Double d = new Double((String) value);
+            final Double d = new Double((String) value);
             super.put(key, d);
             return d;
             
@@ -1683,10 +1689,11 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @param props  the properties object to convert
      * @return new ExtendedProperties created from props
      */
-    public static ExtendedProperties convertProperties(Properties props) {
-        ExtendedProperties c = new ExtendedProperties();
+    public static ExtendedProperties convertProperties(final Properties props) {
+        final ExtendedProperties c = new ExtendedProperties();
 
         @SuppressWarnings("unchecked") // Properties are supposed to have string keys ...
+        final
         Enumeration<String> e = (Enumeration<String>) props.propertyNames();
         // Unfortunately PMD 4.3 cannot handle the original code where the @Suppress
         // was in the for loop:
@@ -1694,8 +1701,8 @@ public class ExtendedProperties extends Hashtable<String, Object> {
         //    Enumeration<String> e = (Enumeration<String>) props.propertyNames(); e.hasMoreElements();) {
         //        String s = e.nextElement(); // ... if props does not, this line would fail anyway ...
         while (e.hasMoreElements()) {
-            String s = e.nextElement(); // ... if props does not, this line would fail anyway ...
-            String value = props.getProperty(s);
+            final String s = e.nextElement(); // ... if props does not, this line would fail anyway ...
+            final String value = props.getProperty(s);
             if(value != null) {
                 c.setProperty(s, value);
             }
@@ -1713,8 +1720,8 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @return old value of the property
      */
     @Override
-    public Object put(String key, Object value) {
-        Object ret = getProperty(key);
+    public Object put(final String key, final Object value) {
+        final Object ret = getProperty(key);
         addProperty(key, value);
         return ret;
     }
@@ -1727,16 +1734,17 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @param map full of key/value pair data
      */
     @Override
-    public void putAll(Map<? extends String, ? extends Object> map) {
+    public void putAll(final Map<? extends String, ? extends Object> map) {
         if (map instanceof ExtendedProperties) {
-            for (Iterator<String> it = ((ExtendedProperties) map).getKeys(); it.hasNext(); ) {
-                String key = it.next();
+            for (final Iterator<String> it = ((ExtendedProperties) map).getKeys(); it.hasNext(); ) {
+                final String key = it.next();
                 put(key, map.get(key));
             }
         } else {
             @SuppressWarnings("unchecked") // OK to downcast here
+            final
             Map<String, Object> mapso = (Map<String,Object>) map;
-            for (java.util.Map.Entry<String, Object> entry : mapso.entrySet()) {
+            for (final java.util.Map.Entry<String, Object> entry : mapso.entrySet()) {
                 put(entry.getKey(), entry.getValue());
             }
         }
@@ -1751,9 +1759,9 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * @return old value of the property
      */
     @Override
-    public Object remove(Object key) {
-        String strKey = String.valueOf(key);
-        Object ret = getProperty(strKey);
+    public Object remove(final Object key) {
+        final String strKey = String.valueOf(key);
+        final Object ret = getProperty(strKey);
         clearProperty(strKey);
         return ret;
     }

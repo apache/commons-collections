@@ -72,9 +72,9 @@ public class TransformedMap<K, V>
      * @return a new transformed map
      * @throws IllegalArgumentException if map is null
      */
-    public static <K, V> TransformedMap<K, V> transformingMap(Map<K, V> map,
-            Transformer<? super K, ? extends K> keyTransformer,
-            Transformer<? super V, ? extends V> valueTransformer) {
+    public static <K, V> TransformedMap<K, V> transformingMap(final Map<K, V> map,
+            final Transformer<? super K, ? extends K> keyTransformer,
+            final Transformer<? super V, ? extends V> valueTransformer) {
         return new TransformedMap<K, V>(map, keyTransformer, valueTransformer);
     }
 
@@ -95,12 +95,12 @@ public class TransformedMap<K, V>
      * @throws IllegalArgumentException if map is null
      * @since 3.2
      */
-    public static <K, V> TransformedMap<K, V> transformedMap(Map<K, V> map,
-            Transformer<? super K, ? extends K> keyTransformer,
-            Transformer<? super V, ? extends V> valueTransformer) {
-        TransformedMap<K, V> decorated = new TransformedMap<K, V>(map, keyTransformer, valueTransformer);
+    public static <K, V> TransformedMap<K, V> transformedMap(final Map<K, V> map,
+            final Transformer<? super K, ? extends K> keyTransformer,
+            final Transformer<? super V, ? extends V> valueTransformer) {
+        final TransformedMap<K, V> decorated = new TransformedMap<K, V>(map, keyTransformer, valueTransformer);
         if (map.size() > 0) {
-            Map<K, V> transformed = decorated.transformMap(map);
+            final Map<K, V> transformed = decorated.transformMap(map);
             decorated.clear();
             decorated.decorated().putAll(transformed);  // avoids double transformation
         }
@@ -119,8 +119,8 @@ public class TransformedMap<K, V>
      * @param valueTransformer  the transformer to use for value conversion, null means no conversion
      * @throws IllegalArgumentException if map is null
      */
-    protected TransformedMap(Map<K, V> map, Transformer<? super K, ? extends K> keyTransformer,
-            Transformer<? super V, ? extends V> valueTransformer) {
+    protected TransformedMap(final Map<K, V> map, final Transformer<? super K, ? extends K> keyTransformer,
+            final Transformer<? super V, ? extends V> valueTransformer) {
         super(map);
         this.keyTransformer = keyTransformer;
         this.valueTransformer = valueTransformer;
@@ -134,7 +134,7 @@ public class TransformedMap<K, V>
      * @throws IOException
      * @since 3.1
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(map);
     }
@@ -148,7 +148,7 @@ public class TransformedMap<K, V>
      * @since 3.1
      */
     @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map<K, V>) in.readObject(); // (1)
     }
@@ -162,7 +162,7 @@ public class TransformedMap<K, V>
      * @param object  the object to transform
      * @return the transformed object
      */
-    protected K transformKey(K object) {
+    protected K transformKey(final K object) {
         if (keyTransformer == null) {
             return object;
         }
@@ -177,7 +177,7 @@ public class TransformedMap<K, V>
      * @param object  the object to transform
      * @return the transformed object
      */
-    protected V transformValue(V object) {
+    protected V transformValue(final V object) {
         if (valueTransformer == null) {
             return object;
         }
@@ -193,13 +193,13 @@ public class TransformedMap<K, V>
      * @return the transformed object
      */
     @SuppressWarnings("unchecked")
-    protected Map<K, V> transformMap(Map<? extends K, ? extends V> map) {
+    protected Map<K, V> transformMap(final Map<? extends K, ? extends V> map) {
         if (map.isEmpty()) {
             return (Map<K, V>) map;
         }
-        Map<K, V> result = new LinkedMap<K, V>(map.size());
+        final Map<K, V> result = new LinkedMap<K, V>(map.size());
 
-        for (Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
+        for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
             result.put(transformKey(entry.getKey()), transformValue(entry.getValue()));
         }
         return result;
@@ -213,7 +213,7 @@ public class TransformedMap<K, V>
      * @since 3.1
      */
     @Override
-    protected V checkSetValue(V value) {
+    protected V checkSetValue(final V value) {
         return valueTransformer.transform(value);
     }
 

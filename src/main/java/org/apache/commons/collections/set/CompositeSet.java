@@ -50,7 +50,7 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
      *
      * @param set  the initial set in the composite
      */
-    public CompositeSet(Set<E> set) {
+    public CompositeSet(final Set<E> set) {
         super(set);
     }
 
@@ -59,7 +59,7 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
      * 
      * @param sets  the initial sets in the composite
      */
-    public CompositeSet(Set<E>... sets) {
+    public CompositeSet(final Set<E>... sets) {
         super(sets);
     }
 
@@ -75,13 +75,13 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
      * @see SetMutator
      */
     @Override
-    public synchronized void addComposited(Collection<E> c) {
+    public synchronized void addComposited(final Collection<E> c) {
         if (!(c instanceof Set)) {
             throw new IllegalArgumentException("Collections added must implement java.util.Set");
         }
 
-        for (Set<E> set : getCollections()) {
-            Collection<E> intersects = CollectionUtils.intersection(set, c);
+        for (final Set<E> set : getCollections()) {
+            final Collection<E> intersects = CollectionUtils.intersection(set, c);
             if (intersects.size() > 0) {
                 if (this.mutator == null) {
                     throw new UnsupportedOperationException(
@@ -117,7 +117,7 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
      */
     @Override
     @SuppressWarnings("unchecked")
-    public synchronized void addComposited(Collection<E> c, Collection<E> d) {
+    public synchronized void addComposited(final Collection<E> c, final Collection<E> d) {
         if (!(c instanceof Set)) {
             throw new IllegalArgumentException("Argument must implement java.util.Set");
         }
@@ -133,7 +133,7 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
      * @throws IllegalArgumentException if any of the collections in comps do not implement Set
      */
     @Override
-    public synchronized void addComposited(Collection<E>[] comps) {
+    public synchronized void addComposited(final Collection<E>[] comps) {
         for (int i = comps.length - 1; i >= 0; --i) {
             this.addComposited(comps[i]);
         }
@@ -147,7 +147,7 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
      * @param mutator  the {@link CollectionMutator} to use for this composite
      */
     @Override
-    public void setMutator(CollectionMutator<E> mutator) {
+    public void setMutator(final CollectionMutator<E> mutator) {
         super.setMutator(mutator);
     }
 
@@ -161,8 +161,8 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
      * @return true if the object is removed, false otherwise
      */
     @Override
-    public boolean remove(Object obj) {
-        for (Set<? extends E> set : getCollections()) {
+    public boolean remove(final Object obj) {
+        for (final Set<? extends E> set : getCollections()) {
             if (set.contains(obj)) {
                 return set.remove(obj);
             }
@@ -174,9 +174,9 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
      * @see Set#equals
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj instanceof Set) {
-            Set<?> set = (Set<?>) obj;
+            final Set<?> set = (Set<?>) obj;
             return set.containsAll(this) && set.size() == this.size();
         }
         return false;
@@ -188,7 +188,7 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
     @Override
     public int hashCode() {
         int code = 0;
-        for (E e : this) {
+        for (final E e : this) {
             code += e == null ? 0 : e.hashCode();
         }
         return code;

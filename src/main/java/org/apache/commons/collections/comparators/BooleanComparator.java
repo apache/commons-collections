@@ -92,7 +92,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      * <code>true</code> <code>Boolean</code>s before <code>false</code>
      * @return a singleton BooleanComparator instance
      */
-    public static BooleanComparator booleanComparator(boolean trueFirst) {
+    public static BooleanComparator booleanComparator(final boolean trueFirst) {
         return trueFirst ? TRUE_FIRST : FALSE_FIRST;
     }
 
@@ -119,7 +119,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      * @param trueFirst when <code>true</code>, sort 
      *  <code>true</code> boolean values before <code>false</code>
      */
-    public BooleanComparator(boolean trueFirst) {
+    public BooleanComparator(final boolean trueFirst) {
         this.trueFirst = trueFirst;
     }
 
@@ -133,9 +133,9 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      * @return negative if obj1 is less, positive if greater, zero if equal
      * @throws NullPointerException when either argument <code>null</code>
      */
-    public int compare(Boolean b1, Boolean b2) {
-        boolean v1 = b1.booleanValue();
-        boolean v2 = b2.booleanValue();
+    public int compare(final Boolean b1, final Boolean b2) {
+        final boolean v1 = b1.booleanValue();
+        final boolean v2 = b2.booleanValue();
 
         return (v1 ^ v2) ? ( (v1 ^ trueFirst) ? 1 : -1 ) : 0;
     }
@@ -149,7 +149,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      */
     @Override
     public int hashCode() {
-        int hash = "BooleanComparator".hashCode();
+        final int hash = "BooleanComparator".hashCode();
         return trueFirst ? -1 * hash : hash;
     }
 
@@ -166,7 +166,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      * @return true if equal
      */
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         return (this == object) || 
                ((object instanceof BooleanComparator) && 
                 (this.trueFirst == ((BooleanComparator)object).trueFirst));

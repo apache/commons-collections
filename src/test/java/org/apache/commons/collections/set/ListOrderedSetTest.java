@@ -41,7 +41,7 @@ public class ListOrderedSetTest<E>
 
     private static final Integer THREE = new Integer(3);
 
-    public ListOrderedSetTest(String testName) {
+    public ListOrderedSetTest(final String testName) {
         super(testName);
     }
 
@@ -52,7 +52,7 @@ public class ListOrderedSetTest<E>
 
     @SuppressWarnings("unchecked")
     protected ListOrderedSet<E> setupSet() {
-        ListOrderedSet<E> set = makeObject();
+        final ListOrderedSet<E> set = makeObject();
 
         for (int i = 0; i < 10; i++) {
             set.add((E) Integer.toString(i));
@@ -62,7 +62,7 @@ public class ListOrderedSetTest<E>
 
     @SuppressWarnings("unchecked")
     public void testOrdering() {
-        ListOrderedSet<E> set = setupSet();
+        final ListOrderedSet<E> set = setupSet();
         Iterator<E> it = set.iterator();
 
         for (int i = 0; i < 10; i++) {
@@ -97,8 +97,8 @@ public class ListOrderedSetTest<E>
 
     @SuppressWarnings("unchecked")
     public void testListAddRemove() {
-        ListOrderedSet<E> set = makeObject();
-        List<E> view = set.asList();
+        final ListOrderedSet<E> set = makeObject();
+        final List<E> view = set.asList();
         set.add((E) ZERO);
         set.add((E) ONE);
         set.add((E) TWO);
@@ -127,7 +127,7 @@ public class ListOrderedSetTest<E>
 
     @SuppressWarnings("unchecked")
     public void testListAddIndexed() {
-        ListOrderedSet<E> set = makeObject();
+        final ListOrderedSet<E> set = makeObject();
         set.add((E) ZERO);
         set.add((E) TWO);
 
@@ -143,7 +143,7 @@ public class ListOrderedSetTest<E>
         assertSame(ONE, set.get(1));
         assertSame(TWO, set.get(2));
 
-        List<E> list = new ArrayList<E>();
+        final List<E> list = new ArrayList<E>();
         list.add((E) ZERO);
         list.add((E) TWO);
 
@@ -165,9 +165,9 @@ public class ListOrderedSetTest<E>
 
     @SuppressWarnings("unchecked")
     public void testListAddReplacing() {
-        ListOrderedSet<E> set = makeObject();
-        A a = new A();
-        B b = new B();
+        final ListOrderedSet<E> set = makeObject();
+        final A a = new A();
+        final B b = new B();
         set.add((E) a);
         assertEquals(1, set.size());
         set.add((E) b); // will match but not replace A as equal
@@ -180,14 +180,14 @@ public class ListOrderedSetTest<E>
 
     @SuppressWarnings("unchecked")
     public void testRetainAll() {
-        List<E> list = new ArrayList<E>(10);
-        Set<E> set = new HashSet<E>(10);
-        ListOrderedSet<E> orderedSet = ListOrderedSet.listOrderedSet(set, list);
+        final List<E> list = new ArrayList<E>(10);
+        final Set<E> set = new HashSet<E>(10);
+        final ListOrderedSet<E> orderedSet = ListOrderedSet.listOrderedSet(set, list);
         for (int i = 0; i < 10; ++i) {
             orderedSet.add((E) Integer.valueOf(10 - i - 1));
         }
 
-        Collection<E> retained = new ArrayList<E>(5);
+        final Collection<E> retained = new ArrayList<E>(5);
         for (int i = 0; i < 5; ++i) {
             retained.add((E) Integer.valueOf(i * 2));
         }
@@ -206,19 +206,19 @@ public class ListOrderedSetTest<E>
      * test case for https://issues.apache.org/jira/browse/COLLECTIONS-426
      */
     public void testRetainAllCollections426() {
-        int size = 100000;
-        ListOrderedSet<Integer> set = new ListOrderedSet<Integer>();
+        final int size = 100000;
+        final ListOrderedSet<Integer> set = new ListOrderedSet<Integer>();
         for (int i = 0; i < size; i++) {
             set.add(i);
         }
-        ArrayList<Integer> list = new ArrayList<Integer>();
+        final ArrayList<Integer> list = new ArrayList<Integer>();
         for (int i = size; i < 2 * size; i++) {
             list.add(i);
         }
 
-        long start = System.currentTimeMillis();
+        final long start = System.currentTimeMillis();
         set.retainAll(list);
-        long stop = System.currentTimeMillis();
+        final long stop = System.currentTimeMillis();
 
         // make sure retainAll completes under 5 seconds
         // TODO if test is migrated to JUnit 4, add a Timeout rule.
@@ -229,7 +229,7 @@ public class ListOrderedSetTest<E>
     static class A {
 
         @Override
-        public boolean equals(Object obj) {
+        public boolean equals(final Object obj) {
             return obj instanceof A || obj instanceof B;
         }
 
@@ -242,7 +242,7 @@ public class ListOrderedSetTest<E>
     static class B {
 
         @Override
-        public boolean equals(Object obj) {
+        public boolean equals(final Object obj) {
             return obj instanceof A || obj instanceof B;
         }
 
@@ -256,27 +256,27 @@ public class ListOrderedSetTest<E>
         try {
             ListOrderedSet.listOrderedSet((List<E>) null);
             fail();
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
         }
         try {
             ListOrderedSet.listOrderedSet((Set<E>) null);
             fail();
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
         }
         try {
             ListOrderedSet.listOrderedSet(null, null);
             fail();
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
         }
         try {
             ListOrderedSet.listOrderedSet(new HashSet<E>(), null);
             fail();
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
         }
         try {
             ListOrderedSet.listOrderedSet(null, new ArrayList<E>());
             fail();
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
         }
     }
 

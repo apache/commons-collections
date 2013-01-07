@@ -60,7 +60,7 @@ public final class ExceptionClosure<E> implements Closure<E>, Serializable {
      * @param input  the input object
      * @throws FunctorException always
      */
-    public void execute(E input) {
+    public void execute(final E input) {
         throw new FunctorException("ExceptionClosure invoked");
     }
 

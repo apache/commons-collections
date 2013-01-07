@@ -53,7 +53,7 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
      * @return a new transformed Bag
      * @throws IllegalArgumentException if bag or transformer is null
      */
-    public static <E> Bag<E> transformingBag(Bag<E> bag, Transformer<? super E, ? extends E> transformer) {
+    public static <E> Bag<E> transformingBag(final Bag<E> bag, final Transformer<? super E, ? extends E> transformer) {
         return new TransformedBag<E>(bag, transformer);
     }
     
@@ -72,13 +72,14 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
      * @throws IllegalArgumentException if bag or transformer is null
      * @since 3.3
      */
-    public static <E> Bag<E> transformedBag(Bag<E> bag, Transformer<? super E, ? extends E> transformer) {
-        TransformedBag<E> decorated = new TransformedBag<E>(bag, transformer);
+    public static <E> Bag<E> transformedBag(final Bag<E> bag, final Transformer<? super E, ? extends E> transformer) {
+        final TransformedBag<E> decorated = new TransformedBag<E>(bag, transformer);
         if (transformer != null && bag != null && bag.size() > 0) {
             @SuppressWarnings("unchecked") // Bag is of type E
+            final
             E[] values = (E[]) bag.toArray();
             bag.clear();
-            for (E value : values) {
+            for (final E value : values) {
                 decorated.decorated().add(transformer.transform(value));
             }
         }
@@ -96,7 +97,7 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if bag or transformer is null
      */
-    protected TransformedBag(Bag<E> bag, Transformer<? super E, ? extends E> transformer) {
+    protected TransformedBag(final Bag<E> bag, final Transformer<? super E, ? extends E> transformer) {
         super(bag, transformer);
     }
 
@@ -111,22 +112,22 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
 
     //-----------------------------------------------------------------------
     
-    public int getCount(Object object) {
+    public int getCount(final Object object) {
         return getBag().getCount(object);
     }
 
-    public boolean remove(Object object, int nCopies) {
+    public boolean remove(final Object object, final int nCopies) {
         return getBag().remove(object, nCopies);
     }
 
     //-----------------------------------------------------------------------
     
-    public boolean add(E object, int nCopies) {
+    public boolean add(final E object, final int nCopies) {
         return getBag().add(transform(object), nCopies);
     }
 
     public Set<E> uniqueSet() {
-        Set<E> set = getBag().uniqueSet();
+        final Set<E> set = getBag().uniqueSet();
         return TransformedSet.<E>transformingSet(set, transformer);
     }
 

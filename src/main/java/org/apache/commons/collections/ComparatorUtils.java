@@ -76,8 +76,8 @@ public class ComparatorUtils {
      * @see ComparatorChain
      */
     @SuppressWarnings("unchecked")
-    public static <E extends Comparable<? super E>> Comparator<E> chainedComparator(Comparator<E> comparator1,
-                                                                                    Comparator<E> comparator2) {
+    public static <E extends Comparable<? super E>> Comparator<E> chainedComparator(final Comparator<E> comparator1,
+                                                                                    final Comparator<E> comparator2) {
         return chainedComparator(new Comparator[] {comparator1, comparator2});
     }
 
@@ -90,9 +90,9 @@ public class ComparatorUtils {
      * @throws NullPointerException if comparators array is null or contains a null
      * @see ComparatorChain
      */
-    public static <E extends Comparable<? super E>> Comparator<E> chainedComparator(Comparator<E>[] comparators) {
-        ComparatorChain<E> chain = new ComparatorChain<E>();
-        for (Comparator<E> comparator : comparators) {
+    public static <E extends Comparable<? super E>> Comparator<E> chainedComparator(final Comparator<E>[] comparators) {
+        final ComparatorChain<E> chain = new ComparatorChain<E>();
+        for (final Comparator<E> comparator : comparators) {
             if (comparator == null) {
                 throw new NullPointerException("Comparator cannot be null");
             }
@@ -113,7 +113,7 @@ public class ComparatorUtils {
      * @see ComparatorChain
      */
     @SuppressWarnings("unchecked")
-    public static <E extends Comparable<? super E>> Comparator<E> chainedComparator(Collection<Comparator<E>> comparators) {
+    public static <E extends Comparable<? super E>> Comparator<E> chainedComparator(final Collection<Comparator<E>> comparators) {
         return chainedComparator(
             (Comparator<E>[]) comparators.toArray(new Comparator[comparators.size()])
         );
@@ -126,7 +126,7 @@ public class ComparatorUtils {
      * @return  a comparator that reverses the order of the input comparator
      * @see ReverseComparator
      */
-    public static <E> Comparator<E> reversedComparator(Comparator<E> comparator) {
+    public static <E> Comparator<E> reversedComparator(final Comparator<E> comparator) {
         return new ReverseComparator<E>(comparator);
     }
 
@@ -142,7 +142,7 @@ public class ComparatorUtils {
      *        <code>false</code> {@link Boolean}s.
      * @return  a comparator that sorts booleans
      */
-    public static Comparator<Boolean> booleanComparator(boolean trueFirst) {
+    public static Comparator<Boolean> booleanComparator(final boolean trueFirst) {
         return BooleanComparator.booleanComparator(trueFirst);
     }
     
@@ -197,7 +197,7 @@ public class ComparatorUtils {
      * @see  TransformingComparator
      */
     @SuppressWarnings("unchecked")
-    public static <E> Comparator<E> transformedComparator(Comparator<E> comparator, Transformer<? super E, ? extends E> transformer) {
+    public static <E> Comparator<E> transformedComparator(Comparator<E> comparator, final Transformer<? super E, ? extends E> transformer) {
         if (comparator == null) {
             comparator = NATURAL_COMPARATOR;
         }
@@ -215,11 +215,11 @@ public class ComparatorUtils {
      *  @return  the smaller of the two objects
      */
     @SuppressWarnings("unchecked")
-    public static <E> E min(E o1, E o2, Comparator<E> comparator) {
+    public static <E> E min(final E o1, final E o2, Comparator<E> comparator) {
         if (comparator == null) {
             comparator = NATURAL_COMPARATOR;
         }
-        int c = comparator.compare(o1, o2);
+        final int c = comparator.compare(o1, o2);
         return c < 0 ? o1 : o2;
     }
 
@@ -234,11 +234,11 @@ public class ComparatorUtils {
      *  @return  the larger of the two objects
      */
     @SuppressWarnings("unchecked")
-    public static <E> E max(E o1, E o2, Comparator<E> comparator) {
+    public static <E> E max(final E o1, final E o2, Comparator<E> comparator) {
         if (comparator == null) {
             comparator = NATURAL_COMPARATOR;
         }
-        int c = comparator.compare(o1, o2);
+        final int c = comparator.compare(o1, o2);
         return c > 0 ? o1 : o2;
     }
     

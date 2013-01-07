@@ -28,7 +28,7 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 
     protected String[] testArray = { "One", "Two", "Three" };
 
-    public ObjectArrayIteratorTest(String testName) {
+    public ObjectArrayIteratorTest(final String testName) {
         super(testName);
     }
 
@@ -48,15 +48,15 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
         return new ObjectArrayIterator<E>();
     }
 
-    public ObjectArrayIterator<E> makeArrayIterator(E[] array) {
+    public ObjectArrayIterator<E> makeArrayIterator(final E[] array) {
         return new ObjectArrayIterator<E>(array);
     }
 
-    public ObjectArrayIterator<E> makeArrayIterator(E[] array, int index) {
+    public ObjectArrayIterator<E> makeArrayIterator(final E[] array, final int index) {
         return new ObjectArrayIterator<E>(array, index);
     }
 
-    public ObjectArrayIterator<E> makeArrayIterator(E[] array, int start, int end) {
+    public ObjectArrayIterator<E> makeArrayIterator(final E[] array, final int start, final int end) {
         return new ObjectArrayIterator<E>(array, start, end);
     }
 
@@ -66,9 +66,9 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     public void testIterator() {
-        Iterator<E> iter = makeObject();
-        for (String testValue : testArray) {
-            E iterValue = iter.next();
+        final Iterator<E> iter = makeObject();
+        for (final String testValue : testArray) {
+            final E iterValue = iter.next();
 
             assertEquals("Iteration value is correct", testValue, iterValue);
         }
@@ -77,7 +77,7 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 
         try {
             iter.next();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             assertTrue(
                 "NoSuchElementException must be thrown",
                 e.getClass().equals(new NoSuchElementException().getClass()));
@@ -89,34 +89,34 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
             makeArrayIterator(null);
 
             fail("Constructor should throw a NullPointerException when constructed with a null array");
-        } catch (NullPointerException e) {
+        } catch (final NullPointerException e) {
             // expected
         }
 
-        ObjectArrayIterator<E> iter = makeArrayIterator();
+        final ObjectArrayIterator<E> iter = makeArrayIterator();
         try {
             iter.setArray(null);
 
             fail("setArray(null) should throw a NullPointerException");
-        } catch (NullPointerException e) {
+        } catch (final NullPointerException e) {
             // expected
         }
     }
 
     @SuppressWarnings("unchecked")
     public void testDoubleSet() {
-        ObjectArrayIterator<E> it = makeArrayIterator();
+        final ObjectArrayIterator<E> it = makeArrayIterator();
         it.setArray((E[]) new String[0]);
         try {
             it.setArray((E[]) new String[0]);
             fail();
-        } catch (IllegalStateException ex) {
+        } catch (final IllegalStateException ex) {
         }
     }
 
     @SuppressWarnings("unchecked")
     public void testReset() {
-        ObjectArrayIterator<E> it = makeArrayIterator((E[]) testArray);
+        final ObjectArrayIterator<E> it = makeArrayIterator((E[]) testArray);
         it.next();
         it.reset();
         assertEquals("One", it.next());

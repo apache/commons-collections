@@ -44,7 +44,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      * @throws IllegalArgumentException if the closures array is null
      * @throws IllegalArgumentException if any closure in the array is null
      */
-    public static <E> Closure<E> chainedClosure(Closure<? super E>... closures) {
+    public static <E> Closure<E> chainedClosure(final Closure<? super E>... closures) {
         FunctorUtils.validate(closures);
         if (closures.length == 0) {
             return NOPClosure.<E>nopClosure();
@@ -64,7 +64,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      * @throws IllegalArgumentException if any closure in the collection is null
      */
     @SuppressWarnings("unchecked")
-    public static <E> Closure<E> chainedClosure(Collection<Closure<E>> closures) {
+    public static <E> Closure<E> chainedClosure(final Collection<Closure<E>> closures) {
         if (closures == null) {
             throw new IllegalArgumentException("Closure collection must not be null");
         }
@@ -72,9 +72,9 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
             return NOPClosure.<E>nopClosure();
         }
         // convert to array like this to guarantee iterator() ordering
-        Closure<? super E>[] cmds = new Closure[closures.size()];
+        final Closure<? super E>[] cmds = new Closure[closures.size()];
         int i = 0;
-        for (Closure<? super E> closure : closures) {
+        for (final Closure<? super E> closure : closures) {
             cmds[i++] = closure;
         }
         FunctorUtils.validate(cmds);
@@ -87,7 +87,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      * 
      * @param closures  the closures to chain, not copied, no nulls
      */
-    public ChainedClosure(Closure<? super E>[] closures) {
+    public ChainedClosure(final Closure<? super E>[] closures) {
         super();
         iClosures = closures;
     }
@@ -97,8 +97,8 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      * 
      * @param input  the input object passed to each closure
      */
-    public void execute(E input) {
-        for (Closure<? super E> iClosure : iClosures) {
+    public void execute(final E input) {
+        for (final Closure<? super E> iClosure : iClosures) {
             iClosure.execute(input);
         }
     }

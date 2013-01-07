@@ -42,7 +42,7 @@ public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, Re
     /**
      * Create a new EntrySetToMapIteratorAdapter.
      */
-    public EntrySetToMapIteratorAdapter(Set<Map.Entry<K, V>> entrySet) {
+    public EntrySetToMapIteratorAdapter(final Set<Map.Entry<K, V>> entrySet) {
         this.entrySet = entrySet;
         reset();
     }
@@ -64,7 +64,7 @@ public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, Re
     /**
      * {@inheritDoc}
      */
-    public V setValue(V value) {
+    public V setValue(final V value) {
         return current().setValue(value);
     }
 

@@ -29,7 +29,7 @@ import org.apache.commons.collections.OrderedBidiMap;
 public class AbstractOrderedBidiMapDecoratorTest<K, V>
         extends AbstractOrderedBidiMapTest<K, V> {
 
-    public AbstractOrderedBidiMapDecoratorTest(String testName) {
+    public AbstractOrderedBidiMapDecoratorTest(final String testName) {
         super(testName);
     }
 
@@ -72,7 +72,7 @@ public class AbstractOrderedBidiMapDecoratorTest<K, V>
             super(new DualTreeBidiMap<K, V>());
         }
 
-        public TestOrderedBidiMap(OrderedBidiMap<K, V> map) {
+        public TestOrderedBidiMap(final OrderedBidiMap<K, V> map) {
             super(map);
         }
 

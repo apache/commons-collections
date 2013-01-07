@@ -49,7 +49,7 @@ public class EnumerationUtils {
      * @return a list containing all elements of the given enumeration
      * @throws NullPointerException if the enumeration parameter is <code>null</code>.
      */
-    public static <E> List<E> toList(Enumeration<E> enumeration) {
+    public static <E> List<E> toList(final Enumeration<E> enumeration) {
         return IteratorUtils.toList(new EnumerationIterator<E>(enumeration));
     }
 
@@ -60,8 +60,8 @@ public class EnumerationUtils {
      * @param stringTokenizer  the tokenizer to convert to a {@link List(String)}
      * @return List<String>
      */
-    public static List<String> toList(StringTokenizer stringTokenizer) {
-        List<String> result = new ArrayList<String>(stringTokenizer.countTokens());
+    public static List<String> toList(final StringTokenizer stringTokenizer) {
+        final List<String> result = new ArrayList<String>(stringTokenizer.countTokens());
         while (stringTokenizer.hasMoreTokens()) {
             result.add(stringTokenizer.nextToken());
         }

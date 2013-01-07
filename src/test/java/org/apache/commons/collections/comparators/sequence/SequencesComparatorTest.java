@@ -35,7 +35,7 @@ public class SequencesComparatorTest {
     @Test
     public void testLength() {
         for (int i = 0; i < before.size(); ++i) {
-            SequencesComparator<Character> comparator =
+            final SequencesComparator<Character> comparator =
                     new SequencesComparator<Character>(sequence(before.get(i)),
                             sequence(after.get(i)));
             Assert.assertEquals(length[i], comparator.getScript().getModifications());
@@ -44,7 +44,7 @@ public class SequencesComparatorTest {
 
     @Test
     public void testExecution() {
-        ExecutionVisitor<Character> ev = new ExecutionVisitor<Character>();
+        final ExecutionVisitor<Character> ev = new ExecutionVisitor<Character>();
         for (int i = 0; i < before.size(); ++i) {
             ev.setList(sequence(before.get(i)));
             new SequencesComparator<Character>(sequence(before.get(i)),
@@ -55,14 +55,14 @@ public class SequencesComparatorTest {
 
     @Test
     public void testMinimal() {
-        String[] shadokAlph = new String[] {
+        final String[] shadokAlph = new String[] {
             new String("GA"),
             new String("BU"),
             new String("ZO"),
             new String("MEU")
         };
-        List<String> sentenceBefore = new ArrayList<String>();
-        List<String> sentenceAfter  = new ArrayList<String>();
+        final List<String> sentenceBefore = new ArrayList<String>();
+        final List<String> sentenceAfter  = new ArrayList<String>();
         sentenceBefore.add(shadokAlph[0]);
         sentenceBefore.add(shadokAlph[2]);
         sentenceBefore.add(shadokAlph[3]);
@@ -84,7 +84,7 @@ public class SequencesComparatorTest {
         sentenceBefore.add(shadokAlph[0]);
         sentenceBefore.add(shadokAlph[3]);
 
-        Random random = new Random(4564634237452342L);
+        final Random random = new Random(4564634237452342L);
 
         for (int nbCom = 0; nbCom <= 40; nbCom+=5) {
             sentenceAfter.clear();
@@ -98,7 +98,7 @@ public class SequencesComparatorTest {
                 }
             }
 
-            SequencesComparator<String> comparator =
+            final SequencesComparator<String> comparator =
                     new SequencesComparator<String>(sentenceBefore, sentenceAfter);
             Assert.assertTrue(comparator.getScript().getModifications() <= nbCom);
         }
@@ -106,8 +106,8 @@ public class SequencesComparatorTest {
 
     @Test
     public void testShadok() {
-        int lgMax = 5;
-        String[] shadokAlph = new String[] {
+        final int lgMax = 5;
+        final String[] shadokAlph = new String[] {
             new String("GA"),
             new String("BU"),
             new String("ZO"),
@@ -115,11 +115,11 @@ public class SequencesComparatorTest {
         };
         List<List<String>> shadokSentences = new ArrayList<List<String>>();
         for (int lg=0; lg<lgMax; ++lg) {
-            List<List<String>> newTab = new ArrayList<List<String>>();
+            final List<List<String>> newTab = new ArrayList<List<String>>();
             newTab.add(new ArrayList<String>());
-            for (String element : shadokAlph) {
-                for (List<String> sentence : shadokSentences) {
-                    List<String> newSentence = new ArrayList<String>(sentence);
+            for (final String element : shadokAlph) {
+                for (final List<String> sentence : shadokSentences) {
+                    final List<String> newSentence = new ArrayList<String>(sentence);
                     newSentence.add(element);
                     newTab.add(newSentence);
                 }
@@ -127,7 +127,7 @@ public class SequencesComparatorTest {
             shadokSentences = newTab;
         }
 
-        ExecutionVisitor<String> ev = new ExecutionVisitor<String>();
+        final ExecutionVisitor<String> ev = new ExecutionVisitor<String>();
 
         for (int i = 0; i < shadokSentences.size(); ++i) {
             for (int j = 0; j < shadokSentences.size(); ++j) {
@@ -135,7 +135,7 @@ public class SequencesComparatorTest {
                 new SequencesComparator<String>(shadokSentences.get(i),
                         shadokSentences.get(j)).getScript().visit(ev);
 
-                StringBuilder concat = new StringBuilder();
+                final StringBuilder concat = new StringBuilder();
                 for (final String s : shadokSentences.get(j)) {
                     concat.append(s);
                 }
@@ -144,8 +144,8 @@ public class SequencesComparatorTest {
         }
     }
 
-    private List<Character> sequence(String string) {
-        List<Character> list = new ArrayList<Character>();
+    private List<Character> sequence(final String string) {
+        final List<Character> list = new ArrayList<Character>();
         for (int i = 0; i < string.length(); ++i) {
             list.add(new Character(string.charAt(i)));
         }
@@ -157,26 +157,26 @@ public class SequencesComparatorTest {
         private List<T> v;
         private int index;
 
-        public void setList(List<T> array) {
+        public void setList(final List<T> array) {
             v = new ArrayList<T>(array);
             index = 0;
         }
 
-        public void visitInsertCommand(T object) {
+        public void visitInsertCommand(final T object) {
             v.add(index++, object);
         }
 
-        public void visitKeepCommand(T object) {
+        public void visitKeepCommand(final T object) {
             ++index;
         }
 
-        public void visitDeleteCommand(T object) {
+        public void visitDeleteCommand(final T object) {
             v.remove(index);
         }
 
         public String getString() {
-            StringBuffer buffer = new StringBuffer();
-            for (T c : v) {
+            final StringBuffer buffer = new StringBuffer();
+            for (final T c : v) {
                 buffer.append(c);
             }
             return buffer.toString();

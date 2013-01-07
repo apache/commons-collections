@@ -29,7 +29,7 @@ import java.util.List;
  */
 public abstract class AbstractTypedCollectionTest<T> extends BulkTest {
 
-    public AbstractTypedCollectionTest(String name) {
+    public AbstractTypedCollectionTest(final String name) {
         super(name);
     }
 
@@ -42,12 +42,12 @@ public abstract class AbstractTypedCollectionTest<T> extends BulkTest {
 
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
-        Collection<T> c = typedCollection();
-        Integer i = new Integer(3);
+        final Collection<T> c = typedCollection();
+        final Integer i = new Integer(3);
         try {
             c.add((T) i);
             fail("Integer should fail string predicate.");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
         assertTrue("Collection shouldn't contain illegal element", 
@@ -57,8 +57,8 @@ public abstract class AbstractTypedCollectionTest<T> extends BulkTest {
 
     @SuppressWarnings("unchecked")
     public void testIllegalAddAll() {
-        Collection<T> c = typedCollection();
-        List<Object> elements = new ArrayList<Object>();
+        final Collection<T> c = typedCollection();
+        final List<Object> elements = new ArrayList<Object>();
         elements.add("one");
         elements.add("two");
         elements.add(new Integer(3));
@@ -66,7 +66,7 @@ public abstract class AbstractTypedCollectionTest<T> extends BulkTest {
         try {
             c.addAll((Collection<? extends T>) elements);
             fail("Integer should fail string predicate.");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
         assertTrue("Collection shouldn't contain illegal element", 

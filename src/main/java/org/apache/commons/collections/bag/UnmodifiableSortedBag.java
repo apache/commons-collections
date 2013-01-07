@@ -55,7 +55,7 @@ public final class UnmodifiableSortedBag<E>
      * @return an unmodifiable SortedBag
      * @throws IllegalArgumentException if bag is null
      */
-    public static <E> SortedBag<E> unmodifiableSortedBag(SortedBag<E> bag) {
+    public static <E> SortedBag<E> unmodifiableSortedBag(final SortedBag<E> bag) {
         if (bag instanceof Unmodifiable) {
             return bag;
         }
@@ -69,7 +69,7 @@ public final class UnmodifiableSortedBag<E>
      * @param bag  the bag to decorate, must not be null
      * @throws IllegalArgumentException if bag is null
      */
-    private UnmodifiableSortedBag(SortedBag<E> bag) {
+    private UnmodifiableSortedBag(final SortedBag<E> bag) {
         super(bag);
     }
 
@@ -80,7 +80,7 @@ public final class UnmodifiableSortedBag<E>
      * @param out  the output stream
      * @throws IOException
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(collection);
     }
@@ -93,7 +93,7 @@ public final class UnmodifiableSortedBag<E>
      * @throws ClassNotFoundException
      */
     @SuppressWarnings("unchecked")
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         collection = (Collection<E>) in.readObject();
     }
@@ -105,12 +105,12 @@ public final class UnmodifiableSortedBag<E>
     }
 
     @Override
-    public boolean add(E object) {
+    public boolean add(final E object) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> coll) {
+    public boolean addAll(final Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -120,34 +120,34 @@ public final class UnmodifiableSortedBag<E>
     }
 
     @Override
-    public boolean remove(Object object) {
+    public boolean remove(final Object object) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean removeAll(Collection<?> coll) {
+    public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean retainAll(Collection<?> coll) {
+    public boolean retainAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     //-----------------------------------------------------------------------
     @Override
-    public boolean add(E object, int count) {
+    public boolean add(final E object, final int count) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean remove(Object object, int count) {
+    public boolean remove(final Object object, final int count) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public Set<E> uniqueSet() {
-        Set<E> set = decorated().uniqueSet();
+        final Set<E> set = decorated().uniqueSet();
         return UnmodifiableSet.unmodifiableSet(set);
     }
 

@@ -73,7 +73,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      * @param keyTransformer  {@link Transformer} for generating index keys
      * @param map  map to use as index
      */
-    public IndexedCollection(Collection<C> coll, Transformer<C, K> keyTransformer, HashMap<K, C> map) {
+    public IndexedCollection(final Collection<C> coll, final Transformer<C, K> keyTransformer, final HashMap<K, C> map) {
         super(coll);
         this.keyTransformer = keyTransformer;
         this.index = new HashMap<K, C>();
@@ -81,7 +81,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     }
 
     @Override
-    public boolean add(C object) {
+    public boolean add(final C object) {
         final boolean added = super.add(object);
         if (added) {
             addToIndex(object);
@@ -90,9 +90,9 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     }
 
     @Override
-    public boolean addAll(Collection<? extends C> coll) {
+    public boolean addAll(final Collection<? extends C> coll) {
         boolean changed = false;
-        for (C c: coll) {
+        for (final C c: coll) {
             changed |= add(c);
         }
         return changed;
@@ -111,7 +111,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      */
     @SuppressWarnings("unchecked")
     @Override
-    public boolean contains(Object object) {
+    public boolean contains(final Object object) {
         return index.containsKey(keyTransformer.transform((C) object));
     }
 
@@ -121,8 +121,8 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      * Note: uses the index for fast lookup
      */
     @Override
-    public boolean containsAll(Collection<?> coll) {
-        for (Object o : coll) {
+    public boolean containsAll(final Collection<?> coll) {
+        for (final Object o : coll) {
             if (!contains(o)) {
                 return false;
             }
@@ -136,7 +136,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      * @param key  key to look up
      * @return element found
      */
-    public C get(K key) {
+    public C get(final K key) {
         return index.get(key);
     }
 
@@ -145,14 +145,14 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      */
     public void reindex() {
         index.clear();
-        for (C c : decorated()) {
+        for (final C c : decorated()) {
             addToIndex(c);
         }
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public boolean remove(Object object) {
+    public boolean remove(final Object object) {
         final boolean removed = super.remove(object);
         if (removed) {
             removeFromIndex((C) object);
@@ -161,16 +161,16 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
     }
 
     @Override
-    public boolean removeAll(Collection<?> coll) {
+    public boolean removeAll(final Collection<?> coll) {
         boolean changed = false;
-        for (Object o : coll) {
+        for (final Object o : coll) {
             changed |= remove(o);
         }
         return changed;
     }
 
     @Override
-    public boolean retainAll(Collection<?> coll) {
+    public boolean retainAll(final Collection<?> coll) {
         final boolean changed = super.retainAll(coll);
         if (changed) {
             reindex();
@@ -185,7 +185,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      *
      * @param object the object to index
      */
-    private void addToIndex(C object) {
+    private void addToIndex(final C object) {
         final C existingObject = index.put(keyTransformer.transform(object), object);
         if (existingObject != null) {
             throw new IllegalArgumentException("Duplicate key in uniquely indexed collection.");
@@ -197,7 +197,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      *
      * @param object the object to remove
      */
-    private void removeFromIndex(C object) {
+    private void removeFromIndex(final C object) {
         index.remove(keyTransformer.transform(object));
     }
 

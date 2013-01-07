@@ -50,7 +50,7 @@ public final class UnmodifiableEntrySet<K, V>
      * @return a new unmodifiable entry set
      * @throws IllegalArgumentException if set is null
      */
-    public static <K, V> Set<Map.Entry<K, V>> unmodifiableEntrySet(Set<Map.Entry<K, V>> set) {
+    public static <K, V> Set<Map.Entry<K, V>> unmodifiableEntrySet(final Set<Map.Entry<K, V>> set) {
         if (set instanceof Unmodifiable) {
             return set;
         }
@@ -64,18 +64,18 @@ public final class UnmodifiableEntrySet<K, V>
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    private UnmodifiableEntrySet(Set<Map.Entry<K, V>> set) {
+    private UnmodifiableEntrySet(final Set<Map.Entry<K, V>> set) {
         super(set);
     }
 
     //-----------------------------------------------------------------------
     @Override
-    public boolean add(Map.Entry<K, V> object) {
+    public boolean add(final Map.Entry<K, V> object) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean addAll(Collection<? extends Map.Entry<K, V>> coll) {
+    public boolean addAll(final Collection<? extends Map.Entry<K, V>> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -85,17 +85,17 @@ public final class UnmodifiableEntrySet<K, V>
     }
 
     @Override
-    public boolean remove(Object object) {
+    public boolean remove(final Object object) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean removeAll(Collection<?> coll) {
+    public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean retainAll(Collection<?> coll) {
+    public boolean retainAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -108,7 +108,7 @@ public final class UnmodifiableEntrySet<K, V>
     @Override
     @SuppressWarnings("unchecked")
     public Object[] toArray() {
-        Object[] array = collection.toArray();
+        final Object[] array = collection.toArray();
         for (int i = 0; i < array.length; i++) {
             array[i] = new UnmodifiableEntry((Map.Entry<K, V>) array[i]);
         }
@@ -117,7 +117,7 @@ public final class UnmodifiableEntrySet<K, V>
     
     @Override
     @SuppressWarnings("unchecked")
-    public <T> T[] toArray(T[] array) {
+    public <T> T[] toArray(final T[] array) {
         Object[] result = array;
         if (array.length > 0) {
             // we must create a new array to handle multi-threaded situations
@@ -148,7 +148,7 @@ public final class UnmodifiableEntrySet<K, V>
      */
     private class UnmodifiableEntrySetIterator extends AbstractIteratorDecorator<Map.Entry<K, V>> {
 
-        protected UnmodifiableEntrySetIterator(Iterator<Map.Entry<K, V>> iterator) {
+        protected UnmodifiableEntrySetIterator(final Iterator<Map.Entry<K, V>> iterator) {
             super(iterator);
         }
 
@@ -169,12 +169,12 @@ public final class UnmodifiableEntrySet<K, V>
      */
     private class UnmodifiableEntry extends AbstractMapEntryDecorator<K, V> {
 
-        protected UnmodifiableEntry(Map.Entry<K, V> entry) {
+        protected UnmodifiableEntry(final Map.Entry<K, V> entry) {
             super(entry);
         }
 
         @Override
-        public V setValue(V obj) {
+        public V setValue(final V obj) {
             throw new UnsupportedOperationException();
         }
     }

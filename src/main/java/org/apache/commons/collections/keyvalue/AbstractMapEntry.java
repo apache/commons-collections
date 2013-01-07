@@ -33,7 +33,7 @@ public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> impl
      * @param key  the key for the entry, may be null
      * @param value  the value for the entry, may be null
      */
-    protected AbstractMapEntry(K key, V value) {
+    protected AbstractMapEntry(final K key, final V value) {
         super(key, value);
     }
 
@@ -48,8 +48,8 @@ public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> impl
      * @param value  the new value
      * @return the previous value
      */
-    public V setValue(V value) {
-        V answer = this.value;
+    public V setValue(final V value) {
+        final V answer = this.value;
         this.value = value;
         return answer;
     }
@@ -63,14 +63,14 @@ public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> impl
      * @return true if equal key and value
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == this) {
             return true;
         }
         if (obj instanceof Map.Entry == false) {
             return false;
         }
-        Map.Entry<?, ?> other = (Map.Entry<?, ?>) obj;
+        final Map.Entry<?, ?> other = (Map.Entry<?, ?>) obj;
         return
             (getKey() == null ? other.getKey() == null : getKey().equals(other.getKey())) &&
             (getValue() == null ? other.getValue() == null : getValue().equals(other.getValue()));

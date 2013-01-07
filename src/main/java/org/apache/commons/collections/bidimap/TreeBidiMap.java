@@ -84,7 +84,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
          * 
          * @param description  the description for the element
          */
-        private DataElement(String description) {
+        private DataElement(final String description) {
             this.description = description;
         }
 
@@ -188,7 +188,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      */
     public V get(final Object key) {
         checkKey(key);
-        Node<K, V> node = lookupKey(key);
+        final Node<K, V> node = lookupKey(key);
         return node == null ? null : node.getValue();
     }
 
@@ -217,7 +217,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      * @throws NullPointerException if the key is null
      */
     public V put(final K key, final V value) {
-        V result = get(key);
+        final V result = get(key);
         doPut(key, value);
         return result;
     }
@@ -229,8 +229,8 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      *
      * @param map  the map to copy from
      */
-    public void putAll(Map<? extends K, ? extends V> map) {
-        for (Map.Entry<? extends K, ? extends V> e : map.entrySet()) {
+    public void putAll(final Map<? extends K, ? extends V> map) {
+        for (final Map.Entry<? extends K, ? extends V> e : map.entrySet()) {
             put(e.getKey(), e.getValue());
         }
     }
@@ -276,7 +276,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      */
     public K getKey(final Object value) {
         checkValue(value);
-        Node<K, V> node = lookupValue(value);
+        final Node<K, V> node = lookupValue(value);
         return node == null ? null : node.getKey();
     }
 
@@ -330,9 +330,9 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      * @param key the key to search for next from
      * @return the next key, null if no match or at end
      */
-    public K nextKey(K key) {
+    public K nextKey(final K key) {
         checkKey(key);
-        Node<K, V> node = nextGreater(lookupKey(key), KEY);
+        final Node<K, V> node = nextGreater(lookupKey(key), KEY);
         return node == null ? null : node.getKey();
     }
 
@@ -344,9 +344,9 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      * @param key the key to search for previous from
      * @return the previous key, null if no match or at start
      */
-    public K previousKey(K key) {
+    public K previousKey(final K key) {
         checkKey(key);
-        Node<K, V> node = nextSmaller(lookupKey(key), KEY);
+        final Node<K, V> node = nextSmaller(lookupKey(key), KEY);
         return node == null ? null : node.getKey();
     }
 
@@ -442,7 +442,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      * @return true if equal
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         return this.doEquals(obj, KEY);
     }
 
@@ -483,7 +483,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         Node<K, V> node = rootNode[KEY.ordinal()];
         if (node == null) {
             // map is empty
-            Node<K, V> root = new Node<K, V>(key, value);
+            final Node<K, V> root = new Node<K, V>(key, value);
             rootNode[KEY.ordinal()] = root;
             rootNode[VALUE.ordinal()] = root;
             grow();
@@ -491,7 +491,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         } else {
             // add new mapping
             while (true) {
-                int cmp = compare(key, node.getKey());
+                final int cmp = compare(key, node.getKey());
 
                 if (cmp == 0) {
                     // shouldn't happen
@@ -500,7 +500,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
                     if (node.getLeft(KEY) != null) {
                         node = node.getLeft(KEY);
                     } else {
-                        Node<K, V> newNode = new Node<K, V>(key, value);
+                        final Node<K, V> newNode = new Node<K, V>(key, value);
 
                         insertValue(newNode);
                         node.setLeft(newNode, KEY);
@@ -514,7 +514,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
                     if (node.getRight(KEY) != null) {
                         node = node.getRight(KEY);
                     } else {
-                        Node<K, V> newNode = new Node<K, V>(key, value);
+                        final Node<K, V> newNode = new Node<K, V>(key, value);
 
                         insertValue(newNode);
                         node.setRight(newNode, KEY);
@@ -529,8 +529,8 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         }
     }
 
-    private V doRemoveKey(Object key) {
-        Node<K, V> node = lookupKey(key);
+    private V doRemoveKey(final Object key) {
+        final Node<K, V> node = lookupKey(key);
         if (node == null) {
             return null;
         }
@@ -538,8 +538,8 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         return node.getValue();
     }
 
-    private K doRemoveValue(Object value) {
-        Node<K, V> node = lookupValue(value);
+    private K doRemoveValue(final Object value) {
+        final Node<K, V> node = lookupValue(value);
         if (node == null) {
             return null;
         }
@@ -561,7 +561,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         Node<K, V> node = rootNode[dataElement.ordinal()];
 
         while (node != null) {
-            int cmp = compare((T) data, (T) node.getData(dataElement));
+            final int cmp = compare((T) data, (T) node.getData(dataElement));
             if (cmp == 0) {
                 rval = node;
                 break;
@@ -573,11 +573,11 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         return rval;
     }
 
-    private Node<K, V> lookupKey(Object key) {
+    private Node<K, V> lookupKey(final Object key) {
         return this.<K>lookup(key, KEY);
     }
 
-    private Node<K, V> lookupValue(Object value) {
+    private Node<K, V> lookupValue(final Object value) {
         return this.<V>lookup(value, VALUE);
     }
 
@@ -815,7 +815,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      * @param index  the KEY or VALUE int
      */
     private void rotateLeft(final Node<K, V> node, final DataElement dataElement) {
-        Node<K, V> rightChild = node.getRight(dataElement);
+        final Node<K, V> rightChild = node.getRight(dataElement);
         node.setRight(rightChild.getLeft(dataElement), dataElement);
 
         if (rightChild.getLeft(dataElement) != null) {
@@ -843,7 +843,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      * @param index  the KEY or VALUE int
      */
     private void rotateRight(final Node<K, V> node, final DataElement dataElement) {
-        Node<K, V> leftChild = node.getLeft(dataElement);
+        final Node<K, V> leftChild = node.getLeft(dataElement);
         node.setLeft(leftChild.getRight(dataElement), dataElement);
         if (leftChild.getRight(dataElement) != null) {
             leftChild.getRight(dataElement).setParent(node, dataElement);
@@ -878,7 +878,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
             && currentNode != rootNode[dataElement.ordinal()]
             && isRed(currentNode.getParent(dataElement), dataElement)) {
             if (currentNode.isLeftChild(dataElement)) {
-                Node<K, V> y = getRightChild(getGrandParent(currentNode, dataElement), dataElement);
+                final Node<K, V> y = getRightChild(getGrandParent(currentNode, dataElement), dataElement);
 
                 if (isRed(y, dataElement)) {
                     makeBlack(getParent(currentNode, dataElement), dataElement);
@@ -904,7 +904,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
             } else {
 
                 // just like clause above, except swap left for right
-                Node<K, V> y = getLeftChild(getGrandParent(currentNode, dataElement), dataElement);
+                final Node<K, V> y = getLeftChild(getGrandParent(currentNode, dataElement), dataElement);
 
                 if (isRed(y, dataElement)) {
                     makeBlack(getParent(currentNode, dataElement), dataElement);
@@ -940,14 +940,14 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      * @param deletedNode the node to be deleted
      */
     private void doRedBlackDelete(final Node<K, V> deletedNode) {
-        for (DataElement dataElement : DataElement.values()) {
+        for (final DataElement dataElement : DataElement.values()) {
             // if deleted node has both left and children, swap with
             // the next greater node
             if (deletedNode.getLeft(dataElement) != null && deletedNode.getRight(dataElement) != null) {
                 swapPosition(nextGreater(deletedNode, dataElement), deletedNode, dataElement);
             }
 
-            Node<K, V> replacement = deletedNode.getLeft(dataElement) != null ?
+            final Node<K, V> replacement = deletedNode.getLeft(dataElement) != null ?
                     deletedNode.getLeft(dataElement) : deletedNode.getRight(dataElement);
 
             if (replacement != null) {
@@ -1091,15 +1091,15 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      */
     private void swapPosition(final Node<K, V> x, final Node<K, V> y, final DataElement dataElement) {
         // Save initial values.
-        Node<K, V> xFormerParent = x.getParent(dataElement);
-        Node<K, V> xFormerLeftChild = x.getLeft(dataElement);
-        Node<K, V> xFormerRightChild = x.getRight(dataElement);
-        Node<K, V> yFormerParent = y.getParent(dataElement);
-        Node<K, V> yFormerLeftChild = y.getLeft(dataElement);
-        Node<K, V> yFormerRightChild = y.getRight(dataElement);
-        boolean xWasLeftChild =
+        final Node<K, V> xFormerParent = x.getParent(dataElement);
+        final Node<K, V> xFormerLeftChild = x.getLeft(dataElement);
+        final Node<K, V> xFormerRightChild = x.getRight(dataElement);
+        final Node<K, V> yFormerParent = y.getParent(dataElement);
+        final Node<K, V> yFormerLeftChild = y.getLeft(dataElement);
+        final Node<K, V> yFormerRightChild = y.getRight(dataElement);
+        final boolean xWasLeftChild =
                 x.getParent(dataElement) != null && x == x.getParent(dataElement).getLeft(dataElement);
-        boolean yWasLeftChild =
+        final boolean yWasLeftChild =
                 y.getParent(dataElement) != null && y == y.getParent(dataElement).getLeft(dataElement);
 
         // Swap, handling special cases of one being the other's parent.
@@ -1276,7 +1276,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         Node<K, V> node = rootNode[VALUE.ordinal()];
 
         while (true) {
-            int cmp = compare(newNode.getValue(), node.getValue());
+            final int cmp = compare(newNode.getValue(), node.getValue());
 
             if (cmp == 0) {
                 throw new IllegalArgumentException(
@@ -1313,30 +1313,30 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      * @param type  the KEY or VALUE int
      * @return true if equal
      */
-    private boolean doEquals(Object obj, DataElement dataElement) {
+    private boolean doEquals(final Object obj, final DataElement dataElement) {
         if (obj == this) {
             return true;
         }
         if (obj instanceof Map == false) {
             return false;
         }
-        Map<?, ?> other = (Map<?, ?>) obj;
+        final Map<?, ?> other = (Map<?, ?>) obj;
         if (other.size() != size()) {
             return false;
         }
 
         if (nodeCount > 0) {
             try {
-                for (MapIterator<?, ?> it = getMapIterator(dataElement); it.hasNext(); ) {
-                    Object key = it.next();
-                    Object value = it.getValue();
+                for (final MapIterator<?, ?> it = getMapIterator(dataElement); it.hasNext(); ) {
+                    final Object key = it.next();
+                    final Object value = it.getValue();
                     if (value.equals(other.get(key)) == false) {
                         return false;
                     }
                 }
-            } catch (ClassCastException ex) {
+            } catch (final ClassCastException ex) {
                 return false;
-            } catch (NullPointerException ex) {
+            } catch (final NullPointerException ex) {
                 return false;
             }
         }
@@ -1349,12 +1349,12 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      * @param type  the KEY or VALUE int
      * @return the hash code value for this map
      */
-    private int doHashCode(DataElement dataElement) {
+    private int doHashCode(final DataElement dataElement) {
         int total = 0;
         if (nodeCount > 0) {
-            for (MapIterator<?, ?> it = getMapIterator(dataElement); it.hasNext(); ) {
-                Object key = it.next();
-                Object value = it.getValue();
+            for (final MapIterator<?, ?> it = getMapIterator(dataElement); it.hasNext(); ) {
+                final Object key = it.next();
+                final Object value = it.getValue();
                 total += key.hashCode() ^ value.hashCode();
             }
         }
@@ -1367,17 +1367,17 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
      * @param type  the KEY or VALUE int
      * @return the string form of this map
      */
-    private String doToString(DataElement dataElement) {
+    private String doToString(final DataElement dataElement) {
         if (nodeCount == 0) {
             return "{}";
         }
-        StringBuilder buf = new StringBuilder(nodeCount * 32);
+        final StringBuilder buf = new StringBuilder(nodeCount * 32);
         buf.append('{');
-        MapIterator<?, ?> it = getMapIterator(dataElement);
+        final MapIterator<?, ?> it = getMapIterator(dataElement);
         boolean hasNext = it.hasNext();
         while (hasNext) {
-            Object key = it.next();
-            Object value = it.getValue();
+            final Object key = it.next();
+            final Object value = it.getValue();
             buf.append(key == this ? "(this Map)" : key)
                .append('=')
                .append(value == this ? "(this Map)" : value);
@@ -1392,7 +1392,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         return buf.toString();
     }
 
-    private MapIterator<?, ?> getMapIterator(DataElement dataElement) {
+    private MapIterator<?, ?> getMapIterator(final DataElement dataElement) {
         switch (dataElement) {
         case KEY:
             return new ViewMapIterator(KEY);
@@ -1438,7 +1438,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         /**
          * Create a new TreeBidiMap.KeyView.
          */
-        public KeyView(DataElement orderType) {
+        public KeyView(final DataElement orderType) {
             super(orderType);
         }
 
@@ -1454,7 +1454,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         }
 
         @Override
-        public boolean remove(Object o) {
+        public boolean remove(final Object o) {
             return doRemoveKey(o) != null;
         }
 
@@ -1465,7 +1465,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         /**
          * Create a new TreeBidiMap.ValueView.
          */
-        public ValueView(DataElement orderType) {
+        public ValueView(final DataElement orderType) {
             super(orderType);
         }
 
@@ -1481,7 +1481,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         }
 
         @Override
-        public boolean remove(Object o) {
+        public boolean remove(final Object o) {
             return doRemoveValue(o) != null;
         }
 
@@ -1497,24 +1497,24 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         }
 
         @Override
-        public boolean contains(Object obj) {
+        public boolean contains(final Object obj) {
             if (obj instanceof Map.Entry == false) {
                 return false;
             }
-            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
-            Object value = entry.getValue();
-            Node<K, V> node = lookupKey(entry.getKey());
+            final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
+            final Object value = entry.getValue();
+            final Node<K, V> node = lookupKey(entry.getKey());
             return node != null && node.getValue().equals(value);
         }
 
         @Override
-        public boolean remove(Object obj) {
+        public boolean remove(final Object obj) {
             if (obj instanceof Map.Entry == false) {
                 return false;
             }
-            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
-            Object value = entry.getValue();
-            Node<K, V> node = lookupKey(entry.getKey());
+            final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
+            final Object value = entry.getValue();
+            final Node<K, V> node = lookupKey(entry.getKey());
             if (node != null && node.getValue().equals(value)) {
                 doRedBlackDelete(node);
                 return true;
@@ -1538,24 +1538,24 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         }
 
         @Override
-        public boolean contains(Object obj) {
+        public boolean contains(final Object obj) {
             if (obj instanceof Map.Entry == false) {
                 return false;
             }
-            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
-            Object value = entry.getValue();
-            Node<K, V> node = lookupValue(entry.getKey());
+            final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
+            final Object value = entry.getValue();
+            final Node<K, V> node = lookupValue(entry.getKey());
             return node != null && node.getKey().equals(value);
         }
 
         @Override
-        public boolean remove(Object obj) {
+        public boolean remove(final Object obj) {
             if (obj instanceof Map.Entry == false) {
                 return false;
             }
-            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
-            Object value = entry.getValue();
-            Node<K, V> node = lookupValue(entry.getKey());
+            final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
+            final Object value = entry.getValue();
+            final Node<K, V> node = lookupValue(entry.getKey());
             if (node != null && node.getKey().equals(value)) {
                 doRedBlackDelete(node);
                 return true;
@@ -1664,7 +1664,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         /**
          * Constructor.
          */
-        ViewMapIterator(DataElement orderType) {
+        ViewMapIterator(final DataElement orderType) {
             super(orderType);
         }
 
@@ -1705,7 +1705,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         /**
          * Create a new TreeBidiMap.InverseViewMapIterator.
          */
-        public InverseViewMapIterator(DataElement orderType) {
+        public InverseViewMapIterator(final DataElement orderType) {
             super(orderType);
         }
 
@@ -1779,7 +1779,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
             return createEntry(navigatePrevious());
         }
 
-        private Map.Entry<V, K> createEntry(Node<K, V> node) {
+        private Map.Entry<V, K> createEntry(final Node<K, V> node) {
             return new UnmodifiableMapEntry<V, K>(node.getValue(), node.getKey());
         }
     }
@@ -1983,7 +1983,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
             if (!(obj instanceof Map.Entry)) {
                 return false;
             }
-            Map.Entry<?, ?> e = (Map.Entry<?, ?>) obj;
+            final Map.Entry<?, ?> e = (Map.Entry<?, ?>) obj;
             return getKey().equals(e.getKey()) && getValue().equals(e.getValue());
         }
 
@@ -2051,26 +2051,26 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
             return greatestNode(TreeBidiMap.this.rootNode[VALUE.ordinal()], VALUE).getValue();
         }
 
-        public V nextKey(V key) {
+        public V nextKey(final V key) {
             checkKey(key);
-            Node<K, V> node = nextGreater(TreeBidiMap.this.<V>lookup(key, VALUE), VALUE);
+            final Node<K, V> node = nextGreater(TreeBidiMap.this.<V>lookup(key, VALUE), VALUE);
             return node == null ? null : node.getValue();
         }
 
-        public V previousKey(V key) {
+        public V previousKey(final V key) {
             checkKey(key);
-            Node<K, V> node = TreeBidiMap.this.nextSmaller(TreeBidiMap.this.<V>lookup(key, VALUE), VALUE);
+            final Node<K, V> node = TreeBidiMap.this.nextSmaller(TreeBidiMap.this.<V>lookup(key, VALUE), VALUE);
             return node == null ? null : node.getValue();
         }
 
         public K put(final V key, final K value) {
-            K result = get(key);
+            final K result = get(key);
             TreeBidiMap.this.doPut(value, key);
             return result;
         }
 
-        public void putAll(Map<? extends V, ? extends K> map) {
-            for (Map.Entry<? extends V, ? extends K> e : map.entrySet()) {
+        public void putAll(final Map<? extends V, ? extends K> map) {
+            for (final Map.Entry<? extends V, ? extends K> e : map.entrySet()) {
                 put(e.getKey(), e.getValue());
             }
         }
@@ -2120,7 +2120,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         }
 
         @Override
-        public boolean equals(Object obj) {
+        public boolean equals(final Object obj) {
             return TreeBidiMap.this.doEquals(obj, DataElement.VALUE);
         }
 

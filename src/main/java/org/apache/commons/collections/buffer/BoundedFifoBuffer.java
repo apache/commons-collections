@@ -99,7 +99,7 @@ public class BoundedFifoBuffer<E> extends AbstractCollection<E>
      * @throws IllegalArgumentException  if the size is less than 1
      */
     @SuppressWarnings("unchecked")
-    public BoundedFifoBuffer(int size) {
+    public BoundedFifoBuffer(final int size) {
         if (size <= 0) {
             throw new IllegalArgumentException("The size must be greater than 0");
         }
@@ -115,7 +115,7 @@ public class BoundedFifoBuffer<E> extends AbstractCollection<E>
      * @param coll  the collection whose elements to add, may not be null
      * @throws NullPointerException if the collection is null
      */
-    public BoundedFifoBuffer(Collection<? extends E> coll) {
+    public BoundedFifoBuffer(final Collection<? extends E> coll) {
         this(coll.size());
         addAll(coll);
     }
@@ -127,10 +127,10 @@ public class BoundedFifoBuffer<E> extends AbstractCollection<E>
      * @param out  the output stream
      * @throws IOException if an I/O error occurs while writing to the output stream
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeInt(size());
-        for (E e : this) {
+        for (final E e : this) {
             out.writeObject(e);
         }
     }
@@ -143,10 +143,10 @@ public class BoundedFifoBuffer<E> extends AbstractCollection<E>
      * @throws ClassNotFoundException if the class of a serialized object can not be found
      */
     @SuppressWarnings("unchecked")
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         elements = (E[]) new Object[maxElements];
-        int size = in.readInt();
+        final int size = in.readInt();
         for (int i = 0; i < size; i++) {
             elements[i] = (E) in.readObject();
         }
@@ -228,7 +228,7 @@ public class BoundedFifoBuffer<E> extends AbstractCollection<E>
      * @throws BufferOverflowException  if this buffer is full
      */
     @Override
-    public boolean add(E element) {
+    public boolean add(final E element) {
         if (null == element) {
             throw new NullPointerException("Attempted to add null object to buffer");
         }
@@ -270,7 +270,7 @@ public class BoundedFifoBuffer<E> extends AbstractCollection<E>
      * @return the element at position {@code index}
      * @throws NoSuchElementException if the requested position is outside the range [0, size)
      */
-    public E get(int index) {
+    public E get(final int index) {
         final int sz = size();
         if (index < 0 || index >= sz) {
             throw new NoSuchElementException(
@@ -293,7 +293,7 @@ public class BoundedFifoBuffer<E> extends AbstractCollection<E>
             throw new BufferUnderflowException("The buffer is already empty");
         }
 
-        E element = elements[start];
+        final E element = elements[start];
 
         if (null != element) {
             elements[start++] = null;

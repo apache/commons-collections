@@ -58,7 +58,7 @@ public class ArrayStack<E> extends ArrayList<E> implements Buffer<E> {
      * @throws IllegalArgumentException  if the specified initial size
      *  is negative
      */
-    public ArrayStack(int initialSize) {
+    public ArrayStack(final int initialSize) {
         super(initialSize);
     }
 
@@ -81,7 +81,7 @@ public class ArrayStack<E> extends ArrayList<E> implements Buffer<E> {
      * @throws EmptyStackException  if the stack is empty
      */
     public E peek() throws EmptyStackException {
-        int n = size();
+        final int n = size();
         if (n <= 0) {
             throw new EmptyStackException();
         } else {
@@ -98,8 +98,8 @@ public class ArrayStack<E> extends ArrayList<E> implements Buffer<E> {
      * @throws EmptyStackException  if there are not enough items on the
      *  stack to satisfy this request
      */
-    public E peek(int n) throws EmptyStackException {
-        int m = (size() - n) - 1;
+    public E peek(final int n) throws EmptyStackException {
+        final int m = (size() - n) - 1;
         if (m < 0) {
             throw new EmptyStackException();
         } else {
@@ -114,7 +114,7 @@ public class ArrayStack<E> extends ArrayList<E> implements Buffer<E> {
      * @throws EmptyStackException  if the stack is empty
      */
     public E pop() throws EmptyStackException {
-        int n = size();
+        final int n = size();
         if (n <= 0) {
             throw new EmptyStackException();
         } else {
@@ -129,7 +129,7 @@ public class ArrayStack<E> extends ArrayList<E> implements Buffer<E> {
      * @param item  the item to be added
      * @return the item just pushed
      */
-    public E push(E item) {
+    public E push(final E item) {
         add(item);
         return item;
     }
@@ -145,11 +145,11 @@ public class ArrayStack<E> extends ArrayList<E> implements Buffer<E> {
      * @param object  the object to be searched for
      * @return the 1-based depth into the stack of the object, or -1 if not found
      */
-    public int search(Object object) {
+    public int search(final Object object) {
         int i = size() - 1;        // Current index
         int n = 1;                 // Current distance
         while (i >= 0) {
-            Object current = get(i);
+            final Object current = get(i);
             if ((object == null && current == null) ||
                 (object != null && object.equals(current))) {
                 return n;
@@ -167,7 +167,7 @@ public class ArrayStack<E> extends ArrayList<E> implements Buffer<E> {
      * @throws BufferUnderflowException  if the stack is empty
      */
     public E get() {
-        int size = size();
+        final int size = size();
         if (size == 0) {
             throw new BufferUnderflowException();
         }
@@ -181,7 +181,7 @@ public class ArrayStack<E> extends ArrayList<E> implements Buffer<E> {
      * @throws BufferUnderflowException  if the stack is empty
      */
     public E remove() {
-        int size = size();
+        final int size = size();
         if (size == 0) {
             throw new BufferUnderflowException();
         }

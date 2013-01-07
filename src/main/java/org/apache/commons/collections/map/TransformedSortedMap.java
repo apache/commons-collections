@@ -62,9 +62,9 @@ public class TransformedSortedMap<K, V>
      * @return a new transformed sorted map
      * @throws IllegalArgumentException if the map is null
      */
-    public static <K, V> TransformedSortedMap<K, V> transformingSortedMap(SortedMap<K, V> map,
-            Transformer<? super K, ? extends K> keyTransformer,
-            Transformer<? super V, ? extends V> valueTransformer) {
+    public static <K, V> TransformedSortedMap<K, V> transformingSortedMap(final SortedMap<K, V> map,
+            final Transformer<? super K, ? extends K> keyTransformer,
+            final Transformer<? super V, ? extends V> valueTransformer) {
         return new TransformedSortedMap<K, V>(map, keyTransformer, valueTransformer);
     }
 
@@ -85,12 +85,12 @@ public class TransformedSortedMap<K, V>
      * @throws IllegalArgumentException if map is null
      * @since 3.2
      */
-    public static <K, V> TransformedSortedMap<K, V> transformedSortedMap(SortedMap<K, V> map,
-            Transformer<? super K, ? extends K> keyTransformer,
-            Transformer<? super V, ? extends V> valueTransformer) {
-        TransformedSortedMap<K, V> decorated = new TransformedSortedMap<K, V>(map, keyTransformer, valueTransformer);
+    public static <K, V> TransformedSortedMap<K, V> transformedSortedMap(final SortedMap<K, V> map,
+            final Transformer<? super K, ? extends K> keyTransformer,
+            final Transformer<? super V, ? extends V> valueTransformer) {
+        final TransformedSortedMap<K, V> decorated = new TransformedSortedMap<K, V>(map, keyTransformer, valueTransformer);
         if (map.size() > 0) {
-            Map<K, V> transformed = decorated.transformMap(map);
+            final Map<K, V> transformed = decorated.transformMap(map);
             decorated.clear();
             decorated.decorated().putAll(transformed);  // avoids double transformation
         }
@@ -109,9 +109,9 @@ public class TransformedSortedMap<K, V>
      * @param valueTransformer  the predicate to validate to values, null means no transformation
      * @throws IllegalArgumentException if the map is null
      */
-    protected TransformedSortedMap(SortedMap<K, V> map,
-            Transformer<? super K, ? extends K> keyTransformer,
-            Transformer<? super V, ? extends V> valueTransformer) {
+    protected TransformedSortedMap(final SortedMap<K, V> map,
+            final Transformer<? super K, ? extends K> keyTransformer,
+            final Transformer<? super V, ? extends V> valueTransformer) {
         super(map, keyTransformer, valueTransformer);
     }
 
@@ -138,18 +138,18 @@ public class TransformedSortedMap<K, V>
         return getSortedMap().comparator();
     }
 
-    public SortedMap<K, V> subMap(K fromKey, K toKey) {
-        SortedMap<K, V> map = getSortedMap().subMap(fromKey, toKey);
+    public SortedMap<K, V> subMap(final K fromKey, final K toKey) {
+        final SortedMap<K, V> map = getSortedMap().subMap(fromKey, toKey);
         return new TransformedSortedMap<K, V>(map, keyTransformer, valueTransformer);
     }
 
-    public SortedMap<K, V> headMap(K toKey) {
-        SortedMap<K, V> map = getSortedMap().headMap(toKey);
+    public SortedMap<K, V> headMap(final K toKey) {
+        final SortedMap<K, V> map = getSortedMap().headMap(toKey);
         return new TransformedSortedMap<K, V>(map, keyTransformer, valueTransformer);
     }
 
-    public SortedMap<K, V> tailMap(K fromKey) {
-        SortedMap<K, V> map = getSortedMap().tailMap(fromKey);
+    public SortedMap<K, V> tailMap(final K fromKey) {
+        final SortedMap<K, V> map = getSortedMap().tailMap(fromKey);
         return new TransformedSortedMap<K, V>(map, keyTransformer, valueTransformer);
     }
 

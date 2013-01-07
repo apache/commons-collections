@@ -38,7 +38,7 @@ public class AbstractMapIteratorDecorator<K, V> implements MapIterator<K, V> {
      * @param iterator  the iterator to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    public AbstractMapIteratorDecorator(MapIterator<K, V> iterator) {
+    public AbstractMapIteratorDecorator(final MapIterator<K, V> iterator) {
         super();
         if (iterator == null) {
             throw new IllegalArgumentException("MapIterator must not be null");
@@ -83,7 +83,7 @@ public class AbstractMapIteratorDecorator<K, V> implements MapIterator<K, V> {
     }
 
     /** {@inheritDoc} */
-    public V setValue(V obj) {
+    public V setValue(final V obj) {
         return iterator.setValue(obj);
     }
 

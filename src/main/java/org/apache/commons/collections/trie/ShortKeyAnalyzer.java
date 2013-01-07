@@ -44,7 +44,7 @@ public class ShortKeyAnalyzer implements KeyAnalyzer<Short> {
     /**
      * Returns a bit mask where the given bit is set
      */
-    private static int mask(int bit) {
+    private static int mask(final int bit) {
         return MSB >>> bit;
     }
 
@@ -58,37 +58,37 @@ public class ShortKeyAnalyzer implements KeyAnalyzer<Short> {
     /**
      * {@inheritDoc}
      */
-    public int lengthInBits(Short key) {
+    public int lengthInBits(final Short key) {
         return LENGTH;
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean isBitSet(Short key, int bitIndex, int lengthInBits) {
+    public boolean isBitSet(final Short key, final int bitIndex, final int lengthInBits) {
         return (key & mask(bitIndex)) != 0;
     }
 
     /**
      * {@inheritDoc}
      */
-    public int bitIndex(Short key, int offsetInBits, int lengthInBits, 
-            Short other, int otherOffsetInBits, int otherLengthInBits) {
+    public int bitIndex(final Short key, final int offsetInBits, final int lengthInBits, 
+            final Short other, final int otherOffsetInBits, final int otherLengthInBits) {
         
         if (offsetInBits != 0 || otherOffsetInBits != 0) {
             throw new IllegalArgumentException("offsetInBits=" + offsetInBits 
                     + ", otherOffsetInBits=" + otherOffsetInBits);
         }
         
-        int keyValue = key.shortValue();
+        final int keyValue = key.shortValue();
         if (keyValue == 0) {
             return NULL_BIT_KEY;
         }
 
-        int otherValue = other != null ? other.shortValue() : 0;
+        final int otherValue = other != null ? other.shortValue() : 0;
         
         if (keyValue != otherValue) {
-            int xorValue = keyValue ^ otherValue;
+            final int xorValue = keyValue ^ otherValue;
             for (int i = 0; i < LENGTH; i++) {
                 if ((xorValue & mask(i)) != 0) {
                     return i;
@@ -102,18 +102,18 @@ public class ShortKeyAnalyzer implements KeyAnalyzer<Short> {
     /**
      * {@inheritDoc}
      */
-    public int compare(Short o1, Short o2) {
+    public int compare(final Short o1, final Short o2) {
         return o1.compareTo(o2);
     }
     
     /**
      * {@inheritDoc}
      */
-    public boolean isPrefix(Short prefix, int offsetInBits, 
-            int lengthInBits, Short key) {
+    public boolean isPrefix(final Short prefix, final int offsetInBits, 
+            final int lengthInBits, final Short key) {
         
-        int value1 = prefix.shortValue() << offsetInBits;
-        int value2 = key.shortValue();
+        final int value1 = prefix.shortValue() << offsetInBits;
+        final int value2 = key.shortValue();
         
         int mask = 0;
         for (int i = 0; i < lengthInBits; i++) {

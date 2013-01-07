@@ -78,7 +78,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @param loadFactor  the load factor, must be > 0.0f and generally < 1.0f
      * @param threshold  the threshold, must be sensible
      */
-    protected AbstractLinkedMap(int initialCapacity, float loadFactor, int threshold) {
+    protected AbstractLinkedMap(final int initialCapacity, final float loadFactor, final int threshold) {
         super(initialCapacity, loadFactor, threshold);
     }
 
@@ -88,7 +88,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @param initialCapacity  the initial capacity
      * @throws IllegalArgumentException if the initial capacity is negative
      */
-    protected AbstractLinkedMap(int initialCapacity) {
+    protected AbstractLinkedMap(final int initialCapacity) {
         super(initialCapacity);
     }
 
@@ -101,7 +101,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @throws IllegalArgumentException if the initial capacity is negative
      * @throws IllegalArgumentException if the load factor is less than zero
      */
-    protected AbstractLinkedMap(int initialCapacity, float loadFactor) {
+    protected AbstractLinkedMap(final int initialCapacity, final float loadFactor) {
         super(initialCapacity, loadFactor);
     }
 
@@ -111,7 +111,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @param map  the map to copy
      * @throws NullPointerException if the map is null
      */
-    protected AbstractLinkedMap(Map<K, V> map) {
+    protected AbstractLinkedMap(final Map<K, V> map) {
         super(map);
     }
 
@@ -136,7 +136,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @return true if the map contains the value
      */
     @Override
-    public boolean containsValue(Object value) {
+    public boolean containsValue(final Object value) {
         // override uses faster iterator
         if (value == null) {
             for (LinkEntry<K, V> entry = header.after; entry != header; entry = entry.after) {
@@ -196,13 +196,13 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @param key  the key to get after
      * @return the next key
      */
-    public K nextKey(Object key) {
-        LinkEntry<K, V> entry = getEntry(key);
+    public K nextKey(final Object key) {
+        final LinkEntry<K, V> entry = getEntry(key);
         return entry == null || entry.after == header ? null : entry.after.getKey();
     }
 
     @Override
-    protected LinkEntry<K, V> getEntry(Object key) {
+    protected LinkEntry<K, V> getEntry(final Object key) {
         return (LinkEntry<K, V>) super.getEntry(key);
     }
 
@@ -212,8 +212,8 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @param key  the key to get before
      * @return the previous key
      */
-    public K previousKey(Object key) {
-        LinkEntry<K, V> entry = getEntry(key);
+    public K previousKey(final Object key) {
+        final LinkEntry<K, V> entry = getEntry(key);
         return entry == null || entry.before == header ? null : entry.before.getKey();
     }
 
@@ -225,7 +225,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @return the key at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
-    protected LinkEntry<K, V> getEntry(int index) {
+    protected LinkEntry<K, V> getEntry(final int index) {
         if (index < 0) {
             throw new IndexOutOfBoundsException("Index " + index + " is less than zero");
         }
@@ -259,8 +259,8 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @param hashIndex  the index into the data array to store at
      */
     @Override
-    protected void addEntry(HashEntry<K, V> entry, int hashIndex) {
-        LinkEntry<K, V> link = (LinkEntry<K, V>) entry;
+    protected void addEntry(final HashEntry<K, V> entry, final int hashIndex) {
+        final LinkEntry<K, V> link = (LinkEntry<K, V>) entry;
         link.after  = header;
         link.before = header.before;
         header.before.after = link;
@@ -280,7 +280,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @return the newly created entry
      */
     @Override
-    protected LinkEntry<K, V> createEntry(HashEntry<K, V> next, int hashCode, K key, V value) {
+    protected LinkEntry<K, V> createEntry(final HashEntry<K, V> next, final int hashCode, final K key, final V value) {
         return new LinkEntry<K, V>(next, hashCode, convertKey(key), value);
     }
 
@@ -295,8 +295,8 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @param previous  the previous entry in the chain
      */
     @Override
-    protected void removeEntry(HashEntry<K, V> entry, int hashIndex, HashEntry<K, V> previous) {
-        LinkEntry<K, V> link = (LinkEntry<K, V>) entry;
+    protected void removeEntry(final HashEntry<K, V> entry, final int hashIndex, final HashEntry<K, V> previous) {
+        final LinkEntry<K, V> link = (LinkEntry<K, V>) entry;
         link.before.after = link.after;
         link.after.before = link.before;
         link.after = null;
@@ -314,7 +314,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @throws NullPointerException if the entry is null
      * @since 3.1
      */
-    protected LinkEntry<K, V> entryBefore(LinkEntry<K, V> entry) {
+    protected LinkEntry<K, V> entryBefore(final LinkEntry<K, V> entry) {
         return entry.before;
     }
 
@@ -327,7 +327,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @throws NullPointerException if the entry is null
      * @since 3.1
      */
-    protected LinkEntry<K, V> entryAfter(LinkEntry<K, V> entry) {
+    protected LinkEntry<K, V> entryAfter(final LinkEntry<K, V> entry) {
         return entry.after;
     }
 
@@ -349,7 +349,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     protected static class LinkMapIterator<K, V> extends LinkIterator<K, V> implements
             OrderedMapIterator<K, V>, ResettableIterator<K> {
 
-        protected LinkMapIterator(AbstractLinkedMap<K, V> parent) {
+        protected LinkMapIterator(final AbstractLinkedMap<K, V> parent) {
             super(parent);
         }
 
@@ -362,7 +362,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         }
 
         public K getKey() {
-            LinkEntry<K, V> current = currentEntry();
+            final LinkEntry<K, V> current = currentEntry();
             if (current == null) {
                 throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
             }
@@ -370,15 +370,15 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         }
 
         public V getValue() {
-            LinkEntry<K, V> current = currentEntry();
+            final LinkEntry<K, V> current = currentEntry();
             if (current == null) {
                 throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
             }
             return current.getValue();
         }
 
-        public V setValue(V value) {
-            LinkEntry<K, V> current = currentEntry();
+        public V setValue(final V value) {
+            final LinkEntry<K, V> current = currentEntry();
             if (current == null) {
                 throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
             }
@@ -407,7 +407,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
     protected static class EntrySetIterator<K, V> extends LinkIterator<K, V> implements
             OrderedIterator<Map.Entry<K, V>>, ResettableIterator<Map.Entry<K, V>> {
 
-        protected EntrySetIterator(AbstractLinkedMap<K, V> parent) {
+        protected EntrySetIterator(final AbstractLinkedMap<K, V> parent) {
             super(parent);
         }
 
@@ -442,7 +442,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
             OrderedIterator<K>, ResettableIterator<K> {
         
         @SuppressWarnings("unchecked")
-        protected KeySetIterator(AbstractLinkedMap<K, ?> parent) {
+        protected KeySetIterator(final AbstractLinkedMap<K, ?> parent) {
             super((AbstractLinkedMap<K, Object>) parent);
         }
 
@@ -477,7 +477,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
             OrderedIterator<V>, ResettableIterator<V> {
 
         @SuppressWarnings("unchecked")
-        protected ValuesIterator(AbstractLinkedMap<?, V> parent) {
+        protected ValuesIterator(final AbstractLinkedMap<?, V> parent) {
             super((AbstractLinkedMap<Object, V>) parent);
         }
 
@@ -513,7 +513,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
          * @param key  the key
          * @param value  the value
          */
-        protected LinkEntry(HashEntry<K, V> next, int hashCode, Object key, V value) {
+        protected LinkEntry(final HashEntry<K, V> next, final int hashCode, final Object key, final V value) {
             super(next, hashCode, key, value);
         }
     }
@@ -532,7 +532,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         /** The modification count expected */
         protected int expectedModCount;
 
-        protected LinkIterator(AbstractLinkedMap<K, V> parent) {
+        protected LinkIterator(final AbstractLinkedMap<K, V> parent) {
             super();
             this.parent = parent;
             this.next = parent.header.after;
@@ -563,7 +563,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
             if (parent.modCount != expectedModCount) {
                 throw new ConcurrentModificationException();
             }
-            LinkEntry<K, V> previous = next.before;
+            final LinkEntry<K, V> previous = next.before;
             if (previous == parent.header)  {
                 throw new NoSuchElementException(AbstractHashedMap.NO_PREVIOUS_ENTRY);
             }

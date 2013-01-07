@@ -101,7 +101,7 @@ public class PassiveExpiringMap<K, V>
          *        results in entries that NEVER expire. A zero value results in
          *        entries that ALWAYS expire.
          */
-        public ConstantTimeToLiveExpirationPolicy(long timeToLiveMillis) {
+        public ConstantTimeToLiveExpirationPolicy(final long timeToLiveMillis) {
             super();
             this.timeToLiveMillis = timeToLiveMillis;
         }
@@ -118,8 +118,8 @@ public class PassiveExpiringMap<K, V>
          *        parameter, must not be null.
          * @throws IllegalArgumentException if the time unit is null.
          */
-        public ConstantTimeToLiveExpirationPolicy(long timeToLive,
-                                                  TimeUnit timeUnit) {
+        public ConstantTimeToLiveExpirationPolicy(final long timeToLive,
+                                                  final TimeUnit timeUnit) {
             this(validateAndConvertToMillis(timeToLive, TimeUnit.MILLISECONDS));
         }
 
@@ -133,10 +133,10 @@ public class PassiveExpiringMap<K, V>
          *         {@link System#currentTimeMillis()} is returned. Otherwise, -1
          *         is returned indicating the entry never expires.
          */
-        public long expirationTime(K key, V value) {
+        public long expirationTime(final K key, final V value) {
             if (timeToLiveMillis >= 0L) {
                 // avoid numerical overflow
-                long now = System.currentTimeMillis();
+                final long now = System.currentTimeMillis();
                 if (now > Long.MAX_VALUE - timeToLiveMillis) {
                     // expiration would be greater than Long.MAX_VALUE
                     // never expire
@@ -190,8 +190,8 @@ public class PassiveExpiringMap<K, V>
      *        parameter, must not be null.
      * @throws IllegalArgumentException if the time unit is null.
      */
-    private static long validateAndConvertToMillis(long timeToLive,
-                                                   TimeUnit timeUnit) {
+    private static long validateAndConvertToMillis(final long timeToLive,
+                                                   final TimeUnit timeUnit) {
         if (timeUnit == null) {
             throw new IllegalArgumentException("Time unit must not be null");
         }
@@ -219,7 +219,7 @@ public class PassiveExpiringMap<K, V>
      * @param expiringPolicy the policy used to determine expiration times of
      *        entries as they are added.
      */
-    public PassiveExpiringMap(ExpirationPolicy<K, V> expiringPolicy) {
+    public PassiveExpiringMap(final ExpirationPolicy<K, V> expiringPolicy) {
         this(expiringPolicy, new HashMap<K, V>());
     }
 
@@ -234,8 +234,8 @@ public class PassiveExpiringMap<K, V>
      * @param map the map to decorate, must not be null.
      * @throws IllegalArgumentException if the map is null.
      */
-    public PassiveExpiringMap(ExpirationPolicy<K, V> expiringPolicy,
-                              Map<K, V> map) {
+    public PassiveExpiringMap(final ExpirationPolicy<K, V> expiringPolicy,
+                              final Map<K, V> map) {
         super(map);
         if (expiringPolicy == null) {
             throw new IllegalArgumentException("Policy must not be null.");
@@ -253,7 +253,7 @@ public class PassiveExpiringMap<K, V>
      *        entries that NEVER expire. A zero value results in entries that
      *        ALWAYS expire.
      */
-    public PassiveExpiringMap(long timeToLiveMillis) {
+    public PassiveExpiringMap(final long timeToLiveMillis) {
         this(new ConstantTimeToLiveExpirationPolicy<K, V>(timeToLiveMillis),
              new HashMap<K, V>());
     }
@@ -272,7 +272,7 @@ public class PassiveExpiringMap<K, V>
      * @param map the map to decorate, must not be null.
      * @throws IllegalArgumentException if the map is null.
      */
-    public PassiveExpiringMap(long timeToLiveMillis, Map<K, V> map) {
+    public PassiveExpiringMap(final long timeToLiveMillis, final Map<K, V> map) {
         this(new ConstantTimeToLiveExpirationPolicy<K, V>(timeToLiveMillis),
              map);
     }
@@ -289,7 +289,7 @@ public class PassiveExpiringMap<K, V>
      *        parameter, must not be null.
      * @throws IllegalArgumentException if the time unit is null.
      */
-    public PassiveExpiringMap(long timeToLive, TimeUnit timeUnit) {
+    public PassiveExpiringMap(final long timeToLive, final TimeUnit timeUnit) {
         this(validateAndConvertToMillis(timeToLive, timeUnit));
     }
 
@@ -310,7 +310,7 @@ public class PassiveExpiringMap<K, V>
      * @param map the map to decorate, must not be null.
      * @throws IllegalArgumentException if the map is null.
      */
-    public PassiveExpiringMap(long timeToLive, TimeUnit timeUnit, Map<K, V> map) {
+    public PassiveExpiringMap(final long timeToLive, final TimeUnit timeUnit, final Map<K, V> map) {
         this(validateAndConvertToMillis(timeToLive, timeUnit), map);
     }
 
@@ -322,7 +322,7 @@ public class PassiveExpiringMap<K, V>
      * @param map the map to decorate, must not be null.
      * @throws IllegalArgumentException if the map is null.
      */
-    public PassiveExpiringMap(Map<K, V> map) {
+    public PassiveExpiringMap(final Map<K, V> map) {
         this(-1L, map);
     }
 
@@ -342,7 +342,7 @@ public class PassiveExpiringMap<K, V>
      * {@inheritDoc}
      */
     @Override
-    public boolean containsKey(Object key) {
+    public boolean containsKey(final Object key) {
         removeIfExpired(key, now());
         return super.containsKey(key);
     }
@@ -353,7 +353,7 @@ public class PassiveExpiringMap<K, V>
      * {@inheritDoc}
      */
     @Override
-    public boolean containsValue(Object value) {
+    public boolean containsValue(final Object value) {
         removeAllExpired(now());
         return super.containsValue(value);
     }
@@ -373,7 +373,7 @@ public class PassiveExpiringMap<K, V>
      * {@inheritDoc}
      */
     @Override
-    public V get(Object key) {
+    public V get(final Object key) {
         removeIfExpired(key, now());
         return super.get(key);
     }
@@ -399,9 +399,9 @@ public class PassiveExpiringMap<K, V>
      *         and <code>expirationTimeObject</code> &lt; <code>now</code>.
      *         <code>false</code> otherwise.
      */
-    private boolean isExpired(long now, Long expirationTimeObject) {
+    private boolean isExpired(final long now, final Long expirationTimeObject) {
         if (expirationTimeObject != null) {
-            long expirationTime = expirationTimeObject.longValue();
+            final long expirationTime = expirationTimeObject.longValue();
             return expirationTime >= 0 && now >= expirationTime;
         }
         return false;
@@ -425,7 +425,7 @@ public class PassiveExpiringMap<K, V>
     }
 
     @Override
-    public V put(K key, V value) {
+    public V put(final K key, final V value) {
         return put(key, value, now());
     }
 
@@ -433,17 +433,17 @@ public class PassiveExpiringMap<K, V>
      * Add the given key-value pair to this map as well as recording the entry's expiration time based on
      * the current time in milliseconds, <code>now</code> and this map's {@link #expiringPolicy}.
      */
-    private V put(K key, V value, long now) {
+    private V put(final K key, final V value, final long now) {
         // record expiration time of new entry
-        long expirationTime = expiringPolicy.expirationTime(key, value);
+        final long expirationTime = expiringPolicy.expirationTime(key, value);
         expirationMap.put(key, Long.valueOf(expirationTime));
 
         return super.put(key, value);
     }
 
     @Override
-    public void putAll(Map<? extends K, ? extends V> mapToCopy) {
-        for (Map.Entry<? extends K, ? extends V> entry : mapToCopy.entrySet()) {
+    public void putAll(final Map<? extends K, ? extends V> mapToCopy) {
+        for (final Map.Entry<? extends K, ? extends V> entry : mapToCopy.entrySet()) {
             put(entry.getKey(), entry.getValue());
         }
     }
@@ -454,7 +454,7 @@ public class PassiveExpiringMap<K, V>
      * {@inheritDoc}
      */
     @Override
-    public V remove(Object key) {
+    public V remove(final Object key) {
         expirationMap.remove(key);
         return super.remove(key);
     }
@@ -466,11 +466,11 @@ public class PassiveExpiringMap<K, V>
      * 
      * @see #isExpired(long, Long)
      */
-    private void removeAllExpired(long now) {
-        Iterator<Map.Entry<Object, Long>> iter = expirationMap.entrySet()
+    private void removeAllExpired(final long now) {
+        final Iterator<Map.Entry<Object, Long>> iter = expirationMap.entrySet()
             .iterator();
         while (iter.hasNext()) {
-            Map.Entry<Object, Long> expirationEntry = iter.next();
+            final Map.Entry<Object, Long> expirationEntry = iter.next();
             if (isExpired(now, expirationEntry.getValue())) {
                 // remove entry from collection
                 super.remove(expirationEntry.getKey());
@@ -485,8 +485,8 @@ public class PassiveExpiringMap<K, V>
      * less than <code>now</code>. If the entry has a negative expiration time,
      * the entry is never removed.
      */
-    private void removeIfExpired(Object key, long now) {
-        Long expirationTimeObject = expirationMap.get(key);
+    private void removeIfExpired(final Object key, final long now) {
+        final Long expirationTimeObject = expirationMap.get(key);
         if (isExpired(now, expirationTimeObject)) {
             remove(key);
         }
@@ -511,7 +511,7 @@ public class PassiveExpiringMap<K, V>
      */
     @SuppressWarnings("unchecked")
     // (1) should only fail if input stream is incorrect
-    private void readObject(ObjectInputStream in)
+    private void readObject(final ObjectInputStream in)
         throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map<K, V>) in.readObject(); // (1)
@@ -523,7 +523,7 @@ public class PassiveExpiringMap<K, V>
      * @param out the output stream
      * @throws IOException
      */
-    private void writeObject(ObjectOutputStream out)
+    private void writeObject(final ObjectOutputStream out)
         throws IOException {
         out.defaultWriteObject();
         out.writeObject(map);

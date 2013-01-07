@@ -51,7 +51,7 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
     // Initialization and busywork
     //
 
-    public FixedOrderComparatorTest(String name) {
+    public FixedOrderComparatorTest(final String name) {
         super(name);
     }
 
@@ -61,7 +61,7 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
 
     @Override
     public Comparator<String> makeObject() {
-        FixedOrderComparator<String> comparator = new FixedOrderComparator<String>(topCities);
+        final FixedOrderComparator<String> comparator = new FixedOrderComparator<String>(topCities);
         return comparator;
     }
 
@@ -84,11 +84,11 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
      */
     @Test
     public void testConstructorPlusAdd() {
-        FixedOrderComparator<String> comparator = new FixedOrderComparator<String>();
-        for (String topCitie : topCities) {
+        final FixedOrderComparator<String> comparator = new FixedOrderComparator<String>();
+        for (final String topCitie : topCities) {
             comparator.add(topCitie);
         }
-        String[] keys = topCities.clone();
+        final String[] keys = topCities.clone();
         assertComparatorYieldsOrder(keys, comparator);
     }
 
@@ -97,9 +97,9 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
      */
     @Test
     public void testArrayConstructor() {
-        String[] keys = topCities.clone();
-        String[] topCitiesForTest = topCities.clone();
-        FixedOrderComparator<String> comparator = new FixedOrderComparator<String>(topCitiesForTest);
+        final String[] keys = topCities.clone();
+        final String[] topCitiesForTest = topCities.clone();
+        final FixedOrderComparator<String> comparator = new FixedOrderComparator<String>(topCitiesForTest);
         assertComparatorYieldsOrder(keys, comparator);
         // test that changing input after constructor has no effect
         topCitiesForTest[0] = "Brighton";
@@ -111,9 +111,9 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
      */
     @Test
     public void testListConstructor() {
-        String[] keys = topCities.clone();
-        List<String> topCitiesForTest = new LinkedList<String>(Arrays.asList(topCities));
-        FixedOrderComparator<String> comparator = new FixedOrderComparator<String>(topCitiesForTest);
+        final String[] keys = topCities.clone();
+        final List<String> topCitiesForTest = new LinkedList<String>(Arrays.asList(topCities));
+        final FixedOrderComparator<String> comparator = new FixedOrderComparator<String>(topCitiesForTest);
         assertComparatorYieldsOrder(keys, comparator);
         // test that changing input after constructor has no effect
         topCitiesForTest.set(0, "Brighton");
@@ -125,7 +125,7 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
      */
     @Test
     public void testAddAsEqual() {
-        FixedOrderComparator<String> comparator = new FixedOrderComparator<String>(topCities);
+        final FixedOrderComparator<String> comparator = new FixedOrderComparator<String>(topCities);
         comparator.addAsEqual("New York", "Minneapolis");
         assertEquals(0, comparator.compare("New York", "Minneapolis"));
         assertEquals(-1, comparator.compare("Tokyo", "Minneapolis"));
@@ -137,21 +137,21 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
      */
     @Test
     public void testLock() {
-        FixedOrderComparator<String> comparator = new FixedOrderComparator<String>(topCities);
+        final FixedOrderComparator<String> comparator = new FixedOrderComparator<String>(topCities);
         assertEquals(false, comparator.isLocked());
         comparator.compare("New York", "Tokyo");
         assertEquals(true, comparator.isLocked());
         try {
             comparator.add("Minneapolis");
             fail("Should have thrown an UnsupportedOperationException");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // success -- ignore
         }
 
         try {
             comparator.addAsEqual("New York", "Minneapolis");
             fail("Should have thrown an UnsupportedOperationException");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // success -- ignore
         }
     }
@@ -162,13 +162,13 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
         try {
             comparator.compare("New York", "Minneapolis");
             fail("Should have thrown a IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // success-- ignore
         }
         try {
             comparator.compare("Minneapolis", "New York");
             fail("Should have thrown a IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // success-- ignore
         }
         assertEquals(FixedOrderComparator.UnknownObjectBehavior.EXCEPTION, comparator.getUnknownObjectBehavior());
@@ -203,20 +203,20 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
     /** Shuffles the keys and asserts that the comparator sorts them back to
      * their original order.
      */
-    private void assertComparatorYieldsOrder(String[] orderedObjects,
-                                             Comparator<String> comparator) {
-        String[] keys = orderedObjects.clone();
+    private void assertComparatorYieldsOrder(final String[] orderedObjects,
+                                             final Comparator<String> comparator) {
+        final String[] keys = orderedObjects.clone();
 
         // shuffle until the order changes.  It's extremely rare that
         // this requires more than one shuffle.
 
         boolean isInNewOrder = false;
-        Random rand = new Random();
+        final Random rand = new Random();
         while (keys.length > 1 && isInNewOrder == false) {
             // shuffle:
             for (int i = keys.length-1; i > 0; i--) {
-                String swap = keys[i];
-                int j = rand.nextInt(i+1);
+                final String swap = keys[i];
+                final int j = rand.nextInt(i+1);
                 keys[i] = keys[j];
                 keys[j] = swap;
             }

@@ -53,7 +53,7 @@ public abstract class EditCommand<T> {
      * @param object  reference to the object associated with this command, this
      *   refers to an element of one of the sequences being compared
      */
-    protected EditCommand(T object) {
+    protected EditCommand(final T object) {
         this.object = object;
     }
 

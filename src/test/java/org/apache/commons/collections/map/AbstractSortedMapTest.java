@@ -41,7 +41,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
      *
      * @param testName  the test name
      */
-    public AbstractSortedMapTest(String testName) {
+    public AbstractSortedMapTest(final String testName) {
         super(testName);
     }
 
@@ -87,14 +87,14 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
     }
 
     public void testFirstKey() {
-        SortedMap<K, V> sm = makeFullMap();
+        final SortedMap<K, V> sm = makeFullMap();
         assertSame(sm.keySet().iterator().next(), sm.firstKey());
     }
 
     public void testLastKey() {
-        SortedMap<K, V> sm = makeFullMap();
+        final SortedMap<K, V> sm = makeFullMap();
         K obj = null;
-        for (Iterator<K> it = sm.keySet().iterator(); it.hasNext();) {
+        for (final Iterator<K> it = sm.keySet().iterator(); it.hasNext();) {
             obj = it.next();
         }
         assertSame(obj, sm.lastKey());
@@ -119,7 +119,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
         protected final List<V> subSortedValues = new ArrayList<V>();
         protected final List<V> subSortedNewValues = new ArrayList<V>();
 
-        public TestViewMap(String name, AbstractMapTest<K, V> main) {
+        public TestViewMap(final String name, final AbstractMapTest<K, V> main) {
             super(name);
             this.main = main;
         }
@@ -216,10 +216,10 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
         static final int SUBSIZE = 6;
         final K toKey;
 
-        public TestHeadMap(AbstractMapTest<K, V> main) {
+        public TestHeadMap(final AbstractMapTest<K, V> main) {
             super("SortedMap.HeadMap", main);
-            Map<K, V> sm = main.makeFullMap();
-            for (Entry<K, V> entry : sm.entrySet()) {
+            final Map<K, V> sm = main.makeFullMap();
+            for (final Entry<K, V> entry : sm.entrySet()) {
                 this.subSortedKeys.add(entry.getKey());
                 this.subSortedValues.add(entry.getValue());
             }
@@ -245,7 +245,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
             try {
                 getMap().put(toKey, subSortedValues.get(0));
                 fail();
-            } catch (IllegalArgumentException ex) {}
+            } catch (final IllegalArgumentException ex) {}
             verify();
         }
         @Override
@@ -270,10 +270,10 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
         final K fromKey;
         final K invalidKey;
 
-        public TestTailMap(AbstractMapTest<K, V> main) {
+        public TestTailMap(final AbstractMapTest<K, V> main) {
             super("SortedMap.TailMap", main);
-            Map<K, V> sm = main.makeFullMap();
-            for (Entry<K, V> entry : sm.entrySet()) {
+            final Map<K, V> sm = main.makeFullMap();
+            for (final Entry<K, V> entry : sm.entrySet()) {
                 this.subSortedKeys.add(entry.getKey());
                 this.subSortedValues.add(entry.getValue());
             }
@@ -300,7 +300,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
             try {
                 getMap().put(invalidKey, subSortedValues.get(0));
                 fail();
-            } catch (IllegalArgumentException ex) {}
+            } catch (final IllegalArgumentException ex) {}
             verify();
         }
         @Override
@@ -325,10 +325,10 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
         final K fromKey;
         final K toKey;
 
-        public TestSubMap(AbstractMapTest<K, V> main) {
+        public TestSubMap(final AbstractMapTest<K, V> main) {
             super("SortedMap.SubMap", main);
-            Map<K, V> sm = main.makeFullMap();
-            for (Entry<K, V> entry : sm.entrySet()) {
+            final Map<K, V> sm = main.makeFullMap();
+            for (final Entry<K, V> entry : sm.entrySet()) {
                 this.subSortedKeys.add(entry.getKey());
                 this.subSortedValues.add(entry.getValue());
             }
@@ -362,7 +362,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
             try {
                 getMap().put(toKey, subSortedValues.get(0));
                 fail();
-            } catch (IllegalArgumentException ex) {}
+            } catch (final IllegalArgumentException ex) {}
             verify();
         }
         @Override

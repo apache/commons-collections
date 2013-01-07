@@ -35,7 +35,7 @@ public abstract class AbstractIteratorDecorator<E> extends AbstractUntypedIterat
      * @param iterator  the iterator to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    protected AbstractIteratorDecorator(Iterator<E> iterator) {
+    protected AbstractIteratorDecorator(final Iterator<E> iterator) {
         super(iterator);
     }
 

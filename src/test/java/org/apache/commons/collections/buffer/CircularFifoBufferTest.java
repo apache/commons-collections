@@ -38,7 +38,7 @@ import org.apache.commons.collections.collection.AbstractCollectionTest;
  */
 public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
 
-    public CircularFifoBufferTest(String n) {
+    public CircularFifoBufferTest(final String n) {
         super(n);
     }
 
@@ -55,12 +55,12 @@ public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
     @Override
     public void verify() {
         super.verify();
-        Iterator<E> iterator1 = getCollection().iterator();
-        Iterator<E> iterator2 = getConfirmed().iterator();
+        final Iterator<E> iterator1 = getCollection().iterator();
+        final Iterator<E> iterator2 = getConfirmed().iterator();
         while (iterator2.hasNext()) {
             assertTrue(iterator1.hasNext());
-            Object o1 = iterator1.next();
-            Object o2 = iterator2.next();
+            final Object o1 = iterator1.next();
+            final Object o2 = iterator2.next();
             assertEquals(o1, o2);
         }
     }
@@ -102,7 +102,7 @@ public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
      */
     @Override
     public Collection<E> makeConfirmedFullCollection() {
-        Collection<E> c = makeConfirmedCollection();
+        final Collection<E> c = makeConfirmedCollection();
         c.addAll(java.util.Arrays.asList(getFullElements()));
         return c;
     }
@@ -123,11 +123,11 @@ public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
      */
     @SuppressWarnings("unchecked")
     public void testCircularFifoBufferCircular() {
-        List<E> list = new ArrayList<E>();
+        final List<E> list = new ArrayList<E>();
         list.add((E) "A");
         list.add((E) "B");
         list.add((E) "C");
-        Buffer<E> buf = new CircularFifoBuffer<E>(list);
+        final Buffer<E> buf = new CircularFifoBuffer<E>(list);
 
         assertEquals(true, buf.contains("A"));
         assertEquals(true, buf.contains("B"));
@@ -151,10 +151,10 @@ public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
      */
     public void testCircularFifoBufferRemove() {
         resetFull();
-        int size = getConfirmed().size();
+        final int size = getConfirmed().size();
         for (int i = 0; i < size; i++) {
-            Object o1 = getCollection().remove();
-            Object o2 = getConfirmed().remove(0);
+            final Object o1 = getCollection().remove();
+            final Object o2 = getConfirmed().remove(0);
             assertEquals("Removed objects should be equal", o1, o2);
             verify();
         }
@@ -162,7 +162,7 @@ public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
         try {
             getCollection().remove();
             fail("Empty buffer should raise Underflow.");
-        } catch (BufferUnderflowException e) {
+        } catch (final BufferUnderflowException e) {
             // expected
         }
     }
@@ -173,7 +173,7 @@ public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
     public void testConstructorException1() {
         try {
             new CircularFifoBuffer<E>(0);
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             return;
         }
         fail();
@@ -185,7 +185,7 @@ public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
     public void testConstructorException2() {
         try {
             new CircularFifoBuffer<E>(-20);
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             return;
         }
         fail();
@@ -197,7 +197,7 @@ public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
     public void testConstructorException3() {
         try {
             new CircularFifoBuffer<E>(null);
-        } catch (NullPointerException ex) {
+        } catch (final NullPointerException ex) {
             return;
         }
         fail();
@@ -206,7 +206,7 @@ public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
     @SuppressWarnings("unchecked")
     public void testRemoveError1() throws Exception {
         // based on bug 33071
-        CircularFifoBuffer<E> fifo = new CircularFifoBuffer<E>(5);
+        final CircularFifoBuffer<E> fifo = new CircularFifoBuffer<E>(5);
         fifo.add((E) "1");
         fifo.add((E) "2");
         fifo.add((E) "3");
@@ -225,7 +225,7 @@ public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
     @SuppressWarnings("unchecked")
     public void testRemoveError2() throws Exception {
         // based on bug 33071
-        CircularFifoBuffer<E> fifo = new CircularFifoBuffer<E>(5);
+        final CircularFifoBuffer<E> fifo = new CircularFifoBuffer<E>(5);
         fifo.add((E) "1");
         fifo.add((E) "2");
         fifo.add((E) "3");
@@ -246,7 +246,7 @@ public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
     @SuppressWarnings("unchecked")
     public void testRemoveError3() throws Exception {
         // based on bug 33071
-        CircularFifoBuffer<E> fifo = new CircularFifoBuffer<E>(5);
+        final CircularFifoBuffer<E> fifo = new CircularFifoBuffer<E>(5);
         fifo.add((E) "1");
         fifo.add((E) "2");
         fifo.add((E) "3");
@@ -269,7 +269,7 @@ public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
     @SuppressWarnings("unchecked")
     public void testRemoveError4() throws Exception {
         // based on bug 33071
-        CircularFifoBuffer<E> fifo = new CircularFifoBuffer<E>(5);
+        final CircularFifoBuffer<E> fifo = new CircularFifoBuffer<E>(5);
         fifo.add((E) "1");
         fifo.add((E) "2");
         fifo.add((E) "3");
@@ -287,7 +287,7 @@ public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
     @SuppressWarnings("unchecked")
     public void testRemoveError5() throws Exception {
         // based on bug 33071
-        CircularFifoBuffer<E> fifo = new CircularFifoBuffer<E>(5);
+        final CircularFifoBuffer<E> fifo = new CircularFifoBuffer<E>(5);
         fifo.add((E) "1");
         fifo.add((E) "2");
         fifo.add((E) "3");
@@ -305,7 +305,7 @@ public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
     @SuppressWarnings("unchecked")
     public void testRemoveError6() throws Exception {
         // based on bug 33071
-        CircularFifoBuffer<E> fifo = new CircularFifoBuffer<E>(5);
+        final CircularFifoBuffer<E> fifo = new CircularFifoBuffer<E>(5);
         fifo.add((E) "1");
         fifo.add((E) "2");
         fifo.add((E) "3");
@@ -323,7 +323,7 @@ public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
     @SuppressWarnings("unchecked")
     public void testRemoveError7() throws Exception {
         // based on bug 33071
-        CircularFifoBuffer<E> fifo = new CircularFifoBuffer<E>(5);
+        final CircularFifoBuffer<E> fifo = new CircularFifoBuffer<E>(5);
         fifo.add((E) "1");
         fifo.add((E) "2");
         fifo.add((E) "3");
@@ -341,7 +341,7 @@ public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
     @SuppressWarnings("unchecked")
     public void testRemoveError8() throws Exception {
         // based on bug 33071
-        CircularFifoBuffer<E> fifo = new CircularFifoBuffer<E>(5);
+        final CircularFifoBuffer<E> fifo = new CircularFifoBuffer<E>(5);
         fifo.add((E) "1");
         fifo.add((E) "2");
         fifo.add((E) "3");
@@ -360,7 +360,7 @@ public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
     @SuppressWarnings("unchecked")
     public void testRemoveError9() throws Exception {
         // based on bug 33071
-        CircularFifoBuffer<E> fifo = new CircularFifoBuffer<E>(5);
+        final CircularFifoBuffer<E> fifo = new CircularFifoBuffer<E>(5);
         fifo.add((E) "1");
         fifo.add((E) "2");
         fifo.add((E) "3");
@@ -380,7 +380,7 @@ public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
     @SuppressWarnings("unchecked")
     public void testRepeatedSerialization() throws Exception {
         // bug 31433
-        CircularFifoBuffer<E> b = new CircularFifoBuffer<E>(2);
+        final CircularFifoBuffer<E> b = new CircularFifoBuffer<E>(2);
         b.add((E) "a");
         assertEquals(1, b.size());
         assertEquals(true, b.contains("a"));
@@ -388,7 +388,7 @@ public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         new ObjectOutputStream(bos).writeObject(b);
 
-        CircularFifoBuffer<E> b2 = (CircularFifoBuffer<E>) new ObjectInputStream(
+        final CircularFifoBuffer<E> b2 = (CircularFifoBuffer<E>) new ObjectInputStream(
             new ByteArrayInputStream(bos.toByteArray())).readObject();
 
         assertEquals(1, b2.size());
@@ -401,7 +401,7 @@ public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
         bos = new ByteArrayOutputStream();
         new ObjectOutputStream(bos).writeObject(b2);
 
-        CircularFifoBuffer<E> b3 = (CircularFifoBuffer<E>) new ObjectInputStream(
+        final CircularFifoBuffer<E> b3 = (CircularFifoBuffer<E>) new ObjectInputStream(
             new ByteArrayInputStream(bos.toByteArray())).readObject();
 
         assertEquals(2, b3.size());
@@ -416,8 +416,8 @@ public class CircularFifoBufferTest<E> extends AbstractCollectionTest<E> {
     public void testGetIndex() {
         resetFull();
         
-        CircularFifoBuffer<E> buffer = getCollection();
-        List<E> confirmed = getConfirmed();
+        final CircularFifoBuffer<E> buffer = getCollection();
+        final List<E> confirmed = getConfirmed();
         for (int i = 0; i < confirmed.size(); i++) {
             assertEquals(confirmed.get(i), buffer.get(i));
         }

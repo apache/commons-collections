@@ -82,7 +82,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      *
      * @param coll  the collection to copy
      */
-    protected AbstractLinkedList(Collection<? extends E> coll) {
+    protected AbstractLinkedList(final Collection<? extends E> coll) {
         super();
         init();
         addAll(coll);
@@ -108,8 +108,8 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return size() == 0;
     }
 
-    public E get(int index) {
-        Node<E> node = getNode(index, false);
+    public E get(final int index) {
+        final Node<E> node = getNode(index, false);
         return node.getValue();
     }
 
@@ -123,13 +123,13 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return new LinkedListIterator<E>(this, 0);
     }
 
-    public ListIterator<E> listIterator(int fromIndex) {
+    public ListIterator<E> listIterator(final int fromIndex) {
         return new LinkedListIterator<E>(this, fromIndex);
     }
 
     //-----------------------------------------------------------------------
     
-    public int indexOf(Object value) {
+    public int indexOf(final Object value) {
         int i = 0;
         for (Node<E> node = header.next; node != header; node = node.next) {
             if (isEqualValue(node.getValue(), value)) {
@@ -140,7 +140,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return -1;
     }
 
-    public int lastIndexOf(Object value) {
+    public int lastIndexOf(final Object value) {
         int i = size - 1;
         for (Node<E> node = header.previous; node != header; node = node.previous) {
             if (isEqualValue(node.getValue(), value)) {
@@ -151,12 +151,12 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return -1;
     }
 
-    public boolean contains(Object value) {
+    public boolean contains(final Object value) {
         return indexOf(value) != -1;
     }
 
-    public boolean containsAll(Collection<?> coll) {
-        for (Object o : coll) {
+    public boolean containsAll(final Collection<?> coll) {
+        for (final Object o : coll) {
             if (!contains(o)) {
                 return false;
             }
@@ -174,7 +174,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     public <T> T[] toArray(T[] array) {
         // Extend the array if needed
         if (array.length < size) {
-            Class<?> componentType = array.getClass().getComponentType();
+            final Class<?> componentType = array.getClass().getComponentType();
             array = (T[]) Array.newInstance(componentType, size);
         }
         // Copy the values into the array
@@ -196,29 +196,29 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @param toIndexExclusive  the index to end at
      * @return the new sublist
      */
-    public List<E> subList(int fromIndexInclusive, int toIndexExclusive) {
+    public List<E> subList(final int fromIndexInclusive, final int toIndexExclusive) {
         return new LinkedSubList<E>(this, fromIndexInclusive, toIndexExclusive);
     }
 
     //-----------------------------------------------------------------------
     
-    public boolean add(E value) {
+    public boolean add(final E value) {
         addLast(value);
         return true;
     }
 
-    public void add(int index, E value) {
-        Node<E> node = getNode(index, true);
+    public void add(final int index, final E value) {
+        final Node<E> node = getNode(index, true);
         addNodeBefore(node, value);
     }
 
-    public boolean addAll(Collection<? extends E> coll) {
+    public boolean addAll(final Collection<? extends E> coll) {
         return addAll(size, coll);
     }
 
-    public boolean addAll(int index, Collection<? extends E> coll) {
-        Node<E> node = getNode(index, true);
-        for (E e : coll) {
+    public boolean addAll(final int index, final Collection<? extends E> coll) {
+        final Node<E> node = getNode(index, true);
+        for (final E e : coll) {
             addNodeBefore(node, e);
         }
         return true;
@@ -226,14 +226,14 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
     //-----------------------------------------------------------------------
     
-    public E remove(int index) {
-        Node<E> node = getNode(index, false);
-        E oldValue = node.getValue();
+    public E remove(final int index) {
+        final Node<E> node = getNode(index, false);
+        final E oldValue = node.getValue();
         removeNode(node);
         return oldValue;
     }
 
-    public boolean remove(Object value) {
+    public boolean remove(final Object value) {
         for (Node<E> node = header.next; node != header; node = node.next) {
             if (isEqualValue(node.getValue(), value)) {
                 removeNode(node);
@@ -252,9 +252,9 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * <code>coll</code> that provides a fast (e.g. O(1)) implementation of
      * {@link Collection#contains(Object)}.
      */
-    public boolean removeAll(Collection<?> coll) {
+    public boolean removeAll(final Collection<?> coll) {
         boolean modified = false;
-        Iterator<E> it = iterator();
+        final Iterator<E> it = iterator();
         while (it.hasNext()) {
             if (coll.contains(it.next())) {
                 it.remove();
@@ -275,9 +275,9 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * <code>coll</code> that provides a fast (e.g. O(1)) implementation of
      * {@link Collection#contains(Object)}.
      */
-    public boolean retainAll(Collection<?> coll) {
+    public boolean retainAll(final Collection<?> coll) {
         boolean modified = false;
-        Iterator<E> it = iterator();
+        final Iterator<E> it = iterator();
         while (it.hasNext()) {
             if (coll.contains(it.next()) == false) {
                 it.remove();
@@ -287,9 +287,9 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         return modified;
     }
 
-    public E set(int index, E value) {
-        Node<E> node = getNode(index, false);
-        E oldValue = node.getValue();
+    public E set(final int index, final E value) {
+        final Node<E> node = getNode(index, false);
+        final E oldValue = node.getValue();
         updateNode(node, value);
         return oldValue;
     }
@@ -301,7 +301,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     //-----------------------------------------------------------------------
     
     public E getFirst() {
-        Node<E> node = header.next;
+        final Node<E> node = header.next;
         if (node == header) {
             throw new NoSuchElementException();
         }
@@ -309,61 +309,61 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     }
 
     public E getLast() {
-        Node<E> node = header.previous;
+        final Node<E> node = header.previous;
         if (node == header) {
             throw new NoSuchElementException();
         }
         return node.getValue();
     }
 
-    public boolean addFirst(E o) {
+    public boolean addFirst(final E o) {
         addNodeAfter(header, o);
         return true;
     }
 
-    public boolean addLast(E o) {
+    public boolean addLast(final E o) {
         addNodeBefore(header, o);
         return true;
     }
 
     public E removeFirst() {
-        Node<E> node = header.next;
+        final Node<E> node = header.next;
         if (node == header) {
             throw new NoSuchElementException();
         }
-        E oldValue = node.getValue();
+        final E oldValue = node.getValue();
         removeNode(node);
         return oldValue;
     }
 
     public E removeLast() {
-        Node<E> node = header.previous;
+        final Node<E> node = header.previous;
         if (node == header) {
             throw new NoSuchElementException();
         }
-        E oldValue = node.getValue();
+        final E oldValue = node.getValue();
         removeNode(node);
         return oldValue;
     }
 
     //-----------------------------------------------------------------------
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == this) {
             return true;
         }
         if (obj instanceof List == false) {
             return false;
         }
-        List<?> other = (List<?>) obj;
+        final List<?> other = (List<?>) obj;
         if (other.size() != size()) {
             return false;
         }
-        ListIterator<?> it1 = listIterator();
-        ListIterator<?> it2 = other.listIterator();
+        final ListIterator<?> it1 = listIterator();
+        final ListIterator<?> it2 = other.listIterator();
         while (it1.hasNext() && it2.hasNext()) {
-            Object o1 = it1.next();
-            Object o2 = it2.next();
+            final Object o1 = it1.next();
+            final Object o2 = it2.next();
             if (!(o1 == null ? o2 == null : o1.equals(o2))) {
                 return false;
             }
@@ -374,7 +374,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     @Override
     public int hashCode() {
         int hashCode = 1;
-        for (E e : this) {
+        for (final E e : this) {
             hashCode = 31 * hashCode + (e == null ? 0 : e.hashCode());
         }
         return hashCode;
@@ -385,13 +385,13 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         if (size() == 0) {
             return "[]";
         }
-        StringBuilder buf = new StringBuilder(16 * size());
+        final StringBuilder buf = new StringBuilder(16 * size());
         buf.append("[");
 
-        Iterator<E> it = iterator();
+        final Iterator<E> it = iterator();
         boolean hasNext = it.hasNext();
         while (hasNext) {
-            Object value = it.next();
+            final Object value = it.next();
             buf.append(value == this ? "(this Collection)" : value);
             hasNext = it.hasNext();
             if (hasNext) {
@@ -412,7 +412,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @param value2  the second value to compare, may be null
      * @return true if equal
      */
-    protected boolean isEqualValue(Object value1, Object value2) {
+    protected boolean isEqualValue(final Object value1, final Object value2) {
         return value1 == value2 || (value1 == null ? false : value1.equals(value2));
     }
 
@@ -424,7 +424,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @param node  node to update
      * @param value  new value of the node
      */
-    protected void updateNode(Node<E> node, E value) {
+    protected void updateNode(final Node<E> node, final E value) {
         node.setValue(value);
     }
 
@@ -447,7 +447,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @param value  value of the new node
      * @return a new node containing the value
      */
-    protected Node<E> createNode(E value) {
+    protected Node<E> createNode(final E value) {
         return new Node<E>(value);
     }
 
@@ -462,8 +462,8 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @param value  value of the newly added node
      * @throws NullPointerException if <code>node</code> is null
      */
-    protected void addNodeBefore(Node<E> node, E value) {
-        Node<E> newNode = createNode(value);
+    protected void addNodeBefore(final Node<E> node, final E value) {
+        final Node<E> newNode = createNode(value);
         addNode(newNode, node);
     }
 
@@ -478,8 +478,8 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @param value  value of the newly added node
      * @throws NullPointerException if <code>node</code> is null
      */
-    protected void addNodeAfter(Node<E> node, E value) {
-        Node<E> newNode = createNode(value);
+    protected void addNodeAfter(final Node<E> node, final E value) {
+        final Node<E> newNode = createNode(value);
         addNode(newNode, node.next);
     }
 
@@ -490,7 +490,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @param insertBeforeNode  node to insert before
      * @throws NullPointerException if either node is null
      */
-    protected void addNode(Node<E> nodeToInsert, Node<E> insertBeforeNode) {
+    protected void addNode(final Node<E> nodeToInsert, final Node<E> insertBeforeNode) {
         nodeToInsert.next = insertBeforeNode;
         nodeToInsert.previous = insertBeforeNode.previous;
         insertBeforeNode.previous.next = nodeToInsert;
@@ -505,7 +505,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @param node  the node to remove
      * @throws NullPointerException if <code>node</code> is null
      */
-    protected void removeNode(Node<E> node) {
+    protected void removeNode(final Node<E> node) {
         node.previous.next = node.next;
         node.next.previous = node.previous;
         size--;
@@ -533,7 +533,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * the size of the list and endMakerAllowed is false; or greater than the
      * size of the list
      */
-    protected Node<E> getNode(int index, boolean endMarkerAllowed) throws IndexOutOfBoundsException {
+    protected Node<E> getNode(final int index, final boolean endMarkerAllowed) throws IndexOutOfBoundsException {
         // Check the index is within the bounds
         if (index < 0) {
             throw new IndexOutOfBoundsException("Couldn't get the node: " +
@@ -573,7 +573,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @param subList  the sublist to get an iterator for
      * @return a new iterator on the given sublist
      */
-    protected Iterator<E> createSubListIterator(LinkedSubList<E> subList) {
+    protected Iterator<E> createSubListIterator(final LinkedSubList<E> subList) {
         return createSubListListIterator(subList, 0);
     }
 
@@ -584,7 +584,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @param fromIndex  the index to start from, relative to the sublist
      * @return a new list iterator on the given sublist
      */
-    protected ListIterator<E> createSubListListIterator(LinkedSubList<E> subList, int fromIndex) {
+    protected ListIterator<E> createSubListListIterator(final LinkedSubList<E> subList, final int fromIndex) {
         return new LinkedSubListIterator<E>(subList, fromIndex);
     }
 
@@ -595,10 +595,10 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * The first serializable subclass must call this method from
      * <code>writeObject</code>.
      */
-    protected void doWriteObject(ObjectOutputStream outputStream) throws IOException {
+    protected void doWriteObject(final ObjectOutputStream outputStream) throws IOException {
         // Write the size so we know how many nodes to read back
         outputStream.writeInt(size());
-        for (E e : this) {
+        for (final E e : this) {
             outputStream.writeObject(e);
         }
     }
@@ -610,9 +610,9 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * <code>readObject</code>.
      */
     @SuppressWarnings("unchecked")
-    protected void doReadObject(ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
+    protected void doReadObject(final ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
         init();
-        int size = inputStream.readInt();
+        final int size = inputStream.readInt();
         for (int i = 0; i < size; i++) {
             add((E) inputStream.readObject());
         }
@@ -648,7 +648,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
          *
          * @param value  the value to store
          */
-        protected Node(E value) {
+        protected Node(final E value) {
             super();
             this.value = value;
         }
@@ -660,7 +660,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
          * @param next  the next node in the list
          * @param value  the value to store
          */
-        protected Node(Node<E> previous, Node<E> next, E value) {
+        protected Node(final Node<E> previous, final Node<E> next, final E value) {
             super();
             this.previous = previous;
             this.next = next;
@@ -683,7 +683,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
          * @param value  the value
          * @since 3.1
          */
-        protected void setValue(E value) {
+        protected void setValue(final E value) {
             this.value = value;
         }
 
@@ -703,7 +703,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
          * @param previous  the previous node
          * @since 3.1
          */
-        protected void setPreviousNode(Node<E> previous) {
+        protected void setPreviousNode(final Node<E> previous) {
             this.previous = previous;
         }
 
@@ -723,7 +723,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
          * @param next  the next node
          * @since 3.1
          */
-        protected void setNextNode(Node<E> next) {
+        protected void setNextNode(final Node<E> next) {
             this.next = next;
         }
     }
@@ -773,7 +773,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
          * @param fromIndex  the index to start at
          * @throws IndexOutOfBoundsException if fromIndex is less than 0 or greater than the size of the list
          */
-        protected LinkedListIterator(AbstractLinkedList<E> parent, int fromIndex) throws IndexOutOfBoundsException {
+        protected LinkedListIterator(final AbstractLinkedList<E> parent, final int fromIndex) throws IndexOutOfBoundsException {
             super();
             this.parent = parent;
             this.expectedModCount = parent.modCount;
@@ -817,7 +817,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
             if (!hasNext()) {
                 throw new NoSuchElementException("No element at index " + nextIndex + ".");
             }
-            E value = next.getValue();
+            final E value = next.getValue();
             current = next;
             next = next.next;
             nextIndex++;
@@ -834,7 +834,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
                 throw new NoSuchElementException("Already at start of list.");
             }
             next = next.previous;
-            E value = next.getValue();
+            final E value = next.getValue();
             current = next;
             nextIndex--;
             return value;
@@ -864,12 +864,12 @@ public abstract class AbstractLinkedList<E> implements List<E> {
             expectedModCount++;
         }
 
-        public void set(E obj) {
+        public void set(final E obj) {
             checkModCount();
             getLastNodeReturned().setValue(obj);
         }
 
-        public void add(E obj) {
+        public void add(final E obj) {
             checkModCount();
             parent.addNodeBefore(next, obj);
             current = null;
@@ -888,7 +888,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         /** The parent list */
         protected final LinkedSubList<E> sub;
 
-        protected LinkedSubListIterator(LinkedSubList<E> sub, int startIndex) {
+        protected LinkedSubListIterator(final LinkedSubList<E> sub, final int startIndex) {
             super(sub.parent, startIndex + sub.offset);
             this.sub = sub;
         }
@@ -909,7 +909,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         }
 
         @Override
-        public void add(E obj) {
+        public void add(final E obj) {
             super.add(obj);
             sub.expectedModCount = parent.modCount;
             sub.size++;
@@ -937,7 +937,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         /** Sublist modCount */
         int expectedModCount;
 
-        protected LinkedSubList(AbstractLinkedList<E> parent, int fromIndex, int toIndex) {
+        protected LinkedSubList(final AbstractLinkedList<E> parent, final int fromIndex, final int toIndex) {
             if (fromIndex < 0) {
                 throw new IndexOutOfBoundsException("fromIndex = " + fromIndex);
             }
@@ -960,14 +960,14 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         }
 
         @Override
-        public E get(int index) {
+        public E get(final int index) {
             rangeCheck(index, size);
             checkModCount();
             return parent.get(index + offset);
         }
 
         @Override
-        public void add(int index, E obj) {
+        public void add(final int index, final E obj) {
             rangeCheck(index, size + 1);
             checkModCount();
             parent.add(index + offset, obj);
@@ -977,10 +977,10 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         }
 
         @Override
-        public E remove(int index) {
+        public E remove(final int index) {
             rangeCheck(index, size);
             checkModCount();
-            E result = parent.remove(index + offset);
+            final E result = parent.remove(index + offset);
             expectedModCount = parent.modCount;
             size--;
             LinkedSubList.this.modCount++;
@@ -988,14 +988,14 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         }
 
         @Override
-        public boolean addAll(Collection<? extends E> coll) {
+        public boolean addAll(final Collection<? extends E> coll) {
             return addAll(size, coll);
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends E> coll) {
+        public boolean addAll(final int index, final Collection<? extends E> coll) {
             rangeCheck(index, size + 1);
-            int cSize = coll.size();
+            final int cSize = coll.size();
             if (cSize == 0) {
                 return false;
             }
@@ -1009,7 +1009,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         }
 
         @Override
-        public E set(int index, E obj) {
+        public E set(final int index, final E obj) {
             rangeCheck(index, size);
             checkModCount();
             return parent.set(index + offset, obj);
@@ -1018,7 +1018,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         @Override
         public void clear() {
             checkModCount();
-            Iterator<E> it = iterator();
+            final Iterator<E> it = iterator();
             while (it.hasNext()) {
                 it.next();
                 it.remove();
@@ -1039,11 +1039,11 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         }
 
         @Override
-        public List<E> subList(int fromIndexInclusive, int toIndexExclusive) {
+        public List<E> subList(final int fromIndexInclusive, final int toIndexExclusive) {
             return new LinkedSubList<E>(parent, fromIndexInclusive + offset, toIndexExclusive + offset);
         }
 
-        protected void rangeCheck(int index, int beyond) {
+        protected void rangeCheck(final int index, final int beyond) {
             if (index < 0 || index >= beyond) {
                 throw new IndexOutOfBoundsException("Index '" + index + "' out of bounds for size '" + size + "'");
             }

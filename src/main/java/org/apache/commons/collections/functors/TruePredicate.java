@@ -59,7 +59,7 @@ public final class TruePredicate<T> implements Predicate<T>, Serializable {
      * @param object  the input object
      * @return true always
      */
-    public boolean evaluate(T object) {
+    public boolean evaluate(final T object) {
         return true;
     }
 

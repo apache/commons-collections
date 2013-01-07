@@ -89,12 +89,12 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      * @param items  the items that the comparator can compare in order
      * @throws IllegalArgumentException if the array is null
      */
-    public FixedOrderComparator(T[] items) {
+    public FixedOrderComparator(final T[] items) {
         super();
         if (items == null) {
             throw new IllegalArgumentException("The list of items must not be null");
         }
-        for (T item : items) {
+        for (final T item : items) {
             add(item);
         }
     }
@@ -108,12 +108,12 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      * @param items  the items that the comparator can compare in order
      * @throws IllegalArgumentException if the list is null
      */
-    public FixedOrderComparator(List<T> items) {
+    public FixedOrderComparator(final List<T> items) {
         super();
         if (items == null) {
             throw new IllegalArgumentException("The list of items must not be null");
         }
-        for (T t : items) {
+        for (final T t : items) {
             add(t);
         }
     }
@@ -159,7 +159,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      * @throws UnsupportedOperationException if a comparison has been performed
      * @throws IllegalArgumentException if the unknown flag is not valid
      */
-    public void setUnknownObjectBehavior(UnknownObjectBehavior unknownObjectBehavior) {
+    public void setUnknownObjectBehavior(final UnknownObjectBehavior unknownObjectBehavior) {
         checkLocked();
         if (unknownObjectBehavior == null) {
             throw new IllegalArgumentException("Unknown object behavior must not be null");
@@ -179,9 +179,9 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      *  it was already known to the Comparator.
      * @throws UnsupportedOperationException if a comparison has already been made
      */
-    public boolean add(T obj) {
+    public boolean add(final T obj) {
         checkLocked();
-        Integer position = map.put(obj, new Integer(counter++));
+        final Integer position = map.put(obj, new Integer(counter++));
         return position == null;
     }
 
@@ -198,13 +198,13 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      *  Comparator's set of known objects.
      * @throws UnsupportedOperationException if a comparison has already been made
      */
-    public boolean addAsEqual(T existingObj, T newObj) {
+    public boolean addAsEqual(final T existingObj, final T newObj) {
         checkLocked();
-        Integer position = map.get(existingObj);
+        final Integer position = map.get(existingObj);
         if (position == null) {
             throw new IllegalArgumentException(existingObj + " not known to " + this);
         }
-        Integer result = map.put(newObj, position);
+        final Integer result = map.put(newObj, position);
         return result == null;
     }
 
@@ -224,10 +224,10 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      *  to this Comparator and an alternative behavior has not been set
      *  via {@link #setUnknownObjectBehavior(UnknownObjectBehavior)}.
      */
-    public int compare(T obj1, T obj2) {
+    public int compare(final T obj1, final T obj2) {
         isLocked = true;
-        Integer position1 = map.get(obj1);
-        Integer position2 = map.get(obj2);
+        final Integer position1 = map.get(obj1);
+        final Integer position2 = map.get(obj2);
         if (position1 == null || position2 == null) {
             switch (unknownObjectBehavior) {
             case BEFORE:
@@ -235,7 +235,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
             case AFTER:
                 return position1 == null ? position2 == null ? 0 : 1 : -1;
             case EXCEPTION:
-                Object unknownObj = position1 == null ? obj1 : obj2;
+                final Object unknownObj = position1 == null ? obj1 : obj2;
                 throw new IllegalArgumentException("Attempting to compare unknown object "
                         + unknownObj);
             default: //could be null
@@ -276,7 +276,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      * @return true if equal
      */
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         if (this == object) {
             return true;
         }
@@ -284,7 +284,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
             return false;
         }
         if (object.getClass().equals(this.getClass())) {
-            FixedOrderComparator<?> comp = (FixedOrderComparator<?>) object;
+            final FixedOrderComparator<?> comp = (FixedOrderComparator<?>) object;
             return null == map ? null == comp.map : map.equals(comp.map) &&
                     null == unknownObjectBehavior ? null == comp.unknownObjectBehavior :
                         unknownObjectBehavior == comp.unknownObjectBehavior &&

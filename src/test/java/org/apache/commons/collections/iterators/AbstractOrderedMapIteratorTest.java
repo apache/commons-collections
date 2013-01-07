@@ -44,7 +44,7 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
      *
      * @param testName  the test class name
      */
-    public AbstractOrderedMapIteratorTest(String testName) {
+    public AbstractOrderedMapIteratorTest(final String testName) {
         super(testName);
     }
 
@@ -67,12 +67,12 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
 
         super.testEmptyMapIterator();
 
-        OrderedMapIterator<K, V> it = makeEmptyIterator();
+        final OrderedMapIterator<K, V> it = makeEmptyIterator();
         assertEquals(false, it.hasPrevious());
         try {
             it.previous();
             fail();
-        } catch (NoSuchElementException ex) {}
+        } catch (final NoSuchElementException ex) {}
     }
 
     //-----------------------------------------------------------------------
@@ -87,21 +87,21 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
 
         super.testFullMapIterator();
 
-        OrderedMapIterator<K, V> it = makeObject();
-        Map<K, V> map = getMap();
+        final OrderedMapIterator<K, V> it = makeObject();
+        final Map<K, V> map = getMap();
 
         assertEquals(true, it.hasNext());
         assertEquals(false, it.hasPrevious());
-        Set<K> set = new HashSet<K>();
+        final Set<K> set = new HashSet<K>();
         while (it.hasNext()) {
             // getKey
-            K key = it.next();
+            final K key = it.next();
             assertSame("it.next() should equals getKey()", key, it.getKey());
             assertTrue("Key must be in map",  map.containsKey(key));
             assertTrue("Key must be unique", set.add(key));
 
             // getValue
-            V value = it.getValue();
+            final V value = it.getValue();
             if (isGetStructuralModify() == false) {
                 assertSame("Value must be mapped to key", map.get(key), value);
             }
@@ -113,13 +113,13 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
         }
         while (it.hasPrevious()) {
             // getKey
-            Object key = it.previous();
+            final Object key = it.previous();
             assertSame("it.previous() should equals getKey()", key, it.getKey());
             assertTrue("Key must be in map",  map.containsKey(key));
             assertTrue("Key must be unique", set.remove(key));
 
             // getValue
-            Object value = it.getValue();
+            final Object value = it.getValue();
             if (isGetStructuralModify() == false) {
                 assertSame("Value must be mapped to key", map.get(key), value);
             }
@@ -140,23 +140,23 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
             return;
         }
 
-        OrderedMapIterator<K, V> it = makeObject();
-        Map<K, V> map = getMap();
+        final OrderedMapIterator<K, V> it = makeObject();
+        final Map<K, V> map = getMap();
 
         assertEquals("keySet() not consistent", new ArrayList<K>(map.keySet()), new ArrayList<K>(map.keySet()));
 
-        Iterator<K> it2 = map.keySet().iterator();
+        final Iterator<K> it2 = map.keySet().iterator();
         assertEquals(true, it.hasNext());
         assertEquals(true, it2.hasNext());
-        List<K> list = new ArrayList<K>();
+        final List<K> list = new ArrayList<K>();
         while (it.hasNext()) {
-            K key = it.next();
+            final K key = it.next();
             assertEquals(it2.next(), key);
             list.add(key);
         }
         assertEquals(map.size(), list.size());
         while (it.hasPrevious()) {
-            K key = it.previous();
+            final K key = it.previous();
             assertEquals(list.get(list.size() - 1), key);
             list.remove(list.size() - 1);
         }

@@ -46,7 +46,7 @@ import java.util.List;
 public class EditScript<T> {
 
     /** Container for the commands. */
-    private List<EditCommand<T>> commands;
+    private final List<EditCommand<T>> commands;
 
     /** Length of the longest common subsequence. */
     private int lcsLength;
@@ -68,7 +68,7 @@ public class EditScript<T> {
      * 
      * @param command  command to add
      */
-    public void append(KeepCommand<T> command) {
+    public void append(final KeepCommand<T> command) {
         commands.add(command);
         ++lcsLength;
     }
@@ -78,7 +78,7 @@ public class EditScript<T> {
      * 
      * @param command  command to add
      */
-    public void append(InsertCommand<T> command) {
+    public void append(final InsertCommand<T> command) {
         commands.add(command);
         ++modifications;
     }
@@ -88,7 +88,7 @@ public class EditScript<T> {
      * 
      * @param command  command to add
      */
-    public void append(DeleteCommand<T> command) {
+    public void append(final DeleteCommand<T> command) {
         commands.add(command);
         ++modifications;
     }
@@ -102,8 +102,8 @@ public class EditScript<T> {
      * 
      * @param visitor  the visitor that will visit all commands in turn
      */
-    public void visit(CommandVisitor<T> visitor) {
-        for (EditCommand<T> command : commands) {
+    public void visit(final CommandVisitor<T> visitor) {
+        for (final EditCommand<T> command : commands) {
             command.accept(visitor);
         }
     }

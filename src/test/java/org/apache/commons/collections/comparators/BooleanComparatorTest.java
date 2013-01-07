@@ -33,7 +33,7 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
     // conventional
     // ------------------------------------------------------------------------
 
-    public BooleanComparatorTest(String testName) {
+    public BooleanComparatorTest(final String testName) {
         super(testName);
     }
 
@@ -47,7 +47,7 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
 
     @Override
     public List<Boolean> getComparableObjectsOrdered() {
-        List<Boolean> list = new ArrayList<Boolean>();
+        final List<Boolean> list = new ArrayList<Boolean>();
         list.add(new Boolean(false));
         list.add(Boolean.FALSE);
         list.add(new Boolean(false));
@@ -99,7 +99,7 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
     // utilities
     // ------------------------------------------------------------------------
 
-    protected void allTests(boolean trueFirst, BooleanComparator comp) {
+    protected void allTests(final boolean trueFirst, final BooleanComparator comp) {
         orderIndependentTests(comp);
         if(trueFirst) {
             trueFirstTests(comp);
@@ -108,7 +108,7 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
         }
     }
 
-    protected void trueFirstTests(BooleanComparator comp) {
+    protected void trueFirstTests(final BooleanComparator comp) {
         assertNotNull(comp);
         assertEquals(0,comp.compare(true, true));
         assertEquals(0,comp.compare(false, false));
@@ -116,7 +116,7 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
         assertTrue(comp.compare(true, false) < 0);
     }
 
-    protected void falseFirstTests(BooleanComparator comp) {
+    protected void falseFirstTests(final BooleanComparator comp) {
         assertNotNull(comp);
         assertEquals(0,comp.compare(true, true));
         assertEquals(0,comp.compare(false, false));
@@ -124,40 +124,40 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
         assertTrue(comp.compare(true, false) > 0);
     }
 
-    protected void orderIndependentTests(BooleanComparator comp) {
+    protected void orderIndependentTests(final BooleanComparator comp) {
         nullArgumentTests(comp);
     }
 
-    protected void nullArgumentTests(BooleanComparator comp) {
+    protected void nullArgumentTests(final BooleanComparator comp) {
         assertNotNull(comp);
         try {
             comp.compare(null,null);
             fail("Expected NullPointerException");
-        } catch(NullPointerException e) {
+        } catch(final NullPointerException e) {
             // expected
         }
         try {
             comp.compare(Boolean.TRUE,null);
             fail("Expected NullPointerException");
-        } catch(NullPointerException e) {
+        } catch(final NullPointerException e) {
             // expected
         }
         try {
             comp.compare(Boolean.FALSE,null);
             fail("Expected NullPointerException");
-        } catch(NullPointerException e) {
+        } catch(final NullPointerException e) {
             // expected
         }
         try {
             comp.compare(null,Boolean.TRUE);
             fail("Expected NullPointerException");
-        } catch(NullPointerException e) {
+        } catch(final NullPointerException e) {
             // expected
         }
         try {
             comp.compare(null,Boolean.FALSE);
             fail("Expected NullPointerException");
-        } catch(NullPointerException e) {
+        } catch(final NullPointerException e) {
             // expected
         }
     }

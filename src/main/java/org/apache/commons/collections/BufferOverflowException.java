@@ -40,7 +40,7 @@ public class BufferOverflowException extends RuntimeException {
      * 
      * @param message  the detail message for this exception
      */
-    public BufferOverflowException(String message) {
+    public BufferOverflowException(final String message) {
         this(message, null);
     }
 
@@ -50,7 +50,7 @@ public class BufferOverflowException extends RuntimeException {
      * @param message  the detail message for this exception
      * @param exception  the root cause of the exception
      */
-    public BufferOverflowException(String message, Throwable exception) {
+    public BufferOverflowException(final String message, final Throwable exception) {
         super(message, exception);
     }
 

@@ -32,7 +32,7 @@ import org.apache.commons.collections.collection.TransformedCollectionTest;
  */
 public class TransformedSetTest<E> extends AbstractSetTest<E> {
 
-    public TransformedSetTest(String testName) {
+    public TransformedSetTest(final String testName) {
         super(testName);
     }
 
@@ -43,7 +43,7 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
 
     @Override
     public Set<E> makeConfirmedFullCollection() {
-        Set<E> set = new HashSet<E>();
+        final Set<E> set = new HashSet<E>();
         set.addAll(Arrays.asList(getFullElements()));
         return set;
     }
@@ -58,7 +58,7 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public Set<E> makeFullCollection() {
-        Set<E> list = new HashSet<E>();
+        final Set<E> list = new HashSet<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return TransformedSet.transformingSet(list,
                 (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
@@ -66,10 +66,10 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
 
     @SuppressWarnings("unchecked")
     public void testTransformedSet() {
-        Set<E> set = TransformedSet.transformingSet(new HashSet<E>(),
+        final Set<E> set = TransformedSet.transformingSet(new HashSet<E>(),
                 (Transformer<E, E>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, set.size());
-        E[] els = (E[]) new Object[] { "1", "3", "5", "7", "2", "4", "6" };
+        final E[] els = (E[]) new Object[] { "1", "3", "5", "7", "2", "4", "6" };
         for (int i = 0; i < els.length; i++) {
             set.add(els[i]);
             assertEquals(i + 1, set.size());
@@ -83,14 +83,14 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
     }
 
     public void testTransformedSet_decorateTransform() {
-        Set<Object> originalSet = new HashSet<Object>();
-        Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
-        for (Object el : els) {
+        final Set<Object> originalSet = new HashSet<Object>();
+        final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        for (final Object el : els) {
             originalSet.add(el);
         }
-        Set<?> set = TransformedSet.transformedSet(originalSet, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
+        final Set<?> set = TransformedSet.transformedSet(originalSet, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, set.size());
-        for (Object el : els) {
+        for (final Object el : els) {
             assertEquals(true, set.contains(new Integer((String) el)));
             assertEquals(false, set.contains(el));
         }

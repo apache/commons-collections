@@ -40,7 +40,7 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     private static final Factory<Integer> oneFactory = FactoryUtils.constantFactory(1);
 
-    public LazyMapTest(String testName) {
+    public LazyMapTest(final String testName) {
         super(testName);
     }
 
@@ -59,30 +59,30 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     public void mapGetWithFactory() {
         Map<Integer, Number> map = lazyMap(new HashMap<Integer,Number>(), oneFactory);
         assertEquals(0, map.size());
-        Number i1 = map.get("Five");
+        final Number i1 = map.get("Five");
         assertEquals(1, i1);
         assertEquals(1, map.size());
-        Number i2 = map.get(new String(new char[] {'F','i','v','e'}));
+        final Number i2 = map.get(new String(new char[] {'F','i','v','e'}));
         assertEquals(1, i2);
         assertEquals(1, map.size());
         assertSame(i1, i2);
 
         map = lazyMap(new HashMap<Integer,Number>(), FactoryUtils.<Long>nullFactory());
-        Object o = map.get("Five");
+        final Object o = map.get("Five");
         assertEquals(null,o);
         assertEquals(1, map.size());
     }
 
     @Test
     public void mapGetWithTransformer() {
-        Transformer<Number, Integer> intConverter = new Transformer<Number, Integer>(){
-            public Integer transform(Number input) {
+        final Transformer<Number, Integer> intConverter = new Transformer<Number, Integer>(){
+            public Integer transform(final Number input) {
                 return input.intValue();
             }
         };
-        Map<Long, Number> map = lazyMap(new HashMap<Long,Number>(), intConverter );
+        final Map<Long, Number> map = lazyMap(new HashMap<Long,Number>(), intConverter );
         assertEquals(0, map.size());
-        Number i1 = map.get(123L);
+        final Number i1 = map.get(123L);
         assertEquals(123, i1);
         assertEquals(1, map.size());
     }

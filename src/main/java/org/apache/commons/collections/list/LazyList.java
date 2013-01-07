@@ -74,7 +74,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
      * @return a new lazy list
      * @throws IllegalArgumentException if list or factory is null
      */
-    public static <E> LazyList<E> lazyList(List<E> list, Factory<? extends E> factory) {
+    public static <E> LazyList<E> lazyList(final List<E> list, final Factory<? extends E> factory) {
         return new LazyList<E>(list, factory);
     }
     
@@ -86,7 +86,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
      * @param factory  the factory to use for creation, must not be null
      * @throws IllegalArgumentException if list or factory is null
      */
-    protected LazyList(List<E> list, Factory<? extends E> factory) {
+    protected LazyList(final List<E> list, final Factory<? extends E> factory) {
         super(list);
         if (factory == null) {
             throw new IllegalArgumentException("Factory must not be null");
@@ -107,8 +107,8 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
      * @return the element at the given index
      */
     @Override
-    public E get(int index) {
-        int size = decorated().size();
+    public E get(final int index) {
+        final int size = decorated().size();
         if (index < size) {
             // within bounds, get the object
             E object = decorated().get(index);
@@ -126,14 +126,14 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
             decorated().add(null);
         }
         // create our last object, set and return
-        E object = factory.create();
+        final E object = factory.create();
         decorated().add(object);
         return object;
     }
 
     @Override
-    public List<E> subList(int fromIndex, int toIndex) {
-        List<E> sub = decorated().subList(fromIndex, toIndex);
+    public List<E> subList(final int fromIndex, final int toIndex) {
+        final List<E> sub = decorated().subList(fromIndex, toIndex);
         return new LazyList<E>(sub, factory);
     }
 

@@ -33,7 +33,7 @@ import org.apache.commons.collections.BulkTest;
  */
 public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
-    public NodeCachingLinkedListTest(String testName) {
+    public NodeCachingLinkedListTest(final String testName) {
         super(testName);
     }
 
@@ -59,7 +59,7 @@ public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
             return;
         }
         resetEmpty();
-        NodeCachingLinkedList<E> list = getCollection();
+        final NodeCachingLinkedList<E> list = getCollection();
 
         list.addAll(Arrays.asList((E[]) new String[] { "1", "2", "3", "4" }));
         list.removeAllNodes(); // Will dump all 4 elements into cache
@@ -76,13 +76,13 @@ public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     //-----------------------------------------------------------------------
     public static void compareSpeed() {
-        NodeCachingLinkedList<Object> ncll = new NodeCachingLinkedList<Object>();
-        LinkedList<Object> ll = new LinkedList<Object>();
+        final NodeCachingLinkedList<Object> ncll = new NodeCachingLinkedList<Object>();
+        final LinkedList<Object> ll = new LinkedList<Object>();
 
-        Object o1 = new Object();
-        Object o2 = new Object();
+        final Object o1 = new Object();
+        final Object o2 = new Object();
 
-        int loopCount = 4000000;
+        final int loopCount = 4000000;
 
         long startTime, endTime;
 

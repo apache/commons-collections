@@ -33,7 +33,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
 
     //------------------------------------------------------------ Conventional
 
-    public CollatingIteratorTest(String testName) {
+    public CollatingIteratorTest(final String testName) {
         super(testName);
     }
 
@@ -77,7 +77,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
 
     @Override
     public CollatingIterator<Integer> makeObject() {
-        CollatingIterator<Integer> iter = new CollatingIterator<Integer>(comparator);
+        final CollatingIterator<Integer> iter = new CollatingIterator<Integer>(comparator);
         iter.addIterator(evens.iterator());
         iter.addIterator(odds.iterator());
         iter.addIterator(fib.iterator());
@@ -87,7 +87,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
     //------------------------------------------------------------------- Tests
 
     public void testGetSetComparator() {
-        CollatingIterator<Integer> iter = new CollatingIterator<Integer>();
+        final CollatingIterator<Integer> iter = new CollatingIterator<Integer>();
         assertNull(iter.getComparator());
         iter.setComparator(comparator);
         assertSame(comparator, iter.getComparator());
@@ -96,7 +96,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
     }
 
     public void testIterateEven() {
-        CollatingIterator<Integer> iter = new CollatingIterator<Integer>(comparator);
+        final CollatingIterator<Integer> iter = new CollatingIterator<Integer>(comparator);
         iter.addIterator(evens.iterator());
         for (int i = 0; i < evens.size(); i++) {
             assertTrue(iter.hasNext());
@@ -107,7 +107,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
     }
 
     public void testIterateEvenOdd() {
-        CollatingIterator<Integer> iter = new CollatingIterator<Integer>(comparator, evens.iterator(), odds.iterator());
+        final CollatingIterator<Integer> iter = new CollatingIterator<Integer>(comparator, evens.iterator(), odds.iterator());
         for (int i = 0; i < 20; i++) {
             assertTrue(iter.hasNext());
             assertEquals(new Integer(i), iter.next());
@@ -117,7 +117,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
     }
 
     public void testIterateOddEven() {
-        CollatingIterator<Integer> iter = new CollatingIterator<Integer>(comparator, odds.iterator(), evens.iterator());
+        final CollatingIterator<Integer> iter = new CollatingIterator<Integer>(comparator, odds.iterator(), evens.iterator());
         for (int i = 0; i < 20; i++) {
             assertTrue(iter.hasNext());
             assertEquals(new Integer(i),iter.next());
@@ -127,7 +127,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
     }
 
     public void testIterateEvenEven() {
-        CollatingIterator<Integer> iter = new CollatingIterator<Integer>(comparator);
+        final CollatingIterator<Integer> iter = new CollatingIterator<Integer>(comparator);
         iter.addIterator(evens.iterator());
         iter.addIterator(evens.iterator());
         for (int i = 0; i < evens.size(); i++) {
@@ -142,7 +142,7 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
     }
 
     public void testIterateFibEvenOdd() {
-        CollatingIterator<Integer> iter = new CollatingIterator<Integer>(comparator);
+        final CollatingIterator<Integer> iter = new CollatingIterator<Integer>(comparator);
         iter.addIterator(fib.iterator());
         iter.addIterator(evens.iterator());
         iter.addIterator(odds.iterator());
@@ -208,12 +208,12 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
     }
 
     public void testRemoveFromSingle() {
-        CollatingIterator<Integer> iter = new CollatingIterator<Integer>(comparator);
+        final CollatingIterator<Integer> iter = new CollatingIterator<Integer>(comparator);
         iter.addIterator(evens.iterator());
         int expectedSize = evens.size();
         while (iter.hasNext()) {
-            Object o = iter.next();
-            Integer val = (Integer) o;
+            final Object o = iter.next();
+            final Integer val = (Integer) o;
             if (val.intValue() % 4 == 0) {
                 expectedSize--;
                 iter.remove();
@@ -223,13 +223,13 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
     }
 
     public void testRemoveFromDouble() {
-        CollatingIterator<Integer> iter = new CollatingIterator<Integer>(comparator);
+        final CollatingIterator<Integer> iter = new CollatingIterator<Integer>(comparator);
         iter.addIterator(evens.iterator());
         iter.addIterator(odds.iterator());
         int expectedSize = evens.size() + odds.size();
         while (iter.hasNext()) {
-            Object o = iter.next();
-            Integer val = (Integer) o;
+            final Object o = iter.next();
+            final Integer val = (Integer) o;
             if (val.intValue() % 4 == 0 || val.intValue() % 3 == 0) {
                 expectedSize--;
                 iter.remove();
@@ -239,21 +239,21 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
     }
 
     public void testNullComparator() {
-       List<Integer> l1 = Arrays.asList(1, 3, 5);
-       List<Integer> l2 = Arrays.asList(2, 4, 6);
+       final List<Integer> l1 = Arrays.asList(1, 3, 5);
+       final List<Integer> l2 = Arrays.asList(2, 4, 6);
 
-       CollatingIterator<Integer> collatingIterator1 = new CollatingIterator<Integer>(null, l1.iterator(), l2.iterator());
+       final CollatingIterator<Integer> collatingIterator1 = new CollatingIterator<Integer>(null, l1.iterator(), l2.iterator());
        try {
            collatingIterator1.next();
-       } catch (NullPointerException e) {
+       } catch (final NullPointerException e) {
            assertTrue(e.getMessage().startsWith("You must invoke setComparator"));
        }
 
        int i = 0;
-       CollatingIterator<Integer> collatingIterator2 = new CollatingIterator<Integer>(null, l1.iterator(), l2.iterator());
+       final CollatingIterator<Integer> collatingIterator2 = new CollatingIterator<Integer>(null, l1.iterator(), l2.iterator());
        collatingIterator2.setComparator(new ComparableComparator<Integer>());
        for ( ; collatingIterator2.hasNext(); i++ ) {
-          Integer n = collatingIterator2.next();
+          final Integer n = collatingIterator2.next();
           assertEquals("wrong order", (int)n, i + 1);
        }
        assertEquals("wrong size", i, l1.size() + l2.size());

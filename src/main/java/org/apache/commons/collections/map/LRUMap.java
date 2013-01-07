@@ -83,7 +83,7 @@ public class LRUMap<K, V>
      * @param maxSize  the maximum size of the map
      * @throws IllegalArgumentException if the maximum size is less than one
      */
-    public LRUMap(int maxSize) {
+    public LRUMap(final int maxSize) {
         this(maxSize, DEFAULT_LOAD_FACTOR);
     }
 
@@ -95,7 +95,7 @@ public class LRUMap<K, V>
      * @throws IllegalArgumentException if the maximum size is less than one
      * @since 3.1
      */
-    public LRUMap(int maxSize, boolean scanUntilRemovable) {
+    public LRUMap(final int maxSize, final boolean scanUntilRemovable) {
         this(maxSize, DEFAULT_LOAD_FACTOR, scanUntilRemovable);
     }
 
@@ -108,7 +108,7 @@ public class LRUMap<K, V>
      * @throws IllegalArgumentException if the maximum size is less than one
      * @throws IllegalArgumentException if the load factor is less than zero
      */
-    public LRUMap(int maxSize, float loadFactor) {
+    public LRUMap(final int maxSize, final float loadFactor) {
         this(maxSize, loadFactor, false);
     }
 
@@ -123,7 +123,7 @@ public class LRUMap<K, V>
      * @throws IllegalArgumentException if the load factor is less than zero
      * @since 3.1
      */
-    public LRUMap(int maxSize, float loadFactor, boolean scanUntilRemovable) {
+    public LRUMap(final int maxSize, final float loadFactor, final boolean scanUntilRemovable) {
         super(maxSize < 1 ? DEFAULT_CAPACITY : maxSize, loadFactor);
         if (maxSize < 1) {
             throw new IllegalArgumentException("LRUMap max size must be greater than 0");
@@ -141,7 +141,7 @@ public class LRUMap<K, V>
      * @throws NullPointerException if the map is null
      * @throws IllegalArgumentException if the map is empty
      */
-    public LRUMap(Map<K, V> map) {
+    public LRUMap(final Map<K, V> map) {
         this(map, false);
     }
 
@@ -156,7 +156,7 @@ public class LRUMap<K, V>
      * @throws IllegalArgumentException if the map is empty
      * @since 3.1
      */
-    public LRUMap(Map<K, V> map, boolean scanUntilRemovable) {
+    public LRUMap(final Map<K, V> map, final boolean scanUntilRemovable) {
         this(map.size(), DEFAULT_LOAD_FACTOR, scanUntilRemovable);
         putAll(map);
     }
@@ -172,8 +172,8 @@ public class LRUMap<K, V>
      * @return the mapped value, null if no match
      */
     @Override
-    public V get(Object key) {
-        LinkEntry<K, V> entry = getEntry(key);
+    public V get(final Object key) {
+        final LinkEntry<K, V> entry = getEntry(key);
         if (entry == null) {
             return null;
         }
@@ -189,7 +189,7 @@ public class LRUMap<K, V>
      *
      * @param entry  the entry to update
      */
-    protected void moveToMRU(LinkEntry<K, V> entry) {
+    protected void moveToMRU(final LinkEntry<K, V> entry) {
         if (entry.after != header) {
             modCount++;
             // remove
@@ -221,7 +221,7 @@ public class LRUMap<K, V>
      * @param newValue  the new value to store
      */
     @Override
-    protected void updateEntry(HashEntry<K, V> entry, V newValue) {
+    protected void updateEntry(final HashEntry<K, V> entry, final V newValue) {
         moveToMRU((LinkEntry<K, V>) entry);  // handles modCount
         entry.setValue(newValue);
     }
@@ -242,7 +242,7 @@ public class LRUMap<K, V>
      * @param value  the value to add
      */
     @Override
-    protected void addMapping(int hashIndex, int hashCode, K key, V value) {
+    protected void addMapping(final int hashIndex, final int hashCode, final K key, final V value) {
         if (isFull()) {
             LinkEntry<K, V> reuse = header.after;
             boolean removeLRUEntry = false;
@@ -293,13 +293,13 @@ public class LRUMap<K, V>
      * @param key  the key to add
      * @param value  the value to add
      */
-    protected void reuseMapping(LinkEntry<K, V> entry, int hashIndex, int hashCode, K key, V value) {
+    protected void reuseMapping(final LinkEntry<K, V> entry, final int hashIndex, final int hashCode, final K key, final V value) {
         // find the entry before the entry specified in the hash table
         // remember that the parameters (except the first) refer to the new entry,
         // not the old one
         try {
-            int removeIndex = hashIndex(entry.hashCode, data.length);
-            HashEntry<K, V>[] tmp = data;  // may protect against some sync issues
+            final int removeIndex = hashIndex(entry.hashCode, data.length);
+            final HashEntry<K, V>[] tmp = data;  // may protect against some sync issues
             HashEntry<K, V> loop = tmp[removeIndex];
             HashEntry<K, V> previous = null;
             while (loop != entry && loop != null) {
@@ -319,7 +319,7 @@ public class LRUMap<K, V>
             removeEntry(entry, removeIndex, previous);
             reuseEntry(entry, hashIndex, hashCode, key, value);
             addEntry(entry, hashIndex);
-        } catch (NullPointerException ex) {
+        } catch (final NullPointerException ex) {
             throw new IllegalStateException(
                     "NPE, entry=" + entry + " entryIsHeader=" + (entry==header) +
                     " key=" + key + " value=" + value + " size=" + size + " maxSize=" + maxSize +
@@ -362,7 +362,7 @@ public class LRUMap<K, V>
      * @param entry  the entry to be removed
      * @return {@code true}
      */
-    protected boolean removeLRU(LinkEntry<K, V> entry) {
+    protected boolean removeLRU(final LinkEntry<K, V> entry) {
         return true;
     }
 
@@ -410,7 +410,7 @@ public class LRUMap<K, V>
     /**
      * Write the map out using a custom routine.
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         doWriteObject(out);
     }
@@ -418,7 +418,7 @@ public class LRUMap<K, V>
     /**
      * Read the map in using a custom routine.
      */
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         doReadObject(in);
     }
@@ -427,7 +427,7 @@ public class LRUMap<K, V>
      * Writes the data necessary for <code>put()</code> to work in deserialization.
      */
     @Override
-    protected void doWriteObject(ObjectOutputStream out) throws IOException {
+    protected void doWriteObject(final ObjectOutputStream out) throws IOException {
         out.writeInt(maxSize);
         super.doWriteObject(out);
     }
@@ -436,7 +436,7 @@ public class LRUMap<K, V>
      * Reads the data necessary for <code>put()</code> to work in the superclass.
      */
     @Override
-    protected void doReadObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    protected void doReadObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         maxSize = in.readInt();
         super.doReadObject(in);
     }

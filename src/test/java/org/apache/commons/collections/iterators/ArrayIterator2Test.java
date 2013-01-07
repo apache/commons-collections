@@ -28,7 +28,7 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
 
     protected int[] testArray = { 2, 4, 6, 8 };
 
-    public ArrayIterator2Test(String testName) {
+    public ArrayIterator2Test(final String testName) {
         super(testName);
     }
 
@@ -42,15 +42,15 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
         return new ArrayIterator<E>(testArray);
     }
 
-    public ArrayIterator<E> makeArrayIterator(Object array) {
+    public ArrayIterator<E> makeArrayIterator(final Object array) {
         return new ArrayIterator<E>(array);
     }
 
-    public ArrayIterator<E> makeArrayIterator(Object array, int index) {
+    public ArrayIterator<E> makeArrayIterator(final Object array, final int index) {
         return new ArrayIterator<E>(array, index);
     }
 
-    public ArrayIterator<E> makeArrayIterator(Object array, int start, int end) {
+    public ArrayIterator<E> makeArrayIterator(final Object array, final int start, final int end) {
         return new ArrayIterator<E>(array, start, end);
     }
 
@@ -60,10 +60,10 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
     }
 
     public void testIterator() {
-        Iterator<E> iter = makeObject();
-        for (int element : testArray) {
-            Integer testValue = new Integer(element);
-            Number iterValue = (Number) iter.next();
+        final Iterator<E> iter = makeObject();
+        for (final int element : testArray) {
+            final Integer testValue = new Integer(element);
+            final Number iterValue = (Number) iter.next();
 
             assertEquals("Iteration value is correct", testValue, iterValue);
         }
@@ -72,7 +72,7 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
 
         try {
             iter.next();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             assertTrue(
                 "NoSuchElementException must be thrown",
                 e.getClass().equals(new NoSuchElementException().getClass()));
@@ -82,7 +82,7 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
     // proves that an ArrayIterator set with the constructor has the same number of elements
     // as an ArrayIterator set with setArray(Object)
     public void testSetArray() {
-        Iterator<E> iter1 = makeArrayIterator(testArray);
+        final Iterator<E> iter1 = makeArrayIterator(testArray);
         int count1 = 0;
         while (iter1.hasNext()) {
             ++count1;
@@ -91,7 +91,7 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
 
         assertEquals("the count should be right using the constructor", count1, testArray.length);
 
-        ArrayIterator<E> iter2 = makeObject();
+        final ArrayIterator<E> iter2 = makeObject();
         iter2.setArray(testArray);
         int count2 = 0;
         while (iter2.hasNext()) {
@@ -127,35 +127,35 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
         try {
             iter = makeArrayIterator(testArray, -1);
             fail("new ArrayIterator(Object,-1) should throw an ArrayIndexOutOfBoundsException");
-        } catch (ArrayIndexOutOfBoundsException aioobe) {
+        } catch (final ArrayIndexOutOfBoundsException aioobe) {
             // expected
         }
 
         try {
             iter = makeArrayIterator(testArray, testArray.length + 1);
             fail("new ArrayIterator(Object,length+1) should throw an ArrayIndexOutOfBoundsException");
-        } catch (ArrayIndexOutOfBoundsException aioobe) {
+        } catch (final ArrayIndexOutOfBoundsException aioobe) {
             // expected
         }
 
         try {
             iter = makeArrayIterator(testArray, 0, -1);
             fail("new ArrayIterator(Object,0,-1) should throw an ArrayIndexOutOfBoundsException");
-        } catch (ArrayIndexOutOfBoundsException aioobe) {
+        } catch (final ArrayIndexOutOfBoundsException aioobe) {
             // expected
         }
 
         try {
             iter = makeArrayIterator(testArray, 0, testArray.length + 1);
             fail("new ArrayIterator(Object,0,length+1) should throw an ArrayIndexOutOfBoundsException");
-        } catch (ArrayIndexOutOfBoundsException aioobe) {
+        } catch (final ArrayIndexOutOfBoundsException aioobe) {
             // expected
         }
 
         try {
             iter = makeArrayIterator(testArray, 1, 1);
             // expected not to fail
-        } catch (IllegalArgumentException iae) {
+        } catch (final IllegalArgumentException iae) {
             // MODIFIED: an iterator over a zero-length section of array
             //  should be perfectly legal behavior
             fail("new ArrayIterator(Object,1,1) should NOT throw an IllegalArgumentException");
@@ -164,7 +164,7 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
         try {
             iter = makeArrayIterator(testArray, testArray.length - 1, testArray.length - 2);
             fail("new ArrayIterator(Object,length-2,length-1) should throw an IllegalArgumentException");
-        } catch (IllegalArgumentException iae) {
+        } catch (final IllegalArgumentException iae) {
             // expected
         }
     }

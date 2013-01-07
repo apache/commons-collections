@@ -44,7 +44,7 @@ public abstract class AbstractOrderedBidiMapDecorator<K, V>
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    protected AbstractOrderedBidiMapDecorator(OrderedBidiMap<K, V> map) {
+    protected AbstractOrderedBidiMapDecorator(final OrderedBidiMap<K, V> map) {
         super(map);
     }
 
@@ -72,11 +72,11 @@ public abstract class AbstractOrderedBidiMapDecorator<K, V>
         return decorated().lastKey();
     }
 
-    public K nextKey(K key) {
+    public K nextKey(final K key) {
         return decorated().nextKey(key);
     }
 
-    public K previousKey(K key) {
+    public K previousKey(final K key) {
         return decorated().previousKey(key);
     }
 

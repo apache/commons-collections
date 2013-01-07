@@ -36,35 +36,35 @@ import org.apache.commons.collections.functors.NOPTransformer;
 @SuppressWarnings("boxing")
 public class TransformedMapTest extends BulkTest {
 
-    private Transformer<Integer, String> intToString = new Transformer<Integer, String>() {
-        public String transform(Integer input) {
+    private final Transformer<Integer, String> intToString = new Transformer<Integer, String>() {
+        public String transform(final Integer input) {
             return String.valueOf(input);
         }
     };
 
-    private Transformer<Object, Class<?>> objectToClass = new Transformer<Object, Class<?>>() {
-        public java.lang.Class<?> transform(Object input) {
+    private final Transformer<Object, Class<?>> objectToClass = new Transformer<Object, Class<?>>() {
+        public java.lang.Class<?> transform(final Object input) {
             return input == null ? null : input.getClass();
         }
     };
 
-    private Transformer<String, Integer> stringToInt = new Transformer<String, Integer>() {
-        public Integer transform(String input) {
+    private final Transformer<String, Integer> stringToInt = new Transformer<String, Integer>() {
+        public Integer transform(final String input) {
             return Integer.valueOf(input);
         }
     };
 
-    public TransformedMapTest(String testName) {
+    public TransformedMapTest(final String testName) {
         super(testName);
     }
 
     // -----------------------------------------------------------------------
     public void testTransformedMap() {
-        TransformedMap<Integer, String, Object, Class<?>> map = TransformedMap.transformingMap(
+        final TransformedMap<Integer, String, Object, Class<?>> map = TransformedMap.transformingMap(
                 new HashMap<String, Class<?>>(), intToString, objectToClass);
 
-        Integer[] k = new Integer[] { 0, 1, 2, 3, 4, 5, 6 };
-        Object[] v = new Object[] { "", new Object(), new HashMap<Object, Object>(), 0, BigInteger.TEN, null,
+        final Integer[] k = new Integer[] { 0, 1, 2, 3, 4, 5, 6 };
+        final Object[] v = new Object[] { "", new Object(), new HashMap<Object, Object>(), 0, BigInteger.TEN, null,
                 new Object[0] };
 
         assertEquals(0, map.size());
@@ -84,7 +84,7 @@ public class TransformedMapTest extends BulkTest {
         assertEquals(objectToClass.transform(v[0]), map.remove(intToString.transform(k[0])));
         assertEquals(--sz, map.size());
 
-        TransformedMap<String, String, String, Integer> map2 = TransformedMap.transformingMap(
+        final TransformedMap<String, String, String, Integer> map2 = TransformedMap.transformingMap(
                 new HashMap<String, Integer>(), NOPTransformer.<String> nopTransformer(), stringToInt);
         assertEquals(0, map2.size());
         for (int i = 0; i < 6; i++) {
@@ -104,37 +104,37 @@ public class TransformedMapTest extends BulkTest {
     // -----------------------------------------------------------------------
 
     public void testMapIterator() {
-        TransformedMap<String, String, String, Integer> map = TransformedMap.transformingMap(
+        final TransformedMap<String, String, String, Integer> map = TransformedMap.transformingMap(
                 new HashMap<String, Integer>(), NOPTransformer.<String> nopTransformer(), stringToInt);
         assertEquals(0, map.size());
         for (int i = 0; i < 6; i++) {
             map.put(String.valueOf(i), String.valueOf(i));
         }
 
-        for (MapIterator<String, Integer> it = map.mapIterator(); it.hasNext();) {
-            String k = it.next();
+        for (final MapIterator<String, Integer> it = map.mapIterator(); it.hasNext();) {
+            final String k = it.next();
             assertEquals(k, it.getKey());
             assertEquals(map.get(k), it.getValue());
         }
     }
 
     public void testEmptyMap() throws IOException, ClassNotFoundException {
-        TransformedMap<String, String, String, String> map = TransformedMap.transformingMap(
+        final TransformedMap<String, String, String, String> map = TransformedMap.transformingMap(
                 new HashMap<String, String>(),
                 NOPTransformer.<String>nopTransformer(),
                 NOPTransformer.<String>nopTransformer() );
 
-        ObjectInputStream in = new ObjectInputStream( new FileInputStream( TEST_DATA_PATH+"/TransformedMap.emptyCollection.version3.2.obj" ) );
-        Object readObject = in.readObject();
+        final ObjectInputStream in = new ObjectInputStream( new FileInputStream( TEST_DATA_PATH+"/TransformedMap.emptyCollection.version3.2.obj" ) );
+        final Object readObject = in.readObject();
         in.close();
 
-        TransformedMap<?, ?, ?, ?> readMap = (TransformedMap<?, ?, ?, ?>) readObject;
+        final TransformedMap<?, ?, ?, ?> readMap = (TransformedMap<?, ?, ?, ?>) readObject;
         assertTrue( "Map should be empty", readMap.size() == 0 );
         assertEquals( map.entrySet(), readMap.entrySet() );
     }
 
     public void testFullMap() throws IOException, ClassNotFoundException {
-        TransformedMap<String, String, String, String> map = TransformedMap.transformingMap(
+        final TransformedMap<String, String, String, String> map = TransformedMap.transformingMap(
                 new HashMap<String, String>(),
                 NOPTransformer.<String>nopTransformer(),
                 NOPTransformer.<String>nopTransformer() );
@@ -143,11 +143,11 @@ public class TransformedMapTest extends BulkTest {
         map.put( "e", "f" );
         map.put( "g", "h" );
 
-        ObjectInputStream in = new ObjectInputStream( new FileInputStream( TEST_DATA_PATH+"TransformedMap.fullCollection.version3.2.obj" ) );
-        Object readObject = in.readObject();
+        final ObjectInputStream in = new ObjectInputStream( new FileInputStream( TEST_DATA_PATH+"TransformedMap.fullCollection.version3.2.obj" ) );
+        final Object readObject = in.readObject();
         in.close();
 
-        TransformedMap<?, ?, ?, ?> readMap = (TransformedMap<?, ?, ?, ?>) readObject;
+        final TransformedMap<?, ?, ?, ?> readMap = (TransformedMap<?, ?, ?, ?>) readObject;
         assertFalse( "Map should not be empty", readMap.size() == 0 );
         assertEquals( map.entrySet(), readMap.entrySet() );
     }

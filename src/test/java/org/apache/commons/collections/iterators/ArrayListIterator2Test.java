@@ -23,7 +23,7 @@ package org.apache.commons.collections.iterators;
  */
 public class ArrayListIterator2Test<E> extends ArrayIterator2Test<E> {
 
-    public ArrayListIterator2Test(String testName) {
+    public ArrayListIterator2Test(final String testName) {
         super(testName);
     }
 
@@ -37,15 +37,15 @@ public class ArrayListIterator2Test<E> extends ArrayIterator2Test<E> {
         return new ArrayListIterator<E>(testArray);
     }
 
-    public ArrayListIterator<E> makeArrayListIterator(Object array) {
+    public ArrayListIterator<E> makeArrayListIterator(final Object array) {
         return new ArrayListIterator<E>(array);
     }
 
-    public ArrayListIterator<E> makeArrayListIterator(Object array, int index) {
+    public ArrayListIterator<E> makeArrayListIterator(final Object array, final int index) {
         return new ArrayListIterator<E>(array, index);
     }
 
-    public ArrayListIterator<E> makeArrayListIterator(Object array, int start, int end) {
+    public ArrayListIterator<E> makeArrayListIterator(final Object array, final int start, final int end) {
         return new ArrayListIterator<E>(array, start, end);
     }
 

@@ -52,9 +52,9 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * @throws IllegalArgumentException if any element in the array is null
      */
     @SuppressWarnings("unchecked")
-    public static <I, O> Transformer<I, O> switchTransformer(Predicate<? super I>[] predicates,
-            Transformer<? super I, ? extends O>[] transformers,
-            Transformer<? super I, ? extends O> defaultTransformer) {
+    public static <I, O> Transformer<I, O> switchTransformer(final Predicate<? super I>[] predicates,
+            final Transformer<? super I, ? extends O>[] transformers,
+            final Transformer<? super I, ? extends O> defaultTransformer) {
         FunctorUtils.validate(predicates);
         FunctorUtils.validate(transformers);
         if (predicates.length != transformers.length) {
@@ -87,7 +87,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      */
     @SuppressWarnings("unchecked")
     public static <I, O> Transformer<I, O> switchTransformer(
-            Map<? extends Predicate<? super I>, ? extends Transformer<? super I, ? extends O>> predicatesAndTransformers) {
+            final Map<? extends Predicate<? super I>, ? extends Transformer<? super I, ? extends O>> predicatesAndTransformers) {
         if (predicatesAndTransformers == null) {
             throw new IllegalArgumentException("The predicate and transformer map must not be null");
         }
@@ -95,15 +95,15 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
             return ConstantTransformer.<I, O>nullTransformer();
         }
         // convert to array like this to guarantee iterator() ordering
-        Transformer<? super I, ? extends O> defaultTransformer = predicatesAndTransformers.remove(null);
-        int size = predicatesAndTransformers.size();
+        final Transformer<? super I, ? extends O> defaultTransformer = predicatesAndTransformers.remove(null);
+        final int size = predicatesAndTransformers.size();
         if (size == 0) {
             return (Transformer<I, O>) (defaultTransformer == null ? ConstantTransformer.<I, O>nullTransformer() : defaultTransformer);
         }
-        Transformer<? super I, ? extends O>[] transformers = new Transformer[size];
-        Predicate<? super I>[] preds = new Predicate[size];
+        final Transformer<? super I, ? extends O>[] transformers = new Transformer[size];
+        final Predicate<? super I>[] preds = new Predicate[size];
         int i = 0;
-        for (Map.Entry<? extends Predicate<? super I>, ? extends Transformer<? super I, ? extends O>> entry : predicatesAndTransformers.entrySet()) {
+        for (final Map.Entry<? extends Predicate<? super I>, ? extends Transformer<? super I, ? extends O>> entry : predicatesAndTransformers.entrySet()) {
             preds[i] = entry.getKey();
             transformers[i] = entry.getValue();
             i++;
@@ -120,9 +120,9 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * @param defaultTransformer  the transformer to use if no match, null means return null
      */
     @SuppressWarnings("unchecked")
-    public SwitchTransformer(Predicate<? super I>[] predicates,
-            Transformer<? super I, ? extends O>[] transformers,
-            Transformer<? super I, ? extends O> defaultTransformer) {
+    public SwitchTransformer(final Predicate<? super I>[] predicates,
+            final Transformer<? super I, ? extends O>[] transformers,
+            final Transformer<? super I, ? extends O> defaultTransformer) {
         super();
         iPredicates = predicates;
         iTransformers = transformers;
@@ -136,7 +136,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * @param input  the input object to transform
      * @return the transformed result
      */
-    public O transform(I input) {
+    public O transform(final I input) {
         for (int i = 0; i < iPredicates.length; i++) {
             if (iPredicates[i].evaluate(input) == true) {
                 return iTransformers[i].transform(input);

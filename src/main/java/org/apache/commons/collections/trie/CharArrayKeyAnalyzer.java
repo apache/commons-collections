@@ -44,7 +44,7 @@ public class CharArrayKeyAnalyzer extends AbstractKeyAnalyzer<char[]> {
     /**
      * Returns a bit mask where the given bit is set
      */
-    private static int mask(int bit) {
+    private static int mask(final int bit) {
         return MSB >>> bit;
     }
 
@@ -58,15 +58,15 @@ public class CharArrayKeyAnalyzer extends AbstractKeyAnalyzer<char[]> {
     /**
      * {@inheritDoc}
      */
-    public int lengthInBits(char[] key) {
+    public int lengthInBits(final char[] key) {
         return key != null ? key.length * LENGTH : 0;
     }
 
     /**
      * {@inheritDoc}
      */
-    public int bitIndex(char[] key, int offsetInBits, int lengthInBits,
-            char[] other, int otherOffsetInBits, int otherLengthInBits) {
+    public int bitIndex(final char[] key, final int offsetInBits, final int lengthInBits,
+            final char[] other, final int otherOffsetInBits, final int otherLengthInBits) {
         boolean allNull = true;
 
         if (offsetInBits % LENGTH != 0 || otherOffsetInBits % LENGTH != 0
@@ -76,21 +76,21 @@ public class CharArrayKeyAnalyzer extends AbstractKeyAnalyzer<char[]> {
         }
 
 
-        int beginIndex1 = offsetInBits / LENGTH;
-        int beginIndex2 = otherOffsetInBits / LENGTH;
+        final int beginIndex1 = offsetInBits / LENGTH;
+        final int beginIndex2 = otherOffsetInBits / LENGTH;
 
-        int endIndex1 = beginIndex1 + lengthInBits / LENGTH;
-        int endIndex2 = beginIndex2 + otherLengthInBits / LENGTH;
+        final int endIndex1 = beginIndex1 + lengthInBits / LENGTH;
+        final int endIndex2 = beginIndex2 + otherLengthInBits / LENGTH;
 
-        int length = Math.max(endIndex1, endIndex2);
+        final int length = Math.max(endIndex1, endIndex2);
 
         // Look at each character, and if they're different
         // then figure out which bit makes the difference
         // and return it.
         char k = 0, f = 0;
         for(int i = 0; i < length; i++) {
-            int index1 = beginIndex1 + i;
-            int index2 = beginIndex2 + i;
+            final int index1 = beginIndex1 + i;
+            final int index2 = beginIndex2 + i;
 
             if (index1 >= endIndex1) {
                 k = 0;
@@ -105,7 +105,7 @@ public class CharArrayKeyAnalyzer extends AbstractKeyAnalyzer<char[]> {
             }
 
             if (k != f) {
-               int x = k ^ f;
+               final int x = k ^ f;
                return i * LENGTH + Integer.numberOfLeadingZeros(x) - LENGTH;
             }
 
@@ -126,13 +126,13 @@ public class CharArrayKeyAnalyzer extends AbstractKeyAnalyzer<char[]> {
     /**
      * {@inheritDoc}
      */
-    public boolean isBitSet(char[] key, int bitIndex, int lengthInBits) {
+    public boolean isBitSet(final char[] key, final int bitIndex, final int lengthInBits) {
         if (key == null || bitIndex >= lengthInBits) {
             return false;
         }
 
-        int index = bitIndex / LENGTH;
-        int bit = bitIndex % LENGTH;
+        final int index = bitIndex / LENGTH;
+        final int bit = bitIndex % LENGTH;
 
         return (key[index] & mask(bit)) != 0;
     }
@@ -140,15 +140,15 @@ public class CharArrayKeyAnalyzer extends AbstractKeyAnalyzer<char[]> {
     /**
      * {@inheritDoc}
      */
-    public boolean isPrefix(char[] prefix, int offsetInBits,
-            int lengthInBits, char[] key) {
+    public boolean isPrefix(final char[] prefix, final int offsetInBits,
+            final int lengthInBits, final char[] key) {
         if (offsetInBits % LENGTH != 0 || lengthInBits % LENGTH != 0) {
             throw new IllegalArgumentException(
                     "Cannot determine prefix outside of Character boundaries");
         }
 
-        int off = offsetInBits / LENGTH;
-        int len = lengthInBits / LENGTH;
+        final int off = offsetInBits / LENGTH;
+        final int len = lengthInBits / LENGTH;
         for (int i = 0; i < len; i ++) {
             if (prefix[i + off] != key[i]) {
                 return false;

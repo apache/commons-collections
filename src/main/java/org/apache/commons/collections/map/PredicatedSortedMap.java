@@ -62,8 +62,8 @@ public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements So
      * @return a new predicated sorted map
      * @throws IllegalArgumentException if the map is null
      */
-    public static <K, V> PredicatedSortedMap<K, V> predicatedSortedMap(SortedMap<K, V> map,
-            Predicate<? super K> keyPredicate, Predicate<? super V> valuePredicate) {
+    public static <K, V> PredicatedSortedMap<K, V> predicatedSortedMap(final SortedMap<K, V> map,
+            final Predicate<? super K> keyPredicate, final Predicate<? super V> valuePredicate) {
         return new PredicatedSortedMap<K, V>(map, keyPredicate, valuePredicate);
     }
 
@@ -76,8 +76,8 @@ public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements So
      * @param valuePredicate  the predicate to validate to values, null means no check
      * @throws IllegalArgumentException if the map is null
      */
-    protected PredicatedSortedMap(SortedMap<K, V> map, Predicate<? super K> keyPredicate,
-            Predicate<? super V> valuePredicate) {
+    protected PredicatedSortedMap(final SortedMap<K, V> map, final Predicate<? super K> keyPredicate,
+            final Predicate<? super V> valuePredicate) {
         super(map, keyPredicate, valuePredicate);
     }
 
@@ -104,18 +104,18 @@ public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements So
         return getSortedMap().comparator();
     }
 
-    public SortedMap<K, V> subMap(K fromKey, K toKey) {
-        SortedMap<K, V> map = getSortedMap().subMap(fromKey, toKey);
+    public SortedMap<K, V> subMap(final K fromKey, final K toKey) {
+        final SortedMap<K, V> map = getSortedMap().subMap(fromKey, toKey);
         return new PredicatedSortedMap<K, V>(map, keyPredicate, valuePredicate);
     }
 
-    public SortedMap<K, V> headMap(K toKey) {
-        SortedMap<K, V> map = getSortedMap().headMap(toKey);
+    public SortedMap<K, V> headMap(final K toKey) {
+        final SortedMap<K, V> map = getSortedMap().headMap(toKey);
         return new PredicatedSortedMap<K, V>(map, keyPredicate, valuePredicate);
     }
 
-    public SortedMap<K, V> tailMap(K fromKey) {
-        SortedMap<K, V> map = getSortedMap().tailMap(fromKey);
+    public SortedMap<K, V> tailMap(final K fromKey) {
+        final SortedMap<K, V> map = getSortedMap().tailMap(fromKey);
         return new PredicatedSortedMap<K, V>(map, keyPredicate, valuePredicate);
     }
 

@@ -48,7 +48,7 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
      * @return an invoker transformer
      * @since 3.1
      */
-    public static <I, O> Transformer<I, O> invokerTransformer(String methodName) {
+    public static <I, O> Transformer<I, O> invokerTransformer(final String methodName) {
         if (methodName == null) {
             throw new IllegalArgumentException("The method to invoke must not be null");
         }
@@ -63,7 +63,7 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
      * @param args  the arguments to pass to the method
      * @return an invoker transformer
      */
-    public static <I, O> Transformer<I, O> invokerTransformer(String methodName, Class<?>[] paramTypes, Object[] args) {
+    public static <I, O> Transformer<I, O> invokerTransformer(final String methodName, Class<?>[] paramTypes, Object[] args) {
         if (methodName == null) {
             throw new IllegalArgumentException("The method to invoke must not be null");
         }
@@ -86,7 +86,7 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
      * 
      * @param methodName  the method to call
      */
-    private InvokerTransformer(String methodName) {
+    private InvokerTransformer(final String methodName) {
         super();
         iMethodName = methodName;
         iParamTypes = null;
@@ -101,7 +101,7 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
      * @param paramTypes  the constructor parameter types, not cloned
      * @param args  the constructor arguments, not cloned
      */
-    public InvokerTransformer(String methodName, Class<?>[] paramTypes, Object[] args) {
+    public InvokerTransformer(final String methodName, final Class<?>[] paramTypes, final Object[] args) {
         super();
         iMethodName = methodName;
         iParamTypes = paramTypes;
@@ -115,21 +115,21 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
      * @return the transformed result, null if null input
      */
     @SuppressWarnings("unchecked")
-    public O transform(Object input) {
+    public O transform(final Object input) {
         if (input == null) {
             return null;
         }
         try {
-            Class<?> cls = input.getClass();
-            Method method = cls.getMethod(iMethodName, iParamTypes);
+            final Class<?> cls = input.getClass();
+            final Method method = cls.getMethod(iMethodName, iParamTypes);
             return (O) method.invoke(input, iArgs);
-        } catch (NoSuchMethodException ex) {
+        } catch (final NoSuchMethodException ex) {
             throw new FunctorException("InvokerTransformer: The method '" + iMethodName + "' on '" +
                                        input.getClass() + "' does not exist");
-        } catch (IllegalAccessException ex) {
+        } catch (final IllegalAccessException ex) {
             throw new FunctorException("InvokerTransformer: The method '" + iMethodName + "' on '" +
                                        input.getClass() + "' cannot be accessed");
-        } catch (InvocationTargetException ex) {
+        } catch (final InvocationTargetException ex) {
             throw new FunctorException("InvokerTransformer: The method '" + iMethodName + "' on '" +
                                        input.getClass() + "' threw an exception", ex);
         }

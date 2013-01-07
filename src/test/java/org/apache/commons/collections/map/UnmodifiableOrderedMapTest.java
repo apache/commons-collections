@@ -32,7 +32,7 @@ import org.apache.commons.collections.Unmodifiable;
  */
 public class UnmodifiableOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
-    public UnmodifiableOrderedMapTest(String testName) {
+    public UnmodifiableOrderedMapTest(final String testName) {
         super(testName);
     }
 
@@ -60,7 +60,7 @@ public class UnmodifiableOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, 
 
     @Override
     public OrderedMap<K, V> makeFullMap() {
-        OrderedMap<K, V> m = ListOrderedMap.listOrderedMap(new HashMap<K, V>());
+        final OrderedMap<K, V> m = ListOrderedMap.listOrderedMap(new HashMap<K, V>());
         addSampleMappings(m);
         return UnmodifiableOrderedMap.unmodifiableOrderedMap(m);
     }
@@ -72,13 +72,13 @@ public class UnmodifiableOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, 
     }
 
     public void testDecorateFactory() {
-        OrderedMap<K, V> map = makeFullMap();
+        final OrderedMap<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableOrderedMap.unmodifiableOrderedMap(map));
 
         try {
             UnmodifiableOrderedMap.unmodifiableOrderedMap(null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
     }
 
     @Override

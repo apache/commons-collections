@@ -65,7 +65,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      * @param array the array to iterate over
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      */
-    public ObjectArrayListIterator(E... array) {
+    public ObjectArrayListIterator(final E... array) {
         super(array);
     }
 
@@ -78,7 +78,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      * @throws IndexOutOfBoundsException if the start index is out of bounds
      */
-    public ObjectArrayListIterator(E[] array, int start) {
+    public ObjectArrayListIterator(final E[] array, final int start) {
         super(array, start);
     }
     
@@ -93,7 +93,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      * @throws IllegalArgumentException if end index is before the start
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      */
-    public ObjectArrayListIterator(E[] array, int start, int end) {
+    public ObjectArrayListIterator(final E[] array, final int start, final int end) {
         super(array, start, end);
     }
 
@@ -163,7 +163,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      * @param obj  the object to add
      * @throws UnsupportedOperationException always thrown.
      */
-    public void add(E obj) {
+    public void add(final E obj) {
         throw new UnsupportedOperationException("add() method is not supported");
     }
 
@@ -184,7 +184,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      * @throws IllegalStateException if next() has not yet been called.
      * @throws ClassCastException if the object type is unsuitable for the array
      */
-    public void set(E obj) {
+    public void set(final E obj) {
         if (this.lastItemIndex == -1) {
             throw new IllegalStateException("must call next() or previous() before a call to set()");
         }

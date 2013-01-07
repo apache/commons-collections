@@ -48,7 +48,7 @@ public class ConstantFactory<T> implements Factory<T>, Serializable {
      * @return the <code>constant</code> factory.
      */
     @SuppressWarnings("unchecked")
-    public static <T> Factory<T> constantFactory(T constantToReturn) {
+    public static <T> Factory<T> constantFactory(final T constantToReturn) {
         if (constantToReturn == null) {
             return (Factory<T>) NULL_INSTANCE;
         }
@@ -61,7 +61,7 @@ public class ConstantFactory<T> implements Factory<T>, Serializable {
      * 
      * @param constantToReturn  the constant to return each time
      */
-    public ConstantFactory(T constantToReturn) {
+    public ConstantFactory(final T constantToReturn) {
         super();
         iConstant = constantToReturn;
     }

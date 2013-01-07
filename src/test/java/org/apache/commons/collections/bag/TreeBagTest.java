@@ -27,7 +27,7 @@ import org.apache.commons.collections.SortedBag;
  */
 public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
 
-    public TreeBagTest(String testName) {
+    public TreeBagTest(final String testName) {
         super(testName);
     }
 
@@ -38,18 +38,18 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
 
    // TODO: Generics (for example... is this even needed?)
    public void testCollections265() {
-       Bag<Object> bag = new TreeBag<Object>();
+       final Bag<Object> bag = new TreeBag<Object>();
        try {
            bag.add(new Object());
            fail("IllegalArgumentException expected");
-       } catch(IllegalArgumentException iae) {
+       } catch(final IllegalArgumentException iae) {
            // expected;
        }
    }
    
     @SuppressWarnings("unchecked")
     public SortedBag<T> setupBag() {
-        SortedBag<T> bag = makeObject();
+        final SortedBag<T> bag = makeObject();
         bag.add((T) "C");
         bag.add((T) "A");
         bag.add((T) "B");
@@ -58,7 +58,7 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
     }
 
     public void testOrdering() {
-        Bag<T> bag = setupBag();
+        final Bag<T> bag = setupBag();
         assertEquals("Should get elements in correct order", "A", bag.toArray()[0]);
         assertEquals("Should get elements in correct order", "B", bag.toArray()[1]);
         assertEquals("Should get elements in correct order", "C", bag.toArray()[2]);

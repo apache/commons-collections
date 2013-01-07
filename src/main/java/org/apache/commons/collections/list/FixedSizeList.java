@@ -51,7 +51,7 @@ public class FixedSizeList<E>
      * @return a new fixed size list
      * @throws IllegalArgumentException if list is null
      */
-    public static <E> FixedSizeList<E> fixedSizeList(List<E> list) {
+    public static <E> FixedSizeList<E> fixedSizeList(final List<E> list) {
         return new FixedSizeList<E>(list);
     }
 
@@ -62,28 +62,28 @@ public class FixedSizeList<E>
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    protected FixedSizeList(List<E> list) {
+    protected FixedSizeList(final List<E> list) {
         super(list);
     }
 
     //-----------------------------------------------------------------------
     @Override
-    public boolean add(E object) {
+    public boolean add(final E object) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
     @Override
-    public void add(int index, E object) {
+    public void add(final int index, final E object) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> coll) {
+    public boolean addAll(final Collection<? extends E> coll) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends E> coll) {
+    public boolean addAll(final int index, final Collection<? extends E> coll) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
@@ -93,12 +93,12 @@ public class FixedSizeList<E>
     }
 
     @Override
-    public E get(int index) {
+    public E get(final int index) {
         return decorated().get(index);
     }
 
     @Override
-    public int indexOf(Object object) {
+    public int indexOf(final Object object) {
         return decorated().indexOf(object);
     }
 
@@ -108,7 +108,7 @@ public class FixedSizeList<E>
     }
 
     @Override
-    public int lastIndexOf(Object object) {
+    public int lastIndexOf(final Object object) {
         return decorated().lastIndexOf(object);
     }
 
@@ -118,38 +118,38 @@ public class FixedSizeList<E>
     }
 
     @Override
-    public ListIterator<E> listIterator(int index) {
+    public ListIterator<E> listIterator(final int index) {
         return new FixedSizeListIterator(decorated().listIterator(index));
     }
 
     @Override
-    public E remove(int index) {
+    public E remove(final int index) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
     @Override
-    public boolean remove(Object object) {
+    public boolean remove(final Object object) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
     @Override
-    public boolean removeAll(Collection<?> coll) {
+    public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
     @Override
-    public boolean retainAll(Collection<?> coll) {
+    public boolean retainAll(final Collection<?> coll) {
         throw new UnsupportedOperationException("List is fixed size");
     }
 
     @Override
-    public E set(int index, E object) {
+    public E set(final int index, final E object) {
         return decorated().set(index, object);
     }
 
     @Override
-    public List<E> subList(int fromIndex, int toIndex) {
-        List<E> sub = decorated().subList(fromIndex, toIndex);
+    public List<E> subList(final int fromIndex, final int toIndex) {
+        final List<E> sub = decorated().subList(fromIndex, toIndex);
         return new FixedSizeList<E>(sub);
     }
 
@@ -157,7 +157,7 @@ public class FixedSizeList<E>
      * List iterator that only permits changes via set()
      */
     private class FixedSizeListIterator extends AbstractListIteratorDecorator<E> {
-        protected FixedSizeListIterator(ListIterator<E> iterator) {
+        protected FixedSizeListIterator(final ListIterator<E> iterator) {
             super(iterator);
         }
         @Override
@@ -165,7 +165,7 @@ public class FixedSizeList<E>
             throw new UnsupportedOperationException("List is fixed size");
         }
         @Override
-        public void add(Object object) {
+        public void add(final Object object) {
             throw new UnsupportedOperationException("List is fixed size");
         }
     }

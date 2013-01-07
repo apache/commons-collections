@@ -51,7 +51,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     /**
      * Construct
      */
-    public TransformerUtilsTest(String name) {
+    public TransformerUtilsTest(final String name) {
         super(name);
     }
 
@@ -77,10 +77,10 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
         assertSame(TransformerUtils.exceptionTransformer(), TransformerUtils.exceptionTransformer());
         try {
             TransformerUtils.exceptionTransformer().transform(null);
-        } catch (FunctorException ex) {
+        } catch (final FunctorException ex) {
             try {
                 TransformerUtils.exceptionTransformer().transform(cString);
-            } catch (FunctorException ex2) {
+            } catch (final FunctorException ex2) {
                 return;
             }
         }
@@ -131,7 +131,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
         assertEquals(cInteger, TransformerUtils.cloneTransformer().transform(cInteger));
         try {
             assertEquals(cObject, TransformerUtils.cloneTransformer().transform(cObject));
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             return;
         }
         fail();
@@ -141,7 +141,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     //------------------------------------------------------------------
 
     public void testMapTransformer() {
-        Map<Object, Integer> map = new HashMap<Object, Integer>();
+        final Map<Object, Integer> map = new HashMap<Object, Integer>();
         map.put(null, 0);
         map.put(cObject, 1);
         map.put(cString, 2);
@@ -162,7 +162,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
         assertEquals(cInteger, TransformerUtils.asTransformer(ClosureUtils.nopClosure()).transform(cInteger));
         try {
             TransformerUtils.asTransformer((Closure<Object>) null);
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             return;
         }
         fail();
@@ -178,7 +178,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
         assertEquals(Boolean.TRUE, TransformerUtils.asTransformer(TruePredicate.truePredicate()).transform(cInteger));
         try {
             TransformerUtils.asTransformer((Predicate<Object>) null);
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             return;
         }
         fail();
@@ -194,7 +194,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
         assertEquals(null, TransformerUtils.asTransformer(FactoryUtils.nullFactory()).transform(cInteger));
         try {
             TransformerUtils.asTransformer((Factory<Object>) null);
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             return;
         }
         fail();
@@ -205,8 +205,8 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
 
     @SuppressWarnings("unchecked")
     public void testChainedTransformer() {
-        Transformer<Object, Object> a = TransformerUtils.<Object, Object>constantTransformer("A");
-        Transformer<Object, Object> b = TransformerUtils.constantTransformer((Object) "B");
+        final Transformer<Object, Object> a = TransformerUtils.<Object, Object>constantTransformer("A");
+        final Transformer<Object, Object> b = TransformerUtils.constantTransformer((Object) "B");
 
         assertEquals("A", TransformerUtils.chainedTransformer(b, a).transform(null));
         assertEquals("B", TransformerUtils.chainedTransformer(a, b).transform(null));
@@ -222,26 +222,26 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
         try {
             TransformerUtils.chainedTransformer(null, null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             TransformerUtils.chainedTransformer((Transformer[]) null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             TransformerUtils.chainedTransformer((Collection<Transformer<Object, Object>>) null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             TransformerUtils.chainedTransformer(new Transformer[] {null, null});
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             coll = new ArrayList<Transformer<Object, Object>>();
             coll.add(null);
             coll.add(null);
             TransformerUtils.chainedTransformer(coll);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
     }
 
     // switchTransformer
@@ -249,9 +249,9 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
 
     @SuppressWarnings("unchecked")
     public void testSwitchTransformer() {
-        Transformer<String, String> a = TransformerUtils.constantTransformer("A");
-        Transformer<String, String> b = TransformerUtils.constantTransformer("B");
-        Transformer<String, String> c = TransformerUtils.constantTransformer("C");
+        final Transformer<String, String> a = TransformerUtils.constantTransformer("A");
+        final Transformer<String, String> b = TransformerUtils.constantTransformer("B");
+        final Transformer<String, String> c = TransformerUtils.constantTransformer("C");
 
         assertEquals("A", TransformerUtils.switchTransformer(TruePredicate.truePredicate(), a, b).transform(null));
         assertEquals("B", TransformerUtils.switchTransformer(FalsePredicate.falsePredicate(), a, b).transform(null));
@@ -288,34 +288,34 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
         try {
             TransformerUtils.switchTransformer(null, null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             TransformerUtils.switchTransformer((Predicate[]) null, (Transformer[]) null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             TransformerUtils.switchTransformer((Map<Predicate<Object>, Transformer<Object, Object>>) null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             TransformerUtils.switchTransformer(new Predicate[2], new Transformer[2]);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             TransformerUtils.switchTransformer(
                     new Predicate[] { TruePredicate.truePredicate() },
                     new Transformer[] { a, b });
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
     }
 
     // switchMapTransformer
     //------------------------------------------------------------------
 
     public void testSwitchMapTransformer() {
-        Transformer<String, String> a = TransformerUtils.constantTransformer("A");
-        Transformer<String, String> b = TransformerUtils.constantTransformer("B");
-        Transformer<String, String> c = TransformerUtils.constantTransformer("C");
+        final Transformer<String, String> a = TransformerUtils.constantTransformer("A");
+        final Transformer<String, String> b = TransformerUtils.constantTransformer("B");
+        final Transformer<String, String> c = TransformerUtils.constantTransformer("C");
 
         Map<String, Transformer<String, String>> map = new HashMap<String, Transformer<String,String>>();
         map.put("HELLO", a);
@@ -334,14 +334,14 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
         try {
             TransformerUtils.switchMapTransformer(null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
     }
 
     // invokerTransformer
     //------------------------------------------------------------------
 
     public void testInvokerTransformer() {
-        List<Object> list = new ArrayList<Object>();
+        final List<Object> list = new ArrayList<Object>();
         assertEquals(new Integer(0), TransformerUtils.invokerTransformer("size").transform(list));
         list.add(new Object());
         assertEquals(new Integer(1), TransformerUtils.invokerTransformer("size").transform(list));
@@ -350,18 +350,18 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
         try {
             TransformerUtils.invokerTransformer(null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             TransformerUtils.invokerTransformer("noSuchMethod").transform(new Object());
             fail();
-        } catch (FunctorException ex) {}
+        } catch (final FunctorException ex) {}
     }
 
     // invokerTransformer2
     //------------------------------------------------------------------
 
     public void testInvokerTransformer2() {
-        List<Object> list = new ArrayList<Object>();
+        final List<Object> list = new ArrayList<Object>();
         assertEquals(Boolean.FALSE, TransformerUtils.invokerTransformer("contains",
                 new Class[] { Object.class }, new Object[] { cString }).transform(list));
         list.add(cString);
@@ -373,24 +373,24 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
         try {
             TransformerUtils.invokerTransformer(null, null, null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             TransformerUtils.invokerTransformer("noSuchMethod", new Class[] { Object.class },
                     new Object[] { cString }).transform(new Object());
             fail();
-        } catch (FunctorException ex) {}
+        } catch (final FunctorException ex) {}
         try {
             TransformerUtils.invokerTransformer("badArgs", null, new Object[] { cString });
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             TransformerUtils.invokerTransformer("badArgs", new Class[] { Object.class }, null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             TransformerUtils.invokerTransformer("badArgs", new Class[] {}, new Object[] { cString });
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
     }
 
     // stringValueTransformer
@@ -412,17 +412,17 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
         try {
             TransformerUtils.instantiateTransformer(null, new Object[] { "str" });
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             TransformerUtils.instantiateTransformer(new Class[] {}, new Object[] { "str" });
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
 
         Transformer<Class<?>, Object> trans = TransformerUtils.instantiateTransformer(new Class[] { Long.class }, new Object[] { null });
         try {
             trans.transform(String.class);
             fail();
-        } catch (FunctorException ex) {}
+        } catch (final FunctorException ex) {}
 
         trans = TransformerUtils.instantiateTransformer();
         assertEquals("", trans.transform(String.class));

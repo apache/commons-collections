@@ -34,13 +34,13 @@ public class SplitMapUtilsTest extends BulkTest {
     private Map<String, Integer> backingMap;
     private TransformedMap<String, String, String, Integer> transformedMap;
 
-    private Transformer<String, Integer> stringToInt = new Transformer<String, Integer>() {
-        public Integer transform(String input) {
+    private final Transformer<String, Integer> stringToInt = new Transformer<String, Integer>() {
+        public Integer transform(final String input) {
             return Integer.valueOf(input);
         }
     };
 
-    public SplitMapUtilsTest(String testName) {
+    public SplitMapUtilsTest(final String testName) {
         super(testName);
     }
 
@@ -67,9 +67,9 @@ public class SplitMapUtilsTest extends BulkTest {
         }
 
         // mapIterator
-        MapIterator<String, Integer> it = map.mapIterator();
+        final MapIterator<String, Integer> it = map.mapIterator();
         while (it.hasNext()) {
-            String k = it.next();
+            final String k = it.next();
             assertEquals(k, it.getKey());
             assertEquals(Integer.valueOf(k), it.getValue());
         }
@@ -105,7 +105,7 @@ public class SplitMapUtilsTest extends BulkTest {
         });
 
         // equals, hashcode
-        IterableMap<String, Integer> other = SplitMapUtils.readableMap(transformedMap);
+        final IterableMap<String, Integer> other = SplitMapUtils.readableMap(transformedMap);
         assertEquals(other, map);
         assertEquals(other.hashCode(), map.hashCode());
 
@@ -119,7 +119,7 @@ public class SplitMapUtilsTest extends BulkTest {
     }
 
     public void testAlreadyReadableMap() {
-        HashedMap<String, Integer> hashedMap = new HashedMap<String, Integer>();
+        final HashedMap<String, Integer> hashedMap = new HashedMap<String, Integer>();
         assertSame(hashedMap, SplitMapUtils.readableMap(hashedMap));
     }
 
@@ -173,7 +173,7 @@ public class SplitMapUtilsTest extends BulkTest {
         });
 
         // equals, hashcode
-        Map<String, String> other = SplitMapUtils.writableMap(transformedMap);
+        final Map<String, String> other = SplitMapUtils.writableMap(transformedMap);
         assertEquals(other, map);
         assertEquals(other.hashCode(), map.hashCode());
 
@@ -184,7 +184,7 @@ public class SplitMapUtilsTest extends BulkTest {
         assertEquals(++sz, backingMap.size());
 
         // putall
-        Map<String, String> more = new HashMap<String, String>();
+        final Map<String, String> more = new HashMap<String, String>();
         more.put("foo", "77");
         more.put("bar", "88");
         more.put("baz", "99");
@@ -198,23 +198,23 @@ public class SplitMapUtilsTest extends BulkTest {
     }
 
     public void testAlreadyWritableMap() {
-        HashedMap<String, String> hashedMap = new HashedMap<String, String>();
+        final HashedMap<String, String> hashedMap = new HashedMap<String, String>();
         assertSame(hashedMap, SplitMapUtils.writableMap(hashedMap));
     }
 
-    private void attemptGetOperation(Runnable r) {
+    private void attemptGetOperation(final Runnable r) {
         attemptMapOperation("Put exposed as writable Map must not allow Get operations", r);
     }
 
-    private void attemptPutOperation(Runnable r) {
+    private void attemptPutOperation(final Runnable r) {
         attemptMapOperation("Get exposed as writable Map must not allow Put operations", r);
     }
 
-    private void attemptMapOperation(String s, Runnable r) {
+    private void attemptMapOperation(final String s, final Runnable r) {
         try {
             r.run();
             fail(s);
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
         }
     }
 

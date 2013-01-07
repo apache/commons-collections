@@ -34,7 +34,7 @@ import org.apache.commons.collections.collection.AbstractCollectionTest;
  */
 public class BoundedFifoBufferTest<E> extends AbstractCollectionTest<E> {
 
-    public BoundedFifoBufferTest(String n) {
+    public BoundedFifoBufferTest(final String n) {
         super(n);
     }
 
@@ -51,12 +51,12 @@ public class BoundedFifoBufferTest<E> extends AbstractCollectionTest<E> {
     @Override
     public void verify() {
         super.verify();
-        Iterator<E> iterator1 = getCollection().iterator();
-        Iterator<E> iterator2 = getConfirmed().iterator();
+        final Iterator<E> iterator1 = getCollection().iterator();
+        final Iterator<E> iterator2 = getConfirmed().iterator();
         while (iterator2.hasNext()) {
             assertTrue(iterator1.hasNext());
-            E o1 = iterator1.next();
-            E o2 = iterator2.next();
+            final E o1 = iterator1.next();
+            final E o2 = iterator2.next();
             assertEquals(o1, o2);
         }
     }
@@ -98,7 +98,7 @@ public class BoundedFifoBufferTest<E> extends AbstractCollectionTest<E> {
      */
     @Override
     public List<E> makeConfirmedFullCollection() {
-        List<E> c = makeConfirmedCollection();
+        final List<E> c = makeConfirmedCollection();
         c.addAll(java.util.Arrays.asList(getFullElements()));
         return c;
     }
@@ -119,10 +119,10 @@ public class BoundedFifoBufferTest<E> extends AbstractCollectionTest<E> {
      */
     public void testBoundedFifoBufferRemove() {
         resetFull();
-        int size = getConfirmed().size();
+        final int size = getConfirmed().size();
         for (int i = 0; i < size; i++) {
-            E o1 = getCollection().remove();
-            E o2 = getConfirmed().remove(0);
+            final E o1 = getCollection().remove();
+            final E o2 = getConfirmed().remove(0);
             assertEquals("Removed objects should be equal", o1, o2);
             verify();
         }
@@ -130,7 +130,7 @@ public class BoundedFifoBufferTest<E> extends AbstractCollectionTest<E> {
         try {
             getCollection().remove();
             fail("Empty buffer should raise Underflow.");
-        } catch (BufferUnderflowException e) {
+        } catch (final BufferUnderflowException e) {
             // expected
         }
     }
@@ -141,7 +141,7 @@ public class BoundedFifoBufferTest<E> extends AbstractCollectionTest<E> {
     public void testConstructorException1() {
         try {
             new BoundedFifoBuffer<E>(0);
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             return;
         }
         fail();
@@ -153,7 +153,7 @@ public class BoundedFifoBufferTest<E> extends AbstractCollectionTest<E> {
     public void testConstructorException2() {
         try {
             new BoundedFifoBuffer<E>(-20);
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             return;
         }
         fail();
@@ -165,7 +165,7 @@ public class BoundedFifoBufferTest<E> extends AbstractCollectionTest<E> {
     public void testConstructorException3() {
         try {
             new BoundedFifoBuffer<E>(null);
-        } catch (NullPointerException ex) {
+        } catch (final NullPointerException ex) {
             return;
         }
         fail();
@@ -179,14 +179,14 @@ public class BoundedFifoBufferTest<E> extends AbstractCollectionTest<E> {
         try {
             getCollection().get(-1);
             fail();
-        } catch (NoSuchElementException ex) {
+        } catch (final NoSuchElementException ex) {
             // expected
         }
         
         try {
             getCollection().get(getCollection().size());
             fail();
-        } catch (NoSuchElementException ex) {
+        } catch (final NoSuchElementException ex) {
             // expected
         }
     }
@@ -194,8 +194,8 @@ public class BoundedFifoBufferTest<E> extends AbstractCollectionTest<E> {
     public void testGetIndex() {
         resetFull();
         
-        BoundedFifoBuffer<E> buffer = getCollection();
-        List<E> confirmed = getConfirmed();
+        final BoundedFifoBuffer<E> buffer = getCollection();
+        final List<E> confirmed = getConfirmed();
         for (int i = 0; i < confirmed.size(); i++) {
             assertEquals(confirmed.get(i), buffer.get(i));
         }
@@ -217,7 +217,7 @@ public class BoundedFifoBufferTest<E> extends AbstractCollectionTest<E> {
     // BZ 33071 -- gets start=end=1 before removal of interior element
     @SuppressWarnings("unchecked")
     public void testShift() {
-        BoundedFifoBuffer<E> fifo = new BoundedFifoBuffer<E>(3);
+        final BoundedFifoBuffer<E> fifo = new BoundedFifoBuffer<E>(3);
         fifo.add((E) "a");
         fifo.add((E) "b");
         fifo.add((E) "c");

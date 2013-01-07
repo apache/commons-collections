@@ -97,7 +97,7 @@ public class ReferenceMap<K, V> extends AbstractReferenceMap<K, V> implements Se
      *   {@link AbstractReferenceMap.ReferenceStrength#SOFT SOFT},
      *   {@link AbstractReferenceMap.ReferenceStrength#WEAK WEAK}
      */
-    public ReferenceMap(ReferenceStrength keyType, ReferenceStrength valueType) {
+    public ReferenceMap(final ReferenceStrength keyType, final ReferenceStrength valueType) {
         super(keyType, valueType, DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR, false);
     }
 
@@ -116,7 +116,7 @@ public class ReferenceMap<K, V> extends AbstractReferenceMap<K, V> implements Se
      * @param purgeValues should the value be automatically purged when the 
      *   key is garbage collected 
      */
-    public ReferenceMap(ReferenceStrength keyType, ReferenceStrength valueType, boolean purgeValues) {
+    public ReferenceMap(final ReferenceStrength keyType, final ReferenceStrength valueType, final boolean purgeValues) {
         super(keyType, valueType, DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR, purgeValues);
     }
 
@@ -136,8 +136,8 @@ public class ReferenceMap<K, V> extends AbstractReferenceMap<K, V> implements Se
      * @param capacity  the initial capacity for the map
      * @param loadFactor  the load factor for the map
      */
-    public ReferenceMap(ReferenceStrength keyType, ReferenceStrength valueType, int capacity,
-            float loadFactor) {
+    public ReferenceMap(final ReferenceStrength keyType, final ReferenceStrength valueType, final int capacity,
+            final float loadFactor) {
         super(keyType, valueType, capacity, loadFactor, false);
     }
 
@@ -159,8 +159,8 @@ public class ReferenceMap<K, V> extends AbstractReferenceMap<K, V> implements Se
      * @param purgeValues  should the value be automatically purged when the 
      *   key is garbage collected 
      */
-    public ReferenceMap(ReferenceStrength keyType, ReferenceStrength valueType, int capacity,
-            float loadFactor, boolean purgeValues) {
+    public ReferenceMap(final ReferenceStrength keyType, final ReferenceStrength valueType, final int capacity,
+            final float loadFactor, final boolean purgeValues) {
         super(keyType, valueType, capacity, loadFactor, purgeValues);
     }
 
@@ -168,7 +168,7 @@ public class ReferenceMap<K, V> extends AbstractReferenceMap<K, V> implements Se
     /**
      * Write the map out using a custom routine.
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         doWriteObject(out);
     }
@@ -176,7 +176,7 @@ public class ReferenceMap<K, V> extends AbstractReferenceMap<K, V> implements Se
     /**
      * Read the map in using a custom routine.
      */
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         doReadObject(in);
     }

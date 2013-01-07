@@ -33,13 +33,13 @@ import org.apache.commons.collections.collection.PredicatedCollectionTest;
  */
 public class PredicatedBufferTest<E> extends PredicatedCollectionTest<E> {
 
-    public PredicatedBufferTest(String testName) {
+    public PredicatedBufferTest(final String testName) {
         super(testName);
     }
 
     //---------------------------------------------------------------
 
-    protected Buffer<E> decorateCollection(Buffer<E> buffer, Predicate<E> predicate) {
+    protected Buffer<E> decorateCollection(final Buffer<E> buffer, final Predicate<E> predicate) {
         return PredicatedBuffer.predicatedBuffer(buffer, predicate);
     }
 
@@ -55,7 +55,7 @@ public class PredicatedBufferTest<E> extends PredicatedCollectionTest<E> {
 
     @Override
     public Collection<E> makeConfirmedFullCollection() {
-        ArrayStack<E> list = new ArrayStack<E>();
+        final ArrayStack<E> list = new ArrayStack<E>();
         list.addAll(java.util.Arrays.asList(getFullElements()));
         return list;
     }
@@ -68,11 +68,11 @@ public class PredicatedBufferTest<E> extends PredicatedCollectionTest<E> {
 
     @SuppressWarnings("unchecked")
     public void testGet() {
-        Buffer<E> buffer = makeTestBuffer();
+        final Buffer<E> buffer = makeTestBuffer();
         try {
             buffer.get();
             fail("Expecting BufferUnderflowException");
-        } catch (BufferUnderflowException ex) {
+        } catch (final BufferUnderflowException ex) {
             // expected
         }
         buffer.add((E) "one");
@@ -83,13 +83,13 @@ public class PredicatedBufferTest<E> extends PredicatedCollectionTest<E> {
 
     @SuppressWarnings("unchecked")
     public void testRemove() {
-        Buffer<E> buffer = makeTestBuffer();
+        final Buffer<E> buffer = makeTestBuffer();
         buffer.add((E) "one");
         assertEquals("Buffer get", "one", buffer.remove());
         try {
             buffer.remove();
             fail("Expecting BufferUnderflowException");
-        } catch (BufferUnderflowException ex) {
+        } catch (final BufferUnderflowException ex) {
             // expected
         }
     }

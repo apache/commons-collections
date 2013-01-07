@@ -37,7 +37,7 @@ import org.apache.commons.collections.functors.TruePredicate;
  */
 public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
-    public PredicatedSortedSetTest(String testName) {
+    public PredicatedSortedSetTest(final String testName) {
         super(testName);
     }
 
@@ -56,7 +56,7 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
     @Override
     public SortedSet<E> makeFullCollection() {
-        TreeSet<E> set = new TreeSet<E>();
+        final TreeSet<E> set = new TreeSet<E>();
         set.addAll(Arrays.asList(getFullElements()));
         return PredicatedSortedSet.predicatedSortedSet(set, truePredicate);
     }
@@ -64,7 +64,7 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 //--------------------------------------------------------------------
     protected Predicate<E> testPredicate =
         new Predicate<E>() {
-            public boolean evaluate(E o) {
+            public boolean evaluate(final E o) {
                 return o instanceof String && ((String) o).startsWith("A");
             }
         };
@@ -74,18 +74,18 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
     }
 
     public void testGetSet() {
-        PredicatedSortedSet<E> set = makeTestSet();
+        final PredicatedSortedSet<E> set = makeTestSet();
         assertTrue("returned set should not be null", set.decorated() != null);
     }
 
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
-        SortedSet<E> set = makeTestSet();
-        String testString = "B";
+        final SortedSet<E> set = makeTestSet();
+        final String testString = "B";
         try {
             set.add((E) testString);
             fail("Should fail string predicate.");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
         assertTrue("Collection shouldn't contain illegal element",
@@ -94,8 +94,8 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
     @SuppressWarnings("unchecked")
     public void testIllegalAddAll() {
-        SortedSet<E> set = makeTestSet();
-        Set<E> elements = new TreeSet<E>();
+        final SortedSet<E> set = makeTestSet();
+        final Set<E> elements = new TreeSet<E>();
         elements.add((E) "Aone");
         elements.add((E) "Atwo");
         elements.add((E) "Bthree");
@@ -103,7 +103,7 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         try {
             set.addAll(elements);
             fail("Should fail string predicate.");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
         assertTrue("Set shouldn't contain illegal element", !set.contains("Aone"));
@@ -113,8 +113,8 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
     }
 
     public void testComparator() {
-        SortedSet<E> set = makeTestSet();
-        Comparator<? super E> c = set.comparator();
+        final SortedSet<E> set = makeTestSet();
+        final Comparator<? super E> c = set.comparator();
         assertTrue("natural order, so comparator should be null", c == null);
     }
 

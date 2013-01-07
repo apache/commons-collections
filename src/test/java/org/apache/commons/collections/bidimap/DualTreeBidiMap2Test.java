@@ -45,7 +45,7 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
         return BulkTest.makeSuite(DualTreeBidiMap2Test.class);
     }
 
-    public DualTreeBidiMap2Test(String testName) {
+    public DualTreeBidiMap2Test(final String testName) {
         super(testName);
     }
 
@@ -63,13 +63,13 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
 
     public void testComparator() {
         resetEmpty();
-        SortedBidiMap<K, V> bidi = (SortedBidiMap<K, V>) map;
+        final SortedBidiMap<K, V> bidi = (SortedBidiMap<K, V>) map;
         assertNotNull(bidi.comparator());
         assertTrue(bidi.comparator() instanceof ReverseComparator);
     }
 
     public void testComparator2() {
-        DualTreeBidiMap<String, Integer> dtbm = new DualTreeBidiMap<String, Integer>(
+        final DualTreeBidiMap<String, Integer> dtbm = new DualTreeBidiMap<String, Integer>(
                 String.CASE_INSENSITIVE_ORDER, null);
         dtbm.put("two", 0);
         dtbm.put("one", 1);
@@ -79,18 +79,18 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
     }
 
     public void testSerializeDeserializeCheckComparator() throws Exception {
-        SortedBidiMap<?, ?> obj = makeObject();
+        final SortedBidiMap<?, ?> obj = makeObject();
         if (obj instanceof Serializable && isTestSerialization()) {
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-            ObjectOutputStream out = new ObjectOutputStream(buffer);
+            final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+            final ObjectOutputStream out = new ObjectOutputStream(buffer);
             out.writeObject(obj);
             out.close();
 
-            ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
-            Object dest = in.readObject();
+            final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
+            final Object dest = in.readObject();
             in.close();
 
-            SortedBidiMap<?,?> bidi = (SortedBidiMap<?,?>) dest;
+            final SortedBidiMap<?,?> bidi = (SortedBidiMap<?,?>) dest;
             assertNotNull(obj.comparator());
             assertNotNull(bidi.comparator());
             assertTrue(bidi.comparator() instanceof ReverseComparator);
@@ -99,21 +99,22 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
 
     private static class IntegerComparator implements Comparator<Integer>, java.io.Serializable{
         private static final long serialVersionUID = 1L;
-        public int compare(Integer o1, Integer o2) {
+        public int compare(final Integer o1, final Integer o2) {
             return o1.compareTo(o2);
         }
     }
 
     public void testCollections364() throws Exception {
-        DualTreeBidiMap<String, Integer> original = new DualTreeBidiMap<String, Integer>(
+        final DualTreeBidiMap<String, Integer> original = new DualTreeBidiMap<String, Integer>(
                 String.CASE_INSENSITIVE_ORDER, new IntegerComparator());
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutputStream out = new ObjectOutputStream(buffer);
+        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        final ObjectOutputStream out = new ObjectOutputStream(buffer);
         out.writeObject(original);
         out.close();
 
-        ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
+        final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
         @SuppressWarnings("unchecked")
+        final
         DualTreeBidiMap<String, Integer> deserialised = (DualTreeBidiMap<String, Integer>) in.readObject();
         in.close();
 
@@ -124,18 +125,18 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
     }
 
     public void testSortOrder() throws Exception {
-        SortedBidiMap<K, V> sm = makeFullMap();
+        final SortedBidiMap<K, V> sm = makeFullMap();
 
         // Sort by the comparator used in the makeEmptyBidiMap() method
         List<K> newSortedKeys = getAsList(getSampleKeys());
         Collections.sort(newSortedKeys, new ReverseComparator<K>(ComparableComparator.<K>comparableComparator()));
         newSortedKeys = Collections.unmodifiableList(newSortedKeys);
 
-        Iterator<K> mapIter = sm.keySet().iterator();
-        Iterator<K> expectedIter = newSortedKeys.iterator();
+        final Iterator<K> mapIter = sm.keySet().iterator();
+        final Iterator<K> expectedIter = newSortedKeys.iterator();
         while (expectedIter.hasNext()) {
-            K expectedKey = expectedIter.next();
-            K mapKey = mapIter.next();
+            final K expectedKey = expectedIter.next();
+            final K mapKey = mapIter.next();
             assertNotNull("key in sorted list may not be null", expectedKey);
             assertNotNull("key in map may not be null", mapKey);
             assertEquals("key from sorted list and map must be equal", expectedKey, mapKey);

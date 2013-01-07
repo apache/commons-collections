@@ -58,7 +58,7 @@ public class HashedMap<K, V>
      * @param initialCapacity  the initial capacity
      * @throws IllegalArgumentException if the initial capacity is negative
      */
-    public HashedMap(int initialCapacity) {
+    public HashedMap(final int initialCapacity) {
         super(initialCapacity);
     }
 
@@ -71,7 +71,7 @@ public class HashedMap<K, V>
      * @throws IllegalArgumentException if the initial capacity is negative
      * @throws IllegalArgumentException if the load factor is less than zero
      */
-    public HashedMap(int initialCapacity, float loadFactor) {
+    public HashedMap(final int initialCapacity, final float loadFactor) {
         super(initialCapacity, loadFactor);
     }
 
@@ -81,7 +81,7 @@ public class HashedMap<K, V>
      * @param map  the map to copy
      * @throws NullPointerException if the map is null
      */
-    public HashedMap(Map<K, V> map) {
+    public HashedMap(final Map<K, V> map) {
         super(map);
     }
 
@@ -99,7 +99,7 @@ public class HashedMap<K, V>
     /**
      * Write the map out using a custom routine.
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         doWriteObject(out);
     }
@@ -107,7 +107,7 @@ public class HashedMap<K, V>
     /**
      * Read the map in using a custom routine.
      */
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         doReadObject(in);
     }

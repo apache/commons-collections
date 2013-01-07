@@ -88,7 +88,7 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
      * @throws ClassCastException if <i>obj1</i> is not a <code>Comparable</code>,
      *         or when <code>((Comparable)obj1).compareTo(obj2)</code> does
      */
-    public int compare(E obj1, E obj2) {
+    public int compare(final E obj1, final E obj2) {
         return obj1.compareTo(obj2);
     }
 
@@ -119,7 +119,7 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
      * @since 3.0
      */
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         return this == object || 
                null != object && object.getClass().equals(this.getClass());
     }

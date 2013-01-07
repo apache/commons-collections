@@ -55,7 +55,7 @@ public class PredicatedSortedSet<E> extends PredicatedSet<E> implements SortedSe
      * @throws IllegalArgumentException if set or predicate is null
      * @throws IllegalArgumentException if the set contains invalid elements
      */
-    public static <E> PredicatedSortedSet<E> predicatedSortedSet(SortedSet<E> set, Predicate<? super E> predicate) {
+    public static <E> PredicatedSortedSet<E> predicatedSortedSet(final SortedSet<E> set, final Predicate<? super E> predicate) {
         return new PredicatedSortedSet<E>(set, predicate);
     }
 
@@ -71,7 +71,7 @@ public class PredicatedSortedSet<E> extends PredicatedSet<E> implements SortedSe
      * @throws IllegalArgumentException if set or predicate is null
      * @throws IllegalArgumentException if the set contains invalid elements
      */
-    protected PredicatedSortedSet(SortedSet<E> set, Predicate<? super E> predicate) {
+    protected PredicatedSortedSet(final SortedSet<E> set, final Predicate<? super E> predicate) {
         super(set, predicate);
     }
 
@@ -98,18 +98,18 @@ public class PredicatedSortedSet<E> extends PredicatedSet<E> implements SortedSe
         return decorated().last();
     }
 
-    public SortedSet<E> subSet(E fromElement, E toElement) {
-        SortedSet<E> sub = decorated().subSet(fromElement, toElement);
+    public SortedSet<E> subSet(final E fromElement, final E toElement) {
+        final SortedSet<E> sub = decorated().subSet(fromElement, toElement);
         return new PredicatedSortedSet<E>(sub, predicate);
     }
 
-    public SortedSet<E> headSet(E toElement) {
-        SortedSet<E> sub = decorated().headSet(toElement);
+    public SortedSet<E> headSet(final E toElement) {
+        final SortedSet<E> sub = decorated().headSet(toElement);
         return new PredicatedSortedSet<E>(sub, predicate);
     }
 
-    public SortedSet<E> tailSet(E fromElement) {
-        SortedSet<E> sub = decorated().tailSet(fromElement);
+    public SortedSet<E> tailSet(final E fromElement) {
+        final SortedSet<E> sub = decorated().tailSet(fromElement);
         return new PredicatedSortedSet<E>(sub, predicate);
     }
 

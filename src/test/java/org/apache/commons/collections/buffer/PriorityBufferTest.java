@@ -39,7 +39,7 @@ import org.apache.commons.collections.comparators.ReverseComparator;
 @SuppressWarnings("boxing")
 public class PriorityBufferTest<E> extends AbstractCollectionTest<E> {
 
-    public PriorityBufferTest(String testName) {
+    public PriorityBufferTest(final String testName) {
         super(testName);
     }
 
@@ -48,7 +48,7 @@ public class PriorityBufferTest<E> extends AbstractCollectionTest<E> {
     @SuppressWarnings("unchecked")
     public void verify() {
         super.verify();
-        PriorityBuffer<E> heap = getCollection();
+        final PriorityBuffer<E> heap = getCollection();
 
         Comparator<? super E> c = heap.comparator;
         if (c == null) {
@@ -58,9 +58,9 @@ public class PriorityBufferTest<E> extends AbstractCollectionTest<E> {
             c = ComparatorUtils.reversedComparator(c);
         }
 
-        E[] tree = heap.elements;
+        final E[] tree = heap.elements;
         for (int i = 1; i <= heap.size; i++) {
-            E parent = tree[i];
+            final E parent = tree[i];
             if (i * 2 <= heap.size) {
                 assertTrue("Parent is less than or equal to its left child", c.compare(parent, tree[i * 2]) <= 0);
             }
@@ -88,7 +88,7 @@ public class PriorityBufferTest<E> extends AbstractCollectionTest<E> {
 
     @Override
     public Collection<E> makeConfirmedFullCollection() {
-        ArrayList<E> list = new ArrayList<E>();
+        final ArrayList<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }
@@ -117,24 +117,24 @@ public class PriorityBufferTest<E> extends AbstractCollectionTest<E> {
     //-----------------------------------------------------------------------
     public void testBufferEmpty() {
         resetEmpty();
-        Buffer<E> buffer = getCollection();
+        final Buffer<E> buffer = getCollection();
 
         assertEquals(0, buffer.size());
         assertEquals(true, buffer.isEmpty());
         try {
             buffer.get();
             fail();
-        } catch (BufferUnderflowException ex) {}
+        } catch (final BufferUnderflowException ex) {}
 
         try {
             buffer.remove();
             fail();
-        } catch (BufferUnderflowException ex) {}
+        } catch (final BufferUnderflowException ex) {}
     }
 
     @SuppressWarnings("unchecked")
     public void testBasicOps() {
-        PriorityBuffer<E> heap = new PriorityBuffer<E>();
+        final PriorityBuffer<E> heap = new PriorityBuffer<E>();
         heap.add((E) "a");
         heap.add((E) "c");
         heap.add((E) "e");
@@ -173,29 +173,29 @@ public class PriorityBufferTest<E> extends AbstractCollectionTest<E> {
         try {
             heap.get();
             fail("NoSuchElementException should be thrown if get is called after all elements are removed");
-        } catch (BufferUnderflowException ex) {}
+        } catch (final BufferUnderflowException ex) {}
 
         try {
             heap.remove();
             fail("NoSuchElementException should be thrown if remove is called after all elements are removed");
-        } catch (BufferUnderflowException ex) {}
+        } catch (final BufferUnderflowException ex) {}
     }
 
     @SuppressWarnings("unchecked")
     public void testBasicComparatorOps() {
-        PriorityBuffer<E> heap = new PriorityBuffer<E>(new ReverseComparator<E>((Comparator<E>) ComparableComparator.INSTANCE));
+        final PriorityBuffer<E> heap = new PriorityBuffer<E>(new ReverseComparator<E>((Comparator<E>) ComparableComparator.INSTANCE));
 
         assertTrue("heap should be empty after create", heap.isEmpty());
 
         try {
             heap.get();
             fail("NoSuchElementException should be thrown if get is called before any elements are added");
-        } catch (BufferUnderflowException ex) {}
+        } catch (final BufferUnderflowException ex) {}
 
         try {
             heap.remove();
             fail("NoSuchElementException should be thrown if remove is called before any elements are added");
-        } catch (BufferUnderflowException ex) {}
+        } catch (final BufferUnderflowException ex) {}
 
         heap.add((E) "a");
         heap.add((E) "c");
@@ -239,12 +239,12 @@ public class PriorityBufferTest<E> extends AbstractCollectionTest<E> {
         try {
             heap.get();
             fail("NoSuchElementException should be thrown if get is called after all elements are removed");
-        } catch (BufferUnderflowException ex) {}
+        } catch (final BufferUnderflowException ex) {}
 
         try {
             heap.remove();
             fail("NoSuchElementException should be thrown if remove is called after all elements are removed");
-        } catch (BufferUnderflowException ex) {}
+        } catch (final BufferUnderflowException ex) {}
     }
 
     /**
@@ -253,7 +253,7 @@ public class PriorityBufferTest<E> extends AbstractCollectionTest<E> {
     @SuppressWarnings("unchecked")
     public void testAddRemove() {
         resetEmpty();
-        PriorityBuffer heap = getCollection();
+        final PriorityBuffer heap = getCollection();
         heap.add(0);
         heap.add(2);
         heap.add(4);
@@ -279,10 +279,10 @@ public class PriorityBufferTest<E> extends AbstractCollectionTest<E> {
      *
      */
     public void testRandom() {
-        int iterations = 500;
-        int heapSize = 100;
-        int operations = 20;
-        Random randGenerator = new Random();
+        final int iterations = 500;
+        final int heapSize = 100;
+        final int operations = 20;
+        final Random randGenerator = new Random();
         PriorityBuffer<Integer> h = null;
         for (int i = 0; i < iterations; i++) {
             if (i < iterations / 2) {
@@ -305,7 +305,7 @@ public class PriorityBufferTest<E> extends AbstractCollectionTest<E> {
      * Pops all elements from the heap and verifies that the elements come off
      * in the correct order.  NOTE: this method empties the heap.
      */
-    protected void checkOrder(PriorityBuffer<?> h) {
+    protected void checkOrder(final PriorityBuffer<?> h) {
         Integer lastNum = null;
         Integer num = null;
         while (!h.isEmpty()) {
@@ -324,9 +324,9 @@ public class PriorityBufferTest<E> extends AbstractCollectionTest<E> {
      * Returns a string showing the contents of the heap formatted as a tree.
      * Makes no attempt at padding levels or handling wrapping.
      */
-    protected String showTree(PriorityBuffer<?> h) {
+    protected String showTree(final PriorityBuffer<?> h) {
         int count = 1;
-        StringBuilder buffer = new StringBuilder();
+        final StringBuilder buffer = new StringBuilder();
         for (int offset = 1; count < h.size() + 1; offset *= 2) {
             for (int i = offset; i < offset * 2; i++) {
                 if (i < h.elements.length && h.elements[i] != null) {
@@ -354,10 +354,10 @@ public class PriorityBufferTest<E> extends AbstractCollectionTest<E> {
      */
     @SuppressWarnings("unchecked")
     public void testSerialization() {
-        int iterations = 500;
-        int heapSize = 100;
+        final int iterations = 500;
+        final int heapSize = 100;
         PriorityBuffer h;
-        Random randGenerator = new Random();
+        final Random randGenerator = new Random();
         for (int i = 0; i < iterations; i++) {
             if (i < iterations / 2) {
                 h = new PriorityBuffer<E>(true);
@@ -368,26 +368,26 @@ public class PriorityBufferTest<E> extends AbstractCollectionTest<E> {
                 h.add(new Integer(randGenerator.nextInt(heapSize)));
             }
             assertTrue(h.size() == heapSize);
-            PriorityBuffer<?> h1 = serializeAndRestore(h);
+            final PriorityBuffer<?> h1 = serializeAndRestore(h);
             assertTrue(h1.size() == heapSize);
-            Iterator<?> hit = h.iterator();
+            final Iterator<?> hit = h.iterator();
             while (hit.hasNext()) {
-                Integer n = (Integer) hit.next();
+                final Integer n = (Integer) hit.next();
                 assertTrue(h1.contains(n));
             }
             checkOrder(h1);
         }
     }
 
-    public PriorityBuffer<?> serializeAndRestore(PriorityBuffer<E> h) {
+    public PriorityBuffer<?> serializeAndRestore(final PriorityBuffer<E> h) {
         PriorityBuffer<?> h1 = null;
         try {
-            byte[] objekt = writeExternalFormToBytes(h);
+            final byte[] objekt = writeExternalFormToBytes(h);
             h1 = (PriorityBuffer<?>) readExternalFormFromBytes(objekt);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             e.printStackTrace();
             fail(e.toString());
-        } catch (ClassNotFoundException e) {
+        } catch (final ClassNotFoundException e) {
             e.printStackTrace();
             fail(e.toString());
         }

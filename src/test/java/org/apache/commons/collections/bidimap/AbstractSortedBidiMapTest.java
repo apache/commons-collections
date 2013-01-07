@@ -42,13 +42,13 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
     protected List<V> sortedValues = new ArrayList<V>();
     protected SortedSet<V> sortedNewValues = new TreeSet<V>();
 
-    public AbstractSortedBidiMapTest(String testName) {
+    public AbstractSortedBidiMapTest(final String testName) {
         super(testName);
         sortedKeys = getAsList(getSampleKeys());
         Collections.sort(sortedKeys);
         sortedKeys = Collections.unmodifiableList(sortedKeys);
 
-        Map<K, V> map = new TreeMap<K, V>();
+        final Map<K, V> map = new TreeMap<K, V>();
         addSampleMappings(map);
 
         sortedValues.addAll(map.values());
@@ -107,15 +107,15 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
     //-----------------------------------------------------------------------
     public void testBidiHeadMapContains() {
         // extra test as other tests get complex
-        SortedBidiMap<K, V> sm = makeFullMap();
-        Iterator<K> it = sm.keySet().iterator();
-        K first = it.next();
-        K toKey = it.next();
-        K second = it.next();
-        V firstValue = sm.get(first);
-        V secondValue = sm.get(second);
+        final SortedBidiMap<K, V> sm = makeFullMap();
+        final Iterator<K> it = sm.keySet().iterator();
+        final K first = it.next();
+        final K toKey = it.next();
+        final K second = it.next();
+        final V firstValue = sm.get(first);
+        final V secondValue = sm.get(second);
 
-        SortedMap<K, V> head = sm.headMap(toKey);
+        final SortedMap<K, V> head = sm.headMap(toKey);
         assertEquals(1, head.size());
         assertEquals(true, sm.containsKey(first));
         assertEquals(true, head.containsKey(first));
@@ -134,18 +134,18 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         }
 
         // extra test as other tests get complex
-        SortedBidiMap<K, V> sm = makeFullMap();
-        Iterator<K> it = sm.keySet().iterator();
-        K first = it.next();
-        K second = it.next();
-        K toKey = it.next();
+        final SortedBidiMap<K, V> sm = makeFullMap();
+        final Iterator<K> it = sm.keySet().iterator();
+        final K first = it.next();
+        final K second = it.next();
+        final K toKey = it.next();
 
-        V firstValue = sm.get(first);
-        V secondValue = sm.get(second);
-        V toKeyValue = sm.get(toKey);
+        final V firstValue = sm.get(first);
+        final V secondValue = sm.get(second);
+        final V toKeyValue = sm.get(toKey);
 
-        SortedMap<K, V> sub = sm.headMap(toKey);
-        int size = sm.size();
+        final SortedMap<K, V> sub = sm.headMap(toKey);
+        final int size = sm.size();
         assertEquals(2, sub.size());
         sub.clear();
         assertEquals(0, sub.size());
@@ -181,21 +181,21 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         }
 
         // extra test as other tests get complex
-        SortedBidiMap<K, V> sm = makeFullMap();
-        Iterator<K> it = sm.keySet().iterator();
-        K first = it.next();
-        K second = it.next();
-        K toKey = it.next();
+        final SortedBidiMap<K, V> sm = makeFullMap();
+        final Iterator<K> it = sm.keySet().iterator();
+        final K first = it.next();
+        final K second = it.next();
+        final K toKey = it.next();
 
-        int size = sm.size();
-        SortedMap<K, V> sub = sm.headMap(toKey);
+        final int size = sm.size();
+        final SortedMap<K, V> sub = sm.headMap(toKey);
         assertEquals(2, sub.size());
         assertEquals(true, sm.containsKey(first));
         assertEquals(true, sub.containsKey(first));
         assertEquals(true, sm.containsKey(second));
         assertEquals(true, sub.containsKey(second));
 
-        V firstValue = sub.remove(first);
+        final V firstValue = sub.remove(first);
         assertEquals(1, sub.size());
         assertEquals(size - 1, sm.size());
         assertEquals(size - 1, sm.inverseBidiMap().size());
@@ -206,7 +206,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertEquals(false, sub.containsKey(first));
         assertEquals(false, sub.containsValue(firstValue));
 
-        V secondValue = sub.remove(second);
+        final V secondValue = sub.remove(second);
         assertEquals(0, sub.size());
         assertEquals(size - 2, sm.size());
         assertEquals(size - 2, sm.inverseBidiMap().size());
@@ -225,21 +225,21 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         }
 
         // extra test as other tests get complex
-        SortedBidiMap<K, V> sm = makeFullMap();
-        Iterator<K> it = sm.keySet().iterator();
-        K first = it.next();
-        K second = it.next();
-        K toKey = it.next();
+        final SortedBidiMap<K, V> sm = makeFullMap();
+        final Iterator<K> it = sm.keySet().iterator();
+        final K first = it.next();
+        final K second = it.next();
+        final K toKey = it.next();
 
-        int size = sm.size();
-        SortedMap<K, V> sub = sm.headMap(toKey);
-        Set<Map.Entry<K, V>> set = sub.entrySet();
+        final int size = sm.size();
+        final SortedMap<K, V> sub = sm.headMap(toKey);
+        final Set<Map.Entry<K, V>> set = sub.entrySet();
         assertEquals(2, sub.size());
         assertEquals(2, set.size());
 
-        Iterator<Map.Entry<K, V>> it2 = set.iterator();
-        Map.Entry<K, V> firstEntry = cloneMapEntry(it2.next());
-        Map.Entry<K, V> secondEntry = cloneMapEntry(it2.next());
+        final Iterator<Map.Entry<K, V>> it2 = set.iterator();
+        final Map.Entry<K, V> firstEntry = cloneMapEntry(it2.next());
+        final Map.Entry<K, V> secondEntry = cloneMapEntry(it2.next());
         assertEquals(true, sm.containsKey(first));
         assertEquals(true, sub.containsKey(first));
         assertEquals(true, set.contains(firstEntry));
@@ -276,16 +276,16 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
     //-----------------------------------------------------------------------
     public void testBidiTailMapContains() {
         // extra test as other tests get complex
-        SortedBidiMap<K, V> sm = makeFullMap();
-        Iterator<K> it = sm.keySet().iterator();
-        K first = it.next();
-        K fromKey = it.next();
-        K second = it.next();
-        V firstValue = sm.get(first);
-        V fromKeyValue = sm.get(fromKey);
-        V secondValue = sm.get(second);
+        final SortedBidiMap<K, V> sm = makeFullMap();
+        final Iterator<K> it = sm.keySet().iterator();
+        final K first = it.next();
+        final K fromKey = it.next();
+        final K second = it.next();
+        final V firstValue = sm.get(first);
+        final V fromKeyValue = sm.get(fromKey);
+        final V secondValue = sm.get(second);
 
-        SortedMap<K, V> sub = sm.tailMap(fromKey);
+        final SortedMap<K, V> sub = sm.tailMap(fromKey);
         assertEquals(sm.size() - 1, sub.size());
         assertEquals(true, sm.containsKey(first));
         assertEquals(false, sub.containsKey(first));
@@ -308,20 +308,20 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         }
 
         // extra test as other tests get complex
-        SortedBidiMap<K, V> sm = makeFullMap();
-        Iterator<K> it = sm.keySet().iterator();
+        final SortedBidiMap<K, V> sm = makeFullMap();
+        final Iterator<K> it = sm.keySet().iterator();
         it.next();
         it.next();
-        K first = it.next();
-        K fromKey = it.next();
-        K second = it.next();
+        final K first = it.next();
+        final K fromKey = it.next();
+        final K second = it.next();
 
-        V firstValue = sm.get(first);
-        V fromKeyValue = sm.get(fromKey);
-        V secondValue = sm.get(second);
+        final V firstValue = sm.get(first);
+        final V fromKeyValue = sm.get(fromKey);
+        final V secondValue = sm.get(second);
 
-        SortedMap<K, V> sub = sm.tailMap(fromKey);
-        int size = sm.size();
+        final SortedMap<K, V> sub = sm.tailMap(fromKey);
+        final int size = sm.size();
         assertEquals(size - 3, sub.size());
         sub.clear();
         assertEquals(0, sub.size());
@@ -357,22 +357,22 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         }
 
         // extra test as other tests get complex
-        SortedBidiMap<K, V> sm = makeFullMap();
-        Iterator<K> it = sm.keySet().iterator();
+        final SortedBidiMap<K, V> sm = makeFullMap();
+        final Iterator<K> it = sm.keySet().iterator();
         it.next();
         it.next();
-        K fromKey = it.next();
-        K first = it.next();
-        K second = it.next();
+        final K fromKey = it.next();
+        final K first = it.next();
+        final K second = it.next();
 
-        int size = sm.size();
-        SortedMap<K, V> sub = sm.tailMap(fromKey);
+        final int size = sm.size();
+        final SortedMap<K, V> sub = sm.tailMap(fromKey);
         assertEquals(true, sm.containsKey(first));
         assertEquals(true, sub.containsKey(first));
         assertEquals(true, sm.containsKey(second));
         assertEquals(true, sub.containsKey(second));
 
-        Object firstValue = sub.remove(first);
+        final Object firstValue = sub.remove(first);
         assertEquals(size - 3, sub.size());
         assertEquals(size - 1, sm.size());
         assertEquals(size - 1, sm.inverseBidiMap().size());
@@ -383,7 +383,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertEquals(false, sub.containsKey(first));
         assertEquals(false, sub.containsValue(firstValue));
 
-        Object secondValue = sub.remove(second);
+        final Object secondValue = sub.remove(second);
         assertEquals(size - 4, sub.size());
         assertEquals(size - 2, sm.size());
         assertEquals(size - 2, sm.inverseBidiMap().size());
@@ -402,21 +402,21 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         }
 
         // extra test as other tests get complex
-        SortedBidiMap<K, V> sm = makeFullMap();
-        Iterator<K> it = sm.keySet().iterator();
+        final SortedBidiMap<K, V> sm = makeFullMap();
+        final Iterator<K> it = sm.keySet().iterator();
         it.next();
         it.next();
-        K fromKey = it.next();
-        K first = it.next();
-        K second = it.next();
+        final K fromKey = it.next();
+        final K first = it.next();
+        final K second = it.next();
 
-        int size = sm.size();
-        SortedMap<K, V> sub = sm.tailMap(fromKey);
-        Set<Map.Entry<K, V>> set = sub.entrySet();
-        Iterator<Map.Entry<K, V>> it2 = set.iterator();
+        final int size = sm.size();
+        final SortedMap<K, V> sub = sm.tailMap(fromKey);
+        final Set<Map.Entry<K, V>> set = sub.entrySet();
+        final Iterator<Map.Entry<K, V>> it2 = set.iterator();
         it2.next();
-        Map.Entry<K, V> firstEntry = cloneMapEntry(it2.next());
-        Map.Entry<K, V> secondEntry = cloneMapEntry(it2.next());
+        final Map.Entry<K, V> firstEntry = cloneMapEntry(it2.next());
+        final Map.Entry<K, V> secondEntry = cloneMapEntry(it2.next());
         assertEquals(true, sm.containsKey(first));
         assertEquals(true, sub.containsKey(first));
         assertEquals(true, set.contains(firstEntry));
@@ -453,19 +453,19 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
     //-----------------------------------------------------------------------
     public void testBidiSubMapContains() {
         // extra test as other tests get complex
-        SortedBidiMap<K, V> sm = makeFullMap();
-        Iterator<K> it = sm.keySet().iterator();
-        K first = it.next();
-        K fromKey = it.next();
-        K second = it.next();
-        K toKey = it.next();
-        K third = it.next();
-        V firstValue = sm.get(first);
-        V fromKeyValue = sm.get(fromKey);
-        V secondValue = sm.get(second);
-        V thirdValue = sm.get(third);
+        final SortedBidiMap<K, V> sm = makeFullMap();
+        final Iterator<K> it = sm.keySet().iterator();
+        final K first = it.next();
+        final K fromKey = it.next();
+        final K second = it.next();
+        final K toKey = it.next();
+        final K third = it.next();
+        final V firstValue = sm.get(first);
+        final V fromKeyValue = sm.get(fromKey);
+        final V secondValue = sm.get(second);
+        final V thirdValue = sm.get(third);
 
-        SortedMap<K, V> sub = sm.subMap(fromKey, toKey);
+        final SortedMap<K, V> sub = sm.subMap(fromKey, toKey);
         assertEquals(2, sub.size());
         assertEquals(true, sm.containsKey(first));
         assertEquals(false, sub.containsKey(first));
@@ -492,21 +492,21 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         }
 
         // extra test as other tests get complex
-        SortedBidiMap<K, V> sm = makeFullMap();
-        Iterator<K> it = sm.keySet().iterator();
+        final SortedBidiMap<K, V> sm = makeFullMap();
+        final Iterator<K> it = sm.keySet().iterator();
         it.next();
-        K fromKey = it.next();
-        K first = it.next();
-        K second = it.next();
-        K toKey = it.next();
+        final K fromKey = it.next();
+        final K first = it.next();
+        final K second = it.next();
+        final K toKey = it.next();
 
-        V fromKeyValue = sm.get(fromKey);
-        V firstValue = sm.get(first);
-        V secondValue = sm.get(second);
-        V toKeyValue = sm.get(toKey);
+        final V fromKeyValue = sm.get(fromKey);
+        final V firstValue = sm.get(first);
+        final V secondValue = sm.get(second);
+        final V toKeyValue = sm.get(toKey);
 
-        SortedMap<K, V> sub = sm.subMap(fromKey, toKey);
-        int size = sm.size();
+        final SortedMap<K, V> sub = sm.subMap(fromKey, toKey);
+        final int size = sm.size();
         assertEquals(3, sub.size());
         sub.clear();
         assertEquals(0, sub.size());
@@ -549,23 +549,23 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         }
 
         // extra test as other tests get complex
-        SortedBidiMap<K, V> sm = makeFullMap();
-        Iterator<K> it = sm.keySet().iterator();
+        final SortedBidiMap<K, V> sm = makeFullMap();
+        final Iterator<K> it = sm.keySet().iterator();
         it.next();
         it.next();
-        K fromKey = it.next();
-        K first = it.next();
-        K second = it.next();
-        K toKey = it.next();
+        final K fromKey = it.next();
+        final K first = it.next();
+        final K second = it.next();
+        final K toKey = it.next();
 
-        int size = sm.size();
-        SortedMap<K, V> sub = sm.subMap(fromKey, toKey);
+        final int size = sm.size();
+        final SortedMap<K, V> sub = sm.subMap(fromKey, toKey);
         assertEquals(true, sm.containsKey(first));
         assertEquals(true, sub.containsKey(first));
         assertEquals(true, sm.containsKey(second));
         assertEquals(true, sub.containsKey(second));
 
-        V firstValue = sub.remove(first);
+        final V firstValue = sub.remove(first);
         assertEquals(2, sub.size());
         assertEquals(size - 1, sm.size());
         assertEquals(size - 1, sm.inverseBidiMap().size());
@@ -576,7 +576,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         assertEquals(false, sub.containsKey(first));
         assertEquals(false, sub.containsValue(firstValue));
 
-        V secondValue = sub.remove(second);
+        final V secondValue = sub.remove(second);
         assertEquals(1, sub.size());
         assertEquals(size - 2, sm.size());
         assertEquals(size - 2, sm.inverseBidiMap().size());
@@ -595,23 +595,23 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
         }
 
         // extra test as other tests get complex
-        SortedBidiMap<K, V> sm = makeFullMap();
-        Iterator<K> it = sm.keySet().iterator();
+        final SortedBidiMap<K, V> sm = makeFullMap();
+        final Iterator<K> it = sm.keySet().iterator();
         it.next();
         it.next();
-        K fromKey = it.next();
-        K first = it.next();
-        K second = it.next();
-        K toKey = it.next();
+        final K fromKey = it.next();
+        final K first = it.next();
+        final K second = it.next();
+        final K toKey = it.next();
 
-        int size = sm.size();
-        SortedMap<K, V> sub = sm.subMap(fromKey, toKey);
-        Set<Map.Entry<K, V>> set = sub.entrySet();
+        final int size = sm.size();
+        final SortedMap<K, V> sub = sm.subMap(fromKey, toKey);
+        final Set<Map.Entry<K, V>> set = sub.entrySet();
         assertEquals(3, set.size());
-        Iterator<Map.Entry<K, V>> it2 = set.iterator();
+        final Iterator<Map.Entry<K, V>> it2 = set.iterator();
         it2.next();
-        Map.Entry<K, V> firstEntry = cloneMapEntry(it2.next());
-        Map.Entry<K, V> secondEntry = cloneMapEntry(it2.next());
+        final Map.Entry<K, V> firstEntry = cloneMapEntry(it2.next());
+        final Map.Entry<K, V> secondEntry = cloneMapEntry(it2.next());
         assertEquals(true, sm.containsKey(first));
         assertEquals(true, sub.containsKey(first));
         assertEquals(true, set.contains(firstEntry));

@@ -37,7 +37,7 @@ public class DefaultKeyValueTest<K, V> extends TestCase {
      * 
      * @param testName  the test name
      */
-    public DefaultKeyValueTest(String testName) {
+    public DefaultKeyValueTest(final String testName) {
         super(testName);
 
     }
@@ -57,14 +57,14 @@ public class DefaultKeyValueTest<K, V> extends TestCase {
      * Subclasses should override this method to return a DefaultKeyValue
      * of the type being tested.
      */
-    protected DefaultKeyValue<K, V> makeDefaultKeyValue(K key, V value) {
+    protected DefaultKeyValue<K, V> makeDefaultKeyValue(final K key, final V value) {
         return new DefaultKeyValue<K, V>(key, value);
     }
 
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testAccessorsAndMutators() {
-        DefaultKeyValue<K, V> kv = makeDefaultKeyValue();
+        final DefaultKeyValue<K, V> kv = makeDefaultKeyValue();
 
         kv.setKey((K) key);
         assertTrue(kv.getKey() == key);
@@ -87,12 +87,12 @@ public class DefaultKeyValueTest<K, V> extends TestCase {
         //  the KVP to contain itself (and thus cause infinite recursion
         //  in #hashCode and #toString)
 
-        DefaultKeyValue<K, V> kv = makeDefaultKeyValue();
+        final DefaultKeyValue<K, V> kv = makeDefaultKeyValue();
 
         try {
             kv.setKey((K) kv);
             fail("Should throw an IllegalArgumentException");
-        } catch (IllegalArgumentException iae) {
+        } catch (final IllegalArgumentException iae) {
             // expected to happen...
 
             // check that the KVP's state has not changed
@@ -102,7 +102,7 @@ public class DefaultKeyValueTest<K, V> extends TestCase {
         try {
             kv.setValue((V) kv);
             fail("Should throw an IllegalArgumentException");
-        } catch (IllegalArgumentException iae) {
+        } catch (final IllegalArgumentException iae) {
             // expected to happen...
 
             // check that the KVP's state has not changed
@@ -124,7 +124,7 @@ public class DefaultKeyValueTest<K, V> extends TestCase {
         assertTrue(kv.getKey() == key && kv.getValue() == value);
 
         // 3. test copy constructor
-        DefaultKeyValue<K, V> kv2 = new DefaultKeyValue<K, V>(kv);
+        final DefaultKeyValue<K, V> kv2 = new DefaultKeyValue<K, V>(kv);
         assertTrue(kv2.getKey() == key && kv2.getValue() == value);
 
         // test that the KVPs are independent
@@ -134,9 +134,9 @@ public class DefaultKeyValueTest<K, V> extends TestCase {
         assertTrue(kv2.getKey() == key && kv2.getValue() == value);
 
         // 4. test Map.Entry constructor
-        Map<K, V> map = new HashMap<K, V>();
+        final Map<K, V> map = new HashMap<K, V>();
         map.put((K) key, (V) value);
-        Map.Entry<K, V> entry = map.entrySet().iterator().next();
+        final Map.Entry<K, V> entry = map.entrySet().iterator().next();
 
         kv = new DefaultKeyValue<K, V>(entry);
         assertTrue(kv.getKey() == key && kv.getValue() == value);
@@ -178,11 +178,11 @@ public class DefaultKeyValueTest<K, V> extends TestCase {
 
     @SuppressWarnings("unchecked")
     public void testToMapEntry() {
-        DefaultKeyValue<K, V> kv = makeDefaultKeyValue((K) key, (V) value);
+        final DefaultKeyValue<K, V> kv = makeDefaultKeyValue((K) key, (V) value);
 
-        Map<K, V> map = new HashMap<K, V>();
+        final Map<K, V> map = new HashMap<K, V>();
         map.put(kv.getKey(), kv.getValue());
-        Map.Entry<K, V> entry = map.entrySet().iterator().next();
+        final Map.Entry<K, V> entry = map.entrySet().iterator().next();
 
         assertTrue(entry.equals(kv.toMapEntry()));
         assertTrue(entry.hashCode() == kv.hashCode());

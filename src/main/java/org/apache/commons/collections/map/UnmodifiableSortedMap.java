@@ -56,7 +56,7 @@ public final class UnmodifiableSortedMap<K, V>
      * @return a new unmodifiable sorted map
      * @throws IllegalArgumentException if map is null
      */
-    public static <K, V> SortedMap<K, V> unmodifiableSortedMap(SortedMap<K, V> map) {
+    public static <K, V> SortedMap<K, V> unmodifiableSortedMap(final SortedMap<K, V> map) {
         if (map instanceof Unmodifiable) {
             return map;
         }
@@ -70,7 +70,7 @@ public final class UnmodifiableSortedMap<K, V>
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    private UnmodifiableSortedMap(SortedMap<K, V> map) {
+    private UnmodifiableSortedMap(final SortedMap<K, V> map) {
         super(map);
     }
     
@@ -82,7 +82,7 @@ public final class UnmodifiableSortedMap<K, V>
      * @throws IOException
      * @since 3.1
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(map);
     }
@@ -96,7 +96,7 @@ public final class UnmodifiableSortedMap<K, V>
      * @since 3.1
      */
     @SuppressWarnings("unchecked")
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map<K, V>) in.readObject();
     }
@@ -108,17 +108,17 @@ public final class UnmodifiableSortedMap<K, V>
     }
 
     @Override
-    public V put(K key, V value) {
+    public V put(final K key, final V value) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void putAll(Map<? extends K, ? extends V> mapToCopy) {
+    public void putAll(final Map<? extends K, ? extends V> mapToCopy) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public V remove(Object key) {
+    public V remove(final Object key) {
         throw new UnsupportedOperationException();
     }
 
@@ -154,17 +154,17 @@ public final class UnmodifiableSortedMap<K, V>
     }
 
     @Override
-    public SortedMap<K, V> subMap(K fromKey, K toKey) {
+    public SortedMap<K, V> subMap(final K fromKey, final K toKey) {
         return new UnmodifiableSortedMap<K, V>(decorated().subMap(fromKey, toKey));
     }
 
     @Override
-    public SortedMap<K, V> headMap(K toKey) {
+    public SortedMap<K, V> headMap(final K toKey) {
         return new UnmodifiableSortedMap<K, V>(decorated().headMap(toKey));
     }
 
     @Override
-    public SortedMap<K, V> tailMap(K fromKey) {
+    public SortedMap<K, V> tailMap(final K fromKey) {
         return new UnmodifiableSortedMap<K, V>(decorated().tailMap(fromKey));
     }
 

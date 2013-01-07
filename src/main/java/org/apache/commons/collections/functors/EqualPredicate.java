@@ -48,7 +48,7 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null
      */
-    public static <T> Predicate<T> equalPredicate(T object) {
+    public static <T> Predicate<T> equalPredicate(final T object) {
         if (object == null) {
             return nullPredicate();
         }
@@ -65,7 +65,7 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
      * @throws IllegalArgumentException if the predicate is null
      * @since 4.0
      */
-    public static <T> Predicate<T> equalPredicate(T object, Equator<T> equator) {
+    public static <T> Predicate<T> equalPredicate(final T object, final Equator<T> equator) {
         if (object == null) {
             return nullPredicate();
         }
@@ -78,7 +78,7 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
      * 
      * @param object  the object to compare to
      */
-    public EqualPredicate(T object) {
+    public EqualPredicate(final T object) {
         // do not use the DefaultEquator to keep backwards compatibility
         // the DefaultEquator returns also true if the two object references are equal
         this(object, null);
@@ -92,7 +92,7 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
      * @param equator  the equator to use for comparison
      * @since 4.0
      */
-    public EqualPredicate(T object, Equator<T> equator) {
+    public EqualPredicate(final T object, final Equator<T> equator) {
         super();
         iValue = object;
         this.equator = equator;
@@ -104,7 +104,7 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
      * @param object  the input object
      * @return true if input object equals stored value
      */
-    public boolean evaluate(T object) {
+    public boolean evaluate(final T object) {
         if (equator != null) {
             return equator.equate(iValue, object);
         } else {

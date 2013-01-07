@@ -42,7 +42,7 @@ public class FunctorException extends RuntimeException {
      *
      * @param msg  the error message.
      */
-    public FunctorException(String msg) {
+    public FunctorException(final String msg) {
         super(msg);
     }
 
@@ -53,7 +53,7 @@ public class FunctorException extends RuntimeException {
      * @param rootCause  the exception or error that caused this exception
      *                   to be thrown.
      */
-    public FunctorException(Throwable rootCause) {
+    public FunctorException(final Throwable rootCause) {
         super(rootCause);
     }
 
@@ -65,7 +65,7 @@ public class FunctorException extends RuntimeException {
      * @param rootCause  the exception or error that caused this exception
      *                   to be thrown.
      */
-    public FunctorException(String msg, Throwable rootCause) {
+    public FunctorException(final String msg, final Throwable rootCause) {
         super(msg, rootCause);
     }
 

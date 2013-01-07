@@ -50,7 +50,7 @@ public abstract class AbstractSortedSetDecorator<E>
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    protected AbstractSortedSetDecorator(Set<E> set) {
+    protected AbstractSortedSetDecorator(final Set<E> set) {
         super(set);
     }
 
@@ -65,15 +65,15 @@ public abstract class AbstractSortedSetDecorator<E>
     }
 
     //-----------------------------------------------------------------------
-    public SortedSet<E> subSet(E fromElement, E toElement) {
+    public SortedSet<E> subSet(final E fromElement, final E toElement) {
         return decorated().subSet(fromElement, toElement);
     }
 
-    public SortedSet<E> headSet(E toElement) {
+    public SortedSet<E> headSet(final E toElement) {
         return decorated().headSet(toElement);
     }
 
-    public SortedSet<E> tailSet(E fromElement) {
+    public SortedSet<E> tailSet(final E fromElement) {
         return decorated().tailSet(fromElement);
     }
 

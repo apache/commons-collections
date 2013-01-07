@@ -36,7 +36,7 @@ import org.apache.commons.collections.collection.TransformedCollectionTest;
  */
 public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public TransformedMapTest(String testName) {
+    public TransformedMapTest(final String testName) {
         super(testName);
     }
 
@@ -50,7 +50,7 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testTransformedMap() {
-        Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
+        final Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
 
         Map<K, V> map = TransformedMap
                 .transformingMap(
@@ -83,13 +83,13 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
         assertEquals(new Integer((String) els[0]), map.remove(els[0]));
 
-        Set<Map.Entry<K, V>> entrySet = map.entrySet();
-        Map.Entry<K, V>[] array = entrySet.toArray(new Map.Entry[0]);
+        final Set<Map.Entry<K, V>> entrySet = map.entrySet();
+        final Map.Entry<K, V>[] array = entrySet.toArray(new Map.Entry[0]);
         array[0].setValue((V) "66");
         assertEquals(new Integer(66), array[0].getValue());
         assertEquals(new Integer(66), map.get(array[0].getKey()));
 
-        Map.Entry entry = entrySet.iterator().next();
+        final Map.Entry entry = entrySet.iterator().next();
         entry.setValue("88");
         assertEquals(new Integer(88), entry.getValue());
         assertEquals(new Integer(88), map.get(entry.getKey()));
@@ -98,12 +98,12 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testFactory_Decorate() {
-        Map<K, V> base = new HashMap<K, V>();
+        final Map<K, V> base = new HashMap<K, V>();
         base.put((K) "A", (V) "1");
         base.put((K) "B", (V) "2");
         base.put((K) "C", (V) "3");
 
-        Map<K, V> trans = TransformedMap
+        final Map<K, V> trans = TransformedMap
                 .transformingMap(
                         base,
                         null,
@@ -118,12 +118,12 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testFactory_decorateTransform() {
-        Map<K, V> base = new HashMap<K, V>();
+        final Map<K, V> base = new HashMap<K, V>();
         base.put((K) "A", (V) "1");
         base.put((K) "B", (V) "2");
         base.put((K) "C", (V) "3");
 
-        Map<K, V> trans = TransformedMap
+        final Map<K, V> trans = TransformedMap
                 .transformedMap(
                         base,
                         null,

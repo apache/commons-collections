@@ -82,7 +82,7 @@ public class FactoryUtils {
      * @param constantToReturn  the constant object to return each time in the factory
      * @return the <code>constant</code> factory.
      */
-    public static <T> Factory<T> constantFactory(T constantToReturn) {
+    public static <T> Factory<T> constantFactory(final T constantToReturn) {
         return ConstantFactory.constantFactory(constantToReturn);
     }
 
@@ -104,7 +104,7 @@ public class FactoryUtils {
      * the {@code prototype} is {@code null}
      * @throws IllegalArgumentException if the prototype cannot be cloned
      */
-    public static <T> Factory<T> prototypeFactory(T prototype) {
+    public static <T> Factory<T> prototypeFactory(final T prototype) {
         return PrototypeFactory.<T>prototypeFactory(prototype);
     }
 
@@ -119,7 +119,7 @@ public class FactoryUtils {
      * @return the <code>reflection</code> factory
      * @throws IllegalArgumentException if the classToInstantiate is null
      */
-    public static <T> Factory<T> instantiateFactory(Class<T> classToInstantiate) {
+    public static <T> Factory<T> instantiateFactory(final Class<T> classToInstantiate) {
         return InstantiateFactory.instantiateFactory(classToInstantiate, null, null);
     }
 
@@ -138,7 +138,7 @@ public class FactoryUtils {
      * @throws IllegalArgumentException if the paramTypes and args don't match
      * @throws IllegalArgumentException if the constructor doesn't exist
      */
-    public static <T> Factory<T> instantiateFactory(Class<T> classToInstantiate, Class<?>[] paramTypes, Object[] args) {
+    public static <T> Factory<T> instantiateFactory(final Class<T> classToInstantiate, final Class<?>[] paramTypes, final Object[] args) {
         return InstantiateFactory.instantiateFactory(classToInstantiate, paramTypes, args);
     }
 

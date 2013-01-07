@@ -59,7 +59,7 @@ public final class FalsePredicate<T> implements Predicate<T>, Serializable {
      * @param object  the input object
      * @return false always
      */
-    public boolean evaluate(T object) {
+    public boolean evaluate(final T object) {
         return false;
     }
 

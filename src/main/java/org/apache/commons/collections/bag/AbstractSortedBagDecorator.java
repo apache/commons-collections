@@ -48,7 +48,7 @@ public abstract class AbstractSortedBagDecorator<E>
      * @param bag  the bag to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    protected AbstractSortedBagDecorator(SortedBag<E> bag) {
+    protected AbstractSortedBagDecorator(final SortedBag<E> bag) {
         super(bag);
     }
 

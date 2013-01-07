@@ -45,7 +45,7 @@ public class TransformerClosure<E> implements Closure<E>, Serializable {
      * @param transformer  the transformer to call, null means nop
      * @return the <code>transformer</code> closure
      */
-    public static <E> Closure<E> transformerClosure(Transformer<? super E, ?> transformer) {
+    public static <E> Closure<E> transformerClosure(final Transformer<? super E, ?> transformer) {
         if (transformer == null) {
             return NOPClosure.<E>nopClosure();
         }
@@ -58,7 +58,7 @@ public class TransformerClosure<E> implements Closure<E>, Serializable {
      * 
      * @param transformer  the transformer to call, not null
      */
-    public TransformerClosure(Transformer<? super E, ?> transformer) {
+    public TransformerClosure(final Transformer<? super E, ?> transformer) {
         super();
         iTransformer = transformer;
     }
@@ -68,7 +68,7 @@ public class TransformerClosure<E> implements Closure<E>, Serializable {
      * 
      * @param input  the input object
      */
-    public void execute(E input) {
+    public void execute(final E input) {
         iTransformer.transform(input);
     }
 

@@ -40,7 +40,7 @@ import org.apache.commons.collections.iterators.EmptyOrderedMapIterator;
  */
 public class IteratorUtilsTest extends BulkTest {
 
-    public IteratorUtilsTest(String name) {
+    public IteratorUtilsTest(final String name) {
         super(name);
     }
 
@@ -49,15 +49,15 @@ public class IteratorUtilsTest extends BulkTest {
     }
 
     public void testAsIterable() {
-        List<Integer> list = new ArrayList<Integer>();
+        final List<Integer> list = new ArrayList<Integer>();
         list.add(Integer.valueOf(0));
         list.add(Integer.valueOf(1));
         list.add(Integer.valueOf(2));
-        Iterator<Integer> iterator = list.iterator();
+        final Iterator<Integer> iterator = list.iterator();
         
-        Iterable<Integer> iterable = IteratorUtils.asIterable(iterator);
+        final Iterable<Integer> iterable = IteratorUtils.asIterable(iterator);
         int expected = 0;
-        for(Integer actual : iterable) {
+        for(final Integer actual : iterable) {
             assertEquals(expected, actual.intValue());
             ++expected;
         }
@@ -65,7 +65,7 @@ public class IteratorUtilsTest extends BulkTest {
         assertTrue(expected > 0);
 
         // single use iterator
-        for(Integer actual : iterable) {
+        for(final Integer actual : iterable) {
             fail("should not be able to iterate twice");
         }
     }
@@ -74,21 +74,21 @@ public class IteratorUtilsTest extends BulkTest {
         try {
             IteratorUtils.asIterable(null);
             fail("Expecting NullPointerException");
-        } catch (NullPointerException ex) {
+        } catch (final NullPointerException ex) {
             // success
         }
     }
 
     public void testAsMultipleIterable() {
-        List<Integer> list = new ArrayList<Integer>();
+        final List<Integer> list = new ArrayList<Integer>();
         list.add(Integer.valueOf(0));
         list.add(Integer.valueOf(1));
         list.add(Integer.valueOf(2));
-        Iterator<Integer> iterator = list.iterator();
+        final Iterator<Integer> iterator = list.iterator();
         
-        Iterable<Integer> iterable = IteratorUtils.asMultipleUseIterable(iterator);
+        final Iterable<Integer> iterable = IteratorUtils.asMultipleUseIterable(iterator);
         int expected = 0;
-        for(Integer actual : iterable) {
+        for(final Integer actual : iterable) {
             assertEquals(expected, actual.intValue());
             ++expected;
         }
@@ -97,7 +97,7 @@ public class IteratorUtilsTest extends BulkTest {
 
         // multiple use iterator
         expected = 0;
-        for(Integer actual : iterable) {
+        for(final Integer actual : iterable) {
             assertEquals(expected, actual.intValue());
             ++expected;
         }
@@ -109,40 +109,40 @@ public class IteratorUtilsTest extends BulkTest {
         try {
             IteratorUtils.asMultipleUseIterable(null);
             fail("Expecting NullPointerException");
-        } catch (NullPointerException ex) {
+        } catch (final NullPointerException ex) {
             // success
         }
     }
     
     public void testToList() {
-        List<Object> list = new ArrayList<Object>();
+        final List<Object> list = new ArrayList<Object>();
         list.add(new Integer(1));
         list.add("Two");
         list.add(null);
-        List<Object> result = IteratorUtils.toList(list.iterator());
+        final List<Object> result = IteratorUtils.toList(list.iterator());
         assertEquals(list, result);
     }
 
     public void testToArray() {
-        List<Object> list = new ArrayList<Object>();
+        final List<Object> list = new ArrayList<Object>();
         list.add(new Integer(1));
         list.add("Two");
         list.add(null);
-        Object[] result = IteratorUtils.toArray(list.iterator());
+        final Object[] result = IteratorUtils.toArray(list.iterator());
         assertEquals(list, Arrays.asList(result));
     }
 
     public void testToArray2() {
-        List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<String>();
         list.add("One");
         list.add("Two");
         list.add(null);
-        String[] result = IteratorUtils.toArray(list.iterator(), String.class);
+        final String[] result = IteratorUtils.toArray(list.iterator(), String.class);
         assertEquals(list, Arrays.asList(result));
     }
 
     public void testArrayIterator() {
-        Object[] objArray = {"a", "b", "c"};
+        final Object[] objArray = {"a", "b", "c"};
         ResettableIterator<Object> iterator = IteratorUtils.arrayIterator(objArray);
         assertTrue(iterator.next().equals("a"));
         assertTrue(iterator.next().equals("b"));
@@ -152,14 +152,14 @@ public class IteratorUtilsTest extends BulkTest {
         try {
             iterator = IteratorUtils.arrayIterator(new Integer(0));
             fail("Expecting IllegalArgumentException");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
                 // expected
         }
 
         try {
             iterator = IteratorUtils.arrayIterator(null);
             fail("Expecting NullPointerException");
-        } catch (NullPointerException ex) {
+        } catch (final NullPointerException ex) {
                 // expected
         }
 
@@ -169,7 +169,7 @@ public class IteratorUtilsTest extends BulkTest {
         try {
             iterator = IteratorUtils.arrayIterator(objArray, -1);
             fail("Expecting IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (final IndexOutOfBoundsException ex) {
             // expected
         }
 
@@ -180,7 +180,7 @@ public class IteratorUtilsTest extends BulkTest {
         try {
             iterator = IteratorUtils.arrayIterator(objArray, 4);
             fail("Expecting IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (final IndexOutOfBoundsException ex) {
             // expected
         }
 
@@ -190,25 +190,25 @@ public class IteratorUtilsTest extends BulkTest {
         try {
             iterator = IteratorUtils.arrayIterator(objArray, 2, 4);
             fail("Expecting IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (final IndexOutOfBoundsException ex) {
             // expected
         }
 
         try {
             iterator = IteratorUtils.arrayIterator(objArray, -1, 1);
             fail("Expecting IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (final IndexOutOfBoundsException ex) {
             // expected
         }
 
         try {
             iterator = IteratorUtils.arrayIterator(objArray, 2, 1);
             fail("Expecting IllegalArgumentException");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
 
-        int[] intArray = {0, 1, 2};
+        final int[] intArray = {0, 1, 2};
         iterator = IteratorUtils.arrayIterator(intArray);
         assertTrue(iterator.next().equals(new Integer(0)));
         assertTrue(iterator.next().equals(new Integer(1)));
@@ -221,7 +221,7 @@ public class IteratorUtilsTest extends BulkTest {
         try {
             iterator = IteratorUtils.arrayIterator(intArray, -1);
             fail("Expecting IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (final IndexOutOfBoundsException ex) {
             // expected
         }
 
@@ -232,7 +232,7 @@ public class IteratorUtilsTest extends BulkTest {
         try {
             iterator = IteratorUtils.arrayIterator(intArray, 4);
             fail("Expecting IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (final IndexOutOfBoundsException ex) {
             // expected
         }
 
@@ -242,27 +242,27 @@ public class IteratorUtilsTest extends BulkTest {
         try {
             iterator = IteratorUtils.arrayIterator(intArray, 2, 4);
             fail("Expecting IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (final IndexOutOfBoundsException ex) {
             // expected
         }
 
         try {
             iterator = IteratorUtils.arrayIterator(intArray, -1, 1);
             fail("Expecting IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (final IndexOutOfBoundsException ex) {
             // expected
         }
 
         try {
             iterator = IteratorUtils.arrayIterator(intArray, 2, 1);
             fail("Expecting IllegalArgumentException");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
     }
 
     public void testArrayListIterator() {
-        Object[] objArray = {"a", "b", "c", "d"};
+        final Object[] objArray = {"a", "b", "c", "d"};
         ResettableListIterator<Object> iterator = IteratorUtils.arrayListIterator(objArray);
         assertTrue(!iterator.hasPrevious());
         assertTrue(iterator.previousIndex() == -1);
@@ -281,14 +281,14 @@ public class IteratorUtilsTest extends BulkTest {
         try {
             iterator = IteratorUtils.arrayListIterator(new Integer(0));
             fail("Expecting IllegalArgumentException");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
                 // expected
         }
 
         try {
             iterator = IteratorUtils.arrayListIterator(null);
             fail("Expecting NullPointerException");
-        } catch (NullPointerException ex) {
+        } catch (final NullPointerException ex) {
                 // expected
         }
 
@@ -302,7 +302,7 @@ public class IteratorUtilsTest extends BulkTest {
         try {
             iterator = IteratorUtils.arrayListIterator(objArray, -1);
             fail("Expecting IndexOutOfBoundsException.");
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (final IndexOutOfBoundsException ex) {
             // expected
         }
 
@@ -311,14 +311,14 @@ public class IteratorUtilsTest extends BulkTest {
         try {
             iterator.previous();
             fail("Expecting NoSuchElementException.");
-        } catch (NoSuchElementException ex) {
+        } catch (final NoSuchElementException ex) {
             // expected
         }
 
         try {
             iterator = IteratorUtils.arrayListIterator(objArray, 5);
             fail("Expecting IndexOutOfBoundsException.");
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (final IndexOutOfBoundsException ex) {
             // expected
         }
 
@@ -328,25 +328,25 @@ public class IteratorUtilsTest extends BulkTest {
         try {
             iterator = IteratorUtils.arrayListIterator(objArray, 2, 5);
             fail("Expecting IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (final IndexOutOfBoundsException ex) {
             // expected
         }
 
         try {
             iterator = IteratorUtils.arrayListIterator(objArray, -1, 1);
             fail("Expecting IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (final IndexOutOfBoundsException ex) {
             // expected
         }
 
         try {
             iterator = IteratorUtils.arrayListIterator(objArray, 2, 1);
             fail("Expecting IllegalArgumentException");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
 
-        int[] intArray = {0, 1, 2};
+        final int[] intArray = {0, 1, 2};
         iterator = IteratorUtils.arrayListIterator(intArray);
         assertTrue(iterator.previousIndex() == -1);
         assertTrue(!iterator.hasPrevious());
@@ -379,7 +379,7 @@ public class IteratorUtilsTest extends BulkTest {
         try {
             iterator = IteratorUtils.arrayListIterator(intArray, -1);
             fail("Expecting IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (final IndexOutOfBoundsException ex) {
             // expected
         }
 
@@ -389,7 +389,7 @@ public class IteratorUtilsTest extends BulkTest {
         try {
             iterator = IteratorUtils.arrayListIterator(intArray, 4);
             fail("Expecting IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (final IndexOutOfBoundsException ex) {
             // expected
         }
 
@@ -404,21 +404,21 @@ public class IteratorUtilsTest extends BulkTest {
         try {
             iterator = IteratorUtils.arrayListIterator(intArray, 2, 4);
             fail("Expecting IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (final IndexOutOfBoundsException ex) {
             // expected
         }
 
         try {
             iterator = IteratorUtils.arrayListIterator(intArray, -1, 1);
             fail("Expecting IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (final IndexOutOfBoundsException ex) {
             // expected
         }
 
         try {
             iterator = IteratorUtils.arrayListIterator(intArray, 2, 1);
             fail("Expecting IllegalArgumentException");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
     }
@@ -428,7 +428,7 @@ public class IteratorUtilsTest extends BulkTest {
      * Gets an immutable Iterator operating on the elements ["a", "b", "c", "d"].
      */
     private Iterator<String> getImmutableIterator() {
-        List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<String>();
         list.add("a");
         list.add("b");
         list.add("c");
@@ -440,7 +440,7 @@ public class IteratorUtilsTest extends BulkTest {
      * Gets an immutable ListIterator operating on the elements ["a", "b", "c", "d"].
      */
     private ListIterator<String> getImmutableListIterator() {
-        List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<String>();
         list.add("a");
         list.add("b");
         list.add("c");
@@ -467,11 +467,11 @@ public class IteratorUtilsTest extends BulkTest {
         try {
             IteratorUtils.EMPTY_ITERATOR.next();
             fail();
-        } catch (NoSuchElementException ex) {}
+        } catch (final NoSuchElementException ex) {}
         try {
             IteratorUtils.EMPTY_ITERATOR.remove();
             fail();
-        } catch (IllegalStateException ex) {}
+        } catch (final IllegalStateException ex) {}
     }
 
     //-----------------------------------------------------------------------
@@ -495,23 +495,23 @@ public class IteratorUtilsTest extends BulkTest {
         try {
             IteratorUtils.EMPTY_LIST_ITERATOR.next();
             fail();
-        } catch (NoSuchElementException ex) {}
+        } catch (final NoSuchElementException ex) {}
         try {
             IteratorUtils.EMPTY_LIST_ITERATOR.previous();
             fail();
-        } catch (NoSuchElementException ex) {}
+        } catch (final NoSuchElementException ex) {}
         try {
             IteratorUtils.EMPTY_LIST_ITERATOR.remove();
             fail();
-        } catch (IllegalStateException ex) {}
+        } catch (final IllegalStateException ex) {}
         try {
             IteratorUtils.EMPTY_LIST_ITERATOR.set(null);
             fail();
-        } catch (IllegalStateException ex) {}
+        } catch (final IllegalStateException ex) {}
         try {
             IteratorUtils.EMPTY_LIST_ITERATOR.add(null);
             fail();
-        } catch (UnsupportedOperationException ex) {}
+        } catch (final UnsupportedOperationException ex) {}
     }
 
     //-----------------------------------------------------------------------
@@ -534,23 +534,23 @@ public class IteratorUtilsTest extends BulkTest {
         try {
             IteratorUtils.EMPTY_MAP_ITERATOR.next();
             fail();
-        } catch (NoSuchElementException ex) {}
+        } catch (final NoSuchElementException ex) {}
         try {
             IteratorUtils.EMPTY_MAP_ITERATOR.remove();
             fail();
-        } catch (IllegalStateException ex) {}
+        } catch (final IllegalStateException ex) {}
         try {
             IteratorUtils.EMPTY_MAP_ITERATOR.getKey();
             fail();
-        } catch (IllegalStateException ex) {}
+        } catch (final IllegalStateException ex) {}
         try {
             IteratorUtils.EMPTY_MAP_ITERATOR.getValue();
             fail();
-        } catch (IllegalStateException ex) {}
+        } catch (final IllegalStateException ex) {}
         try {
             IteratorUtils.EMPTY_MAP_ITERATOR.setValue(null);
             fail();
-        } catch (IllegalStateException ex) {}
+        } catch (final IllegalStateException ex) {}
     }
 
     //-----------------------------------------------------------------------
@@ -573,15 +573,15 @@ public class IteratorUtilsTest extends BulkTest {
         try {
             IteratorUtils.EMPTY_ORDERED_ITERATOR.next();
             fail();
-        } catch (NoSuchElementException ex) {}
+        } catch (final NoSuchElementException ex) {}
         try {
             IteratorUtils.EMPTY_ORDERED_ITERATOR.previous();
             fail();
-        } catch (NoSuchElementException ex) {}
+        } catch (final NoSuchElementException ex) {}
         try {
             IteratorUtils.EMPTY_ORDERED_ITERATOR.remove();
             fail();
-        } catch (IllegalStateException ex) {}
+        } catch (final IllegalStateException ex) {}
     }
 
     //-----------------------------------------------------------------------
@@ -604,27 +604,27 @@ public class IteratorUtilsTest extends BulkTest {
         try {
             IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.next();
             fail();
-        } catch (NoSuchElementException ex) {}
+        } catch (final NoSuchElementException ex) {}
         try {
             IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.previous();
             fail();
-        } catch (NoSuchElementException ex) {}
+        } catch (final NoSuchElementException ex) {}
         try {
             IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.remove();
             fail();
-        } catch (IllegalStateException ex) {}
+        } catch (final IllegalStateException ex) {}
         try {
             IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.getKey();
             fail();
-        } catch (IllegalStateException ex) {}
+        } catch (final IllegalStateException ex) {}
         try {
             IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.getValue();
             fail();
-        } catch (IllegalStateException ex) {}
+        } catch (final IllegalStateException ex) {}
         try {
             IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR.setValue(null);
             fail();
-        } catch (IllegalStateException ex) {}
+        } catch (final IllegalStateException ex) {}
     }
 
     //-----------------------------------------------------------------------
@@ -632,7 +632,7 @@ public class IteratorUtilsTest extends BulkTest {
      * Test next() and hasNext() for an immutable Iterator.
      */
     public void testUnmodifiableIteratorIteration() {
-        Iterator<String> iterator = getImmutableIterator();
+        final Iterator<String> iterator = getImmutableIterator();
 
         assertTrue(iterator.hasNext());
 
@@ -658,7 +658,7 @@ public class IteratorUtilsTest extends BulkTest {
      * ListIterator.
      */
     public void testUnmodifiableListIteratorIteration() {
-        ListIterator<String> listIterator = getImmutableListIterator();
+        final ListIterator<String> listIterator = getImmutableListIterator();
 
         assertTrue(!listIterator.hasPrevious());
         assertTrue(listIterator.hasNext());
@@ -708,13 +708,13 @@ public class IteratorUtilsTest extends BulkTest {
      * Test remove() for an immutable Iterator.
      */
     public void testUnmodifiableIteratorImmutability() {
-        Iterator<String> iterator = getImmutableIterator();
+        final Iterator<String> iterator = getImmutableIterator();
 
         try {
             iterator.remove();
             // We shouldn't get to here.
             fail("remove() should throw an UnsupportedOperationException");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // This is correct; ignore the exception.
         }
 
@@ -724,7 +724,7 @@ public class IteratorUtilsTest extends BulkTest {
             iterator.remove();
             // We shouldn't get to here.
             fail("remove() should throw an UnsupportedOperationException");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // This is correct; ignore the exception.
         }
 
@@ -734,13 +734,13 @@ public class IteratorUtilsTest extends BulkTest {
      * Test remove() for an immutable ListIterator.
      */
     public void testUnmodifiableListIteratorImmutability() {
-        ListIterator<String> listIterator = getImmutableListIterator();
+        final ListIterator<String> listIterator = getImmutableListIterator();
 
         try {
             listIterator.remove();
             // We shouldn't get to here.
             fail("remove() should throw an UnsupportedOperationException");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // This is correct; ignore the exception.
         }
 
@@ -748,7 +748,7 @@ public class IteratorUtilsTest extends BulkTest {
             listIterator.set("a");
             // We shouldn't get to here.
             fail("set(Object) should throw an UnsupportedOperationException");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // This is correct; ignore the exception.
         }
 
@@ -756,7 +756,7 @@ public class IteratorUtilsTest extends BulkTest {
             listIterator.add("a");
             // We shouldn't get to here.
             fail("add(Object) should throw an UnsupportedOperationException");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // This is correct; ignore the exception.
         }
 
@@ -766,7 +766,7 @@ public class IteratorUtilsTest extends BulkTest {
             listIterator.remove();
             // We shouldn't get to here.
             fail("remove() should throw an UnsupportedOperationException");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // This is correct; ignore the exception.
         }
 
@@ -774,7 +774,7 @@ public class IteratorUtilsTest extends BulkTest {
             listIterator.set("a");
             // We shouldn't get to here.
             fail("set(Object) should throw an UnsupportedOperationException");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // This is correct; ignore the exception.
         }
 
@@ -782,7 +782,7 @@ public class IteratorUtilsTest extends BulkTest {
             listIterator.add("a");
             // We shouldn't get to here.
             fail("add(Object) should throw an UnsupportedOperationException");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // This is correct; ignore the exception.
         }
     }

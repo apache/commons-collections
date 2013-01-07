@@ -74,9 +74,9 @@ public class PredicatedMap<K, V>
      * @return a new predicated map
      * @throws IllegalArgumentException if the map is null
      */
-    public static <K, V> PredicatedMap<K, V> predicatedMap(Map<K, V> map,
-                                                           Predicate<? super K> keyPredicate,
-                                                           Predicate<? super V> valuePredicate) {
+    public static <K, V> PredicatedMap<K, V> predicatedMap(final Map<K, V> map,
+                                                           final Predicate<? super K> keyPredicate,
+                                                           final Predicate<? super V> valuePredicate) {
         return new PredicatedMap<K, V>(map, keyPredicate, valuePredicate);
     }
 
@@ -89,14 +89,14 @@ public class PredicatedMap<K, V>
      * @param valuePredicate  the predicate to validate to values, null means no check
      * @throws IllegalArgumentException if the map is null
      */
-    protected PredicatedMap(Map<K, V> map, Predicate<? super K> keyPredicate, Predicate<? super V> valuePredicate) {
+    protected PredicatedMap(final Map<K, V> map, final Predicate<? super K> keyPredicate, final Predicate<? super V> valuePredicate) {
         super(map);
         this.keyPredicate = keyPredicate;
         this.valuePredicate = valuePredicate;
         
-        Iterator<Map.Entry<K, V>> it = map.entrySet().iterator();
+        final Iterator<Map.Entry<K, V>> it = map.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry<K, V> entry = it.next();
+            final Map.Entry<K, V> entry = it.next();
             validate(entry.getKey(), entry.getValue());
         }
     }
@@ -109,7 +109,7 @@ public class PredicatedMap<K, V>
      * @throws IOException
      * @since 3.1
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(map);
     }
@@ -123,7 +123,7 @@ public class PredicatedMap<K, V>
      * @since 3.1
      */
     @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map<K, V>) in.readObject(); // (1)
     }
@@ -136,7 +136,7 @@ public class PredicatedMap<K, V>
      * @param value  the value to validate
      * @throws IllegalArgumentException if invalid
      */
-    protected void validate(K key, V value) {
+    protected void validate(final K key, final V value) {
         if (keyPredicate != null && keyPredicate.evaluate(key) == false) {
             throw new IllegalArgumentException("Cannot add key - Predicate rejected it");
         }
@@ -154,7 +154,7 @@ public class PredicatedMap<K, V>
      * @since 3.1
      */
     @Override
-    protected V checkSetValue(V value) {
+    protected V checkSetValue(final V value) {
         if (valuePredicate.evaluate(value) == false) {
             throw new IllegalArgumentException("Cannot set value - Predicate rejected it");
         }
@@ -174,14 +174,14 @@ public class PredicatedMap<K, V>
 
     //-----------------------------------------------------------------------
     @Override
-    public V put(K key, V value) {
+    public V put(final K key, final V value) {
         validate(key, value);
         return map.put(key, value);
     }
 
     @Override
-    public void putAll(Map<? extends K, ? extends V> mapToCopy) {
-        for (Map.Entry<? extends K, ? extends V> entry : mapToCopy.entrySet()) {
+    public void putAll(final Map<? extends K, ? extends V> mapToCopy) {
+        for (final Map.Entry<? extends K, ? extends V> entry : mapToCopy.entrySet()) {
             validate(entry.getKey(), entry.getValue());
         }
         super.putAll(mapToCopy);

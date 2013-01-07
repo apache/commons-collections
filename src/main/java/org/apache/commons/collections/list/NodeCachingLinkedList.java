@@ -79,7 +79,7 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
      * 
      * @param coll  the collection to copy
      */
-    public NodeCachingLinkedList(Collection<E> coll) {
+    public NodeCachingLinkedList(final Collection<E> coll) {
         super(coll);
         this.maximumCacheSize = DEFAULT_MAXIMUM_CACHE_SIZE;
     }
@@ -89,7 +89,7 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
      *
      * @param maximumCacheSize  the maximum cache size
      */
-    public NodeCachingLinkedList(int maximumCacheSize) {
+    public NodeCachingLinkedList(final int maximumCacheSize) {
         super();
         this.maximumCacheSize = maximumCacheSize;
         init();  // must call init() as use super();
@@ -110,7 +110,7 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
      * 
      * @param maximumCacheSize  the new maximum cache size
      */
-    protected void setMaximumCacheSize(int maximumCacheSize) {
+    protected void setMaximumCacheSize(final int maximumCacheSize) {
         this.maximumCacheSize = maximumCacheSize;
         shrinkCacheToMaximumSize();
     }
@@ -136,7 +136,7 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
         if (cacheSize == 0) {
             return null;
         }
-        Node<E> cachedNode = firstCachedNode;
+        final Node<E> cachedNode = firstCachedNode;
         firstCachedNode = cachedNode.next;
         cachedNode.next = null; // This should be changed anyway, but defensively
                                 // set it to null.                    
@@ -159,13 +159,13 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
      * 
      * @param node  the node to add to the cache
      */
-    protected void addNodeToCache(Node<E> node) {
+    protected void addNodeToCache(final Node<E> node) {
         if (isCacheFull()) {
             // don't cache the node.
             return;
         }
         // clear the node's contents and add it to the cache.
-        Node<E> nextCachedNode = firstCachedNode;
+        final Node<E> nextCachedNode = firstCachedNode;
         node.previous = null;
         node.next = nextCachedNode;
         node.setValue(null);
@@ -182,8 +182,8 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
      * @return the newly created node
      */
     @Override
-    protected Node<E> createNode(E value) {
-        Node<E> cachedNode = getNodeFromCache();
+    protected Node<E> createNode(final E value) {
+        final Node<E> cachedNode = getNodeFromCache();
         if (cachedNode == null) {
             return super.createNode(value);
         }
@@ -198,7 +198,7 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
      * @param node  the node to remove
      */
     @Override
-    protected void removeNode(Node<E> node) {
+    protected void removeNode(final Node<E> node) {
         super.removeNode(node);
         addNodeToCache(node);
     }
@@ -214,10 +214,10 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
         // We can add them to the cache before removing them, since
         // {@link AbstractLinkedList.removeAllNodes()} removes the
         // nodes by removing references directly from {@link #header}.
-        int numberOfNodesToCache = Math.min(size, maximumCacheSize - cacheSize);
+        final int numberOfNodesToCache = Math.min(size, maximumCacheSize - cacheSize);
         Node<E> node = header.next;
         for (int currentIndex = 0; currentIndex < numberOfNodesToCache; currentIndex++) {
-            Node<E> oldNode = node;
+            final Node<E> oldNode = node;
             node = node.next;
             addNodeToCache(oldNode);
         }
@@ -228,7 +228,7 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
     /**
      * Serializes the data held in this object to the stream specified.
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         doWriteObject(out);
     }
@@ -236,7 +236,7 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
     /**
      * Deserializes the data held in this object to the stream specified.
      */
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         doReadObject(in);
     }

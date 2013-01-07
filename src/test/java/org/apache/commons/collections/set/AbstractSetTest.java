@@ -48,7 +48,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
      *
      * @param name  name for test
      */
-    public AbstractSetTest(String name) {
+    public AbstractSetTest(final String name) {
         super(name);
     }
 
@@ -63,8 +63,8 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
         assertEquals("Sets should be equal", getConfirmed(), getCollection());
         assertEquals("Sets should have equal hashCodes", 
                      getConfirmed().hashCode(), getCollection().hashCode());
-        Collection<E> set = makeConfirmedCollection();
-        Iterator<E> iterator = getCollection().iterator();
+        final Collection<E> set = makeConfirmedCollection();
+        final Iterator<E> iterator = getCollection().iterator();
         while (iterator.hasNext()) {
             assertTrue("Set.iterator should only return unique elements", set.add(iterator.next()));
         }
@@ -96,7 +96,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
      */
     @Override
     public Collection<E> makeConfirmedFullCollection() {
-        Collection<E> set = makeConfirmedCollection();
+        final Collection<E> set = makeConfirmedCollection();
         set.addAll(Arrays.asList(getFullElements()));
         return set;
     }
@@ -119,7 +119,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
      */
     @Override
     public Set<E> makeFullCollection() {
-        Set<E> set = makeObject();
+        final Set<E> set = makeObject();
         set.addAll(Arrays.asList(getFullElements()));
         return set;
     }
@@ -151,7 +151,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
         assertEquals("Empty sets should be equal", getCollection(), getConfirmed());
         verify();
 
-        Collection<E> set2 = makeConfirmedCollection();
+        final Collection<E> set2 = makeConfirmedCollection();
         set2.add((E) "foo");
         assertTrue("Empty set shouldn't equal nonempty set", !getCollection().equals(set2));
 

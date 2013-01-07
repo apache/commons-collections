@@ -52,7 +52,7 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
      * @return a new transformed set
      * @throws IllegalArgumentException if set or transformer is null
      */
-    public static <E> TransformedSet<E> transformingSet(Set<E> set, Transformer<? super E, ? extends E> transformer) {
+    public static <E> TransformedSet<E> transformingSet(final Set<E> set, final Transformer<? super E, ? extends E> transformer) {
         return new TransformedSet<E>(set, transformer);
     }
     
@@ -71,13 +71,14 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
      * @throws IllegalArgumentException if set or transformer is null
      * @since 3.3
      */
-    public static <E> Set<E> transformedSet(Set<E> set, Transformer<? super E, ? extends E> transformer) {
-        TransformedSet<E> decorated = new TransformedSet<E>(set, transformer);
+    public static <E> Set<E> transformedSet(final Set<E> set, final Transformer<? super E, ? extends E> transformer) {
+        final TransformedSet<E> decorated = new TransformedSet<E>(set, transformer);
         if (transformer != null && set != null && set.size() > 0) {
             @SuppressWarnings("unchecked") // set is type E
+            final
             E[] values = (E[]) set.toArray();
             set.clear();
-            for (E value : values) {
+            for (final E value : values) {
                 decorated.decorated().add(transformer.transform(value));
             }
         }
@@ -95,7 +96,7 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if set or transformer is null
      */
-    protected TransformedSet(Set<E> set, Transformer<? super E, ? extends E> transformer) {
+    protected TransformedSet(final Set<E> set, final Transformer<? super E, ? extends E> transformer) {
         super(set, transformer);
     }
 

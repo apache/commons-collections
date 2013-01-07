@@ -61,7 +61,7 @@ public class CircularFifoBuffer<E> extends BoundedFifoBuffer<E> {
      * @param size  the size of the buffer (cannot be changed)
      * @throws IllegalArgumentException  if the size is less than 1
      */
-    public CircularFifoBuffer(int size) {
+    public CircularFifoBuffer(final int size) {
         super(size);
     }
 
@@ -72,7 +72,7 @@ public class CircularFifoBuffer<E> extends BoundedFifoBuffer<E> {
      * @param coll  the collection to copy into the buffer, may not be null
      * @throws NullPointerException if the collection is null
      */
-    public CircularFifoBuffer(Collection<E> coll) {
+    public CircularFifoBuffer(final Collection<E> coll) {
         super(coll);
     }
 
@@ -84,7 +84,7 @@ public class CircularFifoBuffer<E> extends BoundedFifoBuffer<E> {
      * @return true, always
      */
     @Override
-    public boolean add(E element) {
+    public boolean add(final E element) {
         if (isFull()) {
             remove();
         }

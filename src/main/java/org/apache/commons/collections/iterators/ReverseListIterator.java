@@ -51,7 +51,7 @@ public class ReverseListIterator<E> implements ResettableListIterator<E> {
      * @param list  the list to create a reversed iterator for
      * @throws NullPointerException if the list is null
      */
-    public ReverseListIterator(List<E> list) {
+    public ReverseListIterator(final List<E> list) {
         super();
         this.list = list;
         iterator = list.listIterator(list.size());
@@ -74,7 +74,7 @@ public class ReverseListIterator<E> implements ResettableListIterator<E> {
      * @return the next element in the iterator
      */
     public E next() {
-        E obj = iterator.previous();
+        final E obj = iterator.previous();
         validForUpdate = true;
         return obj;
     }
@@ -104,7 +104,7 @@ public class ReverseListIterator<E> implements ResettableListIterator<E> {
      * @return the previous element in the iterator
      */
     public E previous() {
-        E obj = iterator.next();
+        final E obj = iterator.next();
         validForUpdate = true;
         return obj;
     }
@@ -138,7 +138,7 @@ public class ReverseListIterator<E> implements ResettableListIterator<E> {
      * @throws UnsupportedOperationException if the list is unmodifiable
      * @throws IllegalStateException if the iterator is not in a valid state for set
      */
-    public void set(E obj) {
+    public void set(final E obj) {
         if (validForUpdate == false) {
             throw new IllegalStateException("Cannot set to list until next() or previous() called");
         }
@@ -152,7 +152,7 @@ public class ReverseListIterator<E> implements ResettableListIterator<E> {
      * @throws UnsupportedOperationException if the list is unmodifiable
      * @throws IllegalStateException if the iterator is not in a valid state for set
      */
-    public void add(E obj) {
+    public void add(final E obj) {
         // the validForUpdate flag is needed as the necessary previous()
         // method call re-enables remove and add
         if (validForUpdate == false) {

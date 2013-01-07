@@ -31,7 +31,7 @@ import org.apache.commons.collections.Unmodifiable;
 public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmodifiable {
 
     /** The iterator being decorated */
-    private ListIterator<E> iterator;
+    private final ListIterator<E> iterator;
 
     //-----------------------------------------------------------------------
     /**
@@ -42,7 +42,7 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
      * @return a new unmodifiable list iterator
      * @throws IllegalArgumentException if the iterator is null
      */
-    public static <E> ListIterator<E> umodifiableListIterator(ListIterator<E> iterator) {
+    public static <E> ListIterator<E> umodifiableListIterator(final ListIterator<E> iterator) {
         if (iterator == null) {
             throw new IllegalArgumentException("ListIterator must not be null");
         }
@@ -58,7 +58,7 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
      *
      * @param iterator  the iterator to decorate
      */
-    private UnmodifiableListIterator(ListIterator<E> iterator) {
+    private UnmodifiableListIterator(final ListIterator<E> iterator) {
         super();
         this.iterator = iterator;
     }
@@ -92,11 +92,11 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
         throw new UnsupportedOperationException("remove() is not supported");
     }
 
-    public void set(E obj) {
+    public void set(final E obj) {
         throw new UnsupportedOperationException("set() is not supported");
     }
 
-    public void add(E obj) {
+    public void add(final E obj) {
         throw new UnsupportedOperationException("add() is not supported");
     }
 

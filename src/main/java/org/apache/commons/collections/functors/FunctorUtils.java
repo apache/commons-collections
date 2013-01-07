@@ -46,7 +46,7 @@ class FunctorUtils {
      * @return the cloned predicates
      */
     @SuppressWarnings("unchecked")
-    static <T> Predicate<T>[] copy(Predicate<? super T>[] predicates) {
+    static <T> Predicate<T>[] copy(final Predicate<? super T>[] predicates) {
         if (predicates == null) {
             return null;
         }
@@ -66,7 +66,7 @@ class FunctorUtils {
      * @return the coerced predicate.
      */
     @SuppressWarnings("unchecked")
-    static <T> Predicate<T> coerce(Predicate<? super T> predicate){
+    static <T> Predicate<T> coerce(final Predicate<? super T> predicate){
         return (Predicate<T>) predicate;
     }
 
@@ -75,7 +75,7 @@ class FunctorUtils {
      *
      * @param predicates  the predicates to validate
      */
-    static void validate(Predicate<?>[] predicates) {
+    static void validate(final Predicate<?>[] predicates) {
         if (predicates == null) {
             throw new IllegalArgumentException("The predicate array must not be null");
         }
@@ -93,15 +93,16 @@ class FunctorUtils {
      * @param predicates  the predicates to validate
      * @return predicate array
      */
-    static <T> Predicate<T>[] validate(Collection<? extends Predicate<T>> predicates) {
+    static <T> Predicate<T>[] validate(final Collection<? extends Predicate<T>> predicates) {
         if (predicates == null) {
             throw new IllegalArgumentException("The predicate collection must not be null");
         }
         // convert to array like this to guarantee iterator() ordering
         @SuppressWarnings("unchecked") // OK
+        final
         Predicate<T>[] preds = new Predicate[predicates.size()];
         int i = 0;
-        for (Predicate<T> predicate : predicates) {
+        for (final Predicate<T> predicate : predicates) {
             preds[i] = predicate;
             if (preds[i] == null) {
                 throw new IllegalArgumentException("The predicate collection must not contain a null predicate, index " + i + " was null");
@@ -118,7 +119,7 @@ class FunctorUtils {
      * @return the cloned closures
      */
     @SuppressWarnings("unchecked")
-    static <E> Closure<E>[] copy(Closure<? super E>[] closures) {
+    static <E> Closure<E>[] copy(final Closure<? super E>[] closures) {
         if (closures == null) {
             return null;
         }
@@ -130,7 +131,7 @@ class FunctorUtils {
      *
      * @param closures  the closures to validate
      */
-    static void validate(Closure<?>[] closures) {
+    static void validate(final Closure<?>[] closures) {
         if (closures == null) {
             throw new IllegalArgumentException("The closure array must not be null");
         }
@@ -152,7 +153,7 @@ class FunctorUtils {
      * @return the coerced closure.
      */
     @SuppressWarnings("unchecked")
-    static <T> Closure<T> coerce(Closure<? super T> closure){
+    static <T> Closure<T> coerce(final Closure<? super T> closure){
         return (Closure<T>) closure;
     }
 
@@ -163,7 +164,7 @@ class FunctorUtils {
      * @return a clone of the transformers
      */
     @SuppressWarnings("unchecked")
-    static <I, O> Transformer<I, O>[] copy(Transformer<? super I, ? extends O>[] transformers) {
+    static <I, O> Transformer<I, O>[] copy(final Transformer<? super I, ? extends O>[] transformers) {
         if (transformers == null) {
             return null;
         }
@@ -175,7 +176,7 @@ class FunctorUtils {
      *
      * @param transformers  the transformers to validate
      */
-    static void validate(Transformer<?, ?>[] transformers) {
+    static void validate(final Transformer<?, ?>[] transformers) {
         if (transformers == null) {
             throw new IllegalArgumentException("The transformer array must not be null");
         }
@@ -198,7 +199,7 @@ class FunctorUtils {
      * @return the coerced transformer.
      */
     @SuppressWarnings("unchecked")
-    static <I, O> Transformer<I, O> coerce(Transformer<? super I, ? extends O> transformer) {
+    static <I, O> Transformer<I, O> coerce(final Transformer<? super I, ? extends O> transformer) {
         return (Transformer<I, O>) transformer;
     }
 

@@ -60,7 +60,7 @@ public final class ExceptionPredicate<T> implements Predicate<T>, Serializable {
      * @return never
      * @throws FunctorException always
      */
-    public boolean evaluate(T object) {
+    public boolean evaluate(final T object) {
         throw new FunctorException("ExceptionPredicate invoked");
     }
 

@@ -54,7 +54,7 @@ public final class UnmodifiableBuffer<E>
      * @return an unmodifiable Buffer
      * @throws IllegalArgumentException if buffer is null
      */
-    public static <E> Buffer<E> unmodifiableBuffer(Buffer<E> buffer) {
+    public static <E> Buffer<E> unmodifiableBuffer(final Buffer<E> buffer) {
         if (buffer instanceof Unmodifiable) {
             return buffer;
         }
@@ -68,7 +68,7 @@ public final class UnmodifiableBuffer<E>
      * @param buffer  the buffer to decorate, must not be null
      * @throws IllegalArgumentException if buffer is null
      */
-    private UnmodifiableBuffer(Buffer<E> buffer) {
+    private UnmodifiableBuffer(final Buffer<E> buffer) {
         super(buffer);
     }
 
@@ -79,7 +79,7 @@ public final class UnmodifiableBuffer<E>
      * @param out  the output stream
      * @throws IOException if an I/O error occurs while writing to the output stream
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(collection);
     }
@@ -92,7 +92,7 @@ public final class UnmodifiableBuffer<E>
      * @throws ClassNotFoundException if the class of a serialized object can not be found
      */
     @SuppressWarnings("unchecked")
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         collection = (Collection<E>) in.readObject();
     }
@@ -104,12 +104,12 @@ public final class UnmodifiableBuffer<E>
     }
 
     @Override
-    public boolean add(Object object) {
+    public boolean add(final Object object) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> coll) {
+    public boolean addAll(final Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -119,17 +119,17 @@ public final class UnmodifiableBuffer<E>
     }
 
     @Override
-    public boolean remove(Object object) {
+    public boolean remove(final Object object) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean removeAll(Collection<?> coll) {
+    public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean retainAll(Collection<?> coll) {
+    public boolean retainAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 

@@ -35,7 +35,7 @@ public class DefaultEquator<T> implements Equator<T> {
     /**
      * {@inheritDoc} Delegates to {@link Object#equals(Object)}.
      */
-    public boolean equate(T o1, T o2) {
+    public boolean equate(final T o1, final T o2) {
         return o1 == o2 || o1 != null && o1.equals(o2);
     }
 
@@ -45,7 +45,7 @@ public class DefaultEquator<T> implements Equator<T> {
      * @return <code>o.hashCode()</code> if <code>o</code> is non-
      *         <code>null</code>, else {@link #HASHCODE_NULL}.
      */
-    public int hash(T o) {
+    public int hash(final T o) {
         return o == null ? HASHCODE_NULL : o.hashCode();
     }
 

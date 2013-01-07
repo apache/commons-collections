@@ -34,7 +34,7 @@ public class UnmodifiableBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
         return BulkTest.makeSuite(UnmodifiableBidiMapTest.class);
     }
 
-    public UnmodifiableBidiMapTest(String testName) {
+    public UnmodifiableBidiMapTest(final String testName) {
         super(testName);
     }
 
@@ -45,7 +45,7 @@ public class UnmodifiableBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
 
     @Override
     public BidiMap<K, V> makeFullMap() {
-        BidiMap<K, V> bidi = new DualHashBidiMap<K, V>();
+        final BidiMap<K, V> bidi = new DualHashBidiMap<K, V>();
         addSampleMappings(bidi);
         return UnmodifiableBidiMap.unmodifiableBidiMap(bidi);
     }

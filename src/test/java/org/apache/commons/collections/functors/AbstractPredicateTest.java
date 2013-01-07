@@ -35,7 +35,7 @@ public abstract class AbstractPredicateTest {
     
     @Test
     public void predicateSanityTests() throws Exception {
-        Predicate<?> predicate = generatePredicate();
+        final Predicate<?> predicate = generatePredicate();
         Assert.assertNotNull(predicate);
     }
 
@@ -44,11 +44,11 @@ public abstract class AbstractPredicateTest {
      */
     protected abstract Predicate<?> generatePredicate();
 
-    protected <T> void assertFalse(Predicate<T> predicate, T testObject) {
+    protected <T> void assertFalse(final Predicate<T> predicate, final T testObject) {
         Assert.assertFalse(predicate.evaluate(testObject));
     }
 
-    protected <T> void assertTrue(Predicate<T> predicate, T testObject) {
+    protected <T> void assertTrue(final Predicate<T> predicate, final T testObject) {
         Assert.assertTrue(predicate.evaluate(testObject));
     }
 }

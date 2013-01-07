@@ -31,7 +31,7 @@ import java.util.List;
  */
 public class GrowthListTest<E> extends AbstractListTest<E> {
 
-    public GrowthListTest(String testName) {
+    public GrowthListTest(final String testName) {
         super(testName);
     }
 
@@ -42,15 +42,15 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
 
     @Override
     public List<E> makeFullCollection() {
-        List<E> list = new ArrayList<E>();
+        final List<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return GrowthList.growthList(list);
     }
 
     //-----------------------------------------------------------------------
     public void testGrowthAdd() {
-        Integer one = new Integer(1);
-        GrowthList<Integer> grower = new GrowthList<Integer>();
+        final Integer one = new Integer(1);
+        final GrowthList<Integer> grower = new GrowthList<Integer>();
         assertEquals(0, grower.size());
         grower.add(1, one);
         assertEquals(2, grower.size());
@@ -59,12 +59,12 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     }
 
     public void testGrowthAddAll() {
-        Integer one = new Integer(1);
-        Integer two = new Integer(2);
-        Collection<Integer> coll = new ArrayList<Integer>();
+        final Integer one = new Integer(1);
+        final Integer two = new Integer(2);
+        final Collection<Integer> coll = new ArrayList<Integer>();
         coll.add(one);
         coll.add(two);
-        GrowthList<Integer> grower = new GrowthList<Integer>();
+        final GrowthList<Integer> grower = new GrowthList<Integer>();
         assertEquals(0, grower.size());
         grower.addAll(1, coll);
         assertEquals(3, grower.size());
@@ -74,8 +74,8 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     }
 
     public void testGrowthSet1() {
-        Integer one = new Integer(1);
-        GrowthList<Integer> grower = new GrowthList<Integer>();
+        final Integer one = new Integer(1);
+        final GrowthList<Integer> grower = new GrowthList<Integer>();
         assertEquals(0, grower.size());
         grower.set(1, one);
         assertEquals(2, grower.size());
@@ -84,8 +84,8 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     }
 
     public void testGrowthSet2() {
-        Integer one = new Integer(1);
-        GrowthList<Integer> grower = new GrowthList<Integer>();
+        final Integer one = new Integer(1);
+        final GrowthList<Integer> grower = new GrowthList<Integer>();
         assertEquals(0, grower.size());
         grower.set(0, one);
         assertEquals(1, grower.size());
@@ -99,12 +99,12 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     @Override
     public void testListAddByIndexBoundsChecking() {
         List<E> list;
-        E element = getOtherElements()[0];
+        final E element = getOtherElements()[0];
         try {
             list = makeObject();
             list.add(-1, element);
             fail("List.add should throw IndexOutOfBoundsException [-1]");
-        } catch (IndexOutOfBoundsException e) {
+        } catch (final IndexOutOfBoundsException e) {
             // expected
         }
     }
@@ -115,12 +115,12 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     @Override
     public void testListAddByIndexBoundsChecking2() {
         List<E> list;
-        E element = getOtherElements()[0];
+        final E element = getOtherElements()[0];
         try {
             list = makeFullCollection();
             list.add(-1, element);
             fail("List.add should throw IndexOutOfBoundsException [-1]");
-        } catch (IndexOutOfBoundsException e) {
+        } catch (final IndexOutOfBoundsException e) {
             // expected
         }
     }
@@ -130,12 +130,12 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
      */
     @Override
     public void testListSetByIndexBoundsChecking() {
-        List<E> list = makeObject();
-        E element = getOtherElements()[0];
+        final List<E> list = makeObject();
+        final E element = getOtherElements()[0];
         try {
             list.set(-1, element);
             fail("List.set should throw IndexOutOfBoundsException [-1]");
-        } catch (IndexOutOfBoundsException e) {
+        } catch (final IndexOutOfBoundsException e) {
             // expected
         }
     }
@@ -145,12 +145,12 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
      */
     @Override
     public void testListSetByIndexBoundsChecking2() {
-        List<E> list = makeFullCollection();
-        E element = getOtherElements()[0];
+        final List<E> list = makeFullCollection();
+        final E element = getOtherElements()[0];
         try {
             list.set(-1, element);
             fail("List.set should throw IndexOutOfBoundsException [-1]");
-        } catch(IndexOutOfBoundsException e) {
+        } catch(final IndexOutOfBoundsException e) {
             // expected
         } 
     }

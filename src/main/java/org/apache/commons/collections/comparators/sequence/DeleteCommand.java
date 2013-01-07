@@ -38,7 +38,7 @@ public class DeleteCommand<T> extends EditCommand<T> {
      *
      * @param object  the object of the first sequence that should be deleted
      */
-    public DeleteCommand(T object) {
+    public DeleteCommand(final T object) {
         super(object);
     }
 
@@ -49,7 +49,7 @@ public class DeleteCommand<T> extends EditCommand<T> {
      * @param visitor  the visitor to be accepted
      */    
     @Override
-    public void accept(CommandVisitor<T> visitor) {
+    public void accept(final CommandVisitor<T> visitor) {
         visitor.visitDeleteCommand(object);
     }    
 }

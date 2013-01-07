@@ -38,7 +38,7 @@ public class InsertCommand<T> extends EditCommand<T> {
      * 
      * @param object  the object of the second sequence that should be inserted
      */
-    public InsertCommand(T object) {
+    public InsertCommand(final T object) {
         super(object);
     }
 
@@ -50,7 +50,7 @@ public class InsertCommand<T> extends EditCommand<T> {
      * @param visitor  the visitor to be accepted
      */
     @Override
-    public void accept(CommandVisitor<T> visitor) {
+    public void accept(final CommandVisitor<T> visitor) {
         visitor.visitInsertCommand(object);
     }
 

@@ -50,19 +50,19 @@ import java.util.List;
  */
 public class ReplacementsFinder<T> implements CommandVisitor<T> {
 
-    private List<T> pendingInsertions;
-    private List<T> pendingDeletions;
+    private final List<T> pendingInsertions;
+    private final List<T> pendingDeletions;
     private int     skipped;
 
     /** Handler to call when synchronized sequences are found. */
-    private ReplacementsHandler<T> handler;
+    private final ReplacementsHandler<T> handler;
 
     /**
      * Simple constructor. Creates a new instance of {@link ReplacementsFinder}.
      *
      * @param handler  handler to call when synchronized sequences are found
      */
-    public ReplacementsFinder(ReplacementsHandler<T> handler) {
+    public ReplacementsFinder(final ReplacementsHandler<T> handler) {
         pendingInsertions = new ArrayList<T>();
         pendingDeletions  = new ArrayList<T>();
         skipped           = 0;
@@ -74,7 +74,7 @@ public class ReplacementsFinder<T> implements CommandVisitor<T> {
      *
      * @param object  object to insert
      */
-    public void visitInsertCommand(T object) {
+    public void visitInsertCommand(final T object) {
         pendingInsertions.add(object);
     }
 
@@ -86,7 +86,7 @@ public class ReplacementsFinder<T> implements CommandVisitor<T> {
      *
      * @param object  synchronization object detected
      */
-    public void visitKeepCommand(T object) {
+    public void visitKeepCommand(final T object) {
         if (pendingDeletions.isEmpty() && pendingInsertions.isEmpty()) {
             ++skipped;
         } else {
@@ -102,7 +102,7 @@ public class ReplacementsFinder<T> implements CommandVisitor<T> {
      *
      * @param object  object to delete
      */
-    public void visitDeleteCommand(T object) {
+    public void visitDeleteCommand(final T object) {
         pendingDeletions.add(object);
     }
 

@@ -31,7 +31,7 @@ import org.apache.commons.collections.bidimap.DualHashBidiMap;
  */
 public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K, V> {
 
-    public UnmodifiableMapIteratorTest(String testName) {
+    public UnmodifiableMapIteratorTest(final String testName) {
         super(testName);
     }
 
@@ -48,7 +48,7 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
     @Override
     @SuppressWarnings("unchecked")
     public IterableMap<K, V> getMap() {
-        IterableMap<K, V> testMap = new DualHashBidiMap<K, V>();
+        final IterableMap<K, V> testMap = new DualHashBidiMap<K, V>();
         testMap.put((K) "A", (V) "a");
         testMap.put((K) "B", (V)"b");
         testMap.put((K) "C", (V) "c");
@@ -58,7 +58,7 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
     @Override
     @SuppressWarnings("unchecked")
     public Map<K, V> getConfirmedMap() {
-        Map<K, V> testMap = new HashMap<K, V>();
+        final Map<K, V> testMap = new HashMap<K, V>();
         testMap.put((K) "A", (V) "a");
         testMap.put((K) "B", (V)"b");
         testMap.put((K) "C", (V) "c");
@@ -90,7 +90,7 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
         try {
             UnmodifiableMapIterator.unmodifiableMapIterator(null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
     }
 
 }

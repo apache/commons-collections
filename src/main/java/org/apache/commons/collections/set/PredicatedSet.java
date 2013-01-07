@@ -55,7 +55,7 @@ public class PredicatedSet<E> extends PredicatedCollection<E> implements Set<E> 
      * @throws IllegalArgumentException if set or predicate is null
      * @throws IllegalArgumentException if the set contains invalid elements
      */
-    public static <E> PredicatedSet<E> predicatedSet(Set<E> set, Predicate<? super E> predicate) {
+    public static <E> PredicatedSet<E> predicatedSet(final Set<E> set, final Predicate<? super E> predicate) {
         return new PredicatedSet<E>(set, predicate);
     }
 
@@ -71,7 +71,7 @@ public class PredicatedSet<E> extends PredicatedCollection<E> implements Set<E> 
      * @throws IllegalArgumentException if set or predicate is null
      * @throws IllegalArgumentException if the set contains invalid elements
      */
-    protected PredicatedSet(Set<E> set, Predicate<? super E> predicate) {
+    protected PredicatedSet(final Set<E> set, final Predicate<? super E> predicate) {
         super(set, predicate);
     }
 

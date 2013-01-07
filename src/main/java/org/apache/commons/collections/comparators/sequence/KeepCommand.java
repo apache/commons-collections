@@ -40,7 +40,7 @@ public class KeepCommand<T> extends EditCommand<T> {
      *   reference to the instance in the first sequence which is known
      *   to be equal to an instance in the second sequence)
      */
-    public KeepCommand(T object) {
+    public KeepCommand(final T object) {
         super(object);
     }
 
@@ -51,7 +51,7 @@ public class KeepCommand<T> extends EditCommand<T> {
      * @param visitor  the visitor to be accepted
      */
     @Override
-    public void accept(CommandVisitor<T> visitor) {
+    public void accept(final CommandVisitor<T> visitor) {
         visitor.visitKeepCommand(object);
     }
 }

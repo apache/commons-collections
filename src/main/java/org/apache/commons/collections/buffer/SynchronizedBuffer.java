@@ -46,7 +46,7 @@ public class SynchronizedBuffer<E>
      * @return a new synchronized Buffer
      * @throws IllegalArgumentException if buffer is null
      */
-    public static <E> SynchronizedBuffer<E> synchronizedBuffer(Buffer<E> buffer) {
+    public static <E> SynchronizedBuffer<E> synchronizedBuffer(final Buffer<E> buffer) {
         return new SynchronizedBuffer<E>(buffer);
     }
 
@@ -57,7 +57,7 @@ public class SynchronizedBuffer<E>
      * @param buffer  the buffer to decorate, must not be null
      * @throws IllegalArgumentException if the buffer is null
      */
-    protected SynchronizedBuffer(Buffer<E> buffer) {
+    protected SynchronizedBuffer(final Buffer<E> buffer) {
         super(buffer);
     }
 
@@ -68,7 +68,7 @@ public class SynchronizedBuffer<E>
      * @param lock  the lock object to use, must not be null
      * @throws IllegalArgumentException if the buffer is null
      */
-    protected SynchronizedBuffer(Buffer<E> buffer, Object lock) {
+    protected SynchronizedBuffer(final Buffer<E> buffer, final Object lock) {
         super(buffer, lock);
     }
 

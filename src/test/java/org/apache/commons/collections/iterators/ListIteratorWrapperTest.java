@@ -37,7 +37,7 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
 
     protected List<E> list1 = null;
 
-    public ListIteratorWrapperTest(String testName) {
+    public ListIteratorWrapperTest(final String testName) {
         super(testName);
     }
 
@@ -55,7 +55,7 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
 
     @Override
     public ResettableListIterator<E> makeEmptyIterator() {
-        ArrayList<E> list = new ArrayList<E>();
+        final ArrayList<E> list = new ArrayList<E>();
         return new ListIteratorWrapper<E>(list.iterator());
     }
 
@@ -65,9 +65,9 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
     }
 
     public void testIterator() {
-        ListIterator<E> iter = makeObject();
-        for (String testValue : testArray) {
-            Object iterValue = iter.next();
+        final ListIterator<E> iter = makeObject();
+        for (final String testValue : testArray) {
+            final Object iterValue = iter.next();
 
             assertEquals("Iteration value is correct", testValue, iterValue);
         }
@@ -76,29 +76,29 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
 
         try {
             iter.next();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             assertTrue("NoSuchElementException must be thrown",
                        e.getClass().equals(new NoSuchElementException().getClass()));
         }
 
         // now, read it backwards
         for (int i = testArray.length - 1; i > -1; --i) {
-            Object testValue = testArray[i];
-            E iterValue = iter.previous();
+            final Object testValue = testArray[i];
+            final E iterValue = iter.previous();
 
             assertEquals( "Iteration value is correct", testValue, iterValue );
         }
 
         try {
             iter.previous();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             assertTrue("NoSuchElementException must be thrown",
                        e.getClass().equals(new NoSuchElementException().getClass()));
         }
 
         // now, read it forwards again
-        for (String testValue : testArray) {
-            Object iterValue = iter.next();
+        for (final String testValue : testArray) {
+            final Object iterValue = iter.next();
 
             assertEquals("Iteration value is correct", testValue, iterValue);
         }
@@ -107,7 +107,7 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
 
     @Override
     public void testRemove() {
-        ListIterator<E> iter = makeObject();
+        final ListIterator<E> iter = makeObject();
 
         //initial state:
         assertEquals(-1, iter.previousIndex());
@@ -116,7 +116,7 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
         try {
             iter.remove();
             fail("ListIteratorWrapper#remove() should fail; must be initially positioned first");
-        } catch (IllegalStateException e) {
+        } catch (final IllegalStateException e) {
         }
 
         //no change from invalid op:
@@ -141,7 +141,7 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
         try {
             iter.remove();
             fail("ListIteratorWrapper#remove() should fail; must be repositioned first");
-        } catch (IllegalStateException e) {
+        } catch (final IllegalStateException e) {
         }
 
         //no change from invalid op:
@@ -176,7 +176,7 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
         try {
             iter.remove();
             fail("ListIteratorWrapper does not support the remove() method while dug into the cache via previous()");
-        } catch (IllegalStateException e) {
+        } catch (final IllegalStateException e) {
         }
 
         //no change from invalid op:
@@ -205,9 +205,9 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
     }
 
     public void testReset() {
-        ResettableListIterator<E> iter = makeObject();
-        E first = iter.next();
-        E second = iter.next();
+        final ResettableListIterator<E> iter = makeObject();
+        final E first = iter.next();
+        final E second = iter.next();
 
         iter.reset();
 
@@ -220,8 +220,8 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
 
         // after passing the point, where we resetted, continuation should work as expected
         for (int i = 2; i < testArray.length; i++) {
-            Object testValue = testArray[i];
-            E iterValue = iter.next();
+            final Object testValue = testArray[i];
+            final E iterValue = iter.next();
 
             assertEquals("Iteration value is correct", testValue, iterValue);
         }

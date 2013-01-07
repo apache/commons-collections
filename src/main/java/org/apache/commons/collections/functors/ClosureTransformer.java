@@ -43,7 +43,7 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
      * @return the <code>closure</code> transformer
      * @throws IllegalArgumentException if the closure is null
      */
-    public static <T> Transformer<T, T> closureTransformer(Closure<? super T> closure) {
+    public static <T> Transformer<T, T> closureTransformer(final Closure<? super T> closure) {
         if (closure == null) {
             throw new IllegalArgumentException("Closure must not be null");
         }
@@ -56,7 +56,7 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
      * 
      * @param closure  the closure to call, not null
      */
-    public ClosureTransformer(Closure<? super T> closure) {
+    public ClosureTransformer(final Closure<? super T> closure) {
         super();
         iClosure = closure;
     }
@@ -67,7 +67,7 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
      * @param input  the input object to transform
      * @return the transformed result
      */
-    public T transform(T input) {
+    public T transform(final T input) {
         iClosure.execute(input);
         return input;
     }

@@ -33,7 +33,7 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
 
     protected String[] testArray = { "One", "Two", "Three", "Four" };
 
-    public ReverseListIteratorTest(String testName) {
+    public ReverseListIteratorTest(final String testName) {
         super(testName);
     }
 
@@ -45,7 +45,7 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public ReverseListIterator<E> makeObject() {
-        List<E> list = new ArrayList<E>(Arrays.asList((E[]) testArray));
+        final List<E> list = new ArrayList<E>(Arrays.asList((E[]) testArray));
         return new ReverseListIterator<E>(list);
     }
 
@@ -53,7 +53,7 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
     //-----------------------------------------------------------------------
     @Override
     public void testEmptyListIteratorIsIndeedEmpty() {
-        ListIterator<E> it = makeEmptyIterator();
+        final ListIterator<E> it = makeEmptyIterator();
 
         assertEquals(false, it.hasNext());
         assertEquals(-1, it.nextIndex());  // reversed index
@@ -64,21 +64,21 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
         try {
             it.next();
             fail("NoSuchElementException must be thrown from empty ListIterator");
-        } catch (NoSuchElementException e) {
+        } catch (final NoSuchElementException e) {
         }
 
         // previous() should throw a NoSuchElementException
         try {
             it.previous();
             fail("NoSuchElementException must be thrown from empty ListIterator");
-        } catch (NoSuchElementException e) {
+        } catch (final NoSuchElementException e) {
         }
     }
 
     @Override
     public void testWalkForwardAndBack() {
-        ArrayList<E> list = new ArrayList<E>();
-        ListIterator<E> it = makeObject();
+        final ArrayList<E> list = new ArrayList<E>();
+        final ListIterator<E> it = makeObject();
         while (it.hasNext()) {
             list.add(it.next());
         }
@@ -101,7 +101,7 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
             assertEquals("" + i, list.size() - i - 2, it.nextIndex());  // reversed index
             assertEquals(list.size() - i - 1, it.previousIndex());  // reversed index
 
-            Object obj = list.get(i);
+            final Object obj = list.get(i);
             assertEquals(obj, it.previous());
         }
 
@@ -111,13 +111,13 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
         try {
             it.previous();
             fail("NoSuchElementException must be thrown from previous at start of ListIterator");
-        } catch (NoSuchElementException e) {
+        } catch (final NoSuchElementException e) {
         }
     }
 
     //-----------------------------------------------------------------------
     public void testReverse() {
-        ListIterator<E> it = makeObject();
+        final ListIterator<E> it = makeObject();
         assertEquals(true, it.hasNext());
         assertEquals(3, it.nextIndex());
         assertEquals(false, it.hasPrevious());
@@ -149,7 +149,7 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
     }
 
     public void testReset() {
-        ResettableListIterator<E> it = makeObject();
+        final ResettableListIterator<E> it = makeObject();
         assertEquals("Four", it.next());
         it.reset();
         assertEquals("Four", it.next());

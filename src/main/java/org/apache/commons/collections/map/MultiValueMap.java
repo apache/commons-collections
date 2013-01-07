@@ -80,7 +80,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @return a new multi-value map
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static <K, V> MultiValueMap<K, V> multiValueMap(Map<K, ? super Collection<V>> map) {
+    public static <K, V> MultiValueMap<K, V> multiValueMap(final Map<K, ? super Collection<V>> map) {
         return MultiValueMap.<K, V, ArrayList> multiValueMap((Map<K, ? super Collection>) map, ArrayList.class);
     }
 
@@ -94,8 +94,8 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @param collectionClass  the type of the collection class
      * @return a new multi-value map
      */
-    public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(Map<K, ? super C> map,
-                                                                                    Class<C> collectionClass) {
+    public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(final Map<K, ? super C> map,
+                                                                                    final Class<C> collectionClass) {
         return new MultiValueMap<K, V>(map, new ReflectionFactory<C>(collectionClass));
     }
 
@@ -109,8 +109,8 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @param collectionFactory  the collection factory (must return a Collection object).
      * @return a new multi-value map
      */
-    public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(Map<K, ? super C> map,
-                                                                                    Factory<C> collectionFactory) {
+    public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(final Map<K, ? super C> map,
+                                                                                    final Factory<C> collectionFactory) {
         return new MultiValueMap<K, V>(map, collectionFactory);
     }
 
@@ -132,7 +132,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @param collectionFactory  the collection factory which must return a Collection instance
      */
     @SuppressWarnings("unchecked")
-    protected <C extends Collection<V>> MultiValueMap(Map<K, ? super C> map, Factory<C> collectionFactory) {
+    protected <C extends Collection<V>> MultiValueMap(final Map<K, ? super C> map, final Factory<C> collectionFactory) {
         super((Map<K, Object>) map);
         if (collectionFactory == null) {
             throw new IllegalArgumentException("The factory must not be null");
@@ -148,7 +148,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @throws IOException
      * @since 3.3
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(map);
     }
@@ -162,7 +162,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @since 3.3
      */
     @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map<K, Object>) in.readObject(); // (1)
     }
@@ -198,12 +198,12 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @return the value removed (which was passed in), null if nothing removed
      */
     @SuppressWarnings("unchecked")
-    public V remove(Object key, Object value) {
-        Collection<V> valuesForKey = getCollection(key);
+    public V remove(final Object key, final Object value) {
+        final Collection<V> valuesForKey = getCollection(key);
         if (valuesForKey == null) {
             return null;
         }
-        boolean removed = valuesForKey.remove(value);
+        final boolean removed = valuesForKey.remove(value);
         if (removed == false) {
             return null;
         }
@@ -223,10 +223,10 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      */
     @Override
     @SuppressWarnings("unchecked")
-    public boolean containsValue(Object value) {
-        Set<Map.Entry<K, Object>> pairs = decorated().entrySet();
+    public boolean containsValue(final Object value) {
+        final Set<Map.Entry<K, Object>> pairs = decorated().entrySet();
         if (pairs != null) {
-            for (Map.Entry<K, Object> entry : pairs) {
+            for (final Map.Entry<K, Object> entry : pairs) {
                 if (((Collection<V>) entry.getValue()).contains(value)) {
                     return true;
                 }
@@ -247,7 +247,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      */
     @Override
     @SuppressWarnings("unchecked")
-    public Object put(K key, Object value) {
+    public Object put(final K key, final Object value) {
         boolean result = false;
         Collection<V> coll = getCollection(key);
         if (coll == null) {
@@ -277,13 +277,13 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      */
     @Override
     @SuppressWarnings("unchecked")
-    public void putAll(Map<? extends K, ?> map) {
+    public void putAll(final Map<? extends K, ?> map) {
         if (map instanceof MultiMap) {
-            for (Map.Entry<? extends K, Object> entry : ((MultiMap<? extends K, V>) map).entrySet()) {
+            for (final Map.Entry<? extends K, Object> entry : ((MultiMap<? extends K, V>) map).entrySet()) {
                 putAll(entry.getKey(), (Collection<V>) entry.getValue());
             }
         } else {
-            for (Map.Entry<? extends K, ?> entry : map.entrySet()) {
+            for (final Map.Entry<? extends K, ?> entry : map.entrySet()) {
                 put(entry.getKey(), entry.getValue());
             }
         }
@@ -299,7 +299,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     @Override
     @SuppressWarnings("unchecked")
     public Collection<Object> values() {
-        Collection<V> vs = valuesView;
+        final Collection<V> vs = valuesView;
         return (Collection<Object>) (vs != null ? vs : (valuesView = new Values()));
     }
 
@@ -309,8 +309,8 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @param value  the value to search for
      * @return true if the map contains the value
      */
-    public boolean containsValue(Object key, Object value) {
-        Collection<V> coll = getCollection(key);
+    public boolean containsValue(final Object key, final Object value) {
+        final Collection<V> coll = getCollection(key);
         if (coll == null) {
             return false;
         }
@@ -325,7 +325,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @return the collection mapped to the key, null if no mapping
      */
     @SuppressWarnings("unchecked")
-    public Collection<V> getCollection(Object key) {
+    public Collection<V> getCollection(final Object key) {
         return (Collection<V>) decorated().get(key);
     }
 
@@ -335,8 +335,8 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @param key  the key to get size for
      * @return the size of the collection at the key, zero if key not in map
      */
-    public int size(Object key) {
-        Collection<V> coll = getCollection(key);
+    public int size(final Object key) {
+        final Collection<V> coll = getCollection(key);
         if (coll == null) {
             return 0;
         }
@@ -351,7 +351,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @param values  the values to add to the collection at the key, null ignored
      * @return true if this map changed
      */
-    public boolean putAll(K key, Collection<V> values) {
+    public boolean putAll(final K key, final Collection<V> values) {
         if (values == null || values.size() == 0) {
             return false;
         }
@@ -377,7 +377,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @param key  the key to get an iterator for
      * @return the iterator of the collection at the key, empty iterator if key not in map
      */
-    public Iterator<V> iterator(Object key) {
+    public Iterator<V> iterator(final Object key) {
         if (!containsKey(key)) {
             return EmptyIterator.<V>emptyIterator();
         }
@@ -391,7 +391,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      */
     public int totalSize() {
         int total = 0;
-        for (Object v : decorated().values()) {
+        for (final Object v : decorated().values()) {
             total += CollectionUtils.size(v);
         }
         return total;
@@ -407,7 +407,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @param size  the collection size that is about to be added
      * @return the new collection
      */
-    protected Collection<V> createCollection(int size) {
+    protected Collection<V> createCollection(final int size) {
         return collectionFactory.create();
     }
 
@@ -419,7 +419,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
         @Override
         public Iterator<V> iterator() {
             final IteratorChain<V> chain = new IteratorChain<V>();
-            for (K k : keySet()) {
+            for (final K k : keySet()) {
                 chain.addIterator(new ValuesIterator(k));
             }
             return chain;
@@ -444,7 +444,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
         private final Collection<V> values;
         private final Iterator<V> iterator;
 
-        public ValuesIterator(Object key) {
+        public ValuesIterator(final Object key) {
             this.key = key;
             this.values = getCollection(key);
             this.iterator = values.iterator();
@@ -476,14 +476,14 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
 
         private final Class<T> clazz;
 
-        public ReflectionFactory(Class<T> clazz) {
+        public ReflectionFactory(final Class<T> clazz) {
             this.clazz = clazz;
         }
 
         public T create() {
             try {
                 return clazz.newInstance();
-            } catch (Exception ex) {
+            } catch (final Exception ex) {
                 throw new FunctorException("Cannot instantiate class: " + clazz, ex);
             }
         }

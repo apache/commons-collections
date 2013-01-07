@@ -48,7 +48,7 @@ public final class UnmodifiableSet<E>
      * @return a new unmodifiable set
      * @throws IllegalArgumentException if set is null
      */
-    public static <E> Set<E> unmodifiableSet(Set<E> set) {
+    public static <E> Set<E> unmodifiableSet(final Set<E> set) {
         if (set instanceof Unmodifiable) {
             return set;
         }
@@ -62,7 +62,7 @@ public final class UnmodifiableSet<E>
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    private UnmodifiableSet(Set<E> set) {
+    private UnmodifiableSet(final Set<E> set) {
         super(set);
     }
 
@@ -73,12 +73,12 @@ public final class UnmodifiableSet<E>
     }
 
     @Override
-    public boolean add(E object) {
+    public boolean add(final E object) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> coll) {
+    public boolean addAll(final Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -88,17 +88,17 @@ public final class UnmodifiableSet<E>
     }
 
     @Override
-    public boolean remove(Object object) {
+    public boolean remove(final Object object) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean removeAll(Collection<?> coll) {
+    public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean retainAll(Collection<?> coll) {
+    public boolean retainAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 

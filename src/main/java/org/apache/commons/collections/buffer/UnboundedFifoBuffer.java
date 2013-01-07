@@ -90,7 +90,7 @@ public class UnboundedFifoBuffer<E> extends AbstractCollection<E> implements Buf
      * @throws IllegalArgumentException  if the size is less than 1
      */
     @SuppressWarnings("unchecked")
-    public UnboundedFifoBuffer(int initialSize) {
+    public UnboundedFifoBuffer(final int initialSize) {
         if (initialSize <= 0) {
             throw new IllegalArgumentException("The size must be greater than 0");
         }
@@ -106,11 +106,11 @@ public class UnboundedFifoBuffer<E> extends AbstractCollection<E> implements Buf
      * @param out  the output stream
      * @throws IOException if an I/O error occurs while writing to the output stream
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeInt(size());
         out.writeInt(buffer.length);
-        for (E e : this) {
+        for (final E e : this) {
             out.writeObject(e);
         }
     }
@@ -123,10 +123,10 @@ public class UnboundedFifoBuffer<E> extends AbstractCollection<E> implements Buf
      * @throws ClassNotFoundException if the class of a serialized object can not be found
      */
     @SuppressWarnings("unchecked")
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        int size = in.readInt();
-        int length = in.readInt();
+        final int size = in.readInt();
+        final int length = in.readInt();
         buffer = (E[]) new Object[length];
         for (int i = 0; i < size; i++) {
             buffer[i] = (E) in.readObject();
@@ -180,7 +180,7 @@ public class UnboundedFifoBuffer<E> extends AbstractCollection<E> implements Buf
 
         if (size() + 1 >= buffer.length) {
             // copy contents to a new buffer array
-            E[] tmp = (E[]) new Object[(buffer.length - 1) * 2 + 1];
+            final E[] tmp = (E[]) new Object[(buffer.length - 1) * 2 + 1];
             int j = 0;
             // move head to element zero in the new array
             for (int i = head; i != tail;) {
@@ -225,7 +225,7 @@ public class UnboundedFifoBuffer<E> extends AbstractCollection<E> implements Buf
             throw new BufferUnderflowException("The buffer is already empty");
         }
 
-        E element = buffer[head];
+        final E element = buffer[head];
         if (element != null) {
             buffer[head] = null;
             head = increment(head);

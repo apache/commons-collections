@@ -54,7 +54,7 @@ public abstract class AbstractObjectTest extends BulkTest {
      * 
      * @param testName  the test class name
      */
-    public AbstractObjectTest(String testName) {
+    public AbstractObjectTest(final String testName) {
         super(testName);
     }
 
@@ -106,28 +106,28 @@ public abstract class AbstractObjectTest extends BulkTest {
 
     //-----------------------------------------------------------------------
     public void testObjectEqualsSelf() {
-        Object obj = makeObject();
+        final Object obj = makeObject();
         assertEquals("A Object should equal itself", obj, obj);
     }
 
     public void testEqualsNull() {
-        Object obj = makeObject();
+        final Object obj = makeObject();
         assertEquals(false, obj.equals(null)); // make sure this doesn't throw NPE either
     }
 
     public void testObjectHashCodeEqualsSelfHashCode() {
-        Object obj = makeObject();
+        final Object obj = makeObject();
         assertEquals("hashCode should be repeatable", obj.hashCode(), obj.hashCode());
     }
 
     public void testObjectHashCodeEqualsContract() {
-        Object obj1 = makeObject();
+        final Object obj1 = makeObject();
         if (obj1.equals(obj1)) {
             assertEquals(
                 "[1] When two objects are equal, their hashCodes should be also.",
                 obj1.hashCode(), obj1.hashCode());
         }
-        Object obj2 = makeObject();
+        final Object obj2 = makeObject();
         if (obj1.equals(obj2)) {
             assertEquals(
                 "[2] When two objects are equal, their hashCodes should be also.",
@@ -138,23 +138,23 @@ public abstract class AbstractObjectTest extends BulkTest {
         }
     }
 
-    protected Object serializeDeserialize(Object obj) throws Exception {
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutputStream out = new ObjectOutputStream(buffer);
+    protected Object serializeDeserialize(final Object obj) throws Exception {
+        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        final ObjectOutputStream out = new ObjectOutputStream(buffer);
         out.writeObject(obj);
         out.close();
 
-        ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
-        Object dest = in.readObject();
+        final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
+        final Object dest = in.readObject();
         in.close();
 
         return dest;
     }
 
     public void testSerializeDeserializeThenCompare() throws Exception {
-        Object obj = makeObject();
+        final Object obj = makeObject();
         if (obj instanceof Serializable && isTestSerialization()) {
-            Object dest = serializeDeserialize(obj);
+            final Object dest = serializeDeserialize(obj);
             if (isEqualsCheckable()) {
                 assertEquals("obj != deserialize(serialize(obj))", obj, dest);
             }
@@ -170,9 +170,9 @@ public abstract class AbstractObjectTest extends BulkTest {
      * @throws ClassNotFoundException
      */
     public void testSimpleSerialization() throws Exception {
-        Object o = makeObject();
+        final Object o = makeObject();
         if (o instanceof Serializable && isTestSerialization()) {
-            byte[] objekt = writeExternalFormToBytes((Serializable) o);
+            final byte[] objekt = writeExternalFormToBytes((Serializable) o);
             readExternalFormFromBytes(objekt);
         }
     }
@@ -183,9 +183,9 @@ public abstract class AbstractObjectTest extends BulkTest {
      */
     public void testCanonicalEmptyCollectionExists() {
         if (supportsEmptyCollections() && isTestSerialization() && !skipSerializedCanonicalTests()) {
-            Object object = makeObject();
+            final Object object = makeObject();
             if (object instanceof Serializable) {
-                String name = getCanonicalEmptyCollectionName(object);
+                final String name = getCanonicalEmptyCollectionName(object);
                 assertTrue(
                     "Canonical empty collection (" + name + ") is not in SVN",
                     new File(name).exists());
@@ -199,9 +199,9 @@ public abstract class AbstractObjectTest extends BulkTest {
      */
     public void testCanonicalFullCollectionExists() {
         if (supportsFullCollections() && isTestSerialization() && !skipSerializedCanonicalTests()) {
-            Object object = makeObject();
+            final Object object = makeObject();
             if (object instanceof Serializable) {
-                String name = getCanonicalFullCollectionName(object);
+                final String name = getCanonicalFullCollectionName(object);
                 assertTrue(
                     "Canonical full collection (" + name + ") is not in SVN",
                     new File(name).exists());
@@ -231,8 +231,8 @@ public abstract class AbstractObjectTest extends BulkTest {
         return "1";
     }
 
-    protected String getCanonicalEmptyCollectionName(Object object) {
-        StringBuilder retval = new StringBuilder();
+    protected String getCanonicalEmptyCollectionName(final Object object) {
+        final StringBuilder retval = new StringBuilder();
         retval.append(TEST_DATA_PATH);
         String colName = object.getClass().getName();
         colName = colName.substring(colName.lastIndexOf(".") + 1, colName.length());
@@ -243,8 +243,8 @@ public abstract class AbstractObjectTest extends BulkTest {
         return retval.toString();
     }
 
-    protected String getCanonicalFullCollectionName(Object object) {
-        StringBuilder retval = new StringBuilder();
+    protected String getCanonicalFullCollectionName(final Object object) {
+        final StringBuilder retval = new StringBuilder();
         retval.append(TEST_DATA_PATH);
         String colName = object.getClass().getName();
         colName = colName.substring(colName.lastIndexOf(".") + 1, colName.length());
@@ -267,8 +267,8 @@ public abstract class AbstractObjectTest extends BulkTest {
      * @param path path to write the serialized Object
      * @exception IOException
      */
-    protected void writeExternalFormToDisk(Serializable o, String path) throws IOException {
-        FileOutputStream fileStream = new FileOutputStream(path);
+    protected void writeExternalFormToDisk(final Serializable o, final String path) throws IOException {
+        final FileOutputStream fileStream = new FileOutputStream(path);
         writeExternalFormToStream(o, fileStream);
     }
 
@@ -280,8 +280,8 @@ public abstract class AbstractObjectTest extends BulkTest {
      * @return serialized form of the Object
      * @exception IOException
      */
-    protected byte[] writeExternalFormToBytes(Serializable o) throws IOException {
-        ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+    protected byte[] writeExternalFormToBytes(final Serializable o) throws IOException {
+        final ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
         writeExternalFormToStream(o, byteStream);
         return byteStream.toByteArray();
     }
@@ -296,8 +296,8 @@ public abstract class AbstractObjectTest extends BulkTest {
      * @exception IOException
      * @exception ClassNotFoundException
      */
-    protected Object readExternalFormFromDisk(String path) throws IOException, ClassNotFoundException {
-        FileInputStream stream = new FileInputStream(path);
+    protected Object readExternalFormFromDisk(final String path) throws IOException, ClassNotFoundException {
+        final FileInputStream stream = new FileInputStream(path);
         return readExternalFormFromStream(stream);
     }
 
@@ -310,8 +310,8 @@ public abstract class AbstractObjectTest extends BulkTest {
      * @exception IOException
      * @exception ClassNotFoundException
      */
-    protected Object readExternalFormFromBytes(byte[] b) throws IOException, ClassNotFoundException {
-        ByteArrayInputStream stream = new ByteArrayInputStream(b);
+    protected Object readExternalFormFromBytes(final byte[] b) throws IOException, ClassNotFoundException {
+        final ByteArrayInputStream stream = new ByteArrayInputStream(b);
         return readExternalFormFromStream(stream);
     }
 
@@ -321,13 +321,13 @@ public abstract class AbstractObjectTest extends BulkTest {
 
     // private implementation
     //-----------------------------------------------------------------------
-    private Object readExternalFormFromStream(InputStream stream) throws IOException, ClassNotFoundException {
-        ObjectInputStream oStream = new ObjectInputStream(stream);
+    private Object readExternalFormFromStream(final InputStream stream) throws IOException, ClassNotFoundException {
+        final ObjectInputStream oStream = new ObjectInputStream(stream);
         return oStream.readObject();
     }
 
-    private void writeExternalFormToStream(Serializable o, OutputStream stream) throws IOException {
-        ObjectOutputStream oStream = new ObjectOutputStream(stream);
+    private void writeExternalFormToStream(final Serializable o, final OutputStream stream) throws IOException {
+        final ObjectOutputStream oStream = new ObjectOutputStream(stream);
         oStream.writeObject(o);
     }
 

@@ -38,18 +38,18 @@ public class MapPerformance {
     /**
      * Main method
      */
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         testAll();
     }
     
     private static void testAll() {
-        Map<String, String> dummyMap = new DummyMap<String, String>();
-        Map<String, String> hashMap = new HashMap<String, String>();
+        final Map<String, String> dummyMap = new DummyMap<String, String>();
+        final Map<String, String> hashMap = new HashMap<String, String>();
 //        hashMap.put("Alpha", "A");
 //        hashMap.put("Beta", "B");
 //        hashMap.put("Gamma", "C");
 //        hashMap.put("Delta", "D");
-        Map<String, String> flatMap = new Flat3Map<String, String>(hashMap);
+        final Map<String, String> flatMap = new Flat3Map<String, String>(hashMap);
         System.out.println(flatMap);
 //        Map<String, String> unmodHashMap = Collections.unmodifiableMap(new HashMap<String, String>(hashMap));
 //        Map fastHashMap = new FastHashMap(hashMap);
@@ -109,7 +109,7 @@ public class MapPerformance {
 //        test(doubleMap,     "     DoubleMap ");
     }
 
-    private static void test(Map<String, String> map, String name) {
+    private static void test(final Map<String, String> map, final String name) {
         long start = 0, end = 0;
 //        int total = 0;
         start = System.currentTimeMillis();
@@ -136,16 +136,16 @@ public class MapPerformance {
     private static class DummyMap<K, V> implements Map<K, V> {
         public void clear() {
         }
-        public boolean containsKey(Object key) {
+        public boolean containsKey(final Object key) {
             return false;
         }
-        public boolean containsValue(Object value) {
+        public boolean containsValue(final Object value) {
             return false;
         }
         public Set<Map.Entry<K, V>> entrySet() {
             return null;
         }
-        public V get(Object key) {
+        public V get(final Object key) {
             return null;
         }
         public boolean isEmpty() {
@@ -154,12 +154,12 @@ public class MapPerformance {
         public Set<K> keySet() {
             return null;
         }
-        public V put(K key, V value) {
+        public V put(final K key, final V value) {
             return null;
         }
-        public void putAll(Map<? extends K, ? extends V> t) {
+        public void putAll(final Map<? extends K, ? extends V> t) {
         }
-        public V remove(Object key) {
+        public V remove(final Object key) {
             return null;
         }
         public int size() {

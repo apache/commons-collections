@@ -56,14 +56,14 @@ import java.util.List;
 public class SequencesComparator<T> {
 
     /** First sequence. */
-    private List<T> sequence1;
+    private final List<T> sequence1;
 
     /** Second sequence. */
-    private List<T> sequence2;
+    private final List<T> sequence2;
 
     /** Temporary variables. */
-    private int[] vDown;
-    private int[] vUp;
+    private final int[] vDown;
+    private final int[] vUp;
 
     /**
      * Simple constructor.
@@ -81,11 +81,11 @@ public class SequencesComparator<T> {
      * @param sequence2
      *            second sequence to be compared
      */
-    public SequencesComparator(List<T> sequence1, List<T> sequence2) {
+    public SequencesComparator(final List<T> sequence1, final List<T> sequence2) {
         this.sequence1 = sequence1;
         this.sequence2 = sequence2;
 
-        int size = sequence1.size() + sequence2.size() + 2;
+        final int size = sequence1.size() + sequence2.size() + 2;
         vDown = new int[size];
         vUp   = new int[size];
     }
@@ -99,7 +99,7 @@ public class SequencesComparator<T> {
      * @param end2  the value of the end of the second sequence to be compared
      * @return the snake built
      */
-    private Snake buildSnake(int start, int diag, int end1, int end2) {
+    private Snake buildSnake(final int start, final int diag, final int end1, final int end2) {
         int end = start;
         while (end - diag < end2
                 && end < end1
@@ -125,18 +125,18 @@ public class SequencesComparator<T> {
      * @param end2  the end of the second sequence to be compared
      * @return the middle snake
      */
-    private Snake getMiddleSnake(int start1, int end1, int start2, int end2) {
+    private Snake getMiddleSnake(final int start1, final int end1, final int start2, final int end2) {
         // Myers Algorithm
         // Initialisations
-        int m = end1 - start1;
-        int n = end2 - start2;
+        final int m = end1 - start1;
+        final int n = end2 - start2;
         if (m == 0 || n == 0) {
             return null;
         }
 
-        int delta  = m - n;
-        int sum    = n + m;
-        int offset = (sum % 2 == 0 ? sum : sum + 1) / 2;
+        final int delta  = m - n;
+        final int sum    = n + m;
+        final int offset = (sum % 2 == 0 ? sum : sum + 1) / 2;
         vDown[1+offset] = start1;
         vUp[1+offset]   = end1 + 1;
 
@@ -145,7 +145,7 @@ public class SequencesComparator<T> {
             for (int k = -d; k <= d; k += 2) {
                 // First step
 
-                int i = k + offset;
+                final int i = k + offset;
                 if (k == -d || k != d && vDown[i-1] < vDown[i+1]) {
                     vDown[i] = vDown[i+1];
                 } else {
@@ -170,7 +170,7 @@ public class SequencesComparator<T> {
             // Up
             for (int k = delta - d; k <= delta + d; k += 2) {
                 // First step
-                int i = k + offset - delta;
+                final int i = k + offset - delta;
                 if (k == delta - d
                         || k != delta + d && vUp[i+1] <= vUp[i-1]) {
                     vUp[i] = vUp[i+1] - 1;
@@ -208,10 +208,10 @@ public class SequencesComparator<T> {
      * @param end2  the end of the second sequence to be compared
      * @param script the edited script
      */
-    private void buildScript(int start1, int end1, int start2, int end2,
-                             EditScript<T> script) {
+    private void buildScript(final int start1, final int end1, final int start2, final int end2,
+                             final EditScript<T> script) {
 
-        Snake middle = getMiddleSnake(start1, end1, start2, end2);
+        final Snake middle = getMiddleSnake(start1, end1, start2, end2);
 
         if (middle == null
                 || middle.getStart() == end1 && middle.getDiag() == end1 - end2
@@ -263,7 +263,7 @@ public class SequencesComparator<T> {
      *         sequences
      */
     public EditScript<T> getScript() {
-        EditScript<T> script = new EditScript<T>();
+        final EditScript<T> script = new EditScript<T>();
         buildScript(0, sequence1.size(), 0, sequence2.size(), script);
         return script;
     }

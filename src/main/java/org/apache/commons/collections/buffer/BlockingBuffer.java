@@ -60,7 +60,7 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
      * @return a new blocking Buffer
      * @throws IllegalArgumentException if buffer is null
      */
-    public static <E> BlockingBuffer<E> blockingBuffer(Buffer<E> buffer) {
+    public static <E> BlockingBuffer<E> blockingBuffer(final Buffer<E> buffer) {
         return new BlockingBuffer<E>(buffer);
     }
 
@@ -74,7 +74,7 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
      * @throws IllegalArgumentException if the buffer is null
      * @since 3.2
      */
-    public static <E> BlockingBuffer<E> blockingBuffer(Buffer<E> buffer, long timeoutMillis) {
+    public static <E> BlockingBuffer<E> blockingBuffer(final Buffer<E> buffer, final long timeoutMillis) {
         return new BlockingBuffer<E>(buffer, timeoutMillis);
     }
 
@@ -85,7 +85,7 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
      * @param buffer the buffer to decorate, must not be null
      * @throws IllegalArgumentException if the buffer is null
      */
-    protected BlockingBuffer(Buffer<E> buffer) {
+    protected BlockingBuffer(final Buffer<E> buffer) {
         super(buffer);
         this.timeout = 0;
     }
@@ -98,25 +98,25 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
      * @throws IllegalArgumentException if the buffer is null
      * @since 3.2
      */
-    protected BlockingBuffer(Buffer<E> buffer, long timeoutMillis) {
+    protected BlockingBuffer(final Buffer<E> buffer, final long timeoutMillis) {
         super(buffer);
         this.timeout = timeoutMillis < 0 ? 0 : timeoutMillis;
     }
 
     //-----------------------------------------------------------------------
     @Override
-    public boolean add(E o) {
+    public boolean add(final E o) {
         synchronized (lock) {
-            boolean result = collection.add(o);
+            final boolean result = collection.add(o);
             lock.notifyAll();
             return result;
         }
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> c) {
+    public boolean addAll(final Collection<? extends E> c) {
         synchronized (lock) {
-            boolean result = collection.addAll(c);
+            final boolean result = collection.addAll(c);
             lock.notifyAll();
             return result;
         }
@@ -140,8 +140,8 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
                     } else {
                         return get(timeout);
                     }
-                } catch (InterruptedException e) {
-                    PrintWriter out = new PrintWriter(new StringWriter());
+                } catch (final InterruptedException e) {
+                    final PrintWriter out = new PrintWriter(new StringWriter());
                     e.printStackTrace(out);
                     throw new BufferUnderflowException("Caused by InterruptedException: " + out.toString());
                 }
@@ -168,8 +168,8 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
                 try {
                     lock.wait(timeLeft);
                     timeLeft = expiration - System.currentTimeMillis();
-                } catch(InterruptedException e) {
-                    PrintWriter out = new PrintWriter(new StringWriter());
+                } catch(final InterruptedException e) {
+                    final PrintWriter out = new PrintWriter(new StringWriter());
                     e.printStackTrace(out);
                     throw new BufferUnderflowException("Caused by InterruptedException: " + out.toString());
                 }
@@ -199,8 +199,8 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
                     } else {
                         return remove(timeout);
                     }
-                } catch (InterruptedException e) {
-                    PrintWriter out = new PrintWriter(new StringWriter());
+                } catch (final InterruptedException e) {
+                    final PrintWriter out = new PrintWriter(new StringWriter());
                     e.printStackTrace(out);
                     throw new BufferUnderflowException("Caused by InterruptedException: " + out.toString());
                 }
@@ -227,8 +227,8 @@ public class BlockingBuffer<E> extends SynchronizedBuffer<E> {
                 try {
                     lock.wait(timeLeft);
                     timeLeft = expiration - System.currentTimeMillis();
-                } catch(InterruptedException e) {
-                    PrintWriter out = new PrintWriter(new StringWriter());
+                } catch(final InterruptedException e) {
+                    final PrintWriter out = new PrintWriter(new StringWriter());
                     e.printStackTrace(out);
                     throw new BufferUnderflowException("Caused by InterruptedException: " + out.toString());
                 }

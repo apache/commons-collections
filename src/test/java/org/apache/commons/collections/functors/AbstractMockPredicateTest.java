@@ -68,7 +68,7 @@ public abstract class AbstractMockPredicateTest<T> {
     @After
     public final void verifyPredicates()
     {
-        for (Predicate<? super T> predicate : mockPredicatesToVerify) {
+        for (final Predicate<? super T> predicate : mockPredicatesToVerify) {
             verify(predicate);
         }
     }

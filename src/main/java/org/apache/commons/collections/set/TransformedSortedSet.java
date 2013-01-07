@@ -52,8 +52,8 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      * @return a new transformed {@link SortedSet}
      * @throws IllegalArgumentException if set or transformer is null
      */
-    public static <E> TransformedSortedSet<E> transformingSortedSet(SortedSet<E> set,
-                                                                    Transformer<? super E, ? extends E> transformer) {
+    public static <E> TransformedSortedSet<E> transformingSortedSet(final SortedSet<E> set,
+                                                                    final Transformer<? super E, ? extends E> transformer) {
         return new TransformedSortedSet<E>(set, transformer);
     }
     
@@ -72,14 +72,15 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      * @throws IllegalArgumentException if set or transformer is null
      * @since 3.3
      */
-    public static <E> TransformedSortedSet<E> transformedSortedSet(SortedSet<E> set,
-                                                                   Transformer<? super E, ? extends E> transformer) {
-        TransformedSortedSet<E> decorated = new TransformedSortedSet<E>(set, transformer);
+    public static <E> TransformedSortedSet<E> transformedSortedSet(final SortedSet<E> set,
+                                                                   final Transformer<? super E, ? extends E> transformer) {
+        final TransformedSortedSet<E> decorated = new TransformedSortedSet<E>(set, transformer);
         if (transformer != null && set != null && set.size() > 0) {
             @SuppressWarnings("unchecked") // set is type E
+            final
             E[] values = (E[]) set.toArray();
             set.clear();
-            for (E value : values) {
+            for (final E value : values) {
                 decorated.decorated().add(transformer.transform(value));
             }
         }
@@ -97,7 +98,7 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if set or transformer is null
      */
-    protected TransformedSortedSet(SortedSet<E> set, Transformer<? super E, ? extends E> transformer) {
+    protected TransformedSortedSet(final SortedSet<E> set, final Transformer<? super E, ? extends E> transformer) {
         super(set, transformer);
     }
 
@@ -124,18 +125,18 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
     }
 
     //-----------------------------------------------------------------------
-    public SortedSet<E> subSet(E fromElement, E toElement) {
-        SortedSet<E> set = getSortedSet().subSet(fromElement, toElement);
+    public SortedSet<E> subSet(final E fromElement, final E toElement) {
+        final SortedSet<E> set = getSortedSet().subSet(fromElement, toElement);
         return new TransformedSortedSet<E>(set, transformer);
     }
 
-    public SortedSet<E> headSet(E toElement) {
-        SortedSet<E> set = getSortedSet().headSet(toElement);
+    public SortedSet<E> headSet(final E toElement) {
+        final SortedSet<E> set = getSortedSet().headSet(toElement);
         return new TransformedSortedSet<E>(set, transformer);
     }
 
-    public SortedSet<E> tailSet(E fromElement) {
-        SortedSet<E> set = getSortedSet().tailSet(fromElement);
+    public SortedSet<E> tailSet(final E fromElement) {
+        final SortedSet<E> set = getSortedSet().tailSet(fromElement);
         return new TransformedSortedSet<E>(set, transformer);
     }
 

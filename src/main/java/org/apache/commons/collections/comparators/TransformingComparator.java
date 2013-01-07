@@ -53,7 +53,7 @@ public class TransformingComparator<E> implements Comparator<E>, Serializable {
      * @param transformer what will transform the arguments to <code>compare</code>
      */
     @SuppressWarnings("unchecked")
-    public TransformingComparator(Transformer<? super E, ? extends E> transformer) {
+    public TransformingComparator(final Transformer<? super E, ? extends E> transformer) {
         this(transformer, ComparatorUtils.NATURAL_COMPARATOR);
     }
 
@@ -63,7 +63,7 @@ public class TransformingComparator<E> implements Comparator<E>, Serializable {
      * @param transformer  what will transform the arguments to <code>compare</code>
      * @param decorated  the decorated Comparator
      */
-    public TransformingComparator(Transformer<? super E, ? extends E> transformer, Comparator<E> decorated) {
+    public TransformingComparator(final Transformer<? super E, ? extends E> transformer, final Comparator<E> decorated) {
         this.decorated = decorated;
         this.transformer = transformer;
     }
@@ -76,9 +76,9 @@ public class TransformingComparator<E> implements Comparator<E>, Serializable {
      * @param obj2  the second object to transform then compare
      * @return negative if obj1 is less, positive if greater, zero if equal
      */
-    public int compare(E obj1, E obj2) {
-        E value1 = this.transformer.transform(obj1);
-        E value2 = this.transformer.transform(obj2);
+    public int compare(final E obj1, final E obj2) {
+        final E value1 = this.transformer.transform(obj1);
+        final E value2 = this.transformer.transform(obj2);
         return this.decorated.compare(value1, value2);
     }
 
@@ -110,7 +110,7 @@ public class TransformingComparator<E> implements Comparator<E>, Serializable {
      * @return true if equal
      */
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         if (this == object) {
             return true;
         }
@@ -118,7 +118,7 @@ public class TransformingComparator<E> implements Comparator<E>, Serializable {
             return false;
         }
         if (object.getClass().equals(this.getClass())) {
-            TransformingComparator<?> comp = (TransformingComparator<?>) object;
+            final TransformingComparator<?> comp = (TransformingComparator<?>) object;
             return null == decorated ? null == comp.decorated : decorated.equals(comp.decorated) &&
                     null == transformer ? null == comp.transformer : transformer.equals(comp.transformer);
         }

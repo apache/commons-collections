@@ -44,7 +44,7 @@ public class LongKeyAnalyzer extends AbstractKeyAnalyzer<Long> {
     /**
      * Returns a bit mask where the given bit is set
      */
-    private static long mask(int bit) {
+    private static long mask(final int bit) {
         return MSB >>> bit;
     }
 
@@ -58,37 +58,37 @@ public class LongKeyAnalyzer extends AbstractKeyAnalyzer<Long> {
     /**
      * {@inheritDoc}
      */
-    public int lengthInBits(Long key) {
+    public int lengthInBits(final Long key) {
         return LENGTH;
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean isBitSet(Long key, int bitIndex, int lengthInBits) {
+    public boolean isBitSet(final Long key, final int bitIndex, final int lengthInBits) {
         return (key & mask(bitIndex)) != 0;
     }
 
     /**
      * {@inheritDoc}
      */
-    public int bitIndex(Long key, int offsetInBits, int lengthInBits, 
-            Long other, int otherOffsetInBits, int otherLengthInBits) {
+    public int bitIndex(final Long key, final int offsetInBits, final int lengthInBits, 
+            final Long other, final int otherOffsetInBits, final int otherLengthInBits) {
         
         if (offsetInBits != 0 || otherOffsetInBits != 0) {
             throw new IllegalArgumentException("offsetInBits=" + offsetInBits 
                     + ", otherOffsetInBits=" + otherOffsetInBits);
         }
         
-        long keyValue = key.longValue();
+        final long keyValue = key.longValue();
         if (keyValue == 0L) {
             return NULL_BIT_KEY;
         }
 
-        long otherValue = other != null ? other.longValue() : 0L;
+        final long otherValue = other != null ? other.longValue() : 0L;
         
         if (keyValue != otherValue) {
-            long xorValue = keyValue ^ otherValue;
+            final long xorValue = keyValue ^ otherValue;
             for (int i = 0; i < LENGTH; i++) {
                 if ((xorValue & mask(i)) != 0L) {
                     return i;
@@ -102,11 +102,11 @@ public class LongKeyAnalyzer extends AbstractKeyAnalyzer<Long> {
     /**
      * {@inheritDoc}
      */
-    public boolean isPrefix(Long prefix, int offsetInBits, 
-            int lengthInBits, Long key) {
+    public boolean isPrefix(final Long prefix, final int offsetInBits, 
+            final int lengthInBits, final Long key) {
         
-        long value1 = prefix.longValue() << offsetInBits;
-        long value2 = key.longValue();
+        final long value1 = prefix.longValue() << offsetInBits;
+        final long value2 = key.longValue();
         
         long mask = 0L;
         for (int i = 0; i < lengthInBits; i++) {

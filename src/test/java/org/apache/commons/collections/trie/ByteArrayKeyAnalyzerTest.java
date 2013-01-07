@@ -29,9 +29,9 @@ public class ByteArrayKeyAnalyzerTest {
     
     @Test
     public void bitSet() {
-        byte[] key = toByteArray("10100110", 2);
-        ByteArrayKeyAnalyzer ka = new ByteArrayKeyAnalyzer(key.length * 8);
-        int length = ka.lengthInBits(key);
+        final byte[] key = toByteArray("10100110", 2);
+        final ByteArrayKeyAnalyzer ka = new ByteArrayKeyAnalyzer(key.length * 8);
+        final int length = ka.lengthInBits(key);
         
         Assert.assertTrue(ka.isBitSet(key, 0, length));
         Assert.assertFalse(ka.isBitSet(key, 1, length));
@@ -45,17 +45,17 @@ public class ByteArrayKeyAnalyzerTest {
     
     @Test
     public void keys() {
-        PatriciaTrie<byte[], BigInteger> trie
+        final PatriciaTrie<byte[], BigInteger> trie
             = new PatriciaTrie<byte[], BigInteger>(ByteArrayKeyAnalyzer.INSTANCE);
         
-        Map<byte[], BigInteger> map 
+        final Map<byte[], BigInteger> map 
             = new TreeMap<byte[], BigInteger>(ByteArrayKeyAnalyzer.INSTANCE);
         
         for (int i = 0; i < SIZE; i++) {
-            BigInteger value = BigInteger.valueOf(i);
-            byte[] key = toByteArray(value);
+            final BigInteger value = BigInteger.valueOf(i);
+            final byte[] key = toByteArray(value);
             
-            BigInteger existing = trie.put(key, value);
+            final BigInteger existing = trie.put(key, value);
             Assert.assertNull(existing);
             
             map.put(key, value);
@@ -63,9 +63,9 @@ public class ByteArrayKeyAnalyzerTest {
         
         Assert.assertEquals(map.size(), trie.size());
         
-        for (byte[] key : map.keySet()) {
-            BigInteger expected = new BigInteger(1, key);
-            BigInteger value = trie.get(key);
+        for (final byte[] key : map.keySet()) {
+            final BigInteger expected = new BigInteger(1, key);
+            final BigInteger value = trie.get(key);
             
             Assert.assertEquals(expected, value);
         }
@@ -73,28 +73,28 @@ public class ByteArrayKeyAnalyzerTest {
     
     @Test
     public void prefix() {
-        byte[] prefix   = toByteArray("00001010", 2);
-        byte[] key1     = toByteArray("11001010", 2);
-        byte[] key2     = toByteArray("10101100", 2);
+        final byte[] prefix   = toByteArray("00001010", 2);
+        final byte[] key1     = toByteArray("11001010", 2);
+        final byte[] key2     = toByteArray("10101100", 2);
         
-        ByteArrayKeyAnalyzer keyAnalyzer = new ByteArrayKeyAnalyzer(key1.length * 8);
+        final ByteArrayKeyAnalyzer keyAnalyzer = new ByteArrayKeyAnalyzer(key1.length * 8);
         
-        int prefixLength = keyAnalyzer.lengthInBits(prefix);
+        final int prefixLength = keyAnalyzer.lengthInBits(prefix);
             
         Assert.assertFalse(keyAnalyzer.isPrefix(prefix, 4, prefixLength, key1));
         Assert.assertTrue(keyAnalyzer.isPrefix(prefix, 4, prefixLength, key2));
     }
     
-    private static byte[] toByteArray(String value, int radix) {
+    private static byte[] toByteArray(final String value, final int radix) {
         return toByteArray(Long.parseLong(value, radix));
     }
     
-    private static byte[] toByteArray(long value) {
+    private static byte[] toByteArray(final long value) {
         return toByteArray(BigInteger.valueOf(value));
     }
     
-    private static byte[] toByteArray(BigInteger value) {
-        byte[] src = value.toByteArray();
+    private static byte[] toByteArray(final BigInteger value) {
+        final byte[] src = value.toByteArray();
         if (src.length <= 1) {
             return src;
         }
@@ -103,7 +103,7 @@ public class ByteArrayKeyAnalyzerTest {
             return src;
         }
         
-        byte[] dst = new byte[src.length-1];
+        final byte[] dst = new byte[src.length-1];
         System.arraycopy(src, 1, dst, 0, dst.length);
         return dst;
     }

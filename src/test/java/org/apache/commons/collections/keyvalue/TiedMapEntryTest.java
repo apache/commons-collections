@@ -27,7 +27,7 @@ import java.util.Map;
  */
 public class TiedMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 
-    public TiedMapEntryTest(String testName) {
+    public TiedMapEntryTest(final String testName) {
         super(testName);
     }
 
@@ -36,8 +36,8 @@ public class TiedMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
      * Gets the instance to test
      */
     @Override
-    public Map.Entry<K, V> makeMapEntry(K key, V value) {
-        Map<K, V> map = new HashMap<K, V>();
+    public Map.Entry<K, V> makeMapEntry(final K key, final V value) {
+        final Map<K, V> map = new HashMap<K, V>();
         map.put(key, value);
         return new TiedMapEntry<K, V>(map, key);
     }
@@ -56,7 +56,7 @@ public class TiedMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
      */
     @SuppressWarnings("unchecked")
     public void testSetValue() {
-        Map<K, V> map = new HashMap<K, V>();
+        final Map<K, V> map = new HashMap<K, V>();
         map.put((K) "A", (V) "a");
         map.put((K) "B", (V) "b");
         map.put((K) "C", (V) "c");

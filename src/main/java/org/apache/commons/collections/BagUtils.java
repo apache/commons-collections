@@ -80,7 +80,7 @@ public class BagUtils {
      * @return a synchronized bag backed by that bag
      * @throws IllegalArgumentException if the Bag is null
      */
-    public static <E> Bag<E> synchronizedBag(Bag<E> bag) {
+    public static <E> Bag<E> synchronizedBag(final Bag<E> bag) {
         return SynchronizedBag.synchronizedBag(bag);
     }
 
@@ -93,7 +93,7 @@ public class BagUtils {
      * @return an unmodifiable view of that bag
      * @throws IllegalArgumentException if the Bag is null
      */
-    public static <E> Bag<E> unmodifiableBag(Bag<E> bag) {
+    public static <E> Bag<E> unmodifiableBag(final Bag<E> bag) {
         return UnmodifiableBag.unmodifiableBag(bag);
     }
 
@@ -112,7 +112,7 @@ public class BagUtils {
      * @return a predicated bag backed by the given bag
      * @throws IllegalArgumentException if the Bag or Predicate is null
      */
-    public static <E> Bag<E> predicatedBag(Bag<E> bag, Predicate<? super E> predicate) {
+    public static <E> Bag<E> predicatedBag(final Bag<E> bag, final Predicate<? super E> predicate) {
         return PredicatedBag.predicatedBag(bag, predicate);
     }
 
@@ -132,7 +132,7 @@ public class BagUtils {
      * @return a transformed bag backed by the given bag
      * @throws IllegalArgumentException if the Bag or Transformer is null
      */
-    public static <E> Bag<E> transformingBag(Bag<E> bag, Transformer<? super E, ? extends E> transformer) {
+    public static <E> Bag<E> transformingBag(final Bag<E> bag, final Transformer<? super E, ? extends E> transformer) {
         return TransformedBag.transformingBag(bag, transformer);
     }
 
@@ -163,7 +163,7 @@ public class BagUtils {
      * @return a synchronized bag backed by that bag
      * @throws IllegalArgumentException if the SortedBag is null
      */
-    public static <E> SortedBag<E> synchronizedSortedBag(SortedBag<E> bag) {
+    public static <E> SortedBag<E> synchronizedSortedBag(final SortedBag<E> bag) {
         return SynchronizedSortedBag.synchronizedSortedBag(bag);
     }
 
@@ -177,7 +177,7 @@ public class BagUtils {
      * @return an unmodifiable view of that bag
      * @throws IllegalArgumentException if the SortedBag is null
      */
-    public static <E> SortedBag<E> unmodifiableSortedBag(SortedBag<E> bag) {
+    public static <E> SortedBag<E> unmodifiableSortedBag(final SortedBag<E> bag) {
         return UnmodifiableSortedBag.unmodifiableSortedBag(bag);
     }
 
@@ -197,8 +197,8 @@ public class BagUtils {
      * @return a predicated bag backed by the given bag
      * @throws IllegalArgumentException if the SortedBag or Predicate is null
      */
-    public static <E> SortedBag<E> predicatedSortedBag(SortedBag<E> bag,
-            Predicate<? super E> predicate) {
+    public static <E> SortedBag<E> predicatedSortedBag(final SortedBag<E> bag,
+            final Predicate<? super E> predicate) {
         return PredicatedSortedBag.predicatedSortedBag(bag, predicate);
     }
 
@@ -219,8 +219,8 @@ public class BagUtils {
      * @return a transformed bag backed by the given bag
      * @throws IllegalArgumentException if the Bag or Transformer is null
      */
-    public static <E> SortedBag<E> transformingSortedBag(SortedBag<E> bag,
-                                                         Transformer<? super E, ? extends E> transformer) {
+    public static <E> SortedBag<E> transformingSortedBag(final SortedBag<E> bag,
+                                                         final Transformer<? super E, ? extends E> transformer) {
         return TransformedSortedBag.transformingSortedBag(bag, transformer);
     }
 

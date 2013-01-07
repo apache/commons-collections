@@ -73,7 +73,7 @@ public class LazySortedMap<K,V>
      * @return a new lazy sorted map
      * @throws IllegalArgumentException if map or factory is null
      */
-    public static <K, V> LazySortedMap<K, V> lazySortedMap(SortedMap<K, V> map, Factory<? extends V> factory) {
+    public static <K, V> LazySortedMap<K, V> lazySortedMap(final SortedMap<K, V> map, final Factory<? extends V> factory) {
         return new LazySortedMap<K,V>(map, factory);
     }
 
@@ -87,8 +87,8 @@ public class LazySortedMap<K,V>
      * @return a new lazy sorted map
      * @throws IllegalArgumentException if map or factory is null
      */
-    public static <K, V> LazySortedMap<K, V> lazySortedMap(SortedMap<K, V> map,
-                                                           Transformer<? super K, ? extends V> factory) {
+    public static <K, V> LazySortedMap<K, V> lazySortedMap(final SortedMap<K, V> map,
+                                                           final Transformer<? super K, ? extends V> factory) {
         return new LazySortedMap<K,V>(map, factory);
     }
 
@@ -100,7 +100,7 @@ public class LazySortedMap<K,V>
      * @param factory  the factory to use, must not be null
      * @throws IllegalArgumentException if map or factory is null
      */
-    protected LazySortedMap(SortedMap<K,V> map, Factory<? extends V> factory) {
+    protected LazySortedMap(final SortedMap<K,V> map, final Factory<? extends V> factory) {
         super(map, factory);
     }
 
@@ -111,7 +111,7 @@ public class LazySortedMap<K,V>
      * @param factory  the factory to use, must not be null
      * @throws IllegalArgumentException if map or factory is null
      */
-    protected LazySortedMap(SortedMap<K,V> map, Transformer<? super K, ? extends V> factory) {
+    protected LazySortedMap(final SortedMap<K,V> map, final Transformer<? super K, ? extends V> factory) {
         super(map, factory);
     }
 
@@ -138,18 +138,18 @@ public class LazySortedMap<K,V>
         return getSortedMap().comparator();
     }
 
-    public SortedMap<K,V> subMap(K fromKey, K toKey) {
-        SortedMap<K,V> map = getSortedMap().subMap(fromKey, toKey);
+    public SortedMap<K,V> subMap(final K fromKey, final K toKey) {
+        final SortedMap<K,V> map = getSortedMap().subMap(fromKey, toKey);
         return new LazySortedMap<K,V>(map, factory);
     }
 
-    public SortedMap<K,V> headMap(K toKey) {
-        SortedMap<K,V> map = getSortedMap().headMap(toKey);
+    public SortedMap<K,V> headMap(final K toKey) {
+        final SortedMap<K,V> map = getSortedMap().headMap(toKey);
         return new LazySortedMap<K,V>(map, factory);
     }
 
-    public SortedMap<K,V> tailMap(K fromKey) {
-        SortedMap<K,V> map = getSortedMap().tailMap(fromKey);
+    public SortedMap<K,V> tailMap(final K fromKey) {
+        final SortedMap<K,V> map = getSortedMap().tailMap(fromKey);
         return new LazySortedMap<K,V>(map, factory);
     }
 

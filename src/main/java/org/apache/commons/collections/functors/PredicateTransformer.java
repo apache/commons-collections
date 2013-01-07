@@ -43,7 +43,7 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
      * @return the <code>predicate</code> transformer
      * @throws IllegalArgumentException if the predicate is null
      */
-    public static <T> Transformer<T, Boolean> predicateTransformer(Predicate<? super T> predicate) {
+    public static <T> Transformer<T, Boolean> predicateTransformer(final Predicate<? super T> predicate) {
         if (predicate == null) {
             throw new IllegalArgumentException("Predicate must not be null");
         }
@@ -56,7 +56,7 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
      * 
      * @param predicate  the predicate to call, not null
      */
-    public PredicateTransformer(Predicate<? super T> predicate) {
+    public PredicateTransformer(final Predicate<? super T> predicate) {
         super();
         iPredicate = predicate;
     }
@@ -67,7 +67,7 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
      * @param input  the input object to transform
      * @return the transformed result
      */
-    public Boolean transform(T input) {
+    public Boolean transform(final T input) {
         return Boolean.valueOf(iPredicate.evaluate(input));
     }
 

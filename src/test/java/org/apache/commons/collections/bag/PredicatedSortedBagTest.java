@@ -31,9 +31,9 @@ import org.apache.commons.collections.functors.TruePredicate;
  */
 public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
-    private SortedBag<T> nullBag = null;
+    private final SortedBag<T> nullBag = null;
 
-    public PredicatedSortedBagTest(String testName) {
+    public PredicatedSortedBagTest(final String testName) {
         super(testName);
     }
 
@@ -41,7 +41,7 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
     protected Predicate<T> stringPredicate() {
         return new Predicate<T>() {
-            public boolean evaluate(T o) {
+            public boolean evaluate(final T o) {
                 return o instanceof String;
             }
         };
@@ -49,7 +49,7 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
     protected Predicate<T> truePredicate = TruePredicate.<T>truePredicate();
 
-    protected SortedBag<T> decorateBag(SortedBag<T> bag, Predicate<T> predicate) {
+    protected SortedBag<T> decorateBag(final SortedBag<T> bag, final Predicate<T> predicate) {
         return PredicatedSortedBag.predicatedSortedBag(bag, predicate);
     }
 
@@ -65,30 +65,30 @@ public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
     //--------------------------------------------------------------------------
 
     public void testDecorate() {
-        SortedBag<T> bag = decorateBag(new TreeBag<T>(), stringPredicate());
+        final SortedBag<T> bag = decorateBag(new TreeBag<T>(), stringPredicate());
         ((PredicatedSortedBag<T>) bag).decorated();
         try {
             decorateBag(new TreeBag<T>(), null);
             fail("Expecting IllegalArgumentException for null predicate");
-        } catch (IllegalArgumentException e) {}
+        } catch (final IllegalArgumentException e) {}
         try {
             decorateBag(nullBag, stringPredicate());
             fail("Expecting IllegalArgumentException for null bag");
-        } catch (IllegalArgumentException e) {}
+        } catch (final IllegalArgumentException e) {}
     }
 
     @SuppressWarnings("unchecked")
     public void testSortOrder() {
-        SortedBag<T> bag = decorateBag(new TreeBag<T>(), stringPredicate());
-        String one = "one";
-        String two = "two";
-        String three = "three";
+        final SortedBag<T> bag = decorateBag(new TreeBag<T>(), stringPredicate());
+        final String one = "one";
+        final String two = "two";
+        final String three = "three";
         bag.add((T) one);
         bag.add((T) two);
         bag.add((T) three);
         assertEquals("first element", bag.first(), one);
         assertEquals("last element", bag.last(), two);
-        Comparator<? super T> c = bag.comparator();
+        final Comparator<? super T> c = bag.comparator();
         assertTrue("natural order, so comparator should be null", c == null);
     }
 

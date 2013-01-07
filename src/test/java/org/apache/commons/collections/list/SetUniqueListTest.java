@@ -36,7 +36,7 @@ import java.util.Set;
  */
 public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
-    public SetUniqueListTest(String testName) {
+    public SetUniqueListTest(final String testName) {
         super(testName);
     }
 
@@ -50,12 +50,12 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     public void testListIteratorSet() {
         // override to block
         resetFull();
-        ListIterator<E> it = getCollection().listIterator();
+        final ListIterator<E> it = getCollection().listIterator();
         it.next();
         try {
             it.set(null);
             fail();
-        } catch (UnsupportedOperationException ex) {}
+        } catch (final UnsupportedOperationException ex) {}
     }
 
     @Override
@@ -87,14 +87,14 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     public void testListIteratorAdd() {
         // override to cope with Set behaviour
         resetEmpty();
-        List<E> list1 = getCollection();
-        List<E> list2 = getConfirmed();
+        final List<E> list1 = getCollection();
+        final List<E> list2 = getConfirmed();
 
-        E[] elements = getOtherElements();  // changed here
+        final E[] elements = getOtherElements();  // changed here
         ListIterator<E> iter1 = list1.listIterator();
         ListIterator<E> iter2 = list2.listIterator();
 
-        for (E element : elements) {
+        for (final E element : elements) {
             iter1.add(element);
             iter2.add(element);
             super.verify();  // changed here
@@ -103,7 +103,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         resetFull();
         iter1 = getCollection().listIterator();
         iter2 = getConfirmed().listIterator();
-        for (E element : elements) {
+        for (final E element : elements) {
             iter1.next();
             iter2.next();
             iter1.add(element);
@@ -121,13 +121,13 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         getConfirmed().addAll(Arrays.asList(elements));
         verify();
         assertTrue("Empty collection should change after addAll", r);
-        for (E element : elements) {
+        for (final E element : elements) {
             assertTrue("Collection should contain added element",
                     getCollection().contains(element));
         }
 
         resetFull();
-        int size = getCollection().size();
+        final int size = getCollection().size();
         elements = getOtherElements();
         r = getCollection().addAll(Arrays.asList(elements));
         getConfirmed().addAll(Arrays.asList(elements));
@@ -143,7 +143,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
     public void testIntCollectionAddAll() {
       // make a SetUniqueList with one element
-      List<Integer> list = new SetUniqueList<Integer>(new ArrayList<Integer>(), new HashSet<Integer>());
+      final List<Integer> list = new SetUniqueList<Integer>(new ArrayList<Integer>(), new HashSet<Integer>());
       final Integer existingElement = new Integer(1);
       list.add(existingElement);
 
@@ -171,7 +171,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     public void testListSetByIndex() {
         // override for set behaviour
         resetFull();
-        int size = getCollection().size();
+        final int size = getCollection().size();
         getCollection().set(0, (E) new Long(1000));
         assertEquals(size, getCollection().size());
 
@@ -197,7 +197,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         super.verify();
 
         if (extraVerify) {
-            int size = getCollection().size();
+            final int size = getCollection().size();
             getCollection().add((E) new Long(1000));
             assertEquals(size + 1, getCollection().size());
 
@@ -211,8 +211,8 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
     //-----------------------------------------------------------------------
     public void testFactory() {
-        Integer[] array = new Integer[] { new Integer(1), new Integer(2), new Integer(1) };
-        ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(array));
+        final Integer[] array = new Integer[] { new Integer(1), new Integer(2), new Integer(1) };
+        final ArrayList<Integer> list = new ArrayList<Integer>(Arrays.asList(array));
         final SetUniqueList<Integer> lset = SetUniqueList.setUniqueList(list);
 
         assertEquals("Duplicate element was added.", 2, lset.size());
@@ -310,11 +310,11 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
     @SuppressWarnings("unchecked")
     public void testUniqueListReInsert() {
-        List<E> l = SetUniqueList.setUniqueList(new LinkedList<E>());
+        final List<E> l = SetUniqueList.setUniqueList(new LinkedList<E>());
         l.add((E) new Object());
         l.add((E) new Object());
 
-        E a = l.get(0);
+        final E a = l.get(0);
 
         // duplicate is removed
         l.set(0, l.get(1));
@@ -327,7 +327,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
     @SuppressWarnings("unchecked")
     public void testUniqueListDoubleInsert() {
-        List<E> l = SetUniqueList.setUniqueList(new LinkedList<E>());
+        final List<E> l = SetUniqueList.setUniqueList(new LinkedList<E>());
         l.add((E) new Object());
         l.add((E) new Object());
 
@@ -348,12 +348,12 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
          * set(0,b): [b]->a
          * So UniqList contains [b] and a is returned
          */
-        ArrayList<E> l = new ArrayList<E>();
-        HashSet<E> s = new HashSet<E>();
+        final ArrayList<E> l = new ArrayList<E>();
+        final HashSet<E> s = new HashSet<E>();
         final SetUniqueList<E> ul = new SetUniqueList<E>(l, s);
 
-        E a = (E) new Object();
-        E b = (E) new Object();
+        final E a = (E) new Object();
+        final E b = (E) new Object();
         ul.add(a);
         ul.add(b);
         assertEquals(a, l.get(0));
@@ -377,13 +377,13 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
          * set(0,b): [b,c]->a
          * So UniqList contains [b,c] and a is returned
          */
-        ArrayList<E> l = new ArrayList<E>();
-        HashSet<E> s = new HashSet<E>();
+        final ArrayList<E> l = new ArrayList<E>();
+        final HashSet<E> s = new HashSet<E>();
         final SetUniqueList<E> ul = new SetUniqueList<E>(l, s);
 
-        E a = (E) new Object();
-        E b = (E) new Object();
-        E c = (E) new Object();
+        final E a = (E) new Object();
+        final E b = (E) new Object();
+        final E c = (E) new Object();
 
         ul.add(a);
         ul.add(b);
@@ -413,13 +413,13 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
          * set(1,a): [a,c]->b
          * So UniqList contains [a,c] and b is returned
          */
-        ArrayList<E> l = new ArrayList<E>();
-        HashSet<E> s = new HashSet<E>();
+        final ArrayList<E> l = new ArrayList<E>();
+        final HashSet<E> s = new HashSet<E>();
         final SetUniqueList<E> ul = new SetUniqueList<E>(l, s);
 
-        E a = (E) new String("A");
-        E b = (E) new String("B");
-        E c = (E) new String("C");
+        final E a = (E) new String("A");
+        final E b = (E) new String("B");
+        final E c = (E) new String("C");
 
         ul.add(a);
         ul.add(b);
@@ -456,12 +456,12 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
     // TODO: Generics
     public void testCollections304() {
-        List<String> list = new LinkedList<String>();
-        SetUniqueList<String> decoratedList = SetUniqueList.setUniqueList(list);
-        String s1 = "Apple";
-        String s2 = "Lemon";
-        String s3 = "Orange";
-        String s4 = "Strawberry";
+        final List<String> list = new LinkedList<String>();
+        final SetUniqueList<String> decoratedList = SetUniqueList.setUniqueList(list);
+        final String s1 = "Apple";
+        final String s2 = "Lemon";
+        final String s3 = "Orange";
+        final String s4 = "Strawberry";
 
         decoratedList.add(s1);
         decoratedList.add(s2);
@@ -487,8 +487,8 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         List<E> list = new ArrayList<E>();
         List<E> uniqueList = SetUniqueList.setUniqueList(list);
 
-        String hello = "Hello";
-        String world = "World";
+        final String hello = "Hello";
+        final String world = "World";
         uniqueList.add((E) hello);
         uniqueList.add((E) world);
 
@@ -525,13 +525,13 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
     @SuppressWarnings("unchecked")
 	public void testRetainAll() {
-    	List<E> list = new ArrayList<E>(10);
-    	SetUniqueList<E> uniqueList = SetUniqueList.setUniqueList(list);
+    	final List<E> list = new ArrayList<E>(10);
+    	final SetUniqueList<E> uniqueList = SetUniqueList.setUniqueList(list);
     	for (int i = 0; i < 10; ++i) {
     		uniqueList.add((E)Integer.valueOf(i));
     	}
     	
-    	Collection<E> retained = new ArrayList<E>(5);
+    	final Collection<E> retained = new ArrayList<E>(5);
     	for (int i = 0; i < 5; ++i) {
     		retained.add((E)Integer.valueOf(i * 2));
     	}
@@ -548,16 +548,16 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     @SuppressWarnings("unchecked")
 	public void testRetainAllWithInitialList() {
     	// initialized with empty list
-    	List<E> list = new ArrayList<E>(10);
+    	final List<E> list = new ArrayList<E>(10);
     	for (int i = 0; i < 5; ++i) {
     		list.add((E)Integer.valueOf(i));
     	}
-    	SetUniqueList<E> uniqueList = SetUniqueList.setUniqueList(list);
+    	final SetUniqueList<E> uniqueList = SetUniqueList.setUniqueList(list);
     	for (int i = 5; i < 10; ++i) {
     		uniqueList.add((E)Integer.valueOf(i));
     	}
     	
-    	Collection<E> retained = new ArrayList<E>(5);
+    	final Collection<E> retained = new ArrayList<E>(5);
     	for (int i = 0; i < 5; ++i) {
     		retained.add((E)Integer.valueOf(i * 2));
     	}
@@ -575,20 +575,20 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
      * test case for https://issues.apache.org/jira/browse/COLLECTIONS-427
      */
     public void testRetainAllCollections427() {
-        int size = 50000;
-        ArrayList<Integer> list = new ArrayList<Integer>();
+        final int size = 50000;
+        final ArrayList<Integer> list = new ArrayList<Integer>();
         for (int i = 0; i < size; i++) {
             list.add(i);
         }
-        SetUniqueList<Integer> uniqueList = SetUniqueList.setUniqueList(list);
-        ArrayList<Integer> toRetain = new ArrayList<Integer>();
+        final SetUniqueList<Integer> uniqueList = SetUniqueList.setUniqueList(list);
+        final ArrayList<Integer> toRetain = new ArrayList<Integer>();
         for (int i = size; i < 2*size; i++) {
             toRetain.add(i);
         }
 
-        long start = System.currentTimeMillis();
+        final long start = System.currentTimeMillis();
         uniqueList.retainAll(toRetain);
-        long stop = System.currentTimeMillis();
+        final long stop = System.currentTimeMillis();
         
         // make sure retainAll completes under 5 seconds
         // TODO if test is migrated to JUnit 4, add a Timeout rule.
@@ -598,7 +598,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     
     @SuppressWarnings("serial")
     class SetUniqueList307 extends SetUniqueList<E> {
-        public SetUniqueList307(List<E> list, Set<E> set) {
+        public SetUniqueList307(final List<E> list, final Set<E> set) {
             super(list, set);
         }
     }

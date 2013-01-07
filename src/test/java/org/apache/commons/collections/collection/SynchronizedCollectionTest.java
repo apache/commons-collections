@@ -29,7 +29,7 @@ import java.util.Collection;
  */
 public class SynchronizedCollectionTest<E> extends AbstractCollectionTest<E> {
 
-    public SynchronizedCollectionTest(String testName) {
+    public SynchronizedCollectionTest(final String testName) {
         super(testName);
     }
 
@@ -46,7 +46,7 @@ public class SynchronizedCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Override
     public Collection<E> makeConfirmedFullCollection() {
-        ArrayList<E> list = new ArrayList<E>();
+        final ArrayList<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }

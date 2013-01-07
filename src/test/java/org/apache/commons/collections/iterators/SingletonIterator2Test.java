@@ -31,7 +31,7 @@ public class SingletonIterator2Test<E> extends AbstractIteratorTest<E> {
 
     private static final Object testValue = "foo";
 
-    public SingletonIterator2Test(String testName) {
+    public SingletonIterator2Test(final String testName) {
         super(testName);
     }
 
@@ -39,7 +39,7 @@ public class SingletonIterator2Test<E> extends AbstractIteratorTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public SingletonIterator<E> makeEmptyIterator() {
-        SingletonIterator<E> iter = new SingletonIterator<E>((E) testValue);
+        final SingletonIterator<E> iter = new SingletonIterator<E>((E) testValue);
         iter.next();
         iter.remove();
         iter.reset();
@@ -64,17 +64,17 @@ public class SingletonIterator2Test<E> extends AbstractIteratorTest<E> {
 
     //-----------------------------------------------------------------------
     public void testIterator() {
-        Iterator<E> iter = makeObject();
+        final Iterator<E> iter = makeObject();
         assertTrue("Iterator has a first item", iter.hasNext());
 
-        E iterValue = iter.next();
+        final E iterValue = iter.next();
         assertEquals("Iteration value is correct", testValue, iterValue);
 
         assertTrue("Iterator should now be empty", !iter.hasNext());
 
         try {
             iter.next();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             assertTrue(
                 "NoSuchElementException must be thrown",
                 e.getClass().equals(new NoSuchElementException().getClass()));
@@ -82,7 +82,7 @@ public class SingletonIterator2Test<E> extends AbstractIteratorTest<E> {
     }
 
     public void testReset() {
-        ResettableIterator<E> it = makeObject();
+        final ResettableIterator<E> it = makeObject();
 
         assertEquals(true, it.hasNext());
         assertEquals(testValue, it.next());

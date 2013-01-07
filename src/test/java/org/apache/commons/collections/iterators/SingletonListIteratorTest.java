@@ -30,7 +30,7 @@ public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
 
     private static final Object testValue = "foo";
     
-    public SingletonListIteratorTest(String testName) {
+    public SingletonListIteratorTest(final String testName) {
         super(testName);
     }
     
@@ -40,7 +40,7 @@ public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
      */
     @Override
     public SingletonListIterator<E> makeEmptyIterator() {
-        SingletonListIterator<E> iter = makeObject();
+        final SingletonListIterator<E> iter = makeObject();
         iter.next();
         iter.remove();
         iter.reset();        
@@ -69,7 +69,7 @@ public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
     }
 
     public void testIterator() {
-        ListIterator<E> iter = makeObject();
+        final ListIterator<E> iter = makeObject();
         assertTrue( "Iterator should have next item", iter.hasNext() );
         assertTrue( "Iterator should have no previous item", !iter.hasPrevious() );
         assertEquals( "Iteration next index", 0, iter.nextIndex() );
@@ -101,21 +101,21 @@ public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
 
         try {
             iter.next();
-        } catch (Exception e) {
+        } catch (final Exception e) {
           assertTrue("NoSuchElementException must be thrown", 
              e.getClass().equals(new NoSuchElementException().getClass()));
         }
         iter.previous();
         try {
             iter.previous();
-        } catch (Exception e) {
+        } catch (final Exception e) {
           assertTrue("NoSuchElementException must be thrown", 
              e.getClass().equals(new NoSuchElementException().getClass()));
         }
     }
     
     public void testReset() {
-        ResettableListIterator<E> it = makeObject();
+        final ResettableListIterator<E> it = makeObject();
         
         assertEquals(true, it.hasNext());
         assertEquals(false, it.hasPrevious());

@@ -46,7 +46,7 @@ public class SingletonIterator<E>
      *
      * @param object  the single object to return from the iterator
      */
-    public SingletonIterator(E object) {
+    public SingletonIterator(final E object) {
         this(object, true);
     }
 
@@ -58,7 +58,7 @@ public class SingletonIterator<E>
      * @param removeAllowed  true if remove is allowed
      * @since 3.1
      */
-    public SingletonIterator(E object, boolean removeAllowed) {
+    public SingletonIterator(final E object, final boolean removeAllowed) {
         super();
         this.object = object;
         this.removeAllowed = removeAllowed;

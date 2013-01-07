@@ -78,7 +78,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
      * @param initialCapacity  the initial capacity
      * @throws IllegalArgumentException if the initial capacity is negative
      */
-    public LinkedMap(int initialCapacity) {
+    public LinkedMap(final int initialCapacity) {
         super(initialCapacity);
     }
 
@@ -91,7 +91,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
      * @throws IllegalArgumentException if the initial capacity is negative
      * @throws IllegalArgumentException if the load factor is less than zero
      */
-    public LinkedMap(int initialCapacity, float loadFactor) {
+    public LinkedMap(final int initialCapacity, final float loadFactor) {
         super(initialCapacity, loadFactor);
     }
 
@@ -101,7 +101,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
      * @param map  the map to copy
      * @throws NullPointerException if the map is null
      */
-    public LinkedMap(Map<K, V> map) {
+    public LinkedMap(final Map<K, V> map) {
         super(map);
     }
 
@@ -119,7 +119,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
     /**
      * Write the map out using a custom routine.
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         doWriteObject(out);
     }
@@ -127,7 +127,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
     /**
      * Read the map in using a custom routine.
      */
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         doReadObject(in);
     }
@@ -140,7 +140,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
      * @return the key at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
-    public K get(int index) {
+    public K get(final int index) {
         return getEntry(index).getKey();
     }
     
@@ -151,7 +151,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
      * @return the value at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
-    public V getValue(int index) {
+    public V getValue(final int index) {
         return getEntry(index).getValue();
     }
     
@@ -180,7 +180,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
      *  or <code>null</code> if none existed
      * @throws IndexOutOfBoundsException if the index is invalid
      */
-    public V remove(int index) {
+    public V remove(final int index) {
         return remove(get(index));
     }
 
@@ -210,7 +210,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
 
         final LinkedMap<K, ?> parent;
 
-        LinkedMapList(LinkedMap<K, ?> parent) {
+        LinkedMapList(final LinkedMap<K, ?> parent) {
             this.parent = parent;
         }
 
@@ -220,47 +220,47 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
         }
 
         @Override
-        public K get(int index) {
+        public K get(final int index) {
             return parent.get(index);
         }
 
         @Override
-        public boolean contains(Object obj) {
+        public boolean contains(final Object obj) {
             return parent.containsKey(obj);
         }
 
         @Override
-        public int indexOf(Object obj) {
+        public int indexOf(final Object obj) {
             return parent.indexOf(obj);
         }
 
         @Override
-        public int lastIndexOf(Object obj) {
+        public int lastIndexOf(final Object obj) {
             return parent.indexOf(obj);
         }
 
         @Override
-        public boolean containsAll(Collection<?> coll) {
+        public boolean containsAll(final Collection<?> coll) {
             return parent.keySet().containsAll(coll);
         }
 
         @Override
-        public K remove(int index) {
+        public K remove(final int index) {
             throw new UnsupportedOperationException();
         }
 
         @Override
-        public boolean remove(Object obj) {
+        public boolean remove(final Object obj) {
             throw new UnsupportedOperationException();
         }
 
         @Override
-        public boolean removeAll(Collection<?> coll) {
+        public boolean removeAll(final Collection<?> coll) {
             throw new UnsupportedOperationException();
         }
 
         @Override
-        public boolean retainAll(Collection<?> coll) {
+        public boolean retainAll(final Collection<?> coll) {
             throw new UnsupportedOperationException();
         }
 
@@ -275,7 +275,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
         }
 
         @Override
-        public <T> T[] toArray(T[] array) {
+        public <T> T[] toArray(final T[] array) {
             return parent.keySet().toArray(array);
         }
 
@@ -290,12 +290,12 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
         }
 
         @Override
-        public ListIterator<K> listIterator(int fromIndex) {
+        public ListIterator<K> listIterator(final int fromIndex) {
             return UnmodifiableListIterator.umodifiableListIterator(super.listIterator(fromIndex));
         }
 
         @Override
-        public List<K> subList(int fromIndexInclusive, int toIndexExclusive) {
+        public List<K> subList(final int fromIndexInclusive, final int toIndexExclusive) {
             return UnmodifiableList.unmodifiableList(super.subList(fromIndexInclusive, toIndexExclusive));
         }
     }

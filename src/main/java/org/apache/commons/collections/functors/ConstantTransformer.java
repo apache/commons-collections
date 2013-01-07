@@ -58,7 +58,7 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
      * @param constantToReturn  the constant object to return each time in the factory
      * @return the <code>constant</code> factory.
      */
-    public static <I, O> Transformer<I, O> constantTransformer(O constantToReturn) {
+    public static <I, O> Transformer<I, O> constantTransformer(final O constantToReturn) {
         if (constantToReturn == null) {
             return nullTransformer();
         }
@@ -71,7 +71,7 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
      * 
      * @param constantToReturn  the constant to return each time
      */
-    public ConstantTransformer(O constantToReturn) {
+    public ConstantTransformer(final O constantToReturn) {
         super();
         iConstant = constantToReturn;
     }
@@ -82,7 +82,7 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
      * @param input  the input object which is ignored
      * @return the stored constant
      */
-    public O transform(I input) {
+    public O transform(final I input) {
         return iConstant;
     }
 
@@ -100,14 +100,14 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
      * {@inheritDoc}
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == this) {
             return true;
         }
         if (obj instanceof ConstantTransformer == false) {
             return false;
         }
-        Object otherConstant = ((ConstantTransformer<?, ?>) obj).getConstant();
+        final Object otherConstant = ((ConstantTransformer<?, ?>) obj).getConstant();
         return otherConstant == getConstant() || otherConstant != null && otherConstant.equals(getConstant());
     }
 

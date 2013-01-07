@@ -31,7 +31,7 @@ import java.util.List;
  */
 public class FixedSizeListTest<E> extends AbstractListTest<E> {
 
-    public FixedSizeListTest(String testName) {
+    public FixedSizeListTest(final String testName) {
         super(testName);
     }
 
@@ -42,7 +42,7 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
 
     @Override
     public List<E> makeFullCollection() {
-        List<E> list = new ArrayList<E>();
+        final List<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return FixedSizeList.fixedSizeList(list);
     }

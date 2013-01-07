@@ -47,7 +47,7 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
      * @return a new synchronized Bag
      * @throws IllegalArgumentException if bag is null
      */
-    public static <E> SynchronizedBag<E> synchronizedBag(Bag<E> bag) {
+    public static <E> SynchronizedBag<E> synchronizedBag(final Bag<E> bag) {
         return new SynchronizedBag<E>(bag);
     }
     
@@ -58,7 +58,7 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
      * @param bag  the bag to decorate, must not be null
      * @throws IllegalArgumentException if bag is null
      */
-    protected SynchronizedBag(Bag<E> bag) {
+    protected SynchronizedBag(final Bag<E> bag) {
         super(bag);
     }
 
@@ -69,7 +69,7 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
      * @param lock  the lock to use, must not be null
      * @throws IllegalArgumentException if bag is null
      */
-    protected SynchronizedBag(Bag<E> bag, Object lock) {
+    protected SynchronizedBag(final Bag<E> bag, final Object lock) {
         super(bag, lock);
     }
 
@@ -84,13 +84,13 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
     
     //-----------------------------------------------------------------------
     
-    public boolean add(E object, int count) {
+    public boolean add(final E object, final int count) {
         synchronized (lock) {
             return getBag().add(object, count);
         }
     }
 
-    public boolean remove(Object object, int count) {
+    public boolean remove(final Object object, final int count) {
         synchronized (lock) {
             return getBag().remove(object, count);
         }
@@ -98,12 +98,12 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
 
     public Set<E> uniqueSet() {
         synchronized (lock) {
-            Set<E> set = getBag().uniqueSet();
+            final Set<E> set = getBag().uniqueSet();
             return new SynchronizedBagSet(set, lock);
         }
     }
 
-    public int getCount(Object object) {
+    public int getCount(final Object object) {
         synchronized (lock) {
             return getBag().getCount(object);
         }
@@ -122,7 +122,7 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
          * @param set  the set to decorate
          * @param lock  the lock to use, shared with the bag
          */
-        SynchronizedBagSet(Set<E> set, Object lock) {
+        SynchronizedBagSet(final Set<E> set, final Object lock) {
             super(set, lock);
         }
     }

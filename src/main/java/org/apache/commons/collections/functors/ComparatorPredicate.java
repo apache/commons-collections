@@ -104,7 +104,7 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
      * @return the predicate
      * @throws IllegalArgumentException if comparator is null
      */
-    public static <T> Predicate<T> comparatorPredicate(T object, Comparator<T> comparator) {
+    public static <T> Predicate<T> comparatorPredicate(final T object, final Comparator<T> comparator) {
         return comparatorPredicate(object, comparator, Criterion.EQUAL);
     }
 
@@ -118,7 +118,7 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
      * @return the predicate
      * @throws IllegalArgumentException if comparator is null of criterion is invalid
      */
-    public static <T> Predicate<T> comparatorPredicate(T object, Comparator<T> comparator, Criterion criterion) {
+    public static <T> Predicate<T> comparatorPredicate(final T object, final Comparator<T> comparator, final Criterion criterion) {
         if (comparator == null) {
             throw new IllegalArgumentException("Comparator must not be null.");
         }
@@ -136,7 +136,7 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
      * @param comparator  the comparator to use for comparison
      * @param criterion  the criterion to use to evaluate comparison
      */
-    public ComparatorPredicate(T object, Comparator<T> comparator, Criterion criterion) {
+    public ComparatorPredicate(final T object, final Comparator<T> comparator, final Criterion criterion) {
         super();
         this.object = object;
         this.comparator = comparator;
@@ -159,10 +159,10 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
      * 
      * @throws IllegalStateException if the criterion is invalid (really not possible)
      */
-    public boolean evaluate(T target) {
+    public boolean evaluate(final T target) {
 
         boolean result = false;
-        int comparison = comparator.compare(object, target);
+        final int comparison = comparator.compare(object, target);
         switch (criterion) {
         case EQUAL:
             result = comparison == 0;

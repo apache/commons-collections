@@ -89,7 +89,7 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
      * @param paramTypes  the constructor parameter types, not cloned
      * @param args  the constructor arguments, not cloned
      */
-    public InstantiateTransformer(Class<?>[] paramTypes, Object[] args) {
+    public InstantiateTransformer(final Class<?>[] paramTypes, final Object[] args) {
         super();
         iParamTypes = paramTypes;
         iArgs = args;
@@ -101,21 +101,21 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
      * @param input  the input object to transform
      * @return the transformed result
      */
-    public T transform(Class<? extends T> input) {
+    public T transform(final Class<? extends T> input) {
         try {
             if (input == null) {
                 throw new FunctorException(
                     "InstantiateTransformer: Input object was not an instanceof Class, it was a null object");
             }
-            Constructor<? extends T> con = input.getConstructor(iParamTypes);
+            final Constructor<? extends T> con = input.getConstructor(iParamTypes);
             return con.newInstance(iArgs);
-        } catch (NoSuchMethodException ex) {
+        } catch (final NoSuchMethodException ex) {
             throw new FunctorException("InstantiateTransformer: The constructor must exist and be public ");
-        } catch (InstantiationException ex) {
+        } catch (final InstantiationException ex) {
             throw new FunctorException("InstantiateTransformer: InstantiationException", ex);
-        } catch (IllegalAccessException ex) {
+        } catch (final IllegalAccessException ex) {
             throw new FunctorException("InstantiateTransformer: Constructor must be public", ex);
-        } catch (InvocationTargetException ex) {
+        } catch (final InvocationTargetException ex) {
             throw new FunctorException("InstantiateTransformer: Constructor threw an exception", ex);
         }
     }

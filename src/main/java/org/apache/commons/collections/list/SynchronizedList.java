@@ -46,7 +46,7 @@ public class SynchronizedList<E> extends SynchronizedCollection<E> implements Li
      * @return a new synchronized list
      * @throws IllegalArgumentException if list is null
      */
-    public static <T> SynchronizedList<T> synchronizedList(List<T> list) {
+    public static <T> SynchronizedList<T> synchronizedList(final List<T> list) {
         return new SynchronizedList<T>(list);
     }
     
@@ -57,7 +57,7 @@ public class SynchronizedList<E> extends SynchronizedCollection<E> implements Li
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    protected SynchronizedList(List<E> list) {
+    protected SynchronizedList(final List<E> list) {
         super(list);
     }
 
@@ -68,7 +68,7 @@ public class SynchronizedList<E> extends SynchronizedCollection<E> implements Li
      * @param lock  the lock to use, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    protected SynchronizedList(List<E> list, Object lock) {
+    protected SynchronizedList(final List<E> list, final Object lock) {
         super(list, lock);
     }
 
@@ -83,31 +83,31 @@ public class SynchronizedList<E> extends SynchronizedCollection<E> implements Li
 
     //-----------------------------------------------------------------------
     
-    public void add(int index, E object) {
+    public void add(final int index, final E object) {
         synchronized (lock) {
             getList().add(index, object);
         }
     }
 
-    public boolean addAll(int index, Collection<? extends E> coll) {
+    public boolean addAll(final int index, final Collection<? extends E> coll) {
         synchronized (lock) {
             return getList().addAll(index, coll);
         }
     }
 
-    public E get(int index) {
+    public E get(final int index) {
         synchronized (lock) {
             return getList().get(index);
         }
     }
 
-    public int indexOf(Object object) {
+    public int indexOf(final Object object) {
         synchronized (lock) {
             return getList().indexOf(object);
         }
     }
 
-    public int lastIndexOf(Object object) {
+    public int lastIndexOf(final Object object) {
         synchronized (lock) {
             return getList().lastIndexOf(object);
         }
@@ -138,25 +138,25 @@ public class SynchronizedList<E> extends SynchronizedCollection<E> implements Li
      * @param index  index of first element to be returned by this list iterator
      * @return an iterator that must be manually synchronized on the collection
      */
-    public ListIterator<E> listIterator(int index) {
+    public ListIterator<E> listIterator(final int index) {
         return getList().listIterator(index);
     }
 
-    public E remove(int index) {
+    public E remove(final int index) {
         synchronized (lock) {
             return getList().remove(index);
         }
     }
 
-    public E set(int index, E object) {
+    public E set(final int index, final E object) {
         synchronized (lock) {
             return getList().set(index, object);
         }
     }
 
-    public List<E> subList(int fromIndex, int toIndex) {
+    public List<E> subList(final int fromIndex, final int toIndex) {
         synchronized (lock) {
-            List<E> list = getList().subList(fromIndex, toIndex);
+            final List<E> list = getList().subList(fromIndex, toIndex);
             // the lock is passed into the constructor here to ensure that the sublist is
             // synchronized on the same lock as the parent list
             return new SynchronizedList<E>(list, lock);

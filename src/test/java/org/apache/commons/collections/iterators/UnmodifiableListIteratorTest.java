@@ -34,7 +34,7 @@ public class UnmodifiableListIteratorTest<E> extends AbstractListIteratorTest<E>
     protected String[] testArray = { "One", "Two", "Three" };
     protected List<E> testList;
 
-    public UnmodifiableListIteratorTest(String testName) {
+    public UnmodifiableListIteratorTest(final String testName) {
         super(testName);
     }
 
@@ -88,7 +88,7 @@ public class UnmodifiableListIteratorTest<E> extends AbstractListIteratorTest<E>
         try {
             UnmodifiableListIterator.umodifiableListIterator(null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
     }
 
 }

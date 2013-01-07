@@ -69,7 +69,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @throws IllegalArgumentException if there is a key collision
      */
     @SuppressWarnings("unchecked")
-    public CompositeMap(Map<K, V> one, Map<K, V> two) {
+    public CompositeMap(final Map<K, V> one, final Map<K, V> two) {
         this(new Map[] { one, two }, null);
     }
 
@@ -81,7 +81,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @param mutator  MapMutator to be used for mutation operations
      */
     @SuppressWarnings("unchecked")
-    public CompositeMap(Map<K, V> one, Map<K, V> two, MapMutator<K, V> mutator) {
+    public CompositeMap(final Map<K, V> one, final Map<K, V> two, final MapMutator<K, V> mutator) {
         this(new Map[] { one, two }, mutator);
     }
 
@@ -92,7 +92,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @param composite  the Maps to be composited
      * @throws IllegalArgumentException if there is a key collision
      */
-    public CompositeMap(Map<K, V>... composite) {
+    public CompositeMap(final Map<K, V>... composite) {
         this(composite, null);
     }
 
@@ -104,7 +104,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @param mutator  MapMutator to be used for mutation operations
      */
     @SuppressWarnings("unchecked")
-    public CompositeMap(Map<K, V>[] composite, MapMutator<K, V> mutator) {
+    public CompositeMap(final Map<K, V>[] composite, final MapMutator<K, V> mutator) {
         this.mutator = mutator;
         this.composite = new Map[0];
         for (int i = composite.length - 1; i >= 0; --i) {
@@ -118,7 +118,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      *
      * @param mutator  the MapMutator to be used for mutation delegation
      */
-    public void setMutator(MapMutator<K, V> mutator) {
+    public void setMutator(final MapMutator<K, V> mutator) {
         this.mutator = mutator;
     }
 
@@ -130,9 +130,9 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      *         MapMutator set to handle it.
      */
     @SuppressWarnings("unchecked")
-    public synchronized void addComposited(Map<K, V> map) throws IllegalArgumentException {
+    public synchronized void addComposited(final Map<K, V> map) throws IllegalArgumentException {
         for (int i = composite.length - 1; i >= 0; --i) {
-            Collection<K> intersect = CollectionUtils.intersection(this.composite[i].keySet(), map.keySet());
+            final Collection<K> intersect = CollectionUtils.intersection(this.composite[i].keySet(), map.keySet());
             if (intersect.size() != 0) {
                 if (this.mutator == null) {
                     throw new IllegalArgumentException("Key collision adding Map to CompositeMap");
@@ -140,7 +140,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
                 this.mutator.resolveCollision(this, this.composite[i], map, intersect);
             }
         }
-        Map<K, V>[] temp = new Map[this.composite.length + 1];
+        final Map<K, V>[] temp = new Map[this.composite.length + 1];
         System.arraycopy(this.composite, 0, temp, 0, this.composite.length);
         temp[temp.length - 1] = map;
         this.composite = temp;
@@ -153,11 +153,11 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @return The removed Map or <code>null</code> if map is not in the composite
      */
     @SuppressWarnings("unchecked")
-    public synchronized Map<K, V> removeComposited(Map<K, V> map) {
-        int size = this.composite.length;
+    public synchronized Map<K, V> removeComposited(final Map<K, V> map) {
+        final int size = this.composite.length;
         for (int i = 0; i < size; ++i) {
             if (this.composite[i].equals(map)) {
-                Map<K, V>[] temp = new Map[size - 1];
+                final Map<K, V>[] temp = new Map[size - 1];
                 System.arraycopy(this.composite, 0, temp, 0, i);
                 System.arraycopy(this.composite, i + 1, temp, i, size - i - 1);
                 this.composite = temp;
@@ -195,7 +195,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @throws NullPointerException if the key is <tt>null</tt> and this map
      *            does not not permit <tt>null</tt> keys (optional).
      */
-    public boolean containsKey(Object key) {
+    public boolean containsKey(final Object key) {
         for (int i = this.composite.length - 1; i >= 0; --i) {
             if (this.composite[i].containsKey(key)) {
                 return true;
@@ -220,7 +220,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @throws NullPointerException if the value is <tt>null</tt> and this map
      *            does not not permit <tt>null</tt> values (optional).
      */
-    public boolean containsValue(Object value) {
+    public boolean containsValue(final Object value) {
         for (int i = this.composite.length - 1; i >= 0; --i) {
             if (this.composite[i].containsValue(value)) {
                 return true;
@@ -247,7 +247,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @return a set view of the mappings contained in this map.
      */
     public Set<Map.Entry<K, V>> entrySet() {
-        CompositeSet<Map.Entry<K, V>> entries = new CompositeSet<Map.Entry<K,V>>();
+        final CompositeSet<Map.Entry<K, V>> entries = new CompositeSet<Map.Entry<K,V>>();
         for (int i = composite.length - 1; i >= 0; --i) {
             entries.addComposited(composite[i].entrySet());
         }
@@ -278,7 +278,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      *
      * @see #containsKey(Object)
      */
-    public V get(Object key) {
+    public V get(final Object key) {
         for (int i = this.composite.length - 1; i >= 0; --i) {
             if (this.composite[i].containsKey(key)) {
                 return this.composite[i].get(key);
@@ -317,7 +317,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @return a set view of the keys contained in this map.
      */
     public Set<K> keySet() {
-        CompositeSet<K> keys = new CompositeSet<K>();
+        final CompositeSet<K> keys = new CompositeSet<K>();
         for (int i = this.composite.length - 1; i >= 0; --i) {
             keys.addComposited(this.composite[i].keySet());
         }
@@ -349,7 +349,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      *            keys or values, and the specified key or value is
      *            <tt>null</tt>.
      */
-    public V put(K key, V value) {
+    public V put(final K key, final V value) {
         if (this.mutator == null) {
             throw new UnsupportedOperationException("No mutator specified");
         }
@@ -378,7 +378,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      *         this map does not permit <tt>null</tt> keys or values, and the
      *         specified map contains <tt>null</tt> keys or values.
      */
-    public void putAll(Map<? extends K, ? extends V> map) {
+    public void putAll(final Map<? extends K, ? extends V> map) {
         if (this.mutator == null) {
             throw new UnsupportedOperationException("No mutator specified");
         }
@@ -410,7 +410,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @throws UnsupportedOperationException if the <tt>remove</tt> method is
      *         not supported by the composited map containing the key
      */
-    public V remove(Object key) {
+    public V remove(final Object key) {
         for (int i = this.composite.length - 1; i >= 0; --i) {
             if (this.composite[i].containsKey(key)) {
                 return this.composite[i].remove(key);
@@ -448,7 +448,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @return a collection view of the values contained in this map.
      */
     public Collection<V> values() {
-        CompositeCollection<V> values = new CompositeCollection<V>();
+        final CompositeCollection<V> values = new CompositeCollection<V>();
         for (int i = composite.length - 1; i >= 0; --i) {
             values.addComposited(composite[i].values());
         }
@@ -462,9 +462,9 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @return true if the maps are equal
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj instanceof Map) {
-            Map<?, ?> map = (Map<?, ?>) obj;
+            final Map<?, ?> map = (Map<?, ?>) obj;
             return this.entrySet().equals(map.entrySet());
         }
         return false;
@@ -477,7 +477,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
     @Override
     public int hashCode() {
         int code = 0;
-        for (Map.Entry<K, V> entry : entrySet()) {
+        for (final Map.Entry<K, V> entry : entrySet()) {
             code += entry.hashCode();
         }
         return code;

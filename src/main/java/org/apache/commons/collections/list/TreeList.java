@@ -79,7 +79,7 @@ public class TreeList<E> extends AbstractList<E> {
      * @param coll  the collection to copy
      * @throws NullPointerException if the collection is null
      */
-    public TreeList(Collection<E> coll) {
+    public TreeList(final Collection<E> coll) {
         super();
         addAll(coll);
     }
@@ -92,7 +92,7 @@ public class TreeList<E> extends AbstractList<E> {
      * @return the element at the specified index
      */
     @Override
-    public E get(int index) {
+    public E get(final int index) {
         checkInterval(index, 0, size() - 1);
         return root.get(index).getValue();
     }
@@ -136,7 +136,7 @@ public class TreeList<E> extends AbstractList<E> {
      * @return the new iterator
      */
     @Override
-    public ListIterator<E> listIterator(int fromIndex) {
+    public ListIterator<E> listIterator(final int fromIndex) {
         // override to go 75% faster
         // cannot use EmptyIterator as iterator.add() must work
         checkInterval(fromIndex, 0, size());
@@ -150,7 +150,7 @@ public class TreeList<E> extends AbstractList<E> {
      * @return the index of the object, -1 if not found
      */
     @Override
-    public int indexOf(Object object) {
+    public int indexOf(final Object object) {
         // override to go 75% faster
         if (root == null) {
             return -1;
@@ -165,7 +165,7 @@ public class TreeList<E> extends AbstractList<E> {
      * @return true if the object is found
      */
     @Override
-    public boolean contains(Object object) {
+    public boolean contains(final Object object) {
         return indexOf(object) >= 0;
     }
 
@@ -177,7 +177,7 @@ public class TreeList<E> extends AbstractList<E> {
     @Override
     public Object[] toArray() {
         // override to go 20% faster
-        Object[] array = new Object[size()];
+        final Object[] array = new Object[size()];
         if (root != null) {
             root.toArray(array, root.relativePosition);
         }
@@ -192,7 +192,7 @@ public class TreeList<E> extends AbstractList<E> {
      * @param obj  the element to add
      */
     @Override
-    public void add(int index, E obj) {
+    public void add(final int index, final E obj) {
         modCount++;
         checkInterval(index, 0, size());
         if (root == null) {
@@ -212,10 +212,10 @@ public class TreeList<E> extends AbstractList<E> {
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     @Override
-    public E set(int index, E obj) {
+    public E set(final int index, final E obj) {
         checkInterval(index, 0, size() - 1);
-        AVLNode<E> node = root.get(index);
-        E result = node.value;
+        final AVLNode<E> node = root.get(index);
+        final E result = node.value;
         node.setValue(obj);
         return result;
     }
@@ -227,10 +227,10 @@ public class TreeList<E> extends AbstractList<E> {
      * @return the previous object at that index
      */
     @Override
-    public E remove(int index) {
+    public E remove(final int index) {
         modCount++;
         checkInterval(index, 0, size() - 1);
-        E result = get(index);
+        final E result = get(index);
         root = root.remove(index);
         size--;
         return result;
@@ -255,7 +255,7 @@ public class TreeList<E> extends AbstractList<E> {
      * @param endIndex  the last allowed index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
-    private void checkInterval(int index, int startIndex, int endIndex) {
+    private void checkInterval(final int index, final int startIndex, final int endIndex) {
         if (index < startIndex || index > endIndex) {
             throw new IndexOutOfBoundsException("Invalid index:" + index + ", size=" + size());
         }
@@ -298,7 +298,7 @@ public class TreeList<E> extends AbstractList<E> {
          * @param rightFollower the node with the value following this one
          * @param leftFollower the node with the value leading this one
          */
-        private AVLNode(int relativePosition, E obj, AVLNode<E> rightFollower, AVLNode<E> leftFollower) {
+        private AVLNode(final int relativePosition, final E obj, final AVLNode<E> rightFollower, final AVLNode<E> leftFollower) {
             this.relativePosition = relativePosition;
             value = obj;
             rightIsNext = true;
@@ -321,7 +321,7 @@ public class TreeList<E> extends AbstractList<E> {
          *
          * @param obj  the value to store
          */
-        void setValue(E obj) {
+        void setValue(final E obj) {
             this.value = obj;
         }
 
@@ -329,14 +329,14 @@ public class TreeList<E> extends AbstractList<E> {
          * Locate the element with the given index relative to the
          * offset of the parent of this node.
          */
-        AVLNode<E> get(int index) {
-            int indexRelativeToMe = index - relativePosition;
+        AVLNode<E> get(final int index) {
+            final int indexRelativeToMe = index - relativePosition;
 
             if (indexRelativeToMe == 0) {
                 return this;
             }
 
-            AVLNode<E> nextNode = indexRelativeToMe < 0 ? getLeftSubTree() : getRightSubTree();
+            final AVLNode<E> nextNode = indexRelativeToMe < 0 ? getLeftSubTree() : getRightSubTree();
             if (nextNode == null) {
                 return null;
             }
@@ -346,9 +346,9 @@ public class TreeList<E> extends AbstractList<E> {
         /**
          * Locate the index that contains the specified object.
          */
-        int indexOf(Object object, int index) {
+        int indexOf(final Object object, final int index) {
             if (getLeftSubTree() != null) {
-                int result = left.indexOf(object, index + left.relativePosition);
+                final int result = left.indexOf(object, index + left.relativePosition);
                 if (result != -1) {
                     return result;
                 }
@@ -368,7 +368,7 @@ public class TreeList<E> extends AbstractList<E> {
          * @param array the array to be filled
          * @param index the index of this node
          */
-        void toArray(Object[] array, int index) {
+        void toArray(final Object[] array, final int index) {
             array[index] = value;
             if (getLeftSubTree() != null) {
                 left.toArray(array, index + left.relativePosition);
@@ -409,8 +409,8 @@ public class TreeList<E> extends AbstractList<E> {
          * the parent node.
          * @param obj is the object to be stored in the position.
          */
-        AVLNode<E> insert(int index, E obj) {
-            int indexRelativeToMe = index - relativePosition;
+        AVLNode<E> insert(final int index, final E obj) {
+            final int indexRelativeToMe = index - relativePosition;
 
             if (indexRelativeToMe <= 0) {
                 return insertOnLeft(indexRelativeToMe, obj);
@@ -418,7 +418,7 @@ public class TreeList<E> extends AbstractList<E> {
             return insertOnRight(indexRelativeToMe, obj);
         }
 
-        private AVLNode<E> insertOnLeft(int indexRelativeToMe, E obj) {
+        private AVLNode<E> insertOnLeft(final int indexRelativeToMe, final E obj) {
             AVLNode<E> ret = this;
 
             if (getLeftSubTree() == null) {
@@ -435,7 +435,7 @@ public class TreeList<E> extends AbstractList<E> {
             return ret;
         }
 
-        private AVLNode<E> insertOnRight(int indexRelativeToMe, E obj) {
+        private AVLNode<E> insertOnRight(final int indexRelativeToMe, final E obj) {
             AVLNode<E> ret = this;
 
             if (getRightSubTree() == null) {
@@ -490,8 +490,8 @@ public class TreeList<E> extends AbstractList<E> {
          * @param index is the index of the element to be removed relative to the position of
          * the parent node of the current node.
          */
-        AVLNode<E> remove(int index) {
-            int indexRelativeToMe = index - relativePosition;
+        AVLNode<E> remove(final int index) {
+            final int indexRelativeToMe = index - relativePosition;
 
             if (indexRelativeToMe == 0) {
                 return removeSelf();
@@ -559,7 +559,7 @@ public class TreeList<E> extends AbstractList<E> {
 
             if (heightRightMinusLeft() > 0) {
                 // more on the right, so delete from the right
-                AVLNode<E> rightMin = right.min();
+                final AVLNode<E> rightMin = right.min();
                 value = rightMin.value;
                 if (leftIsPrevious) {
                     left = rightMin.left;
@@ -570,12 +570,12 @@ public class TreeList<E> extends AbstractList<E> {
                 }
             } else {
                 // more on the left or equal, so delete from the left
-                AVLNode<E> leftMax = left.max();
+                final AVLNode<E> leftMax = left.max();
                 value = leftMax.value;
                 if (rightIsNext) {
                     right = leftMax.right;
                 }
-                AVLNode<E> leftPrevious = left.left;
+                final AVLNode<E> leftPrevious = left.left;
                 left = left.removeMax();
                 if (left == null) {
                     // special case where left that was deleted was a double link
@@ -619,7 +619,7 @@ public class TreeList<E> extends AbstractList<E> {
         /**
          * Gets the relative position.
          */
-        private int getOffset(AVLNode<E> node) {
+        private int getOffset(final AVLNode<E> node) {
             if (node == null) {
                 return 0;
             }
@@ -629,11 +629,11 @@ public class TreeList<E> extends AbstractList<E> {
         /**
          * Sets the relative position.
          */
-        private int setOffset(AVLNode<E> node, int newOffest) {
+        private int setOffset(final AVLNode<E> node, final int newOffest) {
             if (node == null) {
                 return 0;
             }
-            int oldOffset = getOffset(node);
+            final int oldOffset = getOffset(node);
             node.relativePosition = newOffest;
             return oldOffset;
         }
@@ -650,7 +650,7 @@ public class TreeList<E> extends AbstractList<E> {
         /**
          * Returns the height of the node or -1 if the node is null.
          */
-        private int getHeight(AVLNode<E> node) {
+        private int getHeight(final AVLNode<E> node) {
             return node == null ? -1 : node.height;
         }
 
@@ -662,12 +662,12 @@ public class TreeList<E> extends AbstractList<E> {
         }
 
         private AVLNode<E> rotateLeft() {
-            AVLNode<E> newTop = right; // can't be faedelung!
-            AVLNode<E> movedNode = getRightSubTree().getLeftSubTree();
+            final AVLNode<E> newTop = right; // can't be faedelung!
+            final AVLNode<E> movedNode = getRightSubTree().getLeftSubTree();
 
-            int newTopPosition = relativePosition + getOffset(newTop);
-            int myNewPosition = -newTop.relativePosition;
-            int movedPosition = getOffset(newTop) + getOffset(movedNode);
+            final int newTopPosition = relativePosition + getOffset(newTop);
+            final int myNewPosition = -newTop.relativePosition;
+            final int movedPosition = getOffset(newTop) + getOffset(movedNode);
 
             setRight(movedNode, newTop);
             newTop.setLeft(this, null);
@@ -679,12 +679,12 @@ public class TreeList<E> extends AbstractList<E> {
         }
 
         private AVLNode<E> rotateRight() {
-            AVLNode<E> newTop = left; // can't be faedelung
-            AVLNode<E> movedNode = getLeftSubTree().getRightSubTree();
+            final AVLNode<E> newTop = left; // can't be faedelung
+            final AVLNode<E> movedNode = getLeftSubTree().getRightSubTree();
 
-            int newTopPosition = relativePosition + getOffset(newTop);
-            int myNewPosition = -newTop.relativePosition;
-            int movedPosition = getOffset(newTop) + getOffset(movedNode);
+            final int newTopPosition = relativePosition + getOffset(newTop);
+            final int myNewPosition = -newTop.relativePosition;
+            final int movedPosition = getOffset(newTop) + getOffset(movedNode);
 
             setLeft(movedNode, newTop);
             newTop.setRight(this, null);
@@ -701,7 +701,7 @@ public class TreeList<E> extends AbstractList<E> {
          * @param node  the new left subtree node
          * @param previous  the previous node in the linked list
          */
-        private void setLeft(AVLNode<E> node, AVLNode<E> previous) {
+        private void setLeft(final AVLNode<E> node, final AVLNode<E> previous) {
             leftIsPrevious = node == null;
             left = leftIsPrevious ? previous : node;
             recalcHeight();
@@ -713,7 +713,7 @@ public class TreeList<E> extends AbstractList<E> {
          * @param node  the new left subtree node
          * @param next  the next node in the linked list
          */
-        private void setRight(AVLNode<E> node, AVLNode<E> next) {
+        private void setRight(final AVLNode<E> node, final AVLNode<E> next) {
             rightIsNext = node == null;
             right = rightIsNext ? next : node;
             recalcHeight();
@@ -818,7 +818,7 @@ public class TreeList<E> extends AbstractList<E> {
          * @param parent  the parent list
          * @param fromIndex  the index to start at
          */
-        protected TreeListIterator(TreeList<E> parent, int fromIndex) throws IndexOutOfBoundsException {
+        protected TreeListIterator(final TreeList<E> parent, final int fromIndex) throws IndexOutOfBoundsException {
             super();
             this.parent = parent;
             this.expectedModCount = parent.modCount;
@@ -852,7 +852,7 @@ public class TreeList<E> extends AbstractList<E> {
             if (next == null) {
                 next = parent.root.get(nextIndex);
             }
-            E value = next.getValue();
+            final E value = next.getValue();
             current = next;
             currentIndex = nextIndex++;
             next = next.next();
@@ -873,7 +873,7 @@ public class TreeList<E> extends AbstractList<E> {
             } else {
                 next = next.previous();
             }
-            E value = next.getValue();
+            final E value = next.getValue();
             current = next;
             currentIndex = --nextIndex;
             return value;
@@ -906,7 +906,7 @@ public class TreeList<E> extends AbstractList<E> {
             expectedModCount++;
         }
 
-        public void set(E obj) {
+        public void set(final E obj) {
             checkModCount();
             if (current == null) {
                 throw new IllegalStateException();
@@ -914,7 +914,7 @@ public class TreeList<E> extends AbstractList<E> {
             current.setValue(obj);
         }
 
-        public void add(E obj) {
+        public void add(final E obj) {
             checkModCount();
             parent.add(nextIndex, obj);
             current = null;

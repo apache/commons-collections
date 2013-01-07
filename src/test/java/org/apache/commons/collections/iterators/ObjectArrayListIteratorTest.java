@@ -27,7 +27,7 @@ import java.util.NoSuchElementException;
  */
 public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
 
-    public ObjectArrayListIteratorTest(String testName) {
+    public ObjectArrayListIteratorTest(final String testName) {
         super(testName);
     }
 
@@ -43,7 +43,7 @@ public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
         return new ObjectArrayListIterator<E>((E[]) testArray);
     }
 
-    public ObjectArrayListIterator<E> makeArrayListIterator(E[] array) {
+    public ObjectArrayListIterator<E> makeArrayListIterator(final E[] array) {
         return new ObjectArrayListIterator<E>(array);
     }
 
@@ -52,7 +52,7 @@ public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
      * <code>previous()</code>.
      */
     public void testListIterator() {
-        ListIterator<E> iter = makeObject();
+        final ListIterator<E> iter = makeObject();
 
         // TestArrayIterator#testIterator() has already tested the iterator forward,
         //  now we need to test it in reverse
@@ -63,8 +63,8 @@ public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
         }
 
         for (int x = testArray.length - 1; x >= 0; x--) {
-            Object testValue = testArray[x];
-            Object iterValue = iter.previous();
+            final Object testValue = testArray[x];
+            final Object iterValue = iter.previous();
 
             assertEquals("Iteration value is correct", testValue, iterValue);
         }
@@ -73,7 +73,7 @@ public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
 
         try {
             iter.previous();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             assertTrue(
                 "NoSuchElementException must be thrown",
                 e.getClass().equals(new NoSuchElementException().getClass()));
@@ -86,9 +86,9 @@ public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
      */
     @SuppressWarnings("unchecked")
     public void testListIteratorSet() {
-        String[] testData = new String[] { "a", "b", "c" };
+        final String[] testData = new String[] { "a", "b", "c" };
 
-        String[] result = new String[] { "0", "1", "2" };
+        final String[] result = new String[] { "0", "1", "2" };
 
         ListIterator<E> iter = makeArrayListIterator((E[]) testData);
         int x = 0;
@@ -107,9 +107,9 @@ public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
         try {
             iter.set((E) "should fail");
             fail("ListIterator#set should fail if next() or previous() have not yet been called.");
-        } catch (IllegalStateException e) {
+        } catch (final IllegalStateException e) {
             // expected
-        } catch (Throwable t) { // should never happen
+        } catch (final Throwable t) { // should never happen
             fail(t.toString());
         }
 

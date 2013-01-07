@@ -64,7 +64,7 @@ public class BufferUtils {
      * @return a synchronized buffer backed by that buffer
      * @throws IllegalArgumentException  if the Buffer is null
      */
-    public static <E> Buffer<E> synchronizedBuffer(Buffer<E> buffer) {
+    public static <E> Buffer<E> synchronizedBuffer(final Buffer<E> buffer) {
         return SynchronizedBuffer.synchronizedBuffer(buffer);
     }
 
@@ -81,7 +81,7 @@ public class BufferUtils {
      * @return a blocking buffer backed by that buffer
      * @throws IllegalArgumentException  if the Buffer is null
      */
-    public static <E> Buffer<E> blockingBuffer(Buffer<E> buffer) {
+    public static <E> Buffer<E> blockingBuffer(final Buffer<E> buffer) {
         return BlockingBuffer.blockingBuffer(buffer);
     }
 
@@ -100,7 +100,7 @@ public class BufferUtils {
      * @throws IllegalArgumentException  if the Buffer is null
      * @since 3.2
      */
-    public static <E> Buffer<E> blockingBuffer(Buffer<E> buffer, long timeoutMillis) {
+    public static <E> Buffer<E> blockingBuffer(final Buffer<E> buffer, final long timeoutMillis) {
         return BlockingBuffer.blockingBuffer(buffer, timeoutMillis);
     }
 
@@ -118,7 +118,7 @@ public class BufferUtils {
      * @throws IllegalArgumentException if the given buffer is null
      * @since 3.2
      */
-    public static <E> Buffer<E> boundedBuffer(Buffer<E> buffer, int maximumSize) {
+    public static <E> Buffer<E> boundedBuffer(final Buffer<E> buffer, final int maximumSize) {
         return BoundedBuffer.boundedBuffer(buffer, maximumSize);
     }
 
@@ -137,7 +137,7 @@ public class BufferUtils {
      * @throws IllegalArgumentException if the given buffer is null
      * @since 3.2
      */
-    public static <E> Buffer<E> boundedBuffer(Buffer<E> buffer, int maximumSize, long timeoutMillis) {
+    public static <E> Buffer<E> boundedBuffer(final Buffer<E> buffer, final int maximumSize, final long timeoutMillis) {
         return BoundedBuffer.boundedBuffer(buffer, maximumSize, timeoutMillis);
     }
 
@@ -149,7 +149,7 @@ public class BufferUtils {
      * @return an unmodifiable buffer backed by that buffer
      * @throws IllegalArgumentException  if the Buffer is null
      */
-    public static <E> Buffer<E> unmodifiableBuffer(Buffer<E> buffer) {
+    public static <E> Buffer<E> unmodifiableBuffer(final Buffer<E> buffer) {
         return UnmodifiableBuffer.unmodifiableBuffer(buffer);
     }
 
@@ -167,7 +167,7 @@ public class BufferUtils {
      * @return a predicated buffer
      * @throws IllegalArgumentException  if the Buffer or Predicate is null
      */
-    public static <E> Buffer<E> predicatedBuffer(Buffer<E> buffer, Predicate<? super E> predicate) {
+    public static <E> Buffer<E> predicatedBuffer(final Buffer<E> buffer, final Predicate<? super E> predicate) {
         return PredicatedBuffer.predicatedBuffer(buffer, predicate);
     }
 
@@ -187,7 +187,7 @@ public class BufferUtils {
      * @return a transformed buffer backed by the given buffer
      * @throws IllegalArgumentException  if the Buffer or Transformer is null
      */
-    public static <E> Buffer<E> transformingBuffer(Buffer<E> buffer, Transformer<? super E, ? extends E> transformer) {
+    public static <E> Buffer<E> transformingBuffer(final Buffer<E> buffer, final Transformer<? super E, ? extends E> transformer) {
         return TransformedBuffer.transformingBuffer(buffer, transformer);
     }
 

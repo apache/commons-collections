@@ -42,7 +42,7 @@ public abstract class AbstractSerializableListDecorator<E>
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    protected AbstractSerializableListDecorator(List<E> list) {
+    protected AbstractSerializableListDecorator(final List<E> list) {
         super(list);
     }
 
@@ -53,7 +53,7 @@ public abstract class AbstractSerializableListDecorator<E>
      * @param out  the output stream
      * @throws IOException
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(collection);
     }
@@ -66,7 +66,7 @@ public abstract class AbstractSerializableListDecorator<E>
      * @throws ClassNotFoundException
      */
     @SuppressWarnings("unchecked")
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         collection = (Collection<E>) in.readObject();
     }

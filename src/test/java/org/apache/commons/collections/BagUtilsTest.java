@@ -39,7 +39,7 @@ import org.apache.commons.collections.functors.TruePredicate;
  */
 public class BagUtilsTest extends BulkTest {
 
-    public BagUtilsTest(String name) {
+    public BagUtilsTest(final String name) {
         super(name);
     }
 
@@ -63,7 +63,7 @@ public class BagUtilsTest extends BulkTest {
         try {
             bag = BagUtils.synchronizedBag(null);
             fail("Expecting IllegalArgumentException for null bag.");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
     }
@@ -75,7 +75,7 @@ public class BagUtilsTest extends BulkTest {
         try {
             bag = BagUtils.unmodifiableBag(null);
             fail("Expecting IllegalArgumentException for null bag.");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
     }
@@ -87,13 +87,13 @@ public class BagUtilsTest extends BulkTest {
         try {
             bag = BagUtils.predicatedBag(null,truePredicate);
             fail("Expecting IllegalArgumentException for null bag.");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
         try {
             bag = BagUtils.predicatedBag(new HashBag<Object>(), null);
             fail("Expecting IllegalArgumentException for null predicate.");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
     }
@@ -105,13 +105,13 @@ public class BagUtilsTest extends BulkTest {
         try {
             bag = BagUtils.transformingBag(null, nopTransformer);
             fail("Expecting IllegalArgumentException for null bag.");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
         try {
             bag = BagUtils.transformingBag(new HashBag<Object>(), null);
             fail("Expecting IllegalArgumentException for null transformer.");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
     }
@@ -123,7 +123,7 @@ public class BagUtilsTest extends BulkTest {
         try {
             bag = BagUtils.synchronizedSortedBag(null);
             fail("Expecting IllegalArgumentException for null bag.");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
     }
@@ -135,7 +135,7 @@ public class BagUtilsTest extends BulkTest {
         try {
             bag = BagUtils.unmodifiableSortedBag(null);
             fail("Expecting IllegalArgumentException for null bag.");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
     }
@@ -147,13 +147,13 @@ public class BagUtilsTest extends BulkTest {
         try {
             bag = BagUtils.predicatedSortedBag(null, truePredicate);
             fail("Expecting IllegalArgumentException for null bag.");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
         try {
             bag = BagUtils.predicatedSortedBag(new TreeBag<Object>(), null);
             fail("Expecting IllegalArgumentException for null predicate.");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
     }
@@ -165,13 +165,13 @@ public class BagUtilsTest extends BulkTest {
         try {
             bag = BagUtils.transformingSortedBag(null, nopTransformer);
             fail("Expecting IllegalArgumentException for null bag.");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
         try {
             bag = BagUtils.transformingSortedBag(new TreeBag<Object>(), null);
             fail("Expecting IllegalArgumentException for null transformer.");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
     }

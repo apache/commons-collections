@@ -52,7 +52,7 @@ public class ByteArrayKeyAnalyzer extends AbstractKeyAnalyzer<byte[]> {
      */
     private final int maxLengthInBits;
     
-    public ByteArrayKeyAnalyzer(int maxLengthInBits) {
+    public ByteArrayKeyAnalyzer(final int maxLengthInBits) {
         if (maxLengthInBits < 0) {
             throw new IllegalArgumentException(
                     "maxLengthInBits=" + maxLengthInBits);
@@ -64,7 +64,7 @@ public class ByteArrayKeyAnalyzer extends AbstractKeyAnalyzer<byte[]> {
     /**
      * Returns a bit mask where the given bit is set
      */
-    private static int mask(int bit) {
+    private static int mask(final int bit) {
         return MSB >>> bit;
     }
 
@@ -86,58 +86,58 @@ public class ByteArrayKeyAnalyzer extends AbstractKeyAnalyzer<byte[]> {
     /**
      * {@inheritDoc}
      */
-    public int lengthInBits(byte[] key) {
+    public int lengthInBits(final byte[] key) {
         return key != null ? key.length * bitsPerElement() : 0;
     }
     
     /**
      * {@inheritDoc}
      */
-    public boolean isBitSet(byte[] key, int bitIndex, int lengthInBits) {
+    public boolean isBitSet(final byte[] key, final int bitIndex, final int lengthInBits) {
         if (key == null) {     
             return false;
         }
         
-        int prefix = maxLengthInBits - lengthInBits;
-        int keyBitIndex = bitIndex - prefix;
+        final int prefix = maxLengthInBits - lengthInBits;
+        final int keyBitIndex = bitIndex - prefix;
         
         if (keyBitIndex >= lengthInBits || keyBitIndex < 0) {
             return false;
         }
         
-        int index = keyBitIndex / LENGTH;
-        int bit = keyBitIndex % LENGTH;
+        final int index = keyBitIndex / LENGTH;
+        final int bit = keyBitIndex % LENGTH;
         return (key[index] & mask(bit)) != 0;
     }
 
     /**
      * {@inheritDoc}
      */
-    public int bitIndex(byte[] key, int offsetInBits, int lengthInBits, 
-            byte[] other, int otherOffsetInBits, int otherLengthInBits) {
+    public int bitIndex(final byte[] key, final int offsetInBits, final int lengthInBits, 
+            byte[] other, final int otherOffsetInBits, final int otherLengthInBits) {
         
         if (other == null) {
             other = NULL;
         }
         
         boolean allNull = true;
-        int length = Math.max(lengthInBits, otherLengthInBits);
-        int prefix = maxLengthInBits - length;
+        final int length = Math.max(lengthInBits, otherLengthInBits);
+        final int prefix = maxLengthInBits - length;
         
         if (prefix < 0) {
             return KeyAnalyzer.OUT_OF_BOUNDS_BIT_KEY;
         }
         
         for (int i = 0; i < length; i++) {
-            int index = prefix + offsetInBits + i;
-            boolean value = isBitSet(key, index, lengthInBits);
+            final int index = prefix + offsetInBits + i;
+            final boolean value = isBitSet(key, index, lengthInBits);
                 
             if (value) {
                 allNull = false;
             }
             
-            int otherIndex = prefix + otherOffsetInBits + i;
-            boolean otherValue = isBitSet(other, otherIndex, otherLengthInBits);
+            final int otherIndex = prefix + otherOffsetInBits + i;
+            final boolean otherValue = isBitSet(other, otherIndex, otherLengthInBits);
             
             if (value != otherValue) {
                 return index;
@@ -154,15 +154,15 @@ public class ByteArrayKeyAnalyzer extends AbstractKeyAnalyzer<byte[]> {
     /**
      * {@inheritDoc}
      */
-    public boolean isPrefix(byte[] prefix, int offsetInBits, 
-            int lengthInBits, byte[] key) {
+    public boolean isPrefix(final byte[] prefix, final int offsetInBits, 
+            final int lengthInBits, final byte[] key) {
         
-        int keyLength = lengthInBits(key);
+        final int keyLength = lengthInBits(key);
         if (lengthInBits > keyLength) {
             return false;
         }
         
-        int elements = lengthInBits - offsetInBits;
+        final int elements = lengthInBits - offsetInBits;
         for (int i = 0; i < elements; i++) {
             if (isBitSet(prefix, i+offsetInBits, lengthInBits) 
                     != isBitSet(key, i, keyLength)) {
@@ -177,7 +177,7 @@ public class ByteArrayKeyAnalyzer extends AbstractKeyAnalyzer<byte[]> {
      * {@inheritDoc}
      */
     @Override
-    public int compare(byte[] o1, byte[] o2) {
+    public int compare(final byte[] o1, final byte[] o2) {
         if (o1 == null) {
             return o2 == null ? 0 : -1;
         } else if (o2 == null) {
@@ -189,7 +189,7 @@ public class ByteArrayKeyAnalyzer extends AbstractKeyAnalyzer<byte[]> {
         }
         
         for (int i = 0; i < o1.length; i++) {
-            int diff = (o1[i] & 0xFF) - (o2[i] & 0xFF);
+            final int diff = (o1[i] & 0xFF) - (o2[i] & 0xFF);
             if (diff != 0) {
                 return diff;
             }

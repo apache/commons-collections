@@ -44,7 +44,7 @@ public abstract class AbstractBidiMapDecorator<K, V>
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    protected AbstractBidiMapDecorator(BidiMap<K, V> map) {
+    protected AbstractBidiMapDecorator(final BidiMap<K, V> map) {
         super(map);
     }
 
@@ -64,11 +64,11 @@ public abstract class AbstractBidiMapDecorator<K, V>
         return decorated().mapIterator();
     }
 
-    public K getKey(Object value) {
+    public K getKey(final Object value) {
         return decorated().getKey(value);
     }
 
-    public K removeValue(Object value) {
+    public K removeValue(final Object value) {
         return decorated().removeValue(value);
     }
 

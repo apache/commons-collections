@@ -39,7 +39,7 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
      *
      * @param testName  the test name
      */
-    public AbstractIterableMapTest(String testName) {
+    public AbstractIterableMapTest(final String testName) {
         super(testName);
     }
 
@@ -67,12 +67,12 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
         }
         resetFull();
         Iterator<Map.Entry<K, V>> it = getMap().entrySet().iterator();
-        Map.Entry<K, V> val = it.next();
+        final Map.Entry<K, V> val = it.next();
         getMap().remove(val.getKey());
         try {
             it.next();
             fail();
-        } catch (ConcurrentModificationException ex) {}
+        } catch (final ConcurrentModificationException ex) {}
 
         resetFull();
         it = getMap().entrySet().iterator();
@@ -81,7 +81,7 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
         try {
             it.next();
             fail();
-        } catch (ConcurrentModificationException ex) {}
+        } catch (final ConcurrentModificationException ex) {}
     }
 
     public void testFailFastKeySet() {
@@ -93,12 +93,12 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
         }
         resetFull();
         Iterator<K> it = getMap().keySet().iterator();
-        K val = it.next();
+        final K val = it.next();
         getMap().remove(val);
         try {
             it.next();
             fail();
-        } catch (ConcurrentModificationException ex) {}
+        } catch (final ConcurrentModificationException ex) {}
 
         resetFull();
         it = getMap().keySet().iterator();
@@ -107,7 +107,7 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
         try {
             it.next();
             fail();
-        } catch (ConcurrentModificationException ex) {}
+        } catch (final ConcurrentModificationException ex) {}
     }
 
     public void testFailFastValues() {
@@ -124,7 +124,7 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
         try {
             it.next();
             fail();
-        } catch (ConcurrentModificationException ex) {}
+        } catch (final ConcurrentModificationException ex) {}
 
         resetFull();
         it = getMap().values().iterator();
@@ -133,7 +133,7 @@ public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V
         try {
             it.next();
             fail();
-        } catch (ConcurrentModificationException ex) {}
+        } catch (final ConcurrentModificationException ex) {}
     }
 
     //-----------------------------------------------------------------------

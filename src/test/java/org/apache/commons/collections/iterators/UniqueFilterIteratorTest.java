@@ -34,7 +34,7 @@ public class UniqueFilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
     protected List<E> list1 = null;
 
-    public UniqueFilterIteratorTest(String testName) {
+    public UniqueFilterIteratorTest(final String testName) {
         super(testName);
     }
 
@@ -56,20 +56,20 @@ public class UniqueFilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
     @Override
     public UniqueFilterIterator<E> makeEmptyIterator() {
-        ArrayList<E> list = new ArrayList<E>();
+        final ArrayList<E> list = new ArrayList<E>();
         return new UniqueFilterIterator<E>(list.iterator());
     }
 
     @Override
     public UniqueFilterIterator<E> makeObject() {
-        Iterator<E> i = list1.iterator();
+        final Iterator<E> i = list1.iterator();
         return new UniqueFilterIterator<E>(i);
     }
 
     public void testIterator() {
-        Iterator<E> iter = makeObject();
-        for (String testValue : testArray) {
-            E iterValue = iter.next();
+        final Iterator<E> iter = makeObject();
+        for (final String testValue : testArray) {
+            final E iterValue = iter.next();
 
             assertEquals( "Iteration value is correct", testValue, iterValue );
         }
@@ -78,7 +78,7 @@ public class UniqueFilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
         try {
             iter.next();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             assertTrue("NoSuchElementException must be thrown", 
                        e.getClass().equals(new NoSuchElementException().getClass()));
         }

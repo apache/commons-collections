@@ -39,7 +39,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
      * 
      * @param testName  the test class name
      */
-    public AbstractIteratorTest(String testName) {
+    public AbstractIteratorTest(final String testName) {
         super(testName);
     }
 
@@ -105,7 +105,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
             return;
         }
 
-        Iterator<E> it = makeEmptyIterator();
+        final Iterator<E> it = makeEmptyIterator();
         
         // hasNext() should return false
         assertEquals("hasNext() should return false for empty iterators", false, it.hasNext());
@@ -114,7 +114,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         try {
             it.next();
             fail("NoSuchElementException must be thrown when Iterator is exhausted");
-        } catch (NoSuchElementException e) {
+        } catch (final NoSuchElementException e) {
         }
         verify();
         
@@ -129,7 +129,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
             return;
         }
 
-        Iterator<E> it = makeObject();
+        final Iterator<E> it = makeObject();
 
         // hasNext() must be true (ensure makeFullIterator is correct!)
         assertEquals("hasNext() should return true for at least one element", true, it.hasNext());
@@ -137,7 +137,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         // next() must not throw exception (ensure makeFullIterator is correct!)
         try {
             it.next();
-        } catch (NoSuchElementException e) {
+        } catch (final NoSuchElementException e) {
             fail("Full iterators must have at least one element");
         }
 
@@ -151,7 +151,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         try {
             it.next();
             fail("NoSuchElementException must be thrown when Iterator is exhausted");
-        } catch (NoSuchElementException e) {
+        } catch (final NoSuchElementException e) {
         }
         
         assertNotNull(it.toString());
@@ -161,13 +161,13 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
      * Test remove behaviour.
      */
     public void testRemove() {
-        Iterator<E> it = makeObject();
+        final Iterator<E> it = makeObject();
         
         if (supportsRemove() == false) {
             // check for UnsupportedOperationException if not supported
             try {
                 it.remove();
-            } catch (UnsupportedOperationException ex) {}
+            } catch (final UnsupportedOperationException ex) {}
             return;
         }
         
@@ -175,7 +175,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         try {
             it.remove();
             fail();
-        } catch (IllegalStateException ex) {}
+        } catch (final IllegalStateException ex) {}
         verify();
         
         // remove after next should be fine
@@ -186,7 +186,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         try {
             it.remove();
             fail();
-        } catch (IllegalStateException ex) {}
+        } catch (final IllegalStateException ex) {}
     }
     
 }

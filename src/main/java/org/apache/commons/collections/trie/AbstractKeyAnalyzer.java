@@ -30,7 +30,7 @@ public abstract class AbstractKeyAnalyzer<K> implements KeyAnalyzer<K> {
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    public int compare(K o1, K o2) {
+    public int compare(final K o1, final K o2) {
         if (o1 == null) {
             return o2 == null ? 0 : -1;
         } else if (o2 == null) {
@@ -43,21 +43,21 @@ public abstract class AbstractKeyAnalyzer<K> implements KeyAnalyzer<K> {
     /** 
      * Returns true if bitIndex is a {@link KeyAnalyzer#OUT_OF_BOUNDS_BIT_KEY}
      */
-    static boolean isOutOfBoundsIndex(int bitIndex) {
+    static boolean isOutOfBoundsIndex(final int bitIndex) {
         return bitIndex == OUT_OF_BOUNDS_BIT_KEY;
     }
 
     /** 
      * Returns true if bitIndex is a {@link KeyAnalyzer#EQUAL_BIT_KEY}
      */
-    static boolean isEqualBitKey(int bitIndex) {
+    static boolean isEqualBitKey(final int bitIndex) {
         return bitIndex == EQUAL_BIT_KEY;
     }
 
     /** 
      * Returns true if bitIndex is a {@link KeyAnalyzer#NULL_BIT_KEY} 
      */
-    static boolean isNullBitKey(int bitIndex) {
+    static boolean isNullBitKey(final int bitIndex) {
         return bitIndex == NULL_BIT_KEY;
     }
 
@@ -66,7 +66,7 @@ public abstract class AbstractKeyAnalyzer<K> implements KeyAnalyzer<K> {
      * are considered valid if they're between 0 and 
      * {@link Integer#MAX_VALUE}
      */
-    static boolean isValidBitIndex(int bitIndex) {
+    static boolean isValidBitIndex(final int bitIndex) {
         return 0 <= bitIndex && bitIndex <= Integer.MAX_VALUE;
     }
 }

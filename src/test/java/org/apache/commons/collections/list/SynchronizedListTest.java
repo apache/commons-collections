@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class SynchronizedListTest<E> extends AbstractListTest<E> {
 
-    public SynchronizedListTest(String testName) {
+    public SynchronizedListTest(final String testName) {
         super(testName);
     }
 

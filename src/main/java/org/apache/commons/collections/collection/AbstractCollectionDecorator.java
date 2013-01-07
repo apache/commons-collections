@@ -62,7 +62,7 @@ public abstract class AbstractCollectionDecorator<E>
      * @param coll  the collection to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    protected AbstractCollectionDecorator(Collection<E> coll) {
+    protected AbstractCollectionDecorator(final Collection<E> coll) {
         if (coll == null) {
             throw new IllegalArgumentException("Collection must not be null");
         }
@@ -81,11 +81,11 @@ public abstract class AbstractCollectionDecorator<E>
 
     //-----------------------------------------------------------------------
     
-    public boolean add(E object) {
+    public boolean add(final E object) {
         return decorated().add(object);
     }
 
-    public boolean addAll(Collection<? extends E> coll) {
+    public boolean addAll(final Collection<? extends E> coll) {
         return decorated().addAll(coll);
     }
 
@@ -93,7 +93,7 @@ public abstract class AbstractCollectionDecorator<E>
         decorated().clear();
     }
 
-    public boolean contains(Object object) {
+    public boolean contains(final Object object) {
         return decorated().contains(object);
     }
 
@@ -105,7 +105,7 @@ public abstract class AbstractCollectionDecorator<E>
         return decorated().iterator();
     }
 
-    public boolean remove(Object object) {
+    public boolean remove(final Object object) {
         return decorated().remove(object);
     }
 
@@ -117,24 +117,24 @@ public abstract class AbstractCollectionDecorator<E>
         return decorated().toArray();
     }
 
-    public <T> T[] toArray(T[] object) {
+    public <T> T[] toArray(final T[] object) {
         return decorated().toArray(object);
     }
 
-    public boolean containsAll(Collection<?> coll) {
+    public boolean containsAll(final Collection<?> coll) {
         return decorated().containsAll(coll);
     }
 
-    public boolean removeAll(Collection<?> coll) {
+    public boolean removeAll(final Collection<?> coll) {
         return decorated().removeAll(coll);
     }
 
-    public boolean retainAll(Collection<?> coll) {
+    public boolean retainAll(final Collection<?> coll) {
         return decorated().retainAll(coll);
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         return object == this || decorated().equals(object);
     }
 

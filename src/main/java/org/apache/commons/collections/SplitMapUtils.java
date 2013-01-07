@@ -47,7 +47,7 @@ public class SplitMapUtils {
     private static class WrappedGet<K, V> implements IterableMap<K, V>, Unmodifiable {
         private final Get<K, V> get;
 
-        private WrappedGet(Get<K, V> get) {
+        private WrappedGet(final Get<K, V> get) {
             this.get = get;
         }
 
@@ -55,11 +55,11 @@ public class SplitMapUtils {
             throw new UnsupportedOperationException();
         }
 
-        public boolean containsKey(Object key) {
+        public boolean containsKey(final Object key) {
             return get.containsKey(key);
         }
 
-        public boolean containsValue(Object value) {
+        public boolean containsValue(final Object value) {
             return get.containsValue(value);
         }
 
@@ -68,14 +68,14 @@ public class SplitMapUtils {
         }
 
         @Override
-        public boolean equals(Object arg0) {
+        public boolean equals(final Object arg0) {
             if (arg0 == this) {
                 return true;
             }
             return arg0 instanceof WrappedGet && ((WrappedGet<?, ?>) arg0).get.equals(this.get);
         }
 
-        public V get(Object key) {
+        public V get(final Object key) {
             return get.get(key);
         }
 
@@ -92,15 +92,15 @@ public class SplitMapUtils {
             return UnmodifiableSet.unmodifiableSet(get.keySet());
         }
 
-        public V put(K key, V value) {
+        public V put(final K key, final V value) {
             throw new UnsupportedOperationException();
         }
 
-        public void putAll(Map<? extends K, ? extends V> t) {
+        public void putAll(final Map<? extends K, ? extends V> t) {
             throw new UnsupportedOperationException();
         }
 
-        public V remove(Object key) {
+        public V remove(final Object key) {
             return get.remove(key);
         }
 
@@ -126,7 +126,7 @@ public class SplitMapUtils {
     private static class WrappedPut<K, V> implements Map<K, V>, Put<K, V> {
         private final Put<K, V> put;
 
-        private WrappedPut(Put<K, V> put) {
+        private WrappedPut(final Put<K, V> put) {
             this.put = put;
         }
 
@@ -134,11 +134,11 @@ public class SplitMapUtils {
             put.clear();
         }
 
-        public boolean containsKey(Object key) {
+        public boolean containsKey(final Object key) {
             throw new UnsupportedOperationException();
         }
 
-        public boolean containsValue(Object value) {
+        public boolean containsValue(final Object value) {
             throw new UnsupportedOperationException();
         }
 
@@ -147,14 +147,14 @@ public class SplitMapUtils {
         }
 
         @Override
-        public boolean equals(Object obj) {
+        public boolean equals(final Object obj) {
             if (obj == this) {
                 return true;
             }
             return obj instanceof WrappedPut && ((WrappedPut<?, ?>) obj).put.equals(this.put);
         }
 
-        public V get(Object key) {
+        public V get(final Object key) {
             throw new UnsupportedOperationException();
         }
 
@@ -172,15 +172,15 @@ public class SplitMapUtils {
         }
 
         @SuppressWarnings("unchecked")
-        public V put(K key, V value) {
+        public V put(final K key, final V value) {
             return (V) put.put(key, value);
         }
 
-        public void putAll(Map<? extends K, ? extends V> t) {
+        public void putAll(final Map<? extends K, ? extends V> t) {
             put.putAll(t);
         }
 
-        public V remove(Object key) {
+        public V remove(final Object key) {
             throw new UnsupportedOperationException();
         }
 
@@ -204,7 +204,7 @@ public class SplitMapUtils {
      * @return {@link IterableMap}
      */
     @SuppressWarnings("unchecked")
-    public static <K, V> IterableMap<K, V> readableMap(Get<K, V> get) {
+    public static <K, V> IterableMap<K, V> readableMap(final Get<K, V> get) {
         if (get == null) {
             throw new IllegalArgumentException("Get must not be null");
         }
@@ -228,7 +228,7 @@ public class SplitMapUtils {
      * @return {@link Map}
      */
     @SuppressWarnings("unchecked")
-    public static <K, V> Map<K, V> writableMap(Put<K, V> put) {
+    public static <K, V> Map<K, V> writableMap(final Put<K, V> put) {
         if (put == null) {
             throw new IllegalArgumentException("Put must not be null");
         }

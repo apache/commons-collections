@@ -38,7 +38,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
      *
      * @param testName  the test class name
      */
-    public AbstractListIteratorTest(String testName) {
+    public AbstractListIteratorTest(final String testName) {
         super(testName);
     }
 
@@ -96,7 +96,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
             return;
         }
 
-        ListIterator<E> it = makeEmptyIterator();
+        final ListIterator<E> it = makeEmptyIterator();
 
         assertEquals(false, it.hasNext());
         assertEquals(0, it.nextIndex());
@@ -107,14 +107,14 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
         try {
             it.next();
             fail("NoSuchElementException must be thrown from empty ListIterator");
-        } catch (NoSuchElementException e) {
+        } catch (final NoSuchElementException e) {
         }
 
         // previous() should throw a NoSuchElementException
         try {
             it.previous();
             fail("NoSuchElementException must be thrown from empty ListIterator");
-        } catch (NoSuchElementException e) {
+        } catch (final NoSuchElementException e) {
         }
     }
 
@@ -122,8 +122,8 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
      * Test navigation through the iterator.
      */
     public void testWalkForwardAndBack() {
-        ArrayList<E> list = new ArrayList<E>();
-        ListIterator<E> it = makeObject();
+        final ArrayList<E> list = new ArrayList<E>();
+        final ListIterator<E> it = makeObject();
         while (it.hasNext()) {
             list.add(it.next());
         }
@@ -134,7 +134,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
         try {
             it.next();
             fail("NoSuchElementException must be thrown from next at end of ListIterator");
-        } catch (NoSuchElementException e) {
+        } catch (final NoSuchElementException e) {
         }
 
         // loop back through comparing
@@ -142,7 +142,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
             assertEquals(i + 1, it.nextIndex());
             assertEquals(i, it.previousIndex());
 
-            Object obj = list.get(i);
+            final Object obj = list.get(i);
             assertEquals(obj, it.previous());
         }
 
@@ -152,7 +152,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
         try {
             it.previous();
             fail("NoSuchElementException must be thrown from previous at start of ListIterator");
-        } catch (NoSuchElementException e) {
+        } catch (final NoSuchElementException e) {
         }
     }
 
@@ -162,12 +162,12 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
     public void testAdd() {
         ListIterator<E> it = makeObject();
 
-        E addValue = addSetValue();
+        final E addValue = addSetValue();
         if (supportsAdd() == false) {
             // check for UnsupportedOperationException if not supported
             try {
                 it.add(addValue);
-            } catch (UnsupportedOperationException ex) {}
+            } catch (final UnsupportedOperationException ex) {}
             return;
         }
 
@@ -196,13 +196,13 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
      * Test set behaviour.
      */
     public void testSet() {
-        ListIterator<E> it = makeObject();
+        final ListIterator<E> it = makeObject();
 
         if (supportsSet() == false) {
             // check for UnsupportedOperationException if not supported
             try {
                 it.set(addSetValue());
-            } catch (UnsupportedOperationException ex) {}
+            } catch (final UnsupportedOperationException ex) {}
             return;
         }
 
@@ -210,7 +210,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
         try {
             it.set(addSetValue());
             fail();
-        } catch (IllegalStateException ex) {}
+        } catch (final IllegalStateException ex) {}
 
         // set after next should be fine
         it.next();
@@ -222,20 +222,20 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
     }
 
     public void testRemoveThenSet() {
-        ListIterator<E> it = makeObject();
+        final ListIterator<E> it = makeObject();
         if (supportsRemove() && supportsSet()) {
             it.next();
             it.remove();
             try {
                 it.set(addSetValue());
                 fail("IllegalStateException must be thrown from set after remove");
-            } catch (IllegalStateException e) {
+            } catch (final IllegalStateException e) {
             }
         }
     }
 
     public void testAddThenSet() {
-        ListIterator<E> it = makeObject();
+        final ListIterator<E> it = makeObject();
         // add then set
         if (supportsAdd() && supportsSet()) {
             it.next();
@@ -243,7 +243,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
             try {
                 it.set(addSetValue());
                 fail("IllegalStateException must be thrown from set after add");
-            } catch (IllegalStateException e) {
+            } catch (final IllegalStateException e) {
             }
         }
     }
@@ -252,7 +252,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
      * Test remove after add behaviour.
      */
     public void testAddThenRemove() {
-        ListIterator<E> it = makeObject();
+        final ListIterator<E> it = makeObject();
 
         // add then remove
         if (supportsAdd() && supportsRemove()) {
@@ -261,7 +261,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
             try {
                 it.remove();
                 fail("IllegalStateException must be thrown from remove after add");
-            } catch (IllegalStateException e) {
+            } catch (final IllegalStateException e) {
             }
         }
     }

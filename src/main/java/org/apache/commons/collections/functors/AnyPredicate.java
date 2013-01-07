@@ -53,7 +53,7 @@ public final class AnyPredicate<T> implements Predicate<T>, PredicateDecorator<T
      * @throws IllegalArgumentException if any predicate in the array is null
      */
     @SuppressWarnings("unchecked")
-    public static <T> Predicate<T> anyPredicate(Predicate<? super T>... predicates) {
+    public static <T> Predicate<T> anyPredicate(final Predicate<? super T>... predicates) {
         FunctorUtils.validate(predicates);
         if (predicates.length == 0) {
             return FalsePredicate.<T>falsePredicate();
@@ -77,8 +77,8 @@ public final class AnyPredicate<T> implements Predicate<T>, PredicateDecorator<T
      * @throws IllegalArgumentException if any predicate in the array is null
      */
     @SuppressWarnings("unchecked")
-    public static <T> Predicate<T> anyPredicate(Collection<? extends Predicate<T>> predicates) {
-        Predicate<? super T>[] preds = FunctorUtils.validate(predicates);
+    public static <T> Predicate<T> anyPredicate(final Collection<? extends Predicate<T>> predicates) {
+        final Predicate<? super T>[] preds = FunctorUtils.validate(predicates);
         if (preds.length == 0) {
             return FalsePredicate.<T>falsePredicate();
         }
@@ -94,7 +94,7 @@ public final class AnyPredicate<T> implements Predicate<T>, PredicateDecorator<T
      *
      * @param predicates  the predicates to check, not cloned, not null
      */
-    public AnyPredicate(Predicate<? super T>[] predicates) {
+    public AnyPredicate(final Predicate<? super T>[] predicates) {
         super();
         iPredicates = predicates;
     }
@@ -105,8 +105,8 @@ public final class AnyPredicate<T> implements Predicate<T>, PredicateDecorator<T
      * @param object  the input object
      * @return true if any decorated predicate return true
      */
-    public boolean evaluate(T object) {
-        for (Predicate<? super T> iPredicate : iPredicates) {
+    public boolean evaluate(final T object) {
+        for (final Predicate<? super T> iPredicate : iPredicates) {
             if (iPredicate.evaluate(object)) {
                 return true;
             }

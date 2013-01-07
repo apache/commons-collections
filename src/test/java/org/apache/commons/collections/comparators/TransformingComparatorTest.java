@@ -33,7 +33,7 @@ public class TransformingComparatorTest extends AbstractComparatorTest<Integer> 
     // Initialization and busywork
     //
 
-    public TransformingComparatorTest(String name) {
+    public TransformingComparatorTest(final String name) {
         super(name);
     }
 
@@ -43,15 +43,15 @@ public class TransformingComparatorTest extends AbstractComparatorTest<Integer> 
 
     @Override
     public Comparator<Integer> makeObject() {
-       Comparator<Integer> decorated = new ComparableComparator<Integer>();
-       TransformingComparator<Integer> comparator =
+       final Comparator<Integer> decorated = new ComparableComparator<Integer>();
+       final TransformingComparator<Integer> comparator =
                new TransformingComparator<Integer>(TransformerUtils.<Integer>nopTransformer(), decorated);
        return comparator;
     }
 
     @Override
     public List<Integer> getComparableObjectsOrdered() {
-        List<Integer> list = new LinkedList<Integer>();
+        final List<Integer> list = new LinkedList<Integer>();
         list.add(1);
         list.add(2);
         list.add(3);

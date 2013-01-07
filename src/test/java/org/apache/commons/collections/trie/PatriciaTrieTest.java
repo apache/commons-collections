@@ -42,7 +42,7 @@ public class PatriciaTrieTest {
     
     @Test
     public void testSimple() {
-        PatriciaTrie<Integer, String> intTrie = new PatriciaTrie<Integer, String>(new IntegerKeyAnalyzer());
+        final PatriciaTrie<Integer, String> intTrie = new PatriciaTrie<Integer, String>(new IntegerKeyAnalyzer());
         Assert.assertTrue(intTrie.isEmpty());
         Assert.assertEquals(0, intTrie.size());
         
@@ -66,7 +66,7 @@ public class PatriciaTrieTest {
     
     @Test
     public void testCeilingEntry() {
-        PatriciaTrie<Character, String> charTrie 
+        final PatriciaTrie<Character, String> charTrie 
             = new PatriciaTrie<Character, String>(new CharacterKeyAnalyzer());
         charTrie.put('c', "c");
         charTrie.put('p', "p");
@@ -95,7 +95,7 @@ public class PatriciaTrieTest {
         charTrie.put('f', "f");
         charTrie.put('d', "d");
         
-        Object[] results = new Object[] {
+        final Object[] results = new Object[] {
             'a', "a", 'b', "b", 'c', "c", 'd', "d", 'e', "e",
             'f', "f", 'g', "g", 'h', "h", 'i', "i", 'j', "j",
             'k', "k", 'l', "l", 'm', "m", 'n', "n", 'o', "o",
@@ -105,7 +105,7 @@ public class PatriciaTrieTest {
         };
         
         for(int i = 0; i < results.length; i++) {
-            Map.Entry<Character, String> found = charTrie.ceilingEntry((Character)results[i]);
+            final Map.Entry<Character, String> found = charTrie.ceilingEntry((Character)results[i]);
             Assert.assertNotNull(found);
             Assert.assertEquals(results[i], found.getKey());
             Assert.assertEquals(results[++i], found.getValue());
@@ -159,7 +159,7 @@ public class PatriciaTrieTest {
     
     @Test
     public void testLowerEntry() {
-        PatriciaTrie<Character, String> charTrie = new PatriciaTrie<Character, String>(new CharacterKeyAnalyzer());
+        final PatriciaTrie<Character, String> charTrie = new PatriciaTrie<Character, String>(new CharacterKeyAnalyzer());
         charTrie.put('c', "c");
         charTrie.put('p', "p");
         charTrie.put('l', "l");
@@ -187,7 +187,7 @@ public class PatriciaTrieTest {
         charTrie.put('f', "f");
         charTrie.put('d', "d");
         
-        Object[] results = new Object[] {
+        final Object[] results = new Object[] {
             'a', "a", 'b', "b", 'c', "c", 'd', "d", 'e', "e",
             'f', "f", 'g', "g", 'h', "h", 'i', "i", 'j', "j",
             'k', "k", 'l', "l", 'm', "m", 'n', "n", 'o', "o",
@@ -198,7 +198,7 @@ public class PatriciaTrieTest {
         
         for(int i = 0; i < results.length; i+=2) {
             //System.out.println("Looking for: " + results[i]);
-            Map.Entry<Character, String> found = charTrie.lowerEntry((Character)results[i]);
+            final Map.Entry<Character, String> found = charTrie.lowerEntry((Character)results[i]);
             if(i == 0) {
                 Assert.assertNull(found);
             } else {
@@ -270,7 +270,7 @@ public class PatriciaTrieTest {
     
     @Test
     public void testIteration() {
-        PatriciaTrie<Integer, String> intTrie = new PatriciaTrie<Integer, String>(new IntegerKeyAnalyzer());
+        final PatriciaTrie<Integer, String> intTrie = new PatriciaTrie<Integer, String>(new IntegerKeyAnalyzer());
         intTrie.put(1, "One");
         intTrie.put(5, "Five");
         intTrie.put(4, "Four");
@@ -290,24 +290,24 @@ public class PatriciaTrieTest {
         cursor.finished();
         
         cursor.starting();
-        for (Map.Entry<Integer, String> entry : intTrie.entrySet()) {
+        for (final Map.Entry<Integer, String> entry : intTrie.entrySet()) {
             cursor.select(entry);
         }
         cursor.finished();
         
         cursor.starting();
-        for (Integer integer : intTrie.keySet()) {
+        for (final Integer integer : intTrie.keySet()) {
             cursor.checkKey(integer);
         }
         cursor.finished();
         
         cursor.starting();
-        for (String string : intTrie.values()) {
+        for (final String string : intTrie.values()) {
             cursor.checkValue(string);
         }
         cursor.finished();
 
-        PatriciaTrie<Character, String> charTrie = new PatriciaTrie<Character, String>(new CharacterKeyAnalyzer());
+        final PatriciaTrie<Character, String> charTrie = new PatriciaTrie<Character, String>(new CharacterKeyAnalyzer());
         charTrie.put('c', "c");
         charTrie.put('p', "p");
         charTrie.put('l', "l");
@@ -346,19 +346,19 @@ public class PatriciaTrieTest {
         cursor.finished();
 
         cursor.starting();
-        for (Map.Entry<Character, String> entry : charTrie.entrySet()) {
+        for (final Map.Entry<Character, String> entry : charTrie.entrySet()) {
             cursor.select(entry);
         }
         cursor.finished();
         
         cursor.starting();
-        for (Character character : charTrie.keySet()) {
+        for (final Character character : charTrie.keySet()) {
             cursor.checkKey(character);
         }
         cursor.finished();
         
         cursor.starting();
-        for (String string : charTrie.values()) {
+        for (final String string : charTrie.values()) {
             cursor.checkValue(string);
         }
         cursor.finished();
@@ -366,7 +366,7 @@ public class PatriciaTrieTest {
     
     @Test
     public void testSelect() {
-        PatriciaTrie<Character, String> charTrie = new PatriciaTrie<Character, String>(new CharacterKeyAnalyzer());
+        final PatriciaTrie<Character, String> charTrie = new PatriciaTrie<Character, String>(new CharacterKeyAnalyzer());
         charTrie.put('c', "c");
         charTrie.put('p', "p");
         charTrie.put('l', "l");
@@ -393,7 +393,7 @@ public class PatriciaTrieTest {
         charTrie.put('z', "z");
         charTrie.put('f', "f");
         charTrie.put('d', "d");
-        TestCursor cursor = new TestCursor(
+        final TestCursor cursor = new TestCursor(
                 'd', "d", 'e', "e", 'f', "f", 'g', "g",
                 'a', "a", 'b', "b", 'c', "c",  
                 'l', "l", 'm', "m", 'n', "n", 'o', "o",
@@ -411,7 +411,7 @@ public class PatriciaTrieTest {
     
     @Test
     public void testTraverseCursorRemove() {
-        PatriciaTrie<Character, String> charTrie = new PatriciaTrie<Character, String>(new CharacterKeyAnalyzer());
+        final PatriciaTrie<Character, String> charTrie = new PatriciaTrie<Character, String>(new CharacterKeyAnalyzer());
         charTrie.put('c', "c");
         charTrie.put('p', "p");
         charTrie.put('l', "l");
@@ -438,7 +438,7 @@ public class PatriciaTrieTest {
         charTrie.put('z', "z");
         charTrie.put('f', "f");
         charTrie.put('d', "d");
-        TestCursor cursor = new TestCursor('a', "a", 'b', "b", 'c', "c", 'd', "d", 'e', "e",
+        final TestCursor cursor = new TestCursor('a', "a", 'b', "b", 'c', "c", 'd', "d", 'e', "e",
                 'f', "f", 'g', "g", 'h', "h", 'i', "i", 'j', "j",
                 'k', "k", 'l', "l", 'm', "m", 'n', "n", 'o', "o",
                 'p', "p", 'q', "q", 'r', "r", 's', "s", 't', "t",
@@ -454,7 +454,7 @@ public class PatriciaTrieTest {
         
         Assert.assertEquals(26, charTrie.size());
         
-        Object[] toRemove = new Object[] { 'g', 'd', 'e', 'm', 'p', 'q', 'r', 's' };
+        final Object[] toRemove = new Object[] { 'g', 'd', 'e', 'm', 'p', 'q', 'r', 's' };
         cursor.addToRemove(toRemove);
         
         cursor.starting();
@@ -468,7 +468,7 @@ public class PatriciaTrieTest {
         cursor.finished();
         
         cursor.starting();
-        for (Entry<Character, String> entry : charTrie.entrySet()) {
+        for (final Entry<Character, String> entry : charTrie.entrySet()) {
             cursor.select(entry);
             if (Arrays.asList(toRemove).contains(entry.getKey())) {
                 Assert.fail("got an: " + entry);
@@ -479,7 +479,7 @@ public class PatriciaTrieTest {
     
     @Test
     public void testIteratorRemove() {
-        PatriciaTrie<Character, String> charTrie = new PatriciaTrie<Character, String>(new CharacterKeyAnalyzer());
+        final PatriciaTrie<Character, String> charTrie = new PatriciaTrie<Character, String>(new CharacterKeyAnalyzer());
         charTrie.put('c', "c");
         charTrie.put('p', "p");
         charTrie.put('l', "l");
@@ -506,7 +506,7 @@ public class PatriciaTrieTest {
         charTrie.put('z', "z");
         charTrie.put('f', "f");
         charTrie.put('d', "d");
-        TestCursor cursor = new TestCursor('a', "a", 'b', "b", 'c', "c", 'd', "d", 'e', "e",
+        final TestCursor cursor = new TestCursor('a', "a", 'b', "b", 'c', "c", 'd', "d", 'e', "e",
                 'f', "f", 'g', "g", 'h', "h", 'i', "i", 'j', "j",
                 'k', "k", 'l', "l", 'm', "m", 'n', "n", 'o', "o",
                 'p', "p", 'q', "q", 'r', "r", 's', "s", 't', "t",
@@ -518,11 +518,11 @@ public class PatriciaTrieTest {
         
         Assert.assertEquals(26, charTrie.size());
         
-        Object[] toRemove = new Object[] { 'e', 'm', 'p', 'q', 'r', 's' };
+        final Object[] toRemove = new Object[] { 'e', 'm', 'p', 'q', 'r', 's' };
         
         cursor.starting();
-        for(Iterator<Map.Entry<Character, String>> i = charTrie.entrySet().iterator(); i.hasNext(); ) {
-            Map.Entry<Character,String> entry = i.next();
+        for(final Iterator<Map.Entry<Character, String>> i = charTrie.entrySet().iterator(); i.hasNext(); ) {
+            final Map.Entry<Character,String> entry = i.next();
             cursor.select(entry);
             if(Arrays.asList(toRemove).contains(entry.getKey())) {
                 i.remove();            
@@ -535,7 +535,7 @@ public class PatriciaTrieTest {
         cursor.remove(toRemove);
 
         cursor.starting();
-        for (Entry<Character, String> entry : charTrie.entrySet()) {
+        for (final Entry<Character, String> entry : charTrie.entrySet()) {
             cursor.select(entry);
             if (Arrays.asList(toRemove).contains(entry.getKey())) {
                 Assert.fail("got an: " + entry);
@@ -547,19 +547,19 @@ public class PatriciaTrieTest {
     @Test
     public void testHamlet() throws Exception {
         // Make sure that Hamlet is read & stored in the same order as a SortedSet.
-        List<String> original = new ArrayList<String>();
-        List<String> control = new ArrayList<String>();
-        SortedMap<String, String> sortedControl = new TreeMap<String, String>();
-        PatriciaTrie<String, String> trie = new PatriciaTrie<String, String>(new StringKeyAnalyzer());
+        final List<String> original = new ArrayList<String>();
+        final List<String> control = new ArrayList<String>();
+        final SortedMap<String, String> sortedControl = new TreeMap<String, String>();
+        final PatriciaTrie<String, String> trie = new PatriciaTrie<String, String>(new StringKeyAnalyzer());
         
-        InputStream in = getClass().getResourceAsStream("hamlet.txt");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        final InputStream in = getClass().getResourceAsStream("hamlet.txt");
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         
         String read = null;
         while( (read = reader.readLine()) != null) {
-            StringTokenizer st = new StringTokenizer(read);
+            final StringTokenizer st = new StringTokenizer(read);
             while(st.hasMoreTokens()) {
-                String token = st.nextToken();
+                final String token = st.nextToken();
                 original.add(token);
                 sortedControl.put(token, token);
                 trie.put(token, token);
@@ -570,11 +570,11 @@ public class PatriciaTrieTest {
         Assert.assertEquals(control.size(), sortedControl.size());
         Assert.assertEquals(sortedControl.size(), trie.size());
         Iterator<String> iter = trie.values().iterator();
-        for (String aControl : control) {
+        for (final String aControl : control) {
             Assert.assertEquals(aControl, iter.next());
         }
         
-        Random rnd = new Random();
+        final Random rnd = new Random();
         int item = 0;
         iter = trie.values().iterator();
         int removed = 0;
@@ -592,7 +592,7 @@ public class PatriciaTrieTest {
         
         // reset hamlet
         trie.clear();
-        for (String anOriginal : original) {
+        for (final String anOriginal : original) {
             trie.put(anOriginal, anOriginal);
         }
         
@@ -620,7 +620,7 @@ public class PatriciaTrieTest {
         try {
             sub.headMap(control.get(524));
             Assert.fail("should have thrown IAE");
-        } catch(IllegalArgumentException expected) {}
+        } catch(final IllegalArgumentException expected) {}
         
         Assert.assertEquals(sub.lastKey(), control.get(522));
         Assert.assertEquals(sub.firstKey(), control.get(0));
@@ -640,7 +640,7 @@ public class PatriciaTrieTest {
         try {
             sub.tailMap(control.get(232));
             Assert.fail("should have thrown IAE");
-        } catch(IllegalArgumentException expected) {}
+        } catch(final IllegalArgumentException expected) {}
         
         sub = sub.subMap(control.get(300), control.get(400));
         Assert.assertEquals(100, sub.size());
@@ -658,7 +658,7 @@ public class PatriciaTrieTest {
     
     @Test
     public void testPrefixedBy() {
-        PatriciaTrie<String, String> trie 
+        final PatriciaTrie<String, String> trie 
             = new PatriciaTrie<String, String>(new StringKeyAnalyzer());
         
         final String[] keys = new String[]{
@@ -669,7 +669,7 @@ public class PatriciaTrieTest {
                 "Amma"
         };
 
-        for (String key : keys) {
+        for (final String key : keys) {
             trie.put(key, key);
         }
         
@@ -804,7 +804,7 @@ public class PatriciaTrieTest {
         try {
             iterator.next();
             Assert.fail("CME expected");
-        } catch(ConcurrentModificationException expected) {}
+        } catch(final ConcurrentModificationException expected) {}
         Assert.assertEquals("Amber", map.firstKey());
         Assert.assertEquals("Ammun", map.lastKey());
         
@@ -843,13 +843,13 @@ public class PatriciaTrieTest {
         Assert.assertTrue(map.isEmpty());
         Assert.assertEquals(0, map.size());
         try {
-            Object o = map.firstKey();
+            final Object o = map.firstKey();
             Assert.fail("got a first key: " + o);
-        } catch(NoSuchElementException nsee) {}
+        } catch(final NoSuchElementException nsee) {}
         try {
-            Object o = map.lastKey();
+            final Object o = map.lastKey();
             Assert.fail("got a last key: " + o);
-        } catch(NoSuchElementException nsee) {}
+        } catch(final NoSuchElementException nsee) {}
         iterator = map.values().iterator();
         Assert.assertFalse(iterator.hasNext());
         
@@ -857,13 +857,13 @@ public class PatriciaTrieTest {
         Assert.assertTrue(map.isEmpty());
         Assert.assertEquals(0, map.size());
         try {
-            Object o = map.firstKey();
+            final Object o = map.firstKey();
             Assert.fail("got a first key: " + o);
-        } catch(NoSuchElementException nsee) {}
+        } catch(final NoSuchElementException nsee) {}
         try {
-            Object o = map.lastKey();
+            final Object o = map.lastKey();
             Assert.fail("got a last key: " + o);
-        } catch(NoSuchElementException nsee) {}
+        } catch(final NoSuchElementException nsee) {}
         iterator = map.values().iterator();
         Assert.assertFalse(iterator.hasNext());
         
@@ -874,20 +874,20 @@ public class PatriciaTrieTest {
         Assert.assertTrue(map.isEmpty());
         Assert.assertEquals(0, map.size());
         try {
-            Object o = map.firstKey();
+            final Object o = map.firstKey();
             Assert.fail("got a first key: " + o);
-        } catch(NoSuchElementException nsee) {}
+        } catch(final NoSuchElementException nsee) {}
         try {
-            Object o = map.lastKey();
+            final Object o = map.lastKey();
             Assert.fail("got a last key: " + o);
-        } catch(NoSuchElementException nsee) {}
+        } catch(final NoSuchElementException nsee) {}
         iterator = map.values().iterator();
         Assert.assertFalse(iterator.hasNext());
     }
     
     @Test
     public void testPrefixByOffsetAndLength() {
-        PatriciaTrie<String, String> trie 
+        final PatriciaTrie<String, String> trie 
             = new PatriciaTrie<String, String>(new StringKeyAnalyzer());
         
         final String[] keys = new String[]{
@@ -897,7 +897,7 @@ public class PatriciaTrieTest {
                 "Amma"
         };
     
-        for (String key : keys) {
+        for (final String key : keys) {
             trie.put(key, key);
         }
         
@@ -947,7 +947,7 @@ public class PatriciaTrieTest {
     
     @Test
     public void testPrefixedByRemoval() {
-        PatriciaTrie<String, String> trie 
+        final PatriciaTrie<String, String> trie 
             = new PatriciaTrie<String, String>(new StringKeyAnalyzer());
         
         final String[] keys = new String[]{
@@ -957,7 +957,7 @@ public class PatriciaTrieTest {
                 "Amma"
         };
 
-        for (String key : keys) {
+        for (final String key : keys) {
             trie.put(key, key);
         }
         
@@ -991,7 +991,7 @@ public class PatriciaTrieTest {
 
     @Test
     public void testTraverseWithAllNullBitKey() {
-        PatriciaTrie<String, String> trie 
+        final PatriciaTrie<String, String> trie 
             = new PatriciaTrie<String, String>(new StringKeyAnalyzer());
         
         //
@@ -1010,7 +1010,7 @@ public class PatriciaTrieTest {
         
         final List<String> strings = new ArrayList<String>();
         trie.traverse(new Cursor<String, String>() {
-            public Decision select(Entry<? extends String, ? extends String> entry) {
+            public Decision select(final Entry<? extends String, ? extends String> entry) {
                 strings.add(entry.getValue());
                 return Decision.CONTINUE;
             }
@@ -1019,7 +1019,7 @@ public class PatriciaTrieTest {
         Assert.assertEquals(1, strings.size());
         
         strings.clear();
-        for (String s : trie.values()) {
+        for (final String s : trie.values()) {
             strings.add(s);
         }
         Assert.assertEquals(1, strings.size());
@@ -1027,7 +1027,7 @@ public class PatriciaTrieTest {
     
     @Test
     public void testSelectWithAllNullBitKey() {
-        PatriciaTrie<String, String> trie 
+        final PatriciaTrie<String, String> trie 
             = new PatriciaTrie<String, String>(new StringKeyAnalyzer());
         
         // trie.put("", "All Bits Are Zero");
@@ -1035,7 +1035,7 @@ public class PatriciaTrieTest {
         
         final List<String> strings = new ArrayList<String>();
         trie.select("Hello", new Cursor<String, String>() {
-            public Decision select(Entry<? extends String, ? extends String> entry) {
+            public Decision select(final Entry<? extends String, ? extends String> entry) {
                 strings.add(entry.getValue());
                 return Decision.CONTINUE;
             }
@@ -1044,13 +1044,13 @@ public class PatriciaTrieTest {
     }
     
     private static class TestCursor implements Cursor<Object, Object> {
-        private List<Object> keys;
-        private List<Object> values;
+        private final List<Object> keys;
+        private final List<Object> values;
         private Object selectFor;
         private List<Object> toRemove;
         private int index = 0;
         
-        TestCursor(Object... objects) {
+        TestCursor(final Object... objects) {
             if(objects.length % 2 != 0) {
                 throw new IllegalArgumentException("must be * 2");
             }
@@ -1064,17 +1064,17 @@ public class PatriciaTrieTest {
             }
         }
         
-        void selectFor(Object object) {
+        void selectFor(final Object object) {
             selectFor = object;
         }
         
-        void addToRemove(Object... objects) {
+        void addToRemove(final Object... objects) {
             toRemove = new ArrayList<Object>(Arrays.asList(objects));
         }
         
-        void remove(Object... objects) {
-            for (Object object : objects) {
-                int idx = keys.indexOf(object);
+        void remove(final Object... objects) {
+            for (final Object object : objects) {
+                final int idx = keys.indexOf(object);
                 keys.remove(idx);
                 values.remove(idx);
             }
@@ -1084,15 +1084,15 @@ public class PatriciaTrieTest {
             index = 0;
         }
         
-        public void checkKey(Object k) {
+        public void checkKey(final Object k) {
             Assert.assertEquals(keys.get(index++), k);
         }
         
-        public void checkValue(Object o) {
+        public void checkValue(final Object o) {
             Assert.assertEquals(values.get(index++), o);
         }
 
-        public Decision select(Entry<?, ?> entry) {
+        public Decision select(final Entry<?, ?> entry) {
           //  System.out.println("Scanning: " + entry.getKey());
             Assert.assertEquals(keys.get(index), entry.getKey());
             Assert.assertEquals(values.get(index), entry.getValue());
@@ -1119,7 +1119,7 @@ public class PatriciaTrieTest {
         }
     }
     
-    private static void assertEqualArrays(Object[] a, Object[] b) {
+    private static void assertEqualArrays(final Object[] a, final Object[] b) {
         Assert.assertTrue(Arrays.equals(a, b));
     }
 }

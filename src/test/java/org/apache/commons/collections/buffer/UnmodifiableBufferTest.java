@@ -32,7 +32,7 @@ import org.apache.commons.collections.collection.AbstractCollectionTest;
  */
 public class UnmodifiableBufferTest<E> extends AbstractCollectionTest<E> {
 
-    public UnmodifiableBufferTest(String testName) {
+    public UnmodifiableBufferTest(final String testName) {
         super(testName);
     }
 
@@ -44,7 +44,7 @@ public class UnmodifiableBufferTest<E> extends AbstractCollectionTest<E> {
 
     @Override
     public Collection<E> makeFullCollection() {
-        Buffer<E> buffer = new UnboundedFifoBuffer<E>();
+        final Buffer<E> buffer = new UnboundedFifoBuffer<E>();
         buffer.addAll(Arrays.asList(getFullElements()));
         return UnmodifiableBuffer.unmodifiableBuffer(buffer);
     }
@@ -56,7 +56,7 @@ public class UnmodifiableBufferTest<E> extends AbstractCollectionTest<E> {
 
     @Override
     public Collection<E> makeConfirmedFullCollection() {
-        ArrayStack<E> list = new ArrayStack<E>();
+        final ArrayStack<E> list = new ArrayStack<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }
@@ -81,7 +81,7 @@ public class UnmodifiableBufferTest<E> extends AbstractCollectionTest<E> {
         try {
             getCollection().remove();
             fail();
-        } catch (UnsupportedOperationException ex) {}
+        } catch (final UnsupportedOperationException ex) {}
     }
 
     @Override

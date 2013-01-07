@@ -30,7 +30,7 @@ public class DualHashBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
         return BulkTest.makeSuite(DualHashBidiMapTest.class);
     }
 
-    public DualHashBidiMapTest(String testName) {
+    public DualHashBidiMapTest(final String testName) {
         super(testName);
     }
 

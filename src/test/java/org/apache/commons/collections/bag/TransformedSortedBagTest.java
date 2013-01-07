@@ -30,7 +30,7 @@ import org.apache.commons.collections.collection.TransformedCollectionTest;
  */
 public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
-    public TransformedSortedBagTest(String testName) {
+    public TransformedSortedBagTest(final String testName) {
         super(testName);
     }
 
@@ -42,9 +42,9 @@ public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 
     @SuppressWarnings("unchecked")
     public void testTransformedBag() {
-        SortedBag<T> bag = TransformedSortedBag.transformingSortedBag(new TreeBag<T>(), (Transformer<T, T>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
+        final SortedBag<T> bag = TransformedSortedBag.transformingSortedBag(new TreeBag<T>(), (Transformer<T, T>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, bag.size());
-        Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {
             bag.add((T) els[i]);
             assertEquals(i + 1, bag.size());
@@ -56,14 +56,14 @@ public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
     }
 
     public void testTransformedBag_decorateTransform() {
-        Bag<Object> originalBag = new TreeBag<Object>();
-        Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
-        for (Object el : els) {
+        final Bag<Object> originalBag = new TreeBag<Object>();
+        final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        for (final Object el : els) {
             originalBag.add(el);
         }
-        Bag<?> bag = TransformedBag.transformedBag(originalBag, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
+        final Bag<?> bag = TransformedBag.transformedBag(originalBag, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, bag.size());
-        for (Object el : els) {
+        for (final Object el : els) {
             assertEquals(true, bag.contains(new Integer((String) el)));
         }
         

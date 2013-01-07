@@ -42,7 +42,7 @@ public final class InstanceofPredicate implements Predicate<Object>, Serializabl
      * @return the predicate
      * @throws IllegalArgumentException if the class is null
      */
-    public static Predicate<Object> instanceOfPredicate(Class<?> type) {
+    public static Predicate<Object> instanceOfPredicate(final Class<?> type) {
         if (type == null) {
             throw new IllegalArgumentException("The type to check instanceof must not be null");
         }
@@ -55,7 +55,7 @@ public final class InstanceofPredicate implements Predicate<Object>, Serializabl
      *
      * @param type  the type to check for
      */
-    public InstanceofPredicate(Class<?> type) {
+    public InstanceofPredicate(final Class<?> type) {
         super();
         iType = type;
     }
@@ -66,7 +66,7 @@ public final class InstanceofPredicate implements Predicate<Object>, Serializabl
      * @param object  the input object
      * @return true if input is of stored type
      */
-    public boolean evaluate(Object object) {
+    public boolean evaluate(final Object object) {
         return iType.isInstance(object);
     }
 

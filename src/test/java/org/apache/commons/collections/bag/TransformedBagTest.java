@@ -29,7 +29,7 @@ import org.apache.commons.collections.collection.TransformedCollectionTest;
  */
 public class TransformedBagTest<T> extends AbstractBagTest<T> {
 
-    public TransformedBagTest(String testName) {
+    public TransformedBagTest(final String testName) {
         super(testName);
     }
 
@@ -43,10 +43,10 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
     @SuppressWarnings("unchecked")
     public void testTransformedBag() {
         //T had better be Object!
-        Bag<T> bag = TransformedBag.transformingBag(new HashBag<T>(),
+        final Bag<T> bag = TransformedBag.transformingBag(new HashBag<T>(),
                 (Transformer<T, T>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, bag.size());
-        Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         for (int i = 0; i < els.length; i++) {
             bag.add((T) els[i]);
             assertEquals(i + 1, bag.size());
@@ -60,15 +60,15 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
 
     @SuppressWarnings("unchecked")
     public void testTransformedBag_decorateTransform() {
-        Bag<T> originalBag = new HashBag<T>();
-        Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
-        for (Object el : els) {
+        final Bag<T> originalBag = new HashBag<T>();
+        final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
+        for (final Object el : els) {
             originalBag.add((T) el);
         }
-        Bag<T> bag = TransformedBag.transformedBag(originalBag,
+        final Bag<T> bag = TransformedBag.transformedBag(originalBag,
                 (Transformer<T, T>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, bag.size());
-        for (Object el : els) {
+        for (final Object el : els) {
             assertEquals(true, bag.contains(new Integer((String) el)));
             assertEquals(false, bag.contains(el));
         }

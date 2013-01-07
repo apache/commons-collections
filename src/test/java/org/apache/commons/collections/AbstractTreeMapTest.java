@@ -29,7 +29,7 @@ import org.apache.commons.collections.map.AbstractMapTest;
  */
 public abstract class AbstractTreeMapTest<K, V> extends AbstractMapTest<K, V> {
 
-    public AbstractTreeMapTest(String testName) {
+    public AbstractTreeMapTest(final String testName) {
         super(testName);
     }
 
@@ -45,14 +45,14 @@ public abstract class AbstractTreeMapTest<K, V> extends AbstractMapTest<K, V> {
     public abstract TreeMap<K, V> makeObject();
 
     public void testNewMap() {
-        TreeMap<K, V> map = makeObject();
+        final TreeMap<K, V> map = makeObject();
         assertTrue("New map is empty", map.isEmpty());
         assertEquals("New map has size zero", 0, map.size());
     }
 
     @SuppressWarnings("unchecked")
     public void testSearch() {
-        TreeMap<K, V> map = makeObject();
+        final TreeMap<K, V> map = makeObject();
         map.put((K) "first", (V) "First Item");
         map.put((K) "second", (V) "Second Item");
         assertEquals("Top item is 'Second Item'",

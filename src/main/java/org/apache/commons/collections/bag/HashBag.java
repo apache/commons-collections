@@ -55,7 +55,7 @@ public class HashBag<E> extends AbstractMapBag<E> implements Bag<E>, Serializabl
      * 
      * @param coll  a collection to copy into this bag
      */
-    public HashBag(Collection<? extends E> coll) {
+    public HashBag(final Collection<? extends E> coll) {
         this();
         addAll(coll);
     }
@@ -64,7 +64,7 @@ public class HashBag<E> extends AbstractMapBag<E> implements Bag<E>, Serializabl
     /**
      * Write the bag out using a custom routine.
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         super.doWriteObject(out);
     }
@@ -72,7 +72,7 @@ public class HashBag<E> extends AbstractMapBag<E> implements Bag<E>, Serializabl
     /**
      * Read the bag in using a custom routine.
      */
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         super.doReadObject(new HashMap<E, MutableInteger>(), in);
     }

@@ -17,7 +17,7 @@ public class PassiveExpiringMapTest<K, V>
 
         private static final long serialVersionUID = 1L;
 
-        public long expirationTime(Integer key, String value) {
+        public long expirationTime(final Integer key, final String value) {
             // odd keys expire immediately, even keys never expire
             if (key == null) {
                 return 0;
@@ -35,7 +35,7 @@ public class PassiveExpiringMapTest<K, V>
         return BulkTest.makeSuite(PassiveExpiringMapTest.class);
     }
 
-    public PassiveExpiringMapTest(String testName) {
+    public PassiveExpiringMapTest(final String testName) {
         super(testName);
     }
 
@@ -53,7 +53,7 @@ public class PassiveExpiringMapTest<K, V>
     }
 
     private Map<Integer, String> makeDecoratedTestMap() {
-        Map<Integer, String> m = new HashMap<Integer, String>();
+        final Map<Integer, String> m = new HashMap<Integer, String>();
         m.put(Integer.valueOf(1), "one");
         m.put(Integer.valueOf(2), "two");
         m.put(Integer.valueOf(3), "three");
@@ -71,7 +71,7 @@ public class PassiveExpiringMapTest<K, V>
     }
 
     private Map<Integer, String> makeTestMap() {
-        Map<Integer, String> m = new PassiveExpiringMap<Integer, String>(
+        final Map<Integer, String> m = new PassiveExpiringMap<Integer, String>(
                                                                          new TestExpirationPolicy());
         m.put(Integer.valueOf(1), "one");
         m.put(Integer.valueOf(2), "two");
@@ -84,32 +84,32 @@ public class PassiveExpiringMapTest<K, V>
 
     public void testConstructors() {
         try {
-            Map<String, String> map = null;
+            final Map<String, String> map = null;
             new PassiveExpiringMap<String, String>(map);
             fail("constructor - exception should have been thrown.");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // success
         }
 
         try {
-            ExpirationPolicy<String, String> policy = null;
+            final ExpirationPolicy<String, String> policy = null;
             new PassiveExpiringMap<String, String>(policy);
             fail("constructor - exception should have been thrown.");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // success
         }
 
         try {
-            TimeUnit unit = null;
+            final TimeUnit unit = null;
             new PassiveExpiringMap<String, String>(10L, unit);
             fail("constructor - exception should have been thrown.");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // success
         }
     }
 
     public void testContainsKey() {
-        Map<Integer, String> m = makeTestMap();
+        final Map<Integer, String> m = makeTestMap();
         assertFalse(m.containsKey(Integer.valueOf(1)));
         assertFalse(m.containsKey(Integer.valueOf(3)));
         assertFalse(m.containsKey(Integer.valueOf(5)));
@@ -119,7 +119,7 @@ public class PassiveExpiringMapTest<K, V>
     }
 
     public void testContainsValue() {
-        Map<Integer, String> m = makeTestMap();
+        final Map<Integer, String> m = makeTestMap();
         assertFalse(m.containsValue("one"));
         assertFalse(m.containsValue("three"));
         assertFalse(m.containsValue("five"));
@@ -130,7 +130,7 @@ public class PassiveExpiringMapTest<K, V>
 
     public void testDecoratedMap() {
         // entries shouldn't expire
-        Map<Integer, String> m = makeDecoratedTestMap();
+        final Map<Integer, String> m = makeDecoratedTestMap();
         assertEquals(6, m.size());
         assertEquals("one", m.get(Integer.valueOf(1)));
 
@@ -158,12 +158,12 @@ public class PassiveExpiringMapTest<K, V>
     }
 
     public void testEntrySet() {
-        Map<Integer, String> m = makeTestMap();
+        final Map<Integer, String> m = makeTestMap();
         assertEquals(3, m.entrySet().size());
     }
 
     public void testGet() {
-        Map<Integer, String> m = makeTestMap();
+        final Map<Integer, String> m = makeTestMap();
         assertNull(m.get(Integer.valueOf(1)));
         assertEquals("two", m.get(Integer.valueOf(2)));
         assertNull(m.get(Integer.valueOf(3)));
@@ -185,23 +185,23 @@ public class PassiveExpiringMapTest<K, V>
     }
 
     public void testKeySet() {
-        Map<Integer, String> m = makeTestMap();
+        final Map<Integer, String> m = makeTestMap();
         assertEquals(3, m.keySet().size());
     }
 
     public void testSize() {
-        Map<Integer, String> m = makeTestMap();
+        final Map<Integer, String> m = makeTestMap();
         assertEquals(3, m.size());
     }
 
     public void testValues() {
-        Map<Integer, String> m = makeTestMap();
+        final Map<Integer, String> m = makeTestMap();
         assertEquals(3, m.values().size());
     }
 
     public void testZeroTimeToLive() {
         // item should not be available
-        PassiveExpiringMap<String, String> m = new PassiveExpiringMap<String, String>(
+        final PassiveExpiringMap<String, String> m = new PassiveExpiringMap<String, String>(
                                                                                       0L);
         m.put("a", "b");
         assertNull(m.get("a"));

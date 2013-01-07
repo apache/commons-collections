@@ -42,7 +42,7 @@ public final class NullIsTruePredicate<T> implements Predicate<T>, PredicateDeco
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null
      */
-    public static <T> Predicate<T> nullIsTruePredicate(Predicate<? super T> predicate) {
+    public static <T> Predicate<T> nullIsTruePredicate(final Predicate<? super T> predicate) {
         if (predicate == null) {
             throw new IllegalArgumentException("Predicate must not be null");
         }
@@ -55,7 +55,7 @@ public final class NullIsTruePredicate<T> implements Predicate<T>, PredicateDeco
      * 
      * @param predicate  the predicate to call after the null check
      */
-    public NullIsTruePredicate(Predicate<? super T> predicate) {
+    public NullIsTruePredicate(final Predicate<? super T> predicate) {
         super();
         iPredicate = predicate;
     }
@@ -67,7 +67,7 @@ public final class NullIsTruePredicate<T> implements Predicate<T>, PredicateDeco
      * @param object  the input object
      * @return true if decorated predicate returns true or input is null
      */
-    public boolean evaluate(T object) {
+    public boolean evaluate(final T object) {
         if (object == null) {
             return true;
         }

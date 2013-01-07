@@ -40,7 +40,7 @@ public class EqualPredicateTest extends AbstractPredicateTest {
     
     @Test
     public void objectFactoryUsesEqualsForTest() throws Exception {
-        Predicate<EqualsTestObject> predicate = equalPredicate(FALSE_OBJECT);
+        final Predicate<EqualsTestObject> predicate = equalPredicate(FALSE_OBJECT);
         assertFalse(predicate, FALSE_OBJECT);
         assertTrue(equalPredicate(TRUE_OBJECT), TRUE_OBJECT);
     }
@@ -48,19 +48,19 @@ public class EqualPredicateTest extends AbstractPredicateTest {
     @SuppressWarnings("boxing")
     @Test
     public void testPredicateTypeCanBeSuperClassOfObject() throws Exception {
-        Predicate<Number> predicate = equalPredicate((Number) 4);
+        final Predicate<Number> predicate = equalPredicate((Number) 4);
         assertTrue(predicate, 4);
     }
 
     public static class EqualsTestObject {
         private final boolean b;
 
-        public EqualsTestObject(boolean b) {
+        public EqualsTestObject(final boolean b) {
             this.b = b;
         }
         
         @Override
-        public boolean equals(Object obj) {
+        public boolean equals(final Object obj) {
             return b;
         }
     }

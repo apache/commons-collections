@@ -53,7 +53,7 @@ public final class UnmodifiableOrderedBidiMap<K, V>
      * @return an unmodifiable OrderedBidiMap
      * @throws IllegalArgumentException if map is null
      */
-    public static <K, V> OrderedBidiMap<K, V> unmodifiableOrderedBidiMap(OrderedBidiMap<K, V> map) {
+    public static <K, V> OrderedBidiMap<K, V> unmodifiableOrderedBidiMap(final OrderedBidiMap<K, V> map) {
         if (map instanceof Unmodifiable) {
             return map;
         }
@@ -67,7 +67,7 @@ public final class UnmodifiableOrderedBidiMap<K, V>
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    private UnmodifiableOrderedBidiMap(OrderedBidiMap<K, V> map) {
+    private UnmodifiableOrderedBidiMap(final OrderedBidiMap<K, V> map) {
         super(map);
     }
 
@@ -78,41 +78,41 @@ public final class UnmodifiableOrderedBidiMap<K, V>
     }
 
     @Override
-    public V put(K key, V value) {
+    public V put(final K key, final V value) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void putAll(Map<? extends K, ? extends V> mapToCopy) {
+    public void putAll(final Map<? extends K, ? extends V> mapToCopy) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public V remove(Object key) {
+    public V remove(final Object key) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
-        Set<Map.Entry<K, V>> set = super.entrySet();
+        final Set<Map.Entry<K, V>> set = super.entrySet();
         return UnmodifiableEntrySet.unmodifiableEntrySet(set);
     }
 
     @Override
     public Set<K> keySet() {
-        Set<K> set = super.keySet();
+        final Set<K> set = super.keySet();
         return UnmodifiableSet.unmodifiableSet(set);
     }
 
     @Override
     public Collection<V> values() {
-        Collection<V> coll = super.values();
+        final Collection<V> coll = super.values();
         return UnmodifiableCollection.unmodifiableCollection(coll);
     }
 
     //-----------------------------------------------------------------------
     @Override
-    public K removeValue(Object value) {
+    public K removeValue(final Object value) {
         throw new UnsupportedOperationException();
     }
 
@@ -124,7 +124,7 @@ public final class UnmodifiableOrderedBidiMap<K, V>
     //-----------------------------------------------------------------------
     @Override
     public OrderedMapIterator<K, V> mapIterator() {
-        OrderedMapIterator<K, V> it = decorated().mapIterator();
+        final OrderedMapIterator<K, V> it = decorated().mapIterator();
         return UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(it);
     }
 

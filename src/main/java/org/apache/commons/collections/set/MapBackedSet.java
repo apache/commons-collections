@@ -55,7 +55,7 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
      * @return a new map backed set
      * @throws IllegalArgumentException if set is null
      */
-    public static <E, V> MapBackedSet<E, V> mapBackedSet(Map<E, ? super V> map) {
+    public static <E, V> MapBackedSet<E, V> mapBackedSet(final Map<E, ? super V> map) {
         return mapBackedSet(map, null);
     }
 
@@ -69,7 +69,7 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
      * @return a new map backed set
      * @throws IllegalArgumentException if map is null
      */
-    public static <E, V> MapBackedSet<E, V> mapBackedSet(Map<E, ? super V> map, V dummyValue) {
+    public static <E, V> MapBackedSet<E, V> mapBackedSet(final Map<E, ? super V> map, final V dummyValue) {
         if (map == null) {
             throw new IllegalArgumentException("The map must not be null");
         }
@@ -84,7 +84,7 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
      * @param dummyValue  the dummy value to use
      * @throws IllegalArgumentException if map is null
      */
-    private MapBackedSet(Map<E, ? super V> map, V dummyValue) {
+    private MapBackedSet(final Map<E, ? super V> map, final V dummyValue) {
         super();
         this.map = map;
         this.dummyValue = dummyValue;
@@ -103,39 +103,39 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
         return map.keySet().iterator();
     }
 
-    public boolean contains(Object obj) {
+    public boolean contains(final Object obj) {
         return map.containsKey(obj);
     }
 
-    public boolean containsAll(Collection<?> coll) {
+    public boolean containsAll(final Collection<?> coll) {
         return map.keySet().containsAll(coll);
     }
 
-    public boolean add(E obj) {
-        int size = map.size();
+    public boolean add(final E obj) {
+        final int size = map.size();
         map.put(obj, dummyValue);
         return map.size() != size;
     }
 
-    public boolean addAll(Collection<? extends E> coll) {
-        int size = map.size();
-        for (E e : coll) {
+    public boolean addAll(final Collection<? extends E> coll) {
+        final int size = map.size();
+        for (final E e : coll) {
             map.put(e, dummyValue);
         }
         return map.size() != size;
     }
 
-    public boolean remove(Object obj) {
-        int size = map.size();
+    public boolean remove(final Object obj) {
+        final int size = map.size();
         map.remove(obj);
         return map.size() != size;
     }
 
-    public boolean removeAll(Collection<?> coll) {
+    public boolean removeAll(final Collection<?> coll) {
         return map.keySet().removeAll(coll);
     }
 
-    public boolean retainAll(Collection<?> coll) {
+    public boolean retainAll(final Collection<?> coll) {
         return map.keySet().retainAll(coll);
     }
 
@@ -147,12 +147,12 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
         return map.keySet().toArray();
     }
 
-    public <T> T[] toArray(T[] array) {
+    public <T> T[] toArray(final T[] array) {
         return map.keySet().toArray(array);
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         return map.keySet().equals(obj);
     }
 

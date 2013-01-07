@@ -51,8 +51,8 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
      * @return a new transformed SortedBag
      * @throws IllegalArgumentException if bag or transformer is null
      */
-    public static <E> TransformedSortedBag<E> transformingSortedBag(SortedBag<E> bag,
-                                                                    Transformer<? super E, ? extends E> transformer) {
+    public static <E> TransformedSortedBag<E> transformingSortedBag(final SortedBag<E> bag,
+                                                                    final Transformer<? super E, ? extends E> transformer) {
         return new TransformedSortedBag<E>(bag, transformer);
     }
     
@@ -71,14 +71,15 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
      * @throws IllegalArgumentException if bag or transformer is null
      * @since 3.3
      */
-    public static <E> TransformedSortedBag<E> transformedSortedBag(SortedBag<E> bag,
-                                                                   Transformer<? super E, ? extends E> transformer) {
-        TransformedSortedBag<E>  decorated = new TransformedSortedBag<E>(bag, transformer);
+    public static <E> TransformedSortedBag<E> transformedSortedBag(final SortedBag<E> bag,
+                                                                   final Transformer<? super E, ? extends E> transformer) {
+        final TransformedSortedBag<E>  decorated = new TransformedSortedBag<E>(bag, transformer);
         if (transformer != null && bag != null && bag.size() > 0) {
             @SuppressWarnings("unchecked") // bag is type E
+            final
             E[] values = (E[]) bag.toArray();
             bag.clear();
-            for (E value : values) {
+            for (final E value : values) {
                 decorated.decorated().add(transformer.transform(value));
             }
         }
@@ -96,7 +97,7 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if bag or transformer is null
      */
-    protected TransformedSortedBag(SortedBag<E> bag, Transformer<? super E, ? extends E> transformer) {
+    protected TransformedSortedBag(final SortedBag<E> bag, final Transformer<? super E, ? extends E> transformer) {
         super(bag, transformer);
     }
 

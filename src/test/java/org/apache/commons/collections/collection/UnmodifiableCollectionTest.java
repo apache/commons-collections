@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
 
-    public UnmodifiableCollectionTest(String testName) {
+    public UnmodifiableCollectionTest(final String testName) {
         super(testName);
     }
 
@@ -42,7 +42,7 @@ public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Override
     public Collection<E> makeFullCollection() {
-        List<E> list = new ArrayList<E>();
+        final List<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return UnmodifiableCollection.unmodifiableCollection(list);
     }
@@ -54,7 +54,7 @@ public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Override
     public Collection<E> makeConfirmedFullCollection() {
-        ArrayList<E> list = new ArrayList<E>();
+        final ArrayList<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }

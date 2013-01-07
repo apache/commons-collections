@@ -33,7 +33,7 @@ import org.apache.commons.collections.Unmodifiable;
  */
 public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public UnmodifiableMapTest(String testName) {
+    public UnmodifiableMapTest(final String testName) {
         super(testName);
     }
 
@@ -61,7 +61,7 @@ public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Override
     public IterableMap<K, V> makeFullMap() {
-        Map<K, V> m = new HashMap<K, V>();
+        final Map<K, V> m = new HashMap<K, V>();
         addSampleMappings(m);
         return (IterableMap<K, V>) UnmodifiableMap.unmodifiableMap(m);
     }
@@ -73,13 +73,13 @@ public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     public void testDecorateFactory() {
-        Map<K, V> map = makeFullMap();
+        final Map<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableMap.unmodifiableMap(map));
 
         try {
             UnmodifiableMap.unmodifiableMap(null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
     }
 
     @Override

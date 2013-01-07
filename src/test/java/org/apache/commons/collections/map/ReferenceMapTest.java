@@ -34,7 +34,7 @@ import org.apache.commons.collections.map.AbstractReferenceMap.ReferenceStrength
  */
 public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    public ReferenceMapTest(String testName) {
+    public ReferenceMapTest(final String testName) {
         super(testName);
     }
 
@@ -76,15 +76,15 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         try {
             map.put(null, null);
             fail();
-        } catch (NullPointerException ex) {}
+        } catch (final NullPointerException ex) {}
         try {
             map.put((K) new Object(), null);
             fail();
-        } catch (NullPointerException ex) {}
+        } catch (final NullPointerException ex) {}
         try {
             map.put(null, (V) new Object());
             fail();
-        } catch (NullPointerException ex) {}
+        } catch (final NullPointerException ex) {}
     }
 
     //-----------------------------------------------------------------------
@@ -203,13 +203,13 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public Map<K, V> buildRefMap() {
-        K key = (K) new Object();
-        V value = (V) new Object();
+        final K key = (K) new Object();
+        final V value = (V) new Object();
 
         keyReference = new WeakReference<K>(key);
         valueReference = new WeakReference<V>(value);
 
-        Map<K, V> testMap = new ReferenceMap<K, V>(ReferenceStrength.WEAK, ReferenceStrength.HARD, true);
+        final Map<K, V> testMap = new ReferenceMap<K, V>(ReferenceStrength.WEAK, ReferenceStrength.HARD, true);
         testMap.put(key, value);
 
         assertEquals("In map", value, testMap.get(key));
@@ -221,7 +221,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     /** Tests whether purge values setting works */
     public void testPurgeValues() throws Exception {
         // many thanks to Juozas Baliuka for suggesting this method
-        Map<K, V> testMap = buildRefMap();
+        final Map<K, V> testMap = buildRefMap();
 
         int iterations = 0;
         int bytz = 2;
@@ -237,6 +237,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
             } else {
                 // create garbage:
                 @SuppressWarnings("unused")
+                final
                 byte[] b = new byte[bytz];
                 bytz = bytz * 2;
             }
@@ -247,9 +248,9 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     private static void gc() {
         try {
             // trigger GC
-            byte[][] tooLarge = new byte[1000000000][1000000000];
+            final byte[][] tooLarge = new byte[1000000000][1000000000];
             fail("you have too much RAM");
-        } catch (OutOfMemoryError ex) {
+        } catch (final OutOfMemoryError ex) {
             System.gc(); // ignore
         }
     }

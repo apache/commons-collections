@@ -36,7 +36,7 @@ import org.apache.commons.collections.functors.NotNullPredicate;
 public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
     /** Creates new TestFilterIterator */
-    public FilterIteratorTest(String name) {
+    public FilterIteratorTest(final String name) {
         super(name);
     }
 
@@ -92,7 +92,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     public void testRepeatedNext() {
-        for (String element : array) {
+        for (final String element : array) {
             iterator.next();
         }
         verifyNoMoreElements();
@@ -115,10 +115,10 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @SuppressWarnings("unchecked")
     public void testSetIterator() {
-        Iterator<E> iter1 = Collections.singleton((E) new Object()).iterator();
-        Iterator<E> iter2 = Collections.<E>emptyList().iterator();
+        final Iterator<E> iter1 = Collections.singleton((E) new Object()).iterator();
+        final Iterator<E> iter2 = Collections.<E>emptyList().iterator();
 
-        FilterIterator<E> filterIterator = new FilterIterator<E>(iter1);
+        final FilterIterator<E> filterIterator = new FilterIterator<E>(iter1);
         filterIterator.setPredicate(truePredicate());
         // this iterator has elements
         assertEquals(true, filterIterator.hasNext());
@@ -133,9 +133,9 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
      * correct response for the new predicate.
      */
     public void testSetPredicate() {
-        Iterator<E> iter = Collections.singleton((E) null).iterator();
+        final Iterator<E> iter = Collections.singleton((E) null).iterator();
 
-        FilterIterator<E> filterIterator = new FilterIterator<E>(iter);
+        final FilterIterator<E> filterIterator = new FilterIterator<E>(iter);
         filterIterator.setPredicate(truePredicate());
         // this predicate matches
         assertEquals(true, filterIterator.hasNext());
@@ -151,15 +151,15 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
             iterator.next();
             fail("NoSuchElementException expected");
         }
-        catch (NoSuchElementException e) {
+        catch (final NoSuchElementException e) {
             // success
         }
     }
 
     private void verifyElementsInPredicate(final String[] elements) {
-        Predicate<E> pred = new Predicate<E>() {
-            public boolean evaluate(E x) {
-                for (String element : elements) {
+        final Predicate<E> pred = new Predicate<E>() {
+            public boolean evaluate(final E x) {
+                for (final String element : elements) {
                     if (element.equals(x)) {
                         return true;
                     }
@@ -170,7 +170,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         initIterator();
         iterator.setPredicate(pred);
         for (int i = 0; i < elements.length; i++) {
-            String s = (String)iterator.next();
+            final String s = (String)iterator.next();
             assertEquals(elements[i], s);
             assertTrue(i == elements.length - 1 ? !iterator.hasNext() : iterator.hasNext());
         }
@@ -180,7 +180,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         initIterator();
         iterator.setPredicate(pred);
         if (iterator.hasNext()) {
-            Object last = iterator.next();
+            final Object last = iterator.next();
             iterator.remove();
             assertTrue("Base of FilterIterator still contains removed element.", !list.contains(last));
         }
@@ -197,9 +197,9 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
      * @param i      the Iterator to "filter"
      * @return "filtered" iterator
      */
-    protected FilterIterator<E> makePassThroughFilter(Iterator<E> i) {
-        Predicate<E> pred = new Predicate<E>() {
-                public boolean evaluate(E x) { return true; }
+    protected FilterIterator<E> makePassThroughFilter(final Iterator<E> i) {
+        final Predicate<E> pred = new Predicate<E>() {
+                public boolean evaluate(final E x) { return true; }
         };
         return new FilterIterator<E>(i, pred);
     }
@@ -211,9 +211,9 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
      * @param i      the Iterator to "filter"
      * @return "filtered" iterator
      */
-    protected FilterIterator<E> makeBlockAllFilter(Iterator<E> i) {
-        Predicate<E> pred = new Predicate<E>() {
-                public boolean evaluate(E x) { return false; }
+    protected FilterIterator<E> makeBlockAllFilter(final Iterator<E> i) {
+        final Predicate<E> pred = new Predicate<E>() {
+                public boolean evaluate(final E x) { return false; }
         };
         return new FilterIterator<E>(i, pred);
     }

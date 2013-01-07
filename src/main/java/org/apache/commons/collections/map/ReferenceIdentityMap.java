@@ -95,7 +95,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
      *   {@link AbstractReferenceMap.ReferenceStrength#SOFT SOFT},
      *   {@link AbstractReferenceMap.ReferenceStrength#WEAK WEAK}
      */
-    public ReferenceIdentityMap(ReferenceStrength keyType, ReferenceStrength valueType) {
+    public ReferenceIdentityMap(final ReferenceStrength keyType, final ReferenceStrength valueType) {
         super(keyType, valueType, DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR, false);
     }
 
@@ -114,8 +114,8 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
      * @param purgeValues should the value be automatically purged when the 
      *   key is garbage collected 
      */
-    public ReferenceIdentityMap(ReferenceStrength keyType, ReferenceStrength valueType,
-            boolean purgeValues) {
+    public ReferenceIdentityMap(final ReferenceStrength keyType, final ReferenceStrength valueType,
+            final boolean purgeValues) {
         super(keyType, valueType, DEFAULT_CAPACITY, DEFAULT_LOAD_FACTOR, purgeValues);
     }
 
@@ -134,8 +134,8 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
      * @param capacity  the initial capacity for the map
      * @param loadFactor  the load factor for the map
      */
-    public ReferenceIdentityMap(ReferenceStrength keyType, ReferenceStrength valueType,
-            int capacity, float loadFactor) {
+    public ReferenceIdentityMap(final ReferenceStrength keyType, final ReferenceStrength valueType,
+            final int capacity, final float loadFactor) {
         super(keyType, valueType, capacity, loadFactor, false);
     }
 
@@ -156,8 +156,8 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
      * @param purgeValues  should the value be automatically purged when the 
      *   key is garbage collected 
      */
-    public ReferenceIdentityMap(ReferenceStrength keyType, ReferenceStrength valueType,
-            int capacity, float loadFactor, boolean purgeValues) {
+    public ReferenceIdentityMap(final ReferenceStrength keyType, final ReferenceStrength valueType,
+            final int capacity, final float loadFactor, final boolean purgeValues) {
         super(keyType, valueType, capacity, loadFactor, purgeValues);
     }
 
@@ -171,7 +171,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
      * @return the hash code
      */
     @Override
-    protected int hash(Object key) {
+    protected int hash(final Object key) {
         return System.identityHashCode(key);
     }
 
@@ -185,7 +185,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
      * @return the hash code, as per the MapEntry specification
      */
     @Override
-    protected int hashEntry(Object key, Object value) {
+    protected int hashEntry(final Object key, final Object value) {
         return System.identityHashCode(key) ^
                System.identityHashCode(value);
     }
@@ -201,7 +201,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
      * @return true if equal by identity
      */
     @Override
-    protected boolean isEqualKey(Object key1, Object key2) {
+    protected boolean isEqualKey(final Object key1, Object key2) {
         key2 = keyType == ReferenceStrength.HARD ? key2 : ((Reference<?>) key2).get();
         return key1 == key2;
     }
@@ -216,7 +216,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
      * @return true if equal by identity
      */
     @Override
-    protected boolean isEqualValue(Object value1, Object value2) {
+    protected boolean isEqualValue(final Object value1, final Object value2) {
         return value1 == value2;
     }
 
@@ -224,7 +224,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
     /**
      * Write the map out using a custom routine.
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         doWriteObject(out);
     }
@@ -232,7 +232,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
     /**
      * Read the map in using a custom routine.
      */
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         doReadObject(in);
     }

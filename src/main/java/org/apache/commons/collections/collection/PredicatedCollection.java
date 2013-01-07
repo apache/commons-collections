@@ -58,8 +58,8 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * @throws IllegalArgumentException if collection or predicate is null
      * @throws IllegalArgumentException if the collection contains invalid elements
      */
-    public static <T> PredicatedCollection<T> predicatedCollection(Collection<T> coll,
-                                                                   Predicate<? super T> predicate) {
+    public static <T> PredicatedCollection<T> predicatedCollection(final Collection<T> coll,
+                                                                   final Predicate<? super T> predicate) {
         return new PredicatedCollection<T>(coll, predicate);
     }
 
@@ -75,13 +75,13 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * @throws IllegalArgumentException if collection or predicate is null
      * @throws IllegalArgumentException if the collection contains invalid elements
      */
-    protected PredicatedCollection(Collection<E> coll, Predicate<? super E> predicate) {
+    protected PredicatedCollection(final Collection<E> coll, final Predicate<? super E> predicate) {
         super(coll);
         if (predicate == null) {
             throw new IllegalArgumentException("Predicate must not be null");
         }
         this.predicate = predicate;
-        for (E item : coll) {
+        for (final E item : coll) {
             validate(item);
         }
     }
@@ -95,7 +95,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * @param object  the object being added
      * @throws IllegalArgumentException if the add is invalid
      */
-    protected void validate(E object) {
+    protected void validate(final E object) {
         if (predicate.evaluate(object) == false) {
             throw new IllegalArgumentException("Cannot add Object '" + object + "' - Predicate '" +
                                                predicate + "' rejected it");
@@ -112,7 +112,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * @throws IllegalArgumentException if the add is invalid
      */
     @Override
-    public boolean add(E object) {
+    public boolean add(final E object) {
         validate(object);
         return decorated().add(object);
     }
@@ -127,8 +127,8 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * @throws IllegalArgumentException if the add is invalid
      */
     @Override
-    public boolean addAll(Collection<? extends E> coll) {
-        for (E item : coll) {
+    public boolean addAll(final Collection<? extends E> coll) {
+        for (final E item : coll) {
             validate(item);
         }
         return decorated().addAll(coll);

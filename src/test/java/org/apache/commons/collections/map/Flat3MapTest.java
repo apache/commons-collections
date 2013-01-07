@@ -45,7 +45,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     private static final String TWENTY = "20";
     private static final String THIRTY = "30";
 
-    public Flat3MapTest(String testName) {
+    public Flat3MapTest(final String testName) {
         super(testName);
     }
 
@@ -61,10 +61,10 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testEquals1() {
-        Flat3Map<K, V> map1 = makeObject();
+        final Flat3Map<K, V> map1 = makeObject();
         map1.put((K) "a", (V) "testA");
         map1.put((K) "b", (V) "testB");
-        Flat3Map<K, V> map2 = makeObject();
+        final Flat3Map<K, V> map2 = makeObject();
         map2.put((K) "a", (V) "testB");
         map2.put((K) "b", (V) "testA");
         assertEquals(false, map1.equals(map2));
@@ -72,10 +72,10 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testEquals2() {
-        Flat3Map<K, V> map1 = makeObject();
+        final Flat3Map<K, V> map1 = makeObject();
         map1.put((K) "a", (V) "testA");
         map1.put((K) "b", (V) "testB");
-        Flat3Map<K, V> map2 = makeObject();
+        final Flat3Map<K, V> map2 = makeObject();
         map2.put((K) "a", (V) "testB");
         map2.put((K) "c", (V) "testA");
         assertEquals(false, map1.equals(map2));
@@ -83,7 +83,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testClone2() {
-        Flat3Map<K, V> map = makeObject();
+        final Flat3Map<K, V> map = makeObject();
         assertEquals(0, map.size());
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
@@ -94,7 +94,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertSame(TWENTY, map.get(TWO));
 
         // clone works (size = 2)
-        Flat3Map<K, V> cloned = map.clone();
+        final Flat3Map<K, V> cloned = map.clone();
         assertEquals(2, cloned.size());
         assertEquals(true, cloned.containsKey(ONE));
         assertEquals(true, cloned.containsKey(TWO));
@@ -114,7 +114,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testClone4() {
-        Flat3Map<K, V> map = makeObject();
+        final Flat3Map<K, V> map = makeObject();
         assertEquals(0, map.size());
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
@@ -122,7 +122,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         map.put((K) TWENTY, (V) TWO);
 
         // clone works (size = 4)
-        Flat3Map<K, V> cloned = map.clone();
+        final Flat3Map<K, V> cloned = map.clone();
         assertEquals(4, map.size());
         assertEquals(4, cloned.size());
         assertEquals(true, cloned.containsKey(ONE));
@@ -149,15 +149,15 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     public void testSerialisation0() throws Exception {
-        Flat3Map<K, V> map = makeObject();
-        ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        ObjectOutputStream out = new ObjectOutputStream(bout);
+        final Flat3Map<K, V> map = makeObject();
+        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        final ObjectOutputStream out = new ObjectOutputStream(bout);
         out.writeObject(map);
-        byte[] bytes = bout.toByteArray();
+        final byte[] bytes = bout.toByteArray();
         out.close();
-        ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
-        ObjectInputStream in = new ObjectInputStream(bin);
-        Flat3Map<?, ?> ser = (Flat3Map<?, ?>) in.readObject();
+        final ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
+        final ObjectInputStream in = new ObjectInputStream(bin);
+        final Flat3Map<?, ?> ser = (Flat3Map<?, ?>) in.readObject();
         in.close();
         assertEquals(0, map.size());
         assertEquals(0, ser.size());
@@ -165,18 +165,18 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testSerialisation2() throws Exception {
-        Flat3Map<K, V> map = makeObject();
+        final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
 
-        ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        ObjectOutputStream out = new ObjectOutputStream(bout);
+        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        final ObjectOutputStream out = new ObjectOutputStream(bout);
         out.writeObject(map);
-        byte[] bytes = bout.toByteArray();
+        final byte[] bytes = bout.toByteArray();
         out.close();
-        ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
-        ObjectInputStream in = new ObjectInputStream(bin);
-        Flat3Map<?, ?> ser = (Flat3Map<?, ?>) in.readObject();
+        final ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
+        final ObjectInputStream in = new ObjectInputStream(bin);
+        final Flat3Map<?, ?> ser = (Flat3Map<?, ?>) in.readObject();
         in.close();
         assertEquals(2, map.size());
         assertEquals(2, ser.size());
@@ -188,20 +188,20 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testSerialisation4() throws Exception {
-        Flat3Map<K, V> map = makeObject();
+        final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
         map.put((K) TEN, (V) ONE);
         map.put((K) TWENTY, (V) TWO);
 
-        ByteArrayOutputStream bout = new ByteArrayOutputStream();
-        ObjectOutputStream out = new ObjectOutputStream(bout);
+        final ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        final ObjectOutputStream out = new ObjectOutputStream(bout);
         out.writeObject(map);
-        byte[] bytes = bout.toByteArray();
+        final byte[] bytes = bout.toByteArray();
         out.close();
-        ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
-        ObjectInputStream in = new ObjectInputStream(bin);
-        Flat3Map<?, ?> ser = (Flat3Map<?, ?>) in.readObject();
+        final ByteArrayInputStream bin = new ByteArrayInputStream(bytes);
+        final ObjectInputStream in = new ObjectInputStream(bin);
+        final Flat3Map<?, ?> ser = (Flat3Map<?, ?>) in.readObject();
         in.close();
         assertEquals(4, map.size());
         assertEquals(4, ser.size());
@@ -218,13 +218,13 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testEntryIteratorSetValue1() throws Exception {
-        Flat3Map<K, V> map = makeObject();
+        final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
         map.put((K) THREE, (V) THIRTY);
 
-        Iterator<Map.Entry<K, V>> it = map.entrySet().iterator();
-        Map.Entry<K, V> entry = it.next();
+        final Iterator<Map.Entry<K, V>> it = map.entrySet().iterator();
+        final Map.Entry<K, V> entry = it.next();
         entry.setValue((V) "NewValue");
         assertEquals(3, map.size());
         assertEquals(true, map.containsKey(ONE));
@@ -237,14 +237,14 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testEntryIteratorSetValue2() throws Exception {
-        Flat3Map<K, V> map = makeObject();
+        final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
         map.put((K) THREE, (V) THIRTY);
 
-        Iterator<Map.Entry<K, V>> it = map.entrySet().iterator();
+        final Iterator<Map.Entry<K, V>> it = map.entrySet().iterator();
         it.next();
-        Map.Entry<K, V> entry = it.next();
+        final Map.Entry<K, V> entry = it.next();
         entry.setValue((V) "NewValue");
         assertEquals(3, map.size());
         assertEquals(true, map.containsKey(ONE));
@@ -257,15 +257,15 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testEntryIteratorSetValue3() throws Exception {
-        Flat3Map<K, V> map = makeObject();
+        final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
         map.put((K) THREE, (V) THIRTY);
 
-        Iterator<Map.Entry<K, V>> it = map.entrySet().iterator();
+        final Iterator<Map.Entry<K, V>> it = map.entrySet().iterator();
         it.next();
         it.next();
-        Map.Entry<K, V> entry = it.next();
+        final Map.Entry<K, V> entry = it.next();
         entry.setValue((V) "NewValue");
         assertEquals(3, map.size());
         assertEquals(true, map.containsKey(ONE));
@@ -279,12 +279,12 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testMapIteratorSetValue1() throws Exception {
-        Flat3Map<K, V> map = makeObject();
+        final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
         map.put((K) THREE, (V) THIRTY);
 
-        MapIterator<K, V> it = map.mapIterator();
+        final MapIterator<K, V> it = map.mapIterator();
         it.next();
         it.setValue((V) "NewValue");
         assertEquals(3, map.size());
@@ -298,12 +298,12 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testMapIteratorSetValue2() throws Exception {
-        Flat3Map<K, V> map = makeObject();
+        final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
         map.put((K) THREE, (V) THIRTY);
 
-        MapIterator<K, V> it = map.mapIterator();
+        final MapIterator<K, V> it = map.mapIterator();
         it.next();
         it.next();
         it.setValue((V) "NewValue");
@@ -318,12 +318,12 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testMapIteratorSetValue3() throws Exception {
-        Flat3Map<K, V> map = makeObject();
+        final Flat3Map<K, V> map = makeObject();
         map.put((K) ONE, (V) TEN);
         map.put((K) TWO, (V) TWENTY);
         map.put((K) THREE, (V) THIRTY);
 
-        MapIterator<K, V> it = map.mapIterator();
+        final MapIterator<K, V> it = map.mapIterator();
         it.next();
         it.next();
         it.next();
@@ -411,7 +411,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 //    }
 
     public void testCollections261() {
-        Flat3Map<Integer, Integer> m = new Flat3Map<Integer, Integer>();
+        final Flat3Map<Integer, Integer> m = new Flat3Map<Integer, Integer>();
         m.put( new Integer(1), new Integer(1) );
         m.put( new Integer(0), new Integer(0) );
         assertEquals( new Integer(1), m.remove( new Integer(1) ) ); 

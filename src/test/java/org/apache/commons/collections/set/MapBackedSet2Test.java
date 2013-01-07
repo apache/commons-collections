@@ -29,7 +29,7 @@ import org.apache.commons.collections.map.LinkedMap;
  */
 public class MapBackedSet2Test<E> extends AbstractSetTest<E> {
 
-    public MapBackedSet2Test(String testName) {
+    public MapBackedSet2Test(final String testName) {
         super(testName);
     }
 
@@ -40,7 +40,7 @@ public class MapBackedSet2Test<E> extends AbstractSetTest<E> {
 
     @SuppressWarnings("unchecked")
     protected Set<E> setupSet() {
-        Set<E> set = makeObject();
+        final Set<E> set = makeObject();
 
         for (int i = 0; i < 10; i++) {
             set.add((E) Integer.toString(i));
@@ -50,7 +50,7 @@ public class MapBackedSet2Test<E> extends AbstractSetTest<E> {
 
     @SuppressWarnings("unchecked")
     public void testOrdering() {
-        Set<E> set = setupSet();
+        final Set<E> set = setupSet();
         Iterator<E> it = set.iterator();
 
         for (int i = 0; i < 10; i++) {

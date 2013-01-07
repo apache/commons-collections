@@ -49,7 +49,7 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
      * @return a new synchronized trie
      * @throws IllegalArgumentException if trie is null
      */
-    public static <K, V> SynchronizedTrie<K, V> synchronizedTrie(Trie<K, V> trie) {
+    public static <K, V> SynchronizedTrie<K, V> synchronizedTrie(final Trie<K, V> trie) {
         return new SynchronizedTrie<K, V>(trie);
     }
 
@@ -60,30 +60,30 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
      * @param trie  the trie to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    public SynchronizedTrie(Trie<K, V> trie) {
+    public SynchronizedTrie(final Trie<K, V> trie) {
         if (trie == null) {
             throw new IllegalArgumentException("Collection must not be null");
         }
         this.delegate = trie;
     }
 
-    public synchronized Entry<K, V> select(K key, Cursor<? super K, ? super V> cursor) {
+    public synchronized Entry<K, V> select(final K key, final Cursor<? super K, ? super V> cursor) {
         return delegate.select(key, cursor);
     }
 
-    public synchronized Entry<K, V> select(K key) {
+    public synchronized Entry<K, V> select(final K key) {
         return delegate.select(key);
     }
 
-    public synchronized K selectKey(K key) {
+    public synchronized K selectKey(final K key) {
         return delegate.selectKey(key);
     }
 
-    public synchronized V selectValue(K key) {
+    public synchronized V selectValue(final K key) {
         return delegate.selectValue(key);
     }
 
-    public synchronized Entry<K, V> traverse(Cursor<? super K, ? super V> cursor) {
+    public synchronized Entry<K, V> traverse(final Cursor<? super K, ? super V> cursor) {
         return delegate.traverse(cursor);
     }
     
@@ -103,15 +103,15 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
         delegate.clear();
     }
 
-    public synchronized boolean containsKey(Object key) {
+    public synchronized boolean containsKey(final Object key) {
         return delegate.containsKey(key);
     }
 
-    public synchronized boolean containsValue(Object value) {
+    public synchronized boolean containsValue(final Object value) {
         return delegate.containsValue(value);
     }
 
-    public synchronized V get(Object key) {
+    public synchronized V get(final Object key) {
         return delegate.get(key);
     }
 
@@ -119,15 +119,15 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
         return delegate.isEmpty();
     }
 
-    public synchronized V put(K key, V value) {
+    public synchronized V put(final K key, final V value) {
         return delegate.put(key, value);
     }
 
-    public synchronized void putAll(Map<? extends K, ? extends V> m) {
+    public synchronized void putAll(final Map<? extends K, ? extends V> m) {
         delegate.putAll(m);
     }
 
-    public synchronized V remove(Object key) {
+    public synchronized V remove(final Object key) {
         return delegate.remove(key);
     }
     
@@ -135,11 +135,11 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
         return delegate.lastKey();
     }
 
-    public synchronized SortedMap<K, V> subMap(K fromKey, K toKey) {
+    public synchronized SortedMap<K, V> subMap(final K fromKey, final K toKey) {
         return Collections.synchronizedSortedMap(delegate.subMap(fromKey, toKey));
     }
 
-    public synchronized SortedMap<K, V> tailMap(K fromKey) {
+    public synchronized SortedMap<K, V> tailMap(final K fromKey) {
         return Collections.synchronizedSortedMap(delegate.tailMap(fromKey));
     }
     
@@ -151,28 +151,28 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
         return delegate.firstKey();
     }
 
-    public synchronized SortedMap<K, V> headMap(K toKey) {
+    public synchronized SortedMap<K, V> headMap(final K toKey) {
         return Collections.synchronizedSortedMap(delegate.headMap(toKey));
     }
     
-    public synchronized SortedMap<K, V> getPrefixedBy(K key, int offset, int length) {
+    public synchronized SortedMap<K, V> getPrefixedBy(final K key, final int offset, final int length) {
         return Collections.synchronizedSortedMap(delegate.getPrefixedBy(key, offset, length));
     }
 
-    public synchronized SortedMap<K, V> getPrefixedBy(K key, int length) {
+    public synchronized SortedMap<K, V> getPrefixedBy(final K key, final int length) {
         return Collections.synchronizedSortedMap(delegate.getPrefixedBy(key, length));
     }
 
-    public synchronized SortedMap<K, V> getPrefixedBy(K key) {
+    public synchronized SortedMap<K, V> getPrefixedBy(final K key) {
         return Collections.synchronizedSortedMap(delegate.getPrefixedBy(key));
     }
 
-    public synchronized SortedMap<K, V> getPrefixedByBits(K key, int lengthInBits) {
+    public synchronized SortedMap<K, V> getPrefixedByBits(final K key, final int lengthInBits) {
         return Collections.synchronizedSortedMap(delegate.getPrefixedByBits(key, lengthInBits));
     }
 
-    public synchronized SortedMap<K, V> getPrefixedByBits(K key, 
-            int offsetInBits, int lengthInBits) {
+    public synchronized SortedMap<K, V> getPrefixedByBits(final K key, 
+            final int offsetInBits, final int lengthInBits) {
         return Collections.synchronizedSortedMap(delegate.getPrefixedByBits(key, offsetInBits, lengthInBits));
     }
 
@@ -186,7 +186,7 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
     }
     
     @Override
-    public synchronized boolean equals(Object obj) {
+    public synchronized boolean equals(final Object obj) {
         return delegate.equals(obj);
     }
     

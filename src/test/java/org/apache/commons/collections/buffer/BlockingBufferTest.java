@@ -35,7 +35,7 @@ import java.util.Set;
  */
 public class BlockingBufferTest<E> extends AbstractObjectTest {
 
-    public BlockingBufferTest(String testName) {
+    public BlockingBufferTest(final String testName) {
         super(testName);
     }
 
@@ -61,8 +61,8 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
      * {@link BlockingBuffer#add(Object)}.
      */
     public void testGetWithAdd() {
-        Buffer<E> blockingBuffer = makeObject();
-        E obj = makeElement();
+        final Buffer<E> blockingBuffer = makeObject();
+        final E obj = makeElement();
         new DelayedAdd<E>(blockingBuffer, obj).start();
 
         // verify does not throw BufferUnderflowException; should block until other thread has added to the buffer .
@@ -70,8 +70,8 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
     }
 
     public void testGetWithAddTimeout() {
-        Buffer<E> blockingBuffer = BlockingBuffer.blockingBuffer(new MyBuffer<E>(), 500);
-        E obj = makeElement();
+        final Buffer<E> blockingBuffer = BlockingBuffer.blockingBuffer(new MyBuffer<E>(), 500);
+        final E obj = makeElement();
         new DelayedAdd<E>(blockingBuffer, obj, 100).start();
 
         // verify does not throw BufferUnderflowException; should block until other thread has added to the buffer .
@@ -85,8 +85,8 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
      * {@link BlockingBuffer#addAll(java.util.Collection)}.
      */
     public void testGetWithAddAll() {
-        Buffer<E> blockingBuffer = makeObject();
-        E obj = makeElement();
+        final Buffer<E> blockingBuffer = makeObject();
+        final E obj = makeElement();
         new DelayedAddAll<E>(blockingBuffer, obj).start();
 
         // verify does not throw BufferUnderflowException; should block until other thread has added to the buffer .
@@ -94,8 +94,8 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
     }
 
     public void testGetWithAddAllTimeout() {
-        Buffer<E> blockingBuffer = BlockingBuffer.blockingBuffer(new MyBuffer<E>(), 500);
-        E obj = makeElement();
+        final Buffer<E> blockingBuffer = BlockingBuffer.blockingBuffer(new MyBuffer<E>(), 500);
+        final E obj = makeElement();
         new DelayedAddAll<E>(blockingBuffer, obj, 100).start();
 
         // verify does not throw BufferUnderflowException; should block until other thread has added to the buffer .
@@ -109,8 +109,8 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
      * {@link BlockingBuffer#add(Object)}.
      */
     public void testRemoveWithAdd() {
-        Buffer<E> blockingBuffer = makeObject();
-        E obj = makeElement();
+        final Buffer<E> blockingBuffer = makeObject();
+        final E obj = makeElement();
         new DelayedAdd<E>(blockingBuffer, obj).start();
 
         // verify does not throw BufferUnderflowException; should block until other thread has added to the buffer .
@@ -118,12 +118,12 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
     }
 
     public void testRemoveWithAddTimeout() {
-        Buffer<E> blockingBuffer = BlockingBuffer.blockingBuffer(new MyBuffer<E>(), 100);
-        E obj = makeElement();
+        final Buffer<E> blockingBuffer = BlockingBuffer.blockingBuffer(new MyBuffer<E>(), 100);
+        final E obj = makeElement();
         new DelayedAdd<E>(blockingBuffer, obj, 500).start();
         try {
             blockingBuffer.remove();
-        } catch (BufferUnderflowException e) {
+        } catch (final BufferUnderflowException e) {
         }
     }
 
@@ -134,8 +134,8 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
      * {@link BlockingBuffer#addAll(java.util.Collection)}.
      */
     public void testRemoveWithAddAll() {
-        Buffer<E> blockingBuffer = makeObject();
-        E obj = makeElement();
+        final Buffer<E> blockingBuffer = makeObject();
+        final E obj = makeElement();
         new DelayedAddAll<E>(blockingBuffer, obj).start();
 
         // verify does not throw BufferUnderflowException; should block until other thread has added to the buffer .
@@ -143,12 +143,12 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
     }
 
     public void testRemoveWithAddAllTimeout() {
-        Buffer<E> blockingBuffer = BlockingBuffer.blockingBuffer(new MyBuffer<E>(), 100);
-        E obj = makeElement();
+        final Buffer<E> blockingBuffer = BlockingBuffer.blockingBuffer(new MyBuffer<E>(), 100);
+        final E obj = makeElement();
         new DelayedAddAll<E>(blockingBuffer, obj, 500).start();
         try {
             blockingBuffer.remove();
-        } catch (BufferUnderflowException e) {
+        } catch (final BufferUnderflowException e) {
         }
     }
 
@@ -161,12 +161,12 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
      * then both threads should complete.
      */
     public void testBlockedGetWithAdd() {
-        Buffer<E> blockingBuffer = makeObject();
-        E obj = makeElement();
+        final Buffer<E> blockingBuffer = makeObject();
+        final E obj = makeElement();
 
         // run methods will get and compare -- must wait for add
-        Thread thread1 = new ReadThread<E>(blockingBuffer, obj);
-        Thread thread2 = new ReadThread<E>(blockingBuffer, obj);
+        final Thread thread1 = new ReadThread<E>(blockingBuffer, obj);
+        final Thread thread2 = new ReadThread<E>(blockingBuffer, obj);
         thread1.start();
         thread2.start();
 
@@ -194,12 +194,12 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
      * singleton is added then both threads should complete.
      */
     public void testBlockedGetWithAddAll() {
-        Buffer<E> blockingBuffer = makeObject();
-        E obj = makeElement();
+        final Buffer<E> blockingBuffer = makeObject();
+        final E obj = makeElement();
 
         // run methods will get and compare -- must wait for addAll
-        Thread thread1 = new ReadThread<E>(blockingBuffer, obj);
-        Thread thread2 = new ReadThread<E>(blockingBuffer, obj);
+        final Thread thread1 = new ReadThread<E>(blockingBuffer, obj);
+        final Thread thread2 = new ReadThread<E>(blockingBuffer, obj);
         thread1.start();
         thread2.start();
 
@@ -224,12 +224,12 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
      * Tests interrupted {@link BlockingBuffer#get()}.
      */
     public void testInterruptedGet() {
-        Buffer<E> blockingBuffer = makeObject();
-        E obj = makeElement();
+        final Buffer<E> blockingBuffer = makeObject();
+        final E obj = makeElement();
 
         // spawn a read thread to wait on the empty buffer
-        ArrayList<String> exceptionList = new ArrayList<String>();
-        Thread thread = new ReadThread<E>(blockingBuffer, obj, exceptionList);
+        final ArrayList<String> exceptionList = new ArrayList<String>();
+        final Thread thread = new ReadThread<E>(blockingBuffer, obj, exceptionList);
         thread.start();
 
         // Interrupting the thread should cause it to throw BufferUnderflowException
@@ -255,12 +255,12 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
      * after the addition of a second object.
      */
     public void testBlockedRemoveWithAdd() {
-        Buffer<E> blockingBuffer = makeObject();
-        E obj = makeElement();
+        final Buffer<E> blockingBuffer = makeObject();
+        final E obj = makeElement();
 
         // run methods will remove and compare -- must wait for add
-        Thread thread1 = new ReadThread<E>(blockingBuffer, obj, null, "remove");
-        Thread thread2 = new ReadThread<E>(blockingBuffer, obj, null, "remove");
+        final Thread thread1 = new ReadThread<E>(blockingBuffer, obj, null, "remove");
+        final Thread thread2 = new ReadThread<E>(blockingBuffer, obj, null, "remove");
         thread1.start();
         thread2.start();
 
@@ -295,12 +295,12 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
      * singleton.
      */
     public void testBlockedRemoveWithAddAll1() {
-        Buffer<E> blockingBuffer = makeObject();
-        E obj = makeElement();
+        final Buffer<E> blockingBuffer = makeObject();
+        final E obj = makeElement();
 
         // run methods will remove and compare -- must wait for addAll
-        Thread thread1 = new ReadThread<E>(blockingBuffer, obj, null, "remove");
-        Thread thread2 = new ReadThread<E>(blockingBuffer, obj, null, "remove");
+        final Thread thread1 = new ReadThread<E>(blockingBuffer, obj, null, "remove");
+        final Thread thread2 = new ReadThread<E>(blockingBuffer, obj, null, "remove");
         thread1.start();
         thread2.start();
 
@@ -334,16 +334,16 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
      * complete. Each thread should have read a different object.
      */
     public void testBlockedRemoveWithAddAll2() {
-        Buffer<E> blockingBuffer = makeObject();
-        E obj1 = makeElement();
-        E obj2 = makeElement();
-        Set<E> objs = Collections.synchronizedSet(new HashSet<E>());
+        final Buffer<E> blockingBuffer = makeObject();
+        final E obj1 = makeElement();
+        final E obj2 = makeElement();
+        final Set<E> objs = Collections.synchronizedSet(new HashSet<E>());
         objs.add(obj1);
         objs.add(obj2);
 
         // run methods will remove and compare -- must wait for addAll
-        Thread thread1 = new ReadThread<E>(blockingBuffer, objs, "remove");
-        Thread thread2 = new ReadThread<E>(blockingBuffer, objs, "remove");
+        final Thread thread1 = new ReadThread<E>(blockingBuffer, objs, "remove");
+        final Thread thread2 = new ReadThread<E>(blockingBuffer, objs, "remove");
         thread1.start();
         thread2.start();
 
@@ -367,12 +367,12 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
      * Tests interrupted remove.
      */
     public void testInterruptedRemove() {
-        Buffer<E> blockingBuffer = makeObject();
-        E obj = makeElement();
+        final Buffer<E> blockingBuffer = makeObject();
+        final E obj = makeElement();
 
         // spawn a read thread to wait on the empty buffer
-        ArrayList<String> exceptionList = new ArrayList<String>();
-        Thread thread = new ReadThread<E>(blockingBuffer, obj, exceptionList, "remove");
+        final ArrayList<String> exceptionList = new ArrayList<String>();
+        final Thread thread = new ReadThread<E>(blockingBuffer, obj, exceptionList, "remove");
         thread.start();
 
         // Interrupting the thread should cause it to throw BufferUnderflowException
@@ -393,7 +393,7 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
         try {
             buffer.get(100);
             fail("Get should have timed out.");
-        } catch (BufferUnderflowException e) {
+        } catch (final BufferUnderflowException e) {
         }
     }
 
@@ -402,7 +402,7 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
         try {
             buffer.remove(100);
             fail("Get should have timed out.");
-        } catch (BufferUnderflowException e) {
+        } catch (final BufferUnderflowException e) {
         }
     }
 
@@ -414,13 +414,13 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
 
         long delay = 1000;
 
-        public DelayedAdd(Buffer<E> buffer, E obj, long delay) {
+        public DelayedAdd(final Buffer<E> buffer, final E obj, final long delay) {
             this.buffer = buffer;
             this.obj = obj;
             this.delay = delay;
         }
 
-        DelayedAdd(Buffer<E> buffer, E obj) {
+        DelayedAdd(final Buffer<E> buffer, final E obj) {
             super();
             this.buffer = buffer;
             this.obj = obj;
@@ -431,7 +431,7 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
             try {
                 // wait for other thread to block on get() or remove()
                 Thread.sleep(delay);
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
             }
             buffer.add(obj);
         }
@@ -445,13 +445,13 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
 
         long delay = 100;
 
-        public DelayedAddAll(Buffer<E> buffer, E obj, long delay) {
+        public DelayedAddAll(final Buffer<E> buffer, final E obj, final long delay) {
             this.buffer = buffer;
             this.obj = obj;
             this.delay = delay;
         }
 
-        DelayedAddAll(Buffer<E> buffer, E obj) {
+        DelayedAddAll(final Buffer<E> buffer, final E obj) {
             super();
             this.buffer = buffer;
             this.obj = obj;
@@ -462,7 +462,7 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
             try {
                 // wait for other thread to block on get() or remove()
                 Thread.sleep(delay);
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
             }
             buffer.addAll(Collections.singleton(obj));
         }
@@ -480,20 +480,20 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
 
         Set<E> objs;
 
-        ReadThread(Buffer<E> buffer, Object obj) {
+        ReadThread(final Buffer<E> buffer, final Object obj) {
             super();
             this.buffer = buffer;
             this.obj = obj;
         }
 
-        ReadThread(Buffer<E> buffer, Object obj, ArrayList<String> exceptionList) {
+        ReadThread(final Buffer<E> buffer, final Object obj, final ArrayList<String> exceptionList) {
             super();
             this.buffer = buffer;
             this.obj = obj;
             this.exceptionList = exceptionList;
         }
 
-        ReadThread(Buffer<E> buffer, Object obj, ArrayList<String> exceptionList, String action) {
+        ReadThread(final Buffer<E> buffer, final Object obj, final ArrayList<String> exceptionList, final String action) {
             super();
             this.buffer = buffer;
             this.obj = obj;
@@ -501,7 +501,7 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
             this.action = action;
         }
 
-        ReadThread(Buffer<E> buffer, Set<E> objs, String action) {
+        ReadThread(final Buffer<E> buffer, final Set<E> objs, final String action) {
             super();
             this.buffer = buffer;
             this.objs = objs;
@@ -520,7 +520,7 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
                         assertTrue(objs.remove(buffer.remove()));
                     }
                 }
-            } catch (BufferUnderflowException ex) {
+            } catch (final BufferUnderflowException ex) {
                 exceptionList.add("BufferUnderFlow");
             }
         }
@@ -548,7 +548,7 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
     private void delay() {
         try {
             Thread.sleep( 200 );
-        } catch (InterruptedException e) {
+        } catch (final InterruptedException e) {
         }
     }
 

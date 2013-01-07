@@ -30,13 +30,13 @@ import org.junit.Test;
  */
 public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainTest.PseudoRow> {
 
-    public ComparatorChainTest(String testName) {
+    public ComparatorChainTest(final String testName) {
         super(testName);
     }
 
     @Override
     public Comparator<PseudoRow> makeObject() {
-        ComparatorChain<PseudoRow> chain = new ComparatorChain<PseudoRow>(new ColumnComparator(0));
+        final ComparatorChain<PseudoRow> chain = new ComparatorChain<PseudoRow>(new ColumnComparator(0));
         chain.addComparator(new ColumnComparator(1), true); // reverse the second column
         chain.addComparator(new ColumnComparator(2), false);
         return chain;
@@ -44,49 +44,49 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
 
     @Test
     public void testNoopComparatorChain() {
-        ComparatorChain<Integer> chain = new ComparatorChain<Integer>();
-        Integer i1 = new Integer(4);
-        Integer i2 = new Integer(6);
+        final ComparatorChain<Integer> chain = new ComparatorChain<Integer>();
+        final Integer i1 = new Integer(4);
+        final Integer i2 = new Integer(6);
         chain.addComparator(new ComparableComparator<Integer>());
 
-        int correctValue = i1.compareTo(i2);
+        final int correctValue = i1.compareTo(i2);
         assertTrue("Comparison returns the right order", chain.compare(i1, i2) == correctValue);
     }
 
     @Test
     public void testBadNoopComparatorChain() {
-        ComparatorChain<Integer> chain = new ComparatorChain<Integer>();
-        Integer i1 = new Integer(4);
-        Integer i2 = new Integer(6);
+        final ComparatorChain<Integer> chain = new ComparatorChain<Integer>();
+        final Integer i1 = new Integer(4);
+        final Integer i2 = new Integer(6);
         try {
             chain.compare(i1,i2);
             fail("An exception should be thrown when a chain contains zero comparators.");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
         }
     }
 
     @Test
     public void testListComparatorChain() {
-        List<Comparator<Integer>> list = new LinkedList<Comparator<Integer>>();
+        final List<Comparator<Integer>> list = new LinkedList<Comparator<Integer>>();
         list.add(new ComparableComparator<Integer>());
-        ComparatorChain<Integer> chain = new ComparatorChain<Integer>(list);
-        Integer i1 = new Integer(4);
-        Integer i2 = new Integer(6);
+        final ComparatorChain<Integer> chain = new ComparatorChain<Integer>(list);
+        final Integer i1 = new Integer(4);
+        final Integer i2 = new Integer(6);
 
-        int correctValue = i1.compareTo(i2);
+        final int correctValue = i1.compareTo(i2);
         assertTrue("Comparison returns the right order", chain.compare(i1, i2) == correctValue);
     }
 
     @Test
     public void testBadListComparatorChain() {
-        List<Comparator<Integer>> list = new LinkedList<Comparator<Integer>>();
-        ComparatorChain<Integer> chain = new ComparatorChain<Integer>(list);
-        Integer i1 = new Integer(4);
-        Integer i2 = new Integer(6);
+        final List<Comparator<Integer>> list = new LinkedList<Comparator<Integer>>();
+        final ComparatorChain<Integer> chain = new ComparatorChain<Integer>(list);
+        final Integer i1 = new Integer(4);
+        final Integer i2 = new Integer(6);
         try {
             chain.compare(i1, i2);
             fail("An exception should be thrown when a chain contains zero comparators.");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
         }
     }
 
@@ -94,10 +94,10 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
     public void testComparatorChainOnMinvaluedCompatator() {
         // -1 * Integer.MIN_VALUE is less than 0,
         // test that ComparatorChain handles this edge case correctly
-        ComparatorChain<Integer> chain = new ComparatorChain<Integer>();
+        final ComparatorChain<Integer> chain = new ComparatorChain<Integer>();
         chain.addComparator(new Comparator<Integer>() {
-            public int compare(Integer a, Integer b) {
-                int result = a.compareTo(b);
+            public int compare(final Integer a, final Integer b) {
+                final int result = a.compareTo(b);
                 if (result < 0) {
                     return Integer.MIN_VALUE;
                 }
@@ -115,7 +115,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
 
     @Override
     public List<PseudoRow> getComparableObjectsOrdered() {
-        List<PseudoRow> list = new LinkedList<PseudoRow>();
+        final List<PseudoRow> list = new LinkedList<PseudoRow>();
         // this is the correct order assuming a
         // "0th forward, 1st reverse, 2nd forward" sort
         list.add(new PseudoRow(1, 2, 3));
@@ -133,19 +133,19 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
 
         public int cols[] = new int[3];
 
-        public PseudoRow(int col1, int col2, int col3) {
+        public PseudoRow(final int col1, final int col2, final int col3) {
             cols[0] = col1;
             cols[1] = col2;
             cols[2] = col3;
         }
 
-        public int getColumn(int colIndex) {
+        public int getColumn(final int colIndex) {
             return cols[colIndex];
         }
 
         @Override
         public String toString() {
-            StringBuilder buf = new StringBuilder();
+            final StringBuilder buf = new StringBuilder();
             buf.append("[");
             buf.append(cols[0]);
             buf.append(",");
@@ -157,12 +157,12 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
         }
 
         @Override
-        public boolean equals(Object o) {
+        public boolean equals(final Object o) {
             if (!(o instanceof PseudoRow)) {
                 return false;
             }
 
-            PseudoRow row = (PseudoRow) o;
+            final PseudoRow row = (PseudoRow) o;
             if (getColumn(0) != row.getColumn(0)) {
                 return false;
             }
@@ -185,14 +185,14 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
 
         protected int colIndex = 0;
 
-        public ColumnComparator(int colIndex) {
+        public ColumnComparator(final int colIndex) {
             this.colIndex = colIndex;
         }
 
-        public int compare(PseudoRow o1, PseudoRow o2) {
+        public int compare(final PseudoRow o1, final PseudoRow o2) {
 
-            int col1 = o1.getColumn(colIndex);
-            int col2 = o2.getColumn(colIndex);
+            final int col1 = o1.getColumn(colIndex);
+            final int col2 = o2.getColumn(colIndex);
 
             if (col1 > col2) {
                 return 1;
@@ -209,7 +209,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
         }
 
         @Override
-        public boolean equals(Object that) {
+        public boolean equals(final Object that) {
             return that instanceof ColumnComparator && colIndex == ((ColumnComparator) that).colIndex;
         }
     }

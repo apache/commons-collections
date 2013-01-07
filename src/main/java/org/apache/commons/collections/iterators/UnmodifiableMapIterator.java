@@ -42,7 +42,7 @@ public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, U
      * @return a new unmodifiable map iterator
      * @throws IllegalArgumentException if the iterator is null
      */
-    public static <K, V> MapIterator<K, V> unmodifiableMapIterator(MapIterator<K, V> iterator) {
+    public static <K, V> MapIterator<K, V> unmodifiableMapIterator(final MapIterator<K, V> iterator) {
         if (iterator == null) {
             throw new IllegalArgumentException("MapIterator must not be null");
         }
@@ -58,7 +58,7 @@ public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, U
      *
      * @param iterator  the iterator to decorate
      */
-    private UnmodifiableMapIterator(MapIterator<K, V> iterator) {
+    private UnmodifiableMapIterator(final MapIterator<K, V> iterator) {
         super();
         this.iterator = iterator;
     }
@@ -80,7 +80,7 @@ public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, U
         return iterator.getValue();
     }
 
-    public V setValue(V value) {
+    public V setValue(final V value) {
         throw new UnsupportedOperationException("setValue() is not supported");
     }
 

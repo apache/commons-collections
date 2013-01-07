@@ -104,7 +104,7 @@ public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E
      * @param comparator  the comparator used to order the elements,
      *  null means use natural order
      */
-    public PriorityBuffer(Comparator<? super E> comparator) {
+    public PriorityBuffer(final Comparator<? super E> comparator) {
         this(DEFAULT_CAPACITY, true, comparator);
     }
 
@@ -115,7 +115,7 @@ public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E
      * @param ascendingOrder  if <code>true</code> the heap is created as a 
      * minimum heap; otherwise, the heap is created as a maximum heap
      */
-    public PriorityBuffer(boolean ascendingOrder) {
+    public PriorityBuffer(final boolean ascendingOrder) {
         this(DEFAULT_CAPACITY, ascendingOrder, null);
     }
 
@@ -127,7 +127,7 @@ public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E
      * @param comparator  the comparator used to order the elements,
      *  null means use natural order
      */
-    public PriorityBuffer(boolean ascendingOrder, Comparator<? super E> comparator) {
+    public PriorityBuffer(final boolean ascendingOrder, final Comparator<? super E> comparator) {
         this(DEFAULT_CAPACITY, ascendingOrder, comparator);
     }
 
@@ -138,7 +138,7 @@ public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E
      * @param capacity  the initial capacity for the buffer, greater than zero
      * @throws IllegalArgumentException if <code>capacity</code> is &lt;= <code>0</code>
      */
-    public PriorityBuffer(int capacity) {
+    public PriorityBuffer(final int capacity) {
         this(capacity, true, null);
     }
 
@@ -151,7 +151,7 @@ public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E
      *  null means use natural order
      * @throws IllegalArgumentException if <code>capacity</code> is &lt;= <code>0</code>
      */
-    public PriorityBuffer(int capacity, Comparator<? super E> comparator) {
+    public PriorityBuffer(final int capacity, final Comparator<? super E> comparator) {
         this(capacity, true, comparator);
     }
 
@@ -164,7 +164,7 @@ public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E
      *  minimum heap; otherwise, the heap is created as a maximum heap.
      * @throws IllegalArgumentException if <code>capacity</code> is <code>&lt;= 0</code>
      */
-    public PriorityBuffer(int capacity, boolean ascendingOrder) {
+    public PriorityBuffer(final int capacity, final boolean ascendingOrder) {
         this(capacity, ascendingOrder, null);
     }
 
@@ -180,7 +180,7 @@ public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E
      * @throws IllegalArgumentException if <code>capacity</code> is <code>&lt;= 0</code>
      */
     @SuppressWarnings("unchecked")
-    public PriorityBuffer(int capacity, boolean ascendingOrder, Comparator<? super E> comparator) {
+    public PriorityBuffer(final int capacity, final boolean ascendingOrder, final Comparator<? super E> comparator) {
         super();
         if (capacity <= 0) {
             throw new IllegalArgumentException("invalid capacity");
@@ -241,7 +241,7 @@ public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E
      * @return true always
      */
     @Override
-    public boolean add(E element) {
+    public boolean add(final E element) {
         if (isAtCapacity()) {
             grow();
         }
@@ -378,7 +378,7 @@ public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E
      */
     protected void percolateUpMinHeap(final int index) {
         int hole = index;
-        E element = elements[hole];
+        final E element = elements[hole];
         while (hole > 1 && compare(element, elements[hole / 2]) < 0) {
             // save element that is being pushed down
             // as the element "bubble" is percolated up
@@ -410,7 +410,7 @@ public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E
      */
     protected void percolateUpMaxHeap(final int index) {
         int hole = index;
-        E element = elements[hole];
+        final E element = elements[hole];
 
         while (hole > 1 && compare(element, elements[hole / 2]) > 0) {
             // save element that is being pushed down
@@ -443,7 +443,7 @@ public class PriorityBuffer<E> extends AbstractCollection<E> implements Buffer<E
      * @param b  the second object
      * @return -ve if a less than b, 0 if they are equal, +ve if a greater than b
      */
-    protected int compare(E a, E b) {
+    protected int compare(final E a, final E b) {
         return comparator.compare(a, b);
     }
 

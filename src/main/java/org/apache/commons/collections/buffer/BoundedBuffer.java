@@ -66,7 +66,7 @@ public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCo
      * @throws IllegalArgumentException if the buffer is null
      * @throws IllegalArgumentException if the maximum size is zero or less
      */
-    public static <E> BoundedBuffer<E> boundedBuffer(Buffer<E> buffer, int maximumSize) {
+    public static <E> BoundedBuffer<E> boundedBuffer(final Buffer<E> buffer, final int maximumSize) {
         return new BoundedBuffer<E>(buffer, maximumSize, 0L);
     }
 
@@ -82,7 +82,7 @@ public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCo
      * @throws IllegalArgumentException if the buffer is null
      * @throws IllegalArgumentException if the maximum size is zero or less
      */
-    public static <E> BoundedBuffer<E> boundedBuffer(Buffer<E> buffer, int maximumSize, long timeout) {
+    public static <E> BoundedBuffer<E> boundedBuffer(final Buffer<E> buffer, final int maximumSize, final long timeout) {
         return new BoundedBuffer<E>(buffer, maximumSize, timeout);
     }
 
@@ -97,7 +97,7 @@ public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCo
      * @throws IllegalArgumentException if the buffer is null
      * @throws IllegalArgumentException if the maximum size is zero or less
      */
-    protected BoundedBuffer(Buffer<E> buffer, int maximumSize, long timeout) {
+    protected BoundedBuffer(final Buffer<E> buffer, final int maximumSize, final long timeout) {
         super(buffer);
         if (maximumSize < 1) {
             throw new IllegalArgumentException();
@@ -110,14 +110,14 @@ public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCo
     @Override
     public E remove() {
         synchronized (lock) {
-            E returnValue = decorated().remove();
+            final E returnValue = decorated().remove();
             lock.notifyAll();
             return returnValue;
         }
     }
 
     @Override
-    public boolean add(E o) {
+    public boolean add(final E o) {
         synchronized (lock) {
             timeoutWait(1);
             return decorated().add(o);
@@ -165,8 +165,8 @@ public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCo
             try {
                 lock.wait(timeLeft);
                 timeLeft = expiration - System.currentTimeMillis();
-            } catch (InterruptedException ex) {
-                PrintWriter out = new PrintWriter(new StringWriter());
+            } catch (final InterruptedException ex) {
+                final PrintWriter out = new PrintWriter(new StringWriter());
                 ex.printStackTrace(out);
                 throw new BufferUnderflowException(
                     "Caused by InterruptedException: " + out.toString());
@@ -197,7 +197,7 @@ public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCo
          * 
          * @param it the decorated {@link Iterator}
          */
-        public NotifyingIterator(Iterator<E> it) {
+        public NotifyingIterator(final Iterator<E> it) {
             super(it);
         }
 

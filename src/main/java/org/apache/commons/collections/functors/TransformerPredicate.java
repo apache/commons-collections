@@ -44,7 +44,7 @@ public final class TransformerPredicate<T> implements Predicate<T>, Serializable
      * @return the predicate
      * @throws IllegalArgumentException if the transformer is null
      */
-    public static <T> Predicate<T> transformerPredicate(Transformer<? super T, Boolean> transformer) {
+    public static <T> Predicate<T> transformerPredicate(final Transformer<? super T, Boolean> transformer) {
         if (transformer == null) {
             throw new IllegalArgumentException("The transformer to call must not be null");
         }
@@ -57,7 +57,7 @@ public final class TransformerPredicate<T> implements Predicate<T>, Serializable
      *
      * @param transformer  the transformer to decorate
      */
-    public TransformerPredicate(Transformer<? super T, Boolean> transformer) {
+    public TransformerPredicate(final Transformer<? super T, Boolean> transformer) {
         super();
         iTransformer = transformer;
     }
@@ -69,8 +69,8 @@ public final class TransformerPredicate<T> implements Predicate<T>, Serializable
      * @return true if decorated transformer returns Boolean.TRUE
      * @throws FunctorException if the transformer returns an invalid type
      */
-    public boolean evaluate(T object) {
-        Boolean result = iTransformer.transform(object);
+    public boolean evaluate(final T object) {
+        final Boolean result = iTransformer.transform(object);
         if (result == null) {
             throw new FunctorException(
                     "Transformer must return an instanceof Boolean, it was a null object");

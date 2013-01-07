@@ -102,7 +102,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
      * @param transformer  the transformer to use, null will use a no effect transformer
      */
     @SuppressWarnings("unchecked")
-    public ObjectGraphIterator(E root, Transformer<? super E, ? extends E> transformer) {
+    public ObjectGraphIterator(final E root, final Transformer<? super E, ? extends E> transformer) {
         super();
         if (root instanceof Iterator) {
             this.currentIterator = (Iterator<? extends E>) root;
@@ -122,7 +122,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
      * 
      * @param rootIterator  the root iterator, null will result in an empty iterator
      */
-    public ObjectGraphIterator(Iterator<? extends E> rootIterator) {
+    public ObjectGraphIterator(final Iterator<? extends E> rootIterator) {
         super();
         this.currentIterator = rootIterator;
         this.transformer = null;
@@ -158,7 +158,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
      * @param value  the value to start from
      */
     @SuppressWarnings("unchecked")
-    protected void findNext(E value) {
+    protected void findNext(final E value) {
         if (value instanceof Iterator) {
             // need to examine this iterator
             findNextByIterator((Iterator<? extends E>) value);
@@ -174,7 +174,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
      * 
      * @param iterator  the iterator to start from
      */
-    protected void findNextByIterator(Iterator<? extends E> iterator) {
+    protected void findNextByIterator(final Iterator<? extends E> iterator) {
         if (iterator != currentIterator) {
             // recurse a level
             if (currentIterator != null) {
@@ -224,7 +224,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
             throw new NoSuchElementException("No more elements in the iteration");
         }
         lastUsedIterator = currentIterator;
-        E result = currentValue;
+        final E result = currentValue;
         currentValue = null;
         hasNext = false;
         return result;

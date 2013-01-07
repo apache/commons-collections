@@ -48,7 +48,7 @@ public class ForClosure<E> implements Closure<E>, Serializable {
      * @return the <code>for</code> closure
      */
     @SuppressWarnings("unchecked")
-    public static <E> Closure<E> forClosure(int count, Closure<? super E> closure) {
+    public static <E> Closure<E> forClosure(final int count, final Closure<? super E> closure) {
         if (count <= 0 || closure == null) {
             return NOPClosure.<E>nopClosure();
         }
@@ -65,7 +65,7 @@ public class ForClosure<E> implements Closure<E>, Serializable {
      * @param count  the number of times to execute the closure
      * @param closure  the closure to execute, not null
      */
-    public ForClosure(int count, Closure<? super E> closure) {
+    public ForClosure(final int count, final Closure<? super E> closure) {
         super();
         iCount = count;
         iClosure = closure;
@@ -76,7 +76,7 @@ public class ForClosure<E> implements Closure<E>, Serializable {
      * 
      * @param input  the input object
      */
-    public void execute(E input) {
+    public void execute(final E input) {
         for (int i = 0; i < iCount; i++) {
             iClosure.execute(input);
         }

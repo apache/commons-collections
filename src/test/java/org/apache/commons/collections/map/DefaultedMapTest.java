@@ -38,7 +38,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     protected final Factory<V> nullFactory = FactoryUtils.<V>nullFactory();
 
-    public DefaultedMapTest(String testName) {
+    public DefaultedMapTest(final String testName) {
         super(testName);
     }
 
@@ -52,7 +52,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     @Override
     @SuppressWarnings("unchecked")
     public void testMapGet() {
-        Map<K, V> map = new DefaultedMap<K, V>((V) "NULL");
+        final Map<K, V> map = new DefaultedMap<K, V>((V) "NULL");
 
         assertEquals(0, map.size());
         assertEquals(false, map.containsKey("NotInMap"));
@@ -68,8 +68,8 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testMapGet2() {
-        HashMap<K, V> base = new HashMap<K, V>();
-        Map<K, V> map = DefaultedMap.defaultedMap(base, (V) "NULL");
+        final HashMap<K, V> base = new HashMap<K, V>();
+        final Map<K, V> map = DefaultedMap.defaultedMap(base, (V) "NULL");
 
         assertEquals(0, map.size());
         assertEquals(0, base.size());
@@ -87,8 +87,8 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testMapGet3() {
-        HashMap<K, V> base = new HashMap<K, V>();
-        Map<K, V> map = DefaultedMap.defaultedMap(base, ConstantFactory.constantFactory((V) "NULL"));
+        final HashMap<K, V> base = new HashMap<K, V>();
+        final Map<K, V> map = DefaultedMap.defaultedMap(base, ConstantFactory.constantFactory((V) "NULL"));
 
         assertEquals(0, map.size());
         assertEquals(0, base.size());
@@ -106,9 +106,9 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testMapGet4() {
-        HashMap<K, V> base = new HashMap<K, V>();
-        Map<K, V> map = DefaultedMap.defaultedMap(base, new Transformer<K, V>() {
-            public V transform(K input) {
+        final HashMap<K, V> base = new HashMap<K, V>();
+        final Map<K, V> map = DefaultedMap.defaultedMap(base, new Transformer<K, V>() {
+            public V transform(final K input) {
                 if (input instanceof String) {
                     return (V) "NULL";
                 }

@@ -29,7 +29,7 @@ import java.util.List;
 @SuppressWarnings("boxing")
 public class ComparableComparatorTest extends AbstractComparatorTest<Integer> {
 
-    public ComparableComparatorTest(String testName) {
+    public ComparableComparatorTest(final String testName) {
         super(testName);
     }
 
@@ -40,7 +40,7 @@ public class ComparableComparatorTest extends AbstractComparatorTest<Integer> {
 
     @Override
     public List<Integer> getComparableObjectsOrdered() {
-        List<Integer> list = new LinkedList<Integer>();
+        final List<Integer> list = new LinkedList<Integer>();
         list.add(1);
         list.add(2);
         list.add(3);

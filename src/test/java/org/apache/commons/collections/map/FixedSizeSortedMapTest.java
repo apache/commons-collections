@@ -34,7 +34,7 @@ import org.apache.commons.collections.BulkTest;
  */
 public class FixedSizeSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
-    public FixedSizeSortedMapTest(String testName) {
+    public FixedSizeSortedMapTest(final String testName) {
         super(testName);
     }
 
@@ -50,7 +50,7 @@ public class FixedSizeSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     @Override
     public SortedMap<K, V> makeFullMap() {
-        SortedMap<K, V> map = new TreeMap<K, V>();
+        final SortedMap<K, V> map = new TreeMap<K, V>();
         addSampleMappings(map);
         return FixedSizeSortedMap.fixedSizeSortedMap(map);
     }

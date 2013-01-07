@@ -47,7 +47,7 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
      * @param map  the map
      * @param key  the key
      */
-    public TiedMapEntry(Map<K, V> map, K key) {
+    public TiedMapEntry(final Map<K, V> map, final K key) {
         super();
         this.map = map;
         this.key = key;
@@ -80,7 +80,7 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
      * @return the old value
      * @throws IllegalArgumentException if the value is set to this map entry
      */
-    public V setValue(V value) {
+    public V setValue(final V value) {
         if (value == this) {
             throw new IllegalArgumentException("Cannot set value to this map entry");
         }
@@ -96,15 +96,15 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
      * @return true if equal key and value
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (obj == this) {
             return true;
         }
         if (obj instanceof Map.Entry == false) {
             return false;
         }
-        Map.Entry<?,?> other = (Map.Entry<?,?>) obj;
-        Object value = getValue();
+        final Map.Entry<?,?> other = (Map.Entry<?,?>) obj;
+        final Object value = getValue();
         return
             (key == null ? other.getKey() == null : key.equals(other.getKey())) &&
             (value == null ? other.getValue() == null : value.equals(other.getValue()));
@@ -119,7 +119,7 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
      */
     @Override
     public int hashCode() {
-        Object value = getValue();
+        final Object value = getValue();
         return (getKey() == null ? 0 : getKey().hashCode()) ^
                (value == null ? 0 : value.hashCode()); 
     }

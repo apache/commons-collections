@@ -25,7 +25,7 @@ public class ObjectArrayListIterator2Test<E> extends AbstractListIteratorTest<E>
 
     protected String[] testArray = { "One", "Two", "Three" };
 
-    public ObjectArrayListIterator2Test(String testName) {
+    public ObjectArrayListIterator2Test(final String testName) {
         super(testName);
     }
 
@@ -41,7 +41,7 @@ public class ObjectArrayListIterator2Test<E> extends AbstractListIteratorTest<E>
         return new ObjectArrayListIterator<E>((E[]) testArray);
     }
 
-    public ObjectArrayListIterator<E> makeArrayListIterator(E[] array) {
+    public ObjectArrayListIterator<E> makeArrayListIterator(final E[] array) {
         return new ObjectArrayListIterator<E>(array);
     }
 

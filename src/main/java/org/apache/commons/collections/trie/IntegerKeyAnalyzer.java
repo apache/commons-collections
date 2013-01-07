@@ -44,7 +44,7 @@ public class IntegerKeyAnalyzer extends AbstractKeyAnalyzer<Integer> {
     /**
      * Returns a bit mask where the given bit is set
      */
-    private static int mask(int bit) {
+    private static int mask(final int bit) {
         return MSB >>> bit;
     }
 
@@ -58,37 +58,37 @@ public class IntegerKeyAnalyzer extends AbstractKeyAnalyzer<Integer> {
     /**
      * {@inheritDoc}
      */
-    public int lengthInBits(Integer key) {
+    public int lengthInBits(final Integer key) {
         return LENGTH;
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean isBitSet(Integer key, int bitIndex, int lengthInBits) {
+    public boolean isBitSet(final Integer key, final int bitIndex, final int lengthInBits) {
         return (key & mask(bitIndex)) != 0;
     }
 
     /**
      * {@inheritDoc}
      */
-    public int bitIndex(Integer key, int offsetInBits, int lengthInBits, 
-            Integer other, int otherOffsetInBits, int otherLengthInBits) {
+    public int bitIndex(final Integer key, final int offsetInBits, final int lengthInBits, 
+            final Integer other, final int otherOffsetInBits, final int otherLengthInBits) {
         
         if (offsetInBits != 0 || otherOffsetInBits != 0) {
             throw new IllegalArgumentException("offsetInBits=" + offsetInBits 
                     + ", otherOffsetInBits=" + otherOffsetInBits);
         }
         
-        int keyValue = key.intValue();
+        final int keyValue = key.intValue();
         if (keyValue == 0) {
             return NULL_BIT_KEY;
         }
 
-        int otherValue = other != null ? other.intValue() : 0;
+        final int otherValue = other != null ? other.intValue() : 0;
         
         if (keyValue != otherValue) {
-            int xorValue = keyValue ^ otherValue;
+            final int xorValue = keyValue ^ otherValue;
             for (int i = 0; i < LENGTH; i++) {
                 if ((xorValue & mask(i)) != 0) {
                     return i;
@@ -102,11 +102,11 @@ public class IntegerKeyAnalyzer extends AbstractKeyAnalyzer<Integer> {
     /**
      * {@inheritDoc}
      */
-    public boolean isPrefix(Integer prefix, int offsetInBits, 
-            int lengthInBits, Integer key) {
+    public boolean isPrefix(final Integer prefix, final int offsetInBits, 
+            final int lengthInBits, final Integer key) {
         
-        int value1 = prefix.intValue() << offsetInBits;
-        int value2 = key.intValue();
+        final int value1 = prefix.intValue() << offsetInBits;
+        final int value2 = key.intValue();
         
         int mask = 0;
         for (int i = 0; i < lengthInBits; i++) {

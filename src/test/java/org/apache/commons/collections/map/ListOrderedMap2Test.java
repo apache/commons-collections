@@ -36,7 +36,7 @@ import org.apache.commons.collections.list.AbstractListTest;
  */
 public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
 
-    public ListOrderedMap2Test(String testName) {
+    public ListOrderedMap2Test(final String testName) {
         super(testName);
     }
 
@@ -63,22 +63,22 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
         ListOrderedMap<K, V> lom = getMap();
         try {
             lom.get(0);
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
         try {
             lom.get(-1);
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
 
         resetFull();
         lom = getMap();
         try {
             lom.get(-1);
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
         try {
             lom.get(lom.size());
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
 
         int i = 0;
-        for (MapIterator<K, V> it = lom.mapIterator(); it.hasNext(); i++) {
+        for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext(); i++) {
             assertSame(it.next(), lom.get(i));
         }
     }
@@ -88,22 +88,22 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
         ListOrderedMap<K, V> lom = getMap();
         try {
             lom.getValue(0);
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
         try {
             lom.getValue(-1);
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
 
         resetFull();
         lom = getMap();
         try {
             lom.getValue(-1);
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
         try {
             lom.getValue(lom.size());
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
 
         int i = 0;
-        for (MapIterator<K, V> it = lom.mapIterator(); it.hasNext(); i++) {
+        for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext(); i++) {
             it.next();
             assertSame(it.getValue(), lom.getValue(i));
         }
@@ -116,8 +116,8 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
 
         resetFull();
         lom = getMap();
-        List<K> list = new ArrayList<K>();
-        for (MapIterator<K, V> it = lom.mapIterator(); it.hasNext();) {
+        final List<K> list = new ArrayList<K>();
+        for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext();) {
             list.add(it.next());
         }
         for (int i = 0; i < list.size(); i++) {
@@ -130,27 +130,27 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
         ListOrderedMap<K, V> lom = getMap();
         try {
             lom.remove(0);
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
         try {
             lom.remove(-1);
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
 
         resetFull();
         lom = getMap();
         try {
             lom.remove(-1);
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
         try {
             lom.remove(lom.size());
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
 
-        List<K> list = new ArrayList<K>();
-        for (MapIterator<K, V> it = lom.mapIterator(); it.hasNext();) {
+        final List<K> list = new ArrayList<K>();
+        for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext();) {
             list.add(it.next());
         }
         for (int i = 0; i < list.size(); i++) {
-            Object key = list.get(i);
-            Object value = lom.get(key);
+            final Object key = list.get(i);
+            final Object value = lom.get(key);
             assertEquals(value, lom.remove(i));
             list.remove(i);
             assertEquals(false, lom.containsKey(key));

@@ -29,7 +29,7 @@ import org.apache.commons.collections.list.AbstractListTest;
  */
 public abstract class AbstractArrayListTest<E> extends AbstractListTest<E> {
 
-    public AbstractArrayListTest(String testName) {
+    public AbstractArrayListTest(final String testName) {
         super(testName);
     }
 
@@ -41,21 +41,21 @@ public abstract class AbstractArrayListTest<E> extends AbstractListTest<E> {
 
     //-----------------------------------------------------------------------
     public void testNewArrayList() {
-        ArrayList<E> list = makeObject();
+        final ArrayList<E> list = makeObject();
         assertTrue("New list is empty", list.isEmpty());
         assertEquals("New list has size zero", 0, list.size());
 
         try {
             list.get(1);
             fail("get(int i) should have thrown IndexOutOfBoundsException");
-        } catch (IndexOutOfBoundsException e) {
+        } catch (final IndexOutOfBoundsException e) {
             // Expected result
         }
     }
 
     @SuppressWarnings("unchecked")
     public void testSearch() {
-        ArrayList<E> list = makeObject();
+        final ArrayList<E> list = makeObject();
         list.add((E) "First Item");
         list.add((E) "Last Item");
         assertEquals("First item is 'First Item'", "First Item", list.get(0));

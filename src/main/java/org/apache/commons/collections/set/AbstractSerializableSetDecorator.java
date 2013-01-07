@@ -42,7 +42,7 @@ public abstract class AbstractSerializableSetDecorator<E>
      * @param set  the list to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    protected AbstractSerializableSetDecorator(Set<E> set) {
+    protected AbstractSerializableSetDecorator(final Set<E> set) {
         super(set);
     }
 
@@ -53,7 +53,7 @@ public abstract class AbstractSerializableSetDecorator<E>
      * @param out  the output stream
      * @throws IOException
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(collection);
     }
@@ -66,7 +66,7 @@ public abstract class AbstractSerializableSetDecorator<E>
      * @throws ClassNotFoundException
      */
     @SuppressWarnings("unchecked")
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         collection = (Collection<E>) in.readObject();
     }

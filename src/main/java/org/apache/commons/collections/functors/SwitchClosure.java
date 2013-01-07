@@ -53,9 +53,9 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * @throws IllegalArgumentException if any element in the array is null
      */
     @SuppressWarnings("unchecked")
-    public static <E> Closure<E> switchClosure(Predicate<? super E>[] predicates,
-                                               Closure<? super E>[] closures,
-                                               Closure<? super E> defaultClosure) {
+    public static <E> Closure<E> switchClosure(final Predicate<? super E>[] predicates,
+                                               final Closure<? super E>[] closures,
+                                               final Closure<? super E> defaultClosure) {
         FunctorUtils.validate(predicates);
         FunctorUtils.validate(closures);
         if (predicates.length != closures.length) {
@@ -86,20 +86,20 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * @throws ClassCastException  if the map elements are of the wrong type
      */
     @SuppressWarnings("unchecked")
-    public static <E> Closure<E> switchClosure(Map<Predicate<E>, Closure<E>> predicatesAndClosures) {
+    public static <E> Closure<E> switchClosure(final Map<Predicate<E>, Closure<E>> predicatesAndClosures) {
         if (predicatesAndClosures == null) {
             throw new IllegalArgumentException("The predicate and closure map must not be null");
         }
         // convert to array like this to guarantee iterator() ordering
-        Closure<? super E> defaultClosure = predicatesAndClosures.remove(null);
-        int size = predicatesAndClosures.size();
+        final Closure<? super E> defaultClosure = predicatesAndClosures.remove(null);
+        final int size = predicatesAndClosures.size();
         if (size == 0) {
             return (Closure<E>) (defaultClosure == null ? NOPClosure.<E>nopClosure() : defaultClosure);
         }
-        Closure<E>[] closures = new Closure[size];
-        Predicate<E>[] preds = new Predicate[size];
+        final Closure<E>[] closures = new Closure[size];
+        final Predicate<E>[] preds = new Predicate[size];
         int i = 0;
-        for (Map.Entry<Predicate<E>, Closure<E>> entry : predicatesAndClosures.entrySet()) {
+        for (final Map.Entry<Predicate<E>, Closure<E>> entry : predicatesAndClosures.entrySet()) {
             preds[i] = entry.getKey();
             closures[i] = entry.getValue();
             i++;
@@ -116,8 +116,8 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * @param defaultClosure  the closure to use if no match, null means nop
      */
     @SuppressWarnings("unchecked")
-    public SwitchClosure(Predicate<? super E>[] predicates, Closure<? super E>[] closures,
-                         Closure<? super E> defaultClosure) {
+    public SwitchClosure(final Predicate<? super E>[] predicates, final Closure<? super E>[] closures,
+                         final Closure<? super E> defaultClosure) {
         super();
         iPredicates = predicates;
         iClosures = closures;
@@ -129,7 +129,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      *
      * @param input  the input object
      */
-    public void execute(E input) {
+    public void execute(final E input) {
         for (int i = 0; i < iPredicates.length; i++) {
             if (iPredicates[i].evaluate(input) == true) {
                 iClosures[i].execute(input);

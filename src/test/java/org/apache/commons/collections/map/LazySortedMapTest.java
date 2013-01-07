@@ -43,7 +43,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     
     private static final Factory<Integer> oneFactory = FactoryUtils.constantFactory(1);
    
-    public LazySortedMapTest(String testName) {
+    public LazySortedMapTest(final String testName) {
         super(testName);
     }
     
@@ -74,12 +74,12 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     public void mapGet() {
         Map<Integer, Number> map = lazySortedMap(new TreeMap<Integer,Number>(), oneFactory);
         assertEquals(0, map.size());
-        Number i1 = map.get(5);
+        final Number i1 = map.get(5);
         assertEquals(1, i1);
         assertEquals(1, map.size());
 
         map = lazySortedMap(new TreeMap<Integer,Number>(), FactoryUtils.<Number>nullFactory());
-        Number o = map.get(5);
+        final Number o = map.get(5);
         assertEquals(null,o);
         assertEquals(1, map.size());
         
@@ -87,7 +87,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     
     //-----------------------------------------------------------------------
     public void testSortOrder() {
-        SortedMap<String, Number> map = lazySortedMap(new TreeMap<String,Number>(), oneFactory);
+        final SortedMap<String, Number> map = lazySortedMap(new TreeMap<String,Number>(), oneFactory);
         map.put("A",  5);
         map.get("B"); // Entry with value "One" created
         map.put("C", 8);
@@ -100,25 +100,25 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         assertEquals("Last key in submap should be B",
             "B", map.subMap("A","C").lastKey());
         
-        Comparator<?> c = map.comparator();
+        final Comparator<?> c = map.comparator();
         assertTrue("natural order, so comparator should be null", 
             c == null);      
     } 
     
     public void testTransformerDecorate() {
-        Transformer<Object, Integer> transformer = TransformerUtils.asTransformer(oneFactory);
+        final Transformer<Object, Integer> transformer = TransformerUtils.asTransformer(oneFactory);
         SortedMap<Integer, Number> map = lazySortedMap(new TreeMap<Integer, Number>(), transformer);     
         assertTrue(map instanceof LazySortedMap);  
          try {
             map = lazySortedMap(new TreeMap<Integer, Number>(), (Transformer<Integer, Number>) null);
             fail("Expecting IllegalArgumentException for null transformer");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
         try {
             map = lazySortedMap((SortedMap<Integer,Number>) null, transformer);
             fail("Expecting IllegalArgumentException for null map");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         } 
     }

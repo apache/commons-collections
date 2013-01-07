@@ -56,7 +56,7 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
      * @throws IllegalArgumentException if bag or predicate is null
      * @throws IllegalArgumentException if the bag contains invalid elements
      */
-    public static <E> PredicatedBag<E> predicatedBag(Bag<E> bag, Predicate<? super E> predicate) {
+    public static <E> PredicatedBag<E> predicatedBag(final Bag<E> bag, final Predicate<? super E> predicate) {
         return new PredicatedBag<E>(bag, predicate);
     }
 
@@ -72,7 +72,7 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
      * @throws IllegalArgumentException if bag or predicate is null
      * @throws IllegalArgumentException if the bag contains invalid elements
      */
-    protected PredicatedBag(Bag<E> bag, Predicate<? super E> predicate) {
+    protected PredicatedBag(final Bag<E> bag, final Predicate<? super E> predicate) {
         super(bag, predicate);
     }
 
@@ -88,12 +88,12 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
     
     //-----------------------------------------------------------------------
     
-    public boolean add(E object, int count) {
+    public boolean add(final E object, final int count) {
         validate(object);
         return decorated().add(object, count);
     }
 
-    public boolean remove(Object object, int count) {
+    public boolean remove(final Object object, final int count) {
         return decorated().remove(object, count);
     }
 
@@ -101,7 +101,7 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
         return decorated().uniqueSet();
     }
 
-    public int getCount(Object object) {
+    public int getCount(final Object object) {
         return decorated().getCount(object);
     }
 

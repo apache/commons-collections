@@ -56,7 +56,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
      * @return a new synchronized collection
      * @throws IllegalArgumentException if collection is null
      */
-    public static <T> SynchronizedCollection<T> synchronizedCollection(Collection<T> coll) {
+    public static <T> SynchronizedCollection<T> synchronizedCollection(final Collection<T> coll) {
         return new SynchronizedCollection<T>(coll);
     }
 
@@ -67,7 +67,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
      * @param collection  the collection to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    protected SynchronizedCollection(Collection<E> collection) {
+    protected SynchronizedCollection(final Collection<E> collection) {
         if (collection == null) {
             throw new IllegalArgumentException("Collection must not be null");
         }
@@ -82,7 +82,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
      * @param lock  the lock object to use, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    protected SynchronizedCollection(Collection<E> collection, Object lock) {
+    protected SynchronizedCollection(final Collection<E> collection, final Object lock) {
         if (collection == null) {
             throw new IllegalArgumentException("Collection must not be null");
         }
@@ -101,13 +101,13 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
 
     //-----------------------------------------------------------------------
     
-    public boolean add(E object) {
+    public boolean add(final E object) {
         synchronized (lock) {
             return decorated().add(object);
         }
     }
 
-    public boolean addAll(Collection<? extends E> coll) {
+    public boolean addAll(final Collection<? extends E> coll) {
         synchronized (lock) {
             return decorated().addAll(coll);
         }
@@ -119,13 +119,13 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
         }
     }
 
-    public boolean contains(Object object) {
+    public boolean contains(final Object object) {
         synchronized (lock) {
             return decorated().contains(object);
         }
     }
 
-    public boolean containsAll(Collection<?> coll) {
+    public boolean containsAll(final Collection<?> coll) {
         synchronized (lock) {
             return decorated().containsAll(coll);
         }
@@ -157,25 +157,25 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
         }
     }
 
-    public <T> T[] toArray(T[] object) {
+    public <T> T[] toArray(final T[] object) {
         synchronized (lock) {
             return decorated().toArray(object);
         }
     }
 
-    public boolean remove(Object object) {
+    public boolean remove(final Object object) {
         synchronized (lock) {
             return decorated().remove(object);
         }
     }
 
-    public boolean removeAll(Collection<?> coll) {
+    public boolean removeAll(final Collection<?> coll) {
         synchronized (lock) {
             return decorated().removeAll(coll);
         }
     }
 
-    public boolean retainAll(Collection<?> coll) {
+    public boolean retainAll(final Collection<?> coll) {
         synchronized (lock) {
             return decorated().retainAll(coll);
         }
@@ -188,7 +188,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     }
 
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         synchronized (lock) {
             if (object == this) {
                 return true;

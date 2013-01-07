@@ -45,7 +45,7 @@ public abstract class AbstractSortedBidiMapDecorator<K, V>
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    public AbstractSortedBidiMapDecorator(SortedBidiMap<K, V> map) {
+    public AbstractSortedBidiMapDecorator(final SortedBidiMap<K, V> map) {
         super(map);
     }
 
@@ -73,15 +73,15 @@ public abstract class AbstractSortedBidiMapDecorator<K, V>
         return decorated().valueComparator();
     }
 
-    public SortedMap<K, V> subMap(K fromKey, K toKey) {
+    public SortedMap<K, V> subMap(final K fromKey, final K toKey) {
         return decorated().subMap(fromKey, toKey);
     }
 
-    public SortedMap<K, V> headMap(K toKey) {
+    public SortedMap<K, V> headMap(final K toKey) {
         return decorated().headMap(toKey);
     }
 
-    public SortedMap<K, V> tailMap(K fromKey) {
+    public SortedMap<K, V> tailMap(final K fromKey) {
         return decorated().tailMap(fromKey);
     }
 

@@ -40,7 +40,7 @@ import org.apache.commons.collections.ResettableListIterator;
 public class LoopingListIterator<E> implements ResettableListIterator<E> {
 
     /** The list to base the iterator on */
-    private List<E> list;
+    private final List<E> list;
     /** The current list iterator */
     private ListIterator<E> iterator;
 
@@ -54,7 +54,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * @param list the list to wrap
      * @throws NullPointerException if the list it null
      */
-    public LoopingListIterator(List<E> list) {
+    public LoopingListIterator(final List<E> list) {
         if (list == null) {
             throw new NullPointerException("The list must not be null");
         }
@@ -211,7 +211,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * @throws UnsupportedOperationException if the add method is not
      *  supported by the iterator implementation of the underlying list
      */
-    public void add(E obj) {
+    public void add(final E obj) {
         iterator.add(obj);
     }
 
@@ -227,7 +227,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * @throws UnsupportedOperationException if the set method is not
      *  supported by the iterator implementation of the underlying list
      */
-    public void set(E obj) {
+    public void set(final E obj) {
         iterator.set(obj);
     }
 

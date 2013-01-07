@@ -38,7 +38,7 @@ public abstract class AbstractMapEntryDecorator<K, V> implements Map.Entry<K, V>
      * @param entry  the <code>Map.Entry</code> to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    public AbstractMapEntryDecorator(Map.Entry<K, V> entry) {
+    public AbstractMapEntryDecorator(final Map.Entry<K, V> entry) {
         if (entry == null) {
             throw new IllegalArgumentException("Map Entry must not be null");
         }
@@ -64,12 +64,12 @@ public abstract class AbstractMapEntryDecorator<K, V> implements Map.Entry<K, V>
         return entry.getValue();
     }
 
-    public V setValue(V object) {
+    public V setValue(final V object) {
         return entry.setValue(object);
     }
    
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         if (object == this) {
             return true;
         }

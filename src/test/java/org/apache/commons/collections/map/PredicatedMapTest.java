@@ -38,18 +38,18 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     protected static final Predicate<Object> truePredicate = TruePredicate.<Object>truePredicate();
 
     protected static final Predicate<Object> testPredicate = new Predicate<Object>() {
-        public boolean evaluate(Object o) {
+        public boolean evaluate(final Object o) {
             return o instanceof String;
         }
     };
 
-    public PredicatedMapTest(String testName) {
+    public PredicatedMapTest(final String testName) {
         super(testName);
     }
 
     //-----------------------------------------------------------------------
-    protected IterableMap<K, V> decorateMap(Map<K, V> map, Predicate<? super K> keyPredicate,
-        Predicate<? super V> valuePredicate) {
+    protected IterableMap<K, V> decorateMap(final Map<K, V> map, final Predicate<? super K> keyPredicate,
+        final Predicate<? super V> valuePredicate) {
         return PredicatedMap.predicatedMap(map, keyPredicate, valuePredicate);
     }
 
@@ -77,25 +77,25 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testPut() {
-        Map<K, V> map = makeTestMap();
+        final Map<K, V> map = makeTestMap();
         try {
             map.put((K) "Hi", (V) new Integer(3));
             fail("Illegal value should raise IllegalArgument");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
 
         try {
             map.put((K) new Integer(3), (V) "Hi");
             fail("Illegal key should raise IllegalArgument");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
 
         assertTrue(!map.containsKey(new Integer(3)));
         assertTrue(!map.containsValue(new Integer(3)));
 
-        Map<K, V> map2 = new HashMap<K, V>();
+        final Map<K, V> map2 = new HashMap<K, V>();
         map2.put((K) "A", (V) "a");
         map2.put((K) "B", (V) "b");
         map2.put((K) "C", (V) "c");
@@ -104,23 +104,23 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         try {
             map.putAll(map2);
             fail("Illegal value should raise IllegalArgument");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
 
         map.put((K) "E", (V) "e");
         Iterator<Map.Entry<K, V>> iterator = map.entrySet().iterator();
         try {
-            Map.Entry<K, V> entry = iterator.next();
+            final Map.Entry<K, V> entry = iterator.next();
             entry.setValue((V) new Integer(3));
             fail("Illegal value should raise IllegalArgument");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
 
         map.put((K) "F", (V) "f");
         iterator = map.entrySet().iterator();
-        Map.Entry<K, V> entry = iterator.next();
+        final Map.Entry<K, V> entry = iterator.next();
         entry.setValue((V) "x");
 
     }

@@ -71,7 +71,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
      */
     protected final Predicate<T> getPredicateInstance(final Boolean... mockReturnValues) {
         final List<Predicate<T>> predicates = new ArrayList<Predicate<T>>();
-        for (Boolean returnValue : mockReturnValues) {
+        for (final Boolean returnValue : mockReturnValues) {
             predicates.add(createMockPredicate(returnValue));
         }
         return getPredicateInstance(predicates);

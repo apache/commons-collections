@@ -60,7 +60,7 @@ public final class ExceptionTransformer<I, O> implements Transformer<I, O>, Seri
      * @return never
      * @throws FunctorException always
      */
-    public O transform(I input) {
+    public O transform(final I input) {
         throw new FunctorException("ExceptionTransformer invoked");
     }
 

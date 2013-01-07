@@ -48,7 +48,7 @@ public abstract class AbstractBufferDecorator<E> extends AbstractCollectionDecor
      * @param buffer  the buffer to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
-    protected AbstractBufferDecorator(Buffer<E> buffer) {
+    protected AbstractBufferDecorator(final Buffer<E> buffer) {
         super(buffer);
     }
 

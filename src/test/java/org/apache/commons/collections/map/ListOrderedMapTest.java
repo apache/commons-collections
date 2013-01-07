@@ -40,7 +40,7 @@ import org.apache.commons.collections.list.AbstractListTest;
  */
 public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
-    public ListOrderedMapTest(String testName) {
+    public ListOrderedMapTest(final String testName) {
         super(testName);
     }
 
@@ -67,22 +67,22 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         ListOrderedMap<K, V> lom = getMap();
         try {
             lom.get(0);
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
         try {
             lom.get(-1);
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
 
         resetFull();
         lom = getMap();
         try {
             lom.get(-1);
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
         try {
             lom.get(lom.size());
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
 
         int i = 0;
-        for (MapIterator<K, V> it = lom.mapIterator(); it.hasNext(); i++) {
+        for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext(); i++) {
             assertSame(it.next(), lom.get(i));
         }
     }
@@ -92,22 +92,22 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         ListOrderedMap<K, V> lom = getMap();
         try {
             lom.getValue(0);
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
         try {
             lom.getValue(-1);
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
 
         resetFull();
         lom = getMap();
         try {
             lom.getValue(-1);
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
         try {
             lom.getValue(lom.size());
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
 
         int i = 0;
-        for (MapIterator<K, V> it = lom.mapIterator(); it.hasNext(); i++) {
+        for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext(); i++) {
             it.next();
             assertSame(it.getValue(), lom.getValue(i));
         }
@@ -120,8 +120,8 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         resetFull();
         lom = getMap();
-        List<K> list = new ArrayList<K>();
-        for (MapIterator<K, V> it = lom.mapIterator(); it.hasNext();) {
+        final List<K> list = new ArrayList<K>();
+        for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext();) {
             list.add(it.next());
         }
         for (int i = 0; i < list.size(); i++) {
@@ -135,23 +135,23 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         ListOrderedMap<K, V> lom = getMap();
         try {
             lom.setValue(0, (V) "");
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
         try {
             lom.setValue(-1, (V) "");
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
 
         resetFull();
         lom = getMap();
         try {
             lom.setValue(-1, (V) "");
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
         try {
             lom.setValue(lom.size(), (V) "");
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
 
         for (int i = 0; i < lom.size(); i++) {
-            V value = lom.getValue(i);
-            Object input = new Integer(i);
+            final V value = lom.getValue(i);
+            final Object input = new Integer(i);
             assertEquals(value, lom.setValue(i, (V) input));
             assertEquals(input, lom.getValue(i));
         }
@@ -162,27 +162,27 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         ListOrderedMap<K, V> lom = getMap();
         try {
             lom.remove(0);
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
         try {
             lom.remove(-1);
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
 
         resetFull();
         lom = getMap();
         try {
             lom.remove(-1);
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
         try {
             lom.remove(lom.size());
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
 
-        List<K> list = new ArrayList<K>();
-        for (MapIterator<K, V> it = lom.mapIterator(); it.hasNext();) {
+        final List<K> list = new ArrayList<K>();
+        for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext();) {
             list.add(it.next());
         }
         for (int i = 0; i < list.size(); i++) {
-            Object key = list.get(i);
-            Object value = lom.get(key);
+            final Object key = list.get(i);
+            final Object value = lom.get(key);
             assertEquals(value, lom.remove(i));
             list.remove(i);
             assertEquals(false, lom.containsKey(key));
@@ -197,11 +197,11 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         try {
             lom.put(1, (K) "testInsert1", (V) "testInsert1v");
             fail("should not be able to insert at pos 1 in empty Map");
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
         try {
             lom.put(-1, (K) "testInsert-1", (V) "testInsert-1v");
             fail("should not be able to insert at pos -1 in empty Map");
-        } catch (IndexOutOfBoundsException ex) {}
+        } catch (final IndexOutOfBoundsException ex) {}
 
         // put where key doesn't exist
         lom.put(0, (K) "testInsert1", (V) "testInsert1v");
@@ -225,7 +225,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         // put in a full map
         resetFull();
         lom = getMap();
-        ListOrderedMap<K, V> lom2 = new ListOrderedMap<K, V>();
+        final ListOrderedMap<K, V> lom2 = new ListOrderedMap<K, V>();
         lom2.putAll(lom);
 
         lom2.put(0, (K) "testInsert0", (V) "testInsert0v");
@@ -235,10 +235,10 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
 
         // put where key does exist
-        Integer i1 = new Integer(1);
-        Integer i1b = new Integer(1);
-        Integer i2 = new Integer(2);
-        Integer i3 = new Integer(3);
+        final Integer i1 = new Integer(1);
+        final Integer i1b = new Integer(1);
+        final Integer i2 = new Integer(2);
+        final Integer i3 = new Integer(3);
 
         resetEmpty();
         lom = getMap();
@@ -308,7 +308,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     public void testPutAllWithIndex() {
         resetEmpty();
-        ListOrderedMap<String, String> lom = (ListOrderedMap<String, String>) map;
+        final ListOrderedMap<String, String> lom = (ListOrderedMap<String, String>) map;
 
         // Create Initial Data
         lom.put("testInsert0", "testInsert0v");
@@ -319,7 +319,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertEquals("testInsert2v", lom.getValue(2));
 
         // Create New Test Map and Add using putAll(int, Object, Object)
-        Map<String, String> values = new ListOrderedMap<String, String>();
+        final Map<String, String> values = new ListOrderedMap<String, String>();
         values.put("NewInsert0", "NewInsert0v");
         values.put("NewInsert1", "NewInsert1v");
         lom.putAll(1, values);
@@ -335,21 +335,21 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     public void testPutAllWithIndexBug441() {
         // see COLLECTIONS-441
         resetEmpty();
-        ListOrderedMap<K, V> lom = getMap();
+        final ListOrderedMap<K, V> lom = getMap();
 
-        int size = 5;
+        final int size = 5;
         for (int i = 0; i < size; i++) {
             lom.put((K) Integer.valueOf(i), (V) Boolean.valueOf(true));
         }
 
-        Map<K, V> map = new TreeMap<K, V>();
+        final Map<K, V> map = new TreeMap<K, V>();
         for (int i = 0; i < size; i++) {
             map.put((K) Integer.valueOf(i), (V) Boolean.valueOf(false));
         }
 
         lom.putAll(3, map);
         
-        List<K> orderedList = lom.asList();
+        final List<K> orderedList = lom.asList();
         for (int i = 0; i < size; i++) {
             assertEquals(i, orderedList.get(i));
         }
@@ -358,9 +358,9 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     //-----------------------------------------------------------------------
     public void testValueList_getByIndex() {
         resetFull();
-        ListOrderedMap<K, V> lom = getMap();
+        final ListOrderedMap<K, V> lom = getMap();
         for (int i = 0; i < lom.size(); i++) {
-            V expected = lom.getValue(i);
+            final V expected = lom.getValue(i);
             assertEquals(expected, lom.valueList().get(i));
         }
     }
@@ -368,10 +368,10 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     @SuppressWarnings("unchecked")
     public void testValueList_setByIndex() {
         resetFull();
-        ListOrderedMap<K, V> lom = getMap();
+        final ListOrderedMap<K, V> lom = getMap();
         for (int i = 0; i < lom.size(); i++) {
-            Object input = new Integer(i);
-            V expected = lom.getValue(i);
+            final Object input = new Integer(i);
+            final V expected = lom.getValue(i);
             assertEquals(expected, lom.valueList().set(i, (V) input));
             assertEquals(input, lom.getValue(i));
             assertEquals(input, lom.valueList().get(i));
@@ -380,9 +380,9 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     public void testValueList_removeByIndex() {
         resetFull();
-        ListOrderedMap<K, V> lom = getMap();
+        final ListOrderedMap<K, V> lom = getMap();
         while (lom.size() > 1) {
-            V expected = lom.getValue(1);
+            final V expected = lom.getValue(1);
             assertEquals(expected, lom.valueList().remove(1));
         }
     }

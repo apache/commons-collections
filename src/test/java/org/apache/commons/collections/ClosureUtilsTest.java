@@ -45,14 +45,14 @@ public class ClosureUtilsTest extends TestCase {
     /**
      * Construct
      */
-    public ClosureUtilsTest(String name) {
+    public ClosureUtilsTest(final String name) {
         super(name);
     }
 
     static class MockClosure<T> implements Closure<T> {
         int count = 0;
 
-        public void execute(T object) {
+        public void execute(final T object) {
             count++;
         }
 
@@ -64,7 +64,7 @@ public class ClosureUtilsTest extends TestCase {
     static class MockTransformer<T> implements Transformer<T, T> {
         int count = 0;
 
-        public T transform(T object) {
+        public T transform(final T object) {
             count++;
             return object;
         }
@@ -78,10 +78,10 @@ public class ClosureUtilsTest extends TestCase {
         assertSame(ClosureUtils.exceptionClosure(), ClosureUtils.exceptionClosure());
         try {
             ClosureUtils.exceptionClosure().execute(null);
-        } catch (FunctorException ex) {
+        } catch (final FunctorException ex) {
             try {
                 ClosureUtils.exceptionClosure().execute(cString);
-            } catch (FunctorException ex2) {
+            } catch (final FunctorException ex2) {
                 return;
             }
         }
@@ -92,7 +92,7 @@ public class ClosureUtilsTest extends TestCase {
     //------------------------------------------------------------------
 
     public void testNopClosure() {
-        StringBuilder buf = new StringBuilder("Hello");
+        final StringBuilder buf = new StringBuilder("Hello");
         ClosureUtils.nopClosure().execute(null);
         assertEquals("Hello", buf.toString());
         ClosureUtils.nopClosure().execute("Hello");
@@ -115,7 +115,7 @@ public class ClosureUtilsTest extends TestCase {
     //------------------------------------------------------------------
 
     public void testForClosure() {
-        MockClosure<Object> cmd = new MockClosure<Object>();
+        final MockClosure<Object> cmd = new MockClosure<Object>();
         ClosureUtils.forClosure(5, cmd).execute(null);
         assertEquals(5, cmd.count);
         assertSame(NOPClosure.INSTANCE, ClosureUtils.forClosure(0, new MockClosure<Object>()));
@@ -140,15 +140,15 @@ public class ClosureUtilsTest extends TestCase {
         try {
             ClosureUtils.whileClosure(null, ClosureUtils.nopClosure());
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             ClosureUtils.whileClosure(FalsePredicate.falsePredicate(), null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             ClosureUtils.whileClosure(null, null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
     }
 
     // doWhileClosure
@@ -166,7 +166,7 @@ public class ClosureUtilsTest extends TestCase {
         try {
             ClosureUtils.doWhileClosure(null, null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
     }
 
     // chainedClosure
@@ -202,26 +202,26 @@ public class ClosureUtilsTest extends TestCase {
         try {
             ClosureUtils.chainedClosure(null, null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             ClosureUtils.<Object>chainedClosure((Closure[]) null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             ClosureUtils.<Object>chainedClosure((Collection<Closure<Object>>) null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             ClosureUtils.<Object>chainedClosure(new Closure[] {null, null});
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             coll = new ArrayList<Closure<Object>>();
             coll.add(null);
             coll.add(null);
             ClosureUtils.chainedClosure(coll);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
     }
 
     // ifClosure
@@ -255,8 +255,8 @@ public class ClosureUtilsTest extends TestCase {
 
     @SuppressWarnings("unchecked")
     public void testSwitchClosure() {
-        MockClosure<String> a = new MockClosure<String>();
-        MockClosure<String> b = new MockClosure<String>();
+        final MockClosure<String> a = new MockClosure<String>();
+        final MockClosure<String> b = new MockClosure<String>();
         ClosureUtils.<String>switchClosure(
             new Predicate[] { EqualPredicate.equalPredicate("HELLO"), EqualPredicate.equalPredicate("THERE") },
             new Closure[] { a, b }).execute("WELL");
@@ -273,7 +273,7 @@ public class ClosureUtilsTest extends TestCase {
 
         a.reset();
         b.reset();
-        MockClosure<String> c = new MockClosure<String>();
+        final MockClosure<String> c = new MockClosure<String>();
         ClosureUtils.<String>switchClosure(
             new Predicate[] { EqualPredicate.equalPredicate("HELLO"), EqualPredicate.equalPredicate("THERE") },
             new Closure[] { a, b }, c).execute("WELL");
@@ -283,7 +283,7 @@ public class ClosureUtilsTest extends TestCase {
 
         a.reset();
         b.reset();
-        Map<Predicate<String>, Closure<String>> map = new HashMap<Predicate<String>, Closure<String>>();
+        final Map<Predicate<String>, Closure<String>> map = new HashMap<Predicate<String>, Closure<String>>();
         map.put(EqualPredicate.equalPredicate("HELLO"), a);
         map.put(EqualPredicate.equalPredicate("THERE"), b);
         ClosureUtils.<String>switchClosure(map).execute(null);
@@ -320,34 +320,34 @@ public class ClosureUtilsTest extends TestCase {
         try {
             ClosureUtils.switchClosure(null, null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             ClosureUtils.<String>switchClosure((Predicate<String>[]) null, (Closure<String>[]) null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             ClosureUtils.<String>switchClosure((Map<Predicate<String>, Closure<String>>) null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             ClosureUtils.<String>switchClosure(new Predicate[2], new Closure[2]);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             ClosureUtils.<String>switchClosure(
                     new Predicate[] { TruePredicate.<String>truePredicate() },
                     new Closure[] { a, b });
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
     }
 
     // switchMapClosure
     //------------------------------------------------------------------
 
     public void testSwitchMapClosure() {
-        MockClosure<String> a = new MockClosure<String>();
-        MockClosure<String> b = new MockClosure<String>();
-        Map<String, Closure<String>> map = new HashMap<String, Closure<String>>();
+        final MockClosure<String> a = new MockClosure<String>();
+        final MockClosure<String> b = new MockClosure<String>();
+        final Map<String, Closure<String>> map = new HashMap<String, Closure<String>>();
         map.put("HELLO", a);
         map.put("THERE", b);
         ClosureUtils.switchMapClosure(map).execute(null);
@@ -366,7 +366,7 @@ public class ClosureUtilsTest extends TestCase {
         a.reset();
         b.reset();
         map.clear();
-        MockClosure<String> c = new MockClosure<String>();
+        final MockClosure<String> c = new MockClosure<String>();
         map.put("HELLO", a);
         map.put("THERE", b);
         map.put(null, c);
@@ -380,15 +380,15 @@ public class ClosureUtilsTest extends TestCase {
         try {
             ClosureUtils.switchMapClosure(null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
     }
 
     // asClosure
     //------------------------------------------------------------------
 
     public void testTransformerClosure() {
-        MockTransformer<Object> mock = new MockTransformer<Object>();
-        Closure<Object> closure = ClosureUtils.asClosure(mock);
+        final MockTransformer<Object> mock = new MockTransformer<Object>();
+        final Closure<Object> closure = ClosureUtils.asClosure(mock);
         closure.execute(null);
         assertEquals(1, mock.count);
         closure.execute(null);

@@ -82,7 +82,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @return a new defaulting map
      * @throws IllegalArgumentException if map is null
      */
-    public static <K, V> DefaultedMap<K, V> defaultedMap(Map<K, V> map, V defaultValue) {
+    public static <K, V> DefaultedMap<K, V> defaultedMap(final Map<K, V> map, final V defaultValue) {
         return new DefaultedMap<K, V>(map, ConstantTransformer.constantTransformer(defaultValue));
     }
 
@@ -99,7 +99,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @return a new defaulting map
      * @throws IllegalArgumentException if map or factory is null
      */
-    public static <K, V> DefaultedMap<K, V> defaultedMap(Map<K, V> map, Factory<? extends V> factory) {
+    public static <K, V> DefaultedMap<K, V> defaultedMap(final Map<K, V> map, final Factory<? extends V> factory) {
         if (factory == null) {
             throw new IllegalArgumentException("Factory must not be null");
         }
@@ -120,7 +120,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @return a new defaulting map
      * @throws IllegalArgumentException if map or factory is null
      */
-    public static <K, V> Map<K, V> defaultedMap(Map<K, V> map, Transformer<? super K, ? extends V> transformer) {
+    public static <K, V> Map<K, V> defaultedMap(final Map<K, V> map, final Transformer<? super K, ? extends V> transformer) {
         if (transformer == null) {
            throw new IllegalArgumentException("Transformer must not be null");
        }
@@ -137,7 +137,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * 
      * @param defaultValue  the default value to return when the key is not found
      */
-    public DefaultedMap(V defaultValue) {
+    public DefaultedMap(final V defaultValue) {
         this(ConstantTransformer.constantTransformer(defaultValue));
     }
 
@@ -146,7 +146,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      *
      * @param defaultValueTransformer transformer to use to generate missing values.
      */
-    public DefaultedMap(Transformer<? super K, ? extends V> defaultValueTransformer) {
+    public DefaultedMap(final Transformer<? super K, ? extends V> defaultValueTransformer) {
         this(new HashMap<K, V>(), defaultValueTransformer);
     }
 
@@ -157,7 +157,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @param defaultValueTransformer  the value transformer to use
      * @throws IllegalArgumentException if map or transformer is null
      */
-    protected DefaultedMap(Map<K, V> map, Transformer<? super K, ? extends V> defaultValueTransformer) {
+    protected DefaultedMap(final Map<K, V> map, final Transformer<? super K, ? extends V> defaultValueTransformer) {
         super(map);
         if (defaultValueTransformer == null) {
             throw new IllegalArgumentException("transformer must not be null");
@@ -172,7 +172,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @param out  the output stream
      * @throws IOException
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(map);
     }
@@ -185,7 +185,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @throws ClassNotFoundException
      */
     @SuppressWarnings("unchecked")
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map<K, V>) in.readObject();
     }
@@ -193,7 +193,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
     //-----------------------------------------------------------------------
     @Override
     @SuppressWarnings("unchecked")
-    public V get(Object key) {
+    public V get(final Object key) {
         // create value for key if key is not currently in the map
         if (map.containsKey(key) == false) {
             return value.transform((K) key);

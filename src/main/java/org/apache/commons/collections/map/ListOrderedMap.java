@@ -95,7 +95,7 @@ public class ListOrderedMap<K, V>
      * @return a new list ordered map
      * @throws IllegalArgumentException if map is null
      */
-    public static <K, V> ListOrderedMap<K, V> listOrderedMap(Map<K, V> map) {
+    public static <K, V> ListOrderedMap<K, V> listOrderedMap(final Map<K, V> map) {
         return new ListOrderedMap<K, V>(map);
     }
 
@@ -116,7 +116,7 @@ public class ListOrderedMap<K, V>
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    protected ListOrderedMap(Map<K, V> map) {
+    protected ListOrderedMap(final Map<K, V> map) {
         super(map);
         insertOrder.addAll(decorated().keySet());
     }
@@ -129,7 +129,7 @@ public class ListOrderedMap<K, V>
      * @throws IOException
      * @since 3.1
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(map);
     }
@@ -143,7 +143,7 @@ public class ListOrderedMap<K, V>
      * @since 3.1
      */
     @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map<K, V>) in.readObject(); // (1)
     }
@@ -188,8 +188,8 @@ public class ListOrderedMap<K, V>
      * @param key  the key to find previous for
      * @return the next key, null if no match or at start
      */
-    public K nextKey(Object key) {
-        int index = insertOrder.indexOf(key);
+    public K nextKey(final Object key) {
+        final int index = insertOrder.indexOf(key);
         if (index >= 0 && index < size() - 1) {
             return insertOrder.get(index + 1);
         }
@@ -203,8 +203,8 @@ public class ListOrderedMap<K, V>
      * @param key  the key to find previous for
      * @return the previous key, null if no match or at start
      */
-    public K previousKey(Object key) {
-        int index = insertOrder.indexOf(key);
+    public K previousKey(final Object key) {
+        final int index = insertOrder.indexOf(key);
         if (index > 0) {
             return insertOrder.get(index - 1);
         }
@@ -213,21 +213,21 @@ public class ListOrderedMap<K, V>
 
     //-----------------------------------------------------------------------
     @Override
-    public V put(K key, V value) {
+    public V put(final K key, final V value) {
         if (decorated().containsKey(key)) {
             // re-adding doesn't change order
             return decorated().put(key, value);
         } else {
             // first add, so add to both map and list
-            V result = decorated().put(key, value);
+            final V result = decorated().put(key, value);
             insertOrder.add(key);
             return result;
         }
     }
 
     @Override
-    public void putAll(Map<? extends K, ? extends V> map) {
-        for (Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
+    public void putAll(final Map<? extends K, ? extends V> map) {
+        for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
             put(entry.getKey(), entry.getValue());
         }
     }
@@ -239,9 +239,9 @@ public class ListOrderedMap<K, V>
      * @param index the index in the Map to start at.
      * @param map the Map containing the values to be added.
      */
-    public void putAll(int index, Map<? extends K, ? extends V> map) {
-        for (Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
-            V old = put(index, entry.getKey(), entry.getValue());
+    public void putAll(int index, final Map<? extends K, ? extends V> map) {
+        for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
+            final V old = put(index, entry.getKey(), entry.getValue());
             if (old == null) {
                 // if no key was replaced, increment the index
                 index++;
@@ -253,7 +253,7 @@ public class ListOrderedMap<K, V>
     }
 
     @Override
-    public V remove(Object key) {
+    public V remove(final Object key) {
         V result = null;
         if (decorated().containsKey(key)) {
             result = decorated().remove(key);
@@ -349,12 +349,12 @@ public class ListOrderedMap<K, V>
         if (isEmpty()) {
             return "{}";
         }
-        StringBuilder buf = new StringBuilder();
+        final StringBuilder buf = new StringBuilder();
         buf.append('{');
         boolean first = true;
-        for (Map.Entry<K, V> entry : entrySet()) {
-            K key = entry.getKey();
-            V value = entry.getValue();
+        for (final Map.Entry<K, V> entry : entrySet()) {
+            final K key = entry.getKey();
+            final V value = entry.getValue();
             if (first) {
                 first = false;
             } else {
@@ -376,7 +376,7 @@ public class ListOrderedMap<K, V>
      * @return the key at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
-    public K get(int index) {
+    public K get(final int index) {
         return insertOrder.get(index);
     }
     
@@ -387,7 +387,7 @@ public class ListOrderedMap<K, V>
      * @return the key at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
-    public V getValue(int index) {
+    public V getValue(final int index) {
         return get(insertOrder.get(index));
     }
     
@@ -397,7 +397,7 @@ public class ListOrderedMap<K, V>
      * @param key  the key to find the index of
      * @return the index, or -1 if not found
      */
-    public int indexOf(Object key) {
+    public int indexOf(final Object key) {
         return insertOrder.indexOf(key);
     }
 
@@ -410,8 +410,8 @@ public class ListOrderedMap<K, V>
      * @throws IndexOutOfBoundsException if the index is invalid
      * @since 3.2
      */
-    public V setValue(int index, V value) {
-        K key = insertOrder.get(index);
+    public V setValue(final int index, final V value) {
+        final K key = insertOrder.get(index);
         return put(key, value);
     }
 
@@ -434,11 +434,11 @@ public class ListOrderedMap<K, V>
      * @throws IndexOutOfBoundsException if the index is out of range
      * @since 3.2
      */
-    public V put(int index, K key, V value) {
-        Map<K, V> m = decorated();
+    public V put(int index, final K key, final V value) {
+        final Map<K, V> m = decorated();
         if (m.containsKey(key)) {
-            V result = m.remove(key);
-            int pos = insertOrder.indexOf(key);
+            final V result = m.remove(key);
+            final int pos = insertOrder.indexOf(key);
             insertOrder.remove(pos);
             if (pos < index) {
                 index--;
@@ -460,7 +460,7 @@ public class ListOrderedMap<K, V>
      * @return the removed value, or <code>null</code> if none existed
      * @throws IndexOutOfBoundsException if the index is invalid
      */
-    public V remove(int index) {
+    public V remove(final int index) {
         return remove(get(index));
     }
 
@@ -490,7 +490,7 @@ public class ListOrderedMap<K, V>
         private final ListOrderedMap<Object, V> parent;
 
         @SuppressWarnings("unchecked")
-        ValuesView(ListOrderedMap<?, V> parent) {
+        ValuesView(final ListOrderedMap<?, V> parent) {
             super();
             this.parent = (ListOrderedMap<Object, V>) parent;
         }
@@ -501,7 +501,7 @@ public class ListOrderedMap<K, V>
         }
 
         @Override
-        public boolean contains(Object value) {
+        public boolean contains(final Object value) {
             return this.parent.containsValue(value);
         }
 
@@ -520,17 +520,17 @@ public class ListOrderedMap<K, V>
         }
 
         @Override
-        public V get(int index) {
+        public V get(final int index) {
             return this.parent.getValue(index);
         }
 
         @Override
-        public V set(int index, V value) {
+        public V set(final int index, final V value) {
             return this.parent.setValue(index, value);
         }
 
         @Override
-        public V remove(int index) {
+        public V remove(final int index) {
             return this.parent.remove(index);
         }
     }
@@ -540,7 +540,7 @@ public class ListOrderedMap<K, V>
         private final ListOrderedMap<K, Object> parent;
 
         @SuppressWarnings("unchecked")
-        KeySetView(ListOrderedMap<K, ?> parent) {
+        KeySetView(final ListOrderedMap<K, ?> parent) {
             super();
             this.parent = (ListOrderedMap<K, Object>) parent;
         }
@@ -551,7 +551,7 @@ public class ListOrderedMap<K, V>
         }
 
         @Override
-        public boolean contains(Object value) {
+        public boolean contains(final Object value) {
             return this.parent.containsKey(value);
         }
 
@@ -576,7 +576,7 @@ public class ListOrderedMap<K, V>
         private final List<K> insertOrder;
         private Set<Map.Entry<K, V>> entrySet;
 
-        public EntrySetView(ListOrderedMap<K, V> parent, List<K> insertOrder) {
+        public EntrySetView(final ListOrderedMap<K, V> parent, final List<K> insertOrder) {
             super();
             this.parent = parent;
             this.insertOrder = insertOrder;
@@ -599,23 +599,23 @@ public class ListOrderedMap<K, V>
         }
 
         @Override
-        public boolean contains(Object obj) {
+        public boolean contains(final Object obj) {
             return getEntrySet().contains(obj);
         }
 
         @Override
-        public boolean containsAll(Collection<?> coll) {
+        public boolean containsAll(final Collection<?> coll) {
             return getEntrySet().containsAll(coll);
         }
 
         @Override
         @SuppressWarnings("unchecked")
-        public boolean remove(Object obj) {
+        public boolean remove(final Object obj) {
             if (obj instanceof Map.Entry == false) {
                 return false;
             }
             if (getEntrySet().contains(obj)) {
-                Object key = ((Map.Entry<K, V>) obj).getKey();
+                final Object key = ((Map.Entry<K, V>) obj).getKey();
                 parent.remove(key);
                 return true;
             }
@@ -628,7 +628,7 @@ public class ListOrderedMap<K, V>
         }
 
         @Override
-        public boolean equals(Object obj) {
+        public boolean equals(final Object obj) {
             if (obj == this) {
                 return true;
             }
@@ -656,7 +656,7 @@ public class ListOrderedMap<K, V>
         private final ListOrderedMap<K, V> parent;
         private K last = null;
         
-        ListOrderedIterator(ListOrderedMap<K, V> parent, List<K> insertOrder) {
+        ListOrderedIterator(final ListOrderedMap<K, V> parent, final List<K> insertOrder) {
             super(insertOrder.iterator());
             this.parent = parent;
         }
@@ -677,7 +677,7 @@ public class ListOrderedMap<K, V>
     static class ListOrderedMapEntry<K, V> extends AbstractMapEntry<K, V> {
         private final ListOrderedMap<K, V> parent;
 
-        ListOrderedMapEntry(ListOrderedMap<K, V> parent, K key) {
+        ListOrderedMapEntry(final ListOrderedMap<K, V> parent, final K key) {
             super(key, null);
             this.parent = parent;
         }
@@ -688,7 +688,7 @@ public class ListOrderedMap<K, V>
         }
 
         @Override
-        public V setValue(V value) {
+        public V setValue(final V value) {
             return parent.decorated().put(key, value);
         }
     }
@@ -700,7 +700,7 @@ public class ListOrderedMap<K, V>
         private K last = null;
         private boolean readable = false;
 
-        ListOrderedMapIterator(ListOrderedMap<K, V> parent) {
+        ListOrderedMapIterator(final ListOrderedMap<K, V> parent) {
             super();
             this.parent = parent;
             this.iterator = parent.insertOrder.listIterator();
@@ -749,7 +749,7 @@ public class ListOrderedMap<K, V>
             return parent.get(last);
         }
 
-        public V setValue(V value) {
+        public V setValue(final V value) {
             if (readable == false) {
                 throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
             }

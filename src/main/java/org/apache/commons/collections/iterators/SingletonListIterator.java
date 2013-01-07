@@ -40,7 +40,7 @@ public class SingletonListIterator<E> implements ListIterator<E>, ResettableList
      *
      * @param object  the single object to return from the iterator
      */
-    public SingletonListIterator(E object) {
+    public SingletonListIterator(final E object) {
         super();
         this.object = object;
     }
@@ -145,7 +145,7 @@ public class SingletonListIterator<E> implements ListIterator<E>, ResettableList
      * @param obj  the object to add
      * @throws UnsupportedOperationException always
      */
-    public void add(E obj) {
+    public void add(final E obj) {
         throw new UnsupportedOperationException("add() is not supported by this iterator");
     }
     
@@ -156,7 +156,7 @@ public class SingletonListIterator<E> implements ListIterator<E>, ResettableList
      * @throws IllegalStateException if <tt>next</tt> has not been called 
      *          or the object has been removed
      */
-    public void set(E obj) {
+    public void set(final E obj) {
         if (!nextCalled || removed) {
             throw new IllegalStateException();
         }

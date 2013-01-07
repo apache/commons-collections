@@ -71,10 +71,10 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertSame(PredicateUtils.exceptionPredicate(), PredicateUtils.exceptionPredicate());
         try {
             PredicateUtils.exceptionPredicate().evaluate(null);
-        } catch (FunctorException ex) {
+        } catch (final FunctorException ex) {
             try {
                 PredicateUtils.exceptionPredicate().evaluate(cString);
-            } catch (FunctorException ex2) {
+            } catch (final FunctorException ex2) {
                 return;
             }
         }
@@ -175,7 +175,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
                 FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate(), TruePredicate.truePredicate()}).evaluate(null));
         assertEquals(false, AllPredicate.allPredicate(new Predicate[] {
                 FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate()}).evaluate(null));
-        Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
+        final Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
         coll.add(TruePredicate.truePredicate());
         coll.add(TruePredicate.truePredicate());
         coll.add(TruePredicate.truePredicate());
@@ -233,7 +233,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
 
     @Test(expected=IllegalArgumentException.class) 
     public void testAllPredicateEx6() {
-        Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
+        final Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
         coll.add(null);
         coll.add(null);
         AllPredicate.allPredicate(coll);
@@ -269,7 +269,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
                 FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate(), TruePredicate.truePredicate()}).evaluate(null));
         assertEquals(false, PredicateUtils.anyPredicate(new Predicate[] {
                 FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate()}).evaluate(null));
-        Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
+        final Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
         coll.add(TruePredicate.truePredicate());
         coll.add(TruePredicate.truePredicate());
         coll.add(TruePredicate.truePredicate());
@@ -327,7 +327,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
 
     @Test(expected=IllegalArgumentException.class) 
     public void testAnyPredicateEx6() {
-        Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
+        final Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
         coll.add(null);
         coll.add(null);
         PredicateUtils.anyPredicate(coll);
@@ -366,7 +366,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
                 FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate(), TruePredicate.truePredicate()}).evaluate(null));
         assertEquals(false, PredicateUtils.onePredicate(new Predicate[] {
                 FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate()}).evaluate(null));
-        Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
+        final Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
         coll.add(TruePredicate.truePredicate());
         coll.add(TruePredicate.truePredicate());
         coll.add(TruePredicate.truePredicate());
@@ -425,7 +425,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
 
     @Test(expected=IllegalArgumentException.class)
     public void testOnePredicateEx6() {
-        Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
+        final Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
         coll.add(null);
         coll.add(null);
         PredicateUtils.onePredicate(coll);
@@ -460,7 +460,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
                 FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate(), TruePredicate.truePredicate() }).evaluate(null));
         assertEquals(true, PredicateUtils.nonePredicate(new Predicate[] {
                 FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate() }).evaluate(null));
-        Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
+        final Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
         coll.add(TruePredicate.truePredicate());
         coll.add(TruePredicate.truePredicate());
         coll.add(TruePredicate.truePredicate());
@@ -518,7 +518,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
 
     @Test(expected=IllegalArgumentException.class)
     public void testNonePredicateEx6() {
-        Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
+        final Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
         coll.add(null);
         coll.add(null);
         PredicateUtils.nonePredicate(coll);
@@ -539,7 +539,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
     //------------------------------------------------------------------
 
     @Test public void testUniquePredicate() {
-        Predicate<Object> p = PredicateUtils.uniquePredicate();
+        final Predicate<Object> p = PredicateUtils.uniquePredicate();
         assertEquals(true, p.evaluate(new Object()));
         assertEquals(true, p.evaluate(new Object()));
         assertEquals(true, p.evaluate(new Object()));
@@ -570,7 +570,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
     //------------------------------------------------------------------
 
     @Test public void testInvokerPredicate() {
-        List<Object> list = new ArrayList<Object>();
+        final List<Object> list = new ArrayList<Object>();
         assertEquals(true, PredicateUtils.invokerPredicate("isEmpty").evaluate(list));
         list.add(new Object());
         assertEquals(false, PredicateUtils.invokerPredicate("isEmpty").evaluate(list));
@@ -595,7 +595,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
     //------------------------------------------------------------------
 
     @Test public void testInvokerPredicate2() {
-        List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<String>();
         assertEquals(false, PredicateUtils.invokerPredicate(
             "contains", new Class[] {Object.class}, new Object[] {cString}).evaluate(list));
         list.add(cString);
@@ -669,16 +669,16 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
                 TransformerUtils.nopTransformer(),
                 TruePredicate.truePredicate()).evaluate(new Object()));
 
-        Map<Object, Object> map = new HashMap<Object, Object>();
+        final Map<Object, Object> map = new HashMap<Object, Object>();
         map.put(Boolean.TRUE, "Hello");
-        Transformer<Object, Object> t = TransformerUtils.mapTransformer(map);
-        Predicate<Object> p = EqualPredicate.<Object>equalPredicate("Hello");
+        final Transformer<Object, Object> t = TransformerUtils.mapTransformer(map);
+        final Predicate<Object> p = EqualPredicate.<Object>equalPredicate("Hello");
         assertEquals(false, PredicateUtils.transformedPredicate(t, p).evaluate(null));
         assertEquals(true, PredicateUtils.transformedPredicate(t, p).evaluate(Boolean.TRUE));
         try {
             PredicateUtils.transformedPredicate(null, null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
     }
 
     // misc tests

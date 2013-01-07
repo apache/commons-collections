@@ -48,8 +48,8 @@ public final class TransformedPredicate<T> implements Predicate<T>, PredicateDec
      * @return the predicate
      * @throws IllegalArgumentException if the transformer or the predicate is null
      */
-    public static <T> Predicate<T> transformedPredicate(Transformer<? super T, ? extends T> transformer,
-                                                        Predicate<? super T> predicate) {
+    public static <T> Predicate<T> transformedPredicate(final Transformer<? super T, ? extends T> transformer,
+                                                        final Predicate<? super T> predicate) {
         if (transformer == null) {
             throw new IllegalArgumentException("The transformer to call must not be null");
         }
@@ -66,7 +66,7 @@ public final class TransformedPredicate<T> implements Predicate<T>, PredicateDec
      * @param transformer  the transformer to use
      * @param predicate  the predicate to decorate
      */
-    public TransformedPredicate(Transformer<? super T, ? extends T> transformer, Predicate<? super T> predicate) {
+    public TransformedPredicate(final Transformer<? super T, ? extends T> transformer, final Predicate<? super T> predicate) {
         iTransformer = transformer;
         iPredicate = predicate;
     }
@@ -78,8 +78,8 @@ public final class TransformedPredicate<T> implements Predicate<T>, PredicateDec
      * @param object  the input object which will be transformed
      * @return true if decorated predicate returns true
      */
-    public boolean evaluate(T object) {
-        T result = iTransformer.transform(object);
+    public boolean evaluate(final T object) {
+        final T result = iTransformer.transform(object);
         return iPredicate.evaluate(result);
     }
 

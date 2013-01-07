@@ -77,7 +77,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * 
      * @param coll  the collection to copy
      */
-    public CursorableLinkedList(Collection<E> coll) {
+    public CursorableLinkedList(final Collection<E> coll) {
         super(coll);
     }
 
@@ -143,7 +143,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * @return a new cursor iterator
      */
     @Override
-    public ListIterator<E> listIterator(int fromIndex) {
+    public ListIterator<E> listIterator(final int fromIndex) {
         return cursor(fromIndex);
     }
 
@@ -201,8 +201,8 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * @throws IndexOutOfBoundsException if the index is out of range
      *      (index &lt; 0 || index &gt; size()).
      */
-    public CursorableLinkedList.Cursor<E> cursor(int fromIndex) {
-        Cursor<E> cursor = new Cursor<E>(this, fromIndex);
+    public CursorableLinkedList.Cursor<E> cursor(final int fromIndex) {
+        final Cursor<E> cursor = new Cursor<E>(this, fromIndex);
         registerCursor(cursor);
         return cursor;
     }
@@ -217,7 +217,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * @param value  new value of the node
      */
     @Override
-    protected void updateNode(Node<E> node, E value) {
+    protected void updateNode(final Node<E> node, final E value) {
         super.updateNode(node, value);
         broadcastNodeChanged(node);
     }
@@ -230,7 +230,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * @throws NullPointerException if either node is null
      */
     @Override
-    protected void addNode(Node<E> nodeToInsert, Node<E> insertBeforeNode) {
+    protected void addNode(final Node<E> nodeToInsert, final Node<E> insertBeforeNode) {
         super.addNode(nodeToInsert, insertBeforeNode);
         broadcastNodeInserted(nodeToInsert);
     }
@@ -242,7 +242,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * @throws NullPointerException if <code>node</code> is null
      */
     @Override
-    protected void removeNode(Node<E> node) {
+    protected void removeNode(final Node<E> node) {
         super.removeNode(node);
         broadcastNodeRemoved(node);
     }
@@ -254,7 +254,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
     protected void removeAllNodes() {
         if (size() > 0) {
             // superclass implementation would break all the iterators
-            Iterator<E> it = iterator();
+            final Iterator<E> it = iterator();
             while (it.hasNext()) {
                 it.next();
                 it.remove();
@@ -268,11 +268,11 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * 
      * @param cursor  the cursor to register
      */
-    protected void registerCursor(Cursor<E> cursor) {
+    protected void registerCursor(final Cursor<E> cursor) {
         // We take this opportunity to clean the cursors list
         // of WeakReference objects to garbage-collected cursors.
-        for (Iterator<WeakReference<Cursor<E>>> it = cursors.iterator(); it.hasNext();) {
-            WeakReference<Cursor<E>> ref = it.next();
+        for (final Iterator<WeakReference<Cursor<E>>> it = cursors.iterator(); it.hasNext();) {
+            final WeakReference<Cursor<E>> ref = it.next();
             if (ref.get() == null) {
                 it.remove();
             }
@@ -285,10 +285,10 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * 
      * @param cursor  the cursor to deregister
      */
-    protected void unregisterCursor(Cursor<E> cursor) {
-        for (Iterator<WeakReference<Cursor<E>>> it = cursors.iterator(); it.hasNext();) {
-            WeakReference<Cursor<E>> ref = it.next();
-            Cursor<E> cur = ref.get();
+    protected void unregisterCursor(final Cursor<E> cursor) {
+        for (final Iterator<WeakReference<Cursor<E>>> it = cursors.iterator(); it.hasNext();) {
+            final WeakReference<Cursor<E>> ref = it.next();
+            final Cursor<E> cur = ref.get();
             if (cur == null) {
                 // some other unrelated cursor object has been 
                 // garbage-collected; let's take the opportunity to
@@ -309,11 +309,11 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * 
      * @param node  the node that was changed
      */
-    protected void broadcastNodeChanged(Node<E> node) {
-        Iterator<WeakReference<Cursor<E>>> it = cursors.iterator();
+    protected void broadcastNodeChanged(final Node<E> node) {
+        final Iterator<WeakReference<Cursor<E>>> it = cursors.iterator();
         while (it.hasNext()) {
-            WeakReference<Cursor<E>> ref = it.next();
-            Cursor<E> cursor = ref.get();
+            final WeakReference<Cursor<E>> ref = it.next();
+            final Cursor<E> cursor = ref.get();
             if (cursor == null) {
                 it.remove(); // clean up list
             } else {
@@ -328,11 +328,11 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * 
      * @param node  the node that was changed
      */
-    protected void broadcastNodeRemoved(Node<E> node) {
-        Iterator<WeakReference<Cursor<E>>> it = cursors.iterator();
+    protected void broadcastNodeRemoved(final Node<E> node) {
+        final Iterator<WeakReference<Cursor<E>>> it = cursors.iterator();
         while (it.hasNext()) {
-            WeakReference<Cursor<E>> ref = it.next();
-            Cursor<E> cursor = ref.get();
+            final WeakReference<Cursor<E>> ref = it.next();
+            final Cursor<E> cursor = ref.get();
             if (cursor == null) {
                 it.remove(); // clean up list
             } else {
@@ -347,11 +347,11 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * 
      * @param node  the node that was changed
      */
-    protected void broadcastNodeInserted(Node<E> node) {
-        Iterator<WeakReference<Cursor<E>>> it = cursors.iterator();
+    protected void broadcastNodeInserted(final Node<E> node) {
+        final Iterator<WeakReference<Cursor<E>>> it = cursors.iterator();
         while (it.hasNext()) {
-            WeakReference<Cursor<E>> ref = it.next();
-            Cursor<E> cursor = ref.get();
+            final WeakReference<Cursor<E>> ref = it.next();
+            final Cursor<E> cursor = ref.get();
             if (cursor == null) {
                 it.remove(); // clean up list
             } else {
@@ -364,7 +364,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
     /**
      * Serializes the data held in this object to the stream specified.
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         doWriteObject(out);
     }
@@ -372,7 +372,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
     /**
      * Deserializes the data held in this object to the stream specified.
      */
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         doReadObject(in);
     }
@@ -386,8 +386,8 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      * @return the list iterator for the sublist
      */
     @Override
-    protected ListIterator<E> createSubListListIterator(LinkedSubList<E> subList, int fromIndex) {
-        SubCursor<E> cursor = new SubCursor<E>(subList, fromIndex);
+    protected ListIterator<E> createSubListListIterator(final LinkedSubList<E> subList, final int fromIndex) {
+        final SubCursor<E> cursor = new SubCursor<E>(subList, fromIndex);
         registerCursor(cursor);
         return cursor;
     }
@@ -411,7 +411,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
          * @param parent  the parent list
          * @param index  the index to start from
          */
-        protected Cursor(CursorableLinkedList<E> parent, int index) {
+        protected Cursor(final CursorableLinkedList<E> parent, final int index) {
             super(parent, index);
             valid = true;
         }
@@ -450,7 +450,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
          * @param obj  the object to add
          */
         @Override
-        public void add(E obj) {
+        public void add(final E obj) {
             // overridden, as the nodeInserted() method updates the iterator state
             super.add(obj);
             // matches the (next.previous == node) clause in nodeInserted()
@@ -492,7 +492,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
          * 
          * @param node  the node that changed
          */
-        protected void nodeChanged(Node<E> node) {
+        protected void nodeChanged(final Node<E> node) {
             // do nothing
         }
 
@@ -501,7 +501,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
          * 
          * @param node  the node that was removed
          */
-        protected void nodeRemoved(Node<E> node) {
+        protected void nodeRemoved(final Node<E> node) {
             if (node == next && node == current) {
                 // state where next() followed by previous()
                 next = node.next;
@@ -529,7 +529,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
          * 
          * @param node  the node that was added
          */
-        protected void nodeInserted(Node<E> node) {
+        protected void nodeInserted(final Node<E> node) {
             if (node.previous == current) {
                 next = node;
             } else if (next.previous == node) {
@@ -582,7 +582,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
          * @param sub  the sub list
          * @param index  the index to start from
          */
-        protected SubCursor(LinkedSubList<E> sub, int index) {
+        protected SubCursor(final LinkedSubList<E> sub, final int index) {
             super((CursorableLinkedList<E>) sub.parent, index + sub.offset);
             this.sub = sub;
         }
@@ -603,7 +603,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
         }
 
         @Override
-        public void add(E obj) {
+        public void add(final E obj) {
             super.add(obj);
             sub.expectedModCount = parent.modCount;
             sub.size++;

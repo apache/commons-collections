@@ -90,7 +90,7 @@ public class SetUtils {
      * @param set the set, possibly <code>null</code>
      * @return an empty set if the argument is <code>null</code>
      */
-    public static <T> Set<T> emptyIfNull(Set<T> set) {
+    public static <T> Set<T> emptyIfNull(final Set<T> set) {
         return set == null ? Collections.<T>emptySet() : set;
     }
     
@@ -152,7 +152,7 @@ public class SetUtils {
         }
 
         int hashCode = 0;
-        for (T obj : set) {
+        for (final T obj : set) {
             if (obj != null) {
                 hashCode += obj.hashCode();
             }
@@ -184,7 +184,7 @@ public class SetUtils {
      * @return a synchronized set backed by the given set
      * @throws IllegalArgumentException  if the set is null
      */
-    public static <E> Set<E> synchronizedSet(Set<E> set) {
+    public static <E> Set<E> synchronizedSet(final Set<E> set) {
         return SynchronizedSet.synchronizedSet(set);
     }
 
@@ -198,7 +198,7 @@ public class SetUtils {
      * @return an unmodifiable set backed by the given set
      * @throws IllegalArgumentException  if the set is null
      */
-    public static <E> Set<E> unmodifiableSet(Set<E> set) {
+    public static <E> Set<E> unmodifiableSet(final Set<E> set) {
         return UnmodifiableSet.unmodifiableSet(set);
     }
 
@@ -216,7 +216,7 @@ public class SetUtils {
      * @return a predicated set backed by the given set
      * @throws IllegalArgumentException  if the Set or Predicate is null
      */
-    public static <E> Set<E> predicatedSet(Set<E> set, Predicate<? super E> predicate) {
+    public static <E> Set<E> predicatedSet(final Set<E> set, final Predicate<? super E> predicate) {
         return PredicatedSet.predicatedSet(set, predicate);
     }
 
@@ -236,7 +236,7 @@ public class SetUtils {
      * @return a transformed set backed by the given set
      * @throws IllegalArgumentException  if the Set or Transformer is null
      */
-    public static <E> Set<E> transformedSet(Set<E> set, Transformer<? super E, ? extends E> transformer) {
+    public static <E> Set<E> transformedSet(final Set<E> set, final Transformer<? super E, ? extends E> transformer) {
         return TransformedSet.transformingSet(set, transformer);
     }
     
@@ -252,7 +252,7 @@ public class SetUtils {
      * @return an ordered set backed by the given set
      * @throws IllegalArgumentException  if the Set is null
      */
-    public static <E> Set<E> orderedSet(Set<E> set) {
+    public static <E> Set<E> orderedSet(final Set<E> set) {
         return ListOrderedSet.listOrderedSet(set);
     }
     
@@ -280,7 +280,7 @@ public class SetUtils {
      * @return a synchronized set backed by the given set
      * @throws IllegalArgumentException  if the set is null
      */
-    public static <E> SortedSet<E> synchronizedSortedSet(SortedSet<E> set) {
+    public static <E> SortedSet<E> synchronizedSortedSet(final SortedSet<E> set) {
         return SynchronizedSortedSet.synchronizedSortedSet(set);
     }
 
@@ -294,7 +294,7 @@ public class SetUtils {
      * @return an unmodifiable set backed by the given set
      * @throws IllegalArgumentException  if the set is null
      */
-    public static <E> SortedSet<E> unmodifiableSortedSet(SortedSet<E> set) {
+    public static <E> SortedSet<E> unmodifiableSortedSet(final SortedSet<E> set) {
         return UnmodifiableSortedSet.unmodifiableSortedSet(set);
     }
 
@@ -312,7 +312,7 @@ public class SetUtils {
      * @return a predicated sorted set backed by the given sorted set
      * @throws IllegalArgumentException  if the Set or Predicate is null
      */
-    public static <E> SortedSet<E> predicatedSortedSet(SortedSet<E> set, Predicate<? super E> predicate) {
+    public static <E> SortedSet<E> predicatedSortedSet(final SortedSet<E> set, final Predicate<? super E> predicate) {
         return PredicatedSortedSet.predicatedSortedSet(set, predicate);
     }
 
@@ -332,8 +332,8 @@ public class SetUtils {
      * @return a transformed set backed by the given set
      * @throws IllegalArgumentException  if the Set or Transformer is null
      */
-    public static <E> SortedSet<E> transformedSortedSet(SortedSet<E> set,
-                                                        Transformer<? super E, ? extends E> transformer) {
+    public static <E> SortedSet<E> transformedSortedSet(final SortedSet<E> set,
+                                                        final Transformer<? super E, ? extends E> transformer) {
         return TransformedSortedSet.transformingSortedSet(set, transformer);
     }
     

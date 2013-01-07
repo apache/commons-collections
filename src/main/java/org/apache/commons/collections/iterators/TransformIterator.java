@@ -49,7 +49,7 @@ public class TransformIterator<I, O> implements Iterator<O> {
      *
      * @param iterator  the iterator to use
      */
-    public TransformIterator(Iterator<? extends I> iterator) {
+    public TransformIterator(final Iterator<? extends I> iterator) {
         super();
         this.iterator = iterator;
     }
@@ -62,7 +62,7 @@ public class TransformIterator<I, O> implements Iterator<O> {
      * @param iterator  the iterator to use
      * @param transformer  the transformer to use
      */
-    public TransformIterator(Iterator<? extends I> iterator, Transformer<? super I, ? extends O> transformer) {
+    public TransformIterator(final Iterator<? extends I> iterator, final Transformer<? super I, ? extends O> transformer) {
         super();
         this.iterator = iterator;
         this.transformer = transformer;
@@ -105,7 +105,7 @@ public class TransformIterator<I, O> implements Iterator<O> {
      * 
      * @param iterator  the iterator to use
      */
-    public void setIterator(Iterator<? extends I> iterator) {
+    public void setIterator(final Iterator<? extends I> iterator) {
         this.iterator = iterator;
     }
 
@@ -125,7 +125,7 @@ public class TransformIterator<I, O> implements Iterator<O> {
      * 
      * @param transformer  the transformer to use
      */
-    public void setTransformer(Transformer<? super I, ? extends O> transformer) {
+    public void setTransformer(final Transformer<? super I, ? extends O> transformer) {
         this.transformer = transformer;
     }
 
@@ -137,7 +137,7 @@ public class TransformIterator<I, O> implements Iterator<O> {
      * @param source  the object to transform
      * @return the transformed object
      */
-    protected O transform(I source) {
+    protected O transform(final I source) {
         return transformer.transform(source);
     }
 }

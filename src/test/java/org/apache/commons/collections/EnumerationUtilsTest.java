@@ -32,53 +32,53 @@ import junit.framework.Test;
  */
 public class EnumerationUtilsTest extends BulkTest {
 
-    public EnumerationUtilsTest(String name) {
+    public EnumerationUtilsTest(final String name) {
         super(name);
     }
 
     public static final String TO_LIST_FIXTURE = "this is a test";
     
     public void testToListWithStringTokenizer() {
-        List<String> expectedList1 = new ArrayList<String>();
-        StringTokenizer st = new StringTokenizer(TO_LIST_FIXTURE);
+        final List<String> expectedList1 = new ArrayList<String>();
+        final StringTokenizer st = new StringTokenizer(TO_LIST_FIXTURE);
              while (st.hasMoreTokens()) {
                  expectedList1.add(st.nextToken());
              }
-        List<String> expectedList2 = new ArrayList<String>();
+        final List<String> expectedList2 = new ArrayList<String>();
         expectedList2.add("this");
         expectedList2.add("is");
         expectedList2.add("a");
         expectedList2.add("test");
-        List<String> actualList = EnumerationUtils.toList(new StringTokenizer(TO_LIST_FIXTURE));
+        final List<String> actualList = EnumerationUtils.toList(new StringTokenizer(TO_LIST_FIXTURE));
         Assert.assertEquals(expectedList1, expectedList2);
         Assert.assertEquals(expectedList1, actualList);
         Assert.assertEquals(expectedList2, actualList);
     }
 
     public void testToListWithHashtable() {
-        Hashtable<String, Integer> expected = new Hashtable<String, Integer>();
+        final Hashtable<String, Integer> expected = new Hashtable<String, Integer>();
         expected.put("one", new Integer(1));
         expected.put("two", new Integer(2));
         expected.put("three", new Integer(3));
         // validate elements.
-        List<Integer> actualEltList = EnumerationUtils.toList(expected.elements());
+        final List<Integer> actualEltList = EnumerationUtils.toList(expected.elements());
         Assert.assertEquals(expected.size(), actualEltList.size());
         Assert.assertTrue(actualEltList.contains(new Integer(1)));
         Assert.assertTrue(actualEltList.contains(new Integer(2)));
         Assert.assertTrue(actualEltList.contains(new Integer(3)));
-        List<Integer> expectedEltList = new ArrayList<Integer>();
+        final List<Integer> expectedEltList = new ArrayList<Integer>();
         expectedEltList.add(new Integer(1));
         expectedEltList.add(new Integer(2));
         expectedEltList.add(new Integer(3));
         Assert.assertTrue(actualEltList.containsAll(expectedEltList));
 
         // validate keys.
-        List<String> actualKeyList = EnumerationUtils.toList(expected.keys());
+        final List<String> actualKeyList = EnumerationUtils.toList(expected.keys());
         Assert.assertEquals(expected.size(), actualEltList.size());
         Assert.assertTrue(actualKeyList.contains("one"));
         Assert.assertTrue(actualKeyList.contains("two"));
         Assert.assertTrue(actualKeyList.contains("three"));
-        List<String> expectedKeyList = new ArrayList<String>();
+        final List<String> expectedKeyList = new ArrayList<String>();
         expectedKeyList.add("one");
         expectedKeyList.add("two");
         expectedKeyList.add("three");

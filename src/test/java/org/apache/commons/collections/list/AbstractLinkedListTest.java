@@ -29,7 +29,7 @@ import java.util.Arrays;
  */
 public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
 
-    public AbstractLinkedListTest(String testName) {
+    public AbstractLinkedListTest(final String testName) {
         super(testName);
     }
 
@@ -37,11 +37,11 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
     @SuppressWarnings("unchecked")
     public void testRemoveFirst() {
         resetEmpty();
-        AbstractLinkedList<E> list = getCollection();
+        final AbstractLinkedList<E> list = getCollection();
         if (isRemoveSupported() == false) {
             try {
                 list.removeFirst();
-            } catch (UnsupportedOperationException ex) {}
+            } catch (final UnsupportedOperationException ex) {}
         }
 
         list.addAll(Arrays.asList((E[]) new String[] { "value1", "value2" }));
@@ -61,11 +61,11 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
     @SuppressWarnings("unchecked")
     public void testRemoveLast() {
         resetEmpty();
-        AbstractLinkedList<E> list = getCollection();
+        final AbstractLinkedList<E> list = getCollection();
         if (isRemoveSupported() == false) {
             try {
                 list.removeLast();
-            } catch (UnsupportedOperationException ex) {}
+            } catch (final UnsupportedOperationException ex) {}
         }
 
         list.addAll(Arrays.asList((E[]) new String[] { "value1", "value2" }));
@@ -82,11 +82,11 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
     @SuppressWarnings("unchecked")
     public void testAddNodeAfter() {
         resetEmpty();
-        AbstractLinkedList<E> list = getCollection();
+        final AbstractLinkedList<E> list = getCollection();
         if (isAddSupported() == false) {
             try {
                 list.addFirst(null);
-            } catch (UnsupportedOperationException ex) {}
+            } catch (final UnsupportedOperationException ex) {}
         }
 
         list.addFirst((E) "value1");
@@ -118,7 +118,7 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
         if (isAddSupported() == false || isRemoveSupported() == false) {
             return;
         }
-        AbstractLinkedList<E> list = getCollection();
+        final AbstractLinkedList<E> list = getCollection();
 
         list.addAll(Arrays.asList((E[]) new String[] { "value1", "value2" }));
         list.removeNode(list.getNode(0, false));
@@ -141,13 +141,13 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
     @SuppressWarnings("unchecked")
     public void testGetNode() {
         resetEmpty();
-        AbstractLinkedList<E> list = getCollection();
+        final AbstractLinkedList<E> list = getCollection();
         // get marker
         assertEquals(list.getNode(0, true).previous, list.getNode(0, true).next);
         try {
             list.getNode(0, false);
             fail("Expecting IndexOutOfBoundsException.");
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (final IndexOutOfBoundsException ex) {
             // expected
         }
         list.addAll( Arrays.asList((E[]) new String[]{"value1", "value2"}));
@@ -159,25 +159,25 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
         try {
             list.getNode(2, false);
             fail("Expecting IndexOutOfBoundsException.");
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (final IndexOutOfBoundsException ex) {
             // expected
         }
         try {
             list.getNode(-1, false);
             fail("Expecting IndexOutOfBoundsException.");
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (final IndexOutOfBoundsException ex) {
             // expected
         }
          try {
             list.getNode(3, true);
             fail("Expecting IndexOutOfBoundsException.");
-        } catch (IndexOutOfBoundsException ex) {
+        } catch (final IndexOutOfBoundsException ex) {
             // expected
         }
     }
 
     protected void checkNodes() {
-        AbstractLinkedList<E> list = getCollection();
+        final AbstractLinkedList<E> list = getCollection();
         for (int i = 0; i < list.size; i++) {
             assertEquals(list.getNode(i, false).next, list.getNode(i + 1, true));
             if (i < list.size - 1) {

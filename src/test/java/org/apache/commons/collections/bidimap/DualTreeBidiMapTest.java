@@ -30,7 +30,7 @@ public class DualTreeBidiMapTest<K extends Comparable<K>, V extends Comparable<V
         return BulkTest.makeSuite(DualTreeBidiMapTest.class);
     }
 
-    public DualTreeBidiMapTest(String testName) {
+    public DualTreeBidiMapTest(final String testName) {
         super(testName);
     }
 

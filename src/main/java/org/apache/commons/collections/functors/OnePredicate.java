@@ -53,7 +53,7 @@ public final class OnePredicate<T> implements Predicate<T>, PredicateDecorator<T
      * @throws IllegalArgumentException if any predicate in the array is null
      */
     @SuppressWarnings("unchecked")
-    public static <T> Predicate<T> onePredicate(Predicate<? super T>... predicates) {
+    public static <T> Predicate<T> onePredicate(final Predicate<? super T>... predicates) {
         FunctorUtils.validate(predicates);
         if (predicates.length == 0) {
             return FalsePredicate.<T>falsePredicate();
@@ -73,8 +73,8 @@ public final class OnePredicate<T> implements Predicate<T>, PredicateDecorator<T
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static <T> Predicate<T> onePredicate(Collection<? extends Predicate<T>> predicates) {
-        Predicate<? super T>[] preds = FunctorUtils.validate(predicates);
+    public static <T> Predicate<T> onePredicate(final Collection<? extends Predicate<T>> predicates) {
+        final Predicate<? super T>[] preds = FunctorUtils.validate(predicates);
         return new OnePredicate<T>(preds);
     }
 
@@ -84,7 +84,7 @@ public final class OnePredicate<T> implements Predicate<T>, PredicateDecorator<T
      * 
      * @param predicates  the predicates to check, not cloned, not null
      */
-    public OnePredicate(Predicate<? super T>[] predicates) {
+    public OnePredicate(final Predicate<? super T>[] predicates) {
         super();
         iPredicates = predicates;
     }
@@ -96,9 +96,9 @@ public final class OnePredicate<T> implements Predicate<T>, PredicateDecorator<T
      * @param object  the input object
      * @return true if only one decorated predicate returns true
      */
-    public boolean evaluate(T object) {
+    public boolean evaluate(final T object) {
         boolean match = false;
-        for (Predicate<? super T> iPredicate : iPredicates) {
+        for (final Predicate<? super T> iPredicate : iPredicates) {
             if (iPredicate.evaluate(object)) {
                 if (match) {
                     return false;

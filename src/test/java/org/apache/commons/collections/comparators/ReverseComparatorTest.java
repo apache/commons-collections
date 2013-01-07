@@ -34,7 +34,7 @@ import org.junit.Test;
  */
 public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
 
-    public ReverseComparatorTest(String testName) {
+    public ReverseComparatorTest(final String testName) {
         super(testName);
     }
 
@@ -55,7 +55,7 @@ public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
 
     @Override
     public List<Integer> getComparableObjectsOrdered() {
-        List<Integer> list = new LinkedList<Integer>();
+        final List<Integer> list = new LinkedList<Integer>();
         list.add(new Integer(1));
         list.add(new Integer(2));
         list.add(new Integer(3));
@@ -73,15 +73,15 @@ public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
     @SuppressWarnings("unchecked")
     @Test
     public void testSerializeDeserializeThenCompare() throws Exception {
-        Comparator comp = new ReverseComparator(new ComparableComparator());
+        final Comparator comp = new ReverseComparator(new ComparableComparator());
 
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutputStream out = new ObjectOutputStream(buffer);
+        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        final ObjectOutputStream out = new ObjectOutputStream(buffer);
         out.writeObject(comp);
         out.close();
 
-        ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
-        Object dest = in.readObject();
+        final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
+        final Object dest = in.readObject();
         in.close();
         assertEquals("obj != deserialize(serialize(obj))",comp,dest);
     }

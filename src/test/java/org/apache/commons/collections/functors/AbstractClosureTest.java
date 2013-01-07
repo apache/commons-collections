@@ -24,7 +24,7 @@ public abstract class AbstractClosureTest {
 
     @Test
     public void closureSanityTests() throws Exception {
-        Closure<?> closure = generateClosure();
+        final Closure<?> closure = generateClosure();
         Assert.assertNotNull(closure);
     }
 

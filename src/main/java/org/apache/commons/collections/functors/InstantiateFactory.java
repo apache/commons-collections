@@ -51,7 +51,7 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
      * @param args  the constructor arguments
      * @return a new instantiate factory
      */
-    public static <T> Factory<T> instantiateFactory(Class<T> classToInstantiate, Class<?>[] paramTypes, Object[] args) {
+    public static <T> Factory<T> instantiateFactory(final Class<T> classToInstantiate, Class<?>[] paramTypes, Object[] args) {
         if (classToInstantiate == null) {
             throw new IllegalArgumentException("Class to instantiate must not be null");
         }
@@ -75,7 +75,7 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
      * 
      * @param classToInstantiate  the class to instantiate
      */
-    public InstantiateFactory(Class<T> classToInstantiate) {
+    public InstantiateFactory(final Class<T> classToInstantiate) {
         super();
         iClassToInstantiate = classToInstantiate;
         iParamTypes = null;
@@ -91,7 +91,7 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
      * @param paramTypes  the constructor parameter types, not cloned
      * @param args  the constructor arguments, not cloned
      */
-    public InstantiateFactory(Class<T> classToInstantiate, Class<?>[] paramTypes, Object[] args) {
+    public InstantiateFactory(final Class<T> classToInstantiate, final Class<?>[] paramTypes, final Object[] args) {
         super();
         iClassToInstantiate = classToInstantiate;
         iParamTypes = paramTypes;
@@ -106,7 +106,7 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
         try {
             iConstructor = iClassToInstantiate.getConstructor(iParamTypes);
 
-        } catch (NoSuchMethodException ex) {
+        } catch (final NoSuchMethodException ex) {
             throw new IllegalArgumentException("InstantiateFactory: The constructor must exist and be public ");
         }
     }
@@ -124,11 +124,11 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
 
         try {
             return iConstructor.newInstance(iArgs);
-        } catch (InstantiationException ex) {
+        } catch (final InstantiationException ex) {
             throw new FunctorException("InstantiateFactory: InstantiationException", ex);
-        } catch (IllegalAccessException ex) {
+        } catch (final IllegalAccessException ex) {
             throw new FunctorException("InstantiateFactory: Constructor must be public", ex);
-        } catch (InvocationTargetException ex) {
+        } catch (final InvocationTargetException ex) {
             throw new FunctorException("InstantiateFactory: Constructor threw an exception", ex);
         }
     }

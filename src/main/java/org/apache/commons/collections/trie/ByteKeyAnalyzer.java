@@ -44,7 +44,7 @@ public class ByteKeyAnalyzer extends AbstractKeyAnalyzer<Byte> {
     /**
      * Returns a bit mask where the given bit is set
      */
-    private static int mask(int bit) {
+    private static int mask(final int bit) {
         return MSB >>> bit;
     }
 
@@ -58,37 +58,37 @@ public class ByteKeyAnalyzer extends AbstractKeyAnalyzer<Byte> {
     /**
      * {@inheritDoc}
      */
-    public int lengthInBits(Byte key) {
+    public int lengthInBits(final Byte key) {
         return LENGTH;
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean isBitSet(Byte key, int bitIndex, int lengthInBits) {
+    public boolean isBitSet(final Byte key, final int bitIndex, final int lengthInBits) {
         return (key & mask(bitIndex)) != 0;
     }
 
     /**
      * {@inheritDoc}
      */
-    public int bitIndex(Byte key, int offsetInBits, int lengthInBits, 
-            Byte other, int otherOffsetInBits, int otherLengthInBits) {
+    public int bitIndex(final Byte key, final int offsetInBits, final int lengthInBits, 
+            final Byte other, final int otherOffsetInBits, final int otherLengthInBits) {
         
         if (offsetInBits != 0 || otherOffsetInBits != 0) {
             throw new IllegalArgumentException("offsetInBits=" + offsetInBits 
                     + ", otherOffsetInBits=" + otherOffsetInBits);
         }
         
-        byte keyValue = key.byteValue();
+        final byte keyValue = key.byteValue();
         if (keyValue == 0) {
             return NULL_BIT_KEY;
         }
 
-        byte otherValue = other != null ? other.byteValue() : 0;
+        final byte otherValue = other != null ? other.byteValue() : 0;
         
         if (keyValue != otherValue) {
-            int xorValue = keyValue ^ otherValue;
+            final int xorValue = keyValue ^ otherValue;
             for (int i = 0; i < LENGTH; i++) {
                 if ((xorValue & mask(i)) != 0) {
                     return i;
@@ -102,11 +102,11 @@ public class ByteKeyAnalyzer extends AbstractKeyAnalyzer<Byte> {
     /**
      * {@inheritDoc}
      */
-    public boolean isPrefix(Byte prefix, int offsetInBits, 
-            int lengthInBits, Byte key) {
+    public boolean isPrefix(final Byte prefix, final int offsetInBits, 
+            final int lengthInBits, final Byte key) {
         
-        int value1 = prefix.byteValue() << offsetInBits;
-        int value2 = key.byteValue();
+        final int value1 = prefix.byteValue() << offsetInBits;
+        final int value2 = key.byteValue();
         
         int mask = 0;
         for (int i = 0; i < lengthInBits; i++) {

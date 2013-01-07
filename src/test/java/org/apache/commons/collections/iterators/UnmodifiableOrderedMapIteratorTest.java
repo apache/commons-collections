@@ -32,7 +32,7 @@ import org.apache.commons.collections.map.ListOrderedMap;
  */
 public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMapIteratorTest<K, V> {
 
-    public UnmodifiableOrderedMapIteratorTest(String testName) {
+    public UnmodifiableOrderedMapIteratorTest(final String testName) {
         super(testName);
     }
 
@@ -50,7 +50,7 @@ public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMap
     @Override
     @SuppressWarnings("unchecked")
     public OrderedMap<K, V> getMap() {
-        OrderedMap<K, V> testMap = ListOrderedMap.listOrderedMap(new HashMap<K, V>());
+        final OrderedMap<K, V> testMap = ListOrderedMap.listOrderedMap(new HashMap<K, V>());
         testMap.put((K) "A", (V) "a");
         testMap.put((K) "B", (V) "b");
         testMap.put((K) "C", (V) "c");
@@ -60,7 +60,7 @@ public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMap
     @Override
     @SuppressWarnings("unchecked")
     public Map<K, V> getConfirmedMap() {
-        Map<K, V> testMap = new TreeMap<K, V>();
+        final Map<K, V> testMap = new TreeMap<K, V>();
         testMap.put((K) "A", (V) "a");
         testMap.put((K) "B", (V) "b");
         testMap.put((K) "C", (V) "c");
@@ -92,7 +92,7 @@ public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMap
         try {
             UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(null);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
     }
 
 }

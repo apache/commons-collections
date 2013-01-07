@@ -44,7 +44,7 @@ public class StringKeyAnalyzer extends AbstractKeyAnalyzer<String> {
     /**
      * Returns a bit mask where the given bit is set
      */
-    private static int mask(int bit) {
+    private static int mask(final int bit) {
         return MSB >>> bit;
     }
     
@@ -58,15 +58,15 @@ public class StringKeyAnalyzer extends AbstractKeyAnalyzer<String> {
     /**
      * {@inheritDoc}
      */
-    public int lengthInBits(String key) {
+    public int lengthInBits(final String key) {
         return key != null ? key.length() * LENGTH : 0;
     }
     
     /**
      * {@inheritDoc}
      */
-    public int bitIndex(String key, int offsetInBits, int lengthInBits,
-            String other, int otherOffsetInBits, int otherLengthInBits) {
+    public int bitIndex(final String key, final int offsetInBits, final int lengthInBits,
+            final String other, final int otherOffsetInBits, final int otherLengthInBits) {
         boolean allNull = true;
         
         if (offsetInBits % LENGTH != 0 || otherOffsetInBits % LENGTH != 0 
@@ -76,21 +76,21 @@ public class StringKeyAnalyzer extends AbstractKeyAnalyzer<String> {
         }
         
         
-        int beginIndex1 = offsetInBits / LENGTH;
-        int beginIndex2 = otherOffsetInBits / LENGTH;
+        final int beginIndex1 = offsetInBits / LENGTH;
+        final int beginIndex2 = otherOffsetInBits / LENGTH;
         
-        int endIndex1 = beginIndex1 + lengthInBits / LENGTH;
-        int endIndex2 = beginIndex2 + otherLengthInBits / LENGTH;
+        final int endIndex1 = beginIndex1 + lengthInBits / LENGTH;
+        final int endIndex2 = beginIndex2 + otherLengthInBits / LENGTH;
         
-        int length = Math.max(endIndex1, endIndex2);
+        final int length = Math.max(endIndex1, endIndex2);
         
         // Look at each character, and if they're different
         // then figure out which bit makes the difference
         // and return it.
         char k = 0, f = 0;
         for(int i = 0; i < length; i++) {
-            int index1 = beginIndex1 + i;
-            int index2 = beginIndex2 + i;
+            final int index1 = beginIndex1 + i;
+            final int index2 = beginIndex2 + i;
             
             if (index1 >= endIndex1) {
                 k = 0;
@@ -105,7 +105,7 @@ public class StringKeyAnalyzer extends AbstractKeyAnalyzer<String> {
             }
             
             if (k != f) {
-               int x = k ^ f;
+               final int x = k ^ f;
                return i * LENGTH + Integer.numberOfLeadingZeros(x) - LENGTH;
             }
             
@@ -126,13 +126,13 @@ public class StringKeyAnalyzer extends AbstractKeyAnalyzer<String> {
     /**
      * {@inheritDoc}
      */
-    public boolean isBitSet(String key, int bitIndex, int lengthInBits) {
+    public boolean isBitSet(final String key, final int bitIndex, final int lengthInBits) {
         if (key == null || bitIndex >= lengthInBits) {
             return false;
         }
         
-        int index = bitIndex / LENGTH;
-        int bit = bitIndex % LENGTH;
+        final int index = bitIndex / LENGTH;
+        final int bit = bitIndex % LENGTH;
         
         return (key.charAt(index) & mask(bit)) != 0;
     }
@@ -140,14 +140,14 @@ public class StringKeyAnalyzer extends AbstractKeyAnalyzer<String> {
     /**
      * {@inheritDoc}
      */
-    public boolean isPrefix(String prefix, int offsetInBits, 
-            int lengthInBits, String key) {
+    public boolean isPrefix(final String prefix, final int offsetInBits, 
+            final int lengthInBits, final String key) {
         if (offsetInBits % LENGTH != 0 || lengthInBits % LENGTH != 0) {
             throw new IllegalArgumentException(
                     "Cannot determine prefix outside of Character boundaries");
         }
     
-        String s1 = prefix.substring(offsetInBits / LENGTH, lengthInBits / LENGTH);
+        final String s1 = prefix.substring(offsetInBits / LENGTH, lengthInBits / LENGTH);
         return key.startsWith(s1);
     }
 }

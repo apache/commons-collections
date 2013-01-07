@@ -95,7 +95,7 @@ public class IteratorIterable<E> implements Iterable<E> {
      * 
      * @param iterator the iterator to use.
      */
-    public IteratorIterable(Iterator<? extends E> iterator) {
+    public IteratorIterable(final Iterator<? extends E> iterator) {
         this(iterator, false);
     }
 
@@ -106,7 +106,7 @@ public class IteratorIterable<E> implements Iterable<E> {
      * @param iterator the iterator to use.
      * @param multipleUse <code>true</code> if the new iterable can be used in multiple iterations
      */
-    public IteratorIterable(Iterator<? extends E> iterator, boolean multipleUse) {
+    public IteratorIterable(final Iterator<? extends E> iterator, final boolean multipleUse) {
         super();
         if (multipleUse && !(iterator instanceof ResettableIterator)) {
             this.iterator = new ListIteratorWrapper<E>(iterator); 

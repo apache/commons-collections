@@ -43,7 +43,7 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
     /** 
      * Constructs a new {@link Trie} using the given {@link KeyAnalyzer}.
      */
-    public AbstractTrie(KeyAnalyzer<? super K> keyAnalyzer) {
+    public AbstractTrie(final KeyAnalyzer<? super K> keyAnalyzer) {
         if (keyAnalyzer == null) {
             throw new NullPointerException("keyAnalyzer");
         }
@@ -61,8 +61,8 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
     /**
      * {@inheritDoc}
      */
-    public K selectKey(K key) {
-        Map.Entry<K, V> entry = select(key);
+    public K selectKey(final K key) {
+        final Map.Entry<K, V> entry = select(key);
         if (entry == null) {
             return null;
         }
@@ -72,8 +72,8 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
     /**
      * {@inheritDoc}
      */
-    public V selectValue(K key) {
-        Map.Entry<K, V> entry = select(key);
+    public V selectValue(final K key) {
+        final Map.Entry<K, V> entry = select(key);
         if (entry == null) {
             return null;
         }
@@ -82,9 +82,9 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
     
     @Override
     public String toString() {
-        StringBuilder buffer = new StringBuilder();
+        final StringBuilder buffer = new StringBuilder();
         buffer.append("Trie[").append(size()).append("]={\n");
-        for (Map.Entry<K, V> entry : entrySet()) {
+        for (final Map.Entry<K, V> entry : entrySet()) {
             buffer.append("  ").append(entry).append("\n");
         }
         buffer.append("}\n");
@@ -96,7 +96,7 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
      * cast anything. It's just fooling the compiler!
      */
     @SuppressWarnings("unchecked")
-    final K castKey(Object key) {
+    final K castKey(final Object key) {
         return (K)key;
     }
     
@@ -105,7 +105,7 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
      * 
      * @see KeyAnalyzer#lengthInBits(Object)
      */
-    final int lengthInBits(K key) {
+    final int lengthInBits(final K key) {
         if (key == null) {
             return 0;
         }
@@ -128,7 +128,7 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
      * 
      * @see KeyAnalyzer#isBitSet(Object, int, int)
      */
-    final boolean isBitSet(K key, int bitIndex, int lengthInBits) {
+    final boolean isBitSet(final K key, final int bitIndex, final int lengthInBits) {
         if (key == null) { // root's might be null!
             return false;
         }
@@ -138,7 +138,7 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
     /**
      * Utility method for calling {@link KeyAnalyzer#bitIndex(Object, int, int, Object, int, int)}
      */
-    final int bitIndex(K key, K foundKey) {
+    final int bitIndex(final K key, final K foundKey) {
         return keyAnalyzer.bitIndex(key, 0, lengthInBits(key), 
                 foundKey, 0, lengthInBits(foundKey));
     }
@@ -146,7 +146,7 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
     /**
      * An utility method for calling {@link KeyAnalyzer#compare(Object, Object)}
      */
-    final boolean compareKeys(K key, K other) {
+    final boolean compareKeys(final K key, final K other) {
         if (key == null) {
             return other == null;
         } else if (other == null) {
@@ -159,7 +159,7 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
     /**
      * Returns true if both values are either null or equal
      */
-    static boolean compare(Object a, Object b) {
+    static boolean compare(final Object a, final Object b) {
         return a == null ? b == null : a.equals(b);
     }
     
@@ -176,12 +176,12 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
         
         private final int hashCode;
         
-        public BasicEntry(K key) {
+        public BasicEntry(final K key) {
             this.key = key;
             this.hashCode = key != null ? key.hashCode() : 0;
         }
         
-        public BasicEntry(K key, V value) {
+        public BasicEntry(final K key, final V value) {
             this.key = key;
             this.value = value;
             
@@ -193,7 +193,7 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
          * Replaces the current key and value with the provided
          * key &amp; value
          */
-        public V setKeyValue(K key, V value) {
+        public V setKeyValue(final K key, final V value) {
             this.key = key;
             return setValue(value);
         }
@@ -215,8 +215,8 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
         /**
          * {@inheritDoc}
          */
-        public V setValue(V value) {
-            V previous = this.value;
+        public V setValue(final V value) {
+            final V previous = this.value;
             this.value = value;
             return previous;
         }
@@ -227,14 +227,14 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
         }
         
         @Override
-        public boolean equals(Object o) {
+        public boolean equals(final Object o) {
             if (o == this) {
                 return true;
             } else if (!(o instanceof Map.Entry)) {
                 return false;
             }
             
-            Map.Entry<?, ?> other = (Map.Entry<?, ?>)o;
+            final Map.Entry<?, ?> other = (Map.Entry<?, ?>)o;
             if (compare(key, other.getKey()) 
                     && compare(value, other.getValue())) {
                 return true;

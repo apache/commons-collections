@@ -34,7 +34,7 @@ public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
     private static final Integer TWO = new Integer(2);
     private static final Integer THREE = new Integer(3);
 
-    public ListOrderedSet2Test(String testName) {
+    public ListOrderedSet2Test(final String testName) {
         super(testName);
     }
 
@@ -45,7 +45,7 @@ public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
 
     @SuppressWarnings("unchecked")
     protected ListOrderedSet<E> setupSet() {
-        ListOrderedSet<E> set = makeObject();
+        final ListOrderedSet<E> set = makeObject();
 
         for (int i = 0; i < 10; i++) {
             set.add((E) Integer.toString(i));
@@ -55,7 +55,7 @@ public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
 
     @SuppressWarnings("unchecked")
     public void testOrdering() {
-        ListOrderedSet<E> set = setupSet();
+        final ListOrderedSet<E> set = setupSet();
         Iterator<E> it = set.iterator();
 
         for (int i = 0; i < 10; i++) {
@@ -88,8 +88,8 @@ public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
 
     @SuppressWarnings("unchecked")
     public void testListAddRemove() {
-        ListOrderedSet<E> set = makeObject();
-        List<E> view = set.asList();
+        final ListOrderedSet<E> set = makeObject();
+        final List<E> view = set.asList();
         set.add((E) ZERO);
         set.add((E) ONE);
         set.add((E) TWO);
@@ -118,7 +118,7 @@ public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
 
     @SuppressWarnings("unchecked")
     public void testListAddIndexed() {
-        ListOrderedSet<E> set = makeObject();
+        final ListOrderedSet<E> set = makeObject();
         set.add((E) ZERO);
         set.add((E) TWO);
 
@@ -134,7 +134,7 @@ public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
         assertSame(ONE, set.get(1));
         assertSame(TWO, set.get(2));
 
-        List<E> list = new ArrayList<E>();
+        final List<E> list = new ArrayList<E>();
         list.add((E) ZERO);
         list.add((E) TWO);
 

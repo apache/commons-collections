@@ -39,7 +39,7 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
     protected List<String> list2 = null;
     protected List<String> list3 = null;
 
-    public IteratorChainTest(String testName) {
+    public IteratorChainTest(final String testName) {
         super(testName);
     }
 
@@ -58,13 +58,13 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
 
     @Override
     public IteratorChain<String> makeEmptyIterator() {
-        ArrayList<String> list = new ArrayList<String>();
+        final ArrayList<String> list = new ArrayList<String>();
         return new IteratorChain<String>(list.iterator());
     }
 
     @Override
     public IteratorChain<String> makeObject() {
-        IteratorChain<String> chain = new IteratorChain<String>();
+        final IteratorChain<String> chain = new IteratorChain<String>();
 
         chain.addIterator(list1.iterator());
         chain.addIterator(list2.iterator());
@@ -73,9 +73,9 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
     }
 
     public void testIterator() {
-        Iterator<String> iter = makeObject();
-        for (String testValue : testArray) {
-            Object iterValue = iter.next();
+        final Iterator<String> iter = makeObject();
+        for (final String testValue : testArray) {
+            final Object iterValue = iter.next();
 
             assertEquals( "Iteration value is correct", testValue, iterValue );
         }
@@ -84,7 +84,7 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
 
         try {
             iter.next();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             assertTrue("NoSuchElementException must be thrown", 
                        e.getClass().equals(new NoSuchElementException().getClass()));
         }
@@ -93,23 +93,23 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
     public void testRemoveFromFilteredIterator() {
 
         final Predicate<Integer> myPredicate = new Predicate<Integer>() {
-            public boolean evaluate(Integer i) {
+            public boolean evaluate(final Integer i) {
                 return i.compareTo(new Integer(4)) < 0;
             }
         };
 
-        List<Integer> list1 = new ArrayList<Integer>();
-        List<Integer> list2 = new ArrayList<Integer>();
+        final List<Integer> list1 = new ArrayList<Integer>();
+        final List<Integer> list2 = new ArrayList<Integer>();
 
         list1.add(new Integer(1));
         list1.add(new Integer(2));
         list2.add(new Integer(3));
         list2.add(new Integer(4)); // will be ignored by the predicate
 
-        Iterator<Integer> it1 = IteratorUtils.filteredIterator(list1.iterator(), myPredicate);
-        Iterator<Integer> it2 = IteratorUtils.filteredIterator(list2.iterator(), myPredicate);
+        final Iterator<Integer> it1 = IteratorUtils.filteredIterator(list1.iterator(), myPredicate);
+        final Iterator<Integer> it2 = IteratorUtils.filteredIterator(list2.iterator(), myPredicate);
 
-        Iterator<Integer> it = IteratorUtils.chainedIterator(it1, it2);
+        final Iterator<Integer> it = IteratorUtils.chainedIterator(it1, it2);
         while (it.hasNext()) {
             it.next();
             it.remove();
@@ -120,17 +120,17 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
     
     @Override
     public void testRemove() {
-        Iterator<String> iter = makeObject();
+        final Iterator<String> iter = makeObject();
 
         try {
             iter.remove();
             fail("Calling remove before the first call to next() should throw an exception");
-        } catch (IllegalStateException e) {
+        } catch (final IllegalStateException e) {
 
         }
 
-        for (String testValue : testArray) {
-            String iterValue = iter.next();
+        for (final String testValue : testArray) {
+            final String iterValue = iter.next();
 
             assertEquals("Iteration value is correct", testValue, iterValue);
 
@@ -145,12 +145,12 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
     }
 
     public void testFirstIteratorIsEmptyBug() {
-        List<String> empty = new ArrayList<String>();
-        List<String> notEmpty = new ArrayList<String>();
+        final List<String> empty = new ArrayList<String>();
+        final List<String> notEmpty = new ArrayList<String>();
         notEmpty.add("A");
         notEmpty.add("B");
         notEmpty.add("C");
-        IteratorChain<String> chain = new IteratorChain<String>();
+        final IteratorChain<String> chain = new IteratorChain<String>();
         chain.addIterator(empty.iterator());
         chain.addIterator(notEmpty.iterator());
         assertTrue("should have next",chain.hasNext());
@@ -163,16 +163,16 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
     }
     
     public void testEmptyChain() {
-        IteratorChain<Object> chain = new IteratorChain<Object>();
+        final IteratorChain<Object> chain = new IteratorChain<Object>();
         assertEquals(false, chain.hasNext());
         try {
             chain.next();
             fail();
-        } catch (NoSuchElementException ex) {}
+        } catch (final NoSuchElementException ex) {}
         try {
             chain.remove();
             fail();
-        } catch (IllegalStateException ex) {}
+        } catch (final IllegalStateException ex) {}
     }
         
 }

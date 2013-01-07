@@ -32,7 +32,7 @@ import org.apache.commons.collections.BulkTest;
  */
 public class SynchronizedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
-    public SynchronizedSortedSetTest(String testName) {
+    public SynchronizedSortedSetTest(final String testName) {
         super(testName);
     }
 

@@ -50,7 +50,7 @@ public final class UnmodifiableList<E>
      * @return a new unmodifiable list
      * @throws IllegalArgumentException if list is null
      */
-    public static <E> List<E> unmodifiableList(List<E> list) {
+    public static <E> List<E> unmodifiableList(final List<E> list) {
         if (list instanceof Unmodifiable) {
             return list;
         }
@@ -65,7 +65,7 @@ public final class UnmodifiableList<E>
      * @throws IllegalArgumentException if list is null
      * @since Commons Collection 5
      */
-    public UnmodifiableList(List<E> list) {
+    public UnmodifiableList(final List<E> list) {
         super(list);
     }
 
@@ -76,12 +76,12 @@ public final class UnmodifiableList<E>
     }
 
     @Override
-    public boolean add(Object object) {
+    public boolean add(final Object object) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> coll) {
+    public boolean addAll(final Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -91,17 +91,17 @@ public final class UnmodifiableList<E>
     }
 
     @Override
-    public boolean remove(Object object) {
+    public boolean remove(final Object object) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean removeAll(Collection<?> coll) {
+    public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean retainAll(Collection<?> coll) {
+    public boolean retainAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -112,33 +112,33 @@ public final class UnmodifiableList<E>
     }
 
     @Override
-    public ListIterator<E> listIterator(int index) {
+    public ListIterator<E> listIterator(final int index) {
         return UnmodifiableListIterator.umodifiableListIterator(decorated().listIterator(index));
     }
 
     @Override
-    public void add(int index, E object) {
+    public void add(final int index, final E object) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean addAll(int index, Collection<? extends E> coll) {
+    public boolean addAll(final int index, final Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public E remove(int index) {
+    public E remove(final int index) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public E set(int index, E object) {
+    public E set(final int index, final E object) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public List<E> subList(int fromIndex, int toIndex) {
-        List<E> sub = decorated().subList(fromIndex, toIndex);
+    public List<E> subList(final int fromIndex, final int toIndex) {
+        final List<E> sub = decorated().subList(fromIndex, toIndex);
         return new UnmodifiableList<E>(sub);
     }
 

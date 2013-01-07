@@ -30,7 +30,7 @@ public class ArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 
     protected String[] testArray = { "One", "Two", "Three" };
 
-    public ArrayIteratorTest(String testName) {
+    public ArrayIteratorTest(final String testName) {
         super(testName);
     }
 
@@ -50,9 +50,9 @@ public class ArrayIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     public void testIterator() {
-        Iterator<E> iter = makeObject();
-        for (String testValue : testArray) {
-            E iterValue = iter.next();
+        final Iterator<E> iter = makeObject();
+        for (final String testValue : testArray) {
+            final E iterValue = iter.next();
 
             assertEquals("Iteration value is correct", testValue, iterValue);
         }
@@ -61,7 +61,7 @@ public class ArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 
         try {
             iter.next();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             assertTrue(
                 "NoSuchElementException must be thrown",
                 e.getClass().equals(new NoSuchElementException().getClass()));
@@ -72,22 +72,22 @@ public class ArrayIteratorTest<E> extends AbstractIteratorTest<E> {
         try {
             new ArrayIterator<Object>(null);
             fail("Constructor should throw a NullPointerException when constructed with a null array");
-        } catch (NullPointerException e) {
+        } catch (final NullPointerException e) {
             // expected
         }
 
-        ArrayIterator<Object> iter = new ArrayIterator<Object>();
+        final ArrayIterator<Object> iter = new ArrayIterator<Object>();
         try {
             iter.setArray(null);
 
             fail("setArray(null) should throw a NullPointerException");
-        } catch (NullPointerException e) {
+        } catch (final NullPointerException e) {
             // expected
         }
     }
     
     public void testReset() {
-        ArrayIterator<E> it = makeObject();
+        final ArrayIterator<E> it = makeObject();
         it.next();
         it.reset();
         assertEquals("One", it.next());

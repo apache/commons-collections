@@ -40,7 +40,7 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
      *
      * @param name  name for test
      */
-    public AbstractSortedSetTest(String name) {
+    public AbstractSortedSetTest(final String name) {
         super(name);
     }
 
@@ -55,8 +55,8 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
         
         // Check that iterator returns elements in order and first() and last()
         // are consistent
-        Iterator<E> colliter = getCollection().iterator();
-        Iterator<E> confiter = getConfirmed().iterator();
+        final Iterator<E> colliter = getCollection().iterator();
+        final Iterator<E> confiter = getConfirmed().iterator();
         E first = null;
         E last = null;
         while (colliter.hasNext()) {
@@ -120,7 +120,7 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public E[] getFullNonNullElements() {
-        Object[] elements = new Object[30];
+        final Object[] elements = new Object[30];
 
         for (int i = 0; i < 30; i++) {
             elements[i] = new Integer(i + i + 1);
@@ -134,7 +134,7 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public E[] getOtherNonNullElements() {
-        Object[] elements = new Object[30];
+        final Object[] elements = new Object[30];
         for (int i = 0; i < 30; i++) {
             elements[i] = new Integer(i + i + 2);
         }
@@ -151,10 +151,10 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
      * @return a {@link AbstractSetTest} instance for testing a subset.
      */
     public BulkTest bulkTestSortedSetSubSet() {
-        int length = getFullElements().length;
+        final int length = getFullElements().length;
 
-        int lobound = length / 3;
-        int hibound = lobound * 2;
+        final int lobound = length / 3;
+        final int hibound = lobound * 2;
         return new TestSortedSetSubSet(lobound, hibound);
 
     }
@@ -168,10 +168,10 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
      * @return a {@link AbstractSetTest} instance for testing a headset.
      */
     public BulkTest bulkTestSortedSetHeadSet() {
-        int length = getFullElements().length;
+        final int length = getFullElements().length;
 
-        int lobound = length / 3;
-        int hibound = lobound * 2;
+        final int lobound = length / 3;
+        final int hibound = lobound * 2;
         return new TestSortedSetSubSet(hibound, true);
 
     }
@@ -185,8 +185,8 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
      * @return a {@link AbstractSetTest} instance for testing a tailset.
      */
     public BulkTest bulkTestSortedSetTailSet() {
-        int length = getFullElements().length;
-        int lobound = length / 3;
+        final int length = getFullElements().length;
+        final int lobound = length / 3;
         return new TestSortedSetSubSet(lobound, false);
     }
 
@@ -199,7 +199,7 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
         private E[] m_OtherElements;
 
         @SuppressWarnings("unchecked")
-        public TestSortedSetSubSet(int bound, boolean head) {
+        public TestSortedSetSubSet(final int bound, final boolean head) {
             super("TestSortedSetSubSet");
             if (head) {
                 //System.out.println("HEADSET");
@@ -216,7 +216,7 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
                 //System.out.println("TAILSET");
                 m_Type = TYPE_TAILSET;
                 m_LowBound = bound;
-                Object[] allelements = AbstractSortedSetTest.this.getFullElements();
+                final Object[] allelements = AbstractSortedSetTest.this.getFullElements();
                 //System.out.println("bound = "+bound +"::length="+allelements.length);
                 m_FullElements = (E[]) new Object[allelements.length - bound];
                 System.arraycopy(allelements, bound, m_FullElements, 0, allelements.length - bound);
@@ -234,13 +234,13 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
         } //type
 
         @SuppressWarnings("unchecked")
-        public TestSortedSetSubSet(int lobound, int hibound) {
+        public TestSortedSetSubSet(final int lobound, final int hibound) {
             super("TestSortedSetSubSet");
             //System.out.println("SUBSET");
             m_Type = TYPE_SUBSET;
             m_LowBound = lobound;
             m_HighBound = hibound;
-            int length = hibound - lobound;
+            final int length = hibound - lobound;
             //System.out.println("Low=" + lobound + "::High=" + hibound + "::Length=" + length);
             m_FullElements = (E[]) new Object[length];
             System.arraycopy(AbstractSortedSetTest.this.getFullElements(), lobound, m_FullElements, 0, length);
@@ -279,8 +279,8 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
             return m_OtherElements;
         }
 
-        private SortedSet<E> getSubSet(SortedSet<E> set) {
-            E[] elements = AbstractSortedSetTest.this.getFullElements();
+        private SortedSet<E> getSubSet(final SortedSet<E> set) {
+            final E[] elements = AbstractSortedSetTest.this.getFullElements();
             switch (m_Type) {
                 case TYPE_SUBSET :
                     return set.subSet(elements[m_LowBound], elements[m_HighBound]);

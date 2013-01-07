@@ -28,18 +28,18 @@ class EmptyMapMutator<K,V> implements CompositeMap.MapMutator<K,V> {
     /** Serialization version */
     private static final long serialVersionUID = -2729718980002476794L;
 
-    public void resolveCollision(CompositeMap<K,V> composite,
-    Map<K,V> existing,
-    Map<K,V> added,
-    Collection<K> intersect) {
+    public void resolveCollision(final CompositeMap<K,V> composite,
+    final Map<K,V> existing,
+    final Map<K,V> added,
+    final Collection<K> intersect) {
         // Do nothing
     }
     
-    public V put(CompositeMap<K, V> map, Map<K, V>[] composited, K key, V value) {
+    public V put(final CompositeMap<K, V> map, final Map<K, V>[] composited, final K key, final V value) {
         return composited[0].put(key, value);
     }
     
-    public void putAll(CompositeMap<K, V> map, Map<K, V>[] composited, Map<? extends K, ? extends V> t) {
+    public void putAll(final CompositeMap<K, V> map, final Map<K, V>[] composited, final Map<? extends K, ? extends V> t) {
         composited[0].putAll(t);
     }
 

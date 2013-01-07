@@ -58,7 +58,7 @@ public final class UnmodifiableMap<K, V>
      * @return a new unmodifiable map
      * @throws IllegalArgumentException if map is null
      */
-    public static <K, V> Map<K, V> unmodifiableMap(Map<K, V> map) {
+    public static <K, V> Map<K, V> unmodifiableMap(final Map<K, V> map) {
         if (map instanceof Unmodifiable) {
             return map;
         }
@@ -72,7 +72,7 @@ public final class UnmodifiableMap<K, V>
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    private UnmodifiableMap(Map<K, V> map) {
+    private UnmodifiableMap(final Map<K, V> map) {
         super(map);
     }
 
@@ -84,7 +84,7 @@ public final class UnmodifiableMap<K, V>
      * @throws IOException
      * @since 3.1
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(map);
     }
@@ -98,7 +98,7 @@ public final class UnmodifiableMap<K, V>
      * @since 3.1
      */
     @SuppressWarnings("unchecked")
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map<K, V>) in.readObject();
     }
@@ -110,45 +110,45 @@ public final class UnmodifiableMap<K, V>
     }
 
     @Override
-    public V put(K key, V value) {
+    public V put(final K key, final V value) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void putAll(Map<? extends K, ? extends V> mapToCopy) {
+    public void putAll(final Map<? extends K, ? extends V> mapToCopy) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public V remove(Object key) {
+    public V remove(final Object key) {
         throw new UnsupportedOperationException();
     }
 
     @Override
     public MapIterator<K, V> mapIterator() {
         if (map instanceof IterableMap) {
-            MapIterator<K, V> it = ((IterableMap<K, V>) map).mapIterator();
+            final MapIterator<K, V> it = ((IterableMap<K, V>) map).mapIterator();
             return UnmodifiableMapIterator.unmodifiableMapIterator(it);
         }
-        MapIterator<K, V> it = new EntrySetMapIterator<K, V>(map);
+        final MapIterator<K, V> it = new EntrySetMapIterator<K, V>(map);
         return UnmodifiableMapIterator.unmodifiableMapIterator(it);
     }
 
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
-        Set<Map.Entry<K, V>> set = super.entrySet();
+        final Set<Map.Entry<K, V>> set = super.entrySet();
         return UnmodifiableEntrySet.unmodifiableEntrySet(set);
     }
 
     @Override
     public Set<K> keySet() {
-        Set<K> set = super.keySet();
+        final Set<K> set = super.keySet();
         return UnmodifiableSet.unmodifiableSet(set);
     }
 
     @Override
     public Collection<V> values() {
-        Collection<V> coll = super.values();
+        final Collection<V> coll = super.values();
         return UnmodifiableCollection.unmodifiableCollection(coll);
     }
 

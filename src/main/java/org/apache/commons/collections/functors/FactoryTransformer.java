@@ -42,7 +42,7 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
      * @return the <code>factory</code> transformer
      * @throws IllegalArgumentException if the factory is null
      */
-    public static <I, O> Transformer<I, O> factoryTransformer(Factory<? extends O> factory) {
+    public static <I, O> Transformer<I, O> factoryTransformer(final Factory<? extends O> factory) {
         if (factory == null) {
             throw new IllegalArgumentException("Factory must not be null");
         }
@@ -55,7 +55,7 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
      * 
      * @param factory  the factory to call, not null
      */
-    public FactoryTransformer(Factory<? extends O> factory) {
+    public FactoryTransformer(final Factory<? extends O> factory) {
         super();
         iFactory = factory;
     }
@@ -67,7 +67,7 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
      * @param input  the input object to transform
      * @return the transformed result
      */
-    public O transform(I input) {
+    public O transform(final I input) {
         return iFactory.create();
     }
 

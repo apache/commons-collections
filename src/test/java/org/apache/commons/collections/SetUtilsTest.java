@@ -36,7 +36,7 @@ import org.apache.commons.collections.set.PredicatedSet;
  */
 public class SetUtilsTest extends BulkTest {
 
-    public SetUtilsTest(String name) {
+    public SetUtilsTest(final String name) {
         super(name);
     }
 
@@ -48,8 +48,8 @@ public class SetUtilsTest extends BulkTest {
     }
 
     public void testpredicatedSet() {
-        Predicate<Object> predicate = new Predicate<Object>() {
-            public boolean evaluate(Object o) {
+        final Predicate<Object> predicate = new Predicate<Object>() {
+            public boolean evaluate(final Object o) {
                 return o instanceof String;
             }
         };
@@ -58,13 +58,13 @@ public class SetUtilsTest extends BulkTest {
         try {
             set = SetUtils.predicatedSet(new HashSet<Object>(), null);
             fail("Expecting IllegalArgumentException for null predicate.");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
         try {
             set = SetUtils.predicatedSet(null, predicate);
             fail("Expecting IllegalArgumentException for null set.");
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             // expected
         }
     }
@@ -72,15 +72,15 @@ public class SetUtilsTest extends BulkTest {
     public void testEmptyIfNull() {
         assertTrue(SetUtils.emptyIfNull(null).isEmpty());
         
-        Set<Long> set = new HashSet<Long>();
+        final Set<Long> set = new HashSet<Long>();
         assertSame(set, SetUtils.emptyIfNull(set));
     }
     
     public void testEquals() {
-        Collection<String> data = Arrays.asList( new String[] { "a", "b", "c" });
+        final Collection<String> data = Arrays.asList( new String[] { "a", "b", "c" });
 
-        Set<String> a = new HashSet<String>(data);
-        Set<String> b = new HashSet<String>(data);
+        final Set<String> a = new HashSet<String>(data);
+        final Set<String> b = new HashSet<String>(data);
 
         assertEquals(true, a.equals(b));
         assertEquals(true, SetUtils.isEqualSet(a, b));
@@ -92,10 +92,10 @@ public class SetUtilsTest extends BulkTest {
     }
 
     public void testHashCode() {
-        Collection<String> data = Arrays.asList( new String[] { "a", "b", "c" });
+        final Collection<String> data = Arrays.asList( new String[] { "a", "b", "c" });
 
-        Set<String> a = new HashSet<String>(data);
-        Set<String> b = new HashSet<String>(data);
+        final Set<String> a = new HashSet<String>(data);
+        final Set<String> b = new HashSet<String>(data);
 
         assertEquals(true, a.hashCode() == b.hashCode());
         assertEquals(true, a.hashCode() == SetUtils.hashCodeForSet(a));

@@ -35,7 +35,7 @@ public class UnmodifiableOrderedBidiMapTest<K extends Comparable<K>, V extends C
         return BulkTest.makeSuite(UnmodifiableOrderedBidiMapTest.class);
     }
 
-    public UnmodifiableOrderedBidiMapTest(String testName) {
+    public UnmodifiableOrderedBidiMapTest(final String testName) {
         super(testName);
     }
 
@@ -46,7 +46,7 @@ public class UnmodifiableOrderedBidiMapTest<K extends Comparable<K>, V extends C
 
     @Override
     public BidiMap<K, V> makeFullMap() {
-        OrderedBidiMap<K, V> bidi = new TreeBidiMap<K, V>();
+        final OrderedBidiMap<K, V> bidi = new TreeBidiMap<K, V>();
         addSampleMappings(bidi);
         return UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(bidi);
     }

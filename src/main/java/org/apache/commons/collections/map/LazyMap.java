@@ -77,7 +77,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
      * @return a new lazy map
      * @throws IllegalArgumentException if map or factory is null
      */
-    public static <K, V> LazyMap<K, V> lazyMap(Map<K, V> map, Factory< ? extends V> factory) {
+    public static <K, V> LazyMap<K, V> lazyMap(final Map<K, V> map, final Factory< ? extends V> factory) {
         return new LazyMap<K,V>(map, factory);
     }
 
@@ -91,7 +91,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
      * @return a new lazy map
      * @throws IllegalArgumentException if map or factory is null
      */
-    public static <V, K> LazyMap<K, V> lazyMap(Map<K, V> map, Transformer<? super K, ? extends V> factory) {
+    public static <V, K> LazyMap<K, V> lazyMap(final Map<K, V> map, final Transformer<? super K, ? extends V> factory) {
         return new LazyMap<K,V>(map, factory);
     }
 
@@ -103,7 +103,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
      * @param factory  the factory to use, must not be null
      * @throws IllegalArgumentException if map or factory is null
      */
-    protected LazyMap(Map<K,V> map, Factory<? extends V> factory) {
+    protected LazyMap(final Map<K,V> map, final Factory<? extends V> factory) {
         super(map);
         if (factory == null) {
             throw new IllegalArgumentException("Factory must not be null");
@@ -118,7 +118,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
      * @param factory  the factory to use, must not be null
      * @throws IllegalArgumentException if map or factory is null
      */
-    protected LazyMap(Map<K,V> map, Transformer<? super K, ? extends V> factory) {
+    protected LazyMap(final Map<K,V> map, final Transformer<? super K, ? extends V> factory) {
         super(map);
         if (factory == null) {
             throw new IllegalArgumentException("Factory must not be null");
@@ -134,7 +134,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
      * @throws IOException
      * @since 3.1
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(map);
     }
@@ -148,19 +148,20 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
      * @since 3.1
      */
     @SuppressWarnings("unchecked")
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map<K, V>) in.readObject();
     }
 
     //-----------------------------------------------------------------------
     @Override
-    public V get(Object key) {
+    public V get(final Object key) {
         // create value for key if key is not currently in the map
         if (map.containsKey(key) == false) {
             @SuppressWarnings("unchecked")
+            final
             K castKey = (K) key;
-            V value = factory.transform(castKey);
+            final V value = factory.transform(castKey);
             map.put(castKey, value);
             return value;
         }

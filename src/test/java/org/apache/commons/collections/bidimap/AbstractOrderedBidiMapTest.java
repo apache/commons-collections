@@ -35,7 +35,7 @@ import org.apache.commons.collections.iterators.AbstractMapIteratorTest;
  */
 public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
 
-    public AbstractOrderedBidiMapTest(String testName) {
+    public AbstractOrderedBidiMapTest(final String testName) {
         super(testName);
     }
 
@@ -50,11 +50,11 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         try {
             bidi.firstKey();
             fail();
-        } catch (NoSuchElementException ex) {}
+        } catch (final NoSuchElementException ex) {}
 
         resetFull();
         bidi = getMap();
-        K confirmedFirst = confirmed.keySet().iterator().next();
+        final K confirmedFirst = confirmed.keySet().iterator().next();
         assertEquals(confirmedFirst, bidi.firstKey());
     }
 
@@ -64,12 +64,12 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         try {
             bidi.lastKey();
             fail();
-        } catch (NoSuchElementException ex) {}
+        } catch (final NoSuchElementException ex) {}
 
         resetFull();
         bidi = getMap();
         K confirmedLast = null;
-        for (Iterator<K> it = confirmed.keySet().iterator(); it.hasNext();) {
+        for (final Iterator<K> it = confirmed.keySet().iterator(); it.hasNext();) {
             confirmedLast = it.next();
         }
         assertEquals(confirmedLast, bidi.lastKey());
@@ -83,17 +83,17 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         if (isAllowNullKey() == false) {
             try {
                 assertEquals(null, bidi.nextKey(null)); // this is allowed too
-            } catch (NullPointerException ex) {}
+            } catch (final NullPointerException ex) {}
         } else {
             assertEquals(null, bidi.nextKey(null));
         }
 
         resetFull();
         bidi = (OrderedBidiMap<K, V>) map;
-        Iterator<K> it = confirmed.keySet().iterator();
+        final Iterator<K> it = confirmed.keySet().iterator();
         K confirmedLast = it.next();
         while (it.hasNext()) {
-            K confirmedObject = it.next();
+            final K confirmedObject = it.next();
             assertEquals(confirmedObject, bidi.nextKey(confirmedLast));
             confirmedLast = confirmedObject;
         }
@@ -103,7 +103,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
             try {
                 bidi.nextKey(null);
                 fail();
-            } catch (NullPointerException ex) {}
+            } catch (final NullPointerException ex) {}
         } else {
             assertEquals(null, bidi.nextKey(null));
         }
@@ -116,19 +116,19 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         if (isAllowNullKey() == false) {
             try {
                 assertEquals(null, bidi.previousKey(null)); // this is allowed too
-            } catch (NullPointerException ex) {}
+            } catch (final NullPointerException ex) {}
         } else {
             assertEquals(null, bidi.previousKey(null));
         }
 
         resetFull();
         bidi = getMap();
-        List<K> list = new ArrayList<K>(confirmed.keySet());
+        final List<K> list = new ArrayList<K>(confirmed.keySet());
         Collections.reverse(list);
-        Iterator<K> it = list.iterator();
+        final Iterator<K> it = list.iterator();
         K confirmedLast = it.next();
         while (it.hasNext()) {
-            K confirmedObject = it.next();
+            final K confirmedObject = it.next();
             assertEquals(confirmedObject, bidi.previousKey(confirmedLast));
             confirmedLast = confirmedObject;
         }
@@ -138,7 +138,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
             try {
                 bidi.previousKey(null);
                 fail();
-            } catch (NullPointerException ex) {}
+            } catch (final NullPointerException ex) {}
         } else {
             assertEquals(null, bidi.previousKey(null));
         }

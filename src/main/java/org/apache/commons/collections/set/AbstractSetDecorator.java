@@ -49,7 +49,7 @@ public abstract class AbstractSetDecorator<E> extends AbstractCollectionDecorato
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    protected AbstractSetDecorator(Set<E> set) {
+    protected AbstractSetDecorator(final Set<E> set) {
         super(set);
     }
 

@@ -53,7 +53,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
      * @return a new unmodifiable bounded collection
      * @throws IllegalArgumentException if {@code coll} is {@code null}
      */
-    public static <E> BoundedCollection<E> unmodifiableBoundedCollection(BoundedCollection<E> coll) {
+    public static <E> BoundedCollection<E> unmodifiableBoundedCollection(final BoundedCollection<E> coll) {
         return new UnmodifiableBoundedCollection<E>(coll);
     }
 
@@ -98,7 +98,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
      * @param coll  the collection to decorate, must not be null
      * @throws IllegalArgumentException if coll is null
      */
-    private UnmodifiableBoundedCollection(BoundedCollection<E> coll) {
+    private UnmodifiableBoundedCollection(final BoundedCollection<E> coll) {
         super(coll);
     }
 
@@ -109,12 +109,12 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
     }
 
     @Override
-    public boolean add(E object) {
+    public boolean add(final E object) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> coll) {
+    public boolean addAll(final Collection<? extends E> coll) {
         throw new UnsupportedOperationException();
     }
 
@@ -124,17 +124,17 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
     }
 
     @Override
-    public boolean remove(Object object) {
+    public boolean remove(final Object object) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean removeAll(Collection<?> coll) {
+    public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean retainAll(Collection<?> coll) {
+    public boolean retainAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 

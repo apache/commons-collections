@@ -26,7 +26,7 @@ import org.apache.commons.collections.Bag;
  */
 public class HashBagTest<T> extends AbstractBagTest<T> {
     
-    public HashBagTest(String testName) {
+    public HashBagTest(final String testName) {
         super(testName);
     }
 

@@ -51,7 +51,7 @@ public abstract class AbstractOrderedMapDecorator<K, V> extends AbstractMapDecor
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    public AbstractOrderedMapDecorator(OrderedMap<K, V> map) {
+    public AbstractOrderedMapDecorator(final OrderedMap<K, V> map) {
         super(map);
     }
 
@@ -74,11 +74,11 @@ public abstract class AbstractOrderedMapDecorator<K, V> extends AbstractMapDecor
         return decorated().lastKey();
     }
 
-    public K nextKey(K key) {
+    public K nextKey(final K key) {
         return decorated().nextKey(key);
     }
 
-    public K previousKey(K key) {
+    public K previousKey(final K key) {
         return decorated().previousKey(key);
     }
 

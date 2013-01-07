@@ -27,7 +27,7 @@ import java.util.Arrays;
 
 public class BoundedBufferTest<E> extends AbstractObjectTest {
 
-    public BoundedBufferTest(String testName) {
+    public BoundedBufferTest(final String testName) {
         super(testName);
     }
 
@@ -50,7 +50,7 @@ public class BoundedBufferTest<E> extends AbstractObjectTest {
     @SuppressWarnings("unchecked")
     public void testMaxSize() {
         final Buffer<E> bounded = BoundedBuffer.boundedBuffer(new UnboundedFifoBuffer<E>(), 2, 500);
-        BoundedCollection<?> bc = (BoundedCollection<?>) bounded;
+        final BoundedCollection<?> bc = (BoundedCollection<?>) bounded;
         assertEquals(2, bc.maxSize());
         assertEquals(false, bc.isFull());
         bounded.add((E) "A");
@@ -62,11 +62,11 @@ public class BoundedBufferTest<E> extends AbstractObjectTest {
         try {
             BoundedBuffer.boundedBuffer(new UnboundedFifoBuffer<E>(), 0);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
         try {
             BoundedBuffer.boundedBuffer(new UnboundedFifoBuffer<E>(), -1);
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
     }
 
     @SuppressWarnings("unchecked")
@@ -76,7 +76,7 @@ public class BoundedBufferTest<E> extends AbstractObjectTest {
         try {
             bounded.add((E) "World");
             fail();
-        } catch (BufferOverflowException e) {
+        } catch (final BufferOverflowException e) {
         }
     }
 
@@ -87,7 +87,7 @@ public class BoundedBufferTest<E> extends AbstractObjectTest {
         try {
             bounded.addAll(Collections.singleton((E) "World"));
             fail();
-        } catch (BufferOverflowException e) {
+        } catch (final BufferOverflowException e) {
         }
     }
 
@@ -97,7 +97,7 @@ public class BoundedBufferTest<E> extends AbstractObjectTest {
         try {
             bounded.addAll(Collections.nCopies(2, (E) "test"));
             fail();
-        } catch (BufferOverflowException e) {
+        } catch (final BufferOverflowException e) {
         }
     }
 
@@ -135,7 +135,7 @@ public class BoundedBufferTest<E> extends AbstractObjectTest {
         try {
             bounded.add((E) "!");
             fail();
-        } catch (BufferOverflowException e) {
+        } catch (final BufferOverflowException e) {
         }
     }
 
@@ -152,7 +152,7 @@ public class BoundedBufferTest<E> extends AbstractObjectTest {
         try {
             bounded.add((E) "!");
             fail();
-        } catch (BufferOverflowException e) {
+        } catch (final BufferOverflowException e) {
         }
     }
 
@@ -164,13 +164,13 @@ public class BoundedBufferTest<E> extends AbstractObjectTest {
 
         private final int nToRemove;
 
-        public DelayedIteratorRemove(Buffer<?> buffer, long delay, int nToRemove) {
+        public DelayedIteratorRemove(final Buffer<?> buffer, final long delay, final int nToRemove) {
             this.buffer = buffer;
             this.delay = delay;
             this.nToRemove = nToRemove;
         }
 
-        public DelayedIteratorRemove(Buffer<?> buffer, long delay) {
+        public DelayedIteratorRemove(final Buffer<?> buffer, final long delay) {
             this(buffer, delay, 1);
         }
 
@@ -178,13 +178,13 @@ public class BoundedBufferTest<E> extends AbstractObjectTest {
         public void run() {
             try {
                 Thread.sleep(delay);
-                Iterator<?> iter = buffer.iterator();
+                final Iterator<?> iter = buffer.iterator();
                 for (int i = 0; i < nToRemove; ++i) {
                     iter.next();
                     iter.remove();
                 }
 
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
             }
         }
     }
@@ -197,13 +197,13 @@ public class BoundedBufferTest<E> extends AbstractObjectTest {
 
         private final int nToRemove;
 
-        public DelayedRemove(Buffer<?> buffer, long delay, int nToRemove) {
+        public DelayedRemove(final Buffer<?> buffer, final long delay, final int nToRemove) {
             this.buffer = buffer;
             this.delay = delay;
             this.nToRemove = nToRemove;
         }
 
-        public DelayedRemove(Buffer<?> buffer, long delay) {
+        public DelayedRemove(final Buffer<?> buffer, final long delay) {
             this(buffer, delay, 1);
         }
 
@@ -214,7 +214,7 @@ public class BoundedBufferTest<E> extends AbstractObjectTest {
                 for (int i = 0; i < nToRemove; ++i) {
                     buffer.remove();
                 }
-            } catch (InterruptedException e) {
+            } catch (final InterruptedException e) {
             }
         }
     }

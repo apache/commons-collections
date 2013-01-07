@@ -96,7 +96,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * @param reverseMap  the reverse direction map
      * @since 3.1
      */
-    protected AbstractDualBidiMap(Map<K, V> normalMap, Map<V, K> reverseMap) {
+    protected AbstractDualBidiMap(final Map<K, V> normalMap, final Map<V, K> reverseMap) {
         super();
         this.normalMap = normalMap;
         this.reverseMap = reverseMap;
@@ -110,7 +110,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * @param reverseMap  the reverse direction map
      * @param inverseBidiMap  the inverse BidiMap
      */
-    protected AbstractDualBidiMap(Map<K, V> normalMap, Map<V, K> reverseMap, BidiMap<V, K> inverseBidiMap) {
+    protected AbstractDualBidiMap(final Map<K, V> normalMap, final Map<V, K> reverseMap, final BidiMap<V, K> inverseBidiMap) {
         super();
         this.normalMap = normalMap;
         this.reverseMap = reverseMap;
@@ -130,7 +130,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
     // Map delegation
     //-----------------------------------------------------------------------
     
-    public V get(Object key) {
+    public V get(final Object key) {
         return normalMap.get(key);
     }
 
@@ -142,12 +142,12 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         return normalMap.isEmpty();
     }
 
-    public boolean containsKey(Object key) {
+    public boolean containsKey(final Object key) {
         return normalMap.containsKey(key);
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         return normalMap.equals(obj);
     }
 
@@ -164,7 +164,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
     // BidiMap changes
     //-----------------------------------------------------------------------
     
-    public V put(K key, V value) {
+    public V put(final K key, final V value) {
         if (normalMap.containsKey(key)) {
             reverseMap.remove(normalMap.get(key));
         }
@@ -176,13 +176,13 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         return obj;
     }
 
-    public void putAll(Map<? extends K, ? extends V> map) {
-        for (Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
+    public void putAll(final Map<? extends K, ? extends V> map) {
+        for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
             put(entry.getKey(), entry.getValue());
         }
     }
 
-    public V remove(Object key) {
+    public V remove(final Object key) {
         V value = null;
         if (normalMap.containsKey(key)) {
             value = normalMap.remove(key);
@@ -196,7 +196,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         reverseMap.clear();
     }
 
-    public boolean containsValue(Object value) {
+    public boolean containsValue(final Object value) {
         return reverseMap.containsKey(value);
     }
 
@@ -217,11 +217,11 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         return new BidiMapIterator<K, V>(this);
     }
 
-    public K getKey(Object value) {
+    public K getKey(final Object value) {
         return reverseMap.get(value);
     }
 
-    public K removeValue(Object value) {
+    public K removeValue(final Object value) {
         K key = null;
         if (reverseMap.containsKey(value)) {
             key = reverseMap.remove(value);
@@ -260,7 +260,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * @param iterator  the iterator to decorate
      * @return the keySet iterator
      */
-    protected Iterator<K> createKeySetIterator(Iterator<K> iterator) {
+    protected Iterator<K> createKeySetIterator(final Iterator<K> iterator) {
         return new KeySetIterator<K>(iterator, this);
     }
 
@@ -285,7 +285,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * @param iterator  the iterator to decorate
      * @return the values iterator
      */
-    protected Iterator<V> createValuesIterator(Iterator<V> iterator) {
+    protected Iterator<V> createValuesIterator(final Iterator<V> iterator) {
         return new ValuesIterator<V>(iterator, this);
     }
 
@@ -314,7 +314,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * @param iterator  the iterator to decorate
      * @return the entrySet iterator
      */
-    protected Iterator<Map.Entry<K, V>> createEntrySetIterator(Iterator<Map.Entry<K, V>> iterator) {
+    protected Iterator<Map.Entry<K, V>> createEntrySetIterator(final Iterator<Map.Entry<K, V>> iterator) {
         return new EntrySetIterator<K, V>(iterator, this);
     }
 
@@ -334,13 +334,13 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
          * @param coll  the collection view being decorated
          * @param parent  the parent BidiMap
          */
-        protected View(Collection<E> coll, AbstractDualBidiMap<K, V> parent) {
+        protected View(final Collection<E> coll, final AbstractDualBidiMap<K, V> parent) {
             super(coll);
             this.parent = parent;
         }
 
         @Override
-        public boolean removeAll(Collection<?> coll) {
+        public boolean removeAll(final Collection<?> coll) {
             if (parent.isEmpty() || coll.isEmpty()) {
                 return false;
             }
@@ -353,7 +353,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         }
 
         @Override
-        public boolean retainAll(Collection<?> coll) {
+        public boolean retainAll(final Collection<?> coll) {
             if (parent.isEmpty()) {
                 return false;
             }
@@ -362,7 +362,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
                 return true;
             }
             boolean modified = false;
-            Iterator<E> it = iterator();
+            final Iterator<E> it = iterator();
             while (it.hasNext()) {
                 if (coll.contains(it.next()) == false) {
                     it.remove();
@@ -393,7 +393,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
          * @param parent  the parent BidiMap
          */
         @SuppressWarnings("unchecked")
-        protected KeySet(AbstractDualBidiMap<K, ?> parent) {
+        protected KeySet(final AbstractDualBidiMap<K, ?> parent) {
             super(parent.normalMap.keySet(), (AbstractDualBidiMap<K, Object>) parent);
         }
 
@@ -403,14 +403,14 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         }
 
         @Override
-        public boolean contains(Object key) {
+        public boolean contains(final Object key) {
             return parent.normalMap.containsKey(key);
         }
 
         @Override
-        public boolean remove(Object key) {
+        public boolean remove(final Object key) {
             if (parent.normalMap.containsKey(key)) {
-                Object value = parent.normalMap.remove(key);
+                final Object value = parent.normalMap.remove(key);
                 parent.reverseMap.remove(value);
                 return true;
             }
@@ -437,7 +437,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
          * @param iterator  the iterator to decorate
          * @param parent  the parent map
          */
-        protected KeySetIterator(Iterator<K> iterator, AbstractDualBidiMap<K, ?> parent) {
+        protected KeySetIterator(final Iterator<K> iterator, final AbstractDualBidiMap<K, ?> parent) {
             super(iterator);
             this.parent = parent;
         }
@@ -454,7 +454,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             if (canRemove == false) {
                 throw new IllegalStateException("Iterator remove() can only be called once after next()");
             }
-            Object value = parent.normalMap.get(lastKey);
+            final Object value = parent.normalMap.get(lastKey);
             super.remove();
             parent.reverseMap.remove(value);
             lastKey = null;
@@ -477,7 +477,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
          * @param parent  the parent BidiMap
          */
         @SuppressWarnings("unchecked")
-        protected Values(AbstractDualBidiMap<?, V> parent) {
+        protected Values(final AbstractDualBidiMap<?, V> parent) {
             super(parent.normalMap.values(), (AbstractDualBidiMap<Object, V>) parent);
         }
 
@@ -487,14 +487,14 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         }
 
         @Override
-        public boolean contains(Object value) {
+        public boolean contains(final Object value) {
             return parent.reverseMap.containsKey(value);
         }
 
         @Override
-        public boolean remove(Object value) {
+        public boolean remove(final Object value) {
             if (parent.reverseMap.containsKey(value)) {
-                Object key = parent.reverseMap.remove(value);
+                final Object key = parent.reverseMap.remove(value);
                 parent.normalMap.remove(key);
                 return true;
             }
@@ -522,7 +522,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
          * @param parent  the parent map
          */
         @SuppressWarnings("unchecked")
-        protected ValuesIterator(Iterator<V> iterator, AbstractDualBidiMap<?, V> parent) {
+        protected ValuesIterator(final Iterator<V> iterator, final AbstractDualBidiMap<?, V> parent) {
             super(iterator);
             this.parent = (AbstractDualBidiMap<Object, V>) parent;
         }
@@ -560,7 +560,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
          *
          * @param parent  the parent BidiMap
          */
-        protected EntrySet(AbstractDualBidiMap<K, V> parent) {
+        protected EntrySet(final AbstractDualBidiMap<K, V> parent) {
             super(parent.normalMap.entrySet(), parent);
         }
 
@@ -570,14 +570,14 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         }
 
         @Override
-        public boolean remove(Object obj) {
+        public boolean remove(final Object obj) {
             if (obj instanceof Map.Entry == false) {
                 return false;
             }
-            Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
-            Object key = entry.getKey();
+            final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) obj;
+            final Object key = entry.getKey();
             if (parent.containsKey(key)) {
-                V value = parent.normalMap.get(key);
+                final V value = parent.normalMap.get(key);
                 if (value == null ? entry.getValue() == null : value.equals(entry.getValue())) {
                     parent.normalMap.remove(key);
                     parent.reverseMap.remove(value);
@@ -607,7 +607,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
          * @param iterator  the iterator to decorate
          * @param parent  the parent map
          */
-        protected EntrySetIterator(Iterator<Map.Entry<K, V>> iterator, AbstractDualBidiMap<K, V> parent) {
+        protected EntrySetIterator(final Iterator<Map.Entry<K, V>> iterator, final AbstractDualBidiMap<K, V> parent) {
             super(iterator);
             this.parent = parent;
         }
@@ -625,7 +625,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
                 throw new IllegalStateException("Iterator remove() can only be called once after next()");
             }
             // store value as remove may change the entry in the decorator (eg.TreeMap)
-            Object value = last.getValue();
+            final Object value = last.getValue();
             super.remove();
             parent.reverseMap.remove(value);
             last = null;
@@ -646,14 +646,14 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
          * @param entry  the entry to decorate
          * @param parent  the parent map
          */
-        protected MapEntry(Map.Entry<K, V> entry, AbstractDualBidiMap<K, V> parent) {
+        protected MapEntry(final Map.Entry<K, V> entry, final AbstractDualBidiMap<K, V> parent) {
             super(entry);
             this.parent = parent;
         }
 
         @Override
-        public V setValue(V value) {
-            K key = MapEntry.this.getKey();
+        public V setValue(final V value) {
+            final K key = MapEntry.this.getKey();
             if (parent.reverseMap.containsKey(value) &&
                 parent.reverseMap.get(value) != key) {
                 throw new IllegalArgumentException(
@@ -686,7 +686,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
          * Constructor.
          * @param parent  the parent map
          */
-        protected BidiMapIterator(AbstractDualBidiMap<K, V> parent) {
+        protected BidiMapIterator(final AbstractDualBidiMap<K, V> parent) {
             super();
             this.parent = parent;
             this.iterator = parent.normalMap.entrySet().iterator();
@@ -707,7 +707,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
                 throw new IllegalStateException("Iterator remove() can only be called once after next()");
             }
             // store value as remove may change the entry in the decorator (eg.TreeMap)
-            V value = last.getValue();
+            final V value = last.getValue();
             iterator.remove();
             parent.reverseMap.remove(value);
             last = null;
@@ -730,7 +730,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             return last.getValue();
         }
 
-        public V setValue(V value) {
+        public V setValue(final V value) {
             if (last == null) {
                 throw new IllegalStateException(
                         "Iterator setValue() can only be called after next() and before remove()");

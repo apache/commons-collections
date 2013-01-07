@@ -63,7 +63,7 @@ public class ListUtils {
      * @param list the list, possibly <code>null</code>
      * @return an empty list if the argument is <code>null</code>
      */
-    public static <T> List<T> emptyIfNull(List<T> list) {
+    public static <T> List<T> emptyIfNull(final List<T> list) {
         return list == null ? Collections.<T>emptyList() : list;
     }
     
@@ -87,9 +87,9 @@ public class ListUtils {
             larger = list1;
         }
         
-        HashSet<E> hashSet = new HashSet<E>(smaller);
+        final HashSet<E> hashSet = new HashSet<E>(smaller);
 
-        for (E e : larger) {
+        for (final E e : larger) {
             if (hashSet.contains(e)) {
                 result.add(e);
                 hashSet.remove(e);
@@ -174,8 +174,8 @@ public class ListUtils {
      * @since 4.0
      * @see CollectionUtils#select(Collection, Predicate)
      */
-    public static <E> List<E> select(Collection<? extends E> inputCollection,
-            Predicate<? super E> predicate) {
+    public static <E> List<E> select(final Collection<? extends E> inputCollection,
+            final Predicate<? super E> predicate) {
         return CollectionUtils.select(inputCollection, predicate, new ArrayList<E>(inputCollection.size()));
     }
 
@@ -198,8 +198,8 @@ public class ListUtils {
      * @since 4.0
      * @see CollectionUtils#selectRejected(Collection, Predicate)
      */
-    public static <E> List<E> selectRejected(Collection<? extends E> inputCollection,
-            Predicate<? super E> predicate) {
+    public static <E> List<E> selectRejected(final Collection<? extends E> inputCollection,
+            final Predicate<? super E> predicate) {
         return CollectionUtils.selectRejected(inputCollection, predicate, new ArrayList<E>(inputCollection.size()));
     }
 
@@ -240,8 +240,8 @@ public class ListUtils {
             return false;
         }
 
-        Iterator<?> it1 = list1.iterator();
-        Iterator<?> it2 = list2.iterator();
+        final Iterator<?> it1 = list1.iterator();
+        final Iterator<?> it2 = list2.iterator();
         Object obj1 = null;
         Object obj2 = null;
 
@@ -274,10 +274,10 @@ public class ListUtils {
             return 0;
         }
         int hashCode = 1;
-        Iterator<?> it = list.iterator();
+        final Iterator<?> it = list.iterator();
         
         while (it.hasNext()) {
-            Object obj = it.next();
+            final Object obj = it.next();
             hashCode = 31 * hashCode + (obj == null ? 0 : obj.hashCode());
         }
         return hashCode;
@@ -306,10 +306,10 @@ public class ListUtils {
      * @throws NullPointerException if either parameter is null
      * @since 3.2
      */
-    public static <E> List<E> retainAll(Collection<E> collection, Collection<?> retain) {
-        List<E> list = new ArrayList<E>(Math.min(collection.size(), retain.size()));
+    public static <E> List<E> retainAll(final Collection<E> collection, final Collection<?> retain) {
+        final List<E> list = new ArrayList<E>(Math.min(collection.size(), retain.size()));
 
-        for (E obj : collection) {
+        for (final E obj : collection) {
             if (retain.contains(obj)) {
                 list.add(obj);
             }
@@ -340,9 +340,9 @@ public class ListUtils {
      * @throws NullPointerException if either parameter is null
      * @since 3.2
      */
-    public static <E> List<E> removeAll(Collection<E> collection, Collection<?> remove) {
-        List<E> list = new ArrayList<E>();
-        for (E obj : collection) {
+    public static <E> List<E> removeAll(final Collection<E> collection, final Collection<?> remove) {
+        final List<E> list = new ArrayList<E>();
+        for (final E obj : collection) {
             if (!remove.contains(obj)) {
                 list.add(obj);
             }
@@ -374,7 +374,7 @@ public class ListUtils {
      * @return a synchronized list backed by the given list
      * @throws IllegalArgumentException  if the list is null
      */
-    public static <E> List<E> synchronizedList(List<E> list) {
+    public static <E> List<E> synchronizedList(final List<E> list) {
         return SynchronizedList.synchronizedList(list);
     }
 
@@ -388,7 +388,7 @@ public class ListUtils {
      * @return an unmodifiable list backed by the given list
      * @throws IllegalArgumentException  if the list is null
      */
-    public static <E> List<E> unmodifiableList(List<E> list) {
+    public static <E> List<E> unmodifiableList(final List<E> list) {
         return UnmodifiableList.unmodifiableList(list);
     }
 
@@ -406,7 +406,7 @@ public class ListUtils {
      * @return a predicated list backed by the given list
      * @throws IllegalArgumentException  if the List or Predicate is null
      */
-    public static <E> List<E> predicatedList(List<E> list, Predicate<E> predicate) {
+    public static <E> List<E> predicatedList(final List<E> list, final Predicate<E> predicate) {
         return PredicatedList.predicatedList(list, predicate);
     }
 
@@ -430,7 +430,7 @@ public class ListUtils {
      * @return a transformed list backed by the given list
      * @throws IllegalArgumentException  if the List or Transformer is null
      */
-    public static <E> List<E> transformedList(List<E> list, Transformer<? super E, ? extends E> transformer) {
+    public static <E> List<E> transformedList(final List<E> list, final Transformer<? super E, ? extends E> transformer) {
         return TransformedList.transformingList(list, transformer);
     }
     
@@ -464,7 +464,7 @@ public class ListUtils {
      * @return a lazy list backed by the given list
      * @throws IllegalArgumentException  if the List or Factory is null
      */
-    public static <E> List<E> lazyList(List<E> list, Factory<? extends E> factory) {
+    public static <E> List<E> lazyList(final List<E> list, final Factory<? extends E> factory) {
         return LazyList.lazyList(list, factory);
     }
 
@@ -479,7 +479,7 @@ public class ListUtils {
      * @return a fixed-size list backed by that list
      * @throws IllegalArgumentException  if the List is null
      */
-    public static <E> List<E> fixedSizeList(List<E> list) {
+    public static <E> List<E> fixedSizeList(final List<E> list) {
         return FixedSizeList.fixedSizeList(list);
     }
 
@@ -494,10 +494,10 @@ public class ListUtils {
      * @param predicate  the predicate to use, may be null
      * @return the first index of an Object in the List which matches the predicate or -1 if none could be found
      */
-    public static <E> int indexOf(List<E> list, Predicate<E> predicate) {
+    public static <E> int indexOf(final List<E> list, final Predicate<E> predicate) {
         if (list != null && predicate != null) {
             for (int i = 0; i < list.size(); i++) {
-                E item = list.get(i);
+                final E item = list.get(i);
                 if (predicate.evaluate(item)) {
                     return i;
                 }
@@ -526,7 +526,7 @@ public class ListUtils {
      * @return a list of consecutive sublists
      * @throws IllegalArgumentException if list is {@code null} or size is not strictly positive
      */
-    public static <T> List<List<T>> partition(List<T> list, int size) {
+    public static <T> List<List<T>> partition(final List<T> list, final int size) {
         if (list == null) {
             throw new IllegalArgumentException("List must not be null");          
         }
@@ -543,14 +543,14 @@ public class ListUtils {
         private final List<T> list;
         private final int size;
 
-        private Partition(List<T> list, int size) {
+        private Partition(final List<T> list, final int size) {
             this.list = list;
             this.size = size;
         }
 
         @Override
-        public List<T> get(int index) {
-            int listSize = size();
+        public List<T> get(final int index) {
+            final int listSize = size();
             if (listSize < 0) {
                 throw new IllegalArgumentException("negative size: " + listSize);           
             }
@@ -561,8 +561,8 @@ public class ListUtils {
                 throw new IndexOutOfBoundsException("Index " + index + " must be less than size " +
                                                     listSize);           
             }           
-            int start = index * size;
-            int end = Math.min(start + size, list.size());
+            final int start = index * size;
+            final int end = Math.min(start + size, list.size());
             return list.subList(start, end);
         }
 

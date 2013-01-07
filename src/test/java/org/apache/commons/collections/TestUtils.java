@@ -27,7 +27,7 @@ public final class TestUtils {
      * @param o object that will be tested.
      * @see #assertSameAfterSerialization(Object)
      */
-    public static void assertSameAfterSerialization(String msg, Object o) {
+    public static void assertSameAfterSerialization(final String msg, final Object o) {
         try {
             // write object to byte buffer
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -43,10 +43,10 @@ public final class TestUtils {
 
             // assert that original object and deserialized objects are the same
             assertSame(msg, o, object);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             // should never happen
             throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (final ClassNotFoundException e) {
             // should never happen
             throw new RuntimeException(e);
         }
@@ -62,7 +62,7 @@ public final class TestUtils {
      * @param o object that will be tested.
      * @see #assertSameAfterSerialization(String, Object)
      */
-    public static void assertSameAfterSerialization(Object o) {
+    public static void assertSameAfterSerialization(final Object o) {
         assertSameAfterSerialization(null, o);
     }
 }

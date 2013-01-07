@@ -61,7 +61,7 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
      * 
      * @param comparator the comparator to use
      */
-    public TreeBag(Comparator<? super E> comparator) {
+    public TreeBag(final Comparator<? super E> comparator) {
         super(new TreeMap<E, MutableInteger>(comparator));
     }
 
@@ -71,7 +71,7 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
      * 
      * @param coll the collection to copy into the bag
      */
-    public TreeBag(Collection<? extends E> coll) {
+    public TreeBag(final Collection<? extends E> coll) {
         this();
         addAll(coll);
     }
@@ -84,7 +84,7 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
      * {@link Comparable} and the {@link TreeBag} is using natural ordering
      */
     @Override
-    public boolean add(E object) {
+    public boolean add(final E object) {
         if(comparator() == null && !(object instanceof Comparable)) {
             throw new IllegalArgumentException("Objects of type " + object.getClass() + " cannot be added to " + 
                                                "a naturally ordered TreeBag as it does not implement Comparable");
@@ -115,7 +115,7 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
     /**
      * Write the bag out using a custom routine.
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(comparator());
         super.doWriteObject(out);
@@ -124,9 +124,10 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
     /**
      * Read the bag in using a custom routine.
      */
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         @SuppressWarnings("unchecked")  // This will fail at runtime if the stream is incorrect
+        final
         Comparator<? super E> comp = (Comparator<? super E>) in.readObject();
         super.doReadObject(new TreeMap<E, MutableInteger>(comp), in);
     }

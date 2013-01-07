@@ -40,7 +40,7 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
      * Create a new AbstractSplitMapDecorator.
      * @param decorated the Map to decorate
      */
-    public AbstractIterableGetMapDecorator(Map<K, V> decorated) {
+    public AbstractIterableGetMapDecorator(final Map<K, V> decorated) {
         this.map = decorated;
     }
 
@@ -63,14 +63,14 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
     /**
      * {@inheritDoc}
      */
-    public boolean containsKey(Object key) {
+    public boolean containsKey(final Object key) {
         return decorated().containsKey(key);
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean containsValue(Object value) {
+    public boolean containsValue(final Object value) {
         return decorated().containsValue(value);
     }
 
@@ -84,14 +84,14 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
     /**
      * {@inheritDoc}
      */
-    public V get(Object key) {
+    public V get(final Object key) {
         return decorated().get(key);
     }
 
     /**
      * {@inheritDoc}
      */
-    public V remove(Object key) {
+    public V remove(final Object key) {
         return decorated().remove(key);
     }
 
@@ -135,7 +135,7 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
      * {@inheritDoc}
      */
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         if (object == this) {
             return true;
         }

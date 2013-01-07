@@ -31,7 +31,7 @@ public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
 
     private static final Object testValue = "foo";
 
-    public SingletonIteratorTest(String testName) {
+    public SingletonIteratorTest(final String testName) {
         super(testName);
     }
 
@@ -41,7 +41,7 @@ public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Override
     public SingletonIterator<E> makeEmptyIterator() {
-        SingletonIterator<E> iter = makeObject();
+        final SingletonIterator<E> iter = makeObject();
         iter.next();
         iter.remove();
         iter.reset();
@@ -65,17 +65,17 @@ public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     public void testIterator() {
-        Iterator<E> iter = makeObject();
+        final Iterator<E> iter = makeObject();
         assertTrue("Iterator has a first item", iter.hasNext());
 
-        E iterValue = iter.next();
+        final E iterValue = iter.next();
         assertEquals("Iteration value is correct", testValue, iterValue);
 
         assertTrue("Iterator should now be empty", !iter.hasNext());
 
         try {
             iter.next();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             assertTrue(
                 "NoSuchElementException must be thrown",
                 e.getClass().equals(new NoSuchElementException().getClass()));
@@ -84,7 +84,7 @@ public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
 
     @SuppressWarnings("unchecked")
     public void testSingletonIteratorRemove() {
-        ResettableIterator<E> iter = new SingletonIterator<E>((E) "xyzzy");
+        final ResettableIterator<E> iter = new SingletonIterator<E>((E) "xyzzy");
         assertTrue(iter.hasNext());
         assertEquals("xyzzy",iter.next());
         iter.remove();
@@ -93,7 +93,7 @@ public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     public void testReset() {
-        ResettableIterator<E> it = makeObject();
+        final ResettableIterator<E> it = makeObject();
 
         assertEquals(true, it.hasNext());
         assertEquals(testValue, it.next());

@@ -33,7 +33,7 @@ public class TreeBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> e
         return BulkTest.makeSuite(TreeBidiMapTest.class);
     }
 
-    public TreeBidiMapTest(String testName) {
+    public TreeBidiMapTest(final String testName) {
         super(testName);
     }
 

@@ -43,7 +43,7 @@ public final class IdentityPredicate<T> implements Predicate<T>, Serializable {
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null
      */
-    public static <T> Predicate<T> identityPredicate(T object) {
+    public static <T> Predicate<T> identityPredicate(final T object) {
         if (object == null) {
             return NullPredicate.<T>nullPredicate();
         }
@@ -56,7 +56,7 @@ public final class IdentityPredicate<T> implements Predicate<T>, Serializable {
      *
      * @param object  the object to compare to
      */
-    public IdentityPredicate(T object) {
+    public IdentityPredicate(final T object) {
         super();
         iValue = object;
     }
@@ -68,7 +68,7 @@ public final class IdentityPredicate<T> implements Predicate<T>, Serializable {
      * @param object  the input object
      * @return true if input is the same object as the stored value
      */
-    public boolean evaluate(T object) {
+    public boolean evaluate(final T object) {
         return iValue == object;
     }
 

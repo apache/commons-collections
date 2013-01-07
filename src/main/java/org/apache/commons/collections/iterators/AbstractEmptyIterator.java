@@ -57,11 +57,11 @@ abstract class AbstractEmptyIterator<E> {
         return -1;
     }
 
-    public void add(E obj) {
+    public void add(final E obj) {
         throw new UnsupportedOperationException("add() not supported for empty Iterator");
     }
 
-    public void set(E obj) {
+    public void set(final E obj) {
         throw new IllegalStateException("Iterator contains no elements");
     }
 

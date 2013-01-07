@@ -74,7 +74,7 @@ public class ListOrderedSet<E>
      * @throws IllegalArgumentException if either the set or list is not empty
      * @since 3.1
      */
-    public static <E> ListOrderedSet<E> listOrderedSet(Set<E> set, List<E> list) {
+    public static <E> ListOrderedSet<E> listOrderedSet(final Set<E> set, final List<E> list) {
         if (set == null) {
             throw new IllegalArgumentException("Set must not be null");
         }
@@ -97,7 +97,7 @@ public class ListOrderedSet<E>
      * @return a new ordered set
      * @throws IllegalArgumentException if set is null
      */
-    public static <E> ListOrderedSet<E> listOrderedSet(Set<E> set) {
+    public static <E> ListOrderedSet<E> listOrderedSet(final Set<E> set) {
         return new ListOrderedSet<E>(set);
     }
 
@@ -115,11 +115,11 @@ public class ListOrderedSet<E>
      * @return a new ordered set
      * @throws IllegalArgumentException if list is null
      */
-    public static <E> ListOrderedSet<E> listOrderedSet(List<E> list) {
+    public static <E> ListOrderedSet<E> listOrderedSet(final List<E> list) {
         if (list == null) {
             throw new IllegalArgumentException("List must not be null");
         }
-        Set<E> set = new HashSet<E>(list);
+        final Set<E> set = new HashSet<E>(list);
         list.retainAll(set);
 
         return new ListOrderedSet<E>(set, list);
@@ -143,7 +143,7 @@ public class ListOrderedSet<E>
      * @param set the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    protected ListOrderedSet(Set<E> set) {
+    protected ListOrderedSet(final Set<E> set) {
         super(set);
         setOrder = new ArrayList<E>(set);
     }
@@ -158,7 +158,7 @@ public class ListOrderedSet<E>
      * @param list the list to decorate, must not be null
      * @throws IllegalArgumentException if set or list is null
      */
-    protected ListOrderedSet(Set<E> set, List<E> list) {
+    protected ListOrderedSet(final Set<E> set, final List<E> list) {
         super(set);
         if (list == null) {
             throw new IllegalArgumentException("List must not be null");
@@ -189,7 +189,7 @@ public class ListOrderedSet<E>
     }
 
     @Override
-    public boolean add(E object) {
+    public boolean add(final E object) {
         if (collection.add(object)) {
             setOrder.add(object);
             return true;
@@ -198,17 +198,17 @@ public class ListOrderedSet<E>
     }
 
     @Override
-    public boolean addAll(Collection<? extends E> coll) {
+    public boolean addAll(final Collection<? extends E> coll) {
         boolean result = false;
-        for (E e : coll) {
+        for (final E e : coll) {
             result |= add(e);
         }
         return result;
     }
 
     @Override
-    public boolean remove(Object object) {
-        boolean result = collection.remove(object);
+    public boolean remove(final Object object) {
+        final boolean result = collection.remove(object);
         if (result) {
             setOrder.remove(object);
         }
@@ -216,18 +216,18 @@ public class ListOrderedSet<E>
     }
 
     @Override
-    public boolean removeAll(Collection<?> coll) {
+    public boolean removeAll(final Collection<?> coll) {
         boolean result = false;
-        for (Object name : coll) {
+        for (final Object name : coll) {
             result |= remove(name);
         }
         return result;
     }
 
     @Override
-    public boolean retainAll(Collection<?> coll) {
-        Set<Object> collectionRetainAll = new HashSet<Object>();
-        for (Object next : coll) {
+    public boolean retainAll(final Collection<?> coll) {
+        final Set<Object> collectionRetainAll = new HashSet<Object>();
+        for (final Object next : coll) {
             if (collection.contains(next)) {
                 collectionRetainAll.add(next);
             }
@@ -238,7 +238,7 @@ public class ListOrderedSet<E>
         if (collectionRetainAll.size() == 0) {
             clear();
         } else {
-            for (Iterator<E> it = iterator(); it.hasNext();) {
+            for (final Iterator<E> it = iterator(); it.hasNext();) {
                 if (!collectionRetainAll.contains(it.next())) {
                     it.remove();
                 }
@@ -253,7 +253,7 @@ public class ListOrderedSet<E>
     }
 
     @Override
-    public <T> T[] toArray(T a[]) {
+    public <T> T[] toArray(final T a[]) {
         return setOrder.toArray(a);
     }
 
@@ -268,7 +268,7 @@ public class ListOrderedSet<E>
      * @return the element at position {@code index}
      * @see List#get(int)
      */
-    public E get(int index) {
+    public E get(final int index) {
         return setOrder.get(index);
     }
 
@@ -281,7 +281,7 @@ public class ListOrderedSet<E>
      *         this ordered set does not contain this object
      * @see List#indexOf(Object)
      */
-    public int indexOf(Object object) {
+    public int indexOf(final Object object) {
         return setOrder.indexOf(object);
     }
 
@@ -294,7 +294,7 @@ public class ListOrderedSet<E>
      * @param object the element to be inserted
      * @see List#add(int, Object)
      */
-    public void add(int index, E object) {
+    public void add(final int index, final E object) {
         if (!contains(object)) {
             collection.add(object);
             setOrder.add(index, object);
@@ -312,11 +312,11 @@ public class ListOrderedSet<E>
      * @return {@code true} if this ordered set changed as a result of the call
      * @see List#addAll(int, Collection)
      */
-    public boolean addAll(int index, Collection<? extends E> coll) {
+    public boolean addAll(final int index, final Collection<? extends E> coll) {
         boolean changed = false;
         // collect all elements to be added for performance reasons
         final List<E> toAdd = new ArrayList<E>();
-        for (E e : coll) {
+        for (final E e : coll) {
             if (contains(e)) {
                 continue;
             }
@@ -340,8 +340,8 @@ public class ListOrderedSet<E>
      * @return the element that has been remove from the ordered set
      * @see List#remove(int)
      */
-    public Object remove(int index) {
-        Object obj = setOrder.remove(index);
+    public Object remove(final int index) {
+        final Object obj = setOrder.remove(index);
         remove(obj);
         return obj;
     }
@@ -373,7 +373,7 @@ public class ListOrderedSet<E>
         /** Last object retrieved */
         protected E last;
 
-        private OrderedSetIterator(ListIterator<E> iterator, Collection<E> set) {
+        private OrderedSetIterator(final ListIterator<E> iterator, final Collection<E> set) {
             super(iterator);
             this.set = set;
         }

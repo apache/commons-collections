@@ -28,7 +28,7 @@ import org.apache.commons.collections.KeyValue;
  */
 public class DefaultMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 
-    public DefaultMapEntryTest(String testName) {
+    public DefaultMapEntryTest(final String testName) {
         super(testName);
     }
 
@@ -49,7 +49,7 @@ public class DefaultMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
      * of the type being tested.
      */
     @Override
-    public Map.Entry<K, V> makeMapEntry(K key, V value) {
+    public Map.Entry<K, V> makeMapEntry(final K key, final V value) {
         return new DefaultMapEntry<K, V>(key, value);
     }
 
@@ -62,17 +62,17 @@ public class DefaultMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
     @SuppressWarnings("unchecked")
     public void testConstructors() {
         // 1. test key-value constructor
-        Map.Entry<K, V> entry = new DefaultMapEntry<K, V>((K) key, (V) value);
+        final Map.Entry<K, V> entry = new DefaultMapEntry<K, V>((K) key, (V) value);
         assertSame(key, entry.getKey());
         assertSame(value, entry.getValue());
 
         // 2. test pair constructor
-        KeyValue<K, V> pair = new DefaultKeyValue<K, V>((K) key, (V) value);
+        final KeyValue<K, V> pair = new DefaultKeyValue<K, V>((K) key, (V) value);
         assertSame(key, pair.getKey());
         assertSame(value, pair.getValue());
 
         // 3. test copy constructor
-        Map.Entry<K, V> entry2 = new DefaultMapEntry<K, V>(entry);
+        final Map.Entry<K, V> entry2 = new DefaultMapEntry<K, V>(entry);
         assertSame(key, entry2.getKey());
         assertSame(value, entry2.getValue());
 
@@ -84,13 +84,13 @@ public class DefaultMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
     @Override
     @SuppressWarnings("unchecked")
     public void testSelfReferenceHandling() {
-        Map.Entry<K, V> entry = makeMapEntry();
+        final Map.Entry<K, V> entry = makeMapEntry();
 
         try {
             entry.setValue((V) entry);
             assertSame(entry, entry.getValue());
 
-        } catch (Exception e) {
+        } catch (final Exception e) {
             fail("This Map.Entry implementation supports value self-reference.");
         }
     }

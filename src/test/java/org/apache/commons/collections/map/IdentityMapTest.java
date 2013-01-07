@@ -40,7 +40,7 @@ public class IdentityMapTest<K, V> extends AbstractObjectTest {
     private static final Integer I2A = new Integer(2);
     private static final Integer I2B = new Integer(2);
 
-    public IdentityMapTest(String testName) {
+    public IdentityMapTest(final String testName) {
         super(testName);
     }
 
@@ -62,7 +62,7 @@ public class IdentityMapTest<K, V> extends AbstractObjectTest {
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testBasics() {
-        IterableMap<K, V> map = new IdentityMap<K, V>();
+        final IterableMap<K, V> map = new IdentityMap<K, V>();
         assertEquals(0, map.size());
 
         map.put((K) I1A, (V) I2A);
@@ -96,15 +96,15 @@ public class IdentityMapTest<K, V> extends AbstractObjectTest {
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testHashEntry() {
-        IterableMap<K, V> map = new IdentityMap<K, V>();
+        final IterableMap<K, V> map = new IdentityMap<K, V>();
 
         map.put((K) I1A, (V) I2A);
         map.put((K) I1B, (V) I2A);
 
-        Map.Entry<K, V> entry1 = map.entrySet().iterator().next();
-        Iterator<Map.Entry<K, V>> it = map.entrySet().iterator();
-        Map.Entry<K, V> entry2 = it.next();
-        Map.Entry<K, V> entry3 = it.next();
+        final Map.Entry<K, V> entry1 = map.entrySet().iterator().next();
+        final Iterator<Map.Entry<K, V>> it = map.entrySet().iterator();
+        final Map.Entry<K, V> entry2 = it.next();
+        final Map.Entry<K, V> entry3 = it.next();
 
         assertEquals(true, entry1.equals(entry2));
         assertEquals(true, entry2.equals(entry1));
@@ -117,9 +117,10 @@ public class IdentityMapTest<K, V> extends AbstractObjectTest {
      */
     public void testEmptyMapCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
-        Map<K, V> map = makeObject();
+        final Map<K, V> map = makeObject();
         if (map instanceof Serializable && !skipSerializedCanonicalTests()) {
             @SuppressWarnings("unchecked")
+            final
             Map<K, V> map2 = (Map<K, V>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map));
             assertEquals("Map is empty", 0, map2.size());
         }
@@ -127,9 +128,9 @@ public class IdentityMapTest<K, V> extends AbstractObjectTest {
 
     @SuppressWarnings("unchecked")
     public void testClone() {
-        IdentityMap<K, V> map = new IdentityMap<K, V>(10);
+        final IdentityMap<K, V> map = new IdentityMap<K, V>(10);
         map.put((K) "1", (V) "1");
-        Map<K, V> cloned = map.clone();
+        final Map<K, V> cloned = map.clone();
         assertEquals(map.size(), cloned.size());
         assertSame(map.get("1"), cloned.get("1"));
     }

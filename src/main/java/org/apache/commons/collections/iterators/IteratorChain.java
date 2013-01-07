@@ -93,7 +93,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * @param iterator the first child iterator in the IteratorChain, not null
      * @throws NullPointerException if the iterator is null
      */
-    public IteratorChain(Iterator<? extends E> iterator) {
+    public IteratorChain(final Iterator<? extends E> iterator) {
         super();
         addIterator(iterator);
     }
@@ -108,7 +108,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * @param second the second child iterator in the IteratorChain, not null
      * @throws NullPointerException if either iterator is null
      */
-    public IteratorChain(Iterator<? extends E> first, Iterator<? extends E> second) {
+    public IteratorChain(final Iterator<? extends E> first, final Iterator<? extends E> second) {
         super();
         addIterator(first);
         addIterator(second);
@@ -123,9 +123,9 @@ public class IteratorChain<E> implements Iterator<E> {
      * @param iteratorChain the array of iterators, not null
      * @throws NullPointerException if iterators array is or contains null
      */
-    public IteratorChain(Iterator<? extends E>... iteratorChain) {
+    public IteratorChain(final Iterator<? extends E>... iteratorChain) {
         super();
-        for (Iterator<? extends E> element : iteratorChain) {
+        for (final Iterator<? extends E> element : iteratorChain) {
             addIterator(element);
         }
     }
@@ -142,9 +142,9 @@ public class IteratorChain<E> implements Iterator<E> {
      * @throws ClassCastException if iterators collection doesn't contain an
      * iterator
      */
-    public IteratorChain(Collection<Iterator<? extends E>> iteratorChain) {
+    public IteratorChain(final Collection<Iterator<? extends E>> iteratorChain) {
         super();
-        for (Iterator<? extends E> iterator : iteratorChain) {
+        for (final Iterator<? extends E> iterator : iteratorChain) {
             addIterator(iterator);
         }
     }
@@ -157,7 +157,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * @throws IllegalStateException if I've already started iterating
      * @throws NullPointerException if the iterator is null
      */
-    public void addIterator(Iterator<? extends E> iterator) {
+    public void addIterator(final Iterator<? extends E> iterator) {
         checkLocked();
         if (iterator == null) {
             throw new NullPointerException("Iterator must not be null");
@@ -174,7 +174,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * @throws IllegalStateException if I've already started iterating
      * @throws NullPointerException if the iterator is null
      */
-    public void setIterator(int index, Iterator<? extends E> iterator)
+    public void setIterator(final int index, final Iterator<? extends E> iterator)
             throws IndexOutOfBoundsException {
         checkLocked();
         if (iterator == null) {

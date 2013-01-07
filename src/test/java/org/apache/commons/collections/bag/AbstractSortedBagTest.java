@@ -28,7 +28,7 @@ import org.apache.commons.collections.SortedBag;
  */
 public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
 
-    public AbstractSortedBagTest(String testName) {
+    public AbstractSortedBagTest(final String testName) {
         super(testName);
     }
 

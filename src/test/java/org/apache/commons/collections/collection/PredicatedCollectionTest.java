@@ -33,7 +33,7 @@ import org.apache.commons.collections.functors.TruePredicate;
  */
 public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
 
-    public PredicatedCollectionTest(String name) {
+    public PredicatedCollectionTest(final String name) {
         super(name);
     }
 
@@ -41,7 +41,7 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
     protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
 
     protected Collection<E> decorateCollection(
-                Collection<E> collection, Predicate<E> predicate) {
+                final Collection<E> collection, final Predicate<E> predicate) {
         return PredicatedCollection.predicatedCollection(collection, predicate);
     }
 
@@ -63,14 +63,14 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Override
     public Collection<E> makeFullCollection() {
-        List<E> list = new ArrayList<E>();
+        final List<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return decorateCollection(list, truePredicate);
     }
 
     @Override
     public Collection<E> makeConfirmedFullCollection() {
-        List<E> list = new ArrayList<E>();
+        final List<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }
@@ -78,7 +78,7 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
     //-----------------------------------------------------------------------
     protected Predicate<E> testPredicate =
         new Predicate<E>() {
-            public boolean evaluate(E o) {
+            public boolean evaluate(final E o) {
                 return o instanceof String;
             }
         };
@@ -89,12 +89,12 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
-        Collection<E> c = makeTestCollection();
-        Integer i = new Integer(3);
+        final Collection<E> c = makeTestCollection();
+        final Integer i = new Integer(3);
         try {
             c.add((E) i);
             fail("Integer should fail string predicate.");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
         assertTrue("Collection shouldn't contain illegal element",
@@ -103,8 +103,8 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @SuppressWarnings("unchecked")
     public void testIllegalAddAll() {
-        Collection<E> c = makeTestCollection();
-        List<E> elements = new ArrayList<E>();
+        final Collection<E> c = makeTestCollection();
+        final List<E> elements = new ArrayList<E>();
         elements.add((E) "one");
         elements.add((E) "two");
         elements.add((E) new Integer(3));
@@ -112,7 +112,7 @@ public class PredicatedCollectionTest<E> extends AbstractCollectionTest<E> {
         try {
             c.addAll(elements);
             fail("Integer should fail string predicate.");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
         assertTrue("Collection shouldn't contain illegal element", !c.contains("one"));

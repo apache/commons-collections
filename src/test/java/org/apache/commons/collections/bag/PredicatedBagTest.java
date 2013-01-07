@@ -31,7 +31,7 @@ import org.apache.commons.collections.functors.TruePredicate;
  */
 public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 
-    public PredicatedBagTest(String testName) {
+    public PredicatedBagTest(final String testName) {
         super(testName);
     }
 
@@ -39,7 +39,7 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 
     protected Predicate<T> stringPredicate() {
         return new Predicate<T>() {
-            public boolean evaluate(T o) {
+            public boolean evaluate(final T o) {
                 return o instanceof String;
             }
         };
@@ -47,7 +47,7 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 
     protected Predicate<T> truePredicate = TruePredicate.<T>truePredicate();
 
-    protected Bag<T> decorateBag(HashBag<T> bag, Predicate<T> predicate) {
+    protected Bag<T> decorateBag(final HashBag<T> bag, final Predicate<T> predicate) {
         return PredicatedBag.predicatedBag(bag, predicate);
     }
 
@@ -64,9 +64,9 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 
     @SuppressWarnings("unchecked")
     public void testlegalAddRemove() {
-        Bag<T> bag = makeTestBag();
+        final Bag<T> bag = makeTestBag();
         assertEquals(0, bag.size());
-        T[] els = (T[]) new Object[] { "1", "3", "5", "7", "2", "4", "1" };
+        final T[] els = (T[]) new Object[] { "1", "3", "5", "7", "2", "4", "1" };
         for (int i = 0; i < els.length; i++) {
             bag.add(els[i]);
             assertEquals(i + 1, bag.size());
@@ -82,12 +82,12 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
-        Bag<T> bag = makeTestBag();
-        Integer i = new Integer(3);
+        final Bag<T> bag = makeTestBag();
+        final Integer i = new Integer(3);
         try {
             bag.add((T) i);
             fail("Integer should fail string predicate.");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
         assertTrue("Collection shouldn't contain illegal element",
@@ -96,7 +96,7 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 
     @SuppressWarnings("unchecked")
     public void testIllegalDecorate() {
-        HashBag<Object> elements = new HashBag<Object>();
+        final HashBag<Object> elements = new HashBag<Object>();
         elements.add("one");
         elements.add("two");
         elements.add(new Integer(3));
@@ -104,13 +104,13 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
         try {
             decorateBag((HashBag<T>) elements, stringPredicate());
             fail("Bag contains an element that should fail the predicate.");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
         try {
             decorateBag(new HashBag<T>(), null);
             fail("Expectiing IllegalArgumentException for null predicate.");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
     }

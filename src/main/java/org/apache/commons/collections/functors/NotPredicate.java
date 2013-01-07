@@ -42,7 +42,7 @@ public final class NotPredicate<T> implements Predicate<T>, PredicateDecorator<T
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null
      */
-    public static <T> Predicate<T> notPredicate(Predicate<? super T> predicate) {
+    public static <T> Predicate<T> notPredicate(final Predicate<? super T> predicate) {
         if (predicate == null) {
             throw new IllegalArgumentException("Predicate must not be null");
         }
@@ -55,7 +55,7 @@ public final class NotPredicate<T> implements Predicate<T>, PredicateDecorator<T
      * 
      * @param predicate  the predicate to call after the null check
      */
-    public NotPredicate(Predicate<? super T> predicate) {
+    public NotPredicate(final Predicate<? super T> predicate) {
         super();
         iPredicate = predicate;
     }
@@ -66,7 +66,7 @@ public final class NotPredicate<T> implements Predicate<T>, PredicateDecorator<T
      * @param object  the input object
      * @return true if predicate returns false
      */
-    public boolean evaluate(T object) {
+    public boolean evaluate(final T object) {
         return !iPredicate.evaluate(object);
     }
 

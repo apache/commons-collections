@@ -43,7 +43,7 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
     /**
      * Construct
      */
-    public FactoryUtilsTest(String name) {
+    public FactoryUtilsTest(final String name) {
         super(name);
     }
 
@@ -69,10 +69,10 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
         assertSame(FactoryUtils.exceptionFactory(), FactoryUtils.exceptionFactory());
         try {
             FactoryUtils.exceptionFactory().create();
-        } catch (FunctorException ex) {
+        } catch (final FunctorException ex) {
             try {
                 FactoryUtils.exceptionFactory().create();
-            } catch (FunctorException ex2) {
+            } catch (final FunctorException ex2) {
                 return;
             }
         }
@@ -83,9 +83,9 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
     //------------------------------------------------------------------
 
     public void testNullFactory() {
-        Factory<Object> factory = FactoryUtils.nullFactory();
+        final Factory<Object> factory = FactoryUtils.nullFactory();
         assertNotNull(factory);
-        Object created = factory.create();
+        final Object created = factory.create();
         assertNull(created);
     }
 
@@ -93,17 +93,17 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
     //------------------------------------------------------------------
 
     public void testConstantFactoryNull() {
-        Factory<Object> factory = FactoryUtils.constantFactory(null);
+        final Factory<Object> factory = FactoryUtils.constantFactory(null);
         assertNotNull(factory);
-        Object created = factory.create();
+        final Object created = factory.create();
         assertNull(created);
     }
 
     public void testConstantFactoryConstant() {
-        Integer constant = new Integer(9);
-        Factory<Integer> factory = FactoryUtils.constantFactory(constant);
+        final Integer constant = new Integer(9);
+        final Factory<Integer> factory = FactoryUtils.constantFactory(constant);
         assertNotNull(factory);
-        Integer created = factory.create();
+        final Integer created = factory.create();
         assertSame(constant, created);
     }
 
@@ -115,28 +115,28 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
     }
 
     public void testPrototypeFactoryPublicCloneMethod() throws Exception {
-        Date proto = new Date();
-        Factory<Date> factory = FactoryUtils.prototypeFactory(proto);
+        final Date proto = new Date();
+        final Factory<Date> factory = FactoryUtils.prototypeFactory(proto);
         assertNotNull(factory);
-        Date created = factory.create();
+        final Date created = factory.create();
         assertTrue(proto != created);
         assertEquals(proto, created);
 
         // check serialisation works
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutputStream out = new ObjectOutputStream(buffer);
+        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        final ObjectOutputStream out = new ObjectOutputStream(buffer);
         out.writeObject(factory);
         out.close();
-        ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
+        final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
         in.readObject();
         in.close();
     }
 
     public void testPrototypeFactoryPublicCopyConstructor() throws Exception {
-        Mock1 proto = new Mock1(6);
+        final Mock1 proto = new Mock1(6);
         Factory<Object> factory = FactoryUtils.<Object>prototypeFactory(proto);
         assertNotNull(factory);
-        Object created = factory.create();
+        final Object created = factory.create();
         assertTrue(proto != created);
         assertEquals(proto, created);
 
@@ -145,7 +145,7 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
         ObjectOutputStream out = new ObjectOutputStream(buffer);
         try {
             out.writeObject(factory);
-        } catch (NotSerializableException ex) {
+        } catch (final NotSerializableException ex) {
             out.close();
         }
         factory = FactoryUtils.<Object>prototypeFactory(new Mock2("S"));
@@ -153,36 +153,36 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
         out = new ObjectOutputStream(buffer);
         out.writeObject(factory);
         out.close();
-        ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
+        final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
         in.readObject();
         in.close();
     }
 
     public void testPrototypeFactoryPublicSerialization() throws Exception {
-        Integer proto = new Integer(9);
-        Factory<Integer> factory = FactoryUtils.prototypeFactory(proto);
+        final Integer proto = new Integer(9);
+        final Factory<Integer> factory = FactoryUtils.prototypeFactory(proto);
         assertNotNull(factory);
-        Integer created = factory.create();
+        final Integer created = factory.create();
         assertTrue(proto != created);
         assertEquals(proto, created);
 
         // check serialisation works
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutputStream out = new ObjectOutputStream(buffer);
+        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        final ObjectOutputStream out = new ObjectOutputStream(buffer);
         out.writeObject(factory);
         out.close();
-        ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
+        final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
         in.readObject();
         in.close();
     }
 
     public void testPrototypeFactoryPublicSerializationError() {
-        Mock2 proto = new Mock2(new Object());
-        Factory<Object> factory = FactoryUtils.<Object>prototypeFactory(proto);
+        final Mock2 proto = new Mock2(new Object());
+        final Factory<Object> factory = FactoryUtils.<Object>prototypeFactory(proto);
         assertNotNull(factory);
         try {
             factory.create();
-        } catch (FunctorException ex) {
+        } catch (final FunctorException ex) {
             assertTrue(ex.getCause() instanceof IOException);
             return;
         }
@@ -190,10 +190,10 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
     }
 
     public void testPrototypeFactoryPublicBad() {
-        Object proto = new Object();
+        final Object proto = new Object();
         try {
             FactoryUtils.prototypeFactory(proto);
-        } catch (IllegalArgumentException ex) {
+        } catch (final IllegalArgumentException ex) {
             return;
         }
         fail();
@@ -201,14 +201,14 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
 
     public static class Mock1 {
         private final int iVal;
-        public Mock1(int val) {
+        public Mock1(final int val) {
             iVal = val;
         }
-        public Mock1(Mock1 mock) {
+        public Mock1(final Mock1 mock) {
             iVal = mock.iVal;
         }
         @Override
-        public boolean equals(Object obj) {
+        public boolean equals(final Object obj) {
             if (obj instanceof Mock1) {
                 if (iVal == ((Mock1) obj).iVal) {
                     return true;
@@ -221,11 +221,11 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
     @SuppressWarnings("serial")
     public static class Mock2 implements Serializable {
         private final Object iVal;
-        public Mock2(Object val) {
+        public Mock2(final Object val) {
             iVal = val;
         }
         @Override
-        public boolean equals(Object obj) {
+        public boolean equals(final Object obj) {
             if (obj instanceof Mock2) {
                 if (iVal == ((Mock2) obj).iVal) {
                     return true;
@@ -256,7 +256,7 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
 
     @Test
     public void instantiateFactorySimple() {
-        Factory<Mock3> factory = FactoryUtils.instantiateFactory(Mock3.class);
+        final Factory<Mock3> factory = FactoryUtils.instantiateFactory(Mock3.class);
         assertNotNull(factory);
         Mock3 created = factory.create();
         assertEquals(0, created.getValue());
@@ -278,11 +278,11 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
     public void instantiateFactoryComplex() {
         TimeZone.setDefault(TimeZone.getTimeZone("GMT"));
         // 2nd Jan 1970
-        Factory<Date> factory = FactoryUtils.instantiateFactory(Date.class,
+        final Factory<Date> factory = FactoryUtils.instantiateFactory(Date.class,
             new Class[] {Integer.TYPE, Integer.TYPE, Integer.TYPE},
             new Object[] {new Integer(70), new Integer(0), new Integer(2)});
         assertNotNull(factory);
-        Date created = factory.create();
+        final Date created = factory.create();
         // long time of 1 day (== 2nd Jan 1970)
         assertEquals(new Date(1000 * 60 * 60 * 24), created);
     }

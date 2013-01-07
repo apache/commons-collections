@@ -62,7 +62,7 @@ public class ObjectArrayIterator<E>
      * @param array the array to iterate over
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      */
-    public ObjectArrayIterator(E... array) {
+    public ObjectArrayIterator(final E... array) {
         this(array, 0, array.length);
     }
 
@@ -75,7 +75,7 @@ public class ObjectArrayIterator<E>
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      * @throws IndexOutOfBoundsException if the start index is out of bounds
      */
-    public ObjectArrayIterator(E array[], int start) {
+    public ObjectArrayIterator(final E array[], final int start) {
         this(array, start, array.length);
     }
 
@@ -90,7 +90,7 @@ public class ObjectArrayIterator<E>
      * @throws IllegalArgumentException if end index is before the start
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      */
-    public ObjectArrayIterator(E array[], int start, int end) {
+    public ObjectArrayIterator(final E array[], final int start, final int end) {
         super();
         if (start < 0) {
             throw new ArrayIndexOutOfBoundsException("Start index must not be less than zero");
@@ -171,7 +171,7 @@ public class ObjectArrayIterator<E>
      * @throws IllegalStateException if the <code>array</code> was set in the constructor
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      */
-    public void setArray(E[] array) {
+    public void setArray(final E[] array) {
         if (this.array != null) {
             throw new IllegalStateException("The array to iterate over has already been set");
         }

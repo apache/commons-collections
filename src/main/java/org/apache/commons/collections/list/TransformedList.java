@@ -55,8 +55,8 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
      * @return a new transformed list
      * @throws IllegalArgumentException if list or transformer is null
      */
-    public static <E> TransformedList<E> transformingList(List<E> list,
-                                                          Transformer<? super E, ? extends E> transformer) {
+    public static <E> TransformedList<E> transformingList(final List<E> list,
+                                                          final Transformer<? super E, ? extends E> transformer) {
         return new TransformedList<E>(list, transformer);
     }
     
@@ -75,14 +75,15 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
      * @throws IllegalArgumentException if list or transformer is null
      * @since 3.3
      */
-    public static <E> TransformedList<E> transformedList(List<E> list,
-                                                         Transformer<? super E, ? extends E> transformer) {
-        TransformedList<E> decorated = new TransformedList<E>(list, transformer);
+    public static <E> TransformedList<E> transformedList(final List<E> list,
+                                                         final Transformer<? super E, ? extends E> transformer) {
+        final TransformedList<E> decorated = new TransformedList<E>(list, transformer);
         if (transformer != null && list != null && list.size() > 0) {
             @SuppressWarnings("unchecked") // list is of type E
+            final
             E[] values = (E[]) list.toArray();
             list.clear();
-            for (E value : values) {
+            for (final E value : values) {
                 decorated.decorated().add(transformer.transform(value));
             }
         }
@@ -100,7 +101,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if list or transformer is null
      */
-    protected TransformedList(List<E> list, Transformer<? super E, ? extends E> transformer) {
+    protected TransformedList(final List<E> list, final Transformer<? super E, ? extends E> transformer) {
         super(list, transformer);
     }
 
@@ -115,30 +116,30 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
 
     //-----------------------------------------------------------------------
     
-    public E get(int index) {
+    public E get(final int index) {
         return getList().get(index);
     }
 
-    public int indexOf(Object object) {
+    public int indexOf(final Object object) {
         return getList().indexOf(object);
     }
 
-    public int lastIndexOf(Object object) {
+    public int lastIndexOf(final Object object) {
         return getList().lastIndexOf(object);
     }
 
-    public E remove(int index) {
+    public E remove(final int index) {
         return getList().remove(index);
     }
 
     //-----------------------------------------------------------------------
     
-    public void add(int index, E object) {
+    public void add(final int index, E object) {
         object = transform(object);
         getList().add(index, object);
     }
 
-    public boolean addAll(int index, Collection<? extends E> coll) {
+    public boolean addAll(final int index, Collection<? extends E> coll) {
         coll = transform(coll);
         return getList().addAll(index, coll);
     }
@@ -147,17 +148,17 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
         return listIterator(0);
     }
 
-    public ListIterator<E> listIterator(int i) {
+    public ListIterator<E> listIterator(final int i) {
         return new TransformedListIterator(getList().listIterator(i));
     }
 
-    public E set(int index, E object) {
+    public E set(final int index, E object) {
         object = transform(object);
         return getList().set(index, object);
     }
 
-    public List<E> subList(int fromIndex, int toIndex) {
-        List<E> sub = getList().subList(fromIndex, toIndex);
+    public List<E> subList(final int fromIndex, final int toIndex) {
+        final List<E> sub = getList().subList(fromIndex, toIndex);
         return new TransformedList<E>(sub, transformer);
     }
 
@@ -171,7 +172,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
          * 
          * @param iterator  the list iterator to decorate
          */
-        protected TransformedListIterator(ListIterator<E> iterator) {
+        protected TransformedListIterator(final ListIterator<E> iterator) {
             super(iterator);
         }
 

@@ -31,34 +31,34 @@ import org.easymock.IExpectationSetters;
  * @author Stephen Kestle
  */
 public abstract class MockTestCase {
-    private List<Object> mockObjects = new ArrayList<Object>();
+    private final List<Object> mockObjects = new ArrayList<Object>();
 
     @SuppressWarnings("unchecked")
-    protected <T> T createMock(Class<?> name) {
-        T mock = (T) EasyMock.createMock(name);
+    protected <T> T createMock(final Class<?> name) {
+        final T mock = (T) EasyMock.createMock(name);
         return registerMock(mock);
     }
 
-    private <T> T registerMock(T mock) {
+    private <T> T registerMock(final T mock) {
         mockObjects.add(mock);
         return mock;
     }
 
-    protected <T> IExpectationSetters<T> expect(T t) {
+    protected <T> IExpectationSetters<T> expect(final T t) {
         return EasyMock.expect(t);
     }
 
     protected final void replay() {
-        for (Object o : mockObjects) {
+        for (final Object o : mockObjects) {
             EasyMock.replay(o);
         }
     }
 
     protected final void verify() {
-        for (ListIterator<Object> i = mockObjects.listIterator(); i.hasNext();) {
+        for (final ListIterator<Object> i = mockObjects.listIterator(); i.hasNext();) {
             try {
                 EasyMock.verify(i.next());
-            } catch (AssertionError e) {
+            } catch (final AssertionError e) {
                 throw new AssertionError(i.previousIndex() + 1 + ""
                         + e.getMessage());
             }

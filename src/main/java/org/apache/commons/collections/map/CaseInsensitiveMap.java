@@ -78,7 +78,7 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
      * @param initialCapacity  the initial capacity
      * @throws IllegalArgumentException if the initial capacity is negative
      */
-    public CaseInsensitiveMap(int initialCapacity) {
+    public CaseInsensitiveMap(final int initialCapacity) {
         super(initialCapacity);
     }
 
@@ -91,7 +91,7 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
      * @throws IllegalArgumentException if the initial capacity is negative
      * @throws IllegalArgumentException if the load factor is less than zero
      */
-    public CaseInsensitiveMap(int initialCapacity, float loadFactor) {
+    public CaseInsensitiveMap(final int initialCapacity, final float loadFactor) {
         super(initialCapacity, loadFactor);
     }
 
@@ -105,7 +105,7 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
      * @param map  the map to copy
      * @throws NullPointerException if the map is null
      */
-    public CaseInsensitiveMap(Map<K, V> map) {
+    public CaseInsensitiveMap(final Map<K, V> map) {
         super(map);
     }
 
@@ -120,9 +120,9 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
      * @return the converted key
      */
     @Override
-    protected Object convertKey(Object key) {
+    protected Object convertKey(final Object key) {
         if (key != null) {
-            char[] chars = key.toString().toCharArray();
+            final char[] chars = key.toString().toCharArray();
             for (int i = chars.length - 1; i >= 0; i--) {
                 chars[i] = Character.toLowerCase(Character.toUpperCase(chars[i]));
             }
@@ -145,7 +145,7 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
     /**
      * Write the map out using a custom routine.
      */
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         doWriteObject(out);
     }
@@ -153,7 +153,7 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
     /**
      * Read the map in using a custom routine.
      */
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         doReadObject(in);
     }

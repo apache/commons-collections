@@ -69,7 +69,7 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      *  @exception NullPointerException if <code>nonNullComparator</code> is
      *  <code>null</code>
      **/
-    public NullComparator(Comparator<E> nonNullComparator) {
+    public NullComparator(final Comparator<E> nonNullComparator) {
         this(nonNullComparator, true);
     }
 
@@ -86,7 +86,7 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      *  non-<code>null</code> object.
      **/
     @SuppressWarnings("unchecked")
-    public NullComparator(boolean nullsAreHigh) {
+    public NullComparator(final boolean nullsAreHigh) {
         this(ComparatorUtils.NATURAL_COMPARATOR, nullsAreHigh);
     }
     
@@ -109,7 +109,7 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      *  @exception NullPointerException if <code>nonNullComparator</code> is
      *  <code>null</code>
      **/
-    public NullComparator(Comparator<E> nonNullComparator, boolean nullsAreHigh) {
+    public NullComparator(final Comparator<E> nonNullComparator, final boolean nullsAreHigh) {
         this.nonNullComparator = nonNullComparator;
         this.nullsAreHigh = nullsAreHigh;
         
@@ -135,7 +135,7 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      *  "higher" than (greater than, after, etc.) <code>o2</code>; or
      *  <code>0</code> if <code>o1</code> and <code>o2</code> are equal.
      **/
-    public int compare(E o1, E o2) {
+    public int compare(final E o1, final E o2) {
         if(o1 == o2) { return 0; }
         if(o1 == null) { return this.nullsAreHigh ? 1 : -1; }
         if(o2 == null) { return this.nullsAreHigh ? -1 : 1; }
@@ -166,12 +166,12 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      *  non-<code>null</code> object comparators.
      **/
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if(obj == null) { return false; }
         if(obj == this) { return true; }
         if(!obj.getClass().equals(this.getClass())) { return false; }
 
-        NullComparator<?> other = (NullComparator<?>) obj;
+        final NullComparator<?> other = (NullComparator<?>) obj;
 
         return this.nullsAreHigh == other.nullsAreHigh &&
                 this.nonNullComparator.equals(other.nonNullComparator);

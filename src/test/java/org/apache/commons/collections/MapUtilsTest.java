@@ -52,7 +52,7 @@ import org.apache.commons.collections.collection.TransformedCollectionTest;
 @SuppressWarnings("boxing")
 public class MapUtilsTest extends BulkTest {
 
-    public MapUtilsTest(String name) {
+    public MapUtilsTest(final String name) {
         super(name);
     }
 
@@ -62,60 +62,60 @@ public class MapUtilsTest extends BulkTest {
 
     public Predicate<Object> getPredicate() {
         return new Predicate<Object>() {
-            public boolean evaluate(Object o) {
+            public boolean evaluate(final Object o) {
                 return o instanceof String;
             }
         };
     }
 
     public void testPredicatedMap() {
-        Predicate<Object> p = getPredicate();
+        final Predicate<Object> p = getPredicate();
         Map<Object, Object> map = MapUtils.predicatedMap(new HashMap<Object, Object>(), p, p);
         assertTrue("returned object should be a PredicatedMap", map instanceof PredicatedMap);
         try {
             map = MapUtils.predicatedMap(null, p, p);
             fail("Expecting IllegalArgumentException for null map.");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
     }
 
     public void testLazyMapFactory() {
-        Factory<Integer> factory = FactoryUtils.constantFactory(new Integer(5));
+        final Factory<Integer> factory = FactoryUtils.constantFactory(new Integer(5));
         Map<Object, Object> map = MapUtils.lazyMap(new HashMap<Object, Object>(), factory);
         assertTrue(map instanceof LazyMap);
         try {
             map = MapUtils.lazyMap(new HashMap<Object, Object>(), (Factory<Object>) null);
             fail("Expecting IllegalArgumentException for null factory");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
         try {
             map = MapUtils.lazyMap((Map<Object, Object>) null, factory);
             fail("Expecting IllegalArgumentException for null map");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
-        Transformer<Object, Integer> transformer = TransformerUtils.asTransformer(factory);
+        final Transformer<Object, Integer> transformer = TransformerUtils.asTransformer(factory);
         map = MapUtils.lazyMap(new HashMap<Object, Object>(), transformer);
         assertTrue(map instanceof LazyMap);
         try {
             map = MapUtils.lazyMap(new HashMap<Object, Object>(), (Transformer<Object, Object>) null);
             fail("Expecting IllegalArgumentException for null transformer");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
         try {
             map = MapUtils.lazyMap((Map<Object, Object>) null, transformer);
             fail("Expecting IllegalArgumentException for null map");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
     }
 
     public void testLazyMapTransformer() {
-        Map<Object, Object> map = MapUtils.lazyMap(new HashMap<Object, Object>(), new Transformer<Object, Object>() {
-            public Object transform(Object mapKey) {
+        final Map<Object, Object> map = MapUtils.lazyMap(new HashMap<Object, Object>(), new Transformer<Object, Object>() {
+            public Object transform(final Object mapKey) {
                 if (mapKey instanceof String) {
                     return new Integer((String) mapKey);
                 }
@@ -124,10 +124,10 @@ public class MapUtilsTest extends BulkTest {
         });
 
         assertEquals(0, map.size());
-        Integer i1 = (Integer) map.get("5");
+        final Integer i1 = (Integer) map.get("5");
         assertEquals(new Integer(5), i1);
         assertEquals(1, map.size());
-        Integer i2 = (Integer) map.get(new String(new char[] {'5'}));
+        final Integer i2 = (Integer) map.get(new String(new char[] {'5'}));
         assertEquals(new Integer(5), i2);
         assertEquals(1, map.size());
         assertSame(i1, i2);
@@ -163,11 +163,11 @@ public class MapUtilsTest extends BulkTest {
         try {
             MapUtils.putAll(null, null);
             fail();
-        } catch (NullPointerException ex) {}
+        } catch (final NullPointerException ex) {}
         try {
             MapUtils.putAll(null, new Object[0]);
             fail();
-        } catch (NullPointerException ex) {}
+        } catch (final NullPointerException ex) {}
 
         Map<String, String> test = MapUtils.putAll(new HashMap<String, String>(), new String[0]);
         assertEquals(0, test.size());
@@ -193,7 +193,7 @@ public class MapUtilsTest extends BulkTest {
                 {"BLUE", "#0000FF"}
             });
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
 
         try {
             MapUtils.putAll(new HashMap<String, String>(), new String[][] {
@@ -202,7 +202,7 @@ public class MapUtilsTest extends BulkTest {
                 {"BLUE", "#0000FF"}
             });
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
 
         try {
             MapUtils.putAll(new HashMap<String, String>(), new String[][] {
@@ -211,7 +211,7 @@ public class MapUtilsTest extends BulkTest {
                 {"BLUE", "#0000FF"}
             });
             fail();
-        } catch (IllegalArgumentException ex) {}
+        } catch (final IllegalArgumentException ex) {}
 
         // flat array
         test = MapUtils.putAll(new HashMap<String, String>(), new String[] {
@@ -278,7 +278,7 @@ public class MapUtilsTest extends BulkTest {
         in.put("4", "D");
         in.put("5", "E");
 
-        ResourceBundle b = new ListResourceBundle() {
+        final ResourceBundle b = new ListResourceBundle() {
             @Override
             public Object[][] getContents() {
                 final Object[][] contents = new Object[ in.size() ][2];
@@ -412,7 +412,7 @@ public class MapUtilsTest extends BulkTest {
         try {
             MapUtils.verbosePrint(null, "Map", new HashMap<Object, Object>());
             fail("Should generate NullPointerException");
-        } catch (NullPointerException expected) {
+        } catch (final NullPointerException expected) {
         }
     }
 
@@ -420,7 +420,7 @@ public class MapUtilsTest extends BulkTest {
         try {
             MapUtils.debugPrint(null, "Map", new HashMap<Object, Object>());
             fail("Should generate NullPointerException");
-        } catch (NullPointerException expected) {
+        } catch (final NullPointerException expected) {
         }
     }
 
@@ -715,45 +715,45 @@ public class MapUtilsTest extends BulkTest {
     public void testEmptyIfNull() {
         assertTrue(MapUtils.emptyIfNull(null).isEmpty());
         
-        Map<Long, Long> map = new HashMap<Long, Long>();
+        final Map<Long, Long> map = new HashMap<Long, Long>();
         assertSame(map, MapUtils.emptyIfNull(map));
     }
     
     public void testIsEmptyWithEmptyMap() {
-        Map<Object, Object> map = new HashMap<Object, Object>();
+        final Map<Object, Object> map = new HashMap<Object, Object>();
         assertEquals(true, MapUtils.isEmpty(map));
     }
 
     public void testIsEmptyWithNonEmptyMap() {
-        Map<String, String> map = new HashMap<String, String>();
+        final Map<String, String> map = new HashMap<String, String>();
         map.put("item", "value");
         assertEquals(false, MapUtils.isEmpty(map));
     }
 
     public void testIsEmptyWithNull() {
-        Map<Object, Object> map = null;
+        final Map<Object, Object> map = null;
         assertEquals(true, MapUtils.isEmpty(map));
     }
 
     public void testIsNotEmptyWithEmptyMap() {
-        Map<Object, Object> map = new HashMap<Object, Object>();
+        final Map<Object, Object> map = new HashMap<Object, Object>();
         assertEquals(false, MapUtils.isNotEmpty(map));
     }
 
     public void testIsNotEmptyWithNonEmptyMap() {
-        Map<String, String> map = new HashMap<String, String>();
+        final Map<String, String> map = new HashMap<String, String>();
         map.put("item", "value");
         assertEquals(true, MapUtils.isNotEmpty(map));
     }
 
     public void testIsNotEmptyWithNull() {
-        Map<Object, Object> map = null;
+        final Map<Object, Object> map = null;
         assertEquals(false, MapUtils.isNotEmpty(map));
     }
 
     public void testPopulateMap() {
         // Setup Test Data
-        List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<String>();
         list.add("1");
         list.add("3");
         list.add("5");
@@ -791,16 +791,16 @@ public class MapUtilsTest extends BulkTest {
         try {
             MapUtils.iterableMap(null);
             fail("Should throw IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
         }
-        HashMap<String, String> map = new HashMap<String, String>();
+        final HashMap<String, String> map = new HashMap<String, String>();
         map.put("foo", "foov");
         map.put("bar", "barv");
         map.put("baz", "bazv");
-        IterableMap<String, String> iMap = MapUtils.iterableMap(map);
+        final IterableMap<String, String> iMap = MapUtils.iterableMap(map);
         assertEquals(map, iMap);
         assertNotSame(map, iMap);
-        HashedMap<String, String> hMap = new HashedMap<String, String>(map);
+        final HashedMap<String, String> hMap = new HashedMap<String, String>(map);
         assertSame(hMap, MapUtils.iterableMap(hMap));
     }
 
@@ -808,13 +808,13 @@ public class MapUtilsTest extends BulkTest {
         try {
             MapUtils.iterableSortedMap(null);
             fail("Should throw IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
         }
-        TreeMap<String, String> map = new TreeMap<String, String>();
+        final TreeMap<String, String> map = new TreeMap<String, String>();
         map.put("foo", "foov");
         map.put("bar", "barv");
         map.put("baz", "bazv");
-        IterableSortedMap<String, String> iMap = MapUtils.iterableSortedMap(map);
+        final IterableSortedMap<String, String> iMap = MapUtils.iterableSortedMap(map);
         assertEquals(map, iMap);
         assertNotSame(map, iMap);
         assertSame(iMap, MapUtils.iterableMap(iMap));

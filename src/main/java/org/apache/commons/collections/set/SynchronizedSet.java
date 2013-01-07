@@ -44,7 +44,7 @@ public class SynchronizedSet<E> extends SynchronizedCollection<E> implements Set
      * @return a new synchronized set
      * @throws IllegalArgumentException if set is null
      */
-    public static <E> SynchronizedSet<E> synchronizedSet(Set<E> set) {
+    public static <E> SynchronizedSet<E> synchronizedSet(final Set<E> set) {
         return new SynchronizedSet<E>(set);
     }
     
@@ -55,7 +55,7 @@ public class SynchronizedSet<E> extends SynchronizedCollection<E> implements Set
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    protected SynchronizedSet(Set<E> set) {
+    protected SynchronizedSet(final Set<E> set) {
         super(set);
     }
 
@@ -66,7 +66,7 @@ public class SynchronizedSet<E> extends SynchronizedCollection<E> implements Set
      * @param lock  the lock object to use, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    protected SynchronizedSet(Set<E> set, Object lock) {
+    protected SynchronizedSet(final Set<E> set, final Object lock) {
         super(set, lock);
     }
 

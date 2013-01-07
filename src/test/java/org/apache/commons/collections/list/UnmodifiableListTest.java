@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class UnmodifiableListTest<E> extends AbstractListTest<E> {
 
-    public UnmodifiableListTest(String testName) {
+    public UnmodifiableListTest(final String testName) {
         super(testName);
     }
 
@@ -44,7 +44,7 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
 
     @Override
     public UnmodifiableList<E> makeFullCollection() {
-        ArrayList<E> list = new ArrayList<E>();
+        final ArrayList<E> list = new ArrayList<E>();
         list.addAll(Arrays.asList(getFullElements()));
         return new UnmodifiableList<E>(list);
     }
@@ -85,65 +85,65 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
     }
 
     @SuppressWarnings("unchecked")
-    protected void verifyUnmodifiable(List<E> list) {
+    protected void verifyUnmodifiable(final List<E> list) {
         try {
             list.add(0, (E) new Integer(0));
             fail("Expecting UnsupportedOperationException.");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             list.add((E) new Integer(0));
              fail("Expecting UnsupportedOperationException.");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             list.addAll(0, array);
              fail("Expecting UnsupportedOperationException.");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             list.addAll(array);
              fail("Expecting UnsupportedOperationException.");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             list.clear();
              fail("Expecting UnsupportedOperationException.");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             list.remove(0);
              fail("Expecting UnsupportedOperationException.");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             list.remove(new Integer(0));
              fail("Expecting UnsupportedOperationException.");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             list.removeAll(array);
              fail("Expecting UnsupportedOperationException.");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             list.retainAll(array);
              fail("Expecting UnsupportedOperationException.");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
             list.set(0, (E) new Integer(0));
              fail("Expecting UnsupportedOperationException.");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // expected
         }
     }
@@ -153,12 +153,12 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
      */
     public void testUnmodifiableIterator() {
         setupList();
-        Iterator<E> iterator = list.iterator();
+        final Iterator<E> iterator = list.iterator();
         try {
             iterator.next();
             iterator.remove();
             fail("Expecting UnsupportedOperationException.");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // expected
         }
     }

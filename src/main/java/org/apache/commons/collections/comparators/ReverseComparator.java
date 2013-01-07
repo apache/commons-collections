@@ -61,7 +61,7 @@ public class ReverseComparator<E> implements Comparator<E>, Serializable {
      * @param comparator Comparator to reverse
      */
     @SuppressWarnings("unchecked")
-    public ReverseComparator(Comparator<E> comparator) {
+    public ReverseComparator(final Comparator<E> comparator) {
         this.comparator = comparator == null ? ComparatorUtils.NATURAL_COMPARATOR : comparator;
     }
 
@@ -73,7 +73,7 @@ public class ReverseComparator<E> implements Comparator<E>, Serializable {
      * @param obj2  the second object to compare
      * @return negative if obj1 is less, positive if greater, zero if equal
      */
-    public int compare(E obj1, E obj2) {
+    public int compare(final E obj1, final E obj2) {
         return comparator.compare(obj2, obj1);
     }
 
@@ -107,7 +107,7 @@ public class ReverseComparator<E> implements Comparator<E>, Serializable {
      * @since 3.0
      */
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         if (this == object) {
             return true;
         }
@@ -115,7 +115,7 @@ public class ReverseComparator<E> implements Comparator<E>, Serializable {
             return false;
         }
         if (object.getClass().equals(this.getClass())) {
-            ReverseComparator<?> thatrc = (ReverseComparator<?>) object;
+            final ReverseComparator<?> thatrc = (ReverseComparator<?>) object;
             return comparator.equals(thatrc.comparator);
         }
         return false;

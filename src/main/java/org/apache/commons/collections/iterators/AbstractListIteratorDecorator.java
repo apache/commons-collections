@@ -38,7 +38,7 @@ public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
      * @param iterator  the iterator to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
-    public AbstractListIteratorDecorator(ListIterator<E> iterator) {
+    public AbstractListIteratorDecorator(final ListIterator<E> iterator) {
         super();
         if (iterator == null) {
             throw new IllegalArgumentException("ListIterator must not be null");
@@ -93,12 +93,12 @@ public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
     }
 
     /** {@inheritDoc} */
-    public void set(E obj) {
+    public void set(final E obj) {
         iterator.set(obj);
     }
 
     /** {@inheritDoc} */
-    public void add(E obj) {
+    public void add(final E obj) {
         iterator.add(obj);
     }
     

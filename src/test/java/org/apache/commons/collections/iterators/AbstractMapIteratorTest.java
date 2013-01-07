@@ -41,7 +41,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
      *
      * @param testName  the test class name
      */
-    public AbstractMapIteratorTest(String testName) {
+    public AbstractMapIteratorTest(final String testName) {
         super(testName);
     }
 
@@ -116,40 +116,40 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
             return;
         }
 
-        MapIterator<K, V> it = makeEmptyIterator();
+        final MapIterator<K, V> it = makeEmptyIterator();
         assertEquals(false, it.hasNext());
 
         // next() should throw a NoSuchElementException
         try {
             it.next();
             fail();
-        } catch (NoSuchElementException ex) {}
+        } catch (final NoSuchElementException ex) {}
 
         // getKey() should throw an IllegalStateException
         try {
             it.getKey();
             fail();
-        } catch (IllegalStateException ex) {}
+        } catch (final IllegalStateException ex) {}
 
         // getValue() should throw an IllegalStateException
         try {
             it.getValue();
             fail();
-        } catch (IllegalStateException ex) {}
+        } catch (final IllegalStateException ex) {}
 
         if (supportsSetValue() == false) {
             // setValue() should throw an UnsupportedOperationException/IllegalStateException
             try {
                 it.setValue(addSetValues()[0]);
                 fail();
-            } catch (UnsupportedOperationException ex) {
-            } catch (IllegalStateException ex) {}
+            } catch (final UnsupportedOperationException ex) {
+            } catch (final IllegalStateException ex) {}
         } else {
             // setValue() should throw an IllegalStateException
             try {
                 it.setValue(addSetValues()[0]);
                 fail();
-            } catch (IllegalStateException ex) {}
+            } catch (final IllegalStateException ex) {}
         }
     }
 
@@ -162,21 +162,21 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
             return;
         }
 
-        MapIterator<K, V> it = makeObject();
-        Map<K, V> map = getMap();
+        final MapIterator<K, V> it = makeObject();
+        final Map<K, V> map = getMap();
         assertEquals(true, it.hasNext());
 
         assertEquals(true, it.hasNext());
-        Set<K> set = new HashSet<K>();
+        final Set<K> set = new HashSet<K>();
         while (it.hasNext()) {
             // getKey
-            K key = it.next();
+            final K key = it.next();
             assertSame("it.next() should equals getKey()", key, it.getKey());
             assertTrue("Key must be in map",  map.containsKey(key));
             assertTrue("Key must be unique", set.add(key));
 
             // getValue
-            V value = it.getValue();
+            final V value = it.getValue();
             if (isGetStructuralModify() == false) {
                 assertSame("Value must be mapped to key", map.get(key), value);
             }
@@ -192,23 +192,23 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
             return;
         }
 
-        V newValue = addSetValues()[0];
-        V newValue2 = addSetValues().length == 1 ? addSetValues()[0] : addSetValues()[1];
-        MapIterator<K, V> it = makeObject();
-        Map<K, V> map = getMap();
-        Map<K, V> confirmed = getConfirmedMap();
+        final V newValue = addSetValues()[0];
+        final V newValue2 = addSetValues().length == 1 ? addSetValues()[0] : addSetValues()[1];
+        final MapIterator<K, V> it = makeObject();
+        final Map<K, V> map = getMap();
+        final Map<K, V> confirmed = getConfirmedMap();
         assertEquals(true, it.hasNext());
-        K key = it.next();
-        V value = it.getValue();
+        final K key = it.next();
+        final V value = it.getValue();
 
         if (supportsSetValue() == false) {
             try {
                 it.setValue(newValue);
                 fail();
-            } catch (UnsupportedOperationException ex) {}
+            } catch (final UnsupportedOperationException ex) {}
             return;
         }
-        V old = it.setValue(newValue);
+        final V old = it.setValue(newValue);
         confirmed.put(key, newValue);
         assertSame("Key must not change after setValue", key, it.getKey());
         assertSame("Value must be changed after setValue", newValue, it.getValue());
@@ -236,17 +236,17 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
     //-----------------------------------------------------------------------
     @Override
     public void testRemove() { // override
-        MapIterator<K, V> it = makeObject();
-        Map<K, V> map = getMap();
-        Map<K, V> confirmed = getConfirmedMap();
+        final MapIterator<K, V> it = makeObject();
+        final Map<K, V> map = getMap();
+        final Map<K, V> confirmed = getConfirmedMap();
         assertEquals(true, it.hasNext());
-        K key = it.next();
+        final K key = it.next();
 
         if (supportsRemove() == false) {
             try {
                 it.remove();
                 fail();
-            } catch (UnsupportedOperationException ex) {
+            } catch (final UnsupportedOperationException ex) {
             }
             return;
         }
@@ -258,7 +258,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
 
         try {
             it.remove();  // second remove fails
-        } catch (IllegalStateException ex) {
+        } catch (final IllegalStateException ex) {
         }
         verify();
     }
@@ -268,12 +268,12 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         if (supportsSetValue() == false || supportsRemove() == false) {
             return;
         }
-        V newValue = addSetValues()[0];
-        MapIterator<K, V> it = makeObject();
-        Map<K, V> confirmed = getConfirmedMap();
+        final V newValue = addSetValues()[0];
+        final MapIterator<K, V> it = makeObject();
+        final Map<K, V> confirmed = getConfirmedMap();
 
         assertEquals(true, it.hasNext());
-        K key = it.next();
+        final K key = it.next();
 
         it.setValue(newValue);
         it.remove();
@@ -283,7 +283,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         try {
             it.setValue(newValue);
             fail();
-        } catch (IllegalStateException ex) {}
+        } catch (final IllegalStateException ex) {}
         verify();
     }
 
@@ -292,11 +292,11 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         if (supportsRemove() == false) {
             return;
         }
-        MapIterator<K, V> it = makeObject();
-        Map<K, V> confirmed = getConfirmedMap();
+        final MapIterator<K, V> it = makeObject();
+        final Map<K, V> confirmed = getConfirmedMap();
 
         assertEquals(true, it.hasNext());
-        K key = it.next();
+        final K key = it.next();
 
         it.remove();
         confirmed.remove(key);
@@ -305,7 +305,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         try {
             it.getKey();
             fail();
-        } catch (IllegalStateException ex) {}
+        } catch (final IllegalStateException ex) {}
         verify();
     }
 
@@ -314,11 +314,11 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         if (supportsRemove() == false) {
             return;
         }
-        MapIterator<K, V> it = makeObject();
-        Map<K, V> confirmed = getConfirmedMap();
+        final MapIterator<K, V> it = makeObject();
+        final Map<K, V> confirmed = getConfirmedMap();
 
         assertEquals(true, it.hasNext());
-        K key = it.next();
+        final K key = it.next();
 
         it.remove();
         confirmed.remove(key);
@@ -327,7 +327,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         try {
             it.getValue();
             fail();
-        } catch (IllegalStateException ex) {}
+        } catch (final IllegalStateException ex) {}
         verify();
     }
 

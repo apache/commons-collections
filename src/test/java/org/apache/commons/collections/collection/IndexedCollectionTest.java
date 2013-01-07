@@ -38,20 +38,20 @@ import org.junit.Test;
 @SuppressWarnings("boxing")
 public class IndexedCollectionTest extends AbstractCollectionTest<String> {
 
-    public IndexedCollectionTest(String name) {
+    public IndexedCollectionTest(final String name) {
         super(name);
     }
 
    //------------------------------------------------------------------------
 
-    protected Collection<String> decorateCollection(Collection<String> collection) {
+    protected Collection<String> decorateCollection(final Collection<String> collection) {
         return IndexedCollection.uniqueIndexedCollection(collection, new IntegerTransformer());
     }
 
     private static final class IntegerTransformer implements Transformer<String, Integer>, Serializable {
         private static final long serialVersionUID = 809439581555072949L;
 
-        public Integer transform(String input) {
+        public Integer transform(final String input) {
             return Integer.valueOf(input);
         }
     }
@@ -78,14 +78,14 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
 
     @Override
     public Collection<String> makeFullCollection() {
-        List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<String>();
         list.addAll(Arrays.asList(getFullElements()));
         return decorateCollection(list);
     }
 
     @Override
     public Collection<String> makeConfirmedFullCollection() {
-        List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<String>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }
@@ -105,13 +105,14 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
 
     @Test
     public void addedObjectsCanBeRetrievedByKey() throws Exception {
-        Collection<String> coll = getCollection();
+        final Collection<String> coll = getCollection();
         coll.add("12");
         coll.add("16");
         coll.add("1");
         coll.addAll(asList("2","3","4"));
         
         @SuppressWarnings("unchecked")
+        final
         IndexedCollection<Integer, String> indexed = (IndexedCollection<Integer, String>) coll;
         assertEquals("12", indexed.get(12));
         assertEquals("16", indexed.get(16));

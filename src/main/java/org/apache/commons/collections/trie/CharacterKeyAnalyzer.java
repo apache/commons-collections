@@ -45,7 +45,7 @@ public class CharacterKeyAnalyzer extends AbstractKeyAnalyzer<Character> {
     /**
      * Returns a bit mask where the given bit is set
      */
-    private static int mask(int bit) {
+    private static int mask(final int bit) {
         return MSB >>> bit;
     }
     
@@ -59,29 +59,29 @@ public class CharacterKeyAnalyzer extends AbstractKeyAnalyzer<Character> {
     /**
      * {@inheritDoc}
      */
-    public int lengthInBits(Character key) {
+    public int lengthInBits(final Character key) {
         return LENGTH;
     }
 
     /**
      * {@inheritDoc}
      */
-    public boolean isBitSet(Character key, int bitIndex, int lengthInBits) {
+    public boolean isBitSet(final Character key, final int bitIndex, final int lengthInBits) {
         return (key & mask(bitIndex)) != 0;
     }
 
     /**
      * {@inheritDoc}
      */
-    public int bitIndex(Character key, int offsetInBits, int lengthInBits, 
-            Character other, int otherOffsetInBits, int otherLengthInBits) {
+    public int bitIndex(final Character key, final int offsetInBits, final int lengthInBits, 
+            Character other, final int otherOffsetInBits, final int otherLengthInBits) {
         
         if (offsetInBits != 0 || otherOffsetInBits != 0) {
             throw new IllegalArgumentException("offsetInBits=" + offsetInBits 
                     + ", otherOffsetInBits=" + otherOffsetInBits);
         }
         
-        char keyValue = key.charValue();
+        final char keyValue = key.charValue();
         if (keyValue == Character.MIN_VALUE) {
             return NULL_BIT_KEY;
         }
@@ -90,10 +90,10 @@ public class CharacterKeyAnalyzer extends AbstractKeyAnalyzer<Character> {
             other = Character.MIN_VALUE;
         }
         
-        char otherValue = other != null ? other.charValue() : Character.MIN_VALUE;
+        final char otherValue = other != null ? other.charValue() : Character.MIN_VALUE;
         
         if (keyValue != otherValue) {
-            int xorValue = keyValue ^ otherValue;
+            final int xorValue = keyValue ^ otherValue;
             for (int i = 0; i < LENGTH; i++) {
                 if ((xorValue & mask(i)) != 0) {
                     return i;
@@ -107,11 +107,11 @@ public class CharacterKeyAnalyzer extends AbstractKeyAnalyzer<Character> {
     /**
      * {@inheritDoc}
      */
-    public boolean isPrefix(Character prefix, int offsetInBits, 
-            int lengthInBits, Character key) {
+    public boolean isPrefix(final Character prefix, final int offsetInBits, 
+            final int lengthInBits, final Character key) {
         
-        int value1 = prefix.charValue() << offsetInBits;
-        int value2 = key.charValue();
+        final int value1 = prefix.charValue() << offsetInBits;
+        final int value2 = key.charValue();
         
         int mask = 0;
         for(int i = 0; i < lengthInBits; i++) {
