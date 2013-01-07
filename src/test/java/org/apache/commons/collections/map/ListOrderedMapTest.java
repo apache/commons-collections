@@ -26,7 +26,6 @@ import junit.framework.Test;
 
 import org.apache.commons.collections.BulkTest;
 import org.apache.commons.collections.MapIterator;
-import org.apache.commons.collections.OrderedMapIterator;
 import org.apache.commons.collections.list.AbstractListTest;
 
 /**
