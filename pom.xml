@@ -19,7 +19,7 @@
   <parent>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-parent</artifactId>
-    <version>27</version>
+    <version>28-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>commons-collections</groupId>
@@ -437,6 +437,7 @@
     <!-- The RC version used in the staging repository URL. -->
     <commons.rc.version>RC2</commons.rc.version>
     <checkstyle.version>2.9.1</checkstyle.version>
+    <commons.scmPubCheckoutDirectory>site-content</commons.scmPubCheckoutDirectory>
     <commons.site.path>collections</commons.site.path>
   </properties> 
 
@@ -535,7 +536,7 @@
       <id>setup-checkout</id>
       <activation>
         <file>
-          <missing>${commons.scmPubCheckoutDirectory}</missing>
+          <missing>site-content</missing>
         </file>
       </activation>
       <build>
