@@ -531,7 +531,7 @@
   </reporting>
 
   <profiles>
-    <profile>
+    <!--profile>
       <id>setup-checkout</id>
       <activation>
         <file>
@@ -554,18 +554,18 @@
                 <configuration>
                   <tasks>
                     <exec executable="svn">
-                      <arg line="checkout --depth immediates ${commons.scmPubUrl} ${commons.scmPubCheckoutDirectory}" />
+                      <arg line="checkout - -depth immediates ${commons.scmPubUrl} ${commons.scmPubCheckoutDirectory}" />
                     </exec>
 
                     <exec executable="svn">
-                      <arg line="update --set-depth exclude ${commons.scmPubCheckoutDirectory}/javadocs" />
+                      <arg line="update - -set-depth exclude ${commons.scmPubCheckoutDirectory}/javadocs" />
                     </exec>
 
                     <pathconvert pathsep=" " property="dirs">
                       <dirset dir="${commons.scmPubCheckoutDirectory}" includes="*" />
                     </pathconvert>
                     <exec executable="svn">
-                      <arg line="update --set-depth infinity ${dirs}" />
+                      <arg line="update - -set-depth infinity ${dirs}" />
                     </exec>
                   </tasks>
                 </configuration>
@@ -574,7 +574,7 @@
           </plugin>
         </plugins>
       </build>
-    </profile>
+    </profile-->
   </profiles>
 
 </project>
