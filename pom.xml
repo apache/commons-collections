@@ -438,8 +438,7 @@
     <commons.rc.version>RC2</commons.rc.version>
     <checkstyle.version>2.9.1</checkstyle.version>
     <commons.scmPubCheckoutDirectory>site-content</commons.scmPubCheckoutDirectory>
-    <commons.site.path>collections</commons.site.path>
-  </properties> 
+  </properties>
 
 
   <build>
