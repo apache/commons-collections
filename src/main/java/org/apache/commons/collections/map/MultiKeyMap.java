@@ -73,7 +73,7 @@ import org.apache.commons.collections.keyvalue.MultiKey;
  * @version $Id$
  */
 public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K>, V>
-        implements IterableMap<MultiKey<? extends K>, V>, Serializable {
+        implements IterableMap<MultiKey<? extends K>, V>, Serializable, Cloneable {
 
     /** Serialisation version */
     private static final long serialVersionUID = -1788199231038721040L;
