@@ -38,7 +38,8 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
 
     /**
      * Factory method that performs validation.
-     * 
+     *
+     * @param <T>  the type of the object to transform
      * @param closure  the closure to call, not null
      * @return the <code>closure</code> transformer
      * @throws IllegalArgumentException if the closure is null

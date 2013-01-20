@@ -44,6 +44,8 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
     /**
      * Factory method that performs validation and copies the parameter arrays.
      * 
+     * @param <I>  the input type
+     * @param <O>  the output type
      * @param predicates  array of predicates, cloned, no nulls
      * @param transformers  matching array of transformers, cloned, no nulls
      * @param defaultTransformer  the transformer to use if no match, null means return null
@@ -61,7 +63,8 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
             throw new IllegalArgumentException("The predicate and transformer arrays must be the same size");
         }
         if (predicates.length == 0) {
-            return (Transformer<I, O>) (defaultTransformer == null ? ConstantTransformer.<I, O>nullTransformer() : defaultTransformer);
+            return (Transformer<I, O>) (defaultTransformer == null ? ConstantTransformer.<I, O>nullTransformer() :
+                                                                     defaultTransformer);
         }
         return new SwitchTransformer<I, O>(FunctorUtils.copy(predicates),
                                            FunctorUtils.copy(transformers),
@@ -79,7 +82,9 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * null key. The ordering is that of the iterator() method on the entryset 
      * collection of the map.
      * 
-     * @param predicatesAndTransformers  a map of predicates to transformers
+     * @param <I>  the input type
+     * @param <O>  the output type
+     * @param map  a map of predicates to transformers
      * @return the <code>switch</code> transformer
      * @throws IllegalArgumentException if the map is null
      * @throws IllegalArgumentException if any transformer in the map is null
@@ -87,23 +92,26 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      */
     @SuppressWarnings("unchecked")
     public static <I, O> Transformer<I, O> switchTransformer(
-            final Map<? extends Predicate<? super I>, ? extends Transformer<? super I, ? extends O>> predicatesAndTransformers) {
-        if (predicatesAndTransformers == null) {
+            final Map<? extends Predicate<? super I>, ? extends Transformer<? super I, ? extends O>> map) {
+
+        if (map == null) {
             throw new IllegalArgumentException("The predicate and transformer map must not be null");
         }
-        if (predicatesAndTransformers.size() == 0) {
+        if (map.size() == 0) {
             return ConstantTransformer.<I, O>nullTransformer();
         }
         // convert to array like this to guarantee iterator() ordering
-        final Transformer<? super I, ? extends O> defaultTransformer = predicatesAndTransformers.remove(null);
-        final int size = predicatesAndTransformers.size();
+        final Transformer<? super I, ? extends O> defaultTransformer = map.remove(null);
+        final int size = map.size();
         if (size == 0) {
-            return (Transformer<I, O>) (defaultTransformer == null ? ConstantTransformer.<I, O>nullTransformer() : defaultTransformer);
+            return (Transformer<I, O>) (defaultTransformer == null ? ConstantTransformer.<I, O>nullTransformer() :
+                                                                     defaultTransformer);
         }
         final Transformer<? super I, ? extends O>[] transformers = new Transformer[size];
         final Predicate<? super I>[] preds = new Predicate[size];
         int i = 0;
-        for (final Map.Entry<? extends Predicate<? super I>, ? extends Transformer<? super I, ? extends O>> entry : predicatesAndTransformers.entrySet()) {
+        for (final Map.Entry<? extends Predicate<? super I>,
+                             ? extends Transformer<? super I, ? extends O>> entry : map.entrySet()) {
             preds[i] = entry.getKey();
             transformers[i] = entry.getValue();
             i++;
@@ -126,7 +134,8 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
         super();
         iPredicates = predicates;
         iTransformers = transformers;
-        iDefault = (Transformer<? super I, ? extends O>) (defaultTransformer == null ? ConstantTransformer.<I, O>nullTransformer() : defaultTransformer);
+        iDefault = (Transformer<? super I, ? extends O>) (defaultTransformer == null ?
+                ConstantTransformer.<I, O>nullTransformer() : defaultTransformer);
     }
 
     /**

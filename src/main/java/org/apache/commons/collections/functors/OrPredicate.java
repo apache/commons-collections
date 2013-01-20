@@ -45,7 +45,8 @@ public final class OrPredicate<T> implements Predicate<T>, PredicateDecorator<T>
      * @return the <code>and</code> predicate
      * @throws IllegalArgumentException if either predicate is null
      */
-    public static <T> Predicate<T> orPredicate(final Predicate<? super T> predicate1, final Predicate<? super T> predicate2) {
+    public static <T> Predicate<T> orPredicate(final Predicate<? super T> predicate1,
+                                               final Predicate<? super T> predicate2) {
         if (predicate1 == null || predicate2 == null) {
             throw new IllegalArgumentException("Predicate must not be null");
         }

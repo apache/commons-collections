@@ -43,8 +43,9 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
 
     /**
      * Get a typed null instance.
-     * @param <I>
-     * @param <O>
+     *
+     * @param <I>  the input type
+     * @param <O>  the output type
      * @return Transformer<I, O> that always returns null.
      */
     @SuppressWarnings("unchecked")
@@ -55,6 +56,8 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
     /**
      * Transformer method that performs validation.
      *
+     * @param <I>  the input type
+     * @param <O>  the output type
      * @param constantToReturn  the constant object to return each time in the factory
      * @return the <code>constant</code> factory.
      */

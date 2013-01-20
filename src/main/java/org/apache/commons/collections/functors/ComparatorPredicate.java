@@ -118,7 +118,8 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
      * @return the predicate
      * @throws IllegalArgumentException if comparator is null of criterion is invalid
      */
-    public static <T> Predicate<T> comparatorPredicate(final T object, final Comparator<T> comparator, final Criterion criterion) {
+    public static <T> Predicate<T> comparatorPredicate(final T object, final Comparator<T> comparator,
+                                                       final Criterion criterion) {
         if (comparator == null) {
             throw new IllegalArgumentException("Comparator must not be null.");
         }
@@ -157,6 +158,8 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
      * @see org.apache.commons.collections.Predicate#evaluate(java.lang.Object)
      * @see java.util.Comparator#compare(java.lang.Object first, java.lang.Object second)
      * 
+     * @param target  the target object to compare to
+     * @return {@code true} if the comparison succeeds according to the selected criterion
      * @throws IllegalStateException if the criterion is invalid (really not possible)
      */
     public boolean evaluate(final T target) {

@@ -38,6 +38,7 @@ public final class ExceptionPredicate<T> implements Predicate<T>, Serializable {
     /**
      * Factory returning the singleton instance.
      *
+     * @param <T>  the object type
      * @return the singleton instance
      * @since 3.1
      */

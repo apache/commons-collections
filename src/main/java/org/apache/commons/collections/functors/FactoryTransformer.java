@@ -38,6 +38,8 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
     /**
      * Factory method that performs validation.
      * 
+     * @param <I>  the input type
+     * @param <O>  the output type
      * @param factory  the factory to call, not null
      * @return the <code>factory</code> transformer
      * @throws IllegalArgumentException if the factory is null

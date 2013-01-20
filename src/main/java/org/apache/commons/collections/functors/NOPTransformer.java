@@ -37,6 +37,7 @@ public class NOPTransformer<T> implements Transformer<T, T>, Serializable {
     /**
      * Factory returning the singleton instance.
      *
+     * @param <T>  the input/output type
      * @return the singleton instance
      * @since 3.1
      */

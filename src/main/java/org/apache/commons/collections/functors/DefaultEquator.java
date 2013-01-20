@@ -19,7 +19,7 @@ package org.apache.commons.collections.functors;
 /**
  * Default {@link Equator} implementation.
  * 
- * @param <T>
+ * @param <T>  the types of object this {@link Equator} can evaluate.
  * @since 4.0
  * @version $Id$
  */
@@ -56,7 +56,7 @@ public class DefaultEquator<T> implements Equator<T> {
     /**
      * Get a typed {@link DefaultEquator} instance.
      * 
-     * @param <T>
+     * @param <T>  the object type
      * @return {@link DefaultEquator#INSTANCE}
      */
     @SuppressWarnings("unchecked")

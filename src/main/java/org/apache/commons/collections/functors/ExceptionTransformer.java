@@ -38,6 +38,8 @@ public final class ExceptionTransformer<I, O> implements Transformer<I, O>, Seri
     /**
      * Factory returning the singleton instance.
      *
+     * @param <I>  the input type
+     * @param <O>  the output type
      * @return the singleton instance
      * @since 3.1
      */

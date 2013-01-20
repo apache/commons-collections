@@ -38,6 +38,7 @@ public final class StringValueTransformer<T> implements Transformer<T, String>, 
     /**
      * Factory returning the singleton instance.
      *
+     * @param <T>  the input type
      * @return the singleton instance
      * @since 3.1
      */

@@ -46,12 +46,14 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
     /**
      * Factory method that performs validation.
      * 
+     * @param <T>  the type the factory creates
      * @param classToInstantiate  the class to instantiate, not null
      * @param paramTypes  the constructor parameter types
      * @param args  the constructor arguments
      * @return a new instantiate factory
      */
-    public static <T> Factory<T> instantiateFactory(final Class<T> classToInstantiate, Class<?>[] paramTypes, Object[] args) {
+    public static <T> Factory<T> instantiateFactory(final Class<T> classToInstantiate, Class<?>[] paramTypes,
+                                                    Object[] args) {
         if (classToInstantiate == null) {
             throw new IllegalArgumentException("Class to instantiate must not be null");
         }

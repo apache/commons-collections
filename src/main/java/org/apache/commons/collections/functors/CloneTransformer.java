@@ -38,7 +38,8 @@ public class CloneTransformer<T> implements Transformer<T, T>, Serializable {
 
     /**
      * Factory returning the singleton instance.
-     * 
+     *
+     * @param <T>  the type of the objects to be cloned
      * @return the singleton instance
      * @since 3.1
      */

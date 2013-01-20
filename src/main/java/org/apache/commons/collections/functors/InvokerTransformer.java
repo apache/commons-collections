@@ -44,6 +44,8 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
     /**
      * Gets an instance of this transformer calling a specific method with no arguments.
      * 
+     * @param <I>  the input type
+     * @param <O>  the output type
      * @param methodName  the method name to call
      * @return an invoker transformer
      * @since 3.1
@@ -57,13 +59,16 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
 
     /**
      * Gets an instance of this transformer calling a specific method with specific values.
-     * 
+     *
+     * @param <I>  the input type
+     * @param <O>  the output type
      * @param methodName  the method name to call
      * @param paramTypes  the parameter types of the method
      * @param args  the arguments to pass to the method
      * @return an invoker transformer
      */
-    public static <I, O> Transformer<I, O> invokerTransformer(final String methodName, Class<?>[] paramTypes, Object[] args) {
+    public static <I, O> Transformer<I, O> invokerTransformer(final String methodName, Class<?>[] paramTypes,
+                                                              Object[] args) {
         if (methodName == null) {
             throw new IllegalArgumentException("The method to invoke must not be null");
         }

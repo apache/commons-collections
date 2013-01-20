@@ -44,6 +44,7 @@ public class ConstantFactory<T> implements Factory<T>, Serializable {
     /**
      * Factory method that performs validation.
      *
+     * @param <T>  the type of the constant
      * @param constantToReturn  the constant object to return each time in the factory
      * @return the <code>constant</code> factory.
      */

@@ -44,7 +44,8 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
 
     /**
      * Get a typed no-arg instance.
-     * @param <T>
+     *
+     * @param <T>  the type of the objects to be created
      * @return Transformer<Class<? extends T>, T>
      */
     public static <T> Transformer<Class<? extends T>, T> instantiateTransformer() {
@@ -54,6 +55,7 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
     /**
      * Transformer method that performs validation.
      *
+     * @param <T>  the type of the objects to be created
      * @param paramTypes  the constructor parameter types
      * @param args  the constructor arguments
      * @return an instantiate transformer

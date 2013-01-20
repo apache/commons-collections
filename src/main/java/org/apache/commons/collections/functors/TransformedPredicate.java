@@ -66,7 +66,8 @@ public final class TransformedPredicate<T> implements Predicate<T>, PredicateDec
      * @param transformer  the transformer to use
      * @param predicate  the predicate to decorate
      */
-    public TransformedPredicate(final Transformer<? super T, ? extends T> transformer, final Predicate<? super T> predicate) {
+    public TransformedPredicate(final Transformer<? super T, ? extends T> transformer,
+                                final Predicate<? super T> predicate) {
         iTransformer = transformer;
         iPredicate = predicate;
     }

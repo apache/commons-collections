@@ -105,7 +105,8 @@ class FunctorUtils {
         for (final Predicate<T> predicate : predicates) {
             preds[i] = predicate;
             if (preds[i] == null) {
-                throw new IllegalArgumentException("The predicate collection must not contain a null predicate, index " + i + " was null");
+                throw new IllegalArgumentException(
+                        "The predicate collection must not contain a null predicate, index " + i + " was null");
             }
             i++;
         }
@@ -137,7 +138,8 @@ class FunctorUtils {
         }
         for (int i = 0; i < closures.length; i++) {
             if (closures[i] == null) {
-                throw new IllegalArgumentException("The closure array must not contain a null closure, index " + i + " was null");
+                throw new IllegalArgumentException(
+                        "The closure array must not contain a null closure, index " + i + " was null");
             }
         }
     }

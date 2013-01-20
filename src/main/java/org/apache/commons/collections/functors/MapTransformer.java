@@ -41,6 +41,8 @@ public final class MapTransformer<I, O> implements Transformer<I, O>, Serializab
      * <p>
      * If the map is null, a transformer that always returns null is returned.
      *
+     * @param <I>  the input type
+     * @param <O>  the output type
      * @param map the map, not cloned
      * @return the transformer
      */

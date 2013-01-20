@@ -40,7 +40,8 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
 
     /**
      * Factory method that performs validation and copies the parameter array.
-     * 
+     *
+     * @param <T>  the object type
      * @param transformers  the transformers to chain, copied, no nulls
      * @return the <code>chained</code> transformer
      * @throws IllegalArgumentException if the transformers array is null
@@ -58,7 +59,8 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
      * Create a new Transformer that calls each transformer in turn, passing the 
      * result into the next transformer. The ordering is that of the iterator()
      * method on the collection.
-     * 
+     *
+     * @param <T>  the object type
      * @param transformers  a collection of transformers to chain
      * @return the <code>chained</code> transformer
      * @throws IllegalArgumentException if the transformers collection is null

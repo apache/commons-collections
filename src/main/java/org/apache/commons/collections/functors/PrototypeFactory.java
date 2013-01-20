@@ -48,6 +48,7 @@ public class PrototypeFactory {
      * <li>serialization clone
      * <ul>
      *
+     * @param <T>  the type the factory creates
      * @param prototype  the object to clone each time in the factory
      * @return the <code>prototype</code> factory, or a {@link ConstantFactory#NULL_INSTANCE} if
      * the {@code prototype} is {@code null}
