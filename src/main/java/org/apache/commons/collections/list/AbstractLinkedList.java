@@ -594,6 +594,9 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * <p>
      * The first serializable subclass must call this method from
      * <code>writeObject</code>.
+     * 
+     * @param outputStream  the stream to write the object to
+     * @throws IOException  if anything goes wrong
      */
     protected void doWriteObject(final ObjectOutputStream outputStream) throws IOException {
         // Write the size so we know how many nodes to read back
@@ -608,6 +611,10 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * <p>
      * The first serializable subclass must call this method from
      * <code>readObject</code>.
+     * 
+     * @param inputStream  the stream to read the object from
+     * @throws IOException  if any error occurs while reading from the stream
+     * @throws ClassNotFoundException  if a class read from the stream can not be loaded
      */
     @SuppressWarnings("unchecked")
     protected void doReadObject(final ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
@@ -773,7 +780,8 @@ public abstract class AbstractLinkedList<E> implements List<E> {
          * @param fromIndex  the index to start at
          * @throws IndexOutOfBoundsException if fromIndex is less than 0 or greater than the size of the list
          */
-        protected LinkedListIterator(final AbstractLinkedList<E> parent, final int fromIndex) throws IndexOutOfBoundsException {
+        protected LinkedListIterator(final AbstractLinkedList<E> parent, final int fromIndex)
+                throws IndexOutOfBoundsException {
             super();
             this.parent = parent;
             this.expectedModCount = parent.modCount;

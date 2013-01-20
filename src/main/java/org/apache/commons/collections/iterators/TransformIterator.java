@@ -62,7 +62,8 @@ public class TransformIterator<I, O> implements Iterator<O> {
      * @param iterator  the iterator to use
      * @param transformer  the transformer to use
      */
-    public TransformIterator(final Iterator<? extends I> iterator, final Transformer<? super I, ? extends O> transformer) {
+    public TransformIterator(final Iterator<? extends I> iterator,
+                             final Transformer<? super I, ? extends O> transformer) {
         super();
         this.iterator = iterator;
         this.transformer = transformer;

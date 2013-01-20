@@ -43,7 +43,9 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
      * @return a new unmodifiable ordered map iterator
      * @throws IllegalArgumentException if the iterator is null
      */
-    public static <K, V> OrderedMapIterator<K, V> unmodifiableOrderedMapIterator(final OrderedMapIterator<K, V> iterator) {
+    public static <K, V> OrderedMapIterator<K, V> unmodifiableOrderedMapIterator(
+            final OrderedMapIterator<K, V> iterator) {
+
         if (iterator == null) {
             throw new IllegalArgumentException("OrderedMapIterator must not be null");
         }
