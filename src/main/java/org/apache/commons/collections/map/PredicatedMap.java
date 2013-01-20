@@ -89,7 +89,8 @@ public class PredicatedMap<K, V>
      * @param valuePredicate  the predicate to validate to values, null means no check
      * @throws IllegalArgumentException if the map is null
      */
-    protected PredicatedMap(final Map<K, V> map, final Predicate<? super K> keyPredicate, final Predicate<? super V> valuePredicate) {
+    protected PredicatedMap(final Map<K, V> map, final Predicate<? super K> keyPredicate,
+                            final Predicate<? super V> valuePredicate) {
         super(map);
         this.keyPredicate = keyPredicate;
         this.valuePredicate = valuePredicate;

@@ -110,7 +110,8 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      * @param reverseMap  the reverse direction map
      * @param inverseBidiMap  the inverse BidiMap
      */
-    protected AbstractDualBidiMap(final Map<K, V> normalMap, final Map<V, K> reverseMap, final BidiMap<V, K> inverseBidiMap) {
+    protected AbstractDualBidiMap(final Map<K, V> normalMap, final Map<V, K> reverseMap,
+                                  final BidiMap<V, K> inverseBidiMap) {
         super();
         this.normalMap = normalMap;
         this.reverseMap = reverseMap;

@@ -467,7 +467,8 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * @return the newly created entry
      */
     @Override
-    protected ReferenceEntry<K, V> createEntry(final HashEntry<K, V> next, final int hashCode, final K key, final V value) {
+    protected ReferenceEntry<K, V> createEntry(final HashEntry<K, V> next, final int hashCode,
+                                               final K key, final V value) {
         return new ReferenceEntry<K, V>(this, next, hashCode, key, value);
     }
 
@@ -601,7 +602,8 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
          * @param key  the key
          * @param value  the value
          */
-        public ReferenceEntry(final AbstractReferenceMap<K, V> parent, final HashEntry<K, V> next, final int hashCode, final K key, final V value) {
+        public ReferenceEntry(final AbstractReferenceMap<K, V> parent, final HashEntry<K, V> next,
+                              final int hashCode, final K key, final V value) {
             super(next, hashCode, null, null);
             this.parent = parent;
             this.key = toReference(parent.keyType, key, hashCode);

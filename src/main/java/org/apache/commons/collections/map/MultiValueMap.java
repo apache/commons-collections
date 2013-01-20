@@ -110,7 +110,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @return a new multi-value map
      */
     public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(final Map<K, ? super C> map,
-                                                                                    final Factory<C> collectionFactory) {
+            final Factory<C> collectionFactory) {
         return new MultiValueMap<K, V>(map, collectionFactory);
     }
 
@@ -132,7 +132,8 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @param collectionFactory  the collection factory which must return a Collection instance
      */
     @SuppressWarnings("unchecked")
-    protected <C extends Collection<V>> MultiValueMap(final Map<K, ? super C> map, final Factory<C> collectionFactory) {
+    protected <C extends Collection<V>> MultiValueMap(final Map<K, ? super C> map,
+                                                      final Factory<C> collectionFactory) {
         super((Map<K, Object>) map);
         if (collectionFactory == null) {
             throw new IllegalArgumentException("The factory must not be null");

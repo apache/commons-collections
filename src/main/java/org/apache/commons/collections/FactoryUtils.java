@@ -138,7 +138,8 @@ public class FactoryUtils {
      * @throws IllegalArgumentException if the paramTypes and args don't match
      * @throws IllegalArgumentException if the constructor doesn't exist
      */
-    public static <T> Factory<T> instantiateFactory(final Class<T> classToInstantiate, final Class<?>[] paramTypes, final Object[] args) {
+    public static <T> Factory<T> instantiateFactory(final Class<T> classToInstantiate, final Class<?>[] paramTypes,
+                                                    final Object[] args) {
         return InstantiateFactory.instantiateFactory(classToInstantiate, paramTypes, args);
     }
 

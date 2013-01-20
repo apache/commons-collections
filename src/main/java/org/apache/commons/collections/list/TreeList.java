@@ -298,7 +298,8 @@ public class TreeList<E> extends AbstractList<E> {
          * @param rightFollower the node with the value following this one
          * @param leftFollower the node with the value leading this one
          */
-        private AVLNode(final int relativePosition, final E obj, final AVLNode<E> rightFollower, final AVLNode<E> leftFollower) {
+        private AVLNode(final int relativePosition, final E obj,
+                        final AVLNode<E> rightFollower, final AVLNode<E> leftFollower) {
             this.relativePosition = relativePosition;
             value = obj;
             rightIsNext = true;

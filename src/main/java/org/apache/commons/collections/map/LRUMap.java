@@ -293,7 +293,8 @@ public class LRUMap<K, V>
      * @param key  the key to add
      * @param value  the value to add
      */
-    protected void reuseMapping(final LinkEntry<K, V> entry, final int hashIndex, final int hashCode, final K key, final V value) {
+    protected void reuseMapping(final LinkEntry<K, V> entry, final int hashIndex, final int hashCode,
+                                final K key, final V value) {
         // find the entry before the entry specified in the hash table
         // remember that the parameters (except the first) refer to the new entry,
         // not the old one

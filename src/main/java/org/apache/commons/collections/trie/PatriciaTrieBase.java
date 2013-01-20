@@ -615,7 +615,7 @@ abstract class PatriciaTrieBase<K, V> extends AbstractTrie<K, V> {
             if (child.bitIndex > parent.bitIndex) {
                 child.parent = parent;
             }
-        };
+        }
         
         // Fix H's parent and child Nodes
         {         
@@ -635,7 +635,7 @@ abstract class PatriciaTrieBase<K, V> extends AbstractTrie<K, V> {
             } else {
                 h.parent.right = p;
             }
-        };
+        }
         
         // Copy the remaining fields from H to P
         //p.bitIndex = h.bitIndex;

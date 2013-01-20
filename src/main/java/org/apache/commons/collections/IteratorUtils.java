@@ -103,7 +103,8 @@ public class IteratorUtils {
     /**
      * An ordered map iterator over no elements.
      */
-    public static final OrderedMapIterator<Object, Object> EMPTY_ORDERED_MAP_ITERATOR = EmptyOrderedMapIterator.INSTANCE;
+    public static final OrderedMapIterator<Object, Object> EMPTY_ORDERED_MAP_ITERATOR =
+            EmptyOrderedMapIterator.INSTANCE;
 
     /**
      * IteratorUtils is not normally instantiated.
@@ -454,7 +455,8 @@ public class IteratorUtils {
      * @return a combination iterator over the iterators
      * @throws NullPointerException if either iterator is null
      */
-    public static <E> Iterator<E> chainedIterator(final Iterator<? extends E> iterator1, final Iterator<? extends E> iterator2) {
+    public static <E> Iterator<E> chainedIterator(final Iterator<? extends E> iterator1,
+                                                  final Iterator<? extends E> iterator2) {
         return new IteratorChain<E>(iterator1, iterator2);
     }
 
@@ -501,7 +503,9 @@ public class IteratorUtils {
      * @return a combination iterator over the iterators
      * @throws NullPointerException if either iterator is null
      */
-    public static <E> Iterator<E> collatedIterator(final Comparator<? super E> comparator, final Iterator<? extends E> iterator1, final Iterator<? extends E> iterator2) {
+    public static <E> Iterator<E> collatedIterator(final Comparator<? super E> comparator,
+                                                   final Iterator<? extends E> iterator1,
+                                                   final Iterator<? extends E> iterator2) {
         return new CollatingIterator<E>(comparator, iterator1, iterator2);
     }
 
@@ -520,7 +524,8 @@ public class IteratorUtils {
      * @return a combination iterator over the iterators
      * @throws NullPointerException if iterators array is null or contains a null
      */
-    public static <E> Iterator<E> collatedIterator(final Comparator<? super E> comparator, final Iterator<? extends E>[] iterators) {
+    public static <E> Iterator<E> collatedIterator(final Comparator<? super E> comparator,
+                                                   final Iterator<? extends E>[] iterators) {
         return new CollatingIterator<E>(comparator, iterators);
     }
 
@@ -600,7 +605,8 @@ public class IteratorUtils {
      * @return a new object graph iterator
      * @since 3.1
      */
-    public static <E> Iterator<E> objectGraphIterator(final E root, final Transformer<? super E, ? extends E> transformer) {
+    public static <E> Iterator<E> objectGraphIterator(final E root,
+            final Transformer<? super E, ? extends E> transformer) {
         return new ObjectGraphIterator<E>(root, transformer);
     }
 
@@ -617,7 +623,9 @@ public class IteratorUtils {
      * @return a new transforming iterator
      * @throws NullPointerException if either parameter is null
      */
-    public static <I, O> Iterator<O> transformedIterator(final Iterator<? extends I> iterator, final Transformer<? super I, ? extends O> transform) {
+    public static <I, O> Iterator<O> transformedIterator(final Iterator<? extends I> iterator,
+            final Transformer<? super I, ? extends O> transform) {
+
         if (iterator == null) {
             throw new NullPointerException("Iterator must not be null");
         }
@@ -640,7 +648,8 @@ public class IteratorUtils {
      * @return a new filtered iterator
      * @throws NullPointerException if either parameter is null
      */
-    public static <E> Iterator<E> filteredIterator(final Iterator<? extends E> iterator, final Predicate<? super E> predicate) {
+    public static <E> Iterator<E> filteredIterator(final Iterator<? extends E> iterator,
+                                                   final Predicate<? super E> predicate) {
         if (iterator == null) {
             throw new NullPointerException("Iterator must not be null");
         }
@@ -661,7 +670,9 @@ public class IteratorUtils {
      * @return a new filtered iterator
      * @throws NullPointerException if either parameter is null
      */
-    public static <E> ListIterator<E> filteredListIterator(final ListIterator<? extends E> listIterator, final Predicate<? super E> predicate) {
+    public static <E> ListIterator<E> filteredListIterator(final ListIterator<? extends E> listIterator,
+            final Predicate<? super E> predicate) {
+
         if (listIterator == null) {
             throw new NullPointerException("ListIterator must not be null");
         }
@@ -732,7 +743,8 @@ public class IteratorUtils {
      * @param removeCollection  the collection to remove elements from
      * @return a new iterator
      */
-    public static <E> Iterator<E> asIterator(final Enumeration<? extends E> enumeration, final Collection<? super E> removeCollection) {
+    public static <E> Iterator<E> asIterator(final Enumeration<? extends E> enumeration,
+                                             final Collection<? super E> removeCollection) {
         if (enumeration == null) {
             throw new NullPointerException("Enumeration must not be null");
         }

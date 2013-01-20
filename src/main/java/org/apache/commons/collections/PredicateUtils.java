@@ -244,7 +244,8 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if the method name is null
      * @throws IllegalArgumentException if the paramTypes and args don't match
      */
-    public static <T> Predicate<T> invokerPredicate(final String methodName, final Class<?>[] paramTypes, final Object[] args){
+    public static <T> Predicate<T> invokerPredicate(final String methodName, final Class<?>[] paramTypes,
+                                                    final Object[] args) {
         // reuse transformer as it has caching - this is lazy really, should have inner class here
         return asPredicate(InvokerTransformer.<Object, Boolean>invokerTransformer(methodName, paramTypes, args));
     }
@@ -263,7 +264,8 @@ public class PredicateUtils {
      * @return the <code>and</code> predicate
      * @throws IllegalArgumentException if either predicate is null
      */
-    public static <T> Predicate<T> andPredicate(final Predicate<? super T> predicate1, final Predicate<? super T> predicate2) {
+    public static <T> Predicate<T> andPredicate(final Predicate<? super T> predicate1,
+                                                final Predicate<? super T> predicate2) {
         return AndPredicate.<T>andPredicate(predicate1, predicate2);
     }
 
@@ -312,7 +314,8 @@ public class PredicateUtils {
      * @return the <code>or</code> predicate
      * @throws IllegalArgumentException if either predicate is null
      */
-    public static <T> Predicate<T> orPredicate(final Predicate<? super T> predicate1, final Predicate<? super T> predicate2) {
+    public static <T> Predicate<T> orPredicate(final Predicate<? super T> predicate1,
+                                               final Predicate<? super T> predicate2) {
         return OrPredicate.<T>orPredicate(predicate1, predicate2);
     }
 
@@ -359,7 +362,8 @@ public class PredicateUtils {
      * @return the <code>either</code> predicate
      * @throws IllegalArgumentException if either predicate is null
      */
-    public static <T> Predicate<T> eitherPredicate(final Predicate<? super T> predicate1, final Predicate<? super T> predicate2) {
+    public static <T> Predicate<T> eitherPredicate(final Predicate<? super T> predicate1,
+                                                   final Predicate<? super T> predicate2) {
         @SuppressWarnings("unchecked")
         final
         Predicate<T> onePredicate = PredicateUtils.<T>onePredicate(predicate1, predicate2);
@@ -409,7 +413,8 @@ public class PredicateUtils {
      * @return the <code>neither</code> predicate
      * @throws IllegalArgumentException if either predicate is null
      */
-    public static <T> Predicate<T> neitherPredicate(final Predicate<? super T> predicate1, final Predicate<? super T> predicate2) {
+    public static <T> Predicate<T> neitherPredicate(final Predicate<? super T> predicate1,
+                                                    final Predicate<? super T> predicate2) {
         @SuppressWarnings("unchecked")
         final
         Predicate<T> nonePredicate = PredicateUtils.<T>nonePredicate(predicate1, predicate2);

@@ -52,7 +52,8 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
      * @return a new transformed set
      * @throws IllegalArgumentException if set or transformer is null
      */
-    public static <E> TransformedSet<E> transformingSet(final Set<E> set, final Transformer<? super E, ? extends E> transformer) {
+    public static <E> TransformedSet<E> transformingSet(final Set<E> set,
+            final Transformer<? super E, ? extends E> transformer) {
         return new TransformedSet<E>(set, transformer);
     }
     

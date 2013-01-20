@@ -73,7 +73,8 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
      * @param keyTransformer  {@link Transformer} for generating index keys
      * @param map  map to use as index
      */
-    public IndexedCollection(final Collection<C> coll, final Transformer<C, K> keyTransformer, final HashMap<K, C> map) {
+    public IndexedCollection(final Collection<C> coll, final Transformer<C, K> keyTransformer,
+                             final HashMap<K, C> map) {
         super(coll);
         this.keyTransformer = keyTransformer;
         this.index = new HashMap<K, C>();

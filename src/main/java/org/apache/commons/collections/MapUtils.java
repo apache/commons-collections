@@ -1076,7 +1076,8 @@ public class MapUtils {
      * @param value  the value, null converted to ""
      * @throws NullPointerException if the map is null
      */
-    public static <K> void safeAddToMap(final Map<? super K, Object> map, final K key, final Object value) throws NullPointerException {
+    public static <K> void safeAddToMap(final Map<? super K, Object> map, final K key, final Object value)
+            throws NullPointerException {
         map.put(key, value == null ? "" : value);
     }
 
@@ -1258,7 +1259,8 @@ public class MapUtils {
      * @return a predicated map backed by the given map
      * @throws IllegalArgumentException  if the Map is null
      */
-    public static <K, V> IterableMap<K, V> predicatedMap(final Map<K, V> map, final Predicate<? super K> keyPred, final Predicate<? super V> valuePred) {
+    public static <K, V> IterableMap<K, V> predicatedMap(final Map<K, V> map, final Predicate<? super K> keyPred,
+                                                         final Predicate<? super V> valuePred) {
         return PredicatedMap.predicatedMap(map, keyPred, valuePred);
     }
 
@@ -1370,7 +1372,8 @@ public class MapUtils {
      * @return a lazy map backed by the given map
      * @throws IllegalArgumentException  if the Map or Transformer is null
      */
-    public static <K, V> IterableMap<K, V> lazyMap(final Map<K, V> map, final Transformer<? super K, ? extends V> transformerFactory) {
+    public static <K, V> IterableMap<K, V> lazyMap(final Map<K, V> map,
+            final Transformer<? super K, ? extends V> transformerFactory) {
         return LazyMap.lazyMap(map, transformerFactory);
     }
 
@@ -1413,7 +1416,8 @@ public class MapUtils {
      * @see MultiValueMap
      * @since 3.2
      */
-    public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(final Map<K, C> map, final Class<C> collectionClass) {
+    public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(final Map<K, C> map,
+            final Class<C> collectionClass) {
         return MultiValueMap.multiValueMap(map, collectionClass);
     }
 
@@ -1428,7 +1432,8 @@ public class MapUtils {
      * @see MultiValueMap
      * @since 3.2
      */
-    public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(final Map<K, C> map, final Factory<C> collectionFactory) {
+    public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(final Map<K, C> map,
+            final Factory<C> collectionFactory) {
         return MultiValueMap.multiValueMap(map, collectionFactory);
     }
 
@@ -1619,7 +1624,8 @@ public class MapUtils {
      * @param keyTransformer the <code>Transformer</code> used to transform the collection value into a key value
      * @throws NullPointerException if the map, collection or transformer are null
      */
-    public static <K, V> void populateMap(final Map<K, V> map, final Collection<? extends V> collection, final Transformer<V, K> keyTransformer) {
+    public static <K, V> void populateMap(final Map<K, V> map, final Collection<? extends V> collection,
+                                          final Transformer<V, K> keyTransformer) {
         populateMap(map, collection, keyTransformer, TransformerUtils.<V>nopTransformer());
     }
 
@@ -1635,8 +1641,8 @@ public class MapUtils {
      * @throws NullPointerException if the map, collection or transformers are null
      */
     public static <K, V, E> void populateMap(final Map<K, V> map, final Collection<? extends E> collection, 
-            final Transformer<E, K> keyTransformer, 
-            final Transformer<E, V> valueTransformer) {
+                                             final Transformer<E, K> keyTransformer, 
+                                             final Transformer<E, V> valueTransformer) {
         final Iterator<? extends E> iter = collection.iterator();
         while (iter.hasNext()) {
             final E temp = iter.next();

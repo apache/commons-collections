@@ -52,7 +52,7 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
      * @throws IllegalArgumentException if bag or transformer is null
      */
     public static <E> TransformedSortedBag<E> transformingSortedBag(final SortedBag<E> bag,
-                                                                    final Transformer<? super E, ? extends E> transformer) {
+            final Transformer<? super E, ? extends E> transformer) {
         return new TransformedSortedBag<E>(bag, transformer);
     }
     
@@ -72,7 +72,8 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
      * @since 3.3
      */
     public static <E> TransformedSortedBag<E> transformedSortedBag(final SortedBag<E> bag,
-                                                                   final Transformer<? super E, ? extends E> transformer) {
+            final Transformer<? super E, ? extends E> transformer) {
+
         final TransformedSortedBag<E>  decorated = new TransformedSortedBag<E>(bag, transformer);
         if (transformer != null && bag != null && bag.size() > 0) {
             @SuppressWarnings("unchecked") // bag is type E

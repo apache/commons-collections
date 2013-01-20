@@ -136,7 +136,8 @@ public class IdentityMap<K, V>
      * @return the newly created entry
      */
     @Override
-    protected IdentityEntry<K, V> createEntry(final HashEntry<K, V> next, final int hashCode, final K key, final V value) {
+    protected IdentityEntry<K, V> createEntry(final HashEntry<K, V> next, final int hashCode,
+                                              final K key, final V value) {
         return new IdentityEntry<K, V>(next, hashCode, key, value);
     }
 

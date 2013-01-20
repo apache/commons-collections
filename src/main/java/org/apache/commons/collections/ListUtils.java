@@ -430,7 +430,8 @@ public class ListUtils {
      * @return a transformed list backed by the given list
      * @throws IllegalArgumentException  if the List or Transformer is null
      */
-    public static <E> List<E> transformedList(final List<E> list, final Transformer<? super E, ? extends E> transformer) {
+    public static <E> List<E> transformedList(final List<E> list,
+                                              final Transformer<? super E, ? extends E> transformer) {
         return TransformedList.transformingList(list, transformer);
     }
     

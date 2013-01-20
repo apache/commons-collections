@@ -88,7 +88,9 @@ public class TransformedSortedMap<K, V>
     public static <K, V> TransformedSortedMap<K, V> transformedSortedMap(final SortedMap<K, V> map,
             final Transformer<? super K, ? extends K> keyTransformer,
             final Transformer<? super V, ? extends V> valueTransformer) {
-        final TransformedSortedMap<K, V> decorated = new TransformedSortedMap<K, V>(map, keyTransformer, valueTransformer);
+
+        final TransformedSortedMap<K, V> decorated =
+                new TransformedSortedMap<K, V>(map, keyTransformer, valueTransformer);
         if (map.size() > 0) {
             final Map<K, V> transformed = decorated.transformMap(map);
             decorated.clear();

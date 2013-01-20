@@ -187,7 +187,8 @@ public class BufferUtils {
      * @return a transformed buffer backed by the given buffer
      * @throws IllegalArgumentException  if the Buffer or Transformer is null
      */
-    public static <E> Buffer<E> transformingBuffer(final Buffer<E> buffer, final Transformer<? super E, ? extends E> transformer) {
+    public static <E> Buffer<E> transformingBuffer(final Buffer<E> buffer,
+            final Transformer<? super E, ? extends E> transformer) {
         return TransformedBuffer.transformingBuffer(buffer, transformer);
     }
 

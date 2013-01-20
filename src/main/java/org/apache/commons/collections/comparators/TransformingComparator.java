@@ -63,7 +63,8 @@ public class TransformingComparator<E> implements Comparator<E>, Serializable {
      * @param transformer  what will transform the arguments to <code>compare</code>
      * @param decorated  the decorated Comparator
      */
-    public TransformingComparator(final Transformer<? super E, ? extends E> transformer, final Comparator<E> decorated) {
+    public TransformingComparator(final Transformer<? super E, ? extends E> transformer,
+                                  final Comparator<E> decorated) {
         this.decorated = decorated;
         this.transformer = transformer;
     }

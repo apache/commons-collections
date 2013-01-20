@@ -73,7 +73,8 @@ public class LazySortedMap<K,V>
      * @return a new lazy sorted map
      * @throws IllegalArgumentException if map or factory is null
      */
-    public static <K, V> LazySortedMap<K, V> lazySortedMap(final SortedMap<K, V> map, final Factory<? extends V> factory) {
+    public static <K, V> LazySortedMap<K, V> lazySortedMap(final SortedMap<K, V> map,
+                                                           final Factory<? extends V> factory) {
         return new LazySortedMap<K,V>(map, factory);
     }
 

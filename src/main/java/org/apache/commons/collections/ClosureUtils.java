@@ -172,7 +172,8 @@ public class ClosureUtils {
      * @throws IllegalArgumentException if the method name is null
      * @throws IllegalArgumentException if the paramTypes and args don't match
      */
-    public static <E> Closure<E> invokerClosure(final String methodName, final Class<?>[] paramTypes, final Object[] args) {
+    public static <E> Closure<E> invokerClosure(final String methodName, final Class<?>[] paramTypes,
+                                                final Object[] args) {
         // reuse transformer as it has caching - this is lazy really, should have inner class here
         return asClosure(InvokerTransformer.<E, Object>invokerTransformer(methodName, paramTypes, args));
     }
@@ -237,7 +238,8 @@ public class ClosureUtils {
      * @throws IllegalArgumentException if the closure is null
      * @since 3.2
      */
-    public static <E> Closure<E> ifClosure(final Predicate<? super E> predicate, final Closure<? super E> trueClosure) {
+    public static <E> Closure<E> ifClosure(final Predicate<? super E> predicate,
+                                           final Closure<? super E> trueClosure) {
         return IfClosure.<E>ifClosure(predicate, trueClosure);
     }
 
@@ -277,7 +279,8 @@ public class ClosureUtils {
      * @throws IllegalArgumentException if any element in the arrays is null
      * @throws IllegalArgumentException if the arrays are different sizes
      */
-    public static <E> Closure<E> switchClosure(final Predicate<? super E>[] predicates, final Closure<? super E>[] closures) {
+    public static <E> Closure<E> switchClosure(final Predicate<? super E>[] predicates,
+                                               final Closure<? super E>[] closures) {
         return SwitchClosure.<E>switchClosure(predicates, closures, null);
     }
 

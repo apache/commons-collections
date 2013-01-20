@@ -489,7 +489,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @param key  the key to add
      * @param value  the value to add
      */
-    protected void reuseEntry(final HashEntry<K, V> entry, final int hashIndex, final int hashCode, final K key, final V value) {
+    protected void reuseEntry(final HashEntry<K, V> entry, final int hashIndex, final int hashCode,
+                              final K key, final V value) {
         entry.next = data[hashIndex];
         entry.hashCode = hashCode;
         entry.key = key;

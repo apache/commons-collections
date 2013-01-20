@@ -572,7 +572,8 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param key5  the fifth key
      * @return true if the map contains the key
      */
-    public boolean containsKey(final Object key1, final Object key2, final Object key3, final Object key4, final Object key5) {
+    public boolean containsKey(final Object key1, final Object key2, final Object key3,
+                               final Object key4, final Object key5) {
         final int hashCode = hash(key1, key2, key3, key4, key5);
         AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry =
                 decorated().data[decorated().hashIndex(hashCode, decorated().data.length)];

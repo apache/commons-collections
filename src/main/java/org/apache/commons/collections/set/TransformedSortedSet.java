@@ -53,7 +53,7 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      * @throws IllegalArgumentException if set or transformer is null
      */
     public static <E> TransformedSortedSet<E> transformingSortedSet(final SortedSet<E> set,
-                                                                    final Transformer<? super E, ? extends E> transformer) {
+            final Transformer<? super E, ? extends E> transformer) {
         return new TransformedSortedSet<E>(set, transformer);
     }
     
@@ -73,7 +73,8 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      * @since 3.3
      */
     public static <E> TransformedSortedSet<E> transformedSortedSet(final SortedSet<E> set,
-                                                                   final Transformer<? super E, ? extends E> transformer) {
+            final Transformer<? super E, ? extends E> transformer) {
+
         final TransformedSortedSet<E> decorated = new TransformedSortedSet<E>(set, transformer);
         if (transformer != null && set != null && set.size() > 0) {
             @SuppressWarnings("unchecked") // set is type E

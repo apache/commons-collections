@@ -90,7 +90,9 @@ public class ComparatorUtils {
      * @throws NullPointerException if comparators array is null or contains a null
      * @see ComparatorChain
      */
-    public static <E extends Comparable<? super E>> Comparator<E> chainedComparator(final Comparator<E>[] comparators) {
+    public static <E extends Comparable<? super E>> Comparator<E> chainedComparator(
+            final Comparator<E>[] comparators) {
+
         final ComparatorChain<E> chain = new ComparatorChain<E>();
         for (final Comparator<E> comparator : comparators) {
             if (comparator == null) {
@@ -113,7 +115,9 @@ public class ComparatorUtils {
      * @see ComparatorChain
      */
     @SuppressWarnings("unchecked")
-    public static <E extends Comparable<? super E>> Comparator<E> chainedComparator(final Collection<Comparator<E>> comparators) {
+    public static <E extends Comparable<? super E>> Comparator<E> chainedComparator(
+            final Collection<Comparator<E>> comparators) {
+        
         return chainedComparator(
             (Comparator<E>[]) comparators.toArray(new Comparator[comparators.size()])
         );
@@ -197,7 +201,9 @@ public class ComparatorUtils {
      * @see  TransformingComparator
      */
     @SuppressWarnings("unchecked")
-    public static <E> Comparator<E> transformedComparator(Comparator<E> comparator, final Transformer<? super E, ? extends E> transformer) {
+    public static <E> Comparator<E> transformedComparator(Comparator<E> comparator,
+            final Transformer<? super E, ? extends E> transformer) {
+
         if (comparator == null) {
             comparator = NATURAL_COMPARATOR;
         }

@@ -168,7 +168,8 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
         /** The parent map */
         private final AbstractInputCheckedMapDecorator<K, V> parent;
 
-        protected EntrySetIterator(final Iterator<Map.Entry<K, V>> iterator, final AbstractInputCheckedMapDecorator<K, V> parent) {
+        protected EntrySetIterator(final Iterator<Map.Entry<K, V>> iterator,
+                                   final AbstractInputCheckedMapDecorator<K, V> parent) {
             super(iterator);
             this.parent = parent;
         }

@@ -105,7 +105,8 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
      * @param reverseMap  the reverse direction map
      * @param inverseBidiMap  the inverse BidiMap
      */
-    protected DualTreeBidiMap(final Map<K, V> normalMap, final Map<V, K> reverseMap, final BidiMap<V, K> inverseBidiMap) {
+    protected DualTreeBidiMap(final Map<K, V> normalMap, final Map<V, K> reverseMap,
+                              final BidiMap<V, K> inverseBidiMap) {
         super(normalMap, reverseMap, inverseBidiMap);
         this.comparator = ((SortedMap<K, V>) normalMap).comparator();
         this.valueComparator = ((SortedMap<V, K>) reverseMap).comparator();
@@ -120,7 +121,8 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
      * @return new bidi map
      */
     @Override
-    protected DualTreeBidiMap<V, K> createBidiMap(final Map<V, K> normalMap, final Map<K, V> reverseMap, final BidiMap<K, V> inverseMap) {
+    protected DualTreeBidiMap<V, K> createBidiMap(final Map<V, K> normalMap, final Map<K, V> reverseMap,
+                                                  final BidiMap<K, V> inverseMap) {
         return new DualTreeBidiMap<V, K>(normalMap, reverseMap, inverseMap);
     }
 

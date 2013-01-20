@@ -337,7 +337,9 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if any transformer in the map is null
      */
     @SuppressWarnings("unchecked")
-    public static <I, O> Transformer<I, O> switchMapTransformer(final Map<I, Transformer<I, O>> objectsAndTransformers) {
+    public static <I, O> Transformer<I, O> switchMapTransformer(
+            final Map<I, Transformer<I, O>> objectsAndTransformers) {
+
         Transformer<? super I, ? extends O>[] trs = null;
         Predicate<I>[] preds = null;
         if (objectsAndTransformers == null) {
@@ -411,7 +413,7 @@ public class TransformerUtils {
      * @return the transformer
      * @throws IllegalArgumentException if the methodName is null.
      */
-    public static <I, O> Transformer<I, O> invokerTransformer(final String methodName){
+    public static <I, O> Transformer<I, O> invokerTransformer(final String methodName) {
         return InvokerTransformer.<I, O>invokerTransformer(methodName, null, null);
     }
 
@@ -429,7 +431,8 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if the method name is null
      * @throws IllegalArgumentException if the paramTypes and args don't match
      */
-    public static <I, O> Transformer<I, O> invokerTransformer(final String methodName, final Class<?>[] paramTypes, final Object[] args){
+    public static <I, O> Transformer<I, O> invokerTransformer(final String methodName, final Class<?>[] paramTypes,
+                                                              final Object[] args) {
         return InvokerTransformer.<I, O>invokerTransformer(methodName, paramTypes, args);
     }
 

@@ -699,8 +699,9 @@ public class CollectionUtils {
      *            and predicate or not null
      * @return outputCollection
      */
-    public static <O, R extends Collection<? super O>> R selectRejected(
-            final Collection<? extends O> inputCollection, final Predicate<? super O> predicate, final R outputCollection) {
+    public static <O, R extends Collection<? super O>> R selectRejected(final Collection<? extends O> inputCollection,
+            final Predicate<? super O> predicate, final R outputCollection) {
+
         if (inputCollection != null && predicate != null) {
             for (final O item : inputCollection) {
                 if (!predicate.evaluate(item)) {
@@ -1213,7 +1214,8 @@ public class CollectionUtils {
             return ((BoundedCollection<?>) coll).isFull();
         }
         try {
-            final BoundedCollection<?> bcoll = UnmodifiableBoundedCollection.unmodifiableBoundedCollection((Collection<Object>) coll);
+            final BoundedCollection<?> bcoll =
+                    UnmodifiableBoundedCollection.unmodifiableBoundedCollection((Collection<Object>) coll);
             return bcoll.isFull();
         } catch (final IllegalArgumentException ex) {
             return false;
@@ -1244,7 +1246,8 @@ public class CollectionUtils {
             return ((BoundedCollection<?>) coll).maxSize();
         }
         try {
-            final BoundedCollection<?> bcoll = UnmodifiableBoundedCollection.unmodifiableBoundedCollection((Collection<Object>) coll);
+            final BoundedCollection<?> bcoll =
+                    UnmodifiableBoundedCollection.unmodifiableBoundedCollection((Collection<Object>) coll);
             return bcoll.maxSize();
         } catch (final IllegalArgumentException ex) {
             return -1;
@@ -1345,7 +1348,8 @@ public class CollectionUtils {
      * @return a predicated collection backed by the given collection
      * @throws IllegalArgumentException  if the Collection is null
      */
-    public static <C> Collection<C> predicatedCollection(final Collection<C> collection, final Predicate<? super C> predicate) {
+    public static <C> Collection<C> predicatedCollection(final Collection<C> collection,
+                                                         final Predicate<? super C> predicate) {
         return PredicatedCollection.predicatedCollection(collection, predicate);
     }
 
@@ -1364,7 +1368,8 @@ public class CollectionUtils {
      * @return a transformed collection backed by the given collection
      * @throws IllegalArgumentException  if the Collection or Transformer is null
      */
-    public static <E> Collection<E> transformingCollection(final Collection<E> collection, final Transformer<? super E, ? extends E> transformer) {
+    public static <E> Collection<E> transformingCollection(final Collection<E> collection,
+            final Transformer<? super E, ? extends E> transformer) {
         return TransformedCollection.transformingCollection(collection, transformer);
     }
 

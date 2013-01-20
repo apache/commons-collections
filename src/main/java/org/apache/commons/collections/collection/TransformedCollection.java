@@ -58,7 +58,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * @throws IllegalArgumentException if collection or transformer is null
      */
     public static <E> TransformedCollection<E> transformingCollection(final Collection<E> coll,
-                                                                      final Transformer<? super E, ? extends E> transformer) {
+            final Transformer<? super E, ? extends E> transformer) {
         return new TransformedCollection<E>(coll, transformer);
     }
 
@@ -78,7 +78,8 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * @since 3.3
      */
     public static <E> TransformedCollection<E> transformedCollection(final Collection<E> collection,
-                                                                     final Transformer<? super E, ? extends E> transformer) {
+            final Transformer<? super E, ? extends E> transformer) {
+
         final TransformedCollection<E> decorated = new TransformedCollection<E>(collection, transformer);
         // null collection & transformer are disallowed by the constructor call above 
         if (collection.size() > 0) {

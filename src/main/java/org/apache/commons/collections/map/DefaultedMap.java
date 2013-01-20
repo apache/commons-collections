@@ -120,7 +120,8 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @return a new defaulting map
      * @throws IllegalArgumentException if map or factory is null
      */
-    public static <K, V> Map<K, V> defaultedMap(final Map<K, V> map, final Transformer<? super K, ? extends V> transformer) {
+    public static <K, V> Map<K, V> defaultedMap(final Map<K, V> map,
+                                                final Transformer<? super K, ? extends V> transformer) {
         if (transformer == null) {
            throw new IllegalArgumentException("Transformer must not be null");
        }
