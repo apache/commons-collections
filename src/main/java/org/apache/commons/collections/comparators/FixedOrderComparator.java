@@ -181,7 +181,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      */
     public boolean add(final T obj) {
         checkLocked();
-        final Integer position = map.put(obj, new Integer(counter++));
+        final Integer position = map.put(obj, Integer.valueOf(counter++));
         return position == null;
     }
 

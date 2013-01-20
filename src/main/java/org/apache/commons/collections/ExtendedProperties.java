@@ -1499,7 +1499,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * by the key has not a valid number format.
      */
     public long getLong(final String key, final long defaultValue) {
-        return getLong(key, new Long(defaultValue)).longValue();
+        return getLong(key, Long.valueOf(defaultValue)).longValue();
     }
 
     /**
