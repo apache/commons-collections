@@ -218,7 +218,7 @@ public class MapUtils {
         if (answer instanceof Byte) {
             return (Byte) answer;
         }
-        return new Byte(answer.byteValue());
+        return Byte.valueOf(answer.byteValue());
     }
 
     /**
@@ -238,7 +238,7 @@ public class MapUtils {
         if (answer instanceof Short) {
             return (Short) answer;
         }
-        return new Short(answer.shortValue());
+        return Short.valueOf(answer.shortValue());
     }
 
     /**
@@ -258,7 +258,7 @@ public class MapUtils {
         if (answer instanceof Integer) {
             return (Integer) answer;
         }
-        return new Integer(answer.intValue());
+        return Integer.valueOf(answer.intValue());
     }
 
     /**
@@ -278,7 +278,7 @@ public class MapUtils {
         if (answer instanceof Long) {
             return (Long) answer;
         }
-        return new Long(answer.longValue());
+        return Long.valueOf(answer.longValue());
     }
 
     /**
@@ -298,7 +298,7 @@ public class MapUtils {
         if (answer instanceof Float) {
             return (Float) answer;
         }
-        return new Float(answer.floatValue());
+        return Float.valueOf(answer.floatValue());
     }
 
     /**
@@ -318,7 +318,7 @@ public class MapUtils {
         if (answer instanceof Double) {
             return (Double) answer;
         }
-        return new Double(answer.doubleValue());
+        return Double.valueOf(answer.doubleValue());
     }
 
     /**
