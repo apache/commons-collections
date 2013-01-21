@@ -111,7 +111,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
     }
 
     /**
-     * Executes the true or false closure accoring to the result of the predicate.
+     * Executes the true or false closure according to the result of the predicate.
      * 
      * @param input  the input object
      */
