@@ -65,6 +65,7 @@ public class ClosureUtils {
      *
      * @see org.apache.commons.collections.functors.ExceptionClosure
      * 
+     * @param <E>  the type that the closure acts on
      * @return the closure
      */
     public static <E> Closure<E> exceptionClosure() {
@@ -76,7 +77,8 @@ public class ClosureUtils {
      * This could be useful during testing as a placeholder.
      *
      * @see org.apache.commons.collections.functors.NOPClosure
-     * 
+     *
+     * @param <E>  the type that the closure acts on
      * @return the closure
      */
     public static <E> Closure<E> nopClosure() {
@@ -90,6 +92,7 @@ public class ClosureUtils {
      *
      * @see org.apache.commons.collections.functors.TransformerClosure
      * 
+     * @param <E>  the type that the closure acts on
      * @param transformer  the transformer to run each time in the closure, null means nop
      * @return the closure
      */
@@ -104,6 +107,7 @@ public class ClosureUtils {
      *
      * @see org.apache.commons.collections.functors.ForClosure
      * 
+     * @param <E>  the type that the closure acts on
      * @param count  the number of times to loop
      * @param closure  the closure to call repeatedly
      * @return the <code>for</code> closure
@@ -118,6 +122,7 @@ public class ClosureUtils {
      *
      * @see org.apache.commons.collections.functors.WhileClosure
      * 
+     * @param <E>  the type that the closure acts on
      * @param predicate  the predicate to use as an end of loop test, not null
      * @param closure  the closure to call repeatedly, not null
      * @return the <code>while</code> closure
@@ -133,12 +138,14 @@ public class ClosureUtils {
      *
      * @see org.apache.commons.collections.functors.WhileClosure
      * 
+     * @param <E>  the type that the closure acts on
      * @param closure  the closure to call repeatedly, not null
      * @param predicate  the predicate to use as an end of loop test, not null
      * @return the <code>do-while</code> closure
      * @throws IllegalArgumentException if either argument is null
      */
-    public static <E> Closure<E> doWhileClosure(final Closure<? super E> closure, final Predicate<? super E> predicate) {
+    public static <E> Closure<E> doWhileClosure(final Closure<? super E> closure,
+                                                final Predicate<? super E> predicate) {
         return WhileClosure.<E>whileClosure(predicate, closure, true);
     }
 
@@ -149,6 +156,7 @@ public class ClosureUtils {
      * @see org.apache.commons.collections.functors.InvokerTransformer
      * @see org.apache.commons.collections.functors.TransformerClosure
      * 
+     * @param <E>  the type that the closure acts on
      * @param methodName  the name of the method
      * @return the <code>invoker</code> closure
      * @throws IllegalArgumentException if the method name is null
@@ -164,7 +172,8 @@ public class ClosureUtils {
      *
      * @see org.apache.commons.collections.functors.InvokerTransformer
      * @see org.apache.commons.collections.functors.TransformerClosure
-     * 
+     *
+     * @param <E>  the type that the closure acts on
      * @param methodName  the name of the method
      * @param paramTypes  the parameter types
      * @param args  the arguments
@@ -184,6 +193,7 @@ public class ClosureUtils {
      * 
      * @see org.apache.commons.collections.functors.ChainedClosure
      * 
+     * @param <E>  the type that the closure acts on
      * @param closure1  the first closure
      * @param closure2  the second closure
      * @return the <code>chained</code> closure
@@ -199,6 +209,7 @@ public class ClosureUtils {
      * 
      * @see org.apache.commons.collections.functors.ChainedClosure
      * 
+     * @param <E>  the type that the closure acts on
      * @param closures  an array of closures to chain
      * @return the <code>chained</code> closure
      * @throws IllegalArgumentException if the closures array is null
@@ -215,6 +226,7 @@ public class ClosureUtils {
      * 
      * @see org.apache.commons.collections.functors.ChainedClosure
      * 
+     * @param <E>  the type that the closure acts on
      * @param closures  a collection of closures to chain
      * @return the <code>chained</code> closure
      * @throws IllegalArgumentException if the closures collection is null
@@ -231,6 +243,7 @@ public class ClosureUtils {
      * 
      * @see org.apache.commons.collections.functors.IfClosure
      * 
+     * @param <E>  the type that the closure acts on
      * @param predicate  the validating predicate
      * @param trueClosure  the closure called if the predicate is true
      * @return the <code>if</code> closure
@@ -249,6 +262,7 @@ public class ClosureUtils {
      * 
      * @see org.apache.commons.collections.functors.IfClosure
      * 
+     * @param <E>  the type that the closure acts on
      * @param predicate  the predicate to switch on
      * @param trueClosure  the closure called if the predicate is true
      * @param falseClosure  the closure called if the predicate is false
@@ -272,6 +286,7 @@ public class ClosureUtils {
      * 
      * @see org.apache.commons.collections.functors.SwitchClosure
      * 
+     * @param <E>  the type that the closure acts on
      * @param predicates  an array of predicates to check, not null
      * @param closures  an array of closures to call, not null
      * @return the <code>switch</code> closure
@@ -295,6 +310,7 @@ public class ClosureUtils {
      * 
      * @see org.apache.commons.collections.functors.SwitchClosure
      * 
+     * @param <E>  the type that the closure acts on
      * @param predicates  an array of predicates to check, not null
      * @param closures  an array of closures to call, not null
      * @param defaultClosure  the default to call if no predicate matches
@@ -322,6 +338,7 @@ public class ClosureUtils {
      * 
      * @see org.apache.commons.collections.functors.SwitchClosure
      * 
+     * @param <E>  the type that the closure acts on
      * @param predicatesAndClosures  a map of predicates to closures
      * @return the <code>switch</code> closure
      * @throws IllegalArgumentException if the map is null
@@ -344,6 +361,7 @@ public class ClosureUtils {
      * 
      * @see org.apache.commons.collections.functors.SwitchClosure
      * 
+     * @param <E>  the type that the closure acts on
      * @param objectsAndClosures  a map of objects to closures
      * @return the closure
      * @throws IllegalArgumentException if the map is null
