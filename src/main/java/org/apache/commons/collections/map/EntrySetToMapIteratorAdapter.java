@@ -41,6 +41,7 @@ public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, Re
 
     /**
      * Create a new EntrySetToMapIteratorAdapter.
+     * @param entrySet  the entrySet to adapt
      */
     public EntrySetToMapIteratorAdapter(final Set<Map.Entry<K, V>> entrySet) {
         this.entrySet = entrySet;

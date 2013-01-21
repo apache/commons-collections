@@ -90,6 +90,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      *
      * @param <K>  the key type
      * @param <V>  the value type
+     * @param <C>  the collection class type
      * @param map  the map to wrap
      * @param collectionClass  the type of the collection class
      * @return a new multi-value map
@@ -105,6 +106,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      *
      * @param <K>  the key type
      * @param <V>  the value type
+     * @param <C>  the collection class type
      * @param map  the map to decorate
      * @param collectionFactory  the collection factory (must return a Collection object).
      * @return a new multi-value map
@@ -128,6 +130,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * Creates a MultiValueMap which decorates the given <code>map</code> and
      * creates the value collections using the supplied <code>collectionFactory</code>.
      *
+     * @param <C>  the collection class type
      * @param map  the map to decorate
      * @param collectionFactory  the collection factory which must return a Collection instance
      */
@@ -307,6 +310,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     /**
      * Checks whether the collection at the specified key contains the value.
      *
+     * @param key  the key to search for
      * @param value  the value to search for
      * @return true if the map contains the value
      */

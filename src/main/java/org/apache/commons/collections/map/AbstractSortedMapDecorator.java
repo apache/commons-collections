@@ -122,14 +122,15 @@ public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecora
     /**
      * OrderedMapIterator implementation.
      *
-     * @param <K>
-     * @param <V>
+     * @param <K>  the key type
+     * @param <V>  the value type
      */
     protected static class SortedMapIterator<K, V> extends EntrySetToMapIteratorAdapter<K, V>
             implements OrderedMapIterator<K, V> {
 
         /**
          * Create a new AbstractSortedMapDecorator.SortedMapIterator.
+         * @param entrySet  the entrySet to iterate
          */
         protected SortedMapIterator(final Set<Map.Entry<K, V>> entrySet) {
             super(entrySet);

@@ -1223,6 +1223,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * what must be serialized here, if anything.
      *
      * @param out  the output stream
+     * @throws IOException if an error occurs while writing tothe stream
      */
     protected void doWriteObject(final ObjectOutputStream out) throws IOException {
         out.writeFloat(loadFactor);
@@ -1251,6 +1252,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * before <code>put()</code> or <code>calculateThreshold()</code> will work correctly.
      *
      * @param in  the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
      */
     @SuppressWarnings("unchecked")
     protected void doReadObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {

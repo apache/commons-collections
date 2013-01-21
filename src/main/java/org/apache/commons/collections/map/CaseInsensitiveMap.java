@@ -35,7 +35,7 @@ import java.util.Map;
  * <p>
  * Example:
  * <pre><code>
- *  Map map = new CaseInsensitiveMap();
+ *  Map&lt;String, String&gt; map = new CaseInsensitiveMap&lt;String, String&gt;();
  *  map.put("One", "One");
  *  map.put("Two", "Two");
  *  map.put(null, "Three");

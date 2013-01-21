@@ -989,6 +989,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * what must be serialized here, if anything.
      *
      * @param out  the output stream
+     * @throws IOException if an error occurs while writing to the stream
      */
     @Override
     protected void doWriteObject(final ObjectOutputStream out) throws IOException {
@@ -1021,6 +1022,8 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * before <code>put()</code> or <code>calculateThreshold()</code> will work correctly.
      *
      * @param in  the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
      */
     @Override
     @SuppressWarnings("unchecked")

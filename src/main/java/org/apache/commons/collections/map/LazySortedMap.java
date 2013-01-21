@@ -56,9 +56,7 @@ import org.apache.commons.collections.Transformer;
  * @since 3.0
  * @version $Id$
  */
-public class LazySortedMap<K,V>
-        extends LazyMap<K,V>
-        implements SortedMap<K,V> {
+public class LazySortedMap<K,V> extends LazyMap<K,V> implements SortedMap<K,V> {
 
     /** Serialization version */
     private static final long serialVersionUID = 2715322183617658933L;
