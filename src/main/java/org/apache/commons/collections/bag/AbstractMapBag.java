@@ -447,15 +447,17 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
 
     /**
      * Returns an array of all of this bag's elements.
+     * If the input array has more elements than are in the bag,
+     * trailing elements will be set to null.
      * 
      * @param <T> the type of the array elements
      * @param array the array to populate
      * @return an array of all of this bag's elements
      */
-    @SuppressWarnings("unchecked")
     public <T> T[] toArray(T[] array) {
         final int size = size();
         if (array.length < size) {
+            // This is safe, both are type T
             array = (T[]) Array.newInstance(array.getClass().getComponentType(), size);
         }
 
@@ -464,6 +466,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         while (it.hasNext()) {
             final E current = it.next();
             for (int index = getCount(current); index > 0; index--) {
+                // TODO this is unsafe
                 array[i++] = (T) current;
             }
         }
