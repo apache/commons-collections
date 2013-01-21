@@ -30,4 +30,14 @@
     <Bug pattern="NP_BOOLEAN_RETURN_NULL" />
   </Match>
 
+  <!--  Flat3Map and its inner classes use intentional switch fall-through. The missing
+        default clause is safe and omitted for better readibility.                       -->
+  <Match>
+	<Class name="~org.apache.commons.collections.map.Flat3Map.*" />
+    <Or>
+	  <Bug pattern="SF_SWITCH_FALLTHROUGH" />
+	  <Bug pattern="SF_SWITCH_NO_DEFAULT" />
+    </Or>
+  </Match>
+
 </FindBugsFilter>
