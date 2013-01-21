@@ -32,13 +32,10 @@ import org.apache.commons.collections.Predicate;
  * @since 3.0
  * @version $Id$
  */
-public final class OnePredicate<T> implements Predicate<T>, PredicateDecorator<T>, Serializable {
+public final class OnePredicate<T> extends AbstractQuantifierPredicate<T> implements Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -8125389089924745785L;
-    
-    /** The array of predicates to call */
-    private final Predicate<? super T>[] iPredicates;
     
     /**
      * Factory to create the predicate.
@@ -85,8 +82,7 @@ public final class OnePredicate<T> implements Predicate<T>, PredicateDecorator<T
      * @param predicates  the predicates to check, not cloned, not null
      */
     public OnePredicate(final Predicate<? super T>[] predicates) {
-        super();
-        iPredicates = predicates;
+        super(predicates);
     }
 
     /**
@@ -107,16 +103,6 @@ public final class OnePredicate<T> implements Predicate<T>, PredicateDecorator<T
             }
         }
         return match;
-    }
-
-    /**
-     * Gets the predicates, do not modify the array.
-     * 
-     * @return the predicates
-     * @since 3.1
-     */
-    public Predicate<? super T>[] getPredicates() {
-        return iPredicates;
     }
 
 }
