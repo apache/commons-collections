@@ -150,7 +150,7 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
         if (key == null) {
             return other == null;
         } else if (other == null) {
-            return key == null;
+            return false;
         }
         
         return keyAnalyzer.compare(key, other) == 0;

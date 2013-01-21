@@ -34,7 +34,7 @@ public abstract class AbstractKeyAnalyzer<K> implements KeyAnalyzer<K> {
         if (o1 == null) {
             return o2 == null ? 0 : -1;
         } else if (o2 == null) {
-            return o1 == null ? 0 : 1;
+            return 1;
         }
         
         return ((Comparable<K>)o1).compareTo(o2);

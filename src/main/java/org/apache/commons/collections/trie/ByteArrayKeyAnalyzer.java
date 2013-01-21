@@ -181,7 +181,7 @@ public class ByteArrayKeyAnalyzer extends AbstractKeyAnalyzer<byte[]> {
         if (o1 == null) {
             return o2 == null ? 0 : -1;
         } else if (o2 == null) {
-            return o1 == null ? 0 : 1;
+            return 1;
         }
         
         if (o1.length != o2.length) {
