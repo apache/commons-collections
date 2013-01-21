@@ -140,23 +140,23 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
     }
 
     /**
-     * Gets the predicates, do not modify the array.
+     * Gets the predicates.
      *
-     * @return the predicates
+     * @return a copy of the predicates
      * @since 3.1
      */
     public Predicate<? super E>[] getPredicates() {
-        return iPredicates;
+        return FunctorUtils.copy(iPredicates);
     }
 
     /**
-     * Gets the closures, do not modify the array.
+     * Gets the closures.
      *
-     * @return the closures
+     * @return a copy of the closures
      * @since 3.1
      */
     public Closure<? super E>[] getClosures() {
-        return iClosures;
+        return FunctorUtils.copy(iClosures);
     }
 
     /**

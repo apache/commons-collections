@@ -105,12 +105,13 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
     }
 
     /**
-     * Gets the transformers, do not modify the array.
-     * @return the transformers
+     * Gets the transformers.
+     *
+     * @return a copy of the transformers
      * @since 3.1
      */
     public Transformer<? super T, ? extends T>[] getTransformers() {
-        return iTransformers;
+        return FunctorUtils.copy(iTransformers);
     }
 
 }

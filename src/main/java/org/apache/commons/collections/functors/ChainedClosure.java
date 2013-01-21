@@ -104,12 +104,13 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
     }
 
     /**
-     * Gets the closures, do not modify the array.
-     * @return the closures
+     * Gets the closures.
+     *
+     * @return a copy of the closures
      * @since 3.1
      */
     public Closure<? super E>[] getClosures() {
-        return iClosures;
+        return FunctorUtils.copy(iClosures);
     }
 
 }
