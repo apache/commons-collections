@@ -146,7 +146,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * @since 3.1
      */
     public Predicate<? super E>[] getPredicates() {
-        return FunctorUtils.copy(iPredicates);
+        return FunctorUtils.<E>copy(iPredicates);
     }
 
     /**
@@ -156,7 +156,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * @since 3.1
      */
     public Closure<? super E>[] getClosures() {
-        return FunctorUtils.copy(iClosures);
+        return FunctorUtils.<E>copy(iClosures);
     }
 
     /**

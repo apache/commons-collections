@@ -51,7 +51,7 @@ public abstract class AbstractQuantifierPredicate<T> implements Predicate<T>, Pr
      * @since 3.1
      */
     public Predicate<? super T>[] getPredicates() {
-        return FunctorUtils.copy(iPredicates);
+        return FunctorUtils.<T>copy(iPredicates);
     }
 
 }
