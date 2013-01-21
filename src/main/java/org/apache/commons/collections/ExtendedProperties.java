@@ -478,6 +478,8 @@ public class ExtendedProperties extends Hashtable<String, Object> {
     /**
      * Indicate to client code whether property
      * resources have been initialized or not.
+     *
+     * @return if this instance has already been initialized
      */
     public boolean isInitialized() {
         return isInitialized;
@@ -964,6 +966,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
      * configuration key.
      *
      * @param key The configuration key.
+     * @param defaults The default properties used to initialize the returned object
      * @return The associated properties if key is found.
      * @throws ClassCastException is thrown if the key maps to an
      * object that is not a String/List.
