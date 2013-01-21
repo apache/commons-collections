@@ -1129,7 +1129,7 @@ public class MapUtils {
      * @throws ClassCastException if the array contents is mixed
      * @since 3.2
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") // As per Javadoc throws CCE for invalid array contents
     public static <K, V> Map<K, V> putAll(final Map<K, V> map, final Object[] array) {
         map.size();  // force NPE
         if (array == null || array.length == 0) {
@@ -1138,11 +1138,13 @@ public class MapUtils {
         final Object obj = array[0];
         if (obj instanceof Map.Entry) {
             for (final Object element : array) {
+                // cast ok here, type is checked above
                 final Map.Entry<K, V> entry = (Map.Entry<K, V>) element;
                 map.put(entry.getKey(), entry.getValue());
             }
         } else if (obj instanceof KeyValue) {
             for (final Object element : array) {
+                // cast ok here, type is checked above
                 final KeyValue<K, V> keyval = (KeyValue<K, V>) element;
                 map.put(keyval.getKey(), keyval.getValue());
             }
@@ -1152,10 +1154,12 @@ public class MapUtils {
                 if (sub == null || sub.length < 2) {
                     throw new IllegalArgumentException("Invalid array element: " + i);
                 }
+                // these casts can fail if array has incorrect types
                 map.put((K) sub[0], (V) sub[1]);
             }
         } else {
             for (int i = 0; i < array.length - 1;) {
+                // these casts can fail if array has incorrect types
                 map.put((K) array[i++], (V) array[i++]);
             }
         }

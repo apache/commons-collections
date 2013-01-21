@@ -69,7 +69,7 @@ public class SetUtils {
      * @param <E> the element type
      * @return an empty sorted Set
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") // empty set is OK for any type
     public static <E> SortedSet<E> emptySortedSet() {
         return (SortedSet<E>) EMPTY_SORTED_SET;
     }

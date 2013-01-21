@@ -198,7 +198,7 @@ public class BufferUtils {
      * @param <E> the type of the elements in the buffer
      * @return an empty {@link Buffer}
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") // OK, empty buffer is compatible with any type
     public static <E> Buffer<E> emptyBuffer() {
         return (Buffer<E>) EMPTY_BUFFER;
     }

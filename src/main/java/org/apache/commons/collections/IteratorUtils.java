@@ -846,7 +846,6 @@ public class IteratorUtils {
      * @throws NullPointerException if arrayClass is null
      * @throws ClassCastException if the arrayClass is invalid
      */
-    @SuppressWarnings("unchecked")
     public static <E> E[] toArray(final Iterator<? extends E> iterator, final Class<E> arrayClass) {
         if (iterator == null) {
             throw new NullPointerException("Iterator must not be null");
@@ -855,7 +854,9 @@ public class IteratorUtils {
             throw new NullPointerException("Array class must not be null");
         }
         final List<E> list = toList(iterator, 100);
-        return list.toArray((E[]) Array.newInstance(arrayClass, list.size()));
+        @SuppressWarnings("unchecked") // as per Javadoc, will throw CCE if class is wrong
+        final E[] array = (E[]) Array.newInstance(arrayClass, list.size());
+        return list.toArray(array);
     }
 
     /**

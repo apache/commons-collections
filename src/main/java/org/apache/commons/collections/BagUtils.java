@@ -230,7 +230,7 @@ public class BagUtils {
      * @param <E> the element type
      * @return an empty Bag
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") // OK, empty bag is compatible with any type
     public static <E> Bag<E> emptyBag() {
         return (Bag<E>) EMPTY_BAG;        
     }
@@ -241,7 +241,7 @@ public class BagUtils {
      * @param <E> the element type
      * @return an empty sorted Bag
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") // OK, empty bag is compatible with any type
     public static <E> SortedBag<E> emptySortedBag() {
         return (SortedBag<E>) EMPTY_SORTED_BAG;        
     }
