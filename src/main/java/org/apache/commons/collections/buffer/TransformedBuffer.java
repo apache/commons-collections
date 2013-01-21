@@ -77,8 +77,7 @@ public class TransformedBuffer<E> extends TransformedCollection<E> implements Bu
         final TransformedBuffer<E> decorated = new TransformedBuffer<E>(buffer, transformer); 
         if (buffer.size() > 0) {
             @SuppressWarnings("unchecked") // buffer is type <E>
-            final
-            E[] values = (E[]) buffer.toArray();
+            final E[] values = (E[]) buffer.toArray();
             buffer.clear();
             for (final E value : values) {
                 decorated.decorated().add(transformer.transform(value));

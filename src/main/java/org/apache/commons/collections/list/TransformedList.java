@@ -80,8 +80,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
         final TransformedList<E> decorated = new TransformedList<E>(list, transformer);
         if (transformer != null && list != null && list.size() > 0) {
             @SuppressWarnings("unchecked") // list is of type E
-            final
-            E[] values = (E[]) list.toArray();
+            final E[] values = (E[]) list.toArray();
             list.clear();
             for (final E value : values) {
                 decorated.decorated().add(transformer.transform(value));

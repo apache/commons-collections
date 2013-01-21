@@ -49,8 +49,8 @@ import org.apache.commons.collections.map.LinkedMap;
  * much of the usefulness of having parameterized types.
  * <p>
  * On the downside, this class is not drop-in compatible with {@link java.util.Map}
- * but is intended to be worked with either directly or by {@link Put} and {@link org.apache.commons.collections.Get Get}
- * generalizations.
+ * but is intended to be worked with either directly or by {@link Put} and
+ * {@link org.apache.commons.collections.Get Get} generalizations.
  *
  * @since 4.0
  * @version $Id$

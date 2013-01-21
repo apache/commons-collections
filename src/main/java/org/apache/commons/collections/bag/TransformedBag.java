@@ -76,8 +76,7 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
         final TransformedBag<E> decorated = new TransformedBag<E>(bag, transformer);
         if (transformer != null && bag != null && bag.size() > 0) {
             @SuppressWarnings("unchecked") // Bag is of type E
-            final
-            E[] values = (E[]) bag.toArray();
+            final E[] values = (E[]) bag.toArray();
             bag.clear();
             for (final E value : values) {
                 decorated.decorated().add(transformer.transform(value));

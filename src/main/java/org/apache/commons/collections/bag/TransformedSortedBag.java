@@ -77,8 +77,7 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
         final TransformedSortedBag<E>  decorated = new TransformedSortedBag<E>(bag, transformer);
         if (transformer != null && bag != null && bag.size() > 0) {
             @SuppressWarnings("unchecked") // bag is type E
-            final
-            E[] values = (E[]) bag.toArray();
+            final E[] values = (E[]) bag.toArray();
             bag.clear();
             for (final E value : values) {
                 decorated.decorated().add(transformer.transform(value));
