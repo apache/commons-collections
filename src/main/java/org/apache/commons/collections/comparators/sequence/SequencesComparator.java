@@ -41,9 +41,9 @@ import java.util.List;
  * <a href="http://www.cis.upenn.edu/~bcpierce/courses/dd/papers/diff.ps">
  * An O(ND) Difference Algorithm and Its Variations</a>. This algorithm produces
  * the shortest possible
- * {@link org.apache.commons.collections.list.difference.EditScript edit script}
+ * {@link EditScript edit script}
  * containing all the
- * {@link org.apache.commons.collections.list.difference.EditCommand commands}
+ * {@link EditCommand commands}
  * needed to transform the first sequence into the second one.
  * 
  * @see EditScript

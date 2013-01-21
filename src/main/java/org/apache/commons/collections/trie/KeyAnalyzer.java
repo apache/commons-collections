@@ -20,7 +20,7 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 /** 
- * Defines the interface to analyze {@link Trie} keys on a bit level. 
+ * Defines the interface to analyze {@link org.apache.commons.collections.Trie Trie} keys on a bit level. 
  * {@link KeyAnalyzer}'s methods return the length of the key in bits, 
  * whether or not a bit is set, and bits per element in the key. 
  * <p>

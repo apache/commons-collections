@@ -140,11 +140,13 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
     }
 
     /**
-     * This can receive either a {@link CompositeCollection#CollectionMutator} or a
-     * {@link CompositeSet#SetMutator}. If a {@link CompositeCollection#CollectionMutator}
+     * This can receive either a {@link org.apache.commons.collections.collection.CompositeCollection.CollectionMutator CompositeCollection.CollectionMutator} or a
+     * {@link CompositeSet.SetMutator}. 
+     * If a {@link org.apache.commons.collections.collection.CompositeCollection.CollectionMutator CompositeCollection.CollectionMutator}
      * is used than conflicts when adding composited sets will throw IllegalArgumentException.
      * 
-     * @param mutator  the {@link CollectionMutator} to use for this composite
+     * @param mutator  the {@link org.apache.commons.collections.collection.CompositeCollection.CollectionMutator CompositeCollection.CollectionMutator} 
+     * to use for this composite
      */
     @Override
     public void setMutator(final CollectionMutator<E> mutator) {

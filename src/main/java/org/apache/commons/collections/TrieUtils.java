@@ -35,7 +35,7 @@ public class TrieUtils {
     /**
      * Returns a synchronized instance of a {@link Trie}
      * 
-     * @see Collections#synchronizedMap(Map)
+     * @see java.util.Collections#synchronizedMap(java.util.Map)
      */
     public static <K, V> Trie<K, V> synchronizedTrie(final Trie<K, V> trie) {
         return SynchronizedTrie.synchronizedTrie(trie);
@@ -44,7 +44,7 @@ public class TrieUtils {
     /**
      * Returns an unmodifiable instance of a {@link Trie}
      * 
-     * @see Collections#unmodifiableMap(Map)
+     * @see java.util.Collections#unmodifiableMap(java.util.Map)
      */
     public static <K, V> Trie<K, V> unmodifiableTrie(final Trie<K, V> trie) {
         return UnmodifiableTrie.unmodifiableTrie(trie);

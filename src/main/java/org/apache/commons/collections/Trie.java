@@ -98,18 +98,18 @@ public interface Trie<K, V> extends SortedMap<K, V> {
      * value is closest in an XOR metric to the given key. After the closest
      * entry is found, the {@link Trie} will call select on that entry and continue
      * calling select for each entry (traversing in order of XOR closeness,
-     * NOT lexicographically) until the cursor returns {@link Decision#EXIT}.
+     * NOT lexicographically) until the cursor returns {@link Cursor.Decision#EXIT}.
      * <p>
-     * The cursor can return {@link Decision#CONTINUE} to continue traversing.
+     * The cursor can return {@link Cursor.Decision#CONTINUE} to continue traversing.
      * <p>
-     * {@link Decision#REMOVE_AND_EXIT} is used to remove the current element
+     * {@link Cursor.Decision#REMOVE_AND_EXIT} is used to remove the current element
      * and stop traversing.
      * <p>
-     * Note: The {@link Decision#REMOVE} operation is not supported.
+     * Note: The {@link Cursor.Decision#REMOVE} operation is not supported.
      * 
      * @param key  the key to use in the search
      * @param cursor  the cursor used throughout the search
-     * @return the entry the cursor returned {@link Decision#EXIT} on, or null 
+     * @return the entry the cursor returned {@link Cursor.Decision#EXIT} on, or null 
      * if it continued till the end
      */
     public Map.Entry<K,V> select(K key, Cursor<? super K, ? super V> cursor);
@@ -118,16 +118,16 @@ public interface Trie<K, V> extends SortedMap<K, V> {
      * Traverses the {@link Trie} in lexicographical order. 
      * {@link Cursor#select(java.util.Map.Entry)} will be called on each entry.
      * <p>
-     * The traversal will stop when the cursor returns {@link Decision#EXIT}, 
-     * {@link Decision#CONTINUE} is used to continue traversing and 
-     * {@link Decision#REMOVE} is used to remove the element that was selected 
+     * The traversal will stop when the cursor returns {@link Cursor.Decision#EXIT}, 
+     * {@link Cursor.Decision#CONTINUE} is used to continue traversing and 
+     * {@link Cursor.Decision#REMOVE} is used to remove the element that was selected 
      * and continue traversing.
      * <p>
-     * {@link Decision#REMOVE_AND_EXIT} is used to remove the current element
+     * {@link Cursor.Decision#REMOVE_AND_EXIT} is used to remove the current element
      * and stop traversing.
      *   
      * @param cursor  the cursor used while traversing the {@link Trie}
-     * @return the entry the cursor returned {@link Decision#EXIT} on, or null 
+     * @return the entry the cursor returned {@link Cursor.Decision#EXIT} on, or null 
      * if it continued till the end
      */
     public Map.Entry<K,V> traverse(Cursor<? super K, ? super V> cursor);
@@ -216,17 +216,17 @@ public interface Trie<K, V> extends SortedMap<K, V> {
     public SortedMap<K, V> getPrefixedByBits(K key, int offsetInBits, int lengthInBits);
     
     /**
-     * A {@link Cursor} can be used to traverse a {@link Trie}, visit each node 
+     * A {@link Trie.Cursor} can be used to traverse a {@link Trie}, visit each node 
      * step by step and make {@link Decision}s on each step how to continue with 
      * traversing the {@link Trie}.
      */
     public interface Cursor<K, V> {
         
         /**
-         * The {@link Decision} tells the {@link Cursor} what to do on each step 
+         * The {@link Decision} tells the {@link Trie.Cursor} what to do on each step 
          * while traversing the {@link Trie}.
          * 
-         * NOTE: Not all operations that work with a {@link Cursor} support all 
+         * NOTE: Not all operations that work with a {@link Trie.Cursor} support all 
          * {@link Decision} types
          */
         public static enum Decision {

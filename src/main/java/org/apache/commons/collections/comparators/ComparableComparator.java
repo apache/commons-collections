@@ -24,7 +24,7 @@ import java.util.Comparator;
  * objects.
  * <p>
  * This Comparator is useful, for example, for enforcing the natural order in
- * custom implementations of {@link SortedSet} and {@link SortedMap}.
+ * custom implementations of {@link java.util.SortedSet SortedSet} and {@link java.util.SortedMap SortedMap}.
  * <p>
  * Note: In the 2.0 and 2.1 releases of Commons Collections, this class would
  * throw a {@link ClassCastException} if either of the arguments to

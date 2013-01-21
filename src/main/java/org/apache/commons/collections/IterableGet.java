@@ -17,7 +17,7 @@
 package org.apache.commons.collections;
 
 /**
- * The "read" subset of the {@link Map} interface.
+ * The "read" subset of the {@link java.util.Map} interface.
  *
  * @since 4.0
  * @version $Id$

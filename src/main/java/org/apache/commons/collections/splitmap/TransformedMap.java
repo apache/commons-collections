@@ -49,14 +49,14 @@ import org.apache.commons.collections.map.LinkedMap;
  * much of the usefulness of having parameterized types.
  * <p>
  * On the downside, this class is not drop-in compatible with {@link java.util.Map}
- * but is intended to be worked with either directly or by {@link Put} and {@link Get}
+ * but is intended to be worked with either directly or by {@link Put} and {@link org.apache.commons.collections.Get Get}
  * generalizations.
  *
  * @since 4.0
  * @version $Id$
  *
- * @see SplitMapUtils#readableMap(Get)
- * @see SplitMapUtils#writableMap(Put)
+ * @see org.apache.commons.collections.SplitMapUtils#readableMap(Get)
+ * @see org.apache.commons.collections.SplitMapUtils#writableMap(Put)
  */
 public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<K, V>
         implements Put<J, U>, Serializable {

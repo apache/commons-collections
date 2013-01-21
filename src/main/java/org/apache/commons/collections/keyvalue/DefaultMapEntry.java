@@ -21,8 +21,8 @@ import java.util.Map;
 import org.apache.commons.collections.KeyValue;
 
 /**
- * A restricted implementation of {@link Map.Entry} that prevents
- * the {@link Map.Entry} contract from being broken.
+ * A restricted implementation of {@link java.util.Map.Entry Map.Entry} that prevents
+ * the {@link java.util.Map.Entry Map.Entry} contract from being broken.
  *
  * @since 3.0
  * @version $Id$

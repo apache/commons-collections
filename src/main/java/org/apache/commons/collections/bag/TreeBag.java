@@ -34,7 +34,7 @@ import org.apache.commons.collections.SortedBag;
  * Order will be maintained among the bag members and can be viewed through the
  * iterator.
  * <p>
- * A {@link Bag} stores each object in the collection together with a count
+ * A {@link org.apache.commons.collections.Bag Bag} stores each object in the collection together with a count
  * of occurrences. Extra methods on the interface allow multiple copies of an
  * object to be added or removed at once. It is important to read the interface
  * javadoc carefully as several methods violate the {@link Collection}

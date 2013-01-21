@@ -140,7 +140,7 @@ public class PatriciaTrie<K, V> extends PatriciaTrieBase<K, V> implements Trie<K
      * {@inheritDoc}
      * 
      * The view that this returns is optimized to have a very efficient
-     * {@link Iterator}. The {@link SortedMap#firstEntry()}, 
+     * {@link Iterator}. The {@link SortedMap#firstKey()}, 
      * {@link SortedMap#lastKey()} &amp; {@link Map#size()} methods must 
      * iterate over all possible values in order to determine the results. 
      * This information is cached until the PATRICIA {@link Trie} changes. 

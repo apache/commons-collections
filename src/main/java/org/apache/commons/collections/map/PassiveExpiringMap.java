@@ -65,7 +65,8 @@ public class PassiveExpiringMap<K, V>
     implements Serializable {
 
     /**
-     * A {@link ExpirationPolicy} that returns a expiration time that is a
+     * A {@link org.apache.commons.collections.map.PassiveExpiringMap.ExpirationPolicy ExpirationPolicy}
+     * that returns a expiration time that is a
      * constant about of time in the future from the current time.
      * 
      * @param <K> the type of the keys in the map
@@ -306,8 +307,8 @@ public class PassiveExpiringMap<K, V>
      *        expire. A zero value results in entries that ALWAYS expire.
      * @param timeUnit the unit of time for the <code>timeToLive</code>
      *        parameter, must not be null.
-     * @throws IllegalArgumentException if the time unit is null.
      * @param map the map to decorate, must not be null.
+     * @throws IllegalArgumentException if the time unit is null.
      * @throws IllegalArgumentException if the map is null.
      */
     public PassiveExpiringMap(final long timeToLive, final TimeUnit timeUnit, final Map<K, V> map) {
