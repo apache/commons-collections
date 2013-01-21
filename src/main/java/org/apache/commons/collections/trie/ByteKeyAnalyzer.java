@@ -66,7 +66,7 @@ public class ByteKeyAnalyzer extends AbstractKeyAnalyzer<Byte> {
      * {@inheritDoc}
      */
     public boolean isBitSet(final Byte key, final int bitIndex, final int lengthInBits) {
-        return (key & mask(bitIndex)) != 0;
+        return (key.intValue() & mask(bitIndex)) != 0;
     }
 
     /**

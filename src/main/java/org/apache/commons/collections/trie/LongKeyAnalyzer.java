@@ -66,7 +66,7 @@ public class LongKeyAnalyzer extends AbstractKeyAnalyzer<Long> {
      * {@inheritDoc}
      */
     public boolean isBitSet(final Long key, final int bitIndex, final int lengthInBits) {
-        return (key & mask(bitIndex)) != 0;
+        return (key.longValue() & mask(bitIndex)) != 0;
     }
 
     /**

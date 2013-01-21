@@ -66,7 +66,7 @@ public class ShortKeyAnalyzer implements KeyAnalyzer<Short> {
      * {@inheritDoc}
      */
     public boolean isBitSet(final Short key, final int bitIndex, final int lengthInBits) {
-        return (key & mask(bitIndex)) != 0;
+        return (key.intValue() & mask(bitIndex)) != 0;
     }
 
     /**
