@@ -132,7 +132,7 @@ public class CollectionUtils {
      * @param <T> the element type
      * @return immutable empty collection
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") // OK, empty collection is compatible with any type
     public static <T> Collection<T> emptyCollection() {
         return EMPTY_COLLECTION;
     }
@@ -145,7 +145,7 @@ public class CollectionUtils {
      * @param collection the collection, possibly <code>null</code>
      * @return an empty collection if the argument is <code>null</code>
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") // OK, empty collection is compatible with any type
     public static <T> Collection<T> emptyIfNull(final Collection<T> collection) {
         return collection == null ? EMPTY_COLLECTION : collection;
     }
@@ -1205,8 +1205,7 @@ public class CollectionUtils {
      * @return true if the BoundedCollection is full
      * @throws NullPointerException if the collection is null
      */
-    @SuppressWarnings("unchecked")
-    public static boolean isFull(final Collection<?> coll) {
+    public static boolean isFull(final Collection<? extends Object> coll) {
         if (coll == null) {
             throw new NullPointerException("The collection must not be null");
         }
@@ -1215,7 +1214,7 @@ public class CollectionUtils {
         }
         try {
             final BoundedCollection<?> bcoll =
-                    UnmodifiableBoundedCollection.unmodifiableBoundedCollection((Collection<Object>) coll);
+                    UnmodifiableBoundedCollection.unmodifiableBoundedCollection(coll);
             return bcoll.isFull();
         } catch (final IllegalArgumentException ex) {
             return false;
@@ -1237,8 +1236,7 @@ public class CollectionUtils {
      * @return the maximum size of the BoundedCollection, -1 if no maximum size
      * @throws NullPointerException if the collection is null
      */
-    @SuppressWarnings("unchecked")
-    public static int maxSize(final Collection<?> coll) {
+    public static int maxSize(final Collection<? extends Object> coll) {
         if (coll == null) {
             throw new NullPointerException("The collection must not be null");
         }
@@ -1247,7 +1245,7 @@ public class CollectionUtils {
         }
         try {
             final BoundedCollection<?> bcoll =
-                    UnmodifiableBoundedCollection.unmodifiableBoundedCollection((Collection<Object>) coll);
+                    UnmodifiableBoundedCollection.unmodifiableBoundedCollection(coll);
             return bcoll.maxSize();
         } catch (final IllegalArgumentException ex) {
             return -1;
