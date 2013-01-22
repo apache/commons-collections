@@ -19,6 +19,10 @@
 	<property name="localeLanguage" value="en" />
 	<property name="severity" value="warning" />
 
+	<module name="SuppressionFilter">
+	    <property name="file" value="${checkstyle.suppressions.file}"/>
+	</module>
+
 	<module name="JavadocPackage">
 		<property name="allowLegacy" value="true" />
 	</module>

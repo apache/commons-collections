@@ -5,5 +5,11 @@
   <!-- Suppress switch fallthrough / default case for class Flat3Map -->
   <suppress checks="FallThrough" files="Flat3Map.java" />
   <suppress checks="MissingSwitchDefault" files="Flat3Map.java" />
+
+  <!-- Ignore missing javadoc for Get/Put interfaces, they refer to java.util.Map -->
+  <suppress checks="JavadocMethod" files="Get.java" />
+  <suppress checks="JavadocMethod" files="Put.java" />
   
+  <!-- Ignore missing javadoc param for unsupported method -->
+  <suppress checks="JavadocMethod" files="FilterListIterator.java" lines="116,166" />
 </suppressions>

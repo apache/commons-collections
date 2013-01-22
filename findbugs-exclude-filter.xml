@@ -30,10 +30,13 @@
     <Bug pattern="NP_BOOLEAN_RETURN_NULL" />
   </Match>
 
-  <!--  Flat3Map and its inner classes use intentional switch fall-through. The missing
-        default clause is safe and omitted for better readibility.                       -->
+  <!--  Flat3Map and its inner classes use intentional switch fall-through. The missing  -->
+  <!--  default clause is safe and omitted for better readability.                       -->
   <Match>
-	<Class name="~org.apache.commons.collections.map.Flat3Map.*" />
+    <Or>
+      <Class name="~.*\.Flat3Map$" />
+      <Class name="~.*\.Flat3Map\$\w+Iterator$" />
+    </Or>
     <Or>
 	  <Bug pattern="SF_SWITCH_FALLTHROUGH" />
 	  <Bug pattern="SF_SWITCH_NO_DEFAULT" />
