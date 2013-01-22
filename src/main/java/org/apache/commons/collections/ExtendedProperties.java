@@ -125,7 +125,7 @@ import java.util.Vector;
  * <p><b>NOTE</b>: this class has <b>not</b> been written for
  * performance nor low memory usage.  In fact, it's way slower than it
  * could be and generates too much memory garbage.  But since
- * performance is not an issue during intialization (and there is not
+ * performance is not an issue during initialization (and there is not
  * much time to improve it), I wrote it this way.  If you don't like
  * it, go ahead and tune it up!
  *
@@ -160,7 +160,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
     protected String fileSeparator = System.getProperty("file.separator");
 
     /**
-     * Has this configuration been intialized.
+     * Has this configuration been initialized.
      */
     protected boolean isInitialized = false;
 
@@ -700,8 +700,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
         } else if (current instanceof List) {
             // already a list - just add the new token
             @SuppressWarnings("unchecked") // OK to cast to Object
-            final
-            List<Object> list = (List<Object>) current;
+            final List<Object> list = (List<Object>) current;
             list.add(value);
             
         } else {
@@ -758,8 +757,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
                     
                 } else if (value instanceof List) {
                     @SuppressWarnings("unchecked") // we only add Strings to the Lists
-                    final
-                    List<String> values = (List<String>) value;
+                    final List<String> values = (List<String>) value;
                     for (final String currentElement : values) {
                         final StringBuilder currentOutput = new StringBuilder();
                         currentOutput.append(key);
@@ -775,7 +773,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
     }
 
     /**
-     * Combines an existing Hashtable with this Hashtable.
+     * Combines an existing ExtendedProperties object with this one.
      * <p>
      * Warning: It will overwrite previous entries without warning.
      *
@@ -809,8 +807,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
     }
 
     /**
-     * Get the list of the keys contained in the configuration
-     * repository.
+     * Get the list of the keys contained in the configuration repository.
      *
      * @return an Iterator over the keys
      */
@@ -938,8 +935,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
             }
         } else if (value instanceof List) {
             @SuppressWarnings("unchecked") // Only expecting Strings here
-            final
-            List<String> entry = (List<String>) value;
+            final List<String> entry = (List<String>) value;
             return interpolate(entry.get(0)); // requires a String
         } else {
             throw new ClassCastException('\'' + key + "' doesn't map to a String object");
@@ -995,8 +991,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
     }
 
     /**
-     * Get an array of strings associated with the given configuration
-     * key.
+     * Get an array of strings associated with the given configuration key.
      *
      * @param key The configuration key.
      * @return The associated string array if key is found.
@@ -1013,8 +1008,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
             
         } else if (value instanceof List) {
             @SuppressWarnings("unchecked") // We only add Strings to the Lists
-            final
-            List<String> list = (List<String>) value;
+            final List<String> list = (List<String>) value;
             values = list;
             
         } else if (value == null) {
@@ -1036,8 +1030,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
     }
 
     /**
-     * Get a Vector of strings associated with the given configuration
-     * key.
+     * Get a Vector of strings associated with the given configuration key.
      *
      * @param key The configuration key.
      * @return The associated Vector.
@@ -1065,8 +1058,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
 
         if (value instanceof List) {
             @SuppressWarnings("unchecked") // our lists only contain Strings
-            final
-            List<String> list = (List<String>) value;
+            final List<String> list = (List<String>) value;
             return new Vector<String>(list);
             
         } else if (value instanceof String) {
@@ -1120,8 +1112,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
 
         if (value instanceof List) {
             @SuppressWarnings("unchecked") // our lists only contain strings
-            final
-            List<String> list = (List<String>) value;
+            final List<String> list = (List<String>) value;
             return new ArrayList<String>(list);
             
         } else if (value instanceof String) {
@@ -1696,8 +1687,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
         final ExtendedProperties c = new ExtendedProperties();
 
         @SuppressWarnings("unchecked") // Properties are supposed to have string keys ...
-        final
-        Enumeration<String> e = (Enumeration<String>) props.propertyNames();
+        final Enumeration<String> e = (Enumeration<String>) props.propertyNames();
         // Unfortunately PMD 4.3 cannot handle the original code where the @Suppress
         // was in the for loop:
         //    for (@SuppressWarnings("unchecked") // Properties are supposed to have string keys ...
@@ -1745,8 +1735,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
             }
         } else {
             @SuppressWarnings("unchecked") // OK to downcast here
-            final
-            Map<String, Object> mapso = (Map<String,Object>) map;
+            final Map<String, Object> mapso = (Map<String,Object>) map;
             for (final java.util.Map.Entry<String, Object> entry : mapso.entrySet()) {
                 put(entry.getKey(), entry.getValue());
             }
