@@ -261,9 +261,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      * @param o1  the first object to compare
      * @param o2  the second object to compare
      * @return -1, 0, or 1
-     * @exception UnsupportedOperationException
-     *                   if the ComparatorChain does not contain at least one
-     *                   Comparator
+     * @throws UnsupportedOperationException if the ComparatorChain does not contain at least one Comparator
      */
     public int compare(final E o1, final E o2) throws UnsupportedOperationException {
         if (isLocked == false) {
@@ -280,7 +278,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
             if (retval != 0) {
                 // invert the order if it is a reverse sort
                 if (orderingBits.get(comparatorIndex) == true) {
-                    if(Integer.MIN_VALUE == retval) {
+                    if (Integer.MIN_VALUE == retval) {
                         retval = Integer.MAX_VALUE;
                     } else {
                         retval *= -1;
@@ -340,9 +338,9 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         }
         if (object.getClass().equals(this.getClass())) {
             final ComparatorChain<?> chain = (ComparatorChain<?>) object;
-            return (null == orderingBits ? null == chain.orderingBits : orderingBits
-                    .equals(chain.orderingBits)) && (null == comparatorChain ? null == chain.comparatorChain
-                    : comparatorChain.equals(chain.comparatorChain));
+            return (null == orderingBits ? null == chain.orderingBits : orderingBits.equals(chain.orderingBits)) &&
+                   (null == comparatorChain ? null == chain.comparatorChain :
+                                              comparatorChain.equals(chain.comparatorChain));
         }
         return false;
     }
