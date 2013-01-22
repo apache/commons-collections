@@ -75,11 +75,16 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      * If there are any elements already in the map being decorated, they are
      * NOT transformed.
      *
+     * @param <J>  the input key type
+     * @param <K>  the output key type
+     * @param <U>  the input value type
+     * @param <V>  the output value type
      * @param map the map to decorate, must not be null
      * @param keyTransformer the transformer to use for key conversion, null
-     * means no transformation
+     *   means no transformation
      * @param valueTransformer the transformer to use for value conversion, null
-     * means no transformation
+     *   means no transformation
+     * @return a new transformed map
      * @throws IllegalArgumentException if map is null
      */
     public static <J, K, U, V> TransformedMap<J, K, U, V> transformingMap(final Map<K, V> map,
@@ -198,23 +203,14 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
     }
 
     //-----------------------------------------------------------------------
-    /**
-     * {@inheritDoc}
-     */
     public V put(final J key, final U value) {
         return decorated().put(transformKey(key), transformValue(value));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public void putAll(final Map<? extends J, ? extends U> mapToCopy) {
         decorated().putAll(transformMap(mapToCopy));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public void clear() {
         decorated().clear();
     }
