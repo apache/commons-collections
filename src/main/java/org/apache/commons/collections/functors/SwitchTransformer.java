@@ -155,23 +155,23 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
     }
 
     /**
-     * Gets the predicates, do not modify the array.
+     * Gets the predicates.
      * 
-     * @return the predicates
+     * @return a copy of the predicates
      * @since 3.1
      */
     public Predicate<? super I>[] getPredicates() {
-        return iPredicates;
+        return FunctorUtils.<I>copy(iPredicates);
     }
 
     /**
-     * Gets the transformers, do not modify the array.
+     * Gets the transformers.
      * 
-     * @return the transformers
+     * @return a copy of the transformers
      * @since 3.1
      */
     public Transformer<? super I, ? extends O>[] getTransformers() {
-        return iTransformers;
+        return FunctorUtils.<I, O>copy(iTransformers);
     }
 
     /**
