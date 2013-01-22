@@ -496,7 +496,15 @@
         <configuration>
           <configLocation>${basedir}/checkstyle.xml</configLocation>
           <enableRulesSummary>false</enableRulesSummary>
+	      <suppressionsLocation>${basedir}/checkstyle-suppressions.xml</suppressionsLocation>
         </configuration>
+	    <reportSets>
+          <reportSet>
+            <reports>
+              <report>checkstyle</report>
+            </reports>
+          </reportSet>
+        </reportSets>         
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
