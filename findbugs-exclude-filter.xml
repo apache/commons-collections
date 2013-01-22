@@ -59,4 +59,11 @@
     <Bug pattern="EQ_UNUSUAL" />
   </Match>
 
+  <!-- The compare method in ComparatorChain has to handle a corner-case for Integer.MIN_VALUE -->
+  <Match>
+    <Class name="org.apache.commons.collections.comparators.ComparatorChain" />
+    <Method name="compare" params="java.lang.Object, java.lang.Object" returns="int" />
+    <Bug pattern="RV_CHECK_COMPARETO_FOR_SPECIFIC_RETURN_VALUE" />
+  </Match>
+
 </FindBugsFilter>
