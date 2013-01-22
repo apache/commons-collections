@@ -48,11 +48,12 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
      * 
      * @param <T>  the type the factory creates
      * @param classToInstantiate  the class to instantiate, not null
-     * @param paramTypes  the constructor parameter types
-     * @param args  the constructor arguments
+     * @param paramTypes  the constructor parameter types, cloned
+     * @param args  the constructor arguments, cloned
      * @return a new instantiate factory
      */
-    public static <T> Factory<T> instantiateFactory(final Class<T> classToInstantiate, Class<?>[] paramTypes,
+    public static <T> Factory<T> instantiateFactory(final Class<T> classToInstantiate,
+                                                    Class<?>[] paramTypes,
                                                     Object[] args) {
         if (classToInstantiate == null) {
             throw new IllegalArgumentException("Class to instantiate must not be null");
@@ -66,8 +67,6 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
         if (paramTypes == null || paramTypes.length == 0) {
             return new InstantiateFactory<T>(classToInstantiate);
         }
-        paramTypes = paramTypes.clone();
-        args = args.clone();
         return new InstantiateFactory<T>(classToInstantiate, paramTypes, args);
     }
 
@@ -90,14 +89,14 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
      * Use <code>getInstance</code> if you want that.
      * 
      * @param classToInstantiate  the class to instantiate
-     * @param paramTypes  the constructor parameter types, not cloned
-     * @param args  the constructor arguments, not cloned
+     * @param paramTypes  the constructor parameter types, cloned
+     * @param args  the constructor arguments, cloned
      */
     public InstantiateFactory(final Class<T> classToInstantiate, final Class<?>[] paramTypes, final Object[] args) {
         super();
         iClassToInstantiate = classToInstantiate;
-        iParamTypes = paramTypes;
-        iArgs = args;
+        iParamTypes = paramTypes.clone();
+        iArgs = args.clone();
         findConstructor();
     }
 
@@ -107,7 +106,6 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
     private void findConstructor() {
         try {
             iConstructor = iClassToInstantiate.getConstructor(iParamTypes);
-
         } catch (final NoSuchMethodException ex) {
             throw new IllegalArgumentException("InstantiateFactory: The constructor must exist and be public ");
         }
