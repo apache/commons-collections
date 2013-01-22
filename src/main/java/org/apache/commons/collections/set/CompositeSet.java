@@ -111,9 +111,9 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
     /**
      * Add two sets to this composite.
      *
-     * @param c  the first {@link Set} to add to this composite
-     * @param d  the second {@link Set} to add to this composite
-     * @throws IllegalArgumentException if c or d does not implement java.util.Set
+     * @param c  the first {@link java.util.Set} to add to this composite
+     * @param d  the second {@link java.util.Set} to add to this composite
+     * @throws IllegalArgumentException if c or d does not implement {@link java.util.Set}
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -129,8 +129,8 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
 
     /**
      * Add an array of sets to this composite
-     * @param comps  the {@link Collection} of {@link Set}s to add to this composite
-     * @throws IllegalArgumentException if any of the collections in comps do not implement Set
+     * @param comps  the {@link Collection} of {@link java.util.Set}s to add to this composite
+     * @throws IllegalArgumentException if any of the collections in comps does not implement {@link java.util.Set}
      */
     @Override
     public synchronized void addComposited(final Collection<E>[] comps) {
@@ -140,12 +140,14 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
     }
 
     /**
-     * This can receive either a {@link org.apache.commons.collections.collection.CompositeCollection.CollectionMutator CompositeCollection.CollectionMutator} or a
-     * {@link CompositeSet.SetMutator}. 
-     * If a {@link org.apache.commons.collections.collection.CompositeCollection.CollectionMutator CompositeCollection.CollectionMutator}
+     * This can receive either a
+     * {@link org.apache.commons.collections.collection.CompositeCollection.CollectionMutator CollectionMutator}
+     * or a {@link CompositeSet.SetMutator}. 
+     * If a {@link org.apache.commons.collections.collection.CompositeCollection.CollectionMutator CollectionMutator}
      * is used than conflicts when adding composited sets will throw IllegalArgumentException.
      * 
-     * @param mutator  the {@link org.apache.commons.collections.collection.CompositeCollection.CollectionMutator CompositeCollection.CollectionMutator} 
+     * @param mutator
+     *   the {@link org.apache.commons.collections.collection.CompositeCollection.CollectionMutator CollectionMutator}
      * to use for this composite
      */
     @Override
@@ -173,7 +175,8 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
     }
 
     /**
-     * @see Set#equals
+     * {@inheritDoc}
+     * @see java.util.Set#equals
      */
     @Override
     public boolean equals(final Object obj) {
@@ -185,7 +188,8 @@ public class CompositeSet<E> extends CompositeCollection<E> implements Set<E> {
     }
 
     /**
-     * @see Set#hashCode
+     * {@inheritDoc}
+     * @see java.util.Set#hashCode
      */
     @Override
     public int hashCode() {
