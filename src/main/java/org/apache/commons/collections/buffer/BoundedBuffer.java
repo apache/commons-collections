@@ -82,7 +82,8 @@ public class BoundedBuffer<E> extends SynchronizedBuffer<E> implements BoundedCo
      * @throws IllegalArgumentException if the buffer is null
      * @throws IllegalArgumentException if the maximum size is zero or less
      */
-    public static <E> BoundedBuffer<E> boundedBuffer(final Buffer<E> buffer, final int maximumSize, final long timeout) {
+    public static <E> BoundedBuffer<E> boundedBuffer(final Buffer<E> buffer, final int maximumSize,
+                                                     final long timeout) {
         return new BoundedBuffer<E>(buffer, maximumSize, timeout);
     }
 
