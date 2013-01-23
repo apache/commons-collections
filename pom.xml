@@ -104,6 +104,10 @@
       <name>Henri Yandell</name>
       <id>bayard</id>
     </developer>
+    <developer>
+      <name>Thomas Neidhart</name>
+      <id>tn</name>
+    </developer>
   </developers>
   
   <contributors>
