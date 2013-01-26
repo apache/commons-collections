@@ -46,6 +46,7 @@ import org.apache.commons.collections.iterators.IteratorIterable;
 import org.apache.commons.collections.iterators.ListIteratorWrapper;
 import org.apache.commons.collections.iterators.LoopingIterator;
 import org.apache.commons.collections.iterators.LoopingListIterator;
+import org.apache.commons.collections.iterators.NodeListIterator;
 import org.apache.commons.collections.iterators.ObjectArrayIterator;
 import org.apache.commons.collections.iterators.ObjectArrayListIterator;
 import org.apache.commons.collections.iterators.ObjectGraphIterator;
@@ -55,6 +56,8 @@ import org.apache.commons.collections.iterators.TransformIterator;
 import org.apache.commons.collections.iterators.UnmodifiableIterator;
 import org.apache.commons.collections.iterators.UnmodifiableListIterator;
 import org.apache.commons.collections.iterators.UnmodifiableMapIterator;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 /**
  * Provides static utility methods and decorators for {@link Iterator}
@@ -756,6 +759,45 @@ public class IteratorUtils {
         return new LoopingListIterator<E>(list);
     }
 
+    // org.w3c.dom.NodeList iterators
+    //-----------------------------------------------------------------------
+    /**
+     * Gets an {@link Iterator} that wraps the specified {@link NodeList}.
+     * The returned {@link Iterator} can be used for a single iteration.
+     *
+     * @param nodeList the node list to use, not null
+     * @return a new, single use {@link Iterator}
+     * @throws NullPointerException if nodeList is null
+     */
+    public static NodeListIterator nodeListIterator(final NodeList nodeList) {
+        if (nodeList == null) {
+            throw new NullPointerException("NodeList must not be null");
+        }
+        return new NodeListIterator(nodeList);
+    }
+
+    /**
+     * Gets an {@link Iterator} that wraps the specified node's childNodes.
+     * The returned {@link Iterator} can be used for a single iteration.
+     * <p>
+     * Convenience method, allows easy iteration over NodeLists:
+     * <pre>
+     *   for(Node childNode : IteratorUtils.asIterable(node)){
+     *     ...
+     *   }
+     * </pre>
+     *
+     * @param node the node to use, not null
+     * @return a new, single use {@link Iterator}
+     * @throws NullPointerException if node is null
+     */
+    public static NodeListIterator nodeListIterator(final Node node) {
+        if (node == null) {
+            throw new NullPointerException("Node must not be null");
+        }
+        return new NodeListIterator(node);
+    }
+
     // Views
     //-----------------------------------------------------------------------
     /**
@@ -823,6 +865,7 @@ public class IteratorUtils {
         return new IteratorIterable<E>(iterator, false);
     }
 
+    
     /**
      * Gets an iterable that wraps an iterator.  The returned iterable can be
      * used for multiple iterations.
@@ -957,6 +1000,8 @@ public class IteratorUtils {
      * <li>array - iterator over array returned
      * <li>object with iterator() public method accessed by reflection
      * <li>object - singleton iterator
+     * <li>NodeList - iterator over the list
+     * <li>Node - iterator over the child nodes
      * </ul>
      *
      * @param obj  the object to convert to an iterator
@@ -980,6 +1025,12 @@ public class IteratorUtils {
         }
         if (obj instanceof Map) {
             return ((Map<?, ?>) obj).values().iterator();
+        }
+        if (obj instanceof NodeList) {
+            return new NodeListIterator((NodeList) obj);
+        }
+        if (obj instanceof Node) {
+            return new NodeListIterator((Node) obj);
         }
         if (obj instanceof Dictionary) {
             return new EnumerationIterator<Object>(((Dictionary<?, ?>) obj).elements());

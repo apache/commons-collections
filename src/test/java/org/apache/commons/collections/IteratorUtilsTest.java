@@ -30,13 +30,17 @@ import org.apache.commons.collections.iterators.EmptyListIterator;
 import org.apache.commons.collections.iterators.EmptyMapIterator;
 import org.apache.commons.collections.iterators.EmptyOrderedIterator;
 import org.apache.commons.collections.iterators.EmptyOrderedMapIterator;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.replay;
 
 /**
  * Tests for IteratorUtils.
  *
- * @version $Revision$
- *
- * @author Unknown
+ * @version $Id$
  */
 public class IteratorUtilsTest extends BulkTest {
 
@@ -69,7 +73,7 @@ public class IteratorUtilsTest extends BulkTest {
             fail("should not be able to iterate twice");
         }
     }
-
+    
     public void testAsIterableNull() {
         try {
             IteratorUtils.asIterable(null);
@@ -785,6 +789,85 @@ public class IteratorUtilsTest extends BulkTest {
         } catch (final UnsupportedOperationException e) {
             // This is correct; ignore the exception.
         }
+    }
+
+    /**
+     * Tests method nodeListIterator(NodeList)
+     */
+    public void testNodeListIterator() {
+        Node[] nodes = createNodes();
+        NodeList nodeList = createNodeList(nodes);
+        
+        final Iterator<Node> iterator = IteratorUtils.nodeListIterator(nodeList);
+        int expectedNodeIndex = 0;
+        for (final Node actual : IteratorUtils.asIterable(iterator)) {
+            assertEquals(nodes[expectedNodeIndex], actual);
+            ++expectedNodeIndex;
+        }
+
+        // insure iteration occurred
+        assertTrue(expectedNodeIndex > 0);
+
+        // single use iterator
+        for (final Node actual : IteratorUtils.asIterable(iterator)) {
+            fail("should not be able to iterate twice");
+        }
+    }
+    /**
+     * Tests method nodeListIterator(Node)
+     */
+    public void testNodeIterator() {
+        Node[] nodes = createNodes();
+        NodeList nodeList = createNodeList(nodes);
+        Node parentNode = createMock(Node.class);
+        expect(parentNode.getChildNodes()).andStubReturn(nodeList);
+        replay(parentNode);
+        
+        final Iterator<Node> iterator = IteratorUtils.nodeListIterator(parentNode);
+        int expectedNodeIndex = 0;
+        for (final Node actual : IteratorUtils.asIterable(iterator)) {
+            assertEquals(nodes[expectedNodeIndex], actual);
+            ++expectedNodeIndex;
+        }
+
+        // insure iteration occurred
+        assertTrue(expectedNodeIndex > 0);
+
+        // single use iterator
+        for (final Node actual : IteratorUtils.asIterable(iterator)) {
+            fail("should not be able to iterate twice");
+        }
+    }
+    
+    /**
+     * creates an array of four Node instances, mocked by EasyMock.
+     * @return 
+     */
+    private Node[] createNodes() {
+        Node node1 = createMock(Node.class);
+        Node node2 = createMock(Node.class);
+        Node node3 = createMock(Node.class);
+        Node node4 = createMock(Node.class);
+        replay(node1);
+        replay(node2);
+        replay(node3);
+        replay(node4);
+
+        return new Node[]{node1, node2, node3, node4};
+}
+
+    /**
+     * Creates a NodeList containing the specified nodes.
+     */
+    private NodeList createNodeList(final Node[] nodes) {
+        return new NodeList() {
+            public Node item(int index) {
+                return nodes[index];
+            }
+            public int getLength() {
+                return nodes.length;
+            }
+        };
     }
 
 }

@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-322" dev="tn" type="add" due-to="Thomas Vahrst">
+      Added NodeListIterator and convenience methods in IteratorUtils to iterate over
+      a org.w3c.dom.NodeList.
+    </action>
     <action issue="COLLECTIONS-436" dev="tn" type="add" due-to="Arman Sharif">
       Added "emptyIfNull" methods to classes "CollectionUtils", "ListUtils", "SetUtils"
       and "MapUtils".
