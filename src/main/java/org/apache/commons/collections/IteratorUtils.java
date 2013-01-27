@@ -768,6 +768,7 @@ public class IteratorUtils {
      * @param nodeList the node list to use, not null
      * @return a new, single use {@link Iterator}
      * @throws NullPointerException if nodeList is null
+     * @since 4.0
      */
     public static NodeListIterator nodeListIterator(final NodeList nodeList) {
         if (nodeList == null) {
@@ -782,7 +783,8 @@ public class IteratorUtils {
      * <p>
      * Convenience method, allows easy iteration over NodeLists:
      * <pre>
-     *   for(Node childNode : IteratorUtils.asIterable(node)){
+     *   Iterator&lt;Node&gt; iterator = IteratorUtils.nodeListIterator(node);
+     *   for(Node childNode : IteratorUtils.asIterable(iterator)) {
      *     ...
      *   }
      * </pre>
@@ -790,6 +792,7 @@ public class IteratorUtils {
      * @param node the node to use, not null
      * @return a new, single use {@link Iterator}
      * @throws NullPointerException if node is null
+     * @since 4.0
      */
     public static NodeListIterator nodeListIterator(final Node node) {
         if (node == null) {
