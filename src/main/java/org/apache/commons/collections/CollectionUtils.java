@@ -283,13 +283,42 @@ public class CollectionUtils {
     }
 
     /**
+     * Returns <code>true</code> iff all elements of {@code coll2} are also contained
+     * in {@code coll1}.
+     * <p>
+     * In other words, this method returns <code>true</code> iff the
+     * {@link #intersection} of <i>coll1</i> and <i>coll2</i> has the same cardinality as
+     * {@code coll2}. In case {@code coll2} is empty, {@code true} will be returned.
+     * <p>
+     * This method is intended as a replacement for {@link Collection#containsAll(Collection)}
+     * with a guaranteed runtime complexity of {@code O(n)}. Depending on the type of
+     * {@link Collection} provided, this method will be much faster than calling
+     * {@link Collection#containsAll(Collection)} instead.
+     *
+     * @param coll1  the first collection, must not be null
+     * @param coll2  the second collection, must not be null
+     * @return <code>true</code> iff the intersection of the collections has the same cardinality
+     *   of the second collection
+     * @since 4.0
+     * @see #intersection
+     */
+    public static boolean containsAll(final Collection<?> coll1, final Collection<?> coll2) {
+        if (coll2.isEmpty()) {
+            return true;
+        } else {
+            Collection<Object> result = CollectionUtils.<Object>intersection(coll1, coll2);
+            return result.size() == coll2.size();
+        }
+    }
+    
+    /**
      * Returns <code>true</code> iff at least one element is in both collections.
      * <p>
      * In other words, this method returns <code>true</code> iff the
      * {@link #intersection} of <i>coll1</i> and <i>coll2</i> is not empty.
      *
      * @param coll1  the first collection, must not be null
-     * @param coll2  the first collection, must not be null
+     * @param coll2  the second collection, must not be null
      * @return <code>true</code> iff the intersection of the collections is non-empty
      * @since 2.1
      * @see #intersection
