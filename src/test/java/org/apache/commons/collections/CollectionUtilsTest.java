@@ -252,6 +252,10 @@ public class CollectionUtilsTest extends MockTestCase {
         final Collection<String> odds = new ArrayList<String>(2);
         odds.add("1");
         odds.add("3");
+        final Collection<String> multiples = new ArrayList<String>(3);
+        multiples.add("1");
+        multiples.add("3");
+        multiples.add("1");
 
         assertTrue("containsAll({1},{1,3}) should return false.", !CollectionUtils.containsAll(one, odds));
         assertTrue("containsAll({1,3},{1}) should return true.", CollectionUtils.containsAll(odds, one));
@@ -267,6 +271,10 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue("containsAll({1,3},{}) should return true.", CollectionUtils.containsAll(odds, empty));
         assertTrue("containsAll({},{1,3}) should return false.", !CollectionUtils.containsAll(empty, odds));
         assertTrue("containsAll({},{}) should return true.", CollectionUtils.containsAll(empty, empty));
+
+        assertTrue("containsAll({1,3},{1,3,1}) should return true.", CollectionUtils.containsAll(odds, multiples));
+        assertTrue("containsAll({1,3,1},{1,3,1}) should return true.", CollectionUtils.containsAll(odds, odds));
+        assertTrue("containsAll({1,3,1},{1,3,1}) should return true.", CollectionUtils.containsAll(odds, odds));
     }
 
     @Test

@@ -71,6 +71,14 @@ public class CollectionUtils {
             return getFreq(obj, cardinalityB);
         }
 
+        public int sizeA() {
+            return cardinalityA.size();
+        }
+        
+        public int sizeB() {
+            return cardinalityB.size();
+        }
+
         private final int getFreq(final Object obj, final Map<?, Integer> freqMap) {
             final Integer count = freqMap.get(obj);
             if (count != null) {
@@ -284,11 +292,13 @@ public class CollectionUtils {
 
     /**
      * Returns <code>true</code> iff all elements of {@code coll2} are also contained
-     * in {@code coll1}.
+     * in {@code coll1}. The cardinality of values in {@code coll2} is not taken into account,
+     * which is the same behavior as {@link Collection#containsAll(Collection)}.
      * <p>
      * In other words, this method returns <code>true</code> iff the
      * {@link #intersection} of <i>coll1</i> and <i>coll2</i> has the same cardinality as
-     * {@code coll2}. In case {@code coll2} is empty, {@code true} will be returned.
+     * the set of unique values from {@code coll2}. In case {@code coll2} is empty, {@code true}
+     * will be returned.
      * <p>
      * This method is intended as a replacement for {@link Collection#containsAll(Collection)}
      * with a guaranteed runtime complexity of {@code O(n)}. Depending on the type of
@@ -298,16 +308,19 @@ public class CollectionUtils {
      * @param coll1  the first collection, must not be null
      * @param coll2  the second collection, must not be null
      * @return <code>true</code> iff the intersection of the collections has the same cardinality
-     *   of the second collection
+     *   as the set of unique elements from the second collection
      * @since 4.0
-     * @see #intersection
      */
     public static boolean containsAll(final Collection<?> coll1, final Collection<?> coll2) {
         if (coll2.isEmpty()) {
             return true;
         } else {
-            Collection<Object> result = CollectionUtils.<Object>intersection(coll1, coll2);
-            return result.size() == coll2.size();
+            final SetOperationCardinalityHelper<Object> helper =
+                    new SetOperationCardinalityHelper<Object>(coll1, coll2);
+            for (final Object obj : helper) {
+                helper.setCardinality(obj, helper.min(obj));
+            }
+            return helper.list().size() == helper.sizeB();
         }
     }
     
