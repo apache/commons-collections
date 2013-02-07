@@ -342,15 +342,13 @@ public class TransformerUtils {
     public static <I, O> Transformer<I, O> switchMapTransformer(
             final Map<I, Transformer<I, O>> objectsAndTransformers) {
 
-        Transformer<? super I, ? extends O>[] trs = null;
-        Predicate<I>[] preds = null;
         if (objectsAndTransformers == null) {
             throw new IllegalArgumentException("The object and transformer map must not be null");
         }
         final Transformer<? super I, ? extends O> def = objectsAndTransformers.remove(null);
         final int size = objectsAndTransformers.size();
-        trs = new Transformer[size];
-        preds = new Predicate[size];
+        final Transformer<? super I, ? extends O>[] trs = new Transformer[size];
+        final Predicate<I>[] preds = new Predicate[size];
         int i = 0;
         for (final Map.Entry<I, Transformer<I, O>> entry : objectsAndTransformers.entrySet()) {
             preds[i] = EqualPredicate.<I>equalPredicate(entry.getKey());

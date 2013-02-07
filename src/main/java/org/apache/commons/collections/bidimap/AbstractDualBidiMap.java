@@ -661,8 +661,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
                         "Cannot use setValue() when the object being set is already in the map");
             }
             parent.put(key, value);
-            final V oldValue = super.setValue(value);
-            return oldValue;
+            return super.setValue(value);
         }
     }
 

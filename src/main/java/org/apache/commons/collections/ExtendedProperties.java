@@ -1071,7 +1071,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
             if (defaults != null) {
                 return defaults.getVector(key, defaultValue);
             } else {
-                return defaultValue == null ? new Vector<String>() : defaultValue;
+                return defaultValue == null ? new Vector<String>(1) : defaultValue;
             }
         } else {
             throw new ClassCastException('\'' + key + "' doesn't map to a Vector object");
@@ -1125,7 +1125,7 @@ public class ExtendedProperties extends Hashtable<String, Object> {
             if (defaults != null) {
                 return defaults.getList(key, defaultValue);
             } else {
-                return defaultValue == null ? new ArrayList<String>() : defaultValue;
+                return defaultValue == null ? new ArrayList<String>(1) : defaultValue;
             }
         } else {
             throw new ClassCastException('\'' + key + "' doesn't map to a List object");

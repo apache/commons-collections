@@ -97,7 +97,8 @@ public class CollectionUtils {
             elements = new HashSet<O>();
             addAll(elements, a);
             addAll(elements, b);
-            newList = new ArrayList<O>();
+            // the resulting list must contain at least each unique element, but may grow
+            newList = new ArrayList<O>(elements.size());
         }
 
         public Iterator<O> iterator() {

@@ -420,8 +420,6 @@ public class TreeList<E> extends AbstractList<E> {
         }
 
         private AVLNode<E> insertOnLeft(final int indexRelativeToMe, final E obj) {
-            AVLNode<E> ret = this;
-
             if (getLeftSubTree() == null) {
                 setLeft(new AVLNode<E>(-1, obj, this, left), null);
             } else {
@@ -431,14 +429,12 @@ public class TreeList<E> extends AbstractList<E> {
             if (relativePosition >= 0) {
                 relativePosition++;
             }
-            ret = balance();
+            AVLNode<E> ret = balance();
             recalcHeight();
             return ret;
         }
 
         private AVLNode<E> insertOnRight(final int indexRelativeToMe, final E obj) {
-            AVLNode<E> ret = this;
-
             if (getRightSubTree() == null) {
                 setRight(new AVLNode<E>(+1, obj, right, this), null);
             } else {
@@ -447,7 +443,7 @@ public class TreeList<E> extends AbstractList<E> {
             if (relativePosition < 0) {
                 relativePosition--;
             }
-            ret = balance();
+            AVLNode<E> ret = balance();
             recalcHeight();
             return ret;
         }
@@ -777,8 +773,19 @@ public class TreeList<E> extends AbstractList<E> {
          */
         @Override
         public String toString() {
-            return "AVLNode(" + relativePosition + "," + (left != null) + "," + value +
-                "," + (getRightSubTree() != null) + ", faedelung " + rightIsNext + " )";
+            return new StringBuilder()
+                .append("AVLNode(")
+                .append(relativePosition)
+                .append(',')
+                .append(left != null)
+                .append(',')
+                .append(value)
+                .append(',')
+                .append(getRightSubTree() != null)
+                .append(", faedelung ")
+                .append(rightIsNext)
+                .append(" )")
+                .toString();
         }
     }
 

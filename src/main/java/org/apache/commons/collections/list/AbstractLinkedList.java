@@ -386,7 +386,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
             return "[]";
         }
         final StringBuilder buf = new StringBuilder(16 * size());
-        buf.append("[");
+        buf.append('[');
 
         final Iterator<E> it = iterator();
         boolean hasNext = it.hasNext();
@@ -398,7 +398,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
                 buf.append(", ");
             }
         }
-        buf.append("]");
+        buf.append(']');
         return buf.toString();
     }
 

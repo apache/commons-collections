@@ -370,15 +370,13 @@ public class ClosureUtils {
      */
     @SuppressWarnings("unchecked")
     public static <E> Closure<E> switchMapClosure(final Map<? extends E, Closure<E>> objectsAndClosures) {
-        Closure<? super E>[] trs = null;
-        Predicate<E>[] preds = null;
         if (objectsAndClosures == null) {
             throw new IllegalArgumentException("The object and closure map must not be null");
         }
         final Closure<? super E> def = objectsAndClosures.remove(null);
         final int size = objectsAndClosures.size();
-        trs = new Closure[size];
-        preds = new Predicate[size];
+        final Closure<? super E>[] trs = new Closure[size];
+        final Predicate<E>[] preds = new Predicate[size];
         int i = 0;
         for (final Map.Entry<? extends E, Closure<E>> entry : objectsAndClosures.entrySet()) {
             preds[i] = EqualPredicate.<E>equalPredicate(entry.getKey());
