@@ -69,7 +69,7 @@ public class IteratorUtilsTest extends BulkTest {
         assertTrue(expected > 0);
 
         // single use iterator
-        for(final Integer actual : iterable) {
+        for(@SuppressWarnings("unused") final Integer actual : iterable) {
             fail("should not be able to iterate twice");
         }
     }
@@ -809,7 +809,7 @@ public class IteratorUtilsTest extends BulkTest {
         assertTrue(expectedNodeIndex > 0);
 
         // single use iterator
-        for (final Node actual : IteratorUtils.asIterable(iterator)) {
+        for (@SuppressWarnings("unused") final Node actual : IteratorUtils.asIterable(iterator)) {
             fail("should not be able to iterate twice");
         }
     }
@@ -834,7 +834,7 @@ public class IteratorUtilsTest extends BulkTest {
         assertTrue(expectedNodeIndex > 0);
 
         // single use iterator
-        for (final Node actual : IteratorUtils.asIterable(iterator)) {
+        for (@SuppressWarnings("unused") final Node actual : IteratorUtils.asIterable(iterator)) {
             fail("should not be able to iterate twice");
         }
     }

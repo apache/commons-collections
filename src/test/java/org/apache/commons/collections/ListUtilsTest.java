@@ -23,7 +23,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 
 import org.apache.commons.collections.functors.EqualPredicate;
@@ -315,17 +314,17 @@ public class ListUtilsTest extends BulkTest {
         
         try {
             ListUtils.partition(null, 3);
-            Assert.fail("failed to check for null argument");
+            fail("failed to check for null argument");
         } catch (final IllegalArgumentException e) {}
         
         try {
             ListUtils.partition(strings, 0);
-            Assert.fail("failed to check for size argument");
+            fail("failed to check for size argument");
         } catch (final IllegalArgumentException e) {}
         
         try {
             ListUtils.partition(strings, -10);
-            Assert.fail("failed to check for size argument");
+            fail("failed to check for size argument");
         } catch (final IllegalArgumentException e) {}
         
     }
@@ -346,10 +345,10 @@ public class ListUtilsTest extends BulkTest {
         final List<Integer> output1 = ListUtils.select(list, EQUALS_TWO);
         final List<Number> output2 = ListUtils.<Number>select(list, EQUALS_TWO);
         final HashSet<Number> output3 = CollectionUtils.select(list, EQUALS_TWO, new HashSet<Number>());
-        Assert.assertTrue(CollectionUtils.isEqualCollection(output1, output3));
-        Assert.assertEquals(4, list.size());
-        Assert.assertEquals(1, output1.size());
-        Assert.assertEquals(2, output2.iterator().next());
+        assertTrue(CollectionUtils.isEqualCollection(output1, output3));
+        assertEquals(4, list.size());
+        assertEquals(1, output1.size());
+        assertEquals(2, output2.iterator().next());
     }
 
     public void testSelectRejected() {
@@ -361,12 +360,12 @@ public class ListUtilsTest extends BulkTest {
         final List<Long> output1 = ListUtils.selectRejected(list, EQUALS_TWO);
         final List<? extends Number> output2 = ListUtils.selectRejected(list, EQUALS_TWO);
         final HashSet<Number> output3 = CollectionUtils.selectRejected(list, EQUALS_TWO, new HashSet<Number>());
-        Assert.assertTrue(CollectionUtils.isEqualCollection(output1, output2));
-        Assert.assertTrue(CollectionUtils.isEqualCollection(output1, output3));
-        Assert.assertEquals(4, list.size());
-        Assert.assertEquals(3, output1.size());
-        Assert.assertTrue(output1.contains(1L));
-        Assert.assertTrue(output1.contains(3L));
-        Assert.assertTrue(output1.contains(4L));
+        assertTrue(CollectionUtils.isEqualCollection(output1, output2));
+        assertTrue(CollectionUtils.isEqualCollection(output1, output3));
+        assertEquals(4, list.size());
+        assertEquals(3, output1.size());
+        assertTrue(output1.contains(1L));
+        assertTrue(output1.contains(3L));
+        assertTrue(output1.contains(4L));
     }
 }

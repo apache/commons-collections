@@ -21,7 +21,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 
 /**
@@ -50,9 +49,9 @@ public class EnumerationUtilsTest extends BulkTest {
         expectedList2.add("a");
         expectedList2.add("test");
         final List<String> actualList = EnumerationUtils.toList(new StringTokenizer(TO_LIST_FIXTURE));
-        Assert.assertEquals(expectedList1, expectedList2);
-        Assert.assertEquals(expectedList1, actualList);
-        Assert.assertEquals(expectedList2, actualList);
+        assertEquals(expectedList1, expectedList2);
+        assertEquals(expectedList1, actualList);
+        assertEquals(expectedList2, actualList);
     }
 
     public void testToListWithHashtable() {
@@ -62,27 +61,27 @@ public class EnumerationUtilsTest extends BulkTest {
         expected.put("three", new Integer(3));
         // validate elements.
         final List<Integer> actualEltList = EnumerationUtils.toList(expected.elements());
-        Assert.assertEquals(expected.size(), actualEltList.size());
-        Assert.assertTrue(actualEltList.contains(new Integer(1)));
-        Assert.assertTrue(actualEltList.contains(new Integer(2)));
-        Assert.assertTrue(actualEltList.contains(new Integer(3)));
+        assertEquals(expected.size(), actualEltList.size());
+        assertTrue(actualEltList.contains(new Integer(1)));
+        assertTrue(actualEltList.contains(new Integer(2)));
+        assertTrue(actualEltList.contains(new Integer(3)));
         final List<Integer> expectedEltList = new ArrayList<Integer>();
         expectedEltList.add(new Integer(1));
         expectedEltList.add(new Integer(2));
         expectedEltList.add(new Integer(3));
-        Assert.assertTrue(actualEltList.containsAll(expectedEltList));
+        assertTrue(actualEltList.containsAll(expectedEltList));
 
         // validate keys.
         final List<String> actualKeyList = EnumerationUtils.toList(expected.keys());
-        Assert.assertEquals(expected.size(), actualEltList.size());
-        Assert.assertTrue(actualKeyList.contains("one"));
-        Assert.assertTrue(actualKeyList.contains("two"));
-        Assert.assertTrue(actualKeyList.contains("three"));
+        assertEquals(expected.size(), actualEltList.size());
+        assertTrue(actualKeyList.contains("one"));
+        assertTrue(actualKeyList.contains("two"));
+        assertTrue(actualKeyList.contains("three"));
         final List<String> expectedKeyList = new ArrayList<String>();
         expectedKeyList.add("one");
         expectedKeyList.add("two");
         expectedKeyList.add("three");
-        Assert.assertTrue(actualKeyList.containsAll(expectedKeyList));
+        assertTrue(actualKeyList.containsAll(expectedKeyList));
     }
 
     public static Test suite() {
