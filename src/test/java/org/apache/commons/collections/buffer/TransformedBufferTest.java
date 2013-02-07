@@ -56,7 +56,7 @@ public class TransformedBufferTest extends TestCase {
         for (final Object el : els) {
             originalBuffer.add(el);
         }
-        final Buffer buffer = TransformedBuffer.transformedBuffer(originalBuffer, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
+        final Buffer<?> buffer = TransformedBuffer.transformedBuffer(originalBuffer, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, buffer.size());
         for (final Object el : els) {
             assertEquals(true, buffer.contains(new Integer((String) el)));

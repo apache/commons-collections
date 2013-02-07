@@ -92,7 +92,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     public void testRepeatedNext() {
-        for (final String element : array) {
+        for (@SuppressWarnings("unused") final String element : array) {
             iterator.next();
         }
         verifyNoMoreElements();

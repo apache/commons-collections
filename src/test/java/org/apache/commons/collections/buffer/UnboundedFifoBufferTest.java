@@ -430,6 +430,7 @@ public class UnboundedFifoBufferTest<E> extends AbstractCollectionTest<E> {
     }
 
     //-----------------------------------------------------------------------
+    @SuppressWarnings("unchecked")
     public void testCollections220() throws Exception {
          UnboundedFifoBuffer<String> buffer = new UnboundedFifoBuffer<String>();
          
