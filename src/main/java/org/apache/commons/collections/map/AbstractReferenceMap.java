@@ -514,13 +514,13 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
 
         @Override
         public Object[] toArray() {
-            return toArray(new Object[0]);
+            return toArray(new Object[size()]);
         }
 
         @Override
         public <T> T[] toArray(final T[] arr) {
             // special implementation to handle disappearing entries
-            final ArrayList<Map.Entry<K, V>> list = new ArrayList<Map.Entry<K, V>>();
+            final ArrayList<Map.Entry<K, V>> list = new ArrayList<Map.Entry<K, V>>(size());
             for (final Map.Entry<K, V> entry : this) {
                 list.add(new DefaultMapEntry<K, V>(entry));
             }
@@ -540,13 +540,13 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
 
         @Override
         public Object[] toArray() {
-            return toArray(new Object[0]);
+            return toArray(new Object[size()]);
         }
 
         @Override
         public <T> T[] toArray(final T[] arr) {
             // special implementation to handle disappearing keys
-            final List<K> list = new ArrayList<K>(parent.size());
+            final List<K> list = new ArrayList<K>(size());
             for (final K key : this) {
                 list.add(key);
             }
@@ -566,13 +566,13 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
 
         @Override
         public Object[] toArray() {
-            return toArray(new Object[0]);
+            return toArray(new Object[size()]);
         }
 
         @Override
         public <T> T[] toArray(final T[] arr) {
             // special implementation to handle disappearing values
-            final List<V> list = new ArrayList<V>(parent.size());
+            final List<V> list = new ArrayList<V>(size());
             for (final V value : this) {
                 list.add(value);
             }
