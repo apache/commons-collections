@@ -105,7 +105,7 @@ Notably MultiValueMap is a new more flexible implementation of MultiHashMap.
 </p>
 
 <p>
-<b>Collections 3.3</b> provides more bug fixes and a few enhancements.
+<b>Collections 4.0</b> provides more bug fixes and a few enhancements.
 Notably some crucial classes became Serializable. 
 </p>
 

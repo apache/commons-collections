@@ -17,16 +17,16 @@ limitations under the License.
 -->
 <document>
  <properties>
-  <title>Release notes for v3.3</title>
+  <title>Release notes for v4.0</title>
   <author email="dev@commons.apache.org">Commons Documentation Team</author>
  </properties>
 <body>
 
-<section name="Release notes for v3.3">
+<section name="Release notes for v4.0">
 <p>
 Commons collections is a project to develop and maintain collection classes
 based on and inspired by the JDK collection framework.
-This project is JDK1.2 compatible, and does not use JDK1.5 generics.
+This project is JDK1.5+ compatible and supports generics.
 </p>
 <p>
 This release adds various new classes and fixes a number of bugs.
@@ -36,9 +36,7 @@ All feedback should be directed to commons-user at jakarta.apache.org.
 
 <center><h3>COMPATIBILITY</h3></center>
 <p>
-This release is fully source and binary compatible with v3.2.
-(Checks performed using JDiff and Clirr, thanks).
-Please check the bug fixes to ensure you weren't relying on the behaviour of a bug.
+This release is <b>not</b> source or binary compatible with v3.x.
 </p>
 <p>
 One bug was that the ExtendedProperties was hiding properties with empty 
