@@ -44,37 +44,79 @@ import org.apache.commons.collections.functors.TruePredicate;
  * @version $Id$
  */
 //TODO - note generic types for review in wiki - especially <?> ones
-//TODO - doc Cardinality Helpers
 public class CollectionUtils {
 
+    /**
+     * Helper class to easily access cardinality properties of two collections.
+     * @param <O>  the element type
+     */
     private static class CardinalityHelper<O> {
-        final Map<O, Integer> cardinalityA, cardinalityB;
+        
+        /** Contains the cardinality for each object in collection A. */
+        final Map<O, Integer> cardinalityA;
+        
+        /** Contains the cardinality for each object in collection B. */
+        final Map<O, Integer> cardinalityB;
 
+        /**
+         * Create a new CardinalityHelper for two collections.
+         * @param a  the first collection
+         * @param b  the second collection
+         */
         public CardinalityHelper(final Iterable<? extends O> a, final Iterable<? extends O> b) {
             cardinalityA = CollectionUtils.<O>getCardinalityMap(a);
             cardinalityB = CollectionUtils.<O>getCardinalityMap(b);
         }
 
+        /**
+         * Returns the maximum frequency of an object.
+         * @param obj  the object
+         * @return the maximum frequency of the object 
+         */
         public final int max(final Object obj) {
             return Math.max(freqA(obj), freqB(obj));
         }
 
+        /**
+         * Returns the minimum frequency of an object.
+         * @param obj  the object
+         * @return the minimum frequency of the object
+         */
         public final int min(final Object obj) {
             return Math.min(freqA(obj), freqB(obj));
         }
 
+        /**
+         * Returns the frequency of this object in collection A.
+         * @param obj  the object
+         * @return the frequency of the object in collection A
+         */
         public int freqA(final Object obj) {
             return getFreq(obj, cardinalityA);
         }
 
+        /**
+         * Returns the frequency of this object in collection B.
+         * @param obj  the object
+         * @return the frequency of the object in collection B
+         */
         public int freqB(final Object obj) {
             return getFreq(obj, cardinalityB);
         }
 
+        /**
+         * Returns the number of unique elements in collection A.
+         * @return the number of unique elements in collection A
+         */
+        @SuppressWarnings("unused")
         public int sizeA() {
             return cardinalityA.size();
         }
         
+        /**
+         * Returns the number of unique elements in collection A.
+         * @return the number of unique elements in collection A
+         */
         public int sizeB() {
             return cardinalityB.size();
         }
@@ -88,10 +130,23 @@ public class CollectionUtils {
         }
     }
 
+    /**
+     * Helper class for set-related operations, e.g. union, subtract, intersection.
+     * @param <O>  the element type
+     */
     private static class SetOperationCardinalityHelper<O> extends CardinalityHelper<O> implements Iterable<O> {
+        
+        /** Contains the unique elements of the two collections. */
         private final Set<O> elements;
+        
+        /** Output collection. */
         private final List<O> newList;
 
+        /**
+         * Create a new set operation helper from the two collections.
+         * @param a  the first collection
+         * @param b  the second collection
+         */
         public SetOperationCardinalityHelper(final Iterable<? extends O> a, final Iterable<? extends O> b) {
             super(a, b);
             elements = new HashSet<O>();
@@ -105,12 +160,21 @@ public class CollectionUtils {
             return elements.iterator();
         }
 
+        /**
+         * Add the object {@code count} times to the result collection.
+         * @param obj  the object to add
+         * @param count  the count
+         */
         public void setCardinality(final O obj, final int count) {
             for (int i = 0; i < count; i++) {
                 newList.add(obj);
             }
         }
 
+        /**
+         * Returns the resulting collection.
+         * @return the result
+         */
         public Collection<O> list() {
             return newList;
         }
