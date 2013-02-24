@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-441" dev="tn" type="fix" due-to="Thomas Vahrst">
+      MultiKeyMap.clone() now correctly calls super.clone().
+    </action>
     <action issue="COLLECTIONS-312" dev="tn" type="fix" due-to="Peter Lawrey, Gary Gregory">
       Use of final keyword where applicable, minor performance improvements by properly
       initializing the capacity of newly created collections when known in advance.

@@ -441,18 +441,18 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
     //-----------------------------------------------------------------------
     @Override
     public String getCompatibilityVersion() {
-        return "3.1";
+        return "4.0";
     }
 
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,
-//            "D:/dev/collections/data/test/MultiKeyMap.emptyCollection.version3.1.obj");
+//            "src/test/resources/data/test/MultiKeyMap.emptyCollection.version4.0.obj");
 //        resetFull();
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,
-//            "D:/dev/collections/data/test/MultiKeyMap.fullCollection.version3.1.obj");
+//            "src/test/resources/data/test/MultiKeyMap.fullCollection.version4.0.obj");
 //    }
 
     /**

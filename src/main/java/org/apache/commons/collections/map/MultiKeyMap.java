@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections.map;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -77,10 +80,6 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /** Serialisation version */
     private static final long serialVersionUID = -1788199231038721040L;
-
-    /** The decorated map */
-    //keep this member around for serialization BC with older Collections releases assuming we want to do that
-    protected AbstractHashedMap<MultiKey<? extends K>, V> map;
 
     //-----------------------------------------------------------------------
     /**
@@ -819,9 +818,14 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      *
      * @return a shallow clone
      */
+    @SuppressWarnings("unchecked")
     @Override
     public MultiKeyMap<K, V> clone() {
-        return new MultiKeyMap<K, V>(decorated().clone());
+        try {
+            return (MultiKeyMap<K, V>) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new InternalError();
+        }
     }
 
     /**
@@ -867,6 +871,32 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      */
     @Override
     protected AbstractHashedMap<MultiKey<? extends K>, V> decorated() {
-        return map;
+        return (AbstractHashedMap<MultiKey<? extends K>, V>) super.decorated();
     }
+    
+    //-----------------------------------------------------------------------
+    /**
+     * Write the map out using a custom routine.
+     * 
+     * @param out  the output stream
+     * @throws IOException
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        out.writeObject(map);
+    }
+
+    /**
+     * Read the map in using a custom routine.
+     * 
+     * @param in  the input stream
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    @SuppressWarnings("unchecked")
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        map = (Map<MultiKey<? extends K>, V>) in.readObject();
+    }
+    
 }
