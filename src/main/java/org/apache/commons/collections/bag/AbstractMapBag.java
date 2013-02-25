@@ -453,11 +453,14 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param <T> the type of the array elements
      * @param array the array to populate
      * @return an array of all of this bag's elements
+     * @throws ArrayStoreException if the runtime type of the specified array is not
+     *   a supertype of the runtime type of the elements in this list
+     * @throws NullPointerException if the specified array is null
      */
+    @SuppressWarnings("unchecked")
     public <T> T[] toArray(T[] array) {
         final int size = size();
         if (array.length < size) {
-            // This is safe, both are type T
             array = (T[]) Array.newInstance(array.getClass().getComponentType(), size);
         }
 
@@ -466,7 +469,6 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         while (it.hasNext()) {
             final E current = it.next();
             for (int index = getCount(current); index > 0; index--) {
-                // TODO this is unsafe
                 array[i++] = (T) current;
             }
         }
