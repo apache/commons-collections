@@ -596,6 +596,24 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         assertTrue(stop - start < 5000);
     }
     
+    public void testSetCollections444() {
+        final SetUniqueList<Integer> lset = new SetUniqueList<Integer>(new ArrayList<Integer>(), new HashSet<Integer>());
+
+        // Duplicate element
+        final Integer obj1 = new Integer(1);
+        final Integer obj2 = new Integer(2);
+
+        lset.add(obj1);
+        lset.add(obj2);
+        lset.set(0, obj1);
+        assertEquals(2, lset.size());
+        assertSame(obj1, lset.get(0));
+        assertSame(obj2, lset.get(1));
+
+        assertTrue(lset.contains(obj1));
+        assertTrue(lset.contains(obj2));
+    }
+
     @SuppressWarnings("serial")
     class SetUniqueList307 extends SetUniqueList<E> {
         public SetUniqueList307(final List<E> list, final Set<E> set) {

@@ -232,11 +232,12 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
             // the object is already in the uniq list
             // (and it hasn't been swapped with itself)
             super.remove(pos); // remove the duplicate by index
+            set.remove(removed); // remove the item deleted by the set
+        } else if (pos == -1) {
+            set.add(object); // add the new item to the unique set
+            set.remove(removed); // remove the item deleted by the set
         }
-
-        set.add(object); // add the new item to the unique set
-        set.remove(removed); // remove the item deleted by the set
-
+        
         return removed; // return the item deleted by the set
     }
 

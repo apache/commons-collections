@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-444" dev="tn" type="fix" due-to="Thomas Vahrst">
+      SetUniqueList.set(int, E) now works correctly if the object to be inserted
+      is already placed at the given position.
+    </action>
     <action issue="COLLECTIONS-441" dev="tn" type="fix" due-to="Thomas Vahrst">
       MultiKeyMap.clone() now correctly calls super.clone().
     </action>
