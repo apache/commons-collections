@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-258" dev="tn" type="add" due-to="Nathan Blomquist">
+      Added "DualLinkedHashBidiMap" bidi map implementation.
+    </action>
     <action issue="COLLECTIONS-396" dev="tn" type="add" due-to="Jeff Rodriguez">
       Added "LazyIteratorChain" iterator.
     </action>
