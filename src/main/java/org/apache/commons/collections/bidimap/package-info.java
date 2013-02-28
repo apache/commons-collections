@@ -26,6 +26,7 @@
  * The following implementations are provided in the package:
  * <ul>
  *   <li>DualHashBidiMap - uses two HashMaps to implement BidiMap
+ *   <li>DualLinkedHashBidiMap - uses two LinkedHashMaps to implement BidiMap
  *   <li>DualTreeBidiMap - uses two TreeMaps to implement SortedBidiMap
  *   <li>TreeBidiMap - red-black tree implementation of OrderedBidiMap
  * </ul>
