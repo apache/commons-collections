@@ -26,7 +26,7 @@ import org.apache.commons.collections.list.UnmodifiableList;
 /**
  * An IteratorChain is an Iterator that wraps a number of Iterators.
  * <p>
- * This class makes multiple iterators look like one to the caller When any
+ * This class makes multiple iterators look like one to the caller. When any
  * method from the Iterator interface is called, the IteratorChain will delegate
  * to a single underlying Iterator. The IteratorChain will invoke the Iterators
  * in sequence until all Iterators are exhausted.
@@ -35,10 +35,9 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * efficient (and convenient) than reading out the contents of each Iterator
  * into a List and creating a new Iterator.
  * <p>
- * Calling a method that adds new Iterator<i>after a method in the Iterator
- * interface has been called</i> will result in an
- * UnsupportedOperationException. Subclasses should <i>take care</i> to not
- * alter the underlying List of Iterators.
+ * Calling a method that adds new Iterator <i>after a method in the Iterator
+ * interface has been called</i> will result in an UnsupportedOperationException.
+ * Subclasses should <i>take care</i> to not alter the underlying List of Iterators.
  * <p>
  * NOTE: As from version 3.0, the IteratorChain may contain no iterators. In
  * this case the class will function as an empty iterator.
