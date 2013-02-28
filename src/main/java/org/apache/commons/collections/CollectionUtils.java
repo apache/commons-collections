@@ -1476,6 +1476,7 @@ public class CollectionUtils {
      * @param collection to read
      * @return sole member of collection
      * @throws IllegalArgumentException if collection is null/empty or contains more than one element
+     * @since 4.0
      */
     public static <E> E extractSingleton(final Collection<E> collection) {
         if (collection == null || collection.size() != 1) {
