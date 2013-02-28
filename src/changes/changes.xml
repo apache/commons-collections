@@ -44,36 +44,87 @@
       Added "emptyIfNull" methods to classes "CollectionUtils", "ListUtils", "SetUtils"
       and "MapUtils".
     </action>
-    <action issue="COLLECTIONS-415" dev="tn" type="add" due-to="Adrian Nistor">
-      Added clarifying javadoc wrt runtime complexity of "AbstrictLinkedList#removeAll".
+    <action issue="COLLECTIONS-427" dev="brentworden" type="fix" due-to="Mert Guldur">
+      Fixed performance issue in "SetUniqueList#retainAll" method for large collections.
     </action>
-    <action issue="COLLECTIONS-417" dev="tn" type="add" due-to="Adrian Nistor">
-      Added clarifying javadoc wrt runtime complexity of "AbstrictLinkedList#retainAll".
+    <action issue="COLLECTIONS-426" dev="brentworden" type="fix" due-to="Adrian Nistor">
+      Fixed performance issue in "ListOrderedSet#retainAll" method for large collections.
+    </action>
+    <action issue="COLLECTIONS-425" dev="tn" type="fix" due-to="Adrian Nistor">
+      Improved performance of "ListOrderedMap#remove(Object)" method.
+    </action>
+    <action issue="COLLECTIONS-417" dev="tn" type="fix" due-to="Adrian Nistor">
+      Added clarifying javadoc wrt runtime complexity of "AbstractLinkedList#retainAll".
+    </action>
+    <action issue="COLLECTIONS-415" dev="tn" type="fix" due-to="Adrian Nistor">
+      Added clarifying javadoc wrt runtime complexity of "AbstractLinkedList#removeAll".
+    </action>
+    <action issue="COLLECTIONS-413" dev="tn" type="fix" due-to="Adrian Nistor">
+      Improved performance of "removeAll()" method for sets returned by "DualHashBidiMap#entrySet()".
+    </action>
+    <action issue="COLLECTIONS-412" dev="tn" type="fix" due-to="Adrian Nistor">
+      Improved performance of "CollectionUtils#subtract" methods.
+    </action>
+    <action issue="COLLECTIONS-411" dev="tn" type="fix" due-to="Adrian Nistor">
+      Fixed possible "IndexOutOfBoundsException" in "ListOrderedMap#putAll".
+    </action>
+    <action issue="COLLECTIONS-410" dev="tn" type="fix" due-to="Adrian Nistor">
+      Improved performance of "SetUniqueList#addAll" method.
+    </action>
+    <action issue="COLLECTIONS-409" dev="tn" type="fix" due-to="Adrian Nistor">
+      Improved performance of "ListOrderedSet#addAll" method.
+    </action>
+    <action issue="COLLECTIONS-408" dev="tn" type="fix" due-to="Adrian Nistor">
+      Improved performance of "SetUniqueList#removeAll".
+    </action>
+    <action issue="COLLECTIONS-407" dev="tn" type="fix" due-to="Adrian Nistor">
+      Improved performance of "ListOrderedSet#remove(Object)" in case the object is 
+      not contained in the Set.
+    </action>
+    <action issue="COLLECTIONS-406" dev="tn" type="fix" due-to="Adrian Nistor">
+      Improved performance of "ListUtils#subtract" method.
     </action>
     <action issue="COLLECTIONS-393" dev="tn" type="add" due-to="Chris Shayan">
       Added "ListUtils#partition" method to split a List into consecutive sublists.
     </action>
-    <action issue="COLLECTIONS-272" dev="tn" type="add" due-to="Chaitanya Mutyala">
-      Added serialization support for "FixedOrderComparator" and "TransformingComparator".
+    <action issue="COLLECTIONS-327" dev="brentworden" type="add" due-to="sebb">
+      Added serialVersionUID fields for "ExtendedProperties", "CompositeCollection",
+      "CompositeSet", "EmptyMapMutator", "EmptySetMutator".
+    </action>
+    <action issue="COLLECTIONS-324" dev="tn" type="change" due-to="sebb">
+      Fields transformer and decorated in class "TransformingComparator" are now final.
     </action>
     <action issue="COLLECTIONS-383" dev="tn" type="add" due-to="Adrian Cumiskey">
       Added "CollectionUtils#forAllDo" implementation which takes an "Iterator" as input.
     </action>
-    <action issue="COLLECTIONS-231" dev="tn" type="fix" due-to="Torsten Curdt">
+    <action issue="COLLECTIONS-399" dev="tn" type="add" due-to="Sebb">
+      Added new method "get(int)" to "BoundedFifoBuffer" and "CircularFifoBuffer".
+    </action>
+    <action issue="COLLECTIONS-272" dev="tn" type="add" due-to="Chaitanya Mutyala">
+      Added serialization support for "FixedOrderComparator" and "TransformingComparator".
+    </action>
+    <action issue="COLLECTIONS-231" dev="tn" type="change" due-to="Torsten Curdt">
       Return concrete class in static factory methods instead of base class interface
       (except for Unmodifiable decorators).
     </action>
+    <action issue="COLLECTIONS-404" dev="luc" type="add" due-to="Jordane Sarda">
+      Added an implementation of Eugene Myers difference algorithm in package
+      o.a.c.c.comparators.sequence.
+    </action>
+    <action issue="COLLECTIONS-400" dev="tn" type="fix" due-to="Shin Hwei Tan">
+      Added missing null check in "CollectionUtils#addIgnoreNull(Collection, Object)".
+    </action>
+    <action issue="COLLECTIONS-391" dev="tn" type="fix" due-to="Shin Hwei Tan">
+      Fixed javadoc for "MapUtils#toProperties(Map)".
+    </action>
+    <action issue="COLLECTIONS-389" dev="tn" type="fix" due-to="Shin Hwei Tan">
+      Clarified javadoc for "TransformerUtils#mapTransformer" for null input.
+    </action>
+    <action issue="COLLECTIONS-388" dev="tn" type="fix" due-to="Shin Hwei Tan">
+      Clarified javadoc for "FactoryUtils#prototypeFactory" for null input.
+    </action>
     <action issue="COLLECTIONS-379" dev="tn" type="fix" due-to="Shin Hwei Tan">
       Fixed javadoc for several methods wrt expected NullPointerExceptions.
-    </action>
-    <action issue="COLLECTIONS-404" dev="luc" type="add" due-to="Jordane Sarda">
-      Added an implementation of Eugene Myers difference algorithm.
-    </action>
-    <action issue="COLLECTIONS-293" dev="tn" type="add" due-to="Stephen Kestle">
-      Added support for using custom "Equator" objects in "EqualPredicate".
-    </action>
-    <action issue="COLLECTIONS-425" dev="tn" type="fix" due-to="Adrian Nistor">
-      Improved performance of "ListOrderedMap#remove(Object)" method.
     </action>
     <action issue="COLLECTIONS-323" dev="jochen" type="fix" due-to="Maarten Brak">
       Changed behavior of "CaseInsensitiveMap" constructor to be compliant with "HashMap"
@@ -97,17 +148,17 @@
       Improve javadoc of "CollatingIterator" wrt the used "Comparator" and throw a
       NullPointerException in "CollatingIterator#least" if no comparator is set.
     </action>
+    <action issue="COLLECTIONS-293" dev="tn" type="add" due-to="Stephen Kestle">
+      Added support for using custom "Equator" objects in "EqualPredicate".
+    </action>
     <action issue="COLLECTIONS-241" dev="brentworden" type="add" due-to="Elifarley Callado Coelho">
       Added "PassiveExpiringMap" map decorator.
     </action>
     <action issue="COLLECTIONS-405" dev="brentworden" type="add" due-to="Adam Dyga">
       Added "ListUtils#select" and "ListUtils#selectRejected" methods.
     </action>
-    <action issue="COLLECTIONS-427" dev="brentworden" type="fix" due-to="Mert Guldur">
-      Fixed performance issue in "SetUniqueList#retainAll" method for large collections.
-    </action>
-    <action issue="COLLECTIONS-426" dev="brentworden" type="fix" due-to="Adrian Nistor">
-      Fixed performance issue in "ListOrderedSet#retainAll" method for large collections.
+    <action issue="COLLECTIONS-219" dev="scolebourne" type="fix" due-to="Tom Leccese">
+      "CollectionUtils#removeAll" wrongly called "ListUtils#retainAll".
     </action>
   </release>
   </body>
