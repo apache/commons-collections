@@ -69,7 +69,7 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed SortedBag
      * @throws IllegalArgumentException if bag or transformer is null
-     * @since 3.3
+     * @since 4.0
      */
     public static <E> TransformedSortedBag<E> transformedSortedBag(final SortedBag<E> bag,
             final Transformer<? super E, ? extends E> transformer) {

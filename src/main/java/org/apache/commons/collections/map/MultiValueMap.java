@@ -150,7 +150,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * 
      * @param out  the output stream
      * @throws IOException
-     * @since 3.3
+     * @since 4.0
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -163,7 +163,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException
-     * @since 3.3
+     * @since 4.0
      */
     @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {

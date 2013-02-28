@@ -70,7 +70,7 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed Bag
      * @throws IllegalArgumentException if bag or transformer is null
-     * @since 3.3
+     * @since 4.0
      */
     public static <E> Bag<E> transformedBag(final Bag<E> bag, final Transformer<? super E, ? extends E> transformer) {
         final TransformedBag<E> decorated = new TransformedBag<E>(bag, transformer);

@@ -69,7 +69,7 @@ public class TransformedBuffer<E> extends TransformedCollection<E> implements Bu
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed Buffer
      * @throws IllegalArgumentException if buffer or transformer is null
-     * @since 3.3
+     * @since 4.0
      */
     public static <E> TransformedBuffer<E> transformedBuffer(final Buffer<E> buffer,
                                                              final Transformer<? super E, ? extends E> transformer) {

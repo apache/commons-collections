@@ -70,7 +70,7 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed set
      * @throws IllegalArgumentException if set or transformer is null
-     * @since 3.3
+     * @since 4.0
      */
     public static <E> Set<E> transformedSet(final Set<E> set, final Transformer<? super E, ? extends E> transformer) {
         final TransformedSet<E> decorated = new TransformedSet<E>(set, transformer);
