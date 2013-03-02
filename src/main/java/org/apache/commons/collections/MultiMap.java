@@ -27,7 +27,7 @@ import java.util.Collection;
  * <p>
  * For example:
  * <pre>
- * MultiMap mhm = new MultiHashMap();
+ * MultiMap mhm = new MultiValueMap();
  * mhm.put(key, "A");
  * mhm.put(key, "B");
  * mhm.put(key, "C");
