@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-275" dev="tn" type="add" due-to="Stephen Kestle">
+      Added "IndexedCollection" collection decorator which provides a map-like
+      view on an existing collection.
+    </action>
     <action issue="COLLECTIONS-258" dev="tn" type="add" due-to="Nathan Blomquist">
       Added "DualLinkedHashBidiMap" bidi map implementation.
     </action>
