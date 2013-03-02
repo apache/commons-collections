@@ -38,6 +38,9 @@
         </fileSet>
         <fileSet>
             <directory>src</directory>
+            <excludes>
+                <exclude>**/*.cgi</exclude> 
+            </excludes>
         </fileSet>
     </fileSets>
 </assembly>
