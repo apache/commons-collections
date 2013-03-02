@@ -21,7 +21,6 @@
  * The following implementations are provided in the package:
  * <ul>
  *   <li>CompositeCollection - a collection that combines multiple collections into one
- *   <li>IndexedCollection - a collection that provides a map-like view on another one
  * </ul>
  * The following decorators are provided in the package:
  * <ul>
@@ -29,6 +28,7 @@
  *   <li>Unmodifiable - ensures the collection cannot be altered
  *   <li>Predicated - ensures that only elements that are valid according to a predicate can be added
  *   <li>Transformed - transforms elements as they are added
+ *   <li>Indexed - provides a map-like view onto another collection
  * </ul>
  * 
  * @version $Id$
