@@ -21,6 +21,7 @@
  * The following implementations are provided in the package:
  * <ul>
  *   <li>CompositeCollection - a collection that combines multiple collections into one
+ *   <li>IndexedCollection - a collection that provides a map-like view on another one
  * </ul>
  * The following decorators are provided in the package:
  * <ul>
