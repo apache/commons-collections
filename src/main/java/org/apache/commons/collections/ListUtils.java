@@ -526,6 +526,7 @@ public class ListUtils {
      * @param size  the desired size of each sublist (the last may be smaller)
      * @return a list of consecutive sublists
      * @throws IllegalArgumentException if list is {@code null} or size is not strictly positive
+     * @since 4.0
      */
     public static <T> List<List<T>> partition(final List<T> list, final int size) {
         if (list == null) {
@@ -539,6 +540,7 @@ public class ListUtils {
     
     /**
      * Provides a partition view on a {@link List}.
+     * @since 4.0
      */
     private static class Partition<T> extends AbstractList<List<T>> {
         private final List<T> list;
