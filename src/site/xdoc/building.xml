@@ -28,9 +28,6 @@ limitations under the License.
   primary build system, however an <a href="http://ant.apache.org">Ant</a>
   build is also available.
 </p>
-<p>
-  You may also be interested in the <a href="release_3_3.html">v3.3 release notes</a>.
-</p>
 </section>
 <!-- ================================================== -->
 <section name="Maven 2 Goals">
