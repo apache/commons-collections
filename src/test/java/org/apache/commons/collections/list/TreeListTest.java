@@ -46,6 +46,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
 //        benchmark(new java.util.ArrayList());
 //        System.out.print("\n LinkedList = ");
 //        benchmark(new java.util.LinkedList());
+//        System.out.print("\n NodeCachingLinkedList = ");
 //        benchmark(new NodeCachingLinkedList());
 //    }
 
@@ -246,5 +247,25 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         assertEquals(new Integer(4), li.next());
         assertEquals(false, li.hasNext());
     }
+    
+    public void testBugCollections447() {
+        final List<String> treeList = new TreeList<String>();
+        treeList.add("A");
+        treeList.add("B");
+        treeList.add("C");
+        treeList.add("D");
+        
+        final ListIterator<String> li = treeList.listIterator();
+        assertEquals("A", li.next());
+        assertEquals("B", li.next());
+        
+        assertEquals("B", li.previous());
+                
+        li.remove(); // Deletes "B"
+                
+        // previous() after remove() should move to
+        // the element before the one just removed
+        assertEquals("A", li.previous());
+    }    
 
 }
