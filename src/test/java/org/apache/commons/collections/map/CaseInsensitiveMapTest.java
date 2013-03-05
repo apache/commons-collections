@@ -27,9 +27,7 @@ import org.apache.commons.collections.BulkTest;
 /**
  * Tests for the {@link CaseInsensitiveMap} implementation.
  *
- * @version $Revision$
- *
- * @author Commons-Collections team
+ * @version $Id$
  */
 public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

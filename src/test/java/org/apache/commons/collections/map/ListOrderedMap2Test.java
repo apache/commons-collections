@@ -29,10 +29,8 @@ import org.apache.commons.collections.list.AbstractListTest;
  * Extension of {@link AbstractOrderedMapTest} for exercising the {@link ListOrderedMap}
  * implementation.
  *
- * @since Commons Collections 3.1
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @since 3.1
+ * @version $Id$
  */
 public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
 

@@ -25,10 +25,8 @@ import org.apache.commons.collections.Unmodifiable;
  * Extension of {@link AbstractSortedMapTest} for exercising the
  * {@link UnmodifiableSortedMap} implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @since 3.0
+ * @version $Id$
  */
 public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 

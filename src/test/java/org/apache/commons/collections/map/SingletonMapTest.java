@@ -27,9 +27,7 @@ import org.apache.commons.collections.OrderedMap;
 /**
  * JUnit tests.
  *
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 

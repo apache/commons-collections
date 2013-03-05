@@ -29,11 +29,7 @@ import org.apache.commons.collections.map.AbstractReferenceMap.ReferenceStrength
 /**
  * Tests for ReferenceIdentityMap.
  *
- * @version $Revision$
- *
- * @author Paul Jack
- * @author Stephen Colebourne
- * @author Guilhem Lavaux
+ * @version $Id$
  */
 public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

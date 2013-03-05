@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections.map;
 
-import junit.framework.Assert;
-
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Collection;
@@ -26,10 +24,8 @@ import java.util.Collection;
  * Extension of {@link AbstractMapTest} for exercising the 
  * {@link CompositeMap} implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Brian McCallister
+ * @since 3.0
+ * @version $Id$
  */
 public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     /** used as a flag in MapMutator tests */
@@ -71,8 +67,8 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     
     public void testGet() {
         final CompositeMap<K, V> map = new CompositeMap<K, V>(buildOne(), buildTwo());
-        Assert.assertEquals("one", map.get("1"));
-        Assert.assertEquals("four", map.get("4"));
+        assertEquals("one", map.get("1"));
+        assertEquals("four", map.get("4"));
     }
     
     @SuppressWarnings("unchecked")

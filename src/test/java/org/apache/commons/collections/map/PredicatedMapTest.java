@@ -28,10 +28,8 @@ import org.apache.commons.collections.functors.TruePredicate;
  * Extension of {@link AbstractMapTest} for exercising the 
  * {@link PredicatedMap} implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Phil Steitz
+ * @since 3.0
+ * @version $Id$
  */
 public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

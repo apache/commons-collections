@@ -33,10 +33,8 @@ import org.junit.Test;
  * Extension of {@link LazyMapTest} for exercising the 
  * {@link LazySortedMap} implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Phil Steitz
+ * @since 3.0
+ * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {

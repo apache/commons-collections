@@ -29,10 +29,8 @@ import org.apache.commons.collections.functors.ConstantFactory;
  * Extension of {@link AbstractMapTest} for exercising the 
  * {@link DefaultedMap} implementation.
  *
- * @since Commons Collections 3.2
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @since 3.2
+ * @version $Id$
  */
 public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

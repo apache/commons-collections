@@ -29,9 +29,7 @@ import org.apache.commons.collections.IterableMap;
 /**
  * JUnit tests.
  *
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class IdentityMapTest<K, V> extends AbstractObjectTest {
 

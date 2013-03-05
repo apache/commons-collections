@@ -30,10 +30,8 @@ import org.junit.Test;
  * Extension of {@link AbstractMapTest} for exercising the 
  * {@link LazyMap} implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Phil Steitz
+ * @since 3.0
+ * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {

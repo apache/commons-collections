@@ -30,10 +30,8 @@ import org.apache.commons.collections.functors.TruePredicate;
  * Extension of {@link PredicatedMapTest} for exercising the
  * {@link PredicatedSortedMap} implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Phil Steitz
+ * @since 3.0
+ * @version $Id$
  */
 public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 

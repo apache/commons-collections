@@ -29,10 +29,8 @@ import org.apache.commons.collections.collection.TransformedCollectionTest;
  * Extension of {@link AbstractMapTest} for exercising the {@link TransformedMap}
  * implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @since 3.0
+ * @version $Id$
  */
 public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

@@ -33,9 +33,8 @@ import org.apache.commons.collections.AbstractObjectTest;
 /**
  * TestMultiValueMap.
  *
- * @author <a href="mailto:jcarman@apache.org">James Carman</a>
- * @author Stephen Colebourne
- * @since Commons Collections 3.2
+ * @since 3.2
+ * @version $Id$
  */
 public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 

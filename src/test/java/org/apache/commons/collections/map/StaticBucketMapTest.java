@@ -24,9 +24,7 @@ import org.apache.commons.collections.BulkTest;
  * Unit tests.
  * {@link StaticBucketMap}.
  *
- * @version $Revision$
- *
- * @author Michael A. Smith
+ * @version $Id$
  */
 public class StaticBucketMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

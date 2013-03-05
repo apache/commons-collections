@@ -22,9 +22,7 @@ import org.apache.commons.collections.BulkTest;
 /**
  * JUnit tests.
  *
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public class HashedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

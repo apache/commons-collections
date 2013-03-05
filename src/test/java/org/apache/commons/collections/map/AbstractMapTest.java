@@ -119,11 +119,7 @@ import org.apache.commons.collections.set.AbstractSetTest;
  * cases.  For example, if your map does not allow duplicate values, override
  * {@link #isAllowDuplicateValues()} and have it return <code>false</code>
  *
- * @author Michael Smith
- * @author Rodney Waldhoff
- * @author Paul Jack
- * @author Stephen Colebourne
- * @version $Revision$
+ * @version $Id$
  */
 public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
 

@@ -27,10 +27,7 @@ import org.apache.commons.collections.map.AbstractReferenceMap.ReferenceStrength
 /**
  * Tests for ReferenceMap.
  *
- * @version $Revision$
- *
- * @author Paul Jack
- * @author Guilhem Lavaux
+ * @version $Id$
  */
 public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

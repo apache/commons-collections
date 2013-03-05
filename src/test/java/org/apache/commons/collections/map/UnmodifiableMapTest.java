@@ -26,10 +26,8 @@ import org.apache.commons.collections.Unmodifiable;
  * Extension of {@link AbstractMapTest} for exercising the
  * {@link UnmodifiableMap} implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Phil Steitz
+ * @since 3.0
+ * @version $Id$
  */
 public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

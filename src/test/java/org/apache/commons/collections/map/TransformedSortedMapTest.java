@@ -32,10 +32,8 @@ import org.apache.commons.collections.collection.TransformedCollectionTest;
  * Extension of {@link AbstractSortedMapTest} for exercising the {@link TransformedSortedMap}
  * implementation.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @since 3.0
+ * @version $Id$
  */
 public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
