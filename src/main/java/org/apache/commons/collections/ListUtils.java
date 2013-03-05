@@ -507,9 +507,6 @@ public class ListUtils {
         return -1;
     }
 
-    // partition
-    //-------------------------------------------------------------------------
-
     /**
      * Returns consecutive {@link List#subList(int, int) sublists} of a
      * list, each of the same size (the final list may be smaller). For example,
@@ -580,101 +577,6 @@ public class ListUtils {
         @Override
         public boolean isEmpty() {
             return list.isEmpty();
-        }
-    }
-    
-    // range
-    //-------------------------------------------------------------------------
-
-    /**
-     * Returns an unmodifiable List of integers in the range [0, size - 1].
-     * <p>
-     * The returned list does not store the actual numbers, but checks
-     * if a given number would be contained in the defined range. A call
-     * to {@link #contains(Object)} is very fast - O(1).
-     *
-     * @see #range(int,int)
-     *
-     * @param size  the size of the returned list
-     * @return an unmodifiable list of integers in the range [0, size - 1]
-     * @throws IllegalArgumentException if from &gt; to
-     * @since 4.0
-     */
-    public static List<Integer> range(final int size) {
-        return range(0, size - 1);
-    }
-
-    /**
-     * Returns an unmodifiable List of integers in the range [from, to].
-     * <p>
-     * The returned list does not store the actual numbers, but checks
-     * if a given number would be contained in the defined range. A call
-     * to {@link #contains(Object)} is very fast - O(1).
-     * <p>
-     * The bounds of the range are allowed to be negative.
-     * 
-     * @param from  the start of the range
-     * @param to  the end of the range (inclusive)
-     * @return an unmodifiable list of integers in the specified range
-     * @throws IllegalArgumentException if from &gt; to
-     * @since 4.0
-     */
-    public static List<Integer> range(final int from, final int to) {
-        return ListUtils.unmodifiableList(new RangeList(from, to));
-    }
-
-    /**
-     * Provides a memory-efficient implementation of a fixed range list.
-     * @since 4.0
-     */
-    private static final class RangeList extends AbstractList<Integer> {
-        private final int from;
-        private final int to;
-
-        /**
-         * Creates a list of integers with a given range, inclusive.
-         * 
-         * @param from  the start of the range
-         * @param to  the end of the range (inclusive)
-         * @throws IllegalArgumentException if from &gt; to
-         */
-        private RangeList(final int from, final int to) {
-            if (to < from) {
-                throw new IllegalArgumentException("from(" + from + ") > to(" + to + ")");
-            }
-
-            this.from = from;
-            this.to = to;
-        }
-
-        public int size() {
-            return to - from + 1;
-        }
-
-        public Integer get(final int index) {
-            final int sz = size();
-            if (index >= sz || index < 0) {
-                throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + sz);
-            }
-            return Integer.valueOf(index + from);
-        }
-
-        public int indexOf(Object o) {
-            if (o instanceof Number) {
-                final int value = ((Number) o).intValue();
-                if (value >= from && value <= to) {
-                    return value - from;
-                }
-            }
-            return -1;
-        }
-
-        public int lastIndexOf(Object o) {
-            return indexOf(o);
-        }
-
-        public boolean contains(Object o) {
-            return indexOf(o) != -1;
         }
     }
 }
