@@ -34,6 +34,7 @@ import org.apache.commons.collections.collection.SynchronizedCollection;
 import org.apache.commons.collections.collection.TransformedCollection;
 import org.apache.commons.collections.collection.UnmodifiableBoundedCollection;
 import org.apache.commons.collections.collection.UnmodifiableCollection;
+import org.apache.commons.collections.functors.Equator;
 import org.apache.commons.collections.functors.TruePredicate;
 
 /**
@@ -522,6 +523,78 @@ public class CollectionUtils {
         return true;
     }
 
+    /**
+     * Returns <tt>true</tt> iff the given {@link Collection}s contain
+     * exactly the same elements with exactly the same cardinalities.
+     * <p>
+     * That is, iff the cardinality of <i>e</i> in <i>a</i> is
+     * equal to the cardinality of <i>e</i> in <i>b</i>,
+     * for each element <i>e</i> in <i>a</i> or <i>b</i>.
+     *
+     * @param a  the first collection, must not be null
+     * @param b  the second collection, must not be null
+     * @param equator  the Equator used for testing equality
+     * @return <code>true</code> iff the collections contain the same elements with the same cardinalities.
+     * @throws IllegalArgumentException if the equator is null
+     * @since 4.0
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" }) // we don't know the types due to wildcards in the signature
+    public static boolean isEqualCollection(final Collection<?> a, final Collection<?> b, final Equator<?> equator) {
+        if (equator == null) {
+            throw new IllegalArgumentException("equator may not be null");
+        }
+
+        if(a.size() != b.size()) {
+            return false;
+        }
+
+        final Transformer transformer = new Transformer() {
+            public EquatorWrapper<?> transform(Object input) {
+                return new EquatorWrapper(equator, input);
+            }
+        };
+        
+        return isEqualCollection(collect(a, transformer), collect(b, transformer));
+    }
+
+    /**
+     * Wraps another object and uses the provided Equator to implement
+     * {@link #equals(Object)} and {@link #hashCode()}.
+     * <p>
+     * This class can be used to store objects into a Map.
+     *  
+     * @param <O>  the element type
+     * @since 4.0
+     */
+    private static class EquatorWrapper<O> {
+        private final Equator<O> equator;
+        private final O object;
+        
+        public EquatorWrapper(final Equator<O> equator, final O object) {
+            this.equator = equator;
+            this.object = object;
+        }
+        
+        public O getObject() {
+            return object; 
+        }
+        
+        @Override
+        public boolean equals(Object obj) {
+            if (!(obj instanceof EquatorWrapper)) {
+                return false;
+            }
+            @SuppressWarnings("unchecked")
+            EquatorWrapper<O> otherObj = (EquatorWrapper<O>) obj;
+            return equator.equate(object, otherObj.getObject());
+        }
+
+        @Override
+        public int hashCode() {
+            return equator.hash(object);
+        }        
+    }
+    
     /**
      * Returns the number of occurrences of <i>obj</i> in <i>coll</i>.
      *

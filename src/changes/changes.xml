@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-446" dev="tn" type="add" due-to="Matt Lachman">
+      Added method "CollectionUtils#isEqualCollection(Collection, Collection, Equator)".
+    </action>
     <action issue="COLLECTIONS-447" dev="tn" type="fix" due-to="Jeffrey Barnes">
       Tree traversal with a TreeListIterator will not be affected anymore by
       the removal of an element directly after a call to previous().

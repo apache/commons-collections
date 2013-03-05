@@ -32,6 +32,8 @@ import org.apache.commons.collections.collection.PredicatedCollection;
 import org.apache.commons.collections.collection.SynchronizedCollection;
 import org.apache.commons.collections.collection.TransformedCollection;
 import org.apache.commons.collections.collection.UnmodifiableCollection;
+import org.apache.commons.collections.functors.DefaultEquator;
+import org.apache.commons.collections.functors.Equator;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -513,6 +515,36 @@ public class CollectionUtilsTest extends MockTestCase {
         b.add("1");
         assertTrue(CollectionUtils.isEqualCollection(a, b));
         assertTrue(CollectionUtils.isEqualCollection(b, a));
+    }
+
+    @Test
+    public void testIsEqualCollectionEquator() {
+        Collection<Integer> collB = CollectionUtils.collect(collectionB, TRANSFORM_TO_INTEGER);
+
+        // odd / even equator
+        final Equator<Integer> e = new Equator<Integer>() {
+            public boolean equate(Integer o1, Integer o2) {
+                if (o1.intValue() % 2 == 0 ^ o2.intValue() % 2 == 0) return false;
+                else return true;
+            }
+
+            public int hash(Integer o) {
+                return o.intValue() % 2 == 0 ? Integer.valueOf(0).hashCode() : Integer.valueOf(1).hashCode();
+            }
+        };
+        
+        assertTrue(CollectionUtils.isEqualCollection(collectionA, collectionA, e));
+        assertTrue(CollectionUtils.isEqualCollection(collectionA, collB, e));
+        assertTrue(CollectionUtils.isEqualCollection(collB, collectionA, e));
+        
+        final Equator<Number> defaultEquator = new DefaultEquator<Number>();
+        assertFalse(CollectionUtils.isEqualCollection(collectionA, collectionB, defaultEquator));
+        assertFalse(CollectionUtils.isEqualCollection(collectionA, collB, defaultEquator));        
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testIsEqualCollectionNullEquator() {
+        CollectionUtils.isEqualCollection(collectionA, collectionA, null);
     }
 
     @Test
