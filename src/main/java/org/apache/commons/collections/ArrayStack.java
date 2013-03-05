@@ -37,7 +37,9 @@ import java.util.EmptyStackException;
  * @see java.util.Stack
  * @since 1.0
  * @version $Id$
+ * @deprecated use {@link java.util.ArrayDeque} instead (available from Java 1.6)
  */
+@Deprecated
 public class ArrayStack<E> extends ArrayList<E> implements Buffer<E> {
 
     /** Ensure serialization compatibility */    
