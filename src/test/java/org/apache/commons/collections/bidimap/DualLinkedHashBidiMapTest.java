@@ -22,7 +22,7 @@ import org.apache.commons.collections.BulkTest;
 /**
  * JUnit tests.
  *
- * @version $Id $
+ * @version $Id$
  */
 public class DualLinkedHashBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
 
