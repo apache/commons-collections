@@ -26,7 +26,7 @@ package org.apache.commons.collections;
  * from an object.
  * <p>
  * Standard implementations of common transformers are provided by
- * {@link TransformerUtils}. These include method invokation, returning a constant,
+ * {@link TransformerUtils}. These include method invocation, returning a constant,
  * cloning and returning the string value.
  *
  * @param <I> the input type to the transformer
