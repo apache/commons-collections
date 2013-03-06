@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-372" dev="tn" type="change">
+      TransformingComparator now supports different types for its input/output values.
+    </action>
     <action issue="COLLECTIONS-446" dev="tn" type="add" due-to="Matt Lachman">
       Added method "CollectionUtils#isEqualCollection(Collection, Collection, Equator)".
     </action>

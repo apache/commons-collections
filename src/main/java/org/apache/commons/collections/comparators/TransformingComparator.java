@@ -35,15 +35,15 @@ import org.apache.commons.collections.Transformer;
  * @see org.apache.commons.collections.Transformer
  * @see org.apache.commons.collections.comparators.ComparableComparator
  */
-public class TransformingComparator<E> implements Comparator<E>, Serializable {
+public class TransformingComparator<I, O> implements Comparator<I>, Serializable {
     
     /** Serialization version from Collections 4.0. */
     private static final long serialVersionUID = 3456940356043606220L;
 
     /** The decorated comparator. */
-    protected final Comparator<E> decorated;
+    protected final Comparator<O> decorated;
     /** The transformer being used. */    
-    protected final Transformer<? super E, ? extends E> transformer;
+    protected final Transformer<? super I, ? extends O> transformer;
 
     //-----------------------------------------------------------------------
     /**
@@ -53,7 +53,7 @@ public class TransformingComparator<E> implements Comparator<E>, Serializable {
      * @param transformer what will transform the arguments to <code>compare</code>
      */
     @SuppressWarnings("unchecked")
-    public TransformingComparator(final Transformer<? super E, ? extends E> transformer) {
+    public TransformingComparator(final Transformer<? super I, ? extends O> transformer) {
         this(transformer, ComparatorUtils.NATURAL_COMPARATOR);
     }
 
@@ -63,8 +63,8 @@ public class TransformingComparator<E> implements Comparator<E>, Serializable {
      * @param transformer  what will transform the arguments to <code>compare</code>
      * @param decorated  the decorated Comparator
      */
-    public TransformingComparator(final Transformer<? super E, ? extends E> transformer,
-                                  final Comparator<E> decorated) {
+    public TransformingComparator(final Transformer<? super I, ? extends O> transformer,
+                                  final Comparator<O> decorated) {
         this.decorated = decorated;
         this.transformer = transformer;
     }
@@ -77,9 +77,9 @@ public class TransformingComparator<E> implements Comparator<E>, Serializable {
      * @param obj2  the second object to transform then compare
      * @return negative if obj1 is less, positive if greater, zero if equal
      */
-    public int compare(final E obj1, final E obj2) {
-        final E value1 = this.transformer.transform(obj1);
-        final E value2 = this.transformer.transform(obj2);
+    public int compare(final I obj1, final I obj2) {
+        final O value1 = this.transformer.transform(obj1);
+        final O value2 = this.transformer.transform(obj2);
         return this.decorated.compare(value1, value2);
     }
 
@@ -119,7 +119,7 @@ public class TransformingComparator<E> implements Comparator<E>, Serializable {
             return false;
         }
         if (object.getClass().equals(this.getClass())) {
-            final TransformingComparator<?> comp = (TransformingComparator<?>) object;
+            final TransformingComparator<?, ?> comp = (TransformingComparator<?, ?>) object;
             return null == decorated ? null == comp.decorated : decorated.equals(comp.decorated) &&
                     null == transformer ? null == comp.transformer : transformer.equals(comp.transformer);
         }

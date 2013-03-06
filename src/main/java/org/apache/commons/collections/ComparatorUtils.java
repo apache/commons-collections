@@ -202,20 +202,21 @@ public class ComparatorUtils {
      * by the given transformer before they are compared by the given
      * comparator.
      *
-     * @param <E>  the object type to compare
+     * @param <I>  the input object type of the transformed comparator
+     * @param <O>  the object type of the decorated comparator
      * @param comparator  the sort order to use
      * @param transformer  the transformer to use
      * @return  a comparator that transforms its input objects before comparing them
      * @see  TransformingComparator
      */
     @SuppressWarnings("unchecked")
-    public static <E> Comparator<E> transformedComparator(Comparator<E> comparator,
-            final Transformer<? super E, ? extends E> transformer) {
+    public static <I, O> Comparator<I> transformedComparator(Comparator<O> comparator,
+            final Transformer<? super I, ? extends O> transformer) {
 
         if (comparator == null) {
             comparator = NATURAL_COMPARATOR;
         }
-        return new TransformingComparator<E>(transformer, comparator);
+        return new TransformingComparator<I, O>(transformer, comparator);
     }
 
     /**

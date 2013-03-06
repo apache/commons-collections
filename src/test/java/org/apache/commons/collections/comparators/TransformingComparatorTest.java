@@ -20,6 +20,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.collections.ComparatorUtils;
 import org.apache.commons.collections.TransformerUtils;
 
 /**
@@ -43,10 +44,8 @@ public class TransformingComparatorTest extends AbstractComparatorTest<Integer> 
 
     @Override
     public Comparator<Integer> makeObject() {
-       final Comparator<Integer> decorated = new ComparableComparator<Integer>();
-       final TransformingComparator<Integer> comparator =
-               new TransformingComparator<Integer>(TransformerUtils.<Integer>nopTransformer(), decorated);
-       return comparator;
+       final Comparator<String> decorated = new ComparableComparator<String>();
+       return ComparatorUtils.transformedComparator(decorated, TransformerUtils.<Integer>stringValueTransformer());
     }
 
     @Override
