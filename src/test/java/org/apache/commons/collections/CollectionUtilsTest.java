@@ -998,6 +998,32 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
+    public void filterInverse() {
+        List<Integer> ints = new ArrayList<Integer>();
+        ints.add(1);
+        ints.add(2);
+        ints.add(3);
+        ints.add(3);
+        Iterable<Integer> iterable = ints;
+        assertTrue(CollectionUtils.filterInverse(iterable, EQUALS_TWO));
+        assertEquals(3, ints.size());
+        assertEquals(1, (int) ints.get(0));
+        assertEquals(3, (int) ints.get(1));
+        assertEquals(3, (int) ints.get(2));
+    }
+        
+    @Test
+    public void filterInverseNullParameters() throws Exception {
+        List<Long> longs = Collections.nCopies(4, 10L);
+        assertFalse(CollectionUtils.filterInverse(longs, null));
+        assertEquals(4, longs.size());
+        assertFalse(CollectionUtils.filterInverse(null, EQUALS_TWO));
+        assertEquals(4, longs.size());
+        assertFalse(CollectionUtils.filterInverse(null, null));
+        assertEquals(4, longs.size());
+    }
+
+    @Test
     public void countMatches() {
         assertEquals(4, CollectionUtils.countMatches(iterableB, EQUALS_TWO));
         assertEquals(0, CollectionUtils.countMatches(iterableA, null));

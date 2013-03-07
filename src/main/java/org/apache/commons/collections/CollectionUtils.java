@@ -715,6 +715,24 @@ public class CollectionUtils {
     }
 
     /**
+     * Filter the collection by applying a Predicate to each element. If the
+     * predicate returns true, remove the element.
+     * <p>
+     * This is equivalent to <pre>filter(collection, PredicateUtils.notPredicate(predicate))</pre>
+     * if predicate is != null.
+     * <p>
+     * If the input collection or predicate is null, there is no change made.
+     *
+     * @param <T>  the type of object the {@link Iterable} contains
+     * @param collection  the collection to get the input from, may be null
+     * @param predicate  the predicate to use as a filter, may be null
+     * @return true if the collection is modified by this call, false otherwise.
+     */
+    public static <T> boolean filterInverse(final Iterable<T> collection, final Predicate<? super T> predicate) {
+        return filter(collection, predicate == null ? null : PredicateUtils.notPredicate(predicate));
+    }
+
+    /**
      * Transform the collection by applying a Transformer to each element.
      * <p>
      * If the input collection or transformer is null, there is no change made.
