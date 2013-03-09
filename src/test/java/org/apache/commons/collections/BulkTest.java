@@ -294,9 +294,9 @@ class BulkTestSuiteMaker {
     }
 
     /**
-     *  Makes a hierarchal TestSuite based on the starting class.
+     *  Makes a hierarchical TestSuite based on the starting class.
      *
-     *  @return  the hierarchal TestSuite for startingClass
+     *  @return  the hierarchical TestSuite for startingClass
      */
     public TestSuite make() {
          this.result = new TestSuite();
