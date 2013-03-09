@@ -363,8 +363,9 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
                         "Cannot use setValue() when the object being set is already in the map");
             }
             final V oldValue = parent.put(last.getKey(), value);
-            // set also the value in the Map.Entry:
-            // due to a bug in IBM JDK where the Entry is not in sync with the underlying map
+            // Map.Entry specifies that the behavior is undefined when the backing map
+            // has been modified (as we did with the put), so we also set the value
+            // (especially needed for IBM JDK)
             last.setValue(value);
             return oldValue;
         }
