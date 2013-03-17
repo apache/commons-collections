@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-451" dev="tn" type="change">
+      The constructors for all Utils classes are now private to prevent instantiation.
+    </action>
     <action issue="COLLECTIONS-424" dev="tn" type="change" due-to="Michael Pradel">
       "CompositeSet" does not inherit from "CompositeCollection" anymore. The inner class
       "SetMutator" has been updated accordingly.
