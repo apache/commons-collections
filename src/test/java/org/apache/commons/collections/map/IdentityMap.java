@@ -36,6 +36,9 @@ import java.util.Map;
  * appropriate synchronization. The simplest approach is to wrap this map
  * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
+ * <p>
+ * From 4.0, this class is replaced by java.util.IdentityHashMap but kept as a
+ * test-class because it is still used by the ReferenceIdentityMapTest.
  *
  * @since 3.0
  * @version $Id$

@@ -28,7 +28,6 @@
  *   <li>CaseInsensitiveMap - map that compares keys in a case insensitive way
  *   <li>CompositeMap - map that combines multiple maps into a single view
  *   <li>HashedMap - general purpose HashMap replacement supporting MapIterator
- *   <li>IdentityMap - map that uses == for comparison instead of equals()
  *   <li>Flat3Map - designed for good performance at size 3 or less
  *   <li>LinkedMap - a hash map that maintains insertion order, supporting OrderedMapIterator
  *   <li>LRUMap - a hash map that maintains a maximum size by removing the least recently used entries
