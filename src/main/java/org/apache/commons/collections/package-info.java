@@ -20,7 +20,6 @@
  * The following collection implementations are provided in the package:
  * <ul>
  *   <li>ArrayStack - a non synchronized Stack that follows the same API as {@code java.util Stack}
- *   <li>ExtendedProperties - extends the Properties class to add extra functionality
  * </ul>
  *
  * @version $Id$
