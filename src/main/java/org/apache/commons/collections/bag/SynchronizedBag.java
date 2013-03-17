@@ -20,7 +20,6 @@ import java.util.Set;
 
 import org.apache.commons.collections.Bag;
 import org.apache.commons.collections.collection.SynchronizedCollection;
-import org.apache.commons.collections.set.SynchronizedSet;
 
 /**
  * Decorates another {@link Bag} to synchronize its behaviour
@@ -113,7 +112,7 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
     /**
      * Synchronized Set for the Bag class.
      */
-    class SynchronizedBagSet extends SynchronizedSet<E> {
+    class SynchronizedBagSet extends SynchronizedCollection<E> implements Set<E> {
         /** Serialization version */
         private static final long serialVersionUID = 2990565892366827855L;
 
