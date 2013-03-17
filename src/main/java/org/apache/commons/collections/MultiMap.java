@@ -51,7 +51,7 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * Other values attached to that key are unaffected.
      * <p>
      * If the last value for a key is removed, implementations typically
-     * return <code>null</code> from a subsequant <code>get(Object)</code>, however
+     * return <code>null</code> from a subsequent <code>get(Object)</code>, however
      * they may choose to return an empty collection.
      * 
      * @param key  the key to remove from
@@ -68,7 +68,7 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * Gets the number of keys in this map.
      * <p>
      * Implementations typically return only the count of keys in the map
-     * This cannot be mandated due to backwards compatability of this interface.
+     * This cannot be mandated due to backwards compatibility of this interface.
      *
      * @return the number of key-collection mappings in this map
      */
@@ -99,7 +99,7 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * Checks whether the map contains the value specified.
      * <p>
      * Implementations typically check all collections against all keys for the value.
-     * This cannot be mandated due to backwards compatability of this interface.
+     * This cannot be mandated due to backwards compatibility of this interface.
      *
      * @param value  the value to search for
      * @return true if the map contains the value
@@ -129,7 +129,7 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
     /**
      * Removes all values associated with the specified key.
      * <p>
-     * Implementations typically return <code>null</code> from a subsequant
+     * Implementations typically return <code>null</code> from a subsequent
      * <code>get(Object)</code>, however they may choose to return an empty collection.
      *
      * @param key  the key to remove values from
@@ -144,9 +144,9 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
     /**
      * Gets a collection containing all the values in the map.
      * <p>
-     * Inplementations typically return a collection containing the combination
+     * Implementations typically return a collection containing the combination
      * of values from all keys.
-     * This cannot be mandated due to backwards compatability of this interface.
+     * This cannot be mandated due to backwards compatibility of this interface.
      *
      * @return a collection view of the values contained in this map
      */
