@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-375" dev="tn" type="add" due-to="Ivan Hristov">
+      Added method "ListUtils#defaultIfNull(List, List)".
+    </action>
     <action issue="COLLECTIONS-451" dev="tn" type="change">
       The constructors for all Utils classes are now private to prevent instantiation.
     </action>

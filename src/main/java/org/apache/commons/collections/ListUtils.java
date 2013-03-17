@@ -23,6 +23,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.collections.bag.HashBag;
 import org.apache.commons.collections.list.FixedSizeList;
@@ -63,6 +64,19 @@ public class ListUtils {
      */
     public static <T> List<T> emptyIfNull(final List<T> list) {
         return list == null ? Collections.<T>emptyList() : list;
+    }
+
+    /**
+     * Returns either the passed in list, or if the list is {@code null},
+     * the value of {@code defaultList}.
+     * 
+     * @param <T> the element type
+     * @param list  the list, possibly {@code null}
+     * @param defaultList  the returned values if list is {@code null}
+     * @return an empty list if the argument is <code>null</code>
+     */
+    public static <T> List<T> defaultIfNull(final List<T> list, final List<T> defaultList) {
+        return list == null ? defaultList : list;
     }
     
     /**
