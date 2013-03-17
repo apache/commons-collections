@@ -23,7 +23,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.commons.collections.bag.HashBag;
 import org.apache.commons.collections.list.FixedSizeList;
@@ -39,13 +38,6 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * @version $Id$
  */
 public class ListUtils {
-
-    /**
-     * An empty unmodifiable list.
-     * This uses the {@link Collections Collections} implementation 
-     * and is provided for completeness.
-     */
-    public static final List<Object> EMPTY_LIST = Collections.<Object>emptyList();
 
     /**
      * <code>ListUtils</code> should not normally be instantiated.

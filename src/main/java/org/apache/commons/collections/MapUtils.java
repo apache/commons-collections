@@ -77,12 +77,6 @@ import org.apache.commons.collections.map.UnmodifiableSortedMap;
 public class MapUtils {
 
     /**
-     * An empty unmodifiable map.
-     * This was not provided in JDK1.2.
-     */
-    public static final Map<Object, Object> EMPTY_MAP = UnmodifiableMap.unmodifiableMap(new HashMap<Object, Object>(1));
-
-    /**
      * An empty unmodifiable sorted map.
      * This is not provided in the JDK.
      */

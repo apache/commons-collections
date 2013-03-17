@@ -40,13 +40,6 @@ import org.apache.commons.collections.set.UnmodifiableSortedSet;
 public class SetUtils {
 
     /**
-     * An empty unmodifiable set.
-     * This uses the {@link Collections} implementation 
-     * and is provided for completeness.
-     */
-    public static final Set<?> EMPTY_SET = Collections.EMPTY_SET;
-
-    /**
      * Get a typed empty unmodifiable Set.
      * @param <E> the element type
      * @return an empty Set
