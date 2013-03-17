@@ -1523,15 +1523,6 @@ public class CollectionUtilsTest extends MockTestCase {
                 (Object)map, 0));
     }
 
-    /**
-     * TODO: Should {@link CollectionUtils} be able to be extended? If it is extended, subclasses must 'override' the static methods with
-     * call-throughs anyhow, otherwise java compiler warnings will result
-     */
-    @Test
-    public void ensureCollectionUtilsCanBeExtended() {
-        new CollectionUtils() {};
-    }
-
     @Test
     public void reverse() {
         CollectionUtils.reverseArray(new Object[] {});

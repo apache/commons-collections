@@ -77,8 +77,7 @@ public class SetUtils {
     /**
      * <code>SetUtils</code> should not normally be instantiated.
      */
-    public SetUtils() {
-    }
+    private SetUtils() {}
 
     //-----------------------------------------------------------------------
     

@@ -55,9 +55,7 @@ public class ClosureUtils {
     /**
      * This class is not normally instantiated.
      */
-    public ClosureUtils() {
-        super();
-    }
+    private ClosureUtils() {}
 
     /**
      * Gets a Closure that always throws an exception.

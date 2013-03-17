@@ -74,9 +74,7 @@ public class PredicateUtils {
     /**
      * This class is not normally instantiated.
      */
-    public PredicateUtils() {
-        super();
-    }
+    private PredicateUtils() {}
 
     // Simple predicates
     //-----------------------------------------------------------------------------

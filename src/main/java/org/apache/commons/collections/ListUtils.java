@@ -50,8 +50,7 @@ public class ListUtils {
     /**
      * <code>ListUtils</code> should not normally be instantiated.
      */
-    public ListUtils() {
-    }
+    private ListUtils() {}
 
     //-----------------------------------------------------------------------
     

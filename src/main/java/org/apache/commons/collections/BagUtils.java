@@ -47,11 +47,9 @@ public class BagUtils {
             UnmodifiableSortedBag.unmodifiableSortedBag(new TreeBag<Object>());
 
     /**
-     * Instantiation of BagUtils is not intended or required. However, some
-     * tools require an instance to operate.
+     * Instantiation of BagUtils is not intended or required.
      */
-    public BagUtils() {
-    }
+    private BagUtils() {}
 
     //-----------------------------------------------------------------------
     /**

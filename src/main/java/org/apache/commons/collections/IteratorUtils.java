@@ -112,8 +112,7 @@ public class IteratorUtils {
     /**
      * IteratorUtils is not normally instantiated.
      */
-    public IteratorUtils() {
-    }
+    private IteratorUtils() {}
 
     // Empty
     //-----------------------------------------------------------------------

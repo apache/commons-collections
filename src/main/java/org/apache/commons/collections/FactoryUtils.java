@@ -41,9 +41,7 @@ public class FactoryUtils {
     /**
      * This class is not normally instantiated.
      */
-    public FactoryUtils() {
-        super();
-    }
+    private FactoryUtils() {}
 
     /**
      * Gets a Factory that always throws an exception.

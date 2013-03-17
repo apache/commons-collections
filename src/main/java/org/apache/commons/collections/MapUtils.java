@@ -97,8 +97,7 @@ public class MapUtils {
     /**
      * <code>MapUtils</code> should not normally be instantiated.
      */
-    public MapUtils() {
-    }
+    private MapUtils() {}
 
     // Type safe getters
     //-------------------------------------------------------------------------

@@ -41,8 +41,9 @@ public class SplitMapUtils {
     /**
      * <code>SplitMapUtils</code> should not normally be instantiated.
      */
-    public SplitMapUtils() {
-    }
+    private SplitMapUtils() {}
+
+    //-----------------------------------------------------------------------
 
     private static class WrappedGet<K, V> implements IterableMap<K, V>, Unmodifiable {
         private final Get<K, V> get;
@@ -192,6 +193,8 @@ public class SplitMapUtils {
             throw new UnsupportedOperationException();
         }
     }
+
+    //-----------------------------------------------------------------------
 
     /**
      * Get the specified {@link Get} as an instance of {@link IterableMap}.

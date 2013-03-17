@@ -34,9 +34,7 @@ public class EnumerationUtils {
     /**
      * EnumerationUtils is not normally instantiated.
      */
-    public EnumerationUtils() {
-        // no init.
-    }
+    private EnumerationUtils() {}
     
     /**
      * Creates a list based on an enumeration.
