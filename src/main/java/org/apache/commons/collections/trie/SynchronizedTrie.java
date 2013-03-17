@@ -26,7 +26,6 @@ import java.util.SortedMap;
 
 import org.apache.commons.collections.Trie;
 import org.apache.commons.collections.collection.SynchronizedCollection;
-import org.apache.commons.collections.set.SynchronizedSet;
 
 /**
  * A synchronized {@link Trie}.
@@ -88,11 +87,11 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
     }
     
     public synchronized Set<Entry<K, V>> entrySet() {
-        return SynchronizedSet.synchronizedSet(delegate.entrySet());
+        return Collections.synchronizedSet(delegate.entrySet());
     }
 
     public synchronized Set<K> keySet() {
-        return SynchronizedSet.synchronizedSet(delegate.keySet());
+        return Collections.synchronizedSet(delegate.keySet());
     }
 
     public synchronized Collection<V> values() {

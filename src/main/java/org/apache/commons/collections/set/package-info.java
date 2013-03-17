@@ -28,7 +28,6 @@
  * </ul>
  * The following decorators are provided in the package:
  * <ul>
- *   <li>Synchronized - synchronizes method access for multi-threaded environments
  *   <li>Unmodifiable - ensures the collection cannot be altered
  *   <li>Predicated - ensures that only elements that are valid according to a predicate can be added
  *   <li>Transformed - transforms each element added

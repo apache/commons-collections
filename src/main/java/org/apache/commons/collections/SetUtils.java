@@ -25,8 +25,6 @@ import java.util.TreeSet;
 import org.apache.commons.collections.set.ListOrderedSet;
 import org.apache.commons.collections.set.PredicatedSet;
 import org.apache.commons.collections.set.PredicatedSortedSet;
-import org.apache.commons.collections.set.SynchronizedSet;
-import org.apache.commons.collections.set.SynchronizedSortedSet;
 import org.apache.commons.collections.set.TransformedSet;
 import org.apache.commons.collections.set.TransformedSortedSet;
 import org.apache.commons.collections.set.UnmodifiableSet;
@@ -163,7 +161,7 @@ public class SetUtils {
     /**
      * Returns a synchronized set backed by the given set.
      * <p>
-     * You must manually synchronize on the returned buffer's iterator to 
+     * You must manually synchronize on the returned set's iterator to 
      * avoid non-deterministic behavior:
      *  
      * <pre>
@@ -176,7 +174,7 @@ public class SetUtils {
      * }
      * </pre>
      * 
-     * This method uses the implementation in the decorators subpackage.
+     * This method is just a wrapper for {@link Collections#synchronizedSet(Set)}.
      * 
      * @param <E> the element type
      * @param set  the set to synchronize, must not be null
@@ -184,7 +182,7 @@ public class SetUtils {
      * @throws IllegalArgumentException  if the set is null
      */
     public static <E> Set<E> synchronizedSet(final Set<E> set) {
-        return SynchronizedSet.synchronizedSet(set);
+        return Collections.synchronizedSet(set);
     }
 
     /**
@@ -259,7 +257,7 @@ public class SetUtils {
     /**
      * Returns a synchronized sorted set backed by the given sorted set.
      * <p>
-     * You must manually synchronize on the returned buffer's iterator to 
+     * You must manually synchronize on the returned set's iterator to 
      * avoid non-deterministic behavior:
      *  
      * <pre>
@@ -272,7 +270,7 @@ public class SetUtils {
      * }
      * </pre>
      * 
-     * This method uses the implementation in the decorators subpackage.
+     * This method is just a wrapper for {@link Collections#synchronizedSortedSet(SortedSet)}.
      * 
      * @param <E> the element type
      * @param set  the sorted set to synchronize, must not be null
@@ -280,7 +278,7 @@ public class SetUtils {
      * @throws IllegalArgumentException  if the set is null
      */
     public static <E> SortedSet<E> synchronizedSortedSet(final SortedSet<E> set) {
-        return SynchronizedSortedSet.synchronizedSortedSet(set);
+        return Collections.synchronizedSortedSet(set);
     }
 
     /**

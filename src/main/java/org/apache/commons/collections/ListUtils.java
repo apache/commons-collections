@@ -28,7 +28,6 @@ import org.apache.commons.collections.bag.HashBag;
 import org.apache.commons.collections.list.FixedSizeList;
 import org.apache.commons.collections.list.LazyList;
 import org.apache.commons.collections.list.PredicatedList;
-import org.apache.commons.collections.list.SynchronizedList;
 import org.apache.commons.collections.list.TransformedList;
 import org.apache.commons.collections.list.UnmodifiableList;
 
@@ -353,7 +352,7 @@ public class ListUtils {
     /**
      * Returns a synchronized list backed by the given list.
      * <p>
-     * You must manually synchronize on the returned buffer's iterator to 
+     * You must manually synchronize on the returned list's iterator to 
      * avoid non-deterministic behavior:
      *  
      * <pre>
@@ -366,7 +365,7 @@ public class ListUtils {
      * }
      * </pre>
      * 
-     * This method uses the implementation in the decorators subpackage.
+     * This method is just a wrapper for {@link Collections#synchronizedList(List)}.
      * 
      * @param <E>  the element type
      * @param list  the list to synchronize, must not be null
@@ -374,7 +373,7 @@ public class ListUtils {
      * @throws IllegalArgumentException  if the list is null
      */
     public static <E> List<E> synchronizedList(final List<E> list) {
-        return SynchronizedList.synchronizedList(list);
+        return Collections.synchronizedList(list);
     }
 
     /**
