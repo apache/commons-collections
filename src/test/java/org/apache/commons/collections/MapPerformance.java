@@ -26,9 +26,9 @@ import java.util.Set;
 import org.apache.commons.collections.map.Flat3Map;
 
 /** 
- * <code>TestMapPerformance</code> is designed to perform basic Map performance tests.
- *
- * @author Stephen Colebourne
+ * <code>MapPerformanceTest</code> is designed to perform basic Map performance tests.
+ * 
+ * @version $Id$
  */
 public class MapPerformance {
 

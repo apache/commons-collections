@@ -27,8 +27,6 @@ import org.easymock.IExpectationSetters;
  * Provides utilities for making mock-based tests.  Most notable is the generic "type-safe"
  * {@link #createMock(Class)} method, and {@link #replay()} and {@link #verify()} methods
  * that call the respective methods on all created mock objects.
- * 
- * @author Stephen Kestle
  */
 public abstract class MockTestCase {
     private final List<Object> mockObjects = new ArrayList<Object>();

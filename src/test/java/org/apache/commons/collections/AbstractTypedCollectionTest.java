@@ -23,9 +23,7 @@ import java.util.List;
 /**
  * Tests TypedCollection.
  *
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @version $Id$
  */
 public abstract class AbstractTypedCollectionTest<T> extends BulkTest {
 

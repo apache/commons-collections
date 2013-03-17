@@ -38,11 +38,7 @@ import java.io.Serializable;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Object} fails.
  *
- * @version $Revision$
- *
- * @author Rodney Waldhoff
- * @author Stephen Colebourne
- * @author Anonymous
+ * @version $Id$
  */
 public abstract class AbstractObjectTest extends BulkTest {
 

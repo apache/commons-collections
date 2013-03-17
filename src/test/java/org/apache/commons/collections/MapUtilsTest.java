@@ -41,13 +41,7 @@ import org.apache.commons.collections.collection.TransformedCollectionTest;
 /**
  * Tests for MapUtils.
  *
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Arun Mammen Thomas
- * @author Max Rydahl Andersen
- * @author Janek Bogucki
- * @author Neil O'Toole
+ * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class MapUtilsTest extends BulkTest {

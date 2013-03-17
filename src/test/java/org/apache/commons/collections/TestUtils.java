@@ -27,8 +27,7 @@ import java.io.ObjectOutputStream;
 
 public final class TestUtils {
 
-    private TestUtils() {
-    }
+    private TestUtils() {}
 
     /**
      * Asserts that deserialization of the object returns the same object as the

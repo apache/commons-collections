@@ -133,7 +133,6 @@ import junit.framework.TestSuite;
  *  The ordinary {@link TestSuite} constructor doesn't know how to 
  *  interpret bulk test methods.
  *
- *  @author Paul Jack
  *  @version $Id$
  */
 public class BulkTest extends TestCase implements Cloneable {

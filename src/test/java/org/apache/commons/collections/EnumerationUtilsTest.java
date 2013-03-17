@@ -26,7 +26,6 @@ import junit.framework.Test;
 /**
  * Tests EnumerationUtils.
  *
- * @author <a href="mailto:ggregory@seagullsw.com">Gary Gregory</a>
  * @version $Id$
  */
 public class EnumerationUtilsTest extends BulkTest {

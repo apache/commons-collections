@@ -26,7 +26,7 @@ import org.apache.commons.collections.splitmap.TransformedMap;
 /**
  * Tests for {@link TransformedMap}
  *
- * @since Commons Collections 4.0
+ * @since 4.0
  * @version $Id$
  */
 @SuppressWarnings("boxing")

@@ -28,11 +28,7 @@ import org.apache.commons.collections.set.PredicatedSet;
 /**
  * Tests for SetUtils.
  *
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author Neil O'Toole
- * @author Matthew Hawthorne
+ * @version $Id$
  */
 public class SetUtilsTest extends BulkTest {
 

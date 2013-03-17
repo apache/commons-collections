@@ -33,10 +33,8 @@ import org.junit.Test;
 /**
  * Tests the org.apache.commons.collections.FactoryUtils class.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @since 3.0
+ * @version $Id$
  */
 public class FactoryUtilsTest extends junit.framework.TestCase {
 

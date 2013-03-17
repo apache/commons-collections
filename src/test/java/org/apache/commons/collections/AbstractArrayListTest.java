@@ -23,9 +23,7 @@ import org.apache.commons.collections.list.AbstractListTest;
 /**
  * Abstract test class for ArrayList.
  *
- * @version $Revision$
- *
- * @author Jason van Zyl
+ * @version $Id$
  */
 public abstract class AbstractArrayListTest<E> extends AbstractListTest<E> {
 

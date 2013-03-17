@@ -40,16 +40,7 @@ import org.junit.Test;
 /**
  * Tests for CollectionUtils.
  *
- * @author Rodney Waldhoff
- * @author Matthew Hawthorne
- * @author Stephen Colebourne
- * @author Phil Steitz
- * @author Steven Melzer
- * @author Neil O'Toole
- * @author Stephen Smith
- * @author Stephen Kestle
- *
- * @version $Revision$
+ * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class CollectionUtilsTest extends MockTestCase {

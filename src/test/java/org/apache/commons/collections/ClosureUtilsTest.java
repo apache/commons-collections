@@ -31,12 +31,10 @@ import org.apache.commons.collections.functors.NOPClosure;
 import org.apache.commons.collections.functors.TruePredicate;
 
 /**
- * Tests the org.apache.commons.collections.ClosureUtils class.
+ * Tests the ClosureUtils class.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
+ * @since 3.0
+ * @version $Id$
  */
 public class ClosureUtilsTest extends TestCase {
 

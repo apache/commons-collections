@@ -34,13 +34,10 @@ import org.apache.commons.collections.functors.StringValueTransformer;
 import org.apache.commons.collections.functors.TruePredicate;
 
 /**
- * Tests the org.apache.commons.collections.TransformerUtils class.
+ * Tests the TransformerUtils class.
  *
- * @since Commons Collections 3.0
- * @version $Revision$
- *
- * @author Stephen Colebourne
- * @author James Carman
+ * @since 3.0
+ * @version $Id$
  */
 public class TransformerUtilsTest extends junit.framework.TestCase {
 

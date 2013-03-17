@@ -33,9 +33,7 @@ import org.apache.commons.collections.functors.TruePredicate;
 /**
  * Tests for BagUtils factory methods.
  *
- * @version $Revision$
- *
- * @author Phil Steitz
+ * @version $Id$
  */
 public class BagUtilsTest extends BulkTest {
 

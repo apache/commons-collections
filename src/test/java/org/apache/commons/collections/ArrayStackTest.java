@@ -23,10 +23,9 @@ import junit.framework.Test;
 /**
  * Tests ArrayStack.
  *
- * @version $Revision$
- *
- * @author Craig McClanahan
+ * @version $Id$
  */
+@SuppressWarnings("deprecation") // we test a deprecated class
 public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
     
     public ArrayStackTest(final String testName) {
