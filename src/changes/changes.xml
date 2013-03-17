@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-424" dev="tn" type="change" due-to="Michael Pradel">
+      "CompositeSet" does not inherit from "CompositeCollection" anymore. The inner class
+      "SetMutator" has been updated accordingly.
+    </action>
     <action issue="COLLECTIONS-361" dev="tn" type="add" due-to="Jean-Noel Rouvignac">
       Add method "CollectionUtils#filterInverse(Iterable, Predicate)".
     </action>
