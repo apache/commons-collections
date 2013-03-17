@@ -21,7 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.collections.collection.CompositeCollection;
+import org.apache.commons.collections.set.CompositeSet.SetMutator;
 
 /**
  * Extension of {@link AbstractSetTest} for exercising the
@@ -94,7 +94,7 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
         final Set<E> one = buildOne();
         final Set<E> two = buildTwo();
         final CompositeSet<E> set = new CompositeSet<E>(new Set[] { one, two });
-        set.setMutator(new CompositeSet.SetMutator<E>() {
+        set.setMutator(new SetMutator<E>() {
             private static final long serialVersionUID = 1L;
 
             public void resolveCollision(final CompositeSet<E> comp, final Set<E> existing,
@@ -102,18 +102,13 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
                 //noop
             }
 
-            public boolean add(final CompositeCollection<E> composite,
-                    final List<Collection<E>> collections, final E obj) {
+            public boolean add(final CompositeSet<E> composite,
+                    final List<Set<E>> collections, final E obj) {
                 throw new UnsupportedOperationException();
             }
 
-            public boolean addAll(final CompositeCollection<E> composite,
-                    final List<Collection<E>> collections, final Collection<? extends E> coll) {
-                throw new UnsupportedOperationException();
-            }
-
-            public boolean remove(final CompositeCollection<E> composite,
-                    final List<Collection<E>> collections, final Object obj) {
+            public boolean addAll(final CompositeSet<E> composite,
+                    final List<Set<E>> collections, final Collection<? extends E> coll) {
                 throw new UnsupportedOperationException();
             }
         });

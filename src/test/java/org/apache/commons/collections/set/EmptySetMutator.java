@@ -20,8 +20,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.collections.collection.CompositeCollection;
-
 /**
  * This class is used in CompositeSetTest. When testing serialization, 
  * the class has to be separate of CompositeSetTest, else the test 
@@ -42,15 +40,11 @@ class EmptySetMutator<E> implements CompositeSet.SetMutator<E> {
         throw new IllegalArgumentException();
     }
     
-    public boolean add(final CompositeCollection<E> composite, final List<Collection<E>> collections, final E obj) {
+    public boolean add(final CompositeSet<E> composite, final List<Set<E>> collections, final E obj) {
         return contained.add(obj);
     }
     
-    public boolean addAll(final CompositeCollection<E> composite, final List<Collection<E>> collections, final Collection<? extends E> coll) {
+    public boolean addAll(final CompositeSet<E> composite, final List<Set<E>> collections, final Collection<? extends E> coll) {
         return contained.addAll(coll);
-    }
-    
-    public boolean remove(final CompositeCollection<E> composite, final List<Collection<E>> collections, final Object obj) {
-        return contained.remove(obj);
-    }
+    }    
 }

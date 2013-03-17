@@ -73,7 +73,8 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @param compositeCollection1  the Collection to be appended to the composite
      * @param compositeCollection2  the Collection to be appended to the composite
      */
-    public CompositeCollection(final Collection<E> compositeCollection1, final Collection<E> compositeCollection2) {
+    public CompositeCollection(final Collection<E> compositeCollection1,
+                               final Collection<E> compositeCollection2) {
         super();
         addComposited(compositeCollection1, compositeCollection2);
     }
@@ -87,16 +88,6 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
         super();
         addComposited(compositeCollections);
     }
-
-//    /**
-//     * Create a Composite Collection extracting the collections from an iterable.
-//     *
-//     * @param compositeCollections  the collections to composite
-//     */
-//    public CompositeCollection(Iterable<Collection<E>> compositeCollections) {
-//        super();
-//        addComposited(compositeCollections);
-//    }
 
     //-----------------------------------------------------------------------
     /**
@@ -122,7 +113,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @return true if all of the contained collections are empty
      */
     public boolean isEmpty() {
-        for (final Collection<? extends E> item : all) {
+        for (final Collection<E> item : all) {
             if (item.isEmpty() == false) {
                 return false;
             }
@@ -139,7 +130,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @return true if obj is contained in any of the contained collections
      */
     public boolean contains(final Object obj) {
-        for (final Collection<? extends E> item : all) {
+        for (final Collection<E> item : all) {
             if (item.contains(obj)) {
                 return true;
             }
@@ -162,7 +153,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
             return EmptyIterator.<E>emptyIterator();
         }
         final IteratorChain<E> chain = new IteratorChain<E>();
-        for (final Collection<? extends E> item : all) {
+        for (final Collection<E> item : all) {
             chain.addIterator(item.iterator());
         }
         return chain;
@@ -201,7 +192,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
         }
 
         int offset = 0;
-        for (final Collection<? extends E> item : all) {
+        for (final Collection<E> item : all) {
             for (final E e : item) {
                 result[offset++] = e;
             }
@@ -303,7 +294,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
             return false;
         }
         boolean changed = false;
-        for (final Collection<? extends E> item : all) {
+        for (final Collection<E> item : all) {
             changed |= item.removeAll(coll);
         }
         return changed;
@@ -321,7 +312,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      */
     public boolean retainAll(final Collection<?> coll) {
         boolean changed = false;
-        for (final Collection<? extends E> item : all) {
+        for (final Collection<E> item : all) {
             changed |= item.retainAll(coll);
         }
         return changed;
@@ -335,7 +326,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @throws UnsupportedOperationException if clear is unsupported
      */
     public void clear() {
-        for (final Collection<? extends E> coll : all) {
+        for (final Collection<E> coll : all) {
             coll.clear();
         }
     }
@@ -365,7 +356,8 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @param compositeCollection1  the Collection to be appended to the composite
      * @param compositeCollection2  the Collection to be appended to the composite
      */
-    public void addComposited(final Collection<E> compositeCollection1, final Collection<E> compositeCollection2) {
+    public void addComposited(final Collection<E> compositeCollection1,
+                              final Collection<E> compositeCollection2) {
         all.add(compositeCollection1);
         all.add(compositeCollection2);
     }
@@ -378,17 +370,6 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
     public void addComposited(final Collection<E>[] compositeCollections) {
         all.addAll(Arrays.asList(compositeCollections));
     }
-
-//    /**
-//     * Add these Collections to the list of collections in this composite
-//     *
-//     * @param compositeCollections  the Collections to be appended to the composite
-//     */
-//    public void addComposited(Iterable<Collection<E>> compositeCollections) {
-//        for (Collection<E> item : compositeCollections) {
-//            all.add(item);
-//        }
-//    }
 
     /**
      * Removes a collection from the those being decorated in this composite.
@@ -415,7 +396,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      *
      * @return Unmodifiable list of all collections in this composite.
      */
-    public List<? extends Collection<E>> getCollections() {
+    public List<Collection<E>> getCollections() {
         return UnmodifiableList.unmodifiableList(all);
     }
 
@@ -477,7 +458,9 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
          * @throws NullPointerException if the object cannot be removed because its null
          * @throws IllegalArgumentException if the object cannot be removed
          */
-        public boolean remove(CompositeCollection<E> composite, List<Collection<E>> collections, Object obj);
+        public boolean remove(CompositeCollection<E> composite,
+                              List<Collection<E>> collections,
+                              Object obj);
 
     }
 
