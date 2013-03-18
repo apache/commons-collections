@@ -102,6 +102,7 @@ public class TransformedQueueTest<E> extends AbstractCollectionTest<E> {
         assertEquals(true, queue.remove(new Integer((String) els[0])));
     }
 
+    @Override
     public String getCompatibilityVersion() {
         return "4";
     }
