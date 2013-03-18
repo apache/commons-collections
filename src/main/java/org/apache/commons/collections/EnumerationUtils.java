@@ -55,7 +55,7 @@ public class EnumerationUtils {
      * Override toList(Enumeration) for StringTokenizer as it implements Enumeration<String>
      * for the sake of backward compatibility.
      *
-     * @param stringTokenizer  the tokenizer to convert to a {@link List(String)}
+     * @param stringTokenizer  the tokenizer to convert to a {@link #List(String)}
      * @return List<String>
      */
     public static List<String> toList(final StringTokenizer stringTokenizer) {
