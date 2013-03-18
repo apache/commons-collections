@@ -66,6 +66,7 @@ public class ListUtils {
      * @param list  the list, possibly {@code null}
      * @param defaultList  the returned values if list is {@code null}
      * @return an empty list if the argument is <code>null</code>
+     * @since 4.0
      */
     public static <T> List<T> defaultIfNull(final List<T> list, final List<T> defaultList) {
         return list == null ? defaultList : list;
