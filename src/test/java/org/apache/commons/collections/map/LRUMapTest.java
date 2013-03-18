@@ -253,6 +253,10 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @SuppressWarnings("serial")
     static class MockLRUMapSubclass<K, V> extends LRUMap<K, V> {
+        /**
+         * Generated serial version ID.
+         */
+        private static final long serialVersionUID = -2126883654452042477L;
         LinkEntry<K, V> entry;
         K key;
         V value;
@@ -304,6 +308,11 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @SuppressWarnings("serial")
     static class MockLRUMapSubclassBlocksRemove<K, V> extends LRUMap<K, V> {
+        /**
+         * Generated serial version ID.
+         */
+        private static final long serialVersionUID = 6278917461128992945L;
+
         MockLRUMapSubclassBlocksRemove(final int size, final boolean scanUntilRemove) {
             super(size, scanUntilRemove);
         }
@@ -332,6 +341,11 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @SuppressWarnings("serial")
     static class MockLRUMapSubclassFirstBlocksRemove<K, V> extends LRUMap<K, V> {
+        /**
+         * Generated serial version ID.
+         */
+        private static final long serialVersionUID = -6939790801702973428L;
+
         MockLRUMapSubclassFirstBlocksRemove(final int size) {
             super(size, true);
         }

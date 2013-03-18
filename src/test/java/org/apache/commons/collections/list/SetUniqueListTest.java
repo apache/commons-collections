@@ -616,6 +616,11 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
     @SuppressWarnings("serial")
     class SetUniqueList307 extends SetUniqueList<E> {
+        /**
+         * Generated serial version ID.
+         */
+        private static final long serialVersionUID = 1415013031022962158L;
+
         public SetUniqueList307(final List<E> list, final Set<E> set) {
             super(list, set);
         }

@@ -131,6 +131,10 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
     @SuppressWarnings("serial")
     public static class PseudoRow implements Serializable {
 
+        /**
+         * Generated serial version ID.
+         */
+        private static final long serialVersionUID = 8085570439751032499L;
         public int cols[] = new int[3];
 
         public PseudoRow(final int col1, final int col2, final int col3) {

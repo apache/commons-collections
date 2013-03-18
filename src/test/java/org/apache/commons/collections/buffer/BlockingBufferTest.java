@@ -529,6 +529,11 @@ public class BlockingBufferTest<E> extends AbstractObjectTest {
     @SuppressWarnings("serial")
     protected static class MyBuffer<E> extends LinkedList<E> implements Buffer<E> {
 
+        /**
+         * Generated serial version ID.
+         */
+        private static final long serialVersionUID = -1772433262105175184L;
+
         public E get() {
             if (isEmpty()) {
                 throw new BufferUnderflowException();
