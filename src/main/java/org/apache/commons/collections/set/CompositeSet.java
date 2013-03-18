@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.collection.CompositeCollection;
 import org.apache.commons.collections.iterators.EmptyIterator;
 import org.apache.commons.collections.iterators.IteratorChain;
 import org.apache.commons.collections.list.UnmodifiableList;
