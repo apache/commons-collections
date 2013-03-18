@@ -429,7 +429,7 @@ public class TreeList<E> extends AbstractList<E> {
             if (relativePosition >= 0) {
                 relativePosition++;
             }
-            AVLNode<E> ret = balance();
+            final AVLNode<E> ret = balance();
             recalcHeight();
             return ret;
         }
@@ -443,7 +443,7 @@ public class TreeList<E> extends AbstractList<E> {
             if (relativePosition < 0) {
                 relativePosition--;
             }
-            AVLNode<E> ret = balance();
+            final AVLNode<E> ret = balance();
             recalcHeight();
             return ret;
         }

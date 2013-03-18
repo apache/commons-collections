@@ -510,7 +510,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void testIsEqualCollectionEquator() {
-        Collection<Integer> collB = CollectionUtils.collect(collectionB, TRANSFORM_TO_INTEGER);
+        final Collection<Integer> collB = CollectionUtils.collect(collectionB, TRANSFORM_TO_INTEGER);
 
         // odd / even equator
         final Equator<Integer> e = new Equator<Integer>() {
@@ -993,12 +993,12 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void filterInverse() {
-        List<Integer> ints = new ArrayList<Integer>();
+        final List<Integer> ints = new ArrayList<Integer>();
         ints.add(1);
         ints.add(2);
         ints.add(3);
         ints.add(3);
-        Iterable<Integer> iterable = ints;
+        final Iterable<Integer> iterable = ints;
         assertTrue(CollectionUtils.filterInverse(iterable, EQUALS_TWO));
         assertEquals(3, ints.size());
         assertEquals(1, (int) ints.get(0));
@@ -1008,7 +1008,7 @@ public class CollectionUtilsTest extends MockTestCase {
         
     @Test
     public void filterInverseNullParameters() throws Exception {
-        List<Long> longs = Collections.nCopies(4, 10L);
+        final List<Long> longs = Collections.nCopies(4, 10L);
         assertFalse(CollectionUtils.filterInverse(longs, null));
         assertEquals(4, longs.size());
         assertFalse(CollectionUtils.filterInverse(null, EQUALS_TWO));

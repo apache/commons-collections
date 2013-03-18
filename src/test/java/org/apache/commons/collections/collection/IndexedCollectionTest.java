@@ -133,14 +133,14 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
         try {
             coll.add("1");
             fail();
-        } catch (IllegalArgumentException e) {
+        } catch (final IllegalArgumentException e) {
             // expected
         }
     }
     
     public void testDecoratedCollectionIsIndexedOnCreation() throws Exception {
-        Collection<String> original = makeFullCollection();
-        IndexedCollection<Integer, String> indexed = decorateUniqueCollection(original);
+        final Collection<String> original = makeFullCollection();
+        final IndexedCollection<Integer, String> indexed = decorateUniqueCollection(original);
         
         assertEquals("1", indexed.get(1));
         assertEquals("2", indexed.get(2));
@@ -148,8 +148,8 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
     }
     
     public void testReindexUpdatesIndexWhenDecoratedCollectionIsModifiedSeparately() throws Exception {
-        Collection<String> original = new ArrayList<String>();
-        IndexedCollection<Integer, String> indexed = decorateUniqueCollection(original);
+        final Collection<String> original = new ArrayList<String>();
+        final IndexedCollection<Integer, String> indexed = decorateUniqueCollection(original);
         
         original.add("1");
         original.add("2");

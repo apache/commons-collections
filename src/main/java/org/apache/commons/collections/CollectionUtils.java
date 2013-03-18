@@ -584,6 +584,7 @@ public class CollectionUtils {
                 return false;
             }
             @SuppressWarnings("unchecked")
+            final
             EquatorWrapper<O> otherObj = (EquatorWrapper<O>) obj;
             return equator.equate(object, otherObj.getObject());
         }

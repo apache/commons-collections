@@ -54,10 +54,10 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
         
         
         // create mocked Node Instances and fill Node[] to be used by test cases
-        Node node1 = createMock(Element.class);
-        Node node2 = createMock(Element.class);
-        Node node3 = createMock(Text.class);
-        Node node4 = createMock(Element.class);
+        final Node node1 = createMock(Element.class);
+        final Node node2 = createMock(Element.class);
+        final Node node3 = createMock(Text.class);
+        final Node node4 = createMock(Element.class);
         nodes = new Node[] {node1, node2, node3, node4};
         
         replay(node1);
@@ -68,7 +68,7 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
 
     @Override
     public Iterator<Node> makeEmptyIterator() {
-        NodeList emptyNodeList = new NodeList() {
+        final NodeList emptyNodeList = new NodeList() {
             public Node item(final int index) {
                 throw new IndexOutOfBoundsException();
             }
@@ -80,7 +80,7 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
         if (createIteratorWithStandardConstr) {
             return new NodeListIterator(emptyNodeList);
         } else {
-            Node parentNode = createMock(Node.class);
+            final Node parentNode = createMock(Node.class);
             expect(parentNode.getChildNodes()).andStubReturn(emptyNodeList);
             replay(parentNode);
             
@@ -90,7 +90,7 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
 
     @Override
     public Iterator<Node> makeObject() {
-        NodeList nodeList = new NodeList() {
+        final NodeList nodeList = new NodeList() {
             public Node item(final int index) {
                 return nodes[index];
             }
@@ -111,9 +111,10 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
     public void testNullConstructor(){
         try{
             @SuppressWarnings("unused")
+            final
             NodeListIterator iter = new NodeListIterator((Node) null);
             fail("IllegalArgumentException expected!");
-        }catch(IllegalArgumentException e){
+        }catch(final IllegalArgumentException e){
             // expected.
         }
     }

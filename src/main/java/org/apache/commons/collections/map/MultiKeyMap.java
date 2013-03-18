@@ -823,7 +823,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     public MultiKeyMap<K, V> clone() {
         try {
             return (MultiKeyMap<K, V>) super.clone();
-        } catch (CloneNotSupportedException e) {
+        } catch (final CloneNotSupportedException e) {
             throw new InternalError();
         }
     }

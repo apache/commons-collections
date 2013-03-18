@@ -795,8 +795,8 @@ public class IteratorUtilsTest extends BulkTest {
      * Tests method nodeListIterator(NodeList)
      */
     public void testNodeListIterator() {
-        Node[] nodes = createNodes();
-        NodeList nodeList = createNodeList(nodes);
+        final Node[] nodes = createNodes();
+        final NodeList nodeList = createNodeList(nodes);
         
         final Iterator<Node> iterator = IteratorUtils.nodeListIterator(nodeList);
         int expectedNodeIndex = 0;
@@ -817,9 +817,9 @@ public class IteratorUtilsTest extends BulkTest {
      * Tests method nodeListIterator(Node)
      */
     public void testNodeIterator() {
-        Node[] nodes = createNodes();
-        NodeList nodeList = createNodeList(nodes);
-        Node parentNode = createMock(Node.class);
+        final Node[] nodes = createNodes();
+        final NodeList nodeList = createNodeList(nodes);
+        final Node parentNode = createMock(Node.class);
         expect(parentNode.getChildNodes()).andStubReturn(nodeList);
         replay(parentNode);
         
@@ -844,10 +844,10 @@ public class IteratorUtilsTest extends BulkTest {
      * @return 
      */
     private Node[] createNodes() {
-        Node node1 = createMock(Node.class);
-        Node node2 = createMock(Node.class);
-        Node node3 = createMock(Node.class);
-        Node node4 = createMock(Node.class);
+        final Node node1 = createMock(Node.class);
+        final Node node2 = createMock(Node.class);
+        final Node node3 = createMock(Node.class);
+        final Node node4 = createMock(Node.class);
         replay(node1);
         replay(node2);
         replay(node3);
