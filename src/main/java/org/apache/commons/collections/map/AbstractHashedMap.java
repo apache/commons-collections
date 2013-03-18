@@ -1278,7 +1278,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * <code>Cloneable</code> interface and make this method public.
      *
      * @return a shallow clone
-     * @throws java.lang.InternalError if {@link super#clone()} failed
+     * @throws InternalError if {@link AbstractMap#clone()} failed
      */
     @Override
     @SuppressWarnings("unchecked")
