@@ -127,8 +127,7 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         @SuppressWarnings("unchecked")  // This will fail at runtime if the stream is incorrect
-        final
-        Comparator<? super E> comp = (Comparator<? super E>) in.readObject();
+        final Comparator<? super E> comp = (Comparator<? super E>) in.readObject();
         super.doReadObject(new TreeMap<E, MutableInteger>(comp), in);
     }
 

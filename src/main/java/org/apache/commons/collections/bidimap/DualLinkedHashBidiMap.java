@@ -94,8 +94,7 @@ public class DualLinkedHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> imple
         normalMap = new LinkedHashMap<K, V>();
         reverseMap = new LinkedHashMap<V, K>();
         @SuppressWarnings("unchecked") // will fail at runtime if stream is incorrect
-        final
-        Map<K, V> map = (Map<K, V>) in.readObject();
+        final Map<K, V> map = (Map<K, V>) in.readObject();
         putAll(map);
     }
 }

@@ -234,8 +234,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
             } else {
                 // create garbage:
                 @SuppressWarnings("unused")
-                final
-                byte[] b = new byte[bytz];
+                final byte[] b = new byte[bytz];
                 bytz = bytz * 2;
             }
         }

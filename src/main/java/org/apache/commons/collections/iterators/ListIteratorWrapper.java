@@ -96,8 +96,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
     public void add(final E obj) throws UnsupportedOperationException {
         if (iterator instanceof ListIterator) {
             @SuppressWarnings("unchecked")
-            final
-            ListIterator<E> li = (ListIterator<E>) iterator;
+            final ListIterator<E> li = (ListIterator<E>) iterator;
             li.add(obj);
             return;
         }
@@ -175,8 +174,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
     public E previous() throws NoSuchElementException {
         if (iterator instanceof ListIterator) {
             @SuppressWarnings("unchecked")
-            final
-            ListIterator<E> li = (ListIterator<E>) iterator;
+            final ListIterator<E> li = (ListIterator<E>) iterator;
             return li.previous();
         }
 
@@ -235,8 +233,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
     public void set(final E obj) throws UnsupportedOperationException {
         if (iterator instanceof ListIterator) {
             @SuppressWarnings("unchecked")
-            final
-            ListIterator<E> li = (ListIterator<E>) iterator;
+            final ListIterator<E> li = (ListIterator<E>) iterator;
             li.set(obj);
             return;
         }

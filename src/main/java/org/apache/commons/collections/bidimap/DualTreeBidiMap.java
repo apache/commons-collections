@@ -396,8 +396,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
         normalMap = new TreeMap<K, V>(comparator);
         reverseMap = new TreeMap<V, K>(valueComparator);
         @SuppressWarnings("unchecked") // will fail at runtime if the stream is incorrect
-        final
-        Map<K, V> map = (Map<K, V>) in.readObject();
+        final Map<K, V> map = (Map<K, V>) in.readObject();
         putAll(map);
     }
 

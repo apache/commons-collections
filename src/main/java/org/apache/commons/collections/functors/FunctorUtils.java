@@ -99,8 +99,7 @@ class FunctorUtils {
         }
         // convert to array like this to guarantee iterator() ordering
         @SuppressWarnings("unchecked") // OK
-        final
-        Predicate<T>[] preds = new Predicate[predicates.size()];
+        final Predicate<T>[] preds = new Predicate[predicates.size()];
         int i = 0;
         for (final Predicate<T> predicate : predicates) {
             preds[i] = predicate;

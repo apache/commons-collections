@@ -159,8 +159,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
         // create value for key if key is not currently in the map
         if (map.containsKey(key) == false) {
             @SuppressWarnings("unchecked")
-            final
-            K castKey = (K) key;
+            final K castKey = (K) key;
             final V value = factory.transform(castKey);
             map.put(castKey, value);
             return value;

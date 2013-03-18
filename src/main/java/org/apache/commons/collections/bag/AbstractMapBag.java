@@ -522,8 +522,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         final int entrySize = in.readInt();
         for (int i = 0; i < entrySize; i++) {
             @SuppressWarnings("unchecked") // This will fail at runtime if the stream is incorrect
-            final
-            E obj = (E) in.readObject();
+            final E obj = (E) in.readObject();
             final int count = in.readInt();
             map.put(obj, new MutableInteger(count));
             size += count;

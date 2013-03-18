@@ -759,8 +759,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         final Map<K, V> map = makeObject();
         if (map instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             @SuppressWarnings("unchecked")
-            final
-            Map<K, V> map2 = (Map<K, V>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map));
+            final Map<K, V> map2 = (Map<K, V>) readExternalFormFromDisk(getCanonicalEmptyCollectionName(map));
             assertEquals("Map is empty", 0, map2.size());
         }
     }
@@ -782,8 +781,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         final Map<K, V> map = makeFullMap();
         if (map instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             @SuppressWarnings("unchecked")
-            final
-            Map<K, V> map2 = (Map<K, V>) readExternalFormFromDisk(getCanonicalFullCollectionName(map));
+            final Map<K, V> map2 = (Map<K, V>) readExternalFormFromDisk(getCanonicalFullCollectionName(map));
             assertEquals("Map is the right size", getSampleKeys().length, map2.size());
         }
     }
