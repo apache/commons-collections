@@ -66,10 +66,10 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * decorated <code>Map</code> is also based on {@link Object#equals(Object) equals()},
  * and {@link Object#hashCode() hashCode()}, which {@link IdentityMap}, and
  * {@link CaseInsensitiveMap} don't: The former uses <code>==</code>, and
- * the latter uses {@link Object#equals(Object) equals()} on a lowercased
+ * the latter uses {@link Object#equals(Object) equals()} on a lower-cased
  * key.
  * <p>
- * This class is Serializable from Commons Collections 3.1.
+ * This class is {@link Serializable} starting with Commons Collections 3.1.
  *
  * @since 3.0
  * @version $Id$
