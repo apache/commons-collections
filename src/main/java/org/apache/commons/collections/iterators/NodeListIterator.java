@@ -33,7 +33,7 @@ import org.w3c.dom.NodeList;
 public class NodeListIterator implements Iterator<Node> {
 
     /** the original NodeList instance */
-    private NodeList nodeList;
+    private final NodeList nodeList;
     /** The current iterator index */
     protected int index = 0;
 
