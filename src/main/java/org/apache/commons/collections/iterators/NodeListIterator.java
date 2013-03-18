@@ -28,7 +28,7 @@ import org.w3c.dom.NodeList;
  *
  * @since 4.0
  * @version $Id$
- * @see org.w3c.NodeList
+ * @see NodeList
  */
 public class NodeListIterator implements Iterator<Node> {
 
