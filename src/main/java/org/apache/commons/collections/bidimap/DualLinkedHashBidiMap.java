@@ -52,7 +52,7 @@ public class DualLinkedHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> imple
      *
      * @param map the map whose mappings are to be placed in this map
      */
-    public DualLinkedHashBidiMap(Map<K, V> map) {
+    public DualLinkedHashBidiMap(final Map<K, V> map) {
         super(new LinkedHashMap<K, V>(), new LinkedHashMap<V, K>());
         putAll(map);
     }
@@ -64,7 +64,7 @@ public class DualLinkedHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> imple
      * @param reverseMap     the reverse direction map
      * @param inverseBidiMap the inverse BidiMap
      */
-    protected DualLinkedHashBidiMap(Map<K, V> normalMap, Map<V, K> reverseMap, BidiMap<V, K> inverseBidiMap) {
+    protected DualLinkedHashBidiMap(final Map<K, V> normalMap, final Map<V, K> reverseMap, final BidiMap<V, K> inverseBidiMap) {
         super(normalMap, reverseMap, inverseBidiMap);
     }
 
@@ -84,12 +84,12 @@ public class DualLinkedHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> imple
     
     // Serialization
     //-----------------------------------------------------------------------
-    private void writeObject(ObjectOutputStream out) throws IOException {
+    private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
         out.writeObject(normalMap);
     }
 
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         normalMap = new LinkedHashMap<K, V>();
         reverseMap = new LinkedHashMap<V, K>();

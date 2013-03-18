@@ -127,7 +127,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         setUpTest();
         c.setMutator(new CompositeCollection.CollectionMutator<E>() {
             
-            public boolean add(CompositeCollection<E> composite, List<Collection<E>> collections, E obj) {
+            public boolean add(final CompositeCollection<E> composite, final List<Collection<E>> collections, final E obj) {
                 for (final Collection<E> coll : collections) {
                     coll.add(obj);
                 }

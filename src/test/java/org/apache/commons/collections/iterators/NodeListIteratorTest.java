@@ -69,7 +69,7 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
     @Override
     public Iterator<Node> makeEmptyIterator() {
         NodeList emptyNodeList = new NodeList() {
-            public Node item(int index) {
+            public Node item(final int index) {
                 throw new IndexOutOfBoundsException();
             }
             public int getLength() {
@@ -91,7 +91,7 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
     @Override
     public Iterator<Node> makeObject() {
         NodeList nodeList = new NodeList() {
-            public Node item(int index) {
+            public Node item(final int index) {
                 return nodes[index];
             }
             public int getLength() {

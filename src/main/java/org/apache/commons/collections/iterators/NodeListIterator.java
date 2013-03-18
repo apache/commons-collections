@@ -44,7 +44,7 @@ public class NodeListIterator implements Iterator<Node> {
      * @param node Node, who's child nodes are wrapped by this class. Must not be null
      * @throws IllegalArgumentException if node is null
      */
-    public NodeListIterator(Node node) {
+    public NodeListIterator(final Node node) {
         if (node == null) {
             throw new IllegalArgumentException("node must not be null!");
         }
@@ -58,7 +58,7 @@ public class NodeListIterator implements Iterator<Node> {
      * @param nodeList node list, which is wrapped by this class. Must not be null
      * @throws IllegalArgumentException if nodeList is null
      */
-    public NodeListIterator(NodeList nodeList) {
+    public NodeListIterator(final NodeList nodeList) {
         if (nodeList == null) {
             throw new IllegalArgumentException("nodeList must not be null!");
         }

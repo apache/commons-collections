@@ -94,7 +94,7 @@ public class PredicatedQueue<E> extends PredicatedCollection<E> implements Queue
      * @return the result of adding to the underlying queue
      * @throws IllegalArgumentException if the add is invalid
      */
-    public boolean offer(E object) {
+    public boolean offer(final E object) {
         validate(object);
         return decorated().offer(object);
     }

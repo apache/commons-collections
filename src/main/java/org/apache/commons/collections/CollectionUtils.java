@@ -548,7 +548,7 @@ public class CollectionUtils {
         }
 
         final Transformer transformer = new Transformer() {
-            public EquatorWrapper<?> transform(Object input) {
+            public EquatorWrapper<?> transform(final Object input) {
                 return new EquatorWrapper(equator, input);
             }
         };
@@ -579,7 +579,7 @@ public class CollectionUtils {
         }
         
         @Override
-        public boolean equals(Object obj) {
+        public boolean equals(final Object obj) {
             if (!(obj instanceof EquatorWrapper)) {
                 return false;
             }

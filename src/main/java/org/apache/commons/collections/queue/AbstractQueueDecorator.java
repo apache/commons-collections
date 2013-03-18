@@ -64,7 +64,7 @@ public abstract class AbstractQueueDecorator<E> extends AbstractCollectionDecora
 
     //-----------------------------------------------------------------------
 
-    public boolean offer(E obj) {
+    public boolean offer(final E obj) {
         return decorated().offer(obj);
     }
 

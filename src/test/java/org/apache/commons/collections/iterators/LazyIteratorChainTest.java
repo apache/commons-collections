@@ -60,7 +60,7 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
     public LazyIteratorChain<String> makeEmptyIterator() {
         return new LazyIteratorChain<String>() {
             @Override
-            protected Iterator<String> nextIterator(int count) {
+            protected Iterator<String> nextIterator(final int count) {
                 return null;
             }
         };
@@ -70,7 +70,7 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
     public LazyIteratorChain<String> makeObject() {
         final LazyIteratorChain<String> chain = new LazyIteratorChain<String>() {
             @Override
-            protected Iterator<String> nextIterator(int count) {
+            protected Iterator<String> nextIterator(final int count) {
                 switch (count) {
                 case 1:
                     return list1.iterator();
@@ -166,7 +166,7 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
         notEmpty.add("C");
         final LazyIteratorChain<String> chain = new LazyIteratorChain<String>() {
             @Override
-            protected Iterator<String> nextIterator(int count) {
+            protected Iterator<String> nextIterator(final int count) {
                 switch (count) {
                 case 1:
                     return empty.iterator();

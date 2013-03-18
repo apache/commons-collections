@@ -514,7 +514,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
         // odd / even equator
         final Equator<Integer> e = new Equator<Integer>() {
-            public boolean equate(Integer o1, Integer o2) {
+            public boolean equate(final Integer o1, final Integer o2) {
                 if (o1.intValue() % 2 == 0 ^ o2.intValue() % 2 == 0) {
                     return false;
                 } else {
@@ -522,7 +522,7 @@ public class CollectionUtilsTest extends MockTestCase {
                 }
             }
 
-            public int hash(Integer o) {
+            public int hash(final Integer o) {
                 return o.intValue() % 2 == 0 ? Integer.valueOf(0).hashCode() : Integer.valueOf(1).hashCode();
             }
         };

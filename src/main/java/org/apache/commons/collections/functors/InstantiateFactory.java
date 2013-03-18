@@ -53,8 +53,8 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
      * @return a new instantiate factory
      */
     public static <T> Factory<T> instantiateFactory(final Class<T> classToInstantiate,
-                                                    Class<?>[] paramTypes,
-                                                    Object[] args) {
+                                                    final Class<?>[] paramTypes,
+                                                    final Object[] args) {
         if (classToInstantiate == null) {
             throw new IllegalArgumentException("Class to instantiate must not be null");
         }

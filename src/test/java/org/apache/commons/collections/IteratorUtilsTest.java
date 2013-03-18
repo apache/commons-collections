@@ -861,7 +861,7 @@ public class IteratorUtilsTest extends BulkTest {
      */
     private NodeList createNodeList(final Node[] nodes) {
         return new NodeList() {
-            public Node item(int index) {
+            public Node item(final int index) {
                 return nodes[index];
             }
             public int getLength() {
