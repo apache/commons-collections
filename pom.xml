@@ -30,7 +30,7 @@
   <inceptionYear>2001</inceptionYear>
   <description>Types that extend and augment the Java Collections Framework.</description>
 
-  <url>http://commons.apache.org/collections/</url>
+  <url>http://commons.apache.org/proper/commons-collections/</url>
 
   <issueManagement>
     <system>jira</system>
