@@ -106,13 +106,11 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
     /**
      * Implementation of an entry set that checks additions via setValue.
      */
-    @SuppressWarnings("serial")
     private class EntrySet extends AbstractSetDecorator<Map.Entry<K, V>> {
         
-        /**
-         * Generated serial version ID.
-         */
+        /** Generated serial version ID. */
         private static final long serialVersionUID = 4354731610923110264L;
+
         /** The parent map */
         private final AbstractInputCheckedMapDecorator<K, V> parent;
 
