@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.collection.CompositeCollection;
 import org.apache.commons.collections.iterators.EmptyIterator;
 import org.apache.commons.collections.iterators.IteratorChain;
 import org.apache.commons.collections.list.UnmodifiableList;
@@ -39,7 +38,8 @@ import org.apache.commons.collections.list.UnmodifiableList;
  * Add operations require the use of a pluggable strategy.
  * If no strategy is provided then add is unsupported.
  * <p>
- * From version 4.0, this class does not extend {@link CompositeCollection}
+ * From version 4.0, this class does not extend
+ * {@link org.apache.commons.collections.collection.CompositeCollection CompositeCollection}
  * anymore due to its input restrictions (only accepts Sets).
  * See <a href="https://issues.apache.org/jira/browse/COLLECTIONS-424">COLLECTIONS-424</a>
  * for more details.
