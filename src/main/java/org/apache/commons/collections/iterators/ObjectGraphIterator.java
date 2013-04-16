@@ -19,8 +19,8 @@ package org.apache.commons.collections.iterators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections.ArrayStack;
 import org.apache.commons.collections.Transformer;
+import org.apache.commons.collections.ArrayStack;
 
 /**
  * An Iterator that can traverse multiple iterators down an object graph.
@@ -73,6 +73,7 @@ import org.apache.commons.collections.Transformer;
  * @since 3.1
  * @version $Id$
  */
+@SuppressWarnings("deprecation") // we use the deprecated ArrayStack - change to ArrayDeque (Java 1.6)
 public class ObjectGraphIterator<E> implements Iterator<E> {
 
     /** The stack of iterators */

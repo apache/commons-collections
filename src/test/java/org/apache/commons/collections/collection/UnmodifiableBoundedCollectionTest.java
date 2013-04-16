@@ -20,10 +20,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.apache.commons.collections.ArrayStack;
-import org.apache.commons.collections.Buffer;
-import org.apache.commons.collections.BufferUtils;
-import org.apache.commons.collections.buffer.BoundedBuffer;
+import org.apache.commons.collections.BoundedCollection;
+import org.apache.commons.collections.list.FixedSizeList;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
@@ -40,16 +38,15 @@ public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest
     //-----------------------------------------------------------------------
     @Override
     public Collection<E> makeObject() {
-        final BoundedBuffer<E> buffer = BoundedBuffer.<E>boundedBuffer(new ArrayStack<E>(), 10);
-        return UnmodifiableBoundedCollection.unmodifiableBoundedCollection(buffer);
+        final BoundedCollection<E> coll = FixedSizeList.<E>fixedSizeList(new ArrayList<E>());
+        return UnmodifiableBoundedCollection.unmodifiableBoundedCollection(coll);
     }
 
     @Override
     public Collection<E> makeFullCollection() {
         final E[] allElements = getFullElements();
-        final Buffer<E> buffer = BufferUtils.boundedBuffer(new ArrayStack<E>(), allElements.length);
-        buffer.addAll(Arrays.asList(allElements));
-        return UnmodifiableBoundedCollection.unmodifiableBoundedCollection(buffer);
+        final BoundedCollection<E> coll = FixedSizeList.<E>fixedSizeList(new ArrayList<E>(Arrays.asList(allElements)));
+        return UnmodifiableBoundedCollection.unmodifiableBoundedCollection(coll);
     }
 
     @Override

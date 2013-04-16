@@ -17,12 +17,13 @@
 package org.apache.commons.collections.buffer;
 
 import java.util.Collection;
+import java.util.EmptyStackException;
 
-import org.apache.commons.collections.ArrayStack;
 import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.BufferUnderflowException;
 import org.apache.commons.collections.Predicate;
 import org.apache.commons.collections.collection.PredicatedCollectionTest;
+import org.apache.commons.collections.ArrayStack;
 
 /**
  * Extension of {@link PredicatedCollectionTest} for exercising the
@@ -45,7 +46,7 @@ public class PredicatedBufferTest<E> extends PredicatedCollectionTest<E> {
 
     @Override
     public Buffer<E> makeObject() {
-        return decorateCollection(new ArrayStack<E>(), truePredicate);
+        return decorateCollection(new LifoStackAsBuffer<E>(), truePredicate);
     }
 
     @Override
@@ -63,7 +64,7 @@ public class PredicatedBufferTest<E> extends PredicatedCollectionTest<E> {
     //------------------------------------------------------------
 
     public Buffer<E> makeTestBuffer() {
-        return decorateCollection(new ArrayStack<E>(), testPredicate);
+        return decorateCollection(new LifoStackAsBuffer<E>(), testPredicate);
     }
 
     @SuppressWarnings("unchecked")
@@ -105,5 +106,25 @@ public class PredicatedBufferTest<E> extends PredicatedCollectionTest<E> {
 //        resetFull();
 //        writeExternalFormToDisk((java.io.Serializable) collection, "D:/dev/collections/data/test/PredicatedBuffer.fullCollection.version3.1.obj");
 //    }
+    
+    private static class LifoStackAsBuffer<E> extends ArrayStack<E> implements Buffer<E> {
+
+        public E get() {
+            try {
+                return peek();
+            } catch (EmptyStackException e) {
+                throw new BufferUnderflowException();
+            }
+        }
+
+        public E remove() {
+            try {
+                return pop();
+            } catch (EmptyStackException e) {
+                throw new BufferUnderflowException();
+            }
+        }
+        
+    }
 
 }

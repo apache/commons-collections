@@ -17,7 +17,6 @@
 package org.apache.commons.collections.buffer;
 
 import junit.framework.TestCase;
-import org.apache.commons.collections.ArrayStack;
 import org.apache.commons.collections.Buffer;
 import org.apache.commons.collections.collection.TransformedCollectionTest;
 
@@ -35,7 +34,7 @@ public class TransformedBufferTest extends TestCase {
     }
 
     public void testTransformedBuffer() {
-        final Buffer<Object> buffer = TransformedBuffer.transformingBuffer(new ArrayStack<Object>(), TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
+        final Buffer<Object> buffer = TransformedBuffer.transformingBuffer(new CircularFifoBuffer<Object>(), TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, buffer.size());
         final Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
         for (int i = 0; i < els.length; i++) {
@@ -51,7 +50,7 @@ public class TransformedBufferTest extends TestCase {
     }
 
     public void testTransformedBuffer_decorateTransform() {
-        final Buffer originalBuffer = new ArrayStack();
+        final Buffer originalBuffer = new CircularFifoBuffer();
         final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         for (final Object el : els) {
             originalBuffer.add(el);

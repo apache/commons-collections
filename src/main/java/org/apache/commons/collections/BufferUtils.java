@@ -18,6 +18,7 @@ package org.apache.commons.collections;
 
 import org.apache.commons.collections.buffer.BlockingBuffer;
 import org.apache.commons.collections.buffer.BoundedBuffer;
+import org.apache.commons.collections.buffer.CircularFifoBuffer;
 import org.apache.commons.collections.buffer.PredicatedBuffer;
 import org.apache.commons.collections.buffer.SynchronizedBuffer;
 import org.apache.commons.collections.buffer.TransformedBuffer;
@@ -34,7 +35,7 @@ public class BufferUtils {
     /**
      * An empty unmodifiable buffer.
      */
-    public static final Buffer<Object> EMPTY_BUFFER = UnmodifiableBuffer.unmodifiableBuffer(new ArrayStack<Object>(1));
+    public static final Buffer<Object> EMPTY_BUFFER = UnmodifiableBuffer.unmodifiableBuffer(new CircularFifoBuffer<Object>(1));
 
     /**
      * <code>BufferUtils</code> should not normally be instantiated.

@@ -29,10 +29,12 @@ import java.util.EmptyStackException;
  * The removal order of an <code>ArrayStack</code> is based on insertion 
  * order: The most recently added element is removed first.  The iteration
  * order is <i>not</i> the same as the removal order.  The iterator returns
- * elements from the bottom up, whereas the {@link #remove()} method removes
- * them from the top down.
+ * elements from the bottom up.
  * <p>
  * Unlike <code>Stack</code>, <code>ArrayStack</code> accepts null entries.
+ * <p>
+ * <b>Note:</b> From version 4.0 onwards, this class does not implement the
+ * removed {@code Buffer} interface anymore.
  *
  * @see java.util.Stack
  * @since 1.0
@@ -40,7 +42,7 @@ import java.util.EmptyStackException;
  * @deprecated use {@link java.util.ArrayDeque} instead (available from Java 1.6)
  */
 @Deprecated
-public class ArrayStack<E> extends ArrayList<E> implements Buffer<E> {
+public class ArrayStack<E> extends ArrayList<E> {
 
     /** Ensure serialization compatibility */    
     private static final long serialVersionUID = 2130079159931574599L;
@@ -160,34 +162,6 @@ public class ArrayStack<E> extends ArrayList<E> implements Buffer<E> {
             n++;
         }
         return -1;
-    }
-
-    /**
-     * Returns the element on the top of the stack.
-     *
-     * @return the element on the top of the stack
-     * @throws BufferUnderflowException  if the stack is empty
-     */
-    public E get() {
-        final int size = size();
-        if (size == 0) {
-            throw new BufferUnderflowException();
-        }
-        return get(size - 1);
-    }
-
-    /**
-     * Removes the element on the top of the stack.
-     *
-     * @return the removed element 
-     * @throws BufferUnderflowException  if the stack is empty
-     */
-    public E remove() {
-        final int size = size();
-        if (size == 0) {
-            throw new BufferUnderflowException();
-        }
-        return remove(size - 1);
     }
 
 }
