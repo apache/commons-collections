@@ -15,7 +15,12 @@
  * limitations under the License.
  */
 /**
- * This package contains decorators for the {@link java.util.Queue Queue} interface.
+ * This package contains implementations for the {@link java.util.Queue Queue} interface.
+ * <p>
+ * The following implementations are provided in the package:
+ * <ul>
+ *   <li>CircularFifoQueue - implements a queue with a fixed size that discards oldest when full
+ * </ul>
  * <p>
  * The following decorators are provided in the package:
  * <ul>
