@@ -27,13 +27,13 @@ import static org.junit.Assert.fail;
 import java.util.*;
 
 import org.apache.commons.collections.bag.HashBag;
-import org.apache.commons.collections.buffer.BoundedFifoBuffer;
 import org.apache.commons.collections.collection.PredicatedCollection;
 import org.apache.commons.collections.collection.SynchronizedCollection;
 import org.apache.commons.collections.collection.TransformedCollection;
 import org.apache.commons.collections.collection.UnmodifiableCollection;
 import org.apache.commons.collections.functors.DefaultEquator;
 import org.apache.commons.collections.functors.Equator;
+import org.apache.commons.collections.queue.CircularFifoQueue;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -1211,19 +1211,12 @@ public class CollectionUtilsTest extends MockTestCase {
         }
         assertFalse(CollectionUtils.isFull(set));
 
-        final BoundedFifoBuffer<String> buf = new BoundedFifoBuffer<String>(set);
-        assertEquals(true, CollectionUtils.isFull(buf));
+        final CircularFifoQueue<String> buf = new CircularFifoQueue<String>(set);
+        assertEquals(false, CollectionUtils.isFull(buf));
         buf.remove("2");
         assertFalse(CollectionUtils.isFull(buf));
         buf.add("2");
-        assertEquals(true, CollectionUtils.isFull(buf));
-
-        final Buffer<String> buf2 = BufferUtils.synchronizedBuffer(buf);
-        assertEquals(true, CollectionUtils.isFull(buf2));
-        buf2.remove("2");
-        assertFalse(CollectionUtils.isFull(buf2));
-        buf2.add("2");
-        assertEquals(true, CollectionUtils.isFull(buf2));
+        assertEquals(false, CollectionUtils.isFull(buf));
     }
 
     @Test
@@ -1245,19 +1238,12 @@ public class CollectionUtilsTest extends MockTestCase {
         }
         assertEquals(-1, CollectionUtils.maxSize(set));
 
-        final Buffer<String> buf = new BoundedFifoBuffer<String>(set);
+        final Queue<String> buf = new CircularFifoQueue<String>(set);
         assertEquals(3, CollectionUtils.maxSize(buf));
         buf.remove("2");
         assertEquals(3, CollectionUtils.maxSize(buf));
         buf.add("2");
         assertEquals(3, CollectionUtils.maxSize(buf));
-
-        final Buffer<String> buf2 = BufferUtils.synchronizedBuffer(buf);
-        assertEquals(3, CollectionUtils.maxSize(buf2));
-        buf2.remove("2");
-        assertEquals(3, CollectionUtils.maxSize(buf2));
-        buf2.add("2");
-        assertEquals(3, CollectionUtils.maxSize(buf2));
     }
 
     @Test
