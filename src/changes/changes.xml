@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-452" dev="tn" type="update">
+      Change base package to org.apache.commons.collections4.
+    </action>
     <action issue="COLLECTIONS-382" dev="tn" type="update">
       Change maven coordinates to org.apache.commons.commons-collections4.
     </action>
