@@ -613,7 +613,6 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         assertTrue(lset.contains(obj2));
     }
 
-    @SuppressWarnings("serial")
     class SetUniqueList307 extends SetUniqueList<E> {
         /**
          * Generated serial version ID.

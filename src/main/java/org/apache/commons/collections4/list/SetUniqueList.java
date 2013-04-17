@@ -214,7 +214,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * Sets the value at the specified index avoiding duplicates.
      * <p>
      * The object is set into the specified index. Afterwards, any previous
-     * duplicate is removed If the object is not already in the list then a
+     * duplicate is removed. If the object is not already in the list then a
      * normal set occurs. If it is present, then the old version is removed.
      * 
      * @param index
@@ -229,15 +229,14 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         final E removed = super.set(index, object);
 
         if (pos != -1 && pos != index) {
-            // the object is already in the uniq list
+            // the object is already in the unique list
             // (and it hasn't been swapped with itself)
             super.remove(pos); // remove the duplicate by index
-            set.remove(removed); // remove the item deleted by the set
-        } else if (pos == -1) {
-            set.add(object); // add the new item to the unique set
-            set.remove(removed); // remove the item deleted by the set
         }
-        
+
+        set.remove(removed); // remove the item deleted by the set
+        set.add(object); // add the new item to the unique set
+
         return removed; // return the item deleted by the set
     }
 

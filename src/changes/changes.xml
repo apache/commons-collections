@@ -65,7 +65,7 @@
     <action issue="COLLECTIONS-396" dev="tn" type="add" due-to="Jeff Rodriguez">
       Added "LazyIteratorChain" iterator.
     </action>
-    <action issue="COLLECTIONS-444" dev="tn" type="fix" due-to="Thomas Vahrst">
+    <action issue="COLLECTIONS-444" dev="tn" type="fix" due-to="Thomas Vahrst, John Vasileff">
       SetUniqueList.set(int, E) now works correctly if the object to be inserted
       is already placed at the given position.
     </action>
