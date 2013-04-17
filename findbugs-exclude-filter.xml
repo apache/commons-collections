@@ -25,7 +25,7 @@
 
   <!--  explicit return of a null value for type Boolean is intended -->
   <Match>
-    <Class name="org.apache.commons.collections.MapUtils" />
+    <Class name="org.apache.commons.collections4.MapUtils" />
     <Method name="getBoolean" params="java.util.Map, java.lang.Object" returns="java.lang.Boolean" />
     <Bug pattern="NP_BOOLEAN_RETURN_NULL" />
   </Match>
@@ -45,7 +45,7 @@
 
   <!--  Load first tries ISO_8859_1 encoding, and reverts to the system's default if not available -->
   <Match>
-    <Class name="org.apache.commons.collections.ExtendedProperties" />
+    <Class name="org.apache.commons.collections4.ExtendedProperties" />
     <Method name="load" params="java.io.InputStream, java.lang.String" returns="void" />
     <Bug pattern="DM_DEFAULT_ENCODING" />
   </Match>
@@ -53,15 +53,15 @@
   <!-- TreeBidiMap implements equals by delegating to another method for re-usability -->
   <Match>
     <Or>
-      <Class name="org.apache.commons.collections.bidimap.TreeBidiMap" />
-      <Class name="org.apache.commons.collections.bidimap.TreeBidiMap$Inverse" />
+      <Class name="org.apache.commons.collections4.bidimap.TreeBidiMap" />
+      <Class name="org.apache.commons.collections4.bidimap.TreeBidiMap$Inverse" />
     </Or>
     <Bug pattern="EQ_UNUSUAL" />
   </Match>
 
   <!-- The compare method in ComparatorChain has to handle a corner-case for Integer.MIN_VALUE -->
   <Match>
-    <Class name="org.apache.commons.collections.comparators.ComparatorChain" />
+    <Class name="org.apache.commons.collections4.comparators.ComparatorChain" />
     <Method name="compare" params="java.lang.Object, java.lang.Object" returns="int" />
     <Bug pattern="RV_CHECK_COMPARETO_FOR_SPECIFIC_RETURN_VALUE" />
   </Match>
