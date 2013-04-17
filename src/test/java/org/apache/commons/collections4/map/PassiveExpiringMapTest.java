@@ -26,6 +26,12 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.map.PassiveExpiringMap;
 import org.apache.commons.collections4.map.PassiveExpiringMap.ExpirationPolicy;
 
+/**
+ * JUnit tests.
+ *
+ * @since 4.0
+ * @version $Id: $
+ */
 public class PassiveExpiringMapTest<K, V>
     extends AbstractMapTest<K, V> {
 

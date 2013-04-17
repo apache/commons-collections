@@ -35,6 +35,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
 /**
  * Test cases for CircularFifoQueue.
  *
+ * @since 4.0
  * @version $Id$
  */
 public class CircularFifoQueueTest<E> extends AbstractCollectionTest<E> {

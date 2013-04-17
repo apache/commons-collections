@@ -34,9 +34,7 @@ import org.apache.commons.collections4.list.AbstractListTest;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link List} fails.
  *
- * @version $Revision$
- *
- * @author Rich Dougherty
+ * @version $Id$
  */
 public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
 

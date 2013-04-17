@@ -24,7 +24,6 @@ import org.apache.commons.collections4.list.AbstractLinkedList;
  * Test case for {@link AbstractLinkedList}.
  *
  * @version $Id$
- * @author David Hay
  */
 public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
 

@@ -39,7 +39,7 @@ import junit.framework.TestSuite;
  * A <I>bulk test method</I>, on the other hand, returns a new instance
  * of <code>BulkTest</code>, which can itself define new simple and bulk
  * test methods.  By using the {@link #makeSuite} method, you can 
- * automatically create a hierarchal suite of tests and child bulk tests.
+ * automatically create a hierarchical suite of tests and child bulk tests.
  * <p>
  * For instance, consider the following two classes:
  *

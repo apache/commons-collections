@@ -32,10 +32,10 @@ public final class TestUtils {
     /**
      * Asserts that deserialization of the object returns the same object as the
      * one that was serialized. Object is first serialized, then deserialized
-     * and finally check is preformed to see if original and deserialized
+     * and finally check is performed to see if original and deserialized
      * object references are the same.
      * <p>
-     * This method is especially good for testing singletone pattern on classes
+     * This method is especially good for testing singleton pattern on classes
      * that support serialization.
      *
      * @param msg the identifying message for the <code>AssertionError</code>.

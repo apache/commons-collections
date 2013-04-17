@@ -38,6 +38,14 @@ import org.apache.commons.collections4.Trie.Cursor;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * JUnit tests.
+ *
+ * FIXME: add serialization support
+ *
+ * @since 4.0
+ * @version $Id$
+ */
 public class PatriciaTrieTest {
     
     @Test
