@@ -16,6 +16,10 @@
  */
 package org.apache.commons.collections4.bidimap;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.AbstractSet;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
@@ -69,12 +73,11 @@ import static org.apache.commons.collections4.bidimap.TreeBidiMap.DataElement.VA
  * not allow setValue() and will throw an
  * UnsupportedOperationException on attempts to call that method.
  *
- * TODO: serialization does not work anymore
- *
  * @since 3.0 (previously DoubleOrderedMap v2.0)
  * @version $Id$
  */
-public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> implements OrderedBidiMap<K, V> {
+public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
+    implements OrderedBidiMap<K, V>, Serializable {
 
     static enum DataElement {
         KEY("key"), VALUE("value");
@@ -96,13 +99,15 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         }
     }
 
-    private Node<K, V>[] rootNode;
-    private int nodeCount = 0;
-    private int modifications = 0;
-    private Set<K> keySet;
-    private Set<V> valuesSet;
-    private Set<Map.Entry<K, V>> entrySet;
-    private Inverse inverse = null;
+    private static final long serialVersionUID = 721969328361807L;
+
+    private transient Node<K, V>[] rootNode;
+    private transient int nodeCount = 0;
+    private transient int modifications = 0;
+    private transient Set<K> keySet;
+    private transient Set<V> valuesSet;
+    private transient Set<Map.Entry<K, V>> entrySet;
+    private transient Inverse inverse = null;
 
     //-----------------------------------------------------------------------
     /**
@@ -1405,6 +1410,33 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>> imple
         }
     }
 
+    /**
+     * Reads the content of the stream.
+     */
+    @SuppressWarnings("unchecked") // This will fail at runtime if the stream is incorrect
+    private void readObject(final ObjectInputStream stream) throws IOException, ClassNotFoundException{
+        stream.defaultReadObject();
+        rootNode = new Node[2];
+        int size = stream.readInt();
+        for(int i = 0; i < size; i++){
+            K k =(K) stream.readObject();
+            V v =(V) stream.readObject();
+            put(k, v);
+        }
+    }
+
+    /**
+     * Writes the content to the stream for serialization.
+     */
+    private void writeObject(final ObjectOutputStream stream) throws IOException{
+        stream.defaultWriteObject();
+        stream.writeInt(this.size());
+        for (final Entry<K, V> entry : entrySet()) {
+            stream.writeObject(entry.getKey());
+            stream.writeObject(entry.getValue());
+        }
+    }
+    
     //-----------------------------------------------------------------------
     /**
      * A view of this map.

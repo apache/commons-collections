@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-285" dev="tn" type="add" due-to="Christian Gruenberg">
+      Added serialization support for "TreeBidiMap".
+    </action>
     <action issue="COLLECTIONS-452" dev="tn" type="update">
       Change base package to org.apache.commons.collections4.
     </action>
