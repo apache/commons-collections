@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-382" dev="tn" type="update">
+      Change maven coordinates to org.apache.commons.commons-collections4.
+    </action>
     <action issue="COLLECTIONS-432" dev="tn" type="update">
       Replaced "Buffer" interface with "java.util.Queue". Kept "CircularFifoQueue"
       as well as "Predicated", "Transformed" and "Unmodifiable" decorators.
