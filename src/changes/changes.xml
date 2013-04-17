@@ -22,24 +22,24 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
-    <action issue="COLLECTIONS-432" dev="tn" type="change">
+    <action issue="COLLECTIONS-432" dev="tn" type="update">
       Replaced "Buffer" interface with "java.util.Queue". Kept "CircularFifoQueue"
       as well as "Predicated", "Transformed" and "Unmodifiable" decorators.
     </action>
     <action issue="COLLECTIONS-375" dev="tn" type="add" due-to="Ivan Hristov">
       Added method "ListUtils#defaultIfNull(List, List)".
     </action>
-    <action issue="COLLECTIONS-451" dev="tn" type="change">
+    <action issue="COLLECTIONS-451" dev="tn" type="update">
       The constructors for all Utils classes are now private to prevent instantiation.
     </action>
-    <action issue="COLLECTIONS-424" dev="tn" type="change" due-to="Michael Pradel">
+    <action issue="COLLECTIONS-424" dev="tn" type="update" due-to="Michael Pradel">
       "CompositeSet" does not inherit from "CompositeCollection" anymore. The inner class
       "SetMutator" has been updated accordingly.
     </action>
     <action issue="COLLECTIONS-361" dev="tn" type="add" due-to="Jean-Noel Rouvignac">
       Add method "CollectionUtils#filterInverse(Iterable, Predicate)".
     </action>
-    <action issue="COLLECTIONS-372" dev="tn" type="change">
+    <action issue="COLLECTIONS-372" dev="tn" type="update">
       TransformingComparator now supports different types for its input/output values.
     </action>
     <action issue="COLLECTIONS-446" dev="tn" type="add" due-to="Matt Lachman">
@@ -125,7 +125,7 @@
       Added serialVersionUID fields for "ExtendedProperties", "CompositeCollection",
       "CompositeSet", "EmptyMapMutator", "EmptySetMutator".
     </action>
-    <action issue="COLLECTIONS-324" dev="tn" type="change" due-to="sebb">
+    <action issue="COLLECTIONS-324" dev="tn" type="update" due-to="sebb">
       Fields transformer and decorated in class "TransformingComparator" are now final.
     </action>
     <action issue="COLLECTIONS-383" dev="tn" type="add" due-to="Adrian Cumiskey">
@@ -137,7 +137,7 @@
     <action issue="COLLECTIONS-272" dev="tn" type="add" due-to="Chaitanya Mutyala">
       Added serialization support for "FixedOrderComparator" and "TransformingComparator".
     </action>
-    <action issue="COLLECTIONS-231" dev="tn" type="change" due-to="Torsten Curdt">
+    <action issue="COLLECTIONS-231" dev="tn" type="update" due-to="Torsten Curdt">
       Return concrete class in static factory methods instead of base class interface
       (except for Unmodifiable decorators).
     </action>
