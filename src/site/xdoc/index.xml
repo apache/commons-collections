@@ -34,14 +34,11 @@ Commons-Collections seek to build upon the JDK classes by providing new interfac
 There are many features, including:
 <ul>
 <li>Bag interface for collections that have a number of copies of each object</li>
-<li>Buffer interface for collections that have a well defined removal order, like FIFOs</li>
 <li>BidiMap interface for maps that can be looked up from value to key as well and key to value</li>
 <li>MapIterator interface to provide simple and quick iteration over maps</li>
-<li>Type checking decorators to ensure that only instances of a certain type can be added</li>
 <li>Transforming decorators that alter each object as it is added to the collection</li>
 <li>Composite collections that make multiple collections look like one</li>
 <li>Ordered maps and sets that retain the order elements are added in, including an LRU based map</li>
-<li>Identity map that compares objects based on their identity (==) instead of the equals method</li>
 <li>Reference map that allows keys and/or values to be garbage collected under close control</li>
 <li>Many comparator implementations</li>
 <li>Many iterator implementations</li>
