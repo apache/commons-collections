@@ -105,23 +105,6 @@ public class CollectionUtils {
             return getFreq(obj, cardinalityB);
         }
 
-        /**
-         * Returns the number of unique elements in collection A.
-         * @return the number of unique elements in collection A
-         */
-        @SuppressWarnings("unused")
-        public int sizeA() {
-            return cardinalityA.size();
-        }
-        
-        /**
-         * Returns the number of unique elements in collection A.
-         * @return the number of unique elements in collection A
-         */
-        public int sizeB() {
-            return cardinalityB.size();
-        }
-
         private final int getFreq(final Object obj, final Map<?, Integer> freqMap) {
             final Integer count = freqMap.get(obj);
             if (count != null) {
@@ -366,9 +349,10 @@ public class CollectionUtils {
      * will be returned.
      * <p>
      * This method is intended as a replacement for {@link Collection#containsAll(Collection)}
-     * with a guaranteed runtime complexity of {@code O(n)}. Depending on the type of
+     * with a guaranteed runtime complexity of {@code O(n + m)}. Depending on the type of
      * {@link Collection} provided, this method will be much faster than calling
-     * {@link Collection#containsAll(Collection)} instead.
+     * {@link Collection#containsAll(Collection)} instead, though this will come at the
+     * cost of an additional space complexity O(n).
      *
      * @param coll1  the first collection, must not be null
      * @param coll2  the second collection, must not be null
@@ -380,12 +364,30 @@ public class CollectionUtils {
         if (coll2.isEmpty()) {
             return true;
         } else {
-            final SetOperationCardinalityHelper<Object> helper =
-                    new SetOperationCardinalityHelper<Object>(coll1, coll2);
-            for (final Object obj : helper) {
-                helper.setCardinality(obj, helper.min(obj));
+            final Iterator<?> it = coll1.iterator();
+            final Set<Object> elementsAlreadySeen = new HashSet<Object>();
+            for (final Object nextElement : coll2) {
+                if (elementsAlreadySeen.contains(nextElement)) {
+                    continue;
+                }
+
+                boolean foundCurrentElement = false;
+                while (it.hasNext()) {
+                    final Object p = it.next();
+                    elementsAlreadySeen.add(p);
+                    if (nextElement == null ? p == null : nextElement.equals(p)) {
+                        foundCurrentElement = true;
+                        break;
+                    }
+                }
+
+                if (foundCurrentElement) {
+                    continue;
+                } else {
+                    return false;
+                }
             }
-            return helper.list().size() == helper.sizeB();
+            return true;
         }
     }
     

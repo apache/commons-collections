@@ -22,6 +22,12 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-429,COLLECTION-434" dev="tn" type="add" due-to="Adrian Nistor, Mert Guldur">
+      Added method "CollectionUtils#containsAll(Collection, Collection)" with guaranteed
+      runtime complexity of O(n + m) and space complexity of O(n). This method may yield much
+      better performance than "Collection#containsAll(Collection)" depending on the use-case and
+      type of collection used.
+    </action>
     <action issue="COLLECTIONS-285" dev="tn" type="add" due-to="Christian Gruenberg">
       Added serialization support for "TreeBidiMap".
     </action>
