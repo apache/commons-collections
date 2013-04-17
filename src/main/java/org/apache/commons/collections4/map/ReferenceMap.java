@@ -50,7 +50,7 @@ import java.io.Serializable;
  * This implementation is not synchronized.
  * You can use {@link java.util.Collections#synchronizedMap} to 
  * provide synchronized access to a <code>ReferenceMap</code>.
- * Remember that synchronization will not stop the garbage collecter removing entries.
+ * Remember that synchronization will not stop the garbage collector removing entries.
  * <p>
  * All the available iterators can be reset back to the start by casting to
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
