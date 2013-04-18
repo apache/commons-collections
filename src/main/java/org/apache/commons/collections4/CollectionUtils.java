@@ -19,6 +19,7 @@ package org.apache.commons.collections4;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1435,6 +1436,152 @@ public class CollectionUtils {
             return bcoll.maxSize();
         } catch (final IllegalArgumentException ex) {
             return -1;
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Merges two sorted Collections, a and b, into a single, sorted List
+     * such that the natural ordering of the elements is retained.
+     * <p>
+     * Uses the standard O(n) merge algorithm for combining two sorted lists.
+     *
+     * @param <O>  the element type
+     * @param a  the first collection, must not be null
+     * @param b  the second collection, must not be null
+     * @return a new sorted List, containing the elements of Collection a and b
+     * @throws IllegalArgumentException if either collection is null
+     */
+    public static <O extends Comparable<? super O>> List<O> merge(Collection<? extends O> a,
+                                                                  Collection<? extends O> b) {
+        return merge(a, b, ComparatorUtils.<O>naturalComparator(), true);
+    }
+
+    /**
+    /**
+     * Merges two sorted Collections, a and b, into a single, sorted List
+     * such that the natural ordering of the elements is retained.
+     * <p>
+     * Uses the standard O(n) merge algorithm for combining two sorted lists.
+     *
+     * @param <O>  the element type
+     * @param a  the first collection, must not be null
+     * @param b  the second collection, must not be null
+     * @param includeDuplicates  if {@code true} duplicate elements will be retained, otherwise
+     *   they will be removed in the output collection
+     * @return a new sorted List, containing the elements of Collection a and b
+     * @throws IllegalArgumentException if either collection is null
+     */
+    public static <O extends Comparable<? super O>> List<O> merge(final Collection<? extends O> a,
+                                                                  final Collection<? extends O> b,
+                                                                  final boolean includeDuplicates) {
+        return merge(a, b, ComparatorUtils.<O>naturalComparator(), includeDuplicates);
+    }
+
+    /**
+     * Merges two sorted Collections, a and b, into a single, sorted List
+     * such that the ordering of the elements according to Comparator c is retained.
+     * <p>
+     * Uses the standard O(n) merge algorithm for combining two sorted lists.
+     *
+     * @param <O>  the element type
+     * @param a  the first collection, must not be null
+     * @param b  the second collection, must not be null
+     * @param c  the comparator to use for the merge. 
+     * @return a new sorted List, containing the elements of Collection a and b
+     * @throws IllegalArgumentException if either collection or the comparator is null
+     */
+    public static <O> List<O> merge(final Collection<? extends O> a, final Collection<? extends O> b,
+                                    final Comparator<? super O> c) {
+        return merge(a, b, c, true);
+    }
+    
+    /**
+     * Merges two sorted Collections, a and b, into a single, sorted List
+     * such that the ordering of the elements according to Comparator c is retained.
+     * <p>
+     * Uses the standard O(n) merge algorithm for combining two sorted lists.
+     *
+     * @param <O>  the element type
+     * @param a  the first collection, must not be null
+     * @param b  the second collection, must not be null
+     * @param c  the comparator to use for the merge. 
+     * @param includeDuplicates  if {@code true} duplicate elements will be retained, otherwise
+     *   they will be removed in the output collection
+     * @return a new sorted List, containing the elements of Collection a and b
+     * @throws IllegalArgumentException if either collection or the comparator is null
+     */
+    public static <O> List<O> merge(final Collection<? extends O> a, final Collection<? extends O> b,
+                                    final Comparator<? super O> c, final boolean includeDuplicates) {
+        
+        if (a == null || b == null) {
+            throw new IllegalArgumentException("The collections must not be null");
+        }
+        if (c == null) {
+            throw new IllegalArgumentException("The comparator must not be null");
+        }
+
+        final List<O> mergedList = new ArrayList<O>(a.size() + b.size());
+        
+        // if either collection is empty, just return the other one
+        if (a.isEmpty() || b.isEmpty()) {
+            mergedList.addAll(a.isEmpty() ? b : a);
+            return mergedList;
+        }
+
+        final Iterator<? extends O> it1 = a.iterator();
+        final Iterator<? extends O> it2 = b.iterator();
+        O o1 = it1.next();
+        O o2 = it2.next();
+        O last = null;
+        while (true) {
+            final int x = c.compare(o1, o2);
+            if (x <= 0) {
+                last = addItemToList(o1, mergedList, last, includeDuplicates);
+                if (it1.hasNext()) {
+                    o1 = it1.next();
+                } else {
+                    // a is empty, so add current element of b
+                    last = addItemToList(o2, mergedList, last, includeDuplicates);
+                    break;
+                }
+            } else {
+                last = addItemToList(o2, mergedList, last, includeDuplicates);
+                if (it2.hasNext()) {
+                    o2 = it2.next();
+                } else {
+                    // b is empty, so add current element of a
+                    last = addItemToList(o1, mergedList, last, includeDuplicates);
+                    break;
+                }                
+            }
+        }
+
+        // add the remaining elements from the non-empty iterator
+        final Iterator<? extends O> it = it1.hasNext() ? it1 : it2;
+        while (it.hasNext()) {
+            last = addItemToList(it.next(), mergedList, last, includeDuplicates);
+        }
+        
+        return mergedList;
+    }
+
+    /**
+     * Adds an item to the specified list.
+     *
+     * @param item  the item to add
+     * @param list  the list to use
+     * @param lastItem  the last added item, may be null
+     * @param includeDuplicates  whether duplicate entries are allowed
+     * @return the last added item
+     */
+    private static <E> E addItemToList(final E item, final List<E> list, final E lastItem,
+                                       final boolean includeDuplicates) {
+        if (includeDuplicates || lastItem == null || !lastItem.equals(item)) {
+            list.add(item);
+            return item;
+        } else {
+            return lastItem;
         }
     }
 

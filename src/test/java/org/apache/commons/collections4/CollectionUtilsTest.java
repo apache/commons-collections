@@ -71,6 +71,16 @@ public class CollectionUtilsTest extends MockTestCase {
     private Collection<Integer> collectionC = null;
 
     /**
+     * Sorted Collection of {@link Integer}s
+     */
+    private Collection<Integer> collectionD = null;
+
+    /**
+     * Sorted Collection of {@link Integer}s
+     */
+    private Collection<Integer> collectionE = null;
+
+    /**
      * Collection of {@link Integer}s, bound as {@link Number}s
      */
     private Collection<Number> collectionA2 = null;
@@ -95,6 +105,8 @@ public class CollectionUtilsTest extends MockTestCase {
     private Iterable<Number> iterableA2 = null;
 
     private Iterable<Number> iterableB2 = null;
+
+    private Collection<Integer> emptyCollection = new ArrayList<Integer>(1);
 
     @Before
     public void setUp() {
@@ -134,6 +146,25 @@ public class CollectionUtilsTest extends MockTestCase {
         collectionC2 = new LinkedList<Number>(collectionC);
         iterableA2 = collectionA2;
         iterableB2 = collectionB2;
+        
+        collectionD = new ArrayList<Integer>();
+        collectionD.add(1);
+        collectionD.add(3);
+        collectionD.add(3);
+        collectionD.add(3);
+        collectionD.add(5);
+        collectionD.add(7);
+        collectionD.add(7);
+        collectionD.add(10);
+
+        collectionE = new ArrayList<Integer>();
+        collectionE.add(2);
+        collectionE.add(4);
+        collectionE.add(4);
+        collectionE.add(5);
+        collectionE.add(6);
+        collectionE.add(6);
+        collectionE.add(9);
     }
 
     @Test
@@ -1553,4 +1584,65 @@ public class CollectionUtilsTest extends MockTestCase {
         expect(iterator.hasNext()).andReturn(true);
         expect(iterator.next()).andReturn(t);
     }
+        
+    @Test(expected=IllegalArgumentException.class)
+    public void mergeException1() {
+        CollectionUtils.merge(collectionA, null);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void mergeException2() {
+        CollectionUtils.merge(collectionA, collectionC, null);
+    }
+
+    @Test
+    public void testMerge() {
+        List<Integer> result = CollectionUtils.merge(emptyCollection, emptyCollection);
+        assertEquals("Merge empty with empty", 0, result.size());
+
+        result = CollectionUtils.merge(collectionA, emptyCollection);
+        assertEquals("Merge empty with non-empty", collectionA, result);
+
+        List<Integer> result1 = CollectionUtils.merge(collectionD, collectionE);
+        List<Integer> result2 = CollectionUtils.merge(collectionE, collectionD);
+        assertEquals("Merge two lists 1", result1, result2);
+        
+        List<Integer> combinedList = new ArrayList<Integer>();
+        combinedList.addAll(collectionD);
+        combinedList.addAll(collectionE);
+        Collections.sort(combinedList);
+
+        assertEquals("Merge two lists 2", combinedList, result2);
+
+        final Comparator<Integer> reverseComparator =
+                ComparatorUtils.reversedComparator(ComparatorUtils.<Integer>naturalComparator());
+
+        result = CollectionUtils.merge(emptyCollection, emptyCollection, reverseComparator);
+        assertEquals("Comparator Merge empty with empty", 0, result.size());
+
+        Collections.reverse((List<Integer>) collectionD);
+        Collections.reverse((List<Integer>) collectionE);
+        Collections.reverse(combinedList);
+
+        result1 = CollectionUtils.merge(collectionD, collectionE, reverseComparator);
+        result2 = CollectionUtils.merge(collectionE, collectionD, reverseComparator);
+        assertEquals("Comparator Merge two lists 1", result1, result2);
+        assertEquals("Comparator Merge two lists 2", combinedList, result2);
+    }
+    
+    @Test
+    public void testMergeIgnoreDuplicates() {
+        List<Integer> result1 = CollectionUtils.merge(collectionD, collectionE, false);
+        List<Integer> result2 = CollectionUtils.merge(collectionE, collectionD, false);
+        assertEquals("Merge two lists 1 - ignore duplicates", result1, result2);
+        
+        Set<Integer> combinedSet = new HashSet<Integer>();
+        combinedSet.addAll(collectionD);
+        combinedSet.addAll(collectionE);
+        List<Integer> combinedList = new ArrayList<Integer>(combinedSet);
+        Collections.sort(combinedList);
+
+        assertEquals("Merge two lists 2 - ignore duplicates", combinedList, result2);
+    }
+    
 }

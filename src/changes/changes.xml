@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-296" dev="tn" type="add" due-to="Julius Davies">
+      Added methods "CollectionUtils#merge(...)" to merge two sorted Collections
+      into a sorted List using the standard O(n) merge algorithm.
+    </action>
     <action issue="COLLECTIONS-429,COLLECTION-434" dev="tn" type="add" due-to="Adrian Nistor, Mert Guldur">
       Added method "CollectionUtils#containsAll(Collection, Collection)" with guaranteed
       runtime complexity of O(n + m) and space complexity of O(n). This method may yield much
