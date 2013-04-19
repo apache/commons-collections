@@ -56,7 +56,7 @@ public interface Bag<E> extends Collection<E> {
 
     /**
      * <i>(Violation)</i>
-     * Adds one copy the specified object to the Bag.
+     * Adds one copy of the specified object to the Bag.
      * <p>
      * If the object is already in the {@link #uniqueSet()} then increment its
      * count as reported by {@link #getCount(Object)}. Otherwise add it to the
