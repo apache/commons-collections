@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-419" dev="tn" type="fix" due-to="Adrian Nistor">
+      Added clarifying javadoc wrt runtime complexity of "AbstractDualBidiMap#retainAll".
+    </action>
     <action issue="COLLECTIONS-433" dev="tn" type="fix" due-to="Jeffrey Barnes">
       Improve performance of "TreeList#addAll" and "TreeList(Collection)" by converting
       the input collection into an AVL tree and efficiently merge it into the existing tree.

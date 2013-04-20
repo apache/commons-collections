@@ -355,6 +355,15 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             return modified;
         }
 
+        /**
+         * {@inheritDoc}
+         * <p> 
+         * This implementation iterates over the elements of this bidi map, checking each element in
+         * turn to see if it's contained in <code>coll</code>. If it's not contained, it's removed
+         * from this bidi map. As a consequence, it is advised to use a collection type for
+         * <code>coll</code> that provides a fast (e.g. O(1)) implementation of
+         * {@link Collection#contains(Object)}.
+         */
         @Override
         public boolean retainAll(final Collection<?> coll) {
             if (parent.isEmpty()) {
