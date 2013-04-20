@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4.list;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -265,6 +266,66 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         // previous() after remove() should move to
         // the element before the one just removed
         assertEquals("A", li.previous());
-    }    
+    }
+    
+    public void testIterationOrder() {
+        // COLLECTIONS-433:
+        // ensure that the iteration order of elements is correct
+        // when initializing the TreeList with another collection
+
+        for (int size = 1; size < 1000; size++) {
+            List<Integer> other = new ArrayList<Integer>(size);
+            for (int i = 0; i < size; i++) {
+                other.add(i);
+            }
+            TreeList<Integer> l = new TreeList<Integer>(other);
+            ListIterator<Integer> it = l.listIterator();
+            int i = 0;
+            while (it.hasNext()) {
+                Integer val = it.next();
+                assertEquals(i++, val.intValue());
+            }
+            
+            while (it.hasPrevious()) {
+                Integer val = it.previous();
+                assertEquals(--i, val.intValue());
+            }
+        }        
+    }
+
+    public void testIterationOrderAfterAddAll() {
+        // COLLECTIONS-433:
+        // ensure that the iteration order of elements is correct
+        // when calling addAll on the TreeList
+
+        // to simulate different cases in addAll, do different runs where
+        // the number of elements already in the list and being added by addAll differ
+        
+        int size = 1000;
+        for (int i = 0; i < 100; i++) {
+            List<Integer> other = new ArrayList<Integer>(size);
+            for (int j = i; j < size; j++) {
+                other.add(j);
+            }
+            TreeList<Integer> l = new TreeList<Integer>();
+            for (int j = 0; j < i; j++) {
+                l.add(j);
+            }
+            
+            l.addAll(other);
+
+            ListIterator<Integer> it = l.listIterator();
+            int cnt = 0;
+            while (it.hasNext()) {
+                Integer val = it.next();
+                assertEquals(cnt++, val.intValue());
+            }
+            
+            while (it.hasPrevious()) {
+                Integer val = it.previous();
+                assertEquals(--cnt, val.intValue());
+            }
+        }        
+    }
 
 }

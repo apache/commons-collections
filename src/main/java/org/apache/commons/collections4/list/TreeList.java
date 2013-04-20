@@ -23,6 +23,7 @@ import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
+import org.apache.commons.collections4.ArrayStack;
 import org.apache.commons.collections4.OrderedIterator;
 
 /**
@@ -53,6 +54,7 @@ import org.apache.commons.collections4.OrderedIterator;
  * @since 3.1
  * @version $Id$
  */
+@SuppressWarnings("deprecation") // replace ArrayStack by ArrayDeque when moving to Java 1.6
 public class TreeList<E> extends AbstractList<E> {
 //    add; toArray; iterator; insert; get; indexOf; remove
 //    TreeList = 1260;7360;3080;  160;   170;3400;  170;
@@ -74,14 +76,17 @@ public class TreeList<E> extends AbstractList<E> {
     }
 
     /**
-     * Constructs a new empty list that copies the specified list.
+     * Constructs a new empty list that copies the specified collection.
      *
      * @param coll  the collection to copy
      * @throws NullPointerException if the collection is null
      */
     public TreeList(final Collection<E> coll) {
         super();
-        addAll(coll);
+        if (!coll.isEmpty()) {
+            root = new AVLNode<E>(coll);
+            size = coll.size();
+        }        
     }
 
     //-----------------------------------------------------------------------
@@ -204,6 +209,29 @@ public class TreeList<E> extends AbstractList<E> {
     }
 
     /**
+     * Appends all of the elements in the specified collection to the end of this list,
+     * in the order that they are returned by the specified collection's Iterator.
+     * <p>
+     * This method runs in O(n + log m) time, where m is
+     * the size of this list and n is the size of {@code c}.
+     *
+     * @param c  the collection to be added to this list
+     * @return {@code true} if this list changed as a result of the call
+     * @throws NullPointerException {@inheritDoc}
+     */
+    @Override
+    public boolean addAll(final Collection<? extends E> c) {
+        if (c.isEmpty()) {
+            return false;
+        }
+        modCount += c.size();
+        final AVLNode<E> cTree = new AVLNode<E>(c);
+        root = root == null ? cTree : root.addAll(cTree, size);
+        size += c.size();
+        return true;
+    }
+
+    /**
      * Sets the element at the specified index.
      *
      * @param index  the index to set
@@ -294,7 +322,7 @@ public class TreeList<E> extends AbstractList<E> {
          * Constructs a new node with a relative position.
          *
          * @param relativePosition  the relative position of the node
-         * @param obj  the value for the ndoe
+         * @param obj  the value for the node
          * @param rightFollower the node with the value following this one
          * @param leftFollower the node with the value leading this one
          */
@@ -306,6 +334,58 @@ public class TreeList<E> extends AbstractList<E> {
             leftIsPrevious = true;
             right = rightFollower;
             left = leftFollower;
+        }
+
+        /**
+         * Constructs a new AVL tree from a collection.
+         * <p>
+         * The collection must be nonempty.
+         *
+         * @param coll  a nonempty collection
+         */
+        private AVLNode(final Collection<? extends E> coll) {
+            this(coll.iterator(), 0, coll.size() - 1, 0, null, null);
+        }
+
+        /**
+         * Constructs a new AVL tree from a collection.
+         * <p>
+         * This is a recursive helper for {@link #AVLNode(Collection)}. A call
+         * to this method will construct the subtree for elements {@code start}
+         * through {@code end} of the collection, assuming the iterator
+         * {@code e} already points at element {@code start}.
+         *
+         * @param iterator  an iterator over the collection, which should already point
+         *          to the element at index {@code start} within the collection
+         * @param start  the index of the first element in the collection that
+         *          should be in this subtree
+         * @param end  the index of the last element in the collection that
+         *          should be in this subtree
+         * @param absolutePositionOfParent  absolute position of this node's
+         *          parent, or 0 if this node is the root
+         * @param prev  the {@code AVLNode} corresponding to element (start - 1)
+         *          of the collection, or null if start is 0
+         * @param next  the {@code AVLNode} corresponding to element (end + 1)
+         *          of the collection, or null if end is the last element of the collection
+         */
+        private AVLNode(final Iterator<? extends E> iterator, final int start, final int end,
+                        final int absolutePositionOfParent, final AVLNode<E> prev, final AVLNode<E> next) {
+            final int mid = start + (end - start) / 2;
+            if (start < mid) {
+                left = new AVLNode<E>(iterator, start, mid - 1, mid, prev, this);
+            } else {
+                leftIsPrevious = true;
+                left = prev;
+            }
+            value = iterator.next();
+            relativePosition = mid - absolutePositionOfParent;
+            if (mid < end) {
+                right = new AVLNode<E>(iterator, mid + 1, end, mid, this, next);
+            } else {
+                rightIsNext = true;
+                right = next;
+            }
+            recalcHeight();
         }
 
         /**
@@ -714,6 +794,119 @@ public class TreeList<E> extends AbstractList<E> {
             rightIsNext = node == null;
             right = rightIsNext ? next : node;
             recalcHeight();
+        }
+
+        /**
+         * Appends the elements of another tree list to this tree list by efficiently
+         * merging the two AVL trees. This operation is destructive to both trees and
+         * runs in O(log(m + n)) time.
+         * 
+         * @param otherTree
+         *            the root of the AVL tree to merge with this one
+         * @param currentSize
+         *            the number of elements in this AVL tree
+         * @return the root of the new, merged AVL tree
+         */
+        private AVLNode<E> addAll(AVLNode<E> otherTree, final int currentSize) {
+            final AVLNode<E> maxNode = max();
+            final AVLNode<E> otherTreeMin = otherTree.min();
+
+            // We need to efficiently merge the two AVL trees while keeping them
+            // balanced (or nearly balanced). To do this, we take the shorter
+            // tree and combine it with a similar-height subtree of the taller
+            // tree. There are two symmetric cases:
+            //   * this tree is taller, or
+            //   * otherTree is taller.
+            if (otherTree.height > height) {
+                // CASE 1: The other tree is taller than this one. We will thus
+                // merge this tree into otherTree.
+
+                // STEP 1: Remove the maximum element from this tree.
+                final AVLNode<E> leftSubTree = removeMax();
+
+                // STEP 2: Navigate left from the root of otherTree until we
+                // find a subtree, s, that is no taller than me. (While we are
+                // navigating left, we store the nodes we encounter in a stack
+                // so that we can re-balance them in step 4.)
+                final ArrayStack<AVLNode<E>> sAncestors = new ArrayStack<AVLNode<E>>();
+                AVLNode<E> s = otherTree;
+                int sAbsolutePosition = s.relativePosition + currentSize;
+                int sParentAbsolutePosition = 0;
+                while (s != null && s.height > getHeight(leftSubTree)) {
+                    sParentAbsolutePosition = sAbsolutePosition;
+                    sAncestors.push(s);
+                    s = s.left;
+                    if (s != null) {
+                        sAbsolutePosition += s.relativePosition;
+                    }
+                }
+
+                // STEP 3: Replace s with a newly constructed subtree whose root
+                // is maxNode, whose left subtree is leftSubTree, and whose right
+                // subtree is s.
+                maxNode.setLeft(leftSubTree, null);
+                maxNode.setRight(s, otherTreeMin);
+                if (leftSubTree != null) {
+                    leftSubTree.max().setRight(null, maxNode);
+                    leftSubTree.relativePosition -= currentSize - 1;
+                }
+                if (s != null) {
+                    s.min().setLeft(null, maxNode);
+                    s.relativePosition = sAbsolutePosition - currentSize + 1;
+                }
+                maxNode.relativePosition = currentSize - 1 - sParentAbsolutePosition;
+                otherTree.relativePosition += currentSize;
+
+                // STEP 4: Re-balance the tree and recalculate the heights of s's ancestors.
+                s = maxNode;
+                while (!sAncestors.isEmpty()) {
+                    final AVLNode<E> sAncestor = sAncestors.pop();
+                    sAncestor.setLeft(s, null);
+                    s = sAncestor.balance();
+                }
+                return s;
+            } else {
+                // CASE 2: This tree is taller. This is symmetric to case 1.
+                // We merge otherTree into this tree by finding a subtree s of this
+                // tree that is of similar height to otherTree and replacing it
+                // with a new subtree whose root is otherTreeMin and whose
+                // children are otherTree and s.
+
+                otherTree = otherTree.removeMin();
+
+                final ArrayStack<AVLNode<E>> sAncestors = new ArrayStack<AVLNode<E>>();
+                AVLNode<E> s = this;
+                int sAbsolutePosition = s.relativePosition;
+                int sParentAbsolutePosition = 0;
+                while (s != null && s.height > getHeight(otherTree)) {
+                    sParentAbsolutePosition = sAbsolutePosition;
+                    sAncestors.push(s);
+                    s = s.right;
+                    if (s != null) {
+                        sAbsolutePosition += s.relativePosition;
+                    }
+                }
+
+                otherTreeMin.setRight(otherTree, null);
+                otherTreeMin.setLeft(s, maxNode);
+                if (otherTree != null) {
+                    otherTree.min().setLeft(null, otherTreeMin);
+                    otherTree.relativePosition++;
+                }
+                if (s != null) {
+                    s.max().setRight(null, otherTreeMin);
+                    s.relativePosition = sAbsolutePosition - currentSize;
+                }
+                otherTreeMin.relativePosition = currentSize - sParentAbsolutePosition;
+
+                s = otherTreeMin;
+                while (!sAncestors.isEmpty()) {
+                    final AVLNode<E> sAncestor = sAncestors.pop();
+                    sAncestor.setRight(s, null);
+                    s = sAncestor.balance();
+                }
+                return s;
+            }
         }
 
 //      private void checkFaedelung() {
