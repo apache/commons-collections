@@ -44,11 +44,11 @@ import junit.framework.TestSuite;
  * For instance, consider the following two classes:
  *
  * <Pre>
- *  public class TestSet extends BulkTest {
+ *  public class SetTest extends BulkTest {
  *
  *      private Set set;
  *
- *      public TestSet(Set set) {
+ *      public SetTest(Set set) {
  *          this.set = set;
  *      }
  *
@@ -64,7 +64,7 @@ import junit.framework.TestSuite;
  *  }
  *
  *
- *  public class TestHashMap extends BulkTest {
+ *  public class HashMapTest extends BulkTest {
  *
  *      private Map makeFullMap() {
  *          HashMap result = new HashMap();
@@ -89,25 +89,25 @@ import junit.framework.TestSuite;
  *  }
  *  </Pre>
  *
- *  In the above examples, <code>TestSet</code> defines two
- *  simple test methods and no bulk test methods; <code>TestHashMap</code>
+ *  In the above examples, <code>SetTest</code> defines two
+ *  simple test methods and no bulk test methods; <code>HashMapTest</code>
  *  defines one simple test method and two bulk test methods.  When
- *  <code>makeSuite(TestHashMap.class).run</code> is executed, 
+ *  <code>makeSuite(HashMapTest.class).run</code> is executed, 
  *  <I>five</I> simple test methods will be run, in this order:<P>
  *
  *  <Ol>
- *  <Li>TestHashMap.testClear()
- *  <Li>TestHashMap.bulkTestKeySet().testContains();
- *  <Li>TestHashMap.bulkTestKeySet().testClear();
- *  <Li>TestHashMap.bulkTestEntrySet().testContains();
- *  <Li>TestHashMap.bulkTestEntrySet().testClear();
+ *  <Li>HashMapTest.testClear()
+ *  <Li>HashMapTest.bulkTestKeySet().testContains();
+ *  <Li>HashMapTest.bulkTestKeySet().testClear();
+ *  <Li>HashMapTest.bulkTestEntrySet().testContains();
+ *  <Li>HashMapTest.bulkTestEntrySet().testClear();
  *  </Ol>
  *
  *  In the graphical junit test runners, the tests would be displayed in
  *  the following tree:<P>
  *
  *  <UL>
- *  <LI>TestHashMap</LI>
+ *  <LI>HashMapTest</LI>
  *      <UL>
  *      <LI>testClear
  *      <LI>bulkTestKeySet
@@ -200,16 +200,16 @@ public class BulkTest extends TestCase implements Cloneable {
      *  method name.  The method names are delimited by periods:
      *
      *  <pre>
-     *  TestHashMap.bulkTestEntrySet.testClear
+     *  HashMapTest.bulkTestEntrySet.testClear
      *  </pre>
      *
      *  is the name of one of the simple tests defined in the sample classes
-     *  described above.  If the sample <code>TestHashMap</code> class
+     *  described above.  If the sample <code>HashMapTest</code> class
      *  included this method:
      *
      *  <pre>
      *  public String[] ignoredTests() {
-     *      return new String[] { "TestHashMap.bulkTestEntrySet.testClear" };
+     *      return new String[] { "HashMapTest.bulkTestEntrySet.testClear" };
      *  }
      *  </pre>
      *
@@ -241,7 +241,7 @@ public class BulkTest extends TestCase implements Cloneable {
      *
      *  The class is examined for simple and bulk test methods; any child
      *  bulk tests are also examined recursively; and the results are stored
-     *  in a hierarchal {@link TestSuite}.<P>
+     *  in a hierarchical {@link TestSuite}.<P>
      *
      *  The given class must be a subclass of <code>BulkTest</code> and must
      *  not be abstract.<P>
@@ -278,24 +278,24 @@ class BulkTestSuiteMaker {
     private TestSuite result;
 
     /** 
-     *  The prefix for simple test methods.  Used to check if a test is in 
-     *  the ignored list.
+     * The prefix for simple test methods.  Used to check if a test is in 
+     * the ignored list.
      */ 
     private String prefix;
 
     /** 
-     *  Constructor.
+     * Constructor.
      *
-     *  @param startingClass  the starting class
+     * @param startingClass  the starting class
      */     
     public BulkTestSuiteMaker(final Class<? extends BulkTest> startingClass) {
         this.startingClass = startingClass;
     }
 
     /**
-     *  Makes a hierarchical TestSuite based on the starting class.
+     * Makes a hierarchical TestSuite based on the starting class.
      *
-     *  @return  the hierarchical TestSuite for startingClass
+     * @return  the hierarchical TestSuite for startingClass
      */
     public TestSuite make() {
          this.result = new TestSuite();
@@ -313,10 +313,10 @@ class BulkTestSuiteMaker {
     }
 
     /**
-     *  Appends all the simple tests and bulk tests defined by the given
-     *  instance's class to the current TestSuite.
+     * Appends all the simple tests and bulk tests defined by the given
+     * instance's class to the current TestSuite.
      *
-     *  @param bulk  An instance of the class that defines simple and bulk
+     * @param bulk  An instance of the class that defines simple and bulk
      *    tests for us to append
      */
     void make(final BulkTest bulk) {
@@ -333,12 +333,12 @@ class BulkTestSuiteMaker {
     }
 
     /**
-     *  Adds the simple test defined by the given method to the TestSuite.
+     * Adds the simple test defined by the given method to the TestSuite.
      *
-     *  @param bulk  The instance of the class that defined the method
+     * @param bulk  The instance of the class that defined the method
      *   (I know it's weird.  But the point is, we can clone the instance
      *   and not have to worry about constructors.)
-     *  @param m  The simple test method
+     * @param m  The simple test method
      */
     void addTest(final BulkTest bulk, final Method m) {
         final BulkTest bulk2 = (BulkTest)bulk.clone();
@@ -351,13 +351,13 @@ class BulkTestSuiteMaker {
     }
 
     /**
-     *  Adds a whole new suite of tests that are defined by the result of
-     *  the given bulk test method.  In other words, the given bulk test
-     *  method is invoked, and the resulting BulkTest instance is examined
-     *  for yet more simple and bulk tests.
+     * Adds a whole new suite of tests that are defined by the result of
+     * the given bulk test method.  In other words, the given bulk test
+     * method is invoked, and the resulting BulkTest instance is examined
+     * for yet more simple and bulk tests.
      *
-     *  @param bulk  The instance of the class that defined the method
-     *  @param m  The bulk test method
+     * @param bulk  The instance of the class that defined the method
+     * @param m  The bulk test method
      */
     void addBulk(final BulkTest bulk, final Method m) {
         final String verboseName = prefix + "." + m.getName();
@@ -397,10 +397,10 @@ class BulkTestSuiteMaker {
     }
 
     /**
-     *  Returns the base name of the given class.
+     * Returns the base name of the given class.
      *
-     *  @param c  the class
-     *  @return the name of that class, minus any package names
+     * @param c  the class
+     * @return the name of that class, minus any package names
      */
     private static String getBaseName(final Class<?> c) {
         String name = c.getName();
@@ -419,8 +419,7 @@ class BulkTestSuiteMaker {
         try {
             return c.getConstructor(new Class[] { String.class });
         } catch (final NoSuchMethodException e) {
-            throw new IllegalArgumentException(c + " must provide " +
-             "a (String) constructor");
+            throw new IllegalArgumentException(c + " must provide a (String) constructor");
         }
     }
 
@@ -445,12 +444,11 @@ class BulkTestSuiteMaker {
                 return makeTestCase(c, element);
             }
         }
-        throw new IllegalArgumentException(c.getName() + " must provide " 
-          + " at least one test method.");
+        throw new IllegalArgumentException(c.getName() + " must provide at least one test method.");
     }
 
     /**
-     *  Returns true if the given method is a simple test method.
+     * Returns true if the given method is a simple test method.
      */
     private static boolean isTest(final Method m) {
         if (!m.getName().startsWith("test")) {
@@ -473,7 +471,7 @@ class BulkTestSuiteMaker {
     }
 
     /**
-     *  Returns true if the given method is a bulk test method.
+     * Returns true if the given method is a bulk test method.
      */
     private static boolean isBulk(final Method m) {
         if (!m.getName().startsWith("bulkTest")) {
