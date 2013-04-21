@@ -1006,7 +1006,6 @@ public class CollectionUtilsTest extends MockTestCase {
     };
 
 //Up to here
-    @SuppressWarnings("cast")
     @Test
     public void filter() {
         final List<Integer> ints = new ArrayList<Integer>();
