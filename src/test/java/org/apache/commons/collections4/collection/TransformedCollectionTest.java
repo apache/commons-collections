@@ -99,7 +99,7 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
     }
 
     public void testTransformedCollection_decorateTransform() {
-        final Collection originalCollection = new ArrayList();
+        final Collection<Object> originalCollection = new ArrayList<Object>();
         final Object[] els = getFullElements();
         for (final Object el : els) {
             originalCollection.add(el);
