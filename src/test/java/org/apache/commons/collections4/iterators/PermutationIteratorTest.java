@@ -47,10 +47,12 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
 
     //-----------------------------------------------------------------------
     
+    @Override
     public boolean supportsRemove() {
         return false;
     }
     
+    @Override
     public boolean supportsEmptyIterator() {
         return false;
     }
