@@ -478,7 +478,7 @@ public class ListUtils {
      * Returns a fixed-sized list backed by the given list.
      * Elements may not be added or removed from the returned list, but 
      * existing elements can be changed (for instance, via the 
-     * {@link List#set(int,E)} method).
+     * {@link List#set(int, Object)} method).
      *
      * @param <E>  the element type
      * @param list  the list whose size to fix, must not be null
