@@ -24,6 +24,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -37,6 +38,7 @@ import org.apache.commons.collections4.collection.UnmodifiableBoundedCollection;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.apache.commons.collections4.functors.Equator;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.apache.commons.collections4.iterators.PermutationIterator;
 
 /**
  * Provides utility methods and decorators for {@link Collection} instances.
@@ -1583,6 +1585,34 @@ public class CollectionUtils {
         } else {
             return lastItem;
         }
+    }
+
+    //-----------------------------------------------------------------------
+
+    /**
+     * Returns a {@link Collection} of all the permutations of the input collection.
+     * <p>
+     * NOTE: the number of permutations of a given collection is equal to n!, where
+     * n is the size of the collection. Thus, the resulting collection will become
+     * <b>very</b> large for collections &gt; 10 (e.g. 10! = 3628800, 15! = 1307674368000).
+     * <p>
+     * For larger collections it is advised to use a {@link PermutationIterator} to
+     * iterate over all permutations.
+     * 
+     * @see PermutationIterator
+     * 
+     * @param <E>  the element type
+     * @param collection  the collection to create permutations for, may not be null
+     * @return an unordered collection of all permutations of the input collection
+     * @throws NullPointerException if collection is null
+     */
+    public static <E> Collection<List<E>> permutations(final Collection<E> collection) {
+        final PermutationIterator<E> it = new PermutationIterator<E>(collection);
+        final Collection<List<E>> result = new LinkedList<List<E>>();
+        while (it.hasNext()) {
+            result.add(it.next());
+        }
+        return result;
     }
 
     //-----------------------------------------------------------------------

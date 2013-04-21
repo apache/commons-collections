@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-422" dev="tn" type="add" due-to="Benoit Corne">
+      Added method "CollectionUtils#permutations(Collection)" and class "PermutationIterator"
+      to generate unordered permutations of a collection.
+    </action>
     <action issue="COLLECTIONS-419" dev="tn" type="fix" due-to="Adrian Nistor">
       Added clarifying javadoc wrt runtime complexity of "AbstractDualBidiMap#retainAll".
     </action>

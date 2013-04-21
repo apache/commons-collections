@@ -1645,4 +1645,23 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals("Merge two lists 2 - ignore duplicates", combinedList, result2);
     }
     
+    @Test(expected=NullPointerException.class)
+    public void testPermutationsWithNullCollection() {
+        CollectionUtils.permutations(null);
+    }
+    
+    @Test
+    public void testPermutations() {
+        List<Integer> sample = collectionA.subList(0, 5);
+        Collection<List<Integer>> permutations = CollectionUtils.permutations(sample);
+        
+        // result size = n!
+        int collSize = sample.size();
+        int factorial = 1;
+        for (int i = 1; i <= collSize; i++) {
+            factorial *= i;
+        }
+        assertEquals(factorial, permutations.size());
+    }
+    
 }
