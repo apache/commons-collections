@@ -253,7 +253,6 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertEquals(true, map.containsKey("C"));
     }
 
-    @SuppressWarnings("serial")
     static class MockLRUMapSubclass<K, V> extends LRUMap<K, V> {
         /**
          * Generated serial version ID.
@@ -308,7 +307,6 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertEquals(true, map.containsKey("C"));
     }
 
-    @SuppressWarnings("serial")
     static class MockLRUMapSubclassBlocksRemove<K, V> extends LRUMap<K, V> {
         /**
          * Generated serial version ID.
@@ -341,7 +339,6 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertEquals(true, map.containsKey("C"));
     }
 
-    @SuppressWarnings("serial")
     static class MockLRUMapSubclassFirstBlocksRemove<K, V> extends LRUMap<K, V> {
         /**
          * Generated serial version ID.
