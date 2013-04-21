@@ -38,7 +38,7 @@ import org.apache.commons.collections4.iterators.AbstractListIteratorDecorator;
  * should not affect you. Bear in mind that Sets require immutable objects to
  * function correctly.
  * <p>
- * The {@link org.apache.commons.collections.set.ListOrderedSet ListOrderedSet}
+ * The {@link org.apache.commons.collections4.set.ListOrderedSet ListOrderedSet}
  * class provides an alternative approach, by wrapping an existing Set and
  * retaining insertion order in the iterator.
  * <p>
