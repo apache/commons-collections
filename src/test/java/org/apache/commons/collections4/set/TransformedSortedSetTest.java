@@ -95,11 +95,11 @@ public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         return "4";
     }
 
-    public void testCreate() throws Exception {
-        resetEmpty();
-        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/TransformedSortedSet.emptyCollection.version4.obj");
-        resetFull();
-        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/TransformedSortedSet.fullCollection.version4.obj");
-    }
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/TransformedSortedSet.emptyCollection.version4.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/TransformedSortedSet.fullCollection.version4.obj");
+//    }
 
 }
