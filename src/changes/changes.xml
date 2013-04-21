@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-445" dev="tn" type="fix">
+      Adapt and/or ignore several unit tests when run on a IBM J9 VM (specification version 1.6.0)
+      due to a faulty "java.util.TreeMap" implementation.
+    </action>
     <action issue="COLLECTIONS-422" dev="tn" type="add" due-to="Benoit Corne">
       Added method "CollectionUtils#permutations(Collection)" and class "PermutationIterator"
       to generate unordered permutations of a collection.

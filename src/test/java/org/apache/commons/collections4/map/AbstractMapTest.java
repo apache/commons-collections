@@ -2001,7 +2001,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         
         // bug in IBM JDK: IBM J9 VM build 2.4, JRE 1.6.0 IBM J9 2.4 Linux x86-32 jvmxi3260sr12-20121024_126067
         // a call to values() on an empty map retrieved via TreeMap#headMap or tailMap
-        // will render the values view unusable: resulting in NullPointExceptions or missing values
+        // will render the values view unusable: resulting in NullPointerExceptions or missing values
         // it will also not recover, as the value view is cached internally
         values = getMap().values();
         

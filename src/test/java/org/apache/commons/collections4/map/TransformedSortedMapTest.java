@@ -46,6 +46,35 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
         return BulkTest.makeSuite(TransformedSortedMapTest.class);
     }
 
+    @Override
+    public String[] ignoredTests() {
+        // there are several bugs in the following JVM:
+        // IBM J9 VM build 2.4, JRE 1.6.0 IBM J9 2.4 Linux x86-32 jvmxi3260sr12-20121024_126067
+        // thus disabling tests related to these bugs
+        
+        final String vmName = System.getProperty("java.vm.name");
+        final String version = System.getProperty("java.version");
+        
+        if (vmName == null || version == null) {
+            return null;
+        }
+
+        if (vmName.equals("IBM J9 VM") && version.equals("1.6.0")) {
+            final String preSubMap = "TransformedSortedMapTest.bulkTestSubMap.bulkTestMap";
+            final String preTailMap = "TransformedSortedMapTest.bulkTestTailMap.bulkTestMap";
+            return new String[] {
+                    preSubMap + "EntrySet.testCollectionIteratorRemove",
+                    preSubMap + "KeySet.testCollectionRemove",
+                    preSubMap + "Values.testCollectionIteratorRemove",
+                    preTailMap + "Values.testCollectionClear",
+                    preTailMap + "Values.testCollectionRemoveAll",
+                    preTailMap + "Values.testCollectionRetainAll"
+            };
+        } else {
+            return null;
+        }
+    }
+
     //-----------------------------------------------------------------------
     @Override
     @SuppressWarnings("unchecked")

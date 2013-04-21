@@ -49,9 +49,35 @@ public class DualTreeBidiMapTest<K extends Comparable<K>, V extends Comparable<V
      */
     @Override
     public String[] ignoredTests() {
-        return new String[] {"DualTreeBidiMapTest.bulkTestInverseMap.bulkTestInverseMap"};
+        String recursiveTest = "DualTreeBidiMapTest.bulkTestInverseMap.bulkTestInverseMap";
+
+        // there are several bugs in the following JVM:
+        // IBM J9 VM build 2.4, JRE 1.6.0 IBM J9 2.4 Linux x86-32 jvmxi3260sr12-20121024_126067
+        // thus disabling tests related to these bugs
+        
+        final String vmName = System.getProperty("java.vm.name");
+        final String version = System.getProperty("java.version");
+        
+        if (vmName == null || version == null) {
+            return new String[] { recursiveTest };
+        }
+
+        if (vmName.equals("IBM J9 VM") && version.equals("1.6.0")) {
+            final String preSub = "DualTreeBidiMapTest.bulkTestSubMap.bulkTestMap";
+            final String preTail = "DualTreeBidiMapTest.bulkTestTailMap.bulkTestMap";
+            return new String[] {
+                    recursiveTest,
+                    preSub + "EntrySet.testCollectionIteratorRemove",
+                    preSub + "Values.testCollectionIteratorRemove",
+                    preTail + "Values.testCollectionClear",
+                    preTail + "Values.testCollectionRemoveAll",
+                    preTail + "Values.testCollectionRetainAll"
+            };
+        } else {
+            return new String[] { recursiveTest };
+        }
     }
-    
+
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/DualTreeBidiMap.emptyCollection.version4.obj");
