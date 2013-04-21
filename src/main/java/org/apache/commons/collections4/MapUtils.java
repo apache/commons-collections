@@ -910,6 +910,7 @@ public class MapUtils {
      *  If <code>null</code>, the text 'null' is output.
      * @throws NullPointerException if the stream is <code>null</code>
      */
+    @SuppressWarnings("deprecation")
     public static void verbosePrint(final PrintStream out, final Object label, final Map<?, ?> map) {
         verbosePrintInternal(out, label, map, new ArrayStack<Map<?, ?>>(), false);
     }
@@ -932,6 +933,7 @@ public class MapUtils {
      *   If <code>null</code>, the text 'null' is output.
      * @throws NullPointerException if the stream is <code>null</code>
      */
+    @SuppressWarnings("deprecation")
     public static void debugPrint(final PrintStream out, final Object label, final Map<?, ?> map) {
         verbosePrintInternal(out, label, map, new ArrayStack<Map<?, ?>>(), true);
     }
@@ -961,6 +963,7 @@ public class MapUtils {
      * @param debug  flag indicating whether type names should be output.
      * @throws NullPointerException if the stream is <code>null</code>
      */
+    @SuppressWarnings("deprecation")
     private static void verbosePrintInternal(final PrintStream out, final Object label, final Map<?, ?> map,
                                              final ArrayStack<Map<?, ?>> lineage, final boolean debug) {
         printIndent(out, lineage.size());
