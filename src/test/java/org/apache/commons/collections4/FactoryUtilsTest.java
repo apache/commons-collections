@@ -219,7 +219,6 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
         }
     }
 
-    @SuppressWarnings("serial")
     public static class Mock2 implements Serializable {
         /**
          * Generated serial version ID.
