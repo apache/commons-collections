@@ -337,12 +337,12 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         final int size = 5;
         for (int i = 0; i < size; i++) {
-            lom.put((K) Integer.valueOf(i), (V) Boolean.valueOf(true));
+            lom.put((K) Integer.valueOf(i), (V) Boolean.TRUE);
         }
 
         final Map<K, V> map = new TreeMap<K, V>();
         for (int i = 0; i < size; i++) {
-            map.put((K) Integer.valueOf(i), (V) Boolean.valueOf(false));
+            map.put((K) Integer.valueOf(i), (V) Boolean.FALSE);
         }
 
         lom.putAll(3, map);
