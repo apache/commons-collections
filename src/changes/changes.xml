@@ -47,9 +47,6 @@
       better performance than "Collection#containsAll(Collection)" depending on the use-case and
       type of collection used.
     </action>
-    <action issue="COLLECTIONS-285" dev="tn" type="add" due-to="Christian Gruenberg">
-      Added serialization support for "TreeBidiMap".
-    </action>
     <action issue="COLLECTIONS-452" dev="tn" type="update">
       Change base package to org.apache.commons.collections4.
     </action>
@@ -82,13 +79,6 @@
     <action issue="COLLECTIONS-447" dev="tn" type="fix" due-to="Jeffrey Barnes">
       Tree traversal with a TreeListIterator will not be affected anymore by
       the removal of an element directly after a call to previous().
-    </action>
-    <action issue="COLLECTIONS-275" dev="tn" type="add" due-to="Stephen Kestle">
-      Added "IndexedCollection" collection decorator which provides a map-like
-      view on an existing collection.
-    </action>
-    <action issue="COLLECTIONS-258" dev="tn" type="add" due-to="Nathan Blomquist">
-      Added "DualLinkedHashBidiMap" bidi map implementation.
     </action>
     <action issue="COLLECTIONS-396" dev="tn" type="add" due-to="Jeff Rodriguez">
       Added "LazyIteratorChain" iterator.
@@ -168,12 +158,8 @@
     <action issue="COLLECTIONS-399" dev="tn" type="add" due-to="Sebb">
       Added new method "get(int)" to "BoundedFifoBuffer" and "CircularFifoBuffer".
     </action>
-    <action issue="COLLECTIONS-272" dev="tn" type="add" due-to="Chaitanya Mutyala">
-      Added serialization support for "FixedOrderComparator" and "TransformingComparator".
-    </action>
-    <action issue="COLLECTIONS-231" dev="tn" type="update" due-to="Torsten Curdt">
-      Return concrete class in static factory methods instead of base class interface
-      (except for Unmodifiable decorators).
+    <action issue="COLLECTIONS-405" dev="brentworden" type="add" due-to="Adam Dyga">
+      Added "ListUtils#select" and "ListUtils#selectRejected" methods.
     </action>
     <action issue="COLLECTIONS-404" dev="luc" type="add" due-to="Jordane Sarda">
       Added an implementation of Eugene Myers difference algorithm in package
@@ -219,14 +205,103 @@
     <action issue="COLLECTIONS-293" dev="tn" type="add" due-to="Stephen Kestle">
       Added support for using custom "Equator" objects in "EqualPredicate".
     </action>
+    <action issue="COLLECTIONS-285" dev="tn" type="add" due-to="Christian Gruenberg">
+      Added serialization support for "TreeBidiMap".
+    </action>
+    <action issue="COLLECTIONS-280" dev="bayard" type="update" due-to="Chris Lewis">
+      The predicate that rejected an object to be added to a "PredicatedCollection"
+      is now contained in the respective exception message.
+    </action>
+    <action issue="COLLECTIONS-275" dev="tn" type="add" due-to="Stephen Kestle">
+      Added "IndexedCollection" collection decorator which provides a map-like
+      view on an existing collection.
+    </action>
+    <action issue="COLLECTIONS-272" dev="tn" type="add" due-to="Chaitanya Mutyala">
+      Added serialization support for "FixedOrderComparator" and "TransformingComparator".
+    </action>
+    <action issue="COLLECTIONS-266" dev="bayard" type="fix" due-to="Joerg Schaible">
+      "MultiKey" will now be correctly serialized/de-serialized.
+    </action>
+    <action issue="COLLECTIONS-265" dev="bayard" type="update" due-to="David Saff">
+      "TreeBag" will now only accept "Comparable" objects as input when used with natural ordering.
+    </action>
+    <action issue="COLLECTIONS-262" dev="bayard" type="fix" due-to="Lisen Mu">
+      Fixed javadoc for methods "firstKey()" and "lastKey()" in class "AbstractLinkedMap".
+    </action>
+    <action issue="COLLECTIONS-260" dev="mbenson" type="add" due-to="Stephen Kestle">
+      Added constructor "TransformingComparator(Transformer)".
+    </action>
+    <action issue="COLLECTIONS-258" dev="tn" type="add" due-to="Nathan Blomquist">
+      Added "DualLinkedHashBidiMap" bidi map implementation.
+    </action>
+    <action issue="COLLECTIONS-255" dev="mbenson" type="fix" due-to="Henri Yandell">
+      Removed unused variables in "TreeBidiMap".
+    </action>
+    <action issue="COLLECTIONS-251" dev="mbenson" type="update" due-to="Stephen Kestle">
+      The static factory methods have been renamed from "getInstance()" to a camel-case
+      version of the class name, e.g. "truePredicate()" for class "TruePredicate".
+    </action>
+    <action issue="COLLECTIONS-249" dev="bayard" type="fix" due-to="Joe Kelly">
+      "SetUniqueList.addAll(int, Collection)" now correctly add the collection at the
+      provided index.
+    </action>
+    <action issue="COLLECTIONS-242" dev="skestle" type="add">
+      Added "Equator" interface.
+    </action>
     <action issue="COLLECTIONS-241" dev="brentworden" type="add" due-to="Elifarley Callado Coelho">
       Added "PassiveExpiringMap" map decorator.
     </action>
-    <action issue="COLLECTIONS-405" dev="brentworden" type="add" due-to="Adam Dyga">
-      Added "ListUtils#select" and "ListUtils#selectRejected" methods.
+    <action issue="COLLECTIONS-240" dev="bayard" type="update" due-to="Wouter de Vaal">
+      "MultiValueMap" is now serializable.
+    </action>
+    <action issue="COLLECTIONS-235" dev="bayard" type="add" due-to="Nathan Egge">
+      Added method "ListUtils#indexOf(List, Predicate)".
+    </action>
+    <action issue="COLLECTIONS-231" dev="tn" type="update" due-to="Torsten Curdt">
+      Return concrete class in static factory methods instead of base class interface
+      (except for Unmodifiable decorators).
+    </action>
+    <action issue="COLLECTIONS-230" dev="bayard" type="update" due-to="Stepan Koltsov">
+      "CollectionUtils#size(Collection)" now returns 0 when called with null as input.
+    </action>
+    <action issue="COLLECTIONS-229" dev="scolebourne" type="remove">
+      Removed deprecated classes and methods.
+    </action>
+    <action issue="COLLECTIONS-228" dev="scolebourne" type="fix">
+      "MultiValueMap#put(Object, Object)" and "MultiValueMap#putAll(Object, Collection)"
+      now correctly return if the map has changed by this operation.
+    </action>
+    <action issue="COLLECTIONS-226" dev="bayard" type="add" due-to="Vasily Ivanov">
+      Added method "ListOrderedMap#putAll(int, Map)".
+    </action>
+    <action issue="COLLECTIONS-223" dev="bayard" type="update" due-to="Vasily Ivanov">
+      "CollectionUtils#addAll(...)" methods now return if the collection has been changed
+      by this operation.
+    </action>
+    <action issue="COLLECTIONS-221" dev="bayard" type="update" due-to="Pal Denes">
+      "CompositeCollection", "CompositeMap" and "CompositeSet" are now serializable.
     </action>
     <action issue="COLLECTIONS-219" dev="scolebourne" type="fix" due-to="Tom Leccese">
       "CollectionUtils#removeAll" wrongly called "ListUtils#retainAll".
+    </action>
+    <action issue="COLLECTIONS-218" dev="skestle" type="update">
+      The "CollectionUtils#select(Collection, Predicate, Collection)" method will now
+      return the output collection.
+    </action>
+    <action issue="COLLECTIONS-213" dev="brentworden" type="add" due-to="Dusan Chromy">
+      Added support for resettable iterators in "IteratorIterable".
+    </action>
+    <action issue="COLLECTIONS-194" dev="bayard" type="add" due-to="Dave Meikle">
+      Added methods "MapUtils#populateMap(Map, Collection, Transformer, ...)".
+    </action>
+    <action issue="COLLECTIONS-182" dev="mbenson" type="update" due-to="Jim Cakalic">
+      "CollectionUtils#forAllDo(Collection, Closure)" now returns the provided closure.
+    </action>
+    <action issue="COLLECTIONS-110,COLLECTIONS-243,COLLECTION-245,COLLECTIONS-247,COLLECTIONS-253,COLLECTIONS-273,COLLECTIONS-282" dev="multiple" type="update">
+      Support generic versions of classes in collections.
+    </action>
+    <action issue="COLLECTIONS-8" dev="brentworden" type="add" due-to="Rune Peter Bjørnstad">
+      Added class "ComparatorPredicate".
     </action>
   </release>
   </body>
