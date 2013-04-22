@@ -1453,6 +1453,7 @@ public class CollectionUtils {
      * @param b  the second collection, must not be null
      * @return a new sorted List, containing the elements of Collection a and b
      * @throws IllegalArgumentException if either collection is null
+     * @since 4.0
      */
     public static <O extends Comparable<? super O>> List<O> merge(Collection<? extends O> a,
                                                                   Collection<? extends O> b) {
@@ -1473,6 +1474,7 @@ public class CollectionUtils {
      *   they will be removed in the output collection
      * @return a new sorted List, containing the elements of Collection a and b
      * @throws IllegalArgumentException if either collection is null
+     * @since 4.0 
      */
     public static <O extends Comparable<? super O>> List<O> merge(final Collection<? extends O> a,
                                                                   final Collection<? extends O> b,
@@ -1492,6 +1494,7 @@ public class CollectionUtils {
      * @param c  the comparator to use for the merge. 
      * @return a new sorted List, containing the elements of Collection a and b
      * @throws IllegalArgumentException if either collection or the comparator is null
+     * @since 4.0 
      */
     public static <O> List<O> merge(final Collection<? extends O> a, final Collection<? extends O> b,
                                     final Comparator<? super O> c) {
@@ -1512,6 +1515,7 @@ public class CollectionUtils {
      *   they will be removed in the output collection
      * @return a new sorted List, containing the elements of Collection a and b
      * @throws IllegalArgumentException if either collection or the comparator is null
+     * @since 4.0 
      */
     public static <O> List<O> merge(final Collection<? extends O> a, final Collection<? extends O> b,
                                     final Comparator<? super O> c, final boolean includeDuplicates) {
@@ -1576,6 +1580,7 @@ public class CollectionUtils {
      * @param lastItem  the last added item, may be null
      * @param includeDuplicates  whether duplicate entries are allowed
      * @return the last added item
+     * @since 4.0 
      */
     private static <E> E addItemToList(final E item, final List<E> list, final E lastItem,
                                        final boolean includeDuplicates) {
@@ -1605,6 +1610,7 @@ public class CollectionUtils {
      * @param collection  the collection to create permutations for, may not be null
      * @return an unordered collection of all permutations of the input collection
      * @throws NullPointerException if collection is null
+     * @since 4.0 
      */
     public static <E> Collection<List<E>> permutations(final Collection<E> collection) {
         final PermutationIterator<E> it = new PermutationIterator<E>(collection);
