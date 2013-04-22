@@ -22,66 +22,22 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
-    <action issue="COLLECTIONS-445" dev="tn" type="fix">
-      Adapt and/or ignore several unit tests when run on a IBM J9 VM (specification version 1.6.0)
-      due to a faulty "java.util.TreeMap" implementation.
-    </action>
-    <action issue="COLLECTIONS-422" dev="tn" type="add" due-to="Benoit Corne">
-      Added method "CollectionUtils#permutations(Collection)" and class "PermutationIterator"
-      to generate unordered permutations of a collection.
-    </action>
-    <action issue="COLLECTIONS-419" dev="tn" type="fix" due-to="Adrian Nistor">
-      Added clarifying javadoc wrt runtime complexity of "AbstractDualBidiMap#retainAll".
-    </action>
-    <action issue="COLLECTIONS-433" dev="tn" type="fix" due-to="Jeffrey Barnes">
-      Improve performance of "TreeList#addAll" and "TreeList(Collection)" by converting
-      the input collection into an AVL tree and efficiently merge it into the existing tree.
-    </action>
-    <action issue="COLLECTIONS-296" dev="tn" type="add" due-to="Julius Davies">
-      Added methods "CollectionUtils#merge(...)" to merge two sorted Collections
-      into a sorted List using the standard O(n) merge algorithm.
-    </action>
-    <action issue="COLLECTIONS-429,COLLECTION-434" dev="tn" type="add" due-to="Adrian Nistor, Mert Guldur">
-      Added method "CollectionUtils#containsAll(Collection, Collection)" with guaranteed
-      runtime complexity of O(n + m) and space complexity of O(n). This method may yield much
-      better performance than "Collection#containsAll(Collection)" depending on the use-case and
-      type of collection used.
-    </action>
     <action issue="COLLECTIONS-452" dev="tn" type="update">
       Change base package to org.apache.commons.collections4.
     </action>
-    <action issue="COLLECTIONS-382" dev="tn" type="update">
-      Change maven coordinates to org.apache.commons.commons-collections4.
-    </action>
-    <action issue="COLLECTIONS-432" dev="tn" type="update">
-      Replaced "Buffer" interface with "java.util.Queue". Kept "CircularFifoQueue"
-      as well as "Predicated", "Transformed" and "Unmodifiable" decorators.
-    </action>
-    <action issue="COLLECTIONS-375" dev="tn" type="add" due-to="Ivan Hristov">
-      Added method "ListUtils#defaultIfNull(List, List)".
-    </action>
     <action issue="COLLECTIONS-451" dev="tn" type="update">
       The constructors for all Utils classes are now private to prevent instantiation.
-    </action>
-    <action issue="COLLECTIONS-424" dev="tn" type="update" due-to="Michael Pradel">
-      "CompositeSet" does not inherit from "CompositeCollection" anymore. The inner class
-      "SetMutator" has been updated accordingly.
-    </action>
-    <action issue="COLLECTIONS-361" dev="tn" type="add" due-to="Jean-Noel Rouvignac">
-      Add method "CollectionUtils#filterInverse(Iterable, Predicate)".
-    </action>
-    <action issue="COLLECTIONS-372" dev="tn" type="update">
-      TransformingComparator now supports different types for its input/output values.
-    </action>
-    <action issue="COLLECTIONS-446" dev="tn" type="add" due-to="Matt Lachman">
-      Added method "CollectionUtils#isEqualCollection(Collection, Collection, Equator)".
     </action>
     <action issue="COLLECTIONS-447" dev="tn" type="fix" due-to="Jeffrey Barnes">
       Tree traversal with a TreeListIterator will not be affected anymore by
       the removal of an element directly after a call to previous().
     </action>
-    <action issue="COLLECTIONS-396" dev="tn" type="add" due-to="Jeff Rodriguez">
-      Added "LazyIteratorChain" iterator.
+    <action issue="COLLECTIONS-446" dev="tn" type="add" due-to="Matt Lachman">
+      Added method "CollectionUtils#isEqualCollection(Collection, Collection, Equator)".
+    </action>
+    <action issue="COLLECTIONS-445" dev="tn" type="fix">
+      Adapt and/or ignore several unit tests when run on a IBM J9 VM (specification version 1.6.0)
+      due to a faulty "java.util.TreeMap" implementation.
     </action>
     <action issue="COLLECTIONS-444" dev="tn" type="fix" due-to="Thomas Vahrst, John Vasileff">
       SetUniqueList.set(int, E) now works correctly if the object to be inserted
@@ -90,17 +46,23 @@
     <action issue="COLLECTIONS-441" dev="tn" type="fix" due-to="Thomas Vahrst">
       MultiKeyMap.clone() now correctly calls super.clone().
     </action>
-    <action issue="COLLECTIONS-312" dev="tn" type="fix" due-to="Peter Lawrey, Gary Gregory">
-      Use of final keyword where applicable, minor performance improvements by properly
-      initializing the capacity of newly created collections when known in advance.
-    </action>
-    <action issue="COLLECTIONS-322" dev="tn" type="add" due-to="Thomas Vahrst">
-      Added NodeListIterator and convenience methods in IteratorUtils to iterate over
-      a org.w3c.dom.NodeList.
-    </action>
     <action issue="COLLECTIONS-436" dev="tn" type="add" due-to="Arman Sharif">
       Added "emptyIfNull" methods to classes "CollectionUtils", "ListUtils", "SetUtils"
       and "MapUtils".
+    </action>
+    <action issue="COLLECTIONS-433" dev="tn" type="fix" due-to="Jeffrey Barnes">
+      Improve performance of "TreeList#addAll" and "TreeList(Collection)" by converting
+      the input collection into an AVL tree and efficiently merge it into the existing tree.
+    </action>
+    <action issue="COLLECTIONS-432" dev="tn" type="update">
+      Replaced "Buffer" interface with "java.util.Queue". Kept "CircularFifoQueue"
+      as well as "Predicated", "Transformed" and "Unmodifiable" decorators.
+    </action>
+    <action issue="COLLECTIONS-429,COLLECTION-434" dev="tn" type="add" due-to="Adrian Nistor, Mert Guldur">
+      Added method "CollectionUtils#containsAll(Collection, Collection)" with guaranteed
+      runtime complexity of O(n + m) and space complexity of O(n). This method may yield much
+      better performance than "Collection#containsAll(Collection)" depending on the use-case and
+      type of collection used.
     </action>
     <action issue="COLLECTIONS-427" dev="brentworden" type="fix" due-to="Mert Guldur">
       Fixed performance issue in "SetUniqueList#retainAll" method for large collections.
@@ -111,11 +73,28 @@
     <action issue="COLLECTIONS-425" dev="tn" type="fix" due-to="Adrian Nistor">
       Improved performance of "ListOrderedMap#remove(Object)" method.
     </action>
+    <action issue="COLLECTIONS-424" dev="tn" type="update" due-to="Michael Pradel">
+      "CompositeSet" does not inherit from "CompositeCollection" anymore. The inner class
+      "SetMutator" has been updated accordingly.
+    </action>
+    <action issue="COLLECTIONS-422" dev="tn" type="add" due-to="Benoit Corne">
+      Added method "CollectionUtils#permutations(Collection)" and class "PermutationIterator"
+      to generate unordered permutations of a collection.
+    </action>
+    <action issue="COLLECTIONS-421" dev="tn" type="fix" due-to="Benedikt Ritter">
+      Update javadoc for "ListUtils#lazyList()" and "ListUtils#fixedSizeList()".
+    </action>
+    <action issue="COLLECTIONS-419" dev="tn" type="fix" due-to="Adrian Nistor">
+      Added clarifying javadoc wrt runtime complexity of "AbstractDualBidiMap#retainAll".
+    </action>
     <action issue="COLLECTIONS-417" dev="tn" type="fix" due-to="Adrian Nistor">
       Added clarifying javadoc wrt runtime complexity of "AbstractLinkedList#retainAll".
     </action>
     <action issue="COLLECTIONS-415" dev="tn" type="fix" due-to="Adrian Nistor">
       Added clarifying javadoc wrt runtime complexity of "AbstractLinkedList#removeAll".
+    </action>
+    <action issue="COLLECTIONS-414" dev="tn" type="fix">
+      Fixed several compilation issues with older Java 1.6 compilers.
     </action>
     <action issue="COLLECTIONS-413" dev="tn" type="fix" due-to="Adrian Nistor">
       Improved performance of "removeAll()" method for sets returned by "DualHashBidiMap#entrySet()".
@@ -142,6 +121,19 @@
     <action issue="COLLECTIONS-406" dev="tn" type="fix" due-to="Adrian Nistor">
       Improved performance of "ListUtils#subtract" method.
     </action>
+    <action issue="COLLECTIONS-405" dev="brentworden" type="add" due-to="Adam Dyga">
+      Added "ListUtils#select" and "ListUtils#selectRejected" methods.
+    </action>
+    <action issue="COLLECTIONS-404" dev="luc" type="add" due-to="Jordane Sarda">
+      Added an implementation of Eugene Myers difference algorithm in package
+      o.a.c.c.comparators.sequence.
+    </action>
+    <action issue="COLLECTIONS-400" dev="tn" type="fix" due-to="Shin Hwei Tan">
+      Added missing null check in "CollectionUtils#addIgnoreNull(Collection, Object)".
+    </action>
+    <action issue="COLLECTIONS-396" dev="tn" type="add" due-to="Jeff Rodriguez">
+      Added "LazyIteratorChain" iterator.
+    </action>
     <action issue="COLLECTIONS-393" dev="tn" type="add" due-to="Chris Shayan">
       Added "ListUtils#partition" method to split a List into consecutive sublists.
     </action>
@@ -158,16 +150,6 @@
     <action issue="COLLECTIONS-399" dev="tn" type="add" due-to="Sebb">
       Added new method "get(int)" to "BoundedFifoBuffer" and "CircularFifoBuffer".
     </action>
-    <action issue="COLLECTIONS-405" dev="brentworden" type="add" due-to="Adam Dyga">
-      Added "ListUtils#select" and "ListUtils#selectRejected" methods.
-    </action>
-    <action issue="COLLECTIONS-404" dev="luc" type="add" due-to="Jordane Sarda">
-      Added an implementation of Eugene Myers difference algorithm in package
-      o.a.c.c.comparators.sequence.
-    </action>
-    <action issue="COLLECTIONS-400" dev="tn" type="fix" due-to="Shin Hwei Tan">
-      Added missing null check in "CollectionUtils#addIgnoreNull(Collection, Object)".
-    </action>
     <action issue="COLLECTIONS-391" dev="tn" type="fix" due-to="Shin Hwei Tan">
       Fixed javadoc for "MapUtils#toProperties(Map)".
     </action>
@@ -179,6 +161,18 @@
     </action>
     <action issue="COLLECTIONS-379" dev="tn" type="fix" due-to="Shin Hwei Tan">
       Fixed javadoc for several methods wrt expected NullPointerExceptions.
+    </action>
+    <action issue="COLLECTIONS-382" dev="tn" type="update">
+      Change maven coordinates to org.apache.commons.commons-collections4.
+    </action>
+    <action issue="COLLECTIONS-375" dev="tn" type="add" due-to="Ivan Hristov">
+      Added method "ListUtils#defaultIfNull(List, List)".
+    </action>
+    <action issue="COLLECTIONS-361" dev="tn" type="add" due-to="Jean-Noel Rouvignac">
+      Add method "CollectionUtils#filterInverse(Iterable, Predicate)".
+    </action>
+    <action issue="COLLECTIONS-372" dev="tn" type="update">
+      TransformingComparator now supports different types for its input/output values.
     </action>
     <action issue="COLLECTIONS-323" dev="jochen" type="fix" due-to="Maarten Brak">
       Changed behavior of "CaseInsensitiveMap" constructor to be compliant with "HashMap"
@@ -201,6 +195,18 @@
     <action issue="COLLECTIONS-331" dev="jochen" type="fix" due-to="Michael Krkoska">
       Improve javadoc of "CollatingIterator" wrt the used "Comparator" and throw a
       NullPointerException in "CollatingIterator#least" if no comparator is set.
+    </action>
+    <action issue="COLLECTIONS-312" dev="tn" type="fix" due-to="Peter Lawrey, Gary Gregory">
+      Use of final keyword where applicable, minor performance improvements by properly
+      initializing the capacity of newly created collections when known in advance.
+    </action>
+    <action issue="COLLECTIONS-322" dev="tn" type="add" due-to="Thomas Vahrst">
+      Added NodeListIterator and convenience methods in IteratorUtils to iterate over
+      a org.w3c.dom.NodeList.
+    </action>
+    <action issue="COLLECTIONS-296" dev="tn" type="add" due-to="Julius Davies">
+      Added methods "CollectionUtils#merge(...)" to merge two sorted Collections
+      into a sorted List using the standard O(n) merge algorithm.
     </action>
     <action issue="COLLECTIONS-293" dev="tn" type="add" due-to="Stephen Kestle">
       Added support for using custom "Equator" objects in "EqualPredicate".
