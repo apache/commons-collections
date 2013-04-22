@@ -131,24 +131,14 @@
     <action issue="COLLECTIONS-400" dev="tn" type="fix" due-to="Shin Hwei Tan">
       Added missing null check in "CollectionUtils#addIgnoreNull(Collection, Object)".
     </action>
+    <action issue="COLLECTIONS-399" dev="tn" type="add" due-to="Sebb">
+      Added new method "get(int)" to "CircularFifoQueue".
+    </action>
     <action issue="COLLECTIONS-396" dev="tn" type="add" due-to="Jeff Rodriguez">
       Added "LazyIteratorChain" iterator.
     </action>
     <action issue="COLLECTIONS-393" dev="tn" type="add" due-to="Chris Shayan">
       Added "ListUtils#partition" method to split a List into consecutive sublists.
-    </action>
-    <action issue="COLLECTIONS-327" dev="brentworden" type="add" due-to="sebb">
-      Added serialVersionUID fields for "ExtendedProperties", "CompositeCollection",
-      "CompositeSet", "EmptyMapMutator", "EmptySetMutator".
-    </action>
-    <action issue="COLLECTIONS-324" dev="tn" type="update" due-to="sebb">
-      Fields transformer and decorated in class "TransformingComparator" are now final.
-    </action>
-    <action issue="COLLECTIONS-383" dev="tn" type="add" due-to="Adrian Cumiskey">
-      Added "CollectionUtils#forAllDo" implementation which takes an "Iterator" as input.
-    </action>
-    <action issue="COLLECTIONS-399" dev="tn" type="add" due-to="Sebb">
-      Added new method "get(int)" to "BoundedFifoBuffer" and "CircularFifoBuffer".
     </action>
     <action issue="COLLECTIONS-391" dev="tn" type="fix" due-to="Shin Hwei Tan">
       Fixed javadoc for "MapUtils#toProperties(Map)".
@@ -159,50 +149,69 @@
     <action issue="COLLECTIONS-388" dev="tn" type="fix" due-to="Shin Hwei Tan">
       Clarified javadoc for "FactoryUtils#prototypeFactory" for null input.
     </action>
+    <action issue="COLLECTIONS-384" dev="ggregory" type="fix" due-to="Shin Hwei Tan">
+      Fixed inconsistent javadoc for "MapUtils#synchronizedMap(Map)".
+    </action>
+    <action issue="COLLECTIONS-383" dev="tn" type="add" due-to="Adrian Cumiskey">
+      Added "CollectionUtils#forAllDo" implementation which takes an "Iterator" as input.
+    </action>
+    <action issue="COLLECTIONS-382" dev="tn" type="update" due-to="Olivier Lamy">
+      Change maven coordinates to "org.apache.commons.commons-collections4".
+    </action>
+    <action issue="COLLECTIONS-381" dev="sebb" type="update" due-to="Olivier Lamy">
+      Move the project structure to a standard maven layout.
+    </action>
+    <action issue="COLLECTIONS-380" dev="tn" type="fix" due-to="Dave Brosius">
+      Fixed infinite loop when calling "UnmodifiableBoundedCollection#unmodifiableBoundedCollection()".
+    </action>
     <action issue="COLLECTIONS-379" dev="tn" type="fix" due-to="Shin Hwei Tan">
       Fixed javadoc for several methods wrt expected NullPointerExceptions.
-    </action>
-    <action issue="COLLECTIONS-382" dev="tn" type="update">
-      Change maven coordinates to org.apache.commons.commons-collections4.
     </action>
     <action issue="COLLECTIONS-375" dev="tn" type="add" due-to="Ivan Hristov">
       Added method "ListUtils#defaultIfNull(List, List)".
     </action>
-    <action issue="COLLECTIONS-361" dev="tn" type="add" due-to="Jean-Noel Rouvignac">
-      Add method "CollectionUtils#filterInverse(Iterable, Predicate)".
-    </action>
     <action issue="COLLECTIONS-372" dev="tn" type="update">
       TransformingComparator now supports different types for its input/output values.
     </action>
-    <action issue="COLLECTIONS-323" dev="jochen" type="fix" due-to="Maarten Brak">
-      Changed behavior of "CaseInsensitiveMap" constructor to be compliant with "HashMap"
-      in case the initial capacity is set to zero.
-    </action>
-    <action issue="COLLECTIONS-334" dev="jochen" type="fix" due-to="sebb">
-      Synchronized access to lock in "StaticBucketMap#size()".
-    </action>
-    <action issue="COLLECTIONS-335" dev="jochen" type="fix" due-to="sebb">
-      Fixed cache assignment for "TreeBidiMap#entrySet".
-    </action>
-    <action issue="COLLECTIONS-332" dev="jochen" type="fix" due-to="Tom Parker">
-      Added clarification to javadoc of "ListOrderedMap" that "IdentityMap" and
-      "CaseInsensitiveMap" are not supported.
+    <action issue="COLLECTIONS-361" dev="tn" type="add" due-to="Jean-Noel Rouvignac">
+      Add method "CollectionUtils#filterInverse(Iterable, Predicate)".
     </action>
     <action issue="COLLECTIONS-360" dev="jochen" type="fix" due-to="Sai Zhang">
       "FilterListIterator#hasNext" does not throw a NullPointerException anymore
       to comply to the Java iterator specification.
     </action>
+    <action issue="COLLECTIONS-335" dev="jochen" type="fix" due-to="sebb">
+      Fixed cache assignment for "TreeBidiMap#entrySet".
+    </action>
+    <action issue="COLLECTIONS-334" dev="jochen" type="fix" due-to="sebb">
+      Synchronized access to lock in "StaticBucketMap#size()".
+    </action>
+    <action issue="COLLECTIONS-332" dev="jochen" type="fix" due-to="Tom Parker">
+      Added clarification to javadoc of "ListOrderedMap" that "IdentityMap" and
+      "CaseInsensitiveMap" are not supported.
+    </action>
     <action issue="COLLECTIONS-331" dev="jochen" type="fix" due-to="Michael Krkoska">
       Improve javadoc of "CollatingIterator" wrt the used "Comparator" and throw a
       NullPointerException in "CollatingIterator#least" if no comparator is set.
     </action>
-    <action issue="COLLECTIONS-312" dev="tn" type="fix" due-to="Peter Lawrey, Gary Gregory">
-      Use of final keyword where applicable, minor performance improvements by properly
-      initializing the capacity of newly created collections when known in advance.
+    <action issue="COLLECTIONS-327" dev="brentworden" type="add" due-to="sebb">
+      Added serialVersionUID fields for "ExtendedProperties", "CompositeCollection",
+      "CompositeSet", "EmptyMapMutator", "EmptySetMutator".
+    </action>
+    <action issue="COLLECTIONS-324" dev="tn" type="update" due-to="sebb">
+      Fields transformer and decorated in class "TransformingComparator" are now final.
+    </action>
+    <action issue="COLLECTIONS-323" dev="jochen" type="fix" due-to="Maarten Brak">
+      Changed behavior of "CaseInsensitiveMap" constructor to be compliant with "HashMap"
+      in case the initial capacity is set to zero.
     </action>
     <action issue="COLLECTIONS-322" dev="tn" type="add" due-to="Thomas Vahrst">
       Added NodeListIterator and convenience methods in IteratorUtils to iterate over
       a org.w3c.dom.NodeList.
+    </action>
+    <action issue="COLLECTIONS-312" dev="tn" type="fix" due-to="Peter Lawrey, Gary Gregory">
+      Use of final keyword where applicable, minor performance improvements by properly
+      initializing the capacity of newly created collections when known in advance.
     </action>
     <action issue="COLLECTIONS-296" dev="tn" type="add" due-to="Julius Davies">
       Added methods "CollectionUtils#merge(...)" to merge two sorted Collections
