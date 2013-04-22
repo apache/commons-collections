@@ -312,8 +312,9 @@
     <action issue="COLLECTIONS-182" dev="mbenson" type="update" due-to="Jim Cakalic">
       "CollectionUtils#forAllDo(Collection, Closure)" now returns the provided closure.
     </action>
-    <action issue="COLLECTIONS-110,COLLECTIONS-243,COLLECTION-245,COLLECTIONS-247,COLLECTIONS-253,COLLECTIONS-273,COLLECTIONS-282" dev="multiple" type="update">
-      Support generic versions of classes in collections.
+    <action issue="COLLECTIONS-110,COLLECTIONS-243,COLLECTION-245,COLLECTIONS-247,
+                   COLLECTIONS-253,COLLECTIONS-273,COLLECTIONS-282" dev="multiple" type="update">
+      Make generic versions of all classes in collections.
     </action>
     <action issue="COLLECTIONS-8" dev="brentworden" type="add" due-to="Rune Peter Bjørnstad">
       Added class "ComparatorPredicate".
