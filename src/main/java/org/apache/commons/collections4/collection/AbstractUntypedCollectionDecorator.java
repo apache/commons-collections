@@ -57,6 +57,19 @@ public abstract class AbstractUntypedCollectionDecorator<E, D> implements Collec
     }
 
     /**
+     * Constructor that wraps (not copies).
+     * 
+     * @param coll  the collection to decorate, must not be null
+     * @throws IllegalArgumentException if the collection is null
+     */
+    protected AbstractUntypedCollectionDecorator(final Collection<D> coll) {
+        if (coll == null) {
+            throw new IllegalArgumentException("Collection must not be null");
+        }
+        this.collection = coll;
+    }
+
+    /**
      * Gets the collection being decorated. All access to the decorated
      * collection goes via this method.
      * 
