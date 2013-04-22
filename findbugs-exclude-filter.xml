@@ -43,13 +43,6 @@
     </Or>
   </Match>
 
-  <!--  Load first tries ISO_8859_1 encoding, and reverts to the system's default if not available -->
-  <Match>
-    <Class name="org.apache.commons.collections4.ExtendedProperties" />
-    <Method name="load" params="java.io.InputStream, java.lang.String" returns="void" />
-    <Bug pattern="DM_DEFAULT_ENCODING" />
-  </Match>
-  
   <!-- TreeBidiMap implements equals by delegating to another method for re-usability -->
   <Match>
     <Or>
