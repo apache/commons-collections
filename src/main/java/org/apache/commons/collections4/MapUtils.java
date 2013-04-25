@@ -1705,6 +1705,45 @@ public class MapUtils {
     }
 
     /**
+     * Populates a MultiMap using the supplied <code>Transformer</code> to transform the collection
+     * values into keys, using the unaltered collection value as the value in the <code>MultiMap</code>.
+     *
+     * @param <K>  the key type
+     * @param <V>  the value type
+     * @param map the <code>MultiMap</code> to populate.
+     * @param collection the <code>Collection</code> to use as input values for the map.
+     * @param keyTransformer the <code>Transformer</code> used to transform the collection value into a key value
+     * @throws NullPointerException if the map, collection or transformer are null
+     */
+    public static <K, V> void populateMap(final MultiMap<K, V> map, final Collection<? extends V> collection,
+                                          final Transformer<V, K> keyTransformer) {
+        populateMap(map, collection, keyTransformer, TransformerUtils.<V>nopTransformer());
+    }
+    
+    /**
+     * Populates a MultiMap using the supplied <code>Transformer</code>s to transform the collection
+     * values into keys and values.
+     *
+     * @param <K>  the key type
+     * @param <V>  the value type
+     * @param <E>  the type of object contained in the {@link Collection}
+     * @param map the <code>MultiMap</code> to populate.
+     * @param collection the <code>Collection</code> to use as input values for the map.
+     * @param keyTransformer the <code>Transformer</code> used to transform the collection value into a key value
+     * @param valueTransformer the <code>Transformer</code> used to transform the collection value into a value
+     * @throws NullPointerException if the map, collection or transformers are null
+     */
+    public static <K, V, E> void populateMap(final MultiMap<K, V> map, final Collection<? extends E> collection, 
+                                             final Transformer<E, K> keyTransformer, 
+                                             final Transformer<E, V> valueTransformer) {
+        final Iterator<? extends E> iter = collection.iterator();
+        while (iter.hasNext()) {
+            final E temp = iter.next();
+            map.put(keyTransformer.transform(temp), valueTransformer.transform(temp));
+        }
+    }
+
+    /**
      * Get the specified {@link Map} as an {@link IterableMap}.
      *
      * @param <K>  the key type

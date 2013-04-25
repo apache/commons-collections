@@ -334,6 +334,10 @@
     <action issue="COLLECTIONS-265" dev="bayard" type="update" due-to="David Saff">
       "TreeBag" will now only accept "Comparable" objects as input when used with natural ordering.
     </action>
+    <action issue="COLLECTIONS-263" dev="tn" type="add" due-to="John Hunsley">
+      Added methods "MapUtils#populateMap(MultiMap, ...)" to support also "MultiMap" instances
+      as input.
+    </action>
     <action issue="COLLECTIONS-262" dev="bayard" type="fix" due-to="Lisen Mu">
       Fixed javadoc for methods "firstKey()" and "lastKey()" in class "AbstractLinkedMap".
     </action>

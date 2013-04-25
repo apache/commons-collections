@@ -18,6 +18,7 @@ package org.apache.commons.collections4;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -44,6 +45,7 @@ import org.apache.commons.collections4.keyvalue.DefaultKeyValue;
 import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
 import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.collections4.map.LazyMap;
+import org.apache.commons.collections4.map.MultiValueMap;
 import org.apache.commons.collections4.map.PredicatedMap;
 
 /**
@@ -786,6 +788,48 @@ public class MapUtilsTest extends BulkTest {
             assertEquals(false, map.containsKey(list.get(i)));
             assertEquals(true, map.containsValue(new Integer(list.get(i))));
             assertEquals(new Integer(list.get(i)), map.get(new Integer(list.get(i))));
+        }
+    }
+
+    /**
+     * Test class for populateMap(MultiMap). 
+     */
+    public static class X implements Comparable<X> {
+        int key;
+        String name;
+
+        public X(int key, String name) {
+            this.key = key;
+            this.name = name;
+        }
+
+        public int compareTo(X o) {
+            return key - o.key;
+        }
+        
+    }
+
+    public void testPopulateMultiMap() {
+        // Setup Test Data
+        final List<X> list = new ArrayList<X>();
+        list.add(new X(1, "x1"));
+        list.add(new X(2, "x2"));
+        list.add(new X(2, "x3"));        
+        list.add(new X(5, "x4"));
+        list.add(new X(5, "x5"));
+
+        // Now test key transform population
+        final MultiValueMap<Integer, X> map = MultiValueMap.multiValueMap(new TreeMap<Integer, Collection<X>>());
+        MapUtils.populateMap(map, list, new Transformer<X, Integer>() {
+            public Integer transform(X input) {
+                return input.key;
+            }
+        }, TransformerUtils.<X> nopTransformer());
+        assertEquals(list.size(), map.totalSize());
+
+        for (int i = 0; i < list.size(); i++) {
+            assertEquals(true, map.containsKey(list.get(i).key));
+            assertEquals(true, map.containsValue(list.get(i)));
         }
     }
 
