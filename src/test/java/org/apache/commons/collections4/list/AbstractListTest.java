@@ -44,7 +44,7 @@ import org.apache.commons.collections4.iterators.AbstractListIteratorTest;
  * If your {@link List} fails one of these tests by design,
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link List} fails or override one of the
- * protected methods from AbstractTestCollection.
+ * protected methods from AbstractCollectionTest.
  *
  * @version $Id$
  */

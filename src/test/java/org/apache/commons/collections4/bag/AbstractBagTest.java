@@ -41,7 +41,7 @@ import org.apache.commons.collections4.bag.HashBag;
  * @version $Id$
  */
 public abstract class AbstractBagTest<T> extends AbstractObjectTest {
-//  TODO: this class should really extend from TestCollection, but the bag
+//  TODO: this class should really extend from AbstractCollectionTest, but the bag
 //  implementations currently do not conform to the Collection interface.  Once
 //  those are fixed or at least a strategy is made for resolving the issue, this
 //  can be changed back to extend TestCollection instead.
