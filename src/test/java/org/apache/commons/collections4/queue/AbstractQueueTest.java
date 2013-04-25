@@ -37,6 +37,8 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
  * test case (method) your {@link Queue} fails or override one of the
  * protected methods from AbstractCollectionTest.
  *
+ * TODO: add more tests for Queue interface
+ *
  * @since 4.0
  * @version $Id$
  */
