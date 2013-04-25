@@ -487,18 +487,6 @@ public abstract class AbstractBagTest<T> extends AbstractObjectTest {
     }
 
     /**
-     * Skip the serialized cannonical tests for now.
-     *
-     * @return true
-     *
-     * TODO: store a new serialized object on the disk.
-     */
-    @Override
-    protected boolean skipSerializedCanonicalTests() {
-        return true;
-    }
-
-    /**
      * Compare the current serialized form of the Bag
      * against the canonical version in SVN.
      */
