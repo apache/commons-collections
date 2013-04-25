@@ -237,8 +237,8 @@ public class MultiKeyTest extends TestCase {
     public void testEqualsAfterSerialization() throws IOException, ClassNotFoundException
     {
         SystemHashCodeSimulatingKey sysKey = new SystemHashCodeSimulatingKey("test");
-        final MultiKey mk = new MultiKey(ONE, sysKey);
-        final Map map = new HashMap();
+        final MultiKey<?> mk = new MultiKey<Object>(ONE, sysKey);
+        final Map<MultiKey<?>, Integer> map = new HashMap<MultiKey<?>, Integer>();
         map.put(mk, TWO);
 
         // serialize
@@ -252,12 +252,12 @@ public class MultiKeyTest extends TestCase {
         final ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
         final ObjectInputStream in = new ObjectInputStream(bais);
         sysKey = (SystemHashCodeSimulatingKey)in.readObject(); // simulate deserialization in another process
-        final Map map2 = (Map) in.readObject();
+        final Map<?, ?> map2 = (Map<?, ?>) in.readObject();
         in.close();
 
         assertEquals(2, sysKey.hashCode()); // different hashCode now
 
-        final MultiKey mk2 = new MultiKey(ONE, sysKey);
+        final MultiKey<?> mk2 = new MultiKey<Object>(ONE, sysKey);
         assertEquals(TWO, map2.get(mk2));        
     }
 }

@@ -81,10 +81,9 @@ public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
      * already "canonized" the comparator returned by makeComparator.
      */
     @Override
-    @SuppressWarnings("unchecked")
     @Test
     public void testSerializeDeserializeThenCompare() throws Exception {
-        final Comparator comp = new ReverseComparator(new ComparableComparator());
+        final Comparator<?> comp = new ReverseComparator<String>(new ComparableComparator<String>());
 
         final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         final ObjectOutputStream out = new ObjectOutputStream(buffer);
