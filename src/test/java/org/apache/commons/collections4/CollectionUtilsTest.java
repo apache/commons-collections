@@ -664,6 +664,61 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
+    public void forAllButLastDoCollection() {
+        final Closure<List<? extends Number>> testClosure = ClosureUtils.invokerClosure("clear");
+        final Collection<List<? extends Number>> col = new ArrayList<List<? extends Number>>();
+        col.add(collectionA);
+        col.add(collectionB);
+        List<? extends Number> lastElement = CollectionUtils.forAllButLastDo(col, testClosure);
+        assertSame(lastElement, collectionB);
+        assertTrue(collectionA.isEmpty() && !collectionB.isEmpty());
+
+        col.clear();
+        col.add(collectionB);
+        lastElement = CollectionUtils.forAllButLastDo(col, testClosure);
+        assertSame(lastElement, collectionB);
+        assertTrue(!collectionB.isEmpty() );
+
+        col.clear();
+        lastElement = CollectionUtils.forAllButLastDo(col, testClosure);
+        assertNull(lastElement);
+
+        Collection<String> strings = Arrays.asList(new String[]{"a", "b", "c"});
+        final StringBuffer result = new StringBuffer();
+        result.append(CollectionUtils.forAllButLastDo(strings, new Closure<String>() {
+            public void execute(String input) {
+                result.append(input+";");
+            }
+        }));
+        assertEquals("a;b;c", result.toString());
+
+        Collection<String> oneString = Arrays.asList(new String[]{"a"});
+        final StringBuffer resultOne = new StringBuffer();
+        resultOne.append(CollectionUtils.forAllButLastDo(oneString, new Closure<String>() {
+            public void execute(String input) {
+                resultOne.append(input+";");
+            }
+        }));
+        assertEquals("a", resultOne.toString());
+        assertNull(CollectionUtils.forAllButLastDo(strings, null));
+        assertNull(CollectionUtils.forAllButLastDo((Collection<?>) null, null));
+    }
+
+    @Test
+    public void forAllButLastDoIterator() {
+        final Closure<List<? extends Number>> testClosure = ClosureUtils.invokerClosure("clear");
+        final Collection<List<? extends Number>> col = new ArrayList<List<? extends Number>>();
+        col.add(collectionA);
+        col.add(collectionB);
+        List<? extends Number> lastElement = CollectionUtils.forAllButLastDo(col.iterator(), testClosure);
+        assertSame(lastElement, collectionB);
+        assertTrue(collectionA.isEmpty() && !collectionB.isEmpty());
+        
+        assertNull(CollectionUtils.forAllButLastDo(col.iterator(), null));
+        assertNull(CollectionUtils.forAllButLastDo((Collection<?>) null, null));
+    }
+    
+    @Test
     public void getFromMap() {
         // Unordered map, entries exist
         final Map<String, String> expected = new HashMap<String, String>();

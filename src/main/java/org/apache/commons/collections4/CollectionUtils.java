@@ -695,6 +695,47 @@ public class CollectionUtils {
     }
 
     /**
+     * Executes the given closure on each but the last element in the collection.
+     * <p>
+     * If the input collection or closure is null, there is no change made.
+     *
+     * @param <T>  the type of object the {@link Collection} contains
+     * @param <C>  the closure type
+     * @param collection  the collection to get the input from, may be null
+     * @param closure  the closure to perform, may be null
+     * @return the last element in the collection, or null if either collection or closure is null
+     */
+    public static <T, C extends Closure<? super T>> T forAllButLastDo(final Collection<T> collection,
+                                                                      final C closure) {
+        return collection != null && closure != null ? forAllButLastDo(collection.iterator(), closure) : null;
+    }
+
+    /**
+     * Executes the given closure on each but the last element in the collection.
+     * <p>
+     * If the input collection or closure is null, there is no change made.
+     *
+     * @param <T>  the type of object the {@link Collection} contains
+     * @param <C>  the closure type
+     * @param iterator  the iterator to get the input from, may be null
+     * @param closure  the closure to perform, may be null
+     * @return the last element in the collection, or null if either iterator or closure is null
+     */
+    public static <T, C extends Closure<? super T>> T forAllButLastDo(final Iterator<T> iterator, final C closure) {
+        if (iterator != null && closure != null) {
+            while (iterator.hasNext()) {
+                final T element = iterator.next();
+                if (iterator.hasNext()) {
+                    closure.execute(element);
+                } else {
+                    return element;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
      * Filter the collection by applying a Predicate to each element. If the
      * predicate returns false, remove the element.
      * <p>

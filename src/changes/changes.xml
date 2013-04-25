@@ -28,6 +28,10 @@
     <action issue="COLLECTIONS-451" dev="tn" type="update">
       The constructors for all Utils classes are now private to prevent instantiation.
     </action>
+    <action issue="COLLECTIONS-450" dev="tn" type="add" due-to="J. Moldawski">
+      Added methods "forAllButLastDo(Collection, Closure)" and "forAllButLastDo(Iterator, Closure)"
+      to class "CollectionUtils".
+    </action>
     <action issue="COLLECTIONS-447" dev="tn" type="fix" due-to="Jeffrey Barnes">
       Tree traversal with a TreeListIterator will not be affected anymore by
       the removal of an element directly after a call to previous().
