@@ -37,17 +37,6 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
         return new TreeBag<T>();
     }
 
-   // TODO: Generics (for example... is this even needed?)
-   public void testCollections265() {
-       final Bag<Object> bag = new TreeBag<Object>();
-       try {
-           bag.add(new Object());
-           fail("IllegalArgumentException expected");
-       } catch(final IllegalArgumentException iae) {
-           // expected;
-       }
-   }
-   
     @SuppressWarnings("unchecked")
     public SortedBag<T> setupBag() {
         final SortedBag<T> bag = makeObject();
@@ -58,6 +47,16 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
         return bag;
     }
 
+    public void testCollections265() {
+        final Bag<Object> bag = new TreeBag<Object>();
+        try {
+            bag.add(new Object());
+            fail("IllegalArgumentException expected");
+        } catch(final IllegalArgumentException iae) {
+            // expected;
+        }
+    }
+    
     public void testOrdering() {
         final Bag<T> bag = setupBag();
         assertEquals("Should get elements in correct order", "A", bag.toArray()[0]);
