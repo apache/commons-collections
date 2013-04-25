@@ -24,6 +24,7 @@ import java.util.Queue;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.collection.PredicatedCollectionTest;
+import org.apache.commons.collections4.functors.TruePredicate;
 
 /**
  * Extension of {@link PredicatedCollectionTest} for exercising the
@@ -32,13 +33,15 @@ import org.apache.commons.collections4.collection.PredicatedCollectionTest;
  * @since 4.0
  * @version $Id$
  */
-public class PredicatedQueueTest<E> extends PredicatedCollectionTest<E> {
+public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
 
     public PredicatedQueueTest(final String testName) {
         super(testName);
     }
 
     //---------------------------------------------------------------
+
+    protected Predicate<E> truePredicate = TruePredicate.<E>truePredicate();
 
     protected Queue<E> decorateCollection(final Queue<E> queue, final Predicate<E> predicate) {
         return PredicatedQueue.predicatedQueue(queue, predicate);
@@ -50,7 +53,7 @@ public class PredicatedQueueTest<E> extends PredicatedCollectionTest<E> {
     }
     
     @Override
-    public Collection<E> makeFullCollection() {
+    public Queue<E> makeFullCollection() {
         final Queue<E> queue = new LinkedList<E>();
         queue.addAll(Arrays.asList(getFullElements()));
         return decorateCollection(queue, truePredicate);
@@ -69,6 +72,13 @@ public class PredicatedQueueTest<E> extends PredicatedCollectionTest<E> {
     }
 
     //------------------------------------------------------------
+
+    protected Predicate<E> testPredicate =
+            new Predicate<E>() {
+                public boolean evaluate(final E o) {
+                    return o instanceof String;
+                }
+            };
 
     public Queue<E> makeTestQueue() {
         return decorateCollection(new LinkedList<E>(), testPredicate);

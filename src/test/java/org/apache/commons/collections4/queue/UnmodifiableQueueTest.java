@@ -30,7 +30,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
  * @since 4.0
  * @version $Id$
  */
-public class UnmodifiableQueueTest<E> extends AbstractCollectionTest<E> {
+public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
 
     public UnmodifiableQueueTest(final String testName) {
         super(testName);
@@ -38,12 +38,12 @@ public class UnmodifiableQueueTest<E> extends AbstractCollectionTest<E> {
 
     //-----------------------------------------------------------------------
     @Override
-    public Collection<E> makeObject() {
+    public Queue<E> makeObject() {
         return UnmodifiableQueue.unmodifiableQueue(new LinkedList<E>());
     }
 
     @Override
-    public Collection<E> makeFullCollection() {
+    public Queue<E> makeFullCollection() {
         final Queue<E> queue = new LinkedList<E>();
         queue.addAll(Arrays.asList(getFullElements()));
         return UnmodifiableQueue.unmodifiableQueue(queue);

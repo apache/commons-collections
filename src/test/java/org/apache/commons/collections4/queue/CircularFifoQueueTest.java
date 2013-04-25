@@ -27,25 +27,16 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Queue;
 
-import junit.framework.Test;
-
-import org.apache.commons.collections4.BulkTest;
-import org.apache.commons.collections4.collection.AbstractCollectionTest;
-
 /**
  * Test cases for CircularFifoQueue.
  *
  * @since 4.0
  * @version $Id$
  */
-public class CircularFifoQueueTest<E> extends AbstractCollectionTest<E> {
+public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 
-    public CircularFifoQueueTest(final String n) {
-        super(n);
-    }
-
-    public static Test suite() {
-        return BulkTest.makeSuite(CircularFifoQueueTest.class);
+    public CircularFifoQueueTest(final String testName) {
+        super(testName);
     }
 
     //-----------------------------------------------------------------------
@@ -115,7 +106,7 @@ public class CircularFifoQueueTest<E> extends AbstractCollectionTest<E> {
      * @return an empty CircularFifoQueue
      */
     @Override
-    public Collection<E> makeObject() {
+    public Queue<E> makeObject() {
         return new CircularFifoQueue<E>(100);
     }
 
@@ -156,7 +147,7 @@ public class CircularFifoQueueTest<E> extends AbstractCollectionTest<E> {
         final int size = getConfirmed().size();
         for (int i = 0; i < size; i++) {
             final Object o1 = getCollection().remove();
-            final Object o2 = getConfirmed().remove(0);
+            final Object o2 = ((List<?>) getConfirmed()).remove(0);
             assertEquals("Removed objects should be equal", o1, o2);
             verify();
         }
@@ -419,7 +410,7 @@ public class CircularFifoQueueTest<E> extends AbstractCollectionTest<E> {
         resetFull();
         
         final CircularFifoQueue<E> queue = getCollection();
-        final List<E> confirmed = getConfirmed();
+        final List<E> confirmed = (List<E>) getConfirmed();
         for (int i = 0; i < confirmed.size(); i++) {
             assertEquals(confirmed.get(i), queue.get(i));
         }
@@ -453,11 +444,4 @@ public class CircularFifoQueueTest<E> extends AbstractCollectionTest<E> {
         return (CircularFifoQueue<E>) super.getCollection();
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<E> getConfirmed() {
-        return (List<E>) super.getConfirmed();
-    }
 }

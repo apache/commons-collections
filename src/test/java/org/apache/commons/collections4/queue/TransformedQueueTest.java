@@ -31,7 +31,7 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  * @since 4.0
  * @version $Id$
  */
-public class TransformedQueueTest<E> extends AbstractCollectionTest<E> {
+public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
     
     public TransformedQueueTest(final String testName) {
         super(testName);
