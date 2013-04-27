@@ -431,7 +431,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
         public void remove() {
             // overridden, as the nodeRemoved() method updates the iterator
             // state in the parent.removeNode() call below
-            if (current == null && currentRemovedByAnother) {
+            if (current == null && currentRemovedByAnother) { // NOPMD
                 // quietly ignore, as the last returned node was removed
                 // by the list or some other iterator
                 // by ignoring it, we keep this iterator independent from

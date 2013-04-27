@@ -138,7 +138,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
             return;
         }
         if (currentIterator == null) {
-            if (root == null) {
+            if (root == null) { // NOPMD
                 // do nothing, hasNext will be false
             } else {
                 if (transformer == null) {
@@ -191,11 +191,8 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
             }
             findNext(next);
         }
-        if (hasNext) {
-            // next value found
-        } else if (stack.isEmpty()) {
-            // all iterators exhausted
-        } else {
+        // if we havn't found the next value and iterators are not yet exhausted
+        if (!hasNext && !stack.isEmpty()) {
             // current iterator exhausted, go up a level
             currentIterator = stack.pop();
             findNextByIterator(currentIterator);

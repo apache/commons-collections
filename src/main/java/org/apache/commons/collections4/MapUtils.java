@@ -190,7 +190,7 @@ public class MapUtils {
                     try {
                         final String text = (String) answer;
                         return NumberFormat.getInstance().parse(text);
-                    } catch (final ParseException e) {
+                    } catch (final ParseException e) { // NOPMD
                         // failure means null is returned
                     }
                 }

@@ -1047,13 +1047,13 @@ public class IteratorUtils {
                     return it;
                 }
             }
-        } catch (final RuntimeException e) {
+        } catch (final RuntimeException e) { // NOPMD
             // ignore
-        } catch (final NoSuchMethodException e) {
+        } catch (final NoSuchMethodException e) { // NOPMD
             // ignore
-        } catch (final IllegalAccessException e) {
+        } catch (final IllegalAccessException e) { // NOPMD
             // ignore
-        } catch (final InvocationTargetException e) {
+        } catch (final InvocationTargetException e) { // NOPMD
             // ignore
         }
         return singletonIterator(obj);

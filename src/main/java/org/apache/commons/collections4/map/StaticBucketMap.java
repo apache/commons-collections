@@ -150,7 +150,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      *   the number of buckets.
      * </p>
      */
-    private final int getHash(final Object key) {
+    private int getHash(final Object key) {
         if (key == null) {
             return 0;
         }
