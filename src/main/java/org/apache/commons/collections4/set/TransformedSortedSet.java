@@ -78,7 +78,7 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
         final TransformedSortedSet<E> decorated = new TransformedSortedSet<E>(set, transformer);
         if (transformer != null && set != null && set.size() > 0) {
             @SuppressWarnings("unchecked") // set is type E
-            final E[] values = (E[]) set.toArray();
+            final E[] values = (E[]) set.toArray(); // NOPMD - false positive for generics
             set.clear();
             for (final E value : values) {
                 decorated.decorated().add(transformer.transform(value));

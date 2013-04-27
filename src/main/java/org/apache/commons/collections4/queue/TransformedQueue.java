@@ -76,7 +76,7 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
         final TransformedQueue<E> decorated = new TransformedQueue<E>(queue, transformer); 
         if (queue.size() > 0) {
             @SuppressWarnings("unchecked") // queue is type <E>
-            final E[] values = (E[]) queue.toArray();
+            final E[] values = (E[]) queue.toArray(); // NOPMD - false positive for generics
             queue.clear();
             for (final E value : values) {
                 decorated.decorated().add(transformer.transform(value));
