@@ -52,11 +52,26 @@
     <Bug pattern="EQ_UNUSUAL" />
   </Match>
 
+  <!-- Access to field inverse is 100% synchronized, findbugs may be inaccurate for this check -->
+  <Match>
+    <Class name="org.apache.commons.collections4.bidimap.UnmodifiableBidiMap" />
+    <Bug pattern="IS2_INCONSISTENT_SYNC" />
+  </Match>
+
   <!-- The compare method in ComparatorChain has to handle a corner-case for Integer.MIN_VALUE -->
   <Match>
     <Class name="org.apache.commons.collections4.comparators.ComparatorChain" />
     <Method name="compare" params="java.lang.Object, java.lang.Object" returns="int" />
     <Bug pattern="RV_CHECK_COMPARETO_FOR_SPECIFIC_RETURN_VALUE" />
+  </Match>
+
+  <!-- The ObjectArrayIterator does iterate over an array, thus this we do not want to copy it -->
+  <Match>
+    <Class name="org.apache.commons.collections4.iterators.ObjectArrayIterator" />
+    <Or>
+      <Bug pattern="EI_EXPOSE_REP" />
+      <Bug pattern="EI_EXPOSE_REP2" />
+    </Or>
   </Match>
 
 </FindBugsFilter>
