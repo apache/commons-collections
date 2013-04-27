@@ -35,7 +35,7 @@ package org.apache.commons.collections4.comparators.sequence;
  * The first example is a visitor that build the longest common
  * subsequence:
  * <pre>
- * import org.apache.commons.collections.list.difference.CommandVisitor;
+ * import org.apache.commons.collections4.comparators.sequence.CommandVisitor;
  * 
  * import java.util.ArrayList;
  *
@@ -67,7 +67,7 @@ package org.apache.commons.collections4.comparators.sequence;
  * The second example is a visitor that shows the commands and the way
  * they transform the first sequence into the second one:
  * <pre>
- * import org.apache.commons.collections.list.difference.CommandVisitor;
+ * import org.apache.commons.collections4.comparators.sequence.CommandVisitor;
  * 
  * import java.util.Arrays;
  * import java.util.ArrayList;

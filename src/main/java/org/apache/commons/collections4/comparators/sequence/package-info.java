@@ -44,13 +44,11 @@
  * Eugene W. Myers and described in his paper: <a
  * href="http://www.cis.upenn.edu/~bcpierce/courses/dd/papers/diff.ps">An O(ND)
  * Difference Algorithm and Its Variations</a>. This algorithm produces
- * the shortest possible {@link
- * org.apache.commons.collections.list.difference.EditScript edit script} containing
- * all the {@link org.apache.commons.collections.list.difference.EditCommand
- * commands} needed to transform the first sequence into the second
- * one. The entry point for the user to this algorithm is the {@link
- * org.apache.commons.collections.list.difference.SequencesComparator
- * SequencesComparator} class.
+ * the shortest possible {@link EditScript edit script} containing
+ * all the {@link EditCommand commands} needed to transform the first sequence
+ * into the second one.
+ * The entry point for the user to this algorithm is the
+ * {@link SequencesComparator} class.
  * <p>
  * As explained in Gene Myers paper, the edit script is equivalent to all
  * other representations and contains all the needed information either
@@ -59,22 +57,19 @@
  * <p>
  * If the user needs a very fine grained access to the comparison result,
  * he needs to go through this script by providing a visitor implementing
- * the {@link org.apache.commons.collections.list.difference.CommandVisitor
- * CommandVisitor} interface.
+ * the {@link CommandVisitor} interface.
  * <p>
  * Sometimes however, a more synthetic approach is needed. If the user
  * prefers to see the differences between the two sequences as global
  * <code>replacement</code> operations acting on complete subsequences of
  * the original sequences, he will provide an object implementing the
- * simple {@link org.apache.commons.collections.list.difference.ReplacementsHandler
- * ReplacementsHandler} interface, using an instance of the {@link
- * org.apache.commons.collections.list.difference.ReplacementsFinder
- * ReplacementsFinder} class as a command converting layer between his
+ * simple {@link ReplacementsHandler} interface, using an instance of the
+ * {@link ReplacementsFinder} class as a command converting layer between his
  * object and the edit script. The number of objects which are common to
  * both initial arrays and hence are skipped between each call to the user
- * {@link org.apache.commons.collections.list.difference.ReplacementsHandler#handleReplacement
- * handleReplacement} method is also provided. This allows the user to keep
- * track of the current index in both arrays if he needs so.
+ * {@link ReplacementsHandler#handleReplacement handleReplacement} method is
+ * also provided. This allows the user to keep track of the current index in
+ * both arrays if he needs so.
  *
  * @version $Id$
  */
