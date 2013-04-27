@@ -276,6 +276,10 @@
       Use of final keyword where applicable, minor performance improvements by properly
       initializing the capacity of newly created collections when known in advance.
     </action>
+    <action issue="COLLECTIONS-307" dev="tn" type="update" due-to="Christian Semrau, Thomas Vahrst">
+      "SetUniqueList#subList()" will now return an unmodifiable list as changes to it
+      may invalidate the parent list.
+    </action>
     <action issue="COLLECTIONS-307" dev="bayard" type="fix" due-to="Christian Semrau">
       "SetUniqueList#subList()#contains(Object)" will now correctly check the subList
       rather than the parent list.

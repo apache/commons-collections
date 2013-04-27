@@ -43,6 +43,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         return new SetUniqueList<E>(new ArrayList<E>(), new HashSet<E>());
     }
 
+    //-----------------------------------------------------------------------
     @Override
     public void testListIteratorSet() {
         // override to block
@@ -461,6 +462,16 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         assertEquals(4, decoratedList.size());
     }
 
+    public void testSubListIsUnmodifiable() {
+        resetFull();
+        List<E> subList = getCollection().subList(1, 3);
+        try {
+            subList.remove(0);
+            fail("subList should be unmodifiable");
+        } catch (UnsupportedOperationException e) {
+            // expected
+        }
+    }
     @SuppressWarnings("unchecked")
     public void testCollections307() {
         List<E> list = new ArrayList<E>();
