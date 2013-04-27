@@ -311,7 +311,7 @@
     <action issue="COLLECTIONS-289" dev="bayard" type="add" due-to="Fredrik Kjellberg">
       Added method "CollatingIterator#getIteratorIndex()".
     </action>
-    <action issue="COLLECTIONS-288" dev="bayard" type="fix" due-to="Paul Benedict">
+    <action issue="COLLECTIONS-256,COLLECTIONS-288" dev="bayard" type="fix" due-to="Paul Benedict">
       Fixed javadoc for "ListUtils#transformedList(List)" to clarify that existing objects
       in the list are not transformed.
     </action>
@@ -344,6 +344,10 @@
     </action>
     <action issue="COLLECTIONS-262" dev="bayard" type="fix" due-to="Lisen Mu">
       Fixed javadoc for methods "firstKey()" and "lastKey()" in class "AbstractLinkedMap".
+    </action>
+    <action issue="COLLECTIONS-261" dev="bayard" type="fix" due-to="ori">
+      "Flat3Map#remove(Object)" will now return the correct value mapped to the removed key
+      if the size of the map is less or equal 3.
     </action>
     <action issue="COLLECTIONS-260" dev="mbenson" type="add" due-to="Stephen Kestle">
       Added constructor "TransformingComparator(Transformer)".
@@ -380,6 +384,9 @@
     <action issue="COLLECTIONS-235" dev="bayard" type="add" due-to="Nathan Egge">
       Added method "ListUtils#indexOf(List, Predicate)".
     </action>
+    <action issue="COLLECTIONS-232" dev="bayard" type="fix" due-to="Mark Hindess">
+      Fixed several unit tests which were using parameters to "assertEquals(...)" in wrong order.
+    </action>
     <action issue="COLLECTIONS-231" dev="tn" type="update" due-to="Torsten Curdt">
       Return concrete class in static factory methods instead of base class interface
       (except for Unmodifiable decorators).
@@ -410,6 +417,13 @@
     <action issue="COLLECTIONS-218" dev="skestle" type="update">
       The "CollectionUtils#select(Collection, Predicate, Collection)" method will now
       return the output collection.
+    </action>
+    <action issue="COLLECTIONS-217" dev="scolebourne" type="fix" due-to="Matt Bishop">
+      Calling "setValue(Object)" on any Entry returned by a "Flat3Map" will now
+      correctly set the value for the current entry.
+    </action>
+    <action issue="COLLECTIONS-216" dev="scolebourne" type="fix" due-to="Hendrik Maryns">
+      "MultiKey#toString()" will now use "Arrays#toString(List)".
     </action>
     <action issue="COLLECTIONS-213" dev="brentworden" type="add" due-to="Dusan Chromy">
       Added support for resettable iterators in "IteratorIterable".

@@ -250,7 +250,7 @@ public class MultiKey<K> implements Serializable {
      */
     @Override
     public String toString() {
-        return "MultiKey" + Arrays.asList(keys).toString();
+        return "MultiKey" + Arrays.toString(keys);
     }
 
     /**
