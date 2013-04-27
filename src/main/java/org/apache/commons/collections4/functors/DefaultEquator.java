@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.functors;
 
+import java.io.Serializable;
+
 /**
  * Default {@link Equator} implementation.
  * 
@@ -23,7 +25,11 @@ package org.apache.commons.collections4.functors;
  * @since 4.0
  * @version $Id$
  */
-public class DefaultEquator<T> implements Equator<T> {
+public class DefaultEquator<T> implements Equator<T>, Serializable {
+
+    /** Serial version UID */
+    private static final long serialVersionUID = 825802648423525485L;
+
     /** Static instance */
     public static final DefaultEquator<Object> INSTANCE = new DefaultEquator<Object>();
 
