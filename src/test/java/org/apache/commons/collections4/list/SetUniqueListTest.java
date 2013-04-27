@@ -25,8 +25,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
-import org.apache.commons.collections4.list.SetUniqueList;
-
 /**
  * JUnit tests.
  *
@@ -440,20 +438,6 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         assertTrue(s.contains(c));
     }
 
-    //-----------------------------------------------------------------------
-    @Override
-    public String getCompatibilityVersion() {
-        return "4";
-    }
-
-//    public void testCreate() throws Exception {
-//        resetEmpty();
-//        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/SetUniqueList.emptyCollection.version4.obj");
-//        resetFull();
-//        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/SetUniqueList.fullCollection.version4.obj");
-//    }
-
-    // TODO: Generics
     public void testCollections304() {
         final List<String> list = new LinkedList<String>();
         final SetUniqueList<String> decoratedList = SetUniqueList.setUniqueList(list);
@@ -465,19 +449,15 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         decoratedList.add(s1);
         decoratedList.add(s2);
         decoratedList.add(s3);
-
         assertEquals(3, decoratedList.size());
 
         decoratedList.set(1, s4);
-
         assertEquals(3, decoratedList.size());
 
         decoratedList.add(1, s4);
-
         assertEquals(3, decoratedList.size());
 
         decoratedList.add(1, s2);
-
         assertEquals(4, decoratedList.size());
     }
 
@@ -523,51 +503,51 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     }
 
     @SuppressWarnings("unchecked")
-	public void testRetainAll() {
-    	final List<E> list = new ArrayList<E>(10);
-    	final SetUniqueList<E> uniqueList = SetUniqueList.setUniqueList(list);
-    	for (int i = 0; i < 10; ++i) {
-    		uniqueList.add((E)Integer.valueOf(i));
-    	}
-    	
-    	final Collection<E> retained = new ArrayList<E>(5);
-    	for (int i = 0; i < 5; ++i) {
-    		retained.add((E)Integer.valueOf(i * 2));
-    	}
-    	
-    	assertTrue(uniqueList.retainAll(retained));
-    	assertEquals(5, uniqueList.size());
-    	assertTrue(uniqueList.contains(Integer.valueOf(0)));
-    	assertTrue(uniqueList.contains(Integer.valueOf(2)));
-    	assertTrue(uniqueList.contains(Integer.valueOf(4)));
-    	assertTrue(uniqueList.contains(Integer.valueOf(6)));
-    	assertTrue(uniqueList.contains(Integer.valueOf(8)));
+    public void testRetainAll() {
+        final List<E> list = new ArrayList<E>(10);
+        final SetUniqueList<E> uniqueList = SetUniqueList.setUniqueList(list);
+        for (int i = 0; i < 10; ++i) {
+            uniqueList.add((E)Integer.valueOf(i));
+        }
+        
+        final Collection<E> retained = new ArrayList<E>(5);
+        for (int i = 0; i < 5; ++i) {
+            retained.add((E)Integer.valueOf(i * 2));
+        }
+        
+        assertTrue(uniqueList.retainAll(retained));
+        assertEquals(5, uniqueList.size());
+        assertTrue(uniqueList.contains(Integer.valueOf(0)));
+        assertTrue(uniqueList.contains(Integer.valueOf(2)));
+        assertTrue(uniqueList.contains(Integer.valueOf(4)));
+        assertTrue(uniqueList.contains(Integer.valueOf(6)));
+        assertTrue(uniqueList.contains(Integer.valueOf(8)));
     }
 
     @SuppressWarnings("unchecked")
-	public void testRetainAllWithInitialList() {
-    	// initialized with empty list
-    	final List<E> list = new ArrayList<E>(10);
-    	for (int i = 0; i < 5; ++i) {
-    		list.add((E)Integer.valueOf(i));
-    	}
-    	final SetUniqueList<E> uniqueList = SetUniqueList.setUniqueList(list);
-    	for (int i = 5; i < 10; ++i) {
-    		uniqueList.add((E)Integer.valueOf(i));
-    	}
-    	
-    	final Collection<E> retained = new ArrayList<E>(5);
-    	for (int i = 0; i < 5; ++i) {
-    		retained.add((E)Integer.valueOf(i * 2));
-    	}
-    	
-    	assertTrue(uniqueList.retainAll(retained));
-    	assertEquals(5, uniqueList.size());
-    	assertTrue(uniqueList.contains(Integer.valueOf(0)));
-    	assertTrue(uniqueList.contains(Integer.valueOf(2)));
-    	assertTrue(uniqueList.contains(Integer.valueOf(4)));
-    	assertTrue(uniqueList.contains(Integer.valueOf(6)));
-    	assertTrue(uniqueList.contains(Integer.valueOf(8)));
+    public void testRetainAllWithInitialList() {
+        // initialized with empty list
+        final List<E> list = new ArrayList<E>(10);
+        for (int i = 0; i < 5; ++i) {
+            list.add((E)Integer.valueOf(i));
+        }
+        final SetUniqueList<E> uniqueList = SetUniqueList.setUniqueList(list);
+        for (int i = 5; i < 10; ++i) {
+            uniqueList.add((E)Integer.valueOf(i));
+        }
+        
+        final Collection<E> retained = new ArrayList<E>(5);
+        for (int i = 0; i < 5; ++i) {
+            retained.add((E)Integer.valueOf(i * 2));
+        }
+        
+        assertTrue(uniqueList.retainAll(retained));
+        assertEquals(5, uniqueList.size());
+        assertTrue(uniqueList.contains(Integer.valueOf(0)));
+        assertTrue(uniqueList.contains(Integer.valueOf(2)));
+        assertTrue(uniqueList.contains(Integer.valueOf(4)));
+        assertTrue(uniqueList.contains(Integer.valueOf(6)));
+        assertTrue(uniqueList.contains(Integer.valueOf(8)));
     }
     
     /*
@@ -623,5 +603,18 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
             super(list, set);
         }
     }
+    
+    //-----------------------------------------------------------------------
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
+//    public void testCreate() throws Exception {
+//        resetEmpty();
+//        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/SetUniqueList.emptyCollection.version4.obj");
+//        resetFull();
+//        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/SetUniqueList.fullCollection.version4.obj");
+//    }
 
 }
