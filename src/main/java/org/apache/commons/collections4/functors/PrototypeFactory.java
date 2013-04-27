@@ -80,8 +80,7 @@ public class PrototypeFactory {
     }
 
     /**
-     * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Restricted constructor.
      */
     private PrototypeFactory() {
         super();

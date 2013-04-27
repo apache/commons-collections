@@ -121,7 +121,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
     
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>switchTransformer</code> if you want that.
      * 
      * @param predicates  array of predicates, not cloned, no nulls
      * @param transformers  matching array of transformers, not cloned, no nulls

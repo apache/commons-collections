@@ -23,7 +23,7 @@ import org.apache.commons.collections4.Transformer;
 /**
  * Transformer implementation that returns a clone of the input object.
  * <p>
- * Clone is performed using <code>PrototypeFactory.getInstance(input).create()</code>.
+ * Clone is performed using <code>PrototypeFactory.prototypeFactory(input).create()</code>.
  *
  * @since 3.0
  * @version $Id$
@@ -49,7 +49,7 @@ public class CloneTransformer<T> implements Transformer<T, T>, Serializable {
     }
 
     /**
-     * Constructor
+     * Constructor.
      */
     private CloneTransformer() {
         super();

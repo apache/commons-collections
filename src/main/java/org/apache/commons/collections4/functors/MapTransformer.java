@@ -55,7 +55,7 @@ public final class MapTransformer<I, O> implements Transformer<I, O>, Serializab
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>mapTransformer</code> if you want that.
      *
      * @param map  the map to use for lookup, not cloned
      */

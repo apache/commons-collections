@@ -55,7 +55,7 @@ public final class OrPredicate<T> implements Predicate<T>, PredicateDecorator<T>
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>orPredicate</code> if you want that.
      *
      * @param predicate1  the first predicate to check, not null
      * @param predicate2  the second predicate to check, not null

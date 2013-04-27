@@ -82,7 +82,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>chainedTransformer</code> if you want that.
      * 
      * @param transformers  the transformers to chain, not copied, no nulls
      */

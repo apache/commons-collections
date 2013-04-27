@@ -60,7 +60,7 @@ public class ForClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>forClosure</code> if you want that.
      * 
      * @param count  the number of times to execute the closure
      * @param closure  the closure to execute, not null

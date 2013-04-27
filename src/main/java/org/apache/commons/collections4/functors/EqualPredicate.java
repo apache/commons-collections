@@ -74,7 +74,7 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>equalPredicate</code> if you want that.
      * 
      * @param object  the object to compare to
      */
@@ -86,7 +86,7 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>equalPredicate</code> if you want that.
      * 
      * @param object  the object to compare to
      * @param equator  the equator to use for comparison

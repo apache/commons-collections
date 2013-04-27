@@ -53,7 +53,7 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>closureTransformer</code> if you want that.
      * 
      * @param closure  the closure to call, not null
      */

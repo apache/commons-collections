@@ -53,7 +53,7 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>predicateTransformer</code> if you want that.
      * 
      * @param predicate  the predicate to call, not null
      */

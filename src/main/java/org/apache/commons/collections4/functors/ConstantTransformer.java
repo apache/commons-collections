@@ -70,7 +70,7 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
     
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>constantTransformer</code> if you want that.
      * 
      * @param constantToReturn  the constant to return each time
      */

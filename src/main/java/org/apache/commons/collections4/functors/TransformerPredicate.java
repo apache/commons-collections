@@ -53,7 +53,7 @@ public final class TransformerPredicate<T> implements Predicate<T>, Serializable
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>transformerPredicate</code> if you want that.
      *
      * @param transformer  the transformer to decorate
      */

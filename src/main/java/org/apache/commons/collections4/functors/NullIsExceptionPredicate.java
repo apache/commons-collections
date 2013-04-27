@@ -52,7 +52,7 @@ public final class NullIsExceptionPredicate<T> implements Predicate<T>, Predicat
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>nullIsExceptionPredicate</code> if you want that.
      * 
      * @param predicate  the predicate to call after the null check
      */

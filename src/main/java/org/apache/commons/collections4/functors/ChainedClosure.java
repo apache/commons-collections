@@ -83,7 +83,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>chainedClosure</code> if you want that.
      * 
      * @param closures  the closures to chain, not copied, no nulls
      */

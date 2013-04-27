@@ -77,7 +77,7 @@ public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> imple
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>nonePredicate</code> if you want that.
      *
      * @param predicates  the predicates to check, not cloned, not null
      */

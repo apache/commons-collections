@@ -53,7 +53,7 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>factoryTransformer</code> if you want that.
      * 
      * @param factory  the factory to call, not null
      */

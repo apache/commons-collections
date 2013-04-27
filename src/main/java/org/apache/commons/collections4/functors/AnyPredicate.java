@@ -87,7 +87,7 @@ public final class AnyPredicate<T> extends AbstractQuantifierPredicate<T> implem
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>anyPredicate</code> if you want that.
      *
      * @param predicates  the predicates to check, not cloned, not null
      */

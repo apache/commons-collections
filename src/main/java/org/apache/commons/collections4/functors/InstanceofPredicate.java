@@ -51,7 +51,7 @@ public final class InstanceofPredicate implements Predicate<Object>, Serializabl
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>instanceOfPredicate</code> if you want that.
      *
      * @param type  the type to check for
      */

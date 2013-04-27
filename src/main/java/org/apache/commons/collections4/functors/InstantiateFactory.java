@@ -72,7 +72,7 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>instantiateFactory</code> if you want that.
      * 
      * @param classToInstantiate  the class to instantiate
      */
@@ -86,7 +86,7 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>instantiateFactory</code> if you want that.
      * 
      * @param classToInstantiate  the class to instantiate
      * @param paramTypes  the constructor parameter types, cloned

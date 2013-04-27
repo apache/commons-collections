@@ -63,7 +63,7 @@ public class WhileClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>whileClosure</code> if you want that.
      * 
      * @param predicate  the predicate used to evaluate when the loop terminates, not null
      * @param closure  the closure the execute, not null

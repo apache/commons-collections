@@ -44,7 +44,7 @@ import org.apache.commons.collections4.Predicate;
  * following way:
  *
  * <pre>
- * ComparatorPredicate.getInstance(ONE, comparator).evaluate(TWO);
+ * ComparatorPredicate.comparatorPredicate(ONE, comparator).evaluate(TWO);
  * </pre>
  *
  * The input variable <code>TWO</code> in compared to the stored variable <code>ONE</code> using
@@ -66,7 +66,7 @@ import org.apache.commons.collections4.Predicate;
  * evaluation of a comparator result.
  *
  * <pre>
- * ComparatorPredicate.getInstance(ONE, comparator, <b>ComparatorPredicate.Criterion.GREATER</b>).evaluate(TWO);
+ * ComparatorPredicate.comparatorPredicate(ONE, comparator,<b>ComparatorPredicate.Criterion.GREATER</b>).evaluate(TWO);
  * </pre>
  *
  * The input variable TWO is compared to the stored variable ONE using the supplied <code>comparator</code>
@@ -131,7 +131,7 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want.
+     * Use <code>comparatorPredicate</code> if you want that.
      *
      * @param object  the object to compare to
      * @param comparator  the comparator to use for comparison

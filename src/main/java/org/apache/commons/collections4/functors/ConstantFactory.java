@@ -58,7 +58,7 @@ public class ConstantFactory<T> implements Factory<T>, Serializable {
     
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>constantFactory</code> if you want that.
      * 
      * @param constantToReturn  the constant to return each time
      */

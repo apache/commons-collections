@@ -61,7 +61,7 @@ public final class TransformedPredicate<T> implements Predicate<T>, PredicateDec
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>transformedPredicate</code> if you want that.
      *
      * @param transformer  the transformer to use
      * @param predicate  the predicate to decorate

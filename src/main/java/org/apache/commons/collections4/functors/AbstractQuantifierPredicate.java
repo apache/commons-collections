@@ -36,7 +36,6 @@ public abstract class AbstractQuantifierPredicate<T> implements Predicate<T>, Pr
     
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
      *
      * @param predicates  the predicates to check, not cloned, not null
      */

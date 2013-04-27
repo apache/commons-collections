@@ -51,7 +51,7 @@ public final class NotPredicate<T> implements Predicate<T>, PredicateDecorator<T
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>notPredicate</code> if you want that.
      * 
      * @param predicate  the predicate to call after the null check
      */

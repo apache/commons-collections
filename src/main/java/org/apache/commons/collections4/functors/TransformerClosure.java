@@ -54,7 +54,7 @@ public class TransformerClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>transformerClosure</code> if you want that.
      * 
      * @param transformer  the transformer to call, not null
      */

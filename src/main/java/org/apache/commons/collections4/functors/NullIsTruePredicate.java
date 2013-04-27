@@ -51,7 +51,7 @@ public final class NullIsTruePredicate<T> implements Predicate<T>, PredicateDeco
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>nullIsTruePredicate</code> if you want that.
      * 
      * @param predicate  the predicate to call after the null check
      */

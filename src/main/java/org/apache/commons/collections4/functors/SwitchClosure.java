@@ -109,7 +109,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>switchClosure</code> if you want that.
      *
      * @param predicates  array of predicates, not cloned, no nulls
      * @param closures  matching array of closures, not cloned, no nulls

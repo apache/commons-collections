@@ -100,7 +100,7 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
 
     /**
      * Constructor that performs no validation.
-     * Use <code>getInstance</code> if you want that.
+     * Use <code>invokerTransformer</code> if you want that.
      * 
      * @param methodName  the method to call
      * @param paramTypes  the constructor parameter types, not cloned
