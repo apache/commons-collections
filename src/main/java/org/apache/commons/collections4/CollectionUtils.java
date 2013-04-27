@@ -704,6 +704,7 @@ public class CollectionUtils {
      * @param collection  the collection to get the input from, may be null
      * @param closure  the closure to perform, may be null
      * @return the last element in the collection, or null if either collection or closure is null
+     * @since 4.0
      */
     public static <T, C extends Closure<? super T>> T forAllButLastDo(final Collection<T> collection,
                                                                       final C closure) {
@@ -720,6 +721,7 @@ public class CollectionUtils {
      * @param iterator  the iterator to get the input from, may be null
      * @param closure  the closure to perform, may be null
      * @return the last element in the collection, or null if either iterator or closure is null
+     * @since 4.0
      */
     public static <T, C extends Closure<? super T>> T forAllButLastDo(final Iterator<T> iterator, final C closure) {
         if (iterator != null && closure != null) {
