@@ -39,6 +39,24 @@ public class DefaultEquator<T> implements Equator<T>, Serializable {
     public static final int HASHCODE_NULL = -1;
 
     /**
+     * Factory returning the typed singleton instance.
+     * 
+     * @param <T>  the object type
+     * @return the singleton instance
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> DefaultEquator<T> defaultEquator() {
+        return (DefaultEquator<T>) DefaultEquator.INSTANCE;
+    }
+
+    /**
+     * Restricted constructor.
+     */
+    private DefaultEquator() {
+        super();
+    }
+
+    /**
      * {@inheritDoc} Delegates to {@link Object#equals(Object)}.
      */
     public boolean equate(final T o1, final T o2) {
@@ -59,14 +77,4 @@ public class DefaultEquator<T> implements Equator<T>, Serializable {
         return INSTANCE;
     }
 
-    /**
-     * Get a typed {@link DefaultEquator} instance.
-     * 
-     * @param <T>  the object type
-     * @return {@link DefaultEquator#INSTANCE}
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> DefaultEquator<T> defaultEquator() {
-        return (DefaultEquator<T>) DefaultEquator.INSTANCE;
-    }
 }

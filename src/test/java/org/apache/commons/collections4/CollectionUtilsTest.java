@@ -571,7 +571,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(CollectionUtils.isEqualCollection(collectionA, collB, e));
         assertTrue(CollectionUtils.isEqualCollection(collB, collectionA, e));
         
-        final Equator<Number> defaultEquator = new DefaultEquator<Number>();
+        final Equator<Number> defaultEquator = DefaultEquator.defaultEquator();
         assertFalse(CollectionUtils.isEqualCollection(collectionA, collectionB, defaultEquator));
         assertFalse(CollectionUtils.isEqualCollection(collectionA, collB, defaultEquator));        
     }
