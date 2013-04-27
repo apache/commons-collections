@@ -367,6 +367,12 @@
     <action issue="COLLECTIONS-240" dev="bayard" type="update" due-to="Wouter de Vaal">
       "MultiValueMap" is now serializable.
     </action>
+    <action issue="COLLECTIONS-237" dev="tn" type="add" due-to="Nils Kaiser, Alan Mehlo">
+      Added method "MultiValueMap#iterator()" to return a flattened version of
+      "entrySet().iterator()". Clarified javadoc for "entrySet()" that the returned Entry
+      objects are unflattened, i.e. the Entry object for a given key contains all values
+      mapped to this key.
+    </action>
     <action issue="COLLECTIONS-235" dev="bayard" type="add" due-to="Nathan Egge">
       Added method "ListUtils#indexOf(List, Predicate)".
     </action>

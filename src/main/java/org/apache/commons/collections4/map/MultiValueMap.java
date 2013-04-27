@@ -33,8 +33,11 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.FunctorException;
 import org.apache.commons.collections4.MultiMap;
+import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.iterators.EmptyIterator;
 import org.apache.commons.collections4.iterators.IteratorChain;
+import org.apache.commons.collections4.iterators.LazyIteratorChain;
+import org.apache.commons.collections4.iterators.TransformIterator;
 
 /**
  * A MultiValueMap decorates another map, allowing it to have
@@ -195,7 +198,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * Other values attached to that key are unaffected.
      * <p>
      * If the last value for a key is removed, <code>null</code> will be returned
-     * from a subsequant <code>get(key)</code>.
+     * from a subsequent <code>get(key)</code>.
      *
      * @param key  the key to remove from
      * @param value the value to remove
@@ -294,6 +297,20 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     }
 
     /**
+     * {@inheritDoc}
+     * <p>
+     * NOTE: the returned Entry objects will contain as value a {@link Collection}
+     * of all values that are mapped to the given key. To get a "flattened" version
+     * of all mappings contained in this map, use {@link #iterator()}.
+     * 
+     * @see #iterator()
+     */
+    @Override
+    public Set<Entry<K, Object>> entrySet() {
+        return super.entrySet();
+    }
+
+    /**
      * Gets a collection containing all the values in the map.
      * <p>
      * This returns a collection containing the combination of values from all keys.
@@ -387,6 +404,48 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
             return EmptyIterator.<V>emptyIterator();
         }
         return new ValuesIterator(key);
+    }
+
+    /**
+     * Gets an iterator for all mappings stored in this {@link MultiValueMap}.
+     * <p>
+     * The iterator will return multiple Entry objects with the same key
+     * if there are multiple values mapped to this key.
+     * <p>
+     * NOTE: calling {@link Map.Entry#setValue(Object)} on any of the returned
+     * elements will result in a {@link UnsupportedOperationException}.
+     *
+     * @return the iterator of all mappings in this map
+     * @since 4.0
+     */
+    public Iterator<Entry<K, V>> iterator() {
+        final Collection<K> allKeys = new ArrayList<K>(keySet());
+        final Iterator<K> keyIterator = allKeys.iterator();
+        
+        return new LazyIteratorChain<Entry<K, V>>() {
+            protected Iterator<? extends Entry<K, V>> nextIterator(int count) {
+                if ( ! keyIterator.hasNext() ) {
+                    return null;
+                }
+                final K key = keyIterator.next();
+                final Transformer<V, Entry<K, V>> transformer = new Transformer<V, Entry<K, V>>() {
+                    public Entry<K, V> transform(final V input) {
+                        return new Entry<K, V>() {
+                            public K getKey() {
+                                return key;
+                            }
+                            public V getValue() {
+                                return input;
+                            }
+                            public V setValue(V value) {
+                                throw new UnsupportedOperationException();
+                            }
+                        };
+                    }
+                };
+                return new TransformIterator<V, Entry<K, V>>(new ValuesIterator(key), transformer);
+            }
+        };
     }
 
     /**
