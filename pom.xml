@@ -520,6 +520,35 @@
   <reporting>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-changes-plugin</artifactId>
+        <version>${commons.changes.version}</version>
+        <configuration>
+          <issueLinkTemplatePerSystem>
+            <default>%URL%/%ISSUE%</default>
+          </issueLinkTemplatePerSystem>
+          <!--  Add sample JIRA report - 'mvn changes:jira-report' or 'mvn site' -->
+          <onlyCurrentVersion>false</onlyCurrentVersion>
+          <columnNames>Fix Version,Key,Summary,Type,Resolution,Status</columnNames>
+          <!-- Sort cols have to be reversed in JIRA 4 -->
+          <sortColumnNames>Key DESC,Type,Fix Version DESC</sortColumnNames>
+          <resolutionIds>Fixed</resolutionIds>
+          <statusIds>Resolved,Closed</statusIds>
+          <!-- Don't include sub-task -->
+          <typeIds>Bug,New Feature,Task,Improvement,Wish,Test</typeIds>
+          <fixVersionIds>${commons.release.version}</fixVersionIds>
+          <maxEntries>500</maxEntries>
+        </configuration>
+        <reportSets>
+          <reportSet>
+            <reports>
+              <report>changes-report</report>
+              <report>jira-report</report>
+            </reports>
+          </reportSet>
+        </reportSets>
+      </plugin>
+      <plugin>
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>${checkstyle.version}</version>
         <configuration>
