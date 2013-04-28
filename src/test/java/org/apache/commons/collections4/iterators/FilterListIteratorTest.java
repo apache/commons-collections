@@ -65,7 +65,7 @@ public class FilterListIteratorTest extends TestCase {
         for (int i = 0; i < 20; i++) {
             list.add(Integer.valueOf(i));
             if (i % 2 == 0) { evens.add(Integer.valueOf(i)); }
-            if (i % 2 == 1) { odds.add(Integer.valueOf(i)); }
+            if (i % 2 != 0) { odds.add(Integer.valueOf(i)); }
             if (i % 3 == 0) { threes.add(Integer.valueOf(i)); }
             if (i % 4 == 0) { fours.add(Integer.valueOf(i)); }
             if (i % 6 == 0) { sixes.add(Integer.valueOf(i)); }
@@ -91,7 +91,7 @@ public class FilterListIteratorTest extends TestCase {
 
         oddPred = new Predicate<Integer>() {
             public boolean evaluate(final Integer x) { 
-                return x % 2 == 1;
+                return x % 2 != 0; //works for all numbers, not just >= 0 as is the case for "x % 2 == 1"
             }
         };
 
