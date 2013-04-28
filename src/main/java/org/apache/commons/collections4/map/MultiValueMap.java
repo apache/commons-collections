@@ -412,7 +412,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * The iterator will return multiple Entry objects with the same key
      * if there are multiple values mapped to this key.
      * <p>
-     * NOTE: calling {@link Entry#setValue(Object)} on any of the returned
+     * NOTE: calling {@link java.util.Map.Entry#setValue(Object)} on any of the returned
      * elements will result in a {@link UnsupportedOperationException}.
      *
      * @return the iterator of all mappings in this map
