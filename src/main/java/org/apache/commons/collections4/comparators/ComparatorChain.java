@@ -278,10 +278,10 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
             if (retval != 0) {
                 // invert the order if it is a reverse sort
                 if (orderingBits.get(comparatorIndex) == true) {
-                    if (Integer.MIN_VALUE == retval) {
-                        retval = Integer.MAX_VALUE;
+                    if (retval > 0) {
+                        retval = -1;
                     } else {
-                        retval *= -1;
+                        retval = 1;
                     }
                 }
                 return retval;
