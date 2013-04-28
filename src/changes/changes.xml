@@ -22,6 +22,11 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-454" dev="tn" type="update">
+      An iterator over a "Flat3Map#entrySet()" will now return
+      independent Map.Entry objects that will not change anymore when
+      the iterator progresses.
+    </action>
     <action issue="COLLECTIONS-452" dev="tn" type="update">
       Change base package to org.apache.commons.collections4.
     </action>

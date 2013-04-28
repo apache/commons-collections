@@ -713,9 +713,10 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
     /**
      * Gets the entrySet view of the map.
      * Changes made to the view affect this map.
-     * The Map Entry is not an independent object and changes as the
-     * iterator progresses.
-     * To simply iterate through the entries, use {@link #mapIterator()}.
+     * <p>
+     * NOTE: from 4.0, the returned Map Entry will be an independent object and will
+     * not change anymore as the iterator progresses. To avoid this additional object
+     * creation and simply iterate through the entries, use {@link #mapIterator()}.
      *
      * @return the entrySet view
      */
@@ -771,45 +772,35 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         }
     }
 
-    static abstract class EntryIterator<K, V> implements Map.Entry<K, V> {
+    static class FlatMapEntry<K, V> implements Map.Entry<K, V> {
         private final Flat3Map<K, V> parent;
-        private int nextIndex = 0;
-        protected boolean canRemove = false;
+        private final int index;
+        private volatile boolean removed;
+
+        public FlatMapEntry(final Flat3Map<K, V> parent, final int index) {
+            this.parent = parent;
+            this.index = index;
+            this.removed = false;
+        }
 
         /**
-         * Create a new Flat3Map.EntryIterator.
+         * Used by the iterator that created this entry to indicate that
+         * {@link java.util.Iterator#remove()} has been called.
+         * <p>
+         * As a consequence, all subsequent call to {@link #getKey()},
+         * {@link #setValue(Object)} and {@link #getValue()} will fail.
+         * 
+         * @param flag
          */
-        public EntryIterator(final Flat3Map<K, V> parent) {
-            this.parent = parent;
-        }
-
-        public boolean hasNext() {
-            return nextIndex < parent.size;
-        }
-
-        public Map.Entry<K, V> nextEntry() {
-            if (hasNext() == false) {
-                throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
-            }
-            canRemove = true;
-            nextIndex++;
-            return this;
-        }
-
-        public void remove() {
-            if (canRemove == false) {
-                throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
-            }
-            parent.remove(getKey());
-            nextIndex--;
-            canRemove = false;
+        void setRemoved(final boolean flag) {
+            this.removed = flag;
         }
 
         public K getKey() {
-            if (canRemove == false) {
+            if (removed) {
                 throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
             }
-            switch (nextIndex) {
+            switch (index) {
                 case 3:
                     return parent.key3;
                 case 2:
@@ -821,10 +812,10 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         }
 
         public V getValue() {
-            if (canRemove == false) {
+            if (removed) {
                 throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
             }
-            switch (nextIndex) {
+            switch (index) {
                 case 3:
                     return parent.value3;
                 case 2:
@@ -836,11 +827,11 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         }
 
         public V setValue(final V value) {
-            if (canRemove == false) {
+            if (removed) {
                 throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
             }
             final V old = getValue();
-            switch (nextIndex) {
+            switch (index) {
                 case 3:
                     parent.value3 = value;
                     break;
@@ -853,24 +844,10 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             }
             return old;
         }
-    }
-
-    /**
-     * EntrySetIterator and MapEntry
-     */
-    static class EntrySetIterator<K, V> extends EntryIterator<K, V> implements Iterator<Map.Entry<K, V>> {
-
-        EntrySetIterator(final Flat3Map<K, V> parent) {
-            super(parent);
-        }
-
-        public Map.Entry<K, V> next() {
-            return nextEntry();
-        }
 
         @Override
         public boolean equals(final Object obj) {
-            if (canRemove == false) {
+            if (removed) {
                 return false;
             }
             if (obj instanceof Map.Entry == false) {
@@ -885,7 +862,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
 
         @Override
         public int hashCode() {
-            if (canRemove == false) {
+            if (removed) {
                 return 0;
             }
             final Object key = getKey();
@@ -896,10 +873,60 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
 
         @Override
         public String toString() {
-            if (canRemove) {
+            if (!removed) {
                 return getKey() + "=" + getValue();
             }
             return "";
+        }
+
+    }
+
+    static abstract class EntryIterator<K, V> {
+        private final Flat3Map<K, V> parent;
+        private int nextIndex = 0;
+        protected FlatMapEntry<K, V> currentEntry = null;
+
+        /**
+         * Create a new Flat3Map.EntryIterator.
+         */
+        public EntryIterator(final Flat3Map<K, V> parent) {
+            this.parent = parent;
+        }
+
+        public boolean hasNext() {
+            return nextIndex < parent.size;
+        }
+
+        public Map.Entry<K, V> nextEntry() {
+            if (!hasNext()) {
+                throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
+            }
+            currentEntry = new FlatMapEntry<K, V>(parent, ++nextIndex);
+            return currentEntry;
+        }
+
+        public void remove() {
+            if (currentEntry == null) {
+                throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
+            }
+            currentEntry.setRemoved(true);
+            parent.remove(currentEntry.getKey());
+            nextIndex--;
+            currentEntry = null;
+        }
+
+    }
+
+    /**
+     * EntrySetIterator and MapEntry
+     */
+    static class EntrySetIterator<K, V> extends EntryIterator<K, V> implements Iterator<Map.Entry<K, V>> {
+        EntrySetIterator(final Flat3Map<K, V> parent) {
+            super(parent);
+        }
+
+        public Map.Entry<K, V> next() {
+            return nextEntry();
         }
     }
 
@@ -973,8 +1000,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         }
 
         public K next() {
-            nextEntry();
-            return getKey();
+            return nextEntry().getKey();
         }
     }
 
@@ -1041,8 +1067,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
         }
 
         public V next() {
-            nextEntry();
-            return getValue();
+            return nextEntry().getValue();
         }
     }
 
