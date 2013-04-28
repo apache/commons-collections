@@ -38,6 +38,7 @@ import org.apache.commons.collections4.collection.UnmodifiableBoundedCollection;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.apache.commons.collections4.functors.Equator;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.apache.commons.collections4.iterators.CollatingIterator;
 import org.apache.commons.collections4.iterators.PermutationIterator;
 
 /**
@@ -1498,9 +1499,9 @@ public class CollectionUtils {
      * @throws IllegalArgumentException if either collection is null
      * @since 4.0
      */
-    public static <O extends Comparable<? super O>> List<O> merge(Collection<? extends O> a,
-                                                                  Collection<? extends O> b) {
-        return merge(a, b, ComparatorUtils.<O>naturalComparator(), true);
+    public static <O extends Comparable<? super O>> List<O> collate(Collection<? extends O> a,
+                                                                    Collection<? extends O> b) {
+        return collate(a, b, ComparatorUtils.<O>naturalComparator(), true);
     }
 
     /**
@@ -1519,10 +1520,10 @@ public class CollectionUtils {
      * @throws IllegalArgumentException if either collection is null
      * @since 4.0 
      */
-    public static <O extends Comparable<? super O>> List<O> merge(final Collection<? extends O> a,
-                                                                  final Collection<? extends O> b,
-                                                                  final boolean includeDuplicates) {
-        return merge(a, b, ComparatorUtils.<O>naturalComparator(), includeDuplicates);
+    public static <O extends Comparable<? super O>> List<O> collate(final Collection<? extends O> a,
+                                                                    final Collection<? extends O> b,
+                                                                    final boolean includeDuplicates) {
+        return collate(a, b, ComparatorUtils.<O>naturalComparator(), includeDuplicates);
     }
 
     /**
@@ -1539,9 +1540,9 @@ public class CollectionUtils {
      * @throws IllegalArgumentException if either collection or the comparator is null
      * @since 4.0 
      */
-    public static <O> List<O> merge(final Collection<? extends O> a, final Collection<? extends O> b,
-                                    final Comparator<? super O> c) {
-        return merge(a, b, c, true);
+    public static <O> List<O> collate(final Collection<? extends O> a, final Collection<? extends O> b,
+                                      final Comparator<? super O> c) {
+        return collate(a, b, c, true);
     }
     
     /**
@@ -1560,8 +1561,8 @@ public class CollectionUtils {
      * @throws IllegalArgumentException if either collection or the comparator is null
      * @since 4.0 
      */
-    public static <O> List<O> merge(final Collection<? extends O> a, final Collection<? extends O> b,
-                                    final Comparator<? super O> c, final boolean includeDuplicates) {
+    public static <O> List<O> collate(final Collection<? extends O> a, final Collection<? extends O> b,
+                                      final Comparator<? super O> c, final boolean includeDuplicates) {
         
         if (a == null || b == null) {
             throw new IllegalArgumentException("The collections must not be null");
@@ -1570,68 +1571,24 @@ public class CollectionUtils {
             throw new IllegalArgumentException("The comparator must not be null");
         }
 
-        final List<O> mergedList = new ArrayList<O>(a.size() + b.size());
-        
-        // if either collection is empty, just return the other one
-        if (a.isEmpty() || b.isEmpty()) {
-            mergedList.addAll(a.isEmpty() ? b : a);
-            return mergedList;
-        }
-
-        final Iterator<? extends O> it1 = a.iterator();
-        final Iterator<? extends O> it2 = b.iterator();
-        O o1 = it1.next();
-        O o2 = it2.next();
-        O last = null;
-        while (true) {
-            final int x = c.compare(o1, o2);
-            if (x <= 0) {
-                last = addItemToList(o1, mergedList, last, includeDuplicates);
-                if (it1.hasNext()) {
-                    o1 = it1.next();
-                } else {
-                    // a is empty, so add current element of b
-                    last = addItemToList(o2, mergedList, last, includeDuplicates);
-                    break;
-                }
-            } else {
-                last = addItemToList(o2, mergedList, last, includeDuplicates);
-                if (it2.hasNext()) {
-                    o2 = it2.next();
-                } else {
-                    // b is empty, so add current element of a
-                    last = addItemToList(o1, mergedList, last, includeDuplicates);
-                    break;
-                }                
-            }
-        }
-
-        // add the remaining elements from the non-empty iterator
-        final Iterator<? extends O> it = it1.hasNext() ? it1 : it2;
-        while (it.hasNext()) {
-            last = addItemToList(it.next(), mergedList, last, includeDuplicates);
-        }
-        
-        return mergedList;
-    }
-
-    /**
-     * Adds an item to the specified list.
-     *
-     * @param item  the item to add
-     * @param list  the list to use
-     * @param lastItem  the last added item, may be null
-     * @param includeDuplicates  whether duplicate entries are allowed
-     * @return the last added item
-     * @since 4.0 
-     */
-    private static <E> E addItemToList(final E item, final List<E> list, final E lastItem,
-                                       final boolean includeDuplicates) {
-        if (includeDuplicates || lastItem == null || !lastItem.equals(item)) {
-            list.add(item);
-            return item;
+        final int totalSize = Math.max(1, a.size() + b.size());
+        final Iterator<O> iterator = new CollatingIterator<O>(c, a.iterator(), b.iterator());
+        if (includeDuplicates) {
+            return IteratorUtils.toList(iterator, totalSize);
         } else {
-            return lastItem;
+            final ArrayList<O> mergedList = new ArrayList<O>(totalSize);
+
+            O lastItem = null;
+            while (iterator.hasNext()) {
+                final O item = iterator.next();
+                if (lastItem == null || !lastItem.equals(item)) {
+                    mergedList.add(item);
+                }
+                lastItem = item;
+            }
+
+            mergedList.trimToSize();
+            return mergedList;
         }
     }
 

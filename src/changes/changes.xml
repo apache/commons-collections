@@ -298,7 +298,7 @@
       Calling "CollectionUtils#sizeIsEmpty(null)" will now return true.
     </action>
     <action issue="COLLECTIONS-296" dev="tn" type="add" due-to="Julius Davies">
-      Added methods "CollectionUtils#merge(...)" to merge two sorted Collections
+      Added methods "CollectionUtils#collate(...)" to merge two sorted Collections
       into a sorted List using the standard O(n) merge algorithm.
     </action>
     <action issue="COLLECTIONS-294" dev="bayard" type="fix" due-to="Benjamin Bentmann">

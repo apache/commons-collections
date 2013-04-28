@@ -1640,25 +1640,25 @@ public class CollectionUtilsTest extends MockTestCase {
     }
         
     @Test(expected=IllegalArgumentException.class)
-    public void mergeException1() {
-        CollectionUtils.merge(collectionA, null);
+    public void collateException1() {
+        CollectionUtils.collate(collectionA, null);
     }
 
     @Test(expected=IllegalArgumentException.class)
-    public void mergeException2() {
-        CollectionUtils.merge(collectionA, collectionC, null);
+    public void collateException2() {
+        CollectionUtils.collate(collectionA, collectionC, null);
     }
 
     @Test
-    public void testMerge() {
-        List<Integer> result = CollectionUtils.merge(emptyCollection, emptyCollection);
+    public void testCollate() {
+        List<Integer> result = CollectionUtils.collate(emptyCollection, emptyCollection);
         assertEquals("Merge empty with empty", 0, result.size());
 
-        result = CollectionUtils.merge(collectionA, emptyCollection);
+        result = CollectionUtils.collate(collectionA, emptyCollection);
         assertEquals("Merge empty with non-empty", collectionA, result);
 
-        List<Integer> result1 = CollectionUtils.merge(collectionD, collectionE);
-        List<Integer> result2 = CollectionUtils.merge(collectionE, collectionD);
+        List<Integer> result1 = CollectionUtils.collate(collectionD, collectionE);
+        List<Integer> result2 = CollectionUtils.collate(collectionE, collectionD);
         assertEquals("Merge two lists 1", result1, result2);
         
         List<Integer> combinedList = new ArrayList<Integer>();
@@ -1671,23 +1671,23 @@ public class CollectionUtilsTest extends MockTestCase {
         final Comparator<Integer> reverseComparator =
                 ComparatorUtils.reversedComparator(ComparatorUtils.<Integer>naturalComparator());
 
-        result = CollectionUtils.merge(emptyCollection, emptyCollection, reverseComparator);
+        result = CollectionUtils.collate(emptyCollection, emptyCollection, reverseComparator);
         assertEquals("Comparator Merge empty with empty", 0, result.size());
 
         Collections.reverse((List<Integer>) collectionD);
         Collections.reverse((List<Integer>) collectionE);
         Collections.reverse(combinedList);
 
-        result1 = CollectionUtils.merge(collectionD, collectionE, reverseComparator);
-        result2 = CollectionUtils.merge(collectionE, collectionD, reverseComparator);
+        result1 = CollectionUtils.collate(collectionD, collectionE, reverseComparator);
+        result2 = CollectionUtils.collate(collectionE, collectionD, reverseComparator);
         assertEquals("Comparator Merge two lists 1", result1, result2);
         assertEquals("Comparator Merge two lists 2", combinedList, result2);
     }
     
     @Test
-    public void testMergeIgnoreDuplicates() {
-        List<Integer> result1 = CollectionUtils.merge(collectionD, collectionE, false);
-        List<Integer> result2 = CollectionUtils.merge(collectionE, collectionD, false);
+    public void testCollateIgnoreDuplicates() {
+        List<Integer> result1 = CollectionUtils.collate(collectionD, collectionE, false);
+        List<Integer> result2 = CollectionUtils.collate(collectionE, collectionD, false);
         assertEquals("Merge two lists 1 - ignore duplicates", result1, result2);
         
         Set<Integer> combinedSet = new HashSet<Integer>();
