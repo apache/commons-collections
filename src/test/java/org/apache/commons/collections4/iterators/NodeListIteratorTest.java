@@ -112,8 +112,7 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
     //-----------------------------------------------------------------------
     public void testNullConstructor(){
         try{
-            @SuppressWarnings("unused")
-            final NodeListIterator iter = new NodeListIterator((Node) null);
+            new NodeListIterator((Node) null);
             fail("IllegalArgumentException expected!");
         }catch(final IllegalArgumentException e){
             // expected.
