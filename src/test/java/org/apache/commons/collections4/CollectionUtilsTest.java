@@ -1213,7 +1213,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     Transformer<Object, Integer> TRANSFORM_TO_INTEGER = new Transformer<Object, Integer>() {
         public Integer transform(final Object input) {
-            return new Integer(((Long)input).intValue());
+            return Integer.valueOf(((Long)input).intValue());
         }
     };
 
@@ -1343,8 +1343,8 @@ public class CollectionUtilsTest extends MockTestCase {
     @Test
     public void intersectionUsesMethodEquals() {
         // Let elta and eltb be objects...
-        final Integer elta = new Integer(17);
-        final Integer eltb = new Integer(17);
+        final Integer elta = Integer.valueOf(17);
+        final Integer eltb = Integer.valueOf(17);
 
         // ...which are equal...
         assertEquals(elta, eltb);

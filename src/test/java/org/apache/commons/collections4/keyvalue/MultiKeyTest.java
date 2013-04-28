@@ -37,11 +37,11 @@ import junit.framework.TestCase;
  */
 public class MultiKeyTest extends TestCase {
 
-    Integer ONE = new Integer(1);
-    Integer TWO = new Integer(2);
-    Integer THREE = new Integer(3);
-    Integer FOUR = new Integer(4);
-    Integer FIVE = new Integer(5);
+    Integer ONE = Integer.valueOf(1);
+    Integer TWO = Integer.valueOf(2);
+    Integer THREE = Integer.valueOf(3);
+    Integer FOUR = Integer.valueOf(4);
+    Integer FIVE = Integer.valueOf(5);
 
     public MultiKeyTest(final String name) {
         super(name);

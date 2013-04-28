@@ -34,10 +34,10 @@ import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrengt
  */
 public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    private static final Integer I1A = new Integer(1);
-    private static final Integer I1B = new Integer(1);
-    private static final Integer I2A = new Integer(2);
-    private static final Integer I2B = new Integer(2);
+    private static final Integer I1A = Integer.valueOf(1);
+    private static final Integer I1B = Integer.valueOf(1);
+    private static final Integer I2A = Integer.valueOf(2);
+    private static final Integer I2B = Integer.valueOf(2);
 
     public ReferenceIdentityMapTest(final String testName) {
         super(testName);
@@ -196,12 +196,12 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
     public void testGetAfterGC() {
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         for (int i = 0; i < 10; i++) {
-            map.put(new Integer(i), new Integer(i));
+            map.put(Integer.valueOf(i), Integer.valueOf(i));
         }
 
         gc();
         for (int i = 0; i < 10; i++) {
-            Integer I = new Integer(i);
+            Integer I = Integer.valueOf(i);
             assertTrue("map.containsKey should return false for GC'd element", !map.containsKey(I));
             assertTrue("map.get should return null for GC'd element", map.get(I) == null);
         }
@@ -212,8 +212,8 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         Object[] hard = new Object[10];
         for (int i = 0; i < 10; i++) {
-            hard[i] = new Integer(10 + i);
-            map.put(new Integer(i), new Integer(i));
+            hard[i] = Integer.valueOf(10 + i);
+            map.put(Integer.valueOf(i), Integer.valueOf(i));
             map.put(hard[i], hard[i]);
         }
 
@@ -233,8 +233,8 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         Object[] hard = new Object[10];
         for (int i = 0; i < 10; i++) {
-            hard[i] = new Integer(10 + i);
-            map.put(new Integer(i), new Integer(i));
+            hard[i] = Integer.valueOf(10 + i);
+            map.put(Integer.valueOf(i), Integer.valueOf(i));
             map.put(hard[i], hard[i]);
         }
 
@@ -255,8 +255,8 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         ReferenceIdentityMap map = new ReferenceIdentityMap(ReferenceIdentityMap.WEAK, ReferenceIdentityMap.WEAK);
         Object[] hard = new Object[10];
         for (int i = 0; i < 10; i++) {
-            hard[i] = new Integer(10 + i);
-            map.put(new Integer(i), new Integer(i));
+            hard[i] = Integer.valueOf(10 + i);
+            map.put(Integer.valueOf(i), Integer.valueOf(i));
             map.put(hard[i], hard[i]);
         }
 

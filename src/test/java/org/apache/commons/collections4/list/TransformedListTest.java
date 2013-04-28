@@ -72,44 +72,44 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
         for (int i = 0; i < els.length; i++) {
             list.add(els[i]);
             assertEquals(i + 1, list.size());
-            assertEquals(true, list.contains(new Integer((String) els[i])));
+            assertEquals(true, list.contains(Integer.valueOf((String) els[i])));
             assertEquals(false, list.contains(els[i]));
         }
 
         assertEquals(false, list.remove(els[0]));
-        assertEquals(true, list.remove(new Integer((String) els[0])));
+        assertEquals(true, list.remove(Integer.valueOf((String) els[0])));
 
         list.clear();
         for (int i = 0; i < els.length; i++) {
             list.add(0, els[i]);
             assertEquals(i + 1, list.size());
-            assertEquals(new Integer((String) els[i]), list.get(0));
+            assertEquals(Integer.valueOf((String) els[i]), list.get(0));
         }
 
         list.set(0, (E) "22");
-        assertEquals(new Integer(22), list.get(0));
+        assertEquals(Integer.valueOf(22), list.get(0));
 
         final ListIterator<E> it = list.listIterator();
         it.next();
         it.set((E) "33");
-        assertEquals(new Integer(33), list.get(0));
+        assertEquals(Integer.valueOf(33), list.get(0));
         it.add((E) "44");
-        assertEquals(new Integer(44), list.get(1));
+        assertEquals(Integer.valueOf(44), list.get(1));
 
         final List<E> adds = new ArrayList<E>();
         adds.add((E) "1");
         adds.add((E) "2");
         list.clear();
         list.addAll(adds);
-        assertEquals(new Integer(1), list.get(0));
-        assertEquals(new Integer(2), list.get(1));
+        assertEquals(Integer.valueOf(1), list.get(0));
+        assertEquals(Integer.valueOf(2), list.get(1));
 
         adds.clear();
         adds.add((E) "3");
         list.addAll(1, adds);
-        assertEquals(new Integer(1), list.get(0));
-        assertEquals(new Integer(3), list.get(1));
-        assertEquals(new Integer(2), list.get(2));
+        assertEquals(Integer.valueOf(1), list.get(0));
+        assertEquals(Integer.valueOf(3), list.get(1));
+        assertEquals(Integer.valueOf(2), list.get(2));
     }
 
     public void testTransformedList_decorateTransform() {
@@ -121,12 +121,12 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
         final List<?> list = TransformedList.transformedList(originalList, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, list.size());
         for (final Object el : els) {
-            assertEquals(true, list.contains(new Integer((String) el)));
+            assertEquals(true, list.contains(Integer.valueOf((String) el)));
             assertEquals(false, list.contains(el));
         }
         
         assertEquals(false, list.remove(els[0]));
-        assertEquals(true, list.remove(new Integer((String) els[0])));
+        assertEquals(true, list.remove(Integer.valueOf((String) els[0])));
     }
 
     @Override

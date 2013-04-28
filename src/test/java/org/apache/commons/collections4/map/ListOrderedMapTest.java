@@ -149,7 +149,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         for (int i = 0; i < lom.size(); i++) {
             final V value = lom.getValue(i);
-            final Object input = new Integer(i);
+            final Object input = Integer.valueOf(i);
             assertEquals(value, lom.setValue(i, (V) input));
             assertEquals(input, lom.getValue(i));
         }
@@ -233,10 +233,10 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
 
         // put where key does exist
-        final Integer i1 = new Integer(1);
-        final Integer i1b = new Integer(1);
-        final Integer i2 = new Integer(2);
-        final Integer i3 = new Integer(3);
+        final Integer i1 = Integer.valueOf(1);
+        final Integer i1b = Integer.valueOf(1);
+        final Integer i2 = Integer.valueOf(2);
+        final Integer i3 = Integer.valueOf(3);
 
         resetEmpty();
         lom = getMap();
@@ -368,7 +368,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         resetFull();
         final ListOrderedMap<K, V> lom = getMap();
         for (int i = 0; i < lom.size(); i++) {
-            final Object input = new Integer(i);
+            final Object input = Integer.valueOf(i);
             final V expected = lom.getValue(i);
             assertEquals(expected, lom.valueList().set(i, (V) input));
             assertEquals(input, lom.getValue(i));

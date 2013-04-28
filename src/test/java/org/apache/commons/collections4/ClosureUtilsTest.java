@@ -111,7 +111,7 @@ public class ClosureUtilsTest extends TestCase {
         ClosureUtils.invokerClosure("reverse").execute(buf);
         assertEquals("olleH", buf.toString());
         buf = new StringBuffer("Hello");
-        ClosureUtils.invokerClosure("setLength", new Class[] {Integer.TYPE}, new Object[] {new Integer(2)}).execute(buf);
+        ClosureUtils.invokerClosure("setLength", new Class[] {Integer.TYPE}, new Object[] {Integer.valueOf(2)}).execute(buf);
         assertEquals("He", buf.toString());
     }
 

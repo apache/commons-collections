@@ -60,11 +60,11 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
         @Override
         public List<Integer> getComparableObjectsOrdered() {
             final List<Integer> list = new LinkedList<Integer>();
-            list.add(new Integer(1));
-            list.add(new Integer(2));
-            list.add(new Integer(3));
-            list.add(new Integer(4));
-            list.add(new Integer(5));
+            list.add(Integer.valueOf(1));
+            list.add(Integer.valueOf(2));
+            list.add(Integer.valueOf(3));
+            list.add(Integer.valueOf(4));
+            list.add(Integer.valueOf(5));
             list.add(null);
             return list;
         }
@@ -103,11 +103,11 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
         public List<Integer> getComparableObjectsOrdered() {
             final List<Integer> list = new LinkedList<Integer>();
             list.add(null);
-            list.add(new Integer(1));
-            list.add(new Integer(2));
-            list.add(new Integer(3));
-            list.add(new Integer(4));
-            list.add(new Integer(5));
+            list.add(Integer.valueOf(1));
+            list.add(Integer.valueOf(2));
+            list.add(Integer.valueOf(3));
+            list.add(Integer.valueOf(4));
+            list.add(Integer.valueOf(5));
             return list;
         }
 

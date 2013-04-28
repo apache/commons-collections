@@ -64,7 +64,7 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
     public void testIterator() {
         final Iterator<E> iter = makeObject();
         for (final int element : testArray) {
-            final Integer testValue = new Integer(element);
+            final Integer testValue = Integer.valueOf(element);
             final Number iterValue = (Number) iter.next();
 
             assertEquals("Iteration value is correct", testValue, iterValue);

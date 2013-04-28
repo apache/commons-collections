@@ -119,7 +119,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(0, base.size());
         assertEquals(false, map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
-        assertEquals("NULL_OBJECT", map.get(new Integer(0)));
+        assertEquals("NULL_OBJECT", map.get(Integer.valueOf(0)));
 
         map.put((K) "Key", (V) "Value");
         assertEquals(1, map.size());
@@ -128,7 +128,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals("Value", map.get("Key"));
         assertEquals(false, map.containsKey("NotInMap"));
         assertEquals("NULL", map.get("NotInMap"));
-        assertEquals("NULL_OBJECT", map.get(new Integer(0)));
+        assertEquals("NULL_OBJECT", map.get(Integer.valueOf(0)));
     }
 
     @Override

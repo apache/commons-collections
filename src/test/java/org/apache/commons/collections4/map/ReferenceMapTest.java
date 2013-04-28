@@ -129,12 +129,12 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     public void testGetAfterGC() {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         for (int i = 0; i < 10; i++) {
-            map.put(new Integer(i), new Integer(i));
+            map.put(Integer.valueOf(i), Integer.valueOf(i));
         }
 
         gc();
         for (int i = 0; i < 10; i++) {
-            Integer I = new Integer(i);
+            Integer I = Integer.valueOf(i);
             assertTrue("map.containsKey should return false for GC'd element", !map.containsKey(I));
             assertTrue("map.get should return null for GC'd element", map.get(I) == null);
         }
@@ -145,8 +145,8 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         Object[] hard = new Object[10];
         for (int i = 0; i < 10; i++) {
-            hard[i] = new Integer(10 + i);
-            map.put(new Integer(i), new Integer(i));
+            hard[i] = Integer.valueOf(10 + i);
+            map.put(Integer.valueOf(i), Integer.valueOf(i));
             map.put(hard[i], hard[i]);
         }
 
@@ -166,8 +166,8 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         Object[] hard = new Object[10];
         for (int i = 0; i < 10; i++) {
-            hard[i] = new Integer(10 + i);
-            map.put(new Integer(i), new Integer(i));
+            hard[i] = Integer.valueOf(10 + i);
+            map.put(Integer.valueOf(i), Integer.valueOf(i));
             map.put(hard[i], hard[i]);
         }
 
@@ -188,8 +188,8 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         ReferenceMap map = new ReferenceMap(ReferenceMap.WEAK, ReferenceMap.WEAK);
         Object[] hard = new Object[10];
         for (int i = 0; i < 10; i++) {
-            hard[i] = new Integer(10 + i);
-            map.put(new Integer(i), new Integer(i));
+            hard[i] = Integer.valueOf(10 + i);
+            map.put(Integer.valueOf(i), Integer.valueOf(i));
             map.put(hard[i], hard[i]);
         }
 

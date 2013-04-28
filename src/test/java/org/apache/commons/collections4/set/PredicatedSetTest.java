@@ -75,7 +75,7 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final Set<E> set = makeTestSet();
-        final Integer i = new Integer(3);
+        final Integer i = Integer.valueOf(3);
         try {
             set.add((E) i);
             fail("Integer should fail string predicate.");
@@ -92,7 +92,7 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         final Set<E> elements = new HashSet<E>();
         elements.add((E) "one");
         elements.add((E) "two");
-        elements.add((E) new Integer(3));
+        elements.add((E) Integer.valueOf(3));
         elements.add((E) "four");
         try {
             set.addAll(elements);
@@ -105,7 +105,7 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
         assertTrue("Set shouldn't contain illegal element",
          !set.contains("two"));
         assertTrue("Set shouldn't contain illegal element",
-         !set.contains(new Integer(3)));
+         !set.contains(Integer.valueOf(3)));
         assertTrue("Set shouldn't contain illegal element",
          !set.contains("four"));
     }

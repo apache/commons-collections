@@ -100,11 +100,11 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
 
     @Test public void testIdentityPredicate() {
         assertSame(nullPredicate(), PredicateUtils.identityPredicate(null));
-        assertNotNull(PredicateUtils.identityPredicate(new Integer(6)));
-        assertEquals(false, PredicateUtils.identityPredicate(new Integer(6)).evaluate(null));
-        assertEquals(false, PredicateUtils.<Object>identityPredicate(new Integer(6)).evaluate(cObject));
-        assertEquals(false, PredicateUtils.<Object>identityPredicate(new Integer(6)).evaluate(cString));
-        assertEquals(false, PredicateUtils.identityPredicate(new Integer(6)).evaluate(cInteger));
+        assertNotNull(PredicateUtils.identityPredicate(Integer.valueOf(6)));
+        assertEquals(false, PredicateUtils.identityPredicate(Integer.valueOf(6)).evaluate(null));
+        assertEquals(false, PredicateUtils.<Object>identityPredicate(Integer.valueOf(6)).evaluate(cObject));
+        assertEquals(false, PredicateUtils.<Object>identityPredicate(Integer.valueOf(6)).evaluate(cString));
+        assertEquals(false, PredicateUtils.identityPredicate(Integer.valueOf(6)).evaluate(cInteger));
         assertEquals(true, PredicateUtils.identityPredicate(cInteger).evaluate(cInteger));
     }
 

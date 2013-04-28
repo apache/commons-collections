@@ -51,10 +51,10 @@ public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
         for (int i = 0; i < els.length; i++) {
             bag.add((T) els[i]);
             assertEquals(i + 1, bag.size());
-            assertEquals(true, bag.contains(new Integer((String) els[i])));
+            assertEquals(true, bag.contains(Integer.valueOf((String) els[i])));
         }
 
-        assertEquals(true, bag.remove(new Integer((String) els[0])));
+        assertEquals(true, bag.remove(Integer.valueOf((String) els[0])));
 
     }
 
@@ -67,10 +67,10 @@ public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
         final Bag<?> bag = TransformedBag.transformedBag(originalBag, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, bag.size());
         for (final Object el : els) {
-            assertEquals(true, bag.contains(new Integer((String) el)));
+            assertEquals(true, bag.contains(Integer.valueOf((String) el)));
         }
         
-        assertEquals(true, bag.remove(new Integer((String) els[0])));
+        assertEquals(true, bag.remove(Integer.valueOf((String) els[0])));
     }
 
     @Override

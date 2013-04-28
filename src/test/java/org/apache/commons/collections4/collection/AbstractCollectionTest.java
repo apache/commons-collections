@@ -426,16 +426,16 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         return (E[]) new Object[] {
             new String(""),
             new String("One"),
-            new Integer(2),
+            Integer.valueOf(2),
             "Three",
-            new Integer(4),
+            Integer.valueOf(4),
             "One",
             new Double(5),
             new Float(6),
             "Seven",
             "Eight",
             new String("Nine"),
-            new Integer(10),
+            Integer.valueOf(10),
             new Short((short)11),
             new Long(12),
             "Thirteen",
@@ -453,7 +453,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     @SuppressWarnings("unchecked")
     public E[] getOtherNonNullElements() {
         return (E[]) new Object[] {
-            new Integer(0),
+            Integer.valueOf(0),
             new Float(0),
             new Double(0),
             "Zero",

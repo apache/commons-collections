@@ -124,7 +124,7 @@ public class IteratorUtilsTest extends BulkTest {
     
     public void testToList() {
         final List<Object> list = new ArrayList<Object>();
-        list.add(new Integer(1));
+        list.add(Integer.valueOf(1));
         list.add("Two");
         list.add(null);
         final List<Object> result = IteratorUtils.toList(list.iterator());
@@ -133,7 +133,7 @@ public class IteratorUtilsTest extends BulkTest {
 
     public void testToArray() {
         final List<Object> list = new ArrayList<Object>();
-        list.add(new Integer(1));
+        list.add(Integer.valueOf(1));
         list.add("Two");
         list.add(null);
         final Object[] result = IteratorUtils.toArray(list.iterator());
@@ -158,7 +158,7 @@ public class IteratorUtilsTest extends BulkTest {
         assertTrue(iterator.next().equals("a"));
 
         try {
-            iterator = IteratorUtils.arrayIterator(new Integer(0));
+            iterator = IteratorUtils.arrayIterator(Integer.valueOf(0));
             fail("Expecting IllegalArgumentException");
         } catch (final IllegalArgumentException ex) {
                 // expected
@@ -218,13 +218,13 @@ public class IteratorUtilsTest extends BulkTest {
 
         final int[] intArray = {0, 1, 2};
         iterator = IteratorUtils.arrayIterator(intArray);
-        assertTrue(iterator.next().equals(new Integer(0)));
-        assertTrue(iterator.next().equals(new Integer(1)));
+        assertTrue(iterator.next().equals(Integer.valueOf(0)));
+        assertTrue(iterator.next().equals(Integer.valueOf(1)));
         iterator.reset();
-        assertTrue(iterator.next().equals(new Integer(0)));
+        assertTrue(iterator.next().equals(Integer.valueOf(0)));
 
         iterator = IteratorUtils.arrayIterator(intArray, 1);
-        assertTrue(iterator.next().equals(new Integer(1)));
+        assertTrue(iterator.next().equals(Integer.valueOf(1)));
 
         try {
             iterator = IteratorUtils.arrayIterator(intArray, -1);
@@ -245,7 +245,7 @@ public class IteratorUtilsTest extends BulkTest {
         }
 
         iterator = IteratorUtils.arrayIterator(intArray, 2, 3);
-        assertTrue(iterator.next().equals(new Integer(2)));
+        assertTrue(iterator.next().equals(Integer.valueOf(2)));
 
         try {
             iterator = IteratorUtils.arrayIterator(intArray, 2, 4);
@@ -287,7 +287,7 @@ public class IteratorUtilsTest extends BulkTest {
         assertTrue(iterator.previousIndex() == 3);
 
         try {
-            iterator = IteratorUtils.arrayListIterator(new Integer(0));
+            iterator = IteratorUtils.arrayListIterator(Integer.valueOf(0));
             fail("Expecting IllegalArgumentException");
         } catch (final IllegalArgumentException ex) {
                 // expected
@@ -359,28 +359,28 @@ public class IteratorUtilsTest extends BulkTest {
         assertTrue(iterator.previousIndex() == -1);
         assertTrue(!iterator.hasPrevious());
         assertTrue(iterator.nextIndex() == 0);
-        assertTrue(iterator.next().equals(new Integer(0)));
+        assertTrue(iterator.next().equals(Integer.valueOf(0)));
         assertTrue(iterator.previousIndex() == 0);
         assertTrue(iterator.nextIndex() == 1);
-        assertTrue(iterator.next().equals(new Integer(1)));
+        assertTrue(iterator.next().equals(Integer.valueOf(1)));
         assertTrue(iterator.previousIndex() == 1);
         assertTrue(iterator.nextIndex() == 2);
-        assertTrue(iterator.previous().equals(new Integer(1)));
-        assertTrue(iterator.next().equals(new Integer(1)));
+        assertTrue(iterator.previous().equals(Integer.valueOf(1)));
+        assertTrue(iterator.next().equals(Integer.valueOf(1)));
 
         iterator = IteratorUtils.arrayListIterator(intArray, 1);
         assertTrue(iterator.previousIndex() == -1);
         assertTrue(!iterator.hasPrevious());
         assertTrue(iterator.nextIndex() == 0);
-        assertTrue(iterator.next().equals(new Integer(1)));
-        assertTrue(iterator.previous().equals(new Integer(1)));
-        assertTrue(iterator.next().equals(new Integer(1)));
+        assertTrue(iterator.next().equals(Integer.valueOf(1)));
+        assertTrue(iterator.previous().equals(Integer.valueOf(1)));
+        assertTrue(iterator.next().equals(Integer.valueOf(1)));
         assertTrue(iterator.previousIndex() == 0);
         assertTrue(iterator.nextIndex() == 1);
-        assertTrue(iterator.next().equals(new Integer(2)));
+        assertTrue(iterator.next().equals(Integer.valueOf(2)));
         assertTrue(iterator.previousIndex() == 1);
         assertTrue(iterator.nextIndex() == 2);
-        assertTrue(iterator.previous().equals(new Integer(2)));
+        assertTrue(iterator.previous().equals(Integer.valueOf(2)));
         assertTrue(iterator.previousIndex() == 0);
         assertTrue(iterator.nextIndex() == 1);
 
@@ -404,7 +404,7 @@ public class IteratorUtilsTest extends BulkTest {
         iterator = IteratorUtils.arrayListIterator(intArray, 2, 3);
         assertTrue(!iterator.hasPrevious());
         assertTrue(iterator.previousIndex() == -1);
-        assertTrue(iterator.next().equals(new Integer(2)));
+        assertTrue(iterator.next().equals(Integer.valueOf(2)));
         assertTrue(iterator.hasPrevious());
         assertTrue(!iterator.hasNext());
 

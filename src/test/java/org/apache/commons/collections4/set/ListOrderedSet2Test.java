@@ -29,10 +29,10 @@ import java.util.List;
  */
 public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
 
-    private static final Integer ZERO = new Integer(0);
-    private static final Integer ONE = new Integer(1);
-    private static final Integer TWO = new Integer(2);
-    private static final Integer THREE = new Integer(3);
+    private static final Integer ZERO = Integer.valueOf(0);
+    private static final Integer ONE = Integer.valueOf(1);
+    private static final Integer TWO = Integer.valueOf(2);
+    private static final Integer THREE = Integer.valueOf(3);
 
     public ListOrderedSet2Test(final String testName) {
         super(testName);

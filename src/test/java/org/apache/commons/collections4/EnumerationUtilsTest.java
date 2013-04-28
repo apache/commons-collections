@@ -57,19 +57,19 @@ public class EnumerationUtilsTest extends BulkTest {
 
     public void testToListWithHashtable() {
         final Hashtable<String, Integer> expected = new Hashtable<String, Integer>();
-        expected.put("one", new Integer(1));
-        expected.put("two", new Integer(2));
-        expected.put("three", new Integer(3));
+        expected.put("one", Integer.valueOf(1));
+        expected.put("two", Integer.valueOf(2));
+        expected.put("three", Integer.valueOf(3));
         // validate elements.
         final List<Integer> actualEltList = EnumerationUtils.toList(expected.elements());
         assertEquals(expected.size(), actualEltList.size());
-        assertTrue(actualEltList.contains(new Integer(1)));
-        assertTrue(actualEltList.contains(new Integer(2)));
-        assertTrue(actualEltList.contains(new Integer(3)));
+        assertTrue(actualEltList.contains(Integer.valueOf(1)));
+        assertTrue(actualEltList.contains(Integer.valueOf(2)));
+        assertTrue(actualEltList.contains(Integer.valueOf(3)));
         final List<Integer> expectedEltList = new ArrayList<Integer>();
-        expectedEltList.add(new Integer(1));
-        expectedEltList.add(new Integer(2));
-        expectedEltList.add(new Integer(3));
+        expectedEltList.add(Integer.valueOf(1));
+        expectedEltList.add(Integer.valueOf(2));
+        expectedEltList.add(Integer.valueOf(3));
         assertTrue(actualEltList.containsAll(expectedEltList));
 
         // validate keys.

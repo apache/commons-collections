@@ -86,7 +86,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
         map.put("Two", "Two");
         map.put("one", "Three");
         map.put(null, "Four");
-        map.put(new Integer(20), "Five");
+        map.put(Integer.valueOf(20), "Five");
         final Map<Object, String> caseInsensitiveMap = new CaseInsensitiveMap<Object, String>(map);
         assertEquals(4, caseInsensitiveMap.size()); // ones collapsed
         final Set<Object> keys = caseInsensitiveMap.keySet();

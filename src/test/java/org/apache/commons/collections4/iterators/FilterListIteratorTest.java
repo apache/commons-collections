@@ -63,12 +63,12 @@ public class FilterListIteratorTest extends TestCase {
         fours = new ArrayList<Integer>();
         sixes = new ArrayList<Integer>();
         for (int i = 0; i < 20; i++) {
-            list.add(new Integer(i));
-            if (i % 2 == 0) { evens.add(new Integer(i)); }
-            if (i % 2 == 1) { odds.add(new Integer(i)); }
-            if (i % 3 == 0) { threes.add(new Integer(i)); }
-            if (i % 4 == 0) { fours.add(new Integer(i)); }
-            if (i % 6 == 0) { sixes.add(new Integer(i)); }
+            list.add(Integer.valueOf(i));
+            if (i % 2 == 0) { evens.add(Integer.valueOf(i)); }
+            if (i % 2 == 1) { odds.add(Integer.valueOf(i)); }
+            if (i % 3 == 0) { threes.add(Integer.valueOf(i)); }
+            if (i % 4 == 0) { fours.add(Integer.valueOf(i)); }
+            if (i % 6 == 0) { sixes.add(Integer.valueOf(i)); }
         }
 
         truePred = new Predicate<Integer>() {
@@ -134,59 +134,59 @@ public class FilterListIteratorTest extends TestCase {
         // do this one "by hand" as a sanity check
         final FilterListIterator<Integer> filtered = new FilterListIterator<Integer>(list.listIterator(), threePred);
         
-        assertEquals(new Integer(0), filtered.next());
-        assertEquals(new Integer(3), filtered.next());
-        assertEquals(new Integer(6), filtered.next());
-        assertEquals(new Integer(9), filtered.next());
-        assertEquals(new Integer(12), filtered.next());
-        assertEquals(new Integer(15), filtered.next());
-        assertEquals(new Integer(18), filtered.next());
+        assertEquals(Integer.valueOf(0), filtered.next());
+        assertEquals(Integer.valueOf(3), filtered.next());
+        assertEquals(Integer.valueOf(6), filtered.next());
+        assertEquals(Integer.valueOf(9), filtered.next());
+        assertEquals(Integer.valueOf(12), filtered.next());
+        assertEquals(Integer.valueOf(15), filtered.next());
+        assertEquals(Integer.valueOf(18), filtered.next());
 
-        assertEquals(new Integer(18), filtered.previous());
-        assertEquals(new Integer(15), filtered.previous());
-        assertEquals(new Integer(12), filtered.previous());
-        assertEquals(new Integer(9), filtered.previous());
-        assertEquals(new Integer(6), filtered.previous());
-        assertEquals(new Integer(3), filtered.previous());
-        assertEquals(new Integer(0), filtered.previous());
+        assertEquals(Integer.valueOf(18), filtered.previous());
+        assertEquals(Integer.valueOf(15), filtered.previous());
+        assertEquals(Integer.valueOf(12), filtered.previous());
+        assertEquals(Integer.valueOf(9), filtered.previous());
+        assertEquals(Integer.valueOf(6), filtered.previous());
+        assertEquals(Integer.valueOf(3), filtered.previous());
+        assertEquals(Integer.valueOf(0), filtered.previous());
     
         assertTrue(!filtered.hasPrevious());
 
-        assertEquals(new Integer(0), filtered.next());
-        assertEquals(new Integer(3), filtered.next());
-        assertEquals(new Integer(6), filtered.next());
-        assertEquals(new Integer(9), filtered.next());
-        assertEquals(new Integer(12), filtered.next());
-        assertEquals(new Integer(15), filtered.next());
-        assertEquals(new Integer(18), filtered.next());
+        assertEquals(Integer.valueOf(0), filtered.next());
+        assertEquals(Integer.valueOf(3), filtered.next());
+        assertEquals(Integer.valueOf(6), filtered.next());
+        assertEquals(Integer.valueOf(9), filtered.next());
+        assertEquals(Integer.valueOf(12), filtered.next());
+        assertEquals(Integer.valueOf(15), filtered.next());
+        assertEquals(Integer.valueOf(18), filtered.next());
 
         assertTrue(!filtered.hasNext());
 
-        assertEquals(new Integer(18), filtered.previous());
-        assertEquals(new Integer(15), filtered.previous());
-        assertEquals(new Integer(12), filtered.previous());
-        assertEquals(new Integer(9), filtered.previous());
-        assertEquals(new Integer(6), filtered.previous());
-        assertEquals(new Integer(3), filtered.previous());
-        assertEquals(new Integer(0), filtered.previous());
+        assertEquals(Integer.valueOf(18), filtered.previous());
+        assertEquals(Integer.valueOf(15), filtered.previous());
+        assertEquals(Integer.valueOf(12), filtered.previous());
+        assertEquals(Integer.valueOf(9), filtered.previous());
+        assertEquals(Integer.valueOf(6), filtered.previous());
+        assertEquals(Integer.valueOf(3), filtered.previous());
+        assertEquals(Integer.valueOf(0), filtered.previous());
 
-        assertEquals(new Integer(0), filtered.next());
-        assertEquals(new Integer(0), filtered.previous());
-        assertEquals(new Integer(0), filtered.next());
+        assertEquals(Integer.valueOf(0), filtered.next());
+        assertEquals(Integer.valueOf(0), filtered.previous());
+        assertEquals(Integer.valueOf(0), filtered.next());
 
-        assertEquals(new Integer(3), filtered.next());
-        assertEquals(new Integer(6), filtered.next());
-        assertEquals(new Integer(6), filtered.previous());
-        assertEquals(new Integer(3), filtered.previous());
-        assertEquals(new Integer(3), filtered.next());
-        assertEquals(new Integer(6), filtered.next());
+        assertEquals(Integer.valueOf(3), filtered.next());
+        assertEquals(Integer.valueOf(6), filtered.next());
+        assertEquals(Integer.valueOf(6), filtered.previous());
+        assertEquals(Integer.valueOf(3), filtered.previous());
+        assertEquals(Integer.valueOf(3), filtered.next());
+        assertEquals(Integer.valueOf(6), filtered.next());
 
-        assertEquals(new Integer(9), filtered.next());
-        assertEquals(new Integer(12), filtered.next());
-        assertEquals(new Integer(15), filtered.next());
-        assertEquals(new Integer(15), filtered.previous());
-        assertEquals(new Integer(12), filtered.previous());
-        assertEquals(new Integer(9), filtered.previous());
+        assertEquals(Integer.valueOf(9), filtered.next());
+        assertEquals(Integer.valueOf(12), filtered.next());
+        assertEquals(Integer.valueOf(15), filtered.next());
+        assertEquals(Integer.valueOf(15), filtered.previous());
+        assertEquals(Integer.valueOf(12), filtered.previous());
+        assertEquals(Integer.valueOf(9), filtered.previous());
     }
 
     public void testTruePredicate() {

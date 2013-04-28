@@ -85,7 +85,7 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final Bag<T> bag = makeTestBag();
-        final Integer i = new Integer(3);
+        final Integer i = Integer.valueOf(3);
         try {
             bag.add((T) i);
             fail("Integer should fail string predicate.");
@@ -101,7 +101,7 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
         final HashBag<Object> elements = new HashBag<Object>();
         elements.add("one");
         elements.add("two");
-        elements.add(new Integer(3));
+        elements.add(Integer.valueOf(3));
         elements.add("four");
         try {
             decorateBag((HashBag<T>) elements, stringPredicate());

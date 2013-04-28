@@ -38,9 +38,9 @@ import org.apache.commons.collections4.map.Flat3Map;
  */
 public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    private static final Integer ONE = new Integer(1);
-    private static final Integer TWO = new Integer(2);
-    private static final Integer THREE = new Integer(3);
+    private static final Integer ONE = Integer.valueOf(1);
+    private static final Integer TWO = Integer.valueOf(2);
+    private static final Integer THREE = Integer.valueOf(3);
     private static final String TEN = "10";
     private static final String TWENTY = "20";
     private static final String THIRTY = "30";
@@ -412,17 +412,17 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     public void testCollections261() {
         final Flat3Map<Integer, Integer> m = new Flat3Map<Integer, Integer>();
-        m.put( new Integer(1), new Integer(1) );
-        m.put( new Integer(0), new Integer(0) );
-        assertEquals( new Integer(1), m.remove( new Integer(1) ) ); 
-        assertEquals( new Integer(0), m.remove( new Integer(0) ) ); 
+        m.put( Integer.valueOf(1), Integer.valueOf(1) );
+        m.put( Integer.valueOf(0), Integer.valueOf(0) );
+        assertEquals( Integer.valueOf(1), m.remove( Integer.valueOf(1) ) ); 
+        assertEquals( Integer.valueOf(0), m.remove( Integer.valueOf(0) ) ); 
 
-        m.put( new Integer(2), new Integer(2) );
-        m.put( new Integer(1), new Integer(1) );
-        m.put( new Integer(0), new Integer(0) );
-        assertEquals( new Integer(2), m.remove( new Integer(2) ) ); 
-        assertEquals( new Integer(1), m.remove( new Integer(1) ) ); 
-        assertEquals( new Integer(0), m.remove( new Integer(0) ) ); 
+        m.put( Integer.valueOf(2), Integer.valueOf(2) );
+        m.put( Integer.valueOf(1), Integer.valueOf(1) );
+        m.put( Integer.valueOf(0), Integer.valueOf(0) );
+        assertEquals( Integer.valueOf(2), m.remove( Integer.valueOf(2) ) ); 
+        assertEquals( Integer.valueOf(1), m.remove( Integer.valueOf(1) ) ); 
+        assertEquals( Integer.valueOf(0), m.remove( Integer.valueOf(0) ) ); 
     }
 
 }

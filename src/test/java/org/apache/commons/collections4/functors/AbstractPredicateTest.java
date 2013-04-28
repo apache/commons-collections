@@ -30,7 +30,7 @@ public abstract class AbstractPredicateTest {
     public void initialiseTestObjects() throws Exception {
         cObject = new Object();
         cString = "Hello";
-        cInteger = new Integer(6);
+        cInteger = Integer.valueOf(6);
     }
     
     @Test

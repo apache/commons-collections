@@ -34,8 +34,8 @@ import org.apache.commons.collections4.map.UnmodifiableOrderedMap;
  */
 public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
-    private static final Integer ONE = new Integer(1);
-    private static final Integer TWO = new Integer(2);
+    private static final Integer ONE = Integer.valueOf(1);
+    private static final Integer TWO = Integer.valueOf(2);
     private static final String TEN = "10";
 
     public SingletonMapTest(final String testName) {

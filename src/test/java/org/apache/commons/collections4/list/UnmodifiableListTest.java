@@ -72,7 +72,7 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
     protected void setupList() {
         list = makeFullCollection();
         array = new ArrayList<E>();
-        array.add((E) new Integer(1));
+        array.add((E) Integer.valueOf(1));
     }
 
     /**
@@ -87,13 +87,13 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
     @SuppressWarnings("unchecked")
     protected void verifyUnmodifiable(final List<E> list) {
         try {
-            list.add(0, (E) new Integer(0));
+            list.add(0, (E) Integer.valueOf(0));
             fail("Expecting UnsupportedOperationException.");
         } catch (final UnsupportedOperationException e) {
             // expected
         }
         try {
-            list.add((E) new Integer(0));
+            list.add((E) Integer.valueOf(0));
              fail("Expecting UnsupportedOperationException.");
         } catch (final UnsupportedOperationException e) {
             // expected
@@ -123,7 +123,7 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
             // expected
         }
         try {
-            list.remove(new Integer(0));
+            list.remove(Integer.valueOf(0));
              fail("Expecting UnsupportedOperationException.");
         } catch (final UnsupportedOperationException e) {
             // expected
@@ -141,7 +141,7 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
             // expected
         }
         try {
-            list.set(0, (E) new Integer(0));
+            list.set(0, (E) Integer.valueOf(0));
              fail("Expecting UnsupportedOperationException.");
         } catch (final UnsupportedOperationException e) {
             // expected

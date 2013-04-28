@@ -1320,7 +1320,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
        final Object[] params = new Object[types.length];
        for (int i = 0; i < params.length; i++) {
            if (types[i] == Integer.TYPE) {
-            params[i] = new Integer(0);
+            params[i] = Integer.valueOf(0);
         } else if (types[i] == Collection.class) {
             params[i] = c;
         } else if (types[i] == Object.class) {

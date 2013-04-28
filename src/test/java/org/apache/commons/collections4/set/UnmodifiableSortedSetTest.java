@@ -74,7 +74,7 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
     protected void setupSet() {
         set = makeFullCollection();
         array = new ArrayList<E>();
-        array.add((E) new Integer(1));
+        array.add((E) Integer.valueOf(1));
     }
 
     /**
@@ -84,9 +84,9 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
     public void testUnmodifiable() {
         setupSet();
         verifyUnmodifiable(set);
-        verifyUnmodifiable(set.headSet((E) new Integer(1)));
-        verifyUnmodifiable(set.tailSet((E) new Integer(1)));
-        verifyUnmodifiable(set.subSet((E) new Integer(1), (E) new Integer(3)));
+        verifyUnmodifiable(set.headSet((E) Integer.valueOf(1)));
+        verifyUnmodifiable(set.tailSet((E) Integer.valueOf(1)));
+        verifyUnmodifiable(set.subSet((E) Integer.valueOf(1), (E) Integer.valueOf(3)));
     }
 
     /**

@@ -52,12 +52,12 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
         for (int i = 0; i < els.length; i++) {
             bag.add((T) els[i]);
             assertEquals(i + 1, bag.size());
-            assertEquals(true, bag.contains(new Integer((String) els[i])));
+            assertEquals(true, bag.contains(Integer.valueOf((String) els[i])));
             assertEquals(false, bag.contains(els[i]));
         }
 
         assertEquals(false, bag.remove(els[0]));
-        assertEquals(true, bag.remove(new Integer((String) els[0])));
+        assertEquals(true, bag.remove(Integer.valueOf((String) els[0])));
     }
 
     @SuppressWarnings("unchecked")
@@ -71,12 +71,12 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
                 (Transformer<T, T>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, bag.size());
         for (final Object el : els) {
-            assertEquals(true, bag.contains(new Integer((String) el)));
+            assertEquals(true, bag.contains(Integer.valueOf((String) el)));
             assertEquals(false, bag.contains(el));
         }
         
         assertEquals(false, bag.remove(els[0]));
-        assertEquals(true, bag.remove(new Integer((String) els[0])));
+        assertEquals(true, bag.remove(Integer.valueOf((String) els[0])));
     }
 
     @Override

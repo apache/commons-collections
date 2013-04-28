@@ -74,12 +74,12 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
         for (int i = 0; i < els.length; i++) {
             queue.add(els[i]);
             assertEquals(i + 1, queue.size());
-            assertEquals(true, queue.contains(new Integer((String) els[i])));
+            assertEquals(true, queue.contains(Integer.valueOf((String) els[i])));
             assertEquals(false, queue.contains(els[i]));
         }
         
         assertEquals(false, queue.remove(els[0]));
-        assertEquals(true, queue.remove(new Integer((String) els[0])));
+        assertEquals(true, queue.remove(Integer.valueOf((String) els[0])));
         
     }
 
@@ -94,12 +94,12 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
                 TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, queue.size());
         for (final Object el : els) {
-            assertEquals(true, queue.contains(new Integer((String) el)));
+            assertEquals(true, queue.contains(Integer.valueOf((String) el)));
             assertEquals(false, queue.contains(el));
         }
         
         assertEquals(false, queue.remove(els[0]));
-        assertEquals(true, queue.remove(new Integer((String) els[0])));
+        assertEquals(true, queue.remove(Integer.valueOf((String) els[0])));
     }
 
     @Override

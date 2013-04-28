@@ -36,7 +36,7 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
     
     private static class StringToInteger implements Transformer<Object, Object> {
         public Object transform(final Object input) {
-            return new Integer((String) input);
+            return Integer.valueOf((String) input);
         }
     }
     
@@ -91,11 +91,11 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
         for (int i = 0; i < els.length; i++) {
             coll.add(els[i]);
             assertEquals(i + 1, coll.size());
-            assertEquals(true, coll.contains(new Integer((String) els[i])));
+            assertEquals(true, coll.contains(Integer.valueOf((String) els[i])));
             assertEquals(false, coll.contains(els[i]));
         }
         
-        assertEquals(true, coll.remove(new Integer((String) els[0])));
+        assertEquals(true, coll.remove(Integer.valueOf((String) els[0])));
     }
 
     public void testTransformedCollection_decorateTransform() {
@@ -107,12 +107,12 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
         final Collection<Object> collection = TransformedCollection.transformedCollection(originalCollection, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, collection.size());
         for (final Object el : els) {
-            assertEquals(true, collection.contains(new Integer((String) el)));
+            assertEquals(true, collection.contains(Integer.valueOf((String) el)));
             assertEquals(false, collection.contains(el));
         }
         
         assertEquals(false, collection.remove(els[0]));
-        assertEquals(true, collection.remove(new Integer((String) els[0])));
+        assertEquals(true, collection.remove(Integer.valueOf((String) els[0])));
     }
 
     @Override

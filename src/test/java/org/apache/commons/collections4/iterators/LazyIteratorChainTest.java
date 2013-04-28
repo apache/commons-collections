@@ -109,17 +109,17 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
 
         final Predicate<Integer> myPredicate = new Predicate<Integer>() {
             public boolean evaluate(final Integer i) {
-                return i.compareTo(new Integer(4)) < 0;
+                return i.compareTo(Integer.valueOf(4)) < 0;
             }
         };
 
         final List<Integer> list1 = new ArrayList<Integer>();
         final List<Integer> list2 = new ArrayList<Integer>();
 
-        list1.add(new Integer(1));
-        list1.add(new Integer(2));
-        list2.add(new Integer(3));
-        list2.add(new Integer(4)); // will be ignored by the predicate
+        list1.add(Integer.valueOf(1));
+        list1.add(Integer.valueOf(2));
+        list2.add(Integer.valueOf(3));
+        list2.add(Integer.valueOf(4)); // will be ignored by the predicate
 
         final Iterator<Integer> it1 = IteratorUtils.filteredIterator(list1.iterator(), myPredicate);
         final Iterator<Integer> it2 = IteratorUtils.filteredIterator(list2.iterator(), myPredicate);

@@ -71,7 +71,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
     @SuppressWarnings("unchecked")
     public void testIllegalAdd() {
         final List<E> list = makeTestList();
-        final Integer i = new Integer(3);
+        final Integer i = Integer.valueOf(3);
         try {
             list.add((E) i);
             fail("Integer should fail string predicate.");
@@ -88,7 +88,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         final List<E> elements = new ArrayList<E>();
         elements.add((E) "one");
         elements.add((E) "two");
-        elements.add((E) new Integer(3));
+        elements.add((E) Integer.valueOf(3));
         elements.add((E) "four");
         try {
             list.addAll(0, elements);
@@ -101,7 +101,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         assertTrue("List shouldn't contain illegal element",
          !list.contains("two"));
         assertTrue("List shouldn't contain illegal element",
-         !list.contains(new Integer(3)));
+         !list.contains(Integer.valueOf(3)));
         assertTrue("List shouldn't contain illegal element",
          !list.contains("four"));
     }
@@ -110,7 +110,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
     public void testIllegalSet() {
         final List<E> list = makeTestList();
         try {
-            list.set(0, (E) new Integer(3));
+            list.set(0, (E) Integer.valueOf(3));
             fail("Integer should fail string predicate.");
         } catch (final IllegalArgumentException e) {
             // expected

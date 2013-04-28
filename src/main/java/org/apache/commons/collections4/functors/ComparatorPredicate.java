@@ -28,8 +28,8 @@ import org.apache.commons.collections4.Predicate;
  * In order to demonstrate the use of the predicate, the following variables are declared:
  *
  * <pre>
- * Integer ONE = new Integer(1);
- * Integer TWO = new Integer(2);
+ * Integer ONE = Integer.valueOf(1);
+ * Integer TWO = Integer.valueOf(2);
  *
  * Comparator comparator = new Comparator() {
  *

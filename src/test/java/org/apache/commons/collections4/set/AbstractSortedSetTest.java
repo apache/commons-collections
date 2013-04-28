@@ -123,7 +123,7 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
         final Object[] elements = new Object[30];
 
         for (int i = 0; i < 30; i++) {
-            elements[i] = new Integer(i + i + 1);
+            elements[i] = Integer.valueOf(i + i + 1);
         }
         return (E[]) elements;
     }
@@ -136,7 +136,7 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
     public E[] getOtherNonNullElements() {
         final Object[] elements = new Object[30];
         for (int i = 0; i < 30; i++) {
-            elements[i] = new Integer(i + i + 2);
+            elements[i] = Integer.valueOf(i + i + 2);
         }
         return (E[]) elements;
     }

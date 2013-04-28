@@ -33,14 +33,14 @@ import org.apache.commons.collections4.map.MultiKeyMap;
  */
 public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? extends K>, V> {
 
-    static final Integer I1 = new Integer(1);
-    static final Integer I2 = new Integer(2);
-    static final Integer I3 = new Integer(3);
-    static final Integer I4 = new Integer(4);
-    static final Integer I5 = new Integer(5);
-    static final Integer I6 = new Integer(6);
-    static final Integer I7 = new Integer(7);
-    static final Integer I8 = new Integer(8);
+    static final Integer I1 = Integer.valueOf(1);
+    static final Integer I2 = Integer.valueOf(2);
+    static final Integer I3 = Integer.valueOf(3);
+    static final Integer I4 = Integer.valueOf(4);
+    static final Integer I5 = Integer.valueOf(5);
+    static final Integer I6 = Integer.valueOf(6);
+    static final Integer I7 = Integer.valueOf(7);
+    static final Integer I8 = Integer.valueOf(8);
 
     public MultiKeyMapTest(final String testName) {
         super(testName);

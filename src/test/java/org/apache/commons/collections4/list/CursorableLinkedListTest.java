@@ -58,21 +58,21 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
     @SuppressWarnings("unchecked")
     public void testAdd() {
         assertEquals("[]",list.toString());
-        assertTrue(list.add((E) new Integer(1)));
+        assertTrue(list.add((E) Integer.valueOf(1)));
         assertEquals("[1]",list.toString());
-        assertTrue(list.add((E) new Integer(2)));
+        assertTrue(list.add((E) Integer.valueOf(2)));
         assertEquals("[1, 2]",list.toString());
-        assertTrue(list.add((E) new Integer(3)));
+        assertTrue(list.add((E) Integer.valueOf(3)));
         assertEquals("[1, 2, 3]",list.toString());
-        assertTrue(list.addFirst((E) new Integer(0)));
+        assertTrue(list.addFirst((E) Integer.valueOf(0)));
         assertEquals("[0, 1, 2, 3]",list.toString());
-        assertTrue(list.addLast((E) new Integer(4)));
+        assertTrue(list.addLast((E) Integer.valueOf(4)));
         assertEquals("[0, 1, 2, 3, 4]",list.toString());
-        list.add(0,(E) new Integer(-2));
+        list.add(0,(E) Integer.valueOf(-2));
         assertEquals("[-2, 0, 1, 2, 3, 4]",list.toString());
-        list.add(1,(E) new Integer(-1));
+        list.add(1,(E) Integer.valueOf(-1));
         assertEquals("[-2, -1, 0, 1, 2, 3, 4]",list.toString());
-        list.add(7,(E) new Integer(5));
+        list.add(7,(E) Integer.valueOf(5));
         assertEquals("[-2, -1, 0, 1, 2, 3, 4, 5]",list.toString());
 
         final java.util.List<E> list2 = new java.util.LinkedList<E>();
@@ -112,7 +112,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         assertTrue(list.isEmpty());
 
         for (int i = 0; i < 1000; i++) {
-            list.add((E) new Integer(i));
+            list.add((E) Integer.valueOf(i));
         }
         assertEquals(1000, list.size());
         assertTrue(!list.isEmpty());
@@ -1476,7 +1476,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         // recursive serialization will cause a stack
         // overflow exception with long lists
         for (int i = 0; i < 10000; i++) {
-            list.add((E) new Integer(i));
+            list.add((E) Integer.valueOf(i));
         }
 
         final java.io.ByteArrayOutputStream buf = new java.io.ByteArrayOutputStream();

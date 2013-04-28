@@ -101,7 +101,7 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
     }
 
     public void testConstantFactoryConstant() {
-        final Integer constant = new Integer(9);
+        final Integer constant = Integer.valueOf(9);
         final Factory<Integer> factory = FactoryUtils.constantFactory(constant);
         assertNotNull(factory);
         final Integer created = factory.create();
@@ -160,7 +160,7 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
     }
 
     public void testPrototypeFactoryPublicSerialization() throws Exception {
-        final Integer proto = new Integer(9);
+        final Integer proto = Integer.valueOf(9);
         final Factory<Integer> factory = FactoryUtils.prototypeFactory(proto);
         assertNotNull(factory);
         final Integer created = factory.create();
@@ -284,7 +284,7 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
         // 2nd Jan 1970
         final Factory<Date> factory = FactoryUtils.instantiateFactory(Date.class,
             new Class[] {Integer.TYPE, Integer.TYPE, Integer.TYPE},
-            new Object[] {new Integer(70), new Integer(0), new Integer(2)});
+            new Object[] {Integer.valueOf(70), Integer.valueOf(0), Integer.valueOf(2)});
         assertNotNull(factory);
         final Date created = factory.create();
         // long time of 1 day (== 2nd Jan 1970)

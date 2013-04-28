@@ -51,7 +51,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
 
     private static final Object cObject = new Object();
     private static final Object cString = "Hello";
-    private static final Object cInteger = new Integer(6);
+    private static final Object cInteger = Integer.valueOf(6);
 
     /**
      * Construct
@@ -150,9 +150,9 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
         map.put(null, 0);
         map.put(cObject, 1);
         map.put(cString, 2);
-        assertEquals(new Integer(0), TransformerUtils.mapTransformer(map).transform(null));
-        assertEquals(new Integer(1), TransformerUtils.mapTransformer(map).transform(cObject));
-        assertEquals(new Integer(2), TransformerUtils.mapTransformer(map).transform(cString));
+        assertEquals(Integer.valueOf(0), TransformerUtils.mapTransformer(map).transform(null));
+        assertEquals(Integer.valueOf(1), TransformerUtils.mapTransformer(map).transform(cObject));
+        assertEquals(Integer.valueOf(2), TransformerUtils.mapTransformer(map).transform(cString));
         assertEquals(null, TransformerUtils.mapTransformer(map).transform(cInteger));
         assertSame(ConstantTransformer.NULL_INSTANCE, TransformerUtils.mapTransformer(null));
     }
@@ -347,9 +347,9 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
 
     public void testInvokerTransformer() {
         final List<Object> list = new ArrayList<Object>();
-        assertEquals(new Integer(0), TransformerUtils.invokerTransformer("size").transform(list));
+        assertEquals(Integer.valueOf(0), TransformerUtils.invokerTransformer("size").transform(list));
         list.add(new Object());
-        assertEquals(new Integer(1), TransformerUtils.invokerTransformer("size").transform(list));
+        assertEquals(Integer.valueOf(1), TransformerUtils.invokerTransformer("size").transform(list));
         assertEquals(null, TransformerUtils.invokerTransformer("size").transform(null));
 
         try {
@@ -407,7 +407,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
         assertEquals( "StringValueTransformer should return \"null\" when given a null argument.", "null",
             TransformerUtils.stringValueTransformer().transform(null));
         assertEquals( "StringValueTransformer should return toString value", "6",
-            TransformerUtils.stringValueTransformer().transform(new Integer(6)));
+            TransformerUtils.stringValueTransformer().transform(Integer.valueOf(6)));
     }
 
     // instantiateFactory

@@ -85,7 +85,7 @@ public class MapUtilsTest extends BulkTest {
     }
 
     public void testLazyMapFactory() {
-        final Factory<Integer> factory = FactoryUtils.constantFactory(new Integer(5));
+        final Factory<Integer> factory = FactoryUtils.constantFactory(Integer.valueOf(5));
         Map<Object, Object> map = MapUtils.lazyMap(new HashMap<Object, Object>(), factory);
         assertTrue(map instanceof LazyMap);
         try {
@@ -121,7 +121,7 @@ public class MapUtilsTest extends BulkTest {
         final Map<Object, Object> map = MapUtils.lazyMap(new HashMap<Object, Object>(), new Transformer<Object, Object>() {
             public Object transform(final Object mapKey) {
                 if (mapKey instanceof String) {
-                    return new Integer((String) mapKey);
+                    return Integer.valueOf((String) mapKey);
                 }
                 return null;
             }
@@ -129,10 +129,10 @@ public class MapUtilsTest extends BulkTest {
 
         assertEquals(0, map.size());
         final Integer i1 = (Integer) map.get("5");
-        assertEquals(new Integer(5), i1);
+        assertEquals(Integer.valueOf(5), i1);
         assertEquals(1, map.size());
         final Integer i2 = (Integer) map.get(new String(new char[] {'5'}));
-        assertEquals(new Integer(5), i2);
+        assertEquals(Integer.valueOf(5), i2);
         assertEquals(1, map.size());
         assertSame(i1, i2);
     }
@@ -772,10 +772,10 @@ public class MapUtilsTest extends BulkTest {
         assertEquals(list.size(), map.size());
 
         for (int i = 0; i < list.size(); i++) {
-            assertEquals(true, map.containsKey(new Integer(list.get(i))));
+            assertEquals(true, map.containsKey(Integer.valueOf(list.get(i))));
             assertEquals(false, map.containsKey(list.get(i)));
             assertEquals(true, map.containsValue(list.get(i)));
-            assertEquals(list.get(i), map.get(new Integer(list.get(i))));
+            assertEquals(list.get(i), map.get(Integer.valueOf(list.get(i))));
         }
 
         // Now test both Key-Value transform population
@@ -784,10 +784,10 @@ public class MapUtilsTest extends BulkTest {
 
         assertEquals(list.size(), map.size());
         for (int i = 0; i < list.size(); i++) {
-            assertEquals(true, map.containsKey(new Integer(list.get(i))));
+            assertEquals(true, map.containsKey(Integer.valueOf(list.get(i))));
             assertEquals(false, map.containsKey(list.get(i)));
-            assertEquals(true, map.containsValue(new Integer(list.get(i))));
-            assertEquals(new Integer(list.get(i)), map.get(new Integer(list.get(i))));
+            assertEquals(true, map.containsValue(Integer.valueOf(list.get(i))));
+            assertEquals(Integer.valueOf(list.get(i)), map.get(Integer.valueOf(list.get(i))));
         }
     }
 

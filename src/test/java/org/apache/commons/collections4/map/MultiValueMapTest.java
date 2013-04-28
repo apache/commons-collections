@@ -178,7 +178,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     @SuppressWarnings("unchecked")
     public void testMapEquals() {
         final MultiValueMap<K, V> one = new MultiValueMap<K, V>();
-        final Integer value = new Integer(1);
+        final Integer value = Integer.valueOf(1);
         one.put((K) "One", value);
         one.remove("One", value);
 

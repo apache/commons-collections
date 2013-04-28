@@ -157,7 +157,7 @@ public class ListUtilsTest extends BulkTest {
 
             public Integer create() {
                 index++;
-                return new Integer(index);
+                return Integer.valueOf(index);
             }
         });
 

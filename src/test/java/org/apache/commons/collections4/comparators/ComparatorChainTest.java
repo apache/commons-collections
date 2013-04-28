@@ -56,8 +56,8 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
     @Test
     public void testNoopComparatorChain() {
         final ComparatorChain<Integer> chain = new ComparatorChain<Integer>();
-        final Integer i1 = new Integer(4);
-        final Integer i2 = new Integer(6);
+        final Integer i1 = Integer.valueOf(4);
+        final Integer i2 = Integer.valueOf(6);
         chain.addComparator(new ComparableComparator<Integer>());
 
         final int correctValue = i1.compareTo(i2);
@@ -67,8 +67,8 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
     @Test
     public void testBadNoopComparatorChain() {
         final ComparatorChain<Integer> chain = new ComparatorChain<Integer>();
-        final Integer i1 = new Integer(4);
-        final Integer i2 = new Integer(6);
+        final Integer i1 = Integer.valueOf(4);
+        final Integer i2 = Integer.valueOf(6);
         try {
             chain.compare(i1,i2);
             fail("An exception should be thrown when a chain contains zero comparators.");
@@ -81,8 +81,8 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
         final List<Comparator<Integer>> list = new LinkedList<Comparator<Integer>>();
         list.add(new ComparableComparator<Integer>());
         final ComparatorChain<Integer> chain = new ComparatorChain<Integer>(list);
-        final Integer i1 = new Integer(4);
-        final Integer i2 = new Integer(6);
+        final Integer i1 = Integer.valueOf(4);
+        final Integer i2 = Integer.valueOf(6);
 
         final int correctValue = i1.compareTo(i2);
         assertTrue("Comparison returns the right order", chain.compare(i1, i2) == correctValue);
@@ -92,8 +92,8 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
     public void testBadListComparatorChain() {
         final List<Comparator<Integer>> list = new LinkedList<Comparator<Integer>>();
         final ComparatorChain<Integer> chain = new ComparatorChain<Integer>(list);
-        final Integer i1 = new Integer(4);
-        final Integer i2 = new Integer(6);
+        final Integer i1 = Integer.valueOf(4);
+        final Integer i2 = Integer.valueOf(6);
         try {
             chain.compare(i1, i2);
             fail("An exception should be thrown when a chain contains zero comparators.");
@@ -119,9 +119,9 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
             }
         }, true);
 
-        assertTrue(chain.compare(new Integer(4), new Integer(5)) > 0);
-        assertTrue(chain.compare(new Integer(5), new Integer(4)) < 0);
-        assertTrue(chain.compare(new Integer(4), new Integer(4)) == 0);
+        assertTrue(chain.compare(Integer.valueOf(4), Integer.valueOf(5)) > 0);
+        assertTrue(chain.compare(Integer.valueOf(5), Integer.valueOf(4)) < 0);
+        assertTrue(chain.compare(Integer.valueOf(4), Integer.valueOf(4)) == 0);
     }
 
     @Override
