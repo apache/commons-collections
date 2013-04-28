@@ -34,10 +34,10 @@ import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrengt
  */
 public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
-    private static final Integer I1A = Integer.valueOf(1);
-    private static final Integer I1B = Integer.valueOf(1);
-    private static final Integer I2A = Integer.valueOf(2);
-    private static final Integer I2B = Integer.valueOf(2);
+    private static final Integer I1A = new Integer(1); // Cannot use valueOf here
+    private static final Integer I1B = new Integer(1);
+    private static final Integer I2A = new Integer(2);
+    private static final Integer I2B = new Integer(2);
 
     public ReferenceIdentityMapTest(final String testName) {
         super(testName);

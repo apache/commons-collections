@@ -1343,8 +1343,8 @@ public class CollectionUtilsTest extends MockTestCase {
     @Test
     public void intersectionUsesMethodEquals() {
         // Let elta and eltb be objects...
-        final Integer elta = Integer.valueOf(17);
-        final Integer eltb = Integer.valueOf(17);
+        final Integer elta = new Integer(17); // Cannot use valueOf here
+        final Integer eltb = new Integer(17);
 
         // ...which are equal...
         assertEquals(elta, eltb);
