@@ -137,13 +137,13 @@ public class ListUtilsTest extends BulkTest {
         List<Object> list = ListUtils.predicatedList(new ArrayList<Object>(), predicate);
         assertTrue("returned object should be a PredicatedList", list instanceof PredicatedList);
         try {
-            list = ListUtils.predicatedList(new ArrayList<Object>(), null);
+            ListUtils.predicatedList(new ArrayList<Object>(), null);
             fail("Expecting IllegalArgumentException for null predicate.");
         } catch (final IllegalArgumentException ex) {
             // expected
         }
         try {
-            list = ListUtils.predicatedList(null, predicate);
+            ListUtils.predicatedList(null, predicate);
             fail("Expecting IllegalArgumentException for null list.");
         } catch (final IllegalArgumentException ex) {
             // expected

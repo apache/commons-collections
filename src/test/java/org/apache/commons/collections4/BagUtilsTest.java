@@ -64,7 +64,7 @@ public class BagUtilsTest extends BulkTest {
         assertTrue("Returned object should be a SynchronizedBag.",
             bag instanceof SynchronizedBag);
         try {
-            bag = BagUtils.synchronizedBag(null);
+            BagUtils.synchronizedBag(null);
             fail("Expecting IllegalArgumentException for null bag.");
         } catch (final IllegalArgumentException ex) {
             // expected
@@ -76,7 +76,7 @@ public class BagUtilsTest extends BulkTest {
         assertTrue("Returned object should be an UnmodifiableBag.",
             bag instanceof UnmodifiableBag);
         try {
-            bag = BagUtils.unmodifiableBag(null);
+            BagUtils.unmodifiableBag(null);
             fail("Expecting IllegalArgumentException for null bag.");
         } catch (final IllegalArgumentException ex) {
             // expected
@@ -88,13 +88,13 @@ public class BagUtilsTest extends BulkTest {
         assertTrue("Returned object should be a PredicatedBag.",
             bag instanceof PredicatedBag);
         try {
-            bag = BagUtils.predicatedBag(null,truePredicate);
+            BagUtils.predicatedBag(null,truePredicate);
             fail("Expecting IllegalArgumentException for null bag.");
         } catch (final IllegalArgumentException ex) {
             // expected
         }
         try {
-            bag = BagUtils.predicatedBag(new HashBag<Object>(), null);
+            BagUtils.predicatedBag(new HashBag<Object>(), null);
             fail("Expecting IllegalArgumentException for null predicate.");
         } catch (final IllegalArgumentException ex) {
             // expected
@@ -106,13 +106,13 @@ public class BagUtilsTest extends BulkTest {
         assertTrue("Returned object should be an TransformedBag.",
             bag instanceof TransformedBag);
         try {
-            bag = BagUtils.transformingBag(null, nopTransformer);
+            BagUtils.transformingBag(null, nopTransformer);
             fail("Expecting IllegalArgumentException for null bag.");
         } catch (final IllegalArgumentException ex) {
             // expected
         }
         try {
-            bag = BagUtils.transformingBag(new HashBag<Object>(), null);
+            BagUtils.transformingBag(new HashBag<Object>(), null);
             fail("Expecting IllegalArgumentException for null transformer.");
         } catch (final IllegalArgumentException ex) {
             // expected
@@ -124,7 +124,7 @@ public class BagUtilsTest extends BulkTest {
         assertTrue("Returned object should be a SynchronizedSortedBag.",
             bag instanceof SynchronizedSortedBag);
         try {
-            bag = BagUtils.synchronizedSortedBag(null);
+            BagUtils.synchronizedSortedBag(null);
             fail("Expecting IllegalArgumentException for null bag.");
         } catch (final IllegalArgumentException ex) {
             // expected
@@ -136,7 +136,7 @@ public class BagUtilsTest extends BulkTest {
         assertTrue("Returned object should be an UnmodifiableSortedBag.",
             bag instanceof UnmodifiableSortedBag);
         try {
-            bag = BagUtils.unmodifiableSortedBag(null);
+            BagUtils.unmodifiableSortedBag(null);
             fail("Expecting IllegalArgumentException for null bag.");
         } catch (final IllegalArgumentException ex) {
             // expected
@@ -148,13 +148,13 @@ public class BagUtilsTest extends BulkTest {
         assertTrue("Returned object should be a PredicatedSortedBag.",
             bag instanceof PredicatedSortedBag);
         try {
-            bag = BagUtils.predicatedSortedBag(null, truePredicate);
+            BagUtils.predicatedSortedBag(null, truePredicate);
             fail("Expecting IllegalArgumentException for null bag.");
         } catch (final IllegalArgumentException ex) {
             // expected
         }
         try {
-            bag = BagUtils.predicatedSortedBag(new TreeBag<Object>(), null);
+            BagUtils.predicatedSortedBag(new TreeBag<Object>(), null);
             fail("Expecting IllegalArgumentException for null predicate.");
         } catch (final IllegalArgumentException ex) {
             // expected
@@ -166,13 +166,13 @@ public class BagUtilsTest extends BulkTest {
         assertTrue("Returned object should be an TransformedSortedBag",
             bag instanceof TransformedSortedBag);
         try {
-            bag = BagUtils.transformingSortedBag(null, nopTransformer);
+            BagUtils.transformingSortedBag(null, nopTransformer);
             fail("Expecting IllegalArgumentException for null bag.");
         } catch (final IllegalArgumentException ex) {
             // expected
         }
         try {
-            bag = BagUtils.transformingSortedBag(new TreeBag<Object>(), null);
+            BagUtils.transformingSortedBag(new TreeBag<Object>(), null);
             fail("Expecting IllegalArgumentException for null transformer.");
         } catch (final IllegalArgumentException ex) {
             // expected

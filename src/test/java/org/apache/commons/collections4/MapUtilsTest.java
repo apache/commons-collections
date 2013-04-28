@@ -77,7 +77,7 @@ public class MapUtilsTest extends BulkTest {
         Map<Object, Object> map = MapUtils.predicatedMap(new HashMap<Object, Object>(), p, p);
         assertTrue("returned object should be a PredicatedMap", map instanceof PredicatedMap);
         try {
-            map = MapUtils.predicatedMap(null, p, p);
+            MapUtils.predicatedMap(null, p, p);
             fail("Expecting IllegalArgumentException for null map.");
         } catch (final IllegalArgumentException e) {
             // expected

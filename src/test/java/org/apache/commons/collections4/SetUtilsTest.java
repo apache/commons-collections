@@ -54,13 +54,13 @@ public class SetUtilsTest extends BulkTest {
         Set<Object> set = SetUtils.predicatedSet(new HashSet<Object>(), predicate);
         assertTrue("returned object should be a PredicatedSet", set instanceof PredicatedSet);
         try {
-            set = SetUtils.predicatedSet(new HashSet<Object>(), null);
+            SetUtils.predicatedSet(new HashSet<Object>(), null);
             fail("Expecting IllegalArgumentException for null predicate.");
         } catch (final IllegalArgumentException ex) {
             // expected
         }
         try {
-            set = SetUtils.predicatedSet(null, predicate);
+            SetUtils.predicatedSet(null, predicate);
             fail("Expecting IllegalArgumentException for null set.");
         } catch (final IllegalArgumentException ex) {
             // expected

@@ -1279,7 +1279,7 @@ public class CollectionUtilsTest extends MockTestCase {
         Collection<Number> collection = CollectionUtils.predicatedCollection(new ArrayList<Number>(), predicate);
         assertTrue("returned object should be a PredicatedCollection", collection instanceof PredicatedCollection);
         try {
-            collection = CollectionUtils.predicatedCollection(new ArrayList<Number>(), null);
+            CollectionUtils.predicatedCollection(new ArrayList<Number>(), null);
             fail("Expecting IllegalArgumentException for null predicate.");
         } catch (final IllegalArgumentException ex) {
             // expected
@@ -1454,13 +1454,13 @@ public class CollectionUtilsTest extends MockTestCase {
         Collection<Object> collection = CollectionUtils.transformingCollection(new ArrayList<Object>(), transformer);
         assertTrue("returned object should be a TransformedCollection", collection instanceof TransformedCollection);
         try {
-            collection = CollectionUtils.transformingCollection(new ArrayList<Object>(), null);
+            CollectionUtils.transformingCollection(new ArrayList<Object>(), null);
             fail("Expecting IllegalArgumentException for null transformer.");
         } catch (final IllegalArgumentException ex) {
             // expected
         }
         try {
-            collection = CollectionUtils.transformingCollection(null, transformer);
+            CollectionUtils.transformingCollection(null, transformer);
             fail("Expecting IllegalArgumentException for null collection.");
         } catch (final IllegalArgumentException ex) {
             // expected
@@ -1484,7 +1484,7 @@ public class CollectionUtilsTest extends MockTestCase {
         Collection<Object> col = CollectionUtils.synchronizedCollection(new ArrayList<Object>());
         assertTrue("Returned object should be a SynchronizedCollection.", col instanceof SynchronizedCollection);
         try {
-            col = CollectionUtils.synchronizedCollection(null);
+            CollectionUtils.synchronizedCollection(null);
             fail("Expecting IllegalArgumentException for null collection.");
         } catch (final IllegalArgumentException ex) {
             // expected
@@ -1496,7 +1496,7 @@ public class CollectionUtilsTest extends MockTestCase {
         Collection<Object> col = CollectionUtils.unmodifiableCollection(new ArrayList<Object>());
         assertTrue("Returned object should be a UnmodifiableCollection.", col instanceof UnmodifiableCollection);
         try {
-            col = CollectionUtils.unmodifiableCollection(null);
+            CollectionUtils.unmodifiableCollection(null);
             fail("Expecting IllegalArgumentException for null collection.");
         } catch (final IllegalArgumentException ex) {
             // expected
