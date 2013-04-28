@@ -84,7 +84,7 @@ public class PermutationIterator<E> implements Iterator<List<E>> {
         int value = 1;
         objectMap = new HashMap<Integer, E>();
         for (E e : coll) {
-            objectMap.put(value, e);
+            objectMap.put(Integer.valueOf(value), e);
             keys[value - 1] = value;
             value++;
         }
@@ -142,7 +142,7 @@ public class PermutationIterator<E> implements Iterator<List<E>> {
             if (keys[i] > largestKey) {
                 direction[i] = !direction[i];
             }
-            nextP.add(objectMap.get(keys[i]));
+            nextP.add(objectMap.get(Integer.valueOf(keys[i])));
         }
         final List<E> result = nextPermutation;
         nextPermutation = nextP;
