@@ -91,6 +91,25 @@ public class SequencesComparator<T> {
     }
 
     /**
+     * Get the {@link EditScript} object.
+     * <p>
+     * It is guaranteed that the objects embedded in the {@link InsertCommand
+     * insert commands} come from the second sequence and that the objects
+     * embedded in either the {@link DeleteCommand delete commands} or
+     * {@link KeepCommand keep commands} come from the first sequence. This can
+     * be important if subclassing is used for some elements in the first
+     * sequence and the <code>equals</code> method is specialized.
+     * 
+     * @return the edit script resulting from the comparison of the two
+     *         sequences
+     */
+    public EditScript<T> getScript() {
+        final EditScript<T> script = new EditScript<T>();
+        buildScript(0, sequence1.size(), 0, sequence2.size(), script);
+        return script;
+    }
+
+    /**
      * Build a snake.
      *
      * @param start  the value of the start of the snake
@@ -250,22 +269,58 @@ public class SequencesComparator<T> {
     }
 
     /**
-     * Get the {@link EditScript} object.
-     * <p>
-     * It is guaranteed that the objects embedded in the {@link InsertCommand
-     * insert commands} come from the second sequence and that the objects
-     * embedded in either the {@link DeleteCommand delete commands} or
-     * {@link KeepCommand keep commands} come from the first sequence. This can
-     * be important if subclassing is used for some elements in the first
-     * sequence and the <code>equals</code> method is specialized.
-     * 
-     * @return the edit script resulting from the comparison of the two
-     *         sequences
+     * This class is a simple placeholder to hold the end part of a path
+     * under construction in a {@link SequencesComparator SequencesComparator}.
      */
-    public EditScript<T> getScript() {
-        final EditScript<T> script = new EditScript<T>();
-        buildScript(0, sequence1.size(), 0, sequence2.size(), script);
-        return script;
-    }
+    private static class Snake {
 
+        /** Start index. */
+        private final int start;
+
+        /** End index. */
+        private final int end;
+
+        /** Diagonal number. */
+        private final int diag;
+
+        /**
+         * Simple constructor. Creates a new instance of Snake with specified indices.
+         *
+         * @param start  start index of the snake
+         * @param end  end index of the snake
+         * @param diag  diagonal number
+         */ 
+        public Snake(final int start, final int end, final int diag) {
+            this.start = start;
+            this.end   = end;
+            this.diag  = diag;
+        }
+
+        /**
+         * Get the start index of the snake.
+         *
+         * @return start index of the snake
+         */
+        public int getStart() {
+            return start;
+        }
+
+        /**
+         * Get the end index of the snake.
+         *
+         * @return end index of the snake
+         */
+        public int getEnd() {
+            return end;
+        }
+
+        /**
+         * Get the diagonal number of the snake.
+         *
+         * @return diagonal number of the snake
+         */  
+        public int getDiag() {
+            return diag;
+        }
+    }
 }
