@@ -213,7 +213,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
             --removeIndex;
         }
         if (!removeState || wrappedIteratorIndex - currentIndex > 1) {
-            throw new IllegalStateException(MessageFormat.format(CANNOT_REMOVE_MESSAGE, removeIndex));
+            throw new IllegalStateException(MessageFormat.format(CANNOT_REMOVE_MESSAGE, Integer.valueOf(removeIndex)));
         }
         iterator.remove();
         list.remove(removeIndex);
