@@ -423,6 +423,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
         final Iterator<K> keyIterator = allKeys.iterator();
         
         return new LazyIteratorChain<Entry<K, V>>() {
+            @Override
             protected Iterator<? extends Entry<K, V>> nextIterator(int count) {
                 if ( ! keyIterator.hasNext() ) {
                     return null;
