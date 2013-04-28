@@ -67,6 +67,6 @@ public abstract class AbstractKeyAnalyzer<K> implements KeyAnalyzer<K> {
      * {@link Integer#MAX_VALUE}
      */
     static boolean isValidBitIndex(final int bitIndex) {
-        return 0 <= bitIndex && bitIndex <= Integer.MAX_VALUE;
+        return bitIndex >= 0;
     }
 }
