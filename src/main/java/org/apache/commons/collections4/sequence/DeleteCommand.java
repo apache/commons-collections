@@ -14,15 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.comparators.sequence;
+package org.apache.commons.collections4.sequence;
 
 /**
- * Command representing the keeping of one object present in both sequences.
+ * Command representing the deletion of one object of the first sequence.
  * <p>
- * When one object of the first sequence <code>equals</code> another objects in
- * the second sequence at the right place, the {@link EditScript edit script}
+ * When one object of the first sequence has no corresponding object in the
+ * second sequence at the right place, the {@link EditScript edit script}
  * transforming the first sequence into the second sequence uses an instance of
- * this class to represent the keeping of this object. The objects embedded in
+ * this class to represent the deletion of this object. The objects embedded in
  * these type of commands always come from the first sequence.
  * 
  * @see SequencesComparator
@@ -31,27 +31,25 @@ package org.apache.commons.collections4.comparators.sequence;
  * @since 4.0
  * @version $Id$
  */
-public class KeepCommand<T> extends EditCommand<T> {
+public class DeleteCommand<T> extends EditCommand<T> {
 
     /**
-     * Simple constructor. Creates a new instance of KeepCommand
-     * 
-     * @param object  the object belonging to both sequences (the object is a
-     *   reference to the instance in the first sequence which is known
-     *   to be equal to an instance in the second sequence)
+     * Simple constructor. Creates a new instance of {@link DeleteCommand}.
+     *
+     * @param object  the object of the first sequence that should be deleted
      */
-    public KeepCommand(final T object) {
+    public DeleteCommand(final T object) {
         super(object);
     }
 
     /**
-     * Accept a visitor. When a <code>KeepCommand</code> accepts a visitor, it
-     * calls its {@link CommandVisitor#visitKeepCommand visitKeepCommand} method.
+     * Accept a visitor. When a <code>DeleteCommand</code> accepts a visitor, it calls
+     * its {@link CommandVisitor#visitDeleteCommand visitDeleteCommand} method.
      * 
      * @param visitor  the visitor to be accepted
-     */
+     */    
     @Override
     public void accept(final CommandVisitor<T> visitor) {
-        visitor.visitKeepCommand(getObject());
-    }
+        visitor.visitDeleteCommand(getObject());
+    }    
 }
