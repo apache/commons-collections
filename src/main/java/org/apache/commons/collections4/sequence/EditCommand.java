@@ -48,7 +48,7 @@ package org.apache.commons.collections4.sequence;
 public abstract class EditCommand<T> {
 
     /** Object on which the command should be applied. */
-    private T object;
+    private final T object;
 
     /**
      * Simple constructor. Creates a new instance of EditCommand
