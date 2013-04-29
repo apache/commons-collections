@@ -51,7 +51,7 @@ public class InsertCommand<T> extends EditCommand<T> {
      */
     @Override
     public void accept(final CommandVisitor<T> visitor) {
-        visitor.visitInsertCommand(object);
+        visitor.visitInsertCommand(getObject());
     }
 
 }

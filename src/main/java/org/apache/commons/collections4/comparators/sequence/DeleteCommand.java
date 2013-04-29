@@ -50,6 +50,6 @@ public class DeleteCommand<T> extends EditCommand<T> {
      */    
     @Override
     public void accept(final CommandVisitor<T> visitor) {
-        visitor.visitDeleteCommand(object);
+        visitor.visitDeleteCommand(getObject());
     }    
 }

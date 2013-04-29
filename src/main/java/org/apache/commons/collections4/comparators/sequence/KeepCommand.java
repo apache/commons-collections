@@ -52,6 +52,6 @@ public class KeepCommand<T> extends EditCommand<T> {
      */
     @Override
     public void accept(final CommandVisitor<T> visitor) {
-        visitor.visitKeepCommand(object);
+        visitor.visitKeepCommand(getObject());
     }
 }

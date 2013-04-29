@@ -47,6 +47,9 @@ package org.apache.commons.collections4.comparators.sequence;
  */
 public abstract class EditCommand<T> {
 
+    /** Object on which the command should be applied. */
+    private T object;
+
     /**
      * Simple constructor. Creates a new instance of EditCommand
      * 
@@ -58,6 +61,15 @@ public abstract class EditCommand<T> {
     }
 
     /**
+     * Returns the object associated with this command.
+     *
+     * @return the object on which the command is applied
+     */
+    protected T getObject() {
+        return object;
+    }
+
+    /**
      * Accept a visitor.
      * <p>
      * This method is invoked for each commands belonging to
@@ -66,8 +78,5 @@ public abstract class EditCommand<T> {
      * @param visitor  the visitor to be accepted
      */
     public abstract void accept(CommandVisitor<T> visitor);
-
-    /** Object on which the command should be applied. */
-    protected T object;
 
 }
