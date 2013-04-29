@@ -59,7 +59,7 @@ package org.apache.commons.collections4.sequence;
  *     return a.toArray();
  *   }
  * 
- *   private arrayList a;
+ *   private ArrayList a;
  * 
  * }
  * </pre>
