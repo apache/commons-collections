@@ -380,23 +380,23 @@ public class ListOrderedSet<E>
 
         @Override
         public E next() {
-            last = iterator.next();
+            last = getIterator().next();
             return last;
         }
 
         @Override
         public void remove() {
             set.remove(last);
-            iterator.remove();
+            getIterator().remove();
             last = null;
         }
 
         public boolean hasPrevious() {
-            return ((ListIterator<E>) iterator).hasPrevious();
+            return ((ListIterator<E>) getIterator()).hasPrevious();
         }
 
         public E previous() {
-            last = ((ListIterator<E>) iterator).previous();
+            last = ((ListIterator<E>) getIterator()).previous();
             return last;
         }
     }

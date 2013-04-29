@@ -155,13 +155,13 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
         @Override
         public void add(final E object) {
             validate(object);
-            iterator.add(object);
+            getListIterator().add(object);
         }
         
         @Override
         public void set(final E object) {
             validate(object);
-            iterator.set(object);
+            getListIterator().set(object);
         }
     }
 

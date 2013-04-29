@@ -59,10 +59,10 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
     private static final long serialVersionUID = 721969328361809L;
 
     /** The key comparator to use */
-    protected final Comparator<? super K> comparator;
+    private final Comparator<? super K> comparator;
 
     /** The value comparator to use */
-    protected final Comparator<? super V> valueComparator;
+    private final Comparator<? super V> valueComparator;
     
     /**
      * Creates an empty <code>DualTreeBidiMap</code>

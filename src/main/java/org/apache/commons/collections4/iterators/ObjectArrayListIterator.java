@@ -46,7 +46,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      * has yet been invoked. <code>lastItemIndex</code> is used to to implement the
      * {@link #set} method.
      */
-    protected int lastItemIndex = -1;
+    private int lastItemIndex = -1;
 
     /**
      * Constructor for use with <code>setArray</code>.

@@ -45,10 +45,10 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
     private static final long serialVersionUID = 8417515734108306801L;
 
     /** CollectionMutator to handle changes to the collection */
-    protected CollectionMutator<E> mutator;
+    private CollectionMutator<E> mutator;
 
     /** Collections in the composite */
-    protected List<Collection<E>> all = new ArrayList<Collection<E>>();
+    private final List<Collection<E>> all = new ArrayList<Collection<E>>();
 
     /**
      * Create an empty CompositeCollection.

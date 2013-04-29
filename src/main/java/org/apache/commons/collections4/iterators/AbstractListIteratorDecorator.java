@@ -29,7 +29,7 @@ import java.util.ListIterator;
 public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
 
     /** The iterator being decorated */
-    protected final ListIterator<E> iterator;
+    private final ListIterator<E> iterator;
 
     //-----------------------------------------------------------------------
     /**

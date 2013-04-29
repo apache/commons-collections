@@ -178,13 +178,13 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
         @Override
         public void add(E object) {
             object = transform(object);
-            iterator.add(object);
+            getListIterator().add(object);
         }
 
         @Override
         public void set(E object) {
             object = transform(object);
-            iterator.set(object);
+            getListIterator().set(object);
         }
     }
 

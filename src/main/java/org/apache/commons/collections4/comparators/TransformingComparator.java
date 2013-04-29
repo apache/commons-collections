@@ -41,9 +41,9 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
     private static final long serialVersionUID = 3456940356043606220L;
 
     /** The decorated comparator. */
-    protected final Comparator<O> decorated;
+    private final Comparator<O> decorated;
     /** The transformer being used. */    
-    protected final Transformer<? super I, ? extends O> transformer;
+    private final Transformer<? super I, ? extends O> transformer;
 
     //-----------------------------------------------------------------------
     /**

@@ -154,7 +154,7 @@ public final class UnmodifiableEntrySet<K, V>
 
         @Override
         public Map.Entry<K, V> next() {
-            return new UnmodifiableEntry(iterator.next());
+            return new UnmodifiableEntry(getIterator().next());
         }
 
         @Override

@@ -44,7 +44,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     private static final long serialVersionUID = 2412805092710877986L;
 
     /** The collection to decorate */
-    protected final Collection<E> collection;
+    private final Collection<E> collection;
     /** The object to lock on, needed for List/SortedSet views */
     protected final Object lock;
 

@@ -30,7 +30,7 @@ import org.apache.commons.collections4.KeyValue;
 public abstract class AbstractMapEntryDecorator<K, V> implements Map.Entry<K, V>, KeyValue<K, V> {
     
     /** The <code>Map.Entry</code> to decorate */
-    protected final Map.Entry<K, V> entry;
+    private final Map.Entry<K, V> entry;
 
     /**
      * Constructor that wraps (not copies).

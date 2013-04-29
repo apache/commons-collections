@@ -48,25 +48,25 @@ import org.apache.commons.collections4.list.UnmodifiableList;
 public class IteratorChain<E> implements Iterator<E> {
 
     /** The chain of iterators */
-    protected final List<Iterator<? extends E>> iteratorChain = new ArrayList<Iterator<? extends E>>();
+    private final List<Iterator<? extends E>> iteratorChain = new ArrayList<Iterator<? extends E>>();
 
     /** The index of the current iterator */
-    protected int currentIteratorIndex = 0;
+    private int currentIteratorIndex = 0;
 
     /** The current iterator */
-    protected Iterator<? extends E> currentIterator = null;
+    private Iterator<? extends E> currentIterator = null;
 
     /**
      * The "last used" Iterator is the Iterator upon which next() or hasNext()
      * was most recently called used for the remove() operation only
      */
-    protected Iterator<? extends E> lastUsedIterator = null;
+    private Iterator<? extends E> lastUsedIterator = null;
 
     /**
      * ComparatorChain is "locked" after the first time compare(Object,Object)
      * is called
      */
-    protected boolean isLocked = false;
+    private boolean isLocked = false;
 
     //-----------------------------------------------------------------------
     /**

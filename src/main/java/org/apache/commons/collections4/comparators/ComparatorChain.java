@@ -53,11 +53,11 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
     private static final long serialVersionUID = -721644942746081630L;
 
     /** The list of comparators in the chain. */
-    protected List<Comparator<E>> comparatorChain = null;
+    private final List<Comparator<E>> comparatorChain;
     /** Order - false (clear) = ascend; true (set) = descend. */
-    protected BitSet orderingBits = null;
+    private BitSet orderingBits = null;
    /** Whether the chain has been "locked". */
-    protected boolean isLocked = false;
+    private boolean isLocked = false;
 
     //-----------------------------------------------------------------------
     /**

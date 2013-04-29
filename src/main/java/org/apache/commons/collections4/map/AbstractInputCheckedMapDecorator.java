@@ -178,7 +178,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
 
         @Override
         public Map.Entry<K, V> next() {
-            final Map.Entry<K, V> entry = iterator.next();
+            final Map.Entry<K, V> entry = getIterator().next();
             return new MapEntry(entry, parent);
         }
     }
@@ -199,7 +199,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
         @Override
         public V setValue(V value) {
             value = parent.checkSetValue(value);
-            return entry.setValue(value);
+            return getMapEntry().setValue(value);
         }
     }
 

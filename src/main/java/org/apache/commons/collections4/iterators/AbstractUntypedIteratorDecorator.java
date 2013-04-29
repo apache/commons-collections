@@ -30,7 +30,7 @@ import java.util.Iterator;
 public abstract class AbstractUntypedIteratorDecorator<I, O> implements Iterator<O> {
 
     /** The iterator being decorated */
-    protected final Iterator<I> iterator;
+    private final Iterator<I> iterator;
 
     /**
      * Create a new AbstractUntypedIteratorDecorator.

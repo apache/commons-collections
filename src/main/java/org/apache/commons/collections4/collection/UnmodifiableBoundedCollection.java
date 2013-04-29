@@ -82,7 +82,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
             if (coll instanceof AbstractCollectionDecorator) {
                 coll = ((AbstractCollectionDecorator<E>) coll).collection;
             } else if (coll instanceof SynchronizedCollection) {
-                coll = ((SynchronizedCollection<E>) coll).collection;
+                coll = ((SynchronizedCollection<E>) coll).decorated();
             }
         }
 

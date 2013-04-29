@@ -29,7 +29,7 @@ import org.apache.commons.collections4.OrderedMapIterator;
 public class AbstractOrderedMapIteratorDecorator<K, V> implements OrderedMapIterator<K, V> {
 
     /** The iterator being decorated */
-    protected final OrderedMapIterator<K, V> iterator;
+    private final OrderedMapIterator<K, V> iterator;
 
     //-----------------------------------------------------------------------
     /**

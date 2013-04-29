@@ -29,7 +29,7 @@ import org.apache.commons.collections4.MapIterator;
 public class AbstractMapIteratorDecorator<K, V> implements MapIterator<K, V> {
 
     /** The iterator being decorated */
-    protected final MapIterator<K, V> iterator;
+    private final MapIterator<K, V> iterator;
 
     //-----------------------------------------------------------------------
     /**

@@ -78,7 +78,7 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
      * @return the decorated bag
      */
     protected Bag<E> getBag() {
-        return (Bag<E>) collection;
+        return (Bag<E>) decorated();
     }
     
     //-----------------------------------------------------------------------

@@ -1610,13 +1610,13 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     abstract class ViewIterator {
 
         /** Whether to return KEY or VALUE order. */
-        protected final DataElement orderType;
+        private final DataElement orderType;
         /** The last node returned by the iterator. */
-        protected Node<K, V> lastReturnedNode;
+        Node<K, V> lastReturnedNode;
         /** The next node to be returned by the iterator. */
-        protected Node<K, V> nextNode;
+        private Node<K, V> nextNode;
         /** The previous node in the sequence returned by the iterator. */
-        protected Node<K, V> previousNode;
+        private Node<K, V> previousNode;
         /** The modification count. */
         private int expectedModifications;
 
