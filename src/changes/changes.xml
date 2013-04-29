@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-456" dev="tn" type="add">
+      Added method "ListUtils#longestCommonSubsequence(List, List)".
+    </action>
     <action issue="COLLECTIONS-454" dev="tn" type="update">
       An iterator over a "Flat3Map#entrySet()" will now return
       independent Map.Entry objects that will not change anymore when
@@ -135,7 +138,7 @@
     </action>
     <action issue="COLLECTIONS-404" dev="luc" type="add" due-to="Jordane Sarda">
       Added an implementation of Eugene Myers difference algorithm in package
-      o.a.c.c.comparators.sequence.
+      o.a.c.c.sequence.
     </action>
     <action issue="COLLECTIONS-400" dev="tn" type="fix" due-to="Shin Hwei Tan">
       Added missing null check in "CollectionUtils#addIgnoreNull(Collection, Object)".

@@ -30,6 +30,9 @@ import org.apache.commons.collections4.list.LazyList;
 import org.apache.commons.collections4.list.PredicatedList;
 import org.apache.commons.collections4.list.TransformedList;
 import org.apache.commons.collections4.list.UnmodifiableList;
+import org.apache.commons.collections4.sequence.CommandVisitor;
+import org.apache.commons.collections4.sequence.EditScript;
+import org.apache.commons.collections4.sequence.SequencesComparator;
 
 /**
  * Provides utility methods and decorators for {@link List} instances.
@@ -489,6 +492,7 @@ public class ListUtils {
         return FixedSizeList.fixedSizeList(list);
     }
 
+    //-----------------------------------------------------------------------
     /**
      * Finds the first index in the given List which matches the given predicate.
      * <p>
@@ -512,6 +516,53 @@ public class ListUtils {
         return -1;
     }
 
+    //-----------------------------------------------------------------------
+    /**
+     * Returns the longest common subsequence (LCS) of two sequences (lists).
+     * 
+     * @param <T>  the element type
+     * @param a  the first list
+     * @param b  the second list
+     * @return the longest common subsequence
+     * @throws IllegalArgumentException if either list is {@code null}
+     * @since 4.0
+     */
+    public static <T> List<T> longestCommonSubsequence(final List<T> a, final List<T> b) {
+        if (a == null || b == null) {
+            throw new IllegalArgumentException("List must not be null");          
+        }
+
+        final SequencesComparator<T> comparator = new SequencesComparator<T>(a, b);
+        final EditScript<T> script = comparator.getScript();
+        final LcsVisitor<T> visitor = new LcsVisitor<T>();
+        script.visit(visitor);
+        return visitor.getSubSequence();
+    }
+
+    /**
+     * A helper class used to construct the longest common subsequence.
+     */
+    private static final class LcsVisitor<E> implements CommandVisitor<E> {
+        private ArrayList<E> sequence;
+
+        public LcsVisitor() {
+            sequence = new ArrayList<E>();
+        }
+
+        public void visitInsertCommand(final E object) {}
+
+        public void visitDeleteCommand(final E object) {}
+
+        public void visitKeepCommand(final E object) {
+            sequence.add(object);
+        }
+
+        public List<E> getSubSequence() {
+            return sequence;
+        }
+    }
+
+    //-----------------------------------------------------------------------
     /**
      * Returns consecutive {@link List#subList(int, int) sublists} of a
      * list, each of the same size (the final list may be smaller). For example,

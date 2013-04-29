@@ -31,6 +31,7 @@ import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.list.PredicatedList;
+import org.junit.Assert;
 
 /**
  * Tests for ListUtils.
@@ -309,6 +310,46 @@ public class ListUtilsTest extends BulkTest {
         
         assertEquals(ListUtils.indexOf(null,testPredicate), -1);
         assertEquals(ListUtils.indexOf(fullList, null), -1);
+    }
+    
+    public void testLongestCommonSubsequence() {
+        
+        try {
+            ListUtils.longestCommonSubsequence(null, null);
+            fail("failed to check for null argument");
+        } catch (final IllegalArgumentException e) {}
+
+        try {
+            ListUtils.longestCommonSubsequence(Arrays.asList('A'), null);
+            fail("failed to check for null argument");
+        } catch (final IllegalArgumentException e) {}
+
+        try {
+            ListUtils.longestCommonSubsequence(null, Arrays.asList('A'));
+            fail("failed to check for null argument");
+        } catch (final IllegalArgumentException e) {}
+
+        @SuppressWarnings("unchecked")
+        List<Character> lcs = ListUtils.longestCommonSubsequence(Collections.EMPTY_LIST, Collections.EMPTY_LIST);
+        assertTrue(lcs.isEmpty());
+
+        List<Character> list1 = Arrays.asList('B', 'A', 'N', 'A', 'N', 'A');
+        List<Character> list2 = Arrays.asList('A', 'N', 'A', 'N', 'A', 'S');
+        lcs = ListUtils.longestCommonSubsequence(list1, list2);
+        
+        List<Character> expected = Arrays.asList('A', 'N', 'A', 'N', 'A');
+        assertEquals(expected, lcs);
+
+        List<Character> list3 = Arrays.asList('A', 'T', 'A', 'N', 'A');
+        lcs = ListUtils.longestCommonSubsequence(list1, list3);
+        
+        expected = Arrays.asList('A', 'A', 'N', 'A');
+        assertEquals(expected, lcs);
+
+        List<Character> listZorro = Arrays.asList('Z', 'O', 'R', 'R', 'O');
+        lcs = ListUtils.longestCommonSubsequence(list1, listZorro);
+        
+        assertTrue(lcs.isEmpty());
     }
     
     public void testPartition() {
