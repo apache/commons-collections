@@ -45,7 +45,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      * <p>
      * This factory creates a closure that performs no action when
      * the predicate is false.
-     * 
+     *
      * @param <E> the type that the closure acts on
      * @param predicate  predicate to switch on
      * @param trueClosure  closure used if true
@@ -59,7 +59,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Factory method that performs validation.
-     * 
+     *
      * @param <E> the type that the closure acts on
      * @param predicate  predicate to switch on
      * @param trueClosure  closure used if true
@@ -85,7 +85,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      * <p>
      * This constructor creates a closure that performs no action when
      * the predicate is false.
-     * 
+     *
      * @param predicate  predicate to switch on, not null
      * @param trueClosure  closure used if true, not null
      * @since 3.2
@@ -97,7 +97,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
     /**
      * Constructor that performs no validation.
      * Use <code>ifClosure</code> if you want that.
-     * 
+     *
      * @param predicate  predicate to switch on, not null
      * @param trueClosure  closure used if true, not null
      * @param falseClosure  closure used if false, not null
@@ -112,7 +112,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Executes the true or false closure according to the result of the predicate.
-     * 
+     *
      * @param input  the input object
      */
     public void execute(final E input) {
@@ -125,7 +125,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Gets the predicate.
-     * 
+     *
      * @return the predicate
      * @since 3.1
      */
@@ -135,7 +135,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Gets the closure called when true.
-     * 
+     *
      * @return the closure
      * @since 3.1
      */
@@ -145,7 +145,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Gets the closure called when false.
-     * 
+     *
      * @return the closure
      * @since 3.1
      */

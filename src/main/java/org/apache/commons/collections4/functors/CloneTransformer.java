@@ -57,7 +57,7 @@ public class CloneTransformer<T> implements Transformer<T, T>, Serializable {
 
     /**
      * Transforms the input to result by cloning it.
-     * 
+     *
      * @param input  the input object to transform
      * @return the transformed result
      */

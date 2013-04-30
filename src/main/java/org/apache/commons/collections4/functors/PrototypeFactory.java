@@ -92,10 +92,10 @@ public class PrototypeFactory {
      * PrototypeCloneFactory creates objects by copying a prototype using the clone method.
      */
     static class PrototypeCloneFactory<T> implements Factory<T>, Serializable {
-        
+
         /** The serial version */
         private static final long serialVersionUID = 5604271422565175555L;
-        
+
         /** The object to clone each time */
         private final T iPrototype;
         /** The method used to clone */
@@ -123,7 +123,7 @@ public class PrototypeFactory {
 
         /**
          * Creates an object by calling the clone method.
-         * 
+         *
          * @return the new object
          */
         @SuppressWarnings("unchecked")
@@ -149,10 +149,10 @@ public class PrototypeFactory {
      * PrototypeSerializationFactory creates objects by cloning a prototype using serialization.
      */
     static class PrototypeSerializationFactory<T extends Serializable> implements Factory<T>, Serializable {
-        
+
         /** The serial version */
         private static final long serialVersionUID = -8704966966139178833L;
-        
+
         /** The object to clone via serialization each time */
         private final T iPrototype;
 
@@ -166,7 +166,7 @@ public class PrototypeFactory {
 
         /**
          * Creates an object using serialization.
-         * 
+         *
          * @return the new object
          */
         @SuppressWarnings("unchecked")

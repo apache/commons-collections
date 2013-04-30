@@ -37,7 +37,7 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
 
     /**
      * Factory method that performs validation.
-     * 
+     *
      * @param <I>  the input type
      * @param <O>  the output type
      * @param factory  the factory to call, not null
@@ -54,7 +54,7 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
     /**
      * Constructor that performs no validation.
      * Use <code>factoryTransformer</code> if you want that.
-     * 
+     *
      * @param factory  the factory to call, not null
      */
     public FactoryTransformer(final Factory<? extends O> factory) {
@@ -65,7 +65,7 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
     /**
      * Transforms the input by ignoring the input and returning the result of
      * calling the decorated factory.
-     * 
+     *
      * @param input  the input object to transform
      * @return the transformed result
      */
@@ -75,7 +75,7 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
 
     /**
      * Gets the factory.
-     * 
+     *
      * @return the factory
      * @since 3.1
      */

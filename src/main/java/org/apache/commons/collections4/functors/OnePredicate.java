@@ -36,7 +36,7 @@ public final class OnePredicate<T> extends AbstractQuantifierPredicate<T> implem
 
     /** Serial version UID */
     private static final long serialVersionUID = -8125389089924745785L;
-    
+
     /**
      * Factory to create the predicate.
      * <p>
@@ -78,7 +78,7 @@ public final class OnePredicate<T> extends AbstractQuantifierPredicate<T> implem
     /**
      * Constructor that performs no validation.
      * Use <code>onePredicate</code> if you want that.
-     * 
+     *
      * @param predicates  the predicates to check, not cloned, not null
      */
     public OnePredicate(final Predicate<? super T>[] predicates) {
@@ -88,7 +88,7 @@ public final class OnePredicate<T> extends AbstractQuantifierPredicate<T> implem
     /**
      * Evaluates the predicate returning true if only one decorated predicate
      * returns true.
-     * 
+     *
      * @param object  the input object
      * @return true if only one decorated predicate returns true
      */

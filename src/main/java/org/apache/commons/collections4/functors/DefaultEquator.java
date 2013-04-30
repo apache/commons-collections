@@ -20,7 +20,7 @@ import java.io.Serializable;
 
 /**
  * Default {@link Equator} implementation.
- * 
+ *
  * @param <T>  the types of object this {@link Equator} can evaluate.
  * @since 4.0
  * @version $Id$
@@ -40,7 +40,7 @@ public class DefaultEquator<T> implements Equator<T>, Serializable {
 
     /**
      * Factory returning the typed singleton instance.
-     * 
+     *
      * @param <T>  the object type
      * @return the singleton instance
      */
@@ -65,7 +65,7 @@ public class DefaultEquator<T> implements Equator<T>, Serializable {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @return <code>o.hashCode()</code> if <code>o</code> is non-
      *         <code>null</code>, else {@link #HASHCODE_NULL}.
      */

@@ -22,17 +22,17 @@ import org.apache.commons.collections4.FunctorException;
 /**
  * {@link Closure} that catches any checked exception and re-throws it as a
  * {@link FunctorException} runtime exception. Example usage:
- * 
+ *
  * <pre>
  * // Create a catch and re-throw closure via anonymous subclass
  * CatchAndRethrowClosure&lt;String&gt; writer = new ThrowingClosure() {
  *     private java.io.Writer out = // some writer
- *     
+ *
  *     protected void executeAndThrow(String input) throws IOException {
  *         out.write(input); // throwing of IOException allowed
  *     }
  * };
- * 
+ *
  * // use catch and re-throw closure
  * java.util.List<String> strList = // some list
  * try {
@@ -42,7 +42,7 @@ import org.apache.commons.collections4.FunctorException;
  *     // handle error
  * }
  * </pre>
- * 
+ *
  * @since 4.0
  * @version $Id$
  */
@@ -50,7 +50,7 @@ public abstract class CatchAndRethrowClosure<E> implements Closure<E> {
 
     /**
      * Execute this closure on the specified input object.
-     * 
+     *
      * @param input the input to execute on
      * @throws FunctorException (runtime) if the closure execution resulted in a
      *             checked exception.
@@ -67,7 +67,7 @@ public abstract class CatchAndRethrowClosure<E> implements Closure<E> {
 
     /**
      * Execute this closure on the specified input object.
-     * 
+     *
      * @param input the input to execute on
      * @throws Throwable if the closure execution resulted in a checked
      *             exception.

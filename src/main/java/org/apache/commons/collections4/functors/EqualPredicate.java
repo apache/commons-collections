@@ -36,13 +36,13 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
 
     /** The value to compare to */
     private final T iValue;
-    
+
     /** The equator to use for comparison */
     private final Equator<T> equator;
 
     /**
      * Factory to create the predicate.
-     * 
+     *
      * @param <T> the type that the predicate queries
      * @param object  the object to compare to
      * @return the predicate
@@ -57,7 +57,7 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
 
     /**
      * Factory to create the identity predicate.
-     * 
+     *
      * @param <T> the type that the predicate queries
      * @param object  the object to compare to
      * @param equator  the equator to use for comparison
@@ -75,7 +75,7 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
     /**
      * Constructor that performs no validation.
      * Use <code>equalPredicate</code> if you want that.
-     * 
+     *
      * @param object  the object to compare to
      */
     public EqualPredicate(final T object) {
@@ -87,7 +87,7 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
     /**
      * Constructor that performs no validation.
      * Use <code>equalPredicate</code> if you want that.
-     * 
+     *
      * @param object  the object to compare to
      * @param equator  the equator to use for comparison
      * @since 4.0
@@ -100,7 +100,7 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
 
     /**
      * Evaluates the predicate returning true if the input equals the stored value.
-     * 
+     *
      * @param object  the input object
      * @return true if input object equals stored value
      */
@@ -114,7 +114,7 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
 
     /**
      * Gets the value.
-     * 
+     *
      * @return the value
      * @since 3.1
      */

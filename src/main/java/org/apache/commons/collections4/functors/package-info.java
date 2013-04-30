@@ -21,7 +21,7 @@
  * {@link org.apache.commons.collections4.Transformer Transformer} and
  * {@link org.apache.commons.collections4.Factory Factory} interfaces.
  * These provide simple callbacks for processing with collections.
- * 
+ *
  * @version $Id$
  */
 package org.apache.commons.collections4.functors;

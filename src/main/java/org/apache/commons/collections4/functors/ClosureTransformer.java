@@ -54,7 +54,7 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
     /**
      * Constructor that performs no validation.
      * Use <code>closureTransformer</code> if you want that.
-     * 
+     *
      * @param closure  the closure to call, not null
      */
     public ClosureTransformer(final Closure<? super T> closure) {
@@ -64,7 +64,7 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
 
     /**
      * Transforms the input to result by executing a closure.
-     * 
+     *
      * @param input  the input object to transform
      * @return the transformed result
      */
@@ -75,7 +75,7 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
 
     /**
      * Gets the closure.
-     * 
+     *
      * @return the closure
      * @since 3.1
      */

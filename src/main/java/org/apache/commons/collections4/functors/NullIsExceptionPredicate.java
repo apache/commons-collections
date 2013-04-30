@@ -31,13 +31,13 @@ public final class NullIsExceptionPredicate<T> implements Predicate<T>, Predicat
 
     /** Serial version UID */
     private static final long serialVersionUID = 3243449850504576071L;
-    
+
     /** The predicate to decorate */
     private final Predicate<? super T> iPredicate;
-    
+
     /**
      * Factory to create the null exception predicate.
-     * 
+     *
      * @param <T> the type that the predicate queries
      * @param predicate  the predicate to decorate, not null
      * @return the predicate
@@ -53,7 +53,7 @@ public final class NullIsExceptionPredicate<T> implements Predicate<T>, Predicat
     /**
      * Constructor that performs no validation.
      * Use <code>nullIsExceptionPredicate</code> if you want that.
-     * 
+     *
      * @param predicate  the predicate to call after the null check
      */
     public NullIsExceptionPredicate(final Predicate<? super T> predicate) {
@@ -64,7 +64,7 @@ public final class NullIsExceptionPredicate<T> implements Predicate<T>, Predicat
     /**
      * Evaluates the predicate returning the result of the decorated predicate
      * once a null check is performed.
-     * 
+     *
      * @param object  the input object
      * @return true if decorated predicate returns true
      * @throws FunctorException if input is null
@@ -78,7 +78,7 @@ public final class NullIsExceptionPredicate<T> implements Predicate<T>, Predicat
 
     /**
      * Gets the predicate being decorated.
-     * 
+     *
      * @return the predicate as the only element in an array
      * @since 3.1
      */

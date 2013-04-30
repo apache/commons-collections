@@ -45,7 +45,7 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
 
     /**
      * Factory method that performs validation.
-     * 
+     *
      * @param <T>  the type the factory creates
      * @param classToInstantiate  the class to instantiate, not null
      * @param paramTypes  the constructor parameter types, cloned
@@ -73,7 +73,7 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
     /**
      * Constructor that performs no validation.
      * Use <code>instantiateFactory</code> if you want that.
-     * 
+     *
      * @param classToInstantiate  the class to instantiate
      */
     public InstantiateFactory(final Class<T> classToInstantiate) {
@@ -87,7 +87,7 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
     /**
      * Constructor that performs no validation.
      * Use <code>instantiateFactory</code> if you want that.
-     * 
+     *
      * @param classToInstantiate  the class to instantiate
      * @param paramTypes  the constructor parameter types, cloned
      * @param args  the constructor arguments, cloned
@@ -113,7 +113,7 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
 
     /**
      * Creates an object using the stored constructor.
-     * 
+     *
      * @return the new object
      */
     public T create() {
@@ -132,5 +132,5 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
             throw new FunctorException("InstantiateFactory: Constructor threw an exception", ex);
         }
     }
-    
+
 }

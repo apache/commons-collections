@@ -30,10 +30,10 @@ public abstract class AbstractQuantifierPredicate<T> implements Predicate<T>, Pr
 
     /** Serial version UID */
     private static final long serialVersionUID = -3094696765038308799L;
-    
+
     /** The array of predicates to call */
     protected final Predicate<? super T>[] iPredicates;
-    
+
     /**
      * Constructor that performs no validation.
      *
@@ -45,7 +45,7 @@ public abstract class AbstractQuantifierPredicate<T> implements Predicate<T>, Pr
 
     /**
      * Gets the predicates.
-     * 
+     *
      * @return a copy of the predicates
      * @since 3.1
      */

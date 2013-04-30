@@ -37,7 +37,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Factory method that performs validation and copies the parameter array.
-     * 
+     *
      * @param <E> the type that the closure acts on
      * @param closures  the closures to chain, copied, no nulls
      * @return the <code>chained</code> closure
@@ -53,10 +53,10 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
     }
 
     /**
-     * Create a new Closure that calls each closure in turn, passing the 
+     * Create a new Closure that calls each closure in turn, passing the
      * result into the next closure. The ordering is that of the iterator()
      * method on the collection.
-     * 
+     *
      * @param <E> the type that the closure acts on
      * @param closures  a collection of closures to chain
      * @return the <code>chained</code> closure
@@ -84,7 +84,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
     /**
      * Constructor that performs no validation.
      * Use <code>chainedClosure</code> if you want that.
-     * 
+     *
      * @param closures  the closures to chain, not copied, no nulls
      */
     public ChainedClosure(final Closure<? super E>[] closures) {
@@ -94,7 +94,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Execute a list of closures.
-     * 
+     *
      * @param input  the input object passed to each closure
      */
     public void execute(final E input) {

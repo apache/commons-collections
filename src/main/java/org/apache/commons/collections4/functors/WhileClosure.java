@@ -42,7 +42,7 @@ public class WhileClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Factory method that performs validation.
-     * 
+     *
      * @param <E> the type that the closure acts on
      * @param predicate  the predicate used to evaluate when the loop terminates, not null
      * @param closure  the closure the execute, not null
@@ -64,7 +64,7 @@ public class WhileClosure<E> implements Closure<E>, Serializable {
     /**
      * Constructor that performs no validation.
      * Use <code>whileClosure</code> if you want that.
-     * 
+     *
      * @param predicate  the predicate used to evaluate when the loop terminates, not null
      * @param closure  the closure the execute, not null
      * @param doLoop  true to act as a do-while loop, always executing the closure once
@@ -78,7 +78,7 @@ public class WhileClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Executes the closure until the predicate is false.
-     * 
+     *
      * @param input  the input object
      */
     public void execute(final E input) {
@@ -92,7 +92,7 @@ public class WhileClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Gets the predicate in use.
-     * 
+     *
      * @return the predicate
      * @since 3.1
      */
@@ -102,7 +102,7 @@ public class WhileClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Gets the closure.
-     * 
+     *
      * @return the closure
      * @since 3.1
      */
@@ -112,7 +112,7 @@ public class WhileClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Is the loop a do-while loop.
-     * 
+     *
      * @return true is do-while, false if while
      * @since 3.1
      */

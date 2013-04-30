@@ -43,7 +43,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
 
     /**
      * Factory method that performs validation and copies the parameter arrays.
-     * 
+     *
      * @param <I>  the input type
      * @param <O>  the output type
      * @param predicates  array of predicates, cloned, no nulls
@@ -72,16 +72,16 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
     }
 
     /**
-     * Create a new Transformer that calls one of the transformers depending 
-     * on the predicates. 
+     * Create a new Transformer that calls one of the transformers depending
+     * on the predicates.
      * <p>
-     * The Map consists of Predicate keys and Transformer values. A transformer 
+     * The Map consists of Predicate keys and Transformer values. A transformer
      * is called if its matching predicate returns true. Each predicate is evaluated
      * until one returns true. If no predicates evaluate to true, the default
-     * transformer is called. The default transformer is set in the map with a 
-     * null key. The ordering is that of the iterator() method on the entryset 
+     * transformer is called. The default transformer is set in the map with a
+     * null key. The ordering is that of the iterator() method on the entryset
      * collection of the map.
-     * 
+     *
      * @param <I>  the input type
      * @param <O>  the output type
      * @param map  a map of predicates to transformers
@@ -118,11 +118,11 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
         }
         return new SwitchTransformer<I, O>(preds, transformers, defaultTransformer);
     }
-    
+
     /**
      * Constructor that performs no validation.
      * Use <code>switchTransformer</code> if you want that.
-     * 
+     *
      * @param predicates  array of predicates, not cloned, no nulls
      * @param transformers  matching array of transformers, not cloned, no nulls
      * @param defaultTransformer  the transformer to use if no match, null means return null
@@ -141,7 +141,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
     /**
      * Transforms the input to result by calling the transformer whose matching
      * predicate returns true.
-     * 
+     *
      * @param input  the input object to transform
      * @return the transformed result
      */
@@ -156,7 +156,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
 
     /**
      * Gets the predicates.
-     * 
+     *
      * @return a copy of the predicates
      * @since 3.1
      */
@@ -166,7 +166,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
 
     /**
      * Gets the transformers.
-     * 
+     *
      * @return a copy of the transformers
      * @since 3.1
      */
@@ -176,7 +176,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
 
     /**
      * Gets the default transformer.
-     * 
+     *
      * @return the default transformer
      * @since 3.1
      */

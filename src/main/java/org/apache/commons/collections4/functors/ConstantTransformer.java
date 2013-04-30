@@ -34,7 +34,7 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
 
     /** Serial version UID */
     private static final long serialVersionUID = 6374440726369055124L;
-    
+
     /** Returns null each time */
     public static final Transformer<Object, Object> NULL_INSTANCE = new ConstantTransformer<Object, Object>(null);
 
@@ -67,11 +67,11 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
         }
         return new ConstantTransformer<I, O>(constantToReturn);
     }
-    
+
     /**
      * Constructor that performs no validation.
      * Use <code>constantTransformer</code> if you want that.
-     * 
+     *
      * @param constantToReturn  the constant to return each time
      */
     public ConstantTransformer(final O constantToReturn) {
@@ -81,7 +81,7 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
 
     /**
      * Transforms the input by ignoring it and returning the stored constant instead.
-     * 
+     *
      * @param input  the input object which is ignored
      * @return the stored constant
      */
@@ -91,7 +91,7 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
 
     /**
      * Gets the constant.
-     * 
+     *
      * @return the constant
      * @since 3.1
      */

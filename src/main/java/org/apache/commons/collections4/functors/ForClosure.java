@@ -41,7 +41,7 @@ public class ForClosure<E> implements Closure<E>, Serializable {
      * <p>
      * A null closure or zero count returns the <code>NOPClosure</code>.
      * A count of one returns the specified closure.
-     * 
+     *
      * @param <E> the type that the closure acts on
      * @param count  the number of times to execute the closure
      * @param closure  the closure to execute, not null
@@ -61,7 +61,7 @@ public class ForClosure<E> implements Closure<E>, Serializable {
     /**
      * Constructor that performs no validation.
      * Use <code>forClosure</code> if you want that.
-     * 
+     *
      * @param count  the number of times to execute the closure
      * @param closure  the closure to execute, not null
      */
@@ -73,7 +73,7 @@ public class ForClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Executes the closure <code>count</code> times.
-     * 
+     *
      * @param input  the input object
      */
     public void execute(final E input) {
@@ -84,7 +84,7 @@ public class ForClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Gets the closure.
-     * 
+     *
      * @return the closure
      * @since 3.1
      */
@@ -94,7 +94,7 @@ public class ForClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Gets the count.
-     * 
+     *
      * @return the count
      * @since 3.1
      */

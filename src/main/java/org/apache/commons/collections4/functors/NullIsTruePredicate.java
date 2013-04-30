@@ -30,13 +30,13 @@ public final class NullIsTruePredicate<T> implements Predicate<T>, PredicateDeco
 
     /** Serial version UID */
     private static final long serialVersionUID = -7625133768987126273L;
-    
+
     /** The predicate to decorate */
     private final Predicate<? super T> iPredicate;
-    
+
     /**
      * Factory to create the null true predicate.
-     * 
+     *
      * @param <T> the type that the predicate queries
      * @param predicate  the predicate to decorate, not null
      * @return the predicate
@@ -52,7 +52,7 @@ public final class NullIsTruePredicate<T> implements Predicate<T>, PredicateDeco
     /**
      * Constructor that performs no validation.
      * Use <code>nullIsTruePredicate</code> if you want that.
-     * 
+     *
      * @param predicate  the predicate to call after the null check
      */
     public NullIsTruePredicate(final Predicate<? super T> predicate) {
@@ -63,7 +63,7 @@ public final class NullIsTruePredicate<T> implements Predicate<T>, PredicateDeco
     /**
      * Evaluates the predicate returning the result of the decorated predicate
      * once a null check is performed.
-     * 
+     *
      * @param object  the input object
      * @return true if decorated predicate returns true or input is null
      */
@@ -76,7 +76,7 @@ public final class NullIsTruePredicate<T> implements Predicate<T>, PredicateDeco
 
     /**
      * Gets the predicate being decorated.
-     * 
+     *
      * @return the predicate as the only element in an array
      * @since 3.1
      */

@@ -54,9 +54,9 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
         }
         return new ChainedTransformer<T>(FunctorUtils.copy(transformers));
     }
-    
+
     /**
-     * Create a new Transformer that calls each transformer in turn, passing the 
+     * Create a new Transformer that calls each transformer in turn, passing the
      * result into the next transformer. The ordering is that of the iterator()
      * method on the collection.
      *
@@ -83,7 +83,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
     /**
      * Constructor that performs no validation.
      * Use <code>chainedTransformer</code> if you want that.
-     * 
+     *
      * @param transformers  the transformers to chain, not copied, no nulls
      */
     public ChainedTransformer(final Transformer<? super T, ? extends T>[] transformers) {
@@ -93,7 +93,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
 
     /**
      * Transforms the input to result via each decorated transformer
-     * 
+     *
      * @param object  the input object passed to the first transformer
      * @return the transformed result
      */

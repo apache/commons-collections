@@ -30,13 +30,13 @@ public final class NotPredicate<T> implements Predicate<T>, PredicateDecorator<T
 
     /** Serial version UID */
     private static final long serialVersionUID = -2654603322338049674L;
-    
+
     /** The predicate to decorate */
     private final Predicate<? super T> iPredicate;
-    
+
     /**
      * Factory to create the not predicate.
-     * 
+     *
      * @param <T> the type that the predicate queries
      * @param predicate  the predicate to decorate, not null
      * @return the predicate
@@ -52,7 +52,7 @@ public final class NotPredicate<T> implements Predicate<T>, PredicateDecorator<T
     /**
      * Constructor that performs no validation.
      * Use <code>notPredicate</code> if you want that.
-     * 
+     *
      * @param predicate  the predicate to call after the null check
      */
     public NotPredicate(final Predicate<? super T> predicate) {
@@ -62,7 +62,7 @@ public final class NotPredicate<T> implements Predicate<T>, PredicateDecorator<T
 
     /**
      * Evaluates the predicate returning the opposite to the stored predicate.
-     * 
+     *
      * @param object  the input object
      * @return true if predicate returns false
      */
@@ -72,7 +72,7 @@ public final class NotPredicate<T> implements Predicate<T>, PredicateDecorator<T
 
     /**
      * Gets the predicate being decorated.
-     * 
+     *
      * @return the predicate as the only element in an array
      * @since 3.1
      */

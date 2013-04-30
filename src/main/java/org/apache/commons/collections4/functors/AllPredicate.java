@@ -40,7 +40,7 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> implem
 
     /** Serial version UID */
     private static final long serialVersionUID = -3094696765038308799L;
-    
+
     /**
      * Factory to create the predicate.
      * <p>
@@ -100,7 +100,7 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> implem
 
     /**
      * Evaluates the predicate returning true if all predicates return true.
-     * 
+     *
      * @param object  the input object
      * @return true if all decorated predicates return true
      */

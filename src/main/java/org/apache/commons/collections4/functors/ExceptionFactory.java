@@ -37,7 +37,7 @@ public final class ExceptionFactory<T> implements Factory<T>, Serializable {
 
     /**
      * Factory returning the singleton instance.
-     * 
+     *
      * @param <T>  the type the factory creates
      * @return the singleton instance
      * @since 3.1
@@ -56,7 +56,7 @@ public final class ExceptionFactory<T> implements Factory<T>, Serializable {
 
     /**
      * Always throws an exception.
-     * 
+     *
      * @return never
      * @throws FunctorException always
      */

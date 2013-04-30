@@ -157,7 +157,7 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
      *
      * @see org.apache.commons.collections4.Predicate#evaluate(java.lang.Object)
      * @see java.util.Comparator#compare(java.lang.Object first, java.lang.Object second)
-     * 
+     *
      * @param target  the target object to compare to
      * @return {@code true} if the comparison succeeds according to the selected criterion
      * @throws IllegalStateException if the criterion is invalid (really not possible)

@@ -33,7 +33,7 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
 
     /** The serial version */
     private static final long serialVersionUID = -8653385846894047688L;
-    
+
     /** The method name to call */
     private final String iMethodName;
     /** The array of reflection parameter types */
@@ -43,7 +43,7 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
 
     /**
      * Gets an instance of this transformer calling a specific method with no arguments.
-     * 
+     *
      * @param <I>  the input type
      * @param <O>  the output type
      * @param methodName  the method name to call
@@ -88,7 +88,7 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
 
     /**
      * Constructor for no arg instance.
-     * 
+     *
      * @param methodName  the method to call
      */
     private InvokerTransformer(final String methodName) {
@@ -101,7 +101,7 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
     /**
      * Constructor that performs no validation.
      * Use <code>invokerTransformer</code> if you want that.
-     * 
+     *
      * @param methodName  the method to call
      * @param paramTypes  the constructor parameter types, not cloned
      * @param args  the constructor arguments, not cloned
@@ -115,7 +115,7 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
 
     /**
      * Transforms the input to result by invoking a method on the input.
-     * 
+     *
      * @param input  the input object to transform
      * @return the transformed result, null if null input
      */

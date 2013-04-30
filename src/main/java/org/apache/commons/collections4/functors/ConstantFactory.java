@@ -34,7 +34,7 @@ public class ConstantFactory<T> implements Factory<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -3520677225766901240L;
-    
+
     /** Returns null each time */
     public static final Factory<Object> NULL_INSTANCE = new ConstantFactory<Object>(null);
 
@@ -55,11 +55,11 @@ public class ConstantFactory<T> implements Factory<T>, Serializable {
         }
         return new ConstantFactory<T>(constantToReturn);
     }
-    
+
     /**
      * Constructor that performs no validation.
      * Use <code>constantFactory</code> if you want that.
-     * 
+     *
      * @param constantToReturn  the constant to return each time
      */
     public ConstantFactory(final T constantToReturn) {
@@ -69,7 +69,7 @@ public class ConstantFactory<T> implements Factory<T>, Serializable {
 
     /**
      * Always return constant.
-     * 
+     *
      * @return the stored constant value
      */
     public T create() {
@@ -78,7 +78,7 @@ public class ConstantFactory<T> implements Factory<T>, Serializable {
 
     /**
      * Gets the constant.
-     * 
+     *
      * @return the constant
      * @since 3.1
      */
