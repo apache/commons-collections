@@ -135,13 +135,13 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @param initialCapacity  the initial capacity
      * @param loadFactor  the load factor
      * @throws IllegalArgumentException if the initial capacity is negative
-     * @throws IllegalArgumentException if the load factor is less than or equal to zero 
+     * @throws IllegalArgumentException if the load factor is less than or equal to zero
      */
     @SuppressWarnings("unchecked")
     protected AbstractHashedMap(int initialCapacity, final float loadFactor) {
         super();
         if (initialCapacity < 0) {
-            throw new IllegalArgumentException("Initial capacity must be a non negative number");  
+            throw new IllegalArgumentException("Initial capacity must be a non negative number");
         }
         if (loadFactor <= 0.0f || Float.isNaN(loadFactor)) {
             throw new IllegalArgumentException("Load factor must be greater than 0");
@@ -311,9 +311,9 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * This implementation iterates around the specified map and
      * uses {@link #put(Object, Object)}.
      * <p>
-     * It is private to allow the constructor to still call it 
-     * even when putAll is overriden. 
-     * 
+     * It is private to allow the constructor to still call it
+     * even when putAll is overriden.
+     *
      * @param map  the map to add
      * @throws NullPointerException if the map is null
      */

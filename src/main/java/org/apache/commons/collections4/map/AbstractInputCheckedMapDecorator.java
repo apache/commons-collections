@@ -54,7 +54,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
 
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
@@ -70,7 +70,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
      * or it may transform the value into another object.
      * <p>
      * This implementation returns the input value.
-     * 
+     *
      * @param value  the value to check
      * @throws UnsupportedOperationException if the map may not be changed by setValue
      * @throws IllegalArgumentException if the specified value is invalid
@@ -86,7 +86,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
      * has no effect as this optimises the implementation.
      * <p>
      * This implementation returns <code>true</code>.
-     * 
+     *
      * @return true always
      */
     protected boolean isSetValueChecking() {
@@ -107,7 +107,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
      * Implementation of an entry set that checks additions via setValue.
      */
     private class EntrySet extends AbstractSetDecorator<Map.Entry<K, V>> {
-        
+
         /** Generated serial version ID. */
         private static final long serialVersionUID = 4354731610923110264L;
 
@@ -123,7 +123,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
         public Iterator<Map.Entry<K, V>> iterator() {
             return new EntrySetIterator(collection.iterator(), parent);
         }
-        
+
         @Override
         @SuppressWarnings("unchecked")
         public Object[] toArray() {
@@ -133,7 +133,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
             }
             return array;
         }
-        
+
         @Override
         @SuppressWarnings("unchecked")
         public <T> T[] toArray(final T[] array) {

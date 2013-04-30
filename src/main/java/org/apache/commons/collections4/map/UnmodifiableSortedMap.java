@@ -35,7 +35,7 @@ import org.apache.commons.collections4.collection.UnmodifiableCollection;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  * <p>
- * Attempts to modify it will result in an UnsupportedOperationException. 
+ * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 3.0
  * @version $Id$
@@ -49,7 +49,7 @@ public final class UnmodifiableSortedMap<K, V>
 
     /**
      * Factory method to create an unmodifiable sorted map.
-     * 
+     *
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
@@ -66,18 +66,18 @@ public final class UnmodifiableSortedMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
     private UnmodifiableSortedMap(final SortedMap<K, V> map) {
         super(map);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
-     * 
+     *
      * @param out  the output stream
      * @throws IOException
      * @since 3.1
@@ -89,7 +89,7 @@ public final class UnmodifiableSortedMap<K, V>
 
     /**
      * Read the map in using a custom routine.
-     * 
+     *
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException

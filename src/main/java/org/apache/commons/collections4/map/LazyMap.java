@@ -51,7 +51,7 @@ import org.apache.commons.collections4.functors.FactoryTransformer;
  * <strong>Note that LazyMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
- * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw 
+ * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
@@ -69,7 +69,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
 
     /**
      * Factory method to create a lazily instantiated map.
-     * 
+     *
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
@@ -83,7 +83,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
 
     /**
      * Factory method to create a lazily instantiated map.
-     * 
+     *
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
@@ -98,7 +98,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @param factory  the factory to use, must not be null
      * @throws IllegalArgumentException if map or factory is null
@@ -113,7 +113,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
 
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @param factory  the factory to use, must not be null
      * @throws IllegalArgumentException if map or factory is null
@@ -129,7 +129,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
     //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
-     * 
+     *
      * @param out  the output stream
      * @throws IOException
      * @since 3.1
@@ -141,7 +141,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
 
     /**
      * Read the map in using a custom routine.
-     * 
+     *
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException

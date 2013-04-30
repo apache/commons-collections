@@ -106,7 +106,7 @@ public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, Re
      * Get the currently active entry.
      * @return Map.Entry<K, V>
      */
-    protected synchronized Map.Entry<K, V> current() { 
+    protected synchronized Map.Entry<K, V> current() {
         if (entry == null) {
             throw new IllegalStateException();
         }

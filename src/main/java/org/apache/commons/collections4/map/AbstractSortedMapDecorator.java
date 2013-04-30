@@ -27,7 +27,7 @@ import org.apache.commons.collections4.IterableSortedMap;
 import org.apache.commons.collections4.OrderedMapIterator;
 import org.apache.commons.collections4.iterators.ListIteratorWrapper;
 
-/** 
+/**
  * Provides a base decorator that enables additional functionality to be added
  * to a Map via decoration.
  * <p>
@@ -67,7 +67,7 @@ public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecora
 
     /**
      * Gets the map being decorated.
-     * 
+     *
      * @return the decorated map
      */
     @Override

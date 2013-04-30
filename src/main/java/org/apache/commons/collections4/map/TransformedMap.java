@@ -147,7 +147,7 @@ public class TransformedMap<K, V>
      * @throws ClassNotFoundException
      * @since 3.1
      */
-    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
+    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map<K, V>) in.readObject(); // (1)

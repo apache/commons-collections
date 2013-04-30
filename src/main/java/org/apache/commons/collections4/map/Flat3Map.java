@@ -795,7 +795,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
          * <p>
          * As a consequence, all subsequent call to {@link #getKey()},
          * {@link #setValue(Object)} and {@link #getValue()} will fail.
-         * 
+         *
          * @param flag
          */
         void setRemoved(final boolean flag) {

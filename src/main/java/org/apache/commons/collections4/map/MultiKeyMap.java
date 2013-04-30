@@ -102,7 +102,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
         return new MultiKeyMap<K, V>(map);
     }
 
-    //-----------------------------------------------------------------------    
+    //-----------------------------------------------------------------------
     /**
      * Constructs a new MultiKeyMap that decorates a <code>HashedMap</code>.
      */
@@ -126,7 +126,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     //-----------------------------------------------------------------------
     /**
      * Gets the value mapped to the specified multi-key.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @return the mapped value, null if no match
@@ -146,7 +146,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Checks whether the map contains the specified multi-key.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @return true if the map contains the key
@@ -166,7 +166,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Stores the value against the specified multi-key.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @param value  the value to store
@@ -190,7 +190,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Removes the specified multi-key from this map.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @return the value mapped to the removed key, null if key not in map
@@ -214,7 +214,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Gets the hash code for the specified multi-key.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @return the hash code
@@ -236,7 +236,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Is the key equal to the combined key.
-     * 
+     *
      * @param entry  the entry to compare to
      * @param key1  the first key
      * @param key2  the second key
@@ -254,7 +254,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     //-----------------------------------------------------------------------
     /**
      * Gets the value mapped to the specified multi-key.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
@@ -275,7 +275,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Checks whether the map contains the specified multi-key.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
@@ -296,7 +296,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Stores the value against the specified multi-key.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
@@ -321,7 +321,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Removes the specified multi-key from this map.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
@@ -346,7 +346,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Gets the hash code for the specified multi-key.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
@@ -372,7 +372,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Is the key equal to the combined key.
-     * 
+     *
      * @param entry  the entry to compare to
      * @param key1  the first key
      * @param key2  the second key
@@ -392,7 +392,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     //-----------------------------------------------------------------------
     /**
      * Gets the value mapped to the specified multi-key.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
@@ -414,7 +414,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Checks whether the map contains the specified multi-key.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
@@ -436,7 +436,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Stores the value against the specified multi-key.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
@@ -462,7 +462,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Removes the specified multi-key from this map.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
@@ -488,7 +488,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Gets the hash code for the specified multi-key.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
@@ -518,7 +518,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Is the key equal to the combined key.
-     * 
+     *
      * @param entry  the entry to compare to
      * @param key1  the first key
      * @param key2  the second key
@@ -540,7 +540,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     //-----------------------------------------------------------------------
     /**
      * Gets the value mapped to the specified multi-key.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
@@ -563,7 +563,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Checks whether the map contains the specified multi-key.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
@@ -587,7 +587,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Stores the value against the specified multi-key.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
@@ -614,7 +614,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Removes the specified multi-key from this map.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
@@ -641,7 +641,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Gets the hash code for the specified multi-key.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
@@ -675,7 +675,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Is the key equal to the combined key.
-     * 
+     *
      * @param entry  the entry to compare to
      * @param key1  the first key
      * @param key2  the second key
@@ -702,7 +702,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * <p>
      * This method removes all the mappings where the <code>MultiKey</code>
      * has one or more keys, and the first matches that specified.
-     * 
+     *
      * @param key1  the first key
      * @return true if any elements were removed
      */
@@ -725,7 +725,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * <p>
      * This method removes all the mappings where the <code>MultiKey</code>
      * has two or more keys, and the first two match those specified.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @return true if any elements were removed
@@ -750,7 +750,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * <p>
      * This method removes all the mappings where the <code>MultiKey</code>
      * has three or more keys, and the first three match those specified.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
@@ -777,7 +777,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * <p>
      * This method removes all the mappings where the <code>MultiKey</code>
      * has four or more keys, and the first four match those specified.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
@@ -804,7 +804,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     //-----------------------------------------------------------------------
     /**
      * Check to ensure that input keys are valid MultiKey objects.
-     * 
+     *
      * @param key  the key to check
      */
     protected void checkKey(final MultiKey<?> key) {
@@ -831,7 +831,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     /**
      * Puts the key and value into the map, where the key must be a non-null
      * MultiKey object.
-     * 
+     *
      * @param key  the non-null MultiKey object
      * @param value  the value to store
      * @return the previous value for the key
@@ -847,7 +847,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     /**
      * Copies all of the keys and values from the specified map to this map.
      * Each key must be non-null and a MultiKey object.
-     * 
+     *
      * @param mapToCopy  to this map
      * @throws NullPointerException if the mapToCopy or any key within is null
      * @throws ClassCastException if any key in mapToCopy is not a MultiKey
@@ -873,11 +873,11 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     protected AbstractHashedMap<MultiKey<? extends K>, V> decorated() {
         return (AbstractHashedMap<MultiKey<? extends K>, V>) super.decorated();
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
-     * 
+     *
      * @param out  the output stream
      * @throws IOException
      */
@@ -888,7 +888,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     /**
      * Read the map in using a custom routine.
-     * 
+     *
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException
@@ -898,5 +898,5 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
         in.defaultReadObject();
         map = (Map<MultiKey<? extends K>, V>) in.readObject();
     }
-    
+
 }

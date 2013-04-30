@@ -29,7 +29,7 @@ import java.util.Map;
  * to all lowercase in a locale-independent fashion by using information from the Unicode
  * data file.
  * <p>
- * Null keys are supported.  
+ * Null keys are supported.
  * <p>
  * The <code>keySet()</code> method returns all lowercase keys, or nulls.
  * <p>
@@ -54,7 +54,7 @@ import java.util.Map;
  * <strong>Note that CaseInsensitiveMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
- * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw 
+ * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
  *
  * @since 3.0
@@ -73,7 +73,7 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
     }
 
     /**
-     * Constructs a new, empty map with the specified initial capacity. 
+     * Constructs a new, empty map with the specified initial capacity.
      *
      * @param initialCapacity  the initial capacity
      * @throws IllegalArgumentException if the initial capacity is negative
@@ -84,7 +84,7 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
 
     /**
      * Constructs a new, empty map with the specified initial capacity and
-     * load factor. 
+     * load factor.
      *
      * @param initialCapacity  the initial capacity
      * @param loadFactor  the load factor
@@ -111,11 +111,11 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
 
     //-----------------------------------------------------------------------
     /**
-     * Overrides convertKey() from {@link AbstractHashedMap} to convert keys to 
+     * Overrides convertKey() from {@link AbstractHashedMap} to convert keys to
      * lower case.
      * <p>
      * Returns {@link AbstractHashedMap#NULL} if key is null.
-     * 
+     *
      * @param key  the key convert
      * @return the converted key
      */
@@ -129,7 +129,7 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
             return new String(chars);
         }
         return AbstractHashedMap.NULL;
-    }   
+    }
 
     //-----------------------------------------------------------------------
     /**
@@ -157,5 +157,5 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
         in.defaultReadObject();
         doReadObject(in);
     }
- 
+
 }

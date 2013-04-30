@@ -66,7 +66,7 @@ public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, 
 
     /**
      * Gets the map being decorated.
-     * 
+     *
      * @return the decorated map
      */
     protected Map<K, V> decorated() {
@@ -121,7 +121,7 @@ public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, 
     public Collection<V> values() {
         return decorated().values();
     }
-   
+
     @Override
     public boolean equals(final Object object) {
         if (object == this) {

@@ -149,8 +149,8 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * load factor and initial capacity.
      *
      * @param keyType  the type of reference to use for keys;
-     *   must be {@link ReferenceStrength#HARD HARD}, 
-     *   {@link ReferenceStrength#SOFT SOFT}, 
+     *   must be {@link ReferenceStrength#HARD HARD},
+     *   {@link ReferenceStrength#SOFT SOFT},
      *   {@link ReferenceStrength#WEAK WEAK}
      * @param valueType  the type of reference to use for values;
      *   must be {@link ReferenceStrength#HARD},

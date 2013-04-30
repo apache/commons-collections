@@ -150,7 +150,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
-     * 
+     *
      * @param out  the output stream
      * @throws IOException
      * @since 4.0
@@ -162,13 +162,13 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
 
     /**
      * Read the map in using a custom routine.
-     * 
+     *
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException
      * @since 4.0
      */
-    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
+    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map<K, Object>) in.readObject(); // (1)
@@ -302,7 +302,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * NOTE: the returned Entry objects will contain as value a {@link Collection}
      * of all values that are mapped to the given key. To get a "flattened" version
      * of all mappings contained in this map, use {@link #iterator()}.
-     * 
+     *
      * @see #iterator()
      */
     @Override
@@ -421,7 +421,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     public Iterator<Entry<K, V>> iterator() {
         final Collection<K> allKeys = new ArrayList<K>(keySet());
         final Iterator<K> keyIterator = allKeys.iterator();
-        
+
         return new LazyIteratorChain<Entry<K, V>>() {
             @Override
             protected Iterator<? extends Entry<K, V>> nextIterator(int count) {

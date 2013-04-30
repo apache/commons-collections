@@ -33,7 +33,7 @@ import org.apache.commons.collections4.Transformer;
  * <strong>Note that TransformedSortedMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
- * using {@link java.util.Collections#synchronizedSortedMap}. This class may throw 
+ * using {@link java.util.Collections#synchronizedSortedMap}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
@@ -47,13 +47,13 @@ public class TransformedSortedMap<K, V>
 
     /** Serialization version */
     private static final long serialVersionUID = -8751771676410385778L;
-    
+
     /**
      * Factory method to create a transforming sorted map.
      * <p>
      * If there are any elements already in the map being decorated, they are NOT transformed.
      * Contrast this with {@link #transformedSortedMap(SortedMap, Transformer, Transformer)}.
-     * 
+     *
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
@@ -75,7 +75,7 @@ public class TransformedSortedMap<K, V>
      * If there are any elements already in the map being decorated, they
      * will be transformed by this method.
      * Contrast this with {@link #transformingSortedMap(SortedMap, Transformer, Transformer)}.
-     * 
+     *
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
@@ -105,7 +105,7 @@ public class TransformedSortedMap<K, V>
      * <p>
      * If there are any elements already in the collection being decorated, they
      * are NOT transformed.</p>
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the predicate to validate the keys, null means no transformation
      * @param valueTransformer  the predicate to validate to values, null means no transformation
@@ -120,7 +120,7 @@ public class TransformedSortedMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Gets the map being decorated.
-     * 
+     *
      * @return the decorated map
      */
     protected SortedMap<K, V> getSortedMap() {

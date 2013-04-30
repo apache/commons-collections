@@ -194,7 +194,7 @@ public class LRUMap<K, V>
             modCount++;
             // remove
             if(entry.before == null) {
-                throw new IllegalStateException("Entry.before is null." + 
+                throw new IllegalStateException("Entry.before is null." +
                     " Please check that your keys are immutable, and that you have used synchronization properly." +
                     " If so, then please report this to dev@commons.apache.org as a bug.");
             }
@@ -426,7 +426,7 @@ public class LRUMap<K, V>
 
     /**
      * Writes the data necessary for <code>put()</code> to work in deserialization.
-     * 
+     *
      * @param out  the output stream
      * @throws IOException if an error occurs while writing to the stream
      */

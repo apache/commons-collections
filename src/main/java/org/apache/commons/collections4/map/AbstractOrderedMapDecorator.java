@@ -19,7 +19,7 @@ package org.apache.commons.collections4.map;
 import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.OrderedMapIterator;
 
-/** 
+/**
  * Provides a base decorator that enables additional functionality to be added
  * to an OrderedMap via decoration.
  * <p>
@@ -57,7 +57,7 @@ public abstract class AbstractOrderedMapDecorator<K, V> extends AbstractMapDecor
 
     /**
      * Gets the map being decorated.
-     * 
+     *
      * @return the decorated map
      */
     @Override

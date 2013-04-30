@@ -39,7 +39,7 @@ import org.apache.commons.collections4.Predicate;
  * <strong>Note that PredicatedMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
- * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw 
+ * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
@@ -65,7 +65,7 @@ public class PredicatedMap<K, V>
      * <p>
      * If there are any elements already in the list being decorated, they
      * are validated.
-     * 
+     *
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
@@ -83,7 +83,7 @@ public class PredicatedMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @param keyPredicate  the predicate to validate the keys, null means no check
      * @param valuePredicate  the predicate to validate to values, null means no check
@@ -94,7 +94,7 @@ public class PredicatedMap<K, V>
         super(map);
         this.keyPredicate = keyPredicate;
         this.valuePredicate = valuePredicate;
-        
+
         final Iterator<Map.Entry<K, V>> it = map.entrySet().iterator();
         while (it.hasNext()) {
             final Map.Entry<K, V> entry = it.next();
@@ -105,7 +105,7 @@ public class PredicatedMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
-     * 
+     *
      * @param out  the output stream
      * @throws IOException
      * @since 3.1
@@ -117,13 +117,13 @@ public class PredicatedMap<K, V>
 
     /**
      * Read the map in using a custom routine.
-     * 
+     *
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException
      * @since 3.1
      */
-    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
+    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map<K, V>) in.readObject(); // (1)
@@ -132,7 +132,7 @@ public class PredicatedMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Validates a key value pair.
-     * 
+     *
      * @param key  the key to validate
      * @param value  the value to validate
      * @throws IllegalArgumentException if invalid
@@ -148,7 +148,7 @@ public class PredicatedMap<K, V>
 
     /**
      * Override to validate an object set into the map via <code>setValue</code>.
-     * 
+     *
      * @param value  the value to validate
      * @return the value itself
      * @throws IllegalArgumentException if invalid
@@ -164,7 +164,7 @@ public class PredicatedMap<K, V>
 
     /**
      * Override to only return true when there is a value transformer.
-     * 
+     *
      * @return true if a value predicate is in use
      * @since 3.1
      */

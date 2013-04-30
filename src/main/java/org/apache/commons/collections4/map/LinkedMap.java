@@ -35,7 +35,7 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * A <code>Map</code> implementation that maintains the order of the entries.
  * In this implementation order is maintained by original insertion.
  * <p>
- * This implementation improves on the JDK1.4 LinkedHashMap by adding the 
+ * This implementation improves on the JDK1.4 LinkedHashMap by adding the
  * {@link org.apache.commons.collections4.MapIterator MapIterator}
  * functionality, additional convenience methods and allowing
  * bidirectional iteration. It also implements <code>OrderedMap</code>.
@@ -54,7 +54,7 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * <strong>Note that LinkedMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
- * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw 
+ * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
  *
  * @since 3.0
@@ -64,7 +64,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
 
     /** Serialisation version */
     private static final long serialVersionUID = 9077234323521161066L;
-    
+
     /**
      * Constructs a new empty map with default size and load factor.
      */
@@ -73,7 +73,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
     }
 
     /**
-     * Constructs a new, empty map with the specified initial capacity. 
+     * Constructs a new, empty map with the specified initial capacity.
      *
      * @param initialCapacity  the initial capacity
      * @throws IllegalArgumentException if the initial capacity is negative
@@ -84,7 +84,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
 
     /**
      * Constructs a new, empty map with the specified initial capacity and
-     * load factor. 
+     * load factor.
      *
      * @param initialCapacity  the initial capacity
      * @param loadFactor  the load factor
@@ -115,7 +115,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
     public LinkedMap<K, V> clone() {
         return (LinkedMap<K, V>) super.clone();
     }
-    
+
     /**
      * Write the map out using a custom routine.
      */
@@ -131,11 +131,11 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
         in.defaultReadObject();
         doReadObject(in);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Gets the key at the specified index.
-     * 
+     *
      * @param index  the index to retrieve
      * @return the key at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
@@ -143,10 +143,10 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
     public K get(final int index) {
         return getEntry(index).getKey();
     }
-    
+
     /**
      * Gets the value at the specified index.
-     * 
+     *
      * @param index  the index to retrieve
      * @return the value at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
@@ -154,10 +154,10 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
     public V getValue(final int index) {
         return getEntry(index).getValue();
     }
-    
+
     /**
      * Gets the index of the specified key.
-     * 
+     *
      * @param key  the key to find the index of
      * @return the index, or -1 if not found
      */
@@ -197,7 +197,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
      * An alternative to this method is to use {@link #keySet()}.
      *
      * @see #keySet()
-     * @return The ordered list of keys.  
+     * @return The ordered list of keys.
      */
     public List<K> asList() {
         return new LinkedMapList<K>(this);

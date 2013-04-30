@@ -30,7 +30,7 @@ import org.apache.commons.collections4.keyvalue.AbstractMapEntryDecorator;
 /**
  * Decorates a map entry <code>Set</code> to ensure it can't be altered.
  * <p>
- * Attempts to modify it will result in an UnsupportedOperationException. 
+ * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 3.0
  * @version $Id$
@@ -43,7 +43,7 @@ public final class UnmodifiableEntrySet<K, V>
 
     /**
      * Factory method to create an unmodifiable set of Map Entry objects.
-     * 
+     *
      * @param <K>  the key type
      * @param <V>  the value type
      * @param set  the set to decorate, must not be null
@@ -60,7 +60,7 @@ public final class UnmodifiableEntrySet<K, V>
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
@@ -104,7 +104,7 @@ public final class UnmodifiableEntrySet<K, V>
     public Iterator<Map.Entry<K, V>> iterator() {
         return new UnmodifiableEntrySetIterator(collection.iterator());
     }
-    
+
     @Override
     @SuppressWarnings("unchecked")
     public Object[] toArray() {
@@ -114,7 +114,7 @@ public final class UnmodifiableEntrySet<K, V>
         }
         return array;
     }
-    
+
     @Override
     @SuppressWarnings("unchecked")
     public <T> T[] toArray(final T[] array) {
@@ -141,7 +141,7 @@ public final class UnmodifiableEntrySet<K, V>
         }
         return array;
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Implementation of an entry set iterator.

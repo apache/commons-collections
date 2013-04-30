@@ -38,15 +38,15 @@ import org.apache.commons.collections4.collection.UnmodifiableCollection;
  * key however.
  * <p>
  * If trying to remove or clear the map, an UnsupportedOperationException is
- * thrown. If trying to put a new mapping into the map, an 
- * IllegalArgumentException is thrown. This is because the put method can 
+ * thrown. If trying to put a new mapping into the map, an
+ * IllegalArgumentException is thrown. This is because the put method can
  * succeed if the mapping's key already exists in the map, so the put method
  * is not always unsupported.
  * <p>
  * <strong>Note that FixedSizeSortedMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
- * using {@link java.util.Collections#synchronizedSortedMap}. This class may throw 
+ * using {@link java.util.Collections#synchronizedSortedMap}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
@@ -63,7 +63,7 @@ public class FixedSizeSortedMap<K, V>
 
     /**
      * Factory method to create a fixed size sorted map.
-     * 
+     *
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
@@ -77,7 +77,7 @@ public class FixedSizeSortedMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
@@ -87,7 +87,7 @@ public class FixedSizeSortedMap<K, V>
 
     /**
      * Gets the map being decorated.
-     * 
+     *
      * @return the decorated map
      */
     protected SortedMap<K, V> getSortedMap() {
@@ -106,7 +106,7 @@ public class FixedSizeSortedMap<K, V>
     /**
      * Read the map in using a custom routine.
      */
-    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
+    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map<K, V>) in.readObject(); // (1)

@@ -54,7 +54,7 @@ import java.util.concurrent.TimeUnit;
  * This class may throw exceptions when accessed by concurrent threads without
  * synchronization.
  * </p>
- * 
+ *
  * @param <K> the type of the keys in the map
  * @param <V> the type of the values in the map
  * @since 4.0
@@ -68,7 +68,7 @@ public class PassiveExpiringMap<K, V>
      * A {@link org.apache.commons.collections4.map.PassiveExpiringMap.ExpirationPolicy ExpirationPolicy}
      * that returns a expiration time that is a
      * constant about of time in the future from the current time.
-     * 
+     *
      * @param <K> the type of the keys in the map
      * @param <V> the type of the values in the map
      * @since 4.0
@@ -96,7 +96,7 @@ public class PassiveExpiringMap<K, V>
          * milliseconds. A negative time-to-live value indicates entries never
          * expire. A zero time-to-live value indicates entries expire (nearly)
          * immediately.
-         * 
+         *
          * @param timeToLiveMillis the constant amount of time (in milliseconds)
          *        an entry is available before it expires. A negative value
          *        results in entries that NEVER expire. A zero value results in
@@ -110,7 +110,7 @@ public class PassiveExpiringMap<K, V>
         /**
          * Construct a policy with the given time-to-live constant measured in
          * the given time unit of measure.
-         * 
+         *
          * @param timeToLive the constant amount of time an entry is available
          *        before it expires. A negative value results in entries that
          *        NEVER expire. A zero value results in entries that ALWAYS
@@ -126,7 +126,7 @@ public class PassiveExpiringMap<K, V>
 
         /**
          * Determine the expiration time for the given key-value entry.
-         * 
+         *
          * @param key the key for the entry (ignored).
          * @param value the value for the entry (ignored).
          * @return if {@link #timeToLiveMillis} &ge; 0, an expiration time of
@@ -155,7 +155,7 @@ public class PassiveExpiringMap<K, V>
 
     /**
      * A policy to determine the expiration time for key-value entries.
-     * 
+     *
      * @param <K> the key object type.
      * @param <V> the value object type
      * @since 4.0
@@ -166,7 +166,7 @@ public class PassiveExpiringMap<K, V>
 
         /**
          * Determine the expiration time for the given key-value entry.
-         * 
+         *
          * @param key the key for the entry.
          * @param value the value for the entry.
          * @return the expiration time value measured in milliseconds. A
@@ -183,7 +183,7 @@ public class PassiveExpiringMap<K, V>
      * the given time measured in the given units to the same time measured in
      * milliseconds. If the parameters are invalid, an
      * {@link IllegalArgumentException} is thrown.
-     * 
+     *
      * @param timeToLive the constant amount of time an entry is available
      *        before it expires. A negative value results in entries that NEVER
      *        expire. A zero value results in entries that ALWAYS expire.
@@ -216,7 +216,7 @@ public class PassiveExpiringMap<K, V>
     /**
      * Construct a map decorator using the given expiration policy to determine
      * expiration times.
-     * 
+     *
      * @param expiringPolicy the policy used to determine expiration times of
      *        entries as they are added.
      */
@@ -229,7 +229,7 @@ public class PassiveExpiringMap<K, V>
      * expiration policy to determine expiration times. If there are any
      * elements already in the map being decorated, they will NEVER expire
      * unless they are replaced.
-     * 
+     *
      * @param expiringPolicy the policy used to determine expiration times of
      *        entries as they are added.
      * @param map the map to decorate, must not be null.
@@ -248,7 +248,7 @@ public class PassiveExpiringMap<K, V>
      * Construct a map decorator that decorates the given map using the given
      * time-to-live value measured in milliseconds to create and use a
      * {@link ConstantTimeToLiveExpirationPolicy} expiration policy.
-     * 
+     *
      * @param timeToLiveMillis the constant amount of time (in milliseconds) an
      *        entry is available before it expires. A negative value results in
      *        entries that NEVER expire. A zero value results in entries that
@@ -265,7 +265,7 @@ public class PassiveExpiringMap<K, V>
      * {@link ConstantTimeToLiveExpirationPolicy} expiration policy. If there
      * are any elements already in the map being decorated, they will NEVER
      * expire unless they are replaced.
-     * 
+     *
      * @param timeToLiveMillis the constant amount of time (in milliseconds) an
      *        entry is available before it expires. A negative value results in
      *        entries that NEVER expire. A zero value results in entries that
@@ -282,7 +282,7 @@ public class PassiveExpiringMap<K, V>
      * Construct a map decorator using the given time-to-live value measured in
      * the given time units of measure to create and use a
      * {@link ConstantTimeToLiveExpirationPolicy} expiration policy.
-     * 
+     *
      * @param timeToLive the constant amount of time an entry is available
      *        before it expires. A negative value results in entries that NEVER
      *        expire. A zero value results in entries that ALWAYS expire.
@@ -301,7 +301,7 @@ public class PassiveExpiringMap<K, V>
      * is used to determine expiration times. If there are any elements already
      * in the map being decorated, they will NEVER expire unless they are
      * replaced.
-     * 
+     *
      * @param timeToLive the constant amount of time an entry is available
      *        before it expires. A negative value results in entries that NEVER
      *        expire. A zero value results in entries that ALWAYS expire.
@@ -319,7 +319,7 @@ public class PassiveExpiringMap<K, V>
      * Constructs a map decorator that decorates the given map and results in
      * entries NEVER expiring. If there are any elements already in the map
      * being decorated, they also will NEVER expire.
-     * 
+     *
      * @param map the map to decorate, must not be null.
      * @throws IllegalArgumentException if the map is null.
      */
@@ -391,7 +391,7 @@ public class PassiveExpiringMap<K, V>
 
     /**
      * Determines if the given expiration time is less than <code>now</code>.
-     * 
+     *
      * @param now the time in milliseconds used to compare against the
      *        expiration time.
      * @param expirationTimeObject the expiration time value retrieved from
@@ -464,7 +464,7 @@ public class PassiveExpiringMap<K, V>
      * Removes all entries in the map whose expiration time is less than
      * <code>now</code>. The exceptions are entries with negative expiration
      * times; those entries are never removed.
-     * 
+     *
      * @see #isExpired(long, Long)
      */
     private void removeAllExpired(final long now) {
@@ -505,7 +505,7 @@ public class PassiveExpiringMap<K, V>
 
     /**
      * Read the map in using a custom routine.
-     * 
+     *
      * @param in the input stream
      * @throws IOException
      * @throws ClassNotFoundException
@@ -520,7 +520,7 @@ public class PassiveExpiringMap<K, V>
 
     /**
      * Write the map out using a custom routine.
-     * 
+     *
      * @param out the output stream
      * @throws IOException
      */

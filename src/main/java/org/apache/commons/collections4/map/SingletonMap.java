@@ -43,7 +43,7 @@ import org.apache.commons.collections4.keyvalue.TiedMapEntry;
  * <p>
  * If trying to remove or clear the map, an UnsupportedOperationException is thrown.
  * If trying to put a new mapping into the map, an  IllegalArgumentException is thrown.
- * The put method will only suceed if the key specified is the same as the 
+ * The put method will only suceed if the key specified is the same as the
  * singleton key.
  * <p>
  * The key and value can be obtained by:
@@ -131,7 +131,7 @@ public class SingletonMap<K, V>
     /**
      * Gets the key.
      *
-     * @return the key 
+     * @return the key
      */
     public K getKey() {
         return key;
@@ -171,7 +171,7 @@ public class SingletonMap<K, V>
 
     /**
      * Gets the maximum size of the map, always 1.
-     * 
+     *
      * @return 1 always
      */
     public int maxSize() {
@@ -182,7 +182,7 @@ public class SingletonMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Gets the value mapped to the key specified.
-     * 
+     *
      * @param key  the key
      * @return the mapped value, null if no match
      */
@@ -195,7 +195,7 @@ public class SingletonMap<K, V>
 
     /**
      * Gets the size of the map, always 1.
-     * 
+     *
      * @return the size of 1
      */
     public int size() {
@@ -204,7 +204,7 @@ public class SingletonMap<K, V>
 
     /**
      * Checks whether the map is currently empty, which it never is.
-     * 
+     *
      * @return false always
      */
     public boolean isEmpty() {
@@ -214,7 +214,7 @@ public class SingletonMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Checks whether the map contains the specified key.
-     * 
+     *
      * @param key  the key to search for
      * @return true if the map contains the key
      */
@@ -224,7 +224,7 @@ public class SingletonMap<K, V>
 
     /**
      * Checks whether the map contains the specified value.
-     * 
+     *
      * @param value  the value to search for
      * @return true if the map contains the key
      */
@@ -238,7 +238,7 @@ public class SingletonMap<K, V>
      * <p>
      * An IllegalArgumentException is thrown if the key does not match as the map
      * is fixed size.
-     * 
+     *
      * @param key  the key to set, must be the key of the map
      * @param value  the value to set
      * @return the value previously mapped to this key, null if none
@@ -257,7 +257,7 @@ public class SingletonMap<K, V>
      * The map must be of size 0 or size 1.
      * If it is size 1, the key must match the key of this map otherwise an
      * IllegalArgumentException is thrown.
-     * 
+     *
      * @param map  the map to add, must be size 0 or 1, and the key must match
      * @throws NullPointerException if the map is null
      * @throws IllegalArgumentException if the key does not match
@@ -276,10 +276,10 @@ public class SingletonMap<K, V>
                 throw new IllegalArgumentException("The map size must be 0 or 1");
         }
     }
-    
+
     /**
      * Unsupported operation.
-     * 
+     *
      * @param key  the mapping to remove
      * @return the value mapped to the removed key, null if key not in map
      * @throws UnsupportedOperationException always
@@ -300,19 +300,19 @@ public class SingletonMap<K, V>
      * Gets the entrySet view of the map.
      * Changes made via <code>setValue</code> affect this map.
      * To simply iterate through the entries, use {@link #mapIterator()}.
-     * 
+     *
      * @return the entrySet view
      */
     public Set<Map.Entry<K, V>> entrySet() {
         final Map.Entry<K, V> entry = new TiedMapEntry<K, V>(this, getKey());
         return Collections.singleton(entry);
     }
-    
+
     /**
      * Gets the unmodifiable keySet view of the map.
      * Changes made to the view affect this map.
      * To simply iterate through the keys, use {@link #mapIterator()}.
-     * 
+     *
      * @return the keySet view
      */
     public Set<K> keySet() {
@@ -323,7 +323,7 @@ public class SingletonMap<K, V>
      * Gets the unmodifiable values view of the map.
      * Changes made to the view affect this map.
      * To simply iterate through the values, use {@link #mapIterator()}.
-     * 
+     *
      * @return the values view
      */
     public Collection<V> values() {
@@ -339,7 +339,7 @@ public class SingletonMap<K, V>
 
     /**
      * Gets the first (and only) key in the map.
-     * 
+     *
      * @return the key
      */
     public K firstKey() {
@@ -348,7 +348,7 @@ public class SingletonMap<K, V>
 
     /**
      * Gets the last (and only) key in the map.
-     * 
+     *
      * @return the key
      */
     public K lastKey() {
@@ -357,7 +357,7 @@ public class SingletonMap<K, V>
 
     /**
      * Gets the next key after the key specified, always null.
-     * 
+     *
      * @param key  the next key
      * @return null always
      */
@@ -367,7 +367,7 @@ public class SingletonMap<K, V>
 
     /**
      * Gets the previous key before the key specified, always null.
-     * 
+     *
      * @param key  the next key
      * @return null always
      */
@@ -378,7 +378,7 @@ public class SingletonMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Compares the specified key to the stored key.
-     * 
+     *
      * @param key  the key to compare
      * @return true if equal
      */
@@ -388,7 +388,7 @@ public class SingletonMap<K, V>
 
     /**
      * Compares the specified value to the stored value.
-     * 
+     *
      * @param value  the value to compare
      * @return true if equal
      */
@@ -404,7 +404,7 @@ public class SingletonMap<K, V>
         private final SingletonMap<K, V> parent;
         private boolean hasNext = true;
         private boolean canGetSet = false;
-        
+
         SingletonMapIterator(final SingletonMap<K, V> parent) {
             super();
             this.parent = parent;
@@ -459,11 +459,11 @@ public class SingletonMap<K, V>
             }
             return parent.setValue(value);
         }
-        
+
         public void reset() {
             hasNext = true;
         }
-        
+
         @Override
         public String toString() {
             if (hasNext) {
@@ -472,7 +472,7 @@ public class SingletonMap<K, V>
             return "Iterator[" + getKey() + "=" + getValue() + "]";
         }
     }
-    
+
     /**
      * Values implementation for the SingletonMap.
      * This class is needed as values is a view that must update as the map updates.
@@ -507,7 +507,7 @@ public class SingletonMap<K, V>
             return new SingletonIterator<V>(parent.getValue(), false);
         }
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Clones the map without cloning the key or value.
@@ -526,7 +526,7 @@ public class SingletonMap<K, V>
 
     /**
      * Compares this map with another.
-     * 
+     *
      * @param obj  the object to compare to
      * @return true if equal
      */
@@ -548,18 +548,18 @@ public class SingletonMap<K, V>
 
     /**
      * Gets the standard Map hashCode.
-     * 
+     *
      * @return the hash code defined in the Map interface
      */
     @Override
     public int hashCode() {
         return (getKey() == null ? 0 : getKey().hashCode()) ^
-               (getValue() == null ? 0 : getValue().hashCode()); 
+               (getValue() == null ? 0 : getValue().hashCode());
     }
 
     /**
      * Gets the map as a String.
-     * 
+     *
      * @return a string version of the map
      */
     @Override

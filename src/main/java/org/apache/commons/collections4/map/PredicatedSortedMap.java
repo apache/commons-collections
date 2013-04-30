@@ -35,7 +35,7 @@ import org.apache.commons.collections4.Predicate;
  * <strong>Note that PredicatedSortedMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
- * using {@link java.util.Collections#synchronizedSortedMap}. This class may throw 
+ * using {@link java.util.Collections#synchronizedSortedMap}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
@@ -53,7 +53,7 @@ public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements So
      * <p>
      * If there are any elements already in the list being decorated, they
      * are validated.
-     * 
+     *
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
@@ -70,7 +70,7 @@ public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements So
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @param keyPredicate  the predicate to validate the keys, null means no check
      * @param valuePredicate  the predicate to validate to values, null means no check
@@ -84,7 +84,7 @@ public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements So
     //-----------------------------------------------------------------------
     /**
      * Gets the map being decorated.
-     * 
+     *
      * @return the decorated map
      */
     protected SortedMap<K, V> getSortedMap() {

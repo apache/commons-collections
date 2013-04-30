@@ -48,7 +48,7 @@ import org.apache.commons.collections4.Transformer;
  * <strong>Note that LazySortedMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
- * using {@link java.util.Collections#synchronizedSortedMap}. This class may throw 
+ * using {@link java.util.Collections#synchronizedSortedMap}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
@@ -63,7 +63,7 @@ public class LazySortedMap<K,V> extends LazyMap<K,V> implements SortedMap<K,V> {
 
     /**
      * Factory method to create a lazily instantiated sorted map.
-     * 
+     *
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
@@ -78,7 +78,7 @@ public class LazySortedMap<K,V> extends LazyMap<K,V> implements SortedMap<K,V> {
 
     /**
      * Factory method to create a lazily instantiated sorted map.
-     * 
+     *
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
@@ -94,7 +94,7 @@ public class LazySortedMap<K,V> extends LazyMap<K,V> implements SortedMap<K,V> {
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @param factory  the factory to use, must not be null
      * @throws IllegalArgumentException if map or factory is null
@@ -105,7 +105,7 @@ public class LazySortedMap<K,V> extends LazyMap<K,V> implements SortedMap<K,V> {
 
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @param factory  the factory to use, must not be null
      * @throws IllegalArgumentException if map or factory is null
@@ -117,7 +117,7 @@ public class LazySortedMap<K,V> extends LazyMap<K,V> implements SortedMap<K,V> {
     //-----------------------------------------------------------------------
     /**
      * Gets the map being decorated.
-     * 
+     *
      * @return the decorated map
      */
     protected SortedMap<K,V> getSortedMap() {

@@ -36,15 +36,15 @@ import org.apache.commons.collections4.collection.UnmodifiableCollection;
  * key however.
  * <p>
  * If trying to remove or clear the map, an UnsupportedOperationException is
- * thrown. If trying to put a new mapping into the map, an 
- * IllegalArgumentException is thrown. This is because the put method can 
+ * thrown. If trying to put a new mapping into the map, an
+ * IllegalArgumentException is thrown. This is because the put method can
  * succeed if the mapping's key already exists in the map, so the put method
  * is not always unsupported.
  * <p>
  * <strong>Note that FixedSizeMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
- * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw 
+ * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
@@ -61,7 +61,7 @@ public class FixedSizeMap<K, V>
 
     /**
      * Factory method to create a fixed size map.
-     * 
+     *
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
@@ -75,7 +75,7 @@ public class FixedSizeMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
@@ -86,7 +86,7 @@ public class FixedSizeMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
-     * 
+     *
      * @param out  the output stream
      * @throws IOException
      * @since 3.1
@@ -98,13 +98,13 @@ public class FixedSizeMap<K, V>
 
     /**
      * Read the map in using a custom routine.
-     * 
+     *
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException
      * @since 3.1
      */
-    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
+    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map<K, V>) in.readObject(); // (1)

@@ -53,7 +53,7 @@ import org.apache.commons.collections4.functors.FactoryTransformer;
  * <strong>Note that DefaultedMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
- * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw 
+ * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
  *
  * @since 3.2
@@ -74,7 +74,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * Factory method to create a defaulting map.
      * <p>
      * The value specified is returned when a missing key is found.
-     * 
+     *
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
@@ -91,7 +91,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * <p>
      * The factory specified is called when a missing key is found.
      * The result will be returned as the result of the map get(key) method.
-     * 
+     *
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
@@ -112,7 +112,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * The transformer specified is called when a missing key is found.
      * The key is passed to the transformer as the input, and the result
      * will be returned as the result of the map get(key) method.
-     * 
+     *
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
@@ -135,7 +135,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * <p>
      * The object passed in will be returned by the map whenever an
      * unknown key is requested.
-     * 
+     *
      * @param defaultValue  the default value to return when the key is not found
      */
     public DefaultedMap(final V defaultValue) {
@@ -153,7 +153,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
 
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @param defaultValueTransformer  the value transformer to use
      * @throws IllegalArgumentException if map or transformer is null
@@ -169,7 +169,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
     //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
-     * 
+     *
      * @param out  the output stream
      * @throws IOException
      */
@@ -180,7 +180,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
 
     /**
      * Read the map in using a custom routine.
-     * 
+     *
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException

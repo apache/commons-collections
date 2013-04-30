@@ -55,7 +55,7 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * <strong>Note that ListOrderedMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
- * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw 
+ * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
  * <p>
  * <strong>Note that ListOrderedMap doesn't work with
@@ -89,7 +89,7 @@ public class ListOrderedMap<K, V>
      * Factory method to create an ordered map.
      * <p>
      * An <code>ArrayList</code> is used to retain order.
-     * 
+     *
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
@@ -104,7 +104,7 @@ public class ListOrderedMap<K, V>
     /**
      * Constructs a new empty <code>ListOrderedMap</code> that decorates
      * a <code>HashMap</code>.
-     * 
+     *
      * @since 3.1
      */
     public ListOrderedMap() {
@@ -113,7 +113,7 @@ public class ListOrderedMap<K, V>
 
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
@@ -125,7 +125,7 @@ public class ListOrderedMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
-     * 
+     *
      * @param out  the output stream
      * @throws IOException
      * @since 3.1
@@ -137,13 +137,13 @@ public class ListOrderedMap<K, V>
 
     /**
      * Read the map in using a custom routine.
-     * 
+     *
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException
      * @since 3.1
      */
-    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
+    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         map = (Map<K, V>) in.readObject(); // (1)
@@ -181,11 +181,11 @@ public class ListOrderedMap<K, V>
         }
         return insertOrder.get(size() - 1);
     }
-    
+
     /**
      * Gets the next key to the one specified using insert order.
      * This method performs a list search to find the key and is O(n).
-     * 
+     *
      * @param key  the key to find previous for
      * @return the next key, null if no match or at start
      */
@@ -200,7 +200,7 @@ public class ListOrderedMap<K, V>
     /**
      * Gets the previous key to the one specified using insert order.
      * This method performs a list search to find the key and is O(n).
-     * 
+     *
      * @param key  the key to find previous for
      * @return the previous key, null if no match or at start
      */
@@ -342,7 +342,7 @@ public class ListOrderedMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Returns the Map as a string.
-     * 
+     *
      * @return the Map as a String
      */
     @Override
@@ -372,7 +372,7 @@ public class ListOrderedMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Gets the key at the specified index.
-     * 
+     *
      * @param index  the index to retrieve
      * @return the key at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
@@ -380,10 +380,10 @@ public class ListOrderedMap<K, V>
     public K get(final int index) {
         return insertOrder.get(index);
     }
-    
+
     /**
      * Gets the value at the specified index.
-     * 
+     *
      * @param index  the index to retrieve
      * @return the key at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
@@ -391,10 +391,10 @@ public class ListOrderedMap<K, V>
     public V getValue(final int index) {
         return get(insertOrder.get(index));
     }
-    
+
     /**
      * Gets the index of the specified key.
-     * 
+     *
      * @param key  the key to find the index of
      * @return the index, or -1 if not found
      */
@@ -480,7 +480,7 @@ public class ListOrderedMap<K, V>
      *
      * @see #keyList()
      * @see #keySet()
-     * @return The ordered list of keys.  
+     * @return The ordered list of keys.
      */
     public List<K> asList() {
         return keyList();
@@ -571,7 +571,7 @@ public class ListOrderedMap<K, V>
         }
     }
 
-    //-----------------------------------------------------------------------    
+    //-----------------------------------------------------------------------
     static class EntrySetView<K, V> extends AbstractSet<Map.Entry<K, V>> {
         private final ListOrderedMap<K, V> parent;
         private final List<K> insertOrder;
@@ -589,7 +589,7 @@ public class ListOrderedMap<K, V>
             }
             return entrySet;
         }
-        
+
         @Override
         public int size() {
             return this.parent.size();
@@ -656,7 +656,7 @@ public class ListOrderedMap<K, V>
     static class ListOrderedIterator<K, V> extends AbstractUntypedIteratorDecorator<K, Map.Entry<K, V>> {
         private final ListOrderedMap<K, V> parent;
         private K last = null;
-        
+
         ListOrderedIterator(final ListOrderedMap<K, V> parent, final List<K> insertOrder) {
             super(insertOrder.iterator());
             this.parent = parent;
@@ -716,7 +716,7 @@ public class ListOrderedMap<K, V>
             readable = true;
             return last;
         }
-        
+
         public boolean hasPrevious() {
             return iterator.hasPrevious();
         }
