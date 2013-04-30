@@ -217,6 +217,10 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
             }
             return false;
         }
+        @Override
+        public int hashCode() { // please Findbugs
+            return super.hashCode();
+        }
     }
 
     public static class Mock2 implements Serializable {
@@ -236,6 +240,10 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
                 }
             }
             return false;
+        }
+        @Override
+        public int hashCode() { // please Findbugs
+            return super.hashCode();
         }
     }
 
