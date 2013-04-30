@@ -63,7 +63,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
     private static final long serialVersionUID = -1708388017160694542L;
 
     /** The factory to use to lazily instantiate the objects */
-    protected final Factory<? extends E> factory;
+    private final Factory<? extends E> factory;
 
     /**
      * Factory method to create a lazily instantiating list.

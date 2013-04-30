@@ -47,24 +47,24 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
     /**
      * The default value for {@link #maximumCacheSize}.
      */
-    protected static final int DEFAULT_MAXIMUM_CACHE_SIZE = 20;
+    private static final int DEFAULT_MAXIMUM_CACHE_SIZE = 20;
 
     /**
      * The first cached node, or <code>null</code> if no nodes are cached.
      * Cached nodes are stored in a singly-linked list with
      * <code>next</code> pointing to the next element.
      */
-    protected transient Node<E> firstCachedNode;
+    private transient Node<E> firstCachedNode;
     
     /**
      * The size of the cache.
      */
-    protected transient int cacheSize;
+    private transient int cacheSize;
 
     /**
      * The maximum size of the cache.
      */
-    protected int maximumCacheSize;
+    private int maximumCacheSize;
 
     //-----------------------------------------------------------------------
     /**

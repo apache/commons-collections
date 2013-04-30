@@ -54,7 +54,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     private static final long serialVersionUID = 7196982186153478694L;
 
     /** Internal Set to maintain uniqueness. */
-    protected final Set<E> set;
+    private final Set<E> set;
 
     /**
      * Factory method to create a SetList using the supplied list to retain
@@ -368,8 +368,8 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      */
     static class SetListIterator<E> extends AbstractIteratorDecorator<E> {
 
-        protected final Set<E> set;
-        protected E last = null;
+        private final Set<E> set;
+        private E last = null;
 
         protected SetListIterator(final Iterator<E> it, final Set<E> set) {
             super(it);
@@ -396,8 +396,8 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     static class SetListListIterator<E> extends
             AbstractListIteratorDecorator<E> {
 
-        protected final Set<E> set;
-        protected E last = null;
+        private final Set<E> set;
+        private E last = null;
 
         protected SetListListIterator(final ListIterator<E> it, final Set<E> set) {
             super(it);

@@ -61,7 +61,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
     private static final long serialVersionUID = 8836393098519411393L;
 
     /** A list of the cursor currently open on this list */
-    protected transient List<WeakReference<Cursor<E>>> cursors;
+    private transient List<WeakReference<Cursor<E>>> cursors;
 
     //-----------------------------------------------------------------------
     /**

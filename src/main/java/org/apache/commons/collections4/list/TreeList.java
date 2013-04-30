@@ -987,31 +987,31 @@ public class TreeList<E> extends AbstractList<E> {
      */
     static class TreeListIterator<E> implements ListIterator<E>, OrderedIterator<E> {
         /** The parent list */
-        protected final TreeList<E> parent;
+        private final TreeList<E> parent;
         /**
          * Cache of the next node that will be returned by {@link #next()}.
          */
-        protected AVLNode<E> next;
+        private AVLNode<E> next;
         /**
          * The index of the next node to be returned.
          */
-        protected int nextIndex;
+        private int nextIndex;
         /**
          * Cache of the last node that was returned by {@link #next()}
          * or {@link #previous()}.
          */
-        protected AVLNode<E> current;
+        private AVLNode<E> current;
         /**
          * The index of the last node that was returned.
          */
-        protected int currentIndex;
+        private int currentIndex;
         /**
          * The modification count that the list is expected to have. If the list
          * doesn't have this count, then a
          * {@link java.util.ConcurrentModificationException} may be thrown by
          * the operations.
          */
-        protected int expectedModCount;
+        private int expectedModCount;
 
         /**
          * Create a ListIterator for a list.
