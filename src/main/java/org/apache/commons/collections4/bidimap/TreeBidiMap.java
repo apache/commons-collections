@@ -1444,7 +1444,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     abstract class View<E> extends AbstractSet<E> {
 
         /** Whether to return KEY or VALUE order. */
-        protected final DataElement orderType;
+        final DataElement orderType;
 
         /**
          * Constructor.
