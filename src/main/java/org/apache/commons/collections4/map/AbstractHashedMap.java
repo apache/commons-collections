@@ -75,6 +75,8 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     /** An object for masking null */
     protected static final Object NULL = new Object();
 
+    // TODO Privatise fields?
+
     /** Load factor, normally 0.75 */
     protected transient float loadFactor;
     /** The size of the map */
@@ -831,7 +833,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      */
     protected static class EntrySet<K, V> extends AbstractSet<Map.Entry<K, V>> {
         /** The parent map */
-        protected final AbstractHashedMap<K, V> parent;
+        private final AbstractHashedMap<K, V> parent;
 
         protected EntrySet(final AbstractHashedMap<K, V> parent) {
             super();
@@ -925,7 +927,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      */
     protected static class KeySet<K> extends AbstractSet<K> {
         /** The parent map */
-        protected final AbstractHashedMap<K, ?> parent;
+        private final AbstractHashedMap<K, ?> parent;
 
         protected KeySet(final AbstractHashedMap<K, ?> parent) {
             super();
@@ -1009,7 +1011,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      */
     protected static class Values<V> extends AbstractCollection<V> {
         /** The parent map */
-        protected final AbstractHashedMap<?, V> parent;
+        private final AbstractHashedMap<?, V> parent;
 
         protected Values(final AbstractHashedMap<?, V> parent) {
             super();
@@ -1131,15 +1133,15 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     protected static abstract class HashIterator<K, V> {
 
         /** The parent map */
-        protected final AbstractHashedMap<K, V> parent;
+        private final AbstractHashedMap<K, V> parent;
         /** The current index into the array of buckets */
-        protected int hashIndex;
+        private int hashIndex;
         /** The last returned entry */
-        protected HashEntry<K, V> last;
+        private HashEntry<K, V> last;
         /** The next entry */
-        protected HashEntry<K, V> next;
+        private HashEntry<K, V> next;
         /** The modification count expected */
-        protected int expectedModCount;
+        private int expectedModCount;
 
         protected HashIterator(final AbstractHashedMap<K, V> parent) {
             super();
