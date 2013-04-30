@@ -45,7 +45,7 @@ public class PredicatedQueue<E> extends PredicatedCollection<E> implements Queue
      * <p>
      * If there are any elements already in the queue being decorated, they
      * are validated.
-     * 
+     *
      * @param <E> the type of the elements in the queue
      * @param Queue  the queue to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
@@ -57,14 +57,14 @@ public class PredicatedQueue<E> extends PredicatedCollection<E> implements Queue
                                                           final Predicate<? super E> predicate) {
         return new PredicatedQueue<E>(Queue, predicate);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      * <p>
      * If there are any elements already in the collection being decorated, they
      * are validated.
-     * 
+     *
      * @param queue  the queue to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
      * @throws IllegalArgumentException if Queue or predicate is null
@@ -76,7 +76,7 @@ public class PredicatedQueue<E> extends PredicatedCollection<E> implements Queue
 
     /**
      * Gets the queue being decorated.
-     * 
+     *
      * @return the decorated queue
      */
     @Override
@@ -85,11 +85,11 @@ public class PredicatedQueue<E> extends PredicatedCollection<E> implements Queue
     }
 
     //-----------------------------------------------------------------------
-    
+
     /**
      * Override to validate the object being added to ensure it matches
      * the predicate.
-     * 
+     *
      * @param object  the object being added
      * @return the result of adding to the underlying queue
      * @throws IllegalArgumentException if the add is invalid

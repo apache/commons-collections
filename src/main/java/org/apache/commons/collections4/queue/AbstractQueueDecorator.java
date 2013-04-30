@@ -44,7 +44,7 @@ public abstract class AbstractQueueDecorator<E> extends AbstractCollectionDecora
 
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param queue  the queue to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
@@ -54,7 +54,7 @@ public abstract class AbstractQueueDecorator<E> extends AbstractCollectionDecora
 
     /**
      * Gets the queue being decorated.
-     * 
+     *
      * @return the decorated queue
      */
     @Override
@@ -79,7 +79,7 @@ public abstract class AbstractQueueDecorator<E> extends AbstractCollectionDecora
     public E element() {
         return decorated().element();
     }
-    
+
     public E remove() {
         return decorated().remove();
     }

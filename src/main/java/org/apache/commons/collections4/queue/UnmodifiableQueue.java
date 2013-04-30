@@ -30,7 +30,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
 /**
  * Decorates another {@link Queue} to ensure it can't be altered.
  * <p>
- * Attempts to modify it will result in an UnsupportedOperationException. 
+ * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 4.0
  * @version $Id$
@@ -46,7 +46,7 @@ public final class UnmodifiableQueue<E>
      * Factory method to create an unmodifiable queue.
      * <p>
      * If the queue passed in is already unmodifiable, it is returned.
-     * 
+     *
      * @param <E> the type of the elements in the queue
      * @param queue  the queue to decorate, must not be null
      * @return an unmodifiable Queue
@@ -62,7 +62,7 @@ public final class UnmodifiableQueue<E>
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param queue  the queue to decorate, must not be null
      * @throws IllegalArgumentException if queue is null
      */
@@ -73,7 +73,7 @@ public final class UnmodifiableQueue<E>
     //-----------------------------------------------------------------------
     /**
      * Write the collection out using a custom routine.
-     * 
+     *
      * @param out  the output stream
      * @throws IOException if an I/O error occurs while writing to the output stream
      */
@@ -84,7 +84,7 @@ public final class UnmodifiableQueue<E>
 
     /**
      * Read the collection in using a custom routine.
-     * 
+     *
      * @param in  the input stream
      * @throws IOException if an I/O error occurs while reading from the input stream
      * @throws ClassNotFoundException if the class of a serialized object can not be found
@@ -132,7 +132,7 @@ public final class UnmodifiableQueue<E>
     }
 
     //-----------------------------------------------------------------------
-    
+
     @Override
     public boolean offer(final E obj) {
         throw new UnsupportedOperationException();
@@ -142,10 +142,10 @@ public final class UnmodifiableQueue<E>
     public E poll() {
         throw new UnsupportedOperationException();
     }
-    
+
     @Override
     public E remove() {
         throw new UnsupportedOperationException();
     }
-    
+
 }

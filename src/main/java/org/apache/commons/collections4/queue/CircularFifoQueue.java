@@ -258,11 +258,11 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
                     String.format("The specified index (%1$d) is outside the available range [0, %2$d)",
                                   Integer.valueOf(index), Integer.valueOf(sz)));
         }
-        
+
         final int idx = (start + index) % maxElements;
         return elements[idx];
     }
- 
+
     //-----------------------------------------------------------------------
 
     /**
@@ -411,5 +411,5 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
 
         };
     }
-    
+
 }

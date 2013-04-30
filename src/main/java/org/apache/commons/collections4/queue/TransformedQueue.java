@@ -43,7 +43,7 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
      * If there are any elements already in the queue being decorated, they
      * are NOT transformed.
      * Contrast this with {@link #transformedQueue(Queue, Transformer)}.
-     * 
+     *
      * @param <E> the type of the elements in the queue
      * @param queue  the queue to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -54,7 +54,7 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
                                                             final Transformer<? super E, ? extends E> transformer) {
         return new TransformedQueue<E>(queue, transformer);
     }
-    
+
     /**
      * Factory method to create a transforming queue that will transform
      * existing contents of the specified queue.
@@ -62,7 +62,7 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
      * If there are any elements already in the queue being decorated, they
      * will be transformed by this method.
      * Contrast this with {@link #transformingQueue(Queue, Transformer)}.
-     * 
+     *
      * @param <E> the type of the elements in the queue
      * @param queue  the queue to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -73,7 +73,7 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
     public static <E> TransformedQueue<E> transformedQueue(final Queue<E> queue,
                                                            final Transformer<? super E, ? extends E> transformer) {
         // throws IAE if queue or transformer is null
-        final TransformedQueue<E> decorated = new TransformedQueue<E>(queue, transformer); 
+        final TransformedQueue<E> decorated = new TransformedQueue<E>(queue, transformer);
         if (queue.size() > 0) {
             @SuppressWarnings("unchecked") // queue is type <E>
             final E[] values = (E[]) queue.toArray(); // NOPMD - false positive for generics
@@ -91,7 +91,7 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
      * <p>
      * If there are any elements already in the queue being decorated, they
      * are NOT transformed.
-     * 
+     *
      * @param queue  the queue to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if queue or transformer is null
@@ -102,7 +102,7 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
 
     /**
      * Gets the decorated queue.
-     * 
+     *
      * @return the decorated queue
      */
     protected Queue<E> getQueue() {
@@ -126,7 +126,7 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
     public E element() {
         return getQueue().element();
     }
-    
+
     public E remove() {
         return getQueue().remove();
     }
