@@ -67,8 +67,8 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
      * @param args  the arguments to pass to the method
      * @return an invoker transformer
      */
-    public static <I, O> Transformer<I, O> invokerTransformer(final String methodName, Class<?>[] paramTypes,
-                                                              Object[] args) {
+    public static <I, O> Transformer<I, O> invokerTransformer(final String methodName, final Class<?>[] paramTypes,
+                                                              final Object[] args) {
         if (methodName == null) {
             throw new IllegalArgumentException("The method to invoke must not be null");
         }
@@ -80,8 +80,6 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
         if (paramTypes == null || paramTypes.length == 0) {
             return new InvokerTransformer<I, O>(methodName);
         } else {
-            paramTypes = paramTypes.clone();
-            args = args.clone();
             return new InvokerTransformer<I, O>(methodName, paramTypes, args);
         }
     }
@@ -101,16 +99,18 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
     /**
      * Constructor that performs no validation.
      * Use <code>invokerTransformer</code> if you want that.
+     * <p>
+     * Note: from 4.0, the input parameters will be cloned
      *
      * @param methodName  the method to call
-     * @param paramTypes  the constructor parameter types, not cloned
-     * @param args  the constructor arguments, not cloned
+     * @param paramTypes  the constructor parameter types
+     * @param args  the constructor arguments
      */
     public InvokerTransformer(final String methodName, final Class<?>[] paramTypes, final Object[] args) {
         super();
         iMethodName = methodName;
-        iParamTypes = paramTypes;
-        iArgs = args;
+        iParamTypes = paramTypes != null ? paramTypes.clone() : null;
+        iArgs = args != null ? args.clone() : null;
     }
 
     /**

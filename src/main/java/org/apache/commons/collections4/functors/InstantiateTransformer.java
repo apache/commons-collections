@@ -60,7 +60,8 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
      * @param args  the constructor arguments
      * @return an instantiate transformer
      */
-    public static <T> Transformer<Class<? extends T>, T> instantiateTransformer(Class<?>[] paramTypes, Object[] args) {
+    public static <T> Transformer<Class<? extends T>, T> instantiateTransformer(final Class<?>[] paramTypes,
+                                                                                final Object[] args) {
         if (((paramTypes == null) && (args != null))
             || ((paramTypes != null) && (args == null))
             || ((paramTypes != null) && (args != null) && (paramTypes.length != args.length))) {
@@ -93,8 +94,8 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
      */
     public InstantiateTransformer(final Class<?>[] paramTypes, final Object[] args) {
         super();
-        iParamTypes = paramTypes.clone();
-        iArgs = args.clone();
+        iParamTypes = paramTypes != null ? paramTypes.clone() : null;
+        iArgs = args != null ? args.clone() : null;
     }
 
     /**
