@@ -65,9 +65,10 @@ public class CharacterKeyAnalyzer extends AbstractKeyAnalyzer<Character> {
 
     /**
      * {@inheritDoc}
+     * @throws NullPointerException if the key is null
      */
     public boolean isBitSet(final Character key, final int bitIndex, final int lengthInBits) {
-        return (key & mask(bitIndex)) != 0;
+        return (key.charValue() & mask(bitIndex)) != 0;
     }
 
     /**
