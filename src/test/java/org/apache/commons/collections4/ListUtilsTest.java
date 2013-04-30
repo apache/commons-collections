@@ -330,7 +330,7 @@ public class ListUtilsTest extends BulkTest {
 
         @SuppressWarnings("unchecked")
         List<Character> lcs = ListUtils.longestCommonSubsequence(Collections.EMPTY_LIST, Collections.EMPTY_LIST);
-        assertTrue(lcs.isEmpty());
+        assertEquals(0, lcs.size());
 
         List<Character> list1 = Arrays.asList('B', 'A', 'N', 'A', 'N', 'A');
         List<Character> list2 = Arrays.asList('A', 'N', 'A', 'N', 'A', 'S');
@@ -369,7 +369,7 @@ public class ListUtilsTest extends BulkTest {
       } catch (final IllegalArgumentException e) {}
 
       String lcs = ListUtils.longestCommonSubsequence("", "");
-      assertTrue(lcs.isEmpty());
+      assertEquals(0, lcs.length());
 
       String banana = "BANANA";
       String ananas = "ANANAS";
@@ -385,7 +385,7 @@ public class ListUtilsTest extends BulkTest {
       String zorro = "ZORRO";
       lcs = ListUtils.longestCommonSubsequence(banana, zorro);
       
-      assertTrue(lcs.isEmpty());
+      assertEquals(0, lcs.length());
   }
 
     public void testPartition() {
