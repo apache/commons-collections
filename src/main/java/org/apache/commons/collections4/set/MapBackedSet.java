@@ -41,10 +41,10 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
     private static final long serialVersionUID = 6723912213766056587L;
 
     /** The map being used as the backing store */
-    protected final Map<E, ? super V> map;
+    private final Map<E, ? super V> map;
 
     /** The dummyValue to use */
-    protected final V dummyValue;
+    private final V dummyValue;
 
     /**
      * Factory method to create a set from a map.
