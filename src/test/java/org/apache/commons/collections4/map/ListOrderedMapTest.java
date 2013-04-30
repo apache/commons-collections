@@ -246,7 +246,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         lom.put(0, (K) i1, (V) "One");
         assertEquals(3, lom.size());
         assertEquals(3, lom.map.size());
-        assertEquals(3, lom.insertOrder.size());
+        assertEquals(3, lom.keyList().size());
         assertEquals("One", lom.getValue(0));
         assertSame(i1, lom.get(0));
 
@@ -258,7 +258,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         lom.put(0, (K) i1b, (V) "One");
         assertEquals(3, lom.size());
         assertEquals(3, lom.map.size());
-        assertEquals(3, lom.insertOrder.size());
+        assertEquals(3, lom.keyList().size());
         assertEquals("One", lom.getValue(0));
         assertEquals("2", lom.getValue(1));
         assertEquals("3", lom.getValue(2));
@@ -272,7 +272,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         lom.put(1, (K) i1b, (V) "One");
         assertEquals(3, lom.size());
         assertEquals(3, lom.map.size());
-        assertEquals(3, lom.insertOrder.size());
+        assertEquals(3, lom.keyList().size());
         assertEquals("One", lom.getValue(0));
         assertEquals("2", lom.getValue(1));
         assertEquals("3", lom.getValue(2));
@@ -285,7 +285,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         lom.put(2, (K) i1b, (V) "One");
         assertEquals(3, lom.size());
         assertEquals(3, lom.map.size());
-        assertEquals(3, lom.insertOrder.size());
+        assertEquals(3, lom.keyList().size());
         assertEquals("2", lom.getValue(0));
         assertEquals("One", lom.getValue(1));
         assertEquals("3", lom.getValue(2));
@@ -298,7 +298,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         lom.put(3, (K) i1b, (V) "One");
         assertEquals(3, lom.size());
         assertEquals(3, lom.map.size());
-        assertEquals(3, lom.insertOrder.size());
+        assertEquals(3, lom.keyList().size());
         assertEquals("2", lom.getValue(0));
         assertEquals("3", lom.getValue(1));
         assertEquals("One", lom.getValue(2));
