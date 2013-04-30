@@ -18,6 +18,9 @@ package org.apache.commons.collections4.sequence;
 
 import java.util.List;
 
+import org.apache.commons.collections4.functors.DefaultEquator;
+import org.apache.commons.collections4.functors.Equator;
+
 /**
  * This class allows to compare two objects sequences.
  * <p>
@@ -61,6 +64,9 @@ public class SequencesComparator<T> {
     /** Second sequence. */
     private final List<T> sequence2;
 
+    /** The equator used for testing object equality. */
+    private final Equator<? super T> equator;
+
     /** Temporary variables. */
     private final int[] vDown;
     private final int[] vUp;
@@ -68,7 +74,7 @@ public class SequencesComparator<T> {
     /**
      * Simple constructor.
      * <p>
-     * Creates a new instance of SequencesComparator.
+     * Creates a new instance of SequencesComparator using a {@link DefaultEquator}.
      * <p>
      * It is <em>guaranteed</em> that the comparisons will always be done as
      * <code>o1.equals(o2)</code> where <code>o1</code> belongs to the first
@@ -76,14 +82,30 @@ public class SequencesComparator<T> {
      * important if subclassing is used for some elements in the first sequence
      * and the <code>equals</code> method is specialized.
      * 
-     * @param sequence1
-     *            first sequence to be compared
-     * @param sequence2
-     *            second sequence to be compared
+     * @param sequence1  first sequence to be compared
+     * @param sequence2  second sequence to be compared
      */
     public SequencesComparator(final List<T> sequence1, final List<T> sequence2) {
+        this(sequence1, sequence2, DefaultEquator.defaultEquator());
+    }
+
+    /**
+     * Simple constructor.
+     * <p>
+     * Creates a new instance of SequencesComparator with a custom {@link Equator}.
+     * <p>
+     * It is <em>guaranteed</em> that the comparisons will always be done as
+     * <code>Equator.equate(o1, o2)</code> where <code>o1</code> belongs to the first
+     * sequence and <code>o2</code> belongs to the second sequence.
+     * 
+     * @param sequence1  first sequence to be compared
+     * @param sequence2  second sequence to be compared
+     * @param equator  the equator to use for testing object equality
+     */
+    public SequencesComparator(final List<T> sequence1, final List<T> sequence2, final Equator<? super T> equator) {
         this.sequence1 = sequence1;
         this.sequence2 = sequence2;
+        this.equator = equator;
 
         final int size = sequence1.size() + sequence2.size() + 2;
         vDown = new int[size];
@@ -122,7 +144,7 @@ public class SequencesComparator<T> {
         int end = start;
         while (end - diag < end2
                 && end < end1
-                && sequence1.get(end).equals(sequence2.get(end - diag))) {
+                && equator.equate(sequence1.get(end), sequence2.get(end - diag))) {
             ++end;
         }
         return new Snake(start, end, diag);
@@ -174,7 +196,7 @@ public class SequencesComparator<T> {
                 int x = vDown[i];
                 int y = x - start1 + start2 - k;
 
-                while (x < end1 && y < end2 && sequence1.get(x).equals(sequence2.get(y))) {
+                while (x < end1 && y < end2 && equator.equate(sequence1.get(x), sequence2.get(y))) {
                     vDown[i] = ++x;
                     ++y;
                 }
@@ -200,7 +222,7 @@ public class SequencesComparator<T> {
                 int x = vUp[i] - 1;
                 int y = x - start1 + start2 - k;
                 while (x >= start1 && y >= start2
-                        && sequence1.get(x).equals(sequence2.get(y))) {
+                        && equator.equate(sequence1.get(x), sequence2.get(y))) {
                     vUp[i] = x--;
                     y--;
                 }
@@ -239,7 +261,7 @@ public class SequencesComparator<T> {
             int i = start1;
             int j = start2;
             while (i < end1 || j < end2) {
-                if (i < end1 && j < end2 && sequence1.get(i).equals(sequence2.get(j))) {
+                if (i < end1 && j < end2 && equator.equate(sequence1.get(i), sequence2.get(j))) {
                     script.append(new KeepCommand<T>(sequence1.get(i)));
                     ++i;
                     ++j;
