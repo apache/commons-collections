@@ -50,7 +50,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      * the {@link #set} method.
      *
      */
-    protected int lastItemIndex = -1;
+    private int lastItemIndex = -1;
 
     // Constructors
     // ----------------------------------------------------------------------
