@@ -83,7 +83,7 @@ public class ListOrderedMap<K, V>
     private static final long serialVersionUID = 2728177751851003750L;
 
     /** Internal list to hold the sequence of objects */
-    protected final List<K> insertOrder = new ArrayList<K>();
+    private final List<K> insertOrder = new ArrayList<K>();
 
     /**
      * Factory method to create an ordered map.
