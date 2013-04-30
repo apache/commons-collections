@@ -47,7 +47,7 @@ public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
     /**
      * Gets the key from the pair.
      *
-     * @return the key 
+     * @return the key
      */
     public K getKey() {
         return key;
@@ -76,7 +76,7 @@ public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
 
     /**
      * Gets a debugging String view of the pair.
-     * 
+     *
      * @return a String view of the entry
      */
     @Override

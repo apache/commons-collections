@@ -86,7 +86,7 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
         return super.setKey(key);
     }
 
-    /** 
+    /**
      * Sets the value.
      *
      * @return the old value of the value
@@ -105,7 +105,7 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
     //-----------------------------------------------------------------------
     /**
      * Returns a new <code>Map.Entry</code> object with key and value from this pair.
-     * 
+     *
      * @return a MapEntry instance
      */
     public Map.Entry<K, V> toMapEntry() {
@@ -118,7 +118,7 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
      * <p>
      * Returns true if the compared object is also a <code>DefaultKeyValue</code>,
      * and its key and value are equal to this object's key and value.
-     * 
+     *
      * @param obj  the object to compare to
      * @return true if equal key and value
      */
@@ -132,7 +132,7 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
         }
 
         final DefaultKeyValue<?, ?> other = (DefaultKeyValue<?, ?>) obj;
-        return 
+        return
             (getKey() == null ? other.getKey() == null : getKey().equals(other.getKey())) &&
             (getValue() == null ? other.getValue() == null : getValue().equals(other.getValue()));
     }
@@ -142,7 +142,7 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
      * <p>
      * Implemented per API documentation of {@link java.util.Map.Entry#hashCode()},
      * however subclasses may override this.
-     * 
+     *
      * @return a suitable hash code
      */
     @Override

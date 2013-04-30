@@ -32,10 +32,10 @@ import org.apache.commons.collections4.KeyValue;
  */
 public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Serializable {
 
-    /** Serialization version */    
+    /** Serialization version */
     private static final long serialVersionUID = -8453869361373831205L;
 
-    /** The map underlying the entry/iterator */    
+    /** The map underlying the entry/iterator */
     private final Map<K, V> map;
 
     /** The key */
@@ -57,7 +57,7 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
     //-------------------------------------------------------------------------
     /**
      * Gets the key of this entry
-     * 
+     *
      * @return the key
      */
     public K getKey() {
@@ -66,7 +66,7 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
 
     /**
      * Gets the value of this entry direct from the map.
-     * 
+     *
      * @return the value
      */
     public V getValue() {
@@ -75,7 +75,7 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
 
     /**
      * Sets the value associated with the key direct onto the map.
-     * 
+     *
      * @param value  the new value
      * @return the old value
      * @throws IllegalArgumentException if the value is set to this map entry
@@ -91,7 +91,7 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
      * Compares this <code>Map.Entry</code> with another <code>Map.Entry</code>.
      * <p>
      * Implemented per API documentation of {@link java.util.Map.Entry#equals(Object)}
-     * 
+     *
      * @param obj  the object to compare to
      * @return true if equal key and value
      */
@@ -114,19 +114,19 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
      * Gets a hashCode compatible with the equals method.
      * <p>
      * Implemented per API documentation of {@link java.util.Map.Entry#hashCode()}
-     * 
+     *
      * @return a suitable hash code
      */
     @Override
     public int hashCode() {
         final Object value = getValue();
         return (getKey() == null ? 0 : getKey().hashCode()) ^
-               (value == null ? 0 : value.hashCode()); 
+               (value == null ? 0 : value.hashCode());
     }
 
     /**
      * Gets a string version of the entry.
-     * 
+     *
      * @return entry as a string
      */
     @Override

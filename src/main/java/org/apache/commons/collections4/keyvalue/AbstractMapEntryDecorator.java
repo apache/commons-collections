@@ -28,7 +28,7 @@ import org.apache.commons.collections4.KeyValue;
  * @version $Id$
  */
 public abstract class AbstractMapEntryDecorator<K, V> implements Map.Entry<K, V>, KeyValue<K, V> {
-    
+
     /** The <code>Map.Entry</code> to decorate */
     private final Map.Entry<K, V> entry;
 
@@ -47,7 +47,7 @@ public abstract class AbstractMapEntryDecorator<K, V> implements Map.Entry<K, V>
 
     /**
      * Gets the map being decorated.
-     * 
+     *
      * @return the decorated map
      */
     protected Map.Entry<K, V> getMapEntry() {
@@ -55,7 +55,7 @@ public abstract class AbstractMapEntryDecorator<K, V> implements Map.Entry<K, V>
     }
 
     //-----------------------------------------------------------------------
-    
+
     public K getKey() {
         return entry.getKey();
     }
@@ -67,7 +67,7 @@ public abstract class AbstractMapEntryDecorator<K, V> implements Map.Entry<K, V>
     public V setValue(final V object) {
         return entry.setValue(object);
     }
-   
+
     @Override
     public boolean equals(final Object object) {
         if (object == this) {

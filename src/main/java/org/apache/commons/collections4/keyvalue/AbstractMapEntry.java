@@ -57,7 +57,7 @@ public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> impl
      * Compares this <code>Map.Entry</code> with another <code>Map.Entry</code>.
      * <p>
      * Implemented per API documentation of {@link java.util.Map.Entry#equals(Object)}
-     * 
+     *
      * @param obj  the object to compare to
      * @return true if equal key and value
      */
@@ -79,13 +79,13 @@ public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> impl
      * Gets a hashCode compatible with the equals method.
      * <p>
      * Implemented per API documentation of {@link java.util.Map.Entry#hashCode()}
-     * 
+     *
      * @return a suitable hash code
      */
     @Override
     public int hashCode() {
         return (getKey() == null ? 0 : getKey().hashCode()) ^
-               (getValue() == null ? 0 : getValue().hashCode()); 
+               (getValue() == null ? 0 : getValue().hashCode());
     }
 
 }

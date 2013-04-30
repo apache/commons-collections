@@ -19,11 +19,11 @@ package org.apache.commons.collections4.keyvalue;
 import java.io.Serializable;
 import java.util.Arrays;
 
-/** 
+/**
  * A <code>MultiKey</code> allows multiple map keys to be merged together.
  * <p>
  * The purpose of this class is to avoid the need to write code to handle
- * maps of maps. An example might be the need to look up a file name by 
+ * maps of maps. An example might be the need to look up a file name by
  * key and locale. The typical solution might be nested maps. This class
  * can be used instead by creating an instance passing in the key and locale.
  * <p>
@@ -58,7 +58,7 @@ public class MultiKey<K> implements Serializable {
      * <p>
      * The keys should be immutable
      * If they are not then they must not be changed after adding to the MultiKey.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      */
@@ -72,7 +72,7 @@ public class MultiKey<K> implements Serializable {
      * <p>
      * The keys should be immutable
      * If they are not then they must not be changed after adding to the MultiKey.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
@@ -87,7 +87,7 @@ public class MultiKey<K> implements Serializable {
      * <p>
      * The keys should be immutable
      * If they are not then they must not be changed after adding to the MultiKey.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
@@ -103,7 +103,7 @@ public class MultiKey<K> implements Serializable {
      * <p>
      * The keys should be immutable
      * If they are not then they must not be changed after adding to the MultiKey.
-     * 
+     *
      * @param key1  the first key
      * @param key2  the second key
      * @param key3  the third key
@@ -174,7 +174,7 @@ public class MultiKey<K> implements Serializable {
      * <p>
      * The keys should be immutable
      * If they are not then they must not be changed.
-     * 
+     *
      * @return the individual keys
      */
     public K[] getKeys() {
@@ -186,7 +186,7 @@ public class MultiKey<K> implements Serializable {
      * <p>
      * The key should be immutable.
      * If it is not then it must not be changed.
-     * 
+     *
      * @param index  the index to retrieve
      * @return the key at the index
      * @throws IndexOutOfBoundsException if the index is invalid
@@ -198,7 +198,7 @@ public class MultiKey<K> implements Serializable {
 
     /**
      * Gets the size of the list of keys.
-     * 
+     *
      * @return the size of the list of keys
      * @since 3.1
      */
@@ -212,7 +212,7 @@ public class MultiKey<K> implements Serializable {
      * <p>
      * To be equal, the other object must be a <code>MultiKey</code> with the
      * same number of keys which are also equal.
-     * 
+     *
      * @param other  the other object to compare to
      * @return true if equal
      */
@@ -232,10 +232,10 @@ public class MultiKey<K> implements Serializable {
      * Gets the combined hash code that is computed from all the keys.
      * <p>
      * This value is computed once and then cached, so elements should not
-     * change their hash codes once created (note that this is the same 
+     * change their hash codes once created (note that this is the same
      * constraint that would be used if the individual keys elements were
      * themselves {@link java.util.Map Map} keys.
-     * 
+     *
      * @return the hash code
      */
     @Override
@@ -245,7 +245,7 @@ public class MultiKey<K> implements Serializable {
 
     /**
      * Gets a debugging string version of the key.
-     * 
+     *
      * @return a debugging string
      */
     @Override
@@ -267,11 +267,11 @@ public class MultiKey<K> implements Serializable {
         }
         hashCode = total;
     }
-    
+
     /**
      * Recalculate the hash code after deserialization. The hash code of some
      * keys might have change (hash codes based on the system hash code are
-     * only stable for the same process). 
+     * only stable for the same process).
      * @return the instance with recalculated hash code
      */
     private Object readResolve() {
