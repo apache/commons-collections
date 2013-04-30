@@ -74,7 +74,7 @@ public class CharacterKeyAnalyzer extends AbstractKeyAnalyzer<Character> {
      * {@inheritDoc}
      */
     public int bitIndex(final Character key, final int offsetInBits, final int lengthInBits, 
-            Character other, final int otherOffsetInBits, final int otherLengthInBits) {
+            final Character other, final int otherOffsetInBits, final int otherLengthInBits) {
         
         if (offsetInBits != 0 || otherOffsetInBits != 0) {
             throw new IllegalArgumentException("offsetInBits=" + offsetInBits 
@@ -85,11 +85,7 @@ public class CharacterKeyAnalyzer extends AbstractKeyAnalyzer<Character> {
         if (keyValue == Character.MIN_VALUE) {
             return NULL_BIT_KEY;
         }
-        
-        if (other == null) {
-            other = Character.MIN_VALUE;
-        }
-        
+
         final char otherValue = other != null ? other.charValue() : Character.MIN_VALUE;
         
         if (keyValue != otherValue) {
