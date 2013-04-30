@@ -50,6 +50,7 @@ public class TransformingComparatorTest extends AbstractComparatorTest<Integer> 
     }
 
     @Override
+    @SuppressWarnings("boxing") // OK in test code
     public List<Integer> getComparableObjectsOrdered() {
         final List<Integer> list = new LinkedList<Integer>();
         list.add(1);

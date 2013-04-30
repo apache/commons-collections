@@ -205,6 +205,7 @@ public class ListOrderedSetTest<E>
     /*
      * test case for https://issues.apache.org/jira/browse/COLLECTIONS-426
      */
+    @SuppressWarnings("boxing") // OK in test code
     public void testRetainAllCollections426() {
         final int size = 100000;
         final ListOrderedSet<Integer> set = new ListOrderedSet<Integer>();

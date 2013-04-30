@@ -1275,6 +1275,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     /**
      * Verifies that values.iterator.remove changes the underlying map.
      */
+    @SuppressWarnings("boxing") // OK in test code
     public void testValuesIteratorRemoveChangesMap() {
         resetFull();
         final List<V> sampleValuesAsList = Arrays.asList(getSampleValues());

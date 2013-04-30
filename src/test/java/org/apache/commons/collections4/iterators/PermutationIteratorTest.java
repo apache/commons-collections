@@ -32,6 +32,7 @@ import java.util.Set;
  */
 public class PermutationIteratorTest extends AbstractIteratorTest<List<Character>> {
 
+    @SuppressWarnings("boxing") // OK in test code
     protected Character[] testArray = { 'A', 'B', 'C' };
     protected List<Character> testList;
 
@@ -69,6 +70,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
 
     //-----------------------------------------------------------------------
 
+    @SuppressWarnings("boxing") // OK in test code
     public void testPermutationResultSize() {
         int factorial = 1;
         for (int i = 0; i < 8; i++, factorial*=i) {
@@ -89,6 +91,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
     /**
      * test checking that all the permutations are returned
      */
+    @SuppressWarnings("boxing") // OK in test code
     public void testPermutationExhaustivity() {
         List<Character> perm1 = new ArrayList<Character>();
         List<Character> perm2 = new ArrayList<Character>();

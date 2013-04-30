@@ -49,6 +49,7 @@ import org.junit.Test;
 public class PatriciaTrieTest {
 
     @Test
+    @SuppressWarnings("boxing") // OK in test code
     public void testSimple() {
         final PatriciaTrie<Integer, String> intTrie = new PatriciaTrie<Integer, String>(new IntegerKeyAnalyzer());
         Assert.assertTrue(intTrie.isEmpty());
@@ -73,6 +74,7 @@ public class PatriciaTrieTest {
     }
 
     @Test
+    @SuppressWarnings("boxing") // OK in test code
     public void testCeilingEntry() {
         final PatriciaTrie<Character, String> charTrie
             = new PatriciaTrie<Character, String>(new CharacterKeyAnalyzer());
@@ -166,6 +168,7 @@ public class PatriciaTrieTest {
     }
 
     @Test
+    @SuppressWarnings("boxing") // OK in test code
     public void testLowerEntry() {
         final PatriciaTrie<Character, String> charTrie = new PatriciaTrie<Character, String>(new CharacterKeyAnalyzer());
         charTrie.put('c', "c");
@@ -277,6 +280,7 @@ public class PatriciaTrieTest {
     }
 
     @Test
+    @SuppressWarnings("boxing") // OK in test code
     public void testIteration() {
         final PatriciaTrie<Integer, String> intTrie = new PatriciaTrie<Integer, String>(new IntegerKeyAnalyzer());
         intTrie.put(1, "One");
@@ -373,6 +377,7 @@ public class PatriciaTrieTest {
     }
 
     @Test
+    @SuppressWarnings("boxing") // OK in test code
     public void testSelect() {
         final PatriciaTrie<Character, String> charTrie = new PatriciaTrie<Character, String>(new CharacterKeyAnalyzer());
         charTrie.put('c', "c");
@@ -418,6 +423,7 @@ public class PatriciaTrieTest {
     }
 
     @Test
+    @SuppressWarnings("boxing") // OK in test code
     public void testTraverseCursorRemove() {
         final PatriciaTrie<Character, String> charTrie = new PatriciaTrie<Character, String>(new CharacterKeyAnalyzer());
         charTrie.put('c', "c");
@@ -486,6 +492,7 @@ public class PatriciaTrieTest {
     }
 
     @Test
+    @SuppressWarnings("boxing") // OK in test code
     public void testIteratorRemove() {
         final PatriciaTrie<Character, String> charTrie = new PatriciaTrie<Character, String>(new CharacterKeyAnalyzer());
         charTrie.put('c', "c");

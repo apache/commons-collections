@@ -268,6 +268,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         assertEquals("A", li.previous());
     }
 
+    @SuppressWarnings("boxing") // OK in test code
     public void testIterationOrder() {
         // COLLECTIONS-433:
         // ensure that the iteration order of elements is correct
@@ -293,6 +294,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         }
     }
 
+    @SuppressWarnings("boxing") // OK in test code
     public void testIterationOrderAfterAddAll() {
         // COLLECTIONS-433:
         // ensure that the iteration order of elements is correct

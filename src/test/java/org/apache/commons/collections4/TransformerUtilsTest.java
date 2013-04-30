@@ -145,6 +145,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     // mapTransformer
     //------------------------------------------------------------------
 
+    @SuppressWarnings("boxing") // OK in test code
     public void testMapTransformer() {
         final Map<Object, Integer> map = new HashMap<Object, Integer>();
         map.put(null, 0);

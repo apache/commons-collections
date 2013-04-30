@@ -311,6 +311,7 @@ public class ListUtilsTest extends BulkTest {
         assertEquals(ListUtils.indexOf(fullList, null), -1);
     }
 
+    @SuppressWarnings("boxing") // OK in test code
     public void testLongestCommonSubsequence() {
 
         try {
@@ -388,6 +389,7 @@ public class ListUtilsTest extends BulkTest {
       assertEquals(0, lcs.length());
   }
 
+    @SuppressWarnings("boxing") // OK in test code
     public void testPartition() {
         final List<Integer> strings = new ArrayList<Integer>();
         for (int i = 0; i <= 6; i++) {
@@ -423,6 +425,7 @@ public class ListUtilsTest extends BulkTest {
         }
     };
 
+    @SuppressWarnings("boxing") // OK in test code
     public void testSelect() {
         final List<Integer> list = new ArrayList<Integer>();
         list.add(1);
@@ -439,6 +442,7 @@ public class ListUtilsTest extends BulkTest {
         assertEquals(2, output2.iterator().next());
     }
 
+    @SuppressWarnings("boxing") // OK in test code
     public void testSelectRejected() {
         final List<Long> list = new ArrayList<Long>();
         list.add(1L);

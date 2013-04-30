@@ -564,6 +564,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
     /*
      * test case for https://issues.apache.org/jira/browse/COLLECTIONS-427
      */
+    @SuppressWarnings("boxing") // OK in test code
     public void testRetainAllCollections427() {
         final int size = 50000;
         final ArrayList<Integer> list = new ArrayList<Integer>();
