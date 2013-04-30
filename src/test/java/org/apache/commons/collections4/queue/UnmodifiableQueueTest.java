@@ -101,6 +101,6 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
      */
     @Override
     public Queue<E> getCollection() {
-        return (Queue<E>) super.getCollection();
+        return super.getCollection();
     }
 }
