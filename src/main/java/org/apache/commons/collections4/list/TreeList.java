@@ -86,7 +86,7 @@ public class TreeList<E> extends AbstractList<E> {
         if (!coll.isEmpty()) {
             root = new AVLNode<E>(coll);
             size = coll.size();
-        }        
+        }
     }
 
     //-----------------------------------------------------------------------
@@ -800,7 +800,7 @@ public class TreeList<E> extends AbstractList<E> {
          * Appends the elements of another tree list to this tree list by efficiently
          * merging the two AVL trees. This operation is destructive to both trees and
          * runs in O(log(m + n)) time.
-         * 
+         *
          * @param otherTree
          *            the root of the AVL tree to merge with this one
          * @param currentSize

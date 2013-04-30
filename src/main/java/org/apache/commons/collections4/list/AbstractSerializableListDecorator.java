@@ -49,7 +49,7 @@ public abstract class AbstractSerializableListDecorator<E>
     //-----------------------------------------------------------------------
     /**
      * Write the list out using a custom routine.
-     * 
+     *
      * @param out  the output stream
      * @throws IOException
      */
@@ -60,7 +60,7 @@ public abstract class AbstractSerializableListDecorator<E>
 
     /**
      * Read the list in using a custom routine.
-     * 
+     *
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException

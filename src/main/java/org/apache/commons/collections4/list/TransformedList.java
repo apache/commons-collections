@@ -48,7 +48,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
      * If there are any elements already in the list being decorated, they
      * are NOT transformed.
      * Contrast this with {@link #transformedList(List, Transformer)}.
-     * 
+     *
      * @param <E> the type of the elements in the list
      * @param list  the list to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -59,7 +59,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
                                                           final Transformer<? super E, ? extends E> transformer) {
         return new TransformedList<E>(list, transformer);
     }
-    
+
     /**
      * Factory method to create a transforming list that will transform
      * existing contents of the specified list.
@@ -67,7 +67,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
      * If there are any elements already in the list being decorated, they
      * will be transformed by this method.
      * Contrast this with {@link #transformingList(List, Transformer)}.
-     * 
+     *
      * @param <E> the type of the elements in the list
      * @param list  the list to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -95,7 +95,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
      * <p>
      * If there are any elements already in the list being decorated, they
      * are NOT transformed.
-     * 
+     *
      * @param list  the list to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if list or transformer is null
@@ -106,7 +106,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
 
     /**
      * Gets the decorated list.
-     * 
+     *
      * @return the decorated list
      */
     protected List<E> getList() {
@@ -114,7 +114,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
     }
 
     //-----------------------------------------------------------------------
-    
+
     public E get(final int index) {
         return getList().get(index);
     }
@@ -132,7 +132,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
     }
 
     //-----------------------------------------------------------------------
-    
+
     public void add(final int index, E object) {
         object = transform(object);
         getList().add(index, object);
@@ -168,7 +168,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
 
         /**
          * Create a new transformed list iterator.
-         * 
+         *
          * @param iterator  the list iterator to decorate
          */
         protected TransformedListIterator(final ListIterator<E> iterator) {

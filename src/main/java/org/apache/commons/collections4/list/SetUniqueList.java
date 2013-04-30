@@ -44,7 +44,7 @@ import org.apache.commons.collections4.iterators.AbstractListIteratorDecorator;
  * retaining insertion order in the iterator.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
- * 
+ *
  * @since 3.0
  * @version $Id$
  */
@@ -57,12 +57,11 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     private final Set<E> set;
 
     /**
-     * Factory method to create a SetList using the supplied list to retain
-     * order.
+     * Factory method to create a SetList using the supplied list to retain order.
      * <p>
      * If the list contains duplicates, these are removed (first indexed one
      * kept). A <code>HashSet</code> is used for the set behaviour.
-     * 
+     *
      * @param <E>
      *            the element type
      * @param list
@@ -91,7 +90,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * use.
      * <p>
      * The set and list must both be correctly initialised to the same elements.
-     * 
+     *
      * @param set
      *            the set to decorate, must not be null
      * @param list
@@ -110,7 +109,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     // -----------------------------------------------------------------------
     /**
      * Gets an unmodifiable view as a Set.
-     * 
+     *
      * @return an unmodifiable set view
      */
     public Set<E> asSet() {
@@ -124,7 +123,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * <i>(Violation)</i> The <code>List</code> interface requires that this
      * method returns <code>true</code> always. However this class may return
      * <code>false</code> because of the <code>Set</code> behaviour.
-     * 
+     *
      * @param object
      *            the object to add
      * @return true if object was added
@@ -148,7 +147,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * <i>(Violation)</i> The <code>List</code> interface makes the assumption
      * that the element is always inserted. This may not happen with this
      * implementation.
-     * 
+     *
      * @param index
      *            the index to insert at
      * @param object
@@ -172,7 +171,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * <i>(Violation)</i> The <code>List</code> interface makes the assumption
      * that the elements are always inserted. This may not happen with this
      * implementation.
-     * 
+     *
      * @param coll
      *            the collection to add in iterator order
      * @return true if this collection changed
@@ -192,7 +191,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * <i>(Violation)</i> The <code>List</code> interface makes the assumption
      * that the elements are always inserted. This may not happen with this
      * implementation.
-     * 
+     *
      * @param index
      *            the index to insert at
      * @param coll
@@ -217,7 +216,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * The object is set into the specified index. Afterwards, any previous
      * duplicate is removed. If the object is not already in the list then a
      * normal set occurs. If it is present, then the old version is removed.
-     * 
+     *
      * @param index
      *            the index to insert at
      * @param object
@@ -324,7 +323,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * {@inheritDoc}
      * <p>
      * NOTE: from 4.0, an unmodifiable list will be returned, as changes to the
-     * subList can invalidate the parent list. 
+     * subList can invalidate the parent list.
      */
     @Override
     public List<E> subList(final int fromIndex, final int toIndex) {
@@ -336,7 +335,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     /**
      * Create a new {@link Set} with the same type as the provided {@code set}
      * and populate it with all elements of {@code list}.
-     * 
+     *
      * @param set
      *            the {@link Set} to be used as return type, must not be null
      * @param list

@@ -30,7 +30,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableListIterator;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  * <p>
- * Attempts to modify it will result in an UnsupportedOperationException. 
+ * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 3.0
  * @version $Id$
@@ -44,7 +44,7 @@ public final class UnmodifiableList<E>
 
     /**
      * Factory method to create an unmodifiable list.
-     * 
+     *
      * @param <E> the type of the elements in the list
      * @param list  the list to decorate, must not be null
      * @return a new unmodifiable list
@@ -60,7 +60,7 @@ public final class UnmodifiableList<E>
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      * @since Commons Collection 5

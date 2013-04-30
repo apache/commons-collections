@@ -47,7 +47,7 @@ public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorat
 
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
@@ -57,7 +57,7 @@ public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorat
 
     /**
      * Gets the list being decorated.
-     * 
+     *
      * @return the decorated list
      */
     @Override
@@ -66,7 +66,7 @@ public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorat
     }
 
     //-----------------------------------------------------------------------
-    
+
     public void add(final int index, final E object) {
         decorated().add(index, object);
     }

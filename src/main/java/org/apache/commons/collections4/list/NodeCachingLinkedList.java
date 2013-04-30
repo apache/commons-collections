@@ -55,7 +55,7 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
      * <code>next</code> pointing to the next element.
      */
     private transient Node<E> firstCachedNode;
-    
+
     /**
      * The size of the cache.
      */
@@ -76,14 +76,14 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
 
     /**
      * Constructor that copies the specified collection
-     * 
+     *
      * @param coll  the collection to copy
      */
     public NodeCachingLinkedList(final Collection<E> coll) {
         super(coll);
         this.maximumCacheSize = DEFAULT_MAXIMUM_CACHE_SIZE;
     }
-    
+
     /**
      * Constructor that species the maximum cache size.
      *
@@ -98,7 +98,7 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
     //-----------------------------------------------------------------------
     /**
      * Gets the maximum size of the cache.
-     * 
+     *
      * @return the maximum cache size
      */
     protected int getMaximumCacheSize() {
@@ -107,7 +107,7 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
 
     /**
      * Sets the maximum size of the cache.
-     * 
+     *
      * @param maximumCacheSize  the new maximum cache size
      */
     protected void setMaximumCacheSize(final int maximumCacheSize) {
@@ -124,7 +124,7 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
             getNodeFromCache();
         }
     }
-    
+
     /**
      * Gets a node from the cache. If a node is returned, then the value of
      * {@link #cacheSize} is decreased accordingly. The node that is returned
@@ -139,24 +139,24 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
         final Node<E> cachedNode = firstCachedNode;
         firstCachedNode = cachedNode.next;
         cachedNode.next = null; // This should be changed anyway, but defensively
-                                // set it to null.                    
+                                // set it to null.
         cacheSize--;
         return cachedNode;
     }
-    
+
     /**
      * Checks whether the cache is full.
-     * 
+     *
      * @return true if the cache is full
      */
     protected boolean isCacheFull() {
         return cacheSize >= maximumCacheSize;
     }
-    
+
     /**
      * Adds a node to the cache, if the cache isn't full.
      * The node's contents are cleared to so they can be garbage collected.
-     * 
+     *
      * @param node  the node to add to the cache
      */
     protected void addNodeToCache(final Node<E> node) {
@@ -173,11 +173,11 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
         cacheSize++;
     }
 
-    //-----------------------------------------------------------------------    
+    //-----------------------------------------------------------------------
     /**
      * Creates a new node, either by reusing one from the cache or creating
      * a new one.
-     * 
+     *
      * @param value  value of the new node
      * @return the newly created node
      */
@@ -194,7 +194,7 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
     /**
      * Removes the node from the list, storing it in the cache for reuse
      * if the cache is not yet full.
-     * 
+     *
      * @param node  the node to remove
      */
     @Override
@@ -202,11 +202,11 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
         super.removeNode(node);
         addNodeToCache(node);
     }
-    
+
     /**
      * Removes all the nodes from the list, storing as many as required in the
      * cache for reuse.
-     * 
+     *
      */
     @Override
     protected void removeAllNodes() {
@@ -221,7 +221,7 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
             node = node.next;
             addNodeToCache(oldNode);
         }
-        super.removeAllNodes();        
+        super.removeAllNodes();
     }
 
     //-----------------------------------------------------------------------

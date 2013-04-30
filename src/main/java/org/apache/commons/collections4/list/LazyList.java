@@ -44,7 +44,7 @@ import org.apache.commons.collections4.Factory;
  *
  * After the above code is executed, <code>date</code> will contain
  * a new <code>Date</code> instance.  Furthermore, that <code>Date</code>
- * instance is the fourth element in the list.  The first, second, 
+ * instance is the fourth element in the list.  The first, second,
  * and third element are all set to <code>null</code>.
  * <p>
  * This class differs from {@link GrowthList} because here growth occurs on
@@ -67,7 +67,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
 
     /**
      * Factory method to create a lazily instantiating list.
-     * 
+     *
      * @param <E> the type of the elements in the list
      * @param list  the list to decorate, must not be null
      * @param factory  the factory to use for creation, must not be null
@@ -77,11 +77,11 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
     public static <E> LazyList<E> lazyList(final List<E> list, final Factory<? extends E> factory) {
         return new LazyList<E>(list, factory);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param list  the list to decorate, must not be null
      * @param factory  the factory to use for creation, must not be null
      * @throws IllegalArgumentException if list or factory is null
@@ -98,11 +98,11 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
     /**
      * Decorate the get method to perform the lazy behaviour.
      * <p>
-     * If the requested index is greater than the current size, the list will 
+     * If the requested index is greater than the current size, the list will
      * grow to the new size and a new object will be returned from the factory.
-     * Indexes in-between the old size and the requested size are left with a 
+     * Indexes in-between the old size and the requested size are left with a
      * placeholder that is replaced with a factory object when requested.
-     * 
+     *
      * @param index  the index to retrieve
      * @return the element at the given index
      */

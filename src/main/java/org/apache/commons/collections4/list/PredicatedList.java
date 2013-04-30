@@ -50,7 +50,7 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
      * <p>
      * If there are any elements already in the list being decorated, they
      * are validated.
-     * 
+     *
      * @param <T> the type of the elements in the list
      * @param list  the list to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
@@ -68,7 +68,7 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
      * <p>
      * If there are any elements already in the list being decorated, they
      * are validated.
-     * 
+     *
      * @param list  the list to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
      * @throws IllegalArgumentException if list or predicate is null
@@ -80,7 +80,7 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
 
     /**
      * Gets the list being decorated.
-     * 
+     *
      * @return the decorated list
      */
     @Override
@@ -89,7 +89,7 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
     }
 
     //-----------------------------------------------------------------------
-    
+
     public E get(final int index) {
         return decorated().get(index);
     }
@@ -107,7 +107,7 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
     }
 
     //-----------------------------------------------------------------------
-    
+
     public void add(final int index, final E object) {
         validate(object);
         decorated().add(index, object);
@@ -142,22 +142,22 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
      * Inner class Iterator for the PredicatedList
      */
     protected class PredicatedListIterator extends AbstractListIteratorDecorator<E> {
-        
+
         /**
          * Create a new predicated list iterator.
-         * 
+         *
          * @param iterator  the list iterator to decorate
          */
         protected PredicatedListIterator(final ListIterator<E> iterator) {
             super(iterator);
         }
-        
+
         @Override
         public void add(final E object) {
             validate(object);
             getListIterator().add(object);
         }
-        
+
         @Override
         public void set(final E object) {
             validate(object);

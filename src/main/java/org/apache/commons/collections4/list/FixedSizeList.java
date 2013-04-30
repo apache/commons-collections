@@ -45,7 +45,7 @@ public class FixedSizeList<E>
 
     /**
      * Factory method to create a fixed size list.
-     * 
+     *
      * @param <E> the type of the elements in the list
      * @param list  the list to decorate, must not be null
      * @return a new fixed size list
@@ -58,7 +58,7 @@ public class FixedSizeList<E>
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */

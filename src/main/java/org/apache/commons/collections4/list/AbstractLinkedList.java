@@ -101,7 +101,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     }
 
     //-----------------------------------------------------------------------
-    
+
     public int size() {
         return size;
     }
@@ -116,7 +116,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     }
 
     //-----------------------------------------------------------------------
-    
+
     public Iterator<E> iterator() {
         return listIterator();
     }
@@ -130,7 +130,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     }
 
     //-----------------------------------------------------------------------
-    
+
     public int indexOf(final Object value) {
         int i = 0;
         for (Node<E> node = header.next; node != header; node = node.next) {
@@ -167,7 +167,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     }
 
     //-----------------------------------------------------------------------
-    
+
     public Object[] toArray() {
         return toArray(new Object[size]);
     }
@@ -203,7 +203,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     }
 
     //-----------------------------------------------------------------------
-    
+
     public boolean add(final E value) {
         addLast(value);
         return true;
@@ -227,7 +227,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     }
 
     //-----------------------------------------------------------------------
-    
+
     public E remove(final int index) {
         final Node<E> node = getNode(index, false);
         final E oldValue = node.getValue();
@@ -247,7 +247,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
     /**
      * {@inheritDoc}
-     * <p> 
+     * <p>
      * This implementation iterates over the elements of this list, checking each element in
      * turn to see if it's contained in <code>coll</code>. If it's contained, it's removed
      * from this list. As a consequence, it is advised to use a collection type for
@@ -267,10 +267,10 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     }
 
     //-----------------------------------------------------------------------
-    
+
     /**
      * {@inheritDoc}
-     * <p> 
+     * <p>
      * This implementation iterates over the elements of this list, checking each element in
      * turn to see if it's contained in <code>coll</code>. If it's not contained, it's removed
      * from this list. As a consequence, it is advised to use a collection type for
@@ -301,7 +301,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     }
 
     //-----------------------------------------------------------------------
-    
+
     public E getFirst() {
         final Node<E> node = header.next;
         if (node == header) {
@@ -596,7 +596,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * <p>
      * The first serializable subclass must call this method from
      * <code>writeObject</code>.
-     * 
+     *
      * @param outputStream  the stream to write the object to
      * @throws IOException  if anything goes wrong
      */
@@ -613,7 +613,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * <p>
      * The first serializable subclass must call this method from
      * <code>readObject</code>.
-     * 
+     *
      * @param inputStream  the stream to read the object from
      * @throws IOException  if any error occurs while reading from the stream
      * @throws ClassNotFoundException  if a class read from the stream can not be loaded
