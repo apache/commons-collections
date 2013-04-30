@@ -618,7 +618,7 @@ public class ListUtils {
       
       @Override
       public Character get( int index ) {
-        return sequence.charAt( index );
+        return Character.valueOf(sequence.charAt( index ));
       }
 
       @Override
