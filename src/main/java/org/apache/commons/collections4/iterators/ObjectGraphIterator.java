@@ -77,20 +77,20 @@ import org.apache.commons.collections4.Transformer;
 public class ObjectGraphIterator<E> implements Iterator<E> {
 
     /** The stack of iterators */
-    protected final ArrayStack<Iterator<? extends E>> stack = new ArrayStack<Iterator<? extends E>>(8);
+    private final ArrayStack<Iterator<? extends E>> stack = new ArrayStack<Iterator<? extends E>>(8);
     /** The root object in the tree */
-    protected E root;
+    private E root;
     /** The transformer to use */
-    protected final Transformer<? super E, ? extends E> transformer;
+    private final Transformer<? super E, ? extends E> transformer;
 
     /** Whether there is another element in the iteration */
-    protected boolean hasNext = false;
+    private boolean hasNext = false;
     /** The current iterator */
-    protected Iterator<? extends E> currentIterator;
+    private Iterator<? extends E> currentIterator;
     /** The current value */
-    protected E currentValue;
+    private E currentValue;
     /** The last used iterator, needed for remove() */
-    protected Iterator<? extends E> lastUsedIterator;
+    private Iterator<? extends E> lastUsedIterator;
 
     //-----------------------------------------------------------------------
     /**
