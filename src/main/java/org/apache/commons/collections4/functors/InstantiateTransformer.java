@@ -70,8 +70,6 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
         if (paramTypes == null || paramTypes.length == 0) {
             return new InstantiateTransformer<T>();
         }
-        paramTypes = paramTypes.clone();
-        args = args.clone();
         return new InstantiateTransformer<T>(paramTypes, args);
     }
 
@@ -87,14 +85,16 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
     /**
      * Constructor that performs no validation.
      * Use <code>instantiateTransformer</code> if you want that.
+     * <p>
+     * Note: from 4.0, the input parameters will be cloned
      *
-     * @param paramTypes  the constructor parameter types, not cloned
-     * @param args  the constructor arguments, not cloned
+     * @param paramTypes  the constructor parameter types
+     * @param args  the constructor arguments
      */
     public InstantiateTransformer(final Class<?>[] paramTypes, final Object[] args) {
         super();
-        iParamTypes = paramTypes;
-        iArgs = args;
+        iParamTypes = paramTypes.clone();
+        iArgs = args.clone();
     }
 
     /**
