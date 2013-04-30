@@ -804,7 +804,7 @@ public class MapUtilsTest extends BulkTest {
         }
 
         public int compareTo(X o) {
-            return key - o.key;
+            return key - o.key | name.compareTo(o.name);
         }
 
     }
