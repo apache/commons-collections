@@ -25,6 +25,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections4.bag.HashBag;
+import org.apache.commons.collections4.functors.DefaultEquator;
+import org.apache.commons.collections4.functors.Equator;
 import org.apache.commons.collections4.list.FixedSizeList;
 import org.apache.commons.collections4.list.LazyList;
 import org.apache.commons.collections4.list.PredicatedList;
@@ -520,23 +522,64 @@ public class ListUtils {
     /**
      * Returns the longest common subsequence (LCS) of two sequences (lists).
      * 
-     * @param <T>  the element type
+     * @param <E>  the element type
      * @param a  the first list
      * @param b  the second list
      * @return the longest common subsequence
      * @throws IllegalArgumentException if either list is {@code null}
      * @since 4.0
      */
-    public static <T> List<T> longestCommonSubsequence(final List<T> a, final List<T> b) {
+    public static <E> List<E> longestCommonSubsequence(final List<E> a, final List<E> b) {
+      return longestCommonSubsequence( a, b, DefaultEquator.defaultEquator() );
+    }
+
+    /**
+     * Returns the longest common subsequence (LCS) of two sequences (lists).
+     * 
+     * @param <E>  the element type
+     * @param a  the first list
+     * @param b  the second list
+     * @return the longest common subsequence
+     * @throws IllegalArgumentException if either list or the equator is {@code null}
+     * @since 4.0
+     */
+    public static <E> List<E> longestCommonSubsequence(final List<E> a, final List<E> b, final Equator<? super E> equator) {
         if (a == null || b == null) {
             throw new IllegalArgumentException("List must not be null");          
         }
+        if (equator == null) {
+          throw new IllegalArgumentException("Equator must not be null");
+        }
 
-        final SequencesComparator<T> comparator = new SequencesComparator<T>(a, b);
-        final EditScript<T> script = comparator.getScript();
-        final LcsVisitor<T> visitor = new LcsVisitor<T>();
+        final SequencesComparator<E> comparator = new SequencesComparator<E>(a, b, equator);
+        final EditScript<E> script = comparator.getScript();
+        final LcsVisitor<E> visitor = new LcsVisitor<E>();
         script.visit(visitor);
         return visitor.getSubSequence();
+    }
+
+    /**
+     * Returns the longest common subsequence (LCS) of two {@link CharSequence} objects.
+     * <p>
+     * This is a convenience method for using {@link #longestCommonSubsequence(List, List)}
+     * with {@link CharSequence} instances. 
+     * 
+     * @param a  the first sequence
+     * @param b  the second sequence
+     * @return the longest common subsequence as {@link String}
+     * @throws IllegalArgumentException if either sequence is {@code null}
+     * @since 4.0
+     */
+    public static String longestCommonSubsequence(final CharSequence a, final CharSequence b) {
+        if (a == null || b == null) {
+            throw new IllegalArgumentException("CharSequence must not be null");          
+        }
+        final List<Character> lcs = longestCommonSubsequence(new CharSequenceAsList( a ), new CharSequenceAsList( b ));
+        final StringBuilder sb = new StringBuilder();
+        for ( Character ch : lcs ) {
+          sb.append(ch);
+        }
+        return sb.toString();
     }
 
     /**
@@ -562,6 +605,29 @@ public class ListUtils {
         }
     }
 
+    /**
+     * A simple wrapper to use a CharSequence as List.
+     */
+    private static final class CharSequenceAsList extends AbstractList<Character> {
+
+      private final CharSequence sequence;
+      
+      public CharSequenceAsList(final CharSequence sequence) {
+        this.sequence = sequence;
+      }
+      
+      @Override
+      public Character get( int index ) {
+        return sequence.charAt( index );
+      }
+
+      @Override
+      public int size() {
+        return sequence.length();
+      }
+      
+    }
+        
     //-----------------------------------------------------------------------
     /**
      * Returns consecutive {@link List#subList(int, int) sublists} of a

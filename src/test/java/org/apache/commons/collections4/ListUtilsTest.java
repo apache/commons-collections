@@ -31,7 +31,6 @@ import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.list.PredicatedList;
-import org.junit.Assert;
 
 /**
  * Tests for ListUtils.
@@ -315,7 +314,7 @@ public class ListUtilsTest extends BulkTest {
     public void testLongestCommonSubsequence() {
         
         try {
-            ListUtils.longestCommonSubsequence(null, null);
+            ListUtils.longestCommonSubsequence((List<?>) null, null);
             fail("failed to check for null argument");
         } catch (final IllegalArgumentException e) {}
 
@@ -351,7 +350,44 @@ public class ListUtilsTest extends BulkTest {
         
         assertTrue(lcs.isEmpty());
     }
-    
+
+    public void testLongestCommonSubsequenceWithString() {
+      
+      try {
+          ListUtils.longestCommonSubsequence((String) null, null);
+          fail("failed to check for null argument");
+      } catch (final IllegalArgumentException e) {}
+
+      try {
+          ListUtils.longestCommonSubsequence("A", null);
+          fail("failed to check for null argument");
+      } catch (final IllegalArgumentException e) {}
+
+      try {
+          ListUtils.longestCommonSubsequence(null, "A");
+          fail("failed to check for null argument");
+      } catch (final IllegalArgumentException e) {}
+
+      String lcs = ListUtils.longestCommonSubsequence("", "");
+      assertTrue(lcs.isEmpty());
+
+      String banana = "BANANA";
+      String ananas = "ANANAS";
+      lcs = ListUtils.longestCommonSubsequence(banana, ananas);
+      
+      assertEquals("ANANA", lcs);
+
+      String atana = "ATANA";
+      lcs = ListUtils.longestCommonSubsequence(banana, atana);
+      
+      assertEquals("AANA", lcs);
+
+      String zorro = "ZORRO";
+      lcs = ListUtils.longestCommonSubsequence(banana, zorro);
+      
+      assertTrue(lcs.isEmpty());
+  }
+
     public void testPartition() {
         final List<Integer> strings = new ArrayList<Integer>();
         for (int i = 0; i <= 6; i++) {

@@ -22,11 +22,12 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
-    <action issue="COLLECTIONS-458" dev="tn" type="delete">
-      AbstractUntypedCollectionDecorator<E, D>  is not used.
+    <action issue="COLLECTIONS-458" dev="sebb" type="remove">
+      "AbstractUntypedCollectionDecorator&lt;E, D&gt;" is not used.
     </action>
     <action issue="COLLECTIONS-456" dev="tn" type="add">
-      Added method "ListUtils#longestCommonSubsequence(List, List)".
+      Added methods "ListUtils#longestCommonSubsequence(...)" to get the longest common subsequence
+      of arbitrary lists or CharSequences.
     </action>
     <action issue="COLLECTIONS-454" dev="tn" type="update">
       An iterator over a "Flat3Map#entrySet()" will now return
