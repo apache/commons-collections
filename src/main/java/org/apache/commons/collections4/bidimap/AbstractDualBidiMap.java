@@ -41,6 +41,8 @@ import org.apache.commons.collections4.keyvalue.AbstractMapEntryDecorator;
  */
 public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
+    // TODO privatise fields?
+
     /**
      * Normal delegate map.
      */

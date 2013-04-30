@@ -37,6 +37,8 @@ import org.apache.commons.collections4.ResettableIterator;
  */
 public class ArrayIterator<E> implements ResettableIterator<E> {
 
+    // TODO Privatise fields? Mainly read-only access
+
     /** The array to iterate over */    
     protected Object array;
     /** The start index to loop from */

@@ -41,7 +41,7 @@ import java.util.Set;
 public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, V> {
 
     /** The map to decorate */
-    protected transient Map<K, V> map;
+    protected transient Map<K, V> map; // TODO Privatise? Only write access is for deserialisation
 
     /**
      * Constructor only used in deserialization, do not use otherwise.

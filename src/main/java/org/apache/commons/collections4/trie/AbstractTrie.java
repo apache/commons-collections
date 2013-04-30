@@ -33,7 +33,9 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
         implements Trie<K, V>, Serializable {
     
     private static final long serialVersionUID = 5826987063535505652L;
-    
+
+    // TODO Privatise fields?
+
     /**
      * The {@link KeyAnalyzer} that's being used to build the 
      * PATRICIA {@link Trie}.
