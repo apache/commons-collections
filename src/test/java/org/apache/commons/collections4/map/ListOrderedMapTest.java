@@ -349,7 +349,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         final List<K> orderedList = lom.asList();
         for (int i = 0; i < size; i++) {
-            assertEquals(i, orderedList.get(i));
+            assertEquals(Integer.valueOf(i), orderedList.get(i));
         }
     }
 
