@@ -36,20 +36,20 @@ import org.apache.commons.collections4.Transformer;
  * @see org.apache.commons.collections4.comparators.ComparableComparator
  */
 public class TransformingComparator<I, O> implements Comparator<I>, Serializable {
-    
+
     /** Serialization version from Collections 4.0. */
     private static final long serialVersionUID = 3456940356043606220L;
 
     /** The decorated comparator. */
     private final Comparator<O> decorated;
-    /** The transformer being used. */    
+    /** The transformer being used. */
     private final Transformer<? super I, ? extends O> transformer;
 
     //-----------------------------------------------------------------------
     /**
-     * Constructs an instance with the given Transformer and a 
+     * Constructs an instance with the given Transformer and a
      * {@link ComparableComparator ComparableComparator}.
-     * 
+     *
      * @param transformer what will transform the arguments to <code>compare</code>
      */
     @SuppressWarnings("unchecked")
@@ -59,7 +59,7 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
 
     /**
      * Constructs an instance with the given Transformer and Comparator.
-     * 
+     *
      * @param transformer  what will transform the arguments to <code>compare</code>
      * @param decorated  the decorated Comparator
      */
@@ -72,7 +72,7 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
     //-----------------------------------------------------------------------
     /**
      * Returns the result of comparing the values from the transform operation.
-     * 
+     *
      * @param obj1  the first object to transform then compare
      * @param obj2  the second object to transform then compare
      * @return negative if obj1 is less, positive if greater, zero if equal
@@ -99,14 +99,14 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
     }
 
     /**
-     * Returns <code>true</code> iff <i>that</i> Object is 
-     * is a {@link Comparator} whose ordering is known to be 
+     * Returns <code>true</code> iff <i>that</i> Object is
+     * is a {@link Comparator} whose ordering is known to be
      * equivalent to mine.
      * <p>
      * This implementation returns <code>true</code>
-     * iff <code><i>that</i></code> is a {@link TransformingComparator} 
+     * iff <code><i>that</i></code> is a {@link TransformingComparator}
      * whose attributes are equal to mine.
-     * 
+     *
      * @param object  the object to compare to
      * @return true if equal
      */

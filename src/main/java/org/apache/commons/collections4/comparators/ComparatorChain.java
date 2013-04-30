@@ -43,7 +43,7 @@ import java.util.List;
  * Instances of ComparatorChain are not synchronized. The class is not
  * thread-safe at construction time, but it <i>is</i> thread-safe to perform
  * multiple comparisons after all the setup operations are complete.
- * 
+ *
  * @since 2.0
  * @version $Id$
  */
@@ -232,7 +232,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
 
     /**
      * Throws an exception if the {@link ComparatorChain} is locked.
-     * 
+     *
      * @throws UnsupportedOperationException if the {@link ComparatorChain} is locked
      */
     private void checkLocked() {
@@ -244,7 +244,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
 
     /**
      * Throws an exception if the {@link ComparatorChain} is empty.
-     * 
+     *
      * @throws UnsupportedOperationException if the {@link ComparatorChain} is empty
      */
     private void checkChainIntegrity() {

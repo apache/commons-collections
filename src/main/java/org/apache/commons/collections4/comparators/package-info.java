@@ -18,11 +18,11 @@
  * This package contains implementations of the
  * {@link java.util.Comparator Comparator} interface.
  * <p>
- * You may also consider using 
+ * You may also consider using
  * {@link org.apache.commons.collections4.ComparatorUtils ComparatorUtils},
  * which is a single class that uses static methods to construct instances
  * of the classes in this package.
- * 
+ *
  * @version $Id$
  */
 package org.apache.commons.collections4.comparators;

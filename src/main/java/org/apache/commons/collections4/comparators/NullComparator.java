@@ -89,7 +89,7 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
     public NullComparator(final boolean nullsAreHigh) {
         this(ComparatorUtils.NATURAL_COMPARATOR, nullsAreHigh);
     }
-    
+
     /**
      *  Construct an instance that sorts <code>null</code> higher or lower than
      *  any non-<code>null</code> object it is compared with.  When comparing
@@ -112,7 +112,7 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
     public NullComparator(final Comparator<E> nonNullComparator, final boolean nullsAreHigh) {
         this.nonNullComparator = nonNullComparator;
         this.nullsAreHigh = nullsAreHigh;
-        
+
         if (nonNullComparator == null) {
             throw new NullPointerException("null nonNullComparator");
         }

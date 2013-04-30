@@ -33,10 +33,10 @@ import java.util.Comparator;
  * {@link Comparable#compareTo(Object) compareTo} gave inconsistent results.
  * This is no longer the case. See {@link #compare(Object, Object) compare} for
  * details.
- * 
+ *
  * @since 2.0
  * @version $Id$
- * 
+ *
  * @see java.util.Collections#reverseOrder()
  */
 public class ComparableComparator<E extends Comparable<? super E>> implements Comparator<E>, Serializable {
@@ -55,7 +55,7 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
      * Developers are encouraged to use the comparator returned from this method
      * instead of constructing a new instance to reduce allocation and GC overhead
      * when multiple comparable comparators may be used in the same VM.
-     * 
+     *
      * @param <E>  the element type
      * @return the singleton ComparableComparator
      */
@@ -79,11 +79,11 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
      * Compare the two {@link Comparable Comparable} arguments.
      * This method is equivalent to:
      * <pre>((Comparable)obj1).compareTo(obj2)</pre>
-     * 
+     *
      * @param obj1  the first object to compare
      * @param obj2  the second object to compare
      * @return negative if obj1 is less, positive if greater, zero if equal
-     * @throws NullPointerException if <i>obj1</i> is <code>null</code>, 
+     * @throws NullPointerException if <i>obj1</i> is <code>null</code>,
      *         or when <code>((Comparable)obj1).compareTo(obj2)</code> does
      * @throws ClassCastException if <i>obj1</i> is not a <code>Comparable</code>,
      *         or when <code>((Comparable)obj1).compareTo(obj2)</code> does
@@ -113,14 +113,14 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
      * <code><i>object</i>.{@link Object#getClass() getClass()}</code> equals
      * <code>this.getClass()</code>. Subclasses may want to override this behavior to remain
      * consistent with the {@link Comparator#equals(Object)} contract.
-     * 
+     *
      * @param object  the object to compare with
      * @return {@code true} if equal
      * @since 3.0
      */
     @Override
     public boolean equals(final Object object) {
-        return this == object || 
+        return this == object ||
                null != object && object.getClass().equals(this.getClass());
     }
 

@@ -264,14 +264,14 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
     }
 
     /**
-     * Returns <code>true</code> iff <i>that</i> Object is 
-     * is a {@link Comparator} whose ordering is known to be 
+     * Returns <code>true</code> iff <i>that</i> Object is
+     * is a {@link Comparator} whose ordering is known to be
      * equivalent to mine.
      * <p>
      * This implementation returns <code>true</code>
-     * iff <code><i>that</i></code> is a {@link FixedOrderComparator} 
+     * iff <code><i>that</i></code> is a {@link FixedOrderComparator}
      * whose attributes are equal to mine.
-     * 
+     *
      * @param object  the object to compare to
      * @return true if equal
      */
