@@ -58,7 +58,7 @@ public class ListOrderedSet<E>
     private static final long serialVersionUID = -228664372470420141L;
 
     /** Internal list to hold the sequence of objects */
-    protected final List<E> setOrder;
+    private final List<E> setOrder;
 
     /**
      * Factory method to create an ordered set specifying the list and set to
@@ -368,10 +368,10 @@ public class ListOrderedSet<E>
         implements OrderedIterator<E> {
 
         /** Object we iterate on */
-        protected final Collection<E> set;
+        private final Collection<E> set;
 
         /** Last object retrieved */
-        protected E last;
+        private E last;
 
         private OrderedSetIterator(final ListIterator<E> iterator, final Collection<E> set) {
             super(iterator);
