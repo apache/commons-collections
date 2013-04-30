@@ -22,9 +22,9 @@ import java.util.Collection;
 import org.apache.commons.collections4.map.CompositeMap;
 
 /**
- * This class is used in TestCompositeMap. When testing serialization, 
- * the class has to be separate of TestCompositeMap, else the test 
- * class also has to be serialized. 
+ * This class is used in TestCompositeMap. When testing serialization,
+ * the class has to be separate of TestCompositeMap, else the test
+ * class also has to be serialized.
  */
 class EmptyMapMutator<K,V> implements CompositeMap.MapMutator<K,V> {
     /** Serialization version */
@@ -36,11 +36,11 @@ class EmptyMapMutator<K,V> implements CompositeMap.MapMutator<K,V> {
     final Collection<K> intersect) {
         // Do nothing
     }
-    
+
     public V put(final CompositeMap<K, V> map, final Map<K, V>[] composited, final K key, final V value) {
         return composited[0].put(key, value);
     }
-    
+
     public void putAll(final CompositeMap<K, V> map, final Map<K, V>[] composited, final Map<? extends K, ? extends V> t) {
         composited[0].putAll(t);
     }

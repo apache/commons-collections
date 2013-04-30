@@ -38,7 +38,7 @@ public abstract class AbstractMockPredicateTest<T> {
      * Mock predicates created by a single test case which need to be verified after the test completes.
      */
     private List<Predicate<? super T>> mockPredicatesToVerify;
-    
+
     /**
      * The value to pass to mocks.
      */

@@ -24,7 +24,7 @@ import org.apache.commons.collections4.iterators.IteratorIterable;
 
 /**
  * Tests for IteratorIterable.
- * 
+ *
  * @version $Id$
  */
 public class IteratorIterableTest extends BulkTest {
@@ -49,10 +49,10 @@ public class IteratorIterableTest extends BulkTest {
     public void testIterator() {
         final Iterator<Integer> iter = createIterator();
         final Iterable<Number> iterable = new IteratorIterable<Number>(iter);
-        
+
         // first use
         verifyIteration(iterable);
-        
+
         // second use
         for (@SuppressWarnings("unused") final Number actual : iterable) {
             fail("should not be able to iterate twice");
@@ -63,10 +63,10 @@ public class IteratorIterableTest extends BulkTest {
         final Iterator<Integer> iter = createIterator();
 
         final Iterable<Number> iterable = new IteratorIterable<Number>(iter, true);
-        
+
         // first use
         verifyIteration(iterable);
-        
+
         // second use
         verifyIteration(iterable);
     }

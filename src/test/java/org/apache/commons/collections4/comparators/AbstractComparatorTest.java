@@ -37,7 +37,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
 
     /**
      * JUnit constructor.
-     * 
+     *
      * @param testName  the test class name
      */
     public AbstractComparatorTest(final String testName) {
@@ -45,10 +45,10 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
     }
 
     //-----------------------------------------------------------------------
-    
+
     /**
      * Implement this method to return a list of sorted objects.
-     * 
+     *
      * @return sorted objects
      */
     public abstract List<T> getComparableObjectsOrdered();
@@ -56,7 +56,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
     //-----------------------------------------------------------------------
     /**
      * Implements the abstract superclass method to return the comparator.
-     * 
+     *
      * @return a full iterator
      */
     @Override
@@ -144,7 +144,7 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
 
         final List<T> orderedList = getComparableObjectsOrdered();
 
-        /* debug 
+        /* debug
         Iterator i = randomList.iterator();
         while (i.hasNext()) {
             System.out.println(i.next());
@@ -187,14 +187,14 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
     public void testComparatorCompatibility() throws IOException, ClassNotFoundException {
         if (!skipSerializedCanonicalTests()) {
             Comparator<T> comparator = null;
-    
+
             // test to make sure the canonical form has been preserved
             try {
                 comparator = (Comparator<T>) readExternalFormFromDisk(getCanonicalComparatorName(makeObject()));
             } catch (final FileNotFoundException exception) {
-    
+
                 final boolean autoCreateSerialized = false;
-    
+
                 if (autoCreateSerialized) {
                     comparator = makeObject();
                     final String fileName = getCanonicalComparatorName(comparator);
@@ -206,16 +206,16 @@ public abstract class AbstractComparatorTest<T> extends AbstractObjectTest {
                             + "compatibility: " + exception.getMessage());
                 }
             }
-    
-            
+
+
             // make sure the canonical form produces the ordering we currently
             // expect
             final List<T> randomList = getComparableObjectsOrdered();
             reverseObjects(randomList);
             sortObjects(randomList, comparator);
-    
+
             final List<T> orderedList = getComparableObjectsOrdered();
-    
+
             assertTrue("Comparator did not reorder the List correctly",
                        orderedList.equals(randomList));
         }

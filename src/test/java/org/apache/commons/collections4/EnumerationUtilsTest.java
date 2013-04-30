@@ -37,7 +37,7 @@ public class EnumerationUtilsTest extends BulkTest {
     }
 
     public static final String TO_LIST_FIXTURE = "this is a test";
-    
+
     public void testToListWithStringTokenizer() {
         final List<String> expectedList1 = new ArrayList<String>();
         final StringTokenizer st = new StringTokenizer(TO_LIST_FIXTURE);

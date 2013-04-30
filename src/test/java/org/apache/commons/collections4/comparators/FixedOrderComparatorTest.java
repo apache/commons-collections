@@ -79,7 +79,7 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
 //    public void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/FixedOrderComparator.version4.obj");
 //    }
-    
+
     //
     // The tests
     //

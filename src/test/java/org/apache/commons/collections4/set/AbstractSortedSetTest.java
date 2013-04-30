@@ -52,7 +52,7 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
     @Override
     public void verify() {
         super.verify();
-        
+
         // Check that iterator returns elements in order and first() and last()
         // are consistent
         final Iterator<E> colliter = getCollection().iterator();
@@ -65,7 +65,7 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
                 last = first;
             } else {
               last = colliter.next();
-            }  
+            }
             assertEquals("Element appears to be out of order.", last, confiter.next());
         }
         if (getCollection().size() > 0) {
@@ -302,12 +302,12 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
         public SortedSet<E> makeFullCollection() {
             return getSubSet(AbstractSortedSetTest.this.makeFullCollection());
         }
-        
+
         @Override
         public boolean isTestSerialization() {
             return false;
         }
-        
+
         @Override
         public BulkTest bulkTestSortedSetSubSet() {
             return null;  // prevent infinite recursion

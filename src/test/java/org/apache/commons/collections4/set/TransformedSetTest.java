@@ -94,7 +94,7 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
             assertEquals(true, set.contains(Integer.valueOf((String) el)));
             assertEquals(false, set.contains(el));
         }
-        
+
         assertEquals(false, set.remove(els[0]));
         assertEquals(true, set.remove(Integer.valueOf((String) els[0])));
     }

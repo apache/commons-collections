@@ -52,7 +52,7 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
 //    public void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/ComparatorChain.version4.obj");
 //    }
-    
+
     @Test
     public void testNoopComparatorChain() {
         final ComparatorChain<Integer> chain = new ComparatorChain<Integer>();

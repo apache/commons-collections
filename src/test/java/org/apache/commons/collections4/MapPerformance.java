@@ -25,23 +25,23 @@ import java.util.Set;
 
 import org.apache.commons.collections4.map.Flat3Map;
 
-/** 
+/**
  * <code>MapPerformanceTest</code> is designed to perform basic Map performance tests.
- * 
+ *
  * @version $Id$
  */
 public class MapPerformance {
 
-    /** The total number of runs for each test */    
+    /** The total number of runs for each test */
     private static final int RUNS = 20000000;
-    
+
     /**
      * Main method
      */
     public static void main(final String[] args) {
         testAll();
     }
-    
+
     private static void testAll() {
         final Map<String, String> dummyMap = new DummyMap<String, String>();
         final Map<String, String> hashMap = new HashMap<String, String>();
@@ -59,7 +59,7 @@ public class MapPerformance {
 //        Map bucketMap = new StaticBucketMap();
 //        bucketMap.putAll(hashMap);
 //        Map doubleMap = new DoubleOrderedMap(hashMap);
-        
+
         // dummy is required as the VM seems to hotspot the first call to the
         // test method with the given type
         test(dummyMap,      "         Dummy ");
@@ -67,43 +67,43 @@ public class MapPerformance {
         test(dummyMap,      "         Dummy ");
         test(flatMap,       "         Flat3 ");
         test(hashMap,       "       HashMap ");
-        
+
         test(flatMap,       "         Flat3 ");
         test(flatMap,       "         Flat3 ");
         test(flatMap,       "         Flat3 ");
-        
+
         test(hashMap,       "       HashMap ");
         test(hashMap,       "       HashMap ");
         test(hashMap,       "       HashMap ");
-        
+
 //        test(treeMap,       "       TreeMap ");
 //        test(treeMap,       "       TreeMap ");
 //        test(treeMap,       "       TreeMap ");
-        
+
 //        test(unmodHashMap,  "Unmod(HashMap) ");
 //        test(unmodHashMap,  "Unmod(HashMap) ");
 //        test(unmodHashMap,  "Unmod(HashMap) ");
-//        
+//
 //        test(syncMap,       " Sync(HashMap) ");
 //        test(syncMap,       " Sync(HashMap) ");
 //        test(syncMap,       " Sync(HashMap) ");
-//        
+//
 //        test(fastHashMap,   "   FastHashMap ");
 //        test(fastHashMap,   "   FastHashMap ");
 //        test(fastHashMap,   "   FastHashMap ");
-//        
+//
 //        test(seqMap,        "    SeqHashMap ");
 //        test(seqMap,        "    SeqHashMap ");
 //        test(seqMap,        "    SeqHashMap ");
-//        
+//
 //        test(linkedMap,     " LinkedHashMap ");
 //        test(linkedMap,     " LinkedHashMap ");
 //        test(linkedMap,     " LinkedHashMap ");
-//        
+//
 //        test(bucketMap,     "     BucketMap ");
 //        test(bucketMap,     "     BucketMap ");
 //        test(bucketMap,     "     BucketMap ");
-//        
+//
 //        test(doubleMap,     "     DoubleMap ");
 //        test(doubleMap,     "     DoubleMap ");
 //        test(doubleMap,     "     DoubleMap ");
@@ -169,6 +169,6 @@ public class MapPerformance {
             return null;
         }
     }
-    
+
 }
 

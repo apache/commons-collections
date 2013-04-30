@@ -29,7 +29,7 @@ import junit.framework.Test;
  */
 @SuppressWarnings("deprecation") // we test a deprecated class
 public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
-    
+
     public ArrayStackTest(final String testName) {
         super(testName);
     }
@@ -109,7 +109,7 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
                      -1, stack.search("Missing Item"));
 
     }
-    
+
     @Override
     public String getCompatibilityVersion() {
         return "4";

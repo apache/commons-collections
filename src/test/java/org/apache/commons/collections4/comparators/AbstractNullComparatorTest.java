@@ -73,7 +73,7 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
         public String getCanonicalComparatorName(final Object object) {
             return super.getCanonicalComparatorName(object) + "1";
         }
-        
+
         @Override
         public String getCompatibilityVersion() {
             return "4";
@@ -82,7 +82,7 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
 //        public void testCreate() throws Exception {
 //            writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/NullComparator.version4.obj1");
 //        }
-        
+
     }
 
     /**
@@ -115,7 +115,7 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
         public String getCanonicalComparatorName(final Object object) {
             return super.getCanonicalComparatorName(object) + "2";
         }
-        
+
         @Override
         public String getCompatibilityVersion() {
             return "4";
@@ -124,6 +124,6 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
 //        public void testCreate() throws Exception {
 //            writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/NullComparator.version4.obj2");
 //        }
-        
+
     }
 }

@@ -72,37 +72,37 @@ public class FilterListIteratorTest extends TestCase {
         }
 
         truePred = new Predicate<Integer>() {
-            public boolean evaluate(final Integer x) { 
+            public boolean evaluate(final Integer x) {
                 return true;
             }
         };
 
         falsePred = new Predicate<Integer>() {
-            public boolean evaluate(final Integer x) { 
+            public boolean evaluate(final Integer x) {
                 return true;
             }
         };
 
         evenPred = new Predicate<Integer>() {
-            public boolean evaluate(final Integer x) { 
+            public boolean evaluate(final Integer x) {
                 return x % 2 == 0;
             }
         };
 
         oddPred = new Predicate<Integer>() {
-            public boolean evaluate(final Integer x) { 
+            public boolean evaluate(final Integer x) {
                 return x % 2 != 0; //works for all numbers, not just >= 0 as is the case for "x % 2 == 1"
             }
         };
 
         threePred = new Predicate<Integer>() {
-            public boolean evaluate(final Integer x) { 
+            public boolean evaluate(final Integer x) {
                 return x % 3 == 0;
             }
         };
 
         fourPred = new Predicate<Integer>() {
-            public boolean evaluate(final Integer x) { 
+            public boolean evaluate(final Integer x) {
                 return x % 4 == 0;
             }
         };
@@ -133,7 +133,7 @@ public class FilterListIteratorTest extends TestCase {
     public void testManual() {
         // do this one "by hand" as a sanity check
         final FilterListIterator<Integer> filtered = new FilterListIterator<Integer>(list.listIterator(), threePred);
-        
+
         assertEquals(Integer.valueOf(0), filtered.next());
         assertEquals(Integer.valueOf(3), filtered.next());
         assertEquals(Integer.valueOf(6), filtered.next());
@@ -149,7 +149,7 @@ public class FilterListIteratorTest extends TestCase {
         assertEquals(Integer.valueOf(6), filtered.previous());
         assertEquals(Integer.valueOf(3), filtered.previous());
         assertEquals(Integer.valueOf(0), filtered.previous());
-    
+
         assertTrue(!filtered.hasPrevious());
 
         assertEquals(Integer.valueOf(0), filtered.next());
@@ -193,7 +193,7 @@ public class FilterListIteratorTest extends TestCase {
         final FilterListIterator<Integer> filtered = new FilterListIterator<Integer>(list.listIterator(), truePred);
         walkLists(list, filtered);
     }
-    
+
     public void testFalsePredicate() {
         final FilterListIterator<Integer> filtered = new FilterListIterator<Integer>(list.listIterator(), falsePred);
         walkLists(new ArrayList<Integer>(), filtered);
@@ -203,7 +203,7 @@ public class FilterListIteratorTest extends TestCase {
         final FilterListIterator<Integer> filtered = new FilterListIterator<Integer>(list.listIterator(), evenPred);
         walkLists(evens, filtered);
     }
-    
+
     public void testOdds() {
         final FilterListIterator<Integer> filtered = new FilterListIterator<Integer>(list.listIterator(), oddPred);
         walkLists(odds, filtered);
@@ -235,7 +235,7 @@ public class FilterListIteratorTest extends TestCase {
         walkLists(sixes, filtered);
     }
 
-    public void testNestedSixes3() {        
+    public void testNestedSixes3() {
         final FilterListIterator<Integer> filtered = new FilterListIterator<Integer>(
                                         new FilterListIterator<Integer>(list.listIterator(), threePred),
                                         evenPred
@@ -248,7 +248,7 @@ public class FilterListIteratorTest extends TestCase {
             final FilterListIterator<Integer> filtered = new FilterListIterator<Integer>(list.listIterator(), threePred);
             nextNextPrevious(threes.listIterator(), filtered);
         }
-    
+
         {
             final FilterListIterator<Integer> filtered = new FilterListIterator<Integer>(list.listIterator(), truePred);
             nextNextPrevious(list.listIterator(), filtered);

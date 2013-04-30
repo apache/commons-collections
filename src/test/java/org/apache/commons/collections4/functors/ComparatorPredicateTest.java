@@ -75,9 +75,9 @@ public class ComparatorPredicateTest extends AbstractPredicateTest {
         assertTrue(p, Integer.valueOf(value.intValue()));
         assertTrue(p, Integer.valueOf(value.intValue() + 1));
     }
-    
+
     @Override
     protected Predicate<?> generatePredicate() {
         return comparatorPredicate(Integer.valueOf(10), new TestComparator<Integer>());
-    }    
+    }
 }

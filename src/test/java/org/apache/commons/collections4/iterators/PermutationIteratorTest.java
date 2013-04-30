@@ -46,12 +46,12 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
     }
 
     //-----------------------------------------------------------------------
-    
+
     @Override
     public boolean supportsRemove() {
         return false;
     }
-    
+
     @Override
     public boolean supportsEmptyIterator() {
         return false;
@@ -119,7 +119,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
         perm6.add('A');
 
         List<List<Character>> results = new ArrayList<List<Character>>();
-        
+
         PermutationIterator<Character> it = makeObject();
         while (it.hasNext()) {
             List<Character> next = it.next();
@@ -137,11 +137,11 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
 
     /**
      * test checking that all the permutations are returned only once.
-     */    
+     */
     public void testPermutationUnicity() {
         List<List<Character>> resultsList = new ArrayList<List<Character>>();
         Set<List<Character>> resultsSet = new HashSet<List<Character>>();
-        
+
         PermutationIterator<Character> it = makeObject();
         while (it.hasNext()) {
             List<Character> permutation = it.next();
@@ -155,7 +155,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
 
     public void testPermutationException() {
         List<List<Character>> resultsList = new ArrayList<List<Character>>();
-        
+
         PermutationIterator<Character> it = makeObject();
         while (it.hasNext()) {
             List<Character> permutation = it.next();
@@ -183,10 +183,10 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
         PermutationIterator<Character> it = makeEmptyIterator();
         // there is one permutation for an empty set: 0! = 1
         assertTrue(it.hasNext());
-        
+
         List<Character> nextPermutation = it.next();
         assertEquals(0, nextPermutation.size());
-        
+
         assertFalse(it.hasNext());
     }
 }

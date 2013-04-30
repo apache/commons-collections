@@ -65,7 +65,7 @@ public class PassiveExpiringMapTest<K, V>
 //    public void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(),
 //                "src/test/resources/data/test/PassiveExpiringMap.emptyCollection.version4.obj");
-//    
+//
 //        writeExternalFormToDisk((java.io.Serializable) makeFullMap(),
 //                "src/test/resources/data/test/PassiveExpiringMap.fullCollection.version4.obj");
 //    }

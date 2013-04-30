@@ -146,7 +146,7 @@ public class CollectionUtilsTest extends MockTestCase {
         collectionC2 = new LinkedList<Number>(collectionC);
         iterableA2 = collectionA2;
         iterableB2 = collectionB2;
-        
+
         collectionD = new ArrayList<Integer>();
         collectionD.add(1);
         collectionD.add(3);
@@ -438,7 +438,7 @@ public class CollectionUtilsTest extends MockTestCase {
                 return n.longValue() > 3L;
             }
         };
-        
+
         final Collection<Number> col = CollectionUtils.subtract(iterableA, collectionC, predicate);
         final Map<Number, Integer> freq2 = CollectionUtils.getCardinalityMap(col);
         assertEquals(Integer.valueOf(1), freq2.get(1));
@@ -566,14 +566,14 @@ public class CollectionUtilsTest extends MockTestCase {
                 return o.intValue() % 2 == 0 ? Integer.valueOf(0).hashCode() : Integer.valueOf(1).hashCode();
             }
         };
-        
+
         assertTrue(CollectionUtils.isEqualCollection(collectionA, collectionA, e));
         assertTrue(CollectionUtils.isEqualCollection(collectionA, collB, e));
         assertTrue(CollectionUtils.isEqualCollection(collB, collectionA, e));
-        
+
         final Equator<Number> defaultEquator = DefaultEquator.defaultEquator();
         assertFalse(CollectionUtils.isEqualCollection(collectionA, collectionB, defaultEquator));
-        assertFalse(CollectionUtils.isEqualCollection(collectionA, collB, defaultEquator));        
+        assertFalse(CollectionUtils.isEqualCollection(collectionA, collB, defaultEquator));
     }
 
     @Test(expected=IllegalArgumentException.class)
@@ -654,7 +654,7 @@ public class CollectionUtilsTest extends MockTestCase {
         // null should be OK
         CollectionUtils.forAllDo(col.iterator(), testClosure);
     }
-    
+
     @Test(expected = FunctorException.class)
     public void forAllDoFailure() {
         final Closure<String> testClosure = ClosureUtils.invokerClosure("clear");
@@ -713,11 +713,11 @@ public class CollectionUtilsTest extends MockTestCase {
         List<? extends Number> lastElement = CollectionUtils.forAllButLastDo(col.iterator(), testClosure);
         assertSame(lastElement, collectionB);
         assertTrue(collectionA.isEmpty() && !collectionB.isEmpty());
-        
+
         assertNull(CollectionUtils.forAllButLastDo(col.iterator(), null));
         assertNull(CollectionUtils.forAllButLastDo((Collection<?>) null, null));
     }
-    
+
     @Test
     public void getFromMap() {
         // Unordered map, entries exist
@@ -1099,7 +1099,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(3, (int) ints.get(1));
         assertEquals(3, (int) ints.get(2));
     }
-        
+
     @Test
     public void filterInverseNullParameters() throws Exception {
         final List<Long> longs = Collections.nCopies(4, 10L);
@@ -1515,7 +1515,7 @@ public class CollectionUtilsTest extends MockTestCase {
         final Collection<Object> collection = new ArrayList<Object>();
         assertSame(collection, CollectionUtils.emptyIfNull(collection));
     }
-    
+
     /**
      * This test ensures that {@link Iterable}s are supported by {@link CollectionUtils}.
      * Specifically, it uses mocks to ensure that if the passed in
@@ -1638,7 +1638,7 @@ public class CollectionUtilsTest extends MockTestCase {
         expect(iterator.hasNext()).andReturn(true);
         expect(iterator.next()).andReturn(t);
     }
-        
+
     @Test(expected=IllegalArgumentException.class)
     public void collateException1() {
         CollectionUtils.collate(collectionA, null);
@@ -1660,7 +1660,7 @@ public class CollectionUtilsTest extends MockTestCase {
         List<Integer> result1 = CollectionUtils.collate(collectionD, collectionE);
         List<Integer> result2 = CollectionUtils.collate(collectionE, collectionD);
         assertEquals("Merge two lists 1", result1, result2);
-        
+
         List<Integer> combinedList = new ArrayList<Integer>();
         combinedList.addAll(collectionD);
         combinedList.addAll(collectionE);
@@ -1683,13 +1683,13 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals("Comparator Merge two lists 1", result1, result2);
         assertEquals("Comparator Merge two lists 2", combinedList, result2);
     }
-    
+
     @Test
     public void testCollateIgnoreDuplicates() {
         List<Integer> result1 = CollectionUtils.collate(collectionD, collectionE, false);
         List<Integer> result2 = CollectionUtils.collate(collectionE, collectionD, false);
         assertEquals("Merge two lists 1 - ignore duplicates", result1, result2);
-        
+
         Set<Integer> combinedSet = new HashSet<Integer>();
         combinedSet.addAll(collectionD);
         combinedSet.addAll(collectionE);
@@ -1698,17 +1698,17 @@ public class CollectionUtilsTest extends MockTestCase {
 
         assertEquals("Merge two lists 2 - ignore duplicates", combinedList, result2);
     }
-    
+
     @Test(expected=NullPointerException.class)
     public void testPermutationsWithNullCollection() {
         CollectionUtils.permutations(null);
     }
-    
+
     @Test
     public void testPermutations() {
         List<Integer> sample = collectionA.subList(0, 5);
         Collection<List<Integer>> permutations = CollectionUtils.permutations(sample);
-        
+
         // result size = n!
         int collSize = sample.size();
         int factorial = 1;
@@ -1717,5 +1717,5 @@ public class CollectionUtilsTest extends MockTestCase {
         }
         assertEquals(factorial, permutations.size());
     }
-    
+
 }

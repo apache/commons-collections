@@ -30,13 +30,13 @@ import junit.framework.TestCase;
  * @version $Id$
  */
 public class DefaultKeyValueTest<K, V> extends TestCase {
-    
+
     private final String key = "name";
     private final String value = "duke";
 
     /**
      * JUnit constructor.
-     * 
+     *
      * @param testName  the test name
      */
     public DefaultKeyValueTest(final String testName) {

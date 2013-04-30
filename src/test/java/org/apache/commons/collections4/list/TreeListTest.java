@@ -247,27 +247,27 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         assertEquals(Integer.valueOf(4), li.next());
         assertEquals(false, li.hasNext());
     }
-    
+
     public void testBugCollections447() {
         final List<String> treeList = new TreeList<String>();
         treeList.add("A");
         treeList.add("B");
         treeList.add("C");
         treeList.add("D");
-        
+
         final ListIterator<String> li = treeList.listIterator();
         assertEquals("A", li.next());
         assertEquals("B", li.next());
-        
+
         assertEquals("B", li.previous());
-                
+
         li.remove(); // Deletes "B"
-                
+
         // previous() after remove() should move to
         // the element before the one just removed
         assertEquals("A", li.previous());
     }
-    
+
     public void testIterationOrder() {
         // COLLECTIONS-433:
         // ensure that the iteration order of elements is correct
@@ -285,12 +285,12 @@ public class TreeListTest<E> extends AbstractListTest<E> {
                 Integer val = it.next();
                 assertEquals(i++, val.intValue());
             }
-            
+
             while (it.hasPrevious()) {
                 Integer val = it.previous();
                 assertEquals(--i, val.intValue());
             }
-        }        
+        }
     }
 
     public void testIterationOrderAfterAddAll() {
@@ -300,7 +300,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
 
         // to simulate different cases in addAll, do different runs where
         // the number of elements already in the list and being added by addAll differ
-        
+
         int size = 1000;
         for (int i = 0; i < 100; i++) {
             List<Integer> other = new ArrayList<Integer>(size);
@@ -311,7 +311,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
             for (int j = 0; j < i; j++) {
                 l.add(j);
             }
-            
+
             l.addAll(other);
 
             ListIterator<Integer> it = l.listIterator();
@@ -320,12 +320,12 @@ public class TreeListTest<E> extends AbstractListTest<E> {
                 Integer val = it.next();
                 assertEquals(cnt++, val.intValue());
             }
-            
+
             while (it.hasPrevious()) {
                 Integer val = it.previous();
                 assertEquals(--cnt, val.intValue());
             }
-        }        
+        }
     }
 
 }

@@ -163,7 +163,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         4, list.size());
       assertEquals("Third new element should be at index 0", thirdNewElement, list.get(0));
     }
-    
+
     @Override
     @SuppressWarnings("unchecked")
     public void testListSetByIndex() {
@@ -520,12 +520,12 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         for (int i = 0; i < 10; ++i) {
             uniqueList.add((E)Integer.valueOf(i));
         }
-        
+
         final Collection<E> retained = new ArrayList<E>(5);
         for (int i = 0; i < 5; ++i) {
             retained.add((E)Integer.valueOf(i * 2));
         }
-        
+
         assertTrue(uniqueList.retainAll(retained));
         assertEquals(5, uniqueList.size());
         assertTrue(uniqueList.contains(Integer.valueOf(0)));
@@ -546,12 +546,12 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         for (int i = 5; i < 10; ++i) {
             uniqueList.add((E)Integer.valueOf(i));
         }
-        
+
         final Collection<E> retained = new ArrayList<E>(5);
         for (int i = 0; i < 5; ++i) {
             retained.add((E)Integer.valueOf(i * 2));
         }
-        
+
         assertTrue(uniqueList.retainAll(retained));
         assertEquals(5, uniqueList.size());
         assertTrue(uniqueList.contains(Integer.valueOf(0)));
@@ -560,7 +560,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         assertTrue(uniqueList.contains(Integer.valueOf(6)));
         assertTrue(uniqueList.contains(Integer.valueOf(8)));
     }
-    
+
     /*
      * test case for https://issues.apache.org/jira/browse/COLLECTIONS-427
      */
@@ -579,13 +579,13 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         final long start = System.currentTimeMillis();
         uniqueList.retainAll(toRetain);
         final long stop = System.currentTimeMillis();
-        
+
         // make sure retainAll completes under 5 seconds
         // TODO if test is migrated to JUnit 4, add a Timeout rule.
         // http://kentbeck.github.com/junit/javadoc/latest/org/junit/rules/Timeout.html
         assertTrue(stop - start < 5000);
     }
-    
+
     public void testSetCollections444() {
         final SetUniqueList<Integer> lset = new SetUniqueList<Integer>(new ArrayList<Integer>(), new HashSet<Integer>());
 
@@ -614,7 +614,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
             super(list, set);
         }
     }
-    
+
     //-----------------------------------------------------------------------
     @Override
     public String getCompatibilityVersion() {

@@ -31,7 +31,7 @@ import org.apache.commons.collections4.map.LazySortedMap;
 import org.junit.Test;
 
 /**
- * Extension of {@link LazyMapTest} for exercising the 
+ * Extension of {@link LazyMapTest} for exercising the
  * {@link LazySortedMap} implementation.
  *
  * @since 3.0
@@ -39,18 +39,18 @@ import org.junit.Test;
  */
 @SuppressWarnings("boxing")
 public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
-    
+
     private static final Factory<Integer> oneFactory = FactoryUtils.constantFactory(1);
-   
+
     public LazySortedMapTest(final String testName) {
         super(testName);
     }
-    
+
     @Override
     public SortedMap<K,V> makeObject() {
         return lazySortedMap(new TreeMap<K,V>(), FactoryUtils.<V>nullFactory());
     }
-    
+
     @Override
     public boolean isSubMapViewsSerializable() {
         // TODO TreeMap sub map views have a bug in deserialization.
@@ -68,7 +68,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     public void testMapGet() {
         //TODO eliminate need for this via superclass - see svn history.
     }
-    
+
     @Test
     public void mapGet() {
         Map<Integer, Number> map = lazySortedMap(new TreeMap<Integer,Number>(), oneFactory);
@@ -81,9 +81,9 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         final Number o = map.get(5);
         assertEquals(null,o);
         assertEquals(1, map.size());
-        
+
     }
-    
+
     //-----------------------------------------------------------------------
     public void testSortOrder() {
         final SortedMap<String, Number> map = lazySortedMap(new TreeMap<String,Number>(), oneFactory);
@@ -92,22 +92,22 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         map.put("C", 8);
         assertEquals("First key should be A", "A", map.firstKey());
         assertEquals("Last key should be C", "C", map.lastKey());
-        assertEquals("First key in tail map should be B", 
+        assertEquals("First key in tail map should be B",
             "B", map.tailMap("B").firstKey());
-        assertEquals("Last key in head map should be B", 
+        assertEquals("Last key in head map should be B",
             "B", map.headMap("C").lastKey());
         assertEquals("Last key in submap should be B",
             "B", map.subMap("A","C").lastKey());
-        
+
         final Comparator<?> c = map.comparator();
-        assertTrue("natural order, so comparator should be null", 
-            c == null);      
-    } 
-    
+        assertTrue("natural order, so comparator should be null",
+            c == null);
+    }
+
     public void testTransformerDecorate() {
         final Transformer<Object, Integer> transformer = TransformerUtils.asTransformer(oneFactory);
-        SortedMap<Integer, Number> map = lazySortedMap(new TreeMap<Integer, Number>(), transformer);     
-        assertTrue(map instanceof LazySortedMap);  
+        SortedMap<Integer, Number> map = lazySortedMap(new TreeMap<Integer, Number>(), transformer);
+        assertTrue(map instanceof LazySortedMap);
          try {
             map = lazySortedMap(new TreeMap<Integer, Number>(), (Transformer<Integer, Number>) null);
             fail("Expecting IllegalArgumentException for null transformer");
@@ -119,9 +119,9 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
             fail("Expecting IllegalArgumentException for null map");
         } catch (final IllegalArgumentException e) {
             // expected
-        } 
+        }
     }
-    
+
     @Override
     public String getCompatibilityVersion() {
         return "4";

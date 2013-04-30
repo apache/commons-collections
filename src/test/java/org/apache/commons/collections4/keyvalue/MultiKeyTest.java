@@ -218,7 +218,7 @@ public class MultiKeyTest extends TestCase {
         @Override
         public boolean equals(final Object obj)
         {
-            return obj instanceof SystemHashCodeSimulatingKey 
+            return obj instanceof SystemHashCodeSimulatingKey
                 && name.equals(((SystemHashCodeSimulatingKey)obj).name);
         }
 
@@ -233,7 +233,7 @@ public class MultiKeyTest extends TestCase {
             return this;
         }
     }
-    
+
     public void testEqualsAfterSerialization() throws IOException, ClassNotFoundException
     {
         SystemHashCodeSimulatingKey sysKey = new SystemHashCodeSimulatingKey("test");
@@ -258,6 +258,6 @@ public class MultiKeyTest extends TestCase {
         assertEquals(2, sysKey.hashCode()); // different hashCode now
 
         final MultiKey<?> mk2 = new MultiKey<Object>(ONE, sysKey);
-        assertEquals(TWO, map2.get(mk2));        
+        assertEquals(TWO, map2.get(mk2));
     }
 }

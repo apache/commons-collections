@@ -77,7 +77,7 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
         dtbm.put("one", 1);
         assertEquals("one", dtbm.firstKey());
         assertEquals("two", dtbm.lastKey());
-        
+
     }
 
     public void testSerializeDeserializeCheckComparator() throws Exception {
@@ -159,10 +159,10 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
         // there are several bugs in the following JVM:
         // IBM J9 VM build 2.4, JRE 1.6.0 IBM J9 2.4 Linux x86-32 jvmxi3260sr12-20121024_126067
         // thus disabling tests related to these bugs
-        
+
         final String vmName = System.getProperty("java.vm.name");
         final String version = System.getProperty("java.version");
-        
+
         if (vmName == null || version == null) {
             return new String[] { recursiveTest };
         }

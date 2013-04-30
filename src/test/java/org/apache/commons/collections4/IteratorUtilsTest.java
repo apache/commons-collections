@@ -64,7 +64,7 @@ public class IteratorUtilsTest extends BulkTest {
         list.add(Integer.valueOf(1));
         list.add(Integer.valueOf(2));
         final Iterator<Integer> iterator = list.iterator();
-        
+
         final Iterable<Integer> iterable = IteratorUtils.asIterable(iterator);
         int expected = 0;
         for(final Integer actual : iterable) {
@@ -77,7 +77,7 @@ public class IteratorUtilsTest extends BulkTest {
         // single use iterator
         assertFalse("should not be able to iterate twice", IteratorUtils.asIterable(iterator).iterator().hasNext());
     }
-    
+
     public void testAsIterableNull() {
         try {
             IteratorUtils.asIterable(null);
@@ -93,7 +93,7 @@ public class IteratorUtilsTest extends BulkTest {
         list.add(Integer.valueOf(1));
         list.add(Integer.valueOf(2));
         final Iterator<Integer> iterator = list.iterator();
-        
+
         final Iterable<Integer> iterable = IteratorUtils.asMultipleUseIterable(iterator);
         int expected = 0;
         for(final Integer actual : iterable) {
@@ -121,7 +121,7 @@ public class IteratorUtilsTest extends BulkTest {
             // success
         }
     }
-    
+
     public void testToList() {
         final List<Object> list = new ArrayList<Object>();
         list.add(Integer.valueOf(1));
@@ -801,7 +801,7 @@ public class IteratorUtilsTest extends BulkTest {
     public void testNodeListIterator() {
         final Node[] nodes = createNodes();
         final NodeList nodeList = createNodeList(nodes);
-        
+
         final Iterator<Node> iterator = IteratorUtils.nodeListIterator(nodeList);
         int expectedNodeIndex = 0;
         for (final Node actual : IteratorUtils.asIterable(iterator)) {
@@ -824,7 +824,7 @@ public class IteratorUtilsTest extends BulkTest {
         final Node parentNode = createMock(Node.class);
         expect(parentNode.getChildNodes()).andStubReturn(nodeList);
         replay(parentNode);
-        
+
         final Iterator<Node> iterator = IteratorUtils.nodeListIterator(parentNode);
         int expectedNodeIndex = 0;
         for (final Node actual : IteratorUtils.asIterable(iterator)) {
@@ -838,10 +838,10 @@ public class IteratorUtilsTest extends BulkTest {
         // single use iterator
         assertFalse("should not be able to iterate twice", IteratorUtils.asIterable(iterator).iterator().hasNext());
     }
-    
+
     /**
      * creates an array of four Node instances, mocked by EasyMock.
-     * @return 
+     * @return
      */
     private Node[] createNodes() {
         final Node node1 = createMock(Node.class);

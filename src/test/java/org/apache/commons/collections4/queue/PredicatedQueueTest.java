@@ -51,7 +51,7 @@ public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
     public Queue<E> makeObject() {
         return decorateCollection(new LinkedList<E>(), truePredicate);
     }
-    
+
     @Override
     public Queue<E> makeFullCollection() {
         final Queue<E> queue = new LinkedList<E>();

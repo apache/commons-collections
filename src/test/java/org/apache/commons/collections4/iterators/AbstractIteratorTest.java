@@ -36,7 +36,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
 
     /**
      * JUnit constructor.
-     * 
+     *
      * @param testName  the test class name
      */
     public AbstractIteratorTest(final String testName) {
@@ -46,14 +46,14 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
     //-----------------------------------------------------------------------
     /**
      * Implement this method to return an iterator over an empty collection.
-     * 
+     *
      * @return an empty iterator
      */
     public abstract Iterator<E> makeEmptyIterator();
 
     /**
      * Implements the abstract superclass method to return the full iterator.
-     * 
+     *
      * @return a full iterator
      */
     @Override
@@ -62,7 +62,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
     /**
      * Whether or not we are testing an iterator that can be empty.
      * Default is true.
-     * 
+     *
      * @return true if Iterator can be empty
      */
     public boolean supportsEmptyIterator() {
@@ -72,7 +72,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
     /**
      * Whether or not we are testing an iterator that can contain elements.
      * Default is true.
-     * 
+     *
      * @return true if Iterator can be full
      */
     public boolean supportsFullIterator() {
@@ -82,7 +82,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
     /**
      * Whether or not we are testing an iterator that supports remove().
      * Default is true.
-     * 
+     *
      * @return true if Iterator supports remove
      */
     public boolean supportsRemove() {
@@ -106,10 +106,10 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         }
 
         final Iterator<E> it = makeEmptyIterator();
-        
+
         // hasNext() should return false
         assertEquals("hasNext() should return false for empty iterators", false, it.hasNext());
-        
+
         // next() should throw a NoSuchElementException
         try {
             it.next();
@@ -117,7 +117,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
         } catch (final NoSuchElementException e) {
         }
         verify();
-        
+
         assertNotNull(it.toString());
     }
 
@@ -153,7 +153,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
             fail("NoSuchElementException must be thrown when Iterator is exhausted");
         } catch (final NoSuchElementException e) {
         }
-        
+
         assertNotNull(it.toString());
     }
 
@@ -162,7 +162,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
      */
     public void testRemove() {
         final Iterator<E> it = makeObject();
-        
+
         if (supportsRemove() == false) {
             // check for UnsupportedOperationException if not supported
             try {
@@ -170,23 +170,23 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
             } catch (final UnsupportedOperationException ex) {}
             return;
         }
-        
+
         // should throw IllegalStateException before next() called
         try {
             it.remove();
             fail();
         } catch (final IllegalStateException ex) {}
         verify();
-        
+
         // remove after next should be fine
         it.next();
         it.remove();
-        
+
         // should throw IllegalStateException for second remove()
         try {
             it.remove();
             fail();
         } catch (final IllegalStateException ex) {}
     }
-    
+
 }

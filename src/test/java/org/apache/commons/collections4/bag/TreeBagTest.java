@@ -56,7 +56,7 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
             // expected;
         }
     }
-    
+
     public void testOrdering() {
         final Bag<T> bag = setupBag();
         assertEquals("Should get elements in correct order", "A", bag.toArray()[0]);

@@ -33,13 +33,13 @@ import org.apache.commons.collections4.collection.TransformedCollection;
  * @version $Id$
  */
 public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
-    
+
     private static class StringToInteger implements Transformer<Object, Object> {
         public Object transform(final Object input) {
             return Integer.valueOf((String) input);
         }
     }
-    
+
     public static final Transformer<Object, Object> NOOP_TRANSFORMER = TransformerUtils.nopTransformer();
     public static final Transformer<Object, Object> STRING_TO_INTEGER_TRANSFORMER = new StringToInteger();
 
@@ -59,7 +59,7 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }
-    
+
     @Override
     public Collection<Object> makeObject() {
         return TransformedCollection.transformingCollection(new ArrayList<Object>(), NOOP_TRANSFORMER);
@@ -71,7 +71,7 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
         list.addAll(Arrays.asList(getFullElements()));
         return TransformedCollection.transformingCollection(list, NOOP_TRANSFORMER);
     }
-    
+
     //-----------------------------------------------------------------------
     @Override
     public Object[] getFullElements() {
@@ -94,7 +94,7 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
             assertEquals(true, coll.contains(Integer.valueOf((String) els[i])));
             assertEquals(false, coll.contains(els[i]));
         }
-        
+
         assertEquals(true, coll.remove(Integer.valueOf((String) els[0])));
     }
 
@@ -110,7 +110,7 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
             assertEquals(true, collection.contains(Integer.valueOf((String) el)));
             assertEquals(false, collection.contains(el));
         }
-        
+
         assertEquals(false, collection.remove(els[0]));
         assertEquals(true, collection.remove(Integer.valueOf((String) els[0])));
     }

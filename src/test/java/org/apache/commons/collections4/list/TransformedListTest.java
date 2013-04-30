@@ -124,7 +124,7 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
             assertEquals(true, list.contains(Integer.valueOf((String) el)));
             assertEquals(false, list.contains(el));
         }
-        
+
         assertEquals(false, list.remove(els[0]));
         assertEquals(true, list.remove(Integer.valueOf((String) els[0])));
     }

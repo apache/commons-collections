@@ -170,14 +170,14 @@ public class ListUtilsTest extends BulkTest {
 
     public void testEmptyIfNull() {
         assertTrue(ListUtils.emptyIfNull(null).isEmpty());
-        
+
         final List<Long> list = new ArrayList<Long>();
         assertSame(list, ListUtils.emptyIfNull(list));
     }
 
     public void testDefaultIfNull() {
         assertTrue(ListUtils.defaultIfNull(null, Collections.emptyList()).isEmpty());
-        
+
         final List<Long> list = new ArrayList<Long>();
         assertSame(list, ListUtils.defaultIfNull(list, Collections.<Long>emptyList()));
     }
@@ -260,14 +260,14 @@ public class ListUtilsTest extends BulkTest {
 
         final List<String> result = ListUtils.subtract(list, sub);
         assertTrue(result.size() == 3);
-        
+
         final List<String> expected = new ArrayList<String>();
         expected.add(b);
         expected.add(a);
         expected.add(x);
 
         assertEquals(expected, result);
-        
+
         try {
             ListUtils.subtract(list, null);
             fail("expecting NullPointerException");
@@ -286,7 +286,7 @@ public class ListUtilsTest extends BulkTest {
 
         final List<String> result = ListUtils.subtract(list, sub);
         assertTrue(result.size() == 3);
-        
+
         final List<String> expected = new ArrayList<String>();
         expected.add(a);
         expected.add(null);
@@ -306,13 +306,13 @@ public class ListUtilsTest extends BulkTest {
         testPredicate = EqualPredicate.equalPredicate("de");
         index = ListUtils.indexOf(fullList, testPredicate);
         assertEquals(index, -1);
-        
+
         assertEquals(ListUtils.indexOf(null,testPredicate), -1);
         assertEquals(ListUtils.indexOf(fullList, null), -1);
     }
-    
+
     public void testLongestCommonSubsequence() {
-        
+
         try {
             ListUtils.longestCommonSubsequence((List<?>) null, null);
             fail("failed to check for null argument");
@@ -335,24 +335,24 @@ public class ListUtilsTest extends BulkTest {
         List<Character> list1 = Arrays.asList('B', 'A', 'N', 'A', 'N', 'A');
         List<Character> list2 = Arrays.asList('A', 'N', 'A', 'N', 'A', 'S');
         lcs = ListUtils.longestCommonSubsequence(list1, list2);
-        
+
         List<Character> expected = Arrays.asList('A', 'N', 'A', 'N', 'A');
         assertEquals(expected, lcs);
 
         List<Character> list3 = Arrays.asList('A', 'T', 'A', 'N', 'A');
         lcs = ListUtils.longestCommonSubsequence(list1, list3);
-        
+
         expected = Arrays.asList('A', 'A', 'N', 'A');
         assertEquals(expected, lcs);
 
         List<Character> listZorro = Arrays.asList('Z', 'O', 'R', 'R', 'O');
         lcs = ListUtils.longestCommonSubsequence(list1, listZorro);
-        
+
         assertTrue(lcs.isEmpty());
     }
 
     public void testLongestCommonSubsequenceWithString() {
-      
+
       try {
           ListUtils.longestCommonSubsequence((String) null, null);
           fail("failed to check for null argument");
@@ -374,17 +374,17 @@ public class ListUtilsTest extends BulkTest {
       String banana = "BANANA";
       String ananas = "ANANAS";
       lcs = ListUtils.longestCommonSubsequence(banana, ananas);
-      
+
       assertEquals("ANANA", lcs);
 
       String atana = "ATANA";
       lcs = ListUtils.longestCommonSubsequence(banana, atana);
-      
+
       assertEquals("AANA", lcs);
 
       String zorro = "ZORRO";
       lcs = ListUtils.longestCommonSubsequence(banana, zorro);
-      
+
       assertEquals(0, lcs.length());
   }
 
@@ -393,30 +393,30 @@ public class ListUtilsTest extends BulkTest {
         for (int i = 0; i <= 6; i++) {
             strings.add(i);
         }
-        
+
         final List<List<Integer>> partition = ListUtils.partition(strings, 3);
 
         assertNotNull(partition);
         assertEquals(3, partition.size());
         assertEquals(1, partition.get(2).size());
-        
+
         try {
             ListUtils.partition(null, 3);
             fail("failed to check for null argument");
         } catch (final IllegalArgumentException e) {}
-        
+
         try {
             ListUtils.partition(strings, 0);
             fail("failed to check for size argument");
         } catch (final IllegalArgumentException e) {}
-        
+
         try {
             ListUtils.partition(strings, -10);
             fail("failed to check for size argument");
         } catch (final IllegalArgumentException e) {}
-        
+
     }
-    
+
     private static Predicate<Number> EQUALS_TWO = new Predicate<Number>() {
         public boolean evaluate(final Number input) {
             return input.intValue() == 2;

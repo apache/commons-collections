@@ -32,13 +32,13 @@ import junit.framework.TestCase;
  * @version $Id$
  */
 public abstract class AbstractMapEntryTest<K, V> extends TestCase {
-    
+
     protected final String key = "name";
     protected final String value = "duke";
 
     /**
      * JUnit constructor.
-     * 
+     *
      * @param testName  the test name
      */
     public AbstractMapEntryTest(final String testName) {

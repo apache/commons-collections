@@ -346,13 +346,13 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
 
         lom.putAll(3, map);
-        
+
         final List<K> orderedList = lom.asList();
         for (int i = 0; i < size; i++) {
             assertEquals(i, orderedList.get(i));
         }
     }
-    
+
     //-----------------------------------------------------------------------
     public void testValueList_getByIndex() {
         resetFull();

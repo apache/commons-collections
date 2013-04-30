@@ -493,11 +493,11 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
             fail();
         } catch (final IndexOutOfBoundsException ex) {}
     }
-    
+
     public void testSynchronizedRemoveFromMapIterator() throws InterruptedException {
 
         final LRUMap<Object, Thread> map = new LRUMap<Object, Thread>(10000);
-        
+
         final Map<Throwable, String> exceptions = new HashMap<Throwable, String>();
         final ThreadGroup tg = new ThreadGroup(getName()) {
             @Override
@@ -573,14 +573,14 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
 
         assertEquals("Exceptions have been thrown: " + exceptions, 0, exceptions.size());
-        assertTrue("Each thread should have put at least 1 element into the map, but only " 
+        assertTrue("Each thread should have put at least 1 element into the map, but only "
                 + counter[0] + " did succeed", counter[0] >= threads.length);
     }
-    
+
     public void testSynchronizedRemoveFromEntrySet() throws InterruptedException {
 
         final Map<Object, Thread> map = new LRUMap<Object, Thread>(10000);
-        
+
         final Map<Throwable, String> exceptions = new HashMap<Throwable, String>();
         final ThreadGroup tg = new ThreadGroup(getName()) {
             @Override
@@ -656,14 +656,14 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
 
         assertEquals("Exceptions have been thrown: " + exceptions, 0, exceptions.size());
-        assertTrue("Each thread should have put at least 1 element into the map, but only " 
+        assertTrue("Each thread should have put at least 1 element into the map, but only "
                 + counter[0] + " did succeed", counter[0] >= threads.length);
     }
-    
+
     public void testSynchronizedRemoveFromKeySet() throws InterruptedException {
 
         final Map<Object, Thread> map = new LRUMap<Object, Thread>(10000);
-        
+
         final Map<Throwable, String> exceptions = new HashMap<Throwable, String>();
         final ThreadGroup tg = new ThreadGroup(getName()) {
             @Override
@@ -739,14 +739,14 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
 
         assertEquals("Exceptions have been thrown: " + exceptions, 0, exceptions.size());
-        assertTrue("Each thread should have put at least 1 element into the map, but only " 
+        assertTrue("Each thread should have put at least 1 element into the map, but only "
                 + counter[0] + " did succeed", counter[0] >= threads.length);
     }
-    
+
     public void testSynchronizedRemoveFromValues() throws InterruptedException {
 
         final Map<Object, Thread> map = new LRUMap<Object, Thread>(10000);
-        
+
         final Map<Throwable, String> exceptions = new HashMap<Throwable, String>();
         final ThreadGroup tg = new ThreadGroup(getName()) {
             @Override
@@ -821,7 +821,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
 
         assertEquals("Exceptions have been thrown: " + exceptions, 0, exceptions.size());
-        assertTrue("Each thread should have put at least 1 element into the map, but only " 
+        assertTrue("Each thread should have put at least 1 element into the map, but only "
                 + counter[0] + " did succeed", counter[0] >= threads.length);
     }
 

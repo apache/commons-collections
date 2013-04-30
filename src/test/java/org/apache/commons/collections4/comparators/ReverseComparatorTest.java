@@ -63,7 +63,7 @@ public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
 //    public void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(), "src/test/resources/data/test/ReverseComparator.version4.obj");
 //    }
-    
+
     @Override
     public List<Integer> getComparableObjectsOrdered() {
         final List<Integer> list = new LinkedList<Integer>();

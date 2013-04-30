@@ -54,7 +54,7 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
         list2.add("Four");
         list3 = new ArrayList<String>();
         list3.add("Five");
-        list3.add("Six");        
+        list3.add("Six");
     }
 
     @Override
@@ -100,7 +100,7 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
         try {
             iter.next();
         } catch (final Exception e) {
-            assertTrue("NoSuchElementException must be thrown", 
+            assertTrue("NoSuchElementException must be thrown",
                        e.getClass().equals(new NoSuchElementException().getClass()));
         }
     }
@@ -132,7 +132,7 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
         assertEquals(0, list1.size());
         assertEquals(1, list2.size());
     }
-    
+
     @Override
     public void testRemove() {
         final Iterator<String> iter = makeObject();
@@ -185,7 +185,7 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
         assertEquals("C",chain.next());
         assertTrue("should not have next",!chain.hasNext());
     }
-    
+
     public void testEmptyChain() {
         final LazyIteratorChain<String> chain = makeEmptyIterator();
         assertEquals(false, chain.hasNext());

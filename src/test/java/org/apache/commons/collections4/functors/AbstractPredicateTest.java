@@ -32,7 +32,7 @@ public abstract class AbstractPredicateTest {
         cString = "Hello";
         cInteger = Integer.valueOf(6);
     }
-    
+
     @Test
     public void predicateSanityTests() throws Exception {
         final Predicate<?> predicate = generatePredicate();

@@ -53,7 +53,7 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
 
     /**
      * {@inheritDoc}
-     */    
+     */
     @Override
     protected final Predicate<Integer> getPredicateInstance(final Collection<Predicate<Integer>> predicates) {
         return AllPredicate.allPredicate(predicates);
@@ -87,7 +87,7 @@ public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
         // use the constructor directly, as getInstance() returns the original predicate when passed
         // an array of size one.
         final Predicate<Integer> predicate = createMockPredicate(true);
-        
+
         assertTrue("single true predicate evaluated to false",
                 allPredicate(predicate).evaluate(getTestValue()));
     }

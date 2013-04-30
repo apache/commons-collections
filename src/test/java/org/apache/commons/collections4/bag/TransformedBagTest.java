@@ -74,7 +74,7 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
             assertEquals(true, bag.contains(Integer.valueOf((String) el)));
             assertEquals(false, bag.contains(el));
         }
-        
+
         assertEquals(false, bag.remove(els[0]));
         assertEquals(true, bag.remove(Integer.valueOf((String) els[0])));
     }

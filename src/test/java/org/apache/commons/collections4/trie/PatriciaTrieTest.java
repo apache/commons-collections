@@ -47,22 +47,22 @@ import org.junit.Test;
  * @version $Id$
  */
 public class PatriciaTrieTest {
-    
+
     @Test
     public void testSimple() {
         final PatriciaTrie<Integer, String> intTrie = new PatriciaTrie<Integer, String>(new IntegerKeyAnalyzer());
         Assert.assertTrue(intTrie.isEmpty());
         Assert.assertEquals(0, intTrie.size());
-        
+
         intTrie.put(1, "One");
         Assert.assertFalse(intTrie.isEmpty());
         Assert.assertEquals(1, intTrie.size());
-        
+
         Assert.assertEquals("One", intTrie.remove(1));
         Assert.assertNull(intTrie.remove(1));
         Assert.assertTrue(intTrie.isEmpty());
         Assert.assertEquals(0, intTrie.size());
-        
+
         intTrie.put(1, "One");
         Assert.assertEquals("One", intTrie.get(1));
         Assert.assertEquals("One", intTrie.put(1, "NotOne"));
@@ -71,10 +71,10 @@ public class PatriciaTrieTest {
         Assert.assertEquals("NotOne", intTrie.remove(1));
         Assert.assertNull(intTrie.put(1, "One"));
     }
-    
+
     @Test
     public void testCeilingEntry() {
-        final PatriciaTrie<Character, String> charTrie 
+        final PatriciaTrie<Character, String> charTrie
             = new PatriciaTrie<Character, String>(new CharacterKeyAnalyzer());
         charTrie.put('c', "c");
         charTrie.put('p', "p");
@@ -102,23 +102,23 @@ public class PatriciaTrieTest {
         charTrie.put('z', "z");
         charTrie.put('f', "f");
         charTrie.put('d', "d");
-        
+
         final Object[] results = new Object[] {
             'a', "a", 'b', "b", 'c', "c", 'd', "d", 'e', "e",
             'f', "f", 'g', "g", 'h', "h", 'i', "i", 'j', "j",
             'k', "k", 'l', "l", 'm', "m", 'n', "n", 'o', "o",
             'p', "p", 'q', "q", 'r', "r", 's', "s", 't', "t",
-            'u', "u", 'v', "v", 'w', "w", 'x', "x", 'y', "y", 
+            'u', "u", 'v', "v", 'w', "w", 'x', "x", 'y', "y",
             'z', "z"
         };
-        
+
         for(int i = 0; i < results.length; i++) {
             final Map.Entry<Character, String> found = charTrie.ceilingEntry((Character)results[i]);
             Assert.assertNotNull(found);
             Assert.assertEquals(results[i], found.getKey());
             Assert.assertEquals(results[++i], found.getValue());
         }
-        
+
         // Remove some & try again...
         charTrie.remove('a');
         charTrie.remove('z');
@@ -127,44 +127,44 @@ public class PatriciaTrieTest {
         charTrie.remove('p');
         charTrie.remove('m');
         charTrie.remove('u');
-        
+
         Map.Entry<Character, String> found = charTrie.ceilingEntry('u');
         Assert.assertNotNull(found);
         Assert.assertEquals((Character)'v', found.getKey());
-        
+
         found = charTrie.ceilingEntry('a');
         Assert.assertNotNull(found);
         Assert.assertEquals((Character)'b', found.getKey());
-        
+
         found = charTrie.ceilingEntry('z');
         Assert.assertNull(found);
-        
+
         found = charTrie.ceilingEntry('q');
         Assert.assertNotNull(found);
         Assert.assertEquals((Character)'r', found.getKey());
-        
+
         found = charTrie.ceilingEntry('l');
         Assert.assertNotNull(found);
         Assert.assertEquals((Character)'n', found.getKey());
-        
+
         found = charTrie.ceilingEntry('p');
         Assert.assertNotNull(found);
         Assert.assertEquals((Character)'r', found.getKey());
-        
+
         found = charTrie.ceilingEntry('m');
         Assert.assertNotNull(found);
         Assert.assertEquals((Character)'n', found.getKey());
-        
+
         found = charTrie.ceilingEntry('\0');
         Assert.assertNotNull(found);
         Assert.assertEquals((Character)'b', found.getKey());
-        
+
         charTrie.put('\0', "");
         found = charTrie.ceilingEntry('\0');
         Assert.assertNotNull(found);
-        Assert.assertEquals((Character)'\0', found.getKey());      
+        Assert.assertEquals((Character)'\0', found.getKey());
     }
-    
+
     @Test
     public void testLowerEntry() {
         final PatriciaTrie<Character, String> charTrie = new PatriciaTrie<Character, String>(new CharacterKeyAnalyzer());
@@ -194,16 +194,16 @@ public class PatriciaTrieTest {
         charTrie.put('z', "z");
         charTrie.put('f', "f");
         charTrie.put('d', "d");
-        
+
         final Object[] results = new Object[] {
             'a', "a", 'b', "b", 'c', "c", 'd', "d", 'e', "e",
             'f', "f", 'g', "g", 'h', "h", 'i', "i", 'j', "j",
             'k', "k", 'l', "l", 'm', "m", 'n', "n", 'o', "o",
             'p', "p", 'q', "q", 'r', "r", 's', "s", 't', "t",
-            'u', "u", 'v', "v", 'w', "w", 'x', "x", 'y', "y", 
+            'u', "u", 'v', "v", 'w', "w", 'x', "x", 'y', "y",
             'z', "z"
         };
-        
+
         for(int i = 0; i < results.length; i+=2) {
             //System.out.println("Looking for: " + results[i]);
             final Map.Entry<Character, String> found = charTrie.lowerEntry((Character)results[i]);
@@ -219,7 +219,7 @@ public class PatriciaTrieTest {
         Map.Entry<Character, String> found = charTrie.lowerEntry((char)('z' + 1));
         Assert.assertNotNull(found);
         Assert.assertEquals((Character)'z', found.getKey());
-        
+
         // Remove some & try again...
         charTrie.remove('a');
         charTrie.remove('z');
@@ -228,54 +228,54 @@ public class PatriciaTrieTest {
         charTrie.remove('p');
         charTrie.remove('m');
         charTrie.remove('u');
-        
+
         found = charTrie.lowerEntry('u');
         Assert.assertNotNull(found);
         Assert.assertEquals((Character)'t', found.getKey());
-        
+
         found = charTrie.lowerEntry('v');
         Assert.assertNotNull(found);
         Assert.assertEquals((Character)'t', found.getKey());
-        
+
         found = charTrie.lowerEntry('a');
         Assert.assertNull(found);
-        
+
         found = charTrie.lowerEntry('z');
         Assert.assertNotNull(found);
         Assert.assertEquals((Character)'y', found.getKey());
-        
+
         found = charTrie.lowerEntry((char)('z'+1));
         Assert.assertNotNull(found);
         Assert.assertEquals((Character)'y', found.getKey());
-        
+
         found = charTrie.lowerEntry('q');
         Assert.assertNotNull(found);
         Assert.assertEquals((Character)'o', found.getKey());
-        
+
         found = charTrie.lowerEntry('r');
         Assert.assertNotNull(found);
         Assert.assertEquals((Character)'o', found.getKey());
-        
+
         found = charTrie.lowerEntry('p');
         Assert.assertNotNull(found);
         Assert.assertEquals((Character)'o', found.getKey());
-        
+
         found = charTrie.lowerEntry('l');
         Assert.assertNotNull(found);
         Assert.assertEquals((Character)'k', found.getKey());
-        
+
         found = charTrie.lowerEntry('m');
         Assert.assertNotNull(found);
         Assert.assertEquals((Character)'k', found.getKey());
-        
+
         found = charTrie.lowerEntry('\0');
         Assert.assertNull(found);
-        
+
         charTrie.put('\0', "");
         found = charTrie.lowerEntry('\0');
-        Assert.assertNull(found);      
+        Assert.assertNull(found);
     }
-    
+
     @Test
     public void testIteration() {
         final PatriciaTrie<Integer, String> intTrie = new PatriciaTrie<Integer, String>(new IntegerKeyAnalyzer());
@@ -288,7 +288,7 @@ public class PatriciaTrieTest {
         intTrie.put(13, "Thirteen");
         intTrie.put(14, "Fourteen");
         intTrie.put(16, "Sixteen");
-        
+
         TestCursor cursor = new TestCursor(
                 1, "One", 2, "Two", 3, "Three", 4, "Four", 5, "Five", 13, "Thirteen",
                 14, "Fourteen", 15, "Fifteen", 16, "Sixteen");
@@ -296,19 +296,19 @@ public class PatriciaTrieTest {
         cursor.starting();
         intTrie.traverse(cursor);
         cursor.finished();
-        
+
         cursor.starting();
         for (final Map.Entry<Integer, String> entry : intTrie.entrySet()) {
             cursor.select(entry);
         }
         cursor.finished();
-        
+
         cursor.starting();
         for (final Integer integer : intTrie.keySet()) {
             cursor.checkKey(integer);
         }
         cursor.finished();
-        
+
         cursor.starting();
         for (final String string : intTrie.values()) {
             cursor.checkValue(string);
@@ -346,9 +346,9 @@ public class PatriciaTrieTest {
                 'f', "f", 'g', "g", 'h', "h", 'i', "i", 'j', "j",
                 'k', "k", 'l', "l", 'm', "m", 'n', "n", 'o', "o",
                 'p', "p", 'q', "q", 'r', "r", 's', "s", 't', "t",
-                'u', "u", 'v', "v", 'w', "w", 'x', "x", 'y', "y", 
+                'u', "u", 'v', "v", 'w', "w", 'x', "x", 'y', "y",
                 'z', "z");
-        
+
         cursor.starting();
         charTrie.traverse(cursor);
         cursor.finished();
@@ -358,20 +358,20 @@ public class PatriciaTrieTest {
             cursor.select(entry);
         }
         cursor.finished();
-        
+
         cursor.starting();
         for (final Character character : charTrie.keySet()) {
             cursor.checkKey(character);
         }
         cursor.finished();
-        
+
         cursor.starting();
         for (final String string : charTrie.values()) {
             cursor.checkValue(string);
         }
         cursor.finished();
     }
-    
+
     @Test
     public void testSelect() {
         final PatriciaTrie<Character, String> charTrie = new PatriciaTrie<Character, String>(new CharacterKeyAnalyzer());
@@ -403,20 +403,20 @@ public class PatriciaTrieTest {
         charTrie.put('d', "d");
         final TestCursor cursor = new TestCursor(
                 'd', "d", 'e', "e", 'f', "f", 'g', "g",
-                'a', "a", 'b', "b", 'c', "c",  
+                'a', "a", 'b', "b", 'c', "c",
                 'l', "l", 'm', "m", 'n', "n", 'o', "o",
-                'h', "h", 'i', "i", 'j', "j", 'k', "k", 
+                'h', "h", 'i', "i", 'j', "j", 'k', "k",
                 't', "t", 'u', "u", 'v', "v", 'w', "w",
-                'p', "p", 'q', "q", 'r', "r", 's', "s", 
+                'p', "p", 'q', "q", 'r', "r", 's', "s",
                 'x', "x", 'y', "y", 'z', "z");
-                
+
         Assert.assertEquals(26, charTrie.size());
-        
+
         cursor.starting();
         charTrie.select('d', cursor);
         cursor.finished();
     }
-    
+
     @Test
     public void testTraverseCursorRemove() {
         final PatriciaTrie<Character, String> charTrie = new PatriciaTrie<Character, String>(new CharacterKeyAnalyzer());
@@ -450,31 +450,31 @@ public class PatriciaTrieTest {
                 'f', "f", 'g', "g", 'h', "h", 'i', "i", 'j', "j",
                 'k', "k", 'l', "l", 'm', "m", 'n', "n", 'o', "o",
                 'p', "p", 'q', "q", 'r', "r", 's', "s", 't', "t",
-                'u', "u", 'v', "v", 'w', "w", 'x', "x", 'y', "y", 
+                'u', "u", 'v', "v", 'w', "w", 'x', "x", 'y', "y",
                 'z', "z");
-        
+
         cursor.starting();
         charTrie.traverse(cursor);
         cursor.finished();
-        
+
         // Test removing both an internal & external node.
         // 'm' is an example External node in this Trie, and 'p' is an internal.
-        
+
         Assert.assertEquals(26, charTrie.size());
-        
+
         final Object[] toRemove = new Object[] { 'g', 'd', 'e', 'm', 'p', 'q', 'r', 's' };
         cursor.addToRemove(toRemove);
-        
+
         cursor.starting();
         charTrie.traverse(cursor);
         cursor.finished();
-            
+
         Assert.assertEquals(26 - toRemove.length, charTrie.size());
 
         cursor.starting();
         charTrie.traverse(cursor);
         cursor.finished();
-        
+
         cursor.starting();
         for (final Entry<Character, String> entry : charTrie.entrySet()) {
             cursor.select(entry);
@@ -484,7 +484,7 @@ public class PatriciaTrieTest {
         }
         cursor.finished();
     }
-    
+
     @Test
     public void testIteratorRemove() {
         final PatriciaTrie<Character, String> charTrie = new PatriciaTrie<Character, String>(new CharacterKeyAnalyzer());
@@ -518,28 +518,28 @@ public class PatriciaTrieTest {
                 'f', "f", 'g', "g", 'h', "h", 'i', "i", 'j', "j",
                 'k', "k", 'l', "l", 'm', "m", 'n', "n", 'o', "o",
                 'p', "p", 'q', "q", 'r', "r", 's', "s", 't', "t",
-                'u', "u", 'v', "v", 'w', "w", 'x', "x", 'y', "y", 
+                'u', "u", 'v', "v", 'w', "w", 'x', "x", 'y', "y",
                 'z', "z");
-        
+
         // Test removing both an internal & external node.
         // 'm' is an example External node in this Trie, and 'p' is an internal.
-        
+
         Assert.assertEquals(26, charTrie.size());
-        
+
         final Object[] toRemove = new Object[] { 'e', 'm', 'p', 'q', 'r', 's' };
-        
+
         cursor.starting();
         for(final Iterator<Map.Entry<Character, String>> i = charTrie.entrySet().iterator(); i.hasNext(); ) {
             final Map.Entry<Character,String> entry = i.next();
             cursor.select(entry);
             if(Arrays.asList(toRemove).contains(entry.getKey())) {
-                i.remove();            
+                i.remove();
             }
         }
         cursor.finished();
-            
+
         Assert.assertEquals(26 - toRemove.length, charTrie.size());
-        
+
         cursor.remove(toRemove);
 
         cursor.starting();
@@ -551,7 +551,7 @@ public class PatriciaTrieTest {
         }
         cursor.finished();
     }
-    
+
     @Test
     public void testHamlet() throws Exception {
         // Make sure that Hamlet is read & stored in the same order as a SortedSet.
@@ -559,10 +559,10 @@ public class PatriciaTrieTest {
         final List<String> control = new ArrayList<String>();
         final SortedMap<String, String> sortedControl = new TreeMap<String, String>();
         final PatriciaTrie<String, String> trie = new PatriciaTrie<String, String>(new StringKeyAnalyzer());
-        
+
         final InputStream in = getClass().getResourceAsStream("hamlet.txt");
         final BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-        
+
         String read = null;
         while( (read = reader.readLine()) != null) {
             final StringTokenizer st = new StringTokenizer(read);
@@ -581,7 +581,7 @@ public class PatriciaTrieTest {
         for (final String aControl : control) {
             Assert.assertEquals(aControl, iter.next());
         }
-        
+
         final Random rnd = new Random();
         int item = 0;
         iter = trie.values().iterator();
@@ -593,24 +593,24 @@ public class PatriciaTrieTest {
                 removed++;
             }
         }
-        
+
         Assert.assertEquals(control.size(), item);
         Assert.assertTrue(removed > 0);
         Assert.assertEquals(control.size(), trie.size() + removed);
-        
+
         // reset hamlet
         trie.clear();
         for (final String anOriginal : original) {
             trie.put(anOriginal, anOriginal);
         }
-        
+
         assertEqualArrays(sortedControl.values().toArray(), trie.values().toArray());
         assertEqualArrays(sortedControl.keySet().toArray(), trie.keySet().toArray());
         assertEqualArrays(sortedControl.entrySet().toArray(), trie.entrySet().toArray());
-        
+
         Assert.assertEquals(sortedControl.firstKey(), trie.firstKey());
         Assert.assertEquals(sortedControl.lastKey(), trie.lastKey());
-        
+
         SortedMap<String, String> sub = trie.headMap(control.get(523));
         Assert.assertEquals(523, sub.size());
         for(int i = 0; i < control.size(); i++) {
@@ -624,15 +624,15 @@ public class PatriciaTrieTest {
         Assert.assertTrue(sub.containsValue(control.get(522)));
         Assert.assertFalse(sub.containsValue(control.get(523)));
         Assert.assertFalse(sub.containsValue(control.get(524)));
-        
+
         try {
             sub.headMap(control.get(524));
             Assert.fail("should have thrown IAE");
         } catch(final IllegalArgumentException expected) {}
-        
+
         Assert.assertEquals(sub.lastKey(), control.get(522));
         Assert.assertEquals(sub.firstKey(), control.get(0));
-        
+
         sub = sub.tailMap(control.get(234));
         Assert.assertEquals(289, sub.size());
         Assert.assertEquals(control.get(234), sub.firstKey());
@@ -649,12 +649,12 @@ public class PatriciaTrieTest {
             sub.tailMap(control.get(232));
             Assert.fail("should have thrown IAE");
         } catch(final IllegalArgumentException expected) {}
-        
+
         sub = sub.subMap(control.get(300), control.get(400));
         Assert.assertEquals(100, sub.size());
         Assert.assertEquals(control.get(300), sub.firstKey());
         Assert.assertEquals(control.get(399), sub.lastKey());
-        
+
         for(int i = 0; i < control.size(); i++) {
             if(i < 400 && i > 299) {
                 Assert.assertTrue(sub.containsKey(control.get(i)));
@@ -663,14 +663,14 @@ public class PatriciaTrieTest {
             }
         }
     }
-    
+
     @Test
     public void testPrefixedBy() {
-        final PatriciaTrie<String, String> trie 
+        final PatriciaTrie<String, String> trie
             = new PatriciaTrie<String, String>(new StringKeyAnalyzer());
-        
+
         final String[] keys = new String[]{
-                "", 
+                "",
                 "Albert", "Xavier", "XyZ", "Anna", "Alien", "Alberto",
                 "Alberts", "Allie", "Alliese", "Alabama", "Banane",
                 "Blabla", "Amber", "Ammun", "Akka", "Akko", "Albertoo",
@@ -680,12 +680,12 @@ public class PatriciaTrieTest {
         for (final String key : keys) {
             trie.put(key, key);
         }
-        
+
         SortedMap<String, String> map;
         Iterator<String> iterator;
         Iterator<Map.Entry<String, String>> entryIterator;
         Map.Entry<String, String> entry;
-        
+
         map = trie.getPrefixedBy("Al");
         Assert.assertEquals(8, map.size());
         Assert.assertEquals("Alabama", map.firstKey());
@@ -705,7 +705,7 @@ public class PatriciaTrieTest {
         Assert.assertEquals("Allie", iterator.next());
         Assert.assertEquals("Alliese", iterator.next());
         Assert.assertFalse(iterator.hasNext());
-        
+
         map = trie.getPrefixedBy("Albert");
         iterator = map.keySet().iterator();
         Assert.assertEquals("Albert", iterator.next());
@@ -729,7 +729,7 @@ public class PatriciaTrieTest {
         Assert.assertEquals("Albertz", iterator.next());
         Assert.assertFalse(iterator.hasNext());
         Assert.assertEquals("Albertz", map.remove("Albertz"));
-        
+
         map = trie.getPrefixedBy("Alberto");
         Assert.assertEquals(2, map.size());
         Assert.assertEquals("Alberto", map.firstKey());
@@ -771,7 +771,7 @@ public class PatriciaTrieTest {
         Assert.assertFalse(entryIterator.hasNext());
         Assert.assertEquals("Albertoad", trie.remove("Albertoad"));
         trie.put("Albertoo", "Albertoo");
-        
+
         map = trie.getPrefixedBy("X");
         Assert.assertEquals(2, map.size());
         Assert.assertFalse(map.containsKey("Albert"));
@@ -781,7 +781,7 @@ public class PatriciaTrieTest {
         Assert.assertEquals("Xavier", iterator.next());
         Assert.assertEquals("XyZ", iterator.next());
         Assert.assertFalse(iterator.hasNext());
-        
+
         map = trie.getPrefixedBy("An");
         Assert.assertEquals(1, map.size());
         Assert.assertEquals("Anna", map.firstKey());
@@ -789,7 +789,7 @@ public class PatriciaTrieTest {
         iterator = map.keySet().iterator();
         Assert.assertEquals("Anna", iterator.next());
         Assert.assertFalse(iterator.hasNext());
-        
+
         map = trie.getPrefixedBy("Ban");
         Assert.assertEquals(1, map.size());
         Assert.assertEquals("Banane", map.firstKey());
@@ -797,7 +797,7 @@ public class PatriciaTrieTest {
         iterator = map.keySet().iterator();
         Assert.assertEquals("Banane", iterator.next());
         Assert.assertFalse(iterator.hasNext());
-        
+
         map = trie.getPrefixedBy("Am");
         Assert.assertFalse(map.isEmpty());
         Assert.assertEquals(3, map.size());
@@ -815,10 +815,10 @@ public class PatriciaTrieTest {
         } catch(final ConcurrentModificationException expected) {}
         Assert.assertEquals("Amber", map.firstKey());
         Assert.assertEquals("Ammun", map.lastKey());
-        
+
         map = trie.getPrefixedBy("Ak\0");
         Assert.assertTrue(map.isEmpty());
-        
+
         map = trie.getPrefixedBy("Ak");
         Assert.assertEquals(2, map.size());
         Assert.assertEquals("Akka", map.firstKey());
@@ -838,7 +838,7 @@ public class PatriciaTrieTest {
         Assert.assertEquals("Akko", iterator.next());
         Assert.assertFalse(iterator.hasNext());
         Assert.assertEquals("Al", trie.remove("Al"));
-        
+
         map = trie.getPrefixedBy("Akka");
         Assert.assertEquals(1, map.size());
         Assert.assertEquals("Akka", map.firstKey());
@@ -846,7 +846,7 @@ public class PatriciaTrieTest {
         iterator = map.keySet().iterator();
         Assert.assertEquals("Akka", iterator.next());
         Assert.assertFalse(iterator.hasNext());
-        
+
         map = trie.getPrefixedBy("Ab");
         Assert.assertTrue(map.isEmpty());
         Assert.assertEquals(0, map.size());
@@ -860,7 +860,7 @@ public class PatriciaTrieTest {
         } catch(final NoSuchElementException nsee) {}
         iterator = map.values().iterator();
         Assert.assertFalse(iterator.hasNext());
-        
+
         map = trie.getPrefixedBy("Albertooo");
         Assert.assertTrue(map.isEmpty());
         Assert.assertEquals(0, map.size());
@@ -874,10 +874,10 @@ public class PatriciaTrieTest {
         } catch(final NoSuchElementException nsee) {}
         iterator = map.values().iterator();
         Assert.assertFalse(iterator.hasNext());
-        
+
         map = trie.getPrefixedBy("");
         Assert.assertSame(trie, map); // stricter than necessary, but a good check
-        
+
         map = trie.getPrefixedBy("\0");
         Assert.assertTrue(map.isEmpty());
         Assert.assertEquals(0, map.size());
@@ -892,26 +892,26 @@ public class PatriciaTrieTest {
         iterator = map.values().iterator();
         Assert.assertFalse(iterator.hasNext());
     }
-    
+
     @Test
     public void testPrefixByOffsetAndLength() {
-        final PatriciaTrie<String, String> trie 
+        final PatriciaTrie<String, String> trie
             = new PatriciaTrie<String, String>(new StringKeyAnalyzer());
-        
+
         final String[] keys = new String[]{
                 "Albert", "Xavier", "XyZ", "Anna", "Alien", "Alberto",
                 "Alberts", "Allie", "Alliese", "Alabama", "Banane",
                 "Blabla", "Amber", "Ammun", "Akka", "Akko", "Albertoo",
                 "Amma"
         };
-    
+
         for (final String key : keys) {
             trie.put(key, key);
         }
-        
+
         SortedMap<String, String> map;
         Iterator<String> iterator;
-        
+
         map = trie.getPrefixedBy("Alice", 2);
         Assert.assertEquals(8, map.size());
         Assert.assertEquals("Alabama", map.firstKey());
@@ -931,7 +931,7 @@ public class PatriciaTrieTest {
         Assert.assertEquals("Allie", iterator.next());
         Assert.assertEquals("Alliese", iterator.next());
         Assert.assertFalse(iterator.hasNext());
-        
+
         map = trie.getPrefixedBy("BAlice", 1, 2);
         Assert.assertEquals(8, map.size());
         Assert.assertEquals("Alabama", map.firstKey());
@@ -952,12 +952,12 @@ public class PatriciaTrieTest {
         Assert.assertEquals("Alliese", iterator.next());
         Assert.assertFalse(iterator.hasNext());
     }
-    
+
     @Test
     public void testPrefixedByRemoval() {
-        final PatriciaTrie<String, String> trie 
+        final PatriciaTrie<String, String> trie
             = new PatriciaTrie<String, String>(new StringKeyAnalyzer());
-        
+
         final String[] keys = new String[]{
                 "Albert", "Xavier", "XyZ", "Anna", "Alien", "Alberto",
                 "Alberts", "Allie", "Alliese", "Alabama", "Banane",
@@ -968,7 +968,7 @@ public class PatriciaTrieTest {
         for (final String key : keys) {
             trie.put(key, key);
         }
-        
+
         SortedMap<String, String> map = trie.getPrefixedBy("Al");
         Assert.assertEquals(8, map.size());
         Iterator<String> iter = map.keySet().iterator();
@@ -983,7 +983,7 @@ public class PatriciaTrieTest {
         Assert.assertEquals("Allie", iter.next());
         Assert.assertEquals("Alliese", iter.next());
         Assert.assertFalse(iter.hasNext());
-        
+
         map = trie.getPrefixedBy("Ak");
         Assert.assertEquals(2, map.size());
         iter = map.keySet().iterator();
@@ -999,23 +999,23 @@ public class PatriciaTrieTest {
 
     @Test
     public void testTraverseWithAllNullBitKey() {
-        final PatriciaTrie<String, String> trie 
+        final PatriciaTrie<String, String> trie
             = new PatriciaTrie<String, String>(new StringKeyAnalyzer());
-        
+
         //
         // One entry in the Trie
         // Entry is stored at the root
         //
-        
+
         // trie.put("", "All Bits Are Zero");
         trie.put("\0", "All Bits Are Zero");
-        
+
         //
         //  / ("")   <-- root
         //  \_/  \
         //       null
         //
-        
+
         final List<String> strings = new ArrayList<String>();
         trie.traverse(new Cursor<String, String>() {
             public Decision select(final Entry<? extends String, ? extends String> entry) {
@@ -1023,24 +1023,24 @@ public class PatriciaTrieTest {
                 return Decision.CONTINUE;
             }
         });
-        
+
         Assert.assertEquals(1, strings.size());
-        
+
         strings.clear();
         for (final String s : trie.values()) {
             strings.add(s);
         }
         Assert.assertEquals(1, strings.size());
     }
-    
+
     @Test
     public void testSelectWithAllNullBitKey() {
-        final PatriciaTrie<String, String> trie 
+        final PatriciaTrie<String, String> trie
             = new PatriciaTrie<String, String>(new StringKeyAnalyzer());
-        
+
         // trie.put("", "All Bits Are Zero");
         trie.put("\0", "All Bits Are Zero");
-        
+
         final List<String> strings = new ArrayList<String>();
         trie.select("Hello", new Cursor<String, String>() {
             public Decision select(final Entry<? extends String, ? extends String> entry) {
@@ -1050,19 +1050,19 @@ public class PatriciaTrieTest {
         });
         Assert.assertEquals(1, strings.size());
     }
-    
+
     private static class TestCursor implements Cursor<Object, Object> {
         private final List<Object> keys;
         private final List<Object> values;
         private Object selectFor;
         private List<Object> toRemove;
         private int index = 0;
-        
+
         TestCursor(final Object... objects) {
             if(objects.length % 2 != 0) {
                 throw new IllegalArgumentException("must be * 2");
             }
-            
+
             keys = new ArrayList<Object>(objects.length / 2);
             values = new ArrayList<Object>(keys.size());
             toRemove = Collections.emptyList();
@@ -1071,15 +1071,15 @@ public class PatriciaTrieTest {
                 values.add(objects[++i]);
             }
         }
-        
+
         void selectFor(final Object object) {
             selectFor = object;
         }
-        
+
         void addToRemove(final Object... objects) {
             toRemove = new ArrayList<Object>(Arrays.asList(objects));
         }
-        
+
         void remove(final Object... objects) {
             for (final Object object : objects) {
                 final int idx = keys.indexOf(object);
@@ -1087,15 +1087,15 @@ public class PatriciaTrieTest {
                 values.remove(idx);
             }
         }
-        
+
         void starting() {
             index = 0;
         }
-        
+
         public void checkKey(final Object k) {
             Assert.assertEquals(keys.get(index++), k);
         }
-        
+
         public void checkValue(final Object o) {
             Assert.assertEquals(values.get(index++), o);
         }
@@ -1105,7 +1105,7 @@ public class PatriciaTrieTest {
             Assert.assertEquals(keys.get(index), entry.getKey());
             Assert.assertEquals(values.get(index), entry.getValue());
             index++;
-            
+
             if(toRemove.contains(entry.getKey())) {
               // System.out.println("Removing: " + entry.getKey());
                 index--;
@@ -1113,20 +1113,20 @@ public class PatriciaTrieTest {
                 values.remove(index);
                 toRemove.remove(entry.getKey());
                 return Decision.REMOVE;
-            } 
-            
+            }
+
             if(selectFor != null && selectFor.equals(entry.getKey())) {
                 return Decision.EXIT;
             } else {
                 return Decision.CONTINUE;
             }
         }
-        
+
         void finished() {
             Assert.assertEquals(keys.size(), index);
         }
     }
-    
+
     private static void assertEqualArrays(final Object[] a, final Object[] b) {
         Assert.assertTrue(Arrays.equals(a, b));
     }

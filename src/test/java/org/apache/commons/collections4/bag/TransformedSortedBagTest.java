@@ -69,7 +69,7 @@ public class TransformedSortedBagTest<T> extends AbstractSortedBagTest<T> {
         for (final Object el : els) {
             assertEquals(true, bag.contains(Integer.valueOf((String) el)));
         }
-        
+
         assertEquals(true, bag.remove(Integer.valueOf((String) els[0])));
     }
 

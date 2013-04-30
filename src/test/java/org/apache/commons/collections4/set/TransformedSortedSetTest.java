@@ -86,7 +86,7 @@ public class TransformedSortedSetTest<E> extends AbstractSortedSetTest<E> {
         for (final Object el : els) {
             assertEquals(true, set.contains(Integer.valueOf((String) el)));
         }
-        
+
         assertEquals(true, set.remove(Integer.valueOf((String) els[0])));
     }
 

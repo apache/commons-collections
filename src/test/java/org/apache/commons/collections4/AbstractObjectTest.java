@@ -44,10 +44,10 @@ public abstract class AbstractObjectTest extends BulkTest {
 
     /** Current major release for Collections */
     public static final int COLLECTIONS_MAJOR_VERSION = 4;
-    
+
     /**
      * JUnit constructor.
-     * 
+     *
      * @param testName  the test class name
      */
     public AbstractObjectTest(final String testName) {
@@ -57,7 +57,7 @@ public abstract class AbstractObjectTest extends BulkTest {
     //-----------------------------------------------------------------------
     /**
      * Implement this method to return the object to test.
-     * 
+     *
      * @return the object to test
      */
     public abstract Object makeObject();
@@ -66,7 +66,7 @@ public abstract class AbstractObjectTest extends BulkTest {
      * Override this method if a subclass is testing an object
      * that cannot serialize an "empty" Collection.
      * (e.g. Comparators have no contents)
-     * 
+     *
      * @return true
      */
     public boolean supportsEmptyCollections() {
@@ -77,7 +77,7 @@ public abstract class AbstractObjectTest extends BulkTest {
      * Override this method if a subclass is testing an object
      * that cannot serialize a "full" Collection.
      * (e.g. Comparators have no contents)
-     * 
+     *
      * @return true
      */
     public boolean supportsFullCollections() {
@@ -159,9 +159,9 @@ public abstract class AbstractObjectTest extends BulkTest {
 
     /**
      * Sanity check method, makes sure that any Serializable
-     * class can be serialized and de-serialized in memory, 
+     * class can be serialized and de-serialized in memory,
      * using the handy makeObject() method
-     * 
+     *
      * @throws IOException
      * @throws ClassNotFoundException
      */
@@ -211,14 +211,14 @@ public abstract class AbstractObjectTest extends BulkTest {
      * Get the version of Collections that this object tries to
      * maintain serialization compatibility with. Defaults to 4, due to
      * the package change to collections4 introduced in version 4.
-     * 
+     *
      * This constant makes it possible for TestMap (and other subclasses,
      * if necessary) to automatically check SVN for a versionX copy of a
      * Serialized object, so we can make sure that compatibility is maintained.
      * See, for example, TestMap.getCanonicalFullMapName(Map map).
      * Subclasses can override this variable, indicating compatibility
      * with earlier Collections versions.
-     * 
+     *
      * @return The version, or <code>null</code> if this object shouldn't be
      * tested for compatibility with previous versions.
      */
@@ -257,7 +257,7 @@ public abstract class AbstractObjectTest extends BulkTest {
      * for creating disk-based objects in SVN that can become
      * the basis for compatibility tests using
      * readExternalFormFromDisk(String path)
-     * 
+     *
      * @param o Object to serialize
      * @param path path to write the serialized Object
      * @exception IOException
@@ -270,7 +270,7 @@ public abstract class AbstractObjectTest extends BulkTest {
     /**
      * Converts a Serializable or Externalizable object to
      * bytes.  Useful for in-memory tests of serialization
-     * 
+     *
      * @param o Object to convert to bytes
      * @return serialized form of the Object
      * @exception IOException
@@ -285,7 +285,7 @@ public abstract class AbstractObjectTest extends BulkTest {
      * Reads a Serialized or Externalized Object from disk.
      * Useful for creating compatibility tests between
      * different SVN versions of the same class
-     * 
+     *
      * @param path path to the serialized Object
      * @return the Object at the given path
      * @exception IOException
@@ -299,7 +299,7 @@ public abstract class AbstractObjectTest extends BulkTest {
     /**
      * Read a Serialized or Externalized Object from bytes.
      * Useful for verifying serialization in memory.
-     * 
+     *
      * @param b byte array containing a serialized Object
      * @return Object contained in the bytes
      * @exception IOException

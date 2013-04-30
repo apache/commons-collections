@@ -70,7 +70,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 //            (java.io.Serializable) map,
 //            "src/test/resources/data/test/ReferenceMap.fullCollection.version4.obj");
 //    }
-    
+
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testNullHandling() {

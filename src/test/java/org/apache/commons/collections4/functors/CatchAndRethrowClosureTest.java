@@ -59,7 +59,7 @@ public class CatchAndRethrowClosureTest extends AbstractClosureTest {
     protected <T> Closure<T> generateClosure() {
         return generateNoExceptionClosure();
     }
-    
+
     @Test
     public void testThrowingClosure() {
         Closure<Integer> closure = generateNoExceptionClosure();
@@ -70,7 +70,7 @@ public class CatchAndRethrowClosureTest extends AbstractClosureTest {
         } catch (final RuntimeException ex) {
             Assert.fail();
         }
-        
+
         closure = generateIOExceptionClosure();
         try {
             closure.execute(Integer.valueOf(0));

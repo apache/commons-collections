@@ -35,7 +35,7 @@ public class LoopingListIteratorTest extends TestCase {
     public LoopingListIteratorTest(final String testName) {
         super(testName);
     }
-    
+
     /**
      * Tests constructor exception.
      */
@@ -55,7 +55,7 @@ public class LoopingListIteratorTest extends TestCase {
         final LoopingListIterator<Object> loop = new LoopingListIterator<Object>(list);
         assertFalse(loop.hasNext());
         assertFalse(loop.hasPrevious());
-        
+
         try {
             loop.next();
             fail();
@@ -133,7 +133,7 @@ public class LoopingListIteratorTest extends TestCase {
     public void testJoggingNotOverBoundary() {
         final List<String> list = Arrays.asList(new String[] { "a", "b" });
         final LoopingListIterator<String> loop = new LoopingListIterator<String>(list); // <a> b
-    
+
         // Try jogging back and forth between the elements, but not
         // over the begin/end boundary.
         loop.reset();
@@ -153,7 +153,7 @@ public class LoopingListIteratorTest extends TestCase {
     public void testJoggingOverBoundary() {
         final List<String> list = Arrays.asList(new String[] { "a", "b" });
         final LoopingListIterator<String> loop = new LoopingListIterator<String>(list); // <a> b
-    
+
         // Try jogging back and forth between the elements, but not
         // over the begin/end boundary.
         assertEquals("b", loop.previous()); // a <b>
@@ -270,7 +270,7 @@ public class LoopingListIteratorTest extends TestCase {
         assertEquals("e", loop.previous()); // a b c <e> f
         assertEquals("c", loop.previous()); // a b <c> e f
         assertEquals("c", loop.next());     // a b c <e> f
-        
+
         loop.add("d");                      // a b c d <e> f
         loop.reset();                       // <a> b c d e f
         assertEquals("a", loop.next());     // a <b> c d e f
@@ -282,7 +282,7 @@ public class LoopingListIteratorTest extends TestCase {
         assertEquals("a", loop.next());     // a <b> c d e f
 
         list = new ArrayList<String>(Arrays.asList(new String[] { "b", "e", "f" }));
-        loop = new LoopingListIterator<String>(list); // <b> e f        
+        loop = new LoopingListIterator<String>(list); // <b> e f
 
         loop.add("a");                      // a <b> e f
         assertEquals("a", loop.previous()); // a b e <f>
@@ -350,7 +350,7 @@ public class LoopingListIteratorTest extends TestCase {
         loop.reset();                       // <q> r c
         assertEquals("q", loop.next());     // q <r> c
         loop.set("a");                      // a <r> c
-        
+
         assertEquals("r", loop.next());     // a r <c>
         loop.set("b");                      // a b <c>
 
@@ -359,5 +359,5 @@ public class LoopingListIteratorTest extends TestCase {
         assertEquals("b", loop.next());     // a b <c>
         assertEquals("c", loop.next());     // <a> b c
     }
-    
+
 }

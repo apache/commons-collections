@@ -141,7 +141,7 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
             // This is correct
         }
         verify();
-        
+
         resetFull();
         final Object last = getCollection().getLast();
         final Object confirmedLast = getConfirmedLinkedList().getLast();
@@ -167,7 +167,7 @@ public abstract class AbstractLinkedListTest<T> extends AbstractListTest<T> {
             // This is correct
         }
         verify();
-        
+
         resetFull();
         final Object first = getCollection().removeFirst();
         final Object confirmedFirst = getConfirmedLinkedList().removeFirst();

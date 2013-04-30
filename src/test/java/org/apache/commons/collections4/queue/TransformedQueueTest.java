@@ -32,7 +32,7 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  * @version $Id$
  */
 public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
-    
+
     public TransformedQueueTest(final String testName) {
         super(testName);
     }
@@ -77,10 +77,10 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
             assertEquals(true, queue.contains(Integer.valueOf((String) els[i])));
             assertEquals(false, queue.contains(els[i]));
         }
-        
+
         assertEquals(false, queue.remove(els[0]));
         assertEquals(true, queue.remove(Integer.valueOf((String) els[0])));
-        
+
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -97,7 +97,7 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
             assertEquals(true, queue.contains(Integer.valueOf((String) el)));
             assertEquals(false, queue.contains(el));
         }
-        
+
         assertEquals(false, queue.remove(els[0]));
         assertEquals(true, queue.remove(Integer.valueOf((String) els[0])));
     }
@@ -106,7 +106,7 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
     public String getCompatibilityVersion() {
         return "4";
     }
-    
+
 //  public void testCreate() throws Exception {
 //      resetEmpty();
 //      writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/TransformedQueue.emptyCollection.version4.obj");

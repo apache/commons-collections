@@ -26,7 +26,7 @@ import org.apache.commons.collections4.bag.HashBag;
  * @version $Id$
  */
 public class HashBagTest<T> extends AbstractBagTest<T> {
-    
+
     public HashBagTest(final String testName) {
         super(testName);
     }
@@ -35,12 +35,12 @@ public class HashBagTest<T> extends AbstractBagTest<T> {
     public Bag<T> makeObject() {
         return new HashBag<T>();
     }
-    
+
     @Override
     public String getCompatibilityVersion() {
         return "4";
     }
-    
+
 //    public void testCreate() throws Exception {
 //        Bag bag = makeObject();
 //        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/HashBag.emptyCollection.version4.obj");

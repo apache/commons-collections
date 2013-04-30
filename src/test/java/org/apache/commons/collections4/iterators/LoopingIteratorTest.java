@@ -46,7 +46,7 @@ public class LoopingIteratorTest extends TestCase {
         } catch (final NullPointerException ex) {
         }
     }
-    
+
     /**
      * Tests whether an empty looping iterator works as designed.
      * @throws Exception  If something unexpected occurs.
@@ -176,7 +176,7 @@ public class LoopingIteratorTest extends TestCase {
         assertEquals("b", loop.next());
         assertEquals("c", loop.next());
     }
-    
+
     /**
      * Tests the size() method on a LoopingIterator wrapped ArrayList.
      * @throws Exception  If something unexpected occurs.

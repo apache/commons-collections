@@ -408,7 +408,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 
     public void testGetIndex() {
         resetFull();
-        
+
         final CircularFifoQueue<E> queue = getCollection();
         final List<E> confirmed = (List<E>) getConfirmed();
         for (int i = 0; i < confirmed.size(); i++) {
@@ -418,10 +418,10 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         // remove the first two elements and check again
         queue.remove();
         queue.remove();
-        
+
         for (int i = 0; i < queue.size(); i++) {
             assertEquals(confirmed.get(i + 2), queue.get(i));
-        }        
+        }
     }
 
     @Override

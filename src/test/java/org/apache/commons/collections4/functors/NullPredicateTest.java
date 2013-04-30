@@ -30,7 +30,7 @@ public class NullPredicateTest extends AbstractPredicateTest {
         assertSame(NullPredicate.nullPredicate(), NullPredicate.nullPredicate());
         assertTrue(nullPredicate(), null);
     }
-    
+
     public void ensurePredicateCanBeTypedWithoutWarning() throws Exception {
         final Predicate<String> predicate = NullPredicate.nullPredicate();
         assertFalse(predicate, cString);
@@ -39,5 +39,5 @@ public class NullPredicateTest extends AbstractPredicateTest {
     @Override
     protected Predicate<?> generatePredicate() {
         return nullPredicate();
-    }    
+    }
 }

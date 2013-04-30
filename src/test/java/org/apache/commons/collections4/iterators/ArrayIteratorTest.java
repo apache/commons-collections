@@ -87,7 +87,7 @@ public class ArrayIteratorTest<E> extends AbstractIteratorTest<E> {
             // expected
         }
     }
-    
+
     public void testReset() {
         final ArrayIterator<E> it = makeObject();
         it.next();

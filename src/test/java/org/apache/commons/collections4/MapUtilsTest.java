@@ -715,14 +715,14 @@ public class MapUtilsTest extends BulkTest {
     }
 
     //-----------------------------------------------------------------------
-    
+
     public void testEmptyIfNull() {
         assertTrue(MapUtils.emptyIfNull(null).isEmpty());
-        
+
         final Map<Long, Long> map = new HashMap<Long, Long>();
         assertSame(map, MapUtils.emptyIfNull(map));
     }
-    
+
     public void testIsEmptyWithEmptyMap() {
         final Map<Object, Object> map = new HashMap<Object, Object>();
         assertEquals(true, MapUtils.isEmpty(map));
@@ -792,7 +792,7 @@ public class MapUtilsTest extends BulkTest {
     }
 
     /**
-     * Test class for populateMap(MultiMap). 
+     * Test class for populateMap(MultiMap).
      */
     public static class X implements Comparable<X> {
         int key;
@@ -806,7 +806,7 @@ public class MapUtilsTest extends BulkTest {
         public int compareTo(X o) {
             return key - o.key;
         }
-        
+
     }
 
     public void testPopulateMultiMap() {
@@ -814,7 +814,7 @@ public class MapUtilsTest extends BulkTest {
         final List<X> list = new ArrayList<X>();
         list.add(new X(1, "x1"));
         list.add(new X(2, "x2"));
-        list.add(new X(2, "x3"));        
+        list.add(new X(2, "x3"));
         list.add(new X(5, "x4"));
         list.add(new X(5, "x5"));
 
