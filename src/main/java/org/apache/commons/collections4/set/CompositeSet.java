@@ -53,10 +53,10 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     private static final long serialVersionUID = 5185069727540378940L;
 
     /** SetMutator to handle changes to the collection */
-    protected SetMutator<E> mutator;
+    private SetMutator<E> mutator;
 
     /** Sets in the composite */
-    protected List<Set<E>> all = new ArrayList<Set<E>>();
+    private final List<Set<E>> all = new ArrayList<Set<E>>();
 
     /**
      * Create an empty CompositeSet.
