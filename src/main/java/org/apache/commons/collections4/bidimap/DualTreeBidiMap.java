@@ -226,7 +226,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
      */
     protected static class ViewMap<K, V> extends AbstractSortedMapDecorator<K, V> {
         /** The parent bidi map. */
-        final DualTreeBidiMap<K, V> bidi;
+        private final DualTreeBidiMap<K, V> bidi; // TODO not actually used - WHY?
 
         /**
          * Constructor.
@@ -294,10 +294,10 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
     protected static class BidiOrderedMapIterator<K, V> implements OrderedMapIterator<K, V>, ResettableIterator<K> {
 
         /** The parent map */
-        protected final AbstractDualBidiMap<K, V> parent;
+        private final AbstractDualBidiMap<K, V> parent;
 
         /** The iterator being decorated */
-        protected ListIterator<Map.Entry<K, V>> iterator;
+        private ListIterator<Map.Entry<K, V>> iterator;
 
         /** The last returned entry */
         private Map.Entry<K, V> last = null;
