@@ -23,7 +23,7 @@
 
   <release version="4.0" date="TBA" description="Next release">
     <action issue="COLLECTIONS-458" dev="sebb" type="remove">
-      "AbstractUntypedCollectionDecorator&lt;E, D&gt;" is not used.
+      Removed unused class "AbstractUntypedCollectionDecorator&lt;E, D&gt;".
     </action>
     <action issue="COLLECTIONS-456" dev="tn" type="add">
       Added methods "ListUtils#longestCommonSubsequence(...)" to get the longest common subsequence
