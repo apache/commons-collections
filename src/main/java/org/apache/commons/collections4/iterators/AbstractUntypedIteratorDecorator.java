@@ -34,7 +34,7 @@ public abstract class AbstractUntypedIteratorDecorator<I, O> implements Iterator
 
     /**
      * Create a new AbstractUntypedIteratorDecorator.
-     * 
+     *
      * @param iterator  the iterator to decorate
      */
     protected AbstractUntypedIteratorDecorator(final Iterator<I> iterator) {
@@ -47,7 +47,7 @@ public abstract class AbstractUntypedIteratorDecorator<I, O> implements Iterator
 
     /**
      * Gets the iterator being decorated.
-     * 
+     *
      * @return the decorated iterator
      */
     protected Iterator<I> getIterator() {

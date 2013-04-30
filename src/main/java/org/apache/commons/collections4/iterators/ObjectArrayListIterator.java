@@ -24,7 +24,7 @@ import org.apache.commons.collections4.ResettableListIterator;
 /**
  * Implements a {@link ListIterator} over an array of objects.
  * <p>
- * This iterator does not support {@link #add} or {@link #remove}, as the object array 
+ * This iterator does not support {@link #add} or {@link #remove}, as the object array
  * cannot be structurally modified. The {@link #set} method is supported however.
  * <p>
  * The iterator implements a {@link #reset} method, allowing the reset of the iterator
@@ -41,7 +41,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
         implements ListIterator<E>, ResettableListIterator<E> {
 
     /**
-     * Holds the index of the last item returned by a call to <code>next()</code> 
+     * Holds the index of the last item returned by a call to <code>next()</code>
      * or <code>previous()</code>. This is set to <code>-1</code> if neither method
      * has yet been invoked. <code>lastItemIndex</code> is used to to implement the
      * {@link #set} method.
@@ -81,9 +81,9 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
     public ObjectArrayListIterator(final E[] array, final int start) {
         super(array, start);
     }
-    
+
     /**
-     * Construct an ObjectArrayListIterator that will iterate over a range of values 
+     * Construct an ObjectArrayListIterator that will iterate over a range of values
      * in the specified array.
      *
      * @param array  the array to iterate over
@@ -111,7 +111,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
 
     /**
      * Gets the previous element from the array.
-     * 
+     *
      * @return the previous element
      * @throws NoSuchElementException if there is no previous element
      */
@@ -125,7 +125,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
 
     /**
      * Gets the next element from the array.
-     * 
+     *
      * @return the next element
      * @throws NoSuchElementException if there is no next element
      */
@@ -140,7 +140,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
 
     /**
      * Gets the next index to be retrieved.
-     * 
+     *
      * @return the index of the item to be retrieved next
      */
     public int nextIndex() {
@@ -149,7 +149,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
 
     /**
      * Gets the index of the item to be retrieved if {@link #previous()} is called.
-     * 
+     *
      * @return the index of the item to be retrieved next
      */
     public int previousIndex() {
@@ -170,16 +170,16 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
     /**
      * Sets the element under the cursor.
      * <p>
-     * This method sets the element that was returned by the last call 
-     * to {@link #next()} of {@link #previous()}. 
-     * 
+     * This method sets the element that was returned by the last call
+     * to {@link #next()} of {@link #previous()}.
+     *
      * <b>Note:</b> {@link ListIterator} implementations that support <code>add()</code>
-     * and <code>remove()</code> only allow <code>set()</code> to be called once per call 
+     * and <code>remove()</code> only allow <code>set()</code> to be called once per call
      * to <code>next()</code> or <code>previous</code> (see the {@link ListIterator}
-     * javadoc for more details). Since this implementation does not support 
+     * javadoc for more details). Since this implementation does not support
      * <code>add()</code> or <code>remove()</code>, <code>set()</code> may be
      * called as often as desired.
-     * 
+     *
      * @param obj  the object to set into the array
      * @throws IllegalStateException if next() has not yet been called.
      * @throws ClassCastException if the object type is unsuitable for the array

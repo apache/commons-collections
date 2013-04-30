@@ -48,7 +48,7 @@ public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
 
     /**
      * Gets the iterator being decorated.
-     * 
+     *
      * @return the decorated iterator
      */
     protected ListIterator<E> getListIterator() {
@@ -56,7 +56,7 @@ public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
     }
 
     //-----------------------------------------------------------------------
-    
+
     /** {@inheritDoc} */
     public boolean hasNext() {
         return iterator.hasNext();
@@ -101,5 +101,5 @@ public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
     public void add(final E obj) {
         iterator.add(obj);
     }
-    
+
 }

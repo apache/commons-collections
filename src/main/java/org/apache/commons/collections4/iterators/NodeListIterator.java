@@ -38,7 +38,7 @@ public class NodeListIterator implements Iterator<Node> {
     private int index = 0;
 
     /**
-     * Convenience constructor, which creates a new NodeListIterator from 
+     * Convenience constructor, which creates a new NodeListIterator from
      * the specified node's childNodes.
      *
      * @param node Node, who's child nodes are wrapped by this class. Must not be null
@@ -64,7 +64,7 @@ public class NodeListIterator implements Iterator<Node> {
         }
         this.nodeList = nodeList;
     }
-    
+
     public boolean hasNext() {
         return nodeList == null ? false : index < nodeList.getLength();
     }

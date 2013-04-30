@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4.iterators;
 
-/** 
+/**
  * Provides an implementation of an empty map iterator.
  *
  * @since 4.0

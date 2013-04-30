@@ -48,7 +48,7 @@ public class AbstractMapIteratorDecorator<K, V> implements MapIterator<K, V> {
 
     /**
      * Gets the iterator being decorated.
-     * 
+     *
      * @return the decorated iterator
      */
     protected MapIterator<K, V> getMapIterator() {
@@ -56,7 +56,7 @@ public class AbstractMapIteratorDecorator<K, V> implements MapIterator<K, V> {
     }
 
     //-----------------------------------------------------------------------
-    
+
     /** {@inheritDoc} */
     public boolean hasNext() {
         return iterator.hasNext();

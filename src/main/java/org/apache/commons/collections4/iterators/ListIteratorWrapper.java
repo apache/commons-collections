@@ -28,7 +28,7 @@ import org.apache.commons.collections4.ResettableListIterator;
 /**
  * Converts an {@link Iterator} into a {@link ResettableListIterator}.
  * For plain <code>Iterator</code>s this is accomplished by caching the returned
- * elements.  This class can also be used to simply add 
+ * elements.  This class can also be used to simply add
  * {@link org.apache.commons.collections4.ResettableIterator ResettableIterator}
  * functionality to a given {@link ListIterator}.
  * <p>

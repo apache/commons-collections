@@ -88,7 +88,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * <p>
      * You will normally use {@link #addIterator(Iterator)} to add some more
      * iterators after using this constructor.
-     * 
+     *
      * @param iterator the first child iterator in the IteratorChain, not null
      * @throws NullPointerException if the iterator is null
      */
@@ -102,7 +102,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * <p>
      * This method takes two iterators. The newly constructed iterator will
      * iterate through each one of the input iterators in turn.
-     * 
+     *
      * @param first the first child iterator in the IteratorChain, not null
      * @param second the second child iterator in the IteratorChain, not null
      * @throws NullPointerException if either iterator is null
@@ -118,7 +118,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * <p>
      * This method takes an array of iterators. The newly constructed iterator
      * will iterate through each one of the input iterators in turn.
-     * 
+     *
      * @param iteratorChain the array of iterators, not null
      * @throws NullPointerException if iterators array is or contains null
      */
@@ -135,7 +135,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * <p>
      * This method takes a collection of iterators. The newly constructed
      * iterator will iterate through each one of the input iterators in turn.
-     * 
+     *
      * @param iteratorChain the collection of iterators, not null
      * @throws NullPointerException if iterators collection is or contains null
      * @throws ClassCastException if iterators collection doesn't contain an
@@ -151,7 +151,7 @@ public class IteratorChain<E> implements Iterator<E> {
     //-----------------------------------------------------------------------
     /**
      * Add an Iterator to the end of the chain
-     * 
+     *
      * @param iterator Iterator to add
      * @throws IllegalStateException if I've already started iterating
      * @throws NullPointerException if the iterator is null
@@ -166,7 +166,7 @@ public class IteratorChain<E> implements Iterator<E> {
 
     /**
      * Set the Iterator at the given index
-     * 
+     *
      * @param index index of the Iterator to replace
      * @param iterator Iterator to place at the given index
      * @throws IndexOutOfBoundsException if index &lt; 0 or index &gt; size()
@@ -184,7 +184,7 @@ public class IteratorChain<E> implements Iterator<E> {
 
     /**
      * Get the list of Iterators (unmodifiable)
-     * 
+     *
      * @return the unmodifiable list of iterators added
      */
     public List<Iterator<? extends E>> getIterators() {
@@ -193,7 +193,7 @@ public class IteratorChain<E> implements Iterator<E> {
 
     /**
      * Number of Iterators in the current IteratorChain.
-     * 
+     *
      * @return Iterator count
      */
     public int size() {
@@ -204,7 +204,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * Determine if modifications can still be made to the IteratorChain.
      * IteratorChains cannot be modified once they have executed a method from
      * the Iterator interface.
-     * 
+     *
      * @return true if IteratorChain cannot be modified, false if it can
      */
     public boolean isLocked() {
@@ -257,7 +257,7 @@ public class IteratorChain<E> implements Iterator<E> {
     //-----------------------------------------------------------------------
     /**
      * Return true if any Iterator in the IteratorChain has a remaining element.
-     * 
+     *
      * @return true if elements remain
      */
     public boolean hasNext() {
@@ -270,7 +270,7 @@ public class IteratorChain<E> implements Iterator<E> {
 
     /**
      * Returns the next Object of the current Iterator
-     * 
+     *
      * @return Object from the current Iterator
      * @throws java.util.NoSuchElementException if all the Iterators are
      * exhausted
@@ -289,7 +289,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * underlying Iterator. Therefore, this method may throw an
      * UnsupportedOperationException if the underlying Iterator does not support
      * this method.
-     * 
+     *
      * @throws UnsupportedOperationException if the remove operator is not
      * supported by the underlying Iterator
      * @throws IllegalStateException if the next method has not yet been called,

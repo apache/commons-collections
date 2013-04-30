@@ -23,14 +23,14 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections4.ResettableListIterator;
 
 /**
- * Implements a {@link ListIterator} over an array. 
+ * Implements a {@link ListIterator} over an array.
  * <p>
- * The array can be either an array of object or of primitives. If you know 
+ * The array can be either an array of object or of primitives. If you know
  * that you have an object array, the {@link ObjectArrayListIterator}
  * class is a better choice, as it will perform better.
  *
  * <p>
- * This iterator does not support {@link #add(Object)} or {@link #remove()}, as the array 
+ * This iterator does not support {@link #add(Object)} or {@link #remove()}, as the array
  * cannot be changed in size. The {@link #set(Object)} method is supported however.
  *
  * @see org.apache.commons.collections4.iterators.ArrayIterator
@@ -46,7 +46,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
     /**
      * Holds the index of the last item returned by a call to <code>next()</code>
      * or <code>previous()</code>. This is set to <code>-1</code> if neither method
-     * has yet been invoked. <code>lastItemIndex</code> is used to to implement 
+     * has yet been invoked. <code>lastItemIndex</code> is used to to implement
      * the {@link #set} method.
      *
      */
@@ -92,7 +92,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
     }
 
     /**
-     * Construct an ArrayListIterator that will iterate over a range of values 
+     * Construct an ArrayListIterator that will iterate over a range of values
      * in the specified array.
      *
      * @param array  the array to iterate over
@@ -121,7 +121,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
 
     /**
      * Gets the previous element from the array.
-     * 
+     *
      * @return the previous element
      * @throws NoSuchElementException if there is no previous element
      */
@@ -136,7 +136,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
 
     /**
      * Gets the next element from the array.
-     * 
+     *
      * @return the next element
      * @throws NoSuchElementException if there is no next element
      */
@@ -152,7 +152,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
 
     /**
      * Gets the next index to be retrieved.
-     * 
+     *
      * @return the index of the item to be retrieved next
      */
     public int nextIndex() {
@@ -161,7 +161,7 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
 
     /**
      * Gets the index of the item to be retrieved if {@link #previous()} is called.
-     * 
+     *
      * @return the index of the item to be retrieved next
      */
     public int previousIndex() {
@@ -183,8 +183,8 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
     /**
      * Sets the element under the cursor.
      * <p>
-     * This method sets the element that was returned by the last call 
-     * to {@link #next()} of {@link #previous()}. 
+     * This method sets the element that was returned by the last call
+     * to {@link #next()} of {@link #previous()}.
      * <p>
      * <b>Note:</b> {@link ListIterator} implementations that support
      * <code>add()</code> and <code>remove()</code> only allow <code>set()</code> to be called

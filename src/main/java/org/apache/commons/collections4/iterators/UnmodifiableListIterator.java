@@ -20,10 +20,10 @@ import java.util.ListIterator;
 
 import org.apache.commons.collections4.Unmodifiable;
 
-/** 
+/**
  * Decorates a list iterator such that it cannot be modified.
  * <p>
- * Attempts to modify it will result in an UnsupportedOperationException. 
+ * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 3.0
  * @version $Id$
@@ -51,7 +51,7 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
         }
         return new UnmodifiableListIterator<E>(iterator);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Constructor.

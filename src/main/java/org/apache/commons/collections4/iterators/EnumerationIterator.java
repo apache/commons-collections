@@ -20,7 +20,7 @@ import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Iterator;
 
-/** 
+/**
  * Adapter to make {@link Enumeration Enumeration} instances appear
  * to be {@link Iterator Iterator} instances.
  *
@@ -28,14 +28,14 @@ import java.util.Iterator;
  * @version $Id$
  */
 public class EnumerationIterator<E> implements Iterator<E> {
-    
+
     /** The collection to remove elements from */
     private final Collection<? super E> collection;
     /** The enumeration being converted */
     private Enumeration<? extends E> enumeration;
     /** The last object retrieved */
     private E last;
-    
+
     // Constructors
     //-----------------------------------------------------------------------
     /**
@@ -134,5 +134,5 @@ public class EnumerationIterator<E> implements Iterator<E> {
     public void setEnumeration(final Enumeration<? extends E> enumeration) {
         this.enumeration = enumeration;
     }
-    
+
 }

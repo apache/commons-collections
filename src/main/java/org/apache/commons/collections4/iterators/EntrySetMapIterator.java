@@ -33,20 +33,20 @@ import org.apache.commons.collections4.ResettableIterator;
  *   it.setValue(newValue);
  * }
  * </pre>
- *  
+ *
  * @since 3.0
  * @version $Id$
  */
 public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableIterator<K> {
-    
+
     private final Map<K, V> map;
     private Iterator<Map.Entry<K, V>> iterator;
     private Map.Entry<K, V> last;
     private boolean canRemove = false;
-    
+
     /**
      * Constructor.
-     * 
+     *
      * @param map  the map to iterate over
      */
     public EntrySetMapIterator(final Map<K, V> map) {
@@ -55,7 +55,7 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
         this.iterator = map.entrySet().iterator();
     }
 
-    //-----------------------------------------------------------------------    
+    //-----------------------------------------------------------------------
     /**
      * Checks to see if there are more entries still to be iterated.
      *
@@ -96,7 +96,7 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
         last = null;
         canRemove = false;
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Gets the current key, which is the key returned by the last call
@@ -152,12 +152,12 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
         last = null;
         canRemove = false;
     }
-    
+
     /**
      * Gets the iterator as a String.
-     * 
+     *
      * @return a string version of the iterator
-     */    
+     */
     @Override
     public String toString() {
         if (last != null) {
@@ -165,5 +165,5 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
         }
         return "MapIterator[]";
     }
-    
+
 }

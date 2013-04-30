@@ -21,15 +21,15 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableIterator;
 
-/** 
+/**
  * Implements an {@link java.util.Iterator Iterator} over any array.
  * <p>
- * The array can be either an array of object or of primitives. If you know 
- * that you have an object array, the 
+ * The array can be either an array of object or of primitives. If you know
+ * that you have an object array, the
  * {@link org.apache.commons.collections4.iterators.ObjectArrayIterator ObjectArrayIterator}
  * class is a better choice, as it will perform better.
  * <p>
- * The iterator implements a {@link #reset} method, allowing the reset of 
+ * The iterator implements a {@link #reset} method, allowing the reset of
  * the iterator back to the start if required.
  *
  * @since 1.0
@@ -39,7 +39,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
 
     // TODO Privatise fields? Mainly read-only access
 
-    /** The array to iterate over */    
+    /** The array to iterate over */
     protected Object array;
     /** The start index to loop from */
     protected int startIndex = 0;
@@ -47,7 +47,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     protected int endIndex = 0;
     /** The current iterator index */
     protected int index = 0;
-    
+
     // Constructors
     // ----------------------------------------------------------------------
     /**
@@ -59,7 +59,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     public ArrayIterator() {
         super();
     }
-   
+
     /**
      * Constructs an ArrayIterator that will iterate over the values in the
      * specified array.
@@ -92,7 +92,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     }
 
     /**
-     * Construct an ArrayIterator that will iterate over a range of values 
+     * Construct an ArrayIterator that will iterate over a range of values
      * in the specified array.
      *
      * @param array  the array to iterate over.
@@ -117,7 +117,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
 
     /**
      * Checks whether the index is valid or not.
-     * 
+     *
      * @param bound  the index to check
      * @param type  the index type (for error messages)
      * @throws IndexOutOfBoundsException if the index is invalid
@@ -175,7 +175,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     // Properties
     //-----------------------------------------------------------------------
     /**
-     * Gets the array that this iterator is iterating over. 
+     * Gets the array that this iterator is iterating over.
      *
      * @return the array this iterator iterates over, or <code>null</code> if
      *  the no-arg constructor was used and {@link #setArray(Object)} has never
@@ -184,7 +184,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     public Object getArray() {
         return array;
     }
-    
+
     /**
      * Sets the array that the ArrayIterator should iterate over.
      * <p>
@@ -209,7 +209,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
         this.array = array;
         this.index = 0;
     }
-    
+
     /**
      * Resets the iterator back to the start index.
      */

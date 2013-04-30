@@ -18,7 +18,7 @@
  * This package contains implementations of the
  * {@link java.util.Iterator Iterator} interface.
  * <p>
- * You may also consider using 
+ * You may also consider using
  * {@link org.apache.commons.collections4.IteratorUtils IteratorUtils},
  * which is a single class that uses static methods to construct instances
  * of the classes in this package.

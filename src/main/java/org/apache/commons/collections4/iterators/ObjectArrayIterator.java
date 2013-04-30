@@ -21,7 +21,7 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableIterator;
 
-/** 
+/**
  * An {@link Iterator} over an array of objects.
  * <p>
  * This iterator does not support {@link #remove}, as the object array cannot be
@@ -82,7 +82,7 @@ public class ObjectArrayIterator<E>
     }
 
     /**
-     * Construct an ObjectArrayIterator that will iterate over a range of values 
+     * Construct an ObjectArrayIterator that will iterate over a range of values
      * in the specified array.
      *
      * @param array  the array to iterate over
@@ -151,7 +151,7 @@ public class ObjectArrayIterator<E>
     //-------------------------------------------------------------------------
 
     /**
-     * Gets the array that this iterator is iterating over. 
+     * Gets the array that this iterator is iterating over.
      *
      * @return the array this iterator iterates over, or <code>null</code> if
      * the no-arg constructor was used and {@link #setArray} has never
@@ -185,7 +185,7 @@ public class ObjectArrayIterator<E>
 
     /**
      * Gets the start index to loop from.
-     * 
+     *
      * @return the start index
      */
     public int getStartIndex() {
@@ -194,7 +194,7 @@ public class ObjectArrayIterator<E>
 
     /**
      * Gets the end index to loop to.
-     * 
+     *
      * @return the end index
      */
     public int getEndIndex() {

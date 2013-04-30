@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 import org.apache.commons.collections4.ResettableIterator;
 
-/** 
+/**
  * Provides an implementation of an empty iterator.
  * <p>
  * This class provides an implementation of an empty iterator.

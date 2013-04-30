@@ -34,7 +34,7 @@ import java.util.NoSuchElementException;
  * {@code UnsupportedOperationException}.
  * <p>
  * NOTE: in case an empty collection is provided, the iterator will
- * return exactly one empty list as result, as 0! = 1. 
+ * return exactly one empty list as result, as 0! = 1.
  *
  * @param <E>  the type of the objects being permuted
  *

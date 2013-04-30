@@ -98,7 +98,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
      * <p>
      * The root object can be an iterator, in which case it will be immediately
      * looped around.
-     * 
+     *
      * @param root  the root object, null will result in an empty iterator
      * @param transformer  the transformer to use, null will use a no effect transformer
      */
@@ -120,7 +120,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
      * be used to iterate over nested iterators. That is to say that the iterator
      * passed in here contains other iterators, which may in turn contain further
      * iterators.
-     * 
+     *
      * @param rootIterator  the root iterator, null will result in an empty iterator
      */
     public ObjectGraphIterator(final Iterator<? extends E> rootIterator) {
@@ -155,7 +155,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
 
     /**
      * Finds the next object in the iteration given any start object.
-     * 
+     *
      * @param value  the value to start from
      */
     @SuppressWarnings("unchecked")
@@ -169,10 +169,10 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
             hasNext = true;
         }
     }
-    
+
     /**
      * Finds the next object in the iteration given an iterator.
-     * 
+     *
      * @param iterator  the iterator to start from
      */
     protected void findNextByIterator(final Iterator<? extends E> iterator) {
@@ -183,7 +183,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
             }
             currentIterator = iterator;
         }
-        
+
         while (currentIterator.hasNext() && hasNext == false) {
             E next = currentIterator.next();
             if (transformer != null) {
@@ -202,7 +202,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
     //-----------------------------------------------------------------------
     /**
      * Checks whether there are any more elements in the iteration to obtain.
-     * 
+     *
      * @return true if elements remain in the iteration
      */
     public boolean hasNext() {
@@ -212,7 +212,7 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
 
     /**
      * Gets the next element of the iteration.
-     * 
+     *
      * @return the next element from the iteration
      * @throws NoSuchElementException if all the Iterators are exhausted
      */
@@ -233,8 +233,8 @@ public class ObjectGraphIterator<E> implements Iterator<E> {
      * <p>
      * This method calls remove() on the underlying Iterator and it may
      * throw an UnsupportedOperationException if the underlying Iterator
-     * does not support this method. 
-     * 
+     * does not support this method.
+     *
      * @throws UnsupportedOperationException
      *   if the remove operator is not supported by the underlying Iterator
      * @throws IllegalStateException

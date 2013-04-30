@@ -42,7 +42,7 @@ public class IteratorEnumeration<E> implements Enumeration<E> {
     /**
      * Constructs a new <code>IteratorEnumeration</code> that will use the given
      * iterator.
-     * 
+     *
      * @param iterator the iterator to use
      */
     public IteratorEnumeration(final Iterator<? extends E> iterator) {
@@ -55,7 +55,7 @@ public class IteratorEnumeration<E> implements Enumeration<E> {
 
     /**
      * Returns true if the underlying iterator has more elements.
-     * 
+     *
      * @return true if the underlying iterator has more elements
      */
     public boolean hasMoreElements() {
@@ -64,7 +64,7 @@ public class IteratorEnumeration<E> implements Enumeration<E> {
 
     /**
      * Returns the next element from the underlying iterator.
-     * 
+     *
      * @return the next element from the underlying iterator.
      * @throws java.util.NoSuchElementException if the underlying iterator has
      * no more elements
@@ -78,7 +78,7 @@ public class IteratorEnumeration<E> implements Enumeration<E> {
 
     /**
      * Returns the underlying iterator.
-     * 
+     *
      * @return the underlying iterator
      */
     public Iterator<? extends E> getIterator() {
@@ -87,7 +87,7 @@ public class IteratorEnumeration<E> implements Enumeration<E> {
 
     /**
      * Sets the underlying iterator.
-     * 
+     *
      * @param iterator the new underlying iterator
      */
     public void setIterator(final Iterator<? extends E> iterator) {

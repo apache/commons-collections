@@ -75,7 +75,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * Constructs a new <code>CollatingIterator</code> that will used the
      * specified comparator for ordering. Child iterators will have to be
      * manually added using the {@link #addIterator(Iterator)} method.
-     * 
+     *
      * @param comp the comparator to use to sort; must not be null,
      *   unless you'll be invoking {@link #setComparator(Comparator)}
      *   later on.
@@ -89,7 +89,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * specified comparator for ordering and have the specified initial
      * capacity. Child iterators will have to be manually added using the
      * {@link #addIterator(Iterator)} method.
-     * 
+     *
      * @param comp the comparator to use to sort; must not be null,
      *   unless you'll be invoking {@link #setComparator(Comparator)}
      *   later on.
@@ -105,7 +105,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * Constructs a new <code>CollatingIterator</code> that will use the
      * specified comparator to provide ordered iteration over the two given
      * iterators.
-     * 
+     *
      * @param comp the comparator to use to sort; must not be null,
      *   unless you'll be invoking {@link #setComparator(Comparator)}
      *   later on.
@@ -124,7 +124,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * Constructs a new <code>CollatingIterator</code> that will use the
      * specified comparator to provide ordered iteration over the array of
      * iterators.
-     * 
+     *
      * @param comp the comparator to use to sort; must not be null,
      *   unless you'll be invoking {@link #setComparator(Comparator)}
      *   later on.
@@ -142,7 +142,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * Constructs a new <code>CollatingIterator</code> that will use the
      * specified comparator to provide ordered iteration over the collection of
      * iterators.
-     * 
+     *
      * @param comp the comparator to use to sort; must not be null,
      *   unless you'll be invoking {@link #setComparator(Comparator)}
      *   later on.
@@ -163,7 +163,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     // ----------------------------------------------------------------------
     /**
      * Adds the given {@link Iterator} to the iterators being collated.
-     * 
+     *
      * @param iterator the iterator to add to the collation, must not be null
      * @throws IllegalStateException if iteration has started
      * @throws NullPointerException if the iterator is null
@@ -178,7 +178,7 @@ public class CollatingIterator<E> implements Iterator<E> {
 
     /**
      * Sets the iterator at the given index.
-     * 
+     *
      * @param index index of the Iterator to replace
      * @param iterator Iterator to place at the given index
      * @throws IndexOutOfBoundsException if index &lt; 0 or index &gt; size()
@@ -195,7 +195,7 @@ public class CollatingIterator<E> implements Iterator<E> {
 
     /**
      * Gets the list of Iterators (unmodifiable).
-     * 
+     *
      * @return the unmodifiable list of iterators added
      */
     public List<Iterator<? extends E>> getIterators() {
@@ -204,7 +204,7 @@ public class CollatingIterator<E> implements Iterator<E> {
 
     /**
      * Gets the {@link Comparator} by which collatation occurs.
-     * 
+     *
      * @return the {@link Comparator}
      */
     public Comparator<? super E> getComparator() {
@@ -217,7 +217,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * if the elements in the iterators are implementing the
      * {@link java.lang.Comparable} interface), then use the
      * {@link org.apache.commons.collections4.comparators.ComparableComparator}.
-     * 
+     *
      * @param comp the {@link Comparator} to set
      * @throws IllegalStateException if iteration has started
      */
@@ -230,7 +230,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     // -------------------------------------------------------------------
     /**
      * Returns <code>true</code> if any child iterator has remaining elements.
-     * 
+     *
      * @return true if this iterator has remaining elements
      */
     public boolean hasNext() {
@@ -240,7 +240,7 @@ public class CollatingIterator<E> implements Iterator<E> {
 
     /**
      * Returns the next ordered element from a child iterator.
-     * 
+     *
      * @return the next ordered element
      * @throws NoSuchElementException if no child iterator has any more elements
      */
@@ -261,7 +261,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     /**
      * Removes the last returned element from the child iterator that produced
      * it.
-     * 
+     *
      * @throws IllegalStateException if there is no last returned element, or if
      * the last returned element has already been removed
      */
@@ -274,7 +274,7 @@ public class CollatingIterator<E> implements Iterator<E> {
 
     /**
      * Returns the index of the iterator that returned the last element.
-     * 
+     *
      * @return the index of the iterator that returned the last element
      * @throws IllegalStateException if there is no last returned element
      */
@@ -282,10 +282,10 @@ public class CollatingIterator<E> implements Iterator<E> {
         if (lastReturned == -1) {
             throw new IllegalStateException("No value has been returned yet");
         }
-        
+
         return lastReturned;
     }
-    
+
     // Private Methods
     // -------------------------------------------------------------------
     /**
@@ -307,7 +307,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * <i>i</i> to the next value of the {@link #iterators iterator} at position
      * <i>i</i>, or clear them if the <i>i</i><sup>th</sup> iterator has no next
      * value.
-     * 
+     *
      * @return <tt>false</tt> iff there was no value to set
      */
     private boolean set(final int i) {
@@ -334,7 +334,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     /**
      * Throws {@link IllegalStateException} if iteration has started via
      * {@link #start}.
-     * 
+     *
      * @throws IllegalStateException if iteration started
      */
     private void checkNotStarted() throws IllegalStateException {
@@ -346,7 +346,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     /**
      * Returns the index of the least element in {@link #values},
      * {@link #set(int) setting} any uninitialized values.
-     * 
+     *
      * @throws NullPointerException if no comparator is set
      */
     private int least() {

@@ -20,7 +20,7 @@ import java.util.Iterator;
 
 import org.apache.commons.collections4.Transformer;
 
-/** 
+/**
  * Decorates an iterator such that each element returned is transformed.
  *
  * @since 1.0
@@ -36,7 +36,7 @@ public class TransformIterator<I, O> implements Iterator<O> {
     //-----------------------------------------------------------------------
     /**
      * Constructs a new <code>TransformIterator</code> that will not function
-     * until the {@link #setIterator(Iterator) setIterator} and 
+     * until the {@link #setIterator(Iterator) setIterator} and
      * {@link #setTransformer(Transformer)} methods are invoked.
      */
     public TransformIterator() {
@@ -78,7 +78,7 @@ public class TransformIterator<I, O> implements Iterator<O> {
      * Gets the next object from the iteration, transforming it using the
      * current transformer. If the transformer is null, no transformation
      * occurs and the object from the iterator is returned directly.
-     * 
+     *
      * @return the next object
      * @throws java.util.NoSuchElementException if there are no more elements
      */
@@ -91,19 +91,19 @@ public class TransformIterator<I, O> implements Iterator<O> {
     }
 
     //-----------------------------------------------------------------------
-    /** 
+    /**
      * Gets the iterator this iterator is using.
-     * 
+     *
      * @return the iterator.
      */
     public Iterator<? extends I> getIterator() {
         return iterator;
     }
 
-    /** 
+    /**
      * Sets the iterator for this iterator to use.
      * If iteration has started, this effectively resets the iterator.
-     * 
+     *
      * @param iterator  the iterator to use
      */
     public void setIterator(final Iterator<? extends I> iterator) {
@@ -111,19 +111,19 @@ public class TransformIterator<I, O> implements Iterator<O> {
     }
 
     //-----------------------------------------------------------------------
-    /** 
+    /**
      * Gets the transformer this iterator is using.
-     * 
+     *
      * @return the transformer.
      */
     public Transformer<? super I, ? extends O> getTransformer() {
         return transformer;
     }
 
-    /** 
+    /**
      * Sets the transformer this the iterator to use.
      * A null transformer is a no-op transformer.
-     * 
+     *
      * @param transformer  the transformer to use
      */
     public void setTransformer(final Transformer<? super I, ? extends O> transformer) {

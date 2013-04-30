@@ -21,7 +21,7 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.Predicate;
 
-/** 
+/**
  * Decorates another {@link ListIterator} using a predicate to filter elements.
  * <p>
  * This iterator decorates the underlying iterator, only allowing through
@@ -34,39 +34,39 @@ public class FilterListIterator<E> implements ListIterator<E> {
 
     /** The iterator being used */
     private ListIterator<? extends E> iterator;
-    
+
     /** The predicate being used */
     private Predicate<? super E> predicate;
 
-    /** 
-     * The value of the next (matching) object, when 
-     * {@link #nextObjectSet} is true. 
+    /**
+     * The value of the next (matching) object, when
+     * {@link #nextObjectSet} is true.
      */
     private E nextObject;
 
-    /** 
+    /**
      * Whether or not the {@link #nextObject} has been set
-     * (possibly to <code>null</code>). 
+     * (possibly to <code>null</code>).
      */
-    private boolean nextObjectSet = false;   
+    private boolean nextObjectSet = false;
 
-    /** 
-     * The value of the previous (matching) object, when 
-     * {@link #previousObjectSet} is true. 
+    /**
+     * The value of the previous (matching) object, when
+     * {@link #previousObjectSet} is true.
      */
     private E previousObject;
 
-    /** 
+    /**
      * Whether or not the {@link #previousObject} has been set
-     * (possibly to <code>null</code>). 
+     * (possibly to <code>null</code>).
      */
-    private boolean previousObjectSet = false;   
+    private boolean previousObjectSet = false;
 
-    /** 
+    /**
      * The index of the element that would be returned by {@link #next}.
      */
     private int nextIndex = 0;
-    
+
     //-----------------------------------------------------------------------
     /**
      * Constructs a new <code>FilterListIterator</code> that will not function
@@ -78,7 +78,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
     }
 
     /**
-     * Constructs a new <code>FilterListIterator</code> that will not 
+     * Constructs a new <code>FilterListIterator</code> that will not
      * function until {@link #setPredicate(Predicate) setPredicate} is invoked.
      *
      * @param iterator  the iterator to use
@@ -168,19 +168,19 @@ public class FilterListIterator<E> implements ListIterator<E> {
     }
 
     //-----------------------------------------------------------------------
-    /** 
+    /**
      * Gets the iterator this iterator is using.
-     * 
+     *
      * @return the iterator.
      */
     public ListIterator<? extends E> getListIterator() {
         return iterator;
     }
 
-    /** 
+    /**
      * Sets the iterator for this iterator to use.
      * If iteration has started, this effectively resets the iterator.
-     * 
+     *
      * @param iterator  the iterator to use
      */
     public void setListIterator(final ListIterator<? extends E> iterator) {
@@ -188,18 +188,18 @@ public class FilterListIterator<E> implements ListIterator<E> {
     }
 
     //-----------------------------------------------------------------------
-    /** 
+    /**
      * Gets the predicate this iterator is using.
-     * 
+     *
      * @return the predicate.
      */
     public Predicate<? super E> getPredicate() {
         return predicate;
     }
 
-    /** 
+    /**
      * Sets the predicate this the iterator to use.
-     * 
+     *
      * @param predicate  the transformer to use
      */
     public void setPredicate(final Predicate<? super E> predicate) {
@@ -214,7 +214,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
 
     private boolean setNextObject() {
         // if previousObjectSet,
-        // then we've walked back one step in the 
+        // then we've walked back one step in the
         // underlying list (due to a hasPrevious() call)
         // so skip ahead one matching object
         if (previousObjectSet) {
@@ -246,7 +246,7 @@ public class FilterListIterator<E> implements ListIterator<E> {
 
     private boolean setPreviousObject() {
         // if nextObjectSet,
-        // then we've walked back one step in the 
+        // then we've walked back one step in the
         // underlying list (due to a hasNext() call)
         // so skip ahead one matching object
         if (nextObjectSet) {

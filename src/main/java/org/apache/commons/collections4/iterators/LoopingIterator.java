@@ -25,18 +25,18 @@ import org.apache.commons.collections4.ResettableIterator;
 /**
  * An Iterator that restarts when it reaches the end.
  * <p>
- * The iterator will loop continuously around the provided elements, unless 
+ * The iterator will loop continuously around the provided elements, unless
  * there are no elements in the collection to begin with, or all the elements
  * have been {@link #remove removed}.
  * <p>
  * Concurrent modifications are not directly supported, and for most collection
- * implementations will throw a ConcurrentModificationException. 
+ * implementations will throw a ConcurrentModificationException.
  *
  * @since 3.0
  * @version $Id$
  */
 public class LoopingIterator<E> implements ResettableIterator<E> {
-    
+
     /** The collection to base the iterator on */
     private final Collection<? extends E> collection;
     /** The current iterator */
@@ -47,7 +47,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
      * <p>
      * There is no way to reset an Iterator instance without recreating it from
      * the original source, so the Collection must be passed in.
-     * 
+     *
      * @param coll  the collection to wrap
      * @throws NullPointerException if the collection is null
      */
@@ -59,12 +59,12 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
         reset();
     }
 
-    /** 
+    /**
      * Has the iterator any more elements.
      * <p>
      * Returns false only if the collection originally had zero elements, or
      * all the elements have been {@link #remove removed}.
-     * 
+     *
      * @return <code>true</code> if there are more elements
      */
     public boolean hasNext() {
@@ -75,7 +75,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
      * Returns the next object in the collection.
      * <p>
      * If at the end of the collection, return the first element.
-     * 
+     *
      * @return the next object
      * @throws NoSuchElementException if there are no elements
      *         at all.  Use {@link #hasNext} to avoid this error.
@@ -93,8 +93,8 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
     /**
      * Removes the previously retrieved item from the underlying collection.
      * <p>
-     * This feature is only supported if the underlying collection's 
-     * {@link Collection#iterator iterator} method returns an implementation 
+     * This feature is only supported if the underlying collection's
+     * {@link Collection#iterator iterator} method returns an implementation
      * that supports it.
      * <p>
      * This method can only be called after at least one {@link #next} method call.
@@ -115,7 +115,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
 
     /**
      * Gets the size of the collection underlying the iterator.
-     * 
+     *
      * @return the current collection size
      */
     public int size() {

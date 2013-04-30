@@ -22,7 +22,7 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections4.ResettableListIterator;
 
 /**
- * <code>SingletonIterator</code> is an {@link ListIterator} over a single 
+ * <code>SingletonIterator</code> is an {@link ListIterator} over a single
  * object instance.
  *
  * @since 2.1
@@ -49,7 +49,7 @@ public class SingletonListIterator<E> implements ListIterator<E>, ResettableList
      * Is another object available from the iterator?
      * <p>
      * This returns true if the single object hasn't been returned yet.
-     * 
+     *
      * @return true if the single object hasn't been returned yet
      */
     public boolean hasNext() {
@@ -60,7 +60,7 @@ public class SingletonListIterator<E> implements ListIterator<E>, ResettableList
      * Is a previous object available from the iterator?
      * <p>
      * This returns true if the single object has been returned.
-     * 
+     *
      * @return true if the single object has been returned
      */
     public boolean hasPrevious() {
@@ -71,7 +71,7 @@ public class SingletonListIterator<E> implements ListIterator<E>, ResettableList
      * Returns the index of the element that would be returned by a subsequent
      * call to <tt>next</tt>.
      *
-     * @return 0 or 1 depending on current state. 
+     * @return 0 or 1 depending on current state.
      */
     public int nextIndex() {
         return beforeFirst ? 0 : 1;
@@ -82,7 +82,7 @@ public class SingletonListIterator<E> implements ListIterator<E>, ResettableList
      * call to <tt>previous</tt>. A return value of -1 indicates that the iterator is currently at
      * the start.
      *
-     * @return 0 or -1 depending on current state. 
+     * @return 0 or -1 depending on current state.
      */
     public int previousIndex() {
         return beforeFirst ? -1 : 0;
@@ -94,7 +94,7 @@ public class SingletonListIterator<E> implements ListIterator<E>, ResettableList
      * This returns the single object if it hasn't been returned yet.
      *
      * @return the single object
-     * @throws NoSuchElementException if the single object has already 
+     * @throws NoSuchElementException if the single object has already
      *    been returned
      */
     public E next() {
@@ -112,7 +112,7 @@ public class SingletonListIterator<E> implements ListIterator<E>, ResettableList
      * This returns the single object if it has been returned.
      *
      * @return the single object
-     * @throws NoSuchElementException if the single object has not already 
+     * @throws NoSuchElementException if the single object has not already
      *    been returned
      */
     public E previous() {
@@ -125,8 +125,8 @@ public class SingletonListIterator<E> implements ListIterator<E>, ResettableList
 
     /**
      * Remove the object from this iterator.
-     * @throws IllegalStateException if the <tt>next</tt> or <tt>previous</tt> 
-     *        method has not yet been called, or the <tt>remove</tt> method 
+     * @throws IllegalStateException if the <tt>next</tt> or <tt>previous</tt>
+     *        method has not yet been called, or the <tt>remove</tt> method
      *        has already been called after the last call to <tt>next</tt>
      *        or <tt>previous</tt>.
      */
@@ -138,7 +138,7 @@ public class SingletonListIterator<E> implements ListIterator<E>, ResettableList
             removed = true;
         }
     }
-    
+
     /**
      * Add always throws {@link UnsupportedOperationException}.
      *
@@ -148,12 +148,12 @@ public class SingletonListIterator<E> implements ListIterator<E>, ResettableList
     public void add(final E obj) {
         throw new UnsupportedOperationException("add() is not supported by this iterator");
     }
-    
+
     /**
      * Set sets the value of the singleton.
      *
      * @param obj  the object to set
-     * @throws IllegalStateException if <tt>next</tt> has not been called 
+     * @throws IllegalStateException if <tt>next</tt> has not been called
      *          or the object has been removed
      */
     public void set(final E obj) {
@@ -162,7 +162,7 @@ public class SingletonListIterator<E> implements ListIterator<E>, ResettableList
         }
         this.object = obj;
     }
-    
+
     /**
      * Reset the iterator back to the start.
      */
@@ -170,5 +170,5 @@ public class SingletonListIterator<E> implements ListIterator<E>, ResettableList
         beforeFirst = true;
         nextCalled = false;
     }
-    
+
 }

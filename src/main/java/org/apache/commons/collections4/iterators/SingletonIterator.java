@@ -21,8 +21,8 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableIterator;
 
-/** 
- * <code>SingletonIterator</code> is an {@link Iterator} over a single 
+/**
+ * <code>SingletonIterator</code> is an {@link Iterator} over a single
  * object instance.
  *
  * @since 2.0
@@ -69,7 +69,7 @@ public class SingletonIterator<E>
      * Is another object available from the iterator?
      * <p>
      * This returns true if the single object hasn't been returned yet.
-     * 
+     *
      * @return true if the single object hasn't been returned yet
      */
     public boolean hasNext() {
@@ -82,7 +82,7 @@ public class SingletonIterator<E>
      * This returns the single object if it hasn't been returned yet.
      *
      * @return the single object
-     * @throws NoSuchElementException if the single object has already 
+     * @throws NoSuchElementException if the single object has already
      *    been returned
      */
     public E next() {
@@ -95,7 +95,7 @@ public class SingletonIterator<E>
 
     /**
      * Remove the object from this iterator.
-     * 
+     *
      * @throws IllegalStateException if the <tt>next</tt> method has not
      *        yet been called, or the <tt>remove</tt> method has already
      *        been called after the last call to the <tt>next</tt>
@@ -114,12 +114,12 @@ public class SingletonIterator<E>
             throw new UnsupportedOperationException();
         }
     }
-    
+
     /**
      * Reset the iterator to the start.
      */
     public void reset() {
         beforeFirst = true;
     }
-    
+
 }

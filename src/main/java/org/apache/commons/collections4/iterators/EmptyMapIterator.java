@@ -19,7 +19,7 @@ package org.apache.commons.collections4.iterators;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.ResettableIterator;
 
-/** 
+/**
  * Provides an implementation of an empty map iterator.
  *
  * @since 3.1

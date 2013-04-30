@@ -105,7 +105,7 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
 
     /**
      * Return true if any Iterator in the chain has a remaining element.
-     * 
+     *
      * @return true if elements remain
      */
     public boolean hasNext() {
@@ -117,14 +117,14 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
 
     /**
      * Returns the next element of the current Iterator
-     * 
+     *
      * @return element from the current Iterator
      * @throws java.util.NoSuchElementException if all the Iterators are exhausted
      */
     public E next() {
         updateCurrentIterator();
         lastUsedIterator = currentIterator;
-        
+
         return currentIterator.next();
     }
 
@@ -134,7 +134,7 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
      * As with next() and hasNext(), this method calls remove() on the underlying Iterator.
      * Therefore, this method may throw an UnsupportedOperationException if the underlying
      * Iterator does not support this method.
-     * 
+     *
      * @throws UnsupportedOperationException if the remove operator is not
      *   supported by the underlying Iterator
      * @throws IllegalStateException if the next method has not yet been called,

@@ -20,10 +20,10 @@ import java.util.Iterator;
 
 import org.apache.commons.collections4.Unmodifiable;
 
-/** 
+/**
  * Decorates an iterator such that it cannot be modified.
  * <p>
- * Attempts to modify it will result in an UnsupportedOperationException. 
+ * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 3.0
  * @version $Id$
