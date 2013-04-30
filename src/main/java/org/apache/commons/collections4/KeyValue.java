@@ -33,7 +33,7 @@ public interface KeyValue<K, V> {
     /**
      * Gets the key from the pair.
      *
-     * @return the key 
+     * @return the key
      */
     K getKey();
 

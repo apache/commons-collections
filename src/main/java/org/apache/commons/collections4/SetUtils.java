@@ -71,11 +71,11 @@ public class SetUtils {
     private SetUtils() {}
 
     //-----------------------------------------------------------------------
-    
+
     /**
      * Returns an immutable empty set if the argument is <code>null</code>,
      * or the argument itself otherwise.
-     * 
+     *
      * @param <T> the element type
      * @param set the set, possibly <code>null</code>
      * @return an empty set if the argument is <code>null</code>
@@ -83,7 +83,7 @@ public class SetUtils {
     public static <T> Set<T> emptyIfNull(final Set<T> set) {
         return set == null ? Collections.<T>emptySet() : set;
     }
-    
+
     /**
      * Tests two sets for equality as per the <code>equals()</code> contract
      * in {@link java.util.Set#equals(java.lang.Object)}.
@@ -99,14 +99,14 @@ public class SetUtils {
      * the second. This ensures that the <tt>equals</tt> method works
      * properly across different implementations of the <tt>Set</tt>
      * interface.</p>
-     * 
+     *
      * <p>
-     * This implementation first checks if the two sets are the same object: 
+     * This implementation first checks if the two sets are the same object:
      * if so it returns <tt>true</tt>.  Then, it checks if the two sets are
      * identical in size; if not, it returns false. If so, it returns
      * <tt>a.containsAll((Collection) b)</tt>.</p>
      * </blockquote>
-     * 
+     *
      * @see java.util.Set
      * @param set1  the first set, may be null
      * @param set2  the second set, may be null
@@ -124,13 +124,13 @@ public class SetUtils {
     }
 
     /**
-     * Generates a hash code using the algorithm specified in 
+     * Generates a hash code using the algorithm specified in
      * {@link java.util.Set#hashCode()}.
      * <p>
      * This method is useful for implementing <code>Set</code> when you cannot
      * extend AbstractSet. The method takes Collection instances to enable other
      * collection types to use the Set implementation algorithm.
-     * 
+     *
      * @param <T> the element type
      * @see java.util.Set#hashCode()
      * @param set  the set to calculate the hash code for, may be null
@@ -149,14 +149,14 @@ public class SetUtils {
         }
         return hashCode;
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Returns a synchronized set backed by the given set.
      * <p>
-     * You must manually synchronize on the returned set's iterator to 
+     * You must manually synchronize on the returned set's iterator to
      * avoid non-deterministic behavior:
-     *  
+     *
      * <pre>
      * Set s = SetUtils.synchronizedSet(mySet);
      * synchronized (s) {
@@ -166,9 +166,9 @@ public class SetUtils {
      *     }
      * }
      * </pre>
-     * 
+     *
      * This method is just a wrapper for {@link Collections#synchronizedSet(Set)}.
-     * 
+     *
      * @param <E> the element type
      * @param set  the set to synchronize, must not be null
      * @return a synchronized set backed by the given set
@@ -214,7 +214,7 @@ public class SetUtils {
      * Returns a transformed set backed by the given set.
      * <p>
      * Each object is passed through the transformer as it is added to the
-     * Set. It is important not to use the original set after invoking this 
+     * Set. It is important not to use the original set after invoking this
      * method, as it is a backdoor for adding untransformed objects.
      * <p>
      * Existing entries in the specified set will not be transformed.
@@ -229,7 +229,7 @@ public class SetUtils {
     public static <E> Set<E> transformedSet(final Set<E> set, final Transformer<? super E, ? extends E> transformer) {
         return TransformedSet.transformingSet(set, transformer);
     }
-    
+
     /**
      * Returns a set that maintains the order of elements that are added
      * backed by the given set.
@@ -245,14 +245,14 @@ public class SetUtils {
     public static <E> Set<E> orderedSet(final Set<E> set) {
         return ListOrderedSet.listOrderedSet(set);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Returns a synchronized sorted set backed by the given sorted set.
      * <p>
-     * You must manually synchronize on the returned set's iterator to 
+     * You must manually synchronize on the returned set's iterator to
      * avoid non-deterministic behavior:
-     *  
+     *
      * <pre>
      * Set s = SetUtils.synchronizedSet(mySet);
      * synchronized (s) {
@@ -262,9 +262,9 @@ public class SetUtils {
      *     }
      * }
      * </pre>
-     * 
+     *
      * This method is just a wrapper for {@link Collections#synchronizedSortedSet(SortedSet)}.
-     * 
+     *
      * @param <E> the element type
      * @param set  the sorted set to synchronize, must not be null
      * @return a synchronized set backed by the given set
@@ -289,7 +289,7 @@ public class SetUtils {
     }
 
     /**
-     * Returns a predicated (validating) sorted set backed by the given sorted set.  
+     * Returns a predicated (validating) sorted set backed by the given sorted set.
      * <p>
      * Only objects that pass the test in the given predicate can be added to the set.
      * Trying to add an invalid object results in an IllegalArgumentException.
@@ -310,7 +310,7 @@ public class SetUtils {
      * Returns a transformed sorted set backed by the given set.
      * <p>
      * Each object is passed through the transformer as it is added to the
-     * Set. It is important not to use the original set after invoking this 
+     * Set. It is important not to use the original set after invoking this
      * method, as it is a backdoor for adding untransformed objects.
      * <p>
      * Existing entries in the specified set will not be transformed.
@@ -326,5 +326,5 @@ public class SetUtils {
                                                         final Transformer<? super E, ? extends E> transformer) {
         return TransformedSortedSet.transformingSortedSet(set, transformer);
     }
-    
+
 }

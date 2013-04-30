@@ -77,7 +77,7 @@ public class QueueUtils {
      * Returns a transformed queue backed by the given queue.
      * <p>
      * Each object is passed through the transformer as it is added to the
-     * Queue. It is important not to use the original queue after invoking this 
+     * Queue. It is important not to use the original queue after invoking this
      * method, as it is a backdoor for adding untransformed objects.
      * <p>
      * Existing entries in the specified queue will not be transformed.

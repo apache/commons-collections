@@ -21,7 +21,7 @@ import org.apache.commons.collections4.trie.UnmodifiableTrie;
 
 /**
  * A collection of {@link Trie} utilities.
- * 
+ *
  * @since 4.0
  * @version $Id$
  */
@@ -31,19 +31,19 @@ public class TrieUtils {
      * {@link TrieUtils} should not normally be instantiated.
      */
     private TrieUtils() {}
-    
+
     /**
      * Returns a synchronized instance of a {@link Trie}
-     * 
+     *
      * @see java.util.Collections#synchronizedMap(java.util.Map)
      */
     public static <K, V> Trie<K, V> synchronizedTrie(final Trie<K, V> trie) {
         return SynchronizedTrie.synchronizedTrie(trie);
     }
-    
+
     /**
      * Returns an unmodifiable instance of a {@link Trie}
-     * 
+     *
      * @see java.util.Collections#unmodifiableMap(java.util.Map)
      */
     public static <K, V> Trie<K, V> unmodifiableTrie(final Trie<K, V> trie) {

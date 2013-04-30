@@ -26,7 +26,7 @@ import java.util.EmptyStackException;
  * is therefore operates faster in environments where you do not need to
  * worry about multiple thread contention.
  * <p>
- * The removal order of an <code>ArrayStack</code> is based on insertion 
+ * The removal order of an <code>ArrayStack</code> is based on insertion
  * order: The most recently added element is removed first.  The iteration
  * order is <i>not</i> the same as the removal order.  The iterator returns
  * elements from the bottom up.
@@ -44,7 +44,7 @@ import java.util.EmptyStackException;
 @Deprecated
 public class ArrayStack<E> extends ArrayList<E> {
 
-    /** Ensure serialization compatibility */    
+    /** Ensure serialization compatibility */
     private static final long serialVersionUID = 2130079159931574599L;
 
     /**
@@ -57,7 +57,7 @@ public class ArrayStack<E> extends ArrayList<E> {
 
     /**
      * Constructs a new empty <code>ArrayStack</code> with an initial size.
-     * 
+     *
      * @param initialSize  the initial size to use
      * @throws IllegalArgumentException  if the specified initial size
      *  is negative
@@ -71,7 +71,7 @@ public class ArrayStack<E> extends ArrayList<E> {
      * <p>
      * This method exists for compatibility with <code>java.util.Stack</code>.
      * New users of this class should use <code>isEmpty</code> instead.
-     * 
+     *
      * @return true if the stack is currently empty
      */
     public boolean empty() {

@@ -19,7 +19,7 @@ package org.apache.commons.collections4;
 /**
  * Defines a map that is bounded in size.
  * <p>
- * The size of the map can vary, but it can never exceed a preset 
+ * The size of the map can vary, but it can never exceed a preset
  * maximum number of elements. This interface allows the querying of details
  * associated with the maximum number of elements.
  *

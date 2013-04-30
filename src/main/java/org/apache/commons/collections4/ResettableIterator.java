@@ -18,7 +18,7 @@ package org.apache.commons.collections4;
 
 import java.util.Iterator;
 
-/** 
+/**
  * Defines an iterator that can be reset back to an initial state.
  * <p>
  * This interface allows an iterator to be repeatedly reused.

@@ -35,7 +35,7 @@ import org.apache.commons.collections4.functors.StringValueTransformer;
 import org.apache.commons.collections4.functors.SwitchTransformer;
 
 /**
- * <code>TransformerUtils</code> provides reference implementations and 
+ * <code>TransformerUtils</code> provides reference implementations and
  * utilities for the Transformer functor interface. The supplied transformers are:
  * <ul>
  * <li>Invoker - returns the result of a method call on the input object
@@ -69,7 +69,7 @@ public class TransformerUtils {
     /**
      * Gets a transformer that always throws an exception.
      * This could be useful during testing as a placeholder.
-     * 
+     *
      * @param <I>  the input type
      * @param <O>  the output type
      * @return the transformer
@@ -81,7 +81,7 @@ public class TransformerUtils {
 
     /**
      * Gets a transformer that always returns null.
-     * 
+     *
      * @param <I>  the input type
      * @param <O>  the output type
      * @return the transformer
@@ -95,7 +95,7 @@ public class TransformerUtils {
      * Gets a transformer that returns the input object.
      * The input object should be immutable to maintain the
      * contract of Transformer (although this is not checked).
-     * 
+     *
      * @param <T>  the input/output type
      * @return the transformer
      * @see org.apache.commons.collections4.functors.NOPTransformer
@@ -113,7 +113,7 @@ public class TransformerUtils {
      * <li>public copy constructor
      * <li>serialization clone
      * <ul>
-     * 
+     *
      * @param <T>  the input/output type
      * @return the transformer
      * @see org.apache.commons.collections4.functors.CloneTransformer
@@ -123,7 +123,7 @@ public class TransformerUtils {
     }
 
     /**
-     * Creates a Transformer that will return the same object each time the 
+     * Creates a Transformer that will return the same object each time the
      * transformer is used.
      *
      * @param <I>  the input type
@@ -182,7 +182,7 @@ public class TransformerUtils {
     /**
      * Create a new Transformer that calls two transformers, passing the result of
      * the first into the second.
-     * 
+     *
      * @param <T>  the input/output type
      * @param transformer1  the first transformer
      * @param transformer2  the second transformer
@@ -198,9 +198,9 @@ public class TransformerUtils {
     }
 
     /**
-     * Create a new Transformer that calls each transformer in turn, passing the 
+     * Create a new Transformer that calls each transformer in turn, passing the
      * result into the next transformer.
-     * 
+     *
      * @param <T>  the input/output type
      * @param transformers  an array of transformers to chain
      * @return the transformer
@@ -212,10 +212,10 @@ public class TransformerUtils {
     }
 
     /**
-     * Create a new Transformer that calls each transformer in turn, passing the 
+     * Create a new Transformer that calls each transformer in turn, passing the
      * result into the next transformer. The ordering is that of the iterator()
      * method on the collection.
-     * 
+     *
      * @param <T>  the input/output type
      * @param transformers  a collection of transformers to chain
      * @return the transformer
@@ -228,9 +228,9 @@ public class TransformerUtils {
     }
 
     /**
-     * Create a new Transformer that calls one of two transformers depending 
+     * Create a new Transformer that calls one of two transformers depending
      * on the specified predicate.
-     * 
+     *
      * @param <I>  the input type
      * @param <O>  the output type
      * @param predicate  the predicate to switch on
@@ -249,11 +249,11 @@ public class TransformerUtils {
     }
 
     /**
-     * Create a new Transformer that calls one of the transformers depending 
+     * Create a new Transformer that calls one of the transformers depending
      * on the predicates. The transformer at array location 0 is called if the
      * predicate at array location 0 returned true. Each predicate is evaluated
      * until one returns true. If no predicates evaluate to true, null is returned.
-     * 
+     *
      * @param <I>  the input type
      * @param <O>  the output type
      * @param predicates  an array of predicates to check
@@ -270,12 +270,12 @@ public class TransformerUtils {
     }
 
     /**
-     * Create a new Transformer that calls one of the transformers depending 
+     * Create a new Transformer that calls one of the transformers depending
      * on the predicates. The transformer at array location 0 is called if the
      * predicate at array location 0 returned true. Each predicate is evaluated
      * until one returns true. If no predicates evaluate to true, the default
      * transformer is called. If the default transformer is null, null is returned.
-     * 
+     *
      * @param <I>  the input type
      * @param <O>  the output type
      * @param predicates  an array of predicates to check
@@ -294,17 +294,17 @@ public class TransformerUtils {
     }
 
     /**
-     * Create a new Transformer that calls one of the transformers depending 
-     * on the predicates. 
+     * Create a new Transformer that calls one of the transformers depending
+     * on the predicates.
      * <p>
-     * The Map consists of Predicate keys and Transformer values. A transformer 
+     * The Map consists of Predicate keys and Transformer values. A transformer
      * is called if its matching predicate returns true. Each predicate is evaluated
      * until one returns true. If no predicates evaluate to true, the default
-     * transformer is called. The default transformer is set in the map with a 
+     * transformer is called. The default transformer is set in the map with a
      * null key. If no default transformer is set, null will be returned in a default
-     * case. The ordering is that of the iterator() method on the entryset collection 
+     * case. The ordering is that of the iterator() method on the entryset collection
      * of the map.
-     * 
+     *
      * @param <I>  the input type
      * @param <O>  the output type
      * @param predicatesAndTransformers  a map of predicates to transformers
@@ -321,13 +321,13 @@ public class TransformerUtils {
 
     /**
      * Create a new Transformer that uses the input object as a key to find the
-     * transformer to call. 
+     * transformer to call.
      * <p>
-     * The Map consists of object keys and Transformer values. A transformer 
+     * The Map consists of object keys and Transformer values. A transformer
      * is called if the input object equals the key. If there is no match, the
      * default transformer is called. The default transformer is set in the map
      * using a null key. If no default is set, null will be returned in a default case.
-     * 
+     *
      * @param <I>  the input type
      * @param <O>  the output type
      * @param objectsAndTransformers  a map of objects to transformers
@@ -357,7 +357,7 @@ public class TransformerUtils {
 
     /**
      * Gets a Transformer that expects an input Class object that it will instantiate.
-     * 
+     *
      * @param <T>  the output type
      * @return the transformer
      * @see org.apache.commons.collections4.functors.InstantiateTransformer
@@ -366,8 +366,8 @@ public class TransformerUtils {
         return InstantiateTransformer.<T>instantiateTransformer();
     }
 
-    /** 
-     * Creates a Transformer that expects an input Class object that it will 
+    /**
+     * Creates a Transformer that expects an input Class object that it will
      * instantiate. The constructor used is determined by the arguments specified
      * to this method.
      *
@@ -383,8 +383,8 @@ public class TransformerUtils {
         return InstantiateTransformer.<T>instantiateTransformer(paramTypes, args);
     }
 
-    /** 
-     * Creates a Transformer that uses the passed in Map to transform the input 
+    /**
+     * Creates a Transformer that uses the passed in Map to transform the input
      * object (as a simple lookup).
      *
      * @param <I>  the input type
@@ -399,13 +399,13 @@ public class TransformerUtils {
 
     /**
      * Gets a Transformer that invokes a method on the input object.
-     * The method must have no parameters. If the input object is null, 
+     * The method must have no parameters. If the input object is null,
      * null is returned.
      * <p>
      * For example, <code>TransformerUtils.invokerTransformer("getName");</code>
-     * will call the <code>getName/code> method on the input object to 
+     * will call the <code>getName/code> method on the input object to
      * determine the transformer result.
-     * 
+     *
      * @param <I>  the input type
      * @param <O>  the output type
      * @param methodName  the method name to call on the input object, may not be null
@@ -419,9 +419,9 @@ public class TransformerUtils {
 
     /**
      * Gets a Transformer that invokes a method on the input object.
-     * The method parameters are specified. If the input object is {@code null}, 
+     * The method parameters are specified. If the input object is {@code null},
      * {@code null} is returned.
-     * 
+     *
      * @param <I>  the input type
      * @param <O>  the output type
      * @param methodName  the name of the method
@@ -440,7 +440,7 @@ public class TransformerUtils {
      * Gets a transformer that returns a <code>java.lang.String</code>
      * representation of the input object. This is achieved via the
      * <code>toString</code> method, <code>null</code> returns 'null'.
-     * 
+     *
      * @param <T>  the input type
      * @return the transformer
      * @see org.apache.commons.collections4.functors.StringValueTransformer
@@ -448,5 +448,5 @@ public class TransformerUtils {
     public static <T> Transformer<T, String> stringValueTransformer() {
         return StringValueTransformer.<T>stringValueTransformer();
     }
-    
+
 }

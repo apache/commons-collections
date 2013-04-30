@@ -20,10 +20,10 @@ import java.util.Map;
 
 /**
  * The "write" subset of the {@link Map} interface.
- * 
+ *
  * @since 4.0
  * @version $Id$
- * 
+ *
  * @see Get
  */
 public interface Put<K, V> {

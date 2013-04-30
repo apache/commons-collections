@@ -39,7 +39,7 @@ public interface IterableGet<K, V> extends Get<K, V> {
      *   it.setValue(value + 1);
      * }
      * </pre>
-     * 
+     *
      * @return a map iterator
      */
     MapIterator<K, V> mapIterator();

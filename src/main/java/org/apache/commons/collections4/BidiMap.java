@@ -29,8 +29,8 @@ package org.apache.commons.collections4;
  * a key to be looked up from a value with equal performance.
  * <p>
  * This map enforces the restriction that there is a 1:1 relation between
- * keys and values, meaning that multiple keys cannot map to the same value. 
- * This is required so that "inverting" the map results in a map without 
+ * keys and values, meaning that multiple keys cannot map to the same value.
+ * This is required so that "inverting" the map results in a map without
  * duplicate keys. See the {@link #put} method description for more information.
  *
  * @param <K> the type of the keys in the map
@@ -51,7 +51,7 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      *  BidiMap map1 = new DualHashBidiMap();
      *  map.put("A","B");  // contains A mapped to B, as per Map
      *  map.put("A","C");  // contains A mapped to C, as per Map
-     * 
+     *
      *  BidiMap map2 = new DualHashBidiMap();
      *  map.put("A","B");  // contains A mapped to B, as per Map
      *  map.put("C","B");  // contains C mapped to B, key A is removed
@@ -60,9 +60,9 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      * @param key  the key to store
      * @param value  the value to store
      * @return the previous value mapped to this key
-     * 
+     *
      * @throws UnsupportedOperationException if the <code>put</code> method is not supported
-     * @throws ClassCastException (optional) if the map limits the type of the 
+     * @throws ClassCastException (optional) if the map limits the type of the
      *  value and the specified value is inappropriate
      * @throws IllegalArgumentException (optional) if the map limits the values
      *  in some way and the value was invalid
@@ -81,8 +81,8 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      *
      * @param value  the value to find the key for
      * @return the mapped key, or <code>null</code> if not found
-     * 
-     * @throws ClassCastException (optional) if the map limits the type of the 
+     *
+     * @throws ClassCastException (optional) if the map limits the type of the
      *  value and the specified value is inappropriate
      * @throws NullPointerException (optional) if the map limits the values to
      *  non-null and null was specified
@@ -100,8 +100,8 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      *
      * @param value  the value to find the key-value pair for
      * @return the key that was removed, <code>null</code> if nothing removed
-     * 
-     * @throws ClassCastException (optional) if the map limits the type of the 
+     *
+     * @throws ClassCastException (optional) if the map limits the type of the
      *  value and the specified value is inappropriate
      * @throws NullPointerException (optional) if the map limits the values to
      *  non-null and null was specified

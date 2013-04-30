@@ -59,7 +59,7 @@ public class BagUtils {
      * <p>
      * It is imperative that the user manually synchronize on the returned bag
      * when iterating over it:
-     * 
+     *
      * <pre>
      * Bag bag = BagUtils.synchronizedBag(new HashBag());
      * ...
@@ -70,9 +70,9 @@ public class BagUtils {
      *     }
      * }
      * </pre>
-     * 
+     *
      * Failure to follow this advice may result in non-deterministic behavior.
-     * 
+     *
      * @param <E> the element type
      * @param bag the bag to synchronize, must not be null
      * @return a synchronized bag backed by that bag
@@ -85,7 +85,7 @@ public class BagUtils {
     /**
      * Returns an unmodifiable view of the given bag. Any modification attempts
      * to the returned bag will raise an {@link UnsupportedOperationException}.
-     * 
+     *
      * @param <E> the element type
      * @param bag the bag whose unmodifiable view is to be returned, must not be null
      * @return an unmodifiable view of that bag
@@ -103,7 +103,7 @@ public class BagUtils {
      * IllegalArgumentException. It is important not to use the original bag
      * after invoking this method, as it is a backdoor for adding invalid
      * objects.
-     * 
+     *
      * @param <E> the element type
      * @param bag the bag to predicate, must not be null
      * @param predicate the predicate for the bag, must not be null
@@ -123,7 +123,7 @@ public class BagUtils {
      * <p>
      * Existing entries in the specified bag will not be transformed.
      * If you want that behaviour, see {@link TransformedBag#transformedBag(Bag, Transformer)}.
-     * 
+     *
      * @param <E> the element type
      * @param bag the bag to predicate, must not be null
      * @param transformer the transformer for the bag, must not be null
@@ -142,7 +142,7 @@ public class BagUtils {
      * <p>
      * It is imperative that the user manually synchronize on the returned bag
      * when iterating over it:
-     * 
+     *
      * <pre>
      * SortedBag bag = BagUtils.synchronizedSortedBag(new TreeBag());
      * ...
@@ -153,9 +153,9 @@ public class BagUtils {
      *     }
      * }
      * </pre>
-     * 
+     *
      * Failure to follow this advice may result in non-deterministic behavior.
-     * 
+     *
      * @param <E> the element type
      * @param bag the bag to synchronize, must not be null
      * @return a synchronized bag backed by that bag
@@ -169,7 +169,7 @@ public class BagUtils {
      * Returns an unmodifiable view of the given sorted bag. Any modification
      * attempts to the returned bag will raise an
      * {@link UnsupportedOperationException}.
-     * 
+     *
      * @param <E> the element type
      * @param bag the bag whose unmodifiable view is to be returned, must not be null
      * @return an unmodifiable view of that bag
@@ -188,7 +188,7 @@ public class BagUtils {
      * IllegalArgumentException. It is important not to use the original bag
      * after invoking this method, as it is a backdoor for adding invalid
      * objects.
-     * 
+     *
      * @param <E> the element type
      * @param bag the sorted bag to predicate, must not be null
      * @param predicate the predicate for the bag, must not be null
@@ -210,7 +210,7 @@ public class BagUtils {
      * Existing entries in the specified bag will not be transformed.
      * If you want that behaviour, see
      * {@link TransformedSortedBag#transformedSortedBag(SortedBag, Transformer)}.
-     * 
+     *
      * @param <E> the element type
      * @param bag the bag to predicate, must not be null
      * @param transformer the transformer for the bag, must not be null
@@ -230,7 +230,7 @@ public class BagUtils {
      */
     @SuppressWarnings("unchecked") // OK, empty bag is compatible with any type
     public static <E> Bag<E> emptyBag() {
-        return (Bag<E>) EMPTY_BAG;        
+        return (Bag<E>) EMPTY_BAG;
     }
 
     /**
@@ -241,6 +241,6 @@ public class BagUtils {
      */
     @SuppressWarnings("unchecked") // OK, empty bag is compatible with any type
     public static <E> SortedBag<E> emptySortedBag() {
-        return (SortedBag<E>) EMPTY_SORTED_BAG;        
+        return (SortedBag<E>) EMPTY_SORTED_BAG;
     }
 }

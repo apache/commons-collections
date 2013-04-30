@@ -35,10 +35,10 @@ public class EnumerationUtils {
      * EnumerationUtils is not normally instantiated.
      */
     private EnumerationUtils() {}
-    
+
     /**
      * Creates a list based on an enumeration.
-     * 
+     *
      * <p>As the enumeration is traversed, an ArrayList of its values is
      * created. The new list is returned.</p>
      *

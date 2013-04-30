@@ -21,7 +21,7 @@ import java.util.Set;
 
 /**
  * The "read" subset of the {@link java.util.Map} interface.
- * 
+ *
  * @since 4.0
  * @version $Id$
  *

@@ -18,7 +18,7 @@ package org.apache.commons.collections4;
 
 import java.util.Collection;
 
-/** 
+/**
  * Defines a map that holds a collection of values against each key.
  * <p>
  * A <code>MultiMap</code> is a Map with slightly different semantics.
@@ -53,7 +53,7 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * If the last value for a key is removed, implementations typically
      * return <code>null</code> from a subsequent <code>get(Object)</code>, however
      * they may choose to return an empty collection.
-     * 
+     *
      * @param key  the key to remove from
      * @param item  the item to remove
      * @return the value removed (which was passed in), null if nothing removed

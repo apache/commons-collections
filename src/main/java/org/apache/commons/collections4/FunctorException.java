@@ -24,7 +24,7 @@ package org.apache.commons.collections4;
  * @version $Id$
  */
 public class FunctorException extends RuntimeException {
-    
+
     /** Serialization version */
     private static final long serialVersionUID = -4704772662059351193L;
 

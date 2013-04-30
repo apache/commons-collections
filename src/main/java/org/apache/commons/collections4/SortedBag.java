@@ -31,21 +31,21 @@ public interface SortedBag<E> extends Bag<E> {
     /**
      * Returns the comparator associated with this sorted set, or null
      * if it uses its elements' natural ordering.
-     * 
+     *
      * @return the comparator in use, or null if natural ordering
      */
     public Comparator<? super E> comparator();
 
     /**
      * Returns the first (lowest) member.
-     * 
+     *
      * @return the first element in the sorted bag
      */
     public E first();
 
     /**
      * Returns the last (highest) member.
-     * 
+     *
      * @return the last element in the sorted bag
      */
     public E last();

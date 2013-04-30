@@ -30,8 +30,8 @@ import org.apache.commons.collections4.comparators.TransformingComparator;
  * Provides convenient static utility methods for <Code>Comparator</Code>
  * objects.
  * <p>
- * Most of the functionality in this class can also be found in the 
- * <code>comparators</code> package. This class merely provides a 
+ * Most of the functionality in this class can also be found in the
+ * <code>comparators</code> package. This class merely provides a
  * convenient central place if you have use for more than one class
  * in the <code>comparators</code> subpackage.
  *
@@ -107,7 +107,7 @@ public class ComparatorUtils {
 
     /**
      * Gets a comparator that compares using a collection of {@link Comparator}s,
-     * applied in (default iterator) sequence until one returns not equal or the 
+     * applied in (default iterator) sequence until one returns not equal or the
      * collection is exhausted.
      *
      * @param <E>  the object type to compare
@@ -120,7 +120,7 @@ public class ComparatorUtils {
     @SuppressWarnings("unchecked")
     public static <E extends Comparable<? super E>> Comparator<E> chainedComparator(
             final Collection<Comparator<E>> comparators) {
-        
+
         return chainedComparator(
             (Comparator<E>[]) comparators.toArray(new Comparator[comparators.size()])
         );
@@ -144,8 +144,8 @@ public class ComparatorUtils {
      * The parameter specifies whether true or false is sorted first.
      * <p>
      * The comparator throws NullPointerException if a null value is compared.
-     * 
-     * @param trueFirst  when <code>true</code>, sort 
+     *
+     * @param trueFirst  when <code>true</code>, sort
      *        <code>true</code> {@link Boolean}s before
      *        <code>false</code> {@link Boolean}s.
      * @return  a comparator that sorts booleans
@@ -153,7 +153,7 @@ public class ComparatorUtils {
     public static Comparator<Boolean> booleanComparator(final boolean trueFirst) {
         return BooleanComparator.booleanComparator(trueFirst);
     }
-    
+
     /**
      * Gets a Comparator that controls the comparison of <code>null</code> values.
      * <p>
@@ -219,7 +219,7 @@ public class ComparatorUtils {
     }
 
     /**
-     * Returns the smaller of the given objects according to the given 
+     * Returns the smaller of the given objects according to the given
      * comparator, returning the second object if the comparator
      * returns equal.
      *
@@ -239,8 +239,8 @@ public class ComparatorUtils {
     }
 
     /**
-     * Returns the larger of the given objects according to the given 
-     * comparator, returning the second object if the comparator 
+     * Returns the larger of the given objects according to the given
+     * comparator, returning the second object if the comparator
      * returns equal.
      *
      * @param <E>  the object type to compare
@@ -257,5 +257,5 @@ public class ComparatorUtils {
         final int c = comparator.compare(o1, o2);
         return c > 0 ? o1 : o2;
     }
-    
+
 }

@@ -29,7 +29,7 @@ package org.apache.commons.collections4;
  * Of course all this only works if you use the Unmodifiable classes defined
  * in this library. If you use the JDK unmodifiable class via {@code java.util Collections}
  * then the interface won't be there.
- *  
+ *
  * @since 3.0
  * @version $Id$
  */
