@@ -781,22 +781,22 @@ public class PatriciaTrie<K, V> extends PatriciaTrieBase<K, V> implements Trie<K
        /** 
         * The key to start from, null if the beginning. 
         */
-       protected final K fromKey;
+       private final K fromKey;
        
        /** 
         * The key to end at, null if till the end. 
         */
-       protected final K toKey;
+       private final K toKey;
        
        /** 
         * Whether or not the 'from' is inclusive. 
         */
-       protected final boolean fromInclusive;
+       private final boolean fromInclusive;
        
        /** 
         * Whether or not the 'to' is inclusive. 
         */
-       protected final boolean toInclusive;
+       private final boolean toInclusive;
        
        /**
         * Creates a {@link RangeEntryMap} with the fromKey included and
@@ -1375,12 +1375,12 @@ public class PatriciaTrie<K, V> extends PatriciaTrieBase<K, V> implements Trie<K
         private final class EntryIterator extends TrieIterator<Map.Entry<K, V>> {
             
             // values to reset the subtree if we remove it.
-            protected final K prefix; 
-            protected final int offset;
-            protected final int lengthInBits;
-            protected boolean lastOne;
+            private final K prefix; 
+            private final int offset;
+            private final int lengthInBits;
+            private boolean lastOne;
             
-            protected TrieEntry<K, V> subtree; // the subtree to search within
+            private TrieEntry<K, V> subtree; // the subtree to search within
             
             /**
              * Starts iteration at the given entry & search only 
