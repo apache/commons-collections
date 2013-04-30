@@ -50,7 +50,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
 
     /**
      * Factory method to create a synchronized collection.
-     * 
+     *
      * @param <T> the type of the elements in the collection
      * @param coll  the collection to decorate, must not be null
      * @return a new synchronized collection
@@ -63,7 +63,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param collection  the collection to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
@@ -77,7 +77,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
 
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param collection  the collection to decorate, must not be null
      * @param lock  the lock object to use, must not be null
      * @throws IllegalArgumentException if the collection is null
@@ -92,7 +92,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
 
     /**
      * Gets the collection being decorated.
-     * 
+     *
      * @return the decorated collection
      */
     protected Collection<E> decorated() {
@@ -100,7 +100,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     }
 
     //-----------------------------------------------------------------------
-    
+
     public boolean add(final E object) {
         synchronized (lock) {
             return decorated().add(object);
@@ -144,7 +144,8 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
      *   Iterator it = coll.iterator();
      *   // do stuff with iterator
      * }
-     * 
+     * </pre>
+     *
      * @return an iterator that must be manually synchronized on the collection
      */
     public Iterator<E> iterator() {

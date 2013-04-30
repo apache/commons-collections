@@ -31,7 +31,7 @@ import java.util.Iterator;
  * written for each implementation.
  * <p>
  * This implementation does not perform any special processing with
- * {@link #iterator()}. Instead it simply returns the value from the 
+ * {@link #iterator()}. Instead it simply returns the value from the
  * wrapped collection. This may be undesirable, for example if you are trying
  * to write an unmodifiable implementation it might provide a loophole.
  *
@@ -60,7 +60,7 @@ public abstract class AbstractCollectionDecorator<E>
 
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param coll  the collection to decorate, must not be null
      * @throws IllegalArgumentException if the collection is null
      */
@@ -74,7 +74,7 @@ public abstract class AbstractCollectionDecorator<E>
     /**
      * Gets the collection being decorated.
      * All access to the decorated collection goes via this method.
-     * 
+     *
      * @return the decorated collection
      */
     protected Collection<E> decorated() {
@@ -82,7 +82,7 @@ public abstract class AbstractCollectionDecorator<E>
     }
 
     //-----------------------------------------------------------------------
-    
+
     public boolean add(final E object) {
         return decorated().add(object);
     }

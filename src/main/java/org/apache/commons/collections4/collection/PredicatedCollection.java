@@ -50,7 +50,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * <p>
      * If there are any elements already in the collection being decorated, they
      * are validated.
-     * 
+     *
      * @param <T> the type of the elements in the collection
      * @param coll  the collection to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
@@ -69,7 +69,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * <p>
      * If there are any elements already in the collection being decorated, they
      * are validated.
-     * 
+     *
      * @param coll  the collection to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
      * @throws IllegalArgumentException if collection or predicate is null
@@ -91,7 +91,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * <p>
      * The predicate itself should not throw an exception, but return false to
      * indicate that the object cannot be added.
-     * 
+     *
      * @param object  the object being added
      * @throws IllegalArgumentException if the add is invalid
      */
@@ -106,7 +106,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
     /**
      * Override to validate the object being added to ensure it matches
      * the predicate.
-     * 
+     *
      * @param object  the object being added
      * @return the result of adding to the underlying collection
      * @throws IllegalArgumentException if the add is invalid
@@ -121,7 +121,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * Override to validate the objects being added to ensure they match
      * the predicate. If any one fails, no update is made to the underlying
      * collection.
-     * 
+     *
      * @param coll  the collection being added
      * @return the result of adding to the underlying collection
      * @throws IllegalArgumentException if the add is invalid

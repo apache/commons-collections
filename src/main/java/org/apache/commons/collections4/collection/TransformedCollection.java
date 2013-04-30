@@ -50,7 +50,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * If there are any elements already in the collection being decorated, they
      * are NOT transformed.
      * Contrast this with {@link #transformedCollection(Collection, Transformer)}.
-     * 
+     *
      * @param <E> the type of the elements in the collection
      * @param coll  the collection to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -69,7 +69,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * If there are any elements already in the collection being decorated, they
      * will be transformed by this method.
      * Contrast this with {@link #transformingCollection(Collection, Transformer)}.
-     * 
+     *
      * @param <E> the type of the elements in the collection
      * @param collection  the collection to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -81,7 +81,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
             final Transformer<? super E, ? extends E> transformer) {
 
         final TransformedCollection<E> decorated = new TransformedCollection<E>(collection, transformer);
-        // null collection & transformer are disallowed by the constructor call above 
+        // null collection & transformer are disallowed by the constructor call above
         if (collection.size() > 0) {
             @SuppressWarnings("unchecked") // collection is of type E
             final E[] values = (E[]) collection.toArray(); // NOPMD - false positive for generics
@@ -99,7 +99,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * <p>
      * If there are any elements already in the collection being decorated, they
      * are NOT transformed.
-     * 
+     *
      * @param coll  the collection to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if collection or transformer is null
@@ -116,7 +116,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * Transforms an object.
      * <p>
      * The transformer itself may throw an exception if necessary.
-     * 
+     *
      * @param object  the object to transform
      * @return a transformed object
      */
@@ -128,7 +128,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * Transforms a collection.
      * <p>
      * The transformer itself may throw an exception if necessary.
-     * 
+     *
      * @param coll  the collection to transform
      * @return a transformed object
      */

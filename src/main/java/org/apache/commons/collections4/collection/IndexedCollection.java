@@ -37,7 +37,7 @@ import org.apache.commons.collections4.map.MultiValueMap;
  *
  * @param <K> the type of object in the index.
  * @param <C> the type of object in the collection.
- * 
+ *
  * @since 4.0
  * @version $Id$
  */
@@ -51,7 +51,7 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
 
     /** The map of indexes to collected objects. */
     private final MultiMap<K, C> index;
-    
+
     /** The uniqueness constraint for the index. */
     private final boolean uniqueIndex;
 

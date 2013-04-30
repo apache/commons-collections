@@ -27,7 +27,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  * <p>
- * Attempts to modify it will result in an UnsupportedOperationException. 
+ * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @param <E> the type of the elements in the collection
  * @since 3.0
@@ -44,7 +44,7 @@ public final class UnmodifiableCollection<E>
      * Factory method to create an unmodifiable collection.
      * <p>
      * If the collection passed in is already unmodifiable, it is returned.
-     * 
+     *
      * @param <T> the type of the elements in the collection
      * @param coll  the collection to decorate, must not be null
      * @return an unmodifiable collection
@@ -60,7 +60,7 @@ public final class UnmodifiableCollection<E>
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param coll  the collection to decorate, must not be null
      * @throws IllegalArgumentException if collection is null
      */

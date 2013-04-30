@@ -34,7 +34,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  * <p>
- * Attempts to modify it will result in an UnsupportedOperationException. 
+ * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 3.0
  * @version $Id$
