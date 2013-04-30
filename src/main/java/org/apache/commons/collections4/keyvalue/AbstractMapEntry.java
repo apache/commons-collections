@@ -39,7 +39,7 @@ public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> impl
 
     // Map.Entry interface
     //-------------------------------------------------------------------------
-    /** 
+    /**
      * Sets the value stored in this <code>Map.Entry</code>.
      * <p>
      * This <code>Map.Entry</code> is not connected to a Map, so only the
@@ -48,10 +48,9 @@ public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> impl
      * @param value  the new value
      * @return the previous value
      */
+    @Override
     public V setValue(final V value) {
-        final V answer = this.value;
-        this.value = value;
-        return answer;
+        return super.setValue(value);
     }
 
     /**

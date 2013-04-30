@@ -77,14 +77,13 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
      * @return the old key
      * @throws IllegalArgumentException if key is this object
      */
+    @Override
     public K setKey(final K key) {
         if (key == this) {
             throw new IllegalArgumentException("DefaultKeyValue may not contain itself as a key.");
         }
 
-        final K old = this.key;
-        this.key = key;
-        return old;
+        return super.setKey(key);
     }
 
     /** 
@@ -94,14 +93,13 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
      * @param value the new value
      * @throws IllegalArgumentException if value is this object
      */
+    @Override
     public V setValue(final V value) {
         if (value == this) {
             throw new IllegalArgumentException("DefaultKeyValue may not contain itself as a value.");
         }
 
-        final V old = this.value;
-        this.value = value;
-        return old;
+        return super.setValue(value);
     }
 
     //-----------------------------------------------------------------------

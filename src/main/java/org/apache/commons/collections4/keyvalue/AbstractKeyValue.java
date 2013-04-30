@@ -28,9 +28,9 @@ import org.apache.commons.collections4.KeyValue;
 public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
 
     /** The key */
-    protected K key;
+    private K key;
     /** The value */
-    protected V value;
+    private V value;
 
     /**
      * Constructs a new pair with the specified key and given value.
@@ -53,6 +53,12 @@ public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
         return key;
     }
 
+    protected K setKey(K key) {
+        final K old = this.key;
+        this.key = key;
+        return old;
+    }
+
     /**
      * Gets the value from the pair.
      *
@@ -60,6 +66,12 @@ public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
      */
     public V getValue() {
         return value;
+    }
+
+    protected V setValue(V value) {
+        final V old = this.value;
+        this.value = value;
+        return old;
     }
 
     /**
