@@ -42,7 +42,7 @@ public class HashBag<E> extends AbstractMapBag<E> implements Bag<E>, Serializabl
 
     /** Serial version lock */
     private static final long serialVersionUID = -6561115435802554013L;
-    
+
     /**
      * Constructs an empty {@link HashBag}.
      */
@@ -52,7 +52,7 @@ public class HashBag<E> extends AbstractMapBag<E> implements Bag<E>, Serializabl
 
     /**
      * Constructs a bag containing all the members of the given collection.
-     * 
+     *
      * @param coll  a collection to copy into this bag
      */
     public HashBag(final Collection<? extends E> coll) {
@@ -76,5 +76,5 @@ public class HashBag<E> extends AbstractMapBag<E> implements Bag<E>, Serializabl
         in.defaultReadObject();
         super.doReadObject(new HashMap<E, MutableInteger>(), in);
     }
-    
+
 }

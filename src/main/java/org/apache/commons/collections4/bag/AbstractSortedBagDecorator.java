@@ -44,7 +44,7 @@ public abstract class AbstractSortedBagDecorator<E>
 
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param bag  the bag to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
@@ -54,7 +54,7 @@ public abstract class AbstractSortedBagDecorator<E>
 
     /**
      * Gets the bag being decorated.
-     * 
+     *
      * @return the decorated bag
      */
     @Override
@@ -63,7 +63,7 @@ public abstract class AbstractSortedBagDecorator<E>
     }
 
     //-----------------------------------------------------------------------
-    
+
     public E first() {
         return decorated().first();
     }

@@ -56,7 +56,7 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
     /**
      * Constructs an empty bag that maintains order on its unique representative
      * members according to the given {@link Comparator}.
-     * 
+     *
      * @param comparator the comparator to use
      */
     public TreeBag(final Comparator<? super E> comparator) {
@@ -66,7 +66,7 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
     /**
      * Constructs a {@link TreeBag} containing all the members of the
      * specified collection.
-     * 
+     *
      * @param coll the collection to copy into the bag
      */
     public TreeBag(final Collection<? extends E> coll) {
@@ -77,21 +77,21 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
     //-----------------------------------------------------------------------
     /**
      * {@inheritDoc}
-     * 
+     *
      * @throws IllegalArgumentException if the object to be added does not implement
      * {@link Comparable} and the {@link TreeBag} is using natural ordering
      */
     @Override
     public boolean add(final E object) {
         if(comparator() == null && !(object instanceof Comparable)) {
-            throw new IllegalArgumentException("Objects of type " + object.getClass() + " cannot be added to " + 
+            throw new IllegalArgumentException("Objects of type " + object.getClass() + " cannot be added to " +
                                                "a naturally ordered TreeBag as it does not implement Comparable");
         }
         return super.add(object);
     }
 
     //-----------------------------------------------------------------------
-    
+
     public E first() {
         return getMap().firstKey();
     }

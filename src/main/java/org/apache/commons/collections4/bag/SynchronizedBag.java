@@ -40,7 +40,7 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
 
     /**
      * Factory method to create a synchronized bag.
-     * 
+     *
      * @param <E> the type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @return a new synchronized Bag
@@ -49,11 +49,11 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
     public static <E> SynchronizedBag<E> synchronizedBag(final Bag<E> bag) {
         return new SynchronizedBag<E>(bag);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param bag  the bag to decorate, must not be null
      * @throws IllegalArgumentException if bag is null
      */
@@ -63,7 +63,7 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
 
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param bag  the bag to decorate, must not be null
      * @param lock  the lock to use, must not be null
      * @throws IllegalArgumentException if bag is null
@@ -74,15 +74,15 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
 
     /**
      * Gets the bag being decorated.
-     * 
+     *
      * @return the decorated bag
      */
     protected Bag<E> getBag() {
         return (Bag<E>) decorated();
     }
-    
+
     //-----------------------------------------------------------------------
-    
+
     public boolean add(final E object, final int count) {
         synchronized (lock) {
             return getBag().add(object, count);
@@ -107,7 +107,7 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
             return getBag().getCount(object);
         }
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Synchronized Set for the Bag class.

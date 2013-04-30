@@ -45,7 +45,7 @@ public abstract class AbstractBagDecorator<E>
 
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param bag  the bag to decorate, must not be null
      * @throws IllegalArgumentException if list is null
      */
@@ -55,7 +55,7 @@ public abstract class AbstractBagDecorator<E>
 
     /**
      * Gets the bag being decorated.
-     * 
+     *
      * @return the decorated bag
      */
     @Override
@@ -64,7 +64,7 @@ public abstract class AbstractBagDecorator<E>
     }
 
     //-----------------------------------------------------------------------
-    
+
     public int getCount(final Object object) {
         return decorated().getCount(object);
     }

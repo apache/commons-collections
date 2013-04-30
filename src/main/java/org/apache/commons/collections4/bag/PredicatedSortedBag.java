@@ -47,7 +47,7 @@ public class PredicatedSortedBag<E> extends PredicatedBag<E> implements SortedBa
      * <p>
      * If there are any elements already in the bag being decorated, they
      * are validated.
-     * 
+     *
      * @param <E> the type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
@@ -65,7 +65,7 @@ public class PredicatedSortedBag<E> extends PredicatedBag<E> implements SortedBa
      * Constructor that wraps (not copies).
      * <p>If there are any elements already in the bag being decorated, they
      * are validated.
-     * 
+     *
      * @param bag  the bag to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
      * @throws IllegalArgumentException if bag or predicate is null
@@ -77,16 +77,16 @@ public class PredicatedSortedBag<E> extends PredicatedBag<E> implements SortedBa
 
     /**
      * Gets the decorated sorted bag.
-     * 
+     *
      * @return the decorated bag
      */
     @Override
     protected SortedBag<E> decorated() {
         return (SortedBag<E>) super.decorated();
     }
-    
+
     //-----------------------------------------------------------------------
-    
+
     public E first() {
         return decorated().first();
     }

@@ -48,7 +48,7 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
      * <p>
      * If there are any elements already in the bag being decorated, they
      * are validated.
-     * 
+     *
      * @param <E> the type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
@@ -66,7 +66,7 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
      * <p>
      * If there are any elements already in the bag being decorated, they
      * are validated.
-     * 
+     *
      * @param bag  the bag to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
      * @throws IllegalArgumentException if bag or predicate is null
@@ -78,16 +78,16 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
 
     /**
      * Gets the decorated bag.
-     * 
+     *
      * @return the decorated bag
      */
     @Override
     protected Bag<E> decorated() {
         return (Bag<E>) super.decorated();
     }
-    
+
     //-----------------------------------------------------------------------
-    
+
     public boolean add(final E object, final int count) {
         validate(object);
         return decorated().add(object, count);

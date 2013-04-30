@@ -40,7 +40,7 @@ public class SynchronizedSortedBag<E> extends SynchronizedBag<E> implements Sort
 
     /**
      * Factory method to create a synchronized sorted bag.
-     * 
+     *
      * @param <E> the type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @return a new synchronized SortedBag
@@ -49,11 +49,11 @@ public class SynchronizedSortedBag<E> extends SynchronizedBag<E> implements Sort
     public static <E> SynchronizedSortedBag<E> synchronizedSortedBag(final SortedBag<E> bag) {
         return new SynchronizedSortedBag<E>(bag);
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param bag  the bag to decorate, must not be null
      * @throws IllegalArgumentException if bag is null
      */
@@ -63,7 +63,7 @@ public class SynchronizedSortedBag<E> extends SynchronizedBag<E> implements Sort
 
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param bag  the bag to decorate, must not be null
      * @param lock  the lock to use, must not be null
      * @throws IllegalArgumentException if bag is null
@@ -74,15 +74,15 @@ public class SynchronizedSortedBag<E> extends SynchronizedBag<E> implements Sort
 
     /**
      * Gets the bag being decorated.
-     * 
+     *
      * @return the decorated bag
      */
     protected SortedBag<E> getSortedBag() {
         return (SortedBag<E>) decorated();
     }
-    
+
     //-----------------------------------------------------------------------
-    
+
     public synchronized E first() {
         synchronized (lock) {
             return getSortedBag().first();

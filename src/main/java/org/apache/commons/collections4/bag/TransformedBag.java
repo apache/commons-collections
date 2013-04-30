@@ -46,7 +46,7 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
      * <p>
      * If there are any elements already in the bag being decorated, they
      * are NOT transformed. Contrast this with {@link #transformedBag(Bag, Transformer)}.
-     * 
+     *
      * @param <E> the type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -56,7 +56,7 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
     public static <E> Bag<E> transformingBag(final Bag<E> bag, final Transformer<? super E, ? extends E> transformer) {
         return new TransformedBag<E>(bag, transformer);
     }
-    
+
     /**
      * Factory method to create a transforming bag that will transform
      * existing contents of the specified bag.
@@ -64,7 +64,7 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
      * If there are any elements already in the bag being decorated, they
      * will be transformed by this method.
      * Contrast this with {@link #transformingBag(Bag, Transformer)}.
-     * 
+     *
      * @param <E> the type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -91,7 +91,7 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
      * <p>
      * If there are any elements already in the bag being decorated, they
      * are NOT transformed.
-     * 
+     *
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if bag or transformer is null
@@ -102,7 +102,7 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
 
     /**
      * Gets the decorated bag.
-     * 
+     *
      * @return the decorated bag
      */
     protected Bag<E> getBag() {
@@ -110,7 +110,7 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
     }
 
     //-----------------------------------------------------------------------
-    
+
     public int getCount(final Object object) {
         return getBag().getCount(object);
     }
@@ -120,7 +120,7 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
     }
 
     //-----------------------------------------------------------------------
-    
+
     public boolean add(final E object, final int nCopies) {
         return getBag().add(transform(object), nCopies);
     }

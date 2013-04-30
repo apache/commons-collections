@@ -34,7 +34,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  * <p>
- * Attempts to modify it will result in an UnsupportedOperationException. 
+ * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 3.0
  * @version $Id$
@@ -49,7 +49,7 @@ public final class UnmodifiableSortedBag<E>
      * Factory method to create an unmodifiable bag.
      * <p>
      * If the bag passed in is already unmodifiable, it is returned.
-     * 
+     *
      * @param <E> the type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @return an unmodifiable SortedBag
@@ -65,7 +65,7 @@ public final class UnmodifiableSortedBag<E>
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param bag  the bag to decorate, must not be null
      * @throws IllegalArgumentException if bag is null
      */
@@ -76,7 +76,7 @@ public final class UnmodifiableSortedBag<E>
     //-----------------------------------------------------------------------
     /**
      * Write the collection out using a custom routine.
-     * 
+     *
      * @param out  the output stream
      * @throws IOException
      */
@@ -87,7 +87,7 @@ public final class UnmodifiableSortedBag<E>
 
     /**
      * Read the collection in using a custom routine.
-     * 
+     *
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException

@@ -44,7 +44,7 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
      * <p>
      * If there are any elements already in the bag being decorated, they
      * are NOT transformed. Contrast this with {@link #transformedSortedBag(SortedBag, Transformer)}.
-     * 
+     *
      * @param <E> the type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -55,7 +55,7 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
             final Transformer<? super E, ? extends E> transformer) {
         return new TransformedSortedBag<E>(bag, transformer);
     }
-    
+
     /**
      * Factory method to create a transforming sorted bag that will transform
      * existing contents of the specified sorted bag.
@@ -63,7 +63,7 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
      * If there are any elements already in the bag being decorated, they
      * will be transformed by this method.
      * Contrast this with {@link #transformingSortedBag(SortedBag, Transformer)}.
-     * 
+     *
      * @param <E> the type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -92,7 +92,7 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
      * <p>
      * If there are any elements already in the bag being decorated, they
      * are NOT transformed.
-     * 
+     *
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if bag or transformer is null
@@ -103,7 +103,7 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
 
     /**
      * Gets the decorated bag.
-     * 
+     *
      * @return the decorated bag
      */
     protected SortedBag<E> getSortedBag() {
@@ -111,7 +111,7 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
     }
 
     //-----------------------------------------------------------------------
-    
+
     public E first() {
         return getSortedBag().first();
     }
