@@ -884,7 +884,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
     static abstract class EntryIterator<K, V> {
         private final Flat3Map<K, V> parent;
         private int nextIndex = 0;
-        protected FlatMapEntry<K, V> currentEntry = null;
+        private FlatMapEntry<K, V> currentEntry = null;
 
         /**
          * Create a new Flat3Map.EntryIterator.
