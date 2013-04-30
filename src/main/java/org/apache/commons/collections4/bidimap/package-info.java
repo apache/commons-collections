@@ -17,7 +17,7 @@
 /**
  * This package contains implementations of the
  * {@link org.apache.commons.collections4.BidiMap BidiMap},
- * {@link org.apache.commons.collections4.OrderedBidiMap OrderedBidiMap} and 
+ * {@link org.apache.commons.collections4.OrderedBidiMap OrderedBidiMap} and
  * {@link org.apache.commons.collections4.SortedBidiMap SortedBidiMap} interfaces.
  * A BidiMap is an extension to Map that allows keys and values to be looked up with equal ease.
  * One example usage is a system communicating to a legacy datasource that must convert codes

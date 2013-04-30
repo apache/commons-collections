@@ -31,7 +31,7 @@ import org.apache.commons.collections4.map.UnmodifiableEntrySet;
 /**
  * Decorates another {@link BidiMap} to ensure it can't be altered.
  * <p>
- * Attempts to modify it will result in an UnsupportedOperationException. 
+ * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 3.0
  * @version $Id$

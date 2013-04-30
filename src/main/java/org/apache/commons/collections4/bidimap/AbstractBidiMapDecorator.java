@@ -20,7 +20,7 @@ import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.map.AbstractMapDecorator;
 
-/** 
+/**
  * Provides a base decorator that enables additional functionality to be added
  * to a BidiMap via decoration.
  * <p>
@@ -50,7 +50,7 @@ public abstract class AbstractBidiMapDecorator<K, V>
 
     /**
      * Gets the map being decorated.
-     * 
+     *
      * @return the decorated map
      */
     @Override

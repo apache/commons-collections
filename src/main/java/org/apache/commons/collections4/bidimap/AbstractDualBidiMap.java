@@ -132,7 +132,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
     // Map delegation
     //-----------------------------------------------------------------------
-    
+
     public V get(final Object key) {
         return normalMap.get(key);
     }
@@ -166,7 +166,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
     // BidiMap changes
     //-----------------------------------------------------------------------
-    
+
     public V put(final K key, final V value) {
         if (normalMap.containsKey(key)) {
             reverseMap.remove(normalMap.get(key));
@@ -359,7 +359,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 
         /**
          * {@inheritDoc}
-         * <p> 
+         * <p>
          * This implementation iterates over the elements of this bidi map, checking each element in
          * turn to see if it's contained in <code>coll</code>. If it's not contained, it's removed
          * from this bidi map. As a consequence, it is advised to use a collection type for

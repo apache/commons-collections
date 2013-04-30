@@ -82,7 +82,7 @@ public class DualLinkedHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> imple
             final BidiMap<K, V> inverseBidiMap) {
         return new DualLinkedHashBidiMap<V, K>(normalMap, reverseMap, inverseBidiMap);
     }
-    
+
     // Serialization
     //-----------------------------------------------------------------------
     private void writeObject(final ObjectOutputStream out) throws IOException {

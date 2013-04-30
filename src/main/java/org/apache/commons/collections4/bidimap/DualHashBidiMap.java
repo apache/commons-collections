@@ -51,9 +51,9 @@ public class DualHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements 
         super(new HashMap<K, V>(), new HashMap<V, K>());
     }
 
-    /** 
+    /**
      * Constructs a <code>HashBidiMap</code> and copies the mappings from
-     * specified <code>Map</code>.  
+     * specified <code>Map</code>.
      *
      * @param map  the map whose mappings are to be placed in this map
      */
@@ -61,8 +61,8 @@ public class DualHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements 
         super(new HashMap<K, V>(), new HashMap<V, K>());
         putAll(map);
     }
-    
-    /** 
+
+    /**
      * Constructs a <code>HashBidiMap</code> that decorates the specified maps.
      *
      * @param normalMap  the normal direction map
@@ -76,7 +76,7 @@ public class DualHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements 
 
     /**
      * Creates a new instance of this object.
-     * 
+     *
      * @param normalMap  the normal direction map
      * @param reverseMap  the reverse direction map
      * @param inverseBidiMap  the inverse BidiMap

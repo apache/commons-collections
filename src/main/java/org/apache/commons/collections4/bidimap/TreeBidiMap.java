@@ -86,7 +86,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
 
         /**
          * Create a new TreeBidiMap.DataElement.
-         * 
+         *
          * @param description  the description for the element
          */
         private DataElement(final String description) {
@@ -1436,7 +1436,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             stream.writeObject(entry.getValue());
         }
     }
-    
+
     //-----------------------------------------------------------------------
     /**
      * A view of this map.

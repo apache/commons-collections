@@ -19,7 +19,7 @@ package org.apache.commons.collections4.bidimap;
 import org.apache.commons.collections4.OrderedBidiMap;
 import org.apache.commons.collections4.OrderedMapIterator;
 
-/** 
+/**
  * Provides a base decorator that enables additional functionality to be added
  * to an OrderedBidiMap via decoration.
  * <p>
@@ -50,7 +50,7 @@ public abstract class AbstractOrderedBidiMapDecorator<K, V>
 
     /**
      * Gets the map being decorated.
-     * 
+     *
      * @return the decorated map
      */
     @Override

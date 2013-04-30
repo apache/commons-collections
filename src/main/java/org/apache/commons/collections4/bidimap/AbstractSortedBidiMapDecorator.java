@@ -21,7 +21,7 @@ import java.util.SortedMap;
 
 import org.apache.commons.collections4.SortedBidiMap;
 
-/** 
+/**
  * Provides a base decorator that enables additional functionality to be added
  * to a SortedBidiMap via decoration.
  * <p>
@@ -51,7 +51,7 @@ public abstract class AbstractSortedBidiMapDecorator<K, V>
 
     /**
      * Gets the map being decorated.
-     * 
+     *
      * @return the decorated map
      */
     @Override

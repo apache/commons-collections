@@ -63,7 +63,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
 
     /** The value comparator to use */
     private final Comparator<? super V> valueComparator;
-    
+
     /**
      * Creates an empty <code>DualTreeBidiMap</code>
      */
@@ -127,14 +127,13 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
     }
 
     //-----------------------------------------------------------------------
-    
+
     public Comparator<? super K> comparator() {
         return ((SortedMap<K, V>) normalMap).comparator();
     }
 
     public Comparator<? super V> valueComparator() {
         return ((SortedMap<V, K>) reverseMap).comparator();
-        
     }
 
     public K firstKey() {
@@ -199,7 +198,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
     }
 
     //-----------------------------------------------------------------------
-    
+
     public SortedMap<K, V> headMap(final K toKey) {
         final SortedMap<K, V> sub = ((SortedMap<K, V>) normalMap).headMap(toKey);
         return new ViewMap<K, V>(this, sub);

@@ -33,7 +33,7 @@ import org.apache.commons.collections4.map.UnmodifiableSortedMap;
 /**
  * Decorates another {@link SortedBidiMap} to ensure it can't be altered.
  * <p>
- * Attempts to modify it will result in an {@link UnsupportedOperationException}. 
+ * Attempts to modify it will result in an {@link UnsupportedOperationException}.
  *
  * @since 3.0
  * @version $Id$
