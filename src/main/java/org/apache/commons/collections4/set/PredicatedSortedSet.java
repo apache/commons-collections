@@ -47,7 +47,7 @@ public class PredicatedSortedSet<E> extends PredicatedSet<E> implements SortedSe
      * <p>
      * If there are any elements already in the set being decorated, they
      * are validated.
-     * 
+     *
      * @param <E> the element type
      * @param set  the set to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
@@ -66,7 +66,7 @@ public class PredicatedSortedSet<E> extends PredicatedSet<E> implements SortedSe
      * <p>
      * If there are any elements already in the set being decorated, they
      * are validated.
-     * 
+     *
      * @param set  the set to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
      * @throws IllegalArgumentException if set or predicate is null
@@ -78,7 +78,7 @@ public class PredicatedSortedSet<E> extends PredicatedSet<E> implements SortedSe
 
     /**
      * Gets the sorted set being decorated.
-     * 
+     *
      * @return the decorated sorted set
      */
     @Override

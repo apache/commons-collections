@@ -48,7 +48,7 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
 
     /**
      * Factory method to create a set from a map.
-     * 
+     *
      * @param <E> the element type
      * @param <V> the dummy value type in the map
      * @param map  the map to decorate, must not be null
@@ -61,7 +61,7 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
 
     /**
      * Factory method to create a set from a map.
-     * 
+     *
      * @param <E> the element type
      * @param <V> the dummy value type in the map
      * @param map  the map to decorate, must not be null
@@ -79,7 +79,7 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param map  the map to decorate, must not be null
      * @param dummyValue  the dummy value to use
      * @throws IllegalArgumentException if map is null

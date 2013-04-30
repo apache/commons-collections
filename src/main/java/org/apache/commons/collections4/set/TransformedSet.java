@@ -45,7 +45,7 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
      * If there are any elements already in the set being decorated, they
      * are NOT transformed.
      * Contrast this with {@link #transformedSet(Set, Transformer)}.
-     * 
+     *
      * @param <E> the element type
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -56,7 +56,7 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
             final Transformer<? super E, ? extends E> transformer) {
         return new TransformedSet<E>(set, transformer);
     }
-    
+
     /**
      * Factory method to create a transforming set that will transform
      * existing contents of the specified set.
@@ -64,7 +64,7 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
      * If there are any elements already in the set being decorated, they
      * will be transformed by this method.
      * Contrast this with {@link #transformingSet(Set, Transformer)}.
-     * 
+     *
      * @param <E> the element type
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -91,7 +91,7 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
      * <p>
      * If there are any elements already in the set being decorated, they
      * are NOT transformed.
-     * 
+     *
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if set or transformer is null

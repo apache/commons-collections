@@ -28,7 +28,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  * <p>
- * Attempts to modify it will result in an UnsupportedOperationException. 
+ * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 3.0
  * @version $Id$
@@ -42,7 +42,7 @@ public final class UnmodifiableSet<E>
 
     /**
      * Factory method to create an unmodifiable set.
-     * 
+     *
      * @param <E> the element type
      * @param set  the set to decorate, must not be null
      * @return a new unmodifiable set
@@ -58,7 +58,7 @@ public final class UnmodifiableSet<E>
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */

@@ -32,7 +32,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  * <p>
- * Attempts to modify it will result in an UnsupportedOperationException. 
+ * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 3.0
  * @version $Id$
@@ -46,7 +46,7 @@ public final class UnmodifiableSortedSet<E>
 
     /**
      * Factory method to create an unmodifiable set.
-     * 
+     *
      * @param <E> the element type
      * @param set  the set to decorate, must not be null
      * @return a new unmodifiable {@link SortedSet}
@@ -62,7 +62,7 @@ public final class UnmodifiableSortedSet<E>
     //-----------------------------------------------------------------------
     /**
      * Write the collection out using a custom routine.
-     * 
+     *
      * @param out  the output stream
      * @throws IOException
      */
@@ -73,12 +73,12 @@ public final class UnmodifiableSortedSet<E>
 
     /**
      * Read the collection in using a custom routine.
-     * 
+     *
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect 
+    @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         collection = (Collection<E>) in.readObject(); // (1)
@@ -87,7 +87,7 @@ public final class UnmodifiableSortedSet<E>
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */

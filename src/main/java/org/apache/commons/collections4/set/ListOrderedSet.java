@@ -46,7 +46,7 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * set.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
- * 
+ *
  * @since 3.0
  * @version $Id$
  */
@@ -65,7 +65,7 @@ public class ListOrderedSet<E>
      * use.
      * <p>
      * The list and set must both be empty.
-     * 
+     *
      * @param <E> the element type
      * @param set the set to decorate, must be empty and not null
      * @param list the list to decorate, must be empty and not null
@@ -91,7 +91,7 @@ public class ListOrderedSet<E>
      * Factory method to create an ordered set.
      * <p>
      * An <code>ArrayList</code> is used to retain order.
-     * 
+     *
      * @param <E> the element type
      * @param set the set to decorate, must not be null
      * @return a new ordered set
@@ -109,7 +109,7 @@ public class ListOrderedSet<E>
      * <p>
      * NOTE: If the list contains duplicates, the duplicates are removed,
      * altering the specified list.
-     * 
+     *
      * @param <E> the element type
      * @param list the list to decorate, must not be null
      * @return a new ordered set
@@ -129,7 +129,7 @@ public class ListOrderedSet<E>
     /**
      * Constructs a new empty <code>ListOrderedSet</code> using a
      * <code>HashSet</code> and an <code>ArrayList</code> internally.
-     * 
+     *
      * @since 3.1
      */
     public ListOrderedSet() {
@@ -139,7 +139,7 @@ public class ListOrderedSet<E>
 
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param set the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
@@ -153,7 +153,7 @@ public class ListOrderedSet<E>
      * use.
      * <p>
      * The set and list must both be correctly initialised to the same elements.
-     * 
+     *
      * @param set the set to decorate, must not be null
      * @param list the list to decorate, must not be null
      * @throws IllegalArgumentException if set or list is null
@@ -169,7 +169,7 @@ public class ListOrderedSet<E>
     // -----------------------------------------------------------------------
     /**
      * Gets an unmodifiable view of the order of the Set.
-     * 
+     *
      * @return an unmodifiable list view
      */
     public List<E> asList() {
@@ -263,7 +263,7 @@ public class ListOrderedSet<E>
 
     /**
      * Returns the element at the specified position in this ordered set.
-     * 
+     *
      * @param index the position of the element in the ordered {@link Set}.
      * @return the element at position {@code index}
      * @see List#get(int)
@@ -275,7 +275,7 @@ public class ListOrderedSet<E>
     /**
      * Returns the index of the first occurrence of the specified element in
      * ordered set.
-     * 
+     *
      * @param object the element to search for
      * @return the index of the first occurrence of the object, or {@code -1} if
      *         this ordered set does not contain this object
@@ -289,7 +289,7 @@ public class ListOrderedSet<E>
      * Inserts the specified element at the specified position if it is not yet
      * contained in this ordered set (optional operation). Shifts the element
      * currently at this position and any subsequent elements to the right.
-     * 
+     *
      * @param index the index at which the element is to be inserted
      * @param object the element to be inserted
      * @see List#add(int, Object)
@@ -306,7 +306,7 @@ public class ListOrderedSet<E>
      * ordered set at the specified position (optional operation). Shifts the
      * element currently at the position and all subsequent elements to the
      * right.
-     * 
+     *
      * @param index the position to insert the elements
      * @param coll the collection containing the elements to be inserted
      * @return {@code true} if this ordered set changed as a result of the call
@@ -335,7 +335,7 @@ public class ListOrderedSet<E>
     /**
      * Removes the element at the specified position from the ordered set.
      * Shifts any subsequent elements to the left.
-     * 
+     *
      * @param index the index of the element to be removed
      * @return the element that has been remove from the ordered set
      * @see List#remove(int)
@@ -350,7 +350,7 @@ public class ListOrderedSet<E>
      * Uses the underlying List's toString so that order is achieved. This means
      * that the decorated Set's toString is not used, so any custom toStrings
      * will be ignored.
-     * 
+     *
      * @return a string representation of the ordered set
      */
     // Fortunately List.toString and Set.toString look the same

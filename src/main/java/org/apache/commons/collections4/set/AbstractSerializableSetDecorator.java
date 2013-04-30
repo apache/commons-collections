@@ -38,7 +38,7 @@ public abstract class AbstractSerializableSetDecorator<E>
 
     /**
      * Constructor.
-     * 
+     *
      * @param set  the list to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
@@ -49,7 +49,7 @@ public abstract class AbstractSerializableSetDecorator<E>
     //-----------------------------------------------------------------------
     /**
      * Write the set out using a custom routine.
-     * 
+     *
      * @param out  the output stream
      * @throws IOException
      */
@@ -60,7 +60,7 @@ public abstract class AbstractSerializableSetDecorator<E>
 
     /**
      * Read the set in using a custom routine.
-     * 
+     *
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException

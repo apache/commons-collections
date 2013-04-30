@@ -45,7 +45,7 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      * If there are any elements already in the set being decorated, they
      * are NOT transformed.
      * Contrast this with {@link #transformedSortedSet(SortedSet, Transformer)}.
-     * 
+     *
      * @param <E> the element type
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -56,7 +56,7 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
             final Transformer<? super E, ? extends E> transformer) {
         return new TransformedSortedSet<E>(set, transformer);
     }
-    
+
     /**
      * Factory method to create a transforming sorted set that will transform
      * existing contents of the specified sorted set.
@@ -64,7 +64,7 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      * If there are any elements already in the set being decorated, they
      * will be transformed by this method.
      * Contrast this with {@link #transformingSortedSet(SortedSet, Transformer)}.
-     * 
+     *
      * @param <E> the element type
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
@@ -93,7 +93,7 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      * <p>
      * If there are any elements already in the set being decorated, they
      * are NOT transformed.
-     * 
+     *
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @throws IllegalArgumentException if set or transformer is null
@@ -104,7 +104,7 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
 
     /**
      * Gets the decorated set.
-     * 
+     *
      * @return the decorated set
      */
     protected SortedSet<E> getSortedSet() {

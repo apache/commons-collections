@@ -46,7 +46,7 @@ public abstract class AbstractSortedSetDecorator<E>
 
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
@@ -56,7 +56,7 @@ public abstract class AbstractSortedSetDecorator<E>
 
     /**
      * Gets the set being decorated.
-     * 
+     *
      * @return the decorated set
      */
     @Override

@@ -43,7 +43,7 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * anymore due to its input restrictions (only accepts Sets).
  * See <a href="https://issues.apache.org/jira/browse/COLLECTIONS-424">COLLECTIONS-424</a>
  * for more details.
- * 
+ *
  * @since 3.0
  * @version $Id$
  */
@@ -77,7 +77,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
 
     /**
      * Create a composite set with sets as the initial set of composited Sets.
-     * 
+     *
      * @param sets  the initial sets in the composite
      */
     public CompositeSet(final Set<E>... sets) {
