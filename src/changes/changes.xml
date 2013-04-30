@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-458" dev="tn" type="delete">
+      AbstractUntypedCollectionDecorator<E, D>  is not used.
+    </action>
     <action issue="COLLECTIONS-456" dev="tn" type="add">
       Added method "ListUtils#longestCommonSubsequence(List, List)".
     </action>
