@@ -34,12 +34,12 @@ import java.util.List;
  * commands} come from the first sequence. This can be important if subclassing
  * is used for some elements in the first sequence and the <code>equals</code>
  * method is specialized.
- * 
+ *
  * @see SequencesComparator
  * @see EditCommand
  * @see CommandVisitor
  * @see ReplacementsHandler
- * 
+ *
  * @since 4.0
  * @version $Id$
  */
@@ -65,7 +65,7 @@ public class EditScript<T> {
 
     /**
      * Add a keep command to the script.
-     * 
+     *
      * @param command  command to add
      */
     public void append(final KeepCommand<T> command) {
@@ -75,7 +75,7 @@ public class EditScript<T> {
 
     /**
      * Add an insert command to the script.
-     * 
+     *
      * @param command  command to add
      */
     public void append(final InsertCommand<T> command) {
@@ -85,7 +85,7 @@ public class EditScript<T> {
 
     /**
      * Add a delete command to the script.
-     * 
+     *
      * @param command  command to add
      */
     public void append(final DeleteCommand<T> command) {
@@ -99,7 +99,7 @@ public class EditScript<T> {
      * own visitor, the script will be responsible to drive it through the
      * commands in order and call the appropriate method as each command is
      * encountered.
-     * 
+     *
      * @param visitor  the visitor that will visit all commands in turn
      */
     public void visit(final CommandVisitor<T> visitor) {
@@ -112,7 +112,7 @@ public class EditScript<T> {
      * Get the length of the Longest Common Subsequence (LCS). The length of the
      * longest common subsequence is the number of {@link KeepCommand keep
      * commands} in the script.
-     * 
+     *
      * @return length of the Longest Common Subsequence
      */
     public int getLCSLength() {
@@ -123,7 +123,7 @@ public class EditScript<T> {
      * Get the number of effective modifications. The number of effective
      * modification is the number of {@link DeleteCommand delete} and
      * {@link InsertCommand insert} commands in the script.
-     * 
+     *
      * @return number of effective modifications
      */
     public int getModifications() {

@@ -48,11 +48,11 @@ import org.apache.commons.collections4.functors.Equator;
  * containing all the
  * {@link EditCommand commands}
  * needed to transform the first sequence into the second one.
- * 
+ *
  * @see EditScript
  * @see EditCommand
  * @see CommandVisitor
- * 
+ *
  * @since 4.0
  * @version $Id$
  */
@@ -81,7 +81,7 @@ public class SequencesComparator<T> {
      * sequence and <code>o2</code> belongs to the second sequence. This can be
      * important if subclassing is used for some elements in the first sequence
      * and the <code>equals</code> method is specialized.
-     * 
+     *
      * @param sequence1  first sequence to be compared
      * @param sequence2  second sequence to be compared
      */
@@ -97,7 +97,7 @@ public class SequencesComparator<T> {
      * It is <em>guaranteed</em> that the comparisons will always be done as
      * <code>Equator.equate(o1, o2)</code> where <code>o1</code> belongs to the first
      * sequence and <code>o2</code> belongs to the second sequence.
-     * 
+     *
      * @param sequence1  first sequence to be compared
      * @param sequence2  second sequence to be compared
      * @param equator  the equator to use for testing object equality
@@ -121,7 +121,7 @@ public class SequencesComparator<T> {
      * {@link KeepCommand keep commands} come from the first sequence. This can
      * be important if subclassing is used for some elements in the first
      * sequence and the <code>equals</code> method is specialized.
-     * 
+     *
      * @return the edit script resulting from the comparison of the two
      *         sequences
      */
@@ -150,13 +150,13 @@ public class SequencesComparator<T> {
         return new Snake(start, end, diag);
     }
 
-    /** 
+    /**
      * Get the middle snake corresponding to two subsequences of the
      * main sequences.
      * <p>
      * The snake is found using the MYERS Algorithm (this algorithms has
      * also been implemented in the GNU diff program). This algorithm is
-     * explained in Eugene Myers article: 
+     * explained in Eugene Myers article:
      * <a href="http://www.cs.arizona.edu/people/gene/PAPERS/diff.ps">
      * An O(ND) Difference Algorithm and Its Variations</a>.
      *
@@ -311,7 +311,7 @@ public class SequencesComparator<T> {
          * @param start  start index of the snake
          * @param end  end index of the snake
          * @param diag  diagonal number
-         */ 
+         */
         public Snake(final int start, final int end, final int diag) {
             this.start = start;
             this.end   = end;
@@ -340,7 +340,7 @@ public class SequencesComparator<T> {
          * Get the diagonal number of the snake.
          *
          * @return diagonal number of the snake
-         */  
+         */
         public int getDiag() {
             return diag;
         }

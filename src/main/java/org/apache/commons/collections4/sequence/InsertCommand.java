@@ -24,10 +24,10 @@ package org.apache.commons.collections4.sequence;
  * transforming the first sequence into the second sequence uses an instance of
  * this class to represent the insertion of this object. The objects embedded in
  * these type of commands always come from the second sequence.
- * 
+ *
  * @see SequencesComparator
  * @see EditScript
- * 
+ *
  * @since 4.0
  * @version $Id$
  */
@@ -35,7 +35,7 @@ public class InsertCommand<T> extends EditCommand<T> {
 
     /**
      * Simple constructor. Creates a new instance of InsertCommand
-     * 
+     *
      * @param object  the object of the second sequence that should be inserted
      */
     public InsertCommand(final T object) {
@@ -46,7 +46,7 @@ public class InsertCommand<T> extends EditCommand<T> {
      * Accept a visitor. When an <code>InsertCommand</code> accepts a visitor,
      * it calls its {@link CommandVisitor#visitInsertCommand visitInsertCommand}
      * method.
-     * 
+     *
      * @param visitor  the visitor to be accepted
      */
     @Override

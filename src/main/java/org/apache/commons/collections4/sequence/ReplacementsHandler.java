@@ -20,7 +20,7 @@ import java.util.List;
 
 /**
  * This interface is devoted to handle synchronized replacement sequences.
- * 
+ *
  * @see ReplacementsFinder
  * @since 4.0
  * @version $Id$
@@ -39,7 +39,7 @@ public interface ReplacementsHandler<T> {
      * <p>
      * The replacement is defined as replacing the <code>from</code>
      * sub-sequence into the <code>to</code> sub-sequence.
-     * 
+     *
      * @param skipped  number of tokens skipped since the last call (i.e. number of
      *   tokens that were in both sequences), this number should be strictly positive
      *   except on the very first call where it can be zero (if the first object of

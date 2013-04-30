@@ -38,10 +38,10 @@ package org.apache.commons.collections4.sequence;
  * the object passed as an argument comes from the second sequence) ; this can
  * be important if subclassing is used for some elements in the first sequence
  * and the <code>equals</code> method is specialized.
- * 
+ *
  * @see SequencesComparator
  * @see EditScript
- * 
+ *
  * @since 4.0
  * @version $Id$
  */
@@ -52,7 +52,7 @@ public abstract class EditCommand<T> {
 
     /**
      * Simple constructor. Creates a new instance of EditCommand
-     * 
+     *
      * @param object  reference to the object associated with this command, this
      *   refers to an element of one of the sequences being compared
      */
@@ -74,7 +74,7 @@ public abstract class EditCommand<T> {
      * <p>
      * This method is invoked for each commands belonging to
      * an {@link EditScript EditScript}, in order to implement the visitor design pattern
-     * 
+     *
      * @param visitor  the visitor to be accepted
      */
     public abstract void accept(CommandVisitor<T> visitor);

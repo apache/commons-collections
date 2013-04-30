@@ -40,11 +40,11 @@ import java.util.List;
  * {@link CommandVisitor CommandVisitor} interface) and calls a user-supplied
  * handler implementing the {@link ReplacementsHandler ReplacementsHandler}
  * interface to process the sub-sequences.
- * 
+ *
  * @see ReplacementsHandler
  * @see EditScript
  * @see SequencesComparator
- * 
+ *
  * @since 4.0
  * @version $Id$
  */
