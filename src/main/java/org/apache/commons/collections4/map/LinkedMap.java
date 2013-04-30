@@ -208,7 +208,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
      */
     static class LinkedMapList<K> extends AbstractList<K> {
 
-        final LinkedMap<K, ?> parent;
+        private final LinkedMap<K, ?> parent;
 
         LinkedMapList(final LinkedMap<K, ?> parent) {
             this.parent = parent;
