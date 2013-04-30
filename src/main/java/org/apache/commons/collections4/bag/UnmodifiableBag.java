@@ -91,8 +91,9 @@ public final class UnmodifiableBag<E>
      * @param in  the input stream
      * @throws IOException
      * @throws ClassNotFoundException
+     * @throws ClassCastException if deserialised object has wrong type
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") // will throw CCE, see Javadoc
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
         collection = (Collection<E>) in.readObject();
