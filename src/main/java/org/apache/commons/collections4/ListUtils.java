@@ -50,11 +50,11 @@ public class ListUtils {
     private ListUtils() {}
 
     //-----------------------------------------------------------------------
-    
+
     /**
      * Returns an immutable empty list if the argument is <code>null</code>,
      * or the argument itself otherwise.
-     * 
+     *
      * @param <T> the element type
      * @param list the list, possibly <code>null</code>
      * @return an empty list if the argument is <code>null</code>
@@ -66,7 +66,7 @@ public class ListUtils {
     /**
      * Returns either the passed in list, or if the list is {@code null},
      * the value of {@code defaultList}.
-     * 
+     *
      * @param <T> the element type
      * @param list  the list, possibly {@code null}
      * @param defaultList  the returned values if list is {@code null}
@@ -76,7 +76,7 @@ public class ListUtils {
     public static <T> List<T> defaultIfNull(final List<T> list, final List<T> defaultList) {
         return list == null ? defaultList : list;
     }
-    
+
     /**
      * Returns a new list containing all elements that are contained in
      * both given lists.
@@ -96,7 +96,7 @@ public class ListUtils {
             smaller = list2;
             larger = list1;
         }
-        
+
         final HashSet<E> hashSet = new HashSet<E>(smaller);
 
         for (final E e : larger) {
@@ -140,11 +140,11 @@ public class ListUtils {
      * subtracted from their union.
      *
      * @param <E>  the element type
-     * @param list1  the first list 
+     * @param list1  the first list
      * @param list2  the second list
      * @return  a new list containing the sum of those lists
      * @throws NullPointerException if either list is null
-     */ 
+     */
     public static <E> List<E> sum(final List<? extends E> list1, final List<? extends E> list2) {
         return subtract(union(list1, list2), intersection(list1, list2));
     }
@@ -155,7 +155,7 @@ public class ListUtils {
      * used to append the two given lists into a new list.
      *
      * @param <E>  the element type
-     * @param list1  the first list 
+     * @param list1  the first list
      * @param list2  the second list
      * @return  a new list containing the union of those lists
      * @throws NullPointerException if either list is null
@@ -180,7 +180,7 @@ public class ListUtils {
      * @return the elements matching the predicate (new list)
      * @throws NullPointerException
      *             if the input list is null
-     *          
+     *
      * @since 4.0
      * @see CollectionUtils#select(Collection, Predicate)
      */
@@ -204,7 +204,7 @@ public class ListUtils {
      * @return the elements <b>not</b> matching the predicate (new list)
      * @throws NullPointerException
      *             if the input collection is null
-     *          
+     *
      * @since 4.0
      * @see CollectionUtils#selectRejected(Collection, Predicate)
      */
@@ -236,7 +236,7 @@ public class ListUtils {
      *
      * <b>Note:</b> The behaviour of this method is undefined if the lists are
      * modified during the equals comparison.
-     * 
+     *
      * @see java.util.List
      * @param list1  the first list, may be null
      * @param list2  the second list, may be null
@@ -266,15 +266,15 @@ public class ListUtils {
 
         return !(it1.hasNext() || it2.hasNext());
     }
-    
+
     /**
-     * Generates a hash code using the algorithm specified in 
+     * Generates a hash code using the algorithm specified in
      * {@link java.util.List#hashCode()}.
      * <p>
      * This method is useful for implementing <code>List</code> when you cannot
      * extend AbstractList. The method takes Collection instances to enable other
      * collection types to use the List implementation algorithm.
-     * 
+     *
      * @see java.util.List#hashCode()
      * @param list  the list to generate the hashCode for, may be null
      * @return the hash code
@@ -285,13 +285,13 @@ public class ListUtils {
         }
         int hashCode = 1;
         final Iterator<?> it = list.iterator();
-        
+
         while (it.hasNext()) {
             final Object obj = it.next();
             hashCode = 31 * hashCode + (obj == null ? 0 : obj.hashCode());
         }
         return hashCode;
-    }   
+    }
 
     //-----------------------------------------------------------------------
     /**
@@ -301,13 +301,13 @@ public class ListUtils {
      * in <code>collection</code> unless <code>retain</code> does not contain <code>e</code>, in which
      * case the cardinality is zero. This method is useful if you do not wish to modify
      * the collection <code>c</code> and thus cannot call <code>collection.retainAll(retain);</code>.
-     * <p> 
+     * <p>
      * This implementation iterates over <code>collection</code>, checking each element in
      * turn to see if it's contained in <code>retain</code>. If it's contained, it's added
      * to the returned list. As a consequence, it is advised to use a collection type for
      * <code>retain</code> that provides a fast (e.g. O(1)) implementation of
      * {@link Collection#contains(Object)}.
-     * 
+     *
      * @param <E>  the element type
      * @param collection  the collection whose contents are the target of the #retailAll operation
      * @param retain  the collection containing the elements to be retained in the returned collection
@@ -335,13 +335,13 @@ public class ListUtils {
      * in <code>collection</code> unless <code>remove</code> contains <code>e</code>, in which
      * case the cardinality is zero. This method is useful if you do not wish to modify
      * <code>collection</code> and thus cannot call <code>collection.removeAll(remove);</code>.
-     * <p> 
+     * <p>
      * This implementation iterates over <code>collection</code>, checking each element in
      * turn to see if it's contained in <code>remove</code>. If it's not contained, it's added
      * to the returned list. As a consequence, it is advised to use a collection type for
      * <code>remove</code> that provides a fast (e.g. O(1)) implementation of
      * {@link Collection#contains(Object)}.
-     * 
+     *
      * @param <E>  the element type
      * @param collection  the collection from which items are removed (in the returned collection)
      * @param remove  the items to be removed from the returned <code>collection</code>
@@ -364,9 +364,9 @@ public class ListUtils {
     /**
      * Returns a synchronized list backed by the given list.
      * <p>
-     * You must manually synchronize on the returned list's iterator to 
+     * You must manually synchronize on the returned list's iterator to
      * avoid non-deterministic behavior:
-     *  
+     *
      * <pre>
      * List list = ListUtils.synchronizedList(myList);
      * synchronized (list) {
@@ -376,9 +376,9 @@ public class ListUtils {
      *     }
      * }
      * </pre>
-     * 
+     *
      * This method is just a wrapper for {@link Collections#synchronizedList(List)}.
-     * 
+     *
      * @param <E>  the element type
      * @param list  the list to synchronize, must not be null
      * @return a synchronized list backed by the given list
@@ -428,7 +428,7 @@ public class ListUtils {
      * Existing entries in the specified list will not be transformed.
      * <p>
      * Each object is passed through the transformer as it is added to the
-     * List. It is important not to use the original list after invoking this 
+     * List. It is important not to use the original list after invoking this
      * method, as it is a backdoor for adding untransformed objects.
      * <p>
      * Existing entries in the specified list will not be transformed.
@@ -444,7 +444,7 @@ public class ListUtils {
                                               final Transformer<? super E, ? extends E> transformer) {
         return TransformedList.transformingList(list, transformer);
     }
-    
+
     /**
      * Returns a "lazy" list whose elements will be created on demand.
      * <p>
@@ -466,7 +466,7 @@ public class ListUtils {
      *
      * After the above code is executed, <code>date</code> will refer to
      * a new <code>Date</code> instance.  Furthermore, that <code>Date</code>
-     * instance is the fourth element in the list.  The first, second, 
+     * instance is the fourth element in the list.  The first, second,
      * and third element are all set to <code>null</code>.
      *
      * @param <E>  the element type
@@ -481,8 +481,8 @@ public class ListUtils {
 
     /**
      * Returns a fixed-sized list backed by the given list.
-     * Elements may not be added or removed from the returned list, but 
-     * existing elements can be changed (for instance, via the 
+     * Elements may not be added or removed from the returned list, but
+     * existing elements can be changed (for instance, via the
      * {@link List#set(int, Object)} method).
      *
      * @param <E>  the element type
@@ -521,7 +521,7 @@ public class ListUtils {
     //-----------------------------------------------------------------------
     /**
      * Returns the longest common subsequence (LCS) of two sequences (lists).
-     * 
+     *
      * @param <E>  the element type
      * @param a  the first list
      * @param b  the second list
@@ -535,7 +535,7 @@ public class ListUtils {
 
     /**
      * Returns the longest common subsequence (LCS) of two sequences (lists).
-     * 
+     *
      * @param <E>  the element type
      * @param a  the first list
      * @param b  the second list
@@ -545,7 +545,7 @@ public class ListUtils {
      */
     public static <E> List<E> longestCommonSubsequence(final List<E> a, final List<E> b, final Equator<? super E> equator) {
         if (a == null || b == null) {
-            throw new IllegalArgumentException("List must not be null");          
+            throw new IllegalArgumentException("List must not be null");
         }
         if (equator == null) {
           throw new IllegalArgumentException("Equator must not be null");
@@ -562,8 +562,8 @@ public class ListUtils {
      * Returns the longest common subsequence (LCS) of two {@link CharSequence} objects.
      * <p>
      * This is a convenience method for using {@link #longestCommonSubsequence(List, List)}
-     * with {@link CharSequence} instances. 
-     * 
+     * with {@link CharSequence} instances.
+     *
      * @param a  the first sequence
      * @param b  the second sequence
      * @return the longest common subsequence as {@link String}
@@ -572,7 +572,7 @@ public class ListUtils {
      */
     public static String longestCommonSubsequence(final CharSequence a, final CharSequence b) {
         if (a == null || b == null) {
-            throw new IllegalArgumentException("CharSequence must not be null");          
+            throw new IllegalArgumentException("CharSequence must not be null");
         }
         final List<Character> lcs = longestCommonSubsequence(new CharSequenceAsList( a ), new CharSequenceAsList( b ));
         final StringBuilder sb = new StringBuilder();
@@ -611,11 +611,11 @@ public class ListUtils {
     private static final class CharSequenceAsList extends AbstractList<Character> {
 
       private final CharSequence sequence;
-      
+
       public CharSequenceAsList(final CharSequence sequence) {
         this.sequence = sequence;
       }
-      
+
       @Override
       public Character get( int index ) {
         return Character.valueOf(sequence.charAt( index ));
@@ -625,9 +625,9 @@ public class ListUtils {
       public int size() {
         return sequence.length();
       }
-      
+
     }
-        
+
     //-----------------------------------------------------------------------
     /**
      * Returns consecutive {@link List#subList(int, int) sublists} of a
@@ -642,7 +642,7 @@ public class ListUtils {
      * to all the usual caveats about modification as explained in that API.
      * <p>
      * Adapted from http://code.google.com/p/guava-libraries/
-     * 
+     *
      * @param <T>  the element type
      * @param list  the list to return consecutive sublists of
      * @param size  the desired size of each sublist (the last may be smaller)
@@ -652,14 +652,14 @@ public class ListUtils {
      */
     public static <T> List<List<T>> partition(final List<T> list, final int size) {
         if (list == null) {
-            throw new IllegalArgumentException("List must not be null");          
+            throw new IllegalArgumentException("List must not be null");
         }
         if (size <= 0) {
-            throw new IllegalArgumentException("Size must be greater than 0");            
+            throw new IllegalArgumentException("Size must be greater than 0");
         }
         return new Partition<T>(list, size);
     }
-    
+
     /**
      * Provides a partition view on a {@link List}.
      * @since 4.0
@@ -677,15 +677,15 @@ public class ListUtils {
         public List<T> get(final int index) {
             final int listSize = size();
             if (listSize < 0) {
-                throw new IllegalArgumentException("negative size: " + listSize);           
+                throw new IllegalArgumentException("negative size: " + listSize);
             }
             if (index < 0) {
-                throw new IndexOutOfBoundsException("Index " + index + " must not be negative");         
+                throw new IndexOutOfBoundsException("Index " + index + " must not be negative");
             }
             if (index >= listSize) {
                 throw new IndexOutOfBoundsException("Index " + index + " must be less than size " +
-                                                    listSize);           
-            }           
+                                                    listSize);
+            }
             final int start = index * size;
             final int end = Math.min(start + size, list.size());
             return list.subList(start, end);
