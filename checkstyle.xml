@@ -68,6 +68,13 @@
         <!-- Constant names should obey the traditional all uppercase naming convention -->
         <module name="ConstantName" />
 
+        <!-- No trailing whitespace -->
+        <module name="Regexp">
+            <property name="format" value="[ \t]+$"/>
+            <property name="illegalPattern" value="true"/>
+            <property name="message" value="Trailing whitespace"/>
+        </module>
+
         <!-- Authors should be in pom.xml file -->
         <module name="Regexp">
             <property name="format" value="@author"/>
