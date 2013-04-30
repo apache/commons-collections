@@ -29,19 +29,19 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
 
 /**
  * A synchronized {@link Trie}.
- * 
+ *
  * @since 4.0
  * @version $Id$
  */
 public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
-    
+
     private static final long serialVersionUID = 3121878833178676939L;
-    
+
     private final Trie<K, V> delegate;
-    
+
     /**
      * Factory method to create a synchronized trie.
-     * 
+     *
      * @param <K>  the key type
      * @param <V>  the value type
      * @param trie  the trie to decorate, must not be null
@@ -55,7 +55,7 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param trie  the trie to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
@@ -85,7 +85,7 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
     public synchronized Entry<K, V> traverse(final Cursor<? super K, ? super V> cursor) {
         return delegate.traverse(cursor);
     }
-    
+
     public synchronized Set<Entry<K, V>> entrySet() {
         return Collections.synchronizedSet(delegate.entrySet());
     }
@@ -129,7 +129,7 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
     public synchronized V remove(final Object key) {
         return delegate.remove(key);
     }
-    
+
     public synchronized K lastKey() {
         return delegate.lastKey();
     }
@@ -141,7 +141,7 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
     public synchronized SortedMap<K, V> tailMap(final K fromKey) {
         return Collections.synchronizedSortedMap(delegate.tailMap(fromKey));
     }
-    
+
     public synchronized Comparator<? super K> comparator() {
         return delegate.comparator();
     }
@@ -153,7 +153,7 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
     public synchronized SortedMap<K, V> headMap(final K toKey) {
         return Collections.synchronizedSortedMap(delegate.headMap(toKey));
     }
-    
+
     public synchronized SortedMap<K, V> getPrefixedBy(final K key, final int offset, final int length) {
         return Collections.synchronizedSortedMap(delegate.getPrefixedBy(key, offset, length));
     }
@@ -170,7 +170,7 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
         return Collections.synchronizedSortedMap(delegate.getPrefixedByBits(key, lengthInBits));
     }
 
-    public synchronized SortedMap<K, V> getPrefixedByBits(final K key, 
+    public synchronized SortedMap<K, V> getPrefixedByBits(final K key,
             final int offsetInBits, final int lengthInBits) {
         return Collections.synchronizedSortedMap(delegate.getPrefixedByBits(key, offsetInBits, lengthInBits));
     }
@@ -183,12 +183,12 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
     public synchronized int hashCode() {
         return delegate.hashCode();
     }
-    
+
     @Override
     public synchronized boolean equals(final Object obj) {
         return delegate.equals(obj);
     }
-    
+
     @Override
     public synchronized String toString() {
         return delegate.toString();

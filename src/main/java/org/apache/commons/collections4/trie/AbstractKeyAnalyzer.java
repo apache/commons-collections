@@ -18,12 +18,12 @@ package org.apache.commons.collections4.trie;
 
 /**
  * TODO: add javadoc
- * 
+ *
  * @since 4.0
  * @version $Id$
  */
 public abstract class AbstractKeyAnalyzer<K> implements KeyAnalyzer<K> {
-    
+
     private static final long serialVersionUID = -20497563720380683L;
 
     /**
@@ -36,34 +36,34 @@ public abstract class AbstractKeyAnalyzer<K> implements KeyAnalyzer<K> {
         } else if (o2 == null) {
             return 1;
         }
-        
+
         return ((Comparable<K>)o1).compareTo(o2);
     }
-    
-    /** 
+
+    /**
      * Returns true if bitIndex is a {@link KeyAnalyzer#OUT_OF_BOUNDS_BIT_KEY}
      */
     static boolean isOutOfBoundsIndex(final int bitIndex) {
         return bitIndex == OUT_OF_BOUNDS_BIT_KEY;
     }
 
-    /** 
+    /**
      * Returns true if bitIndex is a {@link KeyAnalyzer#EQUAL_BIT_KEY}
      */
     static boolean isEqualBitKey(final int bitIndex) {
         return bitIndex == EQUAL_BIT_KEY;
     }
 
-    /** 
-     * Returns true if bitIndex is a {@link KeyAnalyzer#NULL_BIT_KEY} 
+    /**
+     * Returns true if bitIndex is a {@link KeyAnalyzer#NULL_BIT_KEY}
      */
     static boolean isNullBitKey(final int bitIndex) {
         return bitIndex == NULL_BIT_KEY;
     }
 
-    /** 
-     * Returns true if the given bitIndex is valid. Indices 
-     * are considered valid if they're between 0 and 
+    /**
+     * Returns true if the given bitIndex is valid. Indices
+     * are considered valid if they're between 0 and
      * {@link Integer#MAX_VALUE}
      */
     static boolean isValidBitIndex(final int bitIndex) {

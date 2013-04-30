@@ -18,12 +18,12 @@ package org.apache.commons.collections4.trie;
 
 /**
  * An {@link KeyAnalyzer} for {@code char[]}s.
- * 
+ *
  * @since 4.0
  * @version $Id$
  */
 public class CharArrayKeyAnalyzer extends AbstractKeyAnalyzer<char[]> {
-    
+
     private static final long serialVersionUID = -8167897361549463457L;
 
     /**

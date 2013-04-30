@@ -18,29 +18,29 @@ package org.apache.commons.collections4.trie;
 
 /**
  * A {@link KeyAnalyzer} for {@link Integer}s.
- * 
+ *
  * @since 4.0
  * @version $Id$
  */
 public class IntegerKeyAnalyzer extends AbstractKeyAnalyzer<Integer> {
-    
+
     private static final long serialVersionUID = 4928508653722068982L;
-    
+
     /**
      * A singleton instance of {@link IntegerKeyAnalyzer}
      */
     public static final IntegerKeyAnalyzer INSTANCE = new IntegerKeyAnalyzer();
-    
+
     /**
      * The length of an {@link Integer} in bits
      */
     public static final int LENGTH = Integer.SIZE;
-    
+
     /**
      * A bit mask where the first bit is 1 and the others are zero
      */
     private static final int MSB = 0x80000000;
-    
+
     /**
      * Returns a bit mask where the given bit is set
      */
@@ -54,7 +54,7 @@ public class IntegerKeyAnalyzer extends AbstractKeyAnalyzer<Integer> {
     public int bitsPerElement() {
         return 1;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -72,21 +72,21 @@ public class IntegerKeyAnalyzer extends AbstractKeyAnalyzer<Integer> {
     /**
      * {@inheritDoc}
      */
-    public int bitIndex(final Integer key, final int offsetInBits, final int lengthInBits, 
+    public int bitIndex(final Integer key, final int offsetInBits, final int lengthInBits,
             final Integer other, final int otherOffsetInBits, final int otherLengthInBits) {
-        
+
         if (offsetInBits != 0 || otherOffsetInBits != 0) {
-            throw new IllegalArgumentException("offsetInBits=" + offsetInBits 
+            throw new IllegalArgumentException("offsetInBits=" + offsetInBits
                     + ", otherOffsetInBits=" + otherOffsetInBits);
         }
-        
+
         final int keyValue = key.intValue();
         if (keyValue == 0) {
             return NULL_BIT_KEY;
         }
 
         final int otherValue = other != null ? other.intValue() : 0;
-        
+
         if (keyValue != otherValue) {
             final int xorValue = keyValue ^ otherValue;
             for (int i = 0; i < LENGTH; i++) {
@@ -95,24 +95,24 @@ public class IntegerKeyAnalyzer extends AbstractKeyAnalyzer<Integer> {
                 }
             }
         }
-        
+
         return KeyAnalyzer.EQUAL_BIT_KEY;
     }
-    
+
     /**
      * {@inheritDoc}
      */
-    public boolean isPrefix(final Integer prefix, final int offsetInBits, 
+    public boolean isPrefix(final Integer prefix, final int offsetInBits,
             final int lengthInBits, final Integer key) {
-        
+
         final int value1 = prefix.intValue() << offsetInBits;
         final int value2 = key.intValue();
-        
+
         int mask = 0;
         for (int i = 0; i < lengthInBits; i++) {
             mask |= 0x1 << i;
         }
-        
+
         return (value1 & mask) == (value2 & mask);
     }
 }

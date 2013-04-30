@@ -29,19 +29,19 @@ import org.apache.commons.collections4.Unmodifiable;
 
 /**
  * An unmodifiable {@link Trie}.
- * 
+ *
  * @since 4.0
  * @version $Id$
  */
 public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodifiable {
-    
+
     private static final long serialVersionUID = -7156426030315945159L;
-    
+
     private final Trie<K, V> delegate;
-    
+
     /**
      * Factory method to create a unmodifiable trie.
-     * 
+     *
      * @param <K>  the key type
      * @param <V>  the value type
      * @param trie  the trie to decorate, must not be null
@@ -55,7 +55,7 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
-     * 
+     *
      * @param trie  the trie to decorate, must not be null
      * @throws IllegalArgumentException if trie is null
      */
@@ -65,7 +65,7 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
         }
         this.delegate = trie;
     }
-    
+
     public Entry<K, V> select(final K key, final Cursor<? super K, ? super V> cursor) {
         final Cursor<K, V> c = new Cursor<K, V>() {
             public Decision select(final Map.Entry<? extends K, ? extends V> entry) {
@@ -78,11 +78,11 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
                         // other decisions are fine
                         break;
                 }
-                
+
                 return decision;
             }
         };
-        
+
         return delegate.select(key, c);
     }
 
@@ -110,18 +110,18 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
                         // other decisions are fine
                         break;
                 }
-                
+
                 return decision;
             }
         };
-        
+
         return delegate.traverse(c);
     }
 
     public Set<Entry<K, V>> entrySet() {
         return Collections.unmodifiableSet(delegate.entrySet());
     }
-    
+
     public Set<K> keySet() {
         return Collections.unmodifiableSet(delegate.keySet());
     }
@@ -182,7 +182,7 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
     public SortedMap<K, V> tailMap(final K fromKey) {
         return Collections.unmodifiableSortedMap(delegate.tailMap(fromKey));
     }
-    
+
     public SortedMap<K, V> getPrefixedBy(final K key, final int offset, final int length) {
         return Collections.unmodifiableSortedMap(
                 delegate.getPrefixedBy(key, offset, length));
@@ -202,7 +202,7 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
         return Collections.unmodifiableSortedMap(
                 delegate.getPrefixedByBits(key, lengthInBits));
     }
-    
+
     public SortedMap<K, V> getPrefixedByBits(final K key, final int offsetInBits, final int lengthInBits) {
         return Collections.unmodifiableSortedMap(delegate.getPrefixedByBits(key, offsetInBits, lengthInBits));
     }
@@ -210,21 +210,21 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
     public Comparator<? super K> comparator() {
         return delegate.comparator();
     }
-    
+
     public int size() {
         return delegate.size();
     }
-    
+
     @Override
     public int hashCode() {
         return delegate.hashCode();
     }
-    
+
     @Override
     public boolean equals(final Object obj) {
         return delegate.equals(obj);
     }
-    
+
     @Override
     public String toString() {
         return delegate.toString();
