@@ -202,7 +202,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
      */
     @Override
     protected boolean isEqualKey(final Object key1, Object key2) {
-        key2 = keyType == ReferenceStrength.HARD ? key2 : ((Reference<?>) key2).get();
+        key2 = isKeyType(ReferenceStrength.HARD) ? key2 : ((Reference<?>) key2).get();
         return key1 == key2;
     }
 

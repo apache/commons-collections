@@ -118,17 +118,17 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     /**
      * The reference type for keys.
      */
-    protected ReferenceStrength keyType;
+    private ReferenceStrength keyType;
 
     /**
      * The reference type for values.
      */
-    protected ReferenceStrength valueType;
+    private ReferenceStrength valueType;
 
     /**
      * Should the value be automatically purged when the associated key has been collected?
      */
-    protected boolean purgeValues;
+    private boolean purgeValues;
 
     /**
      * ReferenceQueue used to eliminate stale mappings.
@@ -591,7 +591,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      */
     protected static class ReferenceEntry<K, V> extends HashEntry<K, V> {
         /** The parent map */
-        protected final AbstractReferenceMap<K, V> parent;
+        private final AbstractReferenceMap<K, V> parent;
 
         /**
          * Creates a new entry object for the ReferenceMap.
@@ -1047,4 +1047,12 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         // do not call super.doReadObject() as code there doesn't work for reference map
     }
 
+    /**
+     * Provided protected read-only access to the key type.
+     * @param type the type to check against.
+     * @return true if keyType has the specified type
+     */
+    protected boolean isKeyType(ReferenceStrength type) {
+        return this.keyType == type;
+    }
 }
