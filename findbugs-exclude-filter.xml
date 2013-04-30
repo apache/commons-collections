@@ -65,13 +65,20 @@
     <Bug pattern="RV_CHECK_COMPARETO_FOR_SPECIFIC_RETURN_VALUE" />
   </Match>
 
-  <!-- The ObjectArrayIterator does iterate over an array, thus this we do not want to copy it -->
+  <!-- The ObjectArrayIterator does iterate over an array, thus we do not want to copy it -->
   <Match>
     <Class name="org.apache.commons.collections4.iterators.ObjectArrayIterator" />
     <Or>
       <Bug pattern="EI_EXPOSE_REP" />
       <Bug pattern="EI_EXPOSE_REP2" />
     </Or>
+  </Match>
+
+  <!-- The constructor has a boolean argument which controls whether the array shall be copied or not -->
+  <Match>
+    <Class name="org.apache.commons.collections4.keyvalue.MultiKey" />
+    <Method name="&lt;init&gt;" params="java.lang.Object[], boolean" returns="void" />
+    <Bug pattern="EI_EXPOSE_REP2" />
   </Match>
 
 </FindBugsFilter>
