@@ -56,10 +56,10 @@ public class CollectionUtils {
      * @param <O>  the element type
      */
     private static class CardinalityHelper<O> {
-        
+
         /** Contains the cardinality for each object in collection A. */
         final Map<O, Integer> cardinalityA;
-        
+
         /** Contains the cardinality for each object in collection B. */
         final Map<O, Integer> cardinalityB;
 
@@ -76,7 +76,7 @@ public class CollectionUtils {
         /**
          * Returns the maximum frequency of an object.
          * @param obj  the object
-         * @return the maximum frequency of the object 
+         * @return the maximum frequency of the object
          */
         public final int max(final Object obj) {
             return Math.max(freqA(obj), freqB(obj));
@@ -123,10 +123,10 @@ public class CollectionUtils {
      * @param <O>  the element type
      */
     private static class SetOperationCardinalityHelper<O> extends CardinalityHelper<O> implements Iterable<O> {
-        
+
         /** Contains the unique elements of the two collections. */
         private final Set<O> elements;
-        
+
         /** Output collection. */
         private final List<O> newList;
 
@@ -200,7 +200,7 @@ public class CollectionUtils {
     /**
      * Returns an immutable empty collection if the argument is <code>null</code>,
      * or the argument itself otherwise.
-     * 
+     *
      * @param <T> the element type
      * @param collection the collection, possibly <code>null</code>
      * @return an empty collection if the argument is <code>null</code>
@@ -307,7 +307,7 @@ public class CollectionUtils {
      * Returns a new {@link Collection} containing <i>a</i> minus a subset of
      * <i>b</i>.  Only the elements of <i>b</i> that satisfy the predicate
      * condition, <i>p</i> are subtracted from <i>a</i>.
-     * 
+     *
      * <p>The cardinality of each element <i>e</i> in the returned {@link Collection}
      * that satisfies the predicate condition will be the cardinality of <i>e</i> in <i>a</i>
      * minus the cardinality of <i>e</i> in <i>b</i>, or zero, whichever is greater.</p>
@@ -394,7 +394,7 @@ public class CollectionUtils {
             return true;
         }
     }
-    
+
     /**
      * Returns <code>true</code> iff at least one element is in both collections.
      * <p>
@@ -558,7 +558,7 @@ public class CollectionUtils {
                 return new EquatorWrapper(equator, input);
             }
         };
-        
+
         return isEqualCollection(collect(a, transformer), collect(b, transformer));
     }
 
@@ -567,23 +567,23 @@ public class CollectionUtils {
      * {@link #equals(Object)} and {@link #hashCode()}.
      * <p>
      * This class can be used to store objects into a Map.
-     *  
+     *
      * @param <O>  the element type
      * @since 4.0
      */
     private static class EquatorWrapper<O> {
         private final Equator<O> equator;
         private final O object;
-        
+
         public EquatorWrapper(final Equator<O> equator, final O object) {
             this.equator = equator;
             this.object = object;
         }
-        
+
         public O getObject() {
-            return object; 
+            return object;
         }
-        
+
         @Override
         public boolean equals(final Object obj) {
             if (!(obj instanceof EquatorWrapper)) {
@@ -597,9 +597,9 @@ public class CollectionUtils {
         @Override
         public int hashCode() {
             return equator.hash(object);
-        }        
+        }
     }
-    
+
     /**
      * Returns the number of occurrences of <i>obj</i> in <i>coll</i>.
      *
@@ -1518,7 +1518,7 @@ public class CollectionUtils {
      *   they will be removed in the output collection
      * @return a new sorted List, containing the elements of Collection a and b
      * @throws IllegalArgumentException if either collection is null
-     * @since 4.0 
+     * @since 4.0
      */
     public static <O extends Comparable<? super O>> List<O> collate(final Collection<? extends O> a,
                                                                     final Collection<? extends O> b,
@@ -1535,16 +1535,16 @@ public class CollectionUtils {
      * @param <O>  the element type
      * @param a  the first collection, must not be null
      * @param b  the second collection, must not be null
-     * @param c  the comparator to use for the merge. 
+     * @param c  the comparator to use for the merge.
      * @return a new sorted List, containing the elements of Collection a and b
      * @throws IllegalArgumentException if either collection or the comparator is null
-     * @since 4.0 
+     * @since 4.0
      */
     public static <O> List<O> collate(final Collection<? extends O> a, final Collection<? extends O> b,
                                       final Comparator<? super O> c) {
         return collate(a, b, c, true);
     }
-    
+
     /**
      * Merges two sorted Collections, a and b, into a single, sorted List
      * such that the ordering of the elements according to Comparator c is retained.
@@ -1554,16 +1554,16 @@ public class CollectionUtils {
      * @param <O>  the element type
      * @param a  the first collection, must not be null
      * @param b  the second collection, must not be null
-     * @param c  the comparator to use for the merge. 
+     * @param c  the comparator to use for the merge.
      * @param includeDuplicates  if {@code true} duplicate elements will be retained, otherwise
      *   they will be removed in the output collection
      * @return a new sorted List, containing the elements of Collection a and b
      * @throws IllegalArgumentException if either collection or the comparator is null
-     * @since 4.0 
+     * @since 4.0
      */
     public static <O> List<O> collate(final Collection<? extends O> a, final Collection<? extends O> b,
                                       final Comparator<? super O> c, final boolean includeDuplicates) {
-        
+
         if (a == null || b == null) {
             throw new IllegalArgumentException("The collections must not be null");
         }
@@ -1603,14 +1603,14 @@ public class CollectionUtils {
      * <p>
      * For larger collections it is advised to use a {@link PermutationIterator} to
      * iterate over all permutations.
-     * 
+     *
      * @see PermutationIterator
-     * 
+     *
      * @param <E>  the element type
      * @param collection  the collection to create permutations for, may not be null
      * @return an unordered collection of all permutations of the input collection
      * @throws NullPointerException if collection is null
-     * @since 4.0 
+     * @since 4.0
      */
     public static <E> Collection<List<E>> permutations(final Collection<E> collection) {
         final PermutationIterator<E> it = new PermutationIterator<E>(collection);

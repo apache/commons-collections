@@ -1177,11 +1177,11 @@ public class MapUtils {
     }
 
     //-----------------------------------------------------------------------
-    
+
     /**
      * Returns an immutable empty map if the argument is <code>null</code>,
      * or the argument itself otherwise.
-     * 
+     *
      * @param <K> the key type
      * @param <V> the value type
      * @param map the map, possibly <code>null</code>
@@ -1190,7 +1190,7 @@ public class MapUtils {
     public static <K,V> Map<K,V> emptyIfNull(final Map<K,V> map) {
         return map == null ? Collections.<K,V>emptyMap() : map;
     }
-    
+
     /**
      * Null-safe check if the specified map is empty.
      * <p>
@@ -1694,8 +1694,8 @@ public class MapUtils {
      * @param valueTransformer the <code>Transformer</code> used to transform the collection value into a value
      * @throws NullPointerException if the map, collection or transformers are null
      */
-    public static <K, V, E> void populateMap(final Map<K, V> map, final Collection<? extends E> collection, 
-                                             final Transformer<E, K> keyTransformer, 
+    public static <K, V, E> void populateMap(final Map<K, V> map, final Collection<? extends E> collection,
+                                             final Transformer<E, K> keyTransformer,
                                              final Transformer<E, V> valueTransformer) {
         final Iterator<? extends E> iter = collection.iterator();
         while (iter.hasNext()) {
@@ -1719,7 +1719,7 @@ public class MapUtils {
                                           final Transformer<V, K> keyTransformer) {
         populateMap(map, collection, keyTransformer, TransformerUtils.<V>nopTransformer());
     }
-    
+
     /**
      * Populates a MultiMap using the supplied <code>Transformer</code>s to transform the collection
      * values into keys and values.
@@ -1733,8 +1733,8 @@ public class MapUtils {
      * @param valueTransformer the <code>Transformer</code> used to transform the collection value into a value
      * @throws NullPointerException if the map, collection or transformers are null
      */
-    public static <K, V, E> void populateMap(final MultiMap<K, V> map, final Collection<? extends E> collection, 
-                                             final Transformer<E, K> keyTransformer, 
+    public static <K, V, E> void populateMap(final MultiMap<K, V> map, final Collection<? extends E> collection,
+                                             final Transformer<E, K> keyTransformer,
                                              final Transformer<E, V> valueTransformer) {
         final Iterator<? extends E> iter = collection.iterator();
         while (iter.hasNext()) {

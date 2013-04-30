@@ -867,7 +867,6 @@ public class IteratorUtils {
         return new IteratorIterable<E>(iterator, false);
     }
 
-    
     /**
      * Gets an iterable that wraps an iterator.  The returned iterable can be
      * used for multiple iterations.

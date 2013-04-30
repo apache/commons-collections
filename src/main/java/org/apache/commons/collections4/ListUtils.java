@@ -539,11 +539,13 @@ public class ListUtils {
      * @param <E>  the element type
      * @param a  the first list
      * @param b  the second list
+     * @param equator  the equator used to test object equality
      * @return the longest common subsequence
      * @throws IllegalArgumentException if either list or the equator is {@code null}
      * @since 4.0
      */
-    public static <E> List<E> longestCommonSubsequence(final List<E> a, final List<E> b, final Equator<? super E> equator) {
+    public static <E> List<E> longestCommonSubsequence(final List<E> a, final List<E> b,
+                                                       final Equator<? super E> equator) {
         if (a == null || b == null) {
             throw new IllegalArgumentException("List must not be null");
         }
