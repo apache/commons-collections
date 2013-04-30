@@ -685,12 +685,12 @@ public class ListOrderedMap<K, V>
 
         @Override
         public V getValue() {
-            return parent.get(key);
+            return parent.get(getKey());
         }
 
         @Override
         public V setValue(final V value) {
-            return parent.decorated().put(key, value);
+            return parent.decorated().put(getKey(), value);
         }
     }
 
