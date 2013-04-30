@@ -402,6 +402,10 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                 delegateMap.put(key2, value2);
             case 1:
                 delegateMap.put(key1, value1);
+            case 0:
+                break;
+            default:
+                throw new IllegalStateException("Invalid map index: " + size);
         }
 
         size = 0;
@@ -659,7 +663,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                 case 1:
                     return parent.key1;
             }
-            throw new IllegalStateException("Invalid map index");
+            throw new IllegalStateException("Invalid map index: " + nextIndex);
         }
 
         public V getValue() {
@@ -674,7 +678,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                 case 1:
                     return parent.value1;
             }
-            throw new IllegalStateException("Invalid map index");
+            throw new IllegalStateException("Invalid map index: " + nextIndex);
         }
 
         public V setValue(final V value) {
@@ -692,6 +696,8 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                 case 1:
                     parent.value1 = value;
                     break;
+                default:
+                    throw new IllegalStateException("Invalid map index: " + nextIndex);
             }
             return old;
         }
@@ -808,7 +814,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                 case 1:
                     return parent.key1;
             }
-            throw new IllegalStateException("Invalid map index");
+            throw new IllegalStateException("Invalid map index: " + index);
         }
 
         public V getValue() {
@@ -823,7 +829,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                 case 1:
                     return parent.value1;
             }
-            throw new IllegalStateException("Invalid map index");
+            throw new IllegalStateException("Invalid map index: " + index);
         }
 
         public V setValue(final V value) {
@@ -841,6 +847,8 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                 case 1:
                     parent.value1 = value;
                     break;
+                default:
+                    throw new IllegalStateException("Invalid map index: " + index);
             }
             return old;
         }
@@ -1191,6 +1199,10 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                 total += hash2 ^ (value2 == null ? 0 : value2.hashCode());
             case 1:
                 total += hash1 ^ (value1 == null ? 0 : value1.hashCode());
+            case 0:
+                break;
+            default:
+                throw new IllegalStateException("Invalid map index: " + size);
         }
         return total;
     }
@@ -1225,6 +1237,10 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
                 buf.append(key1 == this ? "(this Map)" : key1);
                 buf.append('=');
                 buf.append(value1 == this ? "(this Map)" : value1);
+                break;
+            // case 0: has already been dealt with
+            default:
+                throw new IllegalStateException("Invalid map index: " + size);
         }
         buf.append('}');
         return buf.toString();
