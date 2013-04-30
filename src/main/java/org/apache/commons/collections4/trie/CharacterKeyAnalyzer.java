@@ -18,44 +18,44 @@ package org.apache.commons.collections4.trie;
 
 /**
  * A {@link KeyAnalyzer} for {@link Character}s.
- * 
+ *
  * @since 4.0
  * @version $Id$
  */
 public class CharacterKeyAnalyzer extends AbstractKeyAnalyzer<Character> {
-    
+
     private static final long serialVersionUID = 3928565962744720753L;
-    
+
     /**
      * A singleton instance of the {@link CharacterKeyAnalyzer}.
      */
-    public static final CharacterKeyAnalyzer INSTANCE 
+    public static final CharacterKeyAnalyzer INSTANCE
         = new CharacterKeyAnalyzer();
-    
+
     /**
      * The length of a {@link Character} in bits
      */
     public static final int LENGTH = Character.SIZE;
-    
+
     /**
      * A bit mask where the first bit is 1 and the others are zero
      */
     private static final int MSB = 0x8000;
-    
+
     /**
      * Returns a bit mask where the given bit is set
      */
     private static int mask(final int bit) {
         return MSB >>> bit;
     }
-    
+
     /**
      * {@inheritDoc}
      */
     public int bitsPerElement() {
         return 1;
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -74,21 +74,21 @@ public class CharacterKeyAnalyzer extends AbstractKeyAnalyzer<Character> {
     /**
      * {@inheritDoc}
      */
-    public int bitIndex(final Character key, final int offsetInBits, final int lengthInBits, 
+    public int bitIndex(final Character key, final int offsetInBits, final int lengthInBits,
             final Character other, final int otherOffsetInBits, final int otherLengthInBits) {
-        
+
         if (offsetInBits != 0 || otherOffsetInBits != 0) {
-            throw new IllegalArgumentException("offsetInBits=" + offsetInBits 
+            throw new IllegalArgumentException("offsetInBits=" + offsetInBits
                     + ", otherOffsetInBits=" + otherOffsetInBits);
         }
-        
+
         final char keyValue = key.charValue();
         if (keyValue == Character.MIN_VALUE) {
             return NULL_BIT_KEY;
         }
 
         final char otherValue = other != null ? other.charValue() : Character.MIN_VALUE;
-        
+
         if (keyValue != otherValue) {
             final int xorValue = keyValue ^ otherValue;
             for (int i = 0; i < LENGTH; i++) {
@@ -97,24 +97,24 @@ public class CharacterKeyAnalyzer extends AbstractKeyAnalyzer<Character> {
                 }
             }
         }
-        
+
         return KeyAnalyzer.EQUAL_BIT_KEY;
     }
-    
+
     /**
      * {@inheritDoc}
      */
-    public boolean isPrefix(final Character prefix, final int offsetInBits, 
+    public boolean isPrefix(final Character prefix, final int offsetInBits,
             final int lengthInBits, final Character key) {
-        
+
         final int value1 = prefix.charValue() << offsetInBits;
         final int value2 = key.charValue();
-        
+
         int mask = 0;
         for(int i = 0; i < lengthInBits; i++) {
             mask |= 0x1 << i;
         }
-        
+
         return (value1 & mask) == (value2 & mask);
     }
 }
