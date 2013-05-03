@@ -74,7 +74,7 @@
       Replaced "Buffer" interface with "java.util.Queue". Kept "CircularFifoQueue"
       as well as "Predicated", "Transformed" and "Unmodifiable" decorators.
     </action>
-    <action issue="COLLECTIONS-429,COLLECTION-434" dev="tn" type="add" due-to="Adrian Nistor, Mert Guldur">
+    <action issue="COLLECTIONS-429,COLLECTIONS-434" dev="tn" type="add" due-to="Adrian Nistor, Mert Guldur">
       Added method "CollectionUtils#containsAll(Collection, Collection)" with guaranteed
       runtime complexity of O(n + m) and space complexity of O(n). This method may yield much
       better performance than "Collection#containsAll(Collection)" depending on the use-case and
@@ -446,7 +446,7 @@
     <action issue="COLLECTIONS-182" dev="mbenson" type="update" due-to="Jim Cakalic">
       "CollectionUtils#forAllDo(Collection, Closure)" now returns the provided closure.
     </action>
-    <action issue="COLLECTIONS-110,COLLECTIONS-243,COLLECTION-245,COLLECTIONS-247,
+    <action issue="COLLECTIONS-110,COLLECTIONS-243,COLLECTIONS-245,COLLECTIONS-247,
                    COLLECTIONS-253,COLLECTIONS-273,COLLECTIONS-282" dev="multiple" type="update">
       Make generic versions of all classes in collections.
     </action>
