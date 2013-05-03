@@ -144,7 +144,6 @@ Changed classes / methods
  o [COLLECTIONS-265] "TreeBag" will now only accept "Comparable" objects as input when used with natural ordering. Thanks to David Saff. 
  o [COLLECTIONS-251] The static factory methods have been renamed from "getInstance()" to a camel-case version of the class name,
    +COLLECTIONS-321] e.g. "truePredicate()" for class "TruePredicate". Thanks to Stephen Kestle.
-
  o [COLLECTIONS-240] "MultiValueMap" is now serializable. Thanks to Wouter de Vaal. 
  o [COLLECTIONS-231] Return concrete class in static factory methods instead of base class interface
                      (except for Unmodifiable decorators). Thanks to Torsten Curdt. 
@@ -165,7 +164,8 @@ Changed classes / methods
    +COLLECTIONS-282]     
  o [None           ] Switch Abstract*Decorator classes to expose decorated() protected method instead of the decorated collection directly.
                      Each class overrides decorated() to add its type covariantly, thus getList()/getSet() etc. methods are removed
- 
+ o [None           ] ArrayStack is now deprecated and will be removed in the next major release. It is replaced by the java.util.Deque
+                     interface available from Java 6.
 
 
 Fixed Bugs
