@@ -224,9 +224,6 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
      * Internal sorted map view.
      */
     protected static class ViewMap<K, V> extends AbstractSortedMapDecorator<K, V> {
-        /** The parent bidi map. */
-        private final DualTreeBidiMap<K, V> bidi; // TODO not actually used - WHY?
-
         /**
          * Constructor.
          * @param bidi  the parent bidi map
@@ -237,7 +234,6 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
             // use the normalMap as the filtered map, but reverseMap as the full map
             // this forces containsValue and clear to be overridden
             super(new DualTreeBidiMap<K, V>(sm, bidi.reverseMap, bidi.inverseBidiMap));
-            this.bidi = decorated();
         }
 
         @Override
