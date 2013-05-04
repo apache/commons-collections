@@ -186,22 +186,6 @@ public class ClosureUtils {
     }
 
     /**
-     * Create a new Closure that calls two Closures, passing the result of
-     * the first into the second.
-     *
-     * @see org.apache.commons.collections4.functors.ChainedClosure
-     *
-     * @param <E>  the type that the closure acts on
-     * @param closure1  the first closure
-     * @param closure2  the second closure
-     * @return the <code>chained</code> closure
-     * @throws IllegalArgumentException if either closure is null
-     */
-    public static <E> Closure<E> chainedClosure(final Closure<? super E> closure1, final Closure<? super E> closure2) {
-        return ChainedClosure.<E>chainedClosure(closure1, closure2);
-    }
-
-    /**
      * Create a new Closure that calls each closure in turn, passing the
      * result into the next closure.
      *
