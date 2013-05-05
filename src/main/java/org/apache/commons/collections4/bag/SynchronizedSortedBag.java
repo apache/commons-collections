@@ -45,6 +45,7 @@ public class SynchronizedSortedBag<E> extends SynchronizedBag<E> implements Sort
      * @param bag  the bag to decorate, must not be null
      * @return a new synchronized SortedBag
      * @throws IllegalArgumentException if bag is null
+     * @since 4.0
      */
     public static <E> SynchronizedSortedBag<E> synchronizedSortedBag(final SortedBag<E> bag) {
         return new SynchronizedSortedBag<E>(bag);

@@ -54,6 +54,7 @@ public class PredicatedSortedBag<E> extends PredicatedBag<E> implements SortedBa
      * @return a new predicated SortedBag
      * @throws IllegalArgumentException if bag or predicate is null
      * @throws IllegalArgumentException if the bag contains invalid elements
+     * @since 4.0
      */
     public static <E> PredicatedSortedBag<E> predicatedSortedBag(final SortedBag<E> bag,
                                                                  final Predicate<? super E> predicate) {

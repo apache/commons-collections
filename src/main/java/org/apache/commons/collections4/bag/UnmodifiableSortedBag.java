@@ -54,6 +54,7 @@ public final class UnmodifiableSortedBag<E>
      * @param bag  the bag to decorate, must not be null
      * @return an unmodifiable SortedBag
      * @throws IllegalArgumentException if bag is null
+     * @since 4.0
      */
     public static <E> SortedBag<E> unmodifiableSortedBag(final SortedBag<E> bag) {
         if (bag instanceof Unmodifiable) {

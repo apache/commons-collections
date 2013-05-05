@@ -55,6 +55,7 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
      * @return a new predicated Bag
      * @throws IllegalArgumentException if bag or predicate is null
      * @throws IllegalArgumentException if the bag contains invalid elements
+     * @since 4.0
      */
     public static <E> PredicatedBag<E> predicatedBag(final Bag<E> bag, final Predicate<? super E> predicate) {
         return new PredicatedBag<E>(bag, predicate);

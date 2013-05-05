@@ -45,6 +45,7 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
      * @param bag  the bag to decorate, must not be null
      * @return a new synchronized Bag
      * @throws IllegalArgumentException if bag is null
+     * @since 4.0
      */
     public static <E> SynchronizedBag<E> synchronizedBag(final Bag<E> bag) {
         return new SynchronizedBag<E>(bag);
