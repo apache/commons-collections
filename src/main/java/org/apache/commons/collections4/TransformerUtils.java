@@ -180,24 +180,6 @@ public class TransformerUtils {
     }
 
     /**
-     * Create a new Transformer that calls two transformers, passing the result of
-     * the first into the second.
-     *
-     * @param <T>  the input/output type
-     * @param transformer1  the first transformer
-     * @param transformer2  the second transformer
-     * @return the transformer
-     * @throws IllegalArgumentException if either transformer is null
-     * @see org.apache.commons.collections4.functors.ChainedTransformer
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> Transformer<T, T> chainedTransformer(
-            final Transformer<? super T, ? extends T> transformer1,
-            final Transformer<? super T, ? extends T> transformer2) {
-        return ChainedTransformer.<T> chainedTransformer(transformer1, transformer2);
-    }
-
-    /**
      * Create a new Transformer that calls each transformer in turn, passing the
      * result into the next transformer.
      *
@@ -207,7 +189,8 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if the transformers array or any of the transformers is null
      * @see org.apache.commons.collections4.functors.ChainedTransformer
      */
-    public static <T> Transformer<T, T> chainedTransformer(final Transformer<? super T, ? extends T>[] transformers) {
+    public static <T> Transformer<T, T> chainedTransformer(
+            final Transformer<? super T, ? extends T>... transformers) {
         return ChainedTransformer.chainedTransformer(transformers);
     }
 

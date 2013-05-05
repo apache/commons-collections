@@ -1140,7 +1140,7 @@ public class MapUtils {
      * @since 3.2
      */
     @SuppressWarnings("unchecked") // As per Javadoc throws CCE for invalid array contents
-    public static <K, V> Map<K, V> putAll(final Map<K, V> map, final Object[] array) {
+    public static <K, V> Map<K, V> putAll(final Map<K, V> map, final Object... array) {
         map.size();  // force NPE
         if (array == null || array.length == 0) {
             return map;

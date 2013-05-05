@@ -235,7 +235,7 @@ public class IteratorUtils {
      * @return  an iterator over the array
      * @throws NullPointerException if array is null
      */
-    public static <E> ResettableIterator<E> arrayIterator(final E[] array) {
+    public static <E> ResettableIterator<E> arrayIterator(final E... array) {
         return new ObjectArrayIterator<E>(array);
     }
 
@@ -339,7 +339,7 @@ public class IteratorUtils {
      * @return  a list iterator over the array
      * @throws NullPointerException if array is null
      */
-    public static <E> ResettableListIterator<E> arrayListIterator(final E[] array) {
+    public static <E> ResettableListIterator<E> arrayListIterator(final E... array) {
         return new ObjectArrayListIterator<E>(array);
     }
 
@@ -472,21 +472,6 @@ public class IteratorUtils {
     // Chained
     //-----------------------------------------------------------------------
     /**
-     * Gets an iterator that iterates through two {@link Iterator}s
-     * one after another.
-     *
-     * @param <E>  the element type
-     * @param iterator1  the first iterator to use, not null
-     * @param iterator2  the second iterator to use, not null
-     * @return a combination iterator over the iterators
-     * @throws NullPointerException if either iterator is null
-     */
-    public static <E> Iterator<E> chainedIterator(final Iterator<? extends E> iterator1,
-                                                  final Iterator<? extends E> iterator2) {
-        return new IteratorChain<E>(iterator1, iterator2);
-    }
-
-    /**
      * Gets an iterator that iterates through an array of {@link Iterator}s
      * one after another.
      *
@@ -495,7 +480,7 @@ public class IteratorUtils {
      * @return a combination iterator over the iterators
      * @throws NullPointerException if iterators array is null or contains a null
      */
-    public static <E> Iterator<E> chainedIterator(final Iterator<? extends E>[] iterators) {
+    public static <E> Iterator<E> chainedIterator(final Iterator<? extends E>... iterators) {
         return new IteratorChain<E>(iterators);
     }
 
@@ -555,7 +540,7 @@ public class IteratorUtils {
      * @throws NullPointerException if iterators array is null or contains a null value
      */
     public static <E> Iterator<E> collatedIterator(final Comparator<? super E> comparator,
-                                                   final Iterator<? extends E>[] iterators) {
+                                                   final Iterator<? extends E>... iterators) {
         return new CollatingIterator<E>(comparator, iterators);
     }
 

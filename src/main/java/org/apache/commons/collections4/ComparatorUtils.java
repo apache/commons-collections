@@ -65,24 +65,6 @@ public class ComparatorUtils {
     }
 
     /**
-     * Gets a comparator that compares using two {@link Comparator}s.
-     * <p>
-     * The second comparator is used if the first comparator returns equal.
-     *
-     * @param <E>  the object type to compare
-     * @param comparator1  the first comparator to use, not null
-     * @param comparator2  the first comparator to use, not null
-     * @return a {@link ComparatorChain} formed from the two comparators
-     * @throws NullPointerException if either comparator is null
-     * @see ComparatorChain
-     */
-    @SuppressWarnings("unchecked")
-    public static <E extends Comparable<? super E>> Comparator<E> chainedComparator(final Comparator<E> comparator1,
-                                                                                    final Comparator<E> comparator2) {
-        return chainedComparator(new Comparator[] {comparator1, comparator2});
-    }
-
-    /**
      * Gets a comparator that compares using an array of {@link Comparator}s, applied
      * in sequence until one returns not equal or the array is exhausted.
      *
@@ -93,7 +75,7 @@ public class ComparatorUtils {
      * @see ComparatorChain
      */
     public static <E extends Comparable<? super E>> Comparator<E> chainedComparator(
-            final Comparator<E>[] comparators) {
+            final Comparator<E>... comparators) {
 
         final ComparatorChain<E> chain = new ComparatorChain<E>();
         for (final Comparator<E> comparator : comparators) {
