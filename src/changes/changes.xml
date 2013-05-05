@@ -218,6 +218,9 @@
       "AbstractCollectionDecorator" will now use internally "decorated()" to access
       the decorated collection.
     </action>
+    <action issue="COLLECTIONS-351" dev="bayard" type="remove" due-to="Henri Yandell">
+      Removed features which are now supported by the JDK.
+    </action>
     <action issue="COLLECTIONS-350" dev="bayard" type="fix" due-to="Michael Akerman">
       Removed debug output in "MapUtils#getNumber(Map)".
     </action>
