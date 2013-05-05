@@ -88,8 +88,8 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(Integer.valueOf(66), array[0].getValue());
         assertEquals(Integer.valueOf(66), map.get(array[0].getKey()));
 
-        final Map.Entry entry = entrySet.iterator().next();
-        entry.setValue("88");
+        final Map.Entry<K, V> entry = entrySet.iterator().next();
+        entry.setValue((V) "88");
         assertEquals(Integer.valueOf(88), entry.getValue());
         assertEquals(Integer.valueOf(88), map.get(entry.getKey()));
     }
