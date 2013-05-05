@@ -52,6 +52,7 @@ public final class UnmodifiableOrderedBidiMap<K, V>
      * @param map  the map to decorate, must not be null
      * @return an unmodifiable OrderedBidiMap
      * @throws IllegalArgumentException if map is null
+     * @since 4.0
      */
     public static <K, V> OrderedBidiMap<K, V> unmodifiableOrderedBidiMap(final OrderedBidiMap<K, V> map) {
         if (map instanceof Unmodifiable) {

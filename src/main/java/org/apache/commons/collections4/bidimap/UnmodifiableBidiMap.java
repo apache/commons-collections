@@ -52,6 +52,7 @@ public final class UnmodifiableBidiMap<K, V>
      * @param map  the map to decorate, must not be null
      * @return an unmodifiable BidiMap
      * @throws IllegalArgumentException if map is null
+     * @since 4.0
      */
     public static <K, V> BidiMap<K, V> unmodifiableBidiMap(final BidiMap<K, V> map) {
         if (map instanceof Unmodifiable) {
