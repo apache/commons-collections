@@ -56,6 +56,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed collection
      * @throws IllegalArgumentException if collection or transformer is null
+     * @since 4.0
      */
     public static <E> TransformedCollection<E> transformingCollection(final Collection<E> coll,
             final Transformer<? super E, ? extends E> transformer) {

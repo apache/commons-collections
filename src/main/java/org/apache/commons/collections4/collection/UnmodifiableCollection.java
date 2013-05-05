@@ -49,6 +49,7 @@ public final class UnmodifiableCollection<E>
      * @param coll  the collection to decorate, must not be null
      * @return an unmodifiable collection
      * @throws IllegalArgumentException if collection is null
+     * @since 4.0
      */
     public static <T> Collection<T> unmodifiableCollection(final Collection<T> coll) {
         if (coll instanceof Unmodifiable) {

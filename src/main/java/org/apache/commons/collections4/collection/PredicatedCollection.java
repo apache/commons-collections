@@ -57,6 +57,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * @return a new predicated collection
      * @throws IllegalArgumentException if collection or predicate is null
      * @throws IllegalArgumentException if the collection contains invalid elements
+     * @since 4.0
      */
     public static <T> PredicatedCollection<T> predicatedCollection(final Collection<T> coll,
                                                                    final Predicate<? super T> predicate) {

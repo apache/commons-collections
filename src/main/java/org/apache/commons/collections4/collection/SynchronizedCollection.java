@@ -55,6 +55,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
      * @param coll  the collection to decorate, must not be null
      * @return a new synchronized collection
      * @throws IllegalArgumentException if collection is null
+     * @since 4.0
      */
     public static <T> SynchronizedCollection<T> synchronizedCollection(final Collection<T> coll) {
         return new SynchronizedCollection<T>(coll);
