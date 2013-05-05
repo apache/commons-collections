@@ -841,7 +841,6 @@ public class IteratorUtilsTest extends BulkTest {
 
     /**
      * creates an array of four Node instances, mocked by EasyMock.
-     * @return
      */
     private Node[] createNodes() {
         final Node node1 = createMock(Node.class);
