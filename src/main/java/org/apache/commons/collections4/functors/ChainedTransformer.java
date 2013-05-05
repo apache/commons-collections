@@ -52,7 +52,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
         if (transformers.length == 0) {
             return NOPTransformer.<T>nopTransformer();
         }
-        return new ChainedTransformer<T>(FunctorUtils.copy(transformers));
+        return new ChainedTransformer<T>(transformers);
     }
 
     /**
@@ -77,18 +77,28 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
         // convert to array like this to guarantee iterator() ordering
         final Transformer<T, T>[] cmds = transformers.toArray(new Transformer[transformers.size()]);
         FunctorUtils.validate(cmds);
-        return new ChainedTransformer<T>(cmds);
+        return new ChainedTransformer<T>(false, cmds);
+    }
+
+    /**
+     * Hidden constructor for the use by the static factory methods.
+     *
+     * @param clone  if {@code true} the input argument will be cloned
+     * @param transformers  the transformers to chain, not copied, no nulls
+     */
+    private ChainedTransformer(final boolean clone, final Transformer<? super T, ? extends T>[] transformers) {
+        super();
+        iTransformers = clone ? FunctorUtils.copy(transformers) : transformers;
     }
 
     /**
      * Constructor that performs no validation.
      * Use <code>chainedTransformer</code> if you want that.
      *
-     * @param transformers  the transformers to chain, not copied, no nulls
+     * @param transformers  the transformers to chain, copied, no nulls
      */
-    public ChainedTransformer(final Transformer<? super T, ? extends T>[] transformers) {
-        super();
-        iTransformers = transformers;
+    public ChainedTransformer(final Transformer<? super T, ? extends T>... transformers) {
+        this(true, transformers);
     }
 
     /**

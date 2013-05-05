@@ -49,7 +49,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
         if (closures.length == 0) {
             return NOPClosure.<E>nopClosure();
         }
-        return new ChainedClosure<E>(FunctorUtils.copy(closures));
+        return new ChainedClosure<E>(closures);
     }
 
     /**
@@ -78,18 +78,28 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
             cmds[i++] = closure;
         }
         FunctorUtils.validate(cmds);
-        return new ChainedClosure<E>(cmds);
+        return new ChainedClosure<E>(false, cmds);
+    }
+
+    /**
+     * Hidden constructor for the use by the static factory methods.
+     *
+     * @param clone  if {@code true} the input argument will be cloned
+     * @param closures  the closures to chain, no nulls
+     */
+    private ChainedClosure(final boolean clone, final Closure<? super E>... closures) {
+        super();
+        iClosures = clone ? FunctorUtils.copy(closures) : closures;
     }
 
     /**
      * Constructor that performs no validation.
      * Use <code>chainedClosure</code> if you want that.
      *
-     * @param closures  the closures to chain, not copied, no nulls
+     * @param closures  the closures to chain, copied, no nulls
      */
-    public ChainedClosure(final Closure<? super E>[] closures) {
-        super();
-        iClosures = closures;
+    public ChainedClosure(final Closure<? super E>... closures) {
+        this(true, closures);
     }
 
     /**
