@@ -91,7 +91,7 @@ public final class AnyPredicate<T> extends AbstractQuantifierPredicate<T> implem
      *
      * @param predicates  the predicates to check, not cloned, not null
      */
-    public AnyPredicate(final Predicate<? super T>[] predicates) {
+    public AnyPredicate(final Predicate<? super T>... predicates) {
         super(predicates);
     }
 

@@ -81,7 +81,7 @@ public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> imple
      *
      * @param predicates  the predicates to check, not cloned, not null
      */
-    public NonePredicate(final Predicate<? super T>[] predicates) {
+    public NonePredicate(final Predicate<? super T>... predicates) {
         super(predicates);
     }
 

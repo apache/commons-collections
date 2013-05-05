@@ -39,7 +39,7 @@ public abstract class AbstractQuantifierPredicate<T> implements Predicate<T>, Pr
      *
      * @param predicates  the predicates to check, not cloned, not null
      */
-    public AbstractQuantifierPredicate(final Predicate<? super T> ... predicates) {
+    public AbstractQuantifierPredicate(final Predicate<? super T>... predicates) {
         iPredicates = predicates;
     }
 

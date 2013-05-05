@@ -81,7 +81,7 @@ public final class OnePredicate<T> extends AbstractQuantifierPredicate<T> implem
      *
      * @param predicates  the predicates to check, not cloned, not null
      */
-    public OnePredicate(final Predicate<? super T>[] predicates) {
+    public OnePredicate(final Predicate<? super T>... predicates) {
         super(predicates);
     }
 

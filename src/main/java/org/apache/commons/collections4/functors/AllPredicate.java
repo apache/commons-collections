@@ -53,7 +53,7 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> implem
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static <T> Predicate<T> allPredicate(final Predicate<? super T> ... predicates) {
+    public static <T> Predicate<T> allPredicate(final Predicate<? super T>... predicates) {
         FunctorUtils.validate(predicates);
         if (predicates.length == 0) {
             return truePredicate();
@@ -94,7 +94,7 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> implem
      *
      * @param predicates  the predicates to check, not cloned, not null
      */
-    public AllPredicate(final Predicate<? super T> ... predicates) {
+    public AllPredicate(final Predicate<? super T>... predicates) {
         super(predicates);
     }
 
