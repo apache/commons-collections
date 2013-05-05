@@ -49,6 +49,7 @@ public final class UnmodifiableList<E>
      * @param list  the list to decorate, must not be null
      * @return a new unmodifiable list
      * @throws IllegalArgumentException if list is null
+     * @since 4.0
      */
     public static <E> List<E> unmodifiableList(final List<E> list) {
         if (list instanceof Unmodifiable) {

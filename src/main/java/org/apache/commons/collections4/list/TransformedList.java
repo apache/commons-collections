@@ -54,6 +54,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed list
      * @throws IllegalArgumentException if list or transformer is null
+     * @since 4.0
      */
     public static <E> TransformedList<E> transformingList(final List<E> list,
                                                           final Transformer<? super E, ? extends E> transformer) {

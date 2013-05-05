@@ -50,6 +50,7 @@ public class FixedSizeList<E>
      * @param list  the list to decorate, must not be null
      * @return a new fixed size list
      * @throws IllegalArgumentException if list is null
+     * @since 4.0
      */
     public static <E> FixedSizeList<E> fixedSizeList(final List<E> list) {
         return new FixedSizeList<E>(list);

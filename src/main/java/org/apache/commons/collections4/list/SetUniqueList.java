@@ -62,13 +62,11 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * If the list contains duplicates, these are removed (first indexed one
      * kept). A <code>HashSet</code> is used for the set behaviour.
      *
-     * @param <E>
-     *            the element type
-     * @param list
-     *            the list to decorate, must not be null
+     * @param <E>  the element type
+     * @param list  the list to decorate, must not be null
      * @return a new {@link SetUniqueList}
-     * @throws IllegalArgumentException
-     *             if list is null
+     * @throws IllegalArgumentException if list is null
+     * @since 4.0
      */
     public static <E> SetUniqueList<E> setUniqueList(final List<E> list) {
         if (list == null) {
@@ -86,17 +84,13 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
 
     // -----------------------------------------------------------------------
     /**
-     * Constructor that wraps (not copies) the List and specifies the set to
-     * use.
+     * Constructor that wraps (not copies) the List and specifies the set to use.
      * <p>
      * The set and list must both be correctly initialised to the same elements.
      *
-     * @param set
-     *            the set to decorate, must not be null
-     * @param list
-     *            the list to decorate, must not be null
-     * @throws IllegalArgumentException
-     *             if set or list is null
+     * @param set  the set to decorate, must not be null
+     * @param list  the list to decorate, must not be null
+     * @throws IllegalArgumentException if set or list is null
      */
     protected SetUniqueList(final List<E> list, final Set<E> set) {
         super(list);
@@ -124,8 +118,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * method returns <code>true</code> always. However this class may return
      * <code>false</code> because of the <code>Set</code> behaviour.
      *
-     * @param object
-     *            the object to add
+     * @param object  the object to add
      * @return true if object was added
      */
     @Override
@@ -148,10 +141,8 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * that the element is always inserted. This may not happen with this
      * implementation.
      *
-     * @param index
-     *            the index to insert at
-     * @param object
-     *            the object to add
+     * @param index  the index to insert at
+     * @param object  the object to add
      */
     @Override
     public void add(final int index, final E object) {
@@ -172,8 +163,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * that the elements are always inserted. This may not happen with this
      * implementation.
      *
-     * @param coll
-     *            the collection to add in iterator order
+     * @param coll  the collection to add in iterator order
      * @return true if this collection changed
      */
     @Override
@@ -192,10 +182,8 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * that the elements are always inserted. This may not happen with this
      * implementation.
      *
-     * @param index
-     *            the index to insert at
-     * @param coll
-     *            the collection to add in iterator order
+     * @param index  the index to insert at
+     * @param coll  the collection to add in iterator order
      * @return true if this collection changed
      */
     @Override
@@ -217,10 +205,8 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * duplicate is removed. If the object is not already in the list then a
      * normal set occurs. If it is present, then the old version is removed.
      *
-     * @param index
-     *            the index to insert at
-     * @param object
-     *            the object to set
+     * @param index  the index to insert at
+     * @param object  the object to set
      * @return the previous object
      */
     @Override
@@ -336,12 +322,10 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * Create a new {@link Set} with the same type as the provided {@code set}
      * and populate it with all elements of {@code list}.
      *
-     * @param set
-     *            the {@link Set} to be used as return type, must not be null
-     * @param list
-     *            the {@link List} to populate the {@link Set}
+     * @param set  the {@link Set} to be used as return type, must not be null
+     * @param list  the {@link List} to populate the {@link Set}
      * @return a new {@link Set} populated with all elements of the provided
-     *         {@link List}
+     *   {@link List}
      */
     @SuppressWarnings("unchecked")
     protected Set<E> createSetBasedOnList(final Set<E> set, final List<E> list) {

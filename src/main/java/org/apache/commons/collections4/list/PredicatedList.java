@@ -57,6 +57,7 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
      * @return a new predicated list
      * @throws IllegalArgumentException if list or predicate is null
      * @throws IllegalArgumentException if the list contains invalid elements
+     * @since 4.0
      */
     public static <T> PredicatedList<T> predicatedList(final List<T> list, final Predicate<? super T> predicate) {
         return new PredicatedList<T>(list, predicate);
