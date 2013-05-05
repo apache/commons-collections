@@ -48,7 +48,7 @@ public class ConstantFactory<T> implements Factory<T>, Serializable {
      * @param constantToReturn  the constant object to return each time in the factory
      * @return the <code>constant</code> factory.
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked") // The null factory works for all object types
     public static <T> Factory<T> constantFactory(final T constantToReturn) {
         if (constantToReturn == null) {
             return (Factory<T>) NULL_INSTANCE;

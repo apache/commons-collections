@@ -42,7 +42,7 @@ public final class ExceptionClosure<E> implements Closure<E>, Serializable {
      * @return the singleton instance
      * @since 3.1
      */
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")  // the static instance works for all types
     public static <E> Closure<E> exceptionClosure() {
         return (Closure<E>) INSTANCE;
     }
