@@ -72,7 +72,7 @@ public class ListOrderedSet<E>
      * @return a new ordered set
      * @throws IllegalArgumentException if set or list is null
      * @throws IllegalArgumentException if either the set or list is not empty
-     * @since 3.1
+     * @since 4.0
      */
     public static <E> ListOrderedSet<E> listOrderedSet(final Set<E> set, final List<E> list) {
         if (set == null) {
@@ -96,6 +96,7 @@ public class ListOrderedSet<E>
      * @param set the set to decorate, must not be null
      * @return a new ordered set
      * @throws IllegalArgumentException if set is null
+     * @since 4.0
      */
     public static <E> ListOrderedSet<E> listOrderedSet(final Set<E> set) {
         return new ListOrderedSet<E>(set);
@@ -114,6 +115,7 @@ public class ListOrderedSet<E>
      * @param list the list to decorate, must not be null
      * @return a new ordered set
      * @throws IllegalArgumentException if list is null
+     * @since 4.0
      */
     public static <E> ListOrderedSet<E> listOrderedSet(final List<E> list) {
         if (list == null) {

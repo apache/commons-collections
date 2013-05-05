@@ -51,6 +51,7 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed {@link SortedSet}
      * @throws IllegalArgumentException if set or transformer is null
+     * @since 4.0
      */
     public static <E> TransformedSortedSet<E> transformingSortedSet(final SortedSet<E> set,
             final Transformer<? super E, ? extends E> transformer) {

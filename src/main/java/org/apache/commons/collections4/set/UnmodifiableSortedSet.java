@@ -51,6 +51,7 @@ public final class UnmodifiableSortedSet<E>
      * @param set  the set to decorate, must not be null
      * @return a new unmodifiable {@link SortedSet}
      * @throws IllegalArgumentException if set is null
+     * @since 4.0
      */
     public static <E> SortedSet<E> unmodifiableSortedSet(final SortedSet<E> set) {
         if (set instanceof Unmodifiable) {
