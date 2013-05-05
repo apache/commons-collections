@@ -34,6 +34,10 @@
       independent Map.Entry objects that will not change anymore when
       the iterator progresses.
     </action>
+    <action issue="COLLECTIONS-453" dev="tn" type="update">
+      Several closure and transformer implementations in the functors package
+      will now copy an array as input to their constructor (e.g. ChainedClosure).
+    </action>    
     <action issue="COLLECTIONS-452" dev="tn" type="update">
       Change base package to org.apache.commons.collections4.
     </action>
