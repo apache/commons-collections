@@ -46,7 +46,7 @@ class FunctorUtils {
      * @return the cloned predicates
      */
     @SuppressWarnings("unchecked")
-    static <T> Predicate<T>[] copy(final Predicate<? super T>[] predicates) {
+    static <T> Predicate<T>[] copy(final Predicate<? super T>... predicates) {
         if (predicates == null) {
             return null;
         }
@@ -75,7 +75,7 @@ class FunctorUtils {
      *
      * @param predicates  the predicates to validate
      */
-    static void validate(final Predicate<?>[] predicates) {
+    static void validate(final Predicate<?>... predicates) {
         if (predicates == null) {
             throw new IllegalArgumentException("The predicate array must not be null");
         }
@@ -119,7 +119,7 @@ class FunctorUtils {
      * @return the cloned closures
      */
     @SuppressWarnings("unchecked")
-    static <E> Closure<E>[] copy(final Closure<? super E>[] closures) {
+    static <E> Closure<E>[] copy(final Closure<? super E>... closures) {
         if (closures == null) {
             return null;
         }
@@ -131,7 +131,7 @@ class FunctorUtils {
      *
      * @param closures  the closures to validate
      */
-    static void validate(final Closure<?>[] closures) {
+    static void validate(final Closure<?>... closures) {
         if (closures == null) {
             throw new IllegalArgumentException("The closure array must not be null");
         }
@@ -165,7 +165,7 @@ class FunctorUtils {
      * @return a clone of the transformers
      */
     @SuppressWarnings("unchecked")
-    static <I, O> Transformer<I, O>[] copy(final Transformer<? super I, ? extends O>[] transformers) {
+    static <I, O> Transformer<I, O>[] copy(final Transformer<? super I, ? extends O>... transformers) {
         if (transformers == null) {
             return null;
         }
@@ -177,7 +177,7 @@ class FunctorUtils {
      *
      * @param transformers  the transformers to validate
      */
-    static void validate(final Transformer<?, ?>[] transformers) {
+    static void validate(final Transformer<?, ?>... transformers) {
         if (transformers == null) {
             throw new IllegalArgumentException("The transformer array must not be null");
         }
