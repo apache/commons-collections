@@ -71,6 +71,7 @@ public class TransformedMap<K, V>
      * @param valueTransformer  the transformer to use for value conversion, null means no transformation
      * @return a new transformed map
      * @throws IllegalArgumentException if map is null
+     * @since 4.0
      */
     public static <K, V> TransformedMap<K, V> transformingMap(final Map<K, V> map,
             final Transformer<? super K, ? extends K> keyTransformer,
@@ -93,7 +94,7 @@ public class TransformedMap<K, V>
      * @param valueTransformer  the transformer to use for value conversion, null means no transformation
      * @return a new transformed map
      * @throws IllegalArgumentException if map is null
-     * @since 3.2
+     * @since 4.0
      */
     public static <K, V> TransformedMap<K, V> transformedMap(final Map<K, V> map,
             final Transformer<? super K, ? extends K> keyTransformer,

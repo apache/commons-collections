@@ -61,6 +61,7 @@ public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements So
      * @param valuePredicate  the predicate to validate to values, null means no check
      * @return a new predicated sorted map
      * @throws IllegalArgumentException if the map is null
+     * @since 4.0
      */
     public static <K, V> PredicatedSortedMap<K, V> predicatedSortedMap(final SortedMap<K, V> map,
             final Predicate<? super K> keyPredicate, final Predicate<? super V> valuePredicate) {

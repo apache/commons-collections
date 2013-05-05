@@ -57,6 +57,7 @@ public final class UnmodifiableMap<K, V>
      * @param map  the map to decorate, must not be null
      * @return a new unmodifiable map
      * @throws IllegalArgumentException if map is null
+     * @since 4.0
      */
     public static <K, V> Map<K, V> unmodifiableMap(final Map<K, V> map) {
         if (map instanceof Unmodifiable) {

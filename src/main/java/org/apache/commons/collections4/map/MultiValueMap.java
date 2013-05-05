@@ -81,6 +81,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @param <V>  the value type
      * @param map  the map to wrap
      * @return a new multi-value map
+     * @since 4.0
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static <K, V> MultiValueMap<K, V> multiValueMap(final Map<K, ? super Collection<V>> map) {
@@ -97,6 +98,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @param map  the map to wrap
      * @param collectionClass  the type of the collection class
      * @return a new multi-value map
+     * @since 4.0
      */
     public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(final Map<K, ? super C> map,
                                                                                     final Class<C> collectionClass) {
@@ -113,6 +115,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @param map  the map to decorate
      * @param collectionFactory  the collection factory (must return a Collection object).
      * @return a new multi-value map
+     * @since 4.0
      */
     public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(final Map<K, ? super C> map,
             final Factory<C> collectionFactory) {

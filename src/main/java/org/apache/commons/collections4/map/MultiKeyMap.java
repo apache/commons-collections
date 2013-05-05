@@ -91,6 +91,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param map  the map to decorate, not null
      * @return a new multi key map
      * @throws IllegalArgumentException if the map is null or not empty
+     * @since 4.0
      */
     public static <K, V> MultiKeyMap<K, V> multiKeyMap(final AbstractHashedMap<MultiKey<? extends K>, V> map) {
         if (map == null) {

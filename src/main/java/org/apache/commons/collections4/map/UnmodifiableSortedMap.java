@@ -55,6 +55,7 @@ public final class UnmodifiableSortedMap<K, V>
      * @param map  the map to decorate, must not be null
      * @return a new unmodifiable sorted map
      * @throws IllegalArgumentException if map is null
+     * @since 4.0
      */
     public static <K, V> SortedMap<K, V> unmodifiableSortedMap(final SortedMap<K, V> map) {
         if (map instanceof Unmodifiable) {

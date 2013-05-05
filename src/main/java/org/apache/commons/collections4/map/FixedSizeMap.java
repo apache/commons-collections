@@ -67,6 +67,7 @@ public class FixedSizeMap<K, V>
      * @param map  the map to decorate, must not be null
      * @return a new fixed size map
      * @throws IllegalArgumentException if map is null
+     * @since 4.0
      */
     public static <K, V> FixedSizeMap<K, V> fixedSizeMap(final Map<K, V> map) {
         return new FixedSizeMap<K, V>(map);

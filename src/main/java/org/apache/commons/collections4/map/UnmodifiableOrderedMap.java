@@ -55,6 +55,7 @@ public final class UnmodifiableOrderedMap<K, V> extends AbstractOrderedMapDecora
      * @param map  the map to decorate, must not be null
      * @return a new ordered map
      * @throws IllegalArgumentException if map is null
+     * @since 4.0
      */
     public static <K, V> OrderedMap<K, V> unmodifiableOrderedMap(final OrderedMap<K, V> map) {
         if (map instanceof Unmodifiable) {

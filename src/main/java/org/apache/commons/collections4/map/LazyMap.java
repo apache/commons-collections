@@ -76,6 +76,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
      * @param factory  the factory to use, must not be null
      * @return a new lazy map
      * @throws IllegalArgumentException if map or factory is null
+     * @since 4.0
      */
     public static <K, V> LazyMap<K, V> lazyMap(final Map<K, V> map, final Factory< ? extends V> factory) {
         return new LazyMap<K,V>(map, factory);
@@ -90,6 +91,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, 
      * @param factory  the factory to use, must not be null
      * @return a new lazy map
      * @throws IllegalArgumentException if map or factory is null
+     * @since 4.0
      */
     public static <V, K> LazyMap<K, V> lazyMap(final Map<K, V> map, final Transformer<? super K, ? extends V> factory) {
         return new LazyMap<K,V>(map, factory);
