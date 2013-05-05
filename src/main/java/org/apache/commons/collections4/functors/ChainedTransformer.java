@@ -84,7 +84,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
      * Hidden constructor for the use by the static factory methods.
      *
      * @param clone  if {@code true} the input argument will be cloned
-     * @param transformers  the transformers to chain, not copied, no nulls
+     * @param transformers  the transformers to chain, no nulls
      */
     private ChainedTransformer(final boolean clone, final Transformer<? super T, ? extends T>[] transformers) {
         super();

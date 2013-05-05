@@ -66,9 +66,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
             return (Transformer<I, O>) (defaultTransformer == null ? ConstantTransformer.<I, O>nullTransformer() :
                                                                      defaultTransformer);
         }
-        return new SwitchTransformer<I, O>(FunctorUtils.copy(predicates),
-                                           FunctorUtils.copy(transformers),
-                                           defaultTransformer);
+        return new SwitchTransformer<I, O>(predicates, transformers, defaultTransformer);
     }
 
     /**
@@ -116,26 +114,40 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
             transformers[i] = entry.getValue();
             i++;
         }
-        return new SwitchTransformer<I, O>(preds, transformers, defaultTransformer);
+        return new SwitchTransformer<I, O>(false, preds, transformers, defaultTransformer);
+    }
+
+    /**
+     * Hidden constructor for the use by the static factory methods.
+     *
+     * @param clone  if {@code true} the input arguments will be cloned
+     * @param predicates  array of predicates, no nulls
+     * @param transformers  matching array of transformers, no nulls
+     * @param defaultTransformer  the transformer to use if no match, null means return null
+     */
+    @SuppressWarnings("unchecked")
+    private SwitchTransformer(final boolean clone, final Predicate<? super I>[] predicates,
+                             final Transformer<? super I, ? extends O>[] transformers,
+                             final Transformer<? super I, ? extends O> defaultTransformer) {
+        super();
+        iPredicates = clone ? FunctorUtils.copy(predicates) : predicates;
+        iTransformers = clone ? FunctorUtils.copy(transformers) : transformers;
+        iDefault = (Transformer<? super I, ? extends O>) (defaultTransformer == null ?
+                ConstantTransformer.<I, O>nullTransformer() : defaultTransformer);
     }
 
     /**
      * Constructor that performs no validation.
      * Use <code>switchTransformer</code> if you want that.
      *
-     * @param predicates  array of predicates, not cloned, no nulls
-     * @param transformers  matching array of transformers, not cloned, no nulls
+     * @param predicates  array of predicates, cloned, no nulls
+     * @param transformers  matching array of transformers, cloned, no nulls
      * @param defaultTransformer  the transformer to use if no match, null means return null
      */
-    @SuppressWarnings("unchecked")
     public SwitchTransformer(final Predicate<? super I>[] predicates,
             final Transformer<? super I, ? extends O>[] transformers,
             final Transformer<? super I, ? extends O> defaultTransformer) {
-        super();
-        iPredicates = predicates;
-        iTransformers = transformers;
-        iDefault = (Transformer<? super I, ? extends O>) (defaultTransformer == null ?
-                ConstantTransformer.<I, O>nullTransformer() : defaultTransformer);
+        this(true, predicates, transformers, defaultTransformer);
     }
 
     /**

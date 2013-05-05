@@ -64,7 +64,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
         if (predicates.length == 0) {
             return (Closure<E>) (defaultClosure == null ? NOPClosure.<E>nopClosure(): defaultClosure);
         }
-        return new SwitchClosure<E>(FunctorUtils.copy(predicates), FunctorUtils.copy(closures), defaultClosure);
+        return new SwitchClosure<E>(predicates, closures, defaultClosure);
     }
 
     /**
@@ -104,24 +104,37 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
             closures[i] = entry.getValue();
             i++;
         }
-        return new SwitchClosure<E>(preds, closures, defaultClosure);
+        return new SwitchClosure<E>(false, preds, closures, defaultClosure);
+    }
+
+    /**
+     * Hidden constructor for the use by the static factory methods.
+     *
+     * @param clone  if {@code true} the input arguments will be cloned
+     * @param predicates  array of predicates, no nulls
+     * @param closures  matching array of closures, no nulls
+     * @param defaultClosure  the closure to use if no match, null means nop
+     */
+    @SuppressWarnings("unchecked")
+    private SwitchClosure(final boolean clone, final Predicate<? super E>[] predicates,
+                          final Closure<? super E>[] closures, final Closure<? super E> defaultClosure) {
+        super();
+        iPredicates = clone ? FunctorUtils.copy(predicates) : predicates;
+        iClosures = clone ? FunctorUtils.copy(closures) : closures;
+        iDefault = (Closure<? super E>) (defaultClosure == null ? NOPClosure.<E>nopClosure() : defaultClosure);
     }
 
     /**
      * Constructor that performs no validation.
      * Use <code>switchClosure</code> if you want that.
      *
-     * @param predicates  array of predicates, not cloned, no nulls
-     * @param closures  matching array of closures, not cloned, no nulls
+     * @param predicates  array of predicates, cloned, no nulls
+     * @param closures  matching array of closures, cloned, no nulls
      * @param defaultClosure  the closure to use if no match, null means nop
      */
-    @SuppressWarnings("unchecked")
     public SwitchClosure(final Predicate<? super E>[] predicates, final Closure<? super E>[] closures,
                          final Closure<? super E> defaultClosure) {
-        super();
-        iPredicates = predicates;
-        iClosures = closures;
-        iDefault = (Closure<? super E>) (defaultClosure == null ? NOPClosure.<E>nopClosure() : defaultClosure);
+        this(true, predicates, closures, defaultClosure);
     }
 
     /**
