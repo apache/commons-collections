@@ -81,4 +81,10 @@
     <Bug pattern="EI_EXPOSE_REP2" />
   </Match>
 
+  <!-- The unread field is used to make a hard reference to ensure the value will not be gc'ed -->
+  <Match>
+    <Class name="org.apache.commons.collections4.map.AbstractReferenceMap$ReferenceBaseIterator" />
+    <Bug pattern="URF_UNREAD_FIELD" />
+  </Match>
+
 </FindBugsFilter>
