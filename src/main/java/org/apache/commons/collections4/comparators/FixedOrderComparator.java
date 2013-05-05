@@ -89,7 +89,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      * @param items  the items that the comparator can compare in order
      * @throws IllegalArgumentException if the array is null
      */
-    public FixedOrderComparator(final T[] items) {
+    public FixedOrderComparator(final T... items) {
         super();
         if (items == null) {
             throw new IllegalArgumentException("The list of items must not be null");
