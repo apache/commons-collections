@@ -91,6 +91,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      * @param trueFirst when <code>true</code>, sort
      * <code>true</code> <code>Boolean</code>s before <code>false</code>
      * @return a singleton BooleanComparator instance
+     * @since 4.0
      */
     public static BooleanComparator booleanComparator(final boolean trueFirst) {
         return trueFirst ? TRUE_FIRST : FALSE_FIRST;
