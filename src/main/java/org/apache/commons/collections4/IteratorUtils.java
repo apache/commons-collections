@@ -471,6 +471,22 @@ public class IteratorUtils {
 
     // Chained
     //-----------------------------------------------------------------------
+
+    /**
+     * Gets an iterator that iterates through two {@link Iterator}s
+     * one after another.
+     *
+     * @param <E>  the element type
+     * @param iterator1  the first iterator to use, not null
+     * @param iterator2  the second iterator to use, not null
+     * @return a combination iterator over the iterators
+     * @throws NullPointerException if either iterator is null
+     */
+    public static <E> Iterator<E> chainedIterator(final Iterator<? extends E> iterator1,
+                                                  final Iterator<? extends E> iterator2) {
+        return new IteratorChain<E>(iterator1, iterator2);
+    }
+
     /**
      * Gets an iterator that iterates through an array of {@link Iterator}s
      * one after another.
