@@ -51,6 +51,7 @@ import org.apache.commons.collections4.iterators.ObjectArrayIterator;
 import org.apache.commons.collections4.iterators.ObjectArrayListIterator;
 import org.apache.commons.collections4.iterators.ObjectGraphIterator;
 import org.apache.commons.collections4.iterators.PeekingIterator;
+import org.apache.commons.collections4.iterators.PushbackIterator;
 import org.apache.commons.collections4.iterators.SingletonIterator;
 import org.apache.commons.collections4.iterators.SingletonListIterator;
 import org.apache.commons.collections4.iterators.TransformIterator;
@@ -814,9 +815,26 @@ public class IteratorUtils {
      * @param iterator  the iterator to decorate, not null
      * @return a peeking iterator
      * @throws NullPointerException if the iterator is null
+     * @since 4.0
      */
     public static <E> Iterator<E> peekingIterator(final Iterator<? extends E> iterator) {
         return PeekingIterator.peekingIterator(iterator);
+    }
+
+    // Pushback
+    //-----------------------------------------------------------------------
+
+    /**
+     * Gets an iterator that supports pushback of elements.
+     *
+     * @param <E>  the element type
+     * @param iterator  the iterator to decorate, not null
+     * @return a pushback iterator
+     * @throws NullPointerException if the iterator is null
+     * @since 4.0
+     */
+    public static <E> Iterator<E> pushbackIterator(final Iterator<? extends E> iterator) {
+        return PushbackIterator.pushbackIterator(iterator);
     }
 
     // Views
