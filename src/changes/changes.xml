@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-462" dev="tn" type="add" due-to="Andy Seaborne, Claude Warren">
+      Added "PeekingIterator" decorator to support one-element lookahead during iteration.
+    </action>
     <action issue="COLLECTIONS-458" dev="sebb" type="remove">
       Removed unused class "AbstractUntypedCollectionDecorator&lt;E, D&gt;".
     </action>

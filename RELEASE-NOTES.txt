@@ -62,6 +62,7 @@ Removed classes
 New classes
 -----------
 
+ o [COLLECTIONS-462] PeekingIterator - supports one-element lookahead during iteration. Thanks to Andy Seaborne, Claude Warren.
  o [COLLECTIONS-432] CircularFifoQueue - analogous class to CircularFifoBuffer for the Queue interface
                      PredicatedQueue - analogous class to PredicatedBuffer
                      TransformedQueue - analogous class to TransformedBuffer

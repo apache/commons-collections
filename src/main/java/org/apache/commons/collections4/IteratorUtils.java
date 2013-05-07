@@ -50,6 +50,7 @@ import org.apache.commons.collections4.iterators.NodeListIterator;
 import org.apache.commons.collections4.iterators.ObjectArrayIterator;
 import org.apache.commons.collections4.iterators.ObjectArrayListIterator;
 import org.apache.commons.collections4.iterators.ObjectGraphIterator;
+import org.apache.commons.collections4.iterators.PeekingIterator;
 import org.apache.commons.collections4.iterators.SingletonIterator;
 import org.apache.commons.collections4.iterators.SingletonListIterator;
 import org.apache.commons.collections4.iterators.TransformIterator;
@@ -799,6 +800,21 @@ public class IteratorUtils {
             throw new NullPointerException("Node must not be null");
         }
         return new NodeListIterator(node);
+    }
+
+    // Peeking
+    //-----------------------------------------------------------------------
+
+    /**
+     * Gets an iterator that supports one-element lookahead.
+     *
+     * @param <E>  the element type
+     * @param iterator  the iterator to decorate, not null
+     * @return a peeking iterator
+     * @throws NullPointerException if the iterator is null
+     */
+    public static <E> Iterator<E> peekingIterator(final Iterator<? extends E> iterator) {
+        return PeekingIterator.peekingIterator(iterator);
     }
 
     // Views
