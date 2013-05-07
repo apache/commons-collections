@@ -485,6 +485,8 @@ public class IteratorUtils {
      */
     public static <E> Iterator<E> chainedIterator(final Iterator<? extends E> iterator1,
                                                   final Iterator<? extends E> iterator2) {
+        // keep a version with two iterators to avoid the following warning in client code (Java 5 & 6)
+        // "A generic array of E is created for a varargs parameter"
         return new IteratorChain<E>(iterator1, iterator2);
     }
 
