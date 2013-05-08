@@ -454,7 +454,7 @@
       Added support for resettable iterators in "IteratorIterable".
     </action>
     <action issue="COLLECTIONS-194" dev="bayard" type="add" due-to="Dave Meikle">
-      Added methods "MapUtils#populateMap(Map, Collection, Transformer, ...)".
+      Added methods "MapUtils#populateMap(Map, Iterable, Transformer, ...)".
     </action>
     <action issue="COLLECTIONS-182" dev="mbenson" type="update" due-to="Jim Cakalic">
       "CollectionUtils#forAllDo(Collection, Closure)" now returns the provided closure.

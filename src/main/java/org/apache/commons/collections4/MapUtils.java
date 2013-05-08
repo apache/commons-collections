@@ -1666,38 +1666,38 @@ public class MapUtils {
     }
 
     /**
-     * Populates a Map using the supplied <code>Transformer</code> to transform the collection
-     * values into keys, using the unaltered collection value as the value in the <code>Map</code>.
+     * Populates a Map using the supplied <code>Transformer</code> to transform the elements
+     * into keys, using the unaltered element as the value in the <code>Map</code>.
      *
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map the <code>Map</code> to populate.
-     * @param collection the <code>Collection</code> to use as input values for the map.
-     * @param keyTransformer the <code>Transformer</code> used to transform the collection value into a key value
-     * @throws NullPointerException if the map, collection or transformer are null
+     * @param elements the <code>Iterable</code> containing the input values for the map.
+     * @param keyTransformer the <code>Transformer</code> used to transform the element into a key value
+     * @throws NullPointerException if the map, elements or transformer are null
      */
-    public static <K, V> void populateMap(final Map<K, V> map, final Collection<? extends V> collection,
+    public static <K, V> void populateMap(final Map<K, V> map, final Iterable<? extends V> elements,
                                           final Transformer<V, K> keyTransformer) {
-        populateMap(map, collection, keyTransformer, TransformerUtils.<V>nopTransformer());
+        populateMap(map, elements, keyTransformer, TransformerUtils.<V>nopTransformer());
     }
 
     /**
-     * Populates a Map using the supplied <code>Transformer</code>s to transform the collection
-     * values into keys and values.
+     * Populates a Map using the supplied <code>Transformer</code>s to transform the elements
+     * into keys and values.
      *
      * @param <K>  the key type
      * @param <V>  the value type
-     * @param <E>  the type of object contained in the {@link Collection}
+     * @param <E>  the type of object contained in the {@link Iterable}
      * @param map the <code>Map</code> to populate.
-     * @param collection the <code>Collection</code> to use as input values for the map.
-     * @param keyTransformer the <code>Transformer</code> used to transform the collection value into a key value
-     * @param valueTransformer the <code>Transformer</code> used to transform the collection value into a value
-     * @throws NullPointerException if the map, collection or transformers are null
+     * @param elements the <code>Iterable</code> containing the input values for the map.
+     * @param keyTransformer the <code>Transformer</code> used to transform the element into a key value
+     * @param valueTransformer the <code>Transformer</code> used to transform the element into a value
+     * @throws NullPointerException if the map, elements or transformers are null
      */
-    public static <K, V, E> void populateMap(final Map<K, V> map, final Collection<? extends E> collection,
+    public static <K, V, E> void populateMap(final Map<K, V> map, final Iterable<? extends E> elements,
                                              final Transformer<E, K> keyTransformer,
                                              final Transformer<E, V> valueTransformer) {
-        final Iterator<? extends E> iter = collection.iterator();
+        final Iterator<? extends E> iter = elements.iterator();
         while (iter.hasNext()) {
             final E temp = iter.next();
             map.put(keyTransformer.transform(temp), valueTransformer.transform(temp));
@@ -1705,38 +1705,38 @@ public class MapUtils {
     }
 
     /**
-     * Populates a MultiMap using the supplied <code>Transformer</code> to transform the collection
-     * values into keys, using the unaltered collection value as the value in the <code>MultiMap</code>.
+     * Populates a MultiMap using the supplied <code>Transformer</code> to transform the elements
+     * into keys, using the unaltered element as the value in the <code>MultiMap</code>.
      *
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map the <code>MultiMap</code> to populate.
-     * @param collection the <code>Collection</code> to use as input values for the map.
-     * @param keyTransformer the <code>Transformer</code> used to transform the collection value into a key value
-     * @throws NullPointerException if the map, collection or transformer are null
+     * @param elements the <code>Iterable</code> to use as input values for the map.
+     * @param keyTransformer the <code>Transformer</code> used to transform the element into a key value
+     * @throws NullPointerException if the map, elements or transformer are null
      */
-    public static <K, V> void populateMap(final MultiMap<K, V> map, final Collection<? extends V> collection,
+    public static <K, V> void populateMap(final MultiMap<K, V> map, final Iterable<? extends V> elements,
                                           final Transformer<V, K> keyTransformer) {
-        populateMap(map, collection, keyTransformer, TransformerUtils.<V>nopTransformer());
+        populateMap(map, elements, keyTransformer, TransformerUtils.<V>nopTransformer());
     }
 
     /**
-     * Populates a MultiMap using the supplied <code>Transformer</code>s to transform the collection
-     * values into keys and values.
+     * Populates a MultiMap using the supplied <code>Transformer</code>s to transform the elements
+     * into keys and values.
      *
      * @param <K>  the key type
      * @param <V>  the value type
-     * @param <E>  the type of object contained in the {@link Collection}
+     * @param <E>  the type of object contained in the {@link Iterable}
      * @param map the <code>MultiMap</code> to populate.
-     * @param collection the <code>Collection</code> to use as input values for the map.
-     * @param keyTransformer the <code>Transformer</code> used to transform the collection value into a key value
-     * @param valueTransformer the <code>Transformer</code> used to transform the collection value into a value
+     * @param elements the <code>Iterable</code> containing the input values for the map.
+     * @param keyTransformer the <code>Transformer</code> used to transform the element into a key value
+     * @param valueTransformer the <code>Transformer</code> used to transform the element into a value
      * @throws NullPointerException if the map, collection or transformers are null
      */
-    public static <K, V, E> void populateMap(final MultiMap<K, V> map, final Collection<? extends E> collection,
+    public static <K, V, E> void populateMap(final MultiMap<K, V> map, final Iterable<? extends E> elements,
                                              final Transformer<E, K> keyTransformer,
                                              final Transformer<E, V> valueTransformer) {
-        final Iterator<? extends E> iter = collection.iterator();
+        final Iterator<? extends E> iter = elements.iterator();
         while (iter.hasNext()) {
             final E temp = iter.next();
             map.put(keyTransformer.transform(temp), valueTransformer.transform(temp));

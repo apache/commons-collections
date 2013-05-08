@@ -102,7 +102,7 @@ New methods in *Utils
  o [COLLECTIONS-286] CollectionUtils#extractSingleton(Collection). Thanks to Geoffrey De Smet.  
  o [COLLECTIONS-263] MapUtils#populateMap(MultiMap, ...) to support also "MultiMap" instances as input. Thanks to John Hunsley.  
  o [COLLECTIONS-235] ListUtils#indexOf(List, Predicate). Thanks to Nathan Egge. 
- o [COLLECTIONS-194] MapUtils#populateMap(Map, Collection, Transformer, ...). Thanks to Dave Meikle. 
+ o [COLLECTIONS-194] MapUtils#populateMap(Map, Iterable, Transformer, ...). Thanks to Dave Meikle. 
 
 
 New features
