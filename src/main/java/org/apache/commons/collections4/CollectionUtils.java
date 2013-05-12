@@ -43,7 +43,8 @@ import org.apache.commons.collections4.iterators.PermutationIterator;
 
 /**
  * Provides utility methods and decorators for {@link Collection} instances.
- * Method parameters will take {@link Iterable} objects when possible.
+ * <p>
+ * NOTE: From 4.0, method parameters will take {@link Iterable} objects when possible.
  *
  * @since 1.0
  * @version $Id$
@@ -212,11 +213,11 @@ public class CollectionUtils {
 
     /**
      * Returns a {@link Collection} containing the union of the given
-     * {@link Collection}s.
+     * {@link Iterable}s.
      * <p>
      * The cardinality of each element in the returned {@link Collection} will
      * be equal to the maximum of the cardinality of that element in the two
-     * given {@link Collection}s.
+     * given {@link Iterable}s.
      *
      * @param a the first collection, must not be null
      * @param b the second collection, must not be null
@@ -235,11 +236,11 @@ public class CollectionUtils {
 
     /**
      * Returns a {@link Collection} containing the intersection of the given
-     * {@link Collection}s.
+     * {@link Iterable}s.
      * <p>
      * The cardinality of each element in the returned {@link Collection} will
      * be equal to the minimum of the cardinality of that element in the two
-     * given {@link Collection}s.
+     * given {@link Iterable}s.
      *
      * @param a the first collection, must not be null
      * @param b the second collection, must not be null
@@ -259,7 +260,7 @@ public class CollectionUtils {
 
     /**
      * Returns a {@link Collection} containing the exclusive disjunction
-     * (symmetric difference) of the given {@link Collection}s.
+     * (symmetric difference) of the given {@link Iterable}s.
      * <p>
      * The cardinality of each element <i>e</i> in the returned
      * {@link Collection} will be equal to
@@ -432,12 +433,8 @@ public class CollectionUtils {
      * Only those elements present in the collection will appear as
      * keys in the map.
      *
-     * @param coll
-     *            the collection to get the cardinality map for, must not be
-     *            null
-     * @param <O>
-     *            the type of object in the returned {@link Map}. This is a
-     *            super type of <I>.
+     * @param <O>  the type of object in the returned {@link Map}. This is a super type of <I>.
+     * @param coll  the collection to get the cardinality map for, must not be null
      * @return the populated cardinality map
      */
     public static <O> Map<O, Integer> getCardinalityMap(final Iterable<? extends O> coll) {
@@ -638,12 +635,12 @@ public class CollectionUtils {
      * If the input collection or predicate is null, or no element of the collection
      * matches the predicate, null is returned.
      *
-     * @param <T>  the type of object the {@link Collection} contains
+     * @param <T>  the type of object the {@link Iterable} contains
      * @param collection  the collection to search, may be null
      * @param predicate  the predicate to use, may be null
      * @return the first element of the collection which matches the predicate or null if none could be found
      */
-    public static <T> T find(final Collection<T> collection, final Predicate<? super T> predicate) {
+    public static <T> T find(final Iterable<T> collection, final Predicate<? super T> predicate) {
         if (collection != null && predicate != null) {
             for (final T item : collection) {
                 if (predicate.evaluate(item)) {
@@ -659,13 +656,13 @@ public class CollectionUtils {
      * <p>
      * If the input collection or closure is null, there is no change made.
      *
-     * @param <T>  the type of object the {@link Collection} contains
+     * @param <T>  the type of object the {@link Iterable} contains
      * @param <C>  the closure type
      * @param collection  the collection to get the input from, may be null
      * @param closure  the closure to perform, may be null
      * @return closure
      */
-    public static <T, C extends Closure<? super T>> C forAllDo(final Collection<T> collection, final C closure) {
+    public static <T, C extends Closure<? super T>> C forAllDo(final Iterable<T> collection, final C closure) {
         if (collection != null && closure != null) {
             for (final T element : collection) {
                 closure.execute(element);
@@ -700,14 +697,14 @@ public class CollectionUtils {
      * <p>
      * If the input collection or closure is null, there is no change made.
      *
-     * @param <T>  the type of object the {@link Collection} contains
+     * @param <T>  the type of object the {@link Iterable} contains
      * @param <C>  the closure type
      * @param collection  the collection to get the input from, may be null
      * @param closure  the closure to perform, may be null
      * @return the last element in the collection, or null if either collection or closure is null
      * @since 4.0
      */
-    public static <T, C extends Closure<? super T>> T forAllButLastDo(final Collection<T> collection,
+    public static <T, C extends Closure<? super T>> T forAllButLastDo(final Iterable<T> collection,
                                                                       final C closure) {
         return collection != null && closure != null ? forAllButLastDo(collection.iterator(), closure) : null;
     }
@@ -794,7 +791,7 @@ public class CollectionUtils {
      * may reduce in size due to calling this method.
      *
      * @param <C>  the type of object the {@link Collection} contains
-     * @param collection  the {@link Iterable} to get the input from, may be null
+     * @param collection  the {@link Collection} to get the input from, may be null
      * @param transformer  the transformer to perform, may be null
      */
     public static <C> void transform(final Collection<C> collection,
@@ -865,15 +862,17 @@ public class CollectionUtils {
      * <p>
      * A <code>null</code> predicate matches no elements.
      *
-     * @param <O>  the type of object the {@link Collection} contains
+     * @param <O>  the type of object the {@link Iterable} contains
      * @param inputCollection  the collection to get the input from, may not be null
      * @param predicate  the predicate to use, may be null
      * @return the elements matching the predicate (new list)
      * @throws NullPointerException if the input collection is null
      */
-    public static <O> Collection<O> select(final Collection<? extends O> inputCollection,
+    public static <O> Collection<O> select(final Iterable<? extends O> inputCollection,
             final Predicate<? super O> predicate) {
-        return select(inputCollection, predicate, new ArrayList<O>(inputCollection.size()));
+        final Collection<O> answer = inputCollection instanceof Collection<?> ?
+                new ArrayList<O>(((Collection<?>) inputCollection).size()) : new ArrayList<O>();
+        return select(inputCollection, predicate, answer);
     }
 
     /**
@@ -883,7 +882,7 @@ public class CollectionUtils {
      * If the input collection or predicate is null, there is no change to the
      * output collection.
      *
-     * @param <O>  the type of object the {@link Collection} contains
+     * @param <O>  the type of object the {@link Iterable} contains
      * @param <R>  the type of the output {@link Collection}
      * @param inputCollection  the collection to get the input from, may be null
      * @param predicate  the predicate to use, may be null
@@ -891,7 +890,7 @@ public class CollectionUtils {
      *   and predicate or not null
      * @return the outputCollection
      */
-    public static <O, R extends Collection<? super O>> R select(final Collection<? extends O> inputCollection,
+    public static <O, R extends Collection<? super O>> R select(final Iterable<? extends O> inputCollection,
             final Predicate<? super O> predicate, final R outputCollection) {
 
         if (inputCollection != null && predicate != null) {
@@ -911,15 +910,17 @@ public class CollectionUtils {
      * If the input predicate is <code>null</code>, the result is an empty
      * list.
      *
-     * @param <O>  the type of object the {@link Collection} contains
+     * @param <O>  the type of object the {@link Iterable} contains
      * @param inputCollection  the collection to get the input from, may not be null
      * @param predicate  the predicate to use, may be null
      * @return the elements <b>not</b> matching the predicate (new list)
      * @throws NullPointerException if the input collection is null
      */
-    public static <O> Collection<O> selectRejected(final Collection<? extends O> inputCollection,
+    public static <O> Collection<O> selectRejected(final Iterable<? extends O> inputCollection,
             final Predicate<? super O> predicate) {
-        return selectRejected(inputCollection, predicate, new ArrayList<O>(inputCollection.size()));
+        final Collection<O> answer = inputCollection instanceof Collection<?> ?
+                new ArrayList<O>(((Collection<?>) inputCollection).size()) : new ArrayList<O>();
+        return selectRejected(inputCollection, predicate, answer);
     }
 
     /**
@@ -929,7 +930,7 @@ public class CollectionUtils {
      * If the input predicate is <code>null</code>, no elements are added to
      * <code>outputCollection</code>.
      *
-     * @param <O>  the type of object the {@link Collection} contains
+     * @param <O>  the type of object the {@link Iterable} contains
      * @param <R>  the type of the output {@link Collection}
      * @param inputCollection  the collection to get the input from, may be null
      * @param predicate  the predicate to use, may be null
@@ -937,7 +938,7 @@ public class CollectionUtils {
      *   and predicate or not null
      * @return outputCollection
      */
-    public static <O, R extends Collection<? super O>> R selectRejected(final Collection<? extends O> inputCollection,
+    public static <O, R extends Collection<? super O>> R selectRejected(final Iterable<? extends O> inputCollection,
             final Predicate<? super O> predicate, final R outputCollection) {
 
         if (inputCollection != null && predicate != null) {
@@ -956,18 +957,18 @@ public class CollectionUtils {
      * <p>
      * If the input transformer is null, the result is an empty list.
      *
-     * @param inputCollection  the collection to get the input from, may not be null
-     * @param transformer  the transformer to use, may be null
      * @param <I> the type of object in the input collection
      * @param <O> the type of object in the output collection
+     * @param inputCollection  the collection to get the input from, may not be null
+     * @param transformer  the transformer to use, may be null
      * @return the transformed result (new list)
      * @throws NullPointerException if the input collection is null
      */
     public static <I, O> Collection<O> collect(final Iterable<I> inputCollection,
             final Transformer<? super I, ? extends O> transformer) {
-        final ArrayList<O> answer = new ArrayList<O>();
-        collect(inputCollection, transformer, answer);
-        return answer;
+        final Collection<O> answer = inputCollection instanceof Collection<?> ?
+                new ArrayList<O>(((Collection<?>) inputCollection).size()) : new ArrayList<O>();
+        return collect(inputCollection, transformer, answer);
     }
 
     /**
@@ -985,9 +986,7 @@ public class CollectionUtils {
      */
     public static <I, O> Collection<O> collect(final Iterator<I> inputIterator,
             final Transformer<? super I, ? extends O> transformer) {
-        final ArrayList<O> answer = new ArrayList<O>();
-        collect(inputIterator, transformer, answer);
-        return answer;
+        return collect(inputIterator, transformer, new ArrayList<O>());
     }
 
     /**
@@ -997,13 +996,13 @@ public class CollectionUtils {
      * If the input collection or transformer is null, there is no change to the
      * output collection.
      *
+     * @param <I> the type of object in the input collection
+     * @param <O> the type of object in the output collection
+     * @param <R> the output type of the transformer - this extends O.
      * @param inputCollection  the collection to get the input from, may be null
      * @param transformer  the transformer to use, may be null
      * @param outputCollection  the collection to output into, may not be null if the inputCollection
      *   and transformer are not null
-     * @param <I> the type of object in the input collection
-     * @param <O> the type of object in the output collection
-     * @param <R> the output type of the transformer - this extends O.
      * @return the outputCollection with the transformed input added
      * @throws NullPointerException if the output collection is null and both, inputCollection and
      *   transformer are not null
@@ -1499,8 +1498,8 @@ public class CollectionUtils {
      * @throws IllegalArgumentException if either collection is null
      * @since 4.0
      */
-    public static <O extends Comparable<? super O>> List<O> collate(Collection<? extends O> a,
-                                                                    Collection<? extends O> b) {
+    public static <O extends Comparable<? super O>> List<O> collate(Iterable<? extends O> a,
+                                                                    Iterable<? extends O> b) {
         return collate(a, b, ComparatorUtils.<O>naturalComparator(), true);
     }
 
@@ -1520,8 +1519,8 @@ public class CollectionUtils {
      * @throws IllegalArgumentException if either collection is null
      * @since 4.0
      */
-    public static <O extends Comparable<? super O>> List<O> collate(final Collection<? extends O> a,
-                                                                    final Collection<? extends O> b,
+    public static <O extends Comparable<? super O>> List<O> collate(final Iterable<? extends O> a,
+                                                                    final Iterable<? extends O> b,
                                                                     final boolean includeDuplicates) {
         return collate(a, b, ComparatorUtils.<O>naturalComparator(), includeDuplicates);
     }
@@ -1540,7 +1539,7 @@ public class CollectionUtils {
      * @throws IllegalArgumentException if either collection or the comparator is null
      * @since 4.0
      */
-    public static <O> List<O> collate(final Collection<? extends O> a, final Collection<? extends O> b,
+    public static <O> List<O> collate(final Iterable<? extends O> a, final Iterable<? extends O> b,
                                       final Comparator<? super O> c) {
         return collate(a, b, c, true);
     }
@@ -1561,7 +1560,7 @@ public class CollectionUtils {
      * @throws IllegalArgumentException if either collection or the comparator is null
      * @since 4.0
      */
-    public static <O> List<O> collate(final Collection<? extends O> a, final Collection<? extends O> b,
+    public static <O> List<O> collate(final Iterable<? extends O> a, final Iterable<? extends O> b,
                                       final Comparator<? super O> c, final boolean includeDuplicates) {
 
         if (a == null || b == null) {
@@ -1571,7 +1570,10 @@ public class CollectionUtils {
             throw new IllegalArgumentException("The comparator must not be null");
         }
 
-        final int totalSize = Math.max(1, a.size() + b.size());
+        // if both Iterables are a Collection, we can estimate the size
+        final int totalSize = a instanceof Collection<?> && b instanceof Collection<?> ?
+                Math.max(1, ((Collection<?>) a).size() + ((Collection<?>) b).size()) : 10;
+
         final Iterator<O> iterator = new CollatingIterator<O>(c, a.iterator(), b.iterator());
         if (includeDuplicates) {
             return IteratorUtils.toList(iterator, totalSize);
