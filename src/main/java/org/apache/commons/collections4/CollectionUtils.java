@@ -1033,7 +1033,6 @@ public class CollectionUtils {
      * @throws NullPointerException if the output collection is null and both, inputCollection and
      *   transformer are not null
      */
-    //TODO - deprecate and replace with IteratorIterable
     public static <I, O, R extends Collection<? super O>> R collect(final Iterator<? extends I> inputIterator,
             final Transformer<? super I, ? extends O> transformer, final R outputCollection) {
         if (inputIterator != null && transformer != null) {
