@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-466" dev="tn" type="update">
+      Replaced "Collection" with "Iterable" for method arguments where applicable.
+    </action>  
     <action issue="COLLECTIONS-463" dev="tn" type="add" due-to="Andy Seaborne, Claude Warren">
       Added "PushbackIterator" decorator to support pushback of elements during iteration.
     </action>  

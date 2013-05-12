@@ -28,7 +28,7 @@ have changed.
 Major changes since 3.2.1
 -------------------------
 
- - Use of generics for the API
+ - Use of generics and other language features introduced in Java 5 (varargs, Iterable)
  - Removed deprecated classes / methods and features which are now supported by the JDK
  - Replaced Buffer interface with java.util.Queue
 
@@ -125,6 +125,7 @@ New features
 Changed classes / methods
 -------------------------
 
+ o [COLLECTIONS-466] Replaced "Collection" with "Iterable" for method arguments where applicable.
  o [COLLECTIONS-454] An iterator over a "Flat3Map#entrySet()" will now return independent Map.Entry objects that will
                      not change anymore when the iterator progresses.
  o [COLLECTIONS-453] Several closure and transformer implementations in the functor package will now copy
