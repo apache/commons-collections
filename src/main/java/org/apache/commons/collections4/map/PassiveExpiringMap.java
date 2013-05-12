@@ -468,8 +468,7 @@ public class PassiveExpiringMap<K, V>
      * @see #isExpired(long, Long)
      */
     private void removeAllExpired(final long now) {
-        final Iterator<Map.Entry<Object, Long>> iter = expirationMap.entrySet()
-            .iterator();
+        final Iterator<Map.Entry<Object, Long>> iter = expirationMap.entrySet().iterator();
         while (iter.hasNext()) {
             final Map.Entry<Object, Long> expirationEntry = iter.next();
             if (isExpired(now, expirationEntry.getValue())) {
