@@ -29,8 +29,8 @@ import java.util.Iterator;
  * The Iterators are provided by {@link #nextIterator(int)} which has to be overridden by
  * sub-classes and allows to lazily create the Iterators as they are accessed:
  * <pre>
- * return new LazyIteratorChain<String>() {
- *     protected Iterator<String> nextIterator(int count) {
+ * return new LazyIteratorChain&lt;String&gt;() {
+ *     protected Iterator&lt;String&gt; nextIterator(int count) {
  *         return count == 1 ? Arrays.asList("foo", "bar").iterator() : null;
  *     }
  * };
