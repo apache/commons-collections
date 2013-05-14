@@ -30,10 +30,9 @@ import org.apache.commons.collections4.map.PassiveExpiringMap.ExpirationPolicy;
  * JUnit tests.
  *
  * @since 4.0
- * @version $Id: $
+ * @version $Id$
  */
-public class PassiveExpiringMapTest<K, V>
-    extends AbstractMapTest<K, V> {
+public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
 
     private static class TestExpirationPolicy
         implements ExpirationPolicy<Integer, String> {
@@ -83,9 +82,7 @@ public class PassiveExpiringMapTest<K, V>
         m.put(Integer.valueOf(4), "four");
         m.put(Integer.valueOf(5), "five");
         m.put(Integer.valueOf(6), "six");
-        return new PassiveExpiringMap<Integer, String>(
-                                                       new TestExpirationPolicy(),
-                                                       m);
+        return new PassiveExpiringMap<Integer, String>(new TestExpirationPolicy(), m);
     }
 
     @Override
@@ -94,8 +91,8 @@ public class PassiveExpiringMapTest<K, V>
     }
 
     private Map<Integer, String> makeTestMap() {
-        final Map<Integer, String> m = new PassiveExpiringMap<Integer, String>(
-                                                                         new TestExpirationPolicy());
+        final Map<Integer, String> m =
+                new PassiveExpiringMap<Integer, String>(new TestExpirationPolicy());
         m.put(Integer.valueOf(1), "one");
         m.put(Integer.valueOf(2), "two");
         m.put(Integer.valueOf(3), "three");
@@ -224,8 +221,7 @@ public class PassiveExpiringMapTest<K, V>
 
     public void testZeroTimeToLive() {
         // item should not be available
-        final PassiveExpiringMap<String, String> m = new PassiveExpiringMap<String, String>(
-                                                                                      0L);
+        final PassiveExpiringMap<String, String> m = new PassiveExpiringMap<String, String>(0L);
         m.put("a", "b");
         assertNull(m.get("a"));
     }
