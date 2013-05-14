@@ -31,6 +31,11 @@
     <action issue="COLLECTIONS-462" dev="tn" type="add" due-to="Andy Seaborne, Claude Warren">
       Added "PeekingIterator" decorator to support one-element lookahead during iteration.
     </action>
+    <action issue="COLLECTIONS-460" dev="tn" type="update">
+      Changed "IteratorChain" to use internally a "Queue" instead of a "List". Iterators are
+      removed from the queue once used and can be garbage collected after being exhausted.
+      Additionally removed the methods "setIterator(Iterator)" and "getIterators()".
+    </action>
     <action issue="COLLECTIONS-458" dev="sebb" type="remove">
       Removed unused class "AbstractUntypedCollectionDecorator&lt;E, D&gt;".
     </action>

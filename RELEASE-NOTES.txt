@@ -126,6 +126,9 @@ Changed classes / methods
 -------------------------
 
  o [COLLECTIONS-466] Replaced "Collection" with "Iterable" for method arguments where applicable.
+ o [COLLECTIONS-460] Changed "IteratorChain" to use internally a "Queue" instead of a "List". Iterators are
+                     removed from the queue once used and can be garbage collected after being exhausted.
+                     Additionally removed the methods "setIterator(Iterator)" and "getIterators()".
  o [COLLECTIONS-454] An iterator over a "Flat3Map#entrySet()" will now return independent Map.Entry objects that will
                      not change anymore when the iterator progresses.
  o [COLLECTIONS-453] Several closure and transformer implementations in the functor package will now copy

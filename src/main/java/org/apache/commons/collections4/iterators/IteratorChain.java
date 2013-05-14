@@ -16,12 +16,10 @@
  */
 package org.apache.commons.collections4.iterators;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
-
-import org.apache.commons.collections4.list.UnmodifiableList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * An IteratorChain is an Iterator that wraps a number of Iterators.
@@ -37,10 +35,15 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * <p>
  * Calling a method that adds new Iterator <i>after a method in the Iterator
  * interface has been called</i> will result in an UnsupportedOperationException.
- * Subclasses should <i>take care</i> to not alter the underlying List of Iterators.
  * <p>
  * NOTE: As from version 3.0, the IteratorChain may contain no iterators. In
  * this case the class will function as an empty iterator.
+ * <p>
+ * NOTE: As from version 4.0, the IteratorChain stores the iterators in a queue
+ * and removes any reference to them as soon as they are not used anymore. Thus
+ * the methods {@code setIterator(Iterator)} and {@code getIterators()} have been
+ * removed and {@link #size()} will return the number of remaining iterators in
+ * the queue.
  *
  * @since 2.1
  * @version $Id$
@@ -48,10 +51,7 @@ import org.apache.commons.collections4.list.UnmodifiableList;
 public class IteratorChain<E> implements Iterator<E> {
 
     /** The chain of iterators */
-    private final List<Iterator<? extends E>> iteratorChain = new ArrayList<Iterator<? extends E>>();
-
-    /** The index of the current iterator */
-    private int currentIteratorIndex = 0;
+    private final Queue<Iterator<? extends E>> iteratorChain = new LinkedList<Iterator<? extends E>>();
 
     /** The current iterator */
     private Iterator<? extends E> currentIterator = null;
@@ -165,34 +165,7 @@ public class IteratorChain<E> implements Iterator<E> {
     }
 
     /**
-     * Set the Iterator at the given index
-     *
-     * @param index index of the Iterator to replace
-     * @param iterator Iterator to place at the given index
-     * @throws IndexOutOfBoundsException if index &lt; 0 or index &gt; size()
-     * @throws IllegalStateException if I've already started iterating
-     * @throws NullPointerException if the iterator is null
-     */
-    public void setIterator(final int index, final Iterator<? extends E> iterator)
-            throws IndexOutOfBoundsException {
-        checkLocked();
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
-        iteratorChain.set(index, iterator);
-    }
-
-    /**
-     * Get the list of Iterators (unmodifiable)
-     *
-     * @return the unmodifiable list of iterators added
-     */
-    public List<Iterator<? extends E>> getIterators() {
-        return UnmodifiableList.unmodifiableList(iteratorChain);
-    }
-
-    /**
-     * Number of Iterators in the current IteratorChain.
+     * Returns the remaining number of Iterators in the current IteratorChain.
      *
      * @return Iterator count
      */
@@ -240,17 +213,15 @@ public class IteratorChain<E> implements Iterator<E> {
             if (iteratorChain.isEmpty()) {
                 currentIterator = EmptyIterator.<E> emptyIterator();
             } else {
-                currentIterator = iteratorChain.get(0);
+                currentIterator = iteratorChain.remove();
             }
             // set last used iterator here, in case the user calls remove
             // before calling hasNext() or next() (although they shouldn't)
             lastUsedIterator = currentIterator;
         }
 
-        while (currentIterator.hasNext() == false
-                && currentIteratorIndex < iteratorChain.size() - 1) {
-            currentIteratorIndex++;
-            currentIterator = iteratorChain.get(currentIteratorIndex);
+        while (currentIterator.hasNext() == false && !iteratorChain.isEmpty()) {
+            currentIterator = iteratorChain.remove();
         }
     }
 
