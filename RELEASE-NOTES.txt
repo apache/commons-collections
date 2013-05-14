@@ -179,6 +179,8 @@ Changed classes / methods
 Fixed Bugs
 ----------
 
+ o [COLLECTIONS-461] Added additional clarification to javadoc of interface "Put" wrt return type of
+                     "put(Object, Object)" method. Thanks to Matt Benson, sebb. 
  o [COLLECTIONS-447] Tree traversal with a TreeListIterator will not be affected anymore by the removal of an element directly after
                      a call to previous(). Thanks to Jeffrey Barnes. 
  o [COLLECTIONS-445] Adapt and/or ignore several unit tests when run on a IBM J9 VM (specification version 1.6.0) due to a faulty

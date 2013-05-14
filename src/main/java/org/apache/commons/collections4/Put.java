@@ -20,6 +20,12 @@ import java.util.Map;
 
 /**
  * The "write" subset of the {@link Map} interface.
+ * <p>
+ * NOTE: in the original {@link Map} interface, {@link Map#put(Object, Object)} is known
+ * to have the same return type as {@link Map#get(Object)}, namely {@code V}. {@link Put}
+ * makes no assumptions in this regard (there is no association with, nor even knowledge
+ * of, a "reading" interface) and thus defines {@link #put(Object, Object)} as returning
+ * {@link Object}.
  *
  * @since 4.0
  * @version $Id$
