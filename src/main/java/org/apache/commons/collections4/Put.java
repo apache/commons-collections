@@ -40,6 +40,9 @@ public interface Put<K, V> {
     public void clear();
 
     /**
+     * Note that the return type is Object, rather than V as in the Map interface.
+     * See the class Javadoc for further info.
+     *
      * @see Map#put(Object, Object)
      */
     public Object put(K key, V value);
