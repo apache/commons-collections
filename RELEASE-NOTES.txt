@@ -182,6 +182,8 @@ Changed classes / methods
 Fixed Bugs
 ----------
 
+ o [COLLECTIONS-472] Improved performance of "AbstractMapBag#containsAll(Collection)" by returning immediately
+                     after a difference has been found. Thanks to Adrian Nistor.
  o [COLLECTIONS-461] Added additional clarification to javadoc of interface "Put" wrt return type of
                      "put(Object, Object)" method. Thanks to Matt Benson, sebb. 
  o [COLLECTIONS-447] Tree traversal with a TreeListIterator will not be affected anymore by the removal of an element directly after

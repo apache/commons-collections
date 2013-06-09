@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-472" dev="tn" type="fix" due-to="Adrian Nistor">
+      Improved performance of "AbstractMapBag#containsAll(Collection)" by returning immediately
+      after a difference has been found.
+    </action>  
     <action issue="COLLECTIONS-466" dev="tn" type="update">
       Replaced "Collection" with "Iterable" for method arguments where applicable.
     </action>  

@@ -147,14 +147,14 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @return <code>true</code> if the Bag contains all the collection
      */
     boolean containsAll(final Bag<?> other) {
-        boolean result = true;
         final Iterator<?> it = other.uniqueSet().iterator();
         while (it.hasNext()) {
             final Object current = it.next();
-            final boolean contains = getCount(current) >= other.getCount(current);
-            result = result && contains;
+            if (getCount(current) < other.getCount(current)) {
+                return false;
+            }
         }
-        return result;
+        return true;
     }
 
     //-----------------------------------------------------------------------
