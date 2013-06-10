@@ -45,6 +45,7 @@ import org.junit.Test;
  * JUnit tests.
  *
  * FIXME: add serialization support
+ * TODO: integrate into test framework, utilize existing map tests
  *
  * @since 4.0
  * @version $Id$
