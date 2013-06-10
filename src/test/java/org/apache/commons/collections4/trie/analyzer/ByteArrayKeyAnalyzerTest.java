@@ -14,12 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.trie;
+package org.apache.commons.collections4.trie.analyzer;
 
 import java.math.BigInteger;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.apache.commons.collections4.trie.PatriciaTrie;
+import org.apache.commons.collections4.trie.analyzer.ByteArrayKeyAnalyzer;
 import org.junit.Assert;
 import org.junit.Test;
 

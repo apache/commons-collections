@@ -60,9 +60,6 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
         return keyAnalyzer;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public K selectKey(final K key) {
         final Map.Entry<K, V> entry = select(key);
         if (entry == null) {
@@ -71,9 +68,6 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
         return entry.getKey();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public V selectValue(final K key) {
         final Map.Entry<K, V> entry = select(key);
         if (entry == null) {
@@ -94,12 +88,11 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
     }
 
     /**
-     * A utility method to cast keys. It actually doesn't
-     * cast anything. It's just fooling the compiler!
+     * A utility method to cast keys. It actually doesn't cast anything. It's just fooling the compiler!
      */
     @SuppressWarnings("unchecked")
     final K castKey(final Object key) {
-        return (K)key;
+        return (K) key;
     }
 
     /**
@@ -125,8 +118,7 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
     }
 
     /**
-     * Returns whether or not the given bit on the
-     * key is set or false if the key is null.
+     * Returns whether or not the given bit on the key is set or false if the key is null.
      *
      * @see KeyAnalyzer#isBitSet(Object, int, int)
      */
@@ -138,11 +130,10 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
     }
 
     /**
-     * Utility method for calling {@link KeyAnalyzer#bitIndex(Object, int, int, Object, int, int)}
+     * Utility method for calling {@link KeyAnalyzer#bitIndex(Object, int, int, Object, int, int)}.
      */
     final int bitIndex(final K key, final K foundKey) {
-        return keyAnalyzer.bitIndex(key, 0, lengthInBits(key),
-                foundKey, 0, lengthInBits(foundKey));
+        return keyAnalyzer.bitIndex(key, 0, lengthInBits(key), foundKey, 0, lengthInBits(foundKey));
     }
 
     /**
@@ -159,14 +150,14 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
     }
 
     /**
-     * Returns true if both values are either null or equal
+     * Returns true if both values are either null or equal.
      */
     static boolean compare(final Object a, final Object b) {
         return a == null ? b == null : a.equals(b);
     }
 
     /**
-     * A basic implementation of {@link Entry}
+     * A basic implementation of {@link Entry}.
      */
     abstract static class BasicEntry<K, V> implements Map.Entry<K, V>, Serializable {
 
@@ -186,37 +177,25 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
         public BasicEntry(final K key, final V value) {
             this.key = key;
             this.value = value;
-
-            this.hashCode = (key != null ? key.hashCode() : 0)
-                    ^ (value != null ? value.hashCode() : 0);
+            this.hashCode = (key != null ? key.hashCode() : 0) ^ (value != null ? value.hashCode() : 0);
         }
 
         /**
-         * Replaces the current key and value with the provided
-         * key &amp; value
+         * Replaces the current key and value with the provided key &amp; value.
          */
         public V setKeyValue(final K key, final V value) {
             this.key = key;
             return setValue(value);
         }
 
-        /**
-         * {@inheritDoc}
-         */
         public K getKey() {
             return key;
         }
 
-        /**
-         * {@inheritDoc}
-         */
         public V getValue() {
             return value;
         }
 
-        /**
-         * {@inheritDoc}
-         */
         public V setValue(final V value) {
             final V previous = this.value;
             this.value = value;

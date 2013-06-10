@@ -14,7 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.trie;
+package org.apache.commons.collections4.trie.analyzer;
+
+import org.apache.commons.collections4.trie.KeyAnalyzer;
 
 /**
  * A {@link KeyAnalyzer} for {@link Character}s.
@@ -22,60 +24,39 @@ package org.apache.commons.collections4.trie;
  * @since 4.0
  * @version $Id$
  */
-public class CharacterKeyAnalyzer extends AbstractKeyAnalyzer<Character> {
+public class CharacterKeyAnalyzer extends KeyAnalyzer<Character> {
 
     private static final long serialVersionUID = 3928565962744720753L;
 
-    /**
-     * A singleton instance of the {@link CharacterKeyAnalyzer}.
-     */
+    /** A singleton instance of the {@link CharacterKeyAnalyzer}. */
     public static final CharacterKeyAnalyzer INSTANCE
         = new CharacterKeyAnalyzer();
 
-    /**
-     * The length of a {@link Character} in bits
-     */
+    /** The length of a {@link Character} in bits. */
     public static final int LENGTH = Character.SIZE;
 
-    /**
-     * A bit mask where the first bit is 1 and the others are zero
-     */
+    /** A bit mask where the first bit is 1 and the others are zero. */
     private static final int MSB = 0x8000;
 
-    /**
-     * Returns a bit mask where the given bit is set
-     */
+    /** Returns a bit mask where the given bit is set. */
     private static int mask(final int bit) {
         return MSB >>> bit;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int bitsPerElement() {
         return 1;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int lengthInBits(final Character key) {
         return LENGTH;
     }
 
-    /**
-     * {@inheritDoc}
-     * @throws NullPointerException if the key is null
-     */
     public boolean isBitSet(final Character key, final int bitIndex, final int lengthInBits) {
         return (key.charValue() & mask(bitIndex)) != 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int bitIndex(final Character key, final int offsetInBits, final int lengthInBits,
-            final Character other, final int otherOffsetInBits, final int otherLengthInBits) {
+                        final Character other, final int otherOffsetInBits, final int otherLengthInBits) {
 
         if (offsetInBits != 0 || otherOffsetInBits != 0) {
             throw new IllegalArgumentException("offsetInBits=" + offsetInBits
@@ -101,11 +82,8 @@ public class CharacterKeyAnalyzer extends AbstractKeyAnalyzer<Character> {
         return KeyAnalyzer.EQUAL_BIT_KEY;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public boolean isPrefix(final Character prefix, final int offsetInBits,
-            final int lengthInBits, final Character key) {
+                            final int lengthInBits, final Character key) {
 
         final int value1 = prefix.charValue() << offsetInBits;
         final int value2 = key.charValue();

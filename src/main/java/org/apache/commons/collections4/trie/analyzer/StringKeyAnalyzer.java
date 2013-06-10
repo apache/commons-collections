@@ -14,7 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.trie;
+package org.apache.commons.collections4.trie.analyzer;
+
+import org.apache.commons.collections4.trie.KeyAnalyzer;
 
 /**
  * An {@link KeyAnalyzer} for {@link String}s.
@@ -22,59 +24,41 @@ package org.apache.commons.collections4.trie;
  * @since 4.0
  * @version $Id$
  */
-public class StringKeyAnalyzer extends AbstractKeyAnalyzer<String> {
+public class StringKeyAnalyzer extends KeyAnalyzer<String> {
 
     private static final long serialVersionUID = -7032449491269434877L;
 
-    /**
-     * A singleton instance of {@link StringKeyAnalyzer}
-     */
+    /** A singleton instance of {@link StringKeyAnalyzer}. */
     public static final StringKeyAnalyzer INSTANCE = new StringKeyAnalyzer();
 
-    /**
-     * The number of bits per {@link Character}
-     */
+    /** The number of bits per {@link Character}. */
     public static final int LENGTH = Character.SIZE;
 
-    /**
-     * A bit mask where the first bit is 1 and the others are zero
-     */
+    /** A bit mask where the first bit is 1 and the others are zero. */
     private static final int MSB = 0x8000;
 
-    /**
-     * Returns a bit mask where the given bit is set
-     */
+    /** Returns a bit mask where the given bit is set. */
     private static int mask(final int bit) {
         return MSB >>> bit;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int bitsPerElement() {
         return LENGTH;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int lengthInBits(final String key) {
         return key != null ? key.length() * LENGTH : 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int bitIndex(final String key, final int offsetInBits, final int lengthInBits,
-            final String other, final int otherOffsetInBits, final int otherLengthInBits) {
+                        final String other, final int otherOffsetInBits, final int otherLengthInBits) {
+
         boolean allNull = true;
 
         if (offsetInBits % LENGTH != 0 || otherOffsetInBits % LENGTH != 0
                 || lengthInBits % LENGTH != 0 || otherLengthInBits % LENGTH != 0) {
-            throw new IllegalArgumentException(
-                    "The offsets and lengths must be at Character boundaries");
+            throw new IllegalArgumentException("The offsets and lengths must be at Character boundaries");
         }
-
 
         final int beginIndex1 = offsetInBits / LENGTH;
         final int beginIndex2 = otherOffsetInBits / LENGTH;
@@ -123,9 +107,6 @@ public class StringKeyAnalyzer extends AbstractKeyAnalyzer<String> {
         return KeyAnalyzer.EQUAL_BIT_KEY;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public boolean isBitSet(final String key, final int bitIndex, final int lengthInBits) {
         if (key == null || bitIndex >= lengthInBits) {
             return false;
@@ -137,11 +118,8 @@ public class StringKeyAnalyzer extends AbstractKeyAnalyzer<String> {
         return (key.charAt(index) & mask(bit)) != 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public boolean isPrefix(final String prefix, final int offsetInBits,
-            final int lengthInBits, final String key) {
+                            final int lengthInBits, final String key) {
         if (offsetInBits % LENGTH != 0 || lengthInBits % LENGTH != 0) {
             throw new IllegalArgumentException(
                     "Cannot determine prefix outside of Character boundaries");

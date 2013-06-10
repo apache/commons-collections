@@ -14,78 +14,60 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.trie;
+package org.apache.commons.collections4.trie.analyzer;
+
+import org.apache.commons.collections4.trie.KeyAnalyzer;
 
 /**
- * A {@link KeyAnalyzer} for {@link Short}s.
+ * A {@link KeyAnalyzer} for {@link Integer}s.
  *
  * @since 4.0
  * @version $Id$
  */
-public class ShortKeyAnalyzer implements KeyAnalyzer<Short> {
+public class IntegerKeyAnalyzer extends KeyAnalyzer<Integer> {
 
-    private static final long serialVersionUID = -8631376733513512017L;
+    private static final long serialVersionUID = 4928508653722068982L;
 
-    /**
-     * A singleton instance of {@link ShortKeyAnalyzer}
-     */
-    public static final ShortKeyAnalyzer INSTANCE = new ShortKeyAnalyzer();
+    /** A singleton instance of {@link IntegerKeyAnalyzer}. */
+    public static final IntegerKeyAnalyzer INSTANCE = new IntegerKeyAnalyzer();
 
-    /**
-     * The length of an {@link Short} in bits
-     */
-    public static final int LENGTH = Short.SIZE;
+    /** The length of an {@link Integer} in bits. */
+    public static final int LENGTH = Integer.SIZE;
 
-    /**
-     * A bit mask where the first bit is 1 and the others are zero
-     */
-    private static final int MSB = 0x8000;
+    /** A bit mask where the first bit is 1 and the others are zero. */
+    private static final int MSB = 0x80000000;
 
-    /**
-     * Returns a bit mask where the given bit is set
-     */
+    /** Returns a bit mask where the given bit is set. */
     private static int mask(final int bit) {
         return MSB >>> bit;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int bitsPerElement() {
         return 1;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public int lengthInBits(final Short key) {
+    public int lengthInBits(final Integer key) {
         return LENGTH;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isBitSet(final Short key, final int bitIndex, final int lengthInBits) {
+    public boolean isBitSet(final Integer key, final int bitIndex, final int lengthInBits) {
         return (key.intValue() & mask(bitIndex)) != 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public int bitIndex(final Short key, final int offsetInBits, final int lengthInBits,
-            final Short other, final int otherOffsetInBits, final int otherLengthInBits) {
+    public int bitIndex(final Integer key, final int offsetInBits, final int lengthInBits,
+                        final Integer other, final int otherOffsetInBits, final int otherLengthInBits) {
 
         if (offsetInBits != 0 || otherOffsetInBits != 0) {
             throw new IllegalArgumentException("offsetInBits=" + offsetInBits
                     + ", otherOffsetInBits=" + otherOffsetInBits);
         }
 
-        final int keyValue = key.shortValue();
+        final int keyValue = key.intValue();
         if (keyValue == 0) {
             return NULL_BIT_KEY;
         }
 
-        final int otherValue = other != null ? other.shortValue() : 0;
+        final int otherValue = other != null ? other.intValue() : 0;
 
         if (keyValue != otherValue) {
             final int xorValue = keyValue ^ otherValue;
@@ -99,21 +81,11 @@ public class ShortKeyAnalyzer implements KeyAnalyzer<Short> {
         return KeyAnalyzer.EQUAL_BIT_KEY;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public int compare(final Short o1, final Short o2) {
-        return o1.compareTo(o2);
-    }
+    public boolean isPrefix(final Integer prefix, final int offsetInBits,
+                            final int lengthInBits, final Integer key) {
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isPrefix(final Short prefix, final int offsetInBits,
-            final int lengthInBits, final Short key) {
-
-        final int value1 = prefix.shortValue() << offsetInBits;
-        final int value2 = key.shortValue();
+        final int value1 = prefix.intValue() << offsetInBits;
+        final int value2 = key.intValue();
 
         int mask = 0;
         for (int i = 0; i < lengthInBits; i++) {

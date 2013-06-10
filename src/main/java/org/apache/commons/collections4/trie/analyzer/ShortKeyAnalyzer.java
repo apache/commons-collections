@@ -14,78 +14,60 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.trie;
+package org.apache.commons.collections4.trie.analyzer;
+
+import org.apache.commons.collections4.trie.KeyAnalyzer;
 
 /**
- * A {@link KeyAnalyzer} for {@link Byte}s.
+ * A {@link KeyAnalyzer} for {@link Short}s.
  *
  * @since 4.0
  * @version $Id$
  */
-public class ByteKeyAnalyzer extends AbstractKeyAnalyzer<Byte> {
+public class ShortKeyAnalyzer extends KeyAnalyzer<Short> {
 
-    private static final long serialVersionUID = 3395803342983289829L;
+    private static final long serialVersionUID = -8631376733513512017L;
 
-    /**
-     * A singleton instance of {@link ByteKeyAnalyzer}
-     */
-    public static final ByteKeyAnalyzer INSTANCE = new ByteKeyAnalyzer();
+    /** A singleton instance of {@link ShortKeyAnalyzer}. */
+    public static final ShortKeyAnalyzer INSTANCE = new ShortKeyAnalyzer();
 
-    /**
-     * The length of an {@link Byte} in bits
-     */
-    public static final int LENGTH = Byte.SIZE;
+    /** The length of an {@link Short} in bits. */
+    public static final int LENGTH = Short.SIZE;
 
-    /**
-     * A bit mask where the first bit is 1 and the others are zero
-     */
-    private static final int MSB = 0x80;
+    /** A bit mask where the first bit is 1 and the others are zero. */
+    private static final int MSB = 0x8000;
 
-    /**
-     * Returns a bit mask where the given bit is set
-     */
+    /** Returns a bit mask where the given bit is set. */
     private static int mask(final int bit) {
         return MSB >>> bit;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int bitsPerElement() {
         return 1;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public int lengthInBits(final Byte key) {
+    public int lengthInBits(final Short key) {
         return LENGTH;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isBitSet(final Byte key, final int bitIndex, final int lengthInBits) {
+    public boolean isBitSet(final Short key, final int bitIndex, final int lengthInBits) {
         return (key.intValue() & mask(bitIndex)) != 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public int bitIndex(final Byte key, final int offsetInBits, final int lengthInBits,
-            final Byte other, final int otherOffsetInBits, final int otherLengthInBits) {
+    public int bitIndex(final Short key, final int offsetInBits, final int lengthInBits,
+                        final Short other, final int otherOffsetInBits, final int otherLengthInBits) {
 
         if (offsetInBits != 0 || otherOffsetInBits != 0) {
             throw new IllegalArgumentException("offsetInBits=" + offsetInBits
                     + ", otherOffsetInBits=" + otherOffsetInBits);
         }
 
-        final byte keyValue = key.byteValue();
+        final int keyValue = key.shortValue();
         if (keyValue == 0) {
             return NULL_BIT_KEY;
         }
 
-        final byte otherValue = other != null ? other.byteValue() : 0;
+        final int otherValue = other != null ? other.shortValue() : 0;
 
         if (keyValue != otherValue) {
             final int xorValue = keyValue ^ otherValue;
@@ -99,14 +81,11 @@ public class ByteKeyAnalyzer extends AbstractKeyAnalyzer<Byte> {
         return KeyAnalyzer.EQUAL_BIT_KEY;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isPrefix(final Byte prefix, final int offsetInBits,
-            final int lengthInBits, final Byte key) {
+    public boolean isPrefix(final Short prefix, final int offsetInBits,
+                            final int lengthInBits, final Short key) {
 
-        final int value1 = prefix.byteValue() << offsetInBits;
-        final int value2 = key.byteValue();
+        final int value1 = prefix.shortValue() << offsetInBits;
+        final int value2 = key.shortValue();
 
         int mask = 0;
         for (int i = 0; i < lengthInBits; i++) {
@@ -115,4 +94,10 @@ public class ByteKeyAnalyzer extends AbstractKeyAnalyzer<Byte> {
 
         return (value1 & mask) == (value2 & mask);
     }
+
+    @Override
+    public int compare(final Short o1, final Short o2) {
+        return o1.compareTo(o2);
+    }
+
 }

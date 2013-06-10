@@ -34,6 +34,9 @@ import java.util.TreeMap;
 import java.util.Map.Entry;
 
 import org.apache.commons.collections4.Trie.Cursor;
+import org.apache.commons.collections4.trie.analyzer.CharacterKeyAnalyzer;
+import org.apache.commons.collections4.trie.analyzer.IntegerKeyAnalyzer;
+import org.apache.commons.collections4.trie.analyzer.StringKeyAnalyzer;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -1079,6 +1082,7 @@ public class PatriciaTrieTest {
             }
         }
 
+        @SuppressWarnings("unused")
         void selectFor(final Object object) {
             selectFor = object;
         }

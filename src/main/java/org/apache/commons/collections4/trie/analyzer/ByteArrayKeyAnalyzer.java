@@ -14,7 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.trie;
+package org.apache.commons.collections4.trie.analyzer;
+
+import org.apache.commons.collections4.trie.KeyAnalyzer;
 
 /**
  * A {@link KeyAnalyzer} for byte[]s.
@@ -22,34 +24,23 @@ package org.apache.commons.collections4.trie;
  * @since 4.0
  * @version $Id$
  */
-public class ByteArrayKeyAnalyzer extends AbstractKeyAnalyzer<byte[]> {
+public class ByteArrayKeyAnalyzer extends KeyAnalyzer<byte[]> {
 
     private static final long serialVersionUID = 7382825097492285877L;
 
-    /**
-     * A singleton instance of {@link ByteArrayKeyAnalyzer}
-     */
-    public static final ByteArrayKeyAnalyzer INSTANCE
-        = new ByteArrayKeyAnalyzer(Integer.MAX_VALUE);
+    /** A singleton instance of {@link ByteArrayKeyAnalyzer}. */
+    public static final ByteArrayKeyAnalyzer INSTANCE = new ByteArrayKeyAnalyzer(Integer.MAX_VALUE);
 
-    /**
-     * The length of an {@link Byte} in bits
-     */
+    /** The length of an {@link Byte} in bits. */
     public static final int LENGTH = Byte.SIZE;
 
-    /**
-     * A bit mask where the first bit is 1 and the others are zero
-     */
+    /** A bit mask where the first bit is 1 and the others are zero. */
     private static final int MSB = 0x80;
 
-    /**
-     * A place holder for null
-     */
+    /** A place holder for null. */
     private static final byte[] NULL = new byte[0];
 
-    /**
-     * The maximum length of a key in bits
-     */
+    /** The maximum length of a key in bits. */
     private final int maxLengthInBits;
 
     public ByteArrayKeyAnalyzer(final int maxLengthInBits) {
@@ -76,23 +67,14 @@ public class ByteArrayKeyAnalyzer extends AbstractKeyAnalyzer<byte[]> {
         return maxLengthInBits;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int bitsPerElement() {
         return LENGTH;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int lengthInBits(final byte[] key) {
         return key != null ? key.length * bitsPerElement() : 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public boolean isBitSet(final byte[] key, final int bitIndex, final int lengthInBits) {
         if (key == null) {
             return false;
@@ -110,11 +92,8 @@ public class ByteArrayKeyAnalyzer extends AbstractKeyAnalyzer<byte[]> {
         return (key[index] & mask(bit)) != 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int bitIndex(final byte[] key, final int offsetInBits, final int lengthInBits,
-            byte[] other, final int otherOffsetInBits, final int otherLengthInBits) {
+                        byte[] other, final int otherOffsetInBits, final int otherLengthInBits) {
 
         if (other == null) {
             other = NULL;
@@ -151,11 +130,7 @@ public class ByteArrayKeyAnalyzer extends AbstractKeyAnalyzer<byte[]> {
         return KeyAnalyzer.EQUAL_BIT_KEY;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isPrefix(final byte[] prefix, final int offsetInBits,
-            final int lengthInBits, final byte[] key) {
+    public boolean isPrefix(final byte[] prefix, final int offsetInBits, final int lengthInBits, final byte[] key) {
 
         final int keyLength = lengthInBits(key);
         if (lengthInBits > keyLength) {
@@ -173,9 +148,6 @@ public class ByteArrayKeyAnalyzer extends AbstractKeyAnalyzer<byte[]> {
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int compare(final byte[] o1, final byte[] o2) {
         if (o1 == null) {

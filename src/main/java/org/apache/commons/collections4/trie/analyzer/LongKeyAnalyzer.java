@@ -14,7 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.trie;
+package org.apache.commons.collections4.trie.analyzer;
+
+import org.apache.commons.collections4.trie.KeyAnalyzer;
 
 /**
  * A {@link KeyAnalyzer} for {@link Long}s.
@@ -22,58 +24,38 @@ package org.apache.commons.collections4.trie;
  * @since 4.0
  * @version $Id$
  */
-public class LongKeyAnalyzer extends AbstractKeyAnalyzer<Long> {
+public class LongKeyAnalyzer extends KeyAnalyzer<Long> {
 
     private static final long serialVersionUID = -4119639247588227409L;
 
-    /**
-     * A singleton instance of {@link LongKeyAnalyzer}
-     */
+    /** A singleton instance of {@link LongKeyAnalyzer}. */
     public static final LongKeyAnalyzer INSTANCE = new LongKeyAnalyzer();
 
-    /**
-     * The length of an {@link Long} in bits
-     */
+    /** The length of an {@link Long} in bits. */
     public static final int LENGTH = Long.SIZE;
 
-    /**
-     * A bit mask where the first bit is 1 and the others are zero
-     */
+    /** A bit mask where the first bit is 1 and the others are zero. */
     private static final long MSB = 0x8000000000000000L;
 
-    /**
-     * Returns a bit mask where the given bit is set
-     */
+    /** Returns a bit mask where the given bit is set. */
     private static long mask(final int bit) {
         return MSB >>> bit;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int bitsPerElement() {
         return 1;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int lengthInBits(final Long key) {
         return LENGTH;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public boolean isBitSet(final Long key, final int bitIndex, final int lengthInBits) {
         return (key.longValue() & mask(bitIndex)) != 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int bitIndex(final Long key, final int offsetInBits, final int lengthInBits,
-            final Long other, final int otherOffsetInBits, final int otherLengthInBits) {
+                        final Long other, final int otherOffsetInBits, final int otherLengthInBits) {
 
         if (offsetInBits != 0 || otherOffsetInBits != 0) {
             throw new IllegalArgumentException("offsetInBits=" + offsetInBits
@@ -99,11 +81,8 @@ public class LongKeyAnalyzer extends AbstractKeyAnalyzer<Long> {
         return KeyAnalyzer.EQUAL_BIT_KEY;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public boolean isPrefix(final Long prefix, final int offsetInBits,
-            final int lengthInBits, final Long key) {
+                            final int lengthInBits, final Long key) {
 
         final long value1 = prefix.longValue() << offsetInBits;
         final long value2 = key.longValue();

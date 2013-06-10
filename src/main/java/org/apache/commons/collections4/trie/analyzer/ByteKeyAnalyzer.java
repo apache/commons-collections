@@ -14,78 +14,60 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.trie;
+package org.apache.commons.collections4.trie.analyzer;
+
+import org.apache.commons.collections4.trie.KeyAnalyzer;
 
 /**
- * A {@link KeyAnalyzer} for {@link Integer}s.
+ * A {@link KeyAnalyzer} for {@link Byte}s.
  *
  * @since 4.0
  * @version $Id$
  */
-public class IntegerKeyAnalyzer extends AbstractKeyAnalyzer<Integer> {
+public class ByteKeyAnalyzer extends KeyAnalyzer<Byte> {
 
-    private static final long serialVersionUID = 4928508653722068982L;
+    private static final long serialVersionUID = 3395803342983289829L;
 
-    /**
-     * A singleton instance of {@link IntegerKeyAnalyzer}
-     */
-    public static final IntegerKeyAnalyzer INSTANCE = new IntegerKeyAnalyzer();
+    /** A singleton instance of {@link ByteKeyAnalyzer}. */
+    public static final ByteKeyAnalyzer INSTANCE = new ByteKeyAnalyzer();
 
-    /**
-     * The length of an {@link Integer} in bits
-     */
-    public static final int LENGTH = Integer.SIZE;
+    /** The length of an {@link Byte} in bits. */
+    public static final int LENGTH = Byte.SIZE;
 
-    /**
-     * A bit mask where the first bit is 1 and the others are zero
-     */
-    private static final int MSB = 0x80000000;
+    /** A bit mask where the first bit is 1 and the others are zero. */
+    private static final int MSB = 0x80;
 
-    /**
-     * Returns a bit mask where the given bit is set
-     */
+    /** Returns a bit mask where the given bit is set. */
     private static int mask(final int bit) {
         return MSB >>> bit;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int bitsPerElement() {
         return 1;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public int lengthInBits(final Integer key) {
+    public int lengthInBits(final Byte key) {
         return LENGTH;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isBitSet(final Integer key, final int bitIndex, final int lengthInBits) {
+    public boolean isBitSet(final Byte key, final int bitIndex, final int lengthInBits) {
         return (key.intValue() & mask(bitIndex)) != 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public int bitIndex(final Integer key, final int offsetInBits, final int lengthInBits,
-            final Integer other, final int otherOffsetInBits, final int otherLengthInBits) {
+    public int bitIndex(final Byte key, final int offsetInBits, final int lengthInBits,
+                        final Byte other, final int otherOffsetInBits, final int otherLengthInBits) {
 
         if (offsetInBits != 0 || otherOffsetInBits != 0) {
             throw new IllegalArgumentException("offsetInBits=" + offsetInBits
                     + ", otherOffsetInBits=" + otherOffsetInBits);
         }
 
-        final int keyValue = key.intValue();
+        final byte keyValue = key.byteValue();
         if (keyValue == 0) {
             return NULL_BIT_KEY;
         }
 
-        final int otherValue = other != null ? other.intValue() : 0;
+        final byte otherValue = other != null ? other.byteValue() : 0;
 
         if (keyValue != otherValue) {
             final int xorValue = keyValue ^ otherValue;
@@ -99,14 +81,10 @@ public class IntegerKeyAnalyzer extends AbstractKeyAnalyzer<Integer> {
         return KeyAnalyzer.EQUAL_BIT_KEY;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isPrefix(final Integer prefix, final int offsetInBits,
-            final int lengthInBits, final Integer key) {
+    public boolean isPrefix(final Byte prefix, final int offsetInBits, final int lengthInBits, final Byte key) {
 
-        final int value1 = prefix.intValue() << offsetInBits;
-        final int value2 = key.intValue();
+        final int value1 = prefix.byteValue() << offsetInBits;
+        final int value2 = key.byteValue();
 
         int mask = 0;
         for (int i = 0; i < lengthInBits; i++) {

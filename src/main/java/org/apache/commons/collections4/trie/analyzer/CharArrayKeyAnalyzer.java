@@ -14,7 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.trie;
+package org.apache.commons.collections4.trie.analyzer;
+
+import org.apache.commons.collections4.trie.KeyAnalyzer;
 
 /**
  * An {@link KeyAnalyzer} for {@code char[]}s.
@@ -22,51 +24,34 @@ package org.apache.commons.collections4.trie;
  * @since 4.0
  * @version $Id$
  */
-public class CharArrayKeyAnalyzer extends AbstractKeyAnalyzer<char[]> {
+public class CharArrayKeyAnalyzer extends KeyAnalyzer<char[]> {
 
     private static final long serialVersionUID = -8167897361549463457L;
 
-    /**
-     * A singleton instance of {@link CharArrayKeyAnalyzer}
-     */
+    /** A singleton instance of {@link CharArrayKeyAnalyzer}. */
     public static final CharArrayKeyAnalyzer INSTANCE = new CharArrayKeyAnalyzer();
 
-    /**
-     * The number of bits per {@link Character}
-     */
+    /** The number of bits per {@link Character}. */
     public static final int LENGTH = Character.SIZE;
 
-    /**
-     * A bit mask where the first bit is 1 and the others are zero
-     */
+    /** A bit mask where the first bit is 1 and the others are zero. */
     private static final int MSB = 0x8000;
 
-    /**
-     * Returns a bit mask where the given bit is set
-     */
+    /** Returns a bit mask where the given bit is set. */
     private static int mask(final int bit) {
         return MSB >>> bit;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int bitsPerElement() {
         return LENGTH;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int lengthInBits(final char[] key) {
         return key != null ? key.length * LENGTH : 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public int bitIndex(final char[] key, final int offsetInBits, final int lengthInBits,
-            final char[] other, final int otherOffsetInBits, final int otherLengthInBits) {
+                        final char[] other, final int otherOffsetInBits, final int otherLengthInBits) {
         boolean allNull = true;
 
         if (offsetInBits % LENGTH != 0 || otherOffsetInBits % LENGTH != 0
@@ -123,9 +108,6 @@ public class CharArrayKeyAnalyzer extends AbstractKeyAnalyzer<char[]> {
         return KeyAnalyzer.EQUAL_BIT_KEY;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public boolean isBitSet(final char[] key, final int bitIndex, final int lengthInBits) {
         if (key == null || bitIndex >= lengthInBits) {
             return false;
@@ -137,11 +119,7 @@ public class CharArrayKeyAnalyzer extends AbstractKeyAnalyzer<char[]> {
         return (key[index] & mask(bit)) != 0;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public boolean isPrefix(final char[] prefix, final int offsetInBits,
-            final int lengthInBits, final char[] key) {
+    public boolean isPrefix(final char[] prefix, final int offsetInBits, final int lengthInBits, final char[] key) {
         if (offsetInBits % LENGTH != 0 || lengthInBits % LENGTH != 0) {
             throw new IllegalArgumentException(
                     "Cannot determine prefix outside of Character boundaries");

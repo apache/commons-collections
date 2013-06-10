@@ -32,7 +32,10 @@ import java.util.Comparator;
  * @since 4.0
  * @version $Id$
  */
-public interface KeyAnalyzer<K> extends Comparator<K>, Serializable {
+public abstract class KeyAnalyzer<K> implements Comparator<K>, Serializable {
+
+    /** Serialization version */
+    private static final long serialVersionUID = -20497563720380683L;
 
     /**
      * Returned by {@link #bitIndex(Object, int, int, Object, int, int)}
@@ -50,12 +53,42 @@ public interface KeyAnalyzer<K> extends Comparator<K>, Serializable {
     public static final int OUT_OF_BOUNDS_BIT_KEY = -3;
 
     /**
+     * Returns true if bitIndex is a {@link KeyAnalyzer#OUT_OF_BOUNDS_BIT_KEY}
+     */
+    static boolean isOutOfBoundsIndex(final int bitIndex) {
+        return bitIndex == OUT_OF_BOUNDS_BIT_KEY;
+    }
+
+    /**
+     * Returns true if bitIndex is a {@link KeyAnalyzer#EQUAL_BIT_KEY}
+     */
+    static boolean isEqualBitKey(final int bitIndex) {
+        return bitIndex == EQUAL_BIT_KEY;
+    }
+
+    /**
+     * Returns true if bitIndex is a {@link KeyAnalyzer#NULL_BIT_KEY}
+     */
+    static boolean isNullBitKey(final int bitIndex) {
+        return bitIndex == NULL_BIT_KEY;
+    }
+
+    /**
+     * Returns true if the given bitIndex is valid. Indices
+     * are considered valid if they're between 0 and
+     * {@link Integer#MAX_VALUE}
+     */
+    static boolean isValidBitIndex(final int bitIndex) {
+        return bitIndex >= 0;
+    }
+
+    /**
      * Returns the number of bits per element in the key.
      * This is only useful for variable-length keys, such as Strings.
      *
      * @return the number of bits per element
      */
-    public int bitsPerElement();
+    public abstract int bitsPerElement();
 
     /**
      * Returns the length of the Key in bits.
@@ -63,23 +96,55 @@ public interface KeyAnalyzer<K> extends Comparator<K>, Serializable {
      * @param key  the key
      * @return the bit length of the key
      */
-    public int lengthInBits(K key);
+    public abstract int lengthInBits(K key);
 
     /**
      * Returns whether or not a bit is set.
+     *
+     * @param key  the key to check, may not be null
+     * @param bitIndex  the bit index to check
+     * @param lengthInBits  the maximum key length in bits to check
+     * @return {@code true} if the bit is set in the given key and
+     *   {@code bitIndex} &lt; {@code lengthInBits}, {@code false} otherwise.
      */
-    public boolean isBitSet(K key, int bitIndex, int lengthInBits);
+    public abstract boolean isBitSet(K key, int bitIndex, int lengthInBits);
 
     /**
-     * Returns the n-th different bit between key and found. This starts the comparison in
-     * key at 'keyStart' and goes for 'keyLength' bits, and compares to the found key starting
-     * at 'foundStart' and going for 'foundLength' bits.
+     * Returns the n-th different bit between key and other. This starts the comparison in
+     * key at 'offsetInBits' and goes for 'lengthInBits' bits, and compares to the other key starting
+     * at 'otherOffsetInBits' and going for 'otherLengthInBits' bits.
+     *
+     * @param key  the key to use
+     * @param offsetInBits  the bit offset in the key
+     * @param lengthInBits  the maximum key length in bits to use
+     * @param other  the other key to use
+     * @param otherOffsetInBits  the bit offset in the other key
+     * @param otherLengthInBits  the maximum key length in bits for the other key
+     * @return the bit index where the key and other first differ
      */
-    public int bitIndex(K key, int offsetInBits, int lengthInBits,
-                        K other, int otherOffsetInBits, int otherLengthInBits);
+    public abstract int bitIndex(K key, int offsetInBits, int lengthInBits,
+                                 K other, int otherOffsetInBits, int otherLengthInBits);
 
     /**
      * Determines whether or not the given prefix (from offset to length) is a prefix of the given key.
+     *
+     * @param prefix  the prefix to check
+     * @param offsetInBits  the bit offset in the key
+     * @param lengthInBits  the maximum key length in bits to use
+     * @param key  the key to check
+     * @return {@code true} if this is a valid prefix for the given key
      */
-    public boolean isPrefix(K prefix, int offsetInBits, int lengthInBits, K key);
+    public abstract boolean isPrefix(K prefix, int offsetInBits, int lengthInBits, K key);
+
+    @SuppressWarnings("unchecked")
+    public int compare(final K o1, final K o2) {
+        if (o1 == null) {
+            return o2 == null ? 0 : -1;
+        } else if (o2 == null) {
+            return 1;
+        }
+
+        return ((Comparable<K>) o1).compareTo(o2);
+    }
+
 }
