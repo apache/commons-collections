@@ -34,7 +34,7 @@ import org.apache.commons.collections4.Trie.Cursor.Decision;
  * @since 4.0
  * @version $Id$
  */
-abstract class PatriciaTrieBase<K, V> extends AbstractTrie<K, V> {
+abstract class PatriciaTrieBase<K, V> extends AbstractBitwiseTrie<K, V> {
 
     private static final long serialVersionUID = 5155253417231339498L;
 

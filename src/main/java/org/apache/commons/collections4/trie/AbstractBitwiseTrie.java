@@ -19,17 +19,18 @@ package org.apache.commons.collections4.trie;
 import java.io.Serializable;
 import java.util.AbstractMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.collections4.Trie;
 
 /**
  * This class provides some basic {@link Trie} functionality and
- * utility methods for actual {@link Trie} implementations.
+ * utility methods for actual bitwise {@link Trie} implementations.
  *
  * @since 4.0
  * @version $Id$
  */
-abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
+abstract class AbstractBitwiseTrie<K, V> extends AbstractMap<K, V>
         implements Trie<K, V>, Serializable {
 
     private static final long serialVersionUID = 5826987063535505652L;
@@ -37,15 +38,14 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
     // TODO Privatise fields?
 
     /**
-     * The {@link KeyAnalyzer} that's being used to build the
-     * PATRICIA {@link Trie}.
+     * The {@link KeyAnalyzer} that's being used to build the PATRICIA {@link Trie}.
      */
     protected final KeyAnalyzer<? super K> keyAnalyzer;
 
     /**
      * Constructs a new {@link Trie} using the given {@link KeyAnalyzer}.
      */
-    public AbstractTrie(final KeyAnalyzer<? super K> keyAnalyzer) {
+    public AbstractBitwiseTrie(final KeyAnalyzer<? super K> keyAnalyzer) {
         if (keyAnalyzer == null) {
             throw new NullPointerException("keyAnalyzer");
         }
@@ -60,6 +60,46 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
         return keyAnalyzer;
     }
 
+    /**
+     * Returns the {@link Entry} whose key is closest in a bitwise XOR
+     * metric to the given key. This is NOT lexicographic closeness.
+     * For example, given the keys:
+     *
+     * <ol>
+     * <li>D = 1000100
+     * <li>H = 1001000
+     * <li>L = 1001100
+     * </ol>
+     *
+     * If the {@link Trie} contained 'H' and 'L', a lookup of 'D' would
+     * return 'L', because the XOR distance between D &amp; L is smaller
+     * than the XOR distance between D &amp; H.
+     *
+     * @param key  the key to use in the search
+     * @return the {@link Entry} whose key is closest in a bitwise XOR metric
+     *   to the provided key
+     */
+    public abstract Map.Entry<K, V> select(K key);
+
+    /**
+     * Returns the key that is closest in a bitwise XOR metric to the
+     * provided key. This is NOT lexicographic closeness!
+     *
+     * For example, given the keys:
+     *
+     * <ol>
+     * <li>D = 1000100
+     * <li>H = 1001000
+     * <li>L = 1001100
+     * </ol>
+     *
+     * If the {@link Trie} contained 'H' and 'L', a lookup of 'D' would
+     * return 'L', because the XOR distance between D &amp; L is smaller
+     * than the XOR distance between D &amp; H.
+     *
+     * @param key  the key to use in the search
+     * @return the key that is closest in a bitwise XOR metric to the provided key
+     */
     public K selectKey(final K key) {
         final Map.Entry<K, V> entry = select(key);
         if (entry == null) {
@@ -68,6 +108,26 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
         return entry.getKey();
     }
 
+    /**
+     * Returns the value whose key is closest in a bitwise XOR metric to
+     * the provided key. This is NOT lexicographic closeness!
+     *
+     * For example, given the keys:
+     *
+     * <ol>
+     * <li>D = 1000100
+     * <li>H = 1001000
+     * <li>L = 1001100
+     * </ol>
+     *
+     * If the {@link Trie} contained 'H' and 'L', a lookup of 'D' would
+     * return 'L', because the XOR distance between D &amp; L is smaller
+     * than the XOR distance between D &amp; H.
+     *
+     * @param key  the key to use in the search
+     * @return the value whose key is closest in a bitwise XOR metric
+     * to the provided key
+     */
     public V selectValue(final K key) {
         final Map.Entry<K, V> entry = select(key);
         if (entry == null) {
@@ -75,6 +135,27 @@ abstract class AbstractTrie<K, V> extends AbstractMap<K, V>
         }
         return entry.getValue();
     }
+
+    /**
+     * Iterates through the {@link Trie}, starting with the entry whose bitwise
+     * value is closest in an XOR metric to the given key. After the closest
+     * entry is found, the {@link Trie} will call select on that entry and continue
+     * calling select for each entry (traversing in order of XOR closeness,
+     * NOT lexicographically) until the cursor returns {@link Cursor.Decision#EXIT}.
+     * <p>
+     * The cursor can return {@link Cursor.Decision#CONTINUE} to continue traversing.
+     * <p>
+     * {@link Cursor.Decision#REMOVE_AND_EXIT} is used to remove the current element
+     * and stop traversing.
+     * <p>
+     * Note: The {@link Cursor.Decision#REMOVE} operation is not supported.
+     *
+     * @param key  the key to use in the search
+     * @param cursor  the cursor used throughout the search
+     * @return the entry the cursor returned {@link Cursor.Decision#EXIT} on, or null
+     * if it continued till the end
+     */
+    public abstract Map.Entry<K,V> select(K key, Cursor<? super K, ? super V> cursor);
 
     @Override
     public String toString() {

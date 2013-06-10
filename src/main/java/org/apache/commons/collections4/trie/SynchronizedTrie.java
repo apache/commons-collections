@@ -66,22 +66,6 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
         this.delegate = trie;
     }
 
-    public synchronized Entry<K, V> select(final K key, final Cursor<? super K, ? super V> cursor) {
-        return delegate.select(key, cursor);
-    }
-
-    public synchronized Entry<K, V> select(final K key) {
-        return delegate.select(key);
-    }
-
-    public synchronized K selectKey(final K key) {
-        return delegate.selectKey(key);
-    }
-
-    public synchronized V selectValue(final K key) {
-        return delegate.selectValue(key);
-    }
-
     public synchronized Entry<K, V> traverse(final Cursor<? super K, ? super V> cursor) {
         return delegate.traverse(cursor);
     }

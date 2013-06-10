@@ -66,38 +66,6 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
         this.delegate = trie;
     }
 
-    public Entry<K, V> select(final K key, final Cursor<? super K, ? super V> cursor) {
-        final Cursor<K, V> c = new Cursor<K, V>() {
-            public Decision select(final Map.Entry<? extends K, ? extends V> entry) {
-                final Decision decision = cursor.select(entry);
-                switch (decision) {
-                    case REMOVE:
-                    case REMOVE_AND_EXIT:
-                        throw new UnsupportedOperationException();
-                    default:
-                        // other decisions are fine
-                        break;
-                }
-
-                return decision;
-            }
-        };
-
-        return delegate.select(key, c);
-    }
-
-    public Entry<K, V> select(final K key) {
-        return delegate.select(key);
-    }
-
-    public K selectKey(final K key) {
-        return delegate.selectKey(key);
-    }
-
-    public V selectValue(final K key) {
-        return delegate.selectValue(key);
-    }
-
     public Entry<K, V> traverse(final Cursor<? super K, ? super V> cursor) {
         final Cursor<K, V> c = new Cursor<K, V>() {
             public Decision select(final Map.Entry<? extends K, ? extends V> entry) {
@@ -175,8 +143,7 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
     }
 
     public SortedMap<K, V> subMap(final K fromKey, final K toKey) {
-        return Collections.unmodifiableSortedMap(
-                delegate.subMap(fromKey, toKey));
+        return Collections.unmodifiableSortedMap(delegate.subMap(fromKey, toKey));
     }
 
     public SortedMap<K, V> tailMap(final K fromKey) {
@@ -184,23 +151,19 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
     }
 
     public SortedMap<K, V> getPrefixedBy(final K key, final int offset, final int length) {
-        return Collections.unmodifiableSortedMap(
-                delegate.getPrefixedBy(key, offset, length));
+        return Collections.unmodifiableSortedMap(delegate.getPrefixedBy(key, offset, length));
     }
 
     public SortedMap<K, V> getPrefixedBy(final K key, final int length) {
-        return Collections.unmodifiableSortedMap(
-                delegate.getPrefixedBy(key, length));
+        return Collections.unmodifiableSortedMap(delegate.getPrefixedBy(key, length));
     }
 
     public SortedMap<K, V> getPrefixedBy(final K key) {
-        return Collections.unmodifiableSortedMap(
-                delegate.getPrefixedBy(key));
+        return Collections.unmodifiableSortedMap(delegate.getPrefixedBy(key));
     }
 
     public SortedMap<K, V> getPrefixedByBits(final K key, final int lengthInBits) {
-        return Collections.unmodifiableSortedMap(
-                delegate.getPrefixedByBits(key, lengthInBits));
+        return Collections.unmodifiableSortedMap(delegate.getPrefixedByBits(key, lengthInBits));
     }
 
     public SortedMap<K, V> getPrefixedByBits(final K key, final int offsetInBits, final int lengthInBits) {

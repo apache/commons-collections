@@ -21,8 +21,8 @@ import java.util.Comparator;
 
 /**
  * Defines the interface to analyze {@link org.apache.commons.collections4.Trie Trie} keys on a bit level.
- * {@link KeyAnalyzer}'s methods return the length of the key in bits,
- * whether or not a bit is set, and bits per element in the key.
+ * {@link KeyAnalyzer}'s methods return the length of the key in bits, whether or not a bit is set,
+ * and bits per element in the key.
  * <p>
  * Additionally, a method determines if a key is a prefix of another
  * key and returns the bit index where one key is different from another
@@ -39,44 +39,42 @@ public abstract class KeyAnalyzer<K> implements Comparator<K>, Serializable {
 
     /**
      * Returned by {@link #bitIndex(Object, int, int, Object, int, int)}
-     * if key's bits are all 0
+     * if key's bits are all 0.
      */
     public static final int NULL_BIT_KEY = -1;
 
     /**
-     * Returned by {@link #bitIndex(Object, int, int, Object, int, int)}
-     * if key and found key are equal. This is a very very specific case
-     * and shouldn't happen on a regular basis
+     * Returned by {@link #bitIndex(Object, int, int, Object, int, int)} if key and found key are equal.
+     * This is a very very specific case and shouldn't happen on a regular basis.
      */
     public static final int EQUAL_BIT_KEY = -2;
 
     public static final int OUT_OF_BOUNDS_BIT_KEY = -3;
 
     /**
-     * Returns true if bitIndex is a {@link KeyAnalyzer#OUT_OF_BOUNDS_BIT_KEY}
+     * Returns true if bitIndex is a {@link KeyAnalyzer#OUT_OF_BOUNDS_BIT_KEY}.
      */
     static boolean isOutOfBoundsIndex(final int bitIndex) {
         return bitIndex == OUT_OF_BOUNDS_BIT_KEY;
     }
 
     /**
-     * Returns true if bitIndex is a {@link KeyAnalyzer#EQUAL_BIT_KEY}
+     * Returns true if bitIndex is a {@link KeyAnalyzer#EQUAL_BIT_KEY}.
      */
     static boolean isEqualBitKey(final int bitIndex) {
         return bitIndex == EQUAL_BIT_KEY;
     }
 
     /**
-     * Returns true if bitIndex is a {@link KeyAnalyzer#NULL_BIT_KEY}
+     * Returns true if bitIndex is a {@link KeyAnalyzer#NULL_BIT_KEY}.
      */
     static boolean isNullBitKey(final int bitIndex) {
         return bitIndex == NULL_BIT_KEY;
     }
 
     /**
-     * Returns true if the given bitIndex is valid. Indices
-     * are considered valid if they're between 0 and
-     * {@link Integer#MAX_VALUE}
+     * Returns true if the given bitIndex is valid.
+     * Indices are considered valid if they're between 0 and {@link Integer#MAX_VALUE}
      */
     static boolean isValidBitIndex(final int bitIndex) {
         return bitIndex >= 0;

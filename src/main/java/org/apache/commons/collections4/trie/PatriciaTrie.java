@@ -29,11 +29,10 @@ import java.util.SortedMap;
 import org.apache.commons.collections4.Trie;
 
 /**
- * <h3>PATRICIA {@link Trie}</h3>
- *
- * <i>Practical Algorithm to Retrieve Information Coded in Alphanumeric</i>
- *
- * <p>A PATRICIA {@link Trie} is a compressed {@link Trie}. Instead of storing
+ * Implementation of a PATRICIA Trie (Practical Algorithm to Retrieve Information
+ * Coded in Alphanumeric).
+ * <p>
+ * A PATRICIA {@link Trie} is a compressed {@link Trie}. Instead of storing
  * all data at the edges of the {@link Trie} (and having empty internal nodes),
  * PATRICIA stores data in every node. This allows for very efficient traversal,
  * insert, delete, predecessor, successor, prefix, range, and {@link #select(Object)}
@@ -41,25 +40,25 @@ import org.apache.commons.collections4.Trie;
  * is the number of bits in the largest item in the tree. In practice,
  * operations actually take O(A(K)) time, where A(K) is the average number of
  * bits of all items in the tree.
- *
- * <p>Most importantly, PATRICIA requires very few comparisons to keys while
+ * <p>
+ * Most importantly, PATRICIA requires very few comparisons to keys while
  * doing any operation. While performing a lookup, each comparison (at most
  * K of them, described above) will perform a single bit comparison against
  * the given key, instead of comparing the entire key to another key.
- *
- * <p>The {@link Trie} can return operations in lexicographical order using the
+ * <p>
+ * The {@link Trie} can return operations in lexicographical order using the
  * {@link #traverse(Cursor)}, 'prefix', 'submap', or 'iterator' methods. The
  * {@link Trie} can also scan for items that are 'bitwise' (using an XOR
  * metric) by the 'select' method. Bitwise closeness is determined by the
  * {@link KeyAnalyzer} returning true or false for a bit being set or not in
  * a given key.
- *
- * <p>This PATRICIA {@link Trie} supports both variable length & fixed length
+ * <p>
+ * This PATRICIA {@link Trie} supports both variable length & fixed length
  * keys. Some methods, such as {@link #getPrefixedBy(Object)} are suited only
  * to variable length keys, whereas {@link #getPrefixedByBits(Object, int)} is
  * suited to fixed-size keys.
- *
- * <p>Any methods here that take an {@link Object} argument may throw a
+ * <p>
+ * Any methods here that take an {@link Object} argument may throw a
  * {@link ClassCastException} if the method is expecting an instance of K
  * and it isn't K.
  *

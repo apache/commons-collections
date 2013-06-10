@@ -27,92 +27,11 @@ import java.util.Map.Entry;
  * @since 4.0
  * @version $Id$
  */
+// TODO: should extend IterableSortedMap
+// TODO: move bitwise getPrefixedBy methods to AbstractBitwiseTrie
+// TODO: consider a BitwiseTrie interface which extends Trie and supports the bitwise selection methods
+// TODO: consider a better name for getPrefixedBy: maybe prefixMap(...)
 public interface Trie<K, V> extends SortedMap<K, V> {
-
-    /**
-     * Returns the {@link Entry} whose key is closest in a bitwise XOR
-     * metric to the given key. This is NOT lexicographic closeness.
-     * For example, given the keys:
-     *
-     * <ol>
-     * <li>D = 1000100
-     * <li>H = 1001000
-     * <li>L = 1001100
-     * </ol>
-     *
-     * If the {@link Trie} contained 'H' and 'L', a lookup of 'D' would
-     * return 'L', because the XOR distance between D &amp; L is smaller
-     * than the XOR distance between D &amp; H.
-     *
-     * @param key  the key to use in the search
-     * @return the {@link Entry} whose key is closest in a bitwise XOR metric
-     *   to the provided key
-     */
-    public Map.Entry<K, V> select(K key);
-
-    /**
-     * Returns the key that is closest in a bitwise XOR metric to the
-     * provided key. This is NOT lexicographic closeness!
-     *
-     * For example, given the keys:
-     *
-     * <ol>
-     * <li>D = 1000100
-     * <li>H = 1001000
-     * <li>L = 1001100
-     * </ol>
-     *
-     * If the {@link Trie} contained 'H' and 'L', a lookup of 'D' would
-     * return 'L', because the XOR distance between D &amp; L is smaller
-     * than the XOR distance between D &amp; H.
-     *
-     * @param key  the key to use in the search
-     * @return the key that is closest in a bitwise XOR metric to the provided key
-     */
-    public K selectKey(K key);
-
-    /**
-     * Returns the value whose key is closest in a bitwise XOR metric to
-     * the provided key. This is NOT lexicographic closeness!
-     *
-     * For example, given the keys:
-     *
-     * <ol>
-     * <li>D = 1000100
-     * <li>H = 1001000
-     * <li>L = 1001100
-     * </ol>
-     *
-     * If the {@link Trie} contained 'H' and 'L', a lookup of 'D' would
-     * return 'L', because the XOR distance between D &amp; L is smaller
-     * than the XOR distance between D &amp; H.
-     *
-     * @param key  the key to use in the search
-     * @return the value whose key is closest in a bitwise XOR metric
-     * to the provided key
-     */
-    public V selectValue(K key);
-
-    /**
-     * Iterates through the {@link Trie}, starting with the entry whose bitwise
-     * value is closest in an XOR metric to the given key. After the closest
-     * entry is found, the {@link Trie} will call select on that entry and continue
-     * calling select for each entry (traversing in order of XOR closeness,
-     * NOT lexicographically) until the cursor returns {@link Cursor.Decision#EXIT}.
-     * <p>
-     * The cursor can return {@link Cursor.Decision#CONTINUE} to continue traversing.
-     * <p>
-     * {@link Cursor.Decision#REMOVE_AND_EXIT} is used to remove the current element
-     * and stop traversing.
-     * <p>
-     * Note: The {@link Cursor.Decision#REMOVE} operation is not supported.
-     *
-     * @param key  the key to use in the search
-     * @param cursor  the cursor used throughout the search
-     * @return the entry the cursor returned {@link Cursor.Decision#EXIT} on, or null
-     * if it continued till the end
-     */
-    public Map.Entry<K,V> select(K key, Cursor<? super K, ? super V> cursor);
 
     /**
      * Traverses the {@link Trie} in lexicographical order.
