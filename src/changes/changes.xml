@@ -25,6 +25,10 @@
     <action issue="COLLECTIONS-472" dev="tn" type="fix" due-to="Adrian Nistor">
       Improved performance of "AbstractMapBag#containsAll(Collection)" by returning immediately
       after a difference has been found.
+    </action>
+    <action issue="COLLECTIONS-470" dev="tn" type="update" due-to="sebb">
+      Renamed class "TransformedMap" in package "splitmap" to "TransformedSplitMap" to avoid
+      name clash with similar class in package "map".
     </action>  
     <action issue="COLLECTIONS-466" dev="tn" type="update">
       Replaced "Collection" with "Iterable" for method arguments where applicable.

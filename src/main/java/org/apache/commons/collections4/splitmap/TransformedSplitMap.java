@@ -58,7 +58,7 @@ import org.apache.commons.collections4.map.LinkedMap;
  * @see org.apache.commons.collections4.SplitMapUtils#readableMap(Get)
  * @see org.apache.commons.collections4.SplitMapUtils#writableMap(Put)
  */
-public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<K, V>
+public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecorator<K, V>
         implements Put<J, U>, Serializable {
 
     /** Serialization version */
@@ -87,10 +87,10 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      * @return a new transformed map
      * @throws IllegalArgumentException if map is null
      */
-    public static <J, K, U, V> TransformedMap<J, K, U, V> transformingMap(final Map<K, V> map,
+    public static <J, K, U, V> TransformedSplitMap<J, K, U, V> transformingMap(final Map<K, V> map,
             final Transformer<? super J, ? extends K> keyTransformer,
             final Transformer<? super U, ? extends V> valueTransformer) {
-        return new TransformedMap<J, K, U, V>(map, keyTransformer, valueTransformer);
+        return new TransformedSplitMap<J, K, U, V>(map, keyTransformer, valueTransformer);
     }
 
     //-----------------------------------------------------------------------
@@ -107,7 +107,7 @@ public class TransformedMap<J, K, U, V> extends AbstractIterableGetMapDecorator<
      * means no conversion
      * @throws IllegalArgumentException if map is null
      */
-    protected TransformedMap(final Map<K, V> map, final Transformer<? super J, ? extends K> keyTransformer,
+    protected TransformedSplitMap(final Map<K, V> map, final Transformer<? super J, ? extends K> keyTransformer,
             final Transformer<? super U, ? extends V> valueTransformer) {
         super(map);
         if (keyTransformer == null) {

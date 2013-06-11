@@ -26,17 +26,13 @@ import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.functors.NOPTransformer;
 
 /**
- * Tests for {@link TransformedMap}
- *
- * TODO fix version, add Serialization tests
- * FIXME the serialization result is stored as TransformedSplitMap.versionX.obj
- * to distinguish it from the one for o.a.c.c.map.TransformedMap.
+ * Tests for {@link TransformedSplitMap}
  *
  * @since 4.0
  * @version $Id$
  */
 @SuppressWarnings("boxing")
-public class TransformedMapTest extends BulkTest {
+public class TransformedSplitMapTest extends BulkTest {
 
     private final Transformer<Integer, String> intToString = new Transformer<Integer, String>() {
         public String transform(final Integer input) {
@@ -56,13 +52,13 @@ public class TransformedMapTest extends BulkTest {
         }
     };
 
-    public TransformedMapTest(final String testName) {
+    public TransformedSplitMapTest(final String testName) {
         super(testName);
     }
 
     // -----------------------------------------------------------------------
     public void testTransformedMap() {
-        final TransformedMap<Integer, String, Object, Class<?>> map = TransformedMap.transformingMap(
+        final TransformedSplitMap<Integer, String, Object, Class<?>> map = TransformedSplitMap.transformingMap(
                 new HashMap<String, Class<?>>(), intToString, objectToClass);
 
         final Integer[] k = new Integer[] { 0, 1, 2, 3, 4, 5, 6 };
@@ -86,7 +82,7 @@ public class TransformedMapTest extends BulkTest {
         assertEquals(objectToClass.transform(v[0]), map.remove(intToString.transform(k[0])));
         assertEquals(--sz, map.size());
 
-        final TransformedMap<String, String, String, Integer> map2 = TransformedMap.transformingMap(
+        final TransformedSplitMap<String, String, String, Integer> map2 = TransformedSplitMap.transformingMap(
                 new HashMap<String, Integer>(), NOPTransformer.<String> nopTransformer(), stringToInt);
         assertEquals(0, map2.size());
         for (int i = 0; i < 6; i++) {
@@ -106,8 +102,9 @@ public class TransformedMapTest extends BulkTest {
     // -----------------------------------------------------------------------
 
     public void testMapIterator() {
-        final TransformedMap<String, String, String, Integer> map = TransformedMap.transformingMap(
-                new HashMap<String, Integer>(), NOPTransformer.<String> nopTransformer(), stringToInt);
+        final TransformedSplitMap<String, String, String, Integer> map =
+                TransformedSplitMap.transformingMap(new HashMap<String, Integer>(),
+                                                    NOPTransformer.<String> nopTransformer(), stringToInt);
         assertEquals(0, map.size());
         for (int i = 0; i < 6; i++) {
             map.put(String.valueOf(i), String.valueOf(i));
@@ -121,22 +118,23 @@ public class TransformedMapTest extends BulkTest {
     }
 
     public void testEmptyMap() throws IOException, ClassNotFoundException {
-        final TransformedMap<String, String, String, String> map = TransformedMap.transformingMap(
-                new HashMap<String, String>(),
-                NOPTransformer.<String>nopTransformer(),
-                NOPTransformer.<String>nopTransformer() );
+        final TransformedSplitMap<String, String, String, String> map =
+                TransformedSplitMap.transformingMap(new HashMap<String, String>(),
+                                                    NOPTransformer.<String>nopTransformer(),
+                                                    NOPTransformer.<String>nopTransformer() );
 
-        final ObjectInputStream in = new ObjectInputStream( new FileInputStream( TEST_DATA_PATH+"/TransformedSplitMap.emptyCollection.version4.obj" ) );
+        final ObjectInputStream in =
+                new ObjectInputStream( new FileInputStream( TEST_DATA_PATH+"/TransformedSplitMap.emptyCollection.version4.obj" ) );
         final Object readObject = in.readObject();
         in.close();
 
-        final TransformedMap<?, ?, ?, ?> readMap = (TransformedMap<?, ?, ?, ?>) readObject;
+        final TransformedSplitMap<?, ?, ?, ?> readMap = (TransformedSplitMap<?, ?, ?, ?>) readObject;
         assertTrue( "Map should be empty", readMap.size() == 0 );
         assertEquals( map.entrySet(), readMap.entrySet() );
     }
 
     public void testFullMap() throws IOException, ClassNotFoundException {
-        final TransformedMap<String, String, String, String> map = TransformedMap.transformingMap(
+        final TransformedSplitMap<String, String, String, String> map = TransformedSplitMap.transformingMap(
                 new HashMap<String, String>(),
                 NOPTransformer.<String>nopTransformer(),
                 NOPTransformer.<String>nopTransformer() );
@@ -145,17 +143,18 @@ public class TransformedMapTest extends BulkTest {
         map.put( "e", "f" );
         map.put( "g", "h" );
 
-        final ObjectInputStream in = new ObjectInputStream( new FileInputStream( TEST_DATA_PATH+"TransformedSplitMap.fullCollection.version4.obj" ) );
+        final ObjectInputStream in =
+                new ObjectInputStream( new FileInputStream( TEST_DATA_PATH+"TransformedSplitMap.fullCollection.version4.obj" ) );
         final Object readObject = in.readObject();
         in.close();
 
-        final TransformedMap<?, ?, ?, ?> readMap = (TransformedMap<?, ?, ?, ?>) readObject;
+        final TransformedSplitMap<?, ?, ?, ?> readMap = (TransformedSplitMap<?, ?, ?, ?>) readObject;
         assertFalse( "Map should not be empty", readMap.size() == 0 );
         assertEquals( map.entrySet(), readMap.entrySet() );
     }
 
 //    public void testCreate() throws IOException {
-//        TransformedMap<String, String, String, String> map = TransformedMap.transformingMap(
+//        TransformedSplitMap<String, String, String, String> map = TransformedSplitMap.transformingMap(
 //                new HashMap<String, String>(),
 //                NOPTransformer.<String>nopTransformer(),
 //                NOPTransformer.<String>nopTransformer() );

@@ -27,10 +27,10 @@ import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.functors.NOPTransformer;
 import org.apache.commons.collections4.map.HashedMap;
-import org.apache.commons.collections4.splitmap.TransformedMap;
+import org.apache.commons.collections4.splitmap.TransformedSplitMap;
 
 /**
- * Tests for {@link TransformedMap}
+ * Tests for {@link TransformedSplitMap}
  *
  * @since 4.0
  * @version $Id$
@@ -38,7 +38,7 @@ import org.apache.commons.collections4.splitmap.TransformedMap;
 @SuppressWarnings("boxing")
 public class SplitMapUtilsTest extends BulkTest {
     private Map<String, Integer> backingMap;
-    private TransformedMap<String, String, String, Integer> transformedMap;
+    private TransformedSplitMap<String, String, String, Integer> transformedMap;
 
     private final Transformer<String, Integer> stringToInt = new Transformer<String, Integer>() {
         public Integer transform(final String input) {
@@ -54,7 +54,7 @@ public class SplitMapUtilsTest extends BulkTest {
     protected void setUp() throws Exception {
         super.setUp();
         backingMap = new HashMap<String, Integer>();
-        transformedMap = TransformedMap.transformingMap(backingMap, NOPTransformer.<String> nopTransformer(),
+        transformedMap = TransformedSplitMap.transformingMap(backingMap, NOPTransformer.<String> nopTransformer(),
                 stringToInt);
         for (int i = 0; i < 10; i++) {
             transformedMap.put(String.valueOf(i), String.valueOf(i));

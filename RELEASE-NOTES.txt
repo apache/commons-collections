@@ -81,7 +81,7 @@ New classes
  o [COLLECTIONS-241] PassiveExpiringMap - map decorator which passively expires entries. Thanks to Elifarley Callado Coelho. 
  o [COLLECTIONS-8  ] ComparatorPredicate - predicate to compare objects against a fixed instance. Thanks to Rune Peter Bjørnstad.
  o [None           ] Put / Get - interfaces for split maps
- o [None           ] SplitMapUtils / splitmap.TransformedMap - utilities and implementation for split maps
+ o [None           ] SplitMapUtils / splitmap.TransformedSplitMap - utilities and implementation for split maps
 
 
 New methods in *Utils

@@ -40,7 +40,7 @@ import org.apache.commons.collections4.Transformer;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  * <p>
- * @see org.apache.commons.collections4.splitmap.TransformedMap
+ * @see org.apache.commons.collections4.splitmap.TransformedSplitMap
  *
  * @since 3.0
  * @version $Id$
