@@ -449,6 +449,10 @@
     <action issue="COLLECTIONS-226" dev="bayard" type="add" due-to="Vasily Ivanov">
       Added method "ListOrderedMap#putAll(int, Map)".
     </action>
+    <action issue="COLLECTIONS-225" dev="tn" type="add" due-to="Sam Berlin, Roger Kapsi">
+      Added new "Trie" interface with a first concrete implementation "PatriciaTrie"
+      together with decorators "Unmodifiable" and "Synchronized".
+    </action>
     <action issue="COLLECTIONS-223" dev="bayard" type="update" due-to="Vasily Ivanov">
       "CollectionUtils#addAll(...)" methods now return if the collection has been changed
       by this operation.

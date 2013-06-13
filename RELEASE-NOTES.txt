@@ -32,6 +32,7 @@ Major changes since 3.2.1
  - Removed deprecated classes / methods and features which are now supported by the JDK
  - Replaced Buffer interface with java.util.Queue
  - Added concept of split maps with respective interfaces Put / Get (see also package splitmap)
+ - Added new Trie interface together with an implementation of a Patricia Trie
 
 
 Removed classes
@@ -78,7 +79,9 @@ New classes
  o [COLLECTIONS-275] IndexedCollection - collection decorator which provides a map-like view on an existing collection. Thanks to Stephen Kestle. 
  o [COLLECTIONS-258] DualLinkedHashBidiMap - bidi map implementation using LinkedHashMap instances. Thanks to Nathan Blomquist. 
  o [COLLECTIONS-242] Equator - interface for testing object equality. 
- o [COLLECTIONS-241] PassiveExpiringMap - map decorator which passively expires entries. Thanks to Elifarley Callado Coelho. 
+ o [COLLECTIONS-241] PassiveExpiringMap - map decorator which passively expires entries. Thanks to Elifarley Callado Coelho.
+ o [COLLECTIONS-225] PatriciaTrie - PATRICIA trie implementation for the new Trie interface, together with Unmodifiable and
+                     Synchronized decorators. Thanks to Sam Berlin and Roger Kapsi.
  o [COLLECTIONS-8  ] ComparatorPredicate - predicate to compare objects against a fixed instance. Thanks to Rune Peter Bjørnstad.
  o [None           ] Put / Get - interfaces for split maps
  o [None           ] SplitMapUtils / splitmap.TransformedSplitMap - utilities and implementation for split maps
