@@ -24,6 +24,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 
+import org.apache.commons.collections4.OrderedMapIterator;
 import org.apache.commons.collections4.Trie;
 import org.apache.commons.collections4.collection.SynchronizedCollection;
 
@@ -64,10 +65,6 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
             throw new IllegalArgumentException("Collection must not be null");
         }
         this.delegate = trie;
-    }
-
-    public synchronized Entry<K, V> traverse(final Cursor<? super K, ? super V> cursor) {
-        return delegate.traverse(cursor);
     }
 
     public synchronized Set<Entry<K, V>> entrySet() {
@@ -114,6 +111,10 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
         return delegate.remove(key);
     }
 
+    public synchronized int size() {
+        return delegate.size();
+    }
+
     public synchronized K lastKey() {
         return delegate.lastKey();
     }
@@ -138,31 +139,26 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
         return Collections.synchronizedSortedMap(delegate.headMap(toKey));
     }
 
-    public synchronized SortedMap<K, V> getPrefixedBy(final K key, final int offset, final int length) {
-        return Collections.synchronizedSortedMap(delegate.getPrefixedBy(key, offset, length));
+    public synchronized SortedMap<K, V> prefixMap(final K key) {
+        return Collections.synchronizedSortedMap(delegate.prefixMap(key));
     }
 
-    public synchronized SortedMap<K, V> getPrefixedBy(final K key, final int length) {
-        return Collections.synchronizedSortedMap(delegate.getPrefixedBy(key, length));
+    //-----------------------------------------------------------------------
+    public synchronized OrderedMapIterator<K, V> mapIterator() {
+        // TODO: make ordered map iterator synchronized too
+        final OrderedMapIterator<K, V> it = delegate.mapIterator();
+        return it;
     }
 
-    public synchronized SortedMap<K, V> getPrefixedBy(final K key) {
-        return Collections.synchronizedSortedMap(delegate.getPrefixedBy(key));
+    public synchronized K nextKey(K key) {
+        return delegate.nextKey(key);
     }
 
-    public synchronized SortedMap<K, V> getPrefixedByBits(final K key, final int lengthInBits) {
-        return Collections.synchronizedSortedMap(delegate.getPrefixedByBits(key, lengthInBits));
+    public synchronized K previousKey(K key) {
+        return delegate.previousKey(key);
     }
 
-    public synchronized SortedMap<K, V> getPrefixedByBits(final K key,
-            final int offsetInBits, final int lengthInBits) {
-        return Collections.synchronizedSortedMap(delegate.getPrefixedByBits(key, offsetInBits, lengthInBits));
-    }
-
-    public synchronized int size() {
-        return delegate.size();
-    }
-
+    //-----------------------------------------------------------------------
     @Override
     public synchronized int hashCode() {
         return delegate.hashCode();
@@ -177,4 +173,5 @@ public class SynchronizedTrie<K, V> implements Trie<K, V>, Serializable {
     public synchronized String toString() {
         return delegate.toString();
     }
+
 }

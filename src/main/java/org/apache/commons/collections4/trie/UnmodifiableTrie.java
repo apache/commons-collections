@@ -24,8 +24,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 
+import org.apache.commons.collections4.OrderedMapIterator;
 import org.apache.commons.collections4.Trie;
 import org.apache.commons.collections4.Unmodifiable;
+import org.apache.commons.collections4.iterators.UnmodifiableOrderedMapIterator;
 
 /**
  * An unmodifiable {@link Trie}.
@@ -35,6 +37,7 @@ import org.apache.commons.collections4.Unmodifiable;
  */
 public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodifiable {
 
+    /** Serialization version */
     private static final long serialVersionUID = -7156426030315945159L;
 
     private final Trie<K, V> delegate;
@@ -66,25 +69,7 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
         this.delegate = trie;
     }
 
-    public Entry<K, V> traverse(final Cursor<? super K, ? super V> cursor) {
-        final Cursor<K, V> c = new Cursor<K, V>() {
-            public Decision select(final Map.Entry<? extends K, ? extends V> entry) {
-                final Decision decision = cursor.select(entry);
-                switch (decision) {
-                    case REMOVE:
-                    case REMOVE_AND_EXIT:
-                        throw new UnsupportedOperationException();
-                    default:
-                        // other decisions are fine
-                        break;
-                }
-
-                return decision;
-            }
-        };
-
-        return delegate.traverse(c);
-    }
+    //-----------------------------------------------------------------------
 
     public Set<Entry<K, V>> entrySet() {
         return Collections.unmodifiableSet(delegate.entrySet());
@@ -130,6 +115,10 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
         throw new UnsupportedOperationException();
     }
 
+    public int size() {
+        return delegate.size();
+    }
+
     public K firstKey() {
         return delegate.firstKey();
     }
@@ -150,34 +139,29 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
         return Collections.unmodifiableSortedMap(delegate.tailMap(fromKey));
     }
 
-    public SortedMap<K, V> getPrefixedBy(final K key, final int offset, final int length) {
-        return Collections.unmodifiableSortedMap(delegate.getPrefixedBy(key, offset, length));
-    }
-
-    public SortedMap<K, V> getPrefixedBy(final K key, final int length) {
-        return Collections.unmodifiableSortedMap(delegate.getPrefixedBy(key, length));
-    }
-
-    public SortedMap<K, V> getPrefixedBy(final K key) {
-        return Collections.unmodifiableSortedMap(delegate.getPrefixedBy(key));
-    }
-
-    public SortedMap<K, V> getPrefixedByBits(final K key, final int lengthInBits) {
-        return Collections.unmodifiableSortedMap(delegate.getPrefixedByBits(key, lengthInBits));
-    }
-
-    public SortedMap<K, V> getPrefixedByBits(final K key, final int offsetInBits, final int lengthInBits) {
-        return Collections.unmodifiableSortedMap(delegate.getPrefixedByBits(key, offsetInBits, lengthInBits));
+    public SortedMap<K, V> prefixMap(final K key) {
+        return Collections.unmodifiableSortedMap(delegate.prefixMap(key));
     }
 
     public Comparator<? super K> comparator() {
         return delegate.comparator();
     }
 
-    public int size() {
-        return delegate.size();
+    //-----------------------------------------------------------------------
+    public OrderedMapIterator<K, V> mapIterator() {
+        final OrderedMapIterator<K, V> it = delegate.mapIterator();
+        return UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(it);
     }
 
+    public K nextKey(K key) {
+        return delegate.nextKey(key);
+    }
+
+    public K previousKey(K key) {
+        return delegate.previousKey(key);
+    }
+
+    //-----------------------------------------------------------------------
     @Override
     public int hashCode() {
         return delegate.hashCode();
@@ -192,4 +176,5 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
     public String toString() {
         return delegate.toString();
     }
+
 }
