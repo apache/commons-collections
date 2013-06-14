@@ -700,8 +700,8 @@ public class CollectionUtilsTest extends MockTestCase {
             }
         }));
         assertEquals("a", resultOne.toString());
-        assertNull(CollectionUtils.forAllButLastDo(strings, null));
-        assertNull(CollectionUtils.forAllButLastDo((Collection<?>) null, null));
+        assertNull(CollectionUtils.forAllButLastDo(strings, (Closure) null));
+        assertNull(CollectionUtils.forAllButLastDo((Collection<?>) null, (Closure) null));
     }
 
     @Test
@@ -714,8 +714,8 @@ public class CollectionUtilsTest extends MockTestCase {
         assertSame(lastElement, collectionB);
         assertTrue(collectionA.isEmpty() && !collectionB.isEmpty());
 
-        assertNull(CollectionUtils.forAllButLastDo(col.iterator(), null));
-        assertNull(CollectionUtils.forAllButLastDo((Collection<?>) null, null));
+        assertNull(CollectionUtils.forAllButLastDo(col.iterator(), (Closure) null));
+        assertNull(CollectionUtils.forAllButLastDo((Collection<?>) null, (Closure) null));
     }
 
     @Test
