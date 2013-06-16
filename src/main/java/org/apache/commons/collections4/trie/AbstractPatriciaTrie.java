@@ -2138,7 +2138,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> impl
         private int fixup() {
             // The trie has changed since we last found our toKey / fromKey
             if (size == - 1 || AbstractPatriciaTrie.this.modCount != expectedModCount) {
-                final Iterator<Map.Entry<K, V>> it = entrySet().iterator();
+                final Iterator<Map.Entry<K, V>> it = super.entrySet().iterator();
                 size = 0;
 
                 Map.Entry<K, V> entry = null;
