@@ -1950,13 +1950,17 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         assertEquals("hashCodes should be the same", getConfirmed().hashCode(), getMap().hashCode());
         // this fails for LRUMap because confirmed.equals() somehow modifies
         // map, causing concurrent modification exceptions.
-        //assertEquals("Map should still equal HashMap", confirmed, map);
+        // assertEquals("Map should still equal HashMap", confirmed, map);
         // this works though and performs the same verification:
         assertTrue("Map should still equal HashMap", getMap().equals(getConfirmed()));
         // TODO: this should really be reexamined to figure out why LRU map
         // behaves like it does (the equals shouldn't modify since all accesses
         // by the confirmed collection should be through an iterator, thus not
         // causing LRUMap to change).
+        // When comparing two maps, the entries in the map have to be accessed
+        // (usually with the get(Object) method). In the case of the LRUMap, this
+        // also alters the modCount as moveToMRU is called for the retrieved entry.
+        // Imho, the modCount should not be increased for a read-only operation.
     }
 
     public void verifyEntrySet() {
