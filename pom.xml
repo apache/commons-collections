@@ -466,6 +466,9 @@
     <!-- The RC version used in the staging repository URL. -->
     <commons.rc.version>RC2</commons.rc.version>
     <checkstyle.version>2.9.1</checkstyle.version>
+    
+    <commons.site.path>collections</commons.site.path>
+    <commons.scmPubUrl>https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-collections</commons.scmPubUrl>
     <commons.scmPubCheckoutDirectory>site-content</commons.scmPubCheckoutDirectory>
   </properties>
 
@@ -501,7 +504,7 @@
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>${checkstyle.version}</version>
         <configuration>
-          <configLocation>${basedir}/checkstyle.xml</configLocation>
+          <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
           <enableRulesSummary>false</enableRulesSummary>
         </configuration>
       </plugin>
@@ -552,9 +555,9 @@
         <artifactId>maven-checkstyle-plugin</artifactId>
         <version>${checkstyle.version}</version>
         <configuration>
-          <configLocation>${basedir}/checkstyle.xml</configLocation>
+          <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
           <enableRulesSummary>false</enableRulesSummary>
-	      <suppressionsLocation>${basedir}/checkstyle-suppressions.xml</suppressionsLocation>
+	      <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation>
         </configuration>
 	    <reportSets>
           <reportSet>
@@ -579,7 +582,7 @@
         <configuration>
           <threshold>Normal</threshold>
           <effort>Default</effort>
-          <excludeFilterFile>${basedir}/findbugs-exclude-filter.xml</excludeFilterFile>
+          <excludeFilterFile>${basedir}/src/conf/findbugs-exclude-filter.xml</excludeFilterFile>
        </configuration>
       </plugin>
       <plugin>
