@@ -182,7 +182,7 @@ public class ListUtils {
      *             if the input list is null
      *
      * @since 4.0
-     * @see CollectionUtils#select(Collection, Predicate)
+     * @see CollectionUtils#select(Iterable, Predicate)
      */
     public static <E> List<E> select(final Collection<? extends E> inputCollection,
             final Predicate<? super E> predicate) {
@@ -206,7 +206,7 @@ public class ListUtils {
      *             if the input collection is null
      *
      * @since 4.0
-     * @see CollectionUtils#selectRejected(Collection, Predicate)
+     * @see CollectionUtils#selectRejected(Iterable, Predicate)
      */
     public static <E> List<E> selectRejected(final Collection<? extends E> inputCollection,
             final Predicate<? super E> predicate) {
