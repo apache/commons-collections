@@ -29,7 +29,6 @@
  * <p>
  * The following decorators are provided:
  * <ul>
- *   <li>Synchronized - synchronizes method access for multi-threaded environments
  *   <li>Unmodifiable - ensures the collection cannot be altered
  * </ul>
  *

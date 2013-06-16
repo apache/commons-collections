@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4;
 
-import org.apache.commons.collections4.trie.SynchronizedTrie;
 import org.apache.commons.collections4.trie.UnmodifiableTrie;
 
 /**
@@ -33,16 +32,12 @@ public class TrieUtils {
     private TrieUtils() {}
 
     /**
-     * Returns a synchronized instance of a {@link Trie}
-     *
-     * @see java.util.Collections#synchronizedMap(java.util.Map)
-     */
-    public static <K, V> Trie<K, V> synchronizedTrie(final Trie<K, V> trie) {
-        return SynchronizedTrie.synchronizedTrie(trie);
-    }
-
-    /**
      * Returns an unmodifiable instance of a {@link Trie}
+     *
+     * @param <K>  the key type
+     * @param <V>  the value type
+     * @param trie  the trie to make unmodifiable, must not be null
+     * @return an unmodifiable trie backed by the given trie
      *
      * @see java.util.Collections#unmodifiableMap(java.util.Map)
      */

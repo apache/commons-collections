@@ -34,6 +34,7 @@ import java.util.SortedMap;
 import java.util.Map.Entry;
 
 import org.apache.commons.collections4.OrderedMapIterator;
+import org.apache.commons.collections4.Trie;
 
 /**
  * This class implements the base PATRICIA algorithm and everything that
@@ -42,7 +43,7 @@ import org.apache.commons.collections4.OrderedMapIterator;
  * @since 4.0
  * @version $Id$
  */
-abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
+abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> implements Trie<K, V> {
 
     private static final long serialVersionUID = 5155253417231339498L;
 
