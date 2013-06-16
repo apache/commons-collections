@@ -19,7 +19,7 @@
   <parent>
     <groupId>org.apache.commons</groupId>
     <artifactId>commons-parent</artifactId>
-    <version>28</version>
+    <version>30</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apache.commons</groupId>
@@ -563,6 +563,14 @@
             </reports>
           </reportSet>
         </reportSets>         
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>clirr-maven-plugin</artifactId>
+        <version>${commons.clirr.version}</version>
+        <configuration>
+          <minSeverity>${minSeverity}</minSeverity>
+         </configuration>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
