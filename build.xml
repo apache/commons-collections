@@ -19,16 +19,9 @@ limitations under the License.
 
 <!-- ========== Properties ================================================ -->
 
-  <!-- This can be used to define 'junit.jar' and 'emma.lib.dir' properties if necessary -->
+  <!-- This can be used to define 'junit.jar' properties if necessary -->
   <property file="build.properties"/>
   
-	<!-- Import EMMA coverage tool -->
-	<path id="emma.lib">
-		<pathelement location="${emma.lib.dir}/emma.jar" />
-		<pathelement location="${emma.lib.dir}/emma_ant.jar" />
-	</path>
-	<taskdef resource="emma_ant.properties" classpathref="emma.lib" />
-
 <!-- ========== Component Declarations ==================================== -->
 
   <!-- The name of this component -->
@@ -47,7 +40,7 @@ limitations under the License.
   <property name="component.version"       value="4.0-SNAPSHOT"/>
 
   <!-- The base directory for component configuration files -->
-  <property name="source.conf"               value="src/conf"/>
+  <property name="source.conf"             value="src/conf"/>
 
   <!-- The base directory for component sources -->
   <property name="source.java"             value="src/main/java"/>
@@ -63,12 +56,10 @@ limitations under the License.
   <property name="build.test.reports"      value="${build.home}/test-reports"/>
   <property name="build.docs"              value="${build.home}/docs/apidocs"/>
   <property name="build.src"               value="${build.home}/src-ide" />
-  
-  <!-- The directories for tests/instrumentation -->
-  <property name="build.instrumented"      value="${build.home}/instrumented" />
+
+  <!-- The directories for tests                  -->
   <property name="build.reports"           value="${build.home}/reports" />
-  <property name="build.reports.coverage"  value="${build.reports}/coverage" />
-  
+
   <!-- The name/location of the jar file to build -->
   <property name="final.name"           value="${component.name}-${component.version}"/>
   <property name="jar.name"             value="${final.name}.jar"/>
@@ -89,13 +80,11 @@ limitations under the License.
   <property name="dist.home"            value="dist"/>
   <!-- for nightly builds -->
 
-  <!-- Used for generating a support jar for open source packages that require deprecated classes -->
-  <property name="collections-3.jar" value="commons-collections-3.2.jar"/>
-  
   <!-- Path variables -->
   <path id="test.support.path">
     <!--Combines all jar references needed for running and compiling tests-->
     <pathelement location="${junit.jar}" />
+    <pathelement location="${hamcrest.jar}" />    
     <pathelement location="${easymock.jar}" />
   </path>
 
@@ -185,108 +174,6 @@ limitations under the License.
   </target>
 
   <!-- ====================================================================== -->
-  <!-- Targets you might use to get smaller jar files - not recommended -->
-
-  <target name="splitjar" depends="jar"
-          description="Create split jar">
-    <jar    jarfile="${build.home}/${component.name}-bag-${component.version}.jar"
-            basedir="${build.classes}"
-           manifest="${build.conf}/MANIFEST.MF">
-      <include name="**/META-INF/*"/>
-      <include name="**/BagUtils*.class"/>
-      <include name="**/bag/*.class"/>
-    </jar>
-    <jar    jarfile="${build.home}/${component.name}-bidimap-${component.version}.jar"
-            basedir="${build.classes}"
-           manifest="${build.conf}/MANIFEST.MF">
-      <include name="**/META-INF/*"/>
-      <include name="**/bidimap/*.class"/>
-    </jar>
-    <jar    jarfile="${build.home}/${component.name}-buffer-${component.version}.jar"
-            basedir="${build.classes}"
-           manifest="${build.conf}/MANIFEST.MF">
-      <include name="**/META-INF/*"/>
-      <include name="**/BufferUtils*.class"/>
-      <include name="**/buffer/*.class"/>
-    </jar>
-    <jar    jarfile="${build.home}/${component.name}-functors-${component.version}.jar"
-            basedir="${build.classes}"
-           manifest="${build.conf}/MANIFEST.MF">
-      <include name="**/META-INF/*"/>
-      <include name="**/ClosureUtils*.class"/>
-      <include name="**/FactoryUtils*.class"/>
-      <include name="**/PredicateUtils*.class"/>
-      <include name="**/TransformerUtils*.class"/>
-      <include name="**/functors/*.class"/>
-    </jar>
-    <jar    jarfile="${build.home}/${component.name}-core-${component.version}.jar"
-            basedir="${build.classes}"
-           manifest="${build.conf}/MANIFEST.MF">
-      <include name="**/META-INF/*"/>
-      <include name="**/*"/>
-      <exclude name="**/BagUtils*.class"/>
-      <exclude name="**/BufferUtils*.class"/>
-      <exclude name="**/ClosureUtils*.class"/>
-      <exclude name="**/FactoryUtils*.class"/>
-      <exclude name="**/PredicateUtils*.class"/>
-      <exclude name="**/TransformerUtils*.class"/>
-      <exclude name="**/bag/*.class"/>
-      <exclude name="**/bidimap/*.class"/>
-      <exclude name="**/buffer/*.class"/>
-      <exclude name="**/functors/*.class"/>
-      <exclude name="**/iterators/ProxyIterator*.class"/>
-      <exclude name="**/iterators/ProxyListIterator*.class"/>
-      <exclude name="**/map/*.class"/>
-      <exclude name="org/apache/commons/collections/BeanMap*.class"/>
-      <exclude name="org/apache/commons/collections/BinaryHeap*.class"/>
-      <exclude name="org/apache/commons/collections/BoundedFifoBuffer*.class"/>
-      <exclude name="org/apache/commons/collections/CursorableLinkedList*.class"/>
-      <exclude name="org/apache/commons/collections/CursorableSubList*.class"/>
-      <exclude name="org/apache/commons/collections/DefaultMapBag*.class"/>
-      <exclude name="org/apache/commons/collections/DefaultMapEntry*.class"/>
-      <exclude name="org/apache/commons/collections/DoubleOrderedMap*.class"/>
-      <exclude name="org/apache/commons/collections/HashBag*.class"/>
-      <exclude name="org/apache/commons/collections/LRUMap*.class"/>
-      <exclude name="org/apache/commons/collections/MultiHashMap*.class"/>
-      <exclude name="org/apache/commons/collections/PriorityQueue*.class"/>
-      <exclude name="org/apache/commons/collections/ProxyMap*.class"/>
-      <exclude name="org/apache/commons/collections/ReferenceMap*.class"/>
-      <exclude name="org/apache/commons/collections/SequencedHashMap*.class"/>
-      <exclude name="org/apache/commons/collections/StaticBucketMap*.class"/>
-      <exclude name="org/apache/commons/collections/SynchronizedPriorityQueue*.class"/>
-      <exclude name="org/apache/commons/collections/TreeBag*.class"/>
-      <exclude name="org/apache/commons/collections/UnboundedFifoBuffer*.class"/>
-    </jar>
-    <jar    jarfile="${build.home}/${component.name}-deprecated-${component.version}.jar"
-            basedir="${build.classes}"
-           manifest="${build.conf}/MANIFEST.MF">
-      <include name="**/META-INF/*"/>
-      <include name="**/iterators/ProxyIterator*.class"/>
-      <include name="**/iterators/ProxyListIterator*.class"/>
-      <include name="org/apache/commons/collections/BeanMap*.class"/>
-      <include name="org/apache/commons/collections/BinaryHeap*.class"/>
-      <include name="org/apache/commons/collections/BoundedFifoBuffer*.class"/>
-      <include name="org/apache/commons/collections/CursorableLinkedList*.class"/>
-      <include name="org/apache/commons/collections/CursorableSubList*.class"/>
-      <include name="org/apache/commons/collections/DefaultMapBag*.class"/>
-      <include name="org/apache/commons/collections/DefaultMapEntry*.class"/>
-      <include name="org/apache/commons/collections/DoubleOrderedMap*.class"/>
-      <include name="org/apache/commons/collections/HashBag*.class"/>
-      <include name="org/apache/commons/collections/LRUMap*.class"/>
-      <include name="org/apache/commons/collections/MultiHashMap*.class"/>
-      <include name="org/apache/commons/collections/PriorityQueue*.class"/>
-      <include name="org/apache/commons/collections/ProxyMap*.class"/>
-      <include name="org/apache/commons/collections/ReferenceMap*.class"/>
-      <include name="org/apache/commons/collections/SequencedHashMap*.class"/>
-      <include name="org/apache/commons/collections/StaticBucketMap*.class"/>
-      <include name="org/apache/commons/collections/SynchronizedPriorityQueue*.class"/>
-      <include name="org/apache/commons/collections/TreeBag*.class"/>
-      <include name="org/apache/commons/collections/UnboundedFifoBuffer*.class"/>
-    </jar>
-
-  </target>
-
-  <!-- ====================================================================== -->
 
   <target name="compile.tests" depends="compile"
           description="Compile unit test cases">
@@ -314,41 +201,26 @@ limitations under the License.
     <pathelement location="${build.classes}" />
   </path>
 
-  <target name="instrument"
-          depends="compile.tests"
-          unless="emma.norun"
-          description="Instruments the compiled classes and moves them to the instrumentation directory">
-    <emma>
-      <instr instrpathref="build.path"
-             destdir="${build.instrumented}"
-             metadatafile="${build.reports.coverage}/coverage.emma"
-             merge="true">
-      </instr>
-    </emma>
-  </target>
-
   <!-- Runs all tests -->
-  <target name="-test-all" depends="compile.tests,instrument" unless="testcase">
+  <target name="-test-all" depends="compile.tests" unless="testcase">
 	<mkdir dir="${build.test.reports}" />
 
     <junit printsummary="yes" haltonfailure="${test.haltonfailure}" showoutput="yes">
       <classpath>
-        <pathelement location="${build.instrumented}"/>
         <pathelement location="${build.classes}"/>
         <pathelement location="${build.tests}"/>
         <path refid="test.support.path"/>
-      	<path refid="emma.lib"/>
       </classpath>
-      <jvmarg value="-Demma.coverage.out.file=${build.reports.coverage}/coverage.ec" />
-      <jvmarg value="-Demma.coverage.out.merge=true" />
-      <jvmarg value="-Demma.verbosity.level=quiet" />
 
       <formatter type="xml" />
       <formatter type="plain" />
       <batchtest fork="${test.fork}" todir="${build.test.reports}">
         <fileset dir="${source.test}">
-          <include name="**/Test*.java"/>
+          <include name="**/*Test.java"/>
           <exclude name="**/TestUtils.java"/>
+          <exclude name="**/*$*"/>
+          <exclude name="**/Abstract*.java"/>
+          <exclude name="**/BulkTest.java"/>
         </fileset>
       </batchtest>
     </junit>
@@ -376,19 +248,6 @@ limitations under the License.
     </junit>
   </target>
   
-  <target name="coverage.report"
-          depends="test"
-          description="Generates the coverage report for the code that has been run">
-    <emma>
-      <report sourcepath="${source.java}">
-        <fileset dir="${build.reports.coverage}">
-          <include name="*" />
-        </fileset>
-        <html outfile="${build.reports.coverage}/coverage.html" />
-      </report>
-    </emma>
-  </target>
-
   <!-- ====================================================================== -->
 
   <target name="testjar"  depends="compile.tests,jar"
@@ -505,8 +364,8 @@ limitations under the License.
       <property name="test.classes"         value="${tf.build.tf}"/>
       <property name="dist.home"            value="${build.home}"/>
       <property name="component.version"    value="${tf.version}"/>
-      <property name="maven.compile.source" value="1.2"/>
-      <property name="maven.compile.target" value="1.2"/>
+      <property name="maven.compile.source" value="1.5"/>
+      <property name="maven.compile.target" value="1.5"/>
     </ant>
 
   </target>
@@ -597,7 +456,6 @@ limitations under the License.
         <include name="STATUS.html"/>
         <include name="build.xml"/>
         <include name="build-testframework.xml"/>
-        <include name="checkstyle.xml"/>
         <include name="maven.xml"/>
         <include name="project.xml"/>
         <include name="project.properties"/>
@@ -686,22 +544,10 @@ limitations under the License.
       <classpath path="${maven.repo}/clirr/jars/clirr-core-0.6-uber.jar;" />
     </taskdef>
     <clirr>
-      <origfiles dir="${maven.repo}/commons-collections/jars" includes="commons-collections-3.1.jar"/>
+      <origfiles dir="${maven.repo}/commons-collections/jars" includes="commons-collections-3.2.1.jar"/>
       <newfiles dir="${build.home}" includes="${final.name}.jar" />
       <formatter type="plain" outfile="${build.home}/clirr.txt" />
     </clirr>
   </target>
 
-  <!-- ====================================================================== -->
-  <target name="deprecated.jar" description="Compiles a jar of deprecated classes that existed in 3.* releases, and are necessary for other dependencies">
-    <jar jarfile="commons-collections-deprecated.jar">
-    	<zipfileset src="${collections-3.jar}">
-  			<!-- used by Hibernate -->
-    		<include name="**/SequencedHashMap*"/>
-  			<include name="**/KeyValue*"/> <!-- used by SequencedHashMap --> 
-    		<include name="**/LRUMap*"/>
-    		<include name="**/ReferenceMap*"/>
-    	</zipfileset>
-   	</jar>
-  </target>
 </project>
