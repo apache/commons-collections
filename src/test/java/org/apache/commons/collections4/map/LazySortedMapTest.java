@@ -52,17 +52,11 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     }
 
     @Override
-    public boolean isSubMapViewsSerializable() {
-        // TODO TreeMap sub map views have a bug in deserialization.
-        return false;
-    }
-
-    @Override
     public boolean isAllowNullKey() {
         return false;
     }
 
-    // from TestLazyMap
+    // from LazyMapTest
     //-----------------------------------------------------------------------
     @Override
     public void testMapGet() {
