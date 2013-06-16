@@ -32,10 +32,10 @@ limitations under the License.
 <!-- ========== Component Declarations ==================================== -->
 
   <!-- The name of this component -->
-  <property name="component.name"          value="commons-collections"/>
+  <property name="component.name"          value="commons-collections4"/>
 
   <!-- The primary package name of this component -->
-  <property name="component.package"       value="org.apache.commons.collections"/>
+  <property name="component.package"       value="org.apache.commons.collections4"/>
 
   <!-- The short title of this component -->
   <property name="component.title"         value="Commons Collections"/>
@@ -65,7 +65,7 @@ limitations under the License.
   <property name="build.src"               value="${build.home}/src-ide" />
   
   <!-- The directories for tests/instrumentation -->
-  <property name="build.instrumented"           value="${build.home}/instrumented" />
+  <property name="build.instrumented"      value="${build.home}/instrumented" />
   <property name="build.reports"           value="${build.home}/reports" />
   <property name="build.reports.coverage"  value="${build.reports}/coverage" />
   
@@ -108,7 +108,7 @@ limitations under the License.
 
   <!-- Javadoc -->
   <property name="javadoc.access"          value="protected"/>
-  <property name="javadoc.links"           value="http://java.sun.com/j2se/1.3/docs/api/"/>
+  <property name="javadoc.links"           value="http://download.oracle.com/javase/1.5.0/docs/api/"/>
 
   <!-- JUnit -->
   <property name="test.failonerror"        value="true"/>
