@@ -49,7 +49,6 @@ import org.apache.commons.collections4.iterators.PermutationIterator;
  * @since 1.0
  * @version $Id$
  */
-//TODO - note generic types for review in wiki - especially <?> ones
 public class CollectionUtils {
 
     /**
