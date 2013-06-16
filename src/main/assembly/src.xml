@@ -26,7 +26,6 @@
             <includes>
                 <include>build.xml</include>
                 <include>build-testframework.xml</include>
-                <include>checkstyle.xml</include>
                 <include>DEVELOPERS-GUIDE.html</include>
                 <include>LICENSE.txt</include>
                 <include>NOTICE.txt</include>
