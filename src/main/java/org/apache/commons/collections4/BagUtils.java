@@ -16,6 +16,7 @@
  */
 package org.apache.commons.collections4;
 
+import org.apache.commons.collections4.bag.CompliantBag;
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.bag.PredicatedBag;
 import org.apache.commons.collections4.bag.PredicatedSortedBag;
@@ -132,6 +133,19 @@ public class BagUtils {
      */
     public static <E> Bag<E> transformingBag(final Bag<E> bag, final Transformer<? super E, ? extends E> transformer) {
         return TransformedBag.transformingBag(bag, transformer);
+    }
+
+    /**
+     * Returns a bag that complies to the Collection contract, backed by the given bag.
+     *
+     * @param <E> the element type
+     * @param bag the bag to decorate, must not be null
+     * @return a Bag that complies to the Collection contract
+     * @throws IllegalArgumentException if bag is null
+     * @since 4.0
+     */
+    public static <E> Bag<E> compliantBag(final Bag<E> bag) {
+        return CompliantBag.compliantBag(bag);
     }
 
     //-----------------------------------------------------------------------
