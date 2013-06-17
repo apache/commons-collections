@@ -103,8 +103,7 @@ public final class UnmodifiableBag<E>
     //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
-        return UnmodifiableIterator.<E> unmodifiableIterator(decorated()
-                .iterator());
+        return UnmodifiableIterator.<E> unmodifiableIterator(decorated().iterator());
     }
 
     @Override
