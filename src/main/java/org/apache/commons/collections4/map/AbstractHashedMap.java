@@ -75,8 +75,6 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     /** An object for masking null */
     protected static final Object NULL = new Object();
 
-    // TODO Privatise fields?
-
     /** Load factor, normally 0.75 */
     protected transient float loadFactor;
     /** The size of the map */

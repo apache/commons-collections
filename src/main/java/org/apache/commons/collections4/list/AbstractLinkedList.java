@@ -54,8 +54,6 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * - respects {@link AbstractList#modCount}
      */
 
-    // TODO Privatise fields?
-
     /**
      * A {@link Node} which indicates the start and end of the list and does not
      * hold a value. The value of <code>next</code> is the first item in the

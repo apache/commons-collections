@@ -31,8 +31,6 @@ import org.apache.commons.collections4.ResettableIterator;
  */
 public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, ResettableIterator<K> {
 
-    // TODO Privatise fields?
-
     /** The adapted Map entry Set. */
     protected Set<Map.Entry<K, V>> entrySet;
 

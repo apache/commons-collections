@@ -62,7 +62,7 @@ import org.apache.commons.collections4.iterators.EmptyOrderedMapIterator;
 public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> implements OrderedMap<K, V> {
 
     /** Header in the linked list */
-    protected transient LinkEntry<K, V> header; // TODO Privatise?
+    protected transient LinkEntry<K, V> header;
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
@@ -501,7 +501,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      */
     protected static class LinkEntry<K, V> extends HashEntry<K, V> {
         /** The entry before this one in the order */
-        protected LinkEntry<K, V> before; // TODO Privatise?
+        protected LinkEntry<K, V> before;
         /** The entry after this one in the order */
         protected LinkEntry<K, V> after;
 
