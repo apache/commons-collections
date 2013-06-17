@@ -104,6 +104,16 @@ Notably MultiValueMap is a new more flexible implementation of MultiHashMap.
 <b>Collections 3.2.1</b> Re-packaged v3.2 release which is OSGi enabled.
 </p>
 
+<p>
+<b>Collections 4.0</b> represented a major revamp of collections by supporting
+new language features introduced with Java 1.5, mainly support for generics.
+</p>
+<p>
+New interfaces Put, Get and Trie were added, whereas the Buffer interface has
+been replaced by java.util.Queue. Also added were several new Iterators as well as
+an implementation of a Patricia Trie.
+</p>
+
 </section>
 
 </body>

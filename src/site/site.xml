@@ -28,7 +28,8 @@
             <item name="Download"      href="/download_collections.cgi"/>
             <item name="Users guide"   href="/userguide.html"/>
             <item name="History"       href="/history.html"/>
-            <item name="Javadoc (3.2 release)" href="/javadocs/api-release/index.html"/>
+            <item name="Javadoc (4.0 release)" href="/javadocs/api-release/index.html"/>
+            <item name="Javadoc (3.2.1 release)" href="/javadocs/api-3.2.1/index.html"/>
         </menu>
 
         <menu name="Development">
