@@ -64,6 +64,7 @@ Removed classes
 New classes
 -----------
 
+ o [COLLECTIONS-468] CompliantBag - decorates another Bag to make it comply with the Collection contract.
  o [COLLECTIONS-463] PushbackIterator - supports pushback of elements during iteration. Thanks to Andy Seaborne, Claude Warren.
  o [COLLECTIONS-462] PeekingIterator - supports one-element lookahead during iteration. Thanks to Andy Seaborne, Claude Warren.
  o [COLLECTIONS-432] CircularFifoQueue - analogous class to CircularFifoBuffer for the Queue interface
