@@ -55,16 +55,6 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
     // Constructors
     // ----------------------------------------------------------------------
     /**
-     * Constructor for use with <code>setArray</code>.
-     * <p>
-     * Using this constructor, the iterator is equivalent to an empty iterator
-     * until {@link #setArray(Object)} is  called to establish the array to iterate over.
-     */
-    public ArrayListIterator() {
-        super();
-    }
-
-    /**
      * Constructs an ArrayListIterator that will iterate over the values in the
      * specified array.
      *
@@ -88,7 +78,6 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      */
     public ArrayListIterator(final Object array, final int startIndex) {
         super(array, startIndex);
-        this.startIndex = startIndex;
     }
 
     /**
@@ -105,7 +94,6 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      */
     public ArrayListIterator(final Object array, final int startIndex, final int endIndex) {
         super(array, startIndex, endIndex);
-        this.startIndex = startIndex;
     }
 
     // ListIterator interface

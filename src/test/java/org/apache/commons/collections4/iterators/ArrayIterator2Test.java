@@ -81,29 +81,6 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
         }
     }
 
-    // proves that an ArrayIterator set with the constructor has the same number of elements
-    // as an ArrayIterator set with setArray(Object)
-    public void testSetArray() {
-        final Iterator<E> iter1 = makeArrayIterator(testArray);
-        int count1 = 0;
-        while (iter1.hasNext()) {
-            ++count1;
-            iter1.next();
-        }
-
-        assertEquals("the count should be right using the constructor", count1, testArray.length);
-
-        final ArrayIterator<E> iter2 = makeObject();
-        iter2.setArray(testArray);
-        int count2 = 0;
-        while (iter2.hasNext()) {
-            ++count2;
-            iter2.next();
-        }
-
-        assertEquals("the count should be right using setArray(Object)", count2, testArray.length);
-    }
-
     public void testIndexedArray() {
         Iterator<E> iter = makeArrayIterator(testArray, 2);
         int count = 0;

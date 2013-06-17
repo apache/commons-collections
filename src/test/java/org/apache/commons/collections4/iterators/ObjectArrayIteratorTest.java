@@ -94,26 +94,6 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
         } catch (final NullPointerException e) {
             // expected
         }
-
-        final ObjectArrayIterator<E> iter = makeArrayIterator();
-        try {
-            iter.setArray(null);
-
-            fail("setArray(null) should throw a NullPointerException");
-        } catch (final NullPointerException e) {
-            // expected
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    public void testDoubleSet() {
-        final ObjectArrayIterator<E> it = makeArrayIterator();
-        it.setArray((E[]) new String[0]);
-        try {
-            it.setArray((E[]) new String[0]);
-            fail();
-        } catch (final IllegalStateException ex) {
-        }
     }
 
     @SuppressWarnings("unchecked")

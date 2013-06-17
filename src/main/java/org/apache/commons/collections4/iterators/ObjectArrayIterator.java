@@ -36,27 +36,16 @@ import org.apache.commons.collections4.ResettableIterator;
 public class ObjectArrayIterator<E>
         implements Iterator<E>, ResettableIterator<E> {
 
-    // TODO Privatise fields? Mainly read-only access
-
     /** The array */
-    protected E[] array = null;
+    protected final E[] array;
     /** The start index to loop from */
-    protected int startIndex = 0;
+    protected final int startIndex;
     /** The end index to loop to */
-    protected int endIndex = 0;
+    protected final int endIndex;
     /** The current iterator index */
     protected int index = 0;
 
-    /**
-     * Constructor for use with <code>setArray</code>.
-     * <p>
-     * Using this constructor, the iterator is equivalent to an empty iterator
-     * until {@link #setArray} is  called to establish the array to iterate over.
-     */
-    public ObjectArrayIterator() {
-        super();
-    }
-
+    //-------------------------------------------------------------------------
     /**
      * Constructs an ObjectArrayIterator that will iterate over the values in the
      * specified array.
@@ -153,34 +142,10 @@ public class ObjectArrayIterator<E>
     /**
      * Gets the array that this iterator is iterating over.
      *
-     * @return the array this iterator iterates over, or <code>null</code> if
-     * the no-arg constructor was used and {@link #setArray} has never
-     * been called with a valid array.
+     * @return the array this iterator iterates over
      */
     public E[] getArray() {
         return this.array;
-    }
-
-    /**
-     * Sets the array that the ArrayIterator should iterate over.
-     * <p>
-     * This method may only be called once, otherwise an IllegalStateException
-     * will occur.
-     * <p>
-     * The {@link #reset} method can be used to reset the iterator if required.
-     *
-     * @param array  the array that the iterator should iterate over
-     * @throws IllegalStateException if the <code>array</code> was set in the constructor
-     * @throws NullPointerException if <code>array</code> is <code>null</code>
-     */
-    public void setArray(final E[] array) {
-        if (this.array != null) {
-            throw new IllegalStateException("The array to iterate over has already been set");
-        }
-        this.array = array;
-        this.startIndex = 0;
-        this.endIndex = array.length;
-        this.index = 0;
     }
 
     /**

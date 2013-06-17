@@ -77,15 +77,6 @@ public class ArrayIteratorTest<E> extends AbstractIteratorTest<E> {
         } catch (final NullPointerException e) {
             // expected
         }
-
-        final ArrayIterator<Object> iter = new ArrayIterator<Object>();
-        try {
-            iter.setArray(null);
-
-            fail("setArray(null) should throw a NullPointerException");
-        } catch (final NullPointerException e) {
-            // expected
-        }
     }
 
     public void testReset() {

@@ -37,29 +37,17 @@ import org.apache.commons.collections4.ResettableIterator;
  */
 public class ArrayIterator<E> implements ResettableIterator<E> {
 
-    // TODO Privatise fields? Mainly read-only access
-
     /** The array to iterate over */
-    protected Object array;
+    protected final Object array;
     /** The start index to loop from */
-    protected int startIndex = 0;
+    protected final int startIndex;
     /** The end index to loop to */
-    protected int endIndex = 0;
+    protected final int endIndex;
     /** The current iterator index */
     protected int index = 0;
 
     // Constructors
     // ----------------------------------------------------------------------
-    /**
-     * Constructor for use with <code>setArray</code>.
-     * <p>
-     * Using this constructor, the iterator is equivalent to an empty iterator
-     * until {@link #setArray(Object)} is  called to establish the array to iterate over.
-     */
-    public ArrayIterator() {
-        super();
-    }
-
     /**
      * Constructs an ArrayIterator that will iterate over the values in the
      * specified array.
@@ -69,8 +57,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      * @throws NullPointerException if <code>array</code> is <code>null</code>
      */
     public ArrayIterator(final Object array) {
-        super();
-        setArray(array);
+        this(array, 0);
     }
 
     /**
@@ -84,11 +71,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     public ArrayIterator(final Object array, final int startIndex) {
-        super();
-        setArray(array);
-        checkBound(startIndex, "start");
-        this.startIndex = startIndex;
-        this.index = startIndex;
+        this(array, startIndex, Array.getLength(array));
     }
 
     /**
@@ -104,26 +87,30 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      */
     public ArrayIterator(final Object array, final int startIndex, final int endIndex) {
         super();
-        setArray(array);
-        checkBound(startIndex, "start");
-        checkBound(endIndex, "end");
-        if (endIndex < startIndex) {
-            throw new IllegalArgumentException("End index must not be less than start index.");
-        }
+
+        this.array = array;
         this.startIndex = startIndex;
         this.endIndex = endIndex;
         this.index = startIndex;
+
+        final int len = Array.getLength(array);
+        checkBound(startIndex, len, "start");
+        checkBound(endIndex, len, "end");
+        if (endIndex < startIndex) {
+            throw new IllegalArgumentException("End index must not be less than start index.");
+        }
     }
 
     /**
      * Checks whether the index is valid or not.
      *
      * @param bound  the index to check
+     * @param len  the length of the array
      * @param type  the index type (for error messages)
      * @throws IndexOutOfBoundsException if the index is invalid
      */
-    protected void checkBound(final int bound, final String type ) {
-        if (bound > this.endIndex) {
+    protected void checkBound(final int bound, final int len, final String type ) {
+        if (bound > len) {
             throw new ArrayIndexOutOfBoundsException(
               "Attempt to make an ArrayIterator that " + type +
               "s beyond the end of the array. "
@@ -186,28 +173,23 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     }
 
     /**
-     * Sets the array that the ArrayIterator should iterate over.
-     * <p>
-     * If an array has previously been set (using the single-arg constructor
-     * or this method) then that array is discarded in favour of this one.
-     * Iteration is restarted at the start of the new array.
-     * Although this can be used to reset iteration, the {@link #reset()} method
-     * is a more effective choice.
+     * Gets the start index to loop from.
      *
-     * @param array the array that the iterator should iterate over.
-     * @throws IllegalArgumentException if <code>array</code> is not an array.
-     * @throws NullPointerException if <code>array</code> is <code>null</code>
+     * @return the start index
+     * @since 4.0
      */
-    public void setArray(final Object array) {
-        // Array.getLength throws IllegalArgumentException if the object is not
-        // an array or NullPointerException if the object is null.  This call
-        // is made before saving the array and resetting the index so that the
-        // array iterator remains in a consistent state if the argument is not
-        // an array or is null.
-        this.endIndex = Array.getLength(array);
-        this.startIndex = 0;
-        this.array = array;
-        this.index = 0;
+    public int getStartIndex() {
+        return this.startIndex;
+    }
+
+    /**
+     * Gets the end index to loop to.
+     *
+     * @return the end index
+     * @since 4.0
+     */
+    public int getEndIndex() {
+        return this.endIndex;
     }
 
     /**

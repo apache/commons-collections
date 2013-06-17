@@ -48,16 +48,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      */
     private int lastItemIndex = -1;
 
-    /**
-     * Constructor for use with <code>setArray</code>.
-     * <p>
-     * Using this constructor, the iterator is equivalent to an empty iterator
-     * until {@link #setArray} is  called to establish the array to iterate over.
-     */
-    public ObjectArrayListIterator() {
-        super();
-    }
-
+    //-------------------------------------------------------------------------
     /**
      * Constructs an ObjectArrayListIterator that will iterate over the values in the
      * specified array.
@@ -106,7 +97,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      * @return true if there is a previous element to return
      */
     public boolean hasPrevious() {
-        return this.index > this.startIndex;
+        return this.index > getStartIndex();
     }
 
     /**
@@ -144,7 +135,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      * @return the index of the item to be retrieved next
      */
     public int nextIndex() {
-        return this.index - this.startIndex;
+        return this.index - getStartIndex();
     }
 
     /**
@@ -153,7 +144,7 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      * @return the index of the item to be retrieved next
      */
     public int previousIndex() {
-        return this.index - this.startIndex - 1;
+        return this.index - getStartIndex() - 1;
     }
 
     /**
