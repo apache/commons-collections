@@ -63,6 +63,9 @@
       Added methods "ListUtils#longestCommonSubsequence(...)" to get the longest common subsequence
       of arbitrary lists or CharSequences.
     </action>
+    <action issue="COLLECTIONS-455" dev="sebb" type="update">
+      Changed scope of fields to private where appropriate.
+    </action>
     <action issue="COLLECTIONS-454" dev="tn" type="update">
       An iterator over a "Flat3Map#entrySet()" will now return
       independent Map.Entry objects that will not change anymore when

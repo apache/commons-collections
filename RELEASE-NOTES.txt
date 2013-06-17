@@ -138,6 +138,7 @@ Changed classes / methods
                      Additionally removed the methods "setIterator(Iterator)" and "getIterators()".
  o [COLLECTIONS-459] Removed method "setArray(Object)" in class ArrayIterator and method "setArray(Object[])"
                      in class ObjectArrayIterator and made fields array, startIndex and endIndex final.
+ o [COLLECTIONS-455] Changed scope of various fields to proviate where appropriate.
  o [COLLECTIONS-454] An iterator over a "Flat3Map#entrySet()" will now return independent Map.Entry objects that will
                      not change anymore when the iterator progresses.
  o [COLLECTIONS-453] Several closure and transformer implementations in the functor package will now copy
