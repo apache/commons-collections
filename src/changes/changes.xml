@@ -48,6 +48,10 @@
       removed from the queue once used and can be garbage collected after being exhausted.
       Additionally removed the methods "setIterator(Iterator)" and "getIterators()".
     </action>
+    <action issue="COLLECTIONS-459" dev="tn" type="update" due-to="sebb">
+      Removed method "setArray(Object)" in class ArrayIterator and method "setArray(Object[])"
+      in class ObjectArrayIterator and made fields array, startIndex and endIndex final.
+    </action>
     <action issue="COLLECTIONS-458" dev="sebb" type="remove">
       Removed unused class "AbstractUntypedCollectionDecorator&lt;E, D&gt;".
     </action>
