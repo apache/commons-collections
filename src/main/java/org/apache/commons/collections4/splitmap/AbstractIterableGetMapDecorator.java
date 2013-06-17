@@ -34,7 +34,7 @@ import org.apache.commons.collections4.map.EntrySetToMapIteratorAdapter;
 public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> {
 
     /** The map to decorate */
-    protected transient Map<K, V> map; // TODO Privatise? only external access is for deserialisation
+    protected transient Map<K, V> map;
 
     /**
      * Create a new AbstractSplitMapDecorator.

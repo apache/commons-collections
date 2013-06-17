@@ -45,8 +45,6 @@ public abstract class AbstractCollectionDecorator<E>
     /** Serialization version */
     private static final long serialVersionUID = 6249888059822088500L;
 
-    // TODO privatise field? read-only access - could use decorated() - apart from deserialisation
-
     /** The collection being decorated */
     protected Collection<E> collection;
 
