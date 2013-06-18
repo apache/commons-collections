@@ -44,32 +44,32 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
     /**
      * Normal delegate map.
      */
-    protected transient Map<K, V> normalMap;
+    transient Map<K, V> normalMap;
 
     /**
      * Reverse delegate map.
      */
-    protected transient Map<V, K> reverseMap;
+    transient Map<V, K> reverseMap;
 
     /**
      * Inverse view of this map.
      */
-    protected transient BidiMap<V, K> inverseBidiMap = null;
+    transient BidiMap<V, K> inverseBidiMap = null;
 
     /**
      * View of the keys.
      */
-    protected transient Set<K> keySet = null;
+    transient Set<K> keySet = null;
 
     /**
      * View of the values.
      */
-    protected transient Collection<V> values = null;
+    transient Collection<V> values = null;
 
     /**
      * View of the entries.
      */
-    protected transient Set<Map.Entry<K, V>> entrySet = null;
+    transient Set<Map.Entry<K, V>> entrySet = null;
 
     /**
      * Creates an empty map, initialised by <code>createMap</code>.

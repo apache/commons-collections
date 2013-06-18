@@ -76,21 +76,21 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     protected static final Object NULL = new Object();
 
     /** Load factor, normally 0.75 */
-    protected transient float loadFactor;
+    transient float loadFactor;
     /** The size of the map */
-    protected transient int size;
+    transient int size;
     /** Map entries */
-    protected transient HashEntry<K, V>[] data;
+    transient HashEntry<K, V>[] data;
     /** Size at which to rehash */
-    protected transient int threshold;
+    transient int threshold;
     /** Modification count for iterators */
-    protected transient int modCount;
+    transient int modCount;
     /** Entry set */
-    protected transient EntrySet<K, V> entrySet;
+    transient EntrySet<K, V> entrySet;
     /** Key set */
-    protected transient KeySet<K> keySet;
+    transient KeySet<K> keySet;
     /** Values */
-    protected transient Values<V> values;
+    transient Values<V> values;
 
     /**
      * Constructor only used in deserialization, do not use otherwise.

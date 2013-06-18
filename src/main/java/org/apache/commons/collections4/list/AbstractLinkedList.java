@@ -59,13 +59,13 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * hold a value. The value of <code>next</code> is the first item in the
      * list. The value of of <code>previous</code> is the last item in the list.
      */
-    protected transient Node<E> header;
+    transient Node<E> header;
 
     /** The size of the list */
-    protected transient int size;
+    transient int size;
 
     /** Modification count for iterators */
-    protected transient int modCount;
+    transient int modCount;
 
     /**
      * Constructor that does nothing intended for deserialization.
