@@ -69,7 +69,7 @@ public final class CompliantBag<E>
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
-        out.writeObject(collection);
+        out.writeObject(decorated());
     }
 
     /**
@@ -83,7 +83,7 @@ public final class CompliantBag<E>
     @SuppressWarnings("unchecked") // will throw CCE, see Javadoc
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        collection = (Collection<E>) in.readObject();
+        setCollection((Collection<E>) in.readObject());
     }
 
     //-----------------------------------------------------------------------

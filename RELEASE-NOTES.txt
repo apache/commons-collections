@@ -132,6 +132,9 @@ New features
 Changed classes / methods
 -------------------------
 
+ o [COLLECTIONS-473] Made field "collection" in class "AbstractCollectionDecorator" private and added
+                     setter "setCollection(Collection)" with scope protected to set the decorated collection
+                     during de-serialization.
  o [COLLECTIONS-466] Replaced "Collection" with "Iterable" for method arguments where applicable.
  o [COLLECTIONS-460] Changed "IteratorChain" to use internally a "Queue" instead of a "List". Iterators are
                      removed from the queue once used and can be garbage collected after being exhausted.

@@ -82,7 +82,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
                 break;  // normal loop exit
             }
             if (coll instanceof AbstractCollectionDecorator) {
-                coll = ((AbstractCollectionDecorator<E>) coll).collection;
+                coll = ((AbstractCollectionDecorator<E>) coll).decorated();
             } else if (coll instanceof SynchronizedCollection) {
                 coll = ((SynchronizedCollection<E>) coll).decorated();
             }

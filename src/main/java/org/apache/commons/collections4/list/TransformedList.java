@@ -111,7 +111,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
      * @return the decorated list
      */
     protected List<E> getList() {
-        return (List<E>) collection;
+        return (List<E>) decorated();
     }
 
     //-----------------------------------------------------------------------

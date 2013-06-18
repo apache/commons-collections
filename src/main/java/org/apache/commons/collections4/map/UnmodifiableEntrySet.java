@@ -103,13 +103,13 @@ public final class UnmodifiableEntrySet<K, V>
     //-----------------------------------------------------------------------
     @Override
     public Iterator<Map.Entry<K, V>> iterator() {
-        return new UnmodifiableEntrySetIterator(collection.iterator());
+        return new UnmodifiableEntrySetIterator(decorated().iterator());
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public Object[] toArray() {
-        final Object[] array = collection.toArray();
+        final Object[] array = decorated().toArray();
         for (int i = 0; i < array.length; i++) {
             array[i] = new UnmodifiableEntry((Map.Entry<K, V>) array[i]);
         }
@@ -125,7 +125,7 @@ public final class UnmodifiableEntrySet<K, V>
             // where another thread could access data before we decorate it
             result = (Object[]) Array.newInstance(array.getClass().getComponentType(), 0);
         }
-        result = collection.toArray(result);
+        result = decorated().toArray(result);
         for (int i = 0; i < result.length; i++) {
             result[i] = new UnmodifiableEntry((Map.Entry<K, V>) result[i]);
         }

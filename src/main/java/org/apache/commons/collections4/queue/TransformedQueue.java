@@ -106,7 +106,7 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
      * @return the decorated queue
      */
     protected Queue<E> getQueue() {
-        return (Queue<E>) collection;
+        return (Queue<E>) decorated();
     }
 
     //-----------------------------------------------------------------------

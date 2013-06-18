@@ -69,7 +69,7 @@ public final class UnmodifiableSortedSet<E>
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
-        out.writeObject(collection);
+        out.writeObject(decorated());
     }
 
     /**
@@ -82,7 +82,7 @@ public final class UnmodifiableSortedSet<E>
     @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        collection = (Collection<E>) in.readObject(); // (1)
+        setCollection((Collection<E>) in.readObject()); // (1)
     }
 
     //-----------------------------------------------------------------------

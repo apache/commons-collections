@@ -46,7 +46,7 @@ public abstract class AbstractCollectionDecorator<E>
     private static final long serialVersionUID = 6249888059822088500L;
 
     /** The collection being decorated */
-    protected Collection<E> collection;
+    private Collection<E> collection;
 
     /**
      * Constructor only used in deserialization, do not use otherwise.
@@ -77,6 +77,17 @@ public abstract class AbstractCollectionDecorator<E>
      */
     protected Collection<E> decorated() {
         return collection;
+    }
+
+    /**
+     * Sets the collection being decorated.
+     * <p>
+     * <b>NOTE:</b> this method should only be used during deserialization
+     *
+     * @param coll  the decorated collection
+     */
+    protected void setCollection(final Collection<E> coll) {
+        this.collection = coll;
     }
 
     //-----------------------------------------------------------------------

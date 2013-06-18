@@ -22,6 +22,11 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-473" dev="tn" type="update" due-to="sebb">
+      Made field "collection" in class "AbstractCollectionDecorator" private and added
+      setter "setCollection(Collection)" with scope protected to set the decorated collection
+      during de-serialization.
+    </action>
     <action issue="COLLECTIONS-472" dev="tn" type="fix" due-to="Adrian Nistor">
       Improved performance of "AbstractMapBag#containsAll(Collection)" by returning immediately
       after a difference has been found.

@@ -181,18 +181,18 @@ public class ListOrderedSet<E>
     // -----------------------------------------------------------------------
     @Override
     public void clear() {
-        collection.clear();
+        decorated().clear();
         setOrder.clear();
     }
 
     @Override
     public OrderedIterator<E> iterator() {
-        return new OrderedSetIterator<E>(setOrder.listIterator(), collection);
+        return new OrderedSetIterator<E>(setOrder.listIterator(), decorated());
     }
 
     @Override
     public boolean add(final E object) {
-        if (collection.add(object)) {
+        if (decorated().add(object)) {
             setOrder.add(object);
             return true;
         }
@@ -210,7 +210,7 @@ public class ListOrderedSet<E>
 
     @Override
     public boolean remove(final Object object) {
-        final boolean result = collection.remove(object);
+        final boolean result = decorated().remove(object);
         if (result) {
             setOrder.remove(object);
         }
@@ -230,11 +230,11 @@ public class ListOrderedSet<E>
     public boolean retainAll(final Collection<?> coll) {
         final Set<Object> collectionRetainAll = new HashSet<Object>();
         for (final Object next : coll) {
-            if (collection.contains(next)) {
+            if (decorated().contains(next)) {
                 collectionRetainAll.add(next);
             }
         }
-        if (collectionRetainAll.size() == collection.size()) {
+        if (collectionRetainAll.size() == decorated().size()) {
             return false;
         }
         if (collectionRetainAll.size() == 0) {
@@ -298,7 +298,7 @@ public class ListOrderedSet<E>
      */
     public void add(final int index, final E object) {
         if (!contains(object)) {
-            collection.add(object);
+            decorated().add(object);
             setOrder.add(index, object);
         }
     }
@@ -322,7 +322,7 @@ public class ListOrderedSet<E>
             if (contains(e)) {
                 continue;
             }
-            collection.add(e);
+            decorated().add(e);
             toAdd.add(e);
             changed = true;
         }
