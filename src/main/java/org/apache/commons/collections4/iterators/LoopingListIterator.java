@@ -59,7 +59,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
             throw new NullPointerException("The list must not be null");
         }
         this.list = list;
-        reset();
+        _reset();
     }
 
     /**
@@ -235,6 +235,10 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * Resets the iterator back to the start of the list.
      */
     public void reset() {
+        _reset();
+    }
+
+    private void _reset() {
         iterator = list.listIterator();
     }
 
