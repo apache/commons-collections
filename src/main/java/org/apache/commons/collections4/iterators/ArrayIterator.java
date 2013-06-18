@@ -164,9 +164,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     /**
      * Gets the array that this iterator is iterating over.
      *
-     * @return the array this iterator iterates over, or <code>null</code> if
-     *  the no-arg constructor was used and {@link #setArray(Object)} has never
-     *  been called with a valid array.
+     * @return the array this iterator iterates over.
      */
     public Object getArray() {
         return array;
