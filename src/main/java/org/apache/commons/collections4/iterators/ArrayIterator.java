@@ -38,13 +38,13 @@ import org.apache.commons.collections4.ResettableIterator;
 public class ArrayIterator<E> implements ResettableIterator<E> {
 
     /** The array to iterate over */
-    protected final Object array;
+    final Object array;
     /** The start index to loop from */
-    protected final int startIndex;
+    final int startIndex;
     /** The end index to loop to */
-    protected final int endIndex;
+    final int endIndex;
     /** The current iterator index */
-    protected int index = 0;
+    int index = 0;
 
     // Constructors
     // ----------------------------------------------------------------------

@@ -37,13 +37,13 @@ public class ObjectArrayIterator<E>
         implements Iterator<E>, ResettableIterator<E> {
 
     /** The array */
-    protected final E[] array;
+    final E[] array;
     /** The start index to loop from */
-    protected final int startIndex;
+    final int startIndex;
     /** The end index to loop to */
-    protected final int endIndex;
+    final int endIndex;
     /** The current iterator index */
-    protected int index = 0;
+    int index = 0;
 
     //-------------------------------------------------------------------------
     /**
