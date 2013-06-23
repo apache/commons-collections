@@ -54,7 +54,7 @@ limitations under the License.
       <p>
         We recommend you use a mirror to download our release
         builds, but you <strong>must</strong> verify the integrity of
-        the downloaded files using signatures downloaded from our main 
+        the downloaded files using signatures downloaded from our main
         distribution directories. Recent releases (48 hours) may not yet
         be available from the mirrors.
       </p>
@@ -71,7 +71,7 @@ limitations under the License.
 
       <form action="[location]" method="get" id="SelectMirror">
         <p>
-          Other mirrors: 
+          Other mirrors:
           <select name="Preferred">
           [if-any http]
             [for http]<option value="[http]">[http]</option>[end]
@@ -90,37 +90,67 @@ limitations under the License.
       <p>
         The <a href="http://www.apache.org/dist/commons/KEYS">KEYS</a>
         link links to the code signing keys used to sign the product.
-        The <code>PGP</code> link downloads the OpenPGP compatible signature from our main site. 
+        The <code>PGP</code> link downloads the OpenPGP compatible signature from our main site.
         The <code>MD5</code> link downloads the checksum from the main site.
       </p>
     </subsection>
     </section>
-    <section name="Commons Collections 3.2.1 ">
+    <section name="Commons Collections 4.0-alpha1 (Java 5.0+)">
       <subsection name="Binaries">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/collections/binaries/commons-collections-3.2.1-bin.tar.gz">commons-collections-3.2.1-bin.tar.gz</a></td>
-              <td><a href="http://www.apache.org/dist/commons/collections/binaries/commons-collections-3.2.1-bin.tar.gz.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/collections/binaries/commons-collections-3.2.1-bin.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/collections4/binaries/commons-collections4-4.0-alpha1-bin.tar.gz">commons-collections4-4.0-alpha1-bin.tar.gz</a></td>
+              <td><a href="http://www.apache.org/dist/commons/collections4/binaries/commons-collections4-4.0-alpha1-bin.tar.gz.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/collections4/binaries/commons-collections4-4.0-alpha1-bin.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/collections/binaries/commons-collections-3.2.1-bin.zip">commons-collections-3.2.1-bin.zip</a></td>
-              <td><a href="http://www.apache.org/dist/commons/collections/binaries/commons-collections-3.2.1-bin.zip.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/collections/binaries/commons-collections-3.2.1-bin.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/collections4/binaries/commons-collections4-4.0-alpha1-bin.zip">commons-collections4-4.0-alpha1-bin.zip</a></td>
+              <td><a href="http://www.apache.org/dist/commons/collections4/binaries/commons-collections4-4.0-alpha1-bin.zip.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/collections4/binaries/commons-collections4-4.0-alpha1-bin.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>
       <subsection name="Source">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/collections/source/commons-collections-3.2.1-src.tar.gz">commons-collections-3.2.1-src.tar.gz</a></td>
-              <td><a href="http://www.apache.org/dist/commons/collections/source/commons-collections-3.2.1-src.tar.gz.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/collections/source/commons-collections-3.2.1-src.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/collections4/source/commons-collections4-4.0-alpha1-src.tar.gz">commons-collections4-4.0-alpha1-src.tar.gz</a></td>
+              <td><a href="http://www.apache.org/dist/commons/collections4/source/commons-collections4-4.0-alpha1-src.tar.gz.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/collections4/source/commons-collections4-4.0-alpha1-src.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/collections/source/commons-collections-3.2.1-src.zip">commons-collections-3.2.1-src.zip</a></td>
-              <td><a href="http://www.apache.org/dist/commons/collections/source/commons-collections-3.2.1-src.zip.md5">md5</a></td>
-              <td><a href="http://www.apache.org/dist/commons/collections/source/commons-collections-3.2.1-src.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/collections4/source/commons-collections4-4.0-alpha1-src.zip">commons-collections4-4.0-alpha1-src.zip</a></td>
+              <td><a href="http://www.apache.org/dist/commons/collections4/source/commons-collections4-4.0-alpha1-src.zip.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/collections4/source/commons-collections4-4.0-alpha1-src.zip.asc">pgp</a></td>
+          </tr>
+        </table>
+      </subsection>
+    </section>
+    <section name="Commons Collections 3.2.1 (Requires Java 1.2 or later)">
+      <subsection name="Binaries">
+        <table>
+          <tr>
+              <td><a href="[preferred]/commons/collections4/binaries/commons-collections-3.2.1-bin.tar.gz">commons-collections-3.2.1-bin.tar.gz</a></td>
+              <td><a href="http://www.apache.org/dist/commons/collections4/binaries/commons-collections-3.2.1-bin.tar.gz.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/collections4/binaries/commons-collections-3.2.1-bin.tar.gz.asc">pgp</a></td>
+          </tr>
+          <tr>
+              <td><a href="[preferred]/commons/collections4/binaries/commons-collections-3.2.1-bin.zip">commons-collections-3.2.1-bin.zip</a></td>
+              <td><a href="http://www.apache.org/dist/commons/collections4/binaries/commons-collections-3.2.1-bin.zip.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/collections4/binaries/commons-collections-3.2.1-bin.zip.asc">pgp</a></td>
+          </tr>
+        </table>
+      </subsection>
+      <subsection name="Source">
+        <table>
+          <tr>
+              <td><a href="[preferred]/commons/collections4/source/commons-collections-3.2.1-src.tar.gz">commons-collections-3.2.1-src.tar.gz</a></td>
+              <td><a href="http://www.apache.org/dist/commons/collections4/source/commons-collections-3.2.1-src.tar.gz.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/collections4/source/commons-collections-3.2.1-src.tar.gz.asc">pgp</a></td>
+          </tr>
+          <tr>
+              <td><a href="[preferred]/commons/collections4/source/commons-collections-3.2.1-src.zip">commons-collections-3.2.1-src.zip</a></td>
+              <td><a href="http://www.apache.org/dist/commons/collections4/source/commons-collections-3.2.1-src.zip.md5">md5</a></td>
+              <td><a href="http://www.apache.org/dist/commons/collections4/source/commons-collections-3.2.1-src.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>
@@ -130,8 +160,8 @@ limitations under the License.
           Older releases can be obtained from the archives.
         </p>
         <ul>
-          <li class="download"><a href="[preferred]/commons/collections/">browse download area</a></li>
-          <li><a href="http://archive.apache.org/dist/commons/collections/">archives...</a></li>
+          <li class="download"><a href="[preferred]/commons/collections4/">browse download area</a></li>
+          <li><a href="http://archive.apache.org/dist/commons/collections4/">archives...</a></li>
         </ul>
     </section>
   </body>

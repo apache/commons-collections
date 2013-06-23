@@ -24,7 +24,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apache.commons</groupId>
   <artifactId>commons-collections4</artifactId>
-  <version>4.0-SNAPSHOT</version>
+  <version>4.0-alpha1</version>
   <name>Commons Collections</name>
 
   <inceptionYear>2001</inceptionYear>
@@ -449,10 +449,10 @@
     <maven.compile.target>1.5</maven.compile.target>
     
     <!-- Need to change to collections4 when releasing -->
-    <commons.componentid>collections</commons.componentid>
+    <commons.componentid>collections4</commons.componentid>
 
     <!-- Current 4.x release series: still points to old, set to 4.0 when releasing -->
-    <commons.release.version>3.2.1</commons.release.version>
+    <commons.release.version>4.0-alpha1</commons.release.version>
     <commons.release.desc>(Java 5.0+)</commons.release.desc>
     
     <!-- Previous 3.x release series -->
@@ -464,7 +464,7 @@
     <commons.jira.id>COLLECTIONS</commons.jira.id>
     <commons.jira.pid>12310465</commons.jira.pid>
     <!-- The RC version used in the staging repository URL. -->
-    <commons.rc.version>RC2</commons.rc.version>
+    <commons.rc.version>RC1</commons.rc.version>
     <checkstyle.version>2.9.1</checkstyle.version>
     
     <commons.site.path>collections</commons.site.path>
