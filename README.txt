@@ -51,9 +51,6 @@ The major targets are:
 ant compile      - compile the code
 ant test         - test using junit
 ant jar          - create a jar file
+ant test-jar     - create the testframework jar file
 ant javadoc      - build the javadoc
 ant dist         - create folders as per a distribution
-ant tf.jar       - create the testframework jar file
-ant tf.javadoc   - build the testframework javadoc
-
-

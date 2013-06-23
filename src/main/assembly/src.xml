@@ -25,7 +25,8 @@
         <fileSet>
             <includes>
                 <include>build.xml</include>
-                <include>build-testframework.xml</include>
+                <include>default.properties</include>
+                <include>build.properties.sample</include>
                 <include>DEVELOPERS-GUIDE.html</include>
                 <include>LICENSE.txt</include>
                 <include>NOTICE.txt</include>
