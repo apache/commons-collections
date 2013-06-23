@@ -165,7 +165,7 @@ public class IteratorUtilsTest extends BulkTest {
         }
 
         try {
-            iterator = IteratorUtils.arrayIterator(null);
+            iterator = IteratorUtils.arrayIterator((Object[]) null);
             fail("Expecting NullPointerException");
         } catch (final NullPointerException ex) {
                 // expected
@@ -294,7 +294,7 @@ public class IteratorUtilsTest extends BulkTest {
         }
 
         try {
-            iterator = IteratorUtils.arrayListIterator(null);
+            iterator = IteratorUtils.arrayListIterator((Object[]) null);
             fail("Expecting NullPointerException");
         } catch (final NullPointerException ex) {
                 // expected
