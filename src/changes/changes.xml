@@ -21,13 +21,10 @@
   </properties>
   <body>
 
-  <release version="4.x" date="TBA" description="TBA">
+  <release version="4.0" date="TBA" description="Next release">
     <action issue="COLLECTIONS-474" dev="sebb" type="fix" due-to="Ning Chen ">
      Exception in ListOrderedMap#putAll if map contains null values.
     </action>
-  </release>
-
-  <release version="4.0" date="TBA" description="Next release">
     <action issue="COLLECTIONS-473" dev="tn" type="update" due-to="sebb">
       Made field "collection" in class "AbstractCollectionDecorator" private and added
       setter "setCollection(Collection)" with scope protected to set the decorated collection

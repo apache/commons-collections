@@ -192,6 +192,9 @@ Changed classes / methods
 Fixed Bugs
 ----------
 
+ o [COLLECTIONS-474] ListOrderedMap#putAll(index, Object, Object) does not throw an exception anymore if the
+                     map contains null values. Additionally added javadoc clarification on the supported bounds
+                     for the index parameter. Thanks to Ning Chen.
  o [COLLECTIONS-472] Improved performance of "AbstractMapBag#containsAll(Collection)" by returning immediately
                      after a difference has been found. Thanks to Adrian Nistor.
  o [COLLECTIONS-461] Added additional clarification to javadoc of interface "Put" wrt return type of
