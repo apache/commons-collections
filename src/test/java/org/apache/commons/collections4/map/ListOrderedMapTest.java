@@ -385,6 +385,34 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         }
     }
 
+    public void testCOLLECTIONS_474_nullValues () {
+        Object key1 = new Object();
+        Object key2 = new Object();
+        HashMap<Object, Object> hmap = new HashMap<Object, Object>();
+        hmap.put(key1, null);
+        hmap.put(key2, null);
+        assertEquals("Should have two elements", 2, hmap.size());
+        ListOrderedMap<Object, Object> listMap = new ListOrderedMap<Object, Object>();
+        listMap.put(key1, null);
+        listMap.put(key2, null);
+        assertEquals("Should have two elements", 2, listMap.size());
+        listMap.putAll(2, hmap);
+    }
+
+    public void testCOLLECTIONS_474_nonNullValues () {
+        Object key1 = new Object();
+        Object key2 = new Object();
+        HashMap<Object, Object> hmap = new HashMap<Object, Object>();
+        hmap.put(key1, "1");
+        hmap.put(key2, "2");
+        assertEquals("Should have two elements", 2, hmap.size());
+        ListOrderedMap<Object, Object> listMap = new ListOrderedMap<Object, Object>();
+        listMap.put(key1, "3");
+        listMap.put(key2, "4");
+        assertEquals("Should have two elements", 2, listMap.size());
+        listMap.putAll(2, hmap);
+    }
+
     //-----------------------------------------------------------------------
     public BulkTest bulkTestKeyListView() {
         return new TestKeyListView();
