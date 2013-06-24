@@ -239,12 +239,16 @@ public class ListOrderedMap<K, V>
      * the specified index.
      *
      * @param index the index in the Map to start at.
-     * @param map the Map containing the values to be added.
+     * @param map the Map containing the entries to be added.
      */
     public void putAll(int index, final Map<? extends K, ? extends V> map) {
         for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
-            final V old = put(index, entry.getKey(), entry.getValue());
-            if (old == null) {
+            final K key = entry.getKey();
+            final boolean contains = containsKey(key);
+            // The return value of put is null if the key did not exist OR the value was null
+            // so it cannot be used to determine whether the key was added
+            put(index, entry.getKey(), entry.getValue());
+            if (!contains) {
                 // if no key was replaced, increment the index
                 index++;
             } else {
