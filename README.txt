@@ -4,9 +4,9 @@ Apache Commons Collections
 Welcome to the Collections component of the Apache Commons project.
 This component contains many new collections and collection utilities.
 
-Two jar files are produced by this component.
-The first, commons-collections.jar is the main jar used by applications.
-The second, commons-collections-testframework.jar is an extension to junit
+Two jar files (apart from sources and javadocs) are produced by this component.
+The first, commons-collections4-x.y.jar is the main jar used by applications.
+The second, commons-collections4-x.y-tests.jar is an extension to junit
 for testing new collection implementations and is not normally used by applications.
 
 Building from source
