@@ -1,6 +1,6 @@
 
               Apache Commons Collections
-                     Version 4.0
+                  Version 4.0-alpha1
                     RELEASE NOTES
 
 INTRODUCTION:
