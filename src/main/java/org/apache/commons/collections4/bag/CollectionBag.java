@@ -31,7 +31,7 @@ import org.apache.commons.collections4.Bag;
  * @since 4.0
  * @version $Id$
  */
-public final class CompliantBag<E>
+public final class CollectionBag<E>
         extends AbstractBagDecorator<E> implements Serializable {
 
     /** Serialization version */
@@ -45,8 +45,8 @@ public final class CompliantBag<E>
      * @return a Bag that complies to the Collection contract
      * @throws IllegalArgumentException if bag is null
      */
-    public static <E> Bag<E> compliantBag(final Bag<E> bag) {
-        return new CompliantBag<E>(bag);
+    public static <E> Bag<E> collectionBag(final Bag<E> bag) {
+        return new CollectionBag<E>(bag);
     }
 
     //-----------------------------------------------------------------------
@@ -56,7 +56,7 @@ public final class CompliantBag<E>
      * @param bag  the bag to decorate, must not be null
      * @throws IllegalArgumentException if bag is null
      */
-    public CompliantBag(final Bag<E> bag) {
+    public CollectionBag(final Bag<E> bag) {
         super(bag);
     }
 

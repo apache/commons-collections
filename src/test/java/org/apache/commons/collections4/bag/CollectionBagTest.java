@@ -31,19 +31,19 @@ import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 
 /**
- * Test class for {@link CompliantBag}.
+ * Test class for {@link CollectionBag}.
  *
  * @version $Id$
  * @since 4.0
  */
-public class CompliantBagTest<T> extends AbstractCollectionTest<T> {
+public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
 
     /**
      * JUnit constructor.
      *
      * @param testName  the test class name
      */
-    public CompliantBagTest(final String testName) {
+    public CollectionBagTest(final String testName) {
         super(testName);
     }
 
@@ -51,7 +51,7 @@ public class CompliantBagTest<T> extends AbstractCollectionTest<T> {
     
     @Override
     public Bag<T> makeObject() {
-        return CompliantBag.compliantBag(new HashBag<T>());
+        return CollectionBag.collectionBag(new HashBag<T>());
     }
 
     /**
@@ -83,14 +83,14 @@ public class CompliantBagTest<T> extends AbstractCollectionTest<T> {
 
 //    public void testCreate() throws Exception {
 //        Bag bag = makeObject();
-//        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/CompliantBag.emptyCollection.version4.obj");
+//        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/CollectionBag.emptyCollection.version4.obj");
 //        bag = makeObject();
 //        bag.add("A");
 //        bag.add("A");
 //        bag.add("B");
 //        bag.add("B");
 //        bag.add("C");
-//        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/CompliantBag.fullCollection.version4.obj");
+//        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/CollectionBag.fullCollection.version4.obj");
 //    }
     
     //-----------------------------------------------------------------------

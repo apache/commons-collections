@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4;
 
-import org.apache.commons.collections4.bag.CompliantBag;
+import org.apache.commons.collections4.bag.CollectionBag;
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.bag.PredicatedBag;
 import org.apache.commons.collections4.bag.PredicatedSortedBag;
@@ -144,8 +144,8 @@ public class BagUtils {
      * @throws IllegalArgumentException if bag is null
      * @since 4.0
      */
-    public static <E> Bag<E> compliantBag(final Bag<E> bag) {
-        return CompliantBag.compliantBag(bag);
+    public static <E> Bag<E> collectionBag(final Bag<E> bag) {
+        return CollectionBag.collectionBag(bag);
     }
 
     //-----------------------------------------------------------------------
