@@ -25,6 +25,14 @@ These release notes will try to guide you in the process of upgrading, however y
 should remember that this is a new API based on the original, so some concepts
 have changed.
 
+Compatibility with previous releases
+------------------------------------
+
+This release is not source or binary compatible with previous releases of
+Commons Collections. This includes releases from the 3.x branch as well as
+preceding alpha releases for 4.0 (see details of changes below).
+
+
 Major changes since 3.2.1
 -------------------------
 
@@ -33,6 +41,12 @@ Major changes since 3.2.1
  - Replaced Buffer interface with java.util.Queue
  - Added concept of split maps with respective interfaces Put / Get (see also package splitmap)
  - Added new Trie interface together with an implementation of a Patricia Trie
+
+
+Changes since 4.0-alpha1
+------------------------
+
+ - renamed CompliantBag to CollectionBag
 
 
 Removed classes
@@ -64,7 +78,7 @@ Removed classes
 New classes
 -----------
 
- o [COLLECTIONS-468] CompliantBag - decorates another Bag to make it comply with the Collection contract.
+ o [COLLECTIONS-468] CollectionBag - decorates another Bag to make it comply with the Collection contract.
  o [COLLECTIONS-463] PushbackIterator - supports pushback of elements during iteration. Thanks to Andy Seaborne, Claude Warren.
  o [COLLECTIONS-462] PeekingIterator - supports one-element lookahead during iteration. Thanks to Andy Seaborne, Claude Warren.
  o [COLLECTIONS-432] CircularFifoQueue - analogous class to CircularFifoBuffer for the Queue interface

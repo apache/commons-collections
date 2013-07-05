@@ -95,7 +95,7 @@ This release is <b>not</b> source or binary compatible with v3.x.
 
 <center><h3>New Classes</h3></center>
 <ul>
-<li>CompliantBag - decorates another Bag to make it comply with the Collection contract.</li>
+<li>CollectionBag - decorates another Bag to make it comply with the Collection contract.</li>
 <li>PushbackIterator - supports pushback of elements during iteration. Thanks to Andy Seaborne, Claude Warren.</li>
 <li>PeekingIterator - supports one-element lookahead during iteration. Thanks to Andy Seaborne, Claude Warren.</li>
 <li>CircularFifoQueue - analogous class to CircularFifoBuffer for the Queue interface</li>
