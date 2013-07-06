@@ -40,7 +40,6 @@ This document highlights some key features to get you started.
          <li><a href='#Bidirectional%20Maps'>Bidirectional Maps</a></li>
       </ul>
     </li>
-    <li><a href='#Queues%20and%20Buffers'>Queues and Buffers</a></li>
     <li><a href='#Bags'>Bags</a></li>
   </ul>
 <subsection name='Note On Synchronization'>
@@ -139,26 +138,6 @@ Implementations are provided for each bidirectional map type.
 </p>
 
 </subsection>
-</section>
-
-<section name="Queues and Buffers">
-
-<p>
-A new interface hierarchy has been added to support queues and buffers - <code>Buffer.</code>
-These represent collections that have a well defined removal order.
-</p>
-<source>
-Buffer buffer = new UnboundedFifoBuffer();
-buffer.add("ONE");
-buffer.add("TWO");
-buffer.add("THREE");
-buffer.remove();  // removes and returns the next in order, "ONE" as this is a FIFO
-buffer.remove();  // removes and returns the next in order, "TWO" as this is a FIFO
-</source>
-<p>
-Implementations are provided for FIFO (queue), LIFO (stack) and Priority (removal in comparator order).
-</p>
-
 </section>
 
 <section name="Bags">
