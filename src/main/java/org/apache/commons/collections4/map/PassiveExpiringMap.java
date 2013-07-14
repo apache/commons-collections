@@ -121,7 +121,7 @@ public class PassiveExpiringMap<K, V>
          */
         public ConstantTimeToLiveExpirationPolicy(final long timeToLive,
                                                   final TimeUnit timeUnit) {
-            this(validateAndConvertToMillis(timeToLive, TimeUnit.MILLISECONDS));
+            this(validateAndConvertToMillis(timeToLive, timeUnit));
         }
 
         /**
@@ -196,7 +196,7 @@ public class PassiveExpiringMap<K, V>
         if (timeUnit == null) {
             throw new IllegalArgumentException("Time unit must not be null");
         }
-        return timeUnit.convert(timeToLive, TimeUnit.MILLISECONDS);
+        return TimeUnit.MILLISECONDS.convert(timeToLive, timeUnit);
     }
 
     /** map used to manage expiration times for the actual map entries. */

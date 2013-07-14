@@ -22,8 +22,11 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
-    <action issue="COLLECTIONS-474" dev="sebb" type="fix" due-to="Ning Chen ">
-     Exception in ListOrderedMap#putAll if map contains null values.
+    <action issue="COLLECTIONS-475" dev="tn" type="fix">
+     Fixed conversion of timeout parameters in "PassiveExpiringMap".
+    </action>
+    <action issue="COLLECTIONS-474" dev="sebb" type="fix" due-to="Ning Chen">
+     Exception in "ListOrderedMap#putAll" if map contains null values.
     </action>
     <action issue="COLLECTIONS-473" dev="tn" type="update" due-to="sebb">
       Made field "collection" in class "AbstractCollectionDecorator" private and added

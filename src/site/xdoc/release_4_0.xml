@@ -186,6 +186,7 @@ This release is <b>not</b> source or binary compatible with v3.x.
 
 <center><h3>Bugfixes</h3></center>
 <ul>
+<li>Fixed conversion of timeout parameters in "PassiveExpiringMap".</li>
 <li>ListOrderedMap#putAll(index, Object, Object) does not throw an exception anymore if the map contains null values. Additionally added javadoc clarification on the supported bounds for the index parameter. Thanks to Ning Chen.</li>
 <li>Improved performance of "AbstractMapBag#containsAll(Collection)" by returning immediately after a difference has been found. Thanks to Adrian Nistor.</li>
 <li>Added additional clarification to javadoc of interface "Put" wrt return type of "put(Object, Object)" method. Thanks to Matt Benson, sebb.</li>

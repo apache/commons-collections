@@ -225,4 +225,28 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         m.put("a", "b");
         assertNull(m.get("a"));
     }
+    
+    public void testExpiration() {
+        validateExpiration(new PassiveExpiringMap<String, String>(500), 500);
+        validateExpiration(new PassiveExpiringMap<String, String>(1000), 1000);
+        validateExpiration(new PassiveExpiringMap<String, String>(
+                new PassiveExpiringMap.ConstantTimeToLiveExpirationPolicy<String, String>(500)), 500);
+        validateExpiration(new PassiveExpiringMap<String, String>(
+                new PassiveExpiringMap.ConstantTimeToLiveExpirationPolicy<String, String>(1, TimeUnit.SECONDS)), 1000);
+    }
+
+    private void validateExpiration(final Map<String, String> map, long timeout) {
+        map.put("a", "b");
+        
+        assertNotNull(map.get("a"));
+        
+        try {
+            Thread.sleep(2 * timeout);
+        } catch (InterruptedException e) {
+            fail();
+        }
+
+        assertNull(map.get("a"));
+    }
+    
 }
