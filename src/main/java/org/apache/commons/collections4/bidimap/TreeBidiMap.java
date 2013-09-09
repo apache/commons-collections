@@ -21,7 +21,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.AbstractSet;
-import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Map;
@@ -391,7 +390,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      *
      * @return a set view of the values contained in this map.
      */
-    public Collection<V> values() {
+    public Set<V> values() {
         if (valuesSet == null) {
             valuesSet = new ValueView(KEY);
         }
@@ -2128,7 +2127,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return inverseKeySet;
         }
 
-        public Collection<K> values() {
+        public Set<K> values() {
             if (inverseValuesSet == null) {
                 inverseValuesSet = new KeyView(VALUE);
             }

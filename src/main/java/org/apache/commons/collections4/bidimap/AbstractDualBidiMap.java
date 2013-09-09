@@ -64,7 +64,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
     /**
      * View of the values.
      */
-    transient Collection<V> values = null;
+    transient Set<V> values = null;
 
     /**
      * View of the entries.
@@ -272,7 +272,7 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
      *
      * @return the values view
      */
-    public Collection<V> values() {
+    public Set<V> values() {
         if (values == null) {
             values = new Values<V>(this);
         }

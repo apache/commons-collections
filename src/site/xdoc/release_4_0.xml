@@ -151,6 +151,7 @@ This release is <b>not</b> source or binary compatible with v3.x.
 
 <center><h3>Changed classes / methods</h3></center>
 <ul>
+<li>Narrow return type of "BidiMap#values()" to Set as the values are required to be unique.</li>
 <li>Made field "collection" in class "AbstractCollectionDecorator" private and added setter "setCollection(Collection)" with scope protected to set the decorated collection during de-serialization.</li>
 <li>Replaced "Collection" with "Iterable" for method arguments where applicable.</li>
 <li>Changed "IteratorChain" to use internally a "Queue" instead of a "List". Iterators are removed from the queue once used and can be garbage collected after being exhausted. Additionally removed the methods "setIterator(Iterator)" and "getIterators()".</li>

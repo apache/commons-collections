@@ -49,6 +49,7 @@ Changes since 4.0-alpha1
  - [COLLECTIONS-481] No collision detection/resolution was performed when calling "CompositeSet#addComposited(...)"
                      with more than one Set as argument. Also changed the the method with an array argument to use
                      a varargs parameter. Thanks to Hollis Waite.
+ - [COLLECTIONS-480] Narrow return type of "BidiMap#values()" to Set as the values are required to be unique. Thanks to Hollis Waite.
  - [COLLECTIONS-468] Renamed CompliantBag to CollectionBag.
  - [COLLECTIONS-475] Fixed conversion of timeout parameters in "PassiveExpiringMap".
 
@@ -150,6 +151,7 @@ New features
 Changed classes / methods
 -------------------------
 
+ o [COLLECTIONS-480] Narrow return type of "BidiMap#values()" to Set as the values are required to be unique. Thanks to Hollis Waite.
  o [COLLECTIONS-473] Made field "collection" in class "AbstractCollectionDecorator" private and added
                      setter "setCollection(Collection)" with scope protected to set the decorated collection
                      during de-serialization.

@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.bidimap;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
@@ -24,7 +23,6 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
 import org.apache.commons.collections4.OrderedBidiMap;
 import org.apache.commons.collections4.OrderedMapIterator;
 import org.apache.commons.collections4.Unmodifiable;
-import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.apache.commons.collections4.iterators.UnmodifiableOrderedMapIterator;
 import org.apache.commons.collections4.map.UnmodifiableEntrySet;
 
@@ -106,9 +104,9 @@ public final class UnmodifiableOrderedBidiMap<K, V>
     }
 
     @Override
-    public Collection<V> values() {
-        final Collection<V> coll = super.values();
-        return UnmodifiableCollection.unmodifiableCollection(coll);
+    public Set<V> values() {
+        final Set<V> set = super.values();
+        return UnmodifiableSet.unmodifiableSet(set);
     }
 
     //-----------------------------------------------------------------------

@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4;
 
+import java.util.Set;
+
 /**
  * Defines a map that allows bidirectional lookup between key and values.
  * <p>
@@ -124,4 +126,19 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      */
     BidiMap<V, K> inverseBidiMap();
 
+    /**
+     * Returns a {@link Set} view of the values contained in this map.
+     * The set is backed by the map, so changes to the map are reflected
+     * in the set, and vice-versa.  If the map is modified while an iteration
+     * over the set is in progress (except through the iterator's own
+     * <tt>remove</tt> operation), the results of the iteration are undefined.
+     * The set supports element removal, which removes the corresponding
+     * mapping from the map, via the <tt>Iterator.remove</tt>,
+     * <tt>Collection.remove</tt>, <tt>removeAll</tt>,
+     * <tt>retainAll</tt> and <tt>clear</tt> operations.  It does not
+     * support the <tt>add</tt> or <tt>addAll</tt> operations.
+     *
+     * @return a set view of the values contained in this map
+     */
+    Set<V> values();
 }

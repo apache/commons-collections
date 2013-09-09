@@ -27,6 +27,9 @@
      with more than one Set as argument. Also changed the the method with an array argument to use a
      varargs parameter.
     </action>
+    <action issue="COLLECTIONS-480" dev="tn" type="update" due-to="Hollis Waite">
+     Narrow return type of "BidiMap#values()" to Set as the values are required to be unique.
+    </action>
     <action issue="COLLECTIONS-475" dev="tn" type="fix">
      Fixed conversion of timeout parameters in "PassiveExpiringMap".
     </action>
