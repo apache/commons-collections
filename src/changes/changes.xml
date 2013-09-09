@@ -22,6 +22,11 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-481" dev="tn" type="fix" due-to="Hollis Waite">
+     No collision detection/resolution was performed when calling "CompositeSet#addComposited(...)"
+     with more than one Set as argument. Also changed the the method with an array argument to use a
+     varargs parameter.
+    </action>
     <action issue="COLLECTIONS-475" dev="tn" type="fix">
      Fixed conversion of timeout parameters in "PassiveExpiringMap".
     </action>

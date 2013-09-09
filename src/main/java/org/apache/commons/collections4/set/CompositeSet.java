@@ -19,7 +19,6 @@ package org.apache.commons.collections4.set;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -338,6 +337,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * @param set  the set to add
      * @throws IllegalArgumentException if a SetMutator is set, but fails to resolve a collision
      * @throws UnsupportedOperationException if there is no SetMutator set
+     * @throws NullPointerException if {@code set} is null
      * @see SetMutator
      */
     public synchronized void addComposited(final Set<E> set) {
@@ -365,8 +365,8 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * @param set2  the second Set to be appended to the composite
      */
     public void addComposited(final Set<E> set1, final Set<E> set2) {
-        all.add(set1);
-        all.add(set2);
+        addComposited(set1);
+        addComposited(set2);
     }
 
     /**
@@ -374,8 +374,10 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      *
      * @param sets  the Sets to be appended to the composite
      */
-    public void addComposited(final Set<E>[] sets) {
-        all.addAll(Arrays.asList(sets));
+    public void addComposited(final Set<E>... sets) {
+        for (Set<E> set : sets) {
+            addComposited(set);
+        }
     }
 
     /**

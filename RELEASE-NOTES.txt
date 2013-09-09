@@ -46,6 +46,9 @@ Major changes since 3.2.1
 Changes since 4.0-alpha1
 ------------------------
 
+ - [COLLECTIONS-481] No collision detection/resolution was performed when calling "CompositeSet#addComposited(...)"
+                     with more than one Set as argument. Also changed the the method with an array argument to use
+                     a varargs parameter. Thanks to Hollis Waite.
  - [COLLECTIONS-468] Renamed CompliantBag to CollectionBag.
  - [COLLECTIONS-475] Fixed conversion of timeout parameters in "PassiveExpiringMap".
 
@@ -207,6 +210,9 @@ Changed classes / methods
 Fixed Bugs
 ----------
 
+ o [COLLECTIONS-481] No collision detection/resolution was performed when calling "CompositeSet#addComposited(...)"
+                     with more than one Set as argument. Also changed the the method with an array argument to use
+                     a varargs parameter. Thanks to Hollis Waite.
  o [COLLECTIONS-475] Fixed conversion of timeout parameters in "PassiveExpiringMap".
  o [COLLECTIONS-474] ListOrderedMap#putAll(index, Object, Object) does not throw an exception anymore if the
                      map contains null values. Additionally added javadoc clarification on the supported bounds

@@ -150,6 +150,29 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
         }
     }
 
+    @SuppressWarnings("unchecked")
+    public void testAddCompositedCollision() {
+        final HashSet<E> set1 = new HashSet<E>();
+        set1.add((E) "1");
+        set1.add((E) "2");
+        set1.add((E) "3");
+        final HashSet<E> set2 = new HashSet<E>();
+        set2.add((E) "4");
+        final CompositeSet<E> set3 = new CompositeSet<E>(set1);
+        try {
+            set3.addComposited(set1, buildOne());
+            fail("Expecting UnsupportedOperationException.");
+        } catch (final UnsupportedOperationException ex) {
+            // expected
+        }
+        try {
+            set3.addComposited(set1, buildOne(), buildTwo());
+            fail("Expecting UnsupportedOperationException.");
+        } catch (final UnsupportedOperationException ex) {
+            // expected
+        }
+    }
+
     @Override
     public String getCompatibilityVersion() {
         return "4";
