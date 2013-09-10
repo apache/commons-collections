@@ -47,8 +47,8 @@ Changes since 4.0-alpha1
 ------------------------
 
  - [COLLECTIONS-481] No collision detection/resolution was performed when calling "CompositeSet#addComposited(...)"
-                     with more than one Set as argument. Also changed the the method with an array argument to use
-                     a varargs parameter. Thanks to Hollis Waite.
+                     with more than one Set as argument. Additionally use varargs parameters instead of arrays
+                     in CompositeSet and CompositeCollection constructor and addComposited method. Thanks to Hollis Waite.
  - [COLLECTIONS-480] Narrow return type of "BidiMap#values()" to Set as the values are required to be unique. Thanks to Hollis Waite.
  - [COLLECTIONS-468] Renamed CompliantBag to CollectionBag.
  - [COLLECTIONS-475] Fixed conversion of timeout parameters in "PassiveExpiringMap".
@@ -213,8 +213,8 @@ Fixed Bugs
 ----------
 
  o [COLLECTIONS-481] No collision detection/resolution was performed when calling "CompositeSet#addComposited(...)"
-                     with more than one Set as argument. Also changed the the method with an array argument to use
-                     a varargs parameter. Thanks to Hollis Waite.
+                     with more than one Set as argument. Additionally use varargs parameters instead of arrays
+                     in CompositeSet and CompositeCollection constructor and addComposited method. Thanks to Hollis Waite.
  o [COLLECTIONS-475] Fixed conversion of timeout parameters in "PassiveExpiringMap".
  o [COLLECTIONS-474] ListOrderedMap#putAll(index, Object, Object) does not throw an exception anymore if the
                      map contains null values. Additionally added javadoc clarification on the supported bounds

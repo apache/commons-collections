@@ -84,7 +84,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      *
      * @param compositeCollections  the collections to composite
      */
-    public CompositeCollection(final Collection<E>[] compositeCollections) {
+    public CompositeCollection(final Collection<E>... compositeCollections) {
         super();
         addComposited(compositeCollections);
     }
@@ -367,7 +367,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      *
      * @param compositeCollections  the Collections to be appended to the composite
      */
-    public void addComposited(final Collection<E>[] compositeCollections) {
+    public void addComposited(final Collection<E>... compositeCollections) {
         all.addAll(Arrays.asList(compositeCollections));
     }
 
