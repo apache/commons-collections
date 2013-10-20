@@ -59,9 +59,11 @@ public final class UnmodifiableMap<K, V>
      * @throws IllegalArgumentException if map is null
      * @since 4.0
      */
-    public static <K, V> Map<K, V> unmodifiableMap(final Map<K, V> map) {
+    public static <K, V> Map<K, V> unmodifiableMap(final Map<? extends K, ? extends V> map) {
         if (map instanceof Unmodifiable) {
-            return map;
+            @SuppressWarnings("unchecked") // safe to upcast
+            final Map<K, V> tmpMap = (Map<K, V>) map;
+            return tmpMap;
         }
         return new UnmodifiableMap<K, V>(map);
     }
@@ -73,8 +75,9 @@ public final class UnmodifiableMap<K, V>
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    private UnmodifiableMap(final Map<K, V> map) {
-        super(map);
+    @SuppressWarnings("unchecked") // safe to upcast
+    private UnmodifiableMap(final Map<? extends K, ? extends V> map) {
+        super((Map<K, V>) map);
     }
 
     //-----------------------------------------------------------------------

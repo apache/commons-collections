@@ -79,7 +79,7 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
      *
      * @param coll  the collection to copy
      */
-    public NodeCachingLinkedList(final Collection<E> coll) {
+    public NodeCachingLinkedList(final Collection<? extends E> coll) {
         super(coll);
         this.maximumCacheSize = DEFAULT_MAXIMUM_CACHE_SIZE;
     }

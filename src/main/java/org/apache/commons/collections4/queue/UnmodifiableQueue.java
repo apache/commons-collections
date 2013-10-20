@@ -52,9 +52,11 @@ public final class UnmodifiableQueue<E>
      * @return an unmodifiable Queue
      * @throws IllegalArgumentException if queue is null
      */
-    public static <E> Queue<E> unmodifiableQueue(final Queue<E> queue) {
+    public static <E> Queue<E> unmodifiableQueue(final Queue<? extends E> queue) {
         if (queue instanceof Unmodifiable) {
-            return queue;
+            @SuppressWarnings("unchecked") // safe to upcast
+            final Queue<E> tmpQueue = (Queue<E>) queue;
+            return tmpQueue;
         }
         return new UnmodifiableQueue<E>(queue);
     }
@@ -66,8 +68,9 @@ public final class UnmodifiableQueue<E>
      * @param queue  the queue to decorate, must not be null
      * @throws IllegalArgumentException if queue is null
      */
-    private UnmodifiableQueue(final Queue<E> queue) {
-        super(queue);
+    @SuppressWarnings("unchecked") // safe to upcast
+    private UnmodifiableQueue(final Queue<? extends E> queue) {
+        super((Queue<E>) queue);
     }
 
     //-----------------------------------------------------------------------

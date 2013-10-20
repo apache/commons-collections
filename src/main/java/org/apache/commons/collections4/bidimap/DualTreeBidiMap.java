@@ -79,7 +79,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
      *
      * @param map  the map whose mappings are to be placed in this map
      */
-    public DualTreeBidiMap(final Map<K, V> map) {
+    public DualTreeBidiMap(final Map<? extends K, ? extends V> map) {
         super(new TreeMap<K, V>(), new TreeMap<V, K>());
         putAll(map);
         this.comparator = null;

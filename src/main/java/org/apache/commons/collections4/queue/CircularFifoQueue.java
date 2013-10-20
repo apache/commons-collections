@@ -102,7 +102,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
      * @param coll  the collection to copy into the queue, may not be null
      * @throws NullPointerException if the collection is null
      */
-    public CircularFifoQueue(final Collection<E> coll) {
+    public CircularFifoQueue(final Collection<? extends E> coll) {
         this(coll.size());
         addAll(coll);
     }

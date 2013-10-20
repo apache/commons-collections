@@ -56,9 +56,11 @@ public final class UnmodifiableBag<E>
      * @throws IllegalArgumentException if bag is null
      * @since 4.0
      */
-    public static <E> Bag<E> unmodifiableBag(final Bag<E> bag) {
+    public static <E> Bag<E> unmodifiableBag(final Bag<? extends E> bag) {
         if (bag instanceof Unmodifiable) {
-            return bag;
+            @SuppressWarnings("unchecked") // safe to upcast
+            final Bag<E> tmpBag = (Bag<E>) bag;
+            return tmpBag;
         }
         return new UnmodifiableBag<E>(bag);
     }
@@ -70,8 +72,9 @@ public final class UnmodifiableBag<E>
      * @param bag  the bag to decorate, must not be null
      * @throws IllegalArgumentException if bag is null
      */
-    private UnmodifiableBag(final Bag<E> bag) {
-        super(bag);
+    @SuppressWarnings("unchecked") // safe to upcast
+    private UnmodifiableBag(final Bag<? extends E> bag) {
+        super((Bag<E>) bag);
     }
 
     //-----------------------------------------------------------------------

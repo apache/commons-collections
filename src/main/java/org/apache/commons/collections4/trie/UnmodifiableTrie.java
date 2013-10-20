@@ -51,7 +51,7 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
      * @return a new unmodifiable trie
      * @throws IllegalArgumentException if trie is null
      */
-    public static <K, V> UnmodifiableTrie<K, V> unmodifiableTrie(final Trie<K, V> trie) {
+    public static <K, V> UnmodifiableTrie<K, V> unmodifiableTrie(final Trie<K, ? extends V> trie) {
         return new UnmodifiableTrie<K, V>(trie);
     }
 
@@ -62,11 +62,13 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
      * @param trie  the trie to decorate, must not be null
      * @throws IllegalArgumentException if trie is null
      */
-    public UnmodifiableTrie(final Trie<K, V> trie) {
+    public UnmodifiableTrie(final Trie<K, ? extends V> trie) {
         if (trie == null) {
             throw new IllegalArgumentException("Trie must not be null");
         }
-        this.delegate = trie;
+        @SuppressWarnings("unchecked") // safe to upcast
+        final Trie<K, V> tmpTrie = (Trie<K, V>) trie;
+        this.delegate = tmpTrie;
     }
 
     //-----------------------------------------------------------------------

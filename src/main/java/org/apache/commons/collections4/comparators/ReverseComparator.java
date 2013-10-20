@@ -60,7 +60,7 @@ public class ReverseComparator<E> implements Comparator<E>, Serializable {
      * @param comparator Comparator to reverse
      */
     @SuppressWarnings("unchecked")
-    public ReverseComparator(final Comparator<E> comparator) {
+    public ReverseComparator(final Comparator<? super E> comparator) {
         this.comparator = comparator == null ? ComparatorUtils.NATURAL_COMPARATOR : comparator;
     }
 

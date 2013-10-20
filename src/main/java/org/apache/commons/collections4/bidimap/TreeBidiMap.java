@@ -126,7 +126,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      *  not Comparable or are not mutually comparable
      * @throws NullPointerException if any key or value in the map is null
      */
-    public TreeBidiMap(final Map<K, V> map) {
+    public TreeBidiMap(final Map<? extends K, ? extends V> map) {
         this();
         putAll(map);
     }

@@ -188,7 +188,7 @@ public class SetUtils {
      * @return an unmodifiable set backed by the given set
      * @throws IllegalArgumentException  if the set is null
      */
-    public static <E> Set<E> unmodifiableSet(final Set<E> set) {
+    public static <E> Set<E> unmodifiableSet(final Set<? extends E> set) {
         return UnmodifiableSet.unmodifiableSet(set);
     }
 

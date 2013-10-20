@@ -36,7 +36,7 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
     /**
      *  The comparator to use when comparing two non-<code>null</code> objects.
      **/
-    private final Comparator<E> nonNullComparator;
+    private final Comparator<? super E> nonNullComparator;
 
     /**
      *  Specifies whether a <code>null</code> are compared as higher than
@@ -69,7 +69,7 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      *  @exception NullPointerException if <code>nonNullComparator</code> is
      *  <code>null</code>
      **/
-    public NullComparator(final Comparator<E> nonNullComparator) {
+    public NullComparator(final Comparator<? super E> nonNullComparator) {
         this(nonNullComparator, true);
     }
 
@@ -109,7 +109,7 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      *  @exception NullPointerException if <code>nonNullComparator</code> is
      *  <code>null</code>
      **/
-    public NullComparator(final Comparator<E> nonNullComparator, final boolean nullsAreHigh) {
+    public NullComparator(final Comparator<? super E> nonNullComparator, final boolean nullsAreHigh) {
         this.nonNullComparator = nonNullComparator;
         this.nullsAreHigh = nullsAreHigh;
 

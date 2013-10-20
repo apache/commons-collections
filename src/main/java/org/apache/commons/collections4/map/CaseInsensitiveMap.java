@@ -105,7 +105,7 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
      * @param map  the map to copy
      * @throws NullPointerException if the map is null
      */
-    public CaseInsensitiveMap(final Map<K, V> map) {
+    public CaseInsensitiveMap(final Map<? extends K, ? extends V> map) {
         super(map);
     }
 

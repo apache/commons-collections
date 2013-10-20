@@ -51,7 +51,7 @@ public class QueueUtils {
      * @return an unmodifiable queue backed by that queue
      * @throws IllegalArgumentException  if the Queue is null
      */
-    public static <E> Queue<E> unmodifiableQueue(final Queue<E> queue) {
+    public static <E> Queue<E> unmodifiableQueue(final Queue<? extends E> queue) {
         return UnmodifiableQueue.unmodifiableQueue(queue);
     }
 

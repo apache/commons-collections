@@ -1258,7 +1258,7 @@ public class MapUtils {
      * @return an unmodifiable map backed by the given map
      * @throws IllegalArgumentException  if the map is null
      */
-    public static <K, V> Map<K, V> unmodifiableMap(final Map<K, V> map) {
+    public static <K, V> Map<K, V> unmodifiableMap(final Map<? extends K, ? extends V> map) {
         return UnmodifiableMap.unmodifiableMap(map);
     }
 
@@ -1517,7 +1517,7 @@ public class MapUtils {
      * @return an unmodifiable map backed by the given map
      * @throws IllegalArgumentException  if the map is null
      */
-    public static <K, V> SortedMap<K, V> unmodifiableSortedMap(final SortedMap<K, V> map) {
+    public static <K, V> SortedMap<K, V> unmodifiableSortedMap(final SortedMap<K, ? extends V> map) {
         return UnmodifiableSortedMap.unmodifiableSortedMap(map);
     }
 

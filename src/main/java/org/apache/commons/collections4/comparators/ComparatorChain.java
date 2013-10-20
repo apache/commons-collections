@@ -273,7 +273,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
         final Iterator<Comparator<E>> comparators = comparatorChain.iterator();
         for (int comparatorIndex = 0; comparators.hasNext(); ++comparatorIndex) {
 
-            final Comparator<E> comparator = comparators.next();
+            final Comparator<? super E> comparator = comparators.next();
             int retval = comparator.compare(o1,o2);
             if (retval != 0) {
                 // invert the order if it is a reverse sort

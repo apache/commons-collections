@@ -45,7 +45,7 @@ public final class DefaultMapEntry<K, V> extends AbstractMapEntry<K, V> {
      * @param pair  the pair to copy, must not be null
      * @throws NullPointerException if the entry is null
      */
-    public DefaultMapEntry(final KeyValue<K, V> pair) {
+    public DefaultMapEntry(final KeyValue<? extends K, ? extends V> pair) {
         super(pair.getKey(), pair.getValue());
     }
 
@@ -55,7 +55,7 @@ public final class DefaultMapEntry<K, V> extends AbstractMapEntry<K, V> {
      * @param entry  the entry to copy, must not be null
      * @throws NullPointerException if the entry is null
      */
-    public DefaultMapEntry(final Map.Entry<K, V> entry) {
+    public DefaultMapEntry(final Map.Entry<? extends K, ? extends V> entry) {
         super(entry.getKey(), entry.getValue());
     }
 

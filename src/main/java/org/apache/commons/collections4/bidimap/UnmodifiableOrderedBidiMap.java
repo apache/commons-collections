@@ -52,9 +52,12 @@ public final class UnmodifiableOrderedBidiMap<K, V>
      * @throws IllegalArgumentException if map is null
      * @since 4.0
      */
-    public static <K, V> OrderedBidiMap<K, V> unmodifiableOrderedBidiMap(final OrderedBidiMap<K, V> map) {
+    public static <K, V> OrderedBidiMap<K, V> unmodifiableOrderedBidiMap(
+            final OrderedBidiMap<? extends K, ? extends V> map) {
         if (map instanceof Unmodifiable) {
-            return map;
+            @SuppressWarnings("unchecked") // safe to upcast
+            final OrderedBidiMap<K, V> tmpMap = (OrderedBidiMap<K, V>) map;
+            return tmpMap;
         }
         return new UnmodifiableOrderedBidiMap<K, V>(map);
     }
@@ -66,8 +69,9 @@ public final class UnmodifiableOrderedBidiMap<K, V>
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    private UnmodifiableOrderedBidiMap(final OrderedBidiMap<K, V> map) {
-        super(map);
+    @SuppressWarnings("unchecked") // safe to upcast
+    private UnmodifiableOrderedBidiMap(final OrderedBidiMap<? extends K, ? extends V> map) {
+        super((OrderedBidiMap<K, V>) map);
     }
 
     //-----------------------------------------------------------------------

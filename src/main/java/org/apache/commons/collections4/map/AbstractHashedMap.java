@@ -157,7 +157,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @param map  the map to copy
      * @throws NullPointerException if the map is null
      */
-    protected AbstractHashedMap(final Map<K, V> map) {
+    protected AbstractHashedMap(final Map<? extends K, ? extends V> map) {
         this(Math.max(2 * map.size(), DEFAULT_CAPACITY), DEFAULT_LOAD_FACTOR);
         _putAll(map);
     }

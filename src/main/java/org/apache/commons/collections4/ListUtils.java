@@ -398,7 +398,7 @@ public class ListUtils {
      * @return an unmodifiable list backed by the given list
      * @throws IllegalArgumentException  if the list is null
      */
-    public static <E> List<E> unmodifiableList(final List<E> list) {
+    public static <E> List<E> unmodifiableList(final List<? extends E> list) {
         return UnmodifiableList.unmodifiableList(list);
     }
 

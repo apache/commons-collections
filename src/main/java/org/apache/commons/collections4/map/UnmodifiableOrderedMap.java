@@ -57,9 +57,11 @@ public final class UnmodifiableOrderedMap<K, V> extends AbstractOrderedMapDecora
      * @throws IllegalArgumentException if map is null
      * @since 4.0
      */
-    public static <K, V> OrderedMap<K, V> unmodifiableOrderedMap(final OrderedMap<K, V> map) {
+    public static <K, V> OrderedMap<K, V> unmodifiableOrderedMap(final OrderedMap<? extends K, ? extends V> map) {
         if (map instanceof Unmodifiable) {
-            return map;
+            @SuppressWarnings("unchecked") // safe to upcast
+            final OrderedMap<K, V> tmpMap = (OrderedMap<K, V>) map;
+            return tmpMap;
         }
         return new UnmodifiableOrderedMap<K, V>(map);
     }
@@ -71,8 +73,9 @@ public final class UnmodifiableOrderedMap<K, V> extends AbstractOrderedMapDecora
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    private UnmodifiableOrderedMap(final OrderedMap<K, V> map) {
-        super(map);
+    @SuppressWarnings("unchecked") // safe to upcast
+    private UnmodifiableOrderedMap(final OrderedMap<? extends K, ? extends V> map) {
+        super((OrderedMap<K, V>) map);
     }
 
     //-----------------------------------------------------------------------

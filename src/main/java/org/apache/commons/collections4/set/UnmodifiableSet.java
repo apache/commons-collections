@@ -49,9 +49,11 @@ public final class UnmodifiableSet<E>
      * @throws IllegalArgumentException if set is null
      * @since 4.0
      */
-    public static <E> Set<E> unmodifiableSet(final Set<E> set) {
+    public static <E> Set<E> unmodifiableSet(final Set<? extends E> set) {
         if (set instanceof Unmodifiable) {
-            return set;
+            @SuppressWarnings("unchecked") // safe to upcast
+            final Set<E> tmpSet = (Set<E>) set;
+            return tmpSet;
         }
         return new UnmodifiableSet<E>(set);
     }
@@ -63,14 +65,15 @@ public final class UnmodifiableSet<E>
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    private UnmodifiableSet(final Set<E> set) {
-        super(set);
+    @SuppressWarnings("unchecked") // safe to upcast
+    private UnmodifiableSet(final Set<? extends E> set) {
+        super((Set<E>) set);
     }
 
     //-----------------------------------------------------------------------
     @Override
     public Iterator<E> iterator() {
-        return UnmodifiableIterator.<E>unmodifiableIterator(decorated().iterator());
+        return UnmodifiableIterator.unmodifiableIterator(decorated().iterator());
     }
 
     @Override

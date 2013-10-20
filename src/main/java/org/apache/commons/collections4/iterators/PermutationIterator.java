@@ -73,7 +73,7 @@ public class PermutationIterator<E> implements Iterator<List<E>> {
      * @param coll  the collection to generate permutations for
      * @throws NullPointerException if coll is null
      */
-    public PermutationIterator(final Collection<E> coll) {
+    public PermutationIterator(final Collection<? extends E> coll) {
         if (coll == null) {
             throw new NullPointerException("The collection must not be null");
         }

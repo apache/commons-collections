@@ -47,7 +47,7 @@ public class EnumerationUtils {
      * @return a list containing all elements of the given enumeration
      * @throws NullPointerException if the enumeration parameter is <code>null</code>.
      */
-    public static <E> List<E> toList(final Enumeration<E> enumeration) {
+    public static <E> List<E> toList(final Enumeration<? extends E> enumeration) {
         return IteratorUtils.toList(new EnumerationIterator<E>(enumeration));
     }
 

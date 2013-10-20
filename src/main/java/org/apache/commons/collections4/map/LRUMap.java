@@ -141,7 +141,7 @@ public class LRUMap<K, V>
      * @throws NullPointerException if the map is null
      * @throws IllegalArgumentException if the map is empty
      */
-    public LRUMap(final Map<K, V> map) {
+    public LRUMap(final Map<? extends K, ? extends V> map) {
         this(map, false);
     }
 
@@ -156,7 +156,7 @@ public class LRUMap<K, V>
      * @throws IllegalArgumentException if the map is empty
      * @since 3.1
      */
-    public LRUMap(final Map<K, V> map, final boolean scanUntilRemovable) {
+    public LRUMap(final Map<? extends K, ? extends V> map, final boolean scanUntilRemovable) {
         this(map.size(), DEFAULT_LOAD_FACTOR, scanUntilRemovable);
         putAll(map);
     }

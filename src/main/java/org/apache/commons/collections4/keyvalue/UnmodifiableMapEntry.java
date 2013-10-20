@@ -46,7 +46,7 @@ public final class UnmodifiableMapEntry<K, V> extends AbstractMapEntry<K, V> imp
      * @param pair  the pair to copy, must not be null
      * @throws NullPointerException if the entry is null
      */
-    public UnmodifiableMapEntry(final KeyValue<K, V> pair) {
+    public UnmodifiableMapEntry(final KeyValue<? extends K, ? extends V> pair) {
         super(pair.getKey(), pair.getValue());
     }
 
@@ -56,7 +56,7 @@ public final class UnmodifiableMapEntry<K, V> extends AbstractMapEntry<K, V> imp
      * @param entry  the entry to copy, must not be null
      * @throws NullPointerException if the entry is null
      */
-    public UnmodifiableMapEntry(final Map.Entry<K, V> entry) {
+    public UnmodifiableMapEntry(final Map.Entry<? extends K, ? extends V> entry) {
         super(entry.getKey(), entry.getValue());
     }
 

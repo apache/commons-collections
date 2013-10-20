@@ -52,9 +52,11 @@ public final class UnmodifiableBidiMap<K, V>
      * @throws IllegalArgumentException if map is null
      * @since 4.0
      */
-    public static <K, V> BidiMap<K, V> unmodifiableBidiMap(final BidiMap<K, V> map) {
+    public static <K, V> BidiMap<K, V> unmodifiableBidiMap(final BidiMap<? extends K, ? extends V> map) {
         if (map instanceof Unmodifiable) {
-            return map;
+            @SuppressWarnings("unchecked") // safe to upcast
+            final BidiMap<K, V> tmpMap = (BidiMap<K, V>) map;
+            return tmpMap;
         }
         return new UnmodifiableBidiMap<K, V>(map);
     }
@@ -66,8 +68,9 @@ public final class UnmodifiableBidiMap<K, V>
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    private UnmodifiableBidiMap(final BidiMap<K, V> map) {
-        super(map);
+    @SuppressWarnings("unchecked") // safe to upcast
+    private UnmodifiableBidiMap(final BidiMap<? extends K, ? extends V> map) {
+        super((BidiMap<K, V>) map);
     }
 
     //-----------------------------------------------------------------------

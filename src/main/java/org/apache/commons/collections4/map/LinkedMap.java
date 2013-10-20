@@ -101,7 +101,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
      * @param map  the map to copy
      * @throws NullPointerException if the map is null
      */
-    public LinkedMap(final Map<K, V> map) {
+    public LinkedMap(final Map<? extends K, ? extends V> map) {
         super(map);
     }
 

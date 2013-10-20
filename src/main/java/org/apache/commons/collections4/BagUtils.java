@@ -92,7 +92,7 @@ public class BagUtils {
      * @return an unmodifiable view of that bag
      * @throws IllegalArgumentException if the Bag is null
      */
-    public static <E> Bag<E> unmodifiableBag(final Bag<E> bag) {
+    public static <E> Bag<E> unmodifiableBag(final Bag<? extends E> bag) {
         return UnmodifiableBag.unmodifiableBag(bag);
     }
 

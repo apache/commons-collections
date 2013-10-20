@@ -81,7 +81,7 @@ public class TreeList<E> extends AbstractList<E> {
      * @param coll  the collection to copy
      * @throws NullPointerException if the collection is null
      */
-    public TreeList(final Collection<E> coll) {
+    public TreeList(final Collection<? extends E> coll) {
         super();
         if (!coll.isEmpty()) {
             root = new AVLNode<E>(coll);

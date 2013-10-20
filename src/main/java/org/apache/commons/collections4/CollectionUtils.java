@@ -1701,7 +1701,7 @@ public class CollectionUtils {
      * @return an unmodifiable collection backed by the given collection
      * @throws IllegalArgumentException  if the collection is null
      */
-    public static <C> Collection<C> unmodifiableCollection(final Collection<C> collection) {
+    public static <C> Collection<C> unmodifiableCollection(final Collection<? extends C> collection) {
         return UnmodifiableCollection.unmodifiableCollection(collection);
     }
 

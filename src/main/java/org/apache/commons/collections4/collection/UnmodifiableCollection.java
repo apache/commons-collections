@@ -51,9 +51,11 @@ public final class UnmodifiableCollection<E>
      * @throws IllegalArgumentException if collection is null
      * @since 4.0
      */
-    public static <T> Collection<T> unmodifiableCollection(final Collection<T> coll) {
+    public static <T> Collection<T> unmodifiableCollection(final Collection<? extends T> coll) {
         if (coll instanceof Unmodifiable) {
-            return coll;
+            @SuppressWarnings("unchecked") // safe to upcast
+            final Collection<T> tmpColl = (Collection<T>) coll;
+            return tmpColl;
         }
         return new UnmodifiableCollection<T>(coll);
     }
@@ -65,8 +67,9 @@ public final class UnmodifiableCollection<E>
      * @param coll  the collection to decorate, must not be null
      * @throws IllegalArgumentException if collection is null
      */
-    private UnmodifiableCollection(final Collection<E> coll) {
-        super(coll);
+    @SuppressWarnings("unchecked") // safe to upcast
+    private UnmodifiableCollection(final Collection<? extends E> coll) {
+        super((Collection<E>) coll);
     }
 
     //-----------------------------------------------------------------------

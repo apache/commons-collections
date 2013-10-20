@@ -31,7 +31,7 @@ import org.apache.commons.collections4.Unmodifiable;
 public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmodifiable {
 
     /** The iterator being decorated */
-    private final ListIterator<E> iterator;
+    private final ListIterator<? extends E> iterator;
 
     //-----------------------------------------------------------------------
     /**
@@ -42,12 +42,14 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
      * @return a new unmodifiable list iterator
      * @throws IllegalArgumentException if the iterator is null
      */
-    public static <E> ListIterator<E> umodifiableListIterator(final ListIterator<E> iterator) {
+    public static <E> ListIterator<E> umodifiableListIterator(final ListIterator<? extends E> iterator) {
         if (iterator == null) {
             throw new IllegalArgumentException("ListIterator must not be null");
         }
         if (iterator instanceof Unmodifiable) {
-            return iterator;
+            @SuppressWarnings("unchecked") // safe to upcast
+            final ListIterator<E> tmpIterator = (ListIterator<E>) iterator;
+            return tmpIterator;
         }
         return new UnmodifiableListIterator<E>(iterator);
     }
@@ -58,7 +60,7 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
      *
      * @param iterator  the iterator to decorate
      */
-    private UnmodifiableListIterator(final ListIterator<E> iterator) {
+    private UnmodifiableListIterator(final ListIterator<? extends E> iterator) {
         super();
         this.iterator = iterator;
     }

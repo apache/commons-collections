@@ -55,7 +55,7 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
      * @param pair  the pair to copy, must not be null
      * @throws NullPointerException if the entry is null
      */
-    public DefaultKeyValue(final KeyValue<K, V> pair) {
+    public DefaultKeyValue(final KeyValue<? extends K, ? extends V> pair) {
         super(pair.getKey(), pair.getValue());
     }
 
@@ -65,7 +65,7 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
      * @param entry  the entry to copy, must not be null
      * @throws NullPointerException if the entry is null
      */
-    public DefaultKeyValue(final Map.Entry<K, V> entry) {
+    public DefaultKeyValue(final Map.Entry<? extends K, ? extends V> entry) {
         super(entry.getKey(), entry.getValue());
     }
 

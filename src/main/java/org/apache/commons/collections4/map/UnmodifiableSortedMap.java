@@ -57,9 +57,11 @@ public final class UnmodifiableSortedMap<K, V>
      * @throws IllegalArgumentException if map is null
      * @since 4.0
      */
-    public static <K, V> SortedMap<K, V> unmodifiableSortedMap(final SortedMap<K, V> map) {
+    public static <K, V> SortedMap<K, V> unmodifiableSortedMap(final SortedMap<K, ? extends V> map) {
         if (map instanceof Unmodifiable) {
-            return map;
+            @SuppressWarnings("unchecked") // safe to upcast
+            final SortedMap<K, V> tmpMap = (SortedMap<K, V>) map;
+            return tmpMap;
         }
         return new UnmodifiableSortedMap<K, V>(map);
     }
@@ -71,8 +73,9 @@ public final class UnmodifiableSortedMap<K, V>
      * @param map  the map to decorate, must not be null
      * @throws IllegalArgumentException if map is null
      */
-    private UnmodifiableSortedMap(final SortedMap<K, V> map) {
-        super(map);
+    @SuppressWarnings("unchecked") // safe to upcast
+    private UnmodifiableSortedMap(final SortedMap<K, ? extends V> map) {
+        super((SortedMap<K, V>) map);
     }
 
     //-----------------------------------------------------------------------

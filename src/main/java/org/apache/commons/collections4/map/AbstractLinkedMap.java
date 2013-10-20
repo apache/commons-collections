@@ -111,7 +111,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      * @param map  the map to copy
      * @throws NullPointerException if the map is null
      */
-    protected AbstractLinkedMap(final Map<K, V> map) {
+    protected AbstractLinkedMap(final Map<? extends K, ? extends V> map) {
         super(map);
     }
 

@@ -30,7 +30,7 @@ import org.apache.commons.collections4.Unmodifiable;
 public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, Unmodifiable {
 
     /** The iterator being decorated */
-    private final MapIterator<K, V> iterator;
+    private final MapIterator<? extends K, ? extends V> iterator;
 
     //-----------------------------------------------------------------------
     /**
@@ -42,12 +42,15 @@ public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, U
      * @return a new unmodifiable map iterator
      * @throws IllegalArgumentException if the iterator is null
      */
-    public static <K, V> MapIterator<K, V> unmodifiableMapIterator(final MapIterator<K, V> iterator) {
+    public static <K, V> MapIterator<K, V> unmodifiableMapIterator(
+            final MapIterator<? extends K, ? extends V> iterator) {
         if (iterator == null) {
             throw new IllegalArgumentException("MapIterator must not be null");
         }
         if (iterator instanceof Unmodifiable) {
-            return iterator;
+            @SuppressWarnings("unchecked") // safe to upcast
+            final MapIterator<K, V> tmpIterator = (MapIterator<K, V>) iterator;
+            return tmpIterator;
         }
         return new UnmodifiableMapIterator<K, V>(iterator);
     }
@@ -58,7 +61,7 @@ public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, U
      *
      * @param iterator  the iterator to decorate
      */
-    private UnmodifiableMapIterator(final MapIterator<K, V> iterator) {
+    private UnmodifiableMapIterator(final MapIterator<? extends K, ? extends V> iterator) {
         super();
         this.iterator = iterator;
     }

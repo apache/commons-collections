@@ -103,7 +103,7 @@ public class SingletonMap<K, V>
      *
      * @param mapEntry  the mapEntry to use
      */
-    public SingletonMap(final Map.Entry<K, V> mapEntry) {
+    public SingletonMap(final Map.Entry<? extends K, ? extends V> mapEntry) {
         super();
         this.key = mapEntry.getKey();
         this.value = mapEntry.getValue();
@@ -116,12 +116,12 @@ public class SingletonMap<K, V>
      * @throws NullPointerException if the map is null
      * @throws IllegalArgumentException if the size is not 1
      */
-    public SingletonMap(final Map<K, V> map) {
+    public SingletonMap(final Map<? extends K, ? extends V> map) {
         super();
         if (map.size() != 1) {
             throw new IllegalArgumentException("The map size must be 1");
         }
-        final Map.Entry<K, V> entry = map.entrySet().iterator().next();
+        final Map.Entry<? extends K, ? extends V> entry = map.entrySet().iterator().next();
         this.key = entry.getKey();
         this.value = entry.getValue();
     }

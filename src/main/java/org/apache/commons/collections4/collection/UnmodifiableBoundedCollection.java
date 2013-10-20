@@ -54,7 +54,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
      * @throws IllegalArgumentException if {@code coll} is {@code null}
      * @since 4.0
      */
-    public static <E> BoundedCollection<E> unmodifiableBoundedCollection(final BoundedCollection<E> coll) {
+    public static <E> BoundedCollection<E> unmodifiableBoundedCollection(final BoundedCollection<? extends E> coll) {
         return new UnmodifiableBoundedCollection<E>(coll);
     }
 
@@ -100,8 +100,9 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
      * @param coll  the collection to decorate, must not be null
      * @throws IllegalArgumentException if coll is null
      */
-    private UnmodifiableBoundedCollection(final BoundedCollection<E> coll) {
-        super(coll);
+    @SuppressWarnings("unchecked") // safe to upcast
+    private UnmodifiableBoundedCollection(final BoundedCollection<? extends E> coll) {
+        super((BoundedCollection<E>) coll);
     }
 
     //-----------------------------------------------------------------------

@@ -81,7 +81,7 @@ public class HashedMap<K, V>
      * @param map  the map to copy
      * @throws NullPointerException if the map is null
      */
-    public HashedMap(final Map<K, V> map) {
+    public HashedMap(final Map<? extends K, ? extends V> map) {
         super(map);
     }
 

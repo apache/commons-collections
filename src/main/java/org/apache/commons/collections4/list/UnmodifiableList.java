@@ -51,9 +51,11 @@ public final class UnmodifiableList<E>
      * @throws IllegalArgumentException if list is null
      * @since 4.0
      */
-    public static <E> List<E> unmodifiableList(final List<E> list) {
+    public static <E> List<E> unmodifiableList(final List<? extends E> list) {
         if (list instanceof Unmodifiable) {
-            return list;
+            @SuppressWarnings("unchecked") // safe to upcast
+            final List<E> tmpList = (List<E>) list;
+            return tmpList;
         }
         return new UnmodifiableList<E>(list);
     }
@@ -64,10 +66,10 @@ public final class UnmodifiableList<E>
      *
      * @param list  the list to decorate, must not be null
      * @throws IllegalArgumentException if list is null
-     * @since Commons Collection 5
      */
-    public UnmodifiableList(final List<E> list) {
-        super(list);
+    @SuppressWarnings("unchecked") // safe to upcast
+    public UnmodifiableList(final List<? extends E> list) {
+        super((List<E>) list);
     }
 
     //-----------------------------------------------------------------------

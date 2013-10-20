@@ -77,7 +77,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      *
      * @param coll  the collection to copy
      */
-    public CursorableLinkedList(final Collection<E> coll) {
+    public CursorableLinkedList(final Collection<? extends E> coll) {
         super(coll);
     }
 

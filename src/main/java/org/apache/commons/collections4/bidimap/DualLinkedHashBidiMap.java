@@ -16,14 +16,14 @@
  */
 package org.apache.commons.collections4.bidimap;
 
-import org.apache.commons.collections4.BidiMap;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import org.apache.commons.collections4.BidiMap;
 
 /**
  * Implementation of <code>BidiMap</code> that uses two <code>LinkedHashMap</code> instances.
@@ -52,7 +52,7 @@ public class DualLinkedHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> imple
      *
      * @param map the map whose mappings are to be placed in this map
      */
-    public DualLinkedHashBidiMap(final Map<K, V> map) {
+    public DualLinkedHashBidiMap(final Map<? extends K, ? extends V> map) {
         super(new LinkedHashMap<K, V>(), new LinkedHashMap<V, K>());
         putAll(map);
     }
