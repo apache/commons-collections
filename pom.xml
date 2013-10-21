@@ -25,10 +25,10 @@
   <groupId>org.apache.commons</groupId>
   <artifactId>commons-collections4</artifactId>
   <version>4.0-SNAPSHOT</version>
-  <name>Commons Collections</name>
+  <name>Apache Commons Collections</name>
 
   <inceptionYear>2001</inceptionYear>
-  <description>Types that extend and augment the Java Collections Framework.</description>
+  <description>The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.</description>
 
   <url>http://commons.apache.org/proper/commons-collections/</url>
 
