@@ -46,6 +46,8 @@ Major changes since 3.2.1
 Changes since 4.0-alpha1
 ------------------------
 
+ o [COLLECTIONS-488] Added "CollectionsUtils#matchesAll(Iterable, Predicate)" to test if all elements
+                     of a collection match a given predicate. Thanks to Josh Cain.
  o [COLLECTIONS-485] Accept wildcard input where possible, e.g. in copy-constructors, Unmodifiable* decorators
                      and iterators. Thanks to Hollis Waite.
  o [COLLECTIONS-481] No collision detection/resolution was performed when calling "CompositeSet#addComposited(...)"
@@ -112,6 +114,8 @@ New classes
 New methods in *Utils
 ---------------------
 
+ o [COLLECTIONS-488] Added "CollectionsUtils#matchesAll(Iterable, Predicate)" to test if all elements
+                     of a collection match a given predicate. Thanks to Josh Cain.
  o [COLLECTIONS-456] ListUtils#longestCommonSubsequence(...) to get the longest common subsequence of arbitrary lists or CharSequences.
  o [COLLECTIONS-450] CollectionUtils#forAllButLastDo(Collection, Closure) and forAllButLastDo(Iterator, Closure). Thanks to J. Moldawski.
  o [COLLECTIONS-446] CollectionUtils#isEqualCollection(Collection, Collection, Equator). Thanks to Matt Lachman.

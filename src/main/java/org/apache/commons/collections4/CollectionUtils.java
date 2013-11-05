@@ -856,6 +856,34 @@ public class CollectionUtils {
     }
 
     /**
+     * Answers true if a predicate is true for every element of a
+     * collection.
+     * <p>
+     * A <code>null</code> predicate returns false.<br/>
+     * A <code>null</code> or empty collection returns true.
+     *
+     * @param <C>  the type of object the {@link Iterable} contains
+     * @param input  the {@link Iterable} to get the input from, may be null
+     * @param predicate  the predicate to use, may be null
+     * @return true if every element of the collection matches the predicate or if the
+     * collection is empty, false otherwise
+     */
+    public static <C> boolean matchesAll(final Iterable<C> input, final Predicate<? super C> predicate) {
+        if (predicate == null) {
+            return false;
+        }
+
+        if (input != null) {
+            for (final C o : input) {
+                if (!predicate.evaluate(o)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
      * Selects all elements from input collection which match the given
      * predicate into an output collection.
      * <p>

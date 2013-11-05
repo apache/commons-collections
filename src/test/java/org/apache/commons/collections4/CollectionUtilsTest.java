@@ -1718,4 +1718,27 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(factorial, permutations.size());
     }
 
+    @Test
+    public void testMatchesAll() {
+        assertFalse(CollectionUtils.matchesAll(null, null));
+        assertFalse(CollectionUtils.matchesAll(collectionA, null));
+
+        Predicate<Integer> lessThanFive = new Predicate<Integer>() {
+            public boolean evaluate(Integer object) {
+                return object < 5;
+            }
+        };
+        assertTrue(CollectionUtils.matchesAll(collectionA, lessThanFive));
+        
+        Predicate<Integer> lessThanFour = new Predicate<Integer>() {
+            public boolean evaluate(Integer object) {
+                return object < 4;
+            }
+        };
+        assertFalse(CollectionUtils.matchesAll(collectionA, lessThanFour));
+        
+        assertTrue(CollectionUtils.matchesAll(null, lessThanFour));
+        assertTrue(CollectionUtils.matchesAll(emptyCollection, lessThanFour));
+    }
+
 }

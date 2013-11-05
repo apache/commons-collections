@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.0" date="TBA" description="Next release">
+    <action issue="COLLECTIONS-488" dev="tn" type="add" due-to="Josh Cain">
+     Added "CollectionsUtils#matchesAll(Iterable, Predicate)" to test if all elements
+     of a collection match a given predicate.
+    </action>
     <action issue="COLLECTIONS-485" dev="tn" type="fix" due-to="Hollis Waite">
      Accept wildcard input where possible, e.g. in copy-constructors, Unmodifiable* decorators
      and iterators.

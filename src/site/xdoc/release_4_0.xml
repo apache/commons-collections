@@ -120,6 +120,7 @@ This release is <b>not</b> source or binary compatible with v3.x.
 
 <center><h3>Enhancements</h3></center>
 <ul>
+<li>Added CollectionsUtils#matchesAll(Iterable, Predicate) to test if all elements of a collection match a given predicate.</li>
 <li>ListUtils#longestCommonSubsequence(...) to get the longest common subsequence of arbitrary lists or CharSequences.</li>
 <li>CollectionUtils#forAllButLastDo(Collection, Closure) and forAllButLastDo(Iterator, Closure). Thanks to J. Moldawski.</li>
 <li>CollectionUtils#isEqualCollection(Collection, Collection, Equator). Thanks to Matt Lachman.</li>
