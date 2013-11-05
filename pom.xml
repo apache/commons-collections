@@ -24,7 +24,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apache.commons</groupId>
   <artifactId>commons-collections4</artifactId>
-  <version>4.0-SNAPSHOT</version>
+  <version>4.0</version>
   <name>Apache Commons Collections</name>
 
   <inceptionYear>2001</inceptionYear>
@@ -466,7 +466,7 @@
     <commons.componentid>collections4</commons.componentid>
 
     <!-- Current 4.x release series -->
-    <commons.release.version>4.0-alpha1</commons.release.version>
+    <commons.release.version>4.0</commons.release.version>
     <commons.release.desc>(Java 5.0+)</commons.release.desc>
     
     <!-- Previous 3.x release series -->
