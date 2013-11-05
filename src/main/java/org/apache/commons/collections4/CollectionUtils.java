@@ -867,6 +867,7 @@ public class CollectionUtils {
      * @param predicate  the predicate to use, may be null
      * @return true if every element of the collection matches the predicate or if the
      * collection is empty, false otherwise
+     * @since 4.0
      */
     public static <C> boolean matchesAll(final Iterable<C> input, final Predicate<? super C> predicate) {
         if (predicate == null) {
