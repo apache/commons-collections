@@ -773,28 +773,6 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> impl
         }
     }
 
-    /**
-     * Gets the standard Map hashCode.
-     *
-     * @return the hash code defined in the Map interface
-     */
-    @Override
-    public int hashCode() {
-        int total = 0;
-        final Iterator<Entry<K, V>> it = new MyEntryIterator();
-
-        while (it.hasNext()) {
-            total += it.next().hashCode();
-        }
-        return total;
-    }
-
-    private class MyEntryIterator extends TrieIterator<Map.Entry<K,V>> {
-        public Map.Entry<K,V> next() {
-            return nextEntry();
-        }
-    }
-
     //-----------------------------------------------------------------------
 
     public Comparator<? super K> comparator() {
