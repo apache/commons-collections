@@ -53,9 +53,12 @@ have changed.
 <hr />
 
 <center><h3>Compatibility</h3></center>
-<p>
-This release is <b>not</b> source or binary compatible with v3.x.
-</p>
+<ul>
+ <li>Java 5 or later is required</li>
+ <li>This release is <b>not</b> source or binary compatible with previous releases of
+     Commons Collections. This includes releases from the 3.x branch as well as
+     preceding alpha releases for 4.0 (see details of changes below)</li>
+</ul>
 
 <center><h3>Major changes since 3.2.1</h3></center>
 <ul>
@@ -78,7 +81,7 @@ This release is <b>not</b> source or binary compatible with v3.x.
    <li>UnboundedFifoBuffer: use either java.util.LinkedList or java.util.concurrent.LinkedBlockingBuffer</li>
    </ul>
 </li>                     
-<li>Removed features now supported by the JDK
+<li>Removed features now supported by the JDK or other Apache Commons libraries
   <ul>
   <li>FastArrayList: use java.util.concurrent.CopyOnWriteArrayList</li>
   <li>FastHashMap: use java.util.concurrent.ConcurrentHashMap, but beware of null keys and values</li>

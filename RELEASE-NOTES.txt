@@ -25,12 +25,13 @@ These release notes will try to guide you in the process of upgrading, however y
 should remember that this is a new API based on the original, so some concepts
 have changed.
 
-Compatibility with previous releases
-------------------------------------
+Compatibility
+-------------
 
-This release is not source or binary compatible with previous releases of
-Commons Collections. This includes releases from the 3.x branch as well as
-preceding alpha releases for 4.0 (see details of changes below).
+ o Java 5 or later is required.
+ o This release is not source or binary compatible with previous releases of
+   Commons Collections. This includes releases from the 3.x branch as well as
+   preceding alpha releases for 4.0 (see details of changes below).
 
 
 Major changes since 3.2.1
@@ -70,7 +71,7 @@ Removed classes
    - BoundedBuffer: use either ArrayBlockingBuffer(capacity) or LinkedBlockingBuffer(capacity) in java.util.concurrent
    - UnboundedFifoBuffer: use either java.util.LinkedList or java.util.concurrent.LinkedBlockingBuffer
                      
- o [COLLECTIONS-351] Removed features now supported by the JDK
+ o [COLLECTIONS-351] Removed features now supported by the JDK or other Apache Commons libraries
  
    - FastArrayList: use java.util.concurrent.CopyOnWriteArrayList
    - FastHashMap: use java.util.concurrent.ConcurrentHashMap, but beware of null keys and values
