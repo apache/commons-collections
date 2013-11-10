@@ -36,7 +36,6 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
 import org.apache.commons.collections4.collection.TransformedCollection;
 import org.apache.commons.collections4.collection.UnmodifiableBoundedCollection;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
-import org.apache.commons.collections4.functors.Equator;
 import org.apache.commons.collections4.functors.TruePredicate;
 import org.apache.commons.collections4.iterators.CollatingIterator;
 import org.apache.commons.collections4.iterators.PermutationIterator;

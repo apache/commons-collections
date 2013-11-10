@@ -8,7 +8,7 @@
  * BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
  * for the specific language governing permissions and limitations under the License.
  */
-package org.apache.commons.collections4.functors;
+package org.apache.commons.collections4;
 
 /**
  * An equation function, which determines equality between objects of type T.

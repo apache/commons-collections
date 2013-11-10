@@ -20,6 +20,7 @@ import static org.apache.commons.collections4.functors.NullPredicate.nullPredica
 
 import java.io.Serializable;
 
+import org.apache.commons.collections4.Equator;
 import org.apache.commons.collections4.Predicate;
 
 /**

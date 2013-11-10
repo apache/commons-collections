@@ -155,6 +155,7 @@ have changed.
 
 <center><h3>Changed classes / methods</h3></center>
 <ul>
+<li>Moved "Equator" interface to base package for consistency.</li>
 <li>Accept wildcard input where possible, e.g. in copy-constructors, Unmodifiable* decorators and iterators.</li>
 <li>Narrow return type of "BidiMap#values()" to Set as the values are required to be unique.</li>
 <li>Made field "collection" in class "AbstractCollectionDecorator" private and added setter "setCollection(Collection)" with scope protected to set the decorated collection during de-serialization.</li>

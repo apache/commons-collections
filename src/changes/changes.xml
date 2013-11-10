@@ -21,7 +21,26 @@
   </properties>
   <body>
 
-  <release version="4.0" date="TBA" description="Next release">
+  <release version="4.0" date="2013-11-15" description="
+This is a major release: It combines bug fixes, new features and
+changes to existing features.
+
+Most notable changes are: use of generics and other language features introduced in Java 5 (varargs, Iterable),
+removed deprecated classes / methods and features which are now supported by the JDK,
+replaced Buffer interface with java.util.Queue,
+added concept of split maps with respective interfaces Put / Get (see also package splitmap),
+added new Trie interface together with an implementation of a Patricia Trie.
+
+Because of the base package name change, this release can be used together
+with earlier versions of Commons Collections.
+The minimal version of the Java platform required to compile and use
+Commons Collections is Java 5.
+Users are encouraged to upgrade to this version as, in addition to new
+features, this release includes numerous bug fixes.
+  ">
+    <action issue="COLLECTIONS-494" dev="tn" type="update" due-to="Emmanuel Bourg">
+     Moved "Equator" interface to base package for consistency.
+    </action>
     <action issue="COLLECTIONS-488" dev="tn" type="add" due-to="Josh Cain">
      Added "CollectionsUtils#matchesAll(Iterable, Predicate)" to test if all elements
      of a collection match a given predicate.

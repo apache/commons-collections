@@ -47,6 +47,7 @@ Major changes since 3.2.1
 Changes since 4.0-alpha1
 ------------------------
 
+ o [COLLECTIONS-494] Moved "Equator" interface to base package for consistency. Thanks to Emmanuel Bourg.
  o [COLLECTIONS-488] Added "CollectionsUtils#matchesAll(Iterable, Predicate)" to test if all elements
                      of a collection match a given predicate. Thanks to Josh Cain.
  o [COLLECTIONS-485] Accept wildcard input where possible, e.g. in copy-constructors, Unmodifiable* decorators
@@ -158,6 +159,7 @@ New features
 Changed classes / methods
 -------------------------
 
+ o [COLLECTIONS-494] Moved "Equator" interface to base package for consistency. Thanks to Emmanuel Bourg.
  o [COLLECTIONS-485] Accept wildcard input where possible, e.g. in copy-constructors, Unmodifiable* decorators
                      and iterators. Thanks to Hollis Waite.
  o [COLLECTIONS-480] Narrow return type of "BidiMap#values()" to Set as the values are required to be unique. Thanks to Hollis Waite.

@@ -26,7 +26,6 @@ import java.util.List;
 
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.functors.DefaultEquator;
-import org.apache.commons.collections4.functors.Equator;
 import org.apache.commons.collections4.list.FixedSizeList;
 import org.apache.commons.collections4.list.LazyList;
 import org.apache.commons.collections4.list.PredicatedList;

@@ -18,6 +18,8 @@ package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
 
+import org.apache.commons.collections4.Equator;
+
 /**
  * Default {@link Equator} implementation.
  *

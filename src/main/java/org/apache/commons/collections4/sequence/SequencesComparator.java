@@ -18,8 +18,8 @@ package org.apache.commons.collections4.sequence;
 
 import java.util.List;
 
+import org.apache.commons.collections4.Equator;
 import org.apache.commons.collections4.functors.DefaultEquator;
-import org.apache.commons.collections4.functors.Equator;
 
 /**
  * This class allows to compare two objects sequences.
