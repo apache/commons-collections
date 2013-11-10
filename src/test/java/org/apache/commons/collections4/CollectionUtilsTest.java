@@ -42,7 +42,6 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
 import org.apache.commons.collections4.collection.TransformedCollection;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.apache.commons.collections4.functors.DefaultEquator;
-import org.apache.commons.collections4.functors.Equator;
 import org.junit.Before;
 import org.junit.Test;
 
