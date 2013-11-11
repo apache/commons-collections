@@ -23,40 +23,40 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.SortedBag;
 
 /**
- * Decorates another {@link Bag} to comply with the Collection contract.
+ * Decorates another {@link SortedBag} to comply with the Collection contract.
  *
  * @since 4.0
  * @version $Id$
  */
-public final class CollectionBag<E>
-        extends AbstractBagDecorator<E> implements Serializable {
+public final class CollectionSortedBag<E>
+        extends AbstractSortedBagDecorator<E> implements Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = -2560033712679053143L;
 
     /**
-     * Factory method to create a bag that complies to the Collection contract.
+     * Factory method to create a sorted bag that complies to the Collection contract.
      *
      * @param <E> the type of the elements in the bag
-     * @param bag  the bag to decorate, must not be null
-     * @return a Bag that complies to the Collection contract
+     * @param bag  the sorted bag to decorate, must not be null
+     * @return a SortedBag that complies to the Collection contract
      * @throws IllegalArgumentException if bag is null
      */
-    public static <E> Bag<E> collectionBag(final Bag<E> bag) {
-        return new CollectionBag<E>(bag);
+    public static <E> SortedBag<E> collectionSortedBag(final SortedBag<E> bag) {
+        return new CollectionSortedBag<E>(bag);
     }
 
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
      *
-     * @param bag  the bag to decorate, must not be null
+     * @param bag  the sorted bag to decorate, must not be null
      * @throws IllegalArgumentException if bag is null
      */
-    public CollectionBag(final Bag<E> bag) {
+    public CollectionSortedBag(final SortedBag<E> bag) {
         super(bag);
     }
 
