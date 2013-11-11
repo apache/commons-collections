@@ -51,7 +51,12 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
      * @return a new unmodifiable trie
      * @throws IllegalArgumentException if trie is null
      */
-    public static <K, V> UnmodifiableTrie<K, V> unmodifiableTrie(final Trie<K, ? extends V> trie) {
+    public static <K, V> Trie<K, V> unmodifiableTrie(final Trie<K, ? extends V> trie) {
+        if (trie instanceof Unmodifiable) {
+            @SuppressWarnings("unchecked") // safe to upcast
+            final Trie<K, V> tmpTrie = (Trie<K, V>) trie;
+            return tmpTrie;
+        }
         return new UnmodifiableTrie<K, V>(trie);
     }
 

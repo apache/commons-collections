@@ -155,6 +155,8 @@ have changed.
 
 <center><h3>Changed classes / methods</h3></center>
 <ul>
+<li>"UnmodifiableTrie#unmodifiableTrie(Trie)" will not decorate again an already unmodifiable Trie.
+     Also the return type has been changed to "Trie" to be consistent with other Unmodifiable decorators.</li>
 <li>Moved "Equator" interface to base package for consistency.</li>
 <li>Accept wildcard input where possible, e.g. in copy-constructors, Unmodifiable* decorators and iterators.</li>
 <li>Narrow return type of "BidiMap#values()" to Set as the values are required to be unique.</li>

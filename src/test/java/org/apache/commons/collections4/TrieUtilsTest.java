@@ -49,6 +49,8 @@ public class TrieUtilsTest extends BulkTest {
         } catch (final IllegalArgumentException ex) {
             // expected
         }
+        
+        assertSame("UnmodifiableTrie shall not be decorated", trie, TrieUtils.unmodifiableTrie(trie));
     }
 
 }

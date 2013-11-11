@@ -16,14 +16,12 @@
  */
 package org.apache.commons.collections4.trie;
 
-import java.util.SortedMap;
-
 import junit.framework.Test;
 
 import org.apache.commons.collections4.BulkTest;
+import org.apache.commons.collections4.Trie;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.map.AbstractSortedMapTest;
-import org.apache.commons.collections4.map.UnmodifiableSortedMap;
 
 /**
  * Extension of {@link AbstractSortedMapTest} for exercising the
@@ -45,8 +43,8 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
     //-------------------------------------------------------------------
 
     @Override
-    public SortedMap<String, V> makeObject() {
-        return UnmodifiableSortedMap.unmodifiableSortedMap(new PatriciaTrie<V>());
+    public Trie<String, V> makeObject() {
+        return UnmodifiableTrie.unmodifiableTrie(new PatriciaTrie<V>());
     }
 
     @Override
@@ -65,27 +63,30 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
     }
 
     @Override
-    public SortedMap<String, V> makeFullMap() {
-        final SortedMap<String, V> m = new PatriciaTrie<V>();
+    public Trie<String, V> makeFullMap() {
+        final Trie<String, V> m = new PatriciaTrie<V>();
         addSampleMappings(m);
-        return UnmodifiableSortedMap.unmodifiableSortedMap(m);
+        return UnmodifiableTrie.unmodifiableTrie(m);
     }
 
     //-----------------------------------------------------------------------
+
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
     }
 
     public void testDecorateFactory() {
-        final SortedMap<String, V> map = makeFullMap();
-        assertSame(map, UnmodifiableSortedMap.unmodifiableSortedMap(map));
+        final Trie<String, V> trie = makeFullMap();
+        assertSame(trie, UnmodifiableTrie.unmodifiableTrie(trie));
 
         try {
-            UnmodifiableSortedMap.unmodifiableSortedMap(null);
+            UnmodifiableTrie.unmodifiableTrie(null);
             fail();
         } catch (final IllegalArgumentException ex) {}
     }
+
+    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {
