@@ -1530,7 +1530,6 @@ public class CollectionUtils {
     }
 
     /**
-    /**
      * Merges two sorted Collections, a and b, into a single, sorted List
      * such that the natural ordering of the elements is retained.
      * <p>
