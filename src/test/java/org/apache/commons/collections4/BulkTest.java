@@ -426,7 +426,7 @@ class BulkTestSuiteMaker {
     private static <T extends BulkTest> BulkTest makeTestCase(final Class<T> c, final Method m) {
         final Constructor<T> con = getTestCaseConstructor(c);
         try {
-            return con.newInstance(new Object[] { m.getName() });
+            return con.newInstance(m.getName());
         } catch (final InvocationTargetException e) {
             e.printStackTrace();
             throw new RuntimeException(); // FIXME;

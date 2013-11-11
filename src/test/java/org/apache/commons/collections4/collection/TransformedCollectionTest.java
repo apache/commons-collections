@@ -19,6 +19,7 @@ package org.apache.commons.collections4.collection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.collections4.Transformer;
@@ -86,32 +87,30 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
     public void testTransformedCollection() {
         final Collection<Object> coll = TransformedCollection.transformingCollection(new ArrayList<Object>(), STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, coll.size());
-        final Object[] els = getFullElements();
-        for (int i = 0; i < els.length; i++) {
-            coll.add(els[i]);
+        final Object[] elements = getFullElements();
+        for (int i = 0; i < elements.length; i++) {
+            coll.add(elements[i]);
             assertEquals(i + 1, coll.size());
-            assertEquals(true, coll.contains(Integer.valueOf((String) els[i])));
-            assertEquals(false, coll.contains(els[i]));
+            assertEquals(true, coll.contains(Integer.valueOf((String) elements[i])));
+            assertEquals(false, coll.contains(elements[i]));
         }
 
-        assertEquals(true, coll.remove(Integer.valueOf((String) els[0])));
+        assertEquals(true, coll.remove(Integer.valueOf((String) elements[0])));
     }
 
     public void testTransformedCollection_decorateTransform() {
         final Collection<Object> originalCollection = new ArrayList<Object>();
-        final Object[] els = getFullElements();
-        for (final Object el : els) {
-            originalCollection.add(el);
-        }
+        final Object[] elements = getFullElements();
+        Collections.addAll(originalCollection, elements);
         final Collection<Object> collection = TransformedCollection.transformedCollection(originalCollection, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
-        assertEquals(els.length, collection.size());
-        for (final Object el : els) {
-            assertEquals(true, collection.contains(Integer.valueOf((String) el)));
-            assertEquals(false, collection.contains(el));
+        assertEquals(elements.length, collection.size());
+        for (final Object element : elements) {
+            assertEquals(true, collection.contains(Integer.valueOf((String) element)));
+            assertEquals(false, collection.contains(element));
         }
 
-        assertEquals(false, collection.remove(els[0]));
-        assertEquals(true, collection.remove(Integer.valueOf((String) els[0])));
+        assertEquals(false, collection.remove(elements[0]));
+        assertEquals(true, collection.remove(Integer.valueOf((String) elements[0])));
     }
 
     @Override

@@ -216,7 +216,7 @@ public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
 
         boolean isInNewOrder = false;
         final Random rand = new Random();
-        while (keys.length > 1 && isInNewOrder == false) {
+        while (keys.length > 1 && !isInNewOrder) {
             // shuffle:
             for (int i = keys.length-1; i > 0; i--) {
                 final String swap = keys[i];

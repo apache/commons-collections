@@ -129,7 +129,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 
     //-----------------------------------------------------------------------
     public void testBidiClearByHeadMap() {
-        if (isRemoveSupported() == false) {
+        if (!isRemoveSupported()) {
             return;
         }
 
@@ -176,7 +176,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveByHeadMap() {
-        if (isRemoveSupported() == false) {
+        if (!isRemoveSupported()) {
             return;
         }
 
@@ -220,7 +220,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveByHeadMapEntrySet() {
-        if (isRemoveSupported() == false) {
+        if (!isRemoveSupported()) {
             return;
         }
 
@@ -303,7 +303,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 
     //-----------------------------------------------------------------------
     public void testBidiClearByTailMap() {
-        if (isRemoveSupported() == false) {
+        if (!isRemoveSupported()) {
             return;
         }
 
@@ -352,7 +352,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveByTailMap() {
-        if (isRemoveSupported() == false) {
+        if (!isRemoveSupported()) {
             return;
         }
 
@@ -397,7 +397,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveByTailMapEntrySet() {
-        if (isRemoveSupported() == false) {
+        if (!isRemoveSupported()) {
             return;
         }
 
@@ -487,7 +487,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 
     //-----------------------------------------------------------------------
     public void testBidiClearBySubMap() {
-        if (isRemoveSupported() == false) {
+        if (!isRemoveSupported()) {
             return;
         }
 
@@ -544,7 +544,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveBySubMap() {
-        if (isRemoveSupported() == false) {
+        if (!isRemoveSupported()) {
             return;
         }
 
@@ -590,7 +590,7 @@ public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V exten
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveBySubMapEntrySet() {
-        if (isRemoveSupported() == false) {
+        if (!isRemoveSupported()) {
             return;
         }
 

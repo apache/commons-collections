@@ -80,7 +80,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testBidiPut() {
-        if (isPutAddSupported() == false || isPutChangeSupported() == false) {
+        if (!isPutAddSupported() || !isPutChangeSupported()) {
             return;
         }
 
@@ -152,7 +152,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
             getSampleKeys()[0]);
     }
 
-    private final void doTestGetKey(final BidiMap<?, ?> map, final Object key, final Object value) {
+    private void doTestGetKey(final BidiMap<?, ?> map, final Object key, final Object value) {
         assertEquals("Value not found for key.", value, map.get(key));
         assertEquals("Key not found for value.", key, map.getKey(value));
     }
@@ -181,7 +181,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
     //-----------------------------------------------------------------------
     public void testBidiModifyEntrySet() {
-        if (isSetValueSupported() == false) {
+        if (!isSetValueSupported()) {
             return;
         }
 
@@ -190,7 +190,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     }
 
     @SuppressWarnings("unchecked")
-    private final <T> void modifyEntrySet(final BidiMap<?, T> map) {
+    private <T> void modifyEntrySet(final BidiMap<?, T> map) {
         // Gets first entry
         final Map.Entry<?, T> entry = map.entrySet().iterator().next();
 
@@ -214,7 +214,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
     //-----------------------------------------------------------------------
     public void testBidiClear() {
-        if (isRemoveSupported() == false) {
+        if (!isRemoveSupported()) {
             try {
                 makeFullMap().clear();
                 fail();
@@ -237,7 +237,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
     //-----------------------------------------------------------------------
     public void testBidiRemove() {
-        if (isRemoveSupported() == false) {
+        if (!isRemoveSupported()) {
             try {
                 makeFullMap().remove(getSampleKeys()[0]);
                 fail();
@@ -258,13 +258,13 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         assertEquals(null, makeFullMap().removeValue("NotPresent"));
     }
 
-    private final void remove(final BidiMap<?, ?> map, final Object key) {
+    private void remove(final BidiMap<?, ?> map, final Object key) {
         final Object value = map.remove(key);
         assertTrue("Key was not removed.", !map.containsKey(key));
         assertNull("Value was not removed.", map.getKey(value));
     }
 
-    private final void removeValue(final BidiMap<?, ?> map, final Object value) {
+    private void removeValue(final BidiMap<?, ?> map, final Object value) {
         final Object key = map.removeValue(value);
         assertTrue("Key was not removed.", !map.containsKey(key));
         assertNull("Value was not removed.", map.getKey(value));
@@ -286,7 +286,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveByKeySet() {
-        if (isRemoveSupported() == false) {
+        if (!isRemoveSupported()) {
             return;
         }
 
@@ -294,7 +294,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         removeByKeySet(makeFullMap().inverseBidiMap(), getSampleValues()[0], getSampleKeys()[0]);
     }
 
-    private final void removeByKeySet(final BidiMap<?, ?> map, final Object key, final Object value) {
+    private void removeByKeySet(final BidiMap<?, ?> map, final Object key, final Object value) {
         map.keySet().remove(key);
 
         assertTrue("Key was not removed.", !map.containsKey(key));
@@ -310,7 +310,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
     //-----------------------------------------------------------------------
     public void testBidiRemoveByEntrySet() {
-        if (isRemoveSupported() == false) {
+        if (!isRemoveSupported()) {
             return;
         }
 
@@ -318,7 +318,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         removeByEntrySet(makeFullMap().inverseBidiMap(), getSampleValues()[0], getSampleKeys()[0]);
     }
 
-    private final void removeByEntrySet(final BidiMap<?, ?> map, final Object key, final Object value) {
+    private void removeByEntrySet(final BidiMap<?, ?> map, final Object key, final Object value) {
         final Map<Object, Object> temp = new HashMap<Object, Object>();
         temp.put(key, value);
         map.entrySet().remove(temp.entrySet().iterator().next());
@@ -371,7 +371,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
             final Map.Entry<K, V> entryConfirmed2 = getEntry(itConfirmed, key2);
             TestBidiMapEntrySet.this.verify();
 
-            if (isSetValueSupported() == false) {
+            if (!isSetValueSupported()) {
                 try {
                     entry1.setValue(newValue1);
                 } catch (final UnsupportedOperationException ex) {
@@ -545,7 +545,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
         assertEquals(true, it.hasNext());
         final K key1 = it.next();
 
-        if (isSetValueSupported() == false) {
+        if (!isSetValueSupported()) {
             try {
                 it.setValue(newValue1);
                 fail();

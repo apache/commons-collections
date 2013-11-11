@@ -34,7 +34,7 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
     public void testRemoveFirst() {
         resetEmpty();
         final AbstractLinkedList<E> list = getCollection();
-        if (isRemoveSupported() == false) {
+        if (!isRemoveSupported()) {
             try {
                 list.removeFirst();
             } catch (final UnsupportedOperationException ex) {}
@@ -58,7 +58,7 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
     public void testRemoveLast() {
         resetEmpty();
         final AbstractLinkedList<E> list = getCollection();
-        if (isRemoveSupported() == false) {
+        if (!isRemoveSupported()) {
             try {
                 list.removeLast();
             } catch (final UnsupportedOperationException ex) {}
@@ -79,7 +79,7 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
     public void testAddNodeAfter() {
         resetEmpty();
         final AbstractLinkedList<E> list = getCollection();
-        if (isAddSupported() == false) {
+        if (!isAddSupported()) {
             try {
                 list.addFirst(null);
             } catch (final UnsupportedOperationException ex) {}
@@ -111,7 +111,7 @@ public abstract class AbstractLinkedListTest<E> extends AbstractListTest<E> {
     @SuppressWarnings("unchecked")
     public void testRemoveNode() {
         resetEmpty();
-        if (isAddSupported() == false || isRemoveSupported() == false) {
+        if (!isAddSupported() || !isRemoveSupported()) {
             return;
         }
         final AbstractLinkedList<E> list = getCollection();

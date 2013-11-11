@@ -92,7 +92,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
      * Test that the empty list iterator contract is correct.
      */
     public void testEmptyListIteratorIsIndeedEmpty() {
-        if (supportsEmptyIterator() == false) {
+        if (!supportsEmptyIterator()) {
             return;
         }
 
@@ -163,7 +163,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
         ListIterator<E> it = makeObject();
 
         final E addValue = addSetValue();
-        if (supportsAdd() == false) {
+        if (!supportsAdd()) {
             // check for UnsupportedOperationException if not supported
             try {
                 it.add(addValue);
@@ -198,7 +198,7 @@ public abstract class AbstractListIteratorTest<E> extends AbstractIteratorTest<E
     public void testSet() {
         final ListIterator<E> it = makeObject();
 
-        if (supportsSet() == false) {
+        if (!supportsSet()) {
             // check for UnsupportedOperationException if not supported
             try {
                 it.set(addSetValue());

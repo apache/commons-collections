@@ -53,7 +53,7 @@ public class MultiKeyTest extends TestCase {
 
     //-----------------------------------------------------------------------
     public void testConstructors() throws Exception {
-        MultiKey<Integer> mk = null;
+        MultiKey<Integer> mk;
         mk = new MultiKey<Integer>(ONE, TWO);
         assertTrue(Arrays.equals(new Object[] { ONE, TWO }, mk.getKeys()));
 
@@ -71,7 +71,7 @@ public class MultiKeyTest extends TestCase {
     }
 
     public void testConstructorsByArray() throws Exception {
-        MultiKey<Integer> mk = null;
+        MultiKey<Integer> mk;
         Integer[] keys = new Integer[] { THREE, FOUR, ONE, TWO };
         mk = new MultiKey<Integer>(keys);
         assertTrue(Arrays.equals(new Object[] { THREE, FOUR, ONE, TWO }, mk.getKeys()));
@@ -193,9 +193,9 @@ public class MultiKeyTest extends TestCase {
 
         assertEquals(mk1, mk1);
         assertEquals(mk1, mk2);
-        assertTrue(mk1.equals(mk3) == false);
-        assertTrue(mk1.equals("") == false);
-        assertTrue(mk1.equals(null) == false);
+        assertFalse(mk1.equals(mk3));
+        assertFalse(mk1.equals(""));
+        assertFalse(mk1.equals(null));
     }
 
     static class SystemHashCodeSimulatingKey implements Serializable {

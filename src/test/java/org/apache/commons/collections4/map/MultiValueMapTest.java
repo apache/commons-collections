@@ -121,7 +121,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     public void testKeyedIterator() {
         final MultiValueMap<K, V> map = createTestMap();
         final ArrayList<Object> actual = new ArrayList<Object>(IteratorUtils.toList(map.iterator("one")));
-        final ArrayList<Object> expected = new ArrayList<Object>(Arrays.asList(new String[]{ "uno", "un" }));
+        final ArrayList<Object> expected = new ArrayList<Object>(Arrays.asList("uno", "un"));
         assertEquals(expected, actual);
     }
 
@@ -342,7 +342,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     @SuppressWarnings("unchecked")
     public void testPutAll_KeyCollection() {
         final MultiValueMap<K, V> map = new MultiValueMap<K, V>();
-        Collection<V> coll = (Collection<V>) Arrays.asList(new Object[] { "X", "Y", "Z" });
+        Collection<V> coll = (Collection<V>) Arrays.asList("X", "Y", "Z");
 
         assertEquals(true, map.putAll((K) "A", coll));
         assertEquals(3, map.size("A"));
@@ -362,7 +362,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
         assertEquals(true, map.containsValue("A", "Y"));
         assertEquals(true, map.containsValue("A", "Z"));
 
-        coll = (Collection<V>) Arrays.asList(new Object[] { "M" });
+        coll = (Collection<V>) Arrays.asList("M");
         assertEquals(true, map.putAll((K) "A", coll));
         assertEquals(4, map.size("A"));
         assertEquals(true, map.containsValue("A", "X"));

@@ -179,7 +179,7 @@ public class ListUtilsTest extends BulkTest {
     }
 
     public void testEquals() {
-        final Collection<String> data = Arrays.asList( new String[] { "a", "b", "c" });
+        final Collection<String> data = Arrays.asList("a", "b", "c");
 
         final List<String> a = new ArrayList<String>( data );
         final List<String> b = new ArrayList<String>( data );
@@ -194,7 +194,7 @@ public class ListUtilsTest extends BulkTest {
     }
 
     public void testHashCode() {
-        final Collection<String> data = Arrays.asList( new String[] { "a", "b", "c" });
+        final Collection<String> data = Arrays.asList("a", "b", "c");
 
         final List<String> a = new ArrayList<String>(data);
         final List<String> b = new ArrayList<String>(data);

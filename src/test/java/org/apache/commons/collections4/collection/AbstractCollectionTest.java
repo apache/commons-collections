@@ -672,9 +672,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
         resetFull();
         elements = getOtherElements();
-        for (int i = 0; i < elements.length; i++) {
+        for (Object element : elements) {
             assertTrue("Full collection shouldn't contain element",
-                    !getCollection().contains(elements[i]));
+                    !getCollection().contains(element));
         }
     }
 
@@ -862,16 +862,16 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
         resetEmpty();
         final E[] elements = getFullElements();
-        for (int i = 0; i < elements.length; i++) {
-            assertTrue("Shouldn't remove nonexistent element", !getCollection().remove(elements[i]));
+        for (E element : elements) {
+            assertTrue("Shouldn't remove nonexistent element", !getCollection().remove(element));
             verify();
         }
 
         final E[] other = getOtherElements();
 
         resetFull();
-        for (int i = 0; i < other.length; i++) {
-            assertTrue("Shouldn't remove nonexistent other element", !getCollection().remove(other[i]));
+        for (E element : other) {
+            assertTrue("Shouldn't remove nonexistent other element", !getCollection().remove(element));
             verify();
         }
 
@@ -940,10 +940,8 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         verify();
 
         assertTrue("Collection should shrink after removeAll", getCollection().size() < size);
-        final Iterator<E> iter = all.iterator();
-        while (iter.hasNext()) {
-            assertTrue("Collection shouldn't contain removed element",
-                    !getCollection().contains(iter.next()));
+        for (E element : all) {
+            assertTrue("Collection shouldn't contain removed element", !getCollection().contains(element));
         }
     }
 
@@ -994,10 +992,8 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
             getConfirmed().retainAll(elements.subList(min, max));
             verify();
 
-            final Iterator<E> iter = getCollection().iterator();
-            while (iter.hasNext()) {
-                assertTrue("Collection only contains retained element",
-                        elements.subList(min, max).contains(iter.next()));
+            for (E element : getCollection()) {
+                assertTrue("Collection only contains retained element", elements.subList(min, max).contains(element));
             }
         }
 

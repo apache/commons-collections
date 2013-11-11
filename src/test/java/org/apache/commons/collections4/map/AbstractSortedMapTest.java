@@ -18,7 +18,6 @@ package org.apache.commons.collections4.map;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -92,8 +91,8 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
     public void testLastKey() {
         final SortedMap<K, V> sm = makeFullMap();
         K obj = null;
-        for (final Iterator<K> it = sm.keySet().iterator(); it.hasNext();) {
-            obj = it.next();
+        for (K k : sm.keySet()) {
+            obj = k;
         }
         assertSame(obj, sm.lastKey());
     }
@@ -236,7 +235,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
             return ((SortedMap<K, V>) main.makeFullMap()).headMap(toKey);
         }
         public void testHeadMapOutOfRange() {
-            if (isPutAddSupported() == false) {
+            if (!isPutAddSupported()) {
                 return;
             }
             resetEmpty();
@@ -291,7 +290,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
             return ((SortedMap<K, V>) main.makeFullMap()).tailMap(fromKey);
         }
         public void testTailMapOutOfRange() {
-            if (isPutAddSupported() == false) {
+            if (!isPutAddSupported()) {
                 return;
             }
             resetEmpty();
@@ -353,7 +352,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
             return ((SortedMap<K, V>) main.makeFullMap()).subMap(fromKey, toKey);
         }
         public void testSubMapOutOfRange() {
-            if (isPutAddSupported() == false) {
+            if (!isPutAddSupported()) {
                 return;
             }
             resetEmpty();

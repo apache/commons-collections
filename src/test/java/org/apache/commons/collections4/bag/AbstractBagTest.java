@@ -357,7 +357,7 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
             final String element = (String) i.next();
             // ignore the first A, remove the second via Iterator.remove()
             if (element.equals("A")) {
-                if (foundA == false) {
+                if (!foundA) {
                     foundA = true;
                 } else {
                     i.remove();

@@ -64,9 +64,8 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
         assertEquals("Sets should have equal hashCodes",
                      getConfirmed().hashCode(), getCollection().hashCode());
         final Collection<E> set = makeConfirmedCollection();
-        final Iterator<E> iterator = getCollection().iterator();
-        while (iterator.hasNext()) {
-            assertTrue("Set.iterator should only return unique elements", set.add(iterator.next()));
+        for (E element : getCollection()) {
+            assertTrue("Set.iterator should only return unique elements", set.add(element));
         }
     }
 

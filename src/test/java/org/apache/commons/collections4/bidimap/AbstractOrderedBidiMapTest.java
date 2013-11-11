@@ -80,7 +80,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         resetEmpty();
         OrderedBidiMap<K, V> bidi = (OrderedBidiMap<K, V>) map;
         assertEquals(null, bidi.nextKey(getOtherKeys()[0]));
-        if (isAllowNullKey() == false) {
+        if (!isAllowNullKey()) {
             try {
                 assertEquals(null, bidi.nextKey(null)); // this is allowed too
             } catch (final NullPointerException ex) {}
@@ -99,7 +99,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         }
         assertEquals(null, bidi.nextKey(confirmedLast));
 
-        if (isAllowNullKey() == false) {
+        if (!isAllowNullKey()) {
             try {
                 bidi.nextKey(null);
                 fail();
@@ -113,7 +113,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         resetEmpty();
         OrderedBidiMap<K, V> bidi = getMap();
         assertEquals(null, bidi.previousKey(getOtherKeys()[0]));
-        if (isAllowNullKey() == false) {
+        if (!isAllowNullKey()) {
             try {
                 assertEquals(null, bidi.previousKey(null)); // this is allowed too
             } catch (final NullPointerException ex) {}
@@ -134,7 +134,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
         }
         assertEquals(null, bidi.previousKey(confirmedLast));
 
-        if (isAllowNullKey() == false) {
+        if (!isAllowNullKey()) {
             try {
                 bidi.previousKey(null);
                 fail();

@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.set;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -85,9 +86,7 @@ public class TransformedSetTest<E> extends AbstractSetTest<E> {
     public void testTransformedSet_decorateTransform() {
         final Set<Object> originalSet = new HashSet<Object>();
         final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
-        for (final Object el : els) {
-            originalSet.add(el);
-        }
+        Collections.addAll(originalSet, els);
         final Set<?> set = TransformedSet.transformedSet(originalSet, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(els.length, set.size());
         for (final Object el : els) {

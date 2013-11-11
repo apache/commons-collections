@@ -130,13 +130,13 @@ public class SequencesComparatorTest {
         final ExecutionVisitor<String> ev = new ExecutionVisitor<String>();
 
         for (int i = 0; i < shadokSentences.size(); ++i) {
-            for (int j = 0; j < shadokSentences.size(); ++j) {
+            for (List<String> shadokSentence : shadokSentences) {
                 ev.setList(shadokSentences.get(i));
                 new SequencesComparator<String>(shadokSentences.get(i),
-                        shadokSentences.get(j)).getScript().visit(ev);
+                        shadokSentence).getScript().visit(ev);
 
                 final StringBuilder concat = new StringBuilder();
-                for (final String s : shadokSentences.get(j)) {
+                for (final String s : shadokSentence) {
                     concat.append(s);
                 }
                 Assert.assertEquals(concat.toString(), ev.getString());
@@ -175,7 +175,7 @@ public class SequencesComparatorTest {
         }
 
         public String getString() {
-            final StringBuffer buffer = new StringBuffer();
+            final StringBuilder buffer = new StringBuilder();
             for (final T c : v) {
                 buffer.append(c);
             }
@@ -187,7 +187,7 @@ public class SequencesComparatorTest {
     @Before
     public void setUp() {
 
-        before = Arrays.asList(new String[] {
+        before = Arrays.asList(
             "bottle",
             "nematode knowledge",
             "",
@@ -196,10 +196,9 @@ public class SequencesComparatorTest {
             "ABCABBA",
             "glop glop",
             "coq",
-            "spider-man"
-        });
+            "spider-man");
 
-        after = Arrays.asList(new String[] {
+        after = Arrays.asList(
             "noodle",
             "empty bottle",
             "",
@@ -208,8 +207,7 @@ public class SequencesComparatorTest {
             "CBABAC",
             "pas glop pas glop",
             "ane",
-            "klingon"
-        });
+            "klingon");
 
         length = new int[] {
             6,

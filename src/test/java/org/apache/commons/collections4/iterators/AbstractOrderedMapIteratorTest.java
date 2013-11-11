@@ -61,7 +61,7 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
      */
     @Override
     public void testEmptyMapIterator() {
-        if (supportsEmptyIterator() == false) {
+        if (!supportsEmptyIterator()) {
             return;
         }
 
@@ -81,7 +81,7 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
      */
     @Override
     public void testFullMapIterator() {
-        if (supportsFullIterator() == false) {
+        if (!supportsFullIterator()) {
             return;
         }
 
@@ -102,7 +102,7 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
 
             // getValue
             final V value = it.getValue();
-            if (isGetStructuralModify() == false) {
+            if (!isGetStructuralModify()) {
                 assertSame("Value must be mapped to key", map.get(key), value);
             }
             assertTrue("Value must be in map",  map.containsValue(value));
@@ -120,7 +120,7 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
 
             // getValue
             final Object value = it.getValue();
-            if (isGetStructuralModify() == false) {
+            if (!isGetStructuralModify()) {
                 assertSame("Value must be mapped to key", map.get(key), value);
             }
             assertTrue("Value must be in map",  map.containsValue(value));
@@ -136,7 +136,7 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
      * Test that the iterator order matches the keySet order.
      */
     public void testMapIteratorOrder() {
-        if (supportsFullIterator() == false) {
+        if (!supportsFullIterator()) {
             return;
         }
 

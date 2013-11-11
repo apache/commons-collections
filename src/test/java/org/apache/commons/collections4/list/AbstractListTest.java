@@ -473,11 +473,9 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         final List<E> list1 = getCollection();
         final List<E> list2 = getConfirmed();
 
-        final Iterator<E> iterator = list2.iterator();
-        while (iterator.hasNext()) {
-            final Object element = iterator.next();
+        for (E element : list2) {
             assertEquals("indexOf should return correct result",
-                list1.indexOf(element), list2.indexOf(element));
+                    list1.indexOf(element), list2.indexOf(element));
             verify();
         }
 
@@ -793,7 +791,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      * Tests remove on list iterator is correct.
      */
     public void testListListIteratorPreviousRemoveNext() {
-        if (isRemoveSupported() == false) {
+        if (!isRemoveSupported()) {
             return;
         }
         resetFull();
@@ -825,7 +823,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      * Tests remove on list iterator is correct.
      */
     public void testListListIteratorPreviousRemovePrevious() {
-        if (isRemoveSupported() == false) {
+        if (!isRemoveSupported()) {
             return;
         }
         resetFull();
@@ -857,7 +855,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      * Tests remove on list iterator is correct.
      */
     public void testListListIteratorNextRemoveNext() {
-        if (isRemoveSupported() == false) {
+        if (!isRemoveSupported()) {
             return;
         }
         resetFull();
@@ -886,7 +884,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
      * Tests remove on list iterator is correct.
      */
     public void testListListIteratorNextRemovePrevious() {
-        if (isRemoveSupported() == false) {
+        if (!isRemoveSupported()) {
             return;
         }
         resetFull();

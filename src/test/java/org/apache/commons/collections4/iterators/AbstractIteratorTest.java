@@ -101,7 +101,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
      * Test the empty iterator.
      */
     public void testEmptyIterator() {
-        if (supportsEmptyIterator() == false) {
+        if (!supportsEmptyIterator()) {
             return;
         }
 
@@ -125,7 +125,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
      * Test normal iteration behaviour.
      */
     public void testFullIterator() {
-        if (supportsFullIterator() == false) {
+        if (!supportsFullIterator()) {
             return;
         }
 
@@ -163,7 +163,7 @@ public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
     public void testRemove() {
         final Iterator<E> it = makeObject();
 
-        if (supportsRemove() == false) {
+        if (!supportsRemove()) {
             // check for UnsupportedOperationException if not supported
             try {
                 it.remove();

@@ -621,14 +621,14 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         final Object[] keys = getSampleKeys();
 
         resetEmpty();
-        for(int i = 0; i < keys.length; i++) {
+        for (Object key : keys) {
             assertTrue("Map must not contain key when map is empty",
-                       !getMap().containsKey(keys[i]));
+                    !getMap().containsKey(key));
         }
         verify();
 
         resetFull();
-        for (final Object key : keys) {
+        for (Object key : keys) {
             assertTrue("Map must contain key for a mapping in the map. " +
                        "Missing: " + key, getMap().containsKey(key));
         }
@@ -1614,7 +1614,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                 final Map.Entry<K, V> entry = it.next();
                 assertEquals(true, AbstractMapTest.this.getMap().containsKey(entry.getKey()));
                 assertEquals(true, AbstractMapTest.this.getMap().containsValue(entry.getValue()));
-                if (isGetStructuralModify() == false) {
+                if (!isGetStructuralModify()) {
                     assertEquals(AbstractMapTest.this.getMap().get(entry.getKey()), entry.getValue());
                 }
                 count++;
@@ -1641,7 +1641,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             final Map.Entry<K, V> entryConfirmed2 = getEntry(itConfirmed, key2);
             verify();
 
-            if (isSetValueSupported() == false) {
+            if (!isSetValueSupported()) {
                 try {
                     entry1.setValue(newValue1);
                 } catch (final UnsupportedOperationException ex) {
@@ -1693,7 +1693,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         }
 
         public void testMapEntrySetRemoveNonMapEntry() {
-            if (isRemoveSupported() == false) {
+            if (!isRemoveSupported()) {
                 return;
             }
             resetFull();

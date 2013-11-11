@@ -148,7 +148,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
       // add two new unique elements at index 0
       final Integer firstNewElement = Integer.valueOf(2);
       final Integer secondNewElement = Integer.valueOf(3);
-      Collection<Integer> collection = Arrays.asList(new Integer[] {firstNewElement, secondNewElement});
+      Collection<Integer> collection = Arrays.asList(firstNewElement, secondNewElement);
       list.addAll(0, collection);
       assertEquals("Unique elements should be added.", 3, list.size());
       assertEquals("First new element should be at index 0", firstNewElement, list.get(0));
@@ -157,7 +157,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
       // add a duplicate element and a unique element at index 0
       final Integer thirdNewElement = Integer.valueOf(4);
-      collection = Arrays.asList(new Integer[] {existingElement, thirdNewElement});
+      collection = Arrays.asList(existingElement, thirdNewElement);
       list.addAll(0, collection);
       assertEquals("Duplicate element should not be added, unique element should be added.",
         4, list.size());

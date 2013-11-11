@@ -69,7 +69,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     //-----------------------------------------------------------------------
     public void testLRU() {
-        if (isPutAddSupported() == false || isPutChangeSupported() == false) {
+        if (!isPutAddSupported() || !isPutChangeSupported()) {
             return;
         }
         final K[] keys = getSampleKeys();
@@ -151,7 +151,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     //-----------------------------------------------------------------------
     public void testAccessOrder() {
-        if (isPutAddSupported() == false || isPutChangeSupported() == false) {
+        if (!isPutAddSupported() || !isPutChangeSupported()) {
             return;
         }
         final K[] keys = getSampleKeys();
@@ -378,7 +378,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testInternalState_Buckets() {
-        if (isPutAddSupported() == false || isPutChangeSupported() == false) {
+        if (!isPutAddSupported() || !isPutChangeSupported()) {
             return;
         }
         final SingleHashCode one = new SingleHashCode("1");
@@ -468,7 +468,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testInternalState_getEntry_int() {
-        if (isPutAddSupported() == false || isPutChangeSupported() == false) {
+        if (!isPutAddSupported() || !isPutChangeSupported()) {
             return;
         }
         final SingleHashCode one = new SingleHashCode("1");

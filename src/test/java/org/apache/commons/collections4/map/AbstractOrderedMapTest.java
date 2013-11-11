@@ -140,7 +140,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         }
         assertEquals(null, ordered.nextKey(confirmedLast));
 
-        if (isAllowNullKey() == false) {
+        if (!isAllowNullKey()) {
             try {
                 ordered.nextKey(null);
                 fail();
@@ -154,7 +154,7 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         resetEmpty();
         OrderedMap<K, V> ordered = getMap();
         assertEquals(null, ordered.previousKey(getOtherKeys()[0]));
-        if (isAllowNullKey() == false) {
+        if (!isAllowNullKey()) {
             try {
                 assertEquals(null, ordered.previousKey(null)); // this is allowed too
             } catch (final NullPointerException ex) {}
@@ -175,13 +175,13 @@ public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTe
         }
         assertEquals(null, ordered.previousKey(confirmedLast));
 
-        if (isAllowNullKey() == false) {
+        if (!isAllowNullKey()) {
             try {
                 ordered.previousKey(null);
                 fail();
             } catch (final NullPointerException ex) {}
         } else {
-            if (isAllowNullKey() == false) {
+            if (!isAllowNullKey()) {
                 assertEquals(null, ordered.previousKey(null));
             }
         }

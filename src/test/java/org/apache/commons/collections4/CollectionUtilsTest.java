@@ -673,7 +673,7 @@ public class CollectionUtilsTest extends MockTestCase {
         lastElement = CollectionUtils.forAllButLastDo(col, testClosure);
         assertNull(lastElement);
 
-        Collection<String> strings = Arrays.asList(new String[]{"a", "b", "c"});
+        Collection<String> strings = Arrays.asList("a", "b", "c");
         final StringBuffer result = new StringBuffer();
         result.append(CollectionUtils.forAllButLastDo(strings, new Closure<String>() {
             public void execute(String input) {
@@ -682,7 +682,7 @@ public class CollectionUtilsTest extends MockTestCase {
         }));
         assertEquals("a;b;c", result.toString());
 
-        Collection<String> oneString = Arrays.asList(new String[]{"a"});
+        Collection<String> oneString = Arrays.asList("a");
         final StringBuffer resultOne = new StringBuffer();
         resultOne.append(CollectionUtils.forAllButLastDo(oneString, new Closure<String>() {
             public void execute(String input) {
@@ -690,8 +690,8 @@ public class CollectionUtilsTest extends MockTestCase {
             }
         }));
         assertEquals("a", resultOne.toString());
-        assertNull(CollectionUtils.forAllButLastDo(strings, (Closure<String>) null));
-        assertNull(CollectionUtils.forAllButLastDo((Collection<String>) null, (Closure<String>) null));
+        assertNull(CollectionUtils.forAllButLastDo(strings, null));
+        assertNull(CollectionUtils.forAllButLastDo((Collection<String>) null, null));
     }
 
     @Test
@@ -705,7 +705,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(collectionA.isEmpty() && !collectionB.isEmpty());
 
         assertNull(CollectionUtils.forAllButLastDo(col.iterator(), (Closure<List<? extends Number>>) null));
-        assertNull(CollectionUtils.forAllButLastDo((Iterator<String>) null, (Closure<String>) null));
+        assertNull(CollectionUtils.forAllButLastDo((Iterator<String>) null, null));
     }
 
     @Test

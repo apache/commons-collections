@@ -68,7 +68,7 @@ public class LoopingListIteratorTest extends TestCase {
      * one element.
      */
     public void testLooping1() throws Exception {
-        final List<String> list = Arrays.asList(new String[] { "a" });
+        final List<String> list = Arrays.asList("a");
         final LoopingListIterator<String> loop = new LoopingListIterator<String>(list); // <a>
 
         assertTrue(loop.hasNext());
@@ -95,7 +95,7 @@ public class LoopingListIteratorTest extends TestCase {
      * elements.
      */
     public void testLooping2() throws Exception {
-        final List<String> list = Arrays.asList(new String[] { "a", "b" });
+        final List<String> list = Arrays.asList("a", "b");
         final LoopingListIterator<String> loop = new LoopingListIterator<String>(list); // <a> b
 
         assertTrue(loop.hasNext());
@@ -125,7 +125,7 @@ public class LoopingListIteratorTest extends TestCase {
      * the begin/end boundary of the list.
      */
     public void testJoggingNotOverBoundary() {
-        final List<String> list = Arrays.asList(new String[] { "a", "b" });
+        final List<String> list = Arrays.asList("a", "b");
         final LoopingListIterator<String> loop = new LoopingListIterator<String>(list); // <a> b
 
         // Try jogging back and forth between the elements, but not
@@ -145,7 +145,7 @@ public class LoopingListIteratorTest extends TestCase {
      * begin/end boundary of the list.
      */
     public void testJoggingOverBoundary() {
-        final List<String> list = Arrays.asList(new String[] { "a", "b" });
+        final List<String> list = Arrays.asList("a", "b");
         final LoopingListIterator<String> loop = new LoopingListIterator<String>(list); // <a> b
 
         // Try jogging back and forth between the elements, but not
@@ -163,7 +163,7 @@ public class LoopingListIteratorTest extends TestCase {
      * Tests removing an element from a wrapped ArrayList.
      */
     public void testRemovingElementsAndIteratingForward() {
-        final List<String> list = new ArrayList<String>(Arrays.asList(new String[] { "a", "b", "c" }));
+        final List<String> list = new ArrayList<String>(Arrays.asList("a", "b", "c"));
         final LoopingListIterator<String> loop = new LoopingListIterator<String>(list); // <a> b c
 
         assertTrue(loop.hasNext());
@@ -193,7 +193,7 @@ public class LoopingListIteratorTest extends TestCase {
      * Tests removing an element from a wrapped ArrayList.
      */
     public void testRemovingElementsAndIteratingBackwards() {
-        final List<String> list = new ArrayList<String>(Arrays.asList(new String[] { "a", "b", "c" }));
+        final List<String> list = new ArrayList<String>(Arrays.asList("a", "b", "c"));
         final LoopingListIterator<String> loop = new LoopingListIterator<String>(list); // <a> b c
 
         assertTrue(loop.hasPrevious());
@@ -223,7 +223,7 @@ public class LoopingListIteratorTest extends TestCase {
      * Tests the reset method.
      */
     public void testReset() {
-        final List<String> list = Arrays.asList(new String[] { "a", "b", "c" });
+        final List<String> list = Arrays.asList("a", "b", "c");
         final LoopingListIterator<String> loop = new LoopingListIterator<String>(list); // <a> b c
 
         assertEquals("a", loop.next()); // a <b> c
@@ -250,7 +250,7 @@ public class LoopingListIteratorTest extends TestCase {
      * Tests the add method.
      */
     public void testAdd() {
-        List<String> list = new ArrayList<String>(Arrays.asList(new String[] { "b", "e", "f" }));
+        List<String> list = new ArrayList<String>(Arrays.asList("b", "e", "f"));
         LoopingListIterator<String> loop = new LoopingListIterator<String>(list); // <b> e f
 
         loop.add("a");                      // <a> b e f
@@ -275,7 +275,7 @@ public class LoopingListIteratorTest extends TestCase {
         assertEquals("f", loop.next());     // <a> b c d e f
         assertEquals("a", loop.next());     // a <b> c d e f
 
-        list = new ArrayList<String>(Arrays.asList(new String[] { "b", "e", "f" }));
+        list = new ArrayList<String>(Arrays.asList("b", "e", "f"));
         loop = new LoopingListIterator<String>(list); // <b> e f
 
         loop.add("a");                      // a <b> e f
@@ -304,7 +304,7 @@ public class LoopingListIteratorTest extends TestCase {
      * Tests nextIndex and previousIndex.
      */
     public void testNextAndPreviousIndex() {
-        final List<String> list = Arrays.asList(new String[] { "a", "b", "c" });
+        final List<String> list = Arrays.asList("a", "b", "c");
         final LoopingListIterator<String> loop = new LoopingListIterator<String>(list); // <a> b c
 
         assertEquals(0, loop.nextIndex());
@@ -335,7 +335,7 @@ public class LoopingListIteratorTest extends TestCase {
      * Tests using the set method to change elements.
      */
     public void testSet() {
-        final List<String> list = Arrays.asList(new String[] { "q", "r", "z" });
+        final List<String> list = Arrays.asList("q", "r", "z");
         final LoopingListIterator<String> loop = new LoopingListIterator<String>(list); // <q> r z
 
         assertEquals("z", loop.previous()); // q r <z>

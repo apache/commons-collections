@@ -73,7 +73,7 @@ public class SetUtilsTest extends BulkTest {
     }
 
     public void testEquals() {
-        final Collection<String> data = Arrays.asList( new String[] { "a", "b", "c" });
+        final Collection<String> data = Arrays.asList("a", "b", "c");
 
         final Set<String> a = new HashSet<String>(data);
         final Set<String> b = new HashSet<String>(data);
@@ -88,7 +88,7 @@ public class SetUtilsTest extends BulkTest {
     }
 
     public void testHashCode() {
-        final Collection<String> data = Arrays.asList( new String[] { "a", "b", "c" });
+        final Collection<String> data = Arrays.asList("a", "b", "c");
 
         final Set<String> a = new HashSet<String>(data);
         final Set<String> b = new HashSet<String>(data);
