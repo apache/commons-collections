@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Queue;
 
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
@@ -36,8 +37,6 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
  * you may still use this base set of cases.  Simply override the
  * test case (method) your {@link Queue} fails or override one of the
  * protected methods from AbstractCollectionTest.
- *
- * TODO: add more tests for Queue interface
  *
  * @since 4.0
  * @version $Id$
@@ -134,6 +133,181 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
     }
 
     //-----------------------------------------------------------------------
+    /**
+     *  Tests {@link Queue#offer(Object)}.
+     */
+    public void testQueueOffer() {
+        if (!isAddSupported()) {
+            return;
+        }
+
+        final E[] elements = getFullElements();
+        for (final E element : elements) {
+            resetEmpty();
+            final boolean r = getCollection().offer(element);
+            getConfirmed().add(element);
+            verify();
+            assertTrue("Empty queue changed after add", r);
+            assertEquals("Queue size is 1 after first add", 1, getCollection().size());
+        }
+
+        resetEmpty();
+        int size = 0;
+        for (final E element : elements) {
+            final boolean r = getCollection().offer(element);
+            getConfirmed().add(element);
+            verify();
+            if (r) {
+                size++;
+            }
+            assertEquals("Queue size should grow after add", size, getCollection().size());
+            assertTrue("Queue should contain added element", getCollection().contains(element));
+        }
+    }
+    
+    /**
+     *  Tests {@link Queue#element()}.
+     */
+    public void testQueueElement() {
+        resetEmpty();
+        
+        try {
+            getCollection().element();
+            fail("Queue.element should throw NoSuchElementException");
+        } catch (final NoSuchElementException e) {
+            // expected
+        }
+
+        resetFull();
+
+        assertTrue(getConfirmed().contains(getCollection().element()));
+
+        if (!isRemoveSupported()) {
+            return;
+        }
+
+        final int max = getFullElements().length;
+        for (int i = 0; i < max; i++) {
+            final E element = getCollection().element();
+
+            if (!isNullSupported()) {
+                assertNotNull(element);
+            }
+
+            assertTrue(getConfirmed().contains(element));
+            
+            getCollection().remove(element);
+            getConfirmed().remove(element);
+
+            verify();
+        }
+        
+        try {
+            getCollection().element();
+            fail("Queue.element should throw NoSuchElementException");
+        } catch (final NoSuchElementException e) {
+            // expected
+        }
+    }
+
+    /**
+     *  Tests {@link Queue#peek()}.
+     */
+    public void testQueuePeek() {
+        if (!isRemoveSupported()) {
+            return;
+        }
+
+        resetEmpty();
+        
+        E element = getCollection().peek();
+        assertNull(element);
+
+        resetFull();
+
+        final int max = getFullElements().length;
+        for (int i = 0; i < max; i++) {
+            element = getCollection().peek();
+
+            if (!isNullSupported()) {
+                assertNotNull(element);
+            }
+
+            assertTrue(getConfirmed().contains(element));
+            
+            getCollection().remove(element);
+            getConfirmed().remove(element);
+
+            verify();
+        }
+        
+        element = getCollection().peek();
+        assertNull(element);
+    }
+
+    /**
+     *  Tests {@link Queue#remove()}.
+     */
+    public void testQueueRemove() {
+        if (!isRemoveSupported()) {
+            return;
+        }
+
+        resetEmpty();
+        
+        try {
+            getCollection().remove();
+            fail("Queue.remove should throw NoSuchElementException");
+        } catch (final NoSuchElementException e) {
+            // expected
+        }
+
+        resetFull();
+
+        final int max = getFullElements().length;
+        for (int i = 0; i < max; i++) {
+            final E element = getCollection().remove();
+            final boolean success = getConfirmed().remove(element);
+            assertTrue("remove should return correct element", success);
+            verify();
+        }
+        
+        try {
+            getCollection().element();
+            fail("Queue.remove should throw NoSuchElementException");
+        } catch (final NoSuchElementException e) {
+            // expected
+        }
+    }
+
+    /**
+     *  Tests {@link Queue#poll()}.
+     */
+    public void testQueuePoll() {
+        if (!isRemoveSupported()) {
+            return;
+        }
+
+        resetEmpty();
+        
+        E element = getCollection().poll();
+        assertNull(element);
+
+        resetFull();
+
+        final int max = getFullElements().length;
+        for (int i = 0; i < max; i++) {
+            element = getCollection().poll();
+            final boolean success = getConfirmed().remove(element);
+            assertTrue("poll should return correct element", success);
+            verify();
+        }
+        
+        element = getCollection().poll();
+        assertNull(element);
+    }
+
+    //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testEmptyQueueSerialization() throws IOException, ClassNotFoundException {
         final Queue<E> queue = makeObject();
@@ -204,7 +378,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         final Queue<E> queue = makeFullCollection();
         if(queue instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
             final Queue<E> queue2 = (Queue<E>) readExternalFormFromDisk(getCanonicalFullCollectionName(queue));
-            assertEquals("Queues is the right size",queue.size(), queue2.size());
+            assertEquals("Queues are not the right size", queue.size(), queue2.size());
         }
     }
 
