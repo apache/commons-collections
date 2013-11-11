@@ -47,6 +47,8 @@ Major changes since 3.2.1
 Changes since 4.0-alpha1
 ------------------------
 
+ o [COLLECTIONS-496] "UnmodifiableBoundedCollection" does now also implement the marker interface "Unmodifiable"
+                     similar as all other unmodifiable decorators.
  o [COLLECTIONS-495] "UnmodifiableTrie#unmodifiableTrie(Trie)" will not decorate again an already unmodifiable Trie.
                      Also the return type has been changed to "Trie" to be consistent with other Unmodifiable decorators.
  o [COLLECTIONS-494] Moved "Equator" interface to base package for consistency. Thanks to Emmanuel Bourg.
@@ -161,6 +163,8 @@ New features
 Changed classes / methods
 -------------------------
 
+ o [COLLECTIONS-496] "UnmodifiableBoundedCollection" does now also implement the marker interface "Unmodifiable"
+                     similar as all other unmodifiable decorators.
  o [COLLECTIONS-495] "UnmodifiableTrie#unmodifiableTrie(Trie)" will not decorate again an already unmodifiable Trie.
                      Also the return type has been changed to "Trie" to be consistent with other Unmodifiable decorators.
  o [COLLECTIONS-494] Moved "Equator" interface to base package for consistency. Thanks to Emmanuel Bourg.

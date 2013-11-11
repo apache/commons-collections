@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.apache.commons.collections4.BoundedCollection;
+import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.iterators.UnmodifiableIterator;
 
 /**
@@ -40,7 +41,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * @version $Id$
  */
 public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDecorator<E>
-        implements BoundedCollection<E> {
+        implements BoundedCollection<E>, Unmodifiable {
 
     /** Serialization version */
     private static final long serialVersionUID = -7112672385450340330L;
@@ -55,6 +56,11 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
      * @since 4.0
      */
     public static <E> BoundedCollection<E> unmodifiableBoundedCollection(final BoundedCollection<? extends E> coll) {
+        if (coll instanceof Unmodifiable) {
+            @SuppressWarnings("unchecked") // safe to upcast
+            final BoundedCollection<E> tmpColl = (BoundedCollection<E>) coll;
+            return tmpColl;
+        }
         return new UnmodifiableBoundedCollection<E>(coll);
     }
 

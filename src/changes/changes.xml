@@ -38,6 +38,10 @@ Commons Collections is Java 5.
 Users are encouraged to upgrade to this version as, in addition to new
 features, this release includes numerous bug fixes.
   ">
+    <action issue="COLLECTIONS-496" dev="tn" type="update">
+     "UnmodifiableBoundedCollection" does now also implement the marker interface "Unmodifiable"
+     similar as all other unmodifiable decorators.
+    </action>
     <action issue="COLLECTIONS-495" dev="tn" type="fix">
      "UnmodifiableTrie#unmodifiableTrie(Trie)" will not decorate again an already
      unmodifiable Trie. Also the return type has been changed to "Trie" to be consistent

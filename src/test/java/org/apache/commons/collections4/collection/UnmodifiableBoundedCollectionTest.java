@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.apache.commons.collections4.BoundedCollection;
+import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.list.FixedSizeList;
 
 /**
@@ -43,7 +44,7 @@ public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest
     }
 
     @Override
-    public Collection<E> makeFullCollection() {
+    public BoundedCollection<E> makeFullCollection() {
         final E[] allElements = getFullElements();
         final BoundedCollection<E> coll = FixedSizeList.<E>fixedSizeList(new ArrayList<E>(Arrays.asList(allElements)));
         return UnmodifiableBoundedCollection.unmodifiableBoundedCollection(coll);
@@ -80,4 +81,22 @@ public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest
     public String getCompatibilityVersion() {
         return "4";
     }
+    
+    //-----------------------------------------------------------------------
+
+    public void testUnmodifiable() {
+        assertTrue(makeObject() instanceof Unmodifiable);
+        assertTrue(makeFullCollection() instanceof Unmodifiable);
+    }
+    
+    public void testDecorateFactory() {
+        final BoundedCollection<E> coll = makeFullCollection();
+        assertSame(coll, UnmodifiableBoundedCollection.unmodifiableBoundedCollection(coll));
+
+        try {
+            UnmodifiableBoundedCollection.unmodifiableBoundedCollection(null);
+            fail();
+        } catch (final IllegalArgumentException ex) {}
+    }
+    
 }
