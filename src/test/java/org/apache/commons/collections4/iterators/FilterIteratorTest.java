@@ -27,8 +27,6 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.NotNullPredicate;
-import org.apache.commons.collections4.iterators.ArrayIterator;
-import org.apache.commons.collections4.iterators.FilterIterator;
 
 /**
  * Test the filter iterator.

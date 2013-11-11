@@ -27,7 +27,6 @@ import junit.framework.Test;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.list.AbstractListTest;
-import org.apache.commons.collections4.map.ListOrderedMap;
 
 /**
  * Extension of {@link AbstractOrderedMapTest} for exercising the {@link ListOrderedMap}

@@ -20,8 +20,6 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.collections4.comparators.ComparableComparator;
-
 /**
  * Tests for ComparableComparator.
  *

@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections4.iterators;
 
-import org.apache.commons.collections4.iterators.ObjectArrayListIterator;
-
 /**
  * Tests the ObjectArrayListIterator class.
  *

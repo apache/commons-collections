@@ -27,7 +27,6 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
-import org.apache.commons.collections4.map.TransformedSortedMap;
 
 /**
  * Extension of {@link AbstractSortedMapTest} for exercising the {@link TransformedSortedMap}

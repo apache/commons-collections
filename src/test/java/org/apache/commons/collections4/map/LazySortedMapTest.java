@@ -27,7 +27,6 @@ import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.FactoryUtils;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
-import org.apache.commons.collections4.map.LazySortedMap;
 import org.junit.Test;
 
 /**

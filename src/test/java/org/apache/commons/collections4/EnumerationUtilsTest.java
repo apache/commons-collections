@@ -21,8 +21,6 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import org.apache.commons.collections4.EnumerationUtils;
-
 import junit.framework.Test;
 
 /**

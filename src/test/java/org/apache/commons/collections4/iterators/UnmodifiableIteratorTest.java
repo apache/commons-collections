@@ -23,7 +23,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections4.Unmodifiable;
-import org.apache.commons.collections4.iterators.UnmodifiableIterator;
 
 /**
  * Tests the UnmodifiableIterator.

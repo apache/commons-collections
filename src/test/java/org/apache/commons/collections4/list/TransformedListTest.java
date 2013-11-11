@@ -23,7 +23,6 @@ import java.util.ListIterator;
 
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
-import org.apache.commons.collections4.list.TransformedList;
 
 /**
  * Extension of {@link AbstractListTest} for exercising the {@link TransformedList}

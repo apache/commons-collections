@@ -20,8 +20,6 @@ import java.util.HashMap;
 
 import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.Unmodifiable;
-import org.apache.commons.collections4.map.ListOrderedMap;
-import org.apache.commons.collections4.map.UnmodifiableOrderedMap;
 
 /**
  * Extension of {@link AbstractOrderedMapTest} for exercising the

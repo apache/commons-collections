@@ -19,7 +19,6 @@ package org.apache.commons.collections4.bidimap;
 import junit.framework.Test;
 
 import org.apache.commons.collections4.BulkTest;
-import org.apache.commons.collections4.bidimap.DualTreeBidiMap;
 
 /**
  * JUnit tests.

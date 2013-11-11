@@ -23,7 +23,6 @@ import java.util.List;
 
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
-import org.apache.commons.collections4.collection.TransformedCollection;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the {@link TransformedCollection}

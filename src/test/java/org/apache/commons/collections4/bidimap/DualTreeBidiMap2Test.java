@@ -31,7 +31,6 @@ import junit.framework.Test;
 
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.SortedBidiMap;
-import org.apache.commons.collections4.bidimap.DualTreeBidiMap;
 import org.apache.commons.collections4.comparators.ComparableComparator;
 import org.apache.commons.collections4.comparators.ReverseComparator;
 

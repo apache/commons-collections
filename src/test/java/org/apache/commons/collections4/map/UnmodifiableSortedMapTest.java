@@ -20,7 +20,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.apache.commons.collections4.Unmodifiable;
-import org.apache.commons.collections4.map.UnmodifiableSortedMap;
 
 /**
  * Extension of {@link AbstractSortedMapTest} for exercising the

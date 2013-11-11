@@ -27,7 +27,6 @@ import java.util.NoSuchElementException;
 import junit.framework.Test;
 
 import org.apache.commons.collections4.BulkTest;
-import org.apache.commons.collections4.list.CursorableLinkedList;
 
 /**
  * Test class.

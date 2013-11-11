@@ -26,7 +26,6 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.AbstractObjectTest;
 import org.apache.commons.collections4.Bag;
-import org.apache.commons.collections4.bag.HashBag;
 
 /**
  * Abstract test class for {@link org.apache.commons.collections4.Bag Bag} methods and contracts.

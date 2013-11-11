@@ -27,15 +27,6 @@ import static org.junit.Assert.fail;
 import java.util.*;
 
 import org.apache.commons.collections4.queue.CircularFifoQueue;
-import org.apache.commons.collections4.Bag;
-import org.apache.commons.collections4.Closure;
-import org.apache.commons.collections4.ClosureUtils;
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.FunctorException;
-import org.apache.commons.collections4.Predicate;
-import org.apache.commons.collections4.PredicateUtils;
-import org.apache.commons.collections4.Transformer;
-import org.apache.commons.collections4.TransformerUtils;
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.collection.PredicatedCollection;
 import org.apache.commons.collections4.collection.SynchronizedCollection;

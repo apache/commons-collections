@@ -25,10 +25,6 @@ import java.util.List;
 
 import junit.framework.Test;
 
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.Factory;
-import org.apache.commons.collections4.ListUtils;
-import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.list.PredicatedList;
 

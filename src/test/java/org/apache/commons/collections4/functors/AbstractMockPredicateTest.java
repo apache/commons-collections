@@ -16,15 +16,15 @@
  */
 package org.apache.commons.collections4.functors;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.easymock.EasyMock.verify;
 import static org.easymock.EasyMock.replay;
 import org.junit.Before;
 import org.junit.After;
 import org.apache.commons.collections4.Predicate;
 import org.easymock.EasyMock;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Base class for tests of predicates which delegate to other predicates when evaluating an object.  This class

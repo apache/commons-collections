@@ -24,7 +24,6 @@ import java.util.Set;
 import junit.framework.Test;
 
 import org.apache.commons.collections4.BulkTest;
-import org.apache.commons.collections4.map.CaseInsensitiveMap;
 
 /**
  * Tests for the {@link CaseInsensitiveMap} implementation.

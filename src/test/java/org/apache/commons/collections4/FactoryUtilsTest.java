@@ -26,9 +26,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.TimeZone;
 
-import org.apache.commons.collections4.Factory;
-import org.apache.commons.collections4.FactoryUtils;
-import org.apache.commons.collections4.FunctorException;
 import org.apache.commons.collections4.functors.ConstantFactory;
 import org.apache.commons.collections4.functors.ExceptionFactory;
 import org.junit.Test;

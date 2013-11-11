@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.collections4.IterableMap;
-import org.apache.commons.collections4.map.FixedSizeMap;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the {@link FixedSizeMap}

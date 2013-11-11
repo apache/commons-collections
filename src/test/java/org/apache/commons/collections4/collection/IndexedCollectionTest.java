@@ -25,7 +25,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.collections4.Transformer;
-import org.apache.commons.collections4.collection.IndexedCollection;
 
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the

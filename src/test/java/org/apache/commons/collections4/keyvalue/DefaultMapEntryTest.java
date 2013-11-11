@@ -19,8 +19,6 @@ package org.apache.commons.collections4.keyvalue;
 import java.util.Map;
 
 import org.apache.commons.collections4.KeyValue;
-import org.apache.commons.collections4.keyvalue.DefaultKeyValue;
-import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
 
 /**
  * Test the DefaultMapEntry class.

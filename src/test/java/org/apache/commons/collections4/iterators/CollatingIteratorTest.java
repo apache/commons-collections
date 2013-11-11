@@ -22,7 +22,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import org.apache.commons.collections4.comparators.ComparableComparator;
-import org.apache.commons.collections4.iterators.CollatingIterator;
 
 /**
  * Unit test suite for {@link CollatingIterator}.

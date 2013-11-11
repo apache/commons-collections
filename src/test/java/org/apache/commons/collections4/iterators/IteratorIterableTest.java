@@ -20,7 +20,6 @@ import java.util.List;
 import junit.framework.Test;
 
 import org.apache.commons.collections4.BulkTest;
-import org.apache.commons.collections4.iterators.IteratorIterable;
 
 /**
  * Tests for IteratorIterable.

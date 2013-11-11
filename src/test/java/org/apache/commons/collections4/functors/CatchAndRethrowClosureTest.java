@@ -20,7 +20,6 @@ import java.io.IOException;
 
 import org.apache.commons.collections4.Closure;
 import org.apache.commons.collections4.FunctorException;
-import org.apache.commons.collections4.functors.CatchAndRethrowClosure;
 import org.junit.Assert;
 import org.junit.Test;
 

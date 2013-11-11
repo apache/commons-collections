@@ -20,8 +20,6 @@ import java.util.Arrays;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections4.iterators.ObjectArrayListIterator;
-
 /**
  * Tests the ObjectArrayListIterator class.
  *

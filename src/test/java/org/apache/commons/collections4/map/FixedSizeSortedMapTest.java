@@ -22,7 +22,6 @@ import java.util.TreeMap;
 import junit.framework.Test;
 
 import org.apache.commons.collections4.BulkTest;
-import org.apache.commons.collections4.map.FixedSizeSortedMap;
 
 /**
  * Extension of {@link AbstractSortedMapTest} for exercising the {@link FixedSizeSortedMap}

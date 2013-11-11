@@ -23,9 +23,6 @@ import org.apache.commons.collections4.BoundedMap;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.OrderedMap;
-import org.apache.commons.collections4.map.ListOrderedMap;
-import org.apache.commons.collections4.map.SingletonMap;
-import org.apache.commons.collections4.map.UnmodifiableOrderedMap;
 
 /**
  * JUnit tests.

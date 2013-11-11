@@ -19,8 +19,6 @@ package org.apache.commons.collections4.iterators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections4.iterators.ObjectArrayIterator;
-
 /**
  * Tests the ObjectArrayIterator.
  *

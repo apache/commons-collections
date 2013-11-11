@@ -17,7 +17,6 @@
 package org.apache.commons.collections4.bag;
 
 import org.apache.commons.collections4.Bag;
-import org.apache.commons.collections4.bag.HashBag;
 
 /**
  * Extension of {@link AbstractBagTest} for exercising the {@link HashBag}

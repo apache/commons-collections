@@ -20,8 +20,6 @@ import java.util.SortedMap;
 import java.util.TreeMap;
 
 import org.apache.commons.collections4.OrderedBidiMap;
-import org.apache.commons.collections4.bidimap.AbstractOrderedBidiMapDecorator;
-import org.apache.commons.collections4.bidimap.DualTreeBidiMap;
 
 /**
  * Test class for AbstractOrderedBidiMapDecorator.

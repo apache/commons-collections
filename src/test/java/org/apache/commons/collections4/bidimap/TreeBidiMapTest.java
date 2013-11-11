@@ -21,7 +21,6 @@ import java.util.TreeMap;
 import junit.framework.Test;
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.BulkTest;
-import org.apache.commons.collections4.bidimap.TreeBidiMap;
 
 /**
  * JUnit tests.

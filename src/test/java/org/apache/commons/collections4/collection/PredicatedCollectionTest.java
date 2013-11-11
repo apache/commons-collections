@@ -22,7 +22,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.apache.commons.collections4.Predicate;
-import org.apache.commons.collections4.collection.PredicatedCollection;
 import org.apache.commons.collections4.functors.TruePredicate;
 
 /**

@@ -24,7 +24,6 @@ import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
-import org.apache.commons.collections4.map.TransformedMap;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the {@link TransformedMap}

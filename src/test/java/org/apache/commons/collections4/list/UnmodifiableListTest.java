@@ -21,8 +21,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.collections4.list.UnmodifiableList;
-
 /**
  * Extension of {@link AbstractListTest} for exercising the
  * {@link UnmodifiableList} implementation.

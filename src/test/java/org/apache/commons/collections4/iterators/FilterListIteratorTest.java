@@ -25,7 +25,6 @@ import java.util.Random;
 import junit.framework.TestCase;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.PredicateUtils;
-import org.apache.commons.collections4.iterators.FilterListIterator;
 import org.apache.commons.collections4.list.GrowthList;
 import org.junit.Assert;
 

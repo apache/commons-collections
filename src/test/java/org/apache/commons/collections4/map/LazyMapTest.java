@@ -24,7 +24,6 @@ import java.util.Map;
 import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.FactoryUtils;
 import org.apache.commons.collections4.Transformer;
-import org.apache.commons.collections4.map.LazyMap;
 import org.junit.Test;
 
 /**

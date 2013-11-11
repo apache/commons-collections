@@ -19,12 +19,6 @@ package org.apache.commons.collections4;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.collections4.IterableMap;
-import org.apache.commons.collections4.MapIterator;
-import org.apache.commons.collections4.Put;
-import org.apache.commons.collections4.SplitMapUtils;
-import org.apache.commons.collections4.Transformer;
-import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.functors.NOPTransformer;
 import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.collections4.splitmap.TransformedSplitMap;

@@ -17,11 +17,9 @@
 package org.apache.commons.collections4;
 
 import java.util.Collection;
-//import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-//import java.util.TreeMap;
 
 import org.apache.commons.collections4.map.Flat3Map;
 

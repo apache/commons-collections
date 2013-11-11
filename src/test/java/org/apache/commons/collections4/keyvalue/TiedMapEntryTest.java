@@ -19,8 +19,6 @@ package org.apache.commons.collections4.keyvalue;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.collections4.keyvalue.TiedMapEntry;
-
 /**
  * Test the TiedMapEntry class.
  *

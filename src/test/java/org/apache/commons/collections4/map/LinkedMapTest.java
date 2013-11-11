@@ -28,7 +28,6 @@ import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.ResettableIterator;
 import org.apache.commons.collections4.list.AbstractListTest;
-import org.apache.commons.collections4.map.LinkedMap;
 
 /**
  * JUnit tests.

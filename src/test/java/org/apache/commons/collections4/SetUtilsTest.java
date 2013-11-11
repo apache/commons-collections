@@ -23,8 +23,6 @@ import java.util.Set;
 
 import junit.framework.Test;
 
-import org.apache.commons.collections4.Predicate;
-import org.apache.commons.collections4.SetUtils;
 import org.apache.commons.collections4.set.PredicatedSet;
 
 /**

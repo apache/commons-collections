@@ -22,7 +22,6 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableListIterator;
-import org.apache.commons.collections4.iterators.ListIteratorWrapper;
 
 /**
  * Tests the ListIteratorWrapper to insure that it behaves as expected when wrapping a ListIterator.

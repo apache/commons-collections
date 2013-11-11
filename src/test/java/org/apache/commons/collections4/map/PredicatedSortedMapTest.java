@@ -25,7 +25,6 @@ import java.util.TreeMap;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
-import org.apache.commons.collections4.map.PredicatedSortedMap;
 
 /**
  * Extension of {@link PredicatedMapTest} for exercising the

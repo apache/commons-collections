@@ -24,12 +24,6 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
-import org.apache.commons.collections4.Closure;
-import org.apache.commons.collections4.ClosureUtils;
-import org.apache.commons.collections4.FunctorException;
-import org.apache.commons.collections4.Predicate;
-import org.apache.commons.collections4.PredicateUtils;
-import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.functors.ExceptionClosure;
 import org.apache.commons.collections4.functors.FalsePredicate;

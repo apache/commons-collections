@@ -18,8 +18,6 @@ package org.apache.commons.collections4.list;
 
 import java.util.Arrays;
 
-import org.apache.commons.collections4.list.AbstractLinkedList;
-
 /**
  * Test case for {@link AbstractLinkedList}.
  *

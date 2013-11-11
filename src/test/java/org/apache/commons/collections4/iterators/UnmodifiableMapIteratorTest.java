@@ -23,7 +23,6 @@ import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.bidimap.DualHashBidiMap;
-import org.apache.commons.collections4.iterators.UnmodifiableMapIterator;
 
 /**
  * Tests the UnmodifiableMapIterator.

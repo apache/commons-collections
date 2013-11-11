@@ -21,7 +21,6 @@ import java.util.Map;
 
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.Unmodifiable;
-import org.apache.commons.collections4.map.UnmodifiableMap;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the

@@ -23,7 +23,6 @@ import java.util.Map;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
-import org.apache.commons.collections4.map.PredicatedMap;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the 

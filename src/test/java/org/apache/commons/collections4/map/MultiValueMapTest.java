@@ -29,7 +29,6 @@ import java.util.Map;
 import org.apache.commons.collections4.AbstractObjectTest;
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.collections4.MultiMap;
-import org.apache.commons.collections4.map.MultiValueMap;
 
 /**
  * TestMultiValueMap.

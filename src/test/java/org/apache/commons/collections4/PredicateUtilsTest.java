@@ -30,11 +30,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections4.FunctorException;
-import org.apache.commons.collections4.Predicate;
-import org.apache.commons.collections4.PredicateUtils;
-import org.apache.commons.collections4.Transformer;
-import org.apache.commons.collections4.TransformerUtils;
 import org.apache.commons.collections4.functors.AbstractPredicateTest;
 import org.apache.commons.collections4.functors.AllPredicate;
 import org.apache.commons.collections4.functors.EqualPredicate;

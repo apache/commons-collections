@@ -19,8 +19,6 @@ package org.apache.commons.collections4.map;
 import java.util.Map;
 import java.util.Collection;
 
-import org.apache.commons.collections4.map.CompositeMap;
-
 /**
  * This class is used in TestCompositeMap. When testing serialization,
  * the class has to be separate of TestCompositeMap, else the test

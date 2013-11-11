@@ -23,8 +23,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.collections4.collection.CompositeCollection;
-
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link CompositeCollection} implementation.

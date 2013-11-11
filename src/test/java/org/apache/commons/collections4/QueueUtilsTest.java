@@ -21,9 +21,6 @@ import java.util.Queue;
 
 import junit.framework.Test;
 
-import org.apache.commons.collections4.Predicate;
-import org.apache.commons.collections4.Transformer;
-import org.apache.commons.collections4.TransformerUtils;
 import org.apache.commons.collections4.functors.TruePredicate;
 import org.apache.commons.collections4.queue.PredicatedQueue;
 import org.apache.commons.collections4.queue.TransformedQueue;

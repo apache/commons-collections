@@ -23,7 +23,6 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.collections4.Predicate;
-import org.apache.commons.collections4.iterators.IteratorChain;
 
 /**
  * Tests the IteratorChain class.

@@ -22,7 +22,6 @@ import java.util.LinkedList;
 import junit.framework.Test;
 
 import org.apache.commons.collections4.BulkTest;
-import org.apache.commons.collections4.list.NodeCachingLinkedList;
 
 /**
  * Test class for NodeCachingLinkedList, a performance optimised LinkedList.

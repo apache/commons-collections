@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import org.apache.commons.collections4.comparators.BooleanComparator;
 import org.junit.Test;
 
 /**

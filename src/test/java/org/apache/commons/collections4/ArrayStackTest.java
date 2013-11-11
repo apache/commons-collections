@@ -18,8 +18,6 @@ package org.apache.commons.collections4;
 
 import java.util.EmptyStackException;
 
-import org.apache.commons.collections4.ArrayStack;
-
 import junit.framework.Test;
 
 /**

@@ -29,7 +29,6 @@ import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
-import org.apache.commons.collections4.map.Flat3Map;
 
 /**
  * JUnit tests.

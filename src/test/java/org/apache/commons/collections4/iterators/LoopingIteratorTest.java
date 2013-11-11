@@ -21,8 +21,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections4.iterators.LoopingIterator;
-
 import junit.framework.TestCase;
 
 /**

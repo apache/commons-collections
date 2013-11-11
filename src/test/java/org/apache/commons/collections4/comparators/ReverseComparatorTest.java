@@ -25,8 +25,6 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.collections4.comparators.ComparableComparator;
-import org.apache.commons.collections4.comparators.ReverseComparator;
 import org.junit.Test;
 
 /**

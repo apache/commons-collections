@@ -24,7 +24,6 @@ import junit.framework.Test;
 
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.IterableMap;
-import org.apache.commons.collections4.map.ReferenceIdentityMap;
 import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrength;
 
 /**

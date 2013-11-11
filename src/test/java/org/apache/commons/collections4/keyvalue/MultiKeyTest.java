@@ -26,8 +26,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.commons.collections4.keyvalue.MultiKey;
-
 import junit.framework.TestCase;
 
 /**

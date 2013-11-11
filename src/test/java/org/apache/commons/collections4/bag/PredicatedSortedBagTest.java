@@ -20,8 +20,6 @@ import java.util.Comparator;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.SortedBag;
-import org.apache.commons.collections4.bag.PredicatedSortedBag;
-import org.apache.commons.collections4.bag.TreeBag;
 import org.apache.commons.collections4.functors.TruePredicate;
 
 /**

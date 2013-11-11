@@ -22,9 +22,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Map;
 
-import org.apache.commons.collections4.map.AbstractHashedMap;
-import org.apache.commons.collections4.map.ListOrderedMap;
-
 /**
  * A <code>Map</code> implementation that matches keys and values based
  * on <code>==</code> not <code>equals()</code>.

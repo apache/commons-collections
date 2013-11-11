@@ -20,8 +20,6 @@ import java.util.Map;
 
 import org.apache.commons.collections4.KeyValue;
 import org.apache.commons.collections4.Unmodifiable;
-import org.apache.commons.collections4.keyvalue.DefaultKeyValue;
-import org.apache.commons.collections4.keyvalue.UnmodifiableMapEntry;
 
 /**
  * Test the UnmodifiableMapEntry class.

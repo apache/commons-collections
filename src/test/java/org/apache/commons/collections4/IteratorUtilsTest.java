@@ -25,12 +25,6 @@ import java.util.NoSuchElementException;
 
 import junit.framework.Test;
 
-import org.apache.commons.collections4.IteratorUtils;
-import org.apache.commons.collections4.MapIterator;
-import org.apache.commons.collections4.OrderedIterator;
-import org.apache.commons.collections4.OrderedMapIterator;
-import org.apache.commons.collections4.ResettableIterator;
-import org.apache.commons.collections4.ResettableListIterator;
 import org.apache.commons.collections4.iterators.EmptyIterator;
 import org.apache.commons.collections4.iterators.EmptyListIterator;
 import org.apache.commons.collections4.iterators.EmptyMapIterator;

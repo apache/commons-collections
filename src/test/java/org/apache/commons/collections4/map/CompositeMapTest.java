@@ -20,8 +20,6 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Collection;
 
-import org.apache.commons.collections4.map.CompositeMap;
-
 /**
  * Extension of {@link AbstractMapTest} for exercising the
  * {@link CompositeMap} implementation.

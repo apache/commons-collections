@@ -20,8 +20,6 @@ import java.util.Set;
 
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.Predicate;
-import org.apache.commons.collections4.bag.HashBag;
-import org.apache.commons.collections4.bag.PredicatedBag;
 import org.apache.commons.collections4.functors.TruePredicate;
 
 /**

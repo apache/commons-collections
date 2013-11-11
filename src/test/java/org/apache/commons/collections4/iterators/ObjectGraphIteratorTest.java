@@ -23,7 +23,6 @@ import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.collections4.Transformer;
-import org.apache.commons.collections4.iterators.ObjectGraphIterator;
 
 /**
  * Testcase.

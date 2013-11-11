@@ -22,7 +22,6 @@ import java.util.List;
 
 import org.apache.commons.collections4.ComparatorUtils;
 import org.apache.commons.collections4.TransformerUtils;
-import org.apache.commons.collections4.comparators.ComparableComparator;
 
 /**
  * Test class for TransformingComparator.

@@ -17,7 +17,6 @@
 package org.apache.commons.collections4.functors;
 
 import org.apache.commons.collections4.Predicate;
-import org.apache.commons.collections4.functors.AllPredicate;
 
 import static org.apache.commons.collections4.functors.AllPredicate.allPredicate;
 import static org.junit.Assert.assertFalse;

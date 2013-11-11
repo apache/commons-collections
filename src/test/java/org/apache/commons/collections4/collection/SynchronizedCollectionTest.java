@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.apache.commons.collections4.collection.SynchronizedCollection;
-
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link SynchronizedCollection} implementation.

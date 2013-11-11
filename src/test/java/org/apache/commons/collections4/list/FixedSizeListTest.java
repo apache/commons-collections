@@ -20,8 +20,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.collections4.list.FixedSizeList;
-
 /**
  * Extension of {@link AbstractListTest} for exercising the {@link FixedSizeList}
  * implementation.

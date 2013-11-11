@@ -19,8 +19,6 @@ package org.apache.commons.collections4.iterators;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections4.iterators.ArrayIterator;
-
 /**
  * Tests the ArrayIterator to ensure that the next() method will actually
  * perform the iteration rather than the hasNext() method.

@@ -18,8 +18,6 @@ package org.apache.commons.collections4.bag;
 
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.Transformer;
-import org.apache.commons.collections4.bag.HashBag;
-import org.apache.commons.collections4.bag.TransformedBag;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
 
 /**

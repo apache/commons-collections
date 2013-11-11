@@ -20,8 +20,6 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.commons.collections4.comparators.NullComparator;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
 

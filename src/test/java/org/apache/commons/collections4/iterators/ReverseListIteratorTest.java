@@ -23,7 +23,6 @@ import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableListIterator;
-import org.apache.commons.collections4.iterators.ReverseListIterator;
 
 /**
  * Tests the ReverseListIterator.

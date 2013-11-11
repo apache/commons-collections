@@ -21,8 +21,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.commons.collections4.sequence.CommandVisitor;
-import org.apache.commons.collections4.sequence.SequencesComparator;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

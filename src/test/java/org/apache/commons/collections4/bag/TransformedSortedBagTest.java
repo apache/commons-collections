@@ -19,9 +19,6 @@ package org.apache.commons.collections4.bag;
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.SortedBag;
 import org.apache.commons.collections4.Transformer;
-import org.apache.commons.collections4.bag.TransformedBag;
-import org.apache.commons.collections4.bag.TransformedSortedBag;
-import org.apache.commons.collections4.bag.TreeBag;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
 
 /**
