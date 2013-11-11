@@ -16,7 +16,10 @@
  */
 package org.apache.commons.collections4.bag;
 
+import junit.framework.Test;
+
 import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.SortedBag;
 
 /**
@@ -30,6 +33,12 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
     public TreeBagTest(final String testName) {
         super(testName);
     }
+
+    public static Test suite() {
+        return BulkTest.makeSuite(TreeBagTest.class);
+    }
+
+    //-----------------------------------------------------------------------
 
     @Override
     public SortedBag<T> makeObject() {
@@ -71,14 +80,9 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
     }
 
 //    public void testCreate() throws Exception {
-//        Bag bag = makeObject();
+//        Bag<T> bag = makeObject();
 //        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/TreeBag.emptyCollection.version4.obj");
-//        bag = makeObject();
-//        bag.add("A");
-//        bag.add("A");
-//        bag.add("B");
-//        bag.add("B");
-//        bag.add("C");
+//        bag = makeFullCollection();
 //        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/TreeBag.fullCollection.version4.obj");
 //    }
 }

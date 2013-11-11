@@ -18,7 +18,10 @@ package org.apache.commons.collections4.bag;
 
 import java.util.Set;
 
+import junit.framework.Test;
+
 import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
 
@@ -33,6 +36,10 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 
     public PredicatedBagTest(final String testName) {
         super(testName);
+    }
+
+    public static Test suite() {
+        return BulkTest.makeSuite(PredicatedBagTest.class);
     }
 
     //--------------------------------------------------------------------------
@@ -121,14 +128,9 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
     }
 
 //    public void testCreate() throws Exception {
-//        Bag bag = makeObject();
+//        Bag<T> bag = makeObject();
 //        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/PredicatedBag.emptyCollection.version4.obj");
-//        bag = makeObject();
-//        bag.add("A");
-//        bag.add("A");
-//        bag.add("B");
-//        bag.add("B");
-//        bag.add("C");
+//        bag = makeFullCollection();
 //        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/PredicatedBag.fullCollection.version4.obj");
 //    }
 

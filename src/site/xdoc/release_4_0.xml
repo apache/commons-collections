@@ -98,6 +98,7 @@ have changed.
 
 <center><h3>New Classes</h3></center>
 <ul>
+<li>CollectionSortedBag - decorates a SortedBag to make it comply with the Collection contract.</li>
 <li>CollectionBag - decorates another Bag to make it comply with the Collection contract.</li>
 <li>PushbackIterator - supports pushback of elements during iteration. Thanks to Andy Seaborne, Claude Warren.</li>
 <li>PeekingIterator - supports one-element lookahead during iteration. Thanks to Andy Seaborne, Claude Warren.</li>
@@ -155,6 +156,8 @@ have changed.
 
 <center><h3>Changed classes / methods</h3></center>
 <ul>
+<li>Refactored the test framework for Bag implementations to extend from "AbstractCollectionTest" by decorating
+    the concrete Bag instance with a CollectionBag or CollectionSortedBag.</li> 
 <li>"UnmodifiableBoundedCollection" does now also implement the marker interface "Unmodifiable"
     similar as all other unmodifiable decorators.</li>
 <li>"UnmodifiableTrie#unmodifiableTrie(Trie)" will not decorate again an already unmodifiable Trie.
@@ -197,6 +200,7 @@ have changed.
 
 <center><h3>Bugfixes</h3></center>
 <ul>
+<li>"CollectionBag" will now also respect the contract of the decorated bag in case a null argument is provided to either removeAll or retainAll.</li>
 <li>Fixed collision detection/resolution when calling "CompositeSet#addComposited(...)" with more than one Set as argument.</li>
 <li>Fixed conversion of timeout parameters in "PassiveExpiringMap".</li>
 <li>ListOrderedMap#putAll(index, Object, Object) does not throw an exception anymore if the map contains null values. Additionally added javadoc clarification on the supported bounds for the index parameter. Thanks to Ning Chen.</li>

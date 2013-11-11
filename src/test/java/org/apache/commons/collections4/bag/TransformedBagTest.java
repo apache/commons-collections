@@ -16,7 +16,10 @@
  */
 package org.apache.commons.collections4.bag;
 
+import junit.framework.Test;
+
 import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
 
@@ -32,6 +35,12 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
     public TransformedBagTest(final String testName) {
         super(testName);
     }
+
+    public static Test suite() {
+        return BulkTest.makeSuite(TransformedBagTest.class);
+    }
+
+    //-----------------------------------------------------------------------
 
     @Override
     @SuppressWarnings("unchecked")
@@ -83,14 +92,9 @@ public class TransformedBagTest<T> extends AbstractBagTest<T> {
     }
 
 //    public void testCreate() throws Exception {
-//        Bag bag = makeObject();
+//        Bag<T> bag = makeObject();
 //        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/TransformedBag.emptyCollection.version4.obj");
-//        bag = makeObject();
-//        bag.add("A");
-//        bag.add("A");
-//        bag.add("B");
-//        bag.add("B");
-//        bag.add("C");
+//        bag = makeFullCollection();
 //        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/TransformedBag.fullCollection.version4.obj");
 //    }
 

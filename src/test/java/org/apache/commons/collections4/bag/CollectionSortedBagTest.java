@@ -23,34 +23,43 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.apache.commons.collections4.Bag;
-import org.apache.commons.collections4.bag.HashBag;
+import org.apache.commons.collections4.SortedBag;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 
 /**
- * Test class for {@link CollectionBag}.
+ * Test class for {@link CollectionSortedBag}.
  * <p>
- * Note: This test is mainly for serialization support, the CollectionBag decorator
- * is extensively used and tested in AbstractBagTest. 
+ * Note: This test is mainly for serialization support, the CollectionSortedBag decorator
+ * is extensively used and tested in AbstractSortedBagTest. 
  *
  * @version $Id$
  * @since 4.0
  */
-public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
+public class CollectionSortedBagTest<T> extends AbstractCollectionTest<T> {
 
     /**
      * JUnit constructor.
      *
      * @param testName  the test class name
      */
-    public CollectionBagTest(final String testName) {
+    public CollectionSortedBagTest(final String testName) {
         super(testName);
     }
 
     //-----------------------------------------------------------------------
     
+    /**
+     * Overridden because SortedBags don't allow null elements (normally).
+     * @return false
+     */
+    @Override
+    public boolean isNullSupported() {
+        return false;
+    }
+
     @Override
     public Bag<T> makeObject() {
-        return CollectionBag.collectionBag(new HashBag<T>());
+        return CollectionSortedBag.collectionSortedBag(new TreeBag<T>());
     }
 
     /**
@@ -75,6 +84,36 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
         return set;
     }
 
+    //-----------------------------------------------------------------------
+    /**
+     * Override to return comparable objects.
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public T[] getFullNonNullElements() {
+        final Object[] elements = new Object[30];
+
+        for (int i = 0; i < 30; i++) {
+            elements[i] = Integer.valueOf(i + i + 1);
+        }
+        return (T[]) elements;
+    }
+
+    /**
+     * Override to return comparable objects.
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public T[] getOtherNonNullElements() {
+        final Object[] elements = new Object[30];
+        for (int i = 0; i < 30; i++) {
+            elements[i] = Integer.valueOf(i + i + 2);
+        }
+        return (T[]) elements;
+    }
+
+    //-----------------------------------------------------------------------
+
     @Override
     public String getCompatibilityVersion() {
         return "4";
@@ -82,9 +121,9 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
 
 //    public void testCreate() throws Exception {
 //        resetEmpty();
-//        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/CollectionBag.emptyCollection.version4.obj");
+//        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/CollectionSortedBag.emptyCollection.version4.obj");
 //        resetFull();
-//        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/CollectionBag.fullCollection.version4.obj");
+//        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/CollectionSortedBag.fullCollection.version4.obj");
 //    }
 
     //-----------------------------------------------------------------------
@@ -109,10 +148,10 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
      */
     public void testFullBagCompatibility() throws IOException, ClassNotFoundException {
         // test to make sure the canonical form has been preserved
-        final Bag<T> bag = (Bag<T>) makeFullCollection();
+        final SortedBag<T> bag = (SortedBag<T>) makeFullCollection();
         if (bag instanceof Serializable && !skipSerializedCanonicalTests() && isTestSerialization()) {
-            final Bag<?> bag2 = (Bag<?>) readExternalFormFromDisk(getCanonicalFullCollectionName(bag));
-            assertEquals("Bag is the right size",bag.size(), bag2.size());
+            final SortedBag<?> bag2 = (SortedBag<?>) readExternalFormFromDisk(getCanonicalFullCollectionName(bag));
+            assertEquals("Bag is the right size", bag.size(), bag2.size());
             assertEquals(bag, bag2);
         }
     }

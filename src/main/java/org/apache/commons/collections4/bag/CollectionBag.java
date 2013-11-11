@@ -124,29 +124,35 @@ public final class CollectionBag<E>
 
     @Override
     public boolean removeAll(final Collection<?> coll) {
-        boolean result = false;
         if (coll != null) {
+            boolean result = false;
             final Iterator<?> i = coll.iterator();
             while (i.hasNext()) {
                 final Object obj = i.next();
                 final boolean changed = remove(obj, getCount(obj));
                 result = result || changed;
             }
+            return result;
+        } else {
+            return decorated().removeAll(coll);
         }
-        return result;
     }
 
     @Override
     public boolean retainAll(final Collection<?> coll) {
-        boolean modified = false;
-        final Iterator<E> e = iterator();
-        while (e.hasNext()) {
-            if (!coll.contains(e.next())) {
-                e.remove();
-                modified = true;
+        if (coll != null) {
+            boolean modified = false;
+            final Iterator<E> e = iterator();
+            while (e.hasNext()) {
+                if (!coll.contains(e.next())) {
+                    e.remove();
+                    modified = true;
+                }
             }
+            return modified;
+        } else {
+            return decorated().retainAll(coll);
         }
-        return modified;
     }
 
     //-----------------------------------------------------------------------

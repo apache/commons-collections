@@ -38,39 +38,52 @@ Commons Collections is Java 5.
 Users are encouraged to upgrade to this version as, in addition to new
 features, this release includes numerous bug fixes.
   ">
+    <action issue="COLLECTIONS-499" dev="tn" type="update">
+      Refactored the test framework for Bag implementations to extend from
+      "AbstractCollectionTest" by decorating the concrete Bag instance with
+      a CollectionBag or CollectionSortedBag. 
+    </action>
+    <action issue="COLLECTIONS-498" dev="tn" type="fix">
+      "CollectionBag" will now also respect the contract of the decorated bag in case
+      a null argument is provided to either removeAll or retainAll.
+    </action>
+    <action issue="COLLECTIONS-497" dev="tn" type="add">
+      Added bag decorator "CollectionSortedBag" which decorates a SortedBag to make it
+      comply with the Collection contract.
+    </action>
     <action issue="COLLECTIONS-496" dev="tn" type="update">
-     "UnmodifiableBoundedCollection" does now also implement the marker interface "Unmodifiable"
-     similar as all other unmodifiable decorators.
+      "UnmodifiableBoundedCollection" does now also implement the marker interface "Unmodifiable"
+      similar as all other unmodifiable decorators.
     </action>
     <action issue="COLLECTIONS-495" dev="tn" type="fix">
-     "UnmodifiableTrie#unmodifiableTrie(Trie)" will not decorate again an already
-     unmodifiable Trie. Also the return type has been changed to "Trie" to be consistent
-     with other Unmodifiable decorators.
+      "UnmodifiableTrie#unmodifiableTrie(Trie)" will not decorate again an already
+      unmodifiable Trie. Also the return type has been changed to "Trie" to be consistent
+      with other Unmodifiable decorators.
     </action>
     <action issue="COLLECTIONS-494" dev="tn" type="update" due-to="Emmanuel Bourg">
-     Moved "Equator" interface to base package for consistency.
+      Moved "Equator" interface to base package for consistency.
     </action>
     <action issue="COLLECTIONS-488" dev="tn" type="add" due-to="Josh Cain">
-     Added "CollectionsUtils#matchesAll(Iterable, Predicate)" to test if all elements
-     of a collection match a given predicate.
+      Added "CollectionsUtils#matchesAll(Iterable, Predicate)" to test if all elements
+      of a collection match a given predicate.
     </action>
     <action issue="COLLECTIONS-485" dev="tn" type="fix" due-to="Hollis Waite">
-     Accept wildcard input where possible, e.g. in copy-constructors, Unmodifiable* decorators
-     and iterators.
+      Accept wildcard input where possible, e.g. in copy-constructors, Unmodifiable* decorators
+      and iterators.
     </action>
     <action issue="COLLECTIONS-481" dev="tn" type="fix" due-to="Hollis Waite">
-     No collision detection/resolution was performed when calling "CompositeSet#addComposited(...)"
-     with more than one Set as argument. Additionally use varargs parameters instead of arrays
-     in CompositeSet and CompositeCollection constructor and addComposited method.
+      No collision detection/resolution was performed when calling "CompositeSet#addComposited(...)"
+      with more than one Set as argument. Additionally use varargs parameters instead of arrays
+      in CompositeSet and CompositeCollection constructor and addComposited method.
     </action>
     <action issue="COLLECTIONS-480" dev="tn" type="update" due-to="Hollis Waite">
-     Narrow return type of "BidiMap#values()" to Set as the values are required to be unique.
+      Narrow return type of "BidiMap#values()" to Set as the values are required to be unique.
     </action>
     <action issue="COLLECTIONS-475" dev="tn" type="fix">
-     Fixed conversion of timeout parameters in "PassiveExpiringMap".
+      Fixed conversion of timeout parameters in "PassiveExpiringMap".
     </action>
     <action issue="COLLECTIONS-474" dev="sebb" type="fix" due-to="Ning Chen">
-     Exception in "ListOrderedMap#putAll" if map contains null values.
+      Exception in "ListOrderedMap#putAll" if map contains null values.
     </action>
     <action issue="COLLECTIONS-473" dev="tn" type="update" due-to="sebb">
       Made field "collection" in class "AbstractCollectionDecorator" private and added

@@ -47,6 +47,13 @@ Major changes since 3.2.1
 Changes since 4.0-alpha1
 ------------------------
 
+ o [COLLECTIONS-499] Refactored the test framework for Bag implementations to extend from
+                     "AbstractCollectionTest" by decorating the concrete Bag instance with
+                     a CollectionBag or CollectionSortedBag. 
+ o [COLLECTIONS-498] "CollectionBag" will now also respect the contract of the decorated bag in case
+                     a null argument is provided to either removeAll or retainAll.
+ o [COLLECTIONS-497] Added bag decorator "CollectionSortedBag" which decorates a SortedBag to make it
+                     comply with the Collection contract.
  o [COLLECTIONS-496] "UnmodifiableBoundedCollection" does now also implement the marker interface "Unmodifiable"
                      similar as all other unmodifiable decorators.
  o [COLLECTIONS-495] "UnmodifiableTrie#unmodifiableTrie(Trie)" will not decorate again an already unmodifiable Trie.
@@ -93,6 +100,7 @@ Removed classes
 New classes
 -----------
 
+ o [COLLECTIONS-497] CollectionSortedBag - decorates a SortedBag to make it comply with the Collection contract.
  o [COLLECTIONS-468] CollectionBag - decorates another Bag to make it comply with the Collection contract.
  o [COLLECTIONS-463] PushbackIterator - supports pushback of elements during iteration. Thanks to Andy Seaborne, Claude Warren.
  o [COLLECTIONS-462] PeekingIterator - supports one-element lookahead during iteration. Thanks to Andy Seaborne, Claude Warren.
@@ -163,6 +171,9 @@ New features
 Changed classes / methods
 -------------------------
 
+ o [COLLECTIONS-499] Refactored the test framework for Bag implementations to extend from
+                     "AbstractCollectionTest" by decorating the concrete Bag instance with
+                     a CollectionBag or CollectionSortedBag. 
  o [COLLECTIONS-496] "UnmodifiableBoundedCollection" does now also implement the marker interface "Unmodifiable"
                      similar as all other unmodifiable decorators.
  o [COLLECTIONS-495] "UnmodifiableTrie#unmodifiableTrie(Trie)" will not decorate again an already unmodifiable Trie.
@@ -231,6 +242,8 @@ Changed classes / methods
 Fixed Bugs
 ----------
 
+ o [COLLECTIONS-498] "CollectionBag" will now also respect the contract of the decorated bag in case
+                     a null argument is provided to either removeAll or retainAll.
  o [COLLECTIONS-481] No collision detection/resolution was performed when calling "CompositeSet#addComposited(...)"
                      with more than one Set as argument. Additionally use varargs parameters instead of arrays
                      in CompositeSet and CompositeCollection constructor and addComposited method. Thanks to Hollis Waite.

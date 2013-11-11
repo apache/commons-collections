@@ -22,26 +22,27 @@ import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BulkTest;
 
 /**
- * Extension of {@link AbstractBagTest} for exercising the {@link HashBag}
+ * Extension of {@link AbstractBagTest} for exercising the {@link SynchronizedBag}
  * implementation.
  *
+ * @since 4.0
  * @version $Id$
  */
-public class HashBagTest<T> extends AbstractBagTest<T> {
+public class SynchronizedBagTest<T> extends AbstractBagTest<T> {
 
-    public HashBagTest(final String testName) {
+    public SynchronizedBagTest(final String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        return BulkTest.makeSuite(HashBagTest.class);
+        return BulkTest.makeSuite(SynchronizedBagTest.class);
     }
 
     //-----------------------------------------------------------------------
 
     @Override
     public Bag<T> makeObject() {
-        return new HashBag<T>();
+        return SynchronizedBag.synchronizedBag(new HashBag<T>());
     }
 
     @Override
@@ -51,8 +52,9 @@ public class HashBagTest<T> extends AbstractBagTest<T> {
 
 //    public void testCreate() throws Exception {
 //        Bag<T> bag = makeObject();
-//        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/HashBag.emptyCollection.version4.obj");
+//        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/SynchronizedBag.emptyCollection.version4.obj");
 //        bag = makeFullCollection();
-//        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/HashBag.fullCollection.version4.obj");
+//        writeExternalFormToDisk((java.io.Serializable) bag, "src/test/resources/data/test/SynchronizedBag.fullCollection.version4.obj");
 //    }
+
 }

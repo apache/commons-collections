@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.bag;
 
+import java.util.Iterator;
+
 import org.apache.commons.collections4.SortedBag;
 
 /**
@@ -32,11 +34,126 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
         super(testName);
     }
 
+    //-----------------------------------------------------------------------
+    /**
+     * Verification extension, will check the order of elements,
+     * the sets should already be verified equal.
+     */
+    @Override
+    public void verify() {
+        super.verify();
+
+        // Check that iterator returns elements in order and first() and last()
+        // are consistent
+        final Iterator<T> colliter = getCollection().iterator();
+        final Iterator<T> confiter = getConfirmed().iterator();
+        T first = null;
+        T last = null;
+        while (colliter.hasNext()) {
+            if (first == null) {
+                first = colliter.next();
+                last = first;
+            } else {
+              last = colliter.next();
+            }
+            assertEquals("Element appears to be out of order.", last, confiter.next());
+        }
+        if (getCollection().size() > 0) {
+            assertEquals("Incorrect element returned by first().", first,
+                getCollection().first());
+            assertEquals("Incorrect element returned by last().", last,
+                getCollection().last());
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Overridden because SortedBags don't allow null elements (normally).
+     * @return false
+     */
+    @Override
+    public boolean isNullSupported() {
+        return false;
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public abstract SortedBag<T> makeObject();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public SortedBag<T> makeFullCollection() {
+        return (SortedBag<T>) super.makeFullCollection();
+    }
+
+    /**
+     * Returns an empty {@link TreeBag} for use in modification testing.
+     *
+     * @return a confirmed empty collection
+     */
+    @Override
+    public SortedBag<T> makeConfirmedCollection() {
+        return new TreeBag<T>();
+    }
+
+    //-----------------------------------------------------------------------
+
+    @Override
+    public void resetEmpty() {
+        this.setCollection(CollectionSortedBag.collectionSortedBag(makeObject()));
+        this.setConfirmed(makeConfirmedCollection());
+    }
+
+    @Override
+    public void resetFull() {
+        this.setCollection(CollectionSortedBag.collectionSortedBag(makeFullCollection()));
+        this.setConfirmed(makeConfirmedFullCollection());
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Override to return comparable objects.
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public T[] getFullNonNullElements() {
+        final Object[] elements = new Object[30];
+
+        for (int i = 0; i < 30; i++) {
+            elements[i] = Integer.valueOf(i + i + 1);
+        }
+        return (T[]) elements;
+    }
+
+    /**
+     * Override to return comparable objects.
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public T[] getOtherNonNullElements() {
+        final Object[] elements = new Object[30];
+        for (int i = 0; i < 30; i++) {
+            elements[i] = Integer.valueOf(i + i + 2);
+        }
+        return (T[]) elements;
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns the {@link #collection} field cast to a {@link SortedBag}.
+     *
+     * @return the collection field as a SortedBag
+     */
+    @Override
+    public SortedBag<T> getCollection() {
+        return (SortedBag<T>) super.getCollection();
+    }
+
+    //-----------------------------------------------------------------------
 
     // TODO: Add the SortedBag tests!
 }
