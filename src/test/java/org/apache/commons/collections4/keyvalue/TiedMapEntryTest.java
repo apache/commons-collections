@@ -27,10 +27,6 @@ import java.util.Map;
  */
 public class TiedMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 
-    public TiedMapEntryTest(final String testName) {
-        super(testName);
-    }
-
     //-----------------------------------------------------------------------
     /**
      * Gets the instance to test

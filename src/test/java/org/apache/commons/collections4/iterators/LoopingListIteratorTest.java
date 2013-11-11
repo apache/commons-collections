@@ -30,10 +30,6 @@ import junit.framework.TestCase;
  */
 public class LoopingListIteratorTest extends TestCase {
 
-    public LoopingListIteratorTest(final String testName) {
-        super(testName);
-    }
-
     /**
      * Tests constructor exception.
      */

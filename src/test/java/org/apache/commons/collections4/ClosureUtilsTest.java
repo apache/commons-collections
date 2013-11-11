@@ -40,13 +40,6 @@ public class ClosureUtilsTest extends TestCase {
 
     private static final Object cString = "Hello";
 
-    /**
-     * Construct
-     */
-    public ClosureUtilsTest(final String name) {
-        super(name);
-    }
-
     static class MockClosure<T> implements Closure<T> {
         int count = 0;
 

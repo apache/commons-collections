@@ -41,10 +41,6 @@ public class MultiKeyTest extends TestCase {
     Integer FOUR = Integer.valueOf(4);
     Integer FIVE = Integer.valueOf(5);
 
-    public MultiKeyTest(final String name) {
-        super(name);
-    }
-
     @Override
     public void setUp() throws Exception {
         super.setUp();

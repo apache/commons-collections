@@ -36,15 +36,6 @@ public abstract class AbstractMapEntryTest<K, V> extends TestCase {
     protected final String key = "name";
     protected final String value = "duke";
 
-    /**
-     * JUnit constructor.
-     *
-     * @param testName  the test name
-     */
-    public AbstractMapEntryTest(final String testName) {
-        super(testName);
-    }
-
     //-----------------------------------------------------------------------
     /**
      * Make an instance of Map.Entry with the default (null) key and value.

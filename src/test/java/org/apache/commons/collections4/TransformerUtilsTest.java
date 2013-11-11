@@ -46,13 +46,6 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     private static final Object cInteger = Integer.valueOf(6);
 
     /**
-     * Construct
-     */
-    public TransformerUtilsTest(final String name) {
-        super(name);
-    }
-
-    /**
      * Set up instance variables required by this test case.
      */
     @Override

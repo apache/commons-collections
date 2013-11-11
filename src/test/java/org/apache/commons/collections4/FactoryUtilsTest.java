@@ -39,13 +39,6 @@ import org.junit.Test;
 public class FactoryUtilsTest extends junit.framework.TestCase {
 
     /**
-     * Construct
-     */
-    public FactoryUtilsTest(final String name) {
-        super(name);
-    }
-
-    /**
      * Set up instance variables required by this test case.
      */
     @Override

@@ -29,10 +29,6 @@ import org.apache.commons.collections4.Unmodifiable;
  */
 public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 
-    public UnmodifiableMapEntryTest(final String testName) {
-        super(testName);
-    }
-
     //-----------------------------------------------------------------------
     /**
      * Make an instance of Map.Entry with the default (null) key and value.

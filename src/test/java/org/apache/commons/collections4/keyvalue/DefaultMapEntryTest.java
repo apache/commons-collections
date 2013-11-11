@@ -28,10 +28,6 @@ import org.apache.commons.collections4.KeyValue;
  */
 public class DefaultMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 
-    public DefaultMapEntryTest(final String testName) {
-        super(testName);
-    }
-
     //-----------------------------------------------------------------------
     /**
      * Make an instance of Map.Entry with the default (null) key and value.

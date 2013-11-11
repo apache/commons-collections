@@ -32,16 +32,6 @@ public class DefaultKeyValueTest<K, V> extends TestCase {
     private final String key = "name";
     private final String value = "duke";
 
-    /**
-     * JUnit constructor.
-     *
-     * @param testName  the test name
-     */
-    public DefaultKeyValueTest(final String testName) {
-        super(testName);
-
-    }
-
     //-----------------------------------------------------------------------
     /**
      * Make an instance of DefaultKeyValue with the default (null) key and value.

@@ -35,9 +35,6 @@ import org.junit.Assert;
  */
 @SuppressWarnings("boxing")
 public class FilterListIteratorTest extends TestCase {
-    public FilterListIteratorTest(final String testName) {
-        super(testName);
-    }
 
     private ArrayList<Integer> list = null;
     private ArrayList<Integer> odds = null;
