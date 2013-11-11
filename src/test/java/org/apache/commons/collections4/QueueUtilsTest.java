@@ -58,6 +58,8 @@ public class QueueUtilsTest extends BulkTest {
         } catch (final IllegalArgumentException ex) {
             // expected
         }
+        
+        assertSame("UnmodifiableQueue shall not be decorated", queue, QueueUtils.unmodifiableQueue(queue));
     }
 
     public void testPredicatedQueue() {

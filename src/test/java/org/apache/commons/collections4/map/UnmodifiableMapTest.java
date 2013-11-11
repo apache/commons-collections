@@ -65,6 +65,7 @@ public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     //-----------------------------------------------------------------------
+
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
@@ -79,6 +80,8 @@ public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
             fail();
         } catch (final IllegalArgumentException ex) {}
     }
+
+    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

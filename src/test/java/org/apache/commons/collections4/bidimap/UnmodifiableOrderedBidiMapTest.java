@@ -20,9 +20,10 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import junit.framework.Test;
-import org.apache.commons.collections4.BidiMap;
+
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.OrderedBidiMap;
+import org.apache.commons.collections4.Unmodifiable;
 
 /**
  * JUnit tests.
@@ -45,7 +46,7 @@ public class UnmodifiableOrderedBidiMapTest<K extends Comparable<K>, V extends C
     }
 
     @Override
-    public BidiMap<K, V> makeFullMap() {
+    public OrderedBidiMap<K, V> makeFullMap() {
         final OrderedBidiMap<K, V> bidi = new TreeBidiMap<K, V>();
         addSampleMappings(bidi);
         return UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(bidi);
@@ -89,4 +90,20 @@ public class UnmodifiableOrderedBidiMapTest<K extends Comparable<K>, V extends C
         return false;
     }
 
+    //-----------------------------------------------------------------------
+
+    public void testUnmodifiable() {
+        assertTrue(makeObject() instanceof Unmodifiable);
+        assertTrue(makeFullMap() instanceof Unmodifiable);
+    }
+    
+    public void testDecorateFactory() {
+        final OrderedBidiMap<K, V> map = makeFullMap();
+        assertSame(map, UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(map));
+
+        try {
+            UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(null);
+            fail();
+        } catch (final IllegalArgumentException ex) {}
+    }
 }

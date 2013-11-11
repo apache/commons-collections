@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 
 /**
@@ -62,6 +63,11 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
     }
 
     @Override
+    public Queue<E> getCollection() {
+        return super.getCollection();
+    }
+
+    @Override
     public boolean isAddSupported() {
         return false;
     }
@@ -76,6 +82,7 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
         return false;
     }
 
+    //-----------------------------------------------------------------------
     public void testQueueRemove() {
         resetEmpty();
         try {
@@ -83,6 +90,23 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
             fail();
         } catch (final UnsupportedOperationException ex) {}
     }
+
+    public void testUnmodifiable() {
+        assertTrue(makeObject() instanceof Unmodifiable);
+        assertTrue(makeFullCollection() instanceof Unmodifiable);
+    }
+    
+    public void testDecorateFactory() {
+        final Queue<E> queue = makeFullCollection();
+        assertSame(queue, UnmodifiableQueue.unmodifiableQueue(queue));
+
+        try {
+            UnmodifiableQueue.unmodifiableQueue(null);
+            fail();
+        } catch (final IllegalArgumentException ex) {}
+    }
+
+    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {
@@ -96,11 +120,4 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/UnmodifiableQueue.fullCollection.version4.obj");
 //    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Queue<E> getCollection() {
-        return super.getCollection();
-    }
 }

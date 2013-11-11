@@ -20,8 +20,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import junit.framework.Test;
+
 import org.apache.commons.collections4.BidiMap;
 import org.apache.commons.collections4.BulkTest;
+import org.apache.commons.collections4.Unmodifiable;
 
 /**
  * JUnit tests.
@@ -78,4 +80,21 @@ public class UnmodifiableBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
         return false;
     }
 
+    //-----------------------------------------------------------------------
+
+    public void testUnmodifiable() {
+        assertTrue(makeObject() instanceof Unmodifiable);
+        assertTrue(makeFullMap() instanceof Unmodifiable);
+    }
+    
+    public void testDecorateFactory() {
+        final BidiMap<K, V> map = makeFullMap();
+        assertSame(map, UnmodifiableBidiMap.unmodifiableBidiMap(map));
+
+        try {
+            UnmodifiableBidiMap.unmodifiableBidiMap(null);
+            fail();
+        } catch (final IllegalArgumentException ex) {}
+    }
+    
 }

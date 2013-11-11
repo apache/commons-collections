@@ -64,6 +64,7 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
     }
 
     //-----------------------------------------------------------------------
+
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
@@ -78,6 +79,8 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
             fail();
         } catch (final IllegalArgumentException ex) {}
     }
+
+    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

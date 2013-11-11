@@ -21,6 +21,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.collections4.Unmodifiable;
+
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link UnmodifiableCollection} implementation.
@@ -68,6 +70,25 @@ public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
     public boolean isRemoveSupported() {
         return false;
     }
+
+    //-----------------------------------------------------------------------
+    
+    public void testUnmodifiable() {
+        assertTrue(makeObject() instanceof Unmodifiable);
+        assertTrue(makeFullCollection() instanceof Unmodifiable);
+    }
+    
+    public void testDecorateFactory() {
+        final Collection<E> coll = makeFullCollection();
+        assertSame(coll, UnmodifiableCollection.unmodifiableCollection(coll));
+
+        try {
+            UnmodifiableCollection.unmodifiableCollection(null);
+            fail();
+        } catch (final IllegalArgumentException ex) {}
+    }
+
+    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

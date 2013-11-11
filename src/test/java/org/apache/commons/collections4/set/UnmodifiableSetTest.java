@@ -23,6 +23,7 @@ import java.util.Set;
 import junit.framework.Test;
 
 import org.apache.commons.collections4.BulkTest;
+import org.apache.commons.collections4.Unmodifiable;
 
 /**
  * Extension of {@link AbstractSetTest} for exercising the
@@ -63,6 +64,25 @@ public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
     public boolean isRemoveSupported() {
         return false;
     }
+
+    //-----------------------------------------------------------------------
+
+    public void testUnmodifiable() {
+        assertTrue(makeObject() instanceof Unmodifiable);
+        assertTrue(makeFullCollection() instanceof Unmodifiable);
+    }
+    
+    public void testDecorateFactory() {
+        final Set<E> set = makeFullCollection();
+        assertSame(set, UnmodifiableSet.unmodifiableSet(set));
+
+        try {
+            UnmodifiableSet.unmodifiableSet(null);
+            fail();
+        } catch (final IllegalArgumentException ex) {}
+    }
+
+    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

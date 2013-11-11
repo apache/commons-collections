@@ -23,6 +23,7 @@ import junit.framework.Test;
 
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.SortedBidiMap;
+import org.apache.commons.collections4.Unmodifiable;
 
 /**
  * JUnit tests.
@@ -93,6 +94,23 @@ public class UnmodifiableSortedBidiMapTest<K extends Comparable<K>, V extends Co
     @Override
     public boolean isRemoveSupported() {
         return false;
+    }
+
+    //-----------------------------------------------------------------------
+
+    public void testUnmodifiable() {
+        assertTrue(makeObject() instanceof Unmodifiable);
+        assertTrue(makeFullMap() instanceof Unmodifiable);
+    }
+    
+    public void testDecorateFactory() {
+        final SortedBidiMap<K, V> map = makeFullMap();
+        assertSame(map, UnmodifiableSortedBidiMap.unmodifiableSortedBidiMap(map));
+
+        try {
+            UnmodifiableSortedBidiMap.unmodifiableSortedBidiMap(null);
+            fail();
+        } catch (final IllegalArgumentException ex) {}
     }
 
 }

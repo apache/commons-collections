@@ -82,6 +82,16 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
         verifyUnmodifiable(list.subList(0, 2));
     }
 
+    public void testDecorateFactory() {
+        final List<E> list = makeObject();
+        assertSame(list, UnmodifiableList.unmodifiableList(list));
+
+        try {
+            UnmodifiableList.unmodifiableList(null);
+            fail();
+        } catch (final IllegalArgumentException ex) {}
+    }
+
     @SuppressWarnings("unchecked")
     protected void verifyUnmodifiable(final List<E> list) {
         try {
@@ -160,6 +170,8 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
             // expected
         }
     }
+
+    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

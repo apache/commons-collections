@@ -89,6 +89,16 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
         verifyUnmodifiable(set.subSet((E) Integer.valueOf(1), (E) Integer.valueOf(3)));
     }
 
+    public void testDecorateFactory() {
+        final SortedSet<E> set = makeFullCollection();
+        assertSame(set, UnmodifiableSortedSet.unmodifiableSortedSet(set));
+
+        try {
+            UnmodifiableSortedSet.unmodifiableSortedSet(null);
+            fail();
+        } catch (final IllegalArgumentException ex) {}
+    }
+
     /**
      * Verifies that a set is not modifiable
      */
@@ -137,6 +147,8 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
         final Comparator<? super E> c = set.comparator();
         assertTrue("natural order, so comparator should be null", c == null);
     }
+
+    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {

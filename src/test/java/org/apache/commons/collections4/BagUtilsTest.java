@@ -76,6 +76,8 @@ public class BagUtilsTest extends BulkTest {
         } catch (final IllegalArgumentException ex) {
             // expected
         }
+        
+        assertSame("UnmodifiableBag shall not be decorated", bag, BagUtils.unmodifiableBag(bag));
     }
 
     public void testPredicatedBag() {
@@ -127,7 +129,7 @@ public class BagUtilsTest extends BulkTest {
     }
 
     public void testUnmodifiableSortedBag() {
-        Bag<Object> bag = BagUtils.unmodifiableSortedBag(new TreeBag<Object>());
+        SortedBag<Object> bag = BagUtils.unmodifiableSortedBag(new TreeBag<Object>());
         assertTrue("Returned object should be an UnmodifiableSortedBag.",
             bag instanceof UnmodifiableSortedBag);
         try {
@@ -136,6 +138,8 @@ public class BagUtilsTest extends BulkTest {
         } catch (final IllegalArgumentException ex) {
             // expected
         }
+        
+        assertSame("UnmodifiableSortedBag shall not be decorated", bag, BagUtils.unmodifiableSortedBag(bag));
     }
 
     public void testPredicatedSortedBag() {
