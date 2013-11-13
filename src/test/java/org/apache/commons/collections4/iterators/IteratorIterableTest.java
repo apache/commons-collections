@@ -45,6 +45,7 @@ public class IteratorIterableTest extends BulkTest {
         return iter;
     }
 
+    @SuppressWarnings("unused")
     public void testIterator() {
         final Iterator<Integer> iter = createIterator();
         final Iterable<Number> iterable = new IteratorIterable<Number>(iter);
@@ -53,7 +54,7 @@ public class IteratorIterableTest extends BulkTest {
         verifyIteration(iterable);
 
         // second use
-        for (@SuppressWarnings("unused") final Number actual : iterable) {
+        for (final Number actual : iterable) {
             fail("should not be able to iterate twice");
         }
     }
