@@ -47,27 +47,21 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
 
     @Override
     public String[] ignoredTests() {
-        // there are several bugs in the following JVM:
-        // IBM J9 VM build 2.4, JRE 1.6.0 IBM J9 2.4 Linux x86-32 jvmxi3260sr12-20121024_126067
-        // thus disabling tests related to these bugs
-
-        final String vmName = System.getProperty("java.vm.name");
-        final String version = System.getProperty("java.version");
-
-        if (vmName == null || version == null) {
-            return null;
-        }
-
-        if (vmName.equals("IBM J9 VM") && version.equals("1.6.0")) {
-            final String preSubMap = "TransformedSortedMapTest.bulkTestSubMap.bulkTestMap";
-            final String preTailMap = "TransformedSortedMapTest.bulkTestTailMap.bulkTestMap";
+        if (IBMJDK16) {
+            final String preSubMap = "TransformedSortedMapTest.bulkTestSubMap.";
+            final String preTailMap = "TransformedSortedMapTest.bulkTestTailMap.";
             return new String[] {
-                    preSubMap + "EntrySet.testCollectionIteratorRemove",
-                    preSubMap + "KeySet.testCollectionRemove",
-                    preSubMap + "Values.testCollectionIteratorRemove",
-                    preTailMap + "Values.testCollectionClear",
-                    preTailMap + "Values.testCollectionRemoveAll",
-                    preTailMap + "Values.testCollectionRetainAll"
+                    preSubMap + "bulkTestMapEntrySet.testCollectionIteratorRemove",
+                    preSubMap + "bulkTestMapKeySet.testCollectionRemove",
+                    preSubMap + "bulkTestMapValues.testCollectionIteratorRemove",
+                    preTailMap + "testMapRemove",
+                    preTailMap + "bulkTestMapEntrySet.testCollectionIteratorRemove",
+                    preTailMap + "bulkTestMapEntrySet.testCollectionRemoveAll",
+                    preTailMap + "bulkTestMapKeySet.testCollectionIteratorRemove",
+                    preTailMap + "bulkTestMapKeySet.testCollectionRemoveAll",                    
+                    preTailMap + "bulkTestMapValues.testCollectionClear",
+                    preTailMap + "bulkTestMapValues.testCollectionRemoveAll",
+                    preTailMap + "bulkTestMapValues.testCollectionRetainAll"
             };
         } else {
             return null;

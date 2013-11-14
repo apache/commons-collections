@@ -48,29 +48,23 @@ public class DualTreeBidiMapTest<K extends Comparable<K>, V extends Comparable<V
      */
     @Override
     public String[] ignoredTests() {
-        String recursiveTest = "DualTreeBidiMapTest.bulkTestInverseMap.bulkTestInverseMap";
+        final String recursiveTest = "DualTreeBidiMapTest.bulkTestInverseMap.bulkTestInverseMap";
 
-        // there are several bugs in the following JVM:
-        // IBM J9 VM build 2.4, JRE 1.6.0 IBM J9 2.4 Linux x86-32 jvmxi3260sr12-20121024_126067
-        // thus disabling tests related to these bugs
-
-        final String vmName = System.getProperty("java.vm.name");
-        final String version = System.getProperty("java.version");
-
-        if (vmName == null || version == null) {
-            return new String[] { recursiveTest };
-        }
-
-        if (vmName.equals("IBM J9 VM") && version.equals("1.6.0")) {
-            final String preSub = "DualTreeBidiMapTest.bulkTestSubMap.bulkTestMap";
-            final String preTail = "DualTreeBidiMapTest.bulkTestTailMap.bulkTestMap";
+        if (IBMJDK16) {
+            final String preSub = "DualTreeBidiMapTest.bulkTestSubMap.";
+            final String preTail = "DualTreeBidiMapTest.bulkTestTailMap.";
             return new String[] {
                     recursiveTest,
-                    preSub + "EntrySet.testCollectionIteratorRemove",
-                    preSub + "Values.testCollectionIteratorRemove",
-                    preTail + "Values.testCollectionClear",
-                    preTail + "Values.testCollectionRemoveAll",
-                    preTail + "Values.testCollectionRetainAll"
+                    preSub + "bulkTestMapEntrySet.testCollectionIteratorRemove",
+                    preSub + "bulkTestMapValues.testCollectionIteratorRemove",
+                    preTail + "testMapRemove",
+                    preTail + "bulkTestMapEntrySet.testCollectionIteratorRemove",
+                    preTail + "bulkTestMapEntrySet.testCollectionRemoveAll",
+                    preTail + "bulkTestMapKeySet.testCollectionIteratorRemove",
+                    preTail + "bulkTestMapKeySet.testCollectionRemoveAll",                    
+                    preTail + "bulkTestMapValues.testCollectionClear",
+                    preTail + "bulkTestMapValues.testCollectionRemoveAll",
+                    preTail + "bulkTestMapValues.testCollectionRetainAll"
             };
         } else {
             return new String[] { recursiveTest };
