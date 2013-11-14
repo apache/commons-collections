@@ -690,8 +690,8 @@ public class CollectionUtilsTest extends MockTestCase {
             }
         }));
         assertEquals("a", resultOne.toString());
-        assertNull(CollectionUtils.forAllButLastDo(strings, null));
-        assertNull(CollectionUtils.forAllButLastDo((Collection<String>) null, null));
+        assertNull(CollectionUtils.forAllButLastDo(strings, (Closure<String>) null)); // do not remove cast
+        assertNull(CollectionUtils.forAllButLastDo((Collection<String>) null, (Closure<String>) null)); // do not remove cast
     }
 
     @Test
@@ -705,7 +705,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(collectionA.isEmpty() && !collectionB.isEmpty());
 
         assertNull(CollectionUtils.forAllButLastDo(col.iterator(), (Closure<List<? extends Number>>) null));
-        assertNull(CollectionUtils.forAllButLastDo((Iterator<String>) null, null));
+        assertNull(CollectionUtils.forAllButLastDo((Iterator<String>) null, (Closure<String>) null)); // do not remove cast
     }
 
     @Test
