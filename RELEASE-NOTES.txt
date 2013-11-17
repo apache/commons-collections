@@ -32,6 +32,8 @@ Compatibility
  o This release is not source or binary compatible with previous releases of
    Commons Collections. This includes releases from the 3.x branch as well as
    preceding alpha releases for 4.0 (see details of changes below).
+ o some unit tests are disabled when executed with an IBM JDK 6 due to a faulty
+   java.util.TreeMap implementation.
 
 
 Major changes since 3.2.1
