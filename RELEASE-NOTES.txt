@@ -47,6 +47,8 @@ Major changes since 3.2.1
 Changes since 4.0-alpha1
 ------------------------
 
+ o [COLLECTIONS-500] Renamed "V MultiMap#remove(K, V)" to "boolean MultiMap#removeMapping(K, V)"
+                     to avoid future conflicts with a default method of the Map interface in Java 8.
  o [COLLECTIONS-499] Refactored the test framework for Bag implementations to extend from
                      "AbstractCollectionTest" by decorating the concrete Bag instance with
                      a CollectionBag or CollectionSortedBag. 
@@ -171,6 +173,8 @@ New features
 Changed classes / methods
 -------------------------
 
+ o [COLLECTIONS-500] Renamed "V MultiMap#remove(K, V)" to "boolean MultiMap#removeMapping(K, V)"
+                     to avoid future conflicts with a default method of the Map interface in Java 8.
  o [COLLECTIONS-499] Refactored the test framework for Bag implementations to extend from
                      "AbstractCollectionTest" by decorating the concrete Bag instance with
                      a CollectionBag or CollectionSortedBag. 

@@ -25,7 +25,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 
-
 import org.apache.commons.collections4.AbstractObjectTest;
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.collections4.MultiMap;
@@ -179,7 +178,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
         final MultiValueMap<K, V> one = new MultiValueMap<K, V>();
         final Integer value = Integer.valueOf(1);
         one.put((K) "One", value);
-        one.remove("One", value);
+        one.removeMapping("One", value);
 
         final MultiValueMap<K, V> two = new MultiValueMap<K, V>();
         assertEquals(two, one);
@@ -207,7 +206,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
         assertEquals(4, map.totalSize());
         map.remove("A");
         assertEquals(3, map.totalSize());
-        map.remove("B", "BC");
+        map.removeMapping("B", "BC");
         assertEquals(2, map.totalSize());
     }
 
@@ -225,7 +224,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
         assertEquals(2, map.size());
         map.remove("A");
         assertEquals(1, map.size());
-        map.remove("B", "BC");
+        map.removeMapping("B", "BC");
         assertEquals(1, map.size());
     }
 
@@ -249,7 +248,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
         map.remove("A");
         assertEquals(0, map.size("A"));
         assertEquals(3, map.size("B"));
-        map.remove("B", "BC");
+        map.removeMapping("B", "BC");
         assertEquals(0, map.size("A"));
         assertEquals(2, map.size("B"));
     }
@@ -377,11 +376,11 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
         map.put((K) "A", "AA");
         map.put((K) "A", "AB");
         map.put((K) "A", "AC");
-        assertEquals(null, map.remove("C", "CA"));
-        assertEquals(null, map.remove("A", "AD"));
-        assertEquals("AC", map.remove("A", "AC"));
-        assertEquals("AB", map.remove("A", "AB"));
-        assertEquals("AA", map.remove("A", "AA"));
+        assertEquals(false, map.removeMapping("C", "CA"));
+        assertEquals(false, map.removeMapping("A", "AD"));
+        assertEquals(true, map.removeMapping("A", "AC"));
+        assertEquals(true, map.removeMapping("A", "AB"));
+        assertEquals(true, map.removeMapping("A", "AA"));
         assertEquals(new MultiValueMap<K, V>(), map);
     }
 
@@ -397,7 +396,8 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     @Override
     public Object makeObject() {
-        final Map m = makeEmptyMap();
+        @SuppressWarnings("unchecked")
+        final Map<String, String> m = makeEmptyMap();
         m.put("a", "1");
         m.put("a", "1b");
         m.put("b", "2");
@@ -407,6 +407,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
         return m;
     }
 
+    @SuppressWarnings("rawtypes")
     private Map makeEmptyMap() {
         return new MultiValueMap();
     }

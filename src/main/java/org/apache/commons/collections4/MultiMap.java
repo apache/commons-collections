@@ -56,12 +56,13 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      *
      * @param key  the key to remove from
      * @param item  the item to remove
-     * @return the value removed (which was passed in), null if nothing removed
+     * @return {@code true} if the mapping was removed, {@code false} otherwise
      * @throws UnsupportedOperationException if the map is unmodifiable
      * @throws ClassCastException if the key or value is of an invalid type
      * @throws NullPointerException if the key or value is null and null is invalid
+     * @since 4.0 (signature in previous releases: V remove(K, V))
      */
-    public V remove(K key, V item);
+    boolean removeMapping(K key, V item);
 
     //-----------------------------------------------------------------------
     /**

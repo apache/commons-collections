@@ -205,22 +205,21 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      *
      * @param key  the key to remove from
      * @param value the value to remove
-     * @return the value removed (which was passed in), null if nothing removed
+     * @return {@code true} if the mapping was removed, {@code false} otherwise
      */
-    @SuppressWarnings("unchecked")
-    public V remove(final Object key, final Object value) {
+    public boolean removeMapping(final Object key, final Object value) {
         final Collection<V> valuesForKey = getCollection(key);
         if (valuesForKey == null) {
-            return null;
+            return false;
         }
         final boolean removed = valuesForKey.remove(value);
         if (removed == false) {
-            return null;
+            return false;
         }
         if (valuesForKey.isEmpty()) {
             remove(key);
         }
-        return (V) value;
+        return true;
     }
 
     /**
