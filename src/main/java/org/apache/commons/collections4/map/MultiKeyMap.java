@@ -195,8 +195,9 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param key1  the first key
      * @param key2  the second key
      * @return the value mapped to the removed key, null if key not in map
+     * @since 4.0 (previous name: remove(Object, Object))
      */
-    public V remove(final Object key1, final Object key2) {
+    public V removeMultiKey(final Object key1, final Object key2) {
         final int hashCode = hash(key1, key2);
         final int index = decorated().hashIndex(hashCode, decorated().data.length);
         AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry = decorated().data[index];
@@ -327,8 +328,9 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param key2  the second key
      * @param key3  the third key
      * @return the value mapped to the removed key, null if key not in map
+     * @since 4.0 (previous name: remove(Object, Object, Object))
      */
-    public V remove(final Object key1, final Object key2, final Object key3) {
+    public V removeMultiKey(final Object key1, final Object key2, final Object key3) {
         final int hashCode = hash(key1, key2, key3);
         final int index = decorated().hashIndex(hashCode, decorated().data.length);
         AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry = decorated().data[index];
@@ -469,8 +471,9 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param key3  the third key
      * @param key4  the fourth key
      * @return the value mapped to the removed key, null if key not in map
+     * @since 4.0 (previous name: remove(Object, Object, Object, Object))
      */
-    public V remove(final Object key1, final Object key2, final Object key3, final Object key4) {
+    public V removeMultiKey(final Object key1, final Object key2, final Object key3, final Object key4) {
         final int hashCode = hash(key1, key2, key3, key4);
         final int index = decorated().hashIndex(hashCode, decorated().data.length);
         AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry = decorated().data[index];
@@ -622,8 +625,10 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param key4  the fourth key
      * @param key5  the fifth key
      * @return the value mapped to the removed key, null if key not in map
+     * @since 4.0 (previous name: remove(Object, Object, Object, Object, Object))
      */
-    public V remove(final Object key1, final Object key2, final Object key3, final Object key4, final Object key5) {
+    public V removeMultiKey(final Object key1, final Object key2, final Object key3,
+                            final Object key4, final Object key5) {
         final int hashCode = hash(key1, key2, key3, key4, key5);
         final int index = decorated().hashIndex(hashCode, decorated().data.length);
         AbstractHashedMap.HashEntry<MultiKey<? extends K>, V> entry = decorated().data[index];

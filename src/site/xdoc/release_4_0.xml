@@ -156,6 +156,8 @@ have changed.
 
 <center><h3>Changed classes / methods</h3></center>
 <ul>
+<li>Renamed methods "V MultiKeyMap#remove(Object, Object, ...)" to "V MultiKeyMap#removeMultiKey(Object, Object, ...)"
+    to avoid future conflicts with a default method of the Map interface in Java 8.</li>
 <li>Renamed "V MultiMap#remove(K, V)" to "boolean MultiMap#removeMapping(K, V)"
     to avoid future conflicts with a default method of the Map interface in Java 8.</li>
 <li>Refactored the test framework for Bag implementations to extend from "AbstractCollectionTest" by decorating
