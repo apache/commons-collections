@@ -78,6 +78,7 @@ public abstract class AbstractBidiMapDecorator<K, V>
         return decorated().inverseBidiMap();
     }
 
+    @Override
     public Set<V> values() {
         return decorated().values();
     }

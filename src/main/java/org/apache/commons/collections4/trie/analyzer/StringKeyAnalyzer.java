@@ -42,14 +42,17 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
         return MSB >>> bit;
     }
 
+    @Override
     public int bitsPerElement() {
         return LENGTH;
     }
 
+    @Override
     public int lengthInBits(final String key) {
         return key != null ? key.length() * LENGTH : 0;
     }
 
+    @Override
     public int bitIndex(final String key, final int offsetInBits, final int lengthInBits,
                         final String other, final int otherOffsetInBits, final int otherLengthInBits) {
 
@@ -107,6 +110,7 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
         return KeyAnalyzer.EQUAL_BIT_KEY;
     }
 
+    @Override
     public boolean isBitSet(final String key, final int bitIndex, final int lengthInBits) {
         if (key == null || bitIndex >= lengthInBits) {
             return false;
@@ -118,6 +122,7 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
         return (key.charAt(index) & mask(bit)) != 0;
     }
 
+    @Override
     public boolean isPrefix(final String prefix, final int offsetInBits,
                             final int lengthInBits, final String key) {
         if (offsetInBits % LENGTH != 0 || lengthInBits % LENGTH != 0) {

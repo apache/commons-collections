@@ -83,6 +83,7 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public void testQueueRemove() {
         resetEmpty();
         try {
