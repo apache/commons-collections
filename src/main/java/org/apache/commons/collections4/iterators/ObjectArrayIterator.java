@@ -33,8 +33,7 @@ import org.apache.commons.collections4.ResettableIterator;
  * @since 3.0
  * @version $Id$
  */
-public class ObjectArrayIterator<E>
-        implements Iterator<E>, ResettableIterator<E> {
+public class ObjectArrayIterator<E> implements ResettableIterator<E> {
 
     /** The array */
     final E[] array;

@@ -19,15 +19,14 @@ package org.apache.commons.collections4.bag;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.apache.commons.collections4.set.UnmodifiableSet;
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.iterators.UnmodifiableIterator;
+import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
  * Decorates another {@link Bag} to ensure it can't be altered.
@@ -40,7 +39,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * @version $Id$
  */
 public final class UnmodifiableBag<E>
-        extends AbstractBagDecorator<E> implements Unmodifiable, Serializable {
+        extends AbstractBagDecorator<E> implements Unmodifiable {
 
     /** Serialization version */
     private static final long serialVersionUID = -1873799975157099624L;

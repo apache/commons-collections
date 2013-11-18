@@ -22,7 +22,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Map;
 
-import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.keyvalue.MultiKey;
 
@@ -76,7 +75,7 @@ import org.apache.commons.collections4.keyvalue.MultiKey;
  * @version $Id$
  */
 public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K>, V>
-        implements IterableMap<MultiKey<? extends K>, V>, Serializable, Cloneable {
+        implements Serializable, Cloneable {
 
     /** Serialisation version */
     private static final long serialVersionUID = -1788199231038721040L;

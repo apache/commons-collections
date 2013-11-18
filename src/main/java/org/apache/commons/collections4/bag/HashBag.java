@@ -38,7 +38,7 @@ import org.apache.commons.collections4.Bag;
  * @since 3.0 (previously in main package v2.0)
  * @version $Id$
  */
-public class HashBag<E> extends AbstractMapBag<E> implements Bag<E>, Serializable {
+public class HashBag<E> extends AbstractMapBag<E> implements Serializable {
 
     /** Serial version lock */
     private static final long serialVersionUID = -6561115435802554013L;

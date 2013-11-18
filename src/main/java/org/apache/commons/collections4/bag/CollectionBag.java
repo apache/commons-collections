@@ -19,7 +19,6 @@ package org.apache.commons.collections4.bag;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -31,8 +30,7 @@ import org.apache.commons.collections4.Bag;
  * @since 4.0
  * @version $Id$
  */
-public final class CollectionBag<E>
-        extends AbstractBagDecorator<E> implements Serializable {
+public final class CollectionBag<E> extends AbstractBagDecorator<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = -2560033712679053143L;

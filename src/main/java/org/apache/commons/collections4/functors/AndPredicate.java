@@ -26,7 +26,7 @@ import org.apache.commons.collections4.Predicate;
  * @since 3.0
  * @version $Id$
  */
-public final class AndPredicate<T> implements Predicate<T>, PredicateDecorator<T>, Serializable {
+public final class AndPredicate<T> implements PredicateDecorator<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = 4189014213763186912L;

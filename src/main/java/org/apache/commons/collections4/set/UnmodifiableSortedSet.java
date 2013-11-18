@@ -19,7 +19,6 @@ package org.apache.commons.collections4.set;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.SortedSet;
@@ -39,7 +38,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  */
 public final class UnmodifiableSortedSet<E>
         extends AbstractSortedSetDecorator<E>
-        implements Unmodifiable, Serializable {
+        implements Unmodifiable {
 
     /** Serialization version */
     private static final long serialVersionUID = -725356885467962424L;

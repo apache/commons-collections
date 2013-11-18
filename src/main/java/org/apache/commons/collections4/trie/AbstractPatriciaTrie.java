@@ -43,7 +43,7 @@ import org.apache.commons.collections4.Trie;
  * @since 4.0
  * @version $Id$
  */
-abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> implements Trie<K, V> {
+abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
     private static final long serialVersionUID = 5155253417231339498L;
 

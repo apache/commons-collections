@@ -56,7 +56,7 @@ import org.apache.commons.collections4.collection.UnmodifiableCollection;
  */
 public class FixedSizeSortedMap<K, V>
         extends AbstractSortedMapDecorator<K, V>
-        implements SortedMap<K, V>, BoundedMap<K, V>, Serializable {
+        implements BoundedMap<K, V>, Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = 3126019624511683653L;

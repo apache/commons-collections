@@ -28,7 +28,7 @@ import org.apache.commons.collections4.ResettableListIterator;
  * @since 2.1
  * @version $Id$
  */
-public class SingletonListIterator<E> implements ListIterator<E>, ResettableListIterator<E> {
+public class SingletonListIterator<E> implements ResettableListIterator<E> {
 
     private boolean beforeFirst = true;
     private boolean nextCalled = false;

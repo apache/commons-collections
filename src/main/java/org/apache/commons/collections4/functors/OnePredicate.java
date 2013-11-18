@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.functors;
 
-import java.io.Serializable;
 import java.util.Collection;
 
 import org.apache.commons.collections4.Predicate;
@@ -32,7 +31,7 @@ import org.apache.commons.collections4.Predicate;
  * @since 3.0
  * @version $Id$
  */
-public final class OnePredicate<T> extends AbstractQuantifierPredicate<T> implements Serializable {
+public final class OnePredicate<T> extends AbstractQuantifierPredicate<T> {
 
     /** Serial version UID */
     private static final long serialVersionUID = -8125389089924745785L;

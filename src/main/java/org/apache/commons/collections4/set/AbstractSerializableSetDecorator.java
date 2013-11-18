@@ -19,7 +19,6 @@ package org.apache.commons.collections4.set;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Set;
 
@@ -30,8 +29,7 @@ import java.util.Set;
  * @version $Id$
  */
 public abstract class AbstractSerializableSetDecorator<E>
-        extends AbstractSetDecorator<E>
-        implements Serializable {
+        extends AbstractSetDecorator<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = 1229469966212206107L;

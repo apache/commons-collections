@@ -59,7 +59,7 @@ import org.apache.commons.collections4.functors.FactoryTransformer;
  * @since 3.0
  * @version $Id$
  */
-public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Map<K, V>, Serializable {
+public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = 7990956402564206740L;

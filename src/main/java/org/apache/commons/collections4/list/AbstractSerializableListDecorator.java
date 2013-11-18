@@ -19,7 +19,6 @@ package org.apache.commons.collections4.list;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
@@ -30,8 +29,7 @@ import java.util.List;
  * @version $Id$
  */
 public abstract class AbstractSerializableListDecorator<E>
-        extends AbstractListDecorator<E>
-        implements Serializable {
+        extends AbstractListDecorator<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = 2684959196747496299L;

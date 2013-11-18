@@ -26,7 +26,7 @@ import org.apache.commons.collections4.Predicate;
  * @since 4.0
  * @version $Id$
  */
-public abstract class AbstractQuantifierPredicate<T> implements Predicate<T>, PredicateDecorator<T>, Serializable {
+public abstract class AbstractQuantifierPredicate<T> implements PredicateDecorator<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -3094696765038308799L;

@@ -38,7 +38,7 @@ import org.apache.commons.collections4.ResettableListIterator;
  * @version $Id$
  */
 public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
-        implements ListIterator<E>, ResettableListIterator<E> {
+        implements ResettableListIterator<E> {
 
     /**
      * Holds the index of the last item returned by a call to <code>next()</code>

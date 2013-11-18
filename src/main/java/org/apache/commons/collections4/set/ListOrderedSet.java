@@ -51,8 +51,7 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * @version $Id$
  */
 public class ListOrderedSet<E>
-    extends AbstractSerializableSetDecorator<E>
-    implements Set<E> {
+    extends AbstractSerializableSetDecorator<E> {
 
     /** Serialization version */
     private static final long serialVersionUID = -228664372470420141L;

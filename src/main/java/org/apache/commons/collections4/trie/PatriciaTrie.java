@@ -55,7 +55,7 @@ import org.apache.commons.collections4.trie.analyzer.StringKeyAnalyzer;
  * @since 4.0
  * @version $Id$
  */
-public class PatriciaTrie<E> extends AbstractPatriciaTrie<String, E> implements Trie<String, E> {
+public class PatriciaTrie<E> extends AbstractPatriciaTrie<String, E> {
 
     private static final long serialVersionUID = 4446367780901817838L;
 

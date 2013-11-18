@@ -26,7 +26,7 @@ import org.apache.commons.collections4.Predicate;
  * @since 3.0
  * @version $Id$
  */
-public final class NullIsFalsePredicate<T> implements Predicate<T>, PredicateDecorator<T>, Serializable {
+public final class NullIsFalsePredicate<T> implements PredicateDecorator<T>, Serializable {
 
     /** Serial version UID */
     private static final long serialVersionUID = -2997501534564735525L;

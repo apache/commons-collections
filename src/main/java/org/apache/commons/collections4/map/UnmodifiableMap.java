@@ -44,7 +44,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableMapIterator;
  */
 public final class UnmodifiableMap<K, V>
         extends AbstractMapDecorator<K, V>
-        implements IterableMap<K, V>, Unmodifiable, Serializable {
+        implements Unmodifiable, Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = 2737023427269031941L;

@@ -54,7 +54,7 @@ import org.apache.commons.collections4.collection.UnmodifiableCollection;
  */
 public class FixedSizeMap<K, V>
         extends AbstractMapDecorator<K, V>
-        implements Map<K, V>, BoundedMap<K, V>, Serializable {
+        implements BoundedMap<K, V>, Serializable {
 
     /** Serialization version */
     private static final long serialVersionUID = 7450927208116179316L;

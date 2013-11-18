@@ -29,7 +29,7 @@ import org.apache.commons.collections4.ResettableIterator;
  * @version $Id$
  */
 public class SingletonIterator<E>
-        implements Iterator<E>, ResettableIterator<E> {
+        implements ResettableIterator<E> {
 
     /** Whether remove is allowed */
     private final boolean removeAllowed;
