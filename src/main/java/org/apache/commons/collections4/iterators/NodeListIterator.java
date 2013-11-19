@@ -72,9 +72,8 @@ public class NodeListIterator implements Iterator<Node> {
     public Node next() {
         if (nodeList != null && index < nodeList.getLength()) {
             return nodeList.item(index++);
-        } else {
-            throw new NoSuchElementException("underlying nodeList has no more elements");
         }
+        throw new NoSuchElementException("underlying nodeList has no more elements");
     }
 
     /**
