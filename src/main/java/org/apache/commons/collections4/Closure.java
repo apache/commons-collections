@@ -39,6 +39,6 @@ public interface Closure<T> {
      * @throws IllegalArgumentException (runtime) if the input is invalid
      * @throws FunctorException (runtime) if any other error occurs
      */
-    public void execute(T input);
+    void execute(T input);
 
 }
