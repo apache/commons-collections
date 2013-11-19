@@ -39,6 +39,6 @@ public interface Factory<T> {
      * @return a new object
      * @throws FunctorException (runtime) if the factory cannot create an object
      */
-    public T create();
+    T create();
 
 }
