@@ -460,7 +460,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
          * @throws NullPointerException if the object cannot be added because its null
          * @throws IllegalArgumentException if the object cannot be added
          */
-        public boolean add(CompositeSet<E> composite, List<Set<E>> sets, E obj);
+        boolean add(CompositeSet<E> composite, List<Set<E>> sets, E obj);
 
         /**
          * Called when a collection is to be added to the composite.
@@ -474,7 +474,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
          * @throws NullPointerException if the object cannot be added because its null
          * @throws IllegalArgumentException if the object cannot be added
          */
-        public boolean addAll(CompositeSet<E> composite,
+        boolean addAll(CompositeSet<E> composite,
                               List<Set<E>> sets,
                               Collection<? extends E> coll);
 
@@ -490,7 +490,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
          * @param added  the Set being added to the composite
          * @param intersects  the intersection of the existing and added sets
          */
-        public void resolveCollision(CompositeSet<E> comp,
+        void resolveCollision(CompositeSet<E> comp,
                                      Set<E> existing,
                                      Set<E> added,
                                      Collection<E> intersects);
