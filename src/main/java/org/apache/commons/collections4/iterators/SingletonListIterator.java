@@ -133,10 +133,9 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
     public void remove() {
         if(!nextCalled || removed) {
             throw new IllegalStateException();
-        } else {
-            object = null;
-            removed = true;
         }
+        object = null;
+        removed = true;
     }
 
     /**
