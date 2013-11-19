@@ -48,11 +48,11 @@ public interface SortedBidiMap<K, V> extends OrderedBidiMap<K, V>, SortedMap<K, 
      *
      * @return an inverted bidirectional map
      */
-    public SortedBidiMap<V, K> inverseBidiMap();
+    SortedBidiMap<V, K> inverseBidiMap();
 
     /**
      * Get the comparator used for the values in the value-to-key map aspect.
      * @return Comparator<? super V>
      */
-    public Comparator<? super V> valueComparator();
+    Comparator<? super V> valueComparator();
 }
