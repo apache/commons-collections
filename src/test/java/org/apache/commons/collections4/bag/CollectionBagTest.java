@@ -23,7 +23,6 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.apache.commons.collections4.Bag;
-import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 
 /**
