@@ -83,6 +83,6 @@ public class NodeListIterator implements Iterator<Node> {
      * @throws UnsupportedOperationException always
      */
     public void remove() {
-        throw new UnsupportedOperationException("remove() method not supported for an NodeListIterator.");
+        throw new UnsupportedOperationException("remove() method not supported for a NodeListIterator.");
     }
 }
