@@ -32,46 +32,46 @@ public interface Get<K, V> {
     /**
      * @see java.util.Map#containsKey(Object)
      */
-    public boolean containsKey(Object key);
+    boolean containsKey(Object key);
 
     /**
      * @see java.util.Map#containsValue(Object)
      */
-    public boolean containsValue(Object value);
+    boolean containsValue(Object value);
 
     /**
      * @see java.util.Map#entrySet()
      */
-    public Set<java.util.Map.Entry<K, V>> entrySet();
+    Set<java.util.Map.Entry<K, V>> entrySet();
 
     /**
      * @see java.util.Map#get(Object)
      */
-    public V get(Object key);
+    V get(Object key);
 
     /**
      * @see java.util.Map#remove(Object)
      */
-    public V remove(Object key);
+    V remove(Object key);
 
     /**
      * @see java.util.Map#isEmpty()
      */
-    public boolean isEmpty();
+    boolean isEmpty();
 
     /**
      * @see java.util.Map#keySet()
      */
-    public Set<K> keySet();
+    Set<K> keySet();
 
     /**
      * @see java.util.Map#size()
      */
-    public int size();
+    int size();
 
     /**
      * @see java.util.Map#values()
      */
-    public Collection<V> values();
+    Collection<V> values();
 
 }
