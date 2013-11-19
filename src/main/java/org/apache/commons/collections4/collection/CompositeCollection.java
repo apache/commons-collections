@@ -428,7 +428,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
          * @throws NullPointerException if the object cannot be added because its null
          * @throws IllegalArgumentException if the object cannot be added
          */
-        public boolean add(CompositeCollection<E> composite, List<Collection<E>> collections, E obj);
+        boolean add(CompositeCollection<E> composite, List<Collection<E>> collections, E obj);
 
         /**
          * Called when a collection is to be added to the composite.
@@ -442,7 +442,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
          * @throws NullPointerException if the object cannot be added because its null
          * @throws IllegalArgumentException if the object cannot be added
          */
-        public boolean addAll(CompositeCollection<E> composite,
+        boolean addAll(CompositeCollection<E> composite,
                               List<Collection<E>> collections,
                               Collection<? extends E> coll);
 
@@ -458,7 +458,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
          * @throws NullPointerException if the object cannot be removed because its null
          * @throws IllegalArgumentException if the object cannot be removed
          */
-        public boolean remove(CompositeCollection<E> composite,
+        boolean remove(CompositeCollection<E> composite,
                               List<Collection<E>> collections,
                               Object obj);
 
