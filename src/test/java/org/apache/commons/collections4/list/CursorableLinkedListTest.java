@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
@@ -74,7 +75,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         list.add(7,(E) Integer.valueOf(5));
         assertEquals("[-2, -1, 0, 1, 2, 3, 4, 5]",list.toString());
 
-        final java.util.List<E> list2 = new java.util.LinkedList<E>();
+        final java.util.List<E> list2 = new LinkedList<E>();
         list2.add((E) "A");
         list2.add((E) "B");
         list2.add((E) "C");
