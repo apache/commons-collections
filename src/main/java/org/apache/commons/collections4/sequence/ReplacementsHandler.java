@@ -47,6 +47,6 @@ public interface ReplacementsHandler<T> {
      * @param from  sub-sequence of objects coming from the first sequence
      * @param to  sub-sequence of objects coming from the second sequence
      */
-    public void handleReplacement(int skipped, List<T> from, List<T> to);
+    void handleReplacement(int skipped, List<T> from, List<T> to);
 
 }
