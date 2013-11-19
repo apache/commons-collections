@@ -44,6 +44,6 @@ public interface Predicate<T> {
      * @throws IllegalArgumentException (runtime) if the input is invalid
      * @throws FunctorException (runtime) if the predicate encounters a problem
      */
-    public boolean evaluate(T object);
+    boolean evaluate(T object);
 
 }
