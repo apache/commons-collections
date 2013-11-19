@@ -499,7 +499,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
          * @param added  the Map being added
          * @param intersect  the intersection of the keysets of the existing and added maps
          */
-        public void resolveCollision(CompositeMap<K, V> composite, Map<K, V> existing,
+        void resolveCollision(CompositeMap<K, V> composite, Map<K, V> existing,
                 Map<K, V> added, Collection<K> intersect);
 
         /**
@@ -524,7 +524,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
          *            keys or values, and the specified key or value is
          *            <tt>null</tt>.
          */
-        public V put(CompositeMap<K, V> map, Map<K, V>[] composited, K key, V value);
+        V put(CompositeMap<K, V> map, Map<K, V>[] composited, K key, V value);
 
         /**
          * Called when the CompositeMap.putAll() method is invoked.
@@ -542,7 +542,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
          *            keys or values, and the specified key or value is
          *            <tt>null</tt>.
          */
-        public void putAll(CompositeMap<K, V> map, Map<K, V>[] composited,
+        void putAll(CompositeMap<K, V> map, Map<K, V>[] composited,
                 Map<? extends K, ? extends V> mapToAdd);
     }
 }
