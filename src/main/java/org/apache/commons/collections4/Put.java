@@ -37,7 +37,7 @@ public interface Put<K, V> {
     /**
      * @see Map#clear()
      */
-    public void clear();
+    void clear();
 
     /**
      * Note that the return type is Object, rather than V as in the Map interface.
@@ -45,11 +45,11 @@ public interface Put<K, V> {
      *
      * @see Map#put(Object, Object)
      */
-    public Object put(K key, V value);
+    Object put(K key, V value);
 
     /**
      * @see Map#putAll(Map)
      */
-    public void putAll(Map<? extends K, ? extends V> t);
+    void putAll(Map<? extends K, ? extends V> t);
 
 }
