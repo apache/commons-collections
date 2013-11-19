@@ -280,17 +280,15 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
     public E poll() {
         if (isEmpty()) {
             return null;
-        } else {
-            return remove();
         }
+        return remove();
     }
 
     public E element() {
         if (isEmpty()) {
             throw new NoSuchElementException("queue is empty");
-        } else {
-            return peek();
         }
+        return peek();
     }
 
     public E peek() {
