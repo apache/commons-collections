@@ -42,6 +42,6 @@ public interface Trie<K, V> extends IterableSortedMap<K, V> {
      * @return a {@link SortedMap} view of this {@link Trie} with all elements whose
      *   key is prefixed by the search key
      */
-    public SortedMap<K, V> prefixMap(K key);
+    SortedMap<K, V> prefixMap(K key);
 
 }
