@@ -64,7 +64,7 @@ public class SplitMapUtils {
             return get.containsValue(value);
         }
 
-        public Set<java.util.Map.Entry<K, V>> entrySet() {
+        public Set<Map.Entry<K, V>> entrySet() {
             return UnmodifiableEntrySet.unmodifiableEntrySet(get.entrySet());
         }
 
@@ -143,7 +143,7 @@ public class SplitMapUtils {
             throw new UnsupportedOperationException();
         }
 
-        public Set<java.util.Map.Entry<K, V>> entrySet() {
+        public Set<Map.Entry<K, V>> entrySet() {
             throw new UnsupportedOperationException();
         }
 
