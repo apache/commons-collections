@@ -106,10 +106,9 @@ public class SingletonIterator<E>
         if (removeAllowed) {
             if (removed || beforeFirst) {
                 throw new IllegalStateException();
-            } else {
-                object = null;
-                removed = true;
             }
+            object = null;
+            removed = true;
         } else {
             throw new UnsupportedOperationException();
         }
