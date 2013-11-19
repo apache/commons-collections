@@ -75,7 +75,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         list.add(7,(E) Integer.valueOf(5));
         assertEquals("[-2, -1, 0, 1, 2, 3, 4, 5]",list.toString());
 
-        final java.util.List<E> list2 = new LinkedList<E>();
+        final List<E> list2 = new LinkedList<E>();
         list2.add((E) "A");
         list2.add((E) "B");
         list2.add((E) "C");
