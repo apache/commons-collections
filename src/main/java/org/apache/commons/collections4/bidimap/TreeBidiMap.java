@@ -1556,7 +1556,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         }
 
         @Override
-        public Iterator<java.util.Map.Entry<K, V>> iterator() {
+        public Iterator<Map.Entry<K, V>> iterator() {
             return new ViewMapEntryIterator();
         }
     }
@@ -1597,7 +1597,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         }
 
         @Override
-        public Iterator<java.util.Map.Entry<V, K>> iterator() {
+        public Iterator<Map.Entry<V, K>> iterator() {
             return new InverseViewMapEntryIterator();
         }
     }
