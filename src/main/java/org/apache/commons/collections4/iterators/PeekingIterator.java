@@ -152,9 +152,8 @@ public class PeekingIterator<E> implements Iterator<E> {
     public void remove() {
         if (slotFilled) {
             throw new IllegalStateException();
-        } else {
-            iterator.remove();
         }
+        iterator.remove();
     }
 
 }
