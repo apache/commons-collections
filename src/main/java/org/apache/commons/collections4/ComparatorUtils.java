@@ -50,8 +50,8 @@ public class ComparatorUtils {
      *
      * @see ComparableComparator#comparableComparator()
      */
-    @SuppressWarnings("rawtypes")
-    public static final Comparator NATURAL_COMPARATOR = ComparableComparator.comparableComparator();
+    @SuppressWarnings({ "rawtypes", "unchecked" }) // explicit type needed for Java 1.5 compilation
+    public static final Comparator NATURAL_COMPARATOR = ComparableComparator.<Comparable>comparableComparator();
 
     /**
      * Gets a comparator that uses the natural order of the objects.
