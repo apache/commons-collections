@@ -47,7 +47,6 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      * or <code>previous()</code>. This is set to <code>-1</code> if neither method
      * has yet been invoked. <code>lastItemIndex</code> is used to to implement
      * the {@link #set} method.
-     *
      */
     private int lastItemIndex = -1;
 

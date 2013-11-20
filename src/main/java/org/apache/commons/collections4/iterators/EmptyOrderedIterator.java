@@ -32,7 +32,8 @@ public class EmptyOrderedIterator<E> extends AbstractEmptyIterator<E>
      * Singleton instance of the iterator.
      * @since 3.1
      */
-    public static final OrderedIterator<Object> INSTANCE = new EmptyOrderedIterator<Object>();
+    @SuppressWarnings("rawtypes")
+    public static final OrderedIterator INSTANCE = new EmptyOrderedIterator<Object>();
 
     /**
      * Typed instance of the iterator.

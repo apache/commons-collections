@@ -32,7 +32,8 @@ public class EmptyOrderedMapIterator<K, V> extends AbstractEmptyMapIterator<K, V
      * Singleton instance of the iterator.
      * @since 3.1
      */
-    public static final OrderedMapIterator<Object, Object> INSTANCE = new EmptyOrderedMapIterator<Object, Object>();
+    @SuppressWarnings("rawtypes")
+    public static final OrderedMapIterator INSTANCE = new EmptyOrderedMapIterator<Object, Object>();
 
     /**
      * Get a typed instance of the iterator.

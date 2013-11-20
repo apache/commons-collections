@@ -32,7 +32,8 @@ public class EmptyMapIterator<K, V> extends AbstractEmptyMapIterator<K, V> imple
      * Singleton instance of the iterator.
      * @since 3.1
      */
-    public static final MapIterator<Object, Object> INSTANCE = new EmptyMapIterator<Object, Object>();
+    @SuppressWarnings("rawtypes")
+    public static final MapIterator INSTANCE = new EmptyMapIterator<Object, Object>();
 
     /**
      * Get a typed instance of the iterator.
