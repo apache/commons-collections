@@ -36,7 +36,6 @@ public class IteratorEnumeration<E> implements Enumeration<E> {
      * until {@link #setIterator(Iterator) setIterator} is invoked.
      */
     public IteratorEnumeration() {
-        super();
     }
 
     /**
@@ -46,7 +45,6 @@ public class IteratorEnumeration<E> implements Enumeration<E> {
      * @param iterator the iterator to use
      */
     public IteratorEnumeration(final Iterator<? extends E> iterator) {
-        super();
         this.iterator = iterator;
     }
 
