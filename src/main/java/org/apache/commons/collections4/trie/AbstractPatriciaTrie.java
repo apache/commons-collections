@@ -31,7 +31,6 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.SortedMap;
-import java.util.Map.Entry;
 
 import org.apache.commons.collections4.OrderedMapIterator;
 import org.apache.commons.collections4.Trie;

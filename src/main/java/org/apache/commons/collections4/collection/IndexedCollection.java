@@ -29,9 +29,9 @@ import org.apache.commons.collections4.map.MultiValueMap;
  * <p>
  * Modifications made to this decorator modify the index as well as the
  * decorated {@link Collection}. However, modifications to the underlying
- * {@link Collection} will not updated the index and it will get out of sync.
+ * {@link Collection} will not update the index and it will get out of sync.
  * <p>
- * If modification to the decorated {@link Collection} is unavoidable, then a
+ * If modification of the decorated {@link Collection} is unavoidable, then a
  * call to {@link #reindex()} will update the index to the current contents of
  * the {@link Collection}.
  *
