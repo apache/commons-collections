@@ -156,6 +156,10 @@ have changed.
 
 <center><h3>Changed classes / methods</h3></center>
 <ul>
+<li>Resolved generic parameter inconsistency for various static fields, e.g. BagUtils.EMPTY_BAG,
+    TruePredicate.INSTANCE and many others. All accessible static fields use raw types so that
+    they can be used directly without explicit casting. To avoid compiler warnings about unchecked
+    conversion and/or rawtypes use the corresponding factory methods, e.g. BagUtils.emptyBag().</li>
 <li>Renamed methods "V MultiKeyMap#remove(Object, Object, ...)" to "V MultiKeyMap#removeMultiKey(Object, Object, ...)"
     to avoid future conflicts with a default method of the Map interface in Java 8.</li>
 <li>Renamed "V MultiMap#remove(K, V)" to "boolean MultiMap#removeMapping(K, V)"
