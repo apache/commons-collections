@@ -50,8 +50,8 @@ public class ComparatorUtils {
      *
      * @see ComparableComparator#comparableComparator()
      */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public static final Comparator NATURAL_COMPARATOR = ComparableComparator.<Comparable>comparableComparator();
+    @SuppressWarnings("rawtypes")
+    public static final Comparator NATURAL_COMPARATOR = ComparableComparator.comparableComparator();
 
     /**
      * Gets a comparator that uses the natural order of the objects.

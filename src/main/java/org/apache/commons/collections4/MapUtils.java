@@ -80,7 +80,8 @@ public class MapUtils {
      * An empty unmodifiable sorted map.
      * This is not provided in the JDK.
      */
-    public static final SortedMap<Object, Object> EMPTY_SORTED_MAP =
+    @SuppressWarnings("rawtypes")
+    public static final SortedMap EMPTY_SORTED_MAP =
             UnmodifiableSortedMap.unmodifiableSortedMap(new TreeMap<Object, Object>());
 
     /**

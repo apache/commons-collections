@@ -507,11 +507,11 @@ public class IteratorUtilsTest extends BulkTest {
             fail();
         } catch (final IllegalStateException ex) {}
         try {
-            IteratorUtils.EMPTY_LIST_ITERATOR.set(null);
+            IteratorUtils.emptyListIterator().set(null);
             fail();
         } catch (final IllegalStateException ex) {}
         try {
-            IteratorUtils.EMPTY_LIST_ITERATOR.add(null);
+            IteratorUtils.emptyListIterator().add(null);
             fail();
         } catch (final UnsupportedOperationException ex) {}
     }

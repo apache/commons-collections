@@ -85,7 +85,8 @@ public class IteratorUtils {
      * WARNING: This constant is binary incompatible with Commons Collections 2.1 and 2.1.1.
      * Use <code>EmptyIterator.INSTANCE</code> for compatibility with Commons Collections 2.1.1.
      */
-    public static final ResettableIterator<Object> EMPTY_ITERATOR = EmptyIterator.RESETTABLE_INSTANCE;
+    @SuppressWarnings("rawtypes")
+    public static final ResettableIterator EMPTY_ITERATOR = EmptyIterator.RESETTABLE_INSTANCE;
 
     /**
      * A list iterator over no elements.
@@ -93,23 +94,26 @@ public class IteratorUtils {
      * WARNING: This constant is binary incompatible with Commons Collections 2.1 and 2.1.1.
      * Use <code>EmptyListIterator.INSTANCE</code> for compatibility with Commons Collections 2.1.1.
      */
-    public static final ResettableListIterator<Object> EMPTY_LIST_ITERATOR = EmptyListIterator.RESETTABLE_INSTANCE;
+    @SuppressWarnings("rawtypes")
+    public static final ResettableListIterator EMPTY_LIST_ITERATOR = EmptyListIterator.RESETTABLE_INSTANCE;
 
     /**
      * An ordered iterator over no elements.
      */
-    public static final OrderedIterator<Object> EMPTY_ORDERED_ITERATOR = EmptyOrderedIterator.INSTANCE;
+    @SuppressWarnings("rawtypes")
+    public static final OrderedIterator EMPTY_ORDERED_ITERATOR = EmptyOrderedIterator.INSTANCE;
 
     /**
      * A map iterator over no elements.
      */
-    public static final MapIterator<Object, Object> EMPTY_MAP_ITERATOR = EmptyMapIterator.INSTANCE;
+    @SuppressWarnings("rawtypes")
+    public static final MapIterator EMPTY_MAP_ITERATOR = EmptyMapIterator.INSTANCE;
 
     /**
      * An ordered map iterator over no elements.
      */
-    public static final OrderedMapIterator<Object, Object> EMPTY_ORDERED_MAP_ITERATOR =
-            EmptyOrderedMapIterator.INSTANCE;
+    @SuppressWarnings("rawtypes")
+    public static final OrderedMapIterator EMPTY_ORDERED_MAP_ITERATOR = EmptyOrderedMapIterator.INSTANCE;
 
     /**
      * IteratorUtils is not normally instantiated.

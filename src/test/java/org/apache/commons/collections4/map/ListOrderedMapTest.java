@@ -305,6 +305,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     public void testPutAllWithIndex() {
         resetEmpty();
+        @SuppressWarnings("unchecked")
         final ListOrderedMap<String, String> lom = (ListOrderedMap<String, String>) map;
 
         // Create Initial Data
@@ -329,6 +330,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertEquals("testInsert2v", lom.getValue(4));
     }
 
+    @SuppressWarnings("unchecked")
     public void testPutAllWithIndexBug441() {
         // see COLLECTIONS-441
         resetEmpty();

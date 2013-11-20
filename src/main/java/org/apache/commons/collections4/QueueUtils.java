@@ -34,7 +34,8 @@ public class QueueUtils {
     /**
      * An empty unmodifiable queue.
      */
-    public static final Queue<Object> EMPTY_QUEUE = UnmodifiableQueue.unmodifiableQueue(new LinkedList<Object>());
+    @SuppressWarnings("rawtypes") // OK, empty queue is compatible with any type
+    public static final Queue EMPTY_QUEUE = UnmodifiableQueue.unmodifiableQueue(new LinkedList<Object>());
 
     /**
      * <code>QueueUtils</code> should not normally be instantiated.

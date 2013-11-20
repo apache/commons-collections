@@ -276,6 +276,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     @SuppressWarnings("unchecked")
     public void testPutWithList() {
+        @SuppressWarnings("rawtypes")
         final MultiValueMap<K, V> test = MultiValueMap.multiValueMap(new HashMap<K, Collection>(), ArrayList.class);
         assertEquals("a", test.put((K) "A", "a"));
         assertEquals("b", test.put((K) "A", "b"));
@@ -286,6 +287,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     @SuppressWarnings("unchecked")
     public void testPutWithSet() {
+        @SuppressWarnings("rawtypes")
         final MultiValueMap<K, V> test = MultiValueMap.multiValueMap(new HashMap<K, HashSet>(), HashSet.class);
         assertEquals("a", test.put((K) "A", "a"));
         assertEquals("b", test.put((K) "A", "b"));

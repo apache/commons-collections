@@ -39,12 +39,14 @@ public class BagUtils {
     /**
      * An empty unmodifiable bag.
      */
-    public static final Bag<Object> EMPTY_BAG = UnmodifiableBag.unmodifiableBag(new HashBag<Object>());
+    @SuppressWarnings("rawtypes") // OK, empty bag is compatible with any type
+    public static final Bag EMPTY_BAG = UnmodifiableBag.unmodifiableBag(new HashBag<Object>());
 
     /**
      * An empty unmodifiable sorted bag.
      */
-    public static final Bag<Object> EMPTY_SORTED_BAG =
+    @SuppressWarnings("rawtypes") // OK, empty bag is compatible with any type
+    public static final Bag EMPTY_SORTED_BAG =
             UnmodifiableSortedBag.unmodifiableSortedBag(new TreeBag<Object>());
 
     /**

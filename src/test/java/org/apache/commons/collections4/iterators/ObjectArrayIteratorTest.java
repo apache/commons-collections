@@ -44,6 +44,7 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
         return new ObjectArrayIterator<E>((E[]) testArray);
     }
 
+    @SuppressWarnings("unchecked")
     public ObjectArrayIterator<E> makeArrayIterator() {
         return new ObjectArrayIterator<E>();
     }

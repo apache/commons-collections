@@ -52,7 +52,8 @@ public class SetUtils {
      * An empty unmodifiable sorted set.
      * This is not provided in the JDK.
      */
-    public static final SortedSet<?> EMPTY_SORTED_SET =
+    @SuppressWarnings("rawtypes")
+    public static final SortedSet EMPTY_SORTED_SET =
             UnmodifiableSortedSet.unmodifiableSortedSet(new TreeSet<Object>());
 
     /**

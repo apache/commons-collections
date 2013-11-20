@@ -426,7 +426,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     //------------------------------------------------------------------
 
     /**
-     * Test that all Transformer singletones hold singleton pattern in
+     * Test that all Transformer singletons hold singleton pattern in
      * serialization/deserialization process.
      */
     public void testSingletonPatternInSerialization() {
@@ -434,14 +434,11 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
                 CloneTransformer.INSTANCE,
                 ExceptionTransformer.INSTANCE,
                 NOPTransformer.INSTANCE,
-                StringValueTransformer.INSTANCE,
+                StringValueTransformer.stringValueTransformer(),
         };
 
         for (final Object original : singletones) {
-            TestUtils.assertSameAfterSerialization(
-                    "Singletone patern broken for " + original.getClass(),
-                    original
-            );
+            TestUtils.assertSameAfterSerialization("Singleton pattern broken for " + original.getClass(), original);
         }
     }
 

@@ -33,7 +33,7 @@ public final class StringValueTransformer<T> implements Transformer<T, String>, 
     private static final long serialVersionUID = 7511110693171758606L;
 
     /** Singleton predicate instance */
-    public static final Transformer<Object, String> INSTANCE = new StringValueTransformer<Object>();
+    private static final Transformer<Object, String> INSTANCE = new StringValueTransformer<Object>();
 
     /**
      * Factory returning the singleton instance.
