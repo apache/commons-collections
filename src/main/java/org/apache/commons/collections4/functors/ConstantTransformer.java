@@ -36,7 +36,8 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
     private static final long serialVersionUID = 6374440726369055124L;
 
     /** Returns null each time */
-    public static final Transformer<Object, Object> NULL_INSTANCE = new ConstantTransformer<Object, Object>(null);
+    @SuppressWarnings("rawtypes")
+    public static final Transformer NULL_INSTANCE = new ConstantTransformer<Object, Object>(null);
 
     /** The closures to call in turn */
     private final O iConstant;

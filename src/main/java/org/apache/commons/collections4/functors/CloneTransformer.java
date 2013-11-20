@@ -34,7 +34,8 @@ public class CloneTransformer<T> implements Transformer<T, T>, Serializable {
     private static final long serialVersionUID = -8188742709499652567L;
 
     /** Singleton predicate instance */
-    public static final Transformer<Object, Object> INSTANCE = new CloneTransformer<Object>();
+    @SuppressWarnings("rawtypes") // the singleton instance works for all types
+    public static final Transformer INSTANCE = new CloneTransformer<Object>();
 
     /**
      * Factory returning the singleton instance.

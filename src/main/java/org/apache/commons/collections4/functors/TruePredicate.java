@@ -32,7 +32,8 @@ public final class TruePredicate<T> implements Predicate<T>, Serializable {
     private static final long serialVersionUID = 3374767158756189740L;
 
     /** Singleton predicate instance */
-    public static final Predicate<?> INSTANCE = new TruePredicate<Object>();
+    @SuppressWarnings("rawtypes")
+    public static final Predicate INSTANCE = new TruePredicate<Object>();
 
     /**
      * Factory returning the singleton instance.

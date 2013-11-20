@@ -32,7 +32,8 @@ public final class NotNullPredicate<T> implements Predicate<T>, Serializable {
     private static final long serialVersionUID = 7533784454832764388L;
 
     /** Singleton predicate instance */
-    public static final Predicate<Object> INSTANCE = new NotNullPredicate<Object>();
+    @SuppressWarnings("rawtypes")
+    public static final Predicate INSTANCE = new NotNullPredicate<Object>();
 
     /**
      * Factory returning the singleton instance.

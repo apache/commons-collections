@@ -46,7 +46,7 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
 
     /** The singleton instance. */
     @SuppressWarnings("rawtypes")
-    public static final ComparableComparator<?> INSTANCE = new ComparableComparator();
+    public static final ComparableComparator INSTANCE = new ComparableComparator();
 
     //-----------------------------------------------------------------------
     /**

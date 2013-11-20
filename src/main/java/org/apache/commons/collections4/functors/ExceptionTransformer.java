@@ -33,7 +33,8 @@ public final class ExceptionTransformer<I, O> implements Transformer<I, O>, Seri
     private static final long serialVersionUID = 7179106032121985545L;
 
     /** Singleton predicate instance */
-    public static final Transformer<Object, Object> INSTANCE = new ExceptionTransformer<Object, Object>();
+    @SuppressWarnings("rawtypes") // the static instance works for all types
+    public static final Transformer INSTANCE = new ExceptionTransformer<Object, Object>();
 
     /**
      * Factory returning the singleton instance.

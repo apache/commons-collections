@@ -32,7 +32,8 @@ public final class NullPredicate<T> implements Predicate<T>, Serializable {
     private static final long serialVersionUID = 7533784454832764388L;
 
     /** Singleton predicate instance */
-    public static final Predicate<?> INSTANCE = new NullPredicate<Object>();
+    @SuppressWarnings("rawtypes")
+    public static final Predicate INSTANCE = new NullPredicate<Object>();
 
     /**
      * Factory returning the singleton instance.

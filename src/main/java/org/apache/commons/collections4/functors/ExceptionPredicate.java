@@ -33,7 +33,8 @@ public final class ExceptionPredicate<T> implements Predicate<T>, Serializable {
     private static final long serialVersionUID = 7179106032121985545L;
 
     /** Singleton predicate instance */
-    public static final Predicate<Object> INSTANCE = new ExceptionPredicate<Object>();
+    @SuppressWarnings("rawtypes") // the static instance works for all types
+    public static final Predicate INSTANCE = new ExceptionPredicate<Object>();
 
     /**
      * Factory returning the singleton instance.

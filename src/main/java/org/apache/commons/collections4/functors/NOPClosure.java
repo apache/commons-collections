@@ -32,7 +32,8 @@ public final class NOPClosure<E> implements Closure<E>, Serializable {
     private static final long serialVersionUID = 3518477308466486130L;
 
     /** Singleton predicate instance */
-    public static final Closure<Object> INSTANCE = new NOPClosure<Object>();
+    @SuppressWarnings("rawtypes")
+    public static final Closure INSTANCE = new NOPClosure<Object>();
 
     /**
      * Factory returning the singleton instance.

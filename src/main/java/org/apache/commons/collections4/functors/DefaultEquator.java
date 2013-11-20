@@ -33,7 +33,8 @@ public class DefaultEquator<T> implements Equator<T>, Serializable {
     private static final long serialVersionUID = 825802648423525485L;
 
     /** Static instance */
-    public static final DefaultEquator<Object> INSTANCE = new DefaultEquator<Object>();
+    @SuppressWarnings("rawtypes") // the static instance works for all types
+    public static final DefaultEquator INSTANCE = new DefaultEquator<Object>();
 
     /**
      * Hashcode used for <code>null</code> objects.

@@ -32,7 +32,8 @@ public final class FalsePredicate<T> implements Predicate<T>, Serializable {
     private static final long serialVersionUID = 7533784454832764388L;
 
     /** Singleton predicate instance */
-    public static final Predicate<Object> INSTANCE = new FalsePredicate<Object>();
+    @SuppressWarnings("rawtypes") // the static instance works for all types
+    public static final Predicate INSTANCE = new FalsePredicate<Object>();
 
     /**
      * Get a typed instance.

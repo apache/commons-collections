@@ -36,7 +36,8 @@ public class ConstantFactory<T> implements Factory<T>, Serializable {
     private static final long serialVersionUID = -3520677225766901240L;
 
     /** Returns null each time */
-    public static final Factory<Object> NULL_INSTANCE = new ConstantFactory<Object>(null);
+    @SuppressWarnings("rawtypes") // The null factory works for all object types
+    public static final Factory NULL_INSTANCE = new ConstantFactory<Object>(null);
 
     /** The closures to call in turn */
     private final T iConstant;

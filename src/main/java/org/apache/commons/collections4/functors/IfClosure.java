@@ -91,7 +91,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      * @since 3.2
      */
     public IfClosure(final Predicate<? super E> predicate, final Closure<? super E> trueClosure) {
-        this(predicate, trueClosure, NOPClosure.INSTANCE);
+        this(predicate, trueClosure, NOPClosure.nopClosure());
     }
 
     /**

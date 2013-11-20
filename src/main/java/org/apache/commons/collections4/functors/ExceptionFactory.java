@@ -33,7 +33,8 @@ public final class ExceptionFactory<T> implements Factory<T>, Serializable {
     private static final long serialVersionUID = 7179106032121985545L;
 
     /** Singleton predicate instance */
-    public static final Factory<Object> INSTANCE = new ExceptionFactory<Object>();
+    @SuppressWarnings("rawtypes") // the static instance works for all types
+    public static final Factory INSTANCE = new ExceptionFactory<Object>();
 
     /**
      * Factory returning the singleton instance.

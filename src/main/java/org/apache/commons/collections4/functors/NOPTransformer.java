@@ -32,7 +32,8 @@ public class NOPTransformer<T> implements Transformer<T, T>, Serializable {
     private static final long serialVersionUID = 2133891748318574490L;
 
     /** Singleton predicate instance */
-    public static final Transformer<Object, Object> INSTANCE = new NOPTransformer<Object>();
+    @SuppressWarnings("rawtypes")
+    public static final Transformer INSTANCE = new NOPTransformer<Object>();
 
     /**
      * Factory returning the singleton instance.
