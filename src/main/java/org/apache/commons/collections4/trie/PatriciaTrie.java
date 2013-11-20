@@ -18,7 +18,6 @@ package org.apache.commons.collections4.trie;
 
 import java.util.Map;
 
-import org.apache.commons.collections4.Trie;
 import org.apache.commons.collections4.trie.analyzer.StringKeyAnalyzer;
 
 /**

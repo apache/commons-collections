@@ -17,7 +17,6 @@
 package org.apache.commons.collections4.iterators;
 
 import java.lang.reflect.Array;
-import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.ResettableListIterator;

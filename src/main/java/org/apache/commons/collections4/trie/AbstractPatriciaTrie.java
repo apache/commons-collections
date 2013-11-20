@@ -33,7 +33,6 @@ import java.util.Set;
 import java.util.SortedMap;
 
 import org.apache.commons.collections4.OrderedMapIterator;
-import org.apache.commons.collections4.Trie;
 
 /**
  * This class implements the base PATRICIA algorithm and everything that

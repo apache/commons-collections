@@ -23,8 +23,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 
-import org.apache.commons.collections4.Bag;
-
 /**
  * Implements {@link Bag}, using a {@link HashMap} to provide the
  * data storage. This is the standard implementation of a bag.
