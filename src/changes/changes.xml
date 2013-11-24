@@ -21,7 +21,11 @@
   </properties>
   <body>
 
-  <release version="4.0" date="2013-11-24" description="
+  <release version="4.0.1" date="TBD" description="">
+<!--    <action issue="COLLECTIONS-XXX" dev="XXX" type="XXX">
+    </action> -->
+  </release>
+  <release version="4.0" date="2013-11-27" description="
 This is a major release: It combines bug fixes, new features and
 changes to existing features.
 
