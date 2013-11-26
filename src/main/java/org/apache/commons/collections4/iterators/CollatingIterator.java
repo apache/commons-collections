@@ -44,10 +44,10 @@ public class CollatingIterator<E> implements Iterator<E> {
     private Comparator<? super E> comparator = null;
 
     /** The list of {@link Iterator}s to evaluate. */
-    private ArrayList<Iterator<? extends E>> iterators = null;
+    private List<Iterator<? extends E>> iterators = null;
 
     /** {@link Iterator#next Next} objects peeked from each iterator. */
-    private ArrayList<E> values = null;
+    private List<E> values = null;
 
     /** Whether or not each {@link #values} element has been set. */
     private BitSet valueSet = null;
@@ -392,7 +392,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * Returns <code>true</code> iff any {@link Iterator} in the given list has
      * a next value.
      */
-    private boolean anyHasNext(final ArrayList<Iterator<? extends E>> iters) {
+    private boolean anyHasNext(final List<Iterator<? extends E>> iters) {
         for (final Iterator<? extends E> iterator : iters) {
             if (iterator.hasNext()) {
                 return true;
