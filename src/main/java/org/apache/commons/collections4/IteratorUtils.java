@@ -31,6 +31,7 @@ import java.util.Map;
 
 import org.apache.commons.collections4.iterators.ArrayIterator;
 import org.apache.commons.collections4.iterators.ArrayListIterator;
+import org.apache.commons.collections4.iterators.BoundedIterator;
 import org.apache.commons.collections4.iterators.CollatingIterator;
 import org.apache.commons.collections4.iterators.EmptyIterator;
 import org.apache.commons.collections4.iterators.EmptyListIterator;
@@ -430,6 +431,44 @@ public class IteratorUtils {
      */
     public static <E> ResettableListIterator<E> arrayListIterator(final Object array, final int start, final int end) {
         return new ArrayListIterator<E>(array, start, end);
+    }
+
+    // Bounded
+    //-----------------------------------------------------------------------
+    /**
+     * Decorates the specified iterator to return at most the given number
+     * of elements.
+     *
+     * @param <E>  the element type
+     * @param iterator  the iterator to decorate
+     * @param max  the maximum number of elements returned by this iterator
+     * @return a new bounded iterator
+     * @throws IllegalArgumentException if the iterator is null or either offset or max is negative
+     * @since 4.0.1
+     */
+    public static <E> BoundedIterator<E> boundedIterator(final Iterator<? extends E> iterator, long max) {
+        return BoundedIterator.boundedIterator(iterator, max);
+    }
+
+    /**
+     * Decorates the specified iterator to return at most the given number
+     * of elements, skipping all elements until the iterator reaches the
+     * position at {@code offset}.
+     * <p>
+     * The iterator is immediately advanced until it reaches the position at
+     * {@code offset}, incurring O(n) time.
+     *
+     * @param <E>  the element type
+     * @param iterator  the iterator to decorate
+     * @param offset  the index of the first element of the decorated iterator to return
+     * @param max  the maximum number of elements returned by this iterator
+     * @return a new bounded iterator
+     * @throws IllegalArgumentException if the iterator is null or either offset or max is negative
+     * @since 4.0.1
+     */
+    public static <E> BoundedIterator<E> boundedIterator(final Iterator<? extends E> iterator,
+                                                         long offset, long max) {
+        return BoundedIterator.boundedIterator(iterator, offset, max);
     }
 
     // Unmodifiable
