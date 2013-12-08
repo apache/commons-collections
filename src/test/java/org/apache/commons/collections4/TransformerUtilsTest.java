@@ -235,6 +235,49 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
         } catch (final IllegalArgumentException ex) {}
     }
 
+    // ifTransformer
+    //------------------------------------------------------------------
+
+    public void testIfTransformer() {
+        final Transformer<Object, String> a = TransformerUtils.constantTransformer("A");
+        final Transformer<Object, String> b = TransformerUtils.constantTransformer("B");
+        final Transformer<Object, String> c = TransformerUtils.constantTransformer("C");
+
+        assertEquals("A", TransformerUtils.ifTransformer(TruePredicate.truePredicate(), a, b).transform(null));
+        assertEquals("B", TransformerUtils.ifTransformer(FalsePredicate.falsePredicate(), a, b).transform(null));
+
+        Predicate<Integer> lessThanFivePredicate = new Predicate<Integer>() {
+            public boolean evaluate(Integer value) {
+                return value < 5;
+            }
+        };
+        // if/else tests
+        assertEquals("A", TransformerUtils.<Integer, String>ifTransformer(lessThanFivePredicate, a, b).transform(1));
+        assertEquals("B", TransformerUtils.<Integer, String>ifTransformer(lessThanFivePredicate, a, b).transform(5));
+        
+        // if tests
+        Predicate<String> equalsAPredicate = EqualPredicate.equalPredicate("A");
+        assertEquals("C", TransformerUtils.<String>ifTransformer(equalsAPredicate, c).transform("A"));
+        assertEquals("B", TransformerUtils.<String>ifTransformer(equalsAPredicate, c).transform("B"));
+
+        try {
+            TransformerUtils.ifTransformer(null, null);
+            fail();
+        } catch (final IllegalArgumentException ex) {}
+        try {
+            TransformerUtils.ifTransformer(TruePredicate.truePredicate(), null);
+            fail();
+        } catch (final IllegalArgumentException ex) {}
+        try {
+            TransformerUtils.ifTransformer(null, ConstantTransformer.constantTransformer("A"));
+            fail();
+        } catch (final IllegalArgumentException ex) {}
+        try {
+            TransformerUtils.ifTransformer(null, null, null);
+            fail();
+        } catch (final IllegalArgumentException ex) {}
+    }
+    
     // switchTransformer
     //------------------------------------------------------------------
 

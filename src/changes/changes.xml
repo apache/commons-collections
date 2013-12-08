@@ -22,8 +22,12 @@
   <body>
 
   <release version="4.0.1" date="TBD" description="">
+    <action issue="COLLECTIONS-503" dev="tn" type="add" due-to="Josh Cain">
+      Added new transformer "IfTransformer" and factory methods "TransformerUtils#ifTransformer(...)"
+      which replace "TransformerUtils#switchTransformer(Predicate, Transformer, Transformer)".
+    </action>
     <action issue="COLLECTIONS-471" dev="tn" type="add" due-to="Radford Tam">
-      Added new decorator "BoundedIterator".
+      Added new decorator "BoundedIterator" and factory methods "IteratorUtils#boundedIterator(...)".
     </action>
   </release>
   <release version="4.0" date="2013-11-27" description="

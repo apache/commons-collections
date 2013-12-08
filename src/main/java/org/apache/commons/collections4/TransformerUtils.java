@@ -26,6 +26,7 @@ import org.apache.commons.collections4.functors.ConstantTransformer;
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.functors.ExceptionTransformer;
 import org.apache.commons.collections4.functors.FactoryTransformer;
+import org.apache.commons.collections4.functors.IfTransformer;
 import org.apache.commons.collections4.functors.InstantiateTransformer;
 import org.apache.commons.collections4.functors.InvokerTransformer;
 import org.apache.commons.collections4.functors.MapTransformer;
@@ -45,6 +46,7 @@ import org.apache.commons.collections4.functors.SwitchTransformer;
  * <li>Predicate - returns the result of the predicate as a Boolean
  * <li>Factory - returns a new object from a factory
  * <li>Chained - chains two or more transformers together
+ * <li>If - calls one transformer or another based on a predicate
  * <li>Switch - calls one transformer based on one or more predicates
  * <li>SwitchMap - calls one transformer looked up from a Map
  * <li>Instantiate - the Class input object is instantiated
@@ -211,6 +213,43 @@ public class TransformerUtils {
     }
 
     /**
+     * Create a new Transformer that calls the transformer if the predicate is true,
+     * otherwise the input object is returned unchanged.
+     *
+     * @param <T>  the input / output type
+     * @param predicate  the predicate to switch on
+     * @param trueTransformer  the transformer called if the predicate is true
+     * @return the transformer
+     * @throws IllegalArgumentException if either the predicate or transformer is null
+     * @see org.apache.commons.collections4.functors.IfTransformer
+     * @since 4.0.1
+     */
+    public static <T> Transformer<T, T> ifTransformer(final Predicate<? super T> predicate,
+                                                      final Transformer<? super T, ? extends T> trueTransformer) {
+        return IfTransformer.ifTransformer(predicate, trueTransformer);
+    }
+
+    /**
+     * Create a new Transformer that calls one of two transformers depending
+     * on the specified predicate.
+     *
+     * @param <I>  the input type
+     * @param <O>  the output type
+     * @param predicate  the predicate to switch on
+     * @param trueTransformer  the transformer called if the predicate is true
+     * @param falseTransformer  the transformer called if the predicate is false
+     * @return the transformer
+     * @throws IllegalArgumentException if either the predicate or transformer is null
+     * @see org.apache.commons.collections4.functors.IfTransformer
+     * @since 4.0.1
+     */
+    public static <I, O> Transformer<I, O> ifTransformer(final Predicate<? super I> predicate,
+                                                         final Transformer<? super I, ? extends O> trueTransformer,
+                                                         final Transformer<? super I, ? extends O> falseTransformer) {
+        return IfTransformer.ifTransformer(predicate, trueTransformer, falseTransformer);
+    }
+
+    /**
      * Create a new Transformer that calls one of two transformers depending
      * on the specified predicate.
      *
@@ -222,8 +261,10 @@ public class TransformerUtils {
      * @return the transformer
      * @throws IllegalArgumentException if either the predicate or transformer is null
      * @see org.apache.commons.collections4.functors.SwitchTransformer
+     * @deprecated as of 4.0.1, use {@link #ifTransformer(Predicate, Transformer, Transformer))
      */
     @SuppressWarnings("unchecked")
+    @Deprecated
     public static <I, O> Transformer<I, O> switchTransformer(final Predicate<? super I> predicate,
             final Transformer<? super I, ? extends O> trueTransformer,
             final Transformer<? super I, ? extends O> falseTransformer) {
