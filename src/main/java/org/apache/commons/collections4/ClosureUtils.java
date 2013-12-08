@@ -39,6 +39,7 @@ import org.apache.commons.collections4.functors.WhileClosure;
  * <li>While - repeatedly calls a closure while a predicate is true
  * <li>DoWhile - repeatedly calls a closure while a predicate is true
  * <li>Chained - chains two or more closures together
+ * <li>If - calls one closure or another based on a predicate
  * <li>Switch - calls one closure based on one or more predicates
  * <li>SwitchMap - calls one closure looked up from a Map
  * <li>Transformer - wraps a Transformer as a Closure
