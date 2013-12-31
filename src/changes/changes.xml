@@ -22,6 +22,11 @@
   <body>
 
   <release version="4.0.1" date="TBD" description="">
+    <action issue="COLLECTIONS-506" dev="tn" type="fix" due-to="Anthony Communier">
+      Added javadoc clarification to class "CollectionUtils" that input objects which
+      override "Object#equals(Object)" must also maintain the general contract of
+      "Object#hashCode()" as various utility methods take advantage of sets/maps/bags.
+    </action>
     <action issue="COLLECTIONS-503" dev="tn" type="add" due-to="Josh Cain">
       Added new transformer "IfTransformer" and factory methods "TransformerUtils#ifTransformer(...)"
       which replace "TransformerUtils#switchTransformer(Predicate, Transformer, Transformer)".
