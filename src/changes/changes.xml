@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.0.1" date="TBD" description="">
+    <action issue="COLLECTIONS-507" dev="tn" type="fix" due-to="Gerson">
+      Removed wrong type bounds for "ComparatorUtils#chainedComparator(...)".
+    </action>
     <action issue="COLLECTIONS-506" dev="tn" type="fix" due-to="Anthony Communier">
       Added javadoc clarification to class "CollectionUtils" that input objects which
       override "Object#equals(Object)" must also maintain the general contract of
