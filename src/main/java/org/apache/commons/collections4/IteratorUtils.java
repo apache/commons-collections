@@ -447,7 +447,7 @@ public class IteratorUtils {
      * @since 4.1
      */
     public static <E> BoundedIterator<E> boundedIterator(final Iterator<? extends E> iterator, long max) {
-        return BoundedIterator.boundedIterator(iterator, max);
+        return boundedIterator(iterator, 0, max);
     }
 
     /**
@@ -468,7 +468,7 @@ public class IteratorUtils {
      */
     public static <E> BoundedIterator<E> boundedIterator(final Iterator<? extends E> iterator,
                                                          long offset, long max) {
-        return BoundedIterator.boundedIterator(iterator, offset, max);
+        return new BoundedIterator<E>(iterator, offset, max);
     }
 
     // Unmodifiable

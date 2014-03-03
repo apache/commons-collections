@@ -48,43 +48,6 @@ public class BoundedIterator<E> implements Iterator<E> {
     //-----------------------------------------------------------------------
 
     /**
-     * Decorates the specified iterator to return at most the given number
-     * of elements.
-     *
-     * @param <E>  the element type
-     * @param iterator  the iterator to decorate
-     * @param max  the maximum number of elements returned by this iterator
-     * @return a new bounded iterator
-     * @throws IllegalArgumentException if the iterator is null or max is negative
-     */
-    public static <E> BoundedIterator<E> boundedIterator(final Iterator<? extends E> iterator,
-                                                         final long max) {
-        return boundedIterator(iterator, 0, max);
-    }
-
-    /**
-     * Decorates the specified iterator to return at most the given number
-     * of elements, skipping all elements until the iterator reaches the position
-     * at {@code offset}.
-     * <p>
-     * The iterator is immediately advanced until it reaches the position at {@code offset},
-     * incurring O(n) time.
-     *
-     * @param <E>  the element type
-     * @param iterator  the iterator to decorate
-     * @param offset  the index of the first element of the decorated iterator to return
-     * @param max  the maximum number of elements returned by this iterator
-     * @return a new bounded iterator
-     * @throws IllegalArgumentException if the iterator is null or either offset or max is negative
-     */
-    public static <E> BoundedIterator<E> boundedIterator(final Iterator<? extends E> iterator,
-                                                         final long offset, final long max) {
-        return new BoundedIterator<E>(iterator, 0, max);
-    }
-
-    //-----------------------------------------------------------------------
-
-    /**
      * Decorates the specified iterator to return at most the given number of elements,
      * skipping all elements until the iterator reaches the position at {@code offset}.
      * <p>
