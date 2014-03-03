@@ -50,12 +50,12 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
 
     @Override
     public Iterator<E> makeEmptyIterator() {
-        return BoundedIterator.boundedIterator(Collections.<E>emptyList().iterator(), 10);
+        return new BoundedIterator<E>(Collections.<E>emptyList().iterator(), 0, 10);
     }
 
     @Override
     public Iterator<E> makeObject() {
-        return BoundedIterator.boundedIterator(new ArrayList<E>(testList).iterator(), 1, testList.size() - 1);
+        return new BoundedIterator<E>(new ArrayList<E>(testList).iterator(), 1, testList.size() - 1);
     }
 
     // ---------------- Tests ---------------------
