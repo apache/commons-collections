@@ -46,7 +46,7 @@ public class PushbackIterator<E> implements Iterator<E> {
     /**
      * Decorates the specified iterator to support one-element lookahead.
      * <p>
-     * If the iterator is already a {@link PeekingIterator} it is returned directly.
+     * If the iterator is already a {@link PushbackIterator} it is returned directly.
      *
      * @param <E>  the element type
      * @param iterator  the iterator to decorate
