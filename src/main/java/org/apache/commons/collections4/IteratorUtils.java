@@ -444,7 +444,7 @@ public class IteratorUtils {
      * @param max  the maximum number of elements returned by this iterator
      * @return a new bounded iterator
      * @throws IllegalArgumentException if the iterator is null or either offset or max is negative
-     * @since 4.0.1
+     * @since 4.1
      */
     public static <E> BoundedIterator<E> boundedIterator(final Iterator<? extends E> iterator, long max) {
         return BoundedIterator.boundedIterator(iterator, max);
@@ -464,7 +464,7 @@ public class IteratorUtils {
      * @param max  the maximum number of elements returned by this iterator
      * @return a new bounded iterator
      * @throws IllegalArgumentException if the iterator is null or either offset or max is negative
-     * @since 4.0.1
+     * @since 4.1
      */
     public static <E> BoundedIterator<E> boundedIterator(final Iterator<? extends E> iterator,
                                                          long offset, long max) {

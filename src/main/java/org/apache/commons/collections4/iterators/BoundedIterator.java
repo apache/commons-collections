@@ -28,7 +28,7 @@ import java.util.NoSuchElementException;
  * iterator is immediately advanced to this position, skipping all elements
  * before that position.
  *
- * @since 4.0.1
+ * @since 4.1
  * @version $Id$
  */
 public class BoundedIterator<E> implements Iterator<E> {

@@ -21,7 +21,7 @@
   </properties>
   <body>
 
-  <release version="4.0.1" date="TBD" description="">
+  <release version="4.1" date="TBD" description="">
     <action issue="COLLECTIONS-507" dev="tn" type="fix" due-to="Gerson">
       Removed wrong type bounds for "ComparatorUtils#chainedComparator(...)".
     </action>

@@ -28,7 +28,7 @@ import java.io.Serializable;
  * @param <I> The input type for the transformer
  * @param <O> The output type for the transformer
  *
- * @since 4.0.1
+ * @since 4.1
  * @version $Id$
  */
 public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {

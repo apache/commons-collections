@@ -222,7 +222,7 @@ public class TransformerUtils {
      * @return the transformer
      * @throws IllegalArgumentException if either the predicate or transformer is null
      * @see org.apache.commons.collections4.functors.IfTransformer
-     * @since 4.0.1
+     * @since 4.1
      */
     public static <T> Transformer<T, T> ifTransformer(final Predicate<? super T> predicate,
                                                       final Transformer<? super T, ? extends T> trueTransformer) {
@@ -241,7 +241,7 @@ public class TransformerUtils {
      * @return the transformer
      * @throws IllegalArgumentException if either the predicate or transformer is null
      * @see org.apache.commons.collections4.functors.IfTransformer
-     * @since 4.0.1
+     * @since 4.1
      */
     public static <I, O> Transformer<I, O> ifTransformer(final Predicate<? super I> predicate,
                                                          final Transformer<? super I, ? extends O> trueTransformer,
@@ -261,7 +261,7 @@ public class TransformerUtils {
      * @return the transformer
      * @throws IllegalArgumentException if either the predicate or transformer is null
      * @see org.apache.commons.collections4.functors.SwitchTransformer
-     * @deprecated as of 4.0.1, use {@link #ifTransformer(Predicate, Transformer, Transformer))
+     * @deprecated as of 4.1, use {@link #ifTransformer(Predicate, Transformer, Transformer))
      */
     @SuppressWarnings("unchecked")
     @Deprecated
