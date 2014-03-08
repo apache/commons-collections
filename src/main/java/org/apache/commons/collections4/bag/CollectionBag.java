@@ -26,7 +26,15 @@ import org.apache.commons.collections4.Bag;
 
 /**
  * Decorates another {@link Bag} to comply with the Collection contract.
+ * <p>
+ * By decorating an existing {@link Bag} instance with a {@link CollectionBag},
+ * it can be safely passed on to methods that require Collection types that
+ * are fully compliant with the Collection contract.
+ * <p>
+ * The method javadoc highlights the differences compared to the original Bag interface.
  *
+ * @see Bag
+ * @param <E> the type held in the bag
  * @since 4.0
  * @version $Id$
  */
@@ -88,6 +96,16 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     // Collection interface
     //-----------------------------------------------------------------------
 
+    /**
+     * <i>(Change)</i>
+     * Returns <code>true</code> if the bag contains all elements in
+     * the given collection, <b>not</b> respecting cardinality. That is,
+     * if the given collection <code>coll</code> contains at least one of
+     * every object contained in this object.
+     *
+     * @param coll  the collection to check against
+     * @return <code>true</code> if the Bag contains at least on of every object in the collection
+     */
     @Override
     public boolean containsAll(final Collection<?> coll) {
         final Iterator<?> e = coll.iterator();
@@ -99,6 +117,16 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
         return true;
     }
 
+    /**
+     * <i>(Change)</i>
+     * Adds one copy of the specified object to the Bag.
+     * <p>
+     * Since this method always increases the size of the bag, it
+     * will always return <code>true</code>.
+     *
+     * @param object  the object to add
+     * @return <code>true</code>, always
+     */
     @Override
     public boolean add(final E object) {
         return add(object, 1);
@@ -115,11 +143,30 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
         return changed;
     }
 
+    /**
+     * <i>(Change)</i>
+     * Removes the first occurrence of the given object from the bag.
+     * <p>
+     * This will also remove the object from the {@link #uniqueSet()} if the
+     * bag contains no occurrence anymore of the object after this operation.
+     *
+     * @param object  the object to remove
+     * @return <code>true</code> if this call changed the collection
+     */
     @Override
     public boolean remove(final Object object) {
         return remove(object, 1);
     }
 
+    /**
+     * <i>(Change)</i>
+     * Remove all elements represented in the given collection,
+     * <b>not</b> respecting cardinality. That is, remove <i>all</i>
+     * occurrences of every object contained in the given collection.
+     *
+     * @param coll  the collection to remove
+     * @return <code>true</code> if this call changed the collection
+     */
     @Override
     public boolean removeAll(final Collection<?> coll) {
         if (coll != null) {
@@ -137,6 +184,17 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
         }
     }
 
+    /**
+     * <i>(Change)</i>
+     * Remove any members of the bag that are not in the given
+     * collection, <i>not</i> respecting cardinality. That is, any object
+     * in the given collection <code>coll</code> will be retained in the
+     * bag with the same number of copies prior to this operation. All
+     * other objects will be completely removed from this bag.
+     *
+     * @param coll  the collection to retain
+     * @return <code>true</code> if this call changed the collection
+     */
     @Override
     public boolean retainAll(final Collection<?> coll) {
         if (coll != null) {
@@ -159,6 +217,17 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
     // Bag interface
     //-----------------------------------------------------------------------
 
+    /**
+     * <i>(Change)</i>
+     * Adds <code>count</code> copies of the specified object to the Bag.
+     * <p>
+     * Since this method always increases the size of the bag, it
+     * will always return <code>true</code>.
+     *
+     * @param object  the object to add
+     * @param count  the number of copies to add
+     * @return <code>true</code>, always
+     */
     @Override
     public boolean add(final E object, final int count) {
         decorated().add(object, count);

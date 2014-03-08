@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-508" dev="tn" type="fix">
+      Clarified javadoc of "CollectionBag" wrt changes from the original Bag interface.
+    </action>
     <action issue="COLLECTIONS-507" dev="tn" type="fix" due-to="Gerson">
       Removed wrong type bounds for "ComparatorUtils#chainedComparator(...)".
     </action>
