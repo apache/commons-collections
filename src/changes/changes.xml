@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-510" dev="tn" type="fix" due-to="Hollis Waite">
+      Fix compilation errors when using source level 1.8 and a recent java 8 compiler.
+    </action>
     <action issue="COLLECTIONS-509" dev="tn" type="fix">
       Clarified javadoc of "CollectionBag" wrt changes from the original Bag interface.
     </action>

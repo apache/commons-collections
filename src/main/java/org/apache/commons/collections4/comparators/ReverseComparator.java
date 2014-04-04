@@ -36,7 +36,7 @@ public class ReverseComparator<E> implements Comparator<E>, Serializable {
     private static final long serialVersionUID = 2858887242028539265L;
 
     /** The comparator being decorated. */
-    private final Comparator<E> comparator;
+    private final Comparator<? super E> comparator;
 
     //-----------------------------------------------------------------------
     /**
