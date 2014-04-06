@@ -51,6 +51,16 @@ public class MultiValuedHashMap<K, V> extends AbstractMultiValuedMap<K, V> imple
     private static final long serialVersionUID = -5845183518195365857L;
 
     /**
+     * The initial capacity used when none specified in constructor.
+     */
+    static final int DEFAULT_INITIAL_CAPACITY = 16;
+
+    /**
+     * The load factor used when none specified in constructor.
+     */
+    static final float DEFAULT_LOAD_FACTOR = 0.75f;
+
+    /**
      * Creates a MultiValuedHashMap which maps keys to collections of type
      * <code>collectionClass</code>.
      *
@@ -62,16 +72,57 @@ public class MultiValuedHashMap<K, V> extends AbstractMultiValuedMap<K, V> imple
      */
     public static <K, V, C extends Collection<V>> MultiValuedMap<K, V> multiValuedMap(
             final Class<C> collectionClass) {
-        return new MultiValuedHashMap<K, V>(collectionClass);
+        return new MultiValuedHashMap<K, V>(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR, collectionClass);
     }
 
     /**
-     * Creates a MultiValueMap based on a <code>HashMap</code> which stores the
-     * multiple values in an <code>ArrayList</code>.
+     * Creates a MultiValueMap based on a <code>HashMap</code> with the default
+     * initial capacity (16) and the default load factor (0.75), which stores
+     * the multiple values in an <code>ArrayList</code>.
      */
     @SuppressWarnings("unchecked")
     public MultiValuedHashMap() {
-        this(ArrayList.class);
+        this(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR, ArrayList.class);
+    }
+
+    /**
+     * Creates a MultiValueMap based on a <code>HashMap</code> with the initial
+     * capacity and the default load factor (0.75), which stores the multiple
+     * values in an <code>ArrayList</code>.
+     *
+     * @param initialCapacity the initial capacity of the underlying hash map
+     */
+    @SuppressWarnings("unchecked")
+    public MultiValuedHashMap(int initialCapacity) {
+        this(initialCapacity, DEFAULT_LOAD_FACTOR, ArrayList.class);
+    }
+
+    /**
+     * Creates a MultiValueMap based on a <code>HashMap</code> with the initial
+     * capacity and the load factor, which stores the multiple values in an
+     * <code>ArrayList</code>.
+     *
+     * @param initialCapacity the initial capacity of the underlying hash map
+     * @param loadFactor the load factor of the underlying hash map
+     */
+    @SuppressWarnings("unchecked")
+    public MultiValuedHashMap(int initialCapacity, float loadFactor) {
+        this(initialCapacity, loadFactor, ArrayList.class);
+    }
+
+    /**
+     * Creates a MultiValueMap based on a <code>HashMap</code> with the initial
+     * capacity and the load factor, which stores the multiple values in an
+     * <code>ArrayList</code> with the initial collection capacity.
+     *
+     * @param initialCapacity the initial capacity of the underlying hash map
+     * @param loadFactor the load factor of the underlying hash map
+     * @param initialCollectionCapacity the initial capacity of the Collection
+     *        of values
+     */
+    @SuppressWarnings("unchecked")
+    public MultiValuedHashMap(int initialCapacity, float loadFactor, int initialCollectionCapacity) {
+        this(initialCapacity, loadFactor, initialCollectionCapacity, ArrayList.class);
     }
 
     /**
@@ -81,7 +132,7 @@ public class MultiValuedHashMap<K, V> extends AbstractMultiValuedMap<K, V> imple
      */
     @SuppressWarnings("unchecked")
     public MultiValuedHashMap(final MultiValuedMap<? extends K, ? extends V> map) {
-        this(ArrayList.class);
+        this(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR, ArrayList.class);
         super.putAll(map);
     }
 
@@ -92,7 +143,7 @@ public class MultiValuedHashMap<K, V> extends AbstractMultiValuedMap<K, V> imple
      */
     @SuppressWarnings("unchecked")
     public MultiValuedHashMap(final Map<? extends K, ? extends V> map) {
-        this(ArrayList.class);
+        this(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR, ArrayList.class);
         super.putAll(map);
     }
 
@@ -100,12 +151,35 @@ public class MultiValuedHashMap<K, V> extends AbstractMultiValuedMap<K, V> imple
      * Creates a MultiValuedHashMap which creates the value collections using
      * the supplied <code>collectionClazz</code>.
      *
-     * @param <C>  the collection type
-     * @param collectionClazz  the class of the <code>Collection</code> to use to
-     *   create the value collections
+     * @param initialCapacity the initial capacity of the underlying
+     *        <code>HashMap</code>
+     * @param loadFactor the load factor of the underlying <code>HashMap</code>
+     * @param <C> the collection type
+     * @param collectionClazz the class of the <code>Collection</code> to use to
+     *        create the value collections
      */
-    protected <C extends Collection<V>> MultiValuedHashMap(final Class<C> collectionClazz) {
-        super(new HashMap<K, Collection<V>>(), collectionClazz);
+    protected <C extends Collection<V>> MultiValuedHashMap(int initialCapacity, float loadFactor,
+            final Class<C> collectionClazz) {
+        super(new HashMap<K, Collection<V>>(initialCapacity, loadFactor), collectionClazz);
+    }
+
+    /**
+     * Creates a MultiValuedHashMap which creates the value collections using
+     * the supplied <code>collectionClazz</code> and the initial collection
+     * capacity .
+     *
+     * @param initialCapacity the initial capacity of the underlying
+     *        <code>HashMap</code>
+     * @param loadFactor the load factor of the underlying <code>HashMap</code>
+     * @param initialCollectionCapacity the initial capacity of the
+     *        <code>Collection</code>
+     * @param <C> the collection type
+     * @param collectionClazz the class of the <code>Collection</code> to use to
+     *        create the value collections
+     */
+    protected <C extends Collection<V>> MultiValuedHashMap(int initialCapacity, float loadFactor,
+            int initialCollectionCapacity, final Class<C> collectionClazz) {
+        super(new HashMap<K, Collection<V>>(initialCapacity, loadFactor), initialCollectionCapacity, collectionClazz);
     }
 
 }

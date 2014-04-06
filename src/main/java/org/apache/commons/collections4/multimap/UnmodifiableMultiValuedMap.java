@@ -22,10 +22,13 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.bag.UnmodifiableBag;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
+import org.apache.commons.collections4.iterators.UnmodifiableMapIterator;
+import org.apache.commons.collections4.map.UnmodifiableMap;
 import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
@@ -92,6 +95,11 @@ public class UnmodifiableMultiValuedMap<K, V>
     }
 
     @Override
+    public Collection<V> get(Object key) {
+        return UnmodifiableCollection.<V>unmodifiableCollection(decorated().get(key));
+    }
+
+    @Override
     public V put(K key, V value) {
         throw new UnsupportedOperationException();
     }
@@ -114,6 +122,16 @@ public class UnmodifiableMultiValuedMap<K, V>
     @Override
     public Collection<V> values() {
         return UnmodifiableCollection.<V>unmodifiableCollection(decorated().values());
+    }
+
+    @Override
+    public Map<K, Collection<V>> asMap() {
+        return UnmodifiableMap.<K, Collection<V>>unmodifiableMap(decorated().asMap());
+    }
+
+    @Override
+    public MapIterator<K, V> mapIterator() {
+        return UnmodifiableMapIterator.<K, V>unmodifiableMapIterator(decorated().mapIterator());
     }
 
     @Override

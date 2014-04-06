@@ -16,6 +16,18 @@
  */
 package org.apache.commons.collections4.multimap;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import junit.framework.Test;
+
+import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.BulkTest;
+import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.Unmodifiable;
 
@@ -31,6 +43,10 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         super(testName);
     }
 
+    public static Test suite() {
+        return BulkTest.makeSuite(UnmodifiableMultiValuedMapTest.class);
+    }
+    
     public boolean isAddSupported() {
         return false;
     }
@@ -73,6 +89,167 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         MultiValuedMap<K, V> map = makeObject();
         try {
             map.put((K) "one", (V) "uno");
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testUnmodifiableEntries() {
+        resetFull();
+        Collection<Entry<K, V>> entries = getMap().entries();
+        try {
+            entries.clear();
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+
+        Iterator<Entry<K, V>> it = entries.iterator();
+        Entry<K, V> entry = it.next();
+        try {
+            it.remove();
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+
+        try {
+            entry.setValue((V) "three");
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testUnmodifiableMapIterator() {
+        resetFull();
+        MapIterator<K, V> mapIt = getMap().mapIterator();
+        try {
+            mapIt.remove();
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+
+        try {
+            mapIt.setValue((V) "three");
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testUnmodifiableKeySet() {
+        resetFull();
+        Set<K> keySet = getMap().keySet();
+        try {
+            keySet.add((K) "four");
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+
+        try {
+            keySet.remove("four");
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+
+        try {
+            keySet.clear();
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+
+        Iterator<K> it = keySet.iterator();
+        try {
+            it.remove();
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testUnmodifiableValues() {
+        resetFull();
+        Collection<V> values = getMap().values();
+        try {
+            values.add((V) "four");
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+
+        try {
+            values.remove("four");
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+
+        try {
+            values.clear();
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+
+        Iterator<V> it = values.iterator();
+        try {
+            it.remove();
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testUnmodifiableAsMap() {
+        resetFull();
+        Map<K, Collection<V>> mapCol = getMap().asMap();
+        try {
+            mapCol.put((K) "four", (Collection<V>) Arrays.asList("four"));
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+
+        try {
+            mapCol.remove("four");
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+
+        try {
+            mapCol.clear();
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+
+        try {
+            mapCol.clear();
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testUnmodifiableKeys() {
+        resetFull();
+        Bag<K> keys = getMap().keys();
+        try {
+            keys.add((K) "four");
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+
+        try {
+            keys.remove("four");
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+
+        try {
+            keys.clear();
+            fail();
+        } catch (UnsupportedOperationException e) {
+        }
+
+        Iterator<K> it = keys.iterator();
+        try {
+            it.remove();
             fail();
         } catch (UnsupportedOperationException e) {
         }

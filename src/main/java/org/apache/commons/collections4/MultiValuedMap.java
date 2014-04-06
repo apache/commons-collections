@@ -284,4 +284,24 @@ public interface MultiValuedMap<K, V> {
      */
     Collection<V> values();
 
+    /**
+     * Returns a {@link Map} view of this MultiValuedMap with a Collection as
+     * its value. The Collection holds all the values mapped to that key.
+     *
+     * @return a Map view of the mappings in this MultiValuedMap
+     */
+    Map<K, Collection<V>> asMap();
+
+    // Iterators
+
+    /**
+     * Obtains a <code>MapIterator</code> over the map.
+     * <p>
+     * A map iterator is an efficient way of iterating over maps. There is no
+     * need to access the entries collection or use Map Entry objects.
+     *
+     * @return a map iterator
+     */
+    MapIterator<K, V> mapIterator();
+
 }

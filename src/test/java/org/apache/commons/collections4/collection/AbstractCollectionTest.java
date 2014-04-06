@@ -703,7 +703,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         // make sure calls to "containsAll" don't change anything
         verify();
 
-        final int min = getFullElements().length < 2 ? 0 : 2;
+        final int min = getFullElements().length < 4 ? 0 : 2;
         final int max = getFullElements().length == 1 ? 1 :
                 getFullElements().length <= 5 ? getFullElements().length - 1 : 5;
         col = Arrays.asList(getFullElements()).subList(min, max);
@@ -931,7 +931,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
         resetFull();
         final int size = getCollection().size();
-        final int min = getFullElements().length < 2 ? 0 : 2;
+        final int min = getFullElements().length < 4 ? 0 : 2;
         final int max = getFullElements().length == 1 ? 1 :
                 getFullElements().length <= 5 ? getFullElements().length - 1 : 5;
         final Collection<E> all = Arrays.asList(getFullElements()).subList(min, max);
@@ -985,7 +985,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         if (getFullElements().length > 1) {
             resetFull();
             size = getCollection().size();
-            final int min = getFullElements().length < 2 ? 0 : 2;
+            final int min = getFullElements().length < 4 ? 0 : 2;
             final int max = getFullElements().length <= 5 ? getFullElements().length - 1 : 5;
             assertTrue("Collection should changed by partial retainAll",
                     getCollection().retainAll(elements.subList(min, max)));

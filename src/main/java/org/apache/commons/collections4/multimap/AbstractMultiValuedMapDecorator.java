@@ -23,14 +23,14 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.MultiValuedMap;
 
 /**
  * Decorates another <code>MultiValuedMap</code> to provide additional behaviour.
  * <p>
- * Each method call made on this <code>MultiValuedMap</code> is forwarded to the
- * decorated <code>MultiValuedMap</code>. This class is used as a framework to
- * build to extensions such as synchronized and unmodifiable behaviour.
+ * Each method call made on this <code>MultiValuedMap</code> is forwarded to the decorated <code>MultiValuedMap</code>.
+ * This class is used as a framework to build to extensions such as synchronized and unmodifiable behaviour.
  *
  * @param <K> the type of key elements
  * @param <V> the type of value elements
@@ -55,7 +55,8 @@ public class AbstractMultiValuedMapDecorator<K, V>
      */
     protected AbstractMultiValuedMapDecorator(final MultiValuedMap<K, V> map) {
         if (map == null) {
-            throw new IllegalArgumentException("MultiValuedMap must not be null");
+            throw new IllegalArgumentException(
+                    "MultiValuedMap must not be null");
         }
         this.map = map;
     }
@@ -120,6 +121,10 @@ public class AbstractMultiValuedMapDecorator<K, V>
         return decorated().values();
     }
 
+    public Map<K, Collection<V>> asMap() {
+        return decorated().asMap();
+    }
+
     public boolean putAll(K key, Iterable<? extends V> values) {
         return decorated().putAll(key, values);
     }
@@ -130,6 +135,10 @@ public class AbstractMultiValuedMapDecorator<K, V>
 
     public void putAll(MultiValuedMap<? extends K, ? extends V> m) {
         decorated().putAll(m);
+    }
+
+    public MapIterator<K, V> mapIterator() {
+        return decorated().mapIterator();
     }
 
     @Override

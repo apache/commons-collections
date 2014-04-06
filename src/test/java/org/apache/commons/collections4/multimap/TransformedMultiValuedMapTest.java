@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.multimap;
 
+import junit.framework.Test;
+
+import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
@@ -32,6 +35,10 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
 
     public TransformedMultiValuedMapTest(String testName) {
         super(testName);
+    }
+
+    public static Test suite() {
+        return BulkTest.makeSuite(TransformedMultiValuedMapTest.class);
     }
 
     @Override
