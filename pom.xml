@@ -24,7 +24,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apache.commons</groupId>
   <artifactId>commons-collections4</artifactId>
-  <version>4.0.1-SNAPSHOT</version>
+  <version>4.1-SNAPSHOT</version>
   <name>Apache Commons Collections</name>
 
   <inceptionYear>2001</inceptionYear>
@@ -263,6 +263,9 @@
     </contributor>
     <contributor>
       <name>Olaf Krische</name>
+    </contributor>
+    <contributor>
+      <name>Dipanjan Laha</name>
     </contributor>
     <contributor>
       <name>Guilhem Lavaux</name>
