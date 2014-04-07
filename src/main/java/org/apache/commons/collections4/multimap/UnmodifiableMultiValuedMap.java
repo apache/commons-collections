@@ -100,7 +100,7 @@ public class UnmodifiableMultiValuedMap<K, V>
     }
 
     @Override
-    public V put(K key, V value) {
+    public boolean put(K key, V value) {
         throw new UnsupportedOperationException();
     }
 

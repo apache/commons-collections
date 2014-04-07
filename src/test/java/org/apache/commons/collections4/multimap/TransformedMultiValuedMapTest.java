@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.multimap;
 
+import java.util.Collection;
+
 import junit.framework.Test;
 
 import org.apache.commons.collections4.BulkTest;
@@ -23,7 +25,6 @@ import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
-import org.apache.commons.collections4.multimap.TransformedMultiValuedMap;
 
 /**
  * Tests for TransformedMultiValuedMap
@@ -65,7 +66,9 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
             assertEquals(true, map.get(Integer.valueOf((String) els[i])).contains(els[i]));
         }
 
-        assertEquals(null, map.remove(els[0]));
+        Collection<V> coll = map.remove(els[0]);
+        assertNotNull(coll);
+        assertEquals(0, coll.size());
         assertEquals(true, map.remove(Integer.valueOf((String) els[0])).contains(els[0]));
     }
 

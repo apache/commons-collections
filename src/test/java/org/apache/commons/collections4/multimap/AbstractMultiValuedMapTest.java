@@ -252,7 +252,9 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         assertFalse(map.containsValue("uno"));
         assertFalse(map.containsValue("un"));
         assertEquals(4, map.size());
-        assertNull(map.remove("one"));
+        col = map.remove("one");
+        assertNotNull(col);
+        assertEquals(0, col.size());
     }
 
     public void testRemoveMappingThroughGetIterator() {
@@ -272,7 +274,9 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         assertFalse(map.containsValue("uno"));
         assertFalse(map.containsValue("un"));
         assertEquals(4, map.size());
-        assertNull(map.remove("one"));
+        Collection<V> coll = map.remove("one");
+        assertNotNull(coll);
+        assertEquals(0, coll.size());
     }
 
     public void testContainsValue() {

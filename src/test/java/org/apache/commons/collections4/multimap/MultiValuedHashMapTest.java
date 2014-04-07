@@ -63,20 +63,21 @@ public class MultiValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, 
     public void testPutWithList() {
         final MultiValuedHashMap<K, V> test =
                 (MultiValuedHashMap<K, V>) MultiValuedHashMap.multiValuedMap(ArrayList.class);
-        assertEquals("a", test.put((K) "A", (V) "a"));
-        assertEquals("b", test.put((K) "A", (V) "b"));
+        assertEquals(true, test.put((K) "A", (V) "a"));
+        assertEquals(true, test.put((K) "A", (V) "b"));
+        assertEquals(true, test.put((K) "A", (V) "a"));
         assertEquals(1, test.keySet().size());
-        assertEquals(2, test.get("A").size());
-        assertEquals(2, test.size());
+        assertEquals(3, test.get("A").size());
+        assertEquals(3, test.size());
     }
 
     @SuppressWarnings("unchecked")
     public void testPutWithSet() {
         final MultiValuedHashMap<K, V> test =
                 (MultiValuedHashMap<K, V>) MultiValuedHashMap.multiValuedMap(HashSet.class);
-        assertEquals("a", test.put((K) "A", (V) "a"));
-        assertEquals("b", test.put((K) "A", (V) "b"));
-        assertEquals(null, test.put((K) "A", (V) "a"));
+        assertEquals(true, test.put((K) "A", (V) "a"));
+        assertEquals(true, test.put((K) "A", (V) "b"));
+        assertEquals(false, test.put((K) "A", (V) "a"));
         assertEquals(1, test.keySet().size());
         assertEquals(2, test.get("A").size());
         assertEquals(2, test.size());

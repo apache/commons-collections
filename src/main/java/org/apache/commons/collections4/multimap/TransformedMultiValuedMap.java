@@ -196,7 +196,7 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
     }
 
     @Override
-    public V put(K key, V value) {
+    public boolean put(K key, V value) {
         K transformedKey = transformKey(key);
         V transformedValue = transformValue(value);
         return decorated().put(transformedKey, transformedValue);

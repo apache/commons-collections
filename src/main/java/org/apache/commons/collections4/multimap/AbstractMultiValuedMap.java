@@ -21,6 +21,7 @@ import java.lang.reflect.Array;
 import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -186,7 +187,8 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
      * @throws ClassCastException if the key is of an invalid type
      */
     public Collection<V> remove(Object key) {
-        return getMap().remove(key);
+        Collection<V> coll = getMap().remove(key);
+        return coll == null ? Collections.<V>emptyList() : coll;
     }
 
     /**
@@ -270,10 +272,9 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
      *
      * @param key the key to store against
      * @param value the value to add to the collection at the key
-     * @return the value added if the map changed and null if the map did not
-     *         change
+     * @return the value added if the map changed and null if the map did not change
      */
-    public V put(K key, V value) {
+    public boolean put(K key, V value) {
         boolean result = false;
         Collection<V> coll = getMap().get(key);
         if (coll == null) {
@@ -287,7 +288,7 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
         } else {
             result = coll.add(value);
         }
-        return result ? value : null;
+        return result;
     }
 
     /**
@@ -470,8 +471,7 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
         public boolean add(V value) {
             final Collection<V> col = getMapping();
             if (col == null) {
-                V addedVal = AbstractMultiValuedMap.this.put((K) key, value);
-                return addedVal != null ? true : false;
+                return AbstractMultiValuedMap.this.put((K) key, value);
             }
             return col.add(value);
         }

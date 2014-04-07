@@ -101,7 +101,7 @@ public class AbstractMultiValuedMapDecorator<K, V>
         decorated().clear();
     }
 
-    public V put(K key, V value) {
+    public boolean put(K key, V value) {
         return decorated().put(key, value);
     }
 
