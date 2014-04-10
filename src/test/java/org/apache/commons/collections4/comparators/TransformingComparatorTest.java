@@ -21,6 +21,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.collections4.ComparatorUtils;
+import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.TransformerUtils;
 
 /**
@@ -58,6 +59,20 @@ public class TransformingComparatorTest extends AbstractComparatorTest<Integer> 
         list.add(4);
         list.add(5);
         return list;
+    }
+
+    public void testEquals() {
+        Transformer<String, String> t1 = TransformerUtils.nopTransformer();
+        TransformingComparator<String, String> comp1 = new TransformingComparator<String, String>(t1);
+        TransformingComparator<String, String> comp2 = new TransformingComparator<String, String>(t1, comp1);
+
+        // Checks the contract: equals-hashcode on comp1 and comp2
+        assertTrue("Contract failed: equals-hashcode",
+                comp1.equals(comp2) ? comp1.hashCode() == comp2.hashCode() : true);
+
+        // Checks the contract: equals-hashcode on comp1 and comp2
+        assertTrue("Contract failed: equals-hashcode",
+                comp2.equals(comp1) ? comp2.hashCode() == comp1.hashCode() : true);
     }
 
     @Override
