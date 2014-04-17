@@ -102,15 +102,17 @@ public interface MultiValuedMap<K, V> {
     boolean containsMapping(Object key, Object value);
 
     /**
-     * Returns a view collection of the values associated with the specified key.
+     * Returns a view collection of the values associated with the specified
+     * key.
      * <p>
-     * This method will return an <b>empty</b> collection if {@link #containsKey(Object)}
-     * returns {@code false}. Changes to the returned collection will update the
-     * underlying {@code MultiValuedMap} and vice-versa.
+     * This method will return an <b>empty</b> collection if
+     * {@link #containsKey(Object)} returns {@code false}. Changes to the
+     * returned collection will update the underlying {@code MultiValuedMap} and
+     * vice-versa.
      *
      * @param key the key to retrieve
      * @return the <code>Collection</code> of values, implementations should
-     *         return <code>null</code> for no mapping, but may return an empty collection
+     *         return an empty collection for no mapping
      * @throws ClassCastException if the key is of an invalid type (optional)
      * @throws NullPointerException if the key is null and null keys are invalid (optional)
      */
@@ -220,8 +222,7 @@ public interface MultiValuedMap<K, V> {
      * Other values attached to that key are unaffected.
      * <p>
      * If the last value for a key is removed, implementations typically return
-     * <code>null</code> from a subsequent <code>get(Object)</code>, however
-     * they may choose to return an empty collection.
+     * an empty collection from a subsequent <code>get(Object)</code>.
      *
      * @param key the key to remove from
      * @param item the item to remove

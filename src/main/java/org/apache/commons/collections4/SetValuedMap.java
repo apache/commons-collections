@@ -37,16 +37,13 @@ public interface SetValuedMap<K, V> extends MultiValuedMap<K, V> {
     /**
      * Gets the set of values associated with the specified key.
      * <p>
-     * Implementations typically return <code>null</code> if no values have been
-     * mapped to the key, however the implementation may choose to return an
-     * empty collection.
+     * Implementations typically return an empty <code>Set</code> if no values
+     * have been mapped to the key.
      * <p>
-     * Implementations may choose to return a clone of the internal collection.
      *
      * @param key the key to retrieve
-     * @return the <code>Set</code> of values, implementations should return
-     *         <code>null</code> for no mapping, but may return an empty
-     *         collection
+     * @return the <code>Set</code> of values, implementations should return an
+     *         empty Set for no mapping
      * @throws ClassCastException if the key is of an invalid type
      * @throws NullPointerException if the key is null and null keys are invalid
      */
@@ -55,9 +52,9 @@ public interface SetValuedMap<K, V> extends MultiValuedMap<K, V> {
     /**
      * Removes all values associated with the specified key.
      * <p>
-     * Implementations typically return <code>null</code> from a subsequent
-     * <code>get(Object)</code>, however they may choose to return an empty
-     * collection.
+     * The returned set <i>may</i> be modifiable, but updates will not be
+     * propagated to this set-valued map. In case no mapping was stored for the
+     * specified key, an empty, unmodifiable set will be returned.
      *
      * @param key the key to remove values from
      * @return the <code>Set</code> of values removed, implementations should

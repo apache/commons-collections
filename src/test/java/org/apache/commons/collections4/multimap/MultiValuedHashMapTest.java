@@ -16,17 +16,21 @@
  */
 package org.apache.commons.collections4.multimap;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Set;
 
 import junit.framework.Test;
 
 import org.apache.commons.collections4.BulkTest;
+import org.apache.commons.collections4.ListValuedMap;
 import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.SetValuedMap;
 
 /**
  * Test MultValuedHashMap
- * 
+ *
  * @since 4.1
  * @version $Id$
  */
@@ -46,41 +50,117 @@ public class MultiValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, 
         return m;
     }
 
-    /*private <C extends Collection<V>> MultiValuedHashMap<K, V> createTestMap(final Class<C> collectionClass) {
-        final MultiValuedHashMap<K, V> map =
-                (MultiValuedHashMap<K, V>) MultiValuedHashMap.<K, V, C> multiValuedMap(collectionClass);
-        addSampleMappings(map);
-        return map;
+    @SuppressWarnings("unchecked")
+    public void testSetValuedMapAdd() {
+        final SetValuedMap<K, V> setMap = MultiValuedHashMap.setValuedHashMap();
+        assertTrue(setMap.get("whatever") instanceof Set);
+
+        Set<V> set = setMap.get("A");
+        assertTrue(set.add((V) "a1"));
+        assertTrue(set.add((V) "a2"));
+        assertFalse(set.add((V) "a1"));
+        assertEquals(2, setMap.size());
+        assertTrue(setMap.containsKey("A"));
     }
 
     @SuppressWarnings("unchecked")
-    public void testValueCollectionType() {
-        final MultiValuedHashMap<K, V> map = createTestMap(LinkedList.class);
-        assertTrue(map.get("one") instanceof LinkedList);
-    }*/
+    public void testSetValuedMapRemove() {
+        final SetValuedMap<K, V> setMap = MultiValuedHashMap.setValuedHashMap();
+        assertTrue(setMap.get("whatever") instanceof Set);
 
-    @SuppressWarnings("unchecked")
-    public void testPutWithList() {
-        final MultiValuedHashMap<K, V> test =
-                (MultiValuedHashMap<K, V>) MultiValuedHashMap.multiValuedMap(ArrayList.class);
-        assertEquals(true, test.put((K) "A", (V) "a"));
-        assertEquals(true, test.put((K) "A", (V) "b"));
-        assertEquals(true, test.put((K) "A", (V) "a"));
-        assertEquals(1, test.keySet().size());
-        assertEquals(3, test.get("A").size());
-        assertEquals(3, test.size());
+        Set<V> set = setMap.get("A");
+        assertTrue(set.add((V) "a1"));
+        assertTrue(set.add((V) "a2"));
+        assertFalse(set.add((V) "a1"));
+        assertEquals(2, setMap.size());
+        assertTrue(setMap.containsKey("A"));
+
+        assertTrue(set.remove("a1"));
+        assertTrue(set.remove("a2"));
+        assertFalse(set.remove("a1"));
+
+        assertEquals(0, setMap.size());
+        assertFalse(setMap.containsKey("A"));
     }
 
     @SuppressWarnings("unchecked")
-    public void testPutWithSet() {
-        final MultiValuedHashMap<K, V> test =
-                (MultiValuedHashMap<K, V>) MultiValuedHashMap.multiValuedMap(HashSet.class);
-        assertEquals(true, test.put((K) "A", (V) "a"));
-        assertEquals(true, test.put((K) "A", (V) "b"));
-        assertEquals(false, test.put((K) "A", (V) "a"));
-        assertEquals(1, test.keySet().size());
-        assertEquals(2, test.get("A").size());
-        assertEquals(2, test.size());
+    public void testSetValuedMapRemoveViaIterator() {
+        final SetValuedMap<K, V> setMap = MultiValuedHashMap.setValuedHashMap();
+        assertTrue(setMap.get("whatever") instanceof Set);
+
+        Set<V> set = setMap.get("A");
+        set.add((V) "a1");
+        set.add((V) "a2");
+        set.add((V) "a1");
+
+        Iterator<V> it = set.iterator();
+        while (it.hasNext()) {
+            it.next();
+            it.remove();
+        }
+        assertEquals(0, setMap.size());
+        assertFalse(setMap.containsKey("A"));
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testListValuedMapAdd() {
+        final ListValuedMap<K, V> listMap = MultiValuedHashMap.listValuedHashMap();
+        assertTrue(listMap.get("whatever") instanceof List);
+        List<V> list = listMap.get("A");
+        list.add((V) "a1");
+        assertEquals(1, listMap.size());
+        assertTrue(listMap.containsKey("A"));
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testListValuedMapAddViaListIterator() {
+        final ListValuedMap<K, V> listMap = MultiValuedHashMap.listValuedHashMap();
+        ListIterator<V> listIt = listMap.get("B").listIterator();
+        assertFalse(listIt.hasNext());
+        listIt.add((V) "b1");
+        listIt.add((V) "b2");
+        listIt.add((V) "b3");
+        assertEquals(3, listMap.size());
+        assertTrue(listMap.containsKey("B"));
+        // As ListIterator always adds before the current cursor
+        assertFalse(listIt.hasNext());
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testListValuedMapRemove() {
+        final ListValuedMap<K, V> listMap = MultiValuedHashMap.listValuedHashMap();
+        List<V> list = listMap.get("A");
+        list.add((V) "a1");
+        list.add((V) "a2");
+        list.add((V) "a3");
+        assertEquals(3, listMap.size());
+        assertEquals("a1", list.remove(0));
+        assertEquals(2, listMap.size());
+        assertEquals("a2", list.remove(0));
+        assertEquals(1, listMap.size());
+        assertEquals("a3", list.remove(0));
+        assertEquals(0, listMap.size());
+        assertFalse(listMap.containsKey("A"));
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testListValuedMapRemoveViaListIterator() {
+        final ListValuedMap<K, V> listMap = MultiValuedHashMap.listValuedHashMap();
+        ListIterator<V> listIt = listMap.get("B").listIterator();
+        listIt.add((V) "b1");
+        listIt.add((V) "b2");
+        assertEquals(2, listMap.size());
+        assertTrue(listMap.containsKey("B"));
+        listIt = listMap.get("B").listIterator();
+        while (listIt.hasNext()) {
+            listIt.next();
+            listIt.remove();
+        }
+        assertFalse(listMap.containsKey("B"));
+        listIt.add((V) "b1");
+        listIt.add((V) "b2");
+        assertTrue(listMap.containsKey("B"));
+        assertEquals(2, listMap.get("B").size());
     }
 
 //    public void testCreate() throws Exception {

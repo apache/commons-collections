@@ -21,7 +21,6 @@ import java.lang.reflect.Array;
 import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -95,14 +94,14 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
      *
      * @param <C> the collection type
      * @param map the map to wrap, must not be null
-     * @param initialCollectionCapacity the initial capacity of the collection
      * @param collectionClazz the collection class
+     * @param initialCollectionCapacity the initial capacity of the collection
      * @throws IllegalArgumentException if the map is null or if
-     *         initialCollectionCapacity is negetive
+     *         initialCollectionCapacity is negative
      */
     @SuppressWarnings("unchecked")
     protected <C extends Collection<V>> AbstractMultiValuedMap(final Map<K, ? super C> map,
-            int initialCollectionCapacity, final Class<C> collectionClazz) {
+            final Class<C> collectionClazz, final int initialCollectionCapacity) {
         if (map == null) {
             throw new IllegalArgumentException("Map must not be null");
         }
@@ -179,16 +178,15 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
     /**
      * Removes all values associated with the specified key.
      * <p>
-     * A subsequent <code>get(Object)</code> would return null collection.
+     * A subsequent <code>get(Object)</code> would return an empty collection.
      *
      * @param key the key to remove values from
-     * @return the <code>Collection</code> of values removed, will return
-     *         <code>null</code> for no mapping found.
+     * @return the <code>Collection</code> of values removed, will return an
+     *         empty, unmodifiable collection for no mapping found.
      * @throws ClassCastException if the key is of an invalid type
      */
     public Collection<V> remove(Object key) {
-        Collection<V> coll = getMap().remove(key);
-        return coll == null ? Collections.<V>emptyList() : coll;
+        return CollectionUtils.emptyIfNull(getMap().remove(key));
     }
 
     /**
@@ -197,7 +195,7 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
      * The item is removed from the collection mapped to the specified key.
      * Other values attached to that key are unaffected.
      * <p>
-     * If the last value for a key is removed, <code>null</code> would be
+     * If the last value for a key is removed, an empty collection would be
      * returned from a subsequent <code>get(Object)</code>.
      *
      * @param key the key to remove from
@@ -455,15 +453,15 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
     /**
      * Wrapped collection to handle add and remove on the collection returned by get(object)
      */
-    private class WrappedCollection implements Collection<V> {
+    protected class WrappedCollection implements Collection<V> {
 
-        private final Object key;
+        protected final Object key;
 
         public WrappedCollection(Object key) {
             this.key = key;
         }
 
-        private Collection<V> getMapping() {
+        protected Collection<V> getMapping() {
             return getMap().get(key);
         }
 

@@ -19,9 +19,14 @@ package org.apache.commons.collections4.multimap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.apache.commons.collections4.ListValuedMap;
 import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.SetValuedMap;
 
 /**
  * Implements a {@link MultiValuedMap}, using a {@link HashMap} to provide data
@@ -61,18 +66,59 @@ public class MultiValuedHashMap<K, V> extends AbstractMultiValuedMap<K, V> imple
     static final float DEFAULT_LOAD_FACTOR = 0.75f;
 
     /**
-     * Creates a MultiValuedHashMap which maps keys to collections of type
-     * <code>collectionClass</code>.
+     * Creates a {@link ListValuedMap} with a {@link HashMap} as its internal
+     * storage
      *
      * @param <K> the key type
      * @param <V> the value type
-     * @param <C> the collection class type
-     * @param collectionClass the type of the collection class
-     * @return a new MultiValuedMap
+     * @return a new <code>ListValuedMap</code>
      */
-    public static <K, V, C extends Collection<V>> MultiValuedMap<K, V> multiValuedMap(
-            final Class<C> collectionClass) {
-        return new MultiValuedHashMap<K, V>(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR, collectionClass);
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static <K, V> ListValuedMap<K, V> listValuedHashMap() {
+        return new ListValuedHashMap(ArrayList.class);
+    }
+
+    /**
+     * Creates a {@link ListValuedMap} with a {@link HashMap} as its internal
+     * storage which maps the keys to list of type <code>listClass</code>
+     *
+     * @param <K> the key type
+     * @param <V> the value type
+     * @param <C> the List class type
+     * @param listClass the class of the list
+     * @return a new <code>ListValuedMap</code>
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static <K, V, C extends List<V>> ListValuedMap<K, V> listValuedHashMap(final Class<C> listClass) {
+        return new ListValuedHashMap(listClass);
+    }
+
+    /**
+     * Creates a {@link SetValuedMap} with a {@link HashMap} as its internal
+     * storage
+     *
+     * @param <K> the key type
+     * @param <V> the value type
+     * @return a new <code>SetValuedMap</code>
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static <K, V> SetValuedMap<K, V> setValuedHashMap() {
+        return new SetValuedHashMap(HashSet.class);
+    }
+
+    /**
+     * Creates a {@link SetValuedMap} with a {@link HashMap} as its internal
+     * storage which maps the keys to a set of type <code>setClass</code>
+     *
+     * @param <K> the key type
+     * @param <V> the value type
+     * @param <C> the Set class type
+     * @param setClass the class of the set
+     * @return a new <code>SetValuedMap</code>
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static <K, V, C extends Set<V>> SetValuedMap<K, V> setValuedHashMap(final Class<C> setClass) {
+        return new SetValuedHashMap(setClass);
     }
 
     /**
@@ -122,7 +168,7 @@ public class MultiValuedHashMap<K, V> extends AbstractMultiValuedMap<K, V> imple
      */
     @SuppressWarnings("unchecked")
     public MultiValuedHashMap(int initialCapacity, float loadFactor, int initialCollectionCapacity) {
-        this(initialCapacity, loadFactor, initialCollectionCapacity, ArrayList.class);
+        this(initialCapacity, loadFactor, ArrayList.class, initialCollectionCapacity);
     }
 
     /**
@@ -178,8 +224,40 @@ public class MultiValuedHashMap<K, V> extends AbstractMultiValuedMap<K, V> imple
      *        create the value collections
      */
     protected <C extends Collection<V>> MultiValuedHashMap(int initialCapacity, float loadFactor,
-            int initialCollectionCapacity, final Class<C> collectionClazz) {
-        super(new HashMap<K, Collection<V>>(initialCapacity, loadFactor), initialCollectionCapacity, collectionClazz);
+            final Class<C> collectionClazz, int initialCollectionCapacity) {
+        super(new HashMap<K, Collection<V>>(initialCapacity, loadFactor), collectionClazz, initialCollectionCapacity);
+    }
+
+    /** Inner class for ListValuedMap */
+    private static class ListValuedHashMap<K, V> extends AbstractListValuedMap<K, V> {
+
+        private static final long serialVersionUID = 3667581458573135234L;
+
+        public <C extends List<V>> ListValuedHashMap(Class<C> listClazz) {
+            super(new HashMap<K, List<V>>(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR), listClazz);
+        }
+
+        public <C extends List<V>> ListValuedHashMap(Class<C> listClazz, int initialListCapacity) {
+            super(new HashMap<K, List<V>>(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR), listClazz,
+                    initialListCapacity);
+        }
+
+    }
+
+    /** Inner class for SetValuedMap */
+    private static class SetValuedHashMap<K, V> extends AbstractSetValuedMap<K, V> {
+
+        private static final long serialVersionUID = -3817515514829894543L;
+
+        public <C extends Set<V>> SetValuedHashMap(Class<C> setClazz) {
+            super(new HashMap<K, Set<V>>(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR), setClazz);
+        }
+
+        public <C extends Set<V>> SetValuedHashMap(Class<C> setClazz, int initialSetCapacity) {
+            super(new HashMap<K, Set<V>>(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR), setClazz,
+                    initialSetCapacity);
+        }
+
     }
 
 }

@@ -35,15 +35,14 @@ public interface ListValuedMap<K, V> extends MultiValuedMap<K, V> {
     /**
      * Gets the list of values associated with the specified key.
      * <p>
-     * Implementations typically return <code>null</code> if no values have been
-     * mapped to the key, however the implementation may choose to return an
-     * empty collection.
-     * <p>
-     * Implementations may choose to return a clone of the internal collection.
+     * This method will return an <b>empty</b> list if
+     * {@link #containsKey(Object)} returns {@code false}. Changes to the
+     * returned list will update the underlying {@code ListValuedMap} and
+     * vice-versa.
      *
      * @param key the key to retrieve
-     * @return the <code>Collection</code> of values, implementations should
-     *         return <code>null</code> for no mapping, but may return an empty collection
+     * @return the <code>List</code> of values, implementations should return an
+     *         empty list for no mapping
      * @throws ClassCastException if the key is of an invalid type
      * @throws NullPointerException if the key is null and null keys are invalid
      */
@@ -52,14 +51,13 @@ public interface ListValuedMap<K, V> extends MultiValuedMap<K, V> {
     /**
      * Removes all values associated with the specified key.
      * <p>
-     * Implementations typically return <code>null</code> from a subsequent
-     * <code>get(Object)</code>, however they may choose to return an empty
-     * collection.
+     * The returned list <i>may</i> be modifiable, but updates will not be
+     * propagated to this list-valued map. In case no mapping was stored for the
+     * specified key, an empty, unmodifiable list will be returned.
      *
      * @param key the key to remove values from
-     * @return the <code>Collection</code> of values removed, implementations
-     *         should return <code>null</code> for no mapping found, but may
-     *         return an empty collection
+     * @return the <code>List</code> of values removed, implementations
+     *         typically return an empty, unmodifiable List for no mapping found
      * @throws UnsupportedOperationException if the map is unmodifiable
      * @throws ClassCastException if the key is of an invalid type
      * @throws NullPointerException if the key is null and null keys are invalid

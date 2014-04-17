@@ -43,7 +43,7 @@ import org.apache.commons.collections4.set.AbstractSetTest;
  * <p>
  * To use, extend this class and implement the {@link #makeObject} method and if
  * necessary override the {@link #makeFullMap()} method.
- * 
+ *
  * @since 4.1
  * @version $Id$
  */
