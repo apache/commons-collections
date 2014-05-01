@@ -29,7 +29,7 @@ public class TrieUtils {
     /**
      * {@link TrieUtils} should not normally be instantiated.
      */
-    private TrieUtils() {}
+    protected TrieUtils() {}
 
     /**
      * Returns an unmodifiable instance of a {@link Trie}

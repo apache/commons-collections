@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-519" dev="tn" type="fix" due-to="Radoslav Paskalev, Daniel Feist">
+      Constructors of *Utils classes are now protected to allow sub-classing.
+    </action>
     <action issue="COLLECTIONS-512" dev="tn" type="fix" due-to="Cyrille Artho">
       "TransformingComparator" did not comply with the contract of Object#equals.
     </action>

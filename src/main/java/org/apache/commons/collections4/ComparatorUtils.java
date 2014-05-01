@@ -43,7 +43,7 @@ public class ComparatorUtils {
     /**
      * ComparatorUtils should not normally be instantiated.
      */
-    private ComparatorUtils() {}
+    protected ComparatorUtils() {}
 
     /**
      * Comparator for natural sort order.

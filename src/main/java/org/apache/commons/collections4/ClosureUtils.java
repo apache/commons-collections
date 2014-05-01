@@ -56,7 +56,7 @@ public class ClosureUtils {
     /**
      * This class is not normally instantiated.
      */
-    private ClosureUtils() {}
+    protected ClosureUtils() {}
 
     /**
      * Gets a Closure that always throws an exception.

@@ -185,7 +185,7 @@ public class CollectionUtils {
     /**
      * <code>CollectionUtils</code> should not normally be instantiated.
      */
-    private CollectionUtils() {}
+    protected CollectionUtils() {}
 
     /**
      * Returns the immutable EMPTY_COLLECTION with generic type safety.
