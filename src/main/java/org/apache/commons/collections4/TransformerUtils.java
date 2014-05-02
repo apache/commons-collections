@@ -66,7 +66,7 @@ public class TransformerUtils {
     /**
      * This class is not normally instantiated.
      */
-    protected TransformerUtils() {}
+    private TransformerUtils() {}
 
     /**
      * Gets a transformer that always throws an exception.

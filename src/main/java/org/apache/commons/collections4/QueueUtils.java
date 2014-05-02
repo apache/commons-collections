@@ -40,7 +40,7 @@ public class QueueUtils {
     /**
      * <code>QueueUtils</code> should not normally be instantiated.
      */
-    protected QueueUtils() {}
+    private QueueUtils() {}
 
     //-----------------------------------------------------------------------
 

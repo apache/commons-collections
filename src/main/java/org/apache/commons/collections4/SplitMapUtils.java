@@ -20,11 +20,11 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.collections4.set.UnmodifiableSet;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.apache.commons.collections4.iterators.UnmodifiableMapIterator;
 import org.apache.commons.collections4.map.EntrySetToMapIteratorAdapter;
 import org.apache.commons.collections4.map.UnmodifiableEntrySet;
-import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
  * Utilities for working with "split maps:" objects that implement {@link Put}
@@ -41,7 +41,7 @@ public class SplitMapUtils {
     /**
      * <code>SplitMapUtils</code> should not normally be instantiated.
      */
-    protected SplitMapUtils() {}
+    private SplitMapUtils() {}
 
     //-----------------------------------------------------------------------
 

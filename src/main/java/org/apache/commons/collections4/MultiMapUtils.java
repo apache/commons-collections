@@ -48,7 +48,7 @@ public class MultiMapUtils {
     /**
      * <code>MultiMapUtils</code> should not normally be instantiated.
      */
-    protected MultiMapUtils() {
+    private MultiMapUtils() {
     }
 
     /**

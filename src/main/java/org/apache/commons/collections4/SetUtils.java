@@ -69,7 +69,7 @@ public class SetUtils {
     /**
      * <code>SetUtils</code> should not normally be instantiated.
      */
-    protected SetUtils() {}
+    private SetUtils() {}
 
     //-----------------------------------------------------------------------
 

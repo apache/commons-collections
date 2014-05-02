@@ -46,7 +46,7 @@ public class ListUtils {
     /**
      * <code>ListUtils</code> should not normally be instantiated.
      */
-    protected ListUtils() {}
+    private ListUtils() {}
 
     //-----------------------------------------------------------------------
 

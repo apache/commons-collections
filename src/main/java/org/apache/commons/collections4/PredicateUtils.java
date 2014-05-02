@@ -74,7 +74,7 @@ public class PredicateUtils {
     /**
      * This class is not normally instantiated.
      */
-    protected PredicateUtils() {}
+    private PredicateUtils() {}
 
     // Simple predicates
     //-----------------------------------------------------------------------------
