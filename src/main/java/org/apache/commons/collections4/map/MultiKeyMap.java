@@ -249,7 +249,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
         return
             multi.size() == 2 &&
             (key1 == multi.getKey(0) || key1 != null && key1.equals(multi.getKey(0))) &&
-            (key2 == multi.getKey(1) || key1 != null && key2.equals(multi.getKey(1)));
+            (key2 == multi.getKey(1) || key2 != null && key2.equals(multi.getKey(1)));
     }
 
     //-----------------------------------------------------------------------

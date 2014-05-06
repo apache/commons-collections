@@ -300,6 +300,22 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
         }
     }
 
+    public void testMultiKeyPutWithNullKey() {
+        final MultiKeyMap<String, String> map = new MultiKeyMap<String, String>();
+        map.put("a", null, "value1");
+        map.put("b", null, "value2");
+        map.put("c", null, "value3");
+        map.put("a", "z",  "value4");
+        map.put("a", null, "value5");
+        map.put(null, "a", "value6");
+        map.put(null, null, "value7");
+        
+        assertEquals(6, map.size());
+        assertEquals("value5", map.get("a", null));
+        assertEquals("value4", map.get("a", "z"));
+        assertEquals("value6", map.get(null, "a"));
+    }
+
     public void testMultiKeyRemove() {
         final MultiKey<K>[] keys = getMultiKeyKeys();
         final V[] values = getSampleValues();

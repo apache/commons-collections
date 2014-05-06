@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-521" dev="tn" type="fix" due-to="Maxime Nay">
+      "MultiKeyMap" was throwing a "NullPointerException" for various operations
+      if two key arguments have been used and the second was "null".
+    </action>
     <action issue="COLLECTIONS-522" dev="tn" type="fix" due-to="Erik">
       Updated code example for "PredicatedList".
     </action>
