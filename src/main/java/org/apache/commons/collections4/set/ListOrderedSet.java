@@ -24,7 +24,9 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.OrderedIterator;
+import org.apache.commons.collections4.functors.UniquePredicate;
 import org.apache.commons.collections4.iterators.AbstractIteratorDecorator;
 import org.apache.commons.collections4.list.UnmodifiableList;
 
@@ -60,8 +62,7 @@ public class ListOrderedSet<E>
     private final List<E> setOrder;
 
     /**
-     * Factory method to create an ordered set specifying the list and set to
-     * use.
+     * Factory method to create an ordered set specifying the list and set to use.
      * <p>
      * The list and set must both be empty.
      *
@@ -102,8 +103,7 @@ public class ListOrderedSet<E>
     }
 
     /**
-     * Factory method to create an ordered set using the supplied list to retain
-     * order.
+     * Factory method to create an ordered set using the supplied list to retain order.
      * <p>
      * A <code>HashSet</code> is used for the set behaviour.
      * <p>
@@ -120,8 +120,8 @@ public class ListOrderedSet<E>
         if (list == null) {
             throw new IllegalArgumentException("List must not be null");
         }
+        CollectionUtils.filter(list, UniquePredicate.uniquePredicate());
         final Set<E> set = new HashSet<E>(list);
-        list.retainAll(set);
 
         return new ListOrderedSet<E>(set, list);
     }

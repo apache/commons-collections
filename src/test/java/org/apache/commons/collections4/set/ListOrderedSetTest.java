@@ -23,6 +23,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.collections4.IteratorUtils;
+
 /**
  * Extension of {@link AbstractSetTest} for exercising the
  * {@link ListOrderedSet} implementation.
@@ -225,6 +227,25 @@ public class ListOrderedSetTest<E>
         // TODO if test is migrated to JUnit 4, add a Timeout rule.
         // http://kentbeck.github.com/junit/javadoc/latest/org/junit/rules/Timeout.html
         assertTrue(stop - start < 5000);
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testDuplicates() {
+        final List<E> list = new ArrayList<E>(10);
+        list.add((E) Integer.valueOf(1));
+        list.add((E) Integer.valueOf(2));
+        list.add((E) Integer.valueOf(3));
+        list.add((E) Integer.valueOf(1));
+
+        final ListOrderedSet<E> orderedSet = ListOrderedSet.listOrderedSet(list);
+
+        assertEquals(3, orderedSet.size());
+        assertEquals(3, IteratorUtils.toArray(orderedSet.iterator()).length);
+
+        // insertion order preserved?
+        assertEquals(Integer.valueOf(1), orderedSet.get(0));
+        assertEquals(Integer.valueOf(2), orderedSet.get(1));
+        assertEquals(Integer.valueOf(3), orderedSet.get(2));
     }
 
     static class A {
