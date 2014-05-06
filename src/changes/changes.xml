@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-522" dev="tn" type="fix" due-to="Erik">
+      Updated code example for "PredicatedList".
+    </action>
     <action issue="COLLECTIONS-512" dev="tn" type="fix" due-to="Cyrille Artho">
       "TransformingComparator" and "FixedOrderComparator" did not comply with
       the contract of "Object#equals".

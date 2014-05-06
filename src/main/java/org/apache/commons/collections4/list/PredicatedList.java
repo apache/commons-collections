@@ -16,13 +16,13 @@
  */
 package org.apache.commons.collections4.list;
 
-import org.apache.commons.collections4.Predicate;
-import org.apache.commons.collections4.collection.PredicatedCollection;
-import org.apache.commons.collections4.iterators.AbstractListIteratorDecorator;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.ListIterator;
+
+import org.apache.commons.collections4.Predicate;
+import org.apache.commons.collections4.collection.PredicatedCollection;
+import org.apache.commons.collections4.iterators.AbstractListIteratorDecorator;
 
 /**
  * Decorates another <code>List</code> to validate that all additions
@@ -33,7 +33,12 @@ import java.util.ListIterator;
  * If an object cannot be added to the list, an IllegalArgumentException is thrown.
  * <p>
  * One usage would be to ensure that no null entries are added to the list.
- * <pre>List list = PredicatedList.decorate(new ArrayList(), NotNullPredicate.INSTANCE);</pre>
+ * <pre>
+ * {@code
+ * List<String> list =
+ *   PredicatedList.predicatedList(new ArrayList<String>(), PredicateUtils.notNullPredicate());
+ * }
+ * </pre>
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
