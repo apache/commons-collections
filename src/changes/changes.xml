@@ -23,7 +23,8 @@
 
   <release version="4.1" date="TBD" description="">
     <action issue="COLLECTIONS-512" dev="tn" type="fix" due-to="Cyrille Artho">
-      "TransformingComparator" did not comply with the contract of Object#equals.
+      "TransformingComparator" and "FixedOrderComparator" did not comply with
+      the contract of "Object#equals".
     </action>
     <action issue="COLLECTIONS-510" dev="tn" type="fix" due-to="Hollis Waite">
       Fix compilation errors when using source level 1.8 and a recent java 8 compiler.

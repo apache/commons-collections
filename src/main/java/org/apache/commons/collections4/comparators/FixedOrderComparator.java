@@ -285,12 +285,12 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
         }
         if (object.getClass().equals(this.getClass())) {
             final FixedOrderComparator<?> comp = (FixedOrderComparator<?>) object;
-            return null == map ? null == comp.map : map.equals(comp.map) &&
-                    null == unknownObjectBehavior ? null == comp.unknownObjectBehavior :
+            return (null == map ? null == comp.map : map.equals(comp.map)) &&
+                   (null == unknownObjectBehavior ? null == comp.unknownObjectBehavior :
                         unknownObjectBehavior == comp.unknownObjectBehavior &&
-                    counter == comp.counter &&
-                    isLocked == comp.isLocked &&
-                    unknownObjectBehavior == comp.unknownObjectBehavior;
+                        counter == comp.counter &&
+                        isLocked == comp.isLocked &&
+                        unknownObjectBehavior == comp.unknownObjectBehavior);
         }
         return false;
     }
