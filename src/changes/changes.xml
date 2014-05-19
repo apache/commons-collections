@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-523" dev="tn" type="fix" due-to="Thiago Andrade">
+      Removed unneeded private method in "PassiveExpiringMap".
+    </action>
     <action issue="COLLECTIONS-516" dev="tn" type="fix" due-to="Cyrille Artho">
       Added clarification to the javadoc of "MapUtils#toProperties(Map)" in case
       of null keys/values.

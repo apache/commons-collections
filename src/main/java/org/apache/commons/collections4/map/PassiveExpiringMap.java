@@ -427,14 +427,6 @@ public class PassiveExpiringMap<K, V>
 
     @Override
     public V put(final K key, final V value) {
-        return put(key, value, now());
-    }
-
-    /**
-     * Add the given key-value pair to this map as well as recording the entry's expiration time based on
-     * the current time in milliseconds, <code>now</code> and this map's {@link #expiringPolicy}.
-     */
-    private V put(final K key, final V value, final long now) {
         // record expiration time of new entry
         final long expirationTime = expiringPolicy.expirationTime(key, value);
         expirationMap.put(key, Long.valueOf(expirationTime));
