@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-516" dev="tn" type="fix" due-to="Cyrille Artho">
+      Added clarification to the javadoc of "MapUtils#toProperties(Map)" in case
+      of null keys/values.
+    </action>
     <action issue="COLLECTIONS-524" dev="tn" type="fix" due-to="J Goodfellow">
       "ListOrderedSet#listOrderedSet(List)" did not remove duplicates from the
       input list as advertised in the javadoc.

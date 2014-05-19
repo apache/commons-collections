@@ -852,11 +852,16 @@ public class MapUtils {
     /**
      * Gets a new Properties object initialised with the values from a Map.
      * A null input will return an empty properties object.
+     * <p>
+     * A Properties object may only store non-null keys and values, thus if
+     * the provided map contains either a key or value which is {@code null},
+     * a {@link NullPointerException} will be thrown.
      *
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map  the map to convert to a Properties object
      * @return the properties object
+     * @throws NullPointerException if a key or value in the provided map is {@code null}
      */
     public static <K, V> Properties toProperties(final Map<K, V> map) {
         final Properties answer = new Properties();
