@@ -22,6 +22,11 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-531" dev="tn" type="fix" due-to="Dipanjan Laha">
+      Use correct type bounds in
+      "CollectionUtils#isEqualCollection(Collection, Collection, Equator)" to
+      prevent a "ClassCastException" at runtime for invalid inputs.
+    </action>
     <action issue="COLLECTIONS-523" dev="tn" type="fix" due-to="Thiago Andrade">
       Removed unneeded private method in "PassiveExpiringMap".
     </action>
