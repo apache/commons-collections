@@ -18,21 +18,38 @@ package org.apache.commons.collections4;
 
 import static org.apache.commons.collections4.functors.EqualPredicate.equalPredicate;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
+import java.util.SortedMap;
+import java.util.TreeMap;
+import java.util.Vector;
 
-import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.collection.PredicatedCollection;
 import org.apache.commons.collections4.collection.SynchronizedCollection;
 import org.apache.commons.collections4.collection.TransformedCollection;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.apache.commons.collections4.functors.DefaultEquator;
+import org.apache.commons.collections4.queue.CircularFifoQueue;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -1719,16 +1736,153 @@ public class CollectionUtilsTest extends MockTestCase {
             }
         };
         assertTrue(CollectionUtils.matchesAll(collectionA, lessThanFive));
-        
+
         Predicate<Integer> lessThanFour = new Predicate<Integer>() {
             public boolean evaluate(Integer object) {
                 return object < 4;
             }
         };
         assertFalse(CollectionUtils.matchesAll(collectionA, lessThanFour));
-        
+
         assertTrue(CollectionUtils.matchesAll(null, lessThanFour));
         assertTrue(CollectionUtils.matchesAll(emptyCollection, lessThanFour));
     }
 
+    @Test
+    public void testRemoveAllWithEquator() {
+        final List<String> base = new ArrayList<String>();
+        base.add("AC");
+        base.add("BB");
+        base.add("CA");
+
+        final List<String> remove = new ArrayList<String>();
+        remove.add("AA");
+        remove.add("CX");
+        remove.add("XZ");
+
+        // use an equator which compares the second letter only
+        final Collection<String> result = CollectionUtils.removeAll(base, remove, new Equator<String>() {
+
+            public boolean equate(String o1, String o2) {
+                return o1.charAt(1) == o2.charAt(1);
+            }
+
+            public int hash(String o) {
+                return o.charAt(1);
+            }
+        });
+
+        assertEquals(2, result.size());
+        assertTrue(result.contains("AC"));
+        assertTrue(result.contains("BB"));
+        assertFalse(result.contains("CA"));
+        assertEquals(3, base.size());
+        assertEquals(true, base.contains("AC"));
+        assertEquals(true, base.contains("BB"));
+        assertEquals(true, base.contains("CA"));
+        assertEquals(3, remove.size());
+        assertEquals(true, remove.contains("AA"));
+        assertEquals(true, remove.contains("CX"));
+        assertEquals(true, remove.contains("XZ"));
+
+        try {
+            CollectionUtils.removeAll(null, null, DefaultEquator.defaultEquator());
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+        } // this is what we want
+
+        try {
+            CollectionUtils.removeAll(base, remove, null);
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+        } // this is what we want
+    }
+
+    @Test
+    public void testRetainAllWithEquator() {
+        final List<String> base = new ArrayList<String>();
+        base.add("AC");
+        base.add("BB");
+        base.add("CA");
+
+        final List<String> retain = new ArrayList<String>();
+        retain.add("AA");
+        retain.add("CX");
+        retain.add("XZ");
+
+        // use an equator which compares the second letter only
+        final Collection<String> result = CollectionUtils.retainAll(base, retain, new Equator<String>() {
+
+            public boolean equate(String o1, String o2) {
+                return o1.charAt(1) == o2.charAt(1);
+            }
+
+            public int hash(String o) {
+                return o.charAt(1);
+            }
+        });
+        assertEquals(1, result.size());
+        assertTrue(result.contains("CA"));
+        assertFalse(result.contains("BB"));
+        assertFalse(result.contains("AC"));
+
+        assertEquals(3, base.size());
+        assertTrue(base.contains("AC"));
+        assertTrue(base.contains("BB"));
+        assertTrue(base.contains("CA"));
+
+        assertEquals(3, retain.size());
+        assertTrue(retain.contains("AA"));
+        assertTrue(retain.contains("CX"));
+        assertTrue(retain.contains("XZ"));
+
+        try {
+            CollectionUtils.retainAll(null, null, null);
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+        } // this is what we want
+
+        try {
+            CollectionUtils.retainAll(base, retain, null);
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+        } // this is what we want
+    }
+
+    @Test
+    public void testContainsWithEquator() {
+        final List<String> base = new ArrayList<String>();
+        base.add("AC");
+        base.add("BB");
+        base.add("CA");
+
+        final Equator<String> secondLetterEquator = new Equator<String>() {
+
+            public boolean equate(String o1, String o2) {
+                return o1.charAt(1) == o2.charAt(1);
+            }
+
+            public int hash(String o) {
+                return o.charAt(1);
+            }
+
+        };
+
+        assertFalse(base.contains("CC"));
+        assertTrue(CollectionUtils.contains(base, "AC", secondLetterEquator));
+        assertTrue(CollectionUtils.contains(base, "CC", secondLetterEquator));
+        assertFalse(CollectionUtils.contains(base, "CX", secondLetterEquator));
+
+        try {
+            CollectionUtils.contains(null, null, secondLetterEquator);
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+        } // this is what we want
+
+        try {
+            CollectionUtils.contains(base, "AC", null);
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+        } // this is what we want
+      }
 }

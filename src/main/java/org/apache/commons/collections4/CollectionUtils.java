@@ -579,10 +579,10 @@ public class CollectionUtils {
      * @since 4.0
      */
     private static class EquatorWrapper<O> {
-        private final Equator<O> equator;
+        private final Equator<? super O> equator;
         private final O object;
 
-        public EquatorWrapper(final Equator<O> equator, final O object) {
+        public EquatorWrapper(final Equator<? super O> equator, final O object) {
             this.equator = equator;
             this.object = object;
         }
@@ -1682,6 +1682,53 @@ public class CollectionUtils {
     }
 
     /**
+     * Returns a collection containing all the elements in
+     * <code>collection</code> that are also in <code>retain</code>. The
+     * cardinality of an element <code>e</code> in the returned collection is
+     * the same as the cardinality of <code>e</code> in <code>collection</code>
+     * unless <code>retain</code> does not contain <code>e</code>, in which case
+     * the cardinality is zero. This method is useful if you do not wish to
+     * modify the collection <code>c</code> and thus cannot call
+     * <code>c.retainAll(retain);</code>.
+     * <p>
+     * Moreover this method uses an {@link Equator} instead of
+     * {@link Object#equals(Object)} to determine the equality of the elements
+     * in <code>collection</code> and <code>retain</code>. Hence this method is
+     * useful in cases where the equals behavior of an object needs to be
+     * modified without changing the object itself.
+     *
+     * @param <E> the type of object the {@link Collection} contains
+     * @param collection the collection whose contents are the target of the {@code retainAll} operation
+     * @param retain the collection containing the elements to be retained in the returned collection
+     * @param equator the Equator used for testing equality
+     * @return a <code>Collection</code> containing all the elements of <code>collection</code>
+     * that occur at least once in <code>retain</code> according to the <code>equator</code>
+     * @throws NullPointerException if any of the parameters is null
+     * @since 4.1
+     */
+    public static <E> Collection<E> retainAll(final Iterable<E> collection,
+                                              final Iterable<? extends E> retain,
+                                              final Equator<? super E> equator) {
+
+        final Transformer<E, EquatorWrapper<E>> transformer = new Transformer<E, EquatorWrapper<E>>() {
+            public EquatorWrapper<E> transform(E input) {
+                return new EquatorWrapper<E>(equator, input);
+            }
+        };
+
+        final Set<EquatorWrapper<E>> retainSet =
+                collect(retain, transformer, new HashSet<EquatorWrapper<E>>());
+
+        final List<E> list = new ArrayList<E>();
+        for (final E element : collection) {
+            if (retainSet.contains(new EquatorWrapper<E>(equator, element))) {
+                list.add(element);
+            }
+        }
+        return list;
+    }
+
+    /**
      * Removes the elements in <code>remove</code> from <code>collection</code>. That is, this
      * method returns a collection containing all the elements in <code>c</code>
      * that are not in <code>remove</code>. The cardinality of an element <code>e</code>
@@ -1700,6 +1747,80 @@ public class CollectionUtils {
      */
     public static <E> Collection<E> removeAll(final Collection<E> collection, final Collection<?> remove) {
         return ListUtils.removeAll(collection, remove);
+  }
+
+    /**
+     * Removes all elements in <code>remove</code> from <code>collection</code>.
+     * That is, this method returns a collection containing all the elements in
+     * <code>collection</code> that are not in <code>remove</code>. The
+     * cardinality of an element <code>e</code> in the returned collection is
+     * the same as the cardinality of <code>e</code> in <code>collection</code>
+     * unless <code>remove</code> contains <code>e</code>, in which case the
+     * cardinality is zero. This method is useful if you do not wish to modify
+     * the collection <code>c</code> and thus cannot call
+     * <code>collection.removeAll(remove)</code>.
+     * <p>
+     * Moreover this method uses an {@link Equator} instead of
+     * {@link Object#equals(Object)} to determine the equality of the elements
+     * in <code>collection</code> and <code>remove</code>. Hence this method is
+     * useful in cases where the equals behavior of an object needs to be
+     * modified without changing the object itself.
+     *
+     * @param <E> the type of object the {@link Collection} contains
+     * @param collection the collection from which items are removed (in the returned collection)
+     * @param remove the items to be removed from the returned collection
+     * @param equator the Equator used for testing equality
+     * @return a <code>Collection</code> containing all the elements of <code>collection</code>
+     * except any element that if equal according to the <code>equator</code>
+     * @throws NullPointerException if any of the parameters is null
+     * @since 4.1
+     */
+    public static <E> Collection<E> removeAll(final Iterable<E> collection,
+                                              final Iterable<? extends E> remove,
+                                              final Equator<? super E> equator) {
+
+        final Transformer<E, EquatorWrapper<E>> transformer = new Transformer<E, EquatorWrapper<E>>() {
+            public EquatorWrapper<E> transform(E input) {
+                return new EquatorWrapper<E>(equator, input);
+            }
+        };
+
+        final Set<EquatorWrapper<E>> removeSet =
+                collect(remove, transformer, new HashSet<EquatorWrapper<E>>());
+
+        final List<E> list = new ArrayList<E>();
+        for (final E element : collection) {
+            if (!removeSet.contains(new EquatorWrapper<E>(equator, element))) {
+                list.add(element);
+            }
+        }
+        return list;
+    }
+
+    /**
+     * This method checks, if any of the elements in <code>collection</code> is
+     * equal to <code>object</code>. Object equality is tested with an
+     * <code>equator</code> unlike <code>collection.contains(object)</code>
+     * which uses {@link Object#equals(Object)}.
+     *
+     * @param <E> the type of object the {@link Collection} contains
+     * @param collection the collection from which items are compared
+     * @param object the object to compare with the collection's entries
+     * @param equator the equator to use to check, if the item if equal to any
+     *        of the collection's entries.
+     * @return true if <code>object</code> is in <code>collection</code>
+     *         according to <code>equator</code>
+     * @throws NullPointerException if any parameter is null
+     * @since 4.1
+     */
+    public static <E> boolean contains(final Collection<? extends E> collection, final E object,
+            final Equator<? super E> equator) {
+        for (final E obj : collection) {
+            if (equator.equate(obj, object)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     //-----------------------------------------------------------------------

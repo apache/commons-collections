@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-529" dev="tn" type="add" due-to="Alexander Muthmann, Dipanjan Laha">
+      Added methods "removeAll(...)" and "retainAll(...)" to "CollectionUtils" that perform
+      equality checks using the provided "Equator" object instead of "Object#equals()".
+    </action>
     <action issue="COLLECTIONS-531" dev="tn" type="fix" due-to="Dipanjan Laha">
       Use correct type bounds in
       "CollectionUtils#isEqualCollection(Collection, Collection, Equator)" to
