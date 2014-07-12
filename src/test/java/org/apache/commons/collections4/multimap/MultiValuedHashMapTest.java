@@ -163,6 +163,64 @@ public class MultiValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, 
         assertEquals(2, listMap.get("B").size());
     }
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public void testEqualsHashCodeContract() {
+        MultiValuedMap map1 = new MultiValuedHashMap();
+        MultiValuedMap map2 = new MultiValuedHashMap();
+
+        map1.put("a", "a1");
+        map1.put("a", "a2");
+        map2.put("a", "a2");
+        map2.put("a", "a1");
+        assertEquals(map1, map2);
+        assertEquals(map1.hashCode(), map2.hashCode());
+
+        map2.put("a", "a2");
+        assertNotSame(map1, map2);
+        assertNotSame(map1.hashCode(), map2.hashCode());
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public void testListValuedMapEqualsHashCodeContract() {
+        ListValuedMap map1 = MultiValuedHashMap.listValuedHashMap();
+        ListValuedMap map2 = MultiValuedHashMap.listValuedHashMap();
+
+        map1.put("a", "a1");
+        map1.put("a", "a2");
+        map2.put("a", "a1");
+        map2.put("a", "a2");
+        assertEquals(map1, map2);
+        assertEquals(map1.hashCode(), map2.hashCode());
+
+        map1.put("b", "b1");
+        map1.put("b", "b2");
+        map2.put("b", "b2");
+        map2.put("b", "b1");
+        assertNotSame(map1, map2);
+        assertNotSame(map1.hashCode(), map2.hashCode());
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public void testSetValuedMapEqualsHashCodeContract() {
+        SetValuedMap map1 = MultiValuedHashMap.setValuedHashMap();
+        SetValuedMap map2 = MultiValuedHashMap.setValuedHashMap();
+
+        map1.put("a", "a1");
+        map1.put("a", "a2");
+        map2.put("a", "a2");
+        map2.put("a", "a1");
+        assertEquals(map1, map2);
+        assertEquals(map1.hashCode(), map2.hashCode());
+
+        map2.put("a", "a2");
+        assertEquals(map1, map2);
+        assertEquals(map1.hashCode(), map2.hashCode());
+
+        map2.put("a", "a3");
+        assertNotSame(map1, map2);
+        assertNotSame(map1.hashCode(), map2.hashCode());
+    }
+
 //    public void testCreate() throws Exception {
 //        writeExternalFormToDisk((java.io.Serializable) makeObject(),
 //                "src/test/resources/data/test/MultiValuedHashMap.emptyCollection.version4.1.obj");

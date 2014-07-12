@@ -18,9 +18,12 @@ package org.apache.commons.collections4.multimap;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.collections4.ListValuedMap;
@@ -97,6 +100,49 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
         return ListUtils.emptyIfNull((List<V>) getMap().remove(key));
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (obj instanceof ListValuedMap == false) {
+            return false;
+        }
+        ListValuedMap<?, ?> other = (ListValuedMap<?, ?>) obj;
+        if (other.size() != size()) {
+            return false;
+        }
+        Iterator<?> it = keySet().iterator();
+        while (it.hasNext()) {
+            Object key = it.next();
+            List<?> list = get(key);
+            List<?> otherList = other.get(key);
+            if (otherList == null) {
+                return false;
+            }
+            if (ListUtils.isEqualList(list, otherList) == false) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int h = 0;
+        Iterator<Entry<K, Collection<V>>> it = getMap().entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<K, Collection<V>> entry = it.next();
+            K key = entry.getKey();
+            List<V> valueList = (List<V>) entry.getValue();
+            h += (key == null ? 0 : key.hashCode()) ^ ListUtils.hashCodeForList(valueList);
+        }
+        return h;
+    }
+
     /**
      * Wrapped list to handle add and remove on the list returned by get(object)
      */
@@ -171,6 +217,34 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
         public List<V> subList(int fromIndex, int toIndex) {
             final List<V> list = ListUtils.emptyIfNull((List<V>) getMapping());
             return list.subList(fromIndex, toIndex);
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            final List<V> list = (List<V>) getMapping();
+            if (list == null) {
+                return Collections.emptyList().equals(other);
+            }
+            if (other == null) {
+                return false;
+            }
+            if (!(other instanceof List)) {
+                return false;
+            }
+            List<?> otherList = (List<?>) other;
+            if (ListUtils.isEqualList(list, otherList) == false) {
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            final List<V> list = (List<V>) getMapping();
+            if (list == null) {
+                return Collections.emptyList().hashCode();
+            }
+            return ListUtils.hashCodeForList(list);
         }
 
     }

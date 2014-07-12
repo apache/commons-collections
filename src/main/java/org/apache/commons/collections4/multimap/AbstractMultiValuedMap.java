@@ -396,7 +396,6 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
         return new MultiValuedMapIterator();
     }
 
-    @SuppressWarnings("rawtypes")
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -412,7 +411,7 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
         if (other.size() != size()) {
             return false;
         }
-        Iterator it = keySet().iterator();
+        Iterator<?> it = keySet().iterator();
         while (it.hasNext()) {
             Object key = it.next();
             Collection<?> col = get(key);
@@ -420,13 +419,8 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
             if (otherCol == null) {
                 return false;
             }
-            if (col.size() != otherCol.size()) {
+            if (CollectionUtils.isEqualCollection(col, otherCol) == false) {
                 return false;
-            }
-            for (Object value : col) {
-                if (!otherCol.contains(value)) {
-                    return false;
-                }
             }
         }
         return true;
@@ -434,7 +428,25 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
 
     @Override
     public int hashCode() {
-        return getMap().hashCode();
+        int h = 0;
+        Iterator<Entry<K, Collection<V>>> it = getMap().entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<K, Collection<V>> entry = it.next();
+            K key = entry.getKey();
+            Collection<V> valueCol = entry.getValue();
+            int vh = 0;
+            if (valueCol != null) {
+                Iterator<V> colIt = valueCol.iterator();
+                while (colIt.hasNext()) {
+                    V val = colIt.next();
+                    if (val != null) {
+                        vh += val.hashCode();
+                    }
+                }
+            }
+            h += (key == null ? 0 : key.hashCode()) ^ vh;
+        }
+        return h;
     }
 
     @Override
@@ -588,7 +600,6 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
             return col.toArray(a);
         }
 
-        @SuppressWarnings("rawtypes")
         @Override
         public boolean equals(Object other) {
             final Collection<V> col = getMapping();
@@ -601,14 +612,9 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
             if(!(other instanceof Collection)){
                 return false;
             }
-            Collection otherCol = (Collection) other;
-            if (col.size() != otherCol.size()) {
+            Collection<?> otherCol = (Collection<?>) other;
+            if (CollectionUtils.isEqualCollection(col, otherCol) == false) {
                 return false;
-            }
-            for (Object value : col) {
-                if (!otherCol.contains(value)) {
-                    return false;
-                }
             }
             return true;
         }
@@ -619,7 +625,15 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
             if (col == null) {
                 return CollectionUtils.EMPTY_COLLECTION.hashCode();
             }
-            return col.hashCode();
+            int h = 0;
+            Iterator<V> it = col.iterator();
+            while (it.hasNext()) {
+                V val = it.next();
+                if (val != null) {
+                    h += val.hashCode();
+                }
+            }
+            return h;
         }
 
         @Override
