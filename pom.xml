@@ -104,6 +104,10 @@
       <name>Henri Yandell</name>
       <id>bayard</id>
     </developer>
+    <developer>
+      <name>Dipanjan Laha</name>
+      <id>dlaha</id>
+    </developer>
   </developers>
   
   <contributors>
@@ -259,9 +263,6 @@
     </contributor>
     <contributor>
       <name>Olaf Krische</name>
-    </contributor>
-    <contributor>
-      <name>Dipanjan Laha</name>
     </contributor>
     <contributor>
       <name>Guilhem Lavaux</name>
