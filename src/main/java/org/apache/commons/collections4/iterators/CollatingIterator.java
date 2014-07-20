@@ -308,7 +308,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * <i>i</i>, or clear them if the <i>i</i><sup>th</sup> iterator has no next
      * value.
      *
-     * @return <tt>false</tt> iff there was no value to set
+     * @return {@code false} iff there was no value to set
      */
     private boolean set(final int i) {
         final Iterator<? extends E> it = iterators.get(i);

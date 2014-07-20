@@ -131,12 +131,12 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      * The set is backed by the map, so changes to the map are reflected
      * in the set, and vice-versa.  If the map is modified while an iteration
      * over the set is in progress (except through the iterator's own
-     * <tt>remove</tt> operation), the results of the iteration are undefined.
+     * {@code remove} operation), the results of the iteration are undefined.
      * The set supports element removal, which removes the corresponding
-     * mapping from the map, via the <tt>Iterator.remove</tt>,
-     * <tt>Collection.remove</tt>, <tt>removeAll</tt>,
-     * <tt>retainAll</tt> and <tt>clear</tt> operations.  It does not
-     * support the <tt>add</tt> or <tt>addAll</tt> operations.
+     * mapping from the map, via the {@code Iterator.remove},
+     * {@code Collection.remove}, {@code removeAll},
+     * {@code retainAll} and {@code clear} operations.  It does not
+     * support the {@code add} or {@code addAll} operations.
      *
      * @return a set view of the values contained in this map
      */

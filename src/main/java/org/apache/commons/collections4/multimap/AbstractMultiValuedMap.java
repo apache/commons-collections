@@ -292,8 +292,8 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
     /**
      * Copies all of the mappings from the specified map to this map. The effect
      * of this call is equivalent to that of calling {@link #put(Object,Object)
-     * put(k, v)} on this map once for each mapping from key <tt>k</tt> to value
-     * <tt>v</tt> in the specified map. The behavior of this operation is
+     * put(k, v)} on this map once for each mapping from key {@code k} to value
+     * {@code v} in the specified map. The behavior of this operation is
      * undefined if the specified map is modified while the operation is in
      * progress.
      *
@@ -311,7 +311,7 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
      * Copies all of the mappings from the specified MultiValuedMap to this map.
      * The effect of this call is equivalent to that of calling
      * {@link #put(Object,Object) put(k, v)} on this map once for each mapping
-     * from key <tt>k</tt> to value <tt>v</tt> in the specified map. The
+     * from key {@code k} to value {@code v} in the specified map. The
      * behavior of this operation is undefined if the specified map is modified
      * while the operation is in progress.
      *
@@ -331,8 +331,8 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
      * <p>
      * Returns a Bag of keys with its values count as the count of the Bag. This
      * bag is backed by the map, so any changes in the map is reflected here.
-     * Any method which modifies this bag like <tt>add</tt>, <tt>remove</tt>,
-     * <tt>Iterator.remove</tt> etc throws
+     * Any method which modifies this bag like {@code add}, {@code remove},
+     * {@code Iterator.remove} etc throws
      * <code>UnsupportedOperationException</code>
      *
      * @return a bag view of the key mapping contained in this map

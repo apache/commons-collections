@@ -95,9 +95,9 @@ public class SingletonIterator<E>
     /**
      * Remove the object from this iterator.
      *
-     * @throws IllegalStateException if the <tt>next</tt> method has not
-     *        yet been called, or the <tt>remove</tt> method has already
-     *        been called after the last call to the <tt>next</tt>
+     * @throws IllegalStateException if the {@code next} method has not
+     *        yet been called, or the {@code remove} method has already
+     *        been called after the last call to the {@code next}
      *        method.
      * @throws UnsupportedOperationException if remove is not supported
      */

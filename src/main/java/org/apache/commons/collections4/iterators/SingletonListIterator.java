@@ -68,7 +68,7 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
 
     /**
      * Returns the index of the element that would be returned by a subsequent
-     * call to <tt>next</tt>.
+     * call to {@code next}.
      *
      * @return 0 or 1 depending on current state.
      */
@@ -78,7 +78,7 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
 
     /**
      * Returns the index of the element that would be returned by a subsequent
-     * call to <tt>previous</tt>. A return value of -1 indicates that the iterator is currently at
+     * call to {@code previous}. A return value of -1 indicates that the iterator is currently at
      * the start.
      *
      * @return 0 or -1 depending on current state.
@@ -124,10 +124,10 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
 
     /**
      * Remove the object from this iterator.
-     * @throws IllegalStateException if the <tt>next</tt> or <tt>previous</tt>
-     *        method has not yet been called, or the <tt>remove</tt> method
-     *        has already been called after the last call to <tt>next</tt>
-     *        or <tt>previous</tt>.
+     * @throws IllegalStateException if the {@code next} or {@code previous}
+     *        method has not yet been called, or the {@code remove} method
+     *        has already been called after the last call to {@code next}
+     *        or {@code previous}.
      */
     public void remove() {
         if(!nextCalled || removed) {
@@ -151,7 +151,7 @@ public class SingletonListIterator<E> implements ResettableListIterator<E> {
      * Set sets the value of the singleton.
      *
      * @param obj  the object to set
-     * @throws IllegalStateException if <tt>next</tt> has not been called
+     * @throws IllegalStateException if {@code next} has not been called
      *          or the object has been removed
      */
     public void set(final E obj) {

@@ -270,9 +270,9 @@ public class CollectionUtils {
      * cardinality(<i>e</i>,<i>b</i>))</tt>.
      * <p>
      * This is equivalent to
-     * <tt>{@link #subtract subtract}({@link #union union(a,b)},{@link #intersection intersection(a,b)})</tt>
+     * {@code {@link #subtract subtract}({@link #union union(a,b)},{@link #intersection intersection(a,b)})}
      * or
-     * <tt>{@link #union union}({@link #subtract subtract(a,b)},{@link #subtract subtract(b,a)})</tt>.
+     * {@code {@link #union union}({@link #subtract subtract(a,b)},{@link #subtract subtract(b,a)})}.
 
      * @param a the first collection, must not be null
      * @param b the second collection, must not be null
@@ -289,7 +289,7 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns a new {@link Collection} containing <tt><i>a</i> - <i>b</i></tt>.
+     * Returns a new {@link Collection} containing {@code <i>a</i> - <i>b</i>}.
      * The cardinality of each element <i>e</i> in the returned {@link Collection}
      * will be the cardinality of <i>e</i> in <i>a</i> minus the cardinality
      * of <i>e</i> in <i>b</i>, or zero, whichever is greater.
@@ -453,7 +453,7 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns <tt>true</tt> iff <i>a</i> is a sub-collection of <i>b</i>,
+     * Returns {@code true} iff <i>a</i> is a sub-collection of <i>b</i>,
      * that is, iff the cardinality of <i>e</i> in <i>a</i> is less than or
      * equal to the cardinality of <i>e</i> in <i>b</i>, for each element <i>e</i>
      * in <i>a</i>.
@@ -475,7 +475,7 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns <tt>true</tt> iff <i>a</i> is a <i>proper</i> sub-collection of <i>b</i>,
+     * Returns {@code true} iff <i>a</i> is a <i>proper</i> sub-collection of <i>b</i>,
      * that is, iff the cardinality of <i>e</i> in <i>a</i> is less
      * than or equal to the cardinality of <i>e</i> in <i>b</i>,
      * for each element <i>e</i> in <i>a</i>, and there is at least one
@@ -500,7 +500,7 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns <tt>true</tt> iff the given {@link Collection}s contain
+     * Returns {@code true} iff the given {@link Collection}s contain
      * exactly the same elements with exactly the same cardinalities.
      * <p>
      * That is, iff the cardinality of <i>e</i> in <i>a</i> is
@@ -528,7 +528,7 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns <tt>true</tt> iff the given {@link Collection}s contain
+     * Returns {@code true} iff the given {@link Collection}s contain
      * exactly the same elements with exactly the same cardinalities.
      * <p>
      * That is, iff the cardinality of <i>e</i> in <i>a</i> is

@@ -97,15 +97,15 @@ public class SetUtils {
      * <blockquote>
      * <p>Two sets are considered equal if they have
      * the same size, and every member of the first set is contained in
-     * the second. This ensures that the <tt>equals</tt> method works
-     * properly across different implementations of the <tt>Set</tt>
+     * the second. This ensures that the {@code equals} method works
+     * properly across different implementations of the {@code Set}
      * interface.</p>
      *
      * <p>
      * This implementation first checks if the two sets are the same object:
-     * if so it returns <tt>true</tt>.  Then, it checks if the two sets are
+     * if so it returns {@code true}.  Then, it checks if the two sets are
      * identical in size; if not, it returns false. If so, it returns
-     * <tt>a.containsAll((Collection) b)</tt>.</p>
+     * {@code a.containsAll((Collection) b)}.</p>
      * </blockquote>
      *
      * @see java.util.Set

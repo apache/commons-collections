@@ -59,21 +59,21 @@ public interface MultiValuedMap<K, V> {
     int size();
 
     /**
-     * Returns <tt>true</tt> if this map contains no key-value mappings.
+     * Returns {@code true} if this map contains no key-value mappings.
      *
-     * @return <tt>true</tt> if this map contains no key-value mappings
+     * @return {@code true} if this map contains no key-value mappings
      */
     boolean isEmpty();
 
     /**
-     * Returns <tt>true</tt> if this map contains a mapping for the specified
-     * key. More formally, returns <tt>true</tt> if and only if this map
-     * contains a mapping for a key <tt>k</tt> such that
-     * <tt>(key==null ? k==null : key.equals(k))</tt>. (There can be at most one
+     * Returns {@code true} if this map contains a mapping for the specified
+     * key. More formally, returns {@code true} if and only if this map
+     * contains a mapping for a key {@code k} such that
+     * {@code (key==null ? k==null : key.equals(k))}. (There can be at most one
      * such mapping.)
      *
      * @param key key whose presence in this map is to be tested
-     * @return <tt>true</tt> if this map contains a mapping for the specified key
+     * @return {@code true} if this map contains a mapping for the specified key
      * @throws ClassCastException if the key is of an inappropriate type for this map (optional)
      * @throws NullPointerException if the specified key is null and this map
      *        does not permit null keys (optional)
@@ -159,13 +159,13 @@ public interface MultiValuedMap<K, V> {
      * <p>
      * The effect of this call is equivalent to that of calling
      * {@link #put(Object,Object) put(k, v)} on this map once for each mapping
-     * from key <tt>k</tt> to value <tt>v</tt> in the specified map.
+     * from key {@code k} to value {@code v} in the specified map.
      * <p>
      * The behavior of this operation is undefined if the specified map is modified
      * while the operation is in progress.
      *
      * @param m mappings to be stored in this map
-     * @throws UnsupportedOperationException if the <tt>putAll</tt> operation is
+     * @throws UnsupportedOperationException if the {@code putAll} operation is
      *        not supported by this map
      * @throws ClassCastException if the class of a key or value in the
      *        specified map prevents it from being stored in this map (optional)
@@ -182,13 +182,13 @@ public interface MultiValuedMap<K, V> {
      * <p>
      * The effect of this call is equivalent to that of
      * calling {@link #put(Object,Object) put(k, v)} on this map once for each
-     * mapping from key <tt>k</tt> to value <tt>v</tt> in the specified map.
+     * mapping from key {@code k} to value {@code v} in the specified map.
      * <p>
      * The behavior of this operation is undefined if the specified map is modified
      * while the operation is in progress.
      *
      * @param m mappings to be stored in this map
-     * @throws UnsupportedOperationException if the <tt>putAll</tt> operation is
+     * @throws UnsupportedOperationException if the {@code putAll} operation is
      *        not supported by this map
      * @throws ClassCastException if the class of a key or value in the
      *        specified map prevents it from being stored in this map (optional)
@@ -273,12 +273,12 @@ public interface MultiValuedMap<K, V> {
      * in the set, and vice-versa.
      * <p>
      * If the map is modified while an iteration over the set is in
-     * progress (except through the iterator's own <tt>remove</tt> operation),
+     * progress (except through the iterator's own {@code remove} operation),
      * the result of the iteration is undefined. The set supports element
      * removal, which removes the corresponding mapping from the map, via the
-     * <tt>Iterator.remove</tt>, <tt>Set.remove</tt>, <tt>removeAll</tt>,
-     * <tt>retainAll</tt>, and <tt>clear</tt> operations. It does not support
-     * the <tt>add</tt> or <tt>addAll</tt> operations.
+     * {@code Iterator.remove}, {@code Set.remove}, {@code removeAll},
+     * {@code retainAll}, and {@code clear} operations. It does not support
+     * the {@code add} or {@code addAll} operations.
      *
      * @return a set view of the keys contained in this map
      */
