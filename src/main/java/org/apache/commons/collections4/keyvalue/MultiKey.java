@@ -182,7 +182,8 @@ public class MultiKey<K> implements Serializable {
     }
 
     /**
-     * Gets the key at the specified index.
+     * Gets the key at the specified index. 
+     * The index enumeration starts at 0.
      * <p>
      * The key should be immutable.
      * If it is not then it must not be changed.
@@ -197,7 +198,7 @@ public class MultiKey<K> implements Serializable {
     }
 
     /**
-     * Gets the size of the list of keys.
+     * Gets the size of the list of keys, this number is the number of values this object was created with.
      *
      * @return the size of the list of keys
      * @since 3.1
