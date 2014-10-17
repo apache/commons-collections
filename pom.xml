@@ -109,7 +109,7 @@
       <id>dlaha</id>
     </developer>
   </developers>
-  
+
   <contributors>
     <contributor>
       <name>Rafael U. C. Afonso</name>
@@ -426,6 +426,9 @@
     <contributor>
       <name>Jason van Zyl</name>
     </contributor>
+    <contributor>
+      <name>Geoff Schoeman</name>
+    </contributor>
   </contributors>
 
   <dependencies>
@@ -456,13 +459,13 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.source>1.5</maven.compiler.source>
     <maven.compiler.target>1.5</maven.compiler.target>
-    
+
     <!--
        This is also  used to generate download_xxx file name.
        To override this when generating the download page:
-       
+
        mvn commons:download-page -Dcommons.componentid=collections
-       
+
        The above seems to change the download page name but not any other
        properties that depend on the componentid.
     -->
@@ -471,26 +474,26 @@
     <!-- Current 4.x release series -->
     <commons.release.version>4.0</commons.release.version>
     <commons.release.desc>(Java 5.0+)</commons.release.desc>
-    
+
     <!-- Previous 3.x release series -->
     <commons.release.2.version>3.2.1</commons.release.2.version>
     <commons.release.2.desc>(Requires Java 1.2 or later)</commons.release.2.desc>
     <!-- Override generated name -->
     <commons.release.2.name>commons-collections-${commons.release.2.version}</commons.release.2.name>
-    
+
     <commons.jira.id>COLLECTIONS</commons.jira.id>
     <commons.jira.pid>12310465</commons.jira.pid>
     <!-- The RC version used in the staging repository URL. -->
     <commons.rc.version>RC5</commons.rc.version>
     <checkstyle.version>2.9.1</checkstyle.version>
-    
+
     <commons.site.path>collections</commons.site.path>
     <commons.scmPubUrl>https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-collections</commons.scmPubUrl>
     <commons.scmPubCheckoutDirectory>site-content</commons.scmPubCheckoutDirectory>
-    
+
     <!-- Override javadoc plugin version due to a vulnerability of the generated javadoc
          see http://jira.codehaus.org/browse/MJAVADOC-370, remove after update to CP 32   -->
-    <commons.javadoc.version>2.9.1</commons.javadoc.version>    
+    <commons.javadoc.version>2.9.1</commons.javadoc.version>
   </properties>
 
 
@@ -586,7 +589,7 @@
               <report>checkstyle</report>
             </reports>
           </reportSet>
-        </reportSets>         
+        </reportSets>
       </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
@@ -615,7 +618,7 @@
         <artifactId>maven-pmd-plugin</artifactId>
         <version>2.7.1</version>
         <configuration>
-          <targetJdk>${maven.compiler.target}</targetJdk>  
+          <targetJdk>${maven.compiler.target}</targetJdk>
         </configuration>
         <reportSets>
           <reportSet>
