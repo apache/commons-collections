@@ -16,13 +16,7 @@
  */
 package org.apache.commons.collections4.multimap;
 
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import org.apache.commons.collections4.ListValuedMap;
 import org.apache.commons.collections4.MultiValuedMap;
@@ -96,7 +90,8 @@ public class MultiValuedLinkedHashMap<K, V> extends AbstractMultiValuedMap<K, V>
 
     /**
      * Creates a {@link SetValuedMap} with a {@link LinkedHashMap} as its internal
-     * storage
+     * storage. This <code>SetValuedMap</code> implementation uses {@link LinkedHashSet} as its
+     * underlying <code>Collection</code> to preserve the item insertion order
      *
      * @param <K> the key type
      * @param <V> the value type
@@ -104,7 +99,7 @@ public class MultiValuedLinkedHashMap<K, V> extends AbstractMultiValuedMap<K, V>
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public static <K, V> SetValuedMap<K, V> setValuedLinkedHashMap() {
-        return new SetValuedLinkedHashMap(HashSet.class);
+        return new SetValuedLinkedHashMap(LinkedHashSet.class);
     }
 
     /**

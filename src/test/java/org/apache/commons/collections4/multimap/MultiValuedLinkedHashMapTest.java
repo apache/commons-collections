@@ -109,6 +109,21 @@ public class MultiValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedMapTe
         assertFalse(setMap.containsKey("A"));
     }
 
+    public void testSetValuedMapIterationOrder() {
+        SetValuedMap<K, V> setMap = MultiValuedLinkedHashMap.setValuedLinkedHashMap();
+        addSampleMappings(setMap);
+
+        MapIterator<K, V> mapIt = setMap.mapIterator();
+        Iterator keyIt = Arrays.asList(getSampleKeys()).iterator();
+        Iterator valueIt = Arrays.asList(getSampleValues()).iterator();
+
+        while(mapIt.hasNext()) {
+            mapIt.next();
+            assertEquals(mapIt.getKey(), keyIt.next());
+            assertEquals(mapIt.getValue(), valueIt.next());
+        }
+    }
+
     @SuppressWarnings("unchecked")
     public void testListValuedMapAdd() {
         final ListValuedMap<K, V> listMap = MultiValuedLinkedHashMap.listValuedLinkedHashMap();
@@ -168,6 +183,21 @@ public class MultiValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedMapTe
         listIt.add((V) "b2");
         assertTrue(listMap.containsKey("B"));
         assertEquals(2, listMap.get("B").size());
+    }
+
+    public void testListValuedMapIterationOrder() {
+        ListValuedMap<K, V> listMap = MultiValuedLinkedHashMap.listValuedLinkedHashMap();
+        addSampleMappings(listMap);
+
+        MapIterator<K, V> mapIt = listMap.mapIterator();
+        Iterator keyIt = Arrays.asList(getSampleKeys()).iterator();
+        Iterator valueIt = Arrays.asList(getSampleValues()).iterator();
+
+        while(mapIt.hasNext()) {
+            mapIt.next();
+            assertEquals(mapIt.getKey(), keyIt.next());
+            assertEquals(mapIt.getValue(), valueIt.next());
+        }
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
