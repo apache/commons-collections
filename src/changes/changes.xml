@@ -22,8 +22,11 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-534" dev="tn" type="fix" due-to="Oswaldo Olivo">
+      Added clarifying javadoc wrt runtime complexity of "CollectionBag#retainAll".
+    </action>
     <action issue="COLLECTIONS-535" dev="britter" type="update" due-to="Alexander Kjäll">
-      Clarify JavaDoc of MultiKey getKey() and size()
+      Clarify JavaDoc of MultiKey getKey() and size().
     </action>
     <action issue="COLLECTIONS-529" dev="tn" type="add" due-to="Alexander Muthmann, Dipanjan Laha">
       Added methods "removeAll(...)" and "retainAll(...)" to "CollectionUtils" that perform

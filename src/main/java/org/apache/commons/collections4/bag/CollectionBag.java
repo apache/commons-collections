@@ -186,11 +186,17 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
 
     /**
      * <i>(Change)</i>
-     * Remove any members of the bag that are not in the given
-     * collection, <i>not</i> respecting cardinality. That is, any object
-     * in the given collection <code>coll</code> will be retained in the
-     * bag with the same number of copies prior to this operation. All
-     * other objects will be completely removed from this bag.
+     * Remove any members of the bag that are not in the given collection,
+     * <i>not</i> respecting cardinality. That is, any object in the given
+     * collection <code>coll</code> will be retained in the bag with the same
+     * number of copies prior to this operation. All other objects will be
+     * completely removed from this bag.
+     * <p>
+     * This implementation iterates over the elements of this bag, checking
+     * each element in turn to see if it's contained in <code>coll</code>.
+     * If it's not contained, it's removed from this bag. As a consequence,
+     * it is advised to use a collection type for <code>coll</code> that provides
+     * a fast (e.g. O(1)) implementation of {@link Collection#contains(Object)}.
      *
      * @param coll  the collection to retain
      * @return <code>true</code> if this call changed the collection
