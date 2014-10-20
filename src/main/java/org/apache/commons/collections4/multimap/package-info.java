@@ -21,6 +21,7 @@
  * The following implementations are provided in the package:
  * <ul>
  *   <li>MultiValuedHashMap - implementation that uses a HashMap to store the data
+ *   <li>MultiValuedLinkedHashMap - implementation that uses a LinkedHashMap as backing map
  * </ul>
  * <p>
  * The following decorators are provided in the package:
