@@ -18,7 +18,6 @@ package org.apache.commons.collections4;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -150,7 +149,7 @@ public class MultiMapUtils {
      */
     public static <K, V> Set<V> getSet(MultiValuedMap<K, V> map, K key) {
         if (map != null) {
-            Collection<V> col =  map.get(key);
+            Collection<V> col = map.get(key);
             if (col instanceof Set) {
                 return (Set<V>) col;
             }
@@ -184,7 +183,7 @@ public class MultiMapUtils {
     // -----------------------------------------------------------------------
 
     /**
-     * Creates a {@link ListValuedMap} with a {@link HashMap} as its internal storage.
+     * Creates a {@link ListValuedMap} with a {@link java.util.HashMap HashMap} as its internal storage.
      *
      * @param <K> the key type
      * @param <V> the value type
@@ -195,7 +194,7 @@ public class MultiMapUtils {
     }
 
     /**
-     * Creates a {@link ListValuedMap} with a {@link HashMap} as its internal
+     * Creates a {@link ListValuedMap} with a {@link java.util.HashMap HashMap} as its internal
      * storage which maps the keys to list of type <code>listClass</code>.
      *
      * @param <K> the key type
@@ -209,7 +208,7 @@ public class MultiMapUtils {
     }
 
     /**
-     * Creates a {@link SetValuedMap} with a {@link HashMap} as its internal
+     * Creates a {@link SetValuedMap} with a {@link java.util.HashMap HashMap} as its internal
      * storage
      *
      * @param <K> the key type
@@ -221,7 +220,7 @@ public class MultiMapUtils {
     }
 
     /**
-     * Creates a {@link SetValuedMap} with a {@link HashMap} as its internal
+     * Creates a {@link SetValuedMap} with a {@link java.util.HashMap HashMap} as its internal
      * storage which maps the keys to a set of type <code>setClass</code>
      *
      * @param <K> the key type

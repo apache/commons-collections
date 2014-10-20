@@ -16,17 +16,25 @@
  */
 package org.apache.commons.collections4.multimap;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Set;
 
 import junit.framework.Test;
 
-import org.apache.commons.collections4.*;
+import org.apache.commons.collections4.BulkTest;
+import org.apache.commons.collections4.ListValuedMap;
+import org.apache.commons.collections4.MapIterator;
+import org.apache.commons.collections4.MultiValuedMap;
+import org.apache.commons.collections4.SetValuedMap;
 
 /**
  * Test MultiValuedLinkedHashMap
  *
  * @since 4.1
- * @version $Id$
+ * @version $Id: $
  */
 public class MultiValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
@@ -47,8 +55,8 @@ public class MultiValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedMapTe
     public void testIterationOrder() {
         MultiValuedMap<K, V> map = makeFullMap();
         MapIterator<K, V> mapIt = map.mapIterator();
-        Iterator keyIt = Arrays.asList(getSampleKeys()).iterator();
-        Iterator valueIt = Arrays.asList(getSampleValues()).iterator();
+        Iterator<K> keyIt = Arrays.asList(getSampleKeys()).iterator();
+        Iterator<V> valueIt = Arrays.asList(getSampleValues()).iterator();
 
         while(mapIt.hasNext()) {
             mapIt.next();
@@ -114,8 +122,8 @@ public class MultiValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedMapTe
         addSampleMappings(setMap);
 
         MapIterator<K, V> mapIt = setMap.mapIterator();
-        Iterator keyIt = Arrays.asList(getSampleKeys()).iterator();
-        Iterator valueIt = Arrays.asList(getSampleValues()).iterator();
+        Iterator<K> keyIt = Arrays.asList(getSampleKeys()).iterator();
+        Iterator<V> valueIt = Arrays.asList(getSampleValues()).iterator();
 
         while(mapIt.hasNext()) {
             mapIt.next();
@@ -190,8 +198,8 @@ public class MultiValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedMapTe
         addSampleMappings(listMap);
 
         MapIterator<K, V> mapIt = listMap.mapIterator();
-        Iterator keyIt = Arrays.asList(getSampleKeys()).iterator();
-        Iterator valueIt = Arrays.asList(getSampleValues()).iterator();
+        Iterator<K> keyIt = Arrays.asList(getSampleKeys()).iterator();
+        Iterator<V> valueIt = Arrays.asList(getSampleValues()).iterator();
 
         while(mapIt.hasNext()) {
             mapIt.next();

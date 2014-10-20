@@ -16,16 +16,22 @@
  */
 package org.apache.commons.collections4.multimap;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.collections4.ListValuedMap;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.SetValuedMap;
 
 /**
- * Implements a {@link MultiValuedMap}, using a {@link LinkedHashMap} to provide data
- * storage. This MultiValuedMap implementation the allows insertion order to be
- * maintained.
+ * Implements a {@link MultiValuedMap}, using a {@link LinkedHashMap} to provide
+ * data storage. This MultiValuedMap implementation the allows insertion order
+ * to be maintained.
  * <p>
  * A <code>MultiValuedMap</code> is a Map with slightly different semantics.
  * Putting a value into the map will add the value to a Collection at that key.
@@ -43,7 +49,7 @@ import org.apache.commons.collections4.SetValuedMap;
  * exceptions when accessed by concurrent threads without synchronization.
  *
  * @since 4.1
- * @version $Id$
+ * @version $Id: $
  */
 public class MultiValuedLinkedHashMap<K, V> extends AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V> {
 
@@ -221,7 +227,8 @@ public class MultiValuedLinkedHashMap<K, V> extends AbstractMultiValuedMap<K, V>
      */
     protected <C extends Collection<V>> MultiValuedLinkedHashMap(int initialCapacity, float loadFactor,
             final Class<C> collectionClazz, int initialCollectionCapacity) {
-        super(new LinkedHashMap<K, Collection<V>>(initialCapacity, loadFactor), collectionClazz, initialCollectionCapacity);
+        super(new LinkedHashMap<K, Collection<V>>(initialCapacity, loadFactor), collectionClazz,
+                                                  initialCollectionCapacity);
     }
 
     /** Inner class for ListValuedLinkedMap */
