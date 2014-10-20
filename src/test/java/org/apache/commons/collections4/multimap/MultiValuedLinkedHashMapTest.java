@@ -34,7 +34,7 @@ import org.apache.commons.collections4.SetValuedMap;
  * Test MultiValuedLinkedHashMap
  *
  * @since 4.1
- * @version $Id: $
+ * @version $Id$
  */
 public class MultiValuedLinkedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 

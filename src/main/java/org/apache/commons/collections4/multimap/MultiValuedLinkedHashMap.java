@@ -49,7 +49,7 @@ import org.apache.commons.collections4.SetValuedMap;
  * exceptions when accessed by concurrent threads without synchronization.
  *
  * @since 4.1
- * @version $Id: $
+ * @version $Id$
  */
 public class MultiValuedLinkedHashMap<K, V> extends AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V> {
 
