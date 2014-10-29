@@ -251,7 +251,7 @@ public abstract class AbstractObjectTest extends BulkTest {
     }
 
     /**
-     * Write a Serializable or Externalizable object as
+     * Writes a Serializable or Externalizable object as
      * a file at the given path.  NOT USEFUL as part
      * of a unit test; this is just a utility method
      * for creating disk-based objects in SVN that can become
