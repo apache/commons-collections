@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-536" dev="tn" type="fix" due-to="Tagir Valeev">
+      Improved check for null input in "MapUtils#putAll(Map, Object[])".
+    </action>
     <action issue="COLLECTIONS-534" dev="tn" type="fix" due-to="Oswaldo Olivo">
       Added clarifying javadoc wrt runtime complexity of "CollectionBag#retainAll".
     </action>
