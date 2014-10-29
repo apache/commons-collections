@@ -1,0 +1,6 @@
+
+TODOS for release 4.1:
+======================
+
+ - mention in the release notes that COLLECTIONS-518 might break binary and source compatibility
+   but it would be unreasonable to instantiate an instance of class AbstractIterableGetMapDecorator
