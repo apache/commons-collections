@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.multimap;
 
-import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -39,7 +38,7 @@ import org.apache.commons.collections4.ListValuedMap;
  * @version $Id$
  */
 public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap<K, V>
-        implements ListValuedMap<K, V>, Serializable {
+        implements ListValuedMap<K, V> {
 
     /** The serialization version */
     private static final long serialVersionUID = 6024950625989666915L;
