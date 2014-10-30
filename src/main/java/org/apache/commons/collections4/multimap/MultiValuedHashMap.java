@@ -50,7 +50,7 @@ import org.apache.commons.collections4.SetValuedMap;
  * @since 4.1
  * @version $Id$
  */
-public class MultiValuedHashMap<K, V> extends AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V> {
+public class MultiValuedHashMap<K, V> extends AbstractMultiValuedMap<K, V> {
 
     /** Serialization Version */
     private static final long serialVersionUID = -5845183518195365857L;
