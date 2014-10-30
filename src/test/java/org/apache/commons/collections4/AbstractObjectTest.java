@@ -297,7 +297,11 @@ public abstract class AbstractObjectTest extends BulkTest {
      */
     protected Object readExternalFormFromDisk(final String path) throws IOException, ClassNotFoundException {
         final FileInputStream stream = new FileInputStream(path);
-        return readExternalFormFromStream(stream);
+        try {
+            return readExternalFormFromStream(stream);
+        } finally {
+            stream.close();
+        }
     }
 
     /**
