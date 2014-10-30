@@ -865,48 +865,41 @@ public class TreeList<E> extends AbstractList<E> {
                     s = sAncestor.balance();
                 }
                 return s;
-            } else {
-                // CASE 2: This tree is taller. This is symmetric to case 1.
-                // We merge otherTree into this tree by finding a subtree s of this
-                // tree that is of similar height to otherTree and replacing it
-                // with a new subtree whose root is otherTreeMin and whose
-                // children are otherTree and s.
-
-                otherTree = otherTree.removeMin();
-
-                final ArrayStack<AVLNode<E>> sAncestors = new ArrayStack<AVLNode<E>>();
-                AVLNode<E> s = this;
-                int sAbsolutePosition = s.relativePosition;
-                int sParentAbsolutePosition = 0;
-                while (s != null && s.height > getHeight(otherTree)) {
-                    sParentAbsolutePosition = sAbsolutePosition;
-                    sAncestors.push(s);
-                    s = s.right;
-                    if (s != null) {
-                        sAbsolutePosition += s.relativePosition;
-                    }
-                }
-
-                otherTreeMin.setRight(otherTree, null);
-                otherTreeMin.setLeft(s, maxNode);
-                if (otherTree != null) {
-                    otherTree.min().setLeft(null, otherTreeMin);
-                    otherTree.relativePosition++;
-                }
-                if (s != null) {
-                    s.max().setRight(null, otherTreeMin);
-                    s.relativePosition = sAbsolutePosition - currentSize;
-                }
-                otherTreeMin.relativePosition = currentSize - sParentAbsolutePosition;
-
-                s = otherTreeMin;
-                while (!sAncestors.isEmpty()) {
-                    final AVLNode<E> sAncestor = sAncestors.pop();
-                    sAncestor.setRight(s, null);
-                    s = sAncestor.balance();
-                }
-                return s;
             }
+            otherTree = otherTree.removeMin();
+
+            final ArrayStack<AVLNode<E>> sAncestors = new ArrayStack<AVLNode<E>>();
+            AVLNode<E> s = this;
+            int sAbsolutePosition = s.relativePosition;
+            int sParentAbsolutePosition = 0;
+            while (s != null && s.height > getHeight(otherTree)) {
+                sParentAbsolutePosition = sAbsolutePosition;
+                sAncestors.push(s);
+                s = s.right;
+                if (s != null) {
+                    sAbsolutePosition += s.relativePosition;
+                }
+            }
+
+            otherTreeMin.setRight(otherTree, null);
+            otherTreeMin.setLeft(s, maxNode);
+            if (otherTree != null) {
+                otherTree.min().setLeft(null, otherTreeMin);
+                otherTree.relativePosition++;
+            }
+            if (s != null) {
+                s.max().setRight(null, otherTreeMin);
+                s.relativePosition = sAbsolutePosition - currentSize;
+            }
+            otherTreeMin.relativePosition = currentSize - sParentAbsolutePosition;
+
+            s = otherTreeMin;
+            while (!sAncestors.isEmpty()) {
+                final AVLNode<E> sAncestor = sAncestors.pop();
+                sAncestor.setRight(s, null);
+                s = sAncestor.balance();
+            }
+            return s;
         }
 
 //      private void checkFaedelung() {
