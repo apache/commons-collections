@@ -219,12 +219,11 @@ public class ListOrderedMap<K, V>
         if (decorated().containsKey(key)) {
             // re-adding doesn't change order
             return decorated().put(key, value);
-        } else {
-            // first add, so add to both map and list
-            final V result = decorated().put(key, value);
-            insertOrder.add(key);
-            return result;
         }
+        // first add, so add to both map and list
+        final V result = decorated().put(key, value);
+        insertOrder.add(key);
+        return result;
     }
 
     @Override
@@ -460,11 +459,10 @@ public class ListOrderedMap<K, V>
             insertOrder.add(index, key);
             m.put(key, value);
             return result;
-        } else {
-            insertOrder.add(index, key);
-            m.put(key, value);
-            return null;
         }
+        insertOrder.add(index, key);
+        m.put(key, value);
+        return null;
     }
 
     /**
