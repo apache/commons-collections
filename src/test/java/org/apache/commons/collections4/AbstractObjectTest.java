@@ -264,7 +264,11 @@ public abstract class AbstractObjectTest extends BulkTest {
      */
     protected void writeExternalFormToDisk(final Serializable o, final String path) throws IOException {
         final FileOutputStream fileStream = new FileOutputStream(path);
-        writeExternalFormToStream(o, fileStream);
+        try {
+            writeExternalFormToStream(o, fileStream);
+        } finally {
+            fileStream.close();
+        }
     }
 
     /**
