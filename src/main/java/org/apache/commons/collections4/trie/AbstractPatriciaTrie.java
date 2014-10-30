@@ -609,9 +609,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     TrieEntry<K, V> nextEntry(final TrieEntry<K, V> node) {
         if (node == null) {
             return firstEntry();
-        } else {
-            return nextEntryImpl(node.predecessor, node, null);
         }
+        return nextEntryImpl(node.predecessor, node, null);
     }
 
     /**
@@ -787,9 +786,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         final TrieEntry<K, V> entry = lastEntry();
         if (entry != null) {
             return entry.getKey();
-        } else {
-            throw new NoSuchElementException();
         }
+        throw new NoSuchElementException();
     }
 
     public K nextKey(final K key) {
@@ -800,9 +798,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         if (entry != null) {
             final TrieEntry<K, V> nextEntry = nextEntry(entry);
             return nextEntry != null ? nextEntry.getKey() : null;
-        } else {
-            return null;
         }
+        return null;
     }
 
     public K previousKey(final K key) {
@@ -813,9 +810,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         if (entry != null) {
             final TrieEntry<K, V> prevEntry = previousEntry(entry);
             return prevEntry != null ? prevEntry.getKey() : null;
-        } else {
-            return null;
         }
+        return null;
     }
 
     public OrderedMapIterator<K, V> mapIterator() {
@@ -889,13 +885,12 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
                 // If data in root, and more after -- return it.
                 if (size() > 1) {
                     return nextEntry(root);
-                } else { // If no more after, no higher entry.
-                    return null;
                 }
-            } else {
-                // Root is empty & we want something after empty, return first.
-                return firstEntry();
+                // If no more after, no higher entry.
+                return null;
             }
+            // Root is empty & we want something after empty, return first.
+            return firstEntry();
         }
 
         final TrieEntry<K, V> found = getNearestEntryForKey(key, lengthInBits);
@@ -956,9 +951,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         if (lengthInBits == 0) {
             if (!root.isEmpty()) {
                 return root;
-            } else {
-                return firstEntry();
             }
+            return firstEntry();
         }
 
         final TrieEntry<K, V> found = getNearestEntryForKey(key, lengthInBits);
@@ -978,9 +972,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         } else if (KeyAnalyzer.isNullBitKey(bitIndex)) {
             if (!root.isEmpty()) {
                 return root;
-            } else {
-                return firstEntry();
             }
+            return firstEntry();
         } else if (KeyAnalyzer.isEqualBitKey(bitIndex)) {
             return found;
         }
@@ -1054,9 +1047,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         if (lengthInBits == 0) {
             if (!root.isEmpty()) {
                 return root;
-            } else {
-                return null;
             }
+            return null;
         }
 
         final TrieEntry<K, V> found = getNearestEntryForKey(key, lengthInBits);
@@ -1076,9 +1068,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         } else if (KeyAnalyzer.isNullBitKey(bitIndex)) {
             if (!root.isEmpty()) {
                 return root;
-            } else {
-                return null;
             }
+            return null;
         } else if (KeyAnalyzer.isEqualBitKey(bitIndex)) {
             return found;
         }
@@ -1199,34 +1190,29 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         if (start.predecessor.right == start) {
             if (isValidUplink(start.predecessor.left, start.predecessor)) {
                 return start.predecessor.left;
-            } else {
-                return followRight(start.predecessor.left);
             }
-        } else {
-            TrieEntry<K, V> node = start.predecessor;
-            while (node.parent != null && node == node.parent.left) {
-                node = node.parent;
-            }
-
-            if (node.parent == null) { // can be null if we're looking up root.
-                return null;
-            }
-
-            if (isValidUplink(node.parent.left, node.parent)) {
-                if (node.parent.left == root) {
-                    if (root.isEmpty()) {
-                        return null;
-                    } else {
-                        return root;
-                    }
-
-                } else {
-                    return node.parent.left;
-                }
-            } else {
-                return followRight(node.parent.left);
-            }
+            return followRight(start.predecessor.left);
         }
+        TrieEntry<K, V> node = start.predecessor;
+        while (node.parent != null && node == node.parent.left) {
+            node = node.parent;
+        }
+
+        if (node.parent == null) { // can be null if we're looking up root.
+            return null;
+        }
+
+        if (isValidUplink(node.parent.left, node.parent)) {
+            if (node.parent.left == root) {
+                if (root.isEmpty()) {
+                    return null;
+                }
+                return root;
+
+            }
+            return node.parent.left;
+        }
+        return followRight(node.parent.left);
     }
 
     /**
@@ -1240,9 +1226,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             final TrieEntry<K, V> parentOfSubtree) {
         if (node == null) {
             return firstEntry();
-        } else {
-            return nextEntryImpl(node.predecessor, node, parentOfSubtree);
         }
+        return nextEntryImpl(node.predecessor, node, parentOfSubtree);
     }
 
     /**
@@ -1805,9 +1790,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             final int ret = getKeyAnalyzer().compare(key, fromKey);
             if (fromInclusive || forceInclusive) {
                 return ret >= 0;
-            } else {
-                return ret > 0;
             }
+            return ret > 0;
         }
 
         /**
@@ -1820,9 +1804,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             final int ret = getKeyAnalyzer().compare(key, toKey);
             if (toInclusive || forceInclusive) {
                 return ret <= 0;
-            } else {
-                return ret < 0;
             }
+            return ret < 0;
         }
 
         /**
