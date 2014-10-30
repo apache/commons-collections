@@ -429,9 +429,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             if (current.bitIndex <= path.bitIndex) {
                 if (!current.isEmpty() && compareKeys(key, current.key)) {
                     return removeEntry(current);
-                } else {
-                    return null;
                 }
+                return null;
             }
 
             path = current;
