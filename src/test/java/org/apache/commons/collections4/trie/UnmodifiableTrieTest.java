@@ -100,9 +100,8 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
                     prefix + "bulkTestTailMap.bulkTestMapEntrySet.testCollectionToArray2",
                     prefix + "bulkTestSubMap.bulkTestMapEntrySet.testCollectionToArray2"
             };
-        } else {
-            return null;
         }
+        return null;
     }
 
     @Override
