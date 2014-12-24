@@ -1208,9 +1208,9 @@ public class CollectionUtilsTest extends MockTestCase {
         final int size = collectionA.size();
         collectionB = CollectionUtils.collect((Collection<Integer>) null, transformer, collectionB);
         assertTrue(collectionA.size() == size && collectionA.contains(1));
-        CollectionUtils.collect(collectionB, null, collectionA);
+        Transformer<? super Long, Integer> nullTransformer = null;
+        CollectionUtils.collect(collectionB, nullTransformer, collectionA);
         assertTrue(collectionA.size() == size && collectionA.contains(1));
-
     }
 
     private void assertCollectResult(final Collection<Number> collection) {
