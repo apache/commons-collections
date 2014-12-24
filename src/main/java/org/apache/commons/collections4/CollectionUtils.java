@@ -36,6 +36,7 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
 import org.apache.commons.collections4.collection.TransformedCollection;
 import org.apache.commons.collections4.collection.UnmodifiableBoundedCollection;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
+import org.apache.commons.collections4.functors.NotPredicate;
 import org.apache.commons.collections4.functors.TruePredicate;
 import org.apache.commons.collections4.iterators.CollatingIterator;
 import org.apache.commons.collections4.iterators.PermutationIterator;
@@ -856,14 +857,7 @@ public class CollectionUtils {
      * @return true if at least one element of the collection matches the predicate
      */
     public static <C> boolean exists(final Iterable<C> input, final Predicate<? super C> predicate) {
-        if (input != null && predicate != null) {
-            for (final C o : input) {
-                if (predicate.evaluate(o)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return !matchesAll(input, new NotPredicate(predicate));
     }
 
     /**
