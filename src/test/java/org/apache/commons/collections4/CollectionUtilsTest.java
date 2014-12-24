@@ -1885,4 +1885,20 @@ public class CollectionUtilsTest extends MockTestCase {
         } catch (final NullPointerException npe) {
         } // this is what we want
       }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testRandomElementWithEmptyCollection() {
+        CollectionUtils.getRandom(emptyCollection);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testRandomElementWithNullCollection() {
+        CollectionUtils.getRandom(emptyCollection);
+    }
+
+    @Test
+    public void testRandomElement() {
+        assertTrue(collectionA.contains(CollectionUtils.getRandom(collectionA)));
+        assertTrue(collectionB.contains(CollectionUtils.getRandom(collectionB)));
+    }
 }

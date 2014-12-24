@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.Random;
 
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.collection.PredicatedCollection;
@@ -182,6 +183,12 @@ public class CollectionUtils {
     @SuppressWarnings("rawtypes") // we deliberately use the raw type here
     public static final Collection EMPTY_COLLECTION =
         UnmodifiableCollection.unmodifiableCollection(new ArrayList<Object>());
+
+    /**
+     * Random object used by random method. This has to be not local to the
+     * random method so as to not return the same value in the same millisecond.
+     */
+    private static final Random RANDOM = new Random();
 
     /**
      * <code>CollectionUtils</code> should not normally be instantiated.
@@ -1912,5 +1919,28 @@ public class CollectionUtils {
             throw new IllegalArgumentException("Can extract singleton only when collection size == 1");
         }
         return collection.iterator().next();
+    }
+
+    /**
+     * Get a random element from collection
+     * @param <E> collection type
+     * @param collection to read
+     * @return random element of collection
+     * @throws IllegalArgumentException if collection is null/empty
+     */
+    public static <E> E getRandom(final Collection<E> collection) {
+        if (isEmpty(collection)) {
+            throw new IllegalArgumentException("Collection must not be empty");
+        }
+        return get(collection, getRandomIndex(collection.size()));
+    }
+
+    private static int getRandomIndex(int size) {
+        int startInclusive=0;
+        if (startInclusive == size) {
+            return startInclusive;
+        }
+
+        return startInclusive + RANDOM.nextInt(size - startInclusive);
     }
 }
