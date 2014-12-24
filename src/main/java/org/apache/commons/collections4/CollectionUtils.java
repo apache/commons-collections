@@ -1929,18 +1929,22 @@ public class CollectionUtils {
      * @throws IllegalArgumentException if collection is null/empty
      */
     public static <E> E getRandom(final Collection<E> collection) {
+        return getRandom(collection, RANDOM);
+    }
+
+    /**
+     * Get a random element from collection
+     * @param <E> collection type
+     * @param collection to read
+     * @param random pseudo random generator
+     * @return random element of collection
+     * @throws IllegalArgumentException if collection is null/empty
+     */
+    public static <E> E getRandom(final Collection<E> collection, Random random) {
         if (isEmpty(collection)) {
             throw new IllegalArgumentException("Collection must not be empty");
         }
-        return get(collection, getRandomIndex(collection.size()));
+        return get(collection, random.nextInt(collection.size()));
     }
 
-    private static int getRandomIndex(int size) {
-        int startInclusive=0;
-        if (startInclusive == size) {
-            return startInclusive;
-        }
-
-        return startInclusive + RANDOM.nextInt(size - startInclusive);
-    }
 }

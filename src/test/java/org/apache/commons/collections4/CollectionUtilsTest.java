@@ -24,6 +24,7 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -1208,8 +1209,7 @@ public class CollectionUtilsTest extends MockTestCase {
         final int size = collectionA.size();
         collectionB = CollectionUtils.collect((Collection<Integer>) null, transformer, collectionB);
         assertTrue(collectionA.size() == size && collectionA.contains(1));
-        Transformer<? super Long, Integer> nullTransformer = null;
-        CollectionUtils.collect(collectionB, nullTransformer, collectionA);
+        CollectionUtils.collect(collectionB, (Transformer) null, collectionA);
         assertTrue(collectionA.size() == size && collectionA.contains(1));
     }
 
@@ -1582,7 +1582,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test(expected=IndexOutOfBoundsException.class)
     public void getNegative() {
-        CollectionUtils.get((Object)collectionA, -3);
+        CollectionUtils.get((Object) collectionA, -3);
     }
 
     @Test(expected=IndexOutOfBoundsException.class)
@@ -1601,12 +1601,12 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(2, CollectionUtils.get((Object)collectionA.iterator(), 2));
         final Map<Integer, Integer> map = CollectionUtils.getCardinalityMap(collectionA);
         assertEquals(map.entrySet().iterator().next(), CollectionUtils.get(
-                (Object)map, 0));
+                (Object) map, 0));
     }
 
     @Test
     public void reverse() {
-        CollectionUtils.reverseArray(new Object[] {});
+        CollectionUtils.reverseArray(new Object[]{});
         final Integer[] a = collectionA.toArray(new Integer[collectionA.size()]);
         CollectionUtils.reverseArray(a);
         // assume our implementation is correct if it returns the same order as the Java function
@@ -1900,5 +1900,10 @@ public class CollectionUtilsTest extends MockTestCase {
     public void testRandomElement() {
         assertTrue(collectionA.contains(CollectionUtils.getRandom(collectionA)));
         assertTrue(collectionB.contains(CollectionUtils.getRandom(collectionB)));
+    }
+
+    @Test
+    public void testRandomElementWithDifferentGenerator() {
+        assertTrue(collectionA.contains(CollectionUtils.getRandom(collectionA, new SecureRandom())));
     }
 }
