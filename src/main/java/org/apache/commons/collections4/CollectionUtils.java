@@ -1271,15 +1271,8 @@ public class CollectionUtils {
         } else if (object instanceof Object[]) {
             return ((Object[]) object)[i];
         } else if (object instanceof Iterator<?>) {
-            final Iterator<?> it = (Iterator<?>) object;
-            while (it.hasNext()) {
-                i--;
-                if (i == -1) {
-                    return it.next();
-                }
-                it.next();
-            }
-            throw new IndexOutOfBoundsException("Entry does not exist: " + i);
+            final Iterator<?> iterator = (Iterator<?>) object;
+            return get(iterator, index);
         } else if (object instanceof Collection<?>) {
             final Iterator<?> iterator = ((Collection<?>) object).iterator();
             return get(iterator, i);
