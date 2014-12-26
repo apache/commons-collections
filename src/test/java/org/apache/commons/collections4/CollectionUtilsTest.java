@@ -1600,8 +1600,26 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(2, CollectionUtils.get((Object)collectionA, 2));
         assertEquals(2, CollectionUtils.get((Object)collectionA.iterator(), 2));
         final Map<Integer, Integer> map = CollectionUtils.getCardinalityMap(collectionA);
-        assertEquals(map.entrySet().iterator().next(), CollectionUtils.get(
-                (Object)map, 0));
+        assertEquals(map.entrySet().iterator().next(), CollectionUtils.get((Object)map, 0));
+    }
+
+    @Test
+    public void getIterator() {
+        final Iterator<Integer> it = collectionA.iterator();
+        assertEquals(Integer.valueOf(2), CollectionUtils.get(it, 2));
+        assertTrue(it.hasNext());
+        assertEquals(Integer.valueOf(4), CollectionUtils.get(it, 6));
+        assertFalse(it.hasNext());
+    }
+
+    @Test
+    public void getEnumeration() {
+        final Vector<Integer> vectorA = new Vector<Integer>(collectionA);
+        final Enumeration<Integer> e = vectorA.elements();
+        assertEquals(Integer.valueOf(2), CollectionUtils.get(e, 2));
+        assertTrue(e.hasMoreElements());
+        assertEquals(Integer.valueOf(4), CollectionUtils.get(e, 6));
+        assertFalse(e.hasMoreElements());
     }
 
     @Test

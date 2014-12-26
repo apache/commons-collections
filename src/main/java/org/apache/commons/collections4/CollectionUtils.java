@@ -1199,6 +1199,35 @@ public class CollectionUtils {
     }
 
     /**
+     * Returns the <code>index</code>-th value in the {@link Enumeration}, throwing
+     * <code>IndexOutOfBoundsException</code> if there is no such element.
+     * <p>
+     * The Enumeration is advanced to <code>index</code> (or to the end, if
+     * <code>index</code> exceeds the number of entries) as a side effect of this method.
+     *
+     * @param e  the enumeration to get a value from
+     * @param index  the index to get
+     * @param <T> the type of object in the {@link Enumeration}
+     * @return the object at the specified index
+     * @throws IndexOutOfBoundsException if the index is invalid
+     * @throws IllegalArgumentException if the object type is invalid
+     * @since 4.1
+     */
+    public static <T> T get(final Enumeration<T> e, final int index) {
+        int i = index;
+        checkIndexBounds(i);
+        while (e.hasMoreElements()) {
+            i--;
+            if (i == -1) {
+                return e.nextElement();
+            } else {
+                e.nextElement();
+            }
+        }
+        throw new IndexOutOfBoundsException("Entry does not exist: " + i);
+    }
+
+    /**
      * Ensures an index is not negative.
      * @param index the index to check.
      * @throws IndexOutOfBoundsException if the index is negative.
@@ -1272,28 +1301,13 @@ public class CollectionUtils {
             return ((Object[]) object)[i];
         } else if (object instanceof Iterator<?>) {
             final Iterator<?> it = (Iterator<?>) object;
-            while (it.hasNext()) {
-                i--;
-                if (i == -1) {
-                    return it.next();
-                }
-                it.next();
-            }
-            throw new IndexOutOfBoundsException("Entry does not exist: " + i);
+            return get(it, i);
         } else if (object instanceof Collection<?>) {
             final Iterator<?> iterator = ((Collection<?>) object).iterator();
             return get(iterator, i);
         } else if (object instanceof Enumeration<?>) {
             final Enumeration<?> it = (Enumeration<?>) object;
-            while (it.hasMoreElements()) {
-                i--;
-                if (i == -1) {
-                    return it.nextElement();
-                } else {
-                    it.nextElement();
-                }
-            }
-            throw new IndexOutOfBoundsException("Entry does not exist: " + i);
+            return get(it, i);
         } else if (object == null) {
             throw new IllegalArgumentException("Unsupported object type: null");
         } else {
