@@ -73,7 +73,7 @@ public final class AnyPredicate<T> extends AbstractQuantifierPredicate<T> {
      * @throws IllegalArgumentException if any predicate in the array is null
      */
     @SuppressWarnings("unchecked")
-    public static <T> Predicate<T> anyPredicate(final Collection<? extends Predicate<T>> predicates) {
+    public static <T> Predicate<T> anyPredicate(final Collection<? extends Predicate<? super T>> predicates) {
         final Predicate<? super T>[] preds = FunctorUtils.validate(predicates);
         if (preds.length == 0) {
             return FalsePredicate.<T>falsePredicate();

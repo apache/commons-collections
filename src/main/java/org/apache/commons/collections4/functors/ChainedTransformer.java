@@ -67,7 +67,8 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
      * @throws IllegalArgumentException if any transformer in the collection is null
      */
     @SuppressWarnings("unchecked")
-    public static <T> Transformer<T, T> chainedTransformer(final Collection<? extends Transformer<T, T>> transformers) {
+    public static <T> Transformer<T, T> chainedTransformer(
+            final Collection<? extends Transformer<? super T, ? extends T>> transformers) {
         if (transformers == null) {
             throw new IllegalArgumentException("Transformer collection must not be null");
         }

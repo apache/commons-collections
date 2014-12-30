@@ -286,7 +286,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if any predicate in the collection is null
      * @see org.apache.commons.collections4.functors.AllPredicate
      */
-    public static <T> Predicate<T> allPredicate(final Collection<? extends Predicate<T>> predicates) {
+    public static <T> Predicate<T> allPredicate(final Collection<? extends Predicate<? super T>> predicates) {
         return AllPredicate.allPredicate(predicates);
     }
 
@@ -334,7 +334,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if any predicate in the collection is null
      * @see org.apache.commons.collections4.functors.AnyPredicate
      */
-    public static <T> Predicate<T> anyPredicate(final Collection<? extends Predicate<T>> predicates) {
+    public static <T> Predicate<T> anyPredicate(final Collection<? extends Predicate<? super T>> predicates) {
         return AnyPredicate.anyPredicate(predicates);
     }
 
@@ -384,7 +384,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if any predicate in the collection is null
      * @see org.apache.commons.collections4.functors.OnePredicate
      */
-    public static <T> Predicate<T> onePredicate(final Collection<Predicate<T>> predicates) {
+    public static <T> Predicate<T> onePredicate(final Collection<? extends Predicate<? super T>> predicates) {
         return OnePredicate.onePredicate(predicates);
     }
 
@@ -434,7 +434,7 @@ public class PredicateUtils {
      * @throws IllegalArgumentException if any predicate in the collection is null
      * @see org.apache.commons.collections4.functors.NonePredicate
      */
-    public static <T> Predicate<T> nonePredicate(final Collection<? extends Predicate<T>> predicates) {
+    public static <T> Predicate<T> nonePredicate(final Collection<? extends Predicate<? super T>> predicates) {
         return NonePredicate.nonePredicate(predicates);
     }
 

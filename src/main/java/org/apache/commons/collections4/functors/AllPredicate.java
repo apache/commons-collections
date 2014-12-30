@@ -76,13 +76,13 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> {
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static <T> Predicate<T> allPredicate(final Collection<? extends Predicate<T>> predicates) {
-        final Predicate<T>[] preds = validate(predicates);
+    public static <T> Predicate<T> allPredicate(final Collection<? extends Predicate<? super T>> predicates) {
+        final Predicate<? super T>[] preds = validate(predicates);
         if (preds.length == 0) {
             return truePredicate();
         }
         if (preds.length == 1) {
-            return preds[0];
+            return coerce(preds[0]);
         }
         return new AllPredicate<T>(preds);
     }

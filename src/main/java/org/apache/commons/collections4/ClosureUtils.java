@@ -216,7 +216,7 @@ public class ClosureUtils {
      * @throws IllegalArgumentException if the closures collection is empty
      * @throws IllegalArgumentException if any closure in the collection is null
      */
-    public static <E> Closure<E> chainedClosure(final Collection<Closure<E>> closures) {
+    public static <E> Closure<E> chainedClosure(final Collection<? extends Closure<? super E>> closures) {
         return ChainedClosure.chainedClosure(closures);
     }
 

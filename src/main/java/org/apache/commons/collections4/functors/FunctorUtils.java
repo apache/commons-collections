@@ -66,7 +66,7 @@ class FunctorUtils {
      * @return the coerced predicate.
      */
     @SuppressWarnings("unchecked")
-    static <T> Predicate<T> coerce(final Predicate<? super T> predicate){
+    static <T> Predicate<T> coerce(final Predicate<? super T> predicate) {
         return (Predicate<T>) predicate;
     }
 
@@ -93,15 +93,15 @@ class FunctorUtils {
      * @param predicates  the predicates to validate
      * @return predicate array
      */
-    static <T> Predicate<T>[] validate(final Collection<? extends Predicate<T>> predicates) {
+    static <T> Predicate<? super T>[] validate(final Collection<? extends Predicate<? super T>> predicates) {
         if (predicates == null) {
             throw new IllegalArgumentException("The predicate collection must not be null");
         }
         // convert to array like this to guarantee iterator() ordering
         @SuppressWarnings("unchecked") // OK
-        final Predicate<T>[] preds = new Predicate[predicates.size()];
+        final Predicate<? super T>[] preds = new Predicate[predicates.size()];
         int i = 0;
-        for (final Predicate<T> predicate : predicates) {
+        for (final Predicate<? super T> predicate : predicates) {
             preds[i] = predicate;
             if (preds[i] == null) {
                 throw new IllegalArgumentException(
@@ -154,7 +154,7 @@ class FunctorUtils {
      * @return the coerced closure.
      */
     @SuppressWarnings("unchecked")
-    static <T> Closure<T> coerce(final Closure<? super T> closure){
+    static <T> Closure<T> coerce(final Closure<? super T> closure) {
         return (Closure<T>) closure;
     }
 

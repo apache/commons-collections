@@ -64,7 +64,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      * @throws IllegalArgumentException if any closure in the collection is null
      */
     @SuppressWarnings("unchecked")
-    public static <E> Closure<E> chainedClosure(final Collection<Closure<E>> closures) {
+    public static <E> Closure<E> chainedClosure(final Collection<? extends Closure<? super E>> closures) {
         if (closures == null) {
             throw new IllegalArgumentException("Closure collection must not be null");
         }

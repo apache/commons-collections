@@ -208,7 +208,7 @@ public class TransformerUtils {
      * @see org.apache.commons.collections4.functors.ChainedTransformer
      */
     public static <T> Transformer<T, T> chainedTransformer(
-            final Collection<? extends Transformer<T, T>> transformers) {
+            final Collection<? extends Transformer<? super T, ? extends T>> transformers) {
         return ChainedTransformer.chainedTransformer(transformers);
     }
 

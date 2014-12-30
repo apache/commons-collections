@@ -66,7 +66,7 @@ public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> {
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
      */
-    public static <T> Predicate<T> nonePredicate(final Collection<? extends Predicate<T>> predicates) {
+    public static <T> Predicate<T> nonePredicate(final Collection<? extends Predicate<? super T>> predicates) {
         final Predicate<? super T>[] preds = FunctorUtils.validate(predicates);
         if (preds.length == 0) {
             return TruePredicate.<T>truePredicate();
