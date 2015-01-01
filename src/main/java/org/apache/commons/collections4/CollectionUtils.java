@@ -995,9 +995,9 @@ public class CollectionUtils {
      * Partitions all elements from inputCollection into separate output collections,
      * based on the evaluation of the given predicate.
      * <p>
-     * For each predicate, the returned list will contain a collection holding
-     * all elements of the input collection matching the predicate. The last collection
-     * contained in the list will hold all elements which didn't match any predicate:
+     * For each predicate, the result will contain a list holding all elements of the
+     * input collection matching the predicate. The last list will hold all elements
+     * which didn't match any predicate:
      * <pre>
      *  [C1, R] = partition(I, P1) with
      *  I = input collection
@@ -1014,17 +1014,16 @@ public class CollectionUtils {
      * will result in the following output: [[1, 2], [3, 4, 5]].
      *
      * @param <O>  the type of object the {@link Iterable} contains
-     * @param <R>  the type of the output {@link Collection}
      * @param inputCollection  the collection to get the input from, may be null
      * @param predicate  the predicate to use, may be null
      * @return a list containing the output collections
      * @since 4.1
      */
-    public static <O, R extends Collection<O>> List<R> partition(final Iterable<? extends O> inputCollection,
+    public static <O> List<List<O>> partition(final Iterable<? extends O> inputCollection,
             final Predicate<? super O> predicate) {
 
-        @SuppressWarnings("unchecked") // safe
-        final Factory<R> factory = (Factory<R>) FactoryUtils.instantiateFactory(ArrayList.class);
+        @SuppressWarnings({ "unchecked", "rawtypes" }) // safe
+        final Factory<List<O>> factory = FactoryUtils.instantiateFactory((Class) ArrayList.class);
         @SuppressWarnings("unchecked") // safe
         final Predicate<? super O>[] predicates = new Predicate[] { predicate };
         return partition(inputCollection, factory, predicates);
@@ -1074,9 +1073,9 @@ public class CollectionUtils {
      * Partitions all elements from inputCollection into separate output collections,
      * based on the evaluation of the given predicates.
      * <p>
-     * For each predicate, the returned list will contain a collection holding
-     * all elements of the input collection matching the predicate. The last collection
-     * contained in the list will hold all elements which didn't match any predicate:
+     * For each predicate, the result will contain a list holding all elements of the
+     * input collection matching the predicate. The last list will hold all elements
+     * which didn't match any predicate:
      * <pre>
      *  [C1, C2, R] = partition(I, P1, P2) with
      *  I = input collection
@@ -1098,17 +1097,16 @@ public class CollectionUtils {
      * and [x &lt; 5] will result in the following output: [[1, 2], [3, 4], [5]].
      *
      * @param <O>  the type of object the {@link Iterable} contains
-     * @param <R>  the type of the output {@link Collection}
      * @param inputCollection  the collection to get the input from, may be null
      * @param predicates  the predicates to use, may be null
      * @return a list containing the output collections
      * @since 4.1
      */
-    public static <O, R extends Collection<O>> List<R> partition(final Iterable<? extends O> inputCollection,
+    public static <O> List<List<O>> partition(final Iterable<? extends O> inputCollection,
             final Predicate<? super O>... predicates) {
 
-        @SuppressWarnings("unchecked") // safe
-        final Factory<R> factory = (Factory<R>) FactoryUtils.instantiateFactory(ArrayList.class);
+        @SuppressWarnings({ "unchecked", "rawtypes" }) // safe
+        final Factory<List<O>> factory = FactoryUtils.instantiateFactory((Class) ArrayList.class);
         return partition(inputCollection, factory, predicates);
     }
 

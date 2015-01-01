@@ -1185,6 +1185,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(output1.contains(4L));
     }
 
+    @SuppressWarnings("unchecked")
     @Test
     public void partition() {
         List<Integer> input = new ArrayList<Integer>();
@@ -1192,7 +1193,7 @@ public class CollectionUtilsTest extends MockTestCase {
         input.add(2);
         input.add(3);
         input.add(4);
-        List<Collection<Integer>> partitions = CollectionUtils.partition(input, EQUALS_TWO);
+        List<List<Integer>> partitions = CollectionUtils.partition(input, EQUALS_TWO);
         assertEquals(2, partitions.size());
         
         // first partition contains 2
@@ -1248,7 +1249,8 @@ public class CollectionUtilsTest extends MockTestCase {
         input.add(2);
         input.add(3);
         input.add(4);
-        List<Collection<Integer>> partitions = CollectionUtils.partition(input, EQUALS_TWO, EVEN);
+        @SuppressWarnings("unchecked")
+        List<List<Integer>> partitions = CollectionUtils.partition(input, EQUALS_TWO, EVEN);
 
         // first partition contains 2
         Collection<Integer> partition = partitions.get(0);
