@@ -1088,7 +1088,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         TrieEntry<K, V> current = root.left;
         TrieEntry<K, V> path = root;
         while(true) {
-            if (current.bitIndex <= path.bitIndex || lengthInBits < current.bitIndex) {
+            if (current.bitIndex <= path.bitIndex || lengthInBits <= current.bitIndex) {
                 break;
             }
 
@@ -1120,8 +1120,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
         // Found key's length-th bit differs from our key
         // which means it cannot be the prefix...
-        if (isBitSet(prefix, endIndexInBits, endIndexInBits)
-                != isBitSet(entry.key, lengthInBits, lengthInBits(entry.key))) {
+        if (isBitSet(prefix, endIndexInBits - 1, endIndexInBits)
+                != isBitSet(entry.key, lengthInBits - 1, lengthInBits(entry.key))) {
             return null;
         }
 
@@ -2264,7 +2264,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             if (prefixStart == null) {
                 final Set<Map.Entry<K,V>> empty = Collections.emptySet();
                 return empty.iterator();
-            } else if (delegate.lengthInBits >= prefixStart.bitIndex) {
+            } else if (delegate.lengthInBits > prefixStart.bitIndex) {
                 return new SingletonIterator(prefixStart);
             } else {
                 return new EntryIterator(prefixStart, delegate.prefix, delegate.offsetInBits, delegate.lengthInBits);

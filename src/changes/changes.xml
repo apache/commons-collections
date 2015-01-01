@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-525" dev="tn" type="fix" due-to="Zigler Zhang">
+      The map returned by "PatriciaTrie#prefixMap()" did not contain all keys
+      that are prefixed by the given search key in some rare cases.
+    </action>
     <action issue="COLLECTIONS-511" dev="tn" type="add" due-to="Nathan Blomquist, Brent Worden">
       Added new methods "CollectionUtils#partition(...)" to partition an input collection
       into separate output collections based on evaluation of one or more predicates.
