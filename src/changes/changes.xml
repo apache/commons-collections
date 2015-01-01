@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-511" dev="tn" type="add" due-to="Nathan Blomquist, Brent Worden">
+      Added new methods "CollectionUtils#partition(...)" to partition an input collection
+      into separate output collections based on evaluation of one or more predicates.
+    </action>
     <action issue="COLLECTIONS-537" dev="tn" type="fix" due-to="Frank Jakop">
       Harmonized signature of factory methods for functor-related classes which take
       a collection as input with their array counterparts.
