@@ -1024,10 +1024,10 @@ public class CollectionUtils {
             final Predicate<? super O> predicate) {
 
         @SuppressWarnings("unchecked") // safe
-        final Class<R> outputClass = (Class<R>) ArrayList.class;
+        final Factory<R> factory = (Factory<R>) FactoryUtils.instantiateFactory(ArrayList.class);
         @SuppressWarnings("unchecked") // safe
         final Predicate<? super O>[] predicates = new Predicate[] { predicate };
-        return partition(inputCollection, FactoryUtils.instantiateFactory(outputClass), predicates);
+        return partition(inputCollection, factory, predicates);
     }
 
     /**
@@ -1108,8 +1108,8 @@ public class CollectionUtils {
             final Predicate<? super O>... predicates) {
 
         @SuppressWarnings("unchecked") // safe
-        final Class<R> outputClass = (Class<R>) ArrayList.class;
-        return partition(inputCollection, FactoryUtils.instantiateFactory(outputClass), predicates);
+        final Factory<R> factory = (Factory<R>) FactoryUtils.instantiateFactory(ArrayList.class);
+        return partition(inputCollection, factory, predicates);
     }
 
     /**
