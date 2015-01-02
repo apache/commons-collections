@@ -84,7 +84,9 @@
     </action>
     <action issue="COLLECTIONS-512" dev="tn" type="fix" due-to="Cyrille Artho">
       "TransformingComparator" and "FixedOrderComparator" did not comply with
-      the contract of "Object#equals".
+      the contract of "Object#equals". Added note to javadoc of
+      "AbstractCollectionDecorator#equals(Object)" that the implementation might
+      break symmetry requirement of the "Collection#equals" contract.
     </action>
     <action issue="COLLECTIONS-510" dev="tn" type="fix" due-to="Hollis Waite">
       Fix compilation errors when using source level 1.8 and a recent java 8 compiler.
