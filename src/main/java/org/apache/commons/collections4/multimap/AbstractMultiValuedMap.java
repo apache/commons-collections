@@ -110,7 +110,7 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
         }
         this.map = (Map<K, Collection<V>>) map;
         this.collectionFactory = new InstantiateFactory<C>(collectionClazz, new Class[] { Integer.TYPE },
-                new Object[] { new Integer(initialCollectionCapacity) });
+                new Object[] { Integer.valueOf(initialCollectionCapacity) });
     }
 
     /**
