@@ -343,6 +343,16 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
         }
 
         @Override
+        public boolean equals(final Object object) {
+            return object == this || decorated().equals(object);
+        }
+
+        @Override
+        public int hashCode() {
+            return decorated().hashCode();
+        }
+
+        @Override
         public boolean removeAll(final Collection<?> coll) {
             if (parent.isEmpty() || coll.isEmpty()) {
                 return false;

@@ -101,4 +101,14 @@ public class TransformedSet<E> extends TransformedCollection<E> implements Set<E
         super(set, transformer);
     }
 
+    @Override
+    public boolean equals(final Object object) {
+        return object == this || decorated().equals(object);
+    }
+
+    @Override
+    public int hashCode() {
+        return decorated().hashCode();
+    }
+
 }

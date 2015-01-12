@@ -114,6 +114,16 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
         return (List<E>) decorated();
     }
 
+    @Override
+    public boolean equals(final Object object) {
+        return object == this || decorated().equals(object);
+    }
+
+    @Override
+    public int hashCode() {
+        return decorated().hashCode();
+    }
+
     //-----------------------------------------------------------------------
 
     public E get(final int index) {

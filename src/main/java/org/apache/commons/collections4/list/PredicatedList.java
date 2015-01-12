@@ -94,6 +94,16 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
         return (List<E>) super.decorated();
     }
 
+    @Override
+    public boolean equals(final Object object) {
+        return object == this || decorated().equals(object);
+    }
+
+    @Override
+    public int hashCode() {
+        return decorated().hashCode();
+    }
+
     //-----------------------------------------------------------------------
 
     public E get(final int index) {

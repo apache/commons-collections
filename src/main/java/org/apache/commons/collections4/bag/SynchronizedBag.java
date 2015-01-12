@@ -82,6 +82,23 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
         return (Bag<E>) decorated();
     }
 
+    @Override
+    public boolean equals(final Object object) {
+        if (object == this) {
+            return true;
+        }
+        synchronized (lock) {
+            return getBag().equals(object);
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        synchronized (lock) {
+            return getBag().hashCode();
+        }
+    }
+
     //-----------------------------------------------------------------------
 
     public boolean add(final E object, final int count) {

@@ -34,6 +34,19 @@ import java.util.Iterator;
  * {@link #iterator()}. Instead it simply returns the value from the
  * wrapped collection. This may be undesirable, for example if you are trying
  * to write an unmodifiable implementation it might provide a loophole.
+ * <p>
+ * This implementation does not forward the hashCode and equals methods through
+ * to the backing object, but relies on Object's implementation. This is necessary
+ * to preserve the symmetry of equals. Custom definitions of equality are usually
+ * based on an interface, such as Set or List, so that the implementation of equals
+ * can cast the object being tested for equality to the custom interface.
+ * AbstractCollectionDecorator does not implement such custom interfaces directly;
+ * they are implemented only in subclasses. Therefore, forwarding equals would break
+ * symmetry, as the forwarding object might consider itself equal to the object being
+ * tested, but the reverse could not be true. This behavior is consistent with the
+ * JDK's collection wrappers, such as {@link java.util.Collections#unmodifiableCollection(Collection)}.
+ * Use an interface-specific subclass of AbstractCollectionDecorator, such as
+ * AbstractListDecorator, to preserve equality behavior, or override equals directly.
  *
  * @param <E> the type of the elements in the collection
  * @since 3.0
@@ -142,16 +155,6 @@ public abstract class AbstractCollectionDecorator<E>
 
     public boolean retainAll(final Collection<?> coll) {
         return decorated().retainAll(coll);
-    }
-
-    @Override
-    public boolean equals(final Object object) {
-        return object == this || decorated().equals(object);
-    }
-
-    @Override
-    public int hashCode() {
-        return decorated().hashCode();
     }
 
     @Override

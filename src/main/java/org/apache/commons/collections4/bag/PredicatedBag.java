@@ -87,6 +87,16 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
         return (Bag<E>) super.decorated();
     }
 
+    @Override
+    public boolean equals(final Object object) {
+        return object == this || decorated().equals(object);
+    }
+
+    @Override
+    public int hashCode() {
+        return decorated().hashCode();
+    }
+
     //-----------------------------------------------------------------------
 
     public boolean add(final E object, final int count) {

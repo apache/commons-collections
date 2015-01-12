@@ -18,10 +18,10 @@ package org.apache.commons.collections4.bag;
 
 import java.util.Set;
 
-import org.apache.commons.collections4.set.TransformedSet;
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollection;
+import org.apache.commons.collections4.set.TransformedSet;
 
 /**
  * Decorates another {@link Bag} to transform objects that are added.
@@ -108,6 +108,16 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
      */
     protected Bag<E> getBag() {
         return (Bag<E>) decorated();
+    }
+
+    @Override
+    public boolean equals(final Object object) {
+        return object == this || decorated().equals(object);
+    }
+
+    @Override
+    public int hashCode() {
+        return decorated().hashCode();
     }
 
     //-----------------------------------------------------------------------
