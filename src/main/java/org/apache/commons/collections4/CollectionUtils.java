@@ -1883,6 +1883,12 @@ public class CollectionUtils {
      * in <code>collection</code> unless <code>retain</code> does not contain <code>e</code>, in which
      * case the cardinality is zero. This method is useful if you do not wish to modify
      * the collection <code>c</code> and thus cannot call <code>c.retainAll(retain);</code>.
+     * <p>
+     * This implementation iterates over <code>collection</code>, checking each element in
+     * turn to see if it's contained in <code>retain</code>. If it's contained, it's added
+     * to the returned list. As a consequence, it is advised to use a collection type for
+     * <code>retain</code> that provides a fast (e.g. O(1)) implementation of
+     * {@link Collection#contains(Object)}.
      *
      * @param <C>  the type of object the {@link Collection} contains
      * @param collection  the collection whose contents are the target of the #retailAll operation

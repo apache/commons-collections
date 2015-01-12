@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-544" dev="tn" type="fix" due-to="Oswaldo Olivo">
+      Documented runtime complexity of "CollectionUtils#retainAll(Collection, Collection).
+    </action>
     <action issue="COLLECTIONS-542" dev="tn" type="fix">
       "AbstractHashedMap" still inherits from "AbstractMap", contrary to what
       the class javadoc stated. The inheritance will now be removed in v5.0. 
