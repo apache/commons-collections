@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-545" dev="tn" type="fix" due-to="Oswaldo Olivo">
+      Documented runtime complexity of "CollectionUtils#removeAll(Collection, Collection).
+    </action>
     <action issue="COLLECTIONS-543" dev="tn" type="fix">
       "AbstractCollectionDecorator" doesn't forward equals and hashCode anymore.
     </action>
