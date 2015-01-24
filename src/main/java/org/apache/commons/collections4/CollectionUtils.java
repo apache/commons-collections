@@ -2168,8 +2168,9 @@ public class CollectionUtils {
      * @param <C> iterable type
      * @param iterable the iterable to read
      * @param transformer the transformer used to convert each element into its own String representation
+     * @param delimiter the char sequence used to delimit each iterable element
      * @return the iterable String representation
-     * @throws IllegalArgumentException if iterable or transformer is null/empty
+     * @throws IllegalArgumentException if iterable, transformer or delimiter is null/empty
      */
     public static <C> String asString(Iterable<C> iterable, Transformer<C, String> transformer, String delimiter){
         if (iterable == null) {
