@@ -22,6 +22,11 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-530" dev="tn" type="fix" due-to="Erik">
+      Added a Builder for "PredicatedCollection". Elements added to the builder
+      that fail the predicate will not throw an IllegalArgumentException. The builder
+      supports creating predicated lists, bags, sets and queues.
+    </action>
     <action issue="COLLECTIONS-545" dev="tn" type="fix" due-to="Oswaldo Olivo">
       Documented runtime complexity of "CollectionUtils#removeAll(Collection, Collection).
     </action>
