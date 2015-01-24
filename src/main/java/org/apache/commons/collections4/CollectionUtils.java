@@ -2151,7 +2151,7 @@ public class CollectionUtils {
      * Converts the specified Iterable into a String representation using the specified
      * Transformer in order to convert each Iterable element into its own String representation.
      * <p>
-     * The iterable elements will be delimited by the 
+     * The default delimiter will be the ", " char sequence (comma and single space)
      * @param <C> iterable type
      * @param iterable the iterable to read
      * @param transformer the transformer used to convert each element into its own String representation
