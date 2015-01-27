@@ -204,31 +204,6 @@ public class ListOrderedSetTest<E>
         assertEquals(Integer.valueOf(0), orderedSet.get(4));
     }
 
-    /*
-     * test case for https://issues.apache.org/jira/browse/COLLECTIONS-426
-     */
-    @SuppressWarnings("boxing") // OK in test code
-    public void testRetainAllCollections426() {
-        final int size = 100000;
-        final ListOrderedSet<Integer> set = new ListOrderedSet<Integer>();
-        for (int i = 0; i < size; i++) {
-            set.add(i);
-        }
-        final ArrayList<Integer> list = new ArrayList<Integer>();
-        for (int i = size; i < 2 * size; i++) {
-            list.add(i);
-        }
-
-        final long start = System.currentTimeMillis();
-        set.retainAll(list);
-        final long stop = System.currentTimeMillis();
-
-        // make sure retainAll completes under 5 seconds
-        // TODO if test is migrated to JUnit 4, add a Timeout rule.
-        // http://kentbeck.github.com/junit/javadoc/latest/org/junit/rules/Timeout.html
-        assertTrue(stop - start < 5000);
-    }
-
     @SuppressWarnings("unchecked")
     public void testDuplicates() {
         final List<E> list = new ArrayList<E>(10);

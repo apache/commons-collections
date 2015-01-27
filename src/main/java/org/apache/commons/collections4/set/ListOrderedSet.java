@@ -225,27 +225,31 @@ public class ListOrderedSet<E>
         return result;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation iterates over the elements of this set, checking
+     * each element in turn to see if it's contained in <code>coll</code>.
+     * If it's not contained, it's removed from this set. As a consequence,
+     * it is advised to use a collection type for <code>coll</code> that provides
+     * a fast (e.g. O(1)) implementation of {@link Collection#contains(Object)}.
+     */
     @Override
     public boolean retainAll(final Collection<?> coll) {
-        final Set<Object> collectionRetainAll = new HashSet<Object>();
-        for (final Object next : coll) {
-            if (decorated().contains(next)) {
-                collectionRetainAll.add(next);
-            }
-        }
-        if (collectionRetainAll.size() == decorated().size()) {
+        boolean result = decorated().retainAll(coll);
+        if (result == false) {
             return false;
         }
-        if (collectionRetainAll.size() == 0) {
-            clear();
+        if (decorated().size() == 0) {
+            setOrder.clear();
         } else {
-            for (final Iterator<E> it = iterator(); it.hasNext();) {
-                if (!collectionRetainAll.contains(it.next())) {
+            for (Iterator<E> it = setOrder.iterator(); it.hasNext();) {
+                if (!decorated().contains(it.next())) {
                     it.remove();
                 }
             }
         }
-        return true;
+        return result;
     }
 
     @Override
