@@ -25,9 +25,9 @@ import java.util.ListIterator;
 import java.util.Set;
 
 import org.apache.commons.collections4.ListUtils;
-import org.apache.commons.collections4.set.UnmodifiableSet;
 import org.apache.commons.collections4.iterators.AbstractIteratorDecorator;
 import org.apache.commons.collections4.iterators.AbstractListIteratorDecorator;
+import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
  * Decorates a <code>List</code> to ensure that no duplicates are present much
@@ -251,27 +251,28 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         return result;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation iterates over the elements of this list, checking
+     * each element in turn to see if it's contained in <code>coll</code>.
+     * If it's not contained, it's removed from this list. As a consequence,
+     * it is advised to use a collection type for <code>coll</code> that provides
+     * a fast (e.g. O(1)) implementation of {@link Collection#contains(Object)}.
+     */
     @Override
     public boolean retainAll(final Collection<?> coll) {
-        final Set<Object> setRetainAll = new HashSet<Object>();
-        for (final Object next : coll) {
-            if (set.contains(next)) {
-                setRetainAll.add(next);
-            }
-        }
-        if (setRetainAll.size() == set.size()) {
+        boolean result = set.retainAll(coll);
+        if (result == false) {
             return false;
         }
-        if (setRetainAll.size() == 0) {
-            clear();
+        if (set.size() == 0) {
+            super.clear();
         } else {
-            for (final Iterator<E> it = iterator(); it.hasNext();) {
-                if (!setRetainAll.contains(it.next())) {
-                    it.remove();
-                }
-            }
+            // use the set as parameter for the call to retainAll to improve performance
+            super.retainAll(set);
         }
-        return true;
+        return result;
     }
 
     @Override
