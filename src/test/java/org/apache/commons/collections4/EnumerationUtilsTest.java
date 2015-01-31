@@ -17,9 +17,11 @@
 package org.apache.commons.collections4;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.Vector;
 
 import junit.framework.Test;
 
@@ -35,6 +37,26 @@ public class EnumerationUtilsTest extends BulkTest {
     }
 
     public static final String TO_LIST_FIXTURE = "this is a test";
+
+    /**
+     * List of {@link Integer}s
+     */
+    private List<Integer> collectionA = null;
+
+    @Override
+    public void setUp() {
+        collectionA = new ArrayList<Integer>();
+        collectionA.add(1);
+        collectionA.add(2);
+        collectionA.add(2);
+        collectionA.add(3);
+        collectionA.add(3);
+        collectionA.add(3);
+        collectionA.add(4);
+        collectionA.add(4);
+        collectionA.add(4);
+        collectionA.add(4);
+    }
 
     public void testToListWithStringTokenizer() {
         final List<String> expectedList1 = new ArrayList<String>();
@@ -81,6 +103,35 @@ public class EnumerationUtilsTest extends BulkTest {
         expectedKeyList.add("two");
         expectedKeyList.add("three");
         assertTrue(actualKeyList.containsAll(expectedKeyList));
+    }
+
+    public void testGetEnumeration() {
+        final Vector<Integer> vectorA = new Vector<Integer>(collectionA);
+        final Enumeration<Integer> e = vectorA.elements();
+        assertEquals(Integer.valueOf(2), EnumerationUtils.get(e, 2));
+        assertTrue(e.hasMoreElements());
+        assertEquals(Integer.valueOf(4), EnumerationUtils.get(e, 6));
+        assertFalse(e.hasMoreElements());
+    }
+
+    public void testGetFromEnumeration() throws Exception {
+        // Enumeration, entry exists
+        final Vector<String> vector = new Vector<String>();
+        vector.addElement("zero");
+        vector.addElement("one");
+        Enumeration<String> en = vector.elements();
+        assertEquals("zero", EnumerationUtils.get(en, 0));
+        en = vector.elements();
+        assertEquals("one", EnumerationUtils.get(en, 1));
+
+        // Enumerator, non-existent entry
+        try {
+            EnumerationUtils.get(en, 3);
+            fail("Expecting IndexOutOfBoundsException.");
+        } catch (final IndexOutOfBoundsException e) {
+            // expected
+        }
+        assertTrue(!en.hasMoreElements());
     }
 
     public static Test suite() {

@@ -17,14 +17,13 @@
 package org.apache.commons.collections4.map;
 
 import java.io.Serializable;
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections4.set.CompositeSet;
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.collections4.collection.CompositeCollection;
+import org.apache.commons.collections4.set.CompositeSet;
 
 /**
  * Decorates a map of other maps to provide a single unified view.
@@ -132,7 +131,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
     @SuppressWarnings("unchecked")
     public synchronized void addComposited(final Map<K, V> map) throws IllegalArgumentException {
         for (int i = composite.length - 1; i >= 0; --i) {
-            final Collection<K> intersect = CollectionUtils.intersection(this.composite[i].keySet(), map.keySet());
+            final Collection<K> intersect = IterableUtils.intersection(this.composite[i].keySet(), map.keySet());
             if (intersect.size() != 0) {
                 if (this.mutator == null) {
                     throw new IllegalArgumentException("Key collision adding Map to CompositeMap");

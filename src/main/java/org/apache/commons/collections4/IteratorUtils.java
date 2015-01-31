@@ -1068,6 +1068,143 @@ public class IteratorUtils {
     }
 
     /**
+     * Executes the given closure on each element in the iterator.
+     * <p>
+     * If the input iterator or closure is null, there is no change made.
+     *
+     * @param <T>  the type of object the {@link Iterator} contains
+     * @param <C>  the closure type
+     * @param iterator  the iterator to get the input from, may be null
+     * @param closure  the closure to perform, may be null
+     * @return closure
+     * @since 4.1
+     */
+    public static <T, C extends Closure<? super T>> C forAllDo(final Iterator<T> iterator, final C closure) {
+        if (iterator != null && closure != null) {
+            while (iterator.hasNext()) {
+                closure.execute(iterator.next());
+            }
+        }
+        return closure;
+    }
+
+    /**
+     * Executes the given closure on each but the last element in the iterator.
+     * <p>
+     * If the input iterator or closure is null, there is no change made.
+     *
+     * @param <T>  the type of object the {@link Iterator} contains
+     * @param <C>  the closure type
+     * @param iterator  the iterator to get the input from, may be null
+     * @param closure  the closure to perform, may be null
+     * @return the last element in the iterator, or null if either iterator or closure is null
+     * @since 4.1
+     */
+    public static <T, C extends Closure<? super T>> T forAllButLastDo(final Iterator<T> iterator, final C closure) {
+        if (iterator != null && closure != null) {
+            while (iterator.hasNext()) {
+                final T element = iterator.next();
+                if (iterator.hasNext()) {
+                    closure.execute(element);
+                } else {
+                    return element;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Transforms all elements from the inputIterator with the given transformer
+     * and adds them to the outputCollection.
+     * <p>
+     * If the input iterator or transformer is null, there is no change to the
+     * output collection.
+     *
+     * @param inputIterator  the iterator to get the input from, may be null
+     * @param transformer  the transformer to use, may be null
+     * @param outputCollection  the collection to output into, may not be null if the inputIterator
+     *   and transformer are not null
+     * @param <I> the type of object in the input iterator
+     * @param <O> the type of object in the output collection
+     * @param <R> the output type of the transformer - this extends O.
+     * @return the outputCollection with the transformed input added
+     * @throws NullPointerException if the output collection is null and both, inputIterator and
+     *   transformer are not null
+     * @since 4.1
+     */
+    public static <I, O, R extends Collection<? super O>> R collect(final Iterator<? extends I> inputIterator,
+            final Transformer<? super I, ? extends O> transformer, final R outputCollection) {
+        if (inputIterator != null && transformer != null) {
+            while (inputIterator.hasNext()) {
+                final I item = inputIterator.next();
+                final O value = transformer.transform(item);
+                outputCollection.add(value);
+            }
+        }
+        return outputCollection;
+    }
+
+    /**
+     * Transforms all elements from the inputIterator with the given transformer
+     * and adds them to the outputCollection.
+     * <p>
+     * If the input iterator or transformer is null, the result is an empty
+     * list.
+     *
+     * @param inputIterator  the iterator to get the input from, may be null
+     * @param transformer  the transformer to use, may be null
+     * @param <I> the type of object in the input iterator
+     * @param <O> the type of object in the output collection
+     * @return the transformed result (new list)
+     * @since 4.1
+     */
+    public static <I, O> Collection<O> collect(final Iterator<I> inputIterator,
+            final Transformer<? super I, ? extends O> transformer) {
+        return collect(inputIterator, transformer, new ArrayList<O>());
+    }
+
+    /**
+     * Returns the <code>index</code>-th value in {@link Iterator}, throwing
+     * <code>IndexOutOfBoundsException</code> if there is no such element.
+     * <p>
+     * The Iterator is advanced to <code>index</code> (or to the end, if
+     * <code>index</code> exceeds the number of entries) as a side effect of this method.
+     *
+     * @param iterator  the iterator to get a value from
+     * @param index  the index to get
+     * @param <T> the type of object in the {@link Iterator}
+     * @return the object at the specified index
+     * @throws IndexOutOfBoundsException if the index is invalid
+     * @throws IllegalArgumentException if the object type is invalid
+     * @since 4.1
+     */
+    public static <T> T get(final Iterator<T> iterator, final int index) {
+        int i = index;
+        checkIndexBounds(i);
+        while (iterator.hasNext()) {
+            i--;
+            if (i == -1) {
+                return iterator.next();
+            }
+            iterator.next();
+        }
+        throw new IndexOutOfBoundsException("Entry does not exist: " + i);
+    }
+
+    /**
+     * Ensures an index is not negative.
+     * @param index the index to check.
+     * @throws IndexOutOfBoundsException if the index is negative.
+     * @since 4.1
+     */
+    static void checkIndexBounds(final int index) {
+        if (index < 0) {
+            throw new IndexOutOfBoundsException("Index cannot be negative: " + index);
+        }
+    }
+
+    /**
      * Gets a suitable Iterator for the given object.
      * <p>
      * This method can handle objects as follows

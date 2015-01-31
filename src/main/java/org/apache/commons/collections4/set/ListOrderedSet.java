@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
 
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.collections4.OrderedIterator;
 import org.apache.commons.collections4.functors.UniquePredicate;
 import org.apache.commons.collections4.iterators.AbstractIteratorDecorator;
@@ -120,7 +120,7 @@ public class ListOrderedSet<E>
         if (list == null) {
             throw new IllegalArgumentException("List must not be null");
         }
-        CollectionUtils.filter(list, UniquePredicate.uniquePredicate());
+        IterableUtils.filter(list, UniquePredicate.uniquePredicate());
         final Set<E> set = new HashSet<E>(list);
 
         return new ListOrderedSet<E>(set, list);

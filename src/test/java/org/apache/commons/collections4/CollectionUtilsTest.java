@@ -114,7 +114,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     private Iterable<Number> iterableB2 = null;
 
-    private Collection<Integer> emptyCollection = new ArrayList<Integer>(1);
+    private final Collection<Integer> emptyCollection = new ArrayList<Integer>(1);
 
     @Before
     public void setUp() {
@@ -175,6 +175,7 @@ public class CollectionUtilsTest extends MockTestCase {
         collectionE.add(9);
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void getCardinalityMap() {
         final Map<Number, Integer> freqA = CollectionUtils.<Number>getCardinalityMap(iterableA);
@@ -192,6 +193,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(1, (int) freqB.get(5L));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void cardinality() {
         assertEquals(1, CollectionUtils.cardinality(1, iterableA));
@@ -235,6 +237,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(2, CollectionUtils.cardinality("E", bag));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void cardinalityOfNull() {
         final List<String> list = new ArrayList<String>();
@@ -346,6 +349,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue("containsAny({},{}) should return false.", !CollectionUtils.containsAny(empty, empty));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void union() {
         final Collection<Integer> col = CollectionUtils.union(iterableA, iterableC);
@@ -365,6 +369,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(Integer.valueOf(1), freq2.get(5));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void intersection() {
         final Collection<Integer> col = CollectionUtils.intersection(iterableA, iterableC);
@@ -384,6 +389,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertNull(freq2.get(5));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void disjunction() {
         final Collection<Integer> col = CollectionUtils.disjunction(iterableA, iterableC);
@@ -403,6 +409,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(Integer.valueOf(1), freq2.get(5));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testDisjunctionAsUnionMinusIntersection() {
         final Collection<Number> dis = CollectionUtils.<Number>disjunction(collectionA, collectionC);
@@ -411,6 +418,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(CollectionUtils.isEqualCollection(dis, CollectionUtils.subtract(un, inter)));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testDisjunctionAsSymmetricDifference() {
         final Collection<Number> dis = CollectionUtils.<Number>disjunction(collectionA, collectionC);
@@ -419,6 +427,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(CollectionUtils.isEqualCollection(dis, CollectionUtils.union(amb, bma)));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testSubtract() {
         final Collection<Integer> col = CollectionUtils.subtract(iterableA, iterableC);
@@ -438,6 +447,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertNull(freq2.get(1));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testSubtractWithPredicate() {
         // greater than 3
@@ -556,6 +566,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(CollectionUtils.isEqualCollection(b, a));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testIsEqualCollectionEquator() {
         final Collection<Integer> collB = CollectionUtils.collect(collectionB, TRANSFORM_TO_INTEGER);
@@ -589,6 +600,7 @@ public class CollectionUtilsTest extends MockTestCase {
         CollectionUtils.isEqualCollection(collectionA, collectionA, null);
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testIsProperSubCollection() {
         final Collection<String> a = new ArrayList<String>();
@@ -611,6 +623,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(!CollectionUtils.isProperSubCollection(a, CollectionUtils.subtract(a, b)));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void find() {
         Predicate<Number> testPredicate = equalPredicate((Number) 4);
@@ -623,7 +636,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertNull(CollectionUtils.find(collectionA, null));
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
     @Test
     public void forAllDoCollection() {
         final Closure<List<? extends Number>> testClosure = ClosureUtils.invokerClosure("clear");
@@ -643,7 +656,7 @@ public class CollectionUtilsTest extends MockTestCase {
         CollectionUtils.forAllDo(col, testClosure);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
     @Test
     public void forAllDoIterator() {
         final Closure<List<? extends Number>> testClosure = ClosureUtils.invokerClosure("clear");
@@ -663,6 +676,7 @@ public class CollectionUtilsTest extends MockTestCase {
         CollectionUtils.forAllDo(col.iterator(), testClosure);
     }
 
+    @SuppressWarnings("deprecation")
     @Test(expected = FunctorException.class)
     public void forAllDoFailure() {
         final Closure<String> testClosure = ClosureUtils.invokerClosure("clear");
@@ -671,6 +685,7 @@ public class CollectionUtilsTest extends MockTestCase {
         CollectionUtils.forAllDo(col, testClosure);
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void forAllButLastDoCollection() {
         final Closure<List<? extends Number>> testClosure = ClosureUtils.invokerClosure("clear");
@@ -712,6 +727,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertNull(CollectionUtils.forAllButLastDo((Collection<String>) null, (Closure<String>) null)); // do not remove cast
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void forAllButLastDoIterator() {
         final Closure<List<? extends Number>> testClosure = ClosureUtils.invokerClosure("clear");
@@ -770,6 +786,7 @@ public class CollectionUtilsTest extends MockTestCase {
      * Tests that {@link List}s are handled correctly - e.g. using
      * {@link List#get(int)}.
      */
+    @SuppressWarnings("deprecation")
     @Test(expected=IndexOutOfBoundsException.class)
     public void getFromList() throws Exception {
         // List, entry exists
@@ -784,6 +801,7 @@ public class CollectionUtilsTest extends MockTestCase {
         CollectionUtils.get(new ArrayList<Object>(), 2);
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void getFromIterator() throws Exception {
         // Iterator, entry exists
@@ -802,6 +820,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(!iterator.hasNext());
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void getFromEnumeration() throws Exception {
         // Enumeration, entry exists
@@ -823,6 +842,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(!en.hasMoreElements());
     }
 
+    @SuppressWarnings("deprecation")
     @Test(expected = IndexOutOfBoundsException.class)
     public void getFromIterable() throws Exception {
         // Collection, entry exists
@@ -1075,6 +1095,7 @@ public class CollectionUtilsTest extends MockTestCase {
     };
 
 //Up to here
+    @SuppressWarnings("deprecation")
     @Test
     public void filter() {
         final List<Integer> ints = new ArrayList<Integer>();
@@ -1088,6 +1109,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(2, (int) ints.get(0));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void filterNullParameters() throws Exception {
         final List<Long> longs = Collections.nCopies(4, 10L);
@@ -1099,6 +1121,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(4, longs.size());
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void filterInverse() {
         final List<Integer> ints = new ArrayList<Integer>();
@@ -1114,6 +1137,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(3, (int) ints.get(2));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void filterInverseNullParameters() throws Exception {
         final List<Long> longs = Collections.nCopies(4, 10L);
@@ -1125,6 +1149,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(4, longs.size());
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void countMatches() {
         assertEquals(4, CollectionUtils.countMatches(iterableB, EQUALS_TWO));
@@ -1133,6 +1158,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(0, CollectionUtils.countMatches(null, null));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void exists() {
         final List<Integer> list = new ArrayList<Integer>();
@@ -1149,6 +1175,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(true, CollectionUtils.exists(list, EQUALS_TWO));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void select() {
         final List<Integer> list = new ArrayList<Integer>();
@@ -1166,6 +1193,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(2, output2.iterator().next());
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void selectRejected() {
         final List<Long> list = new ArrayList<Long>();
@@ -1185,7 +1213,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(output1.contains(4L));
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "deprecation" })
     @Test
     public void partition() {
         List<Integer> input = new ArrayList<Integer>();
@@ -1214,6 +1242,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(input, partitions.get(0));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void partitionWithOutputCollections() {
         List<Integer> input = new ArrayList<Integer>();
@@ -1242,6 +1271,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(rejected.isEmpty());
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void partitionMultiplePredicates() {
         List<Integer> input = new ArrayList<Integer>();
@@ -1268,6 +1298,7 @@ public class CollectionUtilsTest extends MockTestCase {
         Assert.assertArrayEquals(expected, partition.toArray());
     }
     
+    @SuppressWarnings("deprecation")
     @Test
     public void collect() {
         final Transformer<Number, Long> transformer = TransformerUtils.constantTransformer(2L);
@@ -1437,6 +1468,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(3, CollectionUtils.maxSize(buf));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void intersectionUsesMethodEquals() {
         // Let elta and eltb be objects...
@@ -1685,6 +1717,7 @@ public class CollectionUtilsTest extends MockTestCase {
         CollectionUtils.get((Object)null, 0);
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void get() {
         assertEquals(2, CollectionUtils.get((Object)collectionA, 2));
@@ -1693,6 +1726,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(map.entrySet().iterator().next(), CollectionUtils.get((Object)map, 0));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void getIterator() {
         final Iterator<Integer> it = collectionA.iterator();
@@ -1702,6 +1736,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertFalse(it.hasNext());
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void getEnumeration() {
         final Vector<Integer> vectorA = new Vector<Integer>(collectionA);
@@ -1754,16 +1789,19 @@ public class CollectionUtilsTest extends MockTestCase {
         expect(iterator.next()).andReturn(t);
     }
 
+    @SuppressWarnings("deprecation")
     @Test(expected=IllegalArgumentException.class)
     public void collateException1() {
         CollectionUtils.collate(collectionA, null);
     }
 
+    @SuppressWarnings("deprecation")
     @Test(expected=IllegalArgumentException.class)
     public void collateException2() {
         CollectionUtils.collate(collectionA, collectionC, null);
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testCollate() {
         List<Integer> result = CollectionUtils.collate(emptyCollection, emptyCollection);
@@ -1799,6 +1837,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals("Comparator Merge two lists 2", combinedList, result2);
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testCollateIgnoreDuplicates() {
         List<Integer> result1 = CollectionUtils.collate(collectionD, collectionE, false);
@@ -1833,6 +1872,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(factorial, permutations.size());
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testMatchesAll() {
         assertFalse(CollectionUtils.matchesAll(null, null));
@@ -1856,6 +1896,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(CollectionUtils.matchesAll(emptyCollection, lessThanFour));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testRemoveAllWithEquator() {
         final List<String> base = new ArrayList<String>();
@@ -1906,6 +1947,7 @@ public class CollectionUtilsTest extends MockTestCase {
         } // this is what we want
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testRetainAllWithEquator() {
         final List<String> base = new ArrayList<String>();
