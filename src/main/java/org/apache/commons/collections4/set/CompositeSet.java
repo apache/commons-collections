@@ -25,7 +25,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.collections4.iterators.EmptyIterator;
 import org.apache.commons.collections4.iterators.IteratorChain;
 import org.apache.commons.collections4.list.UnmodifiableList;
@@ -342,14 +342,14 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      */
     public synchronized void addComposited(final Set<E> set) {
         for (final Set<E> existingSet : getSets()) {
-            final Collection<E> intersects = CollectionUtils.intersection(existingSet, set);
+            final Collection<E> intersects = IterableUtils.intersection(existingSet, set);
             if (intersects.size() > 0) {
                 if (this.mutator == null) {
                     throw new UnsupportedOperationException(
                         "Collision adding composited set with no SetMutator set");
                 }
                 getMutator().resolveCollision(this, existingSet, set, intersects);
-                if (CollectionUtils.intersection(existingSet, set).size() > 0) {
+                if (IterableUtils.intersection(existingSet, set).size() > 0) {
                     throw new IllegalArgumentException(
                         "Attempt to add illegal entry unresolved by SetMutator.resolveCollision()");
                 }

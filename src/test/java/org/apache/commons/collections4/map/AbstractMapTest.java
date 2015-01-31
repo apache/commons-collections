@@ -31,7 +31,7 @@ import java.util.Set;
 
 import org.apache.commons.collections4.AbstractObjectTest;
 import org.apache.commons.collections4.BulkTest;
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.collections4.collection.AbstractCollectionTest;
 import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
 import org.apache.commons.collections4.set.AbstractSetTest;
@@ -1279,7 +1279,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     public void testValuesIteratorRemoveChangesMap() {
         resetFull();
         final List<V> sampleValuesAsList = Arrays.asList(getSampleValues());
-        final Map<V, Integer> cardinality = CollectionUtils.getCardinalityMap(sampleValuesAsList);
+        final Map<V, Integer> cardinality = IterableUtils.getCardinalityMap(sampleValuesAsList);
         final Collection<V> values = getMap().values();
         for (final Iterator<V> iter = values.iterator(); iter.hasNext();) {
             final V value = iter.next();
