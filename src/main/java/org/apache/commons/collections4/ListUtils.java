@@ -181,11 +181,11 @@ public class ListUtils {
      *             if the input list is null
      *
      * @since 4.0
-     * @see CollectionUtils#select(Iterable, Predicate)
+     * @see IterableUtils#select(Iterable, Predicate)
      */
     public static <E> List<E> select(final Collection<? extends E> inputCollection,
             final Predicate<? super E> predicate) {
-        return CollectionUtils.select(inputCollection, predicate, new ArrayList<E>(inputCollection.size()));
+        return IterableUtils.select(inputCollection, predicate, new ArrayList<E>(inputCollection.size()));
     }
 
     /**
@@ -205,11 +205,11 @@ public class ListUtils {
      *             if the input collection is null
      *
      * @since 4.0
-     * @see CollectionUtils#selectRejected(Iterable, Predicate)
+     * @see IterableUtils#selectRejected(Iterable, Predicate)
      */
     public static <E> List<E> selectRejected(final Collection<? extends E> inputCollection,
             final Predicate<? super E> predicate) {
-        return CollectionUtils.selectRejected(inputCollection, predicate, new ArrayList<E>(inputCollection.size()));
+        return IterableUtils.selectRejected(inputCollection, predicate, new ArrayList<E>(inputCollection.size()));
     }
 
     /**
@@ -587,7 +587,7 @@ public class ListUtils {
      * A helper class used to construct the longest common subsequence.
      */
     private static final class LcsVisitor<E> implements CommandVisitor<E> {
-        private ArrayList<E> sequence;
+        private final ArrayList<E> sequence;
 
         public LcsVisitor() {
             sequence = new ArrayList<E>();

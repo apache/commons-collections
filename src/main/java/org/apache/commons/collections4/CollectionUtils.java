@@ -19,10 +19,8 @@ package org.apache.commons.collections4;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -31,14 +29,11 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.collection.PredicatedCollection;
 import org.apache.commons.collections4.collection.SynchronizedCollection;
 import org.apache.commons.collections4.collection.TransformedCollection;
 import org.apache.commons.collections4.collection.UnmodifiableBoundedCollection;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
-import org.apache.commons.collections4.functors.TruePredicate;
-import org.apache.commons.collections4.iterators.CollatingIterator;
 import org.apache.commons.collections4.iterators.PermutationIterator;
 
 /**
@@ -55,123 +50,7 @@ import org.apache.commons.collections4.iterators.PermutationIterator;
  */
 public class CollectionUtils {
 
-    /**
-     * Helper class to easily access cardinality properties of two collections.
-     * @param <O>  the element type
-     */
-    private static class CardinalityHelper<O> {
-
-        /** Contains the cardinality for each object in collection A. */
-        final Map<O, Integer> cardinalityA;
-
-        /** Contains the cardinality for each object in collection B. */
-        final Map<O, Integer> cardinalityB;
-
-        /**
-         * Create a new CardinalityHelper for two collections.
-         * @param a  the first collection
-         * @param b  the second collection
-         */
-        public CardinalityHelper(final Iterable<? extends O> a, final Iterable<? extends O> b) {
-            cardinalityA = CollectionUtils.<O>getCardinalityMap(a);
-            cardinalityB = CollectionUtils.<O>getCardinalityMap(b);
-        }
-
-        /**
-         * Returns the maximum frequency of an object.
-         * @param obj  the object
-         * @return the maximum frequency of the object
-         */
-        public final int max(final Object obj) {
-            return Math.max(freqA(obj), freqB(obj));
-        }
-
-        /**
-         * Returns the minimum frequency of an object.
-         * @param obj  the object
-         * @return the minimum frequency of the object
-         */
-        public final int min(final Object obj) {
-            return Math.min(freqA(obj), freqB(obj));
-        }
-
-        /**
-         * Returns the frequency of this object in collection A.
-         * @param obj  the object
-         * @return the frequency of the object in collection A
-         */
-        public int freqA(final Object obj) {
-            return getFreq(obj, cardinalityA);
-        }
-
-        /**
-         * Returns the frequency of this object in collection B.
-         * @param obj  the object
-         * @return the frequency of the object in collection B
-         */
-        public int freqB(final Object obj) {
-            return getFreq(obj, cardinalityB);
-        }
-
-        private final int getFreq(final Object obj, final Map<?, Integer> freqMap) {
-            final Integer count = freqMap.get(obj);
-            if (count != null) {
-                return count.intValue();
-            }
-            return 0;
-        }
-    }
-
-    /**
-     * Helper class for set-related operations, e.g. union, subtract, intersection.
-     * @param <O>  the element type
-     */
-    private static class SetOperationCardinalityHelper<O> extends CardinalityHelper<O> implements Iterable<O> {
-
-        /** Contains the unique elements of the two collections. */
-        private final Set<O> elements;
-
-        /** Output collection. */
-        private final List<O> newList;
-
-        /**
-         * Create a new set operation helper from the two collections.
-         * @param a  the first collection
-         * @param b  the second collection
-         */
-        public SetOperationCardinalityHelper(final Iterable<? extends O> a, final Iterable<? extends O> b) {
-            super(a, b);
-            elements = new HashSet<O>();
-            addAll(elements, a);
-            addAll(elements, b);
-            // the resulting list must contain at least each unique element, but may grow
-            newList = new ArrayList<O>(elements.size());
-        }
-
-        public Iterator<O> iterator() {
-            return elements.iterator();
-        }
-
-        /**
-         * Add the object {@code count} times to the result collection.
-         * @param obj  the object to add
-         * @param count  the count
-         */
-        public void setCardinality(final O obj, final int count) {
-            for (int i = 0; i < count; i++) {
-                newList.add(obj);
-            }
-        }
-
-        /**
-         * Returns the resulting collection.
-         * @return the result
-         */
-        public Collection<O> list() {
-            return newList;
-        }
-
-    }
+    
 
     /**
      * An empty unmodifiable collection.
@@ -228,13 +107,11 @@ public class CollectionUtils {
      *        in both input collections.
      * @return the union of the two collections
      * @see Collection#addAll
+     * @deprecated use {@link IterableUtils#union(Iterable, Iterable)} instead
      */
+    @Deprecated
     public static <O> Collection<O> union(final Iterable<? extends O> a, final Iterable<? extends O> b) {
-        final SetOperationCardinalityHelper<O> helper = new SetOperationCardinalityHelper<O>(a, b);
-        for (final O obj : helper) {
-            helper.setCardinality(obj, helper.max(obj));
-        }
-        return helper.list();
+        return IterableUtils.union(a, b);
     }
 
     /**
@@ -252,13 +129,11 @@ public class CollectionUtils {
      * @return the intersection of the two collections
      * @see Collection#retainAll
      * @see #containsAny
+     * @deprecated use {@link IterableUtils#intersection(Iterable, Iterable)} instead
      */
+    @Deprecated
     public static <O> Collection<O> intersection(final Iterable<? extends O> a, final Iterable<? extends O> b) {
-        final SetOperationCardinalityHelper<O> helper = new SetOperationCardinalityHelper<O>(a, b);
-        for (final O obj : helper) {
-            helper.setCardinality(obj, helper.min(obj));
-        }
-        return helper.list();
+        return IterableUtils.intersection(a, b);
     }
 
     /**
@@ -280,13 +155,11 @@ public class CollectionUtils {
      * @param <O> the generic type that is able to represent the types contained
      *        in both input collections.
      * @return the symmetric difference of the two collections
+     * @deprecated use {@link IterableUtils#disjunction(Iterable, Iterable)} instead
      */
+    @Deprecated
     public static <O> Collection<O> disjunction(final Iterable<? extends O> a, final Iterable<? extends O> b) {
-        final SetOperationCardinalityHelper<O> helper = new SetOperationCardinalityHelper<O>(a, b);
-        for (final O obj : helper) {
-            helper.setCardinality(obj, helper.max(obj) - helper.min(obj));
-        }
-        return helper.list();
+        return IterableUtils.disjunction(a, b);
     }
 
     /**
@@ -301,10 +174,11 @@ public class CollectionUtils {
      *        in both input collections.
      * @return a new collection with the results
      * @see Collection#removeAll
+     * @deprecated use {@link IterableUtils#subtract(Iterable, Iterable)} instead
      */
+    @Deprecated
     public static <O> Collection<O> subtract(final Iterable<? extends O> a, final Iterable<? extends O> b) {
-        final Predicate<O> p = TruePredicate.truePredicate();
-        return subtract(a, b, p);
+        return IterableUtils.subtract(a, b);
     }
 
     /**
@@ -327,23 +201,13 @@ public class CollectionUtils {
      * @return a new collection with the results
      * @since 4.0
      * @see Collection#removeAll
+     * @deprecated use {@link IterableUtils#subtract(Iterable, Iterable, Predicate)} instead
      */
+    @Deprecated
     public static <O> Collection<O> subtract(final Iterable<? extends O> a,
                                              final Iterable<? extends O> b,
                                              final Predicate<O> p) {
-        final ArrayList<O> list = new ArrayList<O>();
-        final HashBag<O> bag = new HashBag<O>();
-        for (final O element : b) {
-            if (p.evaluate(element)) {
-                bag.add(element);
-            }
-        }
-        for (final O element : a) {
-            if (!bag.remove(element, 1)) {
-                list.add(element);
-            }
-        }
-        return list;
+        return IterableUtils.subtract(a, b, p);
     }
 
     /**
@@ -439,18 +303,11 @@ public class CollectionUtils {
      * @param <O>  the type of object in the returned {@link Map}. This is a super type of <I>.
      * @param coll  the collection to get the cardinality map for, must not be null
      * @return the populated cardinality map
+     * @deprecated use {@link IterableUtils#getCardinalityMap(Iterable)} instead
      */
+    @Deprecated
     public static <O> Map<O, Integer> getCardinalityMap(final Iterable<? extends O> coll) {
-        final Map<O, Integer> count = new HashMap<O, Integer>();
-        for (final O obj : coll) {
-            final Integer c = count.get(obj);
-            if (c == null) {
-                count.put(obj, Integer.valueOf(1));
-            } else {
-                count.put(obj, Integer.valueOf(c.intValue() + 1));
-            }
-        }
-        return count;
+        return IterableUtils.getCardinalityMap(coll);
     }
 
     /**
@@ -466,13 +323,7 @@ public class CollectionUtils {
      * @see Collection#containsAll
      */
     public static boolean isSubCollection(final Collection<?> a, final Collection<?> b) {
-        final CardinalityHelper<Object> helper = new CardinalityHelper<Object>(a, b);
-        for (final Object obj : a) {
-            if (helper.freqA(obj) > helper.freqB(obj)) {
-                return false;
-            }
-        }
-        return true;
+        return IterableUtils.isSubIterable(a, b);
     }
 
     /**
@@ -497,7 +348,7 @@ public class CollectionUtils {
      * @see Collection#containsAll
      */
     public static boolean isProperSubCollection(final Collection<?> a, final Collection<?> b) {
-        return a.size() < b.size() && CollectionUtils.isSubCollection(a, b);
+        return a.size() < b.size() && IterableUtils.isSubIterable(a, b);
     }
 
     /**
@@ -516,16 +367,7 @@ public class CollectionUtils {
         if(a.size() != b.size()) {
             return false;
         }
-        final CardinalityHelper<Object> helper = new CardinalityHelper<Object>(a, b);
-        if(helper.cardinalityA.size() != helper.cardinalityB.size()) {
-            return false;
-        }
-        for( final Object obj : helper.cardinalityA.keySet()) {
-            if(helper.freqA(obj) != helper.freqB(obj)) {
-                return false;
-            }
-        }
-        return true;
+        return IterableUtils.isEqualIterable(a, b);
     }
 
     /**
@@ -555,57 +397,10 @@ public class CollectionUtils {
         if (equator == null) {
             throw new IllegalArgumentException("equator may not be null");
         }
-
         if(a.size() != b.size()) {
             return false;
         }
-
-        @SuppressWarnings({ "unchecked", "rawtypes" })
-        final Transformer<E, ?> transformer = new Transformer() {
-            public EquatorWrapper<?> transform(final Object input) {
-                return new EquatorWrapper(equator, input);
-            }
-        };
-
-        return isEqualCollection(collect(a, transformer), collect(b, transformer));
-    }
-
-    /**
-     * Wraps another object and uses the provided Equator to implement
-     * {@link #equals(Object)} and {@link #hashCode()}.
-     * <p>
-     * This class can be used to store objects into a Map.
-     *
-     * @param <O>  the element type
-     * @since 4.0
-     */
-    private static class EquatorWrapper<O> {
-        private final Equator<? super O> equator;
-        private final O object;
-
-        public EquatorWrapper(final Equator<? super O> equator, final O object) {
-            this.equator = equator;
-            this.object = object;
-        }
-
-        public O getObject() {
-            return object;
-        }
-
-        @Override
-        public boolean equals(final Object obj) {
-            if (!(obj instanceof EquatorWrapper)) {
-                return false;
-            }
-            @SuppressWarnings("unchecked")
-            final EquatorWrapper<O> otherObj = (EquatorWrapper<O>) obj;
-            return equator.equate(object, otherObj.getObject());
-        }
-
-        @Override
-        public int hashCode() {
-            return equator.hash(object);
-        }
+        return IterableUtils.isEqualIterable(a, b, equator);
     }
 
     /**
@@ -615,29 +410,11 @@ public class CollectionUtils {
      * @param coll the {@link Iterable} to search
      * @param <O> the type of object that the {@link Iterable} may contain.
      * @return the the number of occurrences of obj in coll
+     * @deprecated use {@link IterableUtils#cardinality(Object, Iterable)} instead
      */
+    @Deprecated
     public static <O> int cardinality(final O obj, final Iterable<? super O> coll) {
-        if (coll instanceof Set<?>) {
-            return ((Set<? super O>) coll).contains(obj) ? 1 : 0;
-        }
-        if (coll instanceof Bag<?>) {
-            return ((Bag<? super O>) coll).getCount(obj);
-        }
-        int count = 0;
-        if (obj == null) {
-            for (final Object element : coll) {
-                if (element == null) {
-                    count++;
-                }
-            }
-        } else {
-            for (final Object element : coll) {
-                if (obj.equals(element)) {
-                    count++;
-                }
-            }
-        }
-        return count;
+        return IterableUtils.cardinality(obj, coll);
     }
 
     /**
@@ -650,16 +427,11 @@ public class CollectionUtils {
      * @param collection  the collection to search, may be null
      * @param predicate  the predicate to use, may be null
      * @return the first element of the collection which matches the predicate or null if none could be found
+     * @deprecated use {@link IterableUtils#find(Iterable, Predicate)} instead
      */
+    @Deprecated
     public static <T> T find(final Iterable<T> collection, final Predicate<? super T> predicate) {
-        if (collection != null && predicate != null) {
-            for (final T item : collection) {
-                if (predicate.evaluate(item)) {
-                    return item;
-                }
-            }
-        }
-        return null;
+        return IterableUtils.find(collection, predicate);
     }
 
     /**
@@ -672,14 +444,11 @@ public class CollectionUtils {
      * @param collection  the collection to get the input from, may be null
      * @param closure  the closure to perform, may be null
      * @return closure
+     * @deprecated use {@link IterableUtils#forAllDo(Iterable, Closure)} instead
      */
+    @Deprecated
     public static <T, C extends Closure<? super T>> C forAllDo(final Iterable<T> collection, final C closure) {
-        if (collection != null && closure != null) {
-            for (final T element : collection) {
-                closure.execute(element);
-            }
-        }
-        return closure;
+        return IterableUtils.forAllDo(collection, closure);
     }
 
     /**
@@ -693,14 +462,11 @@ public class CollectionUtils {
      * @param closure  the closure to perform, may be null
      * @return closure
      * @since 4.0
+     * @deprecated use {@link IteratorUtils#forAllDo(Iterator, Closure)} instead
      */
+    @Deprecated
     public static <T, C extends Closure<? super T>> C forAllDo(final Iterator<T> iterator, final C closure) {
-        if (iterator != null && closure != null) {
-            while (iterator.hasNext()) {
-                closure.execute(iterator.next());
-            }
-        }
-        return closure;
+        return IteratorUtils.forAllDo(iterator, closure);
     }
 
     /**
@@ -714,10 +480,12 @@ public class CollectionUtils {
      * @param closure  the closure to perform, may be null
      * @return the last element in the collection, or null if either collection or closure is null
      * @since 4.0
+     * @deprecated use {@link IterableUtils#forAllButLastDo(Iterable, Closure)} instead
      */
+    @Deprecated
     public static <T, C extends Closure<? super T>> T forAllButLastDo(final Iterable<T> collection,
                                                                       final C closure) {
-        return collection != null && closure != null ? forAllButLastDo(collection.iterator(), closure) : null;
+        return IterableUtils.forAllButLastDo(collection, closure);
     }
 
     /**
@@ -731,19 +499,11 @@ public class CollectionUtils {
      * @param closure  the closure to perform, may be null
      * @return the last element in the collection, or null if either iterator or closure is null
      * @since 4.0
+     * @deprecated use {@link IteratorUtils#forAllButLastDo(Iterator, Closure)} instead
      */
+    @Deprecated
     public static <T, C extends Closure<? super T>> T forAllButLastDo(final Iterator<T> iterator, final C closure) {
-        if (iterator != null && closure != null) {
-            while (iterator.hasNext()) {
-                final T element = iterator.next();
-                if (iterator.hasNext()) {
-                    closure.execute(element);
-                } else {
-                    return element;
-                }
-            }
-        }
-        return null;
+        return IteratorUtils.forAllButLastDo(iterator, closure);
     }
 
     /**
@@ -756,18 +516,11 @@ public class CollectionUtils {
      * @param collection  the collection to get the input from, may be null
      * @param predicate  the predicate to use as a filter, may be null
      * @return true if the collection is modified by this call, false otherwise.
+     * @deprecated use {@link IterableUtils#filter(Iterable, Predicate)} instead
      */
+    @Deprecated
     public static <T> boolean filter(final Iterable<T> collection, final Predicate<? super T> predicate) {
-        boolean result = false;
-        if (collection != null && predicate != null) {
-            for (final Iterator<T> it = collection.iterator(); it.hasNext();) {
-                if (!predicate.evaluate(it.next())) {
-                    it.remove();
-                    result = true;
-                }
-            }
-        }
-        return result;
+        return IterableUtils.filter(collection, predicate);
     }
 
     /**
@@ -783,9 +536,11 @@ public class CollectionUtils {
      * @param collection  the collection to get the input from, may be null
      * @param predicate  the predicate to use as a filter, may be null
      * @return true if the collection is modified by this call, false otherwise.
+     * @deprecated use {@link IterableUtils#filterInverse(Iterable, Predicate)} instead
      */
+    @Deprecated
     public static <T> boolean filterInverse(final Iterable<T> collection, final Predicate<? super T> predicate) {
-        return filter(collection, predicate == null ? null : PredicateUtils.notPredicate(predicate));
+        return IterableUtils.filterInverse(collection, predicate);
     }
 
     /**
@@ -815,7 +570,7 @@ public class CollectionUtils {
                     it.set(transformer.transform(it.next()));
                 }
             } else {
-                final Collection<C> resultCollection = collect(collection, transformer);
+                final Collection<C> resultCollection = IterableUtils.collect(collection, transformer);
                 collection.clear();
                 collection.addAll(resultCollection);
             }
@@ -832,17 +587,11 @@ public class CollectionUtils {
      * @param input  the {@link Iterable} to get the input from, may be null
      * @param predicate  the predicate to use, may be null
      * @return the number of matches for the predicate in the collection
+     * @deprecated use {@link IterableUtils#countMatches(Iterable, Predicate)} instead
      */
+    @Deprecated
     public static <C> int countMatches(final Iterable<C> input, final Predicate<? super C> predicate) {
-        int count = 0;
-        if (input != null && predicate != null) {
-            for (final C o : input) {
-                if (predicate.evaluate(o)) {
-                    count++;
-                }
-            }
-        }
-        return count;
+        return IterableUtils.countMatches(input, predicate);
     }
 
     /**
@@ -855,16 +604,11 @@ public class CollectionUtils {
      * @param input  the {@link Iterable} to get the input from, may be null
      * @param predicate  the predicate to use, may be null
      * @return true if at least one element of the collection matches the predicate
+     * @deprecated use {@link IterableUtils#exists(Iterable, Predicate)} instead
      */
+    @Deprecated
     public static <C> boolean exists(final Iterable<C> input, final Predicate<? super C> predicate) {
-        if (input != null && predicate != null) {
-            for (final C o : input) {
-                if (predicate.evaluate(o)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return IterableUtils.exists(input, predicate);
     }
 
     /**
@@ -880,20 +624,11 @@ public class CollectionUtils {
      * @return true if every element of the collection matches the predicate or if the
      * collection is empty, false otherwise
      * @since 4.0
+     * @deprecated use {@link IterableUtils#matchesAll(Iterable, Predicate)} instead
      */
+    @Deprecated
     public static <C> boolean matchesAll(final Iterable<C> input, final Predicate<? super C> predicate) {
-        if (predicate == null) {
-            return false;
-        }
-
-        if (input != null) {
-            for (final C o : input) {
-                if (!predicate.evaluate(o)) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        return IterableUtils.matchesAll(input, predicate);
     }
 
     /**
@@ -907,12 +642,12 @@ public class CollectionUtils {
      * @param predicate  the predicate to use, may be null
      * @return the elements matching the predicate (new list)
      * @throws NullPointerException if the input collection is null
+     * @deprecated use {@link IterableUtils#select(Iterable, Predicate)} instead
      */
+    @Deprecated
     public static <O> Collection<O> select(final Iterable<? extends O> inputCollection,
             final Predicate<? super O> predicate) {
-        final Collection<O> answer = inputCollection instanceof Collection<?> ?
-                new ArrayList<O>(((Collection<?>) inputCollection).size()) : new ArrayList<O>();
-        return select(inputCollection, predicate, answer);
+        return IterableUtils.select(inputCollection, predicate);
     }
 
     /**
@@ -929,18 +664,12 @@ public class CollectionUtils {
      * @param outputCollection  the collection to output into, may not be null if the inputCollection
      *   and predicate or not null
      * @return the outputCollection
+     * @deprecated use {@link IterableUtils#select(Iterable, Predicate, Collection)} instead
      */
+    @Deprecated
     public static <O, R extends Collection<? super O>> R select(final Iterable<? extends O> inputCollection,
             final Predicate<? super O> predicate, final R outputCollection) {
-
-        if (inputCollection != null && predicate != null) {
-            for (final O item : inputCollection) {
-                if (predicate.evaluate(item)) {
-                    outputCollection.add(item);
-                }
-            }
-        }
-        return outputCollection;
+        return IterableUtils.select(inputCollection, predicate, outputCollection);
     }
 
     /**
@@ -955,12 +684,12 @@ public class CollectionUtils {
      * @param predicate  the predicate to use, may be null
      * @return the elements <b>not</b> matching the predicate (new list)
      * @throws NullPointerException if the input collection is null
+     * @deprecated use {@link IterableUtils#selectRejected(Iterable, Predicate)} instead
      */
+    @Deprecated
     public static <O> Collection<O> selectRejected(final Iterable<? extends O> inputCollection,
             final Predicate<? super O> predicate) {
-        final Collection<O> answer = inputCollection instanceof Collection<?> ?
-                new ArrayList<O>(((Collection<?>) inputCollection).size()) : new ArrayList<O>();
-        return selectRejected(inputCollection, predicate, answer);
+        return IterableUtils.selectRejected(inputCollection, predicate);
     }
 
     /**
@@ -977,218 +706,12 @@ public class CollectionUtils {
      * @param outputCollection  the collection to output into, may not be null if the inputCollection
      *   and predicate or not null
      * @return outputCollection
+     * @deprecated use {@link IterableUtils#selectRejected(Iterable, Predicate, Collection)} instead
      */
+    @Deprecated
     public static <O, R extends Collection<? super O>> R selectRejected(final Iterable<? extends O> inputCollection,
             final Predicate<? super O> predicate, final R outputCollection) {
-
-        if (inputCollection != null && predicate != null) {
-            for (final O item : inputCollection) {
-                if (!predicate.evaluate(item)) {
-                    outputCollection.add(item);
-                }
-            }
-        }
-        return outputCollection;
-    }
-
-    /**
-     * Partitions all elements from inputCollection into separate output collections,
-     * based on the evaluation of the given predicate.
-     * <p>
-     * For each predicate, the result will contain a list holding all elements of the
-     * input collection matching the predicate. The last list will hold all elements
-     * which didn't match any predicate:
-     * <pre>
-     *  [C1, R] = partition(I, P1) with
-     *  I = input collection
-     *  P1 = first predicate
-     *  C1 = collection of elements matching P1
-     *  R = collection of elements rejected by all predicates
-     * </pre>
-     * <p>
-     * If the input collection is <code>null</code>, an empty list will be returned.
-     * If the input predicate is <code>null</code>, all elements of the input collection
-     * will be added to the rejected collection.
-     * <p>
-     * Example: for an input list [1, 2, 3, 4, 5] calling partition with a predicate [x &lt; 3]
-     * will result in the following output: [[1, 2], [3, 4, 5]].
-     *
-     * @param <O>  the type of object the {@link Iterable} contains
-     * @param inputCollection  the collection to get the input from, may be null
-     * @param predicate  the predicate to use, may be null
-     * @return a list containing the output collections
-     * @since 4.1
-     */
-    public static <O> List<List<O>> partition(final Iterable<? extends O> inputCollection,
-            final Predicate<? super O> predicate) {
-
-        @SuppressWarnings({ "unchecked", "rawtypes" }) // safe
-        final Factory<List<O>> factory = FactoryUtils.instantiateFactory((Class) ArrayList.class);
-        @SuppressWarnings("unchecked") // safe
-        final Predicate<? super O>[] predicates = new Predicate[] { predicate };
-        return partition(inputCollection, factory, predicates);
-    }
-
-    /**
-     * Partitions all elements from inputCollection into an output and rejected collection,
-     * based on the evaluation of the given predicate.
-     * <p>
-     * Elements matching the predicate are added to the <code>outputCollection</code>,
-     * all other elements are added to the <code>rejectedCollection</code>.
-     * <p>
-     * If the input predicate is <code>null</code>, no elements are added to
-     * <code>outputCollection</code> or <code>rejectedCollection</code>.
-     * <p>
-     * Note: calling the method is equivalent to the following code snippet:
-     * <pre>
-     *   select(inputCollection, predicate, outputCollection);
-     *   selectRejected(inputCollection, predicate, rejectedCollection);
-     * </pre>
-     *
-     * @param <O>  the type of object the {@link Iterable} contains
-     * @param <R>  the type of the output {@link Collection}
-     * @param inputCollection  the collection to get the input from, may be null
-     * @param predicate  the predicate to use, may be null
-     * @param outputCollection  the collection to output selected elements into, may not be null if the
-     *   inputCollection and predicate are not null
-     * @param rejectedCollection  the collection to output rejected elements into, may not be null if the
-     *   inputCollection or predicate are not null
-     * @since 4.1
-     */
-    public static <O, R extends Collection<? super O>> void partition(final Iterable<? extends O> inputCollection,
-            final Predicate<? super O> predicate, R outputCollection, R rejectedCollection) {
-
-        if (inputCollection != null && predicate != null) {
-            for (final O element : inputCollection) {
-                if (predicate.evaluate(element)) {
-                    outputCollection.add(element);
-                } else {
-                    rejectedCollection.add(element);
-                }
-            }
-        }
-    }
-
-    /**
-     * Partitions all elements from inputCollection into separate output collections,
-     * based on the evaluation of the given predicates.
-     * <p>
-     * For each predicate, the result will contain a list holding all elements of the
-     * input collection matching the predicate. The last list will hold all elements
-     * which didn't match any predicate:
-     * <pre>
-     *  [C1, C2, R] = partition(I, P1, P2) with
-     *  I = input collection
-     *  P1 = first predicate
-     *  P2 = second predicate
-     *  C1 = collection of elements matching P1
-     *  C2 = collection of elements matching P2
-     *  R = collection of elements rejected by all predicates
-     * </pre>
-     * <p>
-     * <b>Note</b>: elements are only added to the output collection of the first matching
-     * predicate, determined by the order of arguments.
-     * <p>
-     * If the input collection is <code>null</code>, an empty list will be returned.
-     * If the input predicate is <code>null</code>, all elements of the input collection
-     * will be added to the rejected collection.
-     * <p>
-     * Example: for an input list [1, 2, 3, 4, 5] calling partition with predicates [x &lt; 3]
-     * and [x &lt; 5] will result in the following output: [[1, 2], [3, 4], [5]].
-     *
-     * @param <O>  the type of object the {@link Iterable} contains
-     * @param inputCollection  the collection to get the input from, may be null
-     * @param predicates  the predicates to use, may be null
-     * @return a list containing the output collections
-     * @since 4.1
-     */
-    public static <O> List<List<O>> partition(final Iterable<? extends O> inputCollection,
-            final Predicate<? super O>... predicates) {
-
-        @SuppressWarnings({ "unchecked", "rawtypes" }) // safe
-        final Factory<List<O>> factory = FactoryUtils.instantiateFactory((Class) ArrayList.class);
-        return partition(inputCollection, factory, predicates);
-    }
-
-    /**
-     * Partitions all elements from inputCollection into separate output collections,
-     * based on the evaluation of the given predicates.
-     * <p>
-     * For each predicate, the returned list will contain a collection holding
-     * all elements of the input collection matching the predicate. The last collection
-     * contained in the list will hold all elements which didn't match any predicate:
-     * <pre>
-     *  [C1, C2, R] = partition(I, P1, P2) with
-     *  I = input collection
-     *  P1 = first predicate
-     *  P2 = second predicate
-     *  C1 = collection of elements matching P1
-     *  C2 = collection of elements matching P2
-     *  R = collection of elements rejected by all predicates
-     * </pre>
-     * <p>
-     * <b>Note</b>: elements are only added to the output collection of the first matching
-     * predicate, determined by the order of arguments.
-     * <p>
-     * If the input collection is <code>null</code>, an empty list will be returned.
-     * If no predicates have been provided, all elements of the input collection
-     * will be added to the rejected collection.
-     * <p>
-     * Example: for an input list [1, 2, 3, 4, 5] calling partition with predicates [x &lt; 3]
-     * and [x &lt; 5] will result in the following output: [[1, 2], [3, 4], [5]].
-     *
-     * @param <O>  the type of object the {@link Iterable} contains
-     * @param <R>  the type of the output {@link Collection}
-     * @param inputCollection  the collection to get the input from, may be null
-     * @param partitionFactory  the factory used to create the output collections
-     * @param predicates  the predicates to use, may be empty
-     * @return a list containing the output collections
-     * @since 4.1
-     */
-    public static <O, R extends Collection<O>> List<R> partition(final Iterable<? extends O> inputCollection,
-            final Factory<R> partitionFactory, final Predicate<? super O>... predicates) {
-
-        if (inputCollection == null) {
-            return Collections.emptyList();
-        }
-
-        if (predicates == null || predicates.length < 1) {
-            // return the entire input collection as a single partition
-            final R singlePartition = partitionFactory.create();
-            select(inputCollection, PredicateUtils.truePredicate(), singlePartition);
-            return Collections.singletonList(singlePartition);
-        }
-
-        // create the empty partitions
-        final int numberOfPredicates = predicates.length;
-        final int numberOfPartitions = numberOfPredicates + 1;
-        final List<R> partitions = new ArrayList<R>(numberOfPartitions);
-        for (int i = 0; i < numberOfPartitions; ++i) {
-            partitions.add(partitionFactory.create());
-        }
-
-        // for each element in inputCollection:
-        // find the first predicate that evaluates to true.
-        // if there is a predicate, add the element to the corresponding partition.
-        // if there is no predicate, add it to the last, catch-all partition.
-        for (final O element : inputCollection) {
-            boolean elementAssigned = false;
-            for (int i = 0; i < numberOfPredicates; ++i) {
-                if (predicates[i].evaluate(element)) {
-                    partitions.get(i).add(element);
-                    elementAssigned = true;
-                    break;
-                }
-            }
-
-            if (!elementAssigned) {
-                // no predicates evaluated to true
-                // add element to last partition
-                partitions.get(numberOfPredicates).add(element);
-            }
-        }
-
-        return partitions;
+        return IterableUtils.selectRejected(inputCollection, predicate, outputCollection);
     }
 
     /**
@@ -1203,12 +726,12 @@ public class CollectionUtils {
      * @param transformer  the transformer to use, may be null
      * @return the transformed result (new list)
      * @throws NullPointerException if the input collection is null
+     * @deprecated use {@link IterableUtils#collect(Iterable, Transformer)} instead
      */
+    @Deprecated
     public static <I, O> Collection<O> collect(final Iterable<I> inputCollection,
             final Transformer<? super I, ? extends O> transformer) {
-        final Collection<O> answer = inputCollection instanceof Collection<?> ?
-                new ArrayList<O>(((Collection<?>) inputCollection).size()) : new ArrayList<O>();
-        return collect(inputCollection, transformer, answer);
+        return IterableUtils.collect(inputCollection, transformer);
     }
 
     /**
@@ -1223,10 +746,12 @@ public class CollectionUtils {
      * @param <I> the type of object in the input collection
      * @param <O> the type of object in the output collection
      * @return the transformed result (new list)
+     * @deprecated use {@link IteratorUtils#collect(Iterator, Transformer)} instead
      */
+    @Deprecated
     public static <I, O> Collection<O> collect(final Iterator<I> inputIterator,
             final Transformer<? super I, ? extends O> transformer) {
-        return collect(inputIterator, transformer, new ArrayList<O>());
+        return IteratorUtils.collect(inputIterator, transformer);
     }
 
     /**
@@ -1246,13 +771,12 @@ public class CollectionUtils {
      * @return the outputCollection with the transformed input added
      * @throws NullPointerException if the output collection is null and both, inputCollection and
      *   transformer are not null
+     * @deprecated use {@link IterableUtils#collect(Iterable, Transformer, Collection)} instead
      */
+    @Deprecated
     public static <I, O, R extends Collection<? super O>> R collect(final Iterable<? extends I> inputCollection,
             final Transformer<? super I, ? extends O> transformer, final R outputCollection) {
-        if (inputCollection != null) {
-            return collect(inputCollection.iterator(), transformer, outputCollection);
-        }
-        return outputCollection;
+        return IterableUtils.collect(inputCollection, transformer, outputCollection);
     }
 
     /**
@@ -1272,17 +796,12 @@ public class CollectionUtils {
      * @return the outputCollection with the transformed input added
      * @throws NullPointerException if the output collection is null and both, inputCollection and
      *   transformer are not null
+     * @deprecated use {@link IteratorUtils#collect(Iterator, Transformer, Collection)} instead
      */
+    @Deprecated
     public static <I, O, R extends Collection<? super O>> R collect(final Iterator<? extends I> inputIterator,
             final Transformer<? super I, ? extends O> transformer, final R outputCollection) {
-        if (inputIterator != null && transformer != null) {
-            while (inputIterator.hasNext()) {
-                final I item = inputIterator.next();
-                final O value = transformer.transform(item);
-                outputCollection.add(value);
-            }
-        }
-        return outputCollection;
+        return IteratorUtils.collect(inputIterator, transformer, outputCollection);
     }
 
     //-----------------------------------------------------------------------
@@ -1385,58 +904,11 @@ public class CollectionUtils {
      * @return the object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      * @throws IllegalArgumentException if the object type is invalid
+     * @deprecated use {@link IteratorUtils#get(Iterator, int)} instead
      */
+    @Deprecated
     public static <T> T get(final Iterator<T> iterator, final int index) {
-        int i = index;
-        checkIndexBounds(i);
-        while (iterator.hasNext()) {
-            i--;
-            if (i == -1) {
-                return iterator.next();
-            }
-            iterator.next();
-        }
-        throw new IndexOutOfBoundsException("Entry does not exist: " + i);
-    }
-
-    /**
-     * Returns the <code>index</code>-th value in the {@link Enumeration}, throwing
-     * <code>IndexOutOfBoundsException</code> if there is no such element.
-     * <p>
-     * The Enumeration is advanced to <code>index</code> (or to the end, if
-     * <code>index</code> exceeds the number of entries) as a side effect of this method.
-     *
-     * @param e  the enumeration to get a value from
-     * @param index  the index to get
-     * @param <T> the type of object in the {@link Enumeration}
-     * @return the object at the specified index
-     * @throws IndexOutOfBoundsException if the index is invalid
-     * @throws IllegalArgumentException if the object type is invalid
-     * @since 4.1
-     */
-    public static <T> T get(final Enumeration<T> e, final int index) {
-        int i = index;
-        checkIndexBounds(i);
-        while (e.hasMoreElements()) {
-            i--;
-            if (i == -1) {
-                return e.nextElement();
-            } else {
-                e.nextElement();
-            }
-        }
-        throw new IndexOutOfBoundsException("Entry does not exist: " + i);
-    }
-
-    /**
-     * Ensures an index is not negative.
-     * @param index the index to check.
-     * @throws IndexOutOfBoundsException if the index is negative.
-     */
-    private static void checkIndexBounds(final int index) {
-        if (index < 0) {
-            throw new IndexOutOfBoundsException("Index cannot be negative: " + index);
-        }
+        return IteratorUtils.get(iterator, index);
     }
 
     /**
@@ -1450,13 +922,11 @@ public class CollectionUtils {
      * @param <T> the type of object in the {@link Iterable}.
      * @return the object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
+     * @deprecated use {@link IterableUtils#get(Iterable, int)} instead
      */
+    @Deprecated
     public static <T> T get(final Iterable<T> iterable, final int index) {
-        checkIndexBounds(index);
-        if (iterable instanceof List<?>) {
-            return ((List<T>) iterable).get(index);
-        }
-        return get(iterable.iterator(), index);
+        return IterableUtils.get(iterable, index);
     }
 
     /**
@@ -1497,18 +967,18 @@ public class CollectionUtils {
         if (object instanceof Map<?,?>) {
             final Map<?, ?> map = (Map<?, ?>) object;
             final Iterator<?> iterator = map.entrySet().iterator();
-            return get(iterator, i);
+            return IteratorUtils.get(iterator, i);
         } else if (object instanceof Object[]) {
             return ((Object[]) object)[i];
         } else if (object instanceof Iterator<?>) {
             final Iterator<?> it = (Iterator<?>) object;
-            return get(it, i);
+            return IteratorUtils.get(it, i);
         } else if (object instanceof Collection<?>) {
             final Iterator<?> iterator = ((Collection<?>) object).iterator();
-            return get(iterator, i);
+            return IteratorUtils.get(iterator, i);
         } else if (object instanceof Enumeration<?>) {
             final Enumeration<?> it = (Enumeration<?>) object;
-            return get(it, i);
+            return EnumerationUtils.get(it, i);
         } else if (object == null) {
             throw new IllegalArgumentException("Unsupported object type: null");
         } else {
@@ -1532,8 +1002,8 @@ public class CollectionUtils {
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     public static <K,V> Map.Entry<K, V> get(final Map<K,V> map, final int index) {
-        checkIndexBounds(index);
-        return get(map.entrySet(), index);
+        IteratorUtils.checkIndexBounds(index);
+        return IterableUtils.get(map.entrySet(), index);
     }
 
     /**
@@ -1737,7 +1207,6 @@ public class CollectionUtils {
         }
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Merges two sorted Collections, a and b, into a single, sorted List
      * such that the natural ordering of the elements is retained.
@@ -1750,10 +1219,12 @@ public class CollectionUtils {
      * @return a new sorted List, containing the elements of Collection a and b
      * @throws IllegalArgumentException if either collection is null
      * @since 4.0
+     * @deprecated use {@link IterableUtils#collate(Iterable, Iterable)} instead
      */
+    @Deprecated
     public static <O extends Comparable<? super O>> List<O> collate(Iterable<? extends O> a,
                                                                     Iterable<? extends O> b) {
-        return collate(a, b, ComparatorUtils.<O>naturalComparator(), true);
+        return IterableUtils.collate(a, b);
     }
 
     /**
@@ -1770,11 +1241,13 @@ public class CollectionUtils {
      * @return a new sorted List, containing the elements of Collection a and b
      * @throws IllegalArgumentException if either collection is null
      * @since 4.0
+     * @deprecated use {@link IterableUtils#collate(Iterable, Iterable, boolean)} instead
      */
+    @Deprecated
     public static <O extends Comparable<? super O>> List<O> collate(final Iterable<? extends O> a,
                                                                     final Iterable<? extends O> b,
                                                                     final boolean includeDuplicates) {
-        return collate(a, b, ComparatorUtils.<O>naturalComparator(), includeDuplicates);
+        return IterableUtils.collate(a, b, includeDuplicates);
     }
 
     /**
@@ -1790,10 +1263,12 @@ public class CollectionUtils {
      * @return a new sorted List, containing the elements of Collection a and b
      * @throws IllegalArgumentException if either collection or the comparator is null
      * @since 4.0
+     * @deprecated use {@link IterableUtils#collate(Iterable, Iterable, Comparator)} instead
      */
+    @Deprecated
     public static <O> List<O> collate(final Iterable<? extends O> a, final Iterable<? extends O> b,
                                       final Comparator<? super O> c) {
-        return collate(a, b, c, true);
+        return IterableUtils.collate(a, b, c);
     }
 
     /**
@@ -1811,39 +1286,12 @@ public class CollectionUtils {
      * @return a new sorted List, containing the elements of Collection a and b
      * @throws IllegalArgumentException if either collection or the comparator is null
      * @since 4.0
+     * @deprecated use {@link IterableUtils#collate(Iterable, Iterable, Comparator, boolean)} instead
      */
+    @Deprecated
     public static <O> List<O> collate(final Iterable<? extends O> a, final Iterable<? extends O> b,
                                       final Comparator<? super O> c, final boolean includeDuplicates) {
-
-        if (a == null || b == null) {
-            throw new IllegalArgumentException("The collections must not be null");
-        }
-        if (c == null) {
-            throw new IllegalArgumentException("The comparator must not be null");
-        }
-
-        // if both Iterables are a Collection, we can estimate the size
-        final int totalSize = a instanceof Collection<?> && b instanceof Collection<?> ?
-                Math.max(1, ((Collection<?>) a).size() + ((Collection<?>) b).size()) : 10;
-
-        final Iterator<O> iterator = new CollatingIterator<O>(c, a.iterator(), b.iterator());
-        if (includeDuplicates) {
-            return IteratorUtils.toList(iterator, totalSize);
-        } else {
-            final ArrayList<O> mergedList = new ArrayList<O>(totalSize);
-
-            O lastItem = null;
-            while (iterator.hasNext()) {
-                final O item = iterator.next();
-                if (lastItem == null || !lastItem.equals(item)) {
-                    mergedList.add(item);
-                }
-                lastItem = item;
-            }
-
-            mergedList.trimToSize();
-            return mergedList;
-        }
+        return IterableUtils.collate(a, b, c, includeDuplicates);
     }
 
     //-----------------------------------------------------------------------
@@ -1903,53 +1351,6 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns a collection containing all the elements in
-     * <code>collection</code> that are also in <code>retain</code>. The
-     * cardinality of an element <code>e</code> in the returned collection is
-     * the same as the cardinality of <code>e</code> in <code>collection</code>
-     * unless <code>retain</code> does not contain <code>e</code>, in which case
-     * the cardinality is zero. This method is useful if you do not wish to
-     * modify the collection <code>c</code> and thus cannot call
-     * <code>c.retainAll(retain);</code>.
-     * <p>
-     * Moreover this method uses an {@link Equator} instead of
-     * {@link Object#equals(Object)} to determine the equality of the elements
-     * in <code>collection</code> and <code>retain</code>. Hence this method is
-     * useful in cases where the equals behavior of an object needs to be
-     * modified without changing the object itself.
-     *
-     * @param <E> the type of object the {@link Collection} contains
-     * @param collection the collection whose contents are the target of the {@code retainAll} operation
-     * @param retain the collection containing the elements to be retained in the returned collection
-     * @param equator the Equator used for testing equality
-     * @return a <code>Collection</code> containing all the elements of <code>collection</code>
-     * that occur at least once in <code>retain</code> according to the <code>equator</code>
-     * @throws NullPointerException if any of the parameters is null
-     * @since 4.1
-     */
-    public static <E> Collection<E> retainAll(final Iterable<E> collection,
-                                              final Iterable<? extends E> retain,
-                                              final Equator<? super E> equator) {
-
-        final Transformer<E, EquatorWrapper<E>> transformer = new Transformer<E, EquatorWrapper<E>>() {
-            public EquatorWrapper<E> transform(E input) {
-                return new EquatorWrapper<E>(equator, input);
-            }
-        };
-
-        final Set<EquatorWrapper<E>> retainSet =
-                collect(retain, transformer, new HashSet<EquatorWrapper<E>>());
-
-        final List<E> list = new ArrayList<E>();
-        for (final E element : collection) {
-            if (retainSet.contains(new EquatorWrapper<E>(equator, element))) {
-                list.add(element);
-            }
-        }
-        return list;
-    }
-
-    /**
      * Removes the elements in <code>remove</code> from <code>collection</code>. That is, this
      * method returns a collection containing all the elements in <code>c</code>
      * that are not in <code>remove</code>. The cardinality of an element <code>e</code>
@@ -1974,54 +1375,6 @@ public class CollectionUtils {
      */
     public static <E> Collection<E> removeAll(final Collection<E> collection, final Collection<?> remove) {
         return ListUtils.removeAll(collection, remove);
-  }
-
-    /**
-     * Removes all elements in <code>remove</code> from <code>collection</code>.
-     * That is, this method returns a collection containing all the elements in
-     * <code>collection</code> that are not in <code>remove</code>. The
-     * cardinality of an element <code>e</code> in the returned collection is
-     * the same as the cardinality of <code>e</code> in <code>collection</code>
-     * unless <code>remove</code> contains <code>e</code>, in which case the
-     * cardinality is zero. This method is useful if you do not wish to modify
-     * the collection <code>c</code> and thus cannot call
-     * <code>collection.removeAll(remove)</code>.
-     * <p>
-     * Moreover this method uses an {@link Equator} instead of
-     * {@link Object#equals(Object)} to determine the equality of the elements
-     * in <code>collection</code> and <code>remove</code>. Hence this method is
-     * useful in cases where the equals behavior of an object needs to be
-     * modified without changing the object itself.
-     *
-     * @param <E> the type of object the {@link Collection} contains
-     * @param collection the collection from which items are removed (in the returned collection)
-     * @param remove the items to be removed from the returned collection
-     * @param equator the Equator used for testing equality
-     * @return a <code>Collection</code> containing all the elements of <code>collection</code>
-     * except any element that if equal according to the <code>equator</code>
-     * @throws NullPointerException if any of the parameters is null
-     * @since 4.1
-     */
-    public static <E> Collection<E> removeAll(final Iterable<E> collection,
-                                              final Iterable<? extends E> remove,
-                                              final Equator<? super E> equator) {
-
-        final Transformer<E, EquatorWrapper<E>> transformer = new Transformer<E, EquatorWrapper<E>>() {
-            public EquatorWrapper<E> transform(E input) {
-                return new EquatorWrapper<E>(equator, input);
-            }
-        };
-
-        final Set<EquatorWrapper<E>> removeSet =
-                collect(remove, transformer, new HashSet<EquatorWrapper<E>>());
-
-        final List<E> list = new ArrayList<E>();
-        for (final E element : collection) {
-            if (!removeSet.contains(new EquatorWrapper<E>(equator, element))) {
-                list.add(element);
-            }
-        }
-        return list;
     }
 
     /**
@@ -2042,12 +1395,7 @@ public class CollectionUtils {
      */
     public static <E> boolean contains(final Collection<? extends E> collection, final E object,
             final Equator<? super E> equator) {
-        for (final E obj : collection) {
-            if (equator.equate(obj, object)) {
-                return true;
-            }
-        }
-        return false;
+        return IterableUtils.contains(collection, object, equator);
     }
 
     //-----------------------------------------------------------------------

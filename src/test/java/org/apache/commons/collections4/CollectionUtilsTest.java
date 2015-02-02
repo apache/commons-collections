@@ -50,7 +50,6 @@ import org.apache.commons.collections4.collection.TransformedCollection;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.apache.commons.collections4.functors.DefaultEquator;
 import org.apache.commons.collections4.queue.CircularFifoQueue;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -114,7 +113,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     private Iterable<Number> iterableB2 = null;
 
-    private Collection<Integer> emptyCollection = new ArrayList<Integer>(1);
+    private final Collection<Integer> emptyCollection = new ArrayList<Integer>(1);
 
     @Before
     public void setUp() {
@@ -175,6 +174,7 @@ public class CollectionUtilsTest extends MockTestCase {
         collectionE.add(9);
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void getCardinalityMap() {
         final Map<Number, Integer> freqA = CollectionUtils.<Number>getCardinalityMap(iterableA);
@@ -192,6 +192,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(1, (int) freqB.get(5L));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void cardinality() {
         assertEquals(1, CollectionUtils.cardinality(1, iterableA));
@@ -235,6 +236,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(2, CollectionUtils.cardinality("E", bag));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void cardinalityOfNull() {
         final List<String> list = new ArrayList<String>();
@@ -346,6 +348,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue("containsAny({},{}) should return false.", !CollectionUtils.containsAny(empty, empty));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void union() {
         final Collection<Integer> col = CollectionUtils.union(iterableA, iterableC);
@@ -365,6 +368,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(Integer.valueOf(1), freq2.get(5));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void intersection() {
         final Collection<Integer> col = CollectionUtils.intersection(iterableA, iterableC);
@@ -384,6 +388,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertNull(freq2.get(5));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void disjunction() {
         final Collection<Integer> col = CollectionUtils.disjunction(iterableA, iterableC);
@@ -403,6 +408,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(Integer.valueOf(1), freq2.get(5));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testDisjunctionAsUnionMinusIntersection() {
         final Collection<Number> dis = CollectionUtils.<Number>disjunction(collectionA, collectionC);
@@ -411,6 +417,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(CollectionUtils.isEqualCollection(dis, CollectionUtils.subtract(un, inter)));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testDisjunctionAsSymmetricDifference() {
         final Collection<Number> dis = CollectionUtils.<Number>disjunction(collectionA, collectionC);
@@ -419,6 +426,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(CollectionUtils.isEqualCollection(dis, CollectionUtils.union(amb, bma)));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testSubtract() {
         final Collection<Integer> col = CollectionUtils.subtract(iterableA, iterableC);
@@ -438,6 +446,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertNull(freq2.get(1));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testSubtractWithPredicate() {
         // greater than 3
@@ -556,6 +565,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(CollectionUtils.isEqualCollection(b, a));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testIsEqualCollectionEquator() {
         final Collection<Integer> collB = CollectionUtils.collect(collectionB, TRANSFORM_TO_INTEGER);
@@ -589,6 +599,7 @@ public class CollectionUtilsTest extends MockTestCase {
         CollectionUtils.isEqualCollection(collectionA, collectionA, null);
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testIsProperSubCollection() {
         final Collection<String> a = new ArrayList<String>();
@@ -611,6 +622,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(!CollectionUtils.isProperSubCollection(a, CollectionUtils.subtract(a, b)));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void find() {
         Predicate<Number> testPredicate = equalPredicate((Number) 4);
@@ -623,7 +635,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertNull(CollectionUtils.find(collectionA, null));
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
     @Test
     public void forAllDoCollection() {
         final Closure<List<? extends Number>> testClosure = ClosureUtils.invokerClosure("clear");
@@ -643,7 +655,7 @@ public class CollectionUtilsTest extends MockTestCase {
         CollectionUtils.forAllDo(col, testClosure);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
     @Test
     public void forAllDoIterator() {
         final Closure<List<? extends Number>> testClosure = ClosureUtils.invokerClosure("clear");
@@ -663,6 +675,7 @@ public class CollectionUtilsTest extends MockTestCase {
         CollectionUtils.forAllDo(col.iterator(), testClosure);
     }
 
+    @SuppressWarnings("deprecation")
     @Test(expected = FunctorException.class)
     public void forAllDoFailure() {
         final Closure<String> testClosure = ClosureUtils.invokerClosure("clear");
@@ -671,6 +684,7 @@ public class CollectionUtilsTest extends MockTestCase {
         CollectionUtils.forAllDo(col, testClosure);
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void forAllButLastDoCollection() {
         final Closure<List<? extends Number>> testClosure = ClosureUtils.invokerClosure("clear");
@@ -712,6 +726,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertNull(CollectionUtils.forAllButLastDo((Collection<String>) null, (Closure<String>) null)); // do not remove cast
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void forAllButLastDoIterator() {
         final Closure<List<? extends Number>> testClosure = ClosureUtils.invokerClosure("clear");
@@ -770,6 +785,7 @@ public class CollectionUtilsTest extends MockTestCase {
      * Tests that {@link List}s are handled correctly - e.g. using
      * {@link List#get(int)}.
      */
+    @SuppressWarnings("deprecation")
     @Test(expected=IndexOutOfBoundsException.class)
     public void getFromList() throws Exception {
         // List, entry exists
@@ -784,6 +800,7 @@ public class CollectionUtilsTest extends MockTestCase {
         CollectionUtils.get(new ArrayList<Object>(), 2);
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void getFromIterator() throws Exception {
         // Iterator, entry exists
@@ -823,6 +840,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(!en.hasMoreElements());
     }
 
+    @SuppressWarnings("deprecation")
     @Test(expected = IndexOutOfBoundsException.class)
     public void getFromIterable() throws Exception {
         // Collection, entry exists
@@ -1068,13 +1086,8 @@ public class CollectionUtilsTest extends MockTestCase {
         }
     };
 
-    private static Predicate<Number> EVEN = new Predicate<Number>() {
-        public boolean evaluate(final Number input) {
-            return input.intValue() % 2 == 0;
-        }
-    };
-
 //Up to here
+    @SuppressWarnings("deprecation")
     @Test
     public void filter() {
         final List<Integer> ints = new ArrayList<Integer>();
@@ -1088,6 +1101,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(2, (int) ints.get(0));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void filterNullParameters() throws Exception {
         final List<Long> longs = Collections.nCopies(4, 10L);
@@ -1099,6 +1113,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(4, longs.size());
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void filterInverse() {
         final List<Integer> ints = new ArrayList<Integer>();
@@ -1114,6 +1129,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(3, (int) ints.get(2));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void filterInverseNullParameters() throws Exception {
         final List<Long> longs = Collections.nCopies(4, 10L);
@@ -1125,6 +1141,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(4, longs.size());
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void countMatches() {
         assertEquals(4, CollectionUtils.countMatches(iterableB, EQUALS_TWO));
@@ -1133,6 +1150,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(0, CollectionUtils.countMatches(null, null));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void exists() {
         final List<Integer> list = new ArrayList<Integer>();
@@ -1149,6 +1167,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(true, CollectionUtils.exists(list, EQUALS_TWO));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void select() {
         final List<Integer> list = new ArrayList<Integer>();
@@ -1166,6 +1185,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(2, output2.iterator().next());
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void selectRejected() {
         final List<Long> list = new ArrayList<Long>();
@@ -1185,89 +1205,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(output1.contains(4L));
     }
 
-    @SuppressWarnings("unchecked")
-    @Test
-    public void partition() {
-        List<Integer> input = new ArrayList<Integer>();
-        input.add(1);
-        input.add(2);
-        input.add(3);
-        input.add(4);
-        List<List<Integer>> partitions = CollectionUtils.partition(input, EQUALS_TWO);
-        assertEquals(2, partitions.size());
-        
-        // first partition contains 2
-        Collection<Integer> partition = partitions.get(0);
-        assertEquals(1, partition.size());
-        assertEquals(2, CollectionUtils.extractSingleton(partition).intValue());
-        
-        // second partition contains 1, 3, and 4
-        Integer[] expected = {1, 3, 4};
-        partition = partitions.get(1);
-        Assert.assertArrayEquals(expected, partition.toArray());
-        
-        partitions = CollectionUtils.partition((List<Integer>) null, EQUALS_TWO);
-        assertTrue(partitions.isEmpty());
-        
-        partitions = CollectionUtils.partition(input);
-        assertEquals(1, partitions.size());
-        assertEquals(input, partitions.get(0));
-    }
-
-    @Test
-    public void partitionWithOutputCollections() {
-        List<Integer> input = new ArrayList<Integer>();
-        input.add(1);
-        input.add(2);
-        input.add(3);
-        input.add(4);
-        
-        List<Integer> output = new ArrayList<Integer>();
-        List<Integer> rejected = new ArrayList<Integer>();
-
-        CollectionUtils.partition(input, EQUALS_TWO, output, rejected);
-
-        // output contains 2
-        assertEquals(1, output.size());
-        assertEquals(2, CollectionUtils.extractSingleton(output).intValue());
-        
-        // rejected contains 1, 3, and 4
-        Integer[] expected = {1, 3, 4};
-        Assert.assertArrayEquals(expected, rejected.toArray());
-        
-        output.clear();
-        rejected.clear();
-        CollectionUtils.partition((List<Integer>) null, EQUALS_TWO, output, rejected);
-        assertTrue(output.isEmpty());
-        assertTrue(rejected.isEmpty());
-    }
-
-    @Test
-    public void partitionMultiplePredicates() {
-        List<Integer> input = new ArrayList<Integer>();
-        input.add(1);
-        input.add(2);
-        input.add(3);
-        input.add(4);
-        @SuppressWarnings("unchecked")
-        List<List<Integer>> partitions = CollectionUtils.partition(input, EQUALS_TWO, EVEN);
-
-        // first partition contains 2
-        Collection<Integer> partition = partitions.get(0);
-        assertEquals(1, partition.size());
-        assertEquals(2, partition.iterator().next().intValue());
-        
-        // second partition contains 4
-        partition = partitions.get(1);
-        assertEquals(1, partition.size());
-        assertEquals(4, partition.iterator().next().intValue());
-        
-        // third partition contains 1 and 3
-        Integer[] expected = {1, 3};
-        partition = partitions.get(2);
-        Assert.assertArrayEquals(expected, partition.toArray());
-    }
-    
+    @SuppressWarnings("deprecation")
     @Test
     public void collect() {
         final Transformer<Number, Long> transformer = TransformerUtils.constantTransformer(2L);
@@ -1437,6 +1375,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(3, CollectionUtils.maxSize(buf));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void intersectionUsesMethodEquals() {
         // Let elta and eltb be objects...
@@ -1685,6 +1624,7 @@ public class CollectionUtilsTest extends MockTestCase {
         CollectionUtils.get((Object)null, 0);
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void get() {
         assertEquals(2, CollectionUtils.get((Object)collectionA, 2));
@@ -1693,6 +1633,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(map.entrySet().iterator().next(), CollectionUtils.get((Object)map, 0));
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void getIterator() {
         final Iterator<Integer> it = collectionA.iterator();
@@ -1754,16 +1695,19 @@ public class CollectionUtilsTest extends MockTestCase {
         expect(iterator.next()).andReturn(t);
     }
 
+    @SuppressWarnings("deprecation")
     @Test(expected=IllegalArgumentException.class)
     public void collateException1() {
         CollectionUtils.collate(collectionA, null);
     }
 
+    @SuppressWarnings("deprecation")
     @Test(expected=IllegalArgumentException.class)
     public void collateException2() {
         CollectionUtils.collate(collectionA, collectionC, null);
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testCollate() {
         List<Integer> result = CollectionUtils.collate(emptyCollection, emptyCollection);
@@ -1799,6 +1743,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals("Comparator Merge two lists 2", combinedList, result2);
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testCollateIgnoreDuplicates() {
         List<Integer> result1 = CollectionUtils.collate(collectionD, collectionE, false);
@@ -1833,6 +1778,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertEquals(factorial, permutations.size());
     }
 
+    @SuppressWarnings("deprecation")
     @Test
     public void testMatchesAll() {
         assertFalse(CollectionUtils.matchesAll(null, null));
@@ -1854,107 +1800,6 @@ public class CollectionUtilsTest extends MockTestCase {
 
         assertTrue(CollectionUtils.matchesAll(null, lessThanFour));
         assertTrue(CollectionUtils.matchesAll(emptyCollection, lessThanFour));
-    }
-
-    @Test
-    public void testRemoveAllWithEquator() {
-        final List<String> base = new ArrayList<String>();
-        base.add("AC");
-        base.add("BB");
-        base.add("CA");
-
-        final List<String> remove = new ArrayList<String>();
-        remove.add("AA");
-        remove.add("CX");
-        remove.add("XZ");
-
-        // use an equator which compares the second letter only
-        final Collection<String> result = CollectionUtils.removeAll(base, remove, new Equator<String>() {
-
-            public boolean equate(String o1, String o2) {
-                return o1.charAt(1) == o2.charAt(1);
-            }
-
-            public int hash(String o) {
-                return o.charAt(1);
-            }
-        });
-
-        assertEquals(2, result.size());
-        assertTrue(result.contains("AC"));
-        assertTrue(result.contains("BB"));
-        assertFalse(result.contains("CA"));
-        assertEquals(3, base.size());
-        assertEquals(true, base.contains("AC"));
-        assertEquals(true, base.contains("BB"));
-        assertEquals(true, base.contains("CA"));
-        assertEquals(3, remove.size());
-        assertEquals(true, remove.contains("AA"));
-        assertEquals(true, remove.contains("CX"));
-        assertEquals(true, remove.contains("XZ"));
-
-        try {
-            CollectionUtils.removeAll(null, null, DefaultEquator.defaultEquator());
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-        } // this is what we want
-
-        try {
-            CollectionUtils.removeAll(base, remove, null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-        } // this is what we want
-    }
-
-    @Test
-    public void testRetainAllWithEquator() {
-        final List<String> base = new ArrayList<String>();
-        base.add("AC");
-        base.add("BB");
-        base.add("CA");
-
-        final List<String> retain = new ArrayList<String>();
-        retain.add("AA");
-        retain.add("CX");
-        retain.add("XZ");
-
-        // use an equator which compares the second letter only
-        final Collection<String> result = CollectionUtils.retainAll(base, retain, new Equator<String>() {
-
-            public boolean equate(String o1, String o2) {
-                return o1.charAt(1) == o2.charAt(1);
-            }
-
-            public int hash(String o) {
-                return o.charAt(1);
-            }
-        });
-        assertEquals(1, result.size());
-        assertTrue(result.contains("CA"));
-        assertFalse(result.contains("BB"));
-        assertFalse(result.contains("AC"));
-
-        assertEquals(3, base.size());
-        assertTrue(base.contains("AC"));
-        assertTrue(base.contains("BB"));
-        assertTrue(base.contains("CA"));
-
-        assertEquals(3, retain.size());
-        assertTrue(retain.contains("AA"));
-        assertTrue(retain.contains("CX"));
-        assertTrue(retain.contains("XZ"));
-
-        try {
-            CollectionUtils.retainAll(null, null, null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-        } // this is what we want
-
-        try {
-            CollectionUtils.retainAll(base, retain, null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-        } // this is what we want
     }
 
     @Test

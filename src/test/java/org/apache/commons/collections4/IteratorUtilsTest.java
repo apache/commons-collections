@@ -16,9 +16,15 @@
  */
 package org.apache.commons.collections4;
 
+import static org.easymock.EasyMock.createMock;
+import static org.easymock.EasyMock.expect;
+import static org.easymock.EasyMock.replay;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
@@ -33,10 +39,6 @@ import org.apache.commons.collections4.iterators.EmptyOrderedMapIterator;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.replay;
-
 /**
  * Tests for IteratorUtils.
  *
@@ -44,12 +46,49 @@ import static org.easymock.EasyMock.replay;
  */
 public class IteratorUtilsTest extends BulkTest {
 
+    /**
+     * List of {@link Integer}s
+     */
+    private List<Integer> collectionA = null;
+
+    /**
+     * List of {@link Long}s
+     */
+    private List<Long> collectionB = null;
+
     public IteratorUtilsTest(final String name) {
         super(name);
     }
 
     public static Test suite() {
         return BulkTest.makeSuite(IteratorUtilsTest.class);
+    }
+
+    @Override
+    public void setUp() {
+        collectionA = new ArrayList<Integer>();
+        collectionA.add(1);
+        collectionA.add(2);
+        collectionA.add(2);
+        collectionA.add(3);
+        collectionA.add(3);
+        collectionA.add(3);
+        collectionA.add(4);
+        collectionA.add(4);
+        collectionA.add(4);
+        collectionA.add(4);
+
+        collectionB = new LinkedList<Long>();
+        collectionB.add(5L);
+        collectionB.add(4L);
+        collectionB.add(4L);
+        collectionB.add(3L);
+        collectionB.add(3L);
+        collectionB.add(3L);
+        collectionB.add(2L);
+        collectionB.add(2L);
+        collectionB.add(2L);
+        collectionB.add(2L);
     }
 
     public void testAsIterable() {
@@ -833,6 +872,63 @@ public class IteratorUtilsTest extends BulkTest {
         assertFalse("should not be able to iterate twice", IteratorUtils.asIterable(iterator).iterator().hasNext());
     }
 
+    public void testForAllDoIterator() {
+
+        final Closure<List<? extends Number>> testClosure = ClosureUtils.invokerClosure("clear");
+        final Collection<List<? extends Number>> col = new ArrayList<List<? extends Number>>();
+        col.add(collectionA);
+        col.add(collectionB);
+        Closure<List<? extends Number>> resultClosure = IteratorUtils.forAllDo(col.iterator(), testClosure);
+        assertSame(testClosure, resultClosure);
+        assertTrue(collectionA.isEmpty() && collectionB.isEmpty());
+        // fix for various java 1.6 versions: keep the cast
+        resultClosure = IteratorUtils.forAllDo(col.iterator(), (Closure<List<? extends Number>>) null);
+        assertNull(resultClosure);
+        assertTrue(collectionA.isEmpty() && collectionB.isEmpty());
+        resultClosure = IteratorUtils.forAllDo(null, testClosure);
+        col.add(null);
+        // null should be OK
+        IteratorUtils.forAllDo(col.iterator(), testClosure);
+    }
+
+    public void testForAllButLastDoIterator() {
+        final Closure<List<? extends Number>> testClosure = ClosureUtils.invokerClosure("clear");
+        final Collection<List<? extends Number>> col = new ArrayList<List<? extends Number>>();
+        col.add(collectionA);
+        col.add(collectionB);
+        List<? extends Number> lastElement = IteratorUtils.forAllButLastDo(col.iterator(), testClosure);
+        assertSame(lastElement, collectionB);
+        assertTrue(collectionA.isEmpty() && !collectionB.isEmpty());
+
+        assertNull(IteratorUtils.forAllButLastDo(col.iterator(), (Closure<List<? extends Number>>) null));
+        assertNull(IteratorUtils.forAllButLastDo((Iterator<String>) null, (Closure<String>) null)); // do not remove cast
+    }
+
+    public void testGetFromIterator() throws Exception {
+        // Iterator, entry exists
+        Iterator<Integer> iterator = collectionA.iterator();
+        assertEquals(1, (int) IteratorUtils.get(iterator, 0));
+        iterator = collectionA.iterator();
+        assertEquals(2, (int) IteratorUtils.get(iterator, 1));
+
+        // Iterator, non-existent entry
+        try {
+            IteratorUtils.get(iterator, 10);
+            fail("Expecting IndexOutOfBoundsException.");
+        } catch (final IndexOutOfBoundsException e) {
+            // expected
+        }
+        assertTrue(!iterator.hasNext());
+    }
+
+    public void testGetIterator() {
+        final Iterator<Integer> it = collectionA.iterator();
+        assertEquals(Integer.valueOf(2), IteratorUtils.get(it, 2));
+        assertTrue(it.hasNext());
+        assertEquals(Integer.valueOf(4), IteratorUtils.get(it, 6));
+        assertFalse(it.hasNext());
+    }
+
     /**
      * creates an array of four Node instances, mocked by EasyMock.
      */
@@ -847,7 +943,7 @@ public class IteratorUtilsTest extends BulkTest {
         replay(node4);
 
         return new Node[]{node1, node2, node3, node4};
-}
+    }
 
     /**
      * Creates a NodeList containing the specified nodes.

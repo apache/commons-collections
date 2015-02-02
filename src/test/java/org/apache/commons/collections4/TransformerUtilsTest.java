@@ -281,7 +281,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     // switchTransformer
     //------------------------------------------------------------------
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "deprecation" })
     public void testSwitchTransformer() {
         final Transformer<String, String> a = TransformerUtils.constantTransformer("A");
         final Transformer<String, String> b = TransformerUtils.constantTransformer("B");
