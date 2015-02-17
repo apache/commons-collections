@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.bag;
 
+import java.util.Comparator;
+
 import junit.framework.Test;
 
 import org.apache.commons.collections4.Bag;
@@ -61,6 +63,32 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
             bag.add(new Object());
             fail("IllegalArgumentException expected");
         } catch(final IllegalArgumentException iae) {
+            // expected;
+        }
+    }
+
+    public void testCollections555() {
+        final Bag<Object> bag = new TreeBag<Object>();
+        try {
+            bag.add(null);
+            fail("NullPointerException expected");
+        } catch(final NullPointerException npe) {
+            // expected;
+        }
+        
+        final Bag<String> bag2 = new TreeBag<String>(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareTo(o2);
+            }
+        });
+        try {
+            // jdk bug: adding null to an empty TreeMap works
+            // thus ensure that the bag is not empty before adding null
+            bag2.add("a");
+            bag2.add(null);
+            fail("NullPointerException expected");
+        } catch(final NullPointerException npe) {
             // expected;
         }
     }

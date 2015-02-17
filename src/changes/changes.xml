@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-555" dev="tn" type="fix" due-to="M Kim">
+      Added clarification to javadoc of "TreeBag#add(Object)" wrt null arguments.
+    </action>
     <action issue="COLLECTIONS-427" dev="tn" type="add" due-to="Gonçalo Marques">
       Added "toString(...)" methods to newly created "IteratorUtils" class to get a
       string representation of an Iterable instance similar to "Arrays#toString(...)".
