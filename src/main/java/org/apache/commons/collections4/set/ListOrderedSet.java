@@ -345,8 +345,8 @@ public class ListOrderedSet<E>
      * @return the element that has been remove from the ordered set
      * @see List#remove(int)
      */
-    public Object remove(final int index) {
-        final Object obj = setOrder.remove(index);
+    public E remove(final int index) {
+        final E obj = setOrder.remove(index);
         remove(obj);
         return obj;
     }
