@@ -224,6 +224,55 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertSame(values[3], vit.next());
     }
 
+    public void testAccessOrder2() {
+        if (!isPutAddSupported() || !isPutChangeSupported()) {
+            return;
+        }
+        final K[] keys = getSampleKeys();
+        final V[] values = getSampleValues();
+        Iterator<K> kit = null;
+        Iterator<V> vit = null;
+
+        resetEmpty();
+        LRUMap<K, V> lruMap = (LRUMap<K, V>) map;
+        
+        lruMap.put(keys[0], values[0]);
+        lruMap.put(keys[1], values[1]);
+        kit = lruMap.keySet().iterator();
+        assertSame(keys[0], kit.next());
+        assertSame(keys[1], kit.next());
+        vit = lruMap.values().iterator();
+        assertSame(values[0], vit.next());
+        assertSame(values[1], vit.next());
+
+        // no change to order
+        lruMap.put(keys[1], values[1]);
+        kit = lruMap.keySet().iterator();
+        assertSame(keys[0], kit.next());
+        assertSame(keys[1], kit.next());
+        vit = lruMap.values().iterator();
+        assertSame(values[0], vit.next());
+        assertSame(values[1], vit.next());
+
+        // no change to order
+        lruMap.get(keys[1], false);
+        kit = lruMap.keySet().iterator();
+        assertSame(keys[0], kit.next());
+        assertSame(keys[1], kit.next());
+        vit = lruMap.values().iterator();
+        assertSame(values[0], vit.next());
+        assertSame(values[1], vit.next());
+
+        // change to order
+        lruMap.get(keys[0], true);
+        kit = lruMap.keySet().iterator();
+        assertSame(keys[1], kit.next());
+        assertSame(keys[0], kit.next());
+        vit = lruMap.values().iterator();
+        assertSame(values[1], vit.next());
+        assertSame(values[0], vit.next());
+    }
+
     @SuppressWarnings("unchecked")
     public void testClone() {
         final LRUMap<K, V> map = new LRUMap<K, V>(10);

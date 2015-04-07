@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-395" dev="tn" type="add" due-to="David Hawthorne">
+      Added method "LRUMap#get(Object, boolean)" that allows to query the map
+      without affecting the least recently used order.
+    </action>
     <action issue="COLLECTIONS-558" dev="tn" type="fix" due-to="Felix Rabe">
       Changed return type of "ListOrderedSet#remove(int)" from Object to the generic type parameter.
     </action>

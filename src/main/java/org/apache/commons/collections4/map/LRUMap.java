@@ -116,7 +116,7 @@ public class LRUMap<K, V>
      * Constructs a new, empty map with the specified initial capacity and
      * load factor.
      *
-     * @param maxSize  the maximum size of the ma
+     * @param maxSize  the maximum size of the map
      * @param loadFactor  the load factor
      * @param scanUntilRemovable  scan until a removeable entry is found, default false
      * @throws IllegalArgumentException if the maximum size is less than one
@@ -166,18 +166,36 @@ public class LRUMap<K, V>
      * Gets the value mapped to the key specified.
      * <p>
      * This operation changes the position of the key in the map to the
-     * most recently used position (first).
+     * most recently used position (last).
      *
      * @param key  the key
      * @return the mapped value, null if no match
      */
     @Override
     public V get(final Object key) {
+        return get(key, true);
+    }
+
+    /**
+     * Gets the value mapped to the key specified.
+     * <p>
+     * If {@code updateToMRU} is {@code true}, the position of the key in the map
+     * is changed to the most recently used position (last), otherwise the iteration
+     * order is not changed by this operation.
+     *
+     * @param key  the key
+     * @param updateToMRU  whether the key shall be updated to the
+     *   most recently used position
+     * @return the mapped value, null if no match
+     */
+    public V get(final Object key, final boolean updateToMRU) {
         final LinkEntry<K, V> entry = getEntry(key);
         if (entry == null) {
             return null;
         }
-        moveToMRU(entry);
+        if (updateToMRU) {
+            moveToMRU(entry);
+        }
         return entry.getValue();
     }
 
@@ -214,7 +232,7 @@ public class LRUMap<K, V>
     /**
      * Updates an existing key-value mapping.
      * <p>
-     * This implementation moves the updated entry to the top of the list
+     * This implementation moves the updated entry to the end of the list
      * using {@link #moveToMRU(AbstractLinkedMap.LinkEntry)}.
      *
      * @param entry  the entry to update
