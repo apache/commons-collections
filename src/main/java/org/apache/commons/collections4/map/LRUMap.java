@@ -187,6 +187,7 @@ public class LRUMap<K, V>
      * @param updateToMRU  whether the key shall be updated to the
      *   most recently used position
      * @return the mapped value, null if no match
+     * @since 4.1
      */
     public V get(final Object key, final boolean updateToMRU) {
         final LinkEntry<K, V> entry = getEntry(key);
