@@ -601,42 +601,6 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
         }
 
         @Override
-        public boolean equals(Object other) {
-            final Collection<V> col = getMapping();
-            if (col == null) {
-                return CollectionUtils.EMPTY_COLLECTION.equals(other);
-            }
-            if (other == null) {
-                return false;
-            }
-            if(!(other instanceof Collection)){
-                return false;
-            }
-            Collection<?> otherCol = (Collection<?>) other;
-            if (CollectionUtils.isEqualCollection(col, otherCol) == false) {
-                return false;
-            }
-            return true;
-        }
-
-        @Override
-        public int hashCode() {
-            final Collection<V> col = getMapping();
-            if (col == null) {
-                return CollectionUtils.EMPTY_COLLECTION.hashCode();
-            }
-            int h = 0;
-            Iterator<V> it = col.iterator();
-            while (it.hasNext()) {
-                V val = it.next();
-                if (val != null) {
-                    h += val.hashCode();
-                }
-            }
-            return h;
-        }
-
-        @Override
         public String toString() {
             final Collection<V> col = getMapping();
             if (col == null) {
