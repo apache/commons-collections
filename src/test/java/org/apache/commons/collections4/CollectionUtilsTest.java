@@ -42,6 +42,7 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 import java.util.Vector;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.collection.PredicatedCollection;
@@ -279,6 +280,30 @@ public class CollectionUtilsTest extends MockTestCase {
             final Map<String, Integer> freq = CollectionUtils.getCardinalityMap(list);
             assertEquals(Integer.valueOf(3), freq.get(null));
         }
+    }
+
+    @Test
+    public void containsQuietly() {
+        final Collection<String> nil = null;
+        final Collection<String> empty = new ArrayList<String>(0);
+        final Collection<String> one = new ArrayList<String>(1);
+        one.add("1");
+
+        // ConcurrentLinkedQueue is supposed not to allow null elements
+        final Queue<String> noNulls = new ConcurrentLinkedQueue<String>();
+        boolean allowedNulls = true;
+        try {
+            noNulls.add(null);
+        }
+        catch (NullPointerException e) {
+            allowedNulls = false;
+        }
+        assertFalse(allowedNulls);
+
+        assertFalse("contains(null,1) should return false.", CollectionUtils.containsQuietly(nil, "1"));
+        assertFalse("contains({},1) should return false.", CollectionUtils.containsQuietly(empty, "1"));
+        assertTrue("contains({1},1) should return true.", CollectionUtils.containsQuietly(one, "1"));
+        assertFalse("contains(noNulls,null) should return false.", CollectionUtils.containsQuietly(noNulls, null));
     }
 
     @Test

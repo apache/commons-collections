@@ -347,6 +347,30 @@ public class CollectionUtils {
     }
 
     /**
+     * Safe check if the specified collection {@code coll} contains the specified element {@code o}.
+     * If the element is null and the collection does not permit null elements, this method will
+     * catch the resulting {@link java.lang.NullPointerException} and return <code>false</code>.
+     * If the element is of a type that is incompatible with the collection, this method will
+     * catch the resulting {@link java.lang.ClassCastException} and return <code>false</code>.
+     *
+     * @param coll  the collection to check, may be null
+     * @param o  the element, may be null
+     * @return <code>true</code> iff the collection is not null and contains the element
+     * @since 4.1
+     */
+    public static boolean containsQuietly(final Collection<?> coll, final Object o) {
+        try {
+            return coll != null && coll.contains(o);
+        }
+        catch (NullPointerException e) {
+            return false;
+        }
+        catch (ClassCastException e) {
+            return false;
+        }
+    }
+
+    /**
      * Returns <code>true</code> iff all elements of {@code coll2} are also contained
      * in {@code coll1}. The cardinality of values in {@code coll2} is not taken into account,
      * which is the same behavior as {@link Collection#containsAll(Collection)}.
