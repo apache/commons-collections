@@ -39,21 +39,29 @@
         <created>2013-11-24</created>
         <revision>4.0</revision>
       </Version>
+    </release>
+    <release>
       <Version>
         <name>commons-collections</name>
         <created>2008-04-15</created>
         <revision>3.2.1</revision>
       </Version>
+    </release>
+    <release>
       <Version>
         <name>commons-collections</name>
         <created>2006-05-14</created>
         <revision>3.2</revision>
       </Version>
+    </release>
+    <release>
       <Version>
         <name>commons-collections</name>
         <created>2004-06-23</created>
         <revision>3.1</revision>
       </Version>
+    </release>
+    <release>
       <Version>
         <name>commons-collections</name>
         <created>2004-06-23</created>
