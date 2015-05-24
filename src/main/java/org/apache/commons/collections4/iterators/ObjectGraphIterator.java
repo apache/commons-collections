@@ -16,10 +16,11 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections4.ArrayStack;
 import org.apache.commons.collections4.Transformer;
 
 /**
@@ -73,11 +74,10 @@ import org.apache.commons.collections4.Transformer;
  * @since 3.1
  * @version $Id$
  */
-@SuppressWarnings("deprecation") // we use the deprecated ArrayStack - change to ArrayDeque (Java 1.6)
 public class ObjectGraphIterator<E> implements Iterator<E> {
 
     /** The stack of iterators */
-    private final ArrayStack<Iterator<? extends E>> stack = new ArrayStack<Iterator<? extends E>>(8);
+    private final Deque<Iterator<? extends E>> stack = new ArrayDeque<Iterator<? extends E>>(8);
     /** The root object in the tree */
     private E root;
     /** The transformer to use */

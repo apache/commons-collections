@@ -17,13 +17,14 @@
 package org.apache.commons.collections4.list;
 
 import java.util.AbstractList;
+import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.ConcurrentModificationException;
+import java.util.Deque;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-import org.apache.commons.collections4.ArrayStack;
 import org.apache.commons.collections4.OrderedIterator;
 
 /**
@@ -54,7 +55,6 @@ import org.apache.commons.collections4.OrderedIterator;
  * @since 3.1
  * @version $Id$
  */
-@SuppressWarnings("deprecation") // replace ArrayStack by ArrayDeque when moving to Java 1.6
 public class TreeList<E> extends AbstractList<E> {
 //    add; toArray; iterator; insert; get; indexOf; remove
 //    TreeList = 1260;7360;3080;  160;   170;3400;  170;
@@ -828,7 +828,7 @@ public class TreeList<E> extends AbstractList<E> {
                 // find a subtree, s, that is no taller than me. (While we are
                 // navigating left, we store the nodes we encounter in a stack
                 // so that we can re-balance them in step 4.)
-                final ArrayStack<AVLNode<E>> sAncestors = new ArrayStack<AVLNode<E>>();
+                final Deque<AVLNode<E>> sAncestors = new ArrayDeque<AVLNode<E>>();
                 AVLNode<E> s = otherTree;
                 int sAbsolutePosition = s.relativePosition + currentSize;
                 int sParentAbsolutePosition = 0;
@@ -868,7 +868,7 @@ public class TreeList<E> extends AbstractList<E> {
             }
             otherTree = otherTree.removeMin();
 
-            final ArrayStack<AVLNode<E>> sAncestors = new ArrayStack<AVLNode<E>>();
+            final Deque<AVLNode<E>> sAncestors = new ArrayDeque<AVLNode<E>>();
             AVLNode<E> s = this;
             int sAbsolutePosition = s.relativePosition;
             int sParentAbsolutePosition = 0;

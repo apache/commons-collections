@@ -17,9 +17,9 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Iterator;
-
-import org.apache.commons.collections4.ArrayStack;
 
 /**
  * Decorates an iterator to support pushback of elements.
@@ -33,14 +33,13 @@ import org.apache.commons.collections4.ArrayStack;
  * @since 4.0
  * @version $Id$
  */
-@SuppressWarnings("deprecation") // replace ArrayStack with ArrayDeque when moving to Java 6
 public class PushbackIterator<E> implements Iterator<E> {
 
     /** The iterator being decorated. */
     private final Iterator<? extends E> iterator;
 
     /** The LIFO queue containing the pushed back items. */
-    private ArrayStack<E> items = new ArrayStack<E>();
+    private Deque<E> items = new ArrayDeque<E>();
 
     //-----------------------------------------------------------------------
     /**
