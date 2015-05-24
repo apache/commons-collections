@@ -1192,59 +1192,58 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns a new Collection consisting of the elements of inputCollection
+     * Returns a new Collection containing all elements of the input collection
      * transformed by the given transformer.
      * <p>
-     * If the input transformer is null, the result is an empty list.
+     * If the input collection or transformer is null, the result is an empty list.
      *
-     * @param <I> the type of object in the input collection
-     * @param <O> the type of object in the output collection
+     * @param <I>  the type of object in the input collection
+     * @param <O>  the type of object in the output collection
      * @param inputCollection  the collection to get the input from, may not be null
      * @param transformer  the transformer to use, may be null
      * @return the transformed result (new list)
      * @throws NullPointerException if the input collection is null
      */
     public static <I, O> Collection<O> collect(final Iterable<I> inputCollection,
-            final Transformer<? super I, ? extends O> transformer) {
+                                               final Transformer<? super I, ? extends O> transformer) {
         final Collection<O> answer = inputCollection instanceof Collection<?> ?
                 new ArrayList<O>(((Collection<?>) inputCollection).size()) : new ArrayList<O>();
         return collect(inputCollection, transformer, answer);
     }
 
     /**
-     * Transforms all elements from the inputIterator with the given transformer
-     * and adds them to the outputCollection.
+     * Transforms all elements from the input iterator with the given transformer
+     * and adds them to the output collection.
      * <p>
-     * If the input iterator or transformer is null, the result is an empty
-     * list.
+     * If the input iterator or transformer is null, the result is an empty list.
      *
+     * @param <I>  the type of object in the input collection
+     * @param <O>  the type of object in the output collection
      * @param inputIterator  the iterator to get the input from, may be null
      * @param transformer  the transformer to use, may be null
-     * @param <I> the type of object in the input collection
-     * @param <O> the type of object in the output collection
      * @return the transformed result (new list)
      */
     public static <I, O> Collection<O> collect(final Iterator<I> inputIterator,
-            final Transformer<? super I, ? extends O> transformer) {
+                                               final Transformer<? super I, ? extends O> transformer) {
         return collect(inputIterator, transformer, new ArrayList<O>());
     }
 
     /**
-     * Transforms all elements from inputCollection with the given transformer
-     * and adds them to the outputCollection.
+     * Transforms all elements from input collection with the given transformer
+     * and adds them to the output collection.
      * <p>
      * If the input collection or transformer is null, there is no change to the
      * output collection.
      *
-     * @param <I> the type of object in the input collection
-     * @param <O> the type of object in the output collection
-     * @param <R> the output type of the transformer - this extends O.
+     * @param <I>  the type of object in the input collection
+     * @param <O>  the type of object in the output collection
+     * @param <R>  the type of the output collection
      * @param inputCollection  the collection to get the input from, may be null
      * @param transformer  the transformer to use, may be null
-     * @param outputCollection  the collection to output into, may not be null if the inputCollection
+     * @param outputCollection  the collection to output into, may not be null if inputCollection
      *   and transformer are not null
-     * @return the outputCollection with the transformed input added
-     * @throws NullPointerException if the output collection is null and both, inputCollection and
+     * @return the output collection with the transformed input added
+     * @throws NullPointerException if the outputCollection is null and both, inputCollection and
      *   transformer are not null
      */
     public static <I, O, R extends Collection<? super O>> R collect(final Iterable<? extends I> inputCollection,
@@ -1256,21 +1255,21 @@ public class CollectionUtils {
     }
 
     /**
-     * Transforms all elements from the inputIterator with the given transformer
-     * and adds them to the outputCollection.
+     * Transforms all elements from the input iterator with the given transformer
+     * and adds them to the output collection.
      * <p>
      * If the input iterator or transformer is null, there is no change to the
      * output collection.
      *
+     * @param <I>  the type of object in the input collection
+     * @param <O>  the type of object in the output collection
+     * @param <R>  the type of the output collection
      * @param inputIterator  the iterator to get the input from, may be null
      * @param transformer  the transformer to use, may be null
-     * @param outputCollection  the collection to output into, may not be null if the inputCollection
+     * @param outputCollection  the collection to output into, may not be null if inputIterator
      *   and transformer are not null
-     * @param <I> the type of object in the input collection
-     * @param <O> the type of object in the output collection
-     * @param <R> the output type of the transformer - this extends O.
      * @return the outputCollection with the transformed input added
-     * @throws NullPointerException if the output collection is null and both, inputCollection and
+     * @throws NullPointerException if the output collection is null and both, inputIterator and
      *   transformer are not null
      */
     public static <I, O, R extends Collection<? super O>> R collect(final Iterator<? extends I> inputIterator,
