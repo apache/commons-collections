@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-556" dev="tn" type="add">
+      Added method "SetUtils#identityHashSet()" which returns a new identity HashSet
+      using reference-equality instead of object-equality.
+    </action>
     <action issue="COLLECTIONS-562" dev="tn" type="update">
       Upgraded minimum java requirement to Java 6 (up from Java 5).
     </action>

@@ -102,4 +102,19 @@ public class SetUtilsTest extends BulkTest {
         assertEquals(0, SetUtils.hashCodeForSet(null));
     }
 
+    public void testIdentityHashSet() {
+        Set<String> set = SetUtils.identityHashSet();
+        String a = new String("a");
+        set.add(a);
+        set.add(new String("b"));
+        set.add(a);
+        
+        assertEquals(2, set.size());
+        
+        set.add(new String("a"));
+        assertEquals(3, set.size());
+        
+        set.remove(a);
+        assertEquals(2, set.size());
+    }
 }

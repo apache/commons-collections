@@ -18,6 +18,7 @@ package org.apache.commons.collections4;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.IdentityHashMap;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -151,6 +152,28 @@ public class SetUtils {
         return hashCode;
     }
 
+    /**
+     * Returns a new hash set that matches elements based on <code>==</code> not
+     * <code>equals()</code>.
+     * <p>
+     * <strong>This set will violate the detail of various Set contracts.</note>
+     * As a general rule, don't compare this set to other sets. In particular, you can't
+     * use decorators like {@link ListOrderedSet} on it, which silently assume that these
+     * contracts are fulfilled.</strong>
+     * <p>
+     * <strong>Note that the returned set is not synchronized and is not thread-safe.</strong>
+     * If you wish to use this set from multiple threads concurrently, you must use
+     * appropriate synchronization. The simplest approach is to wrap this map
+     * using {@link java.util.Collections#synchronizedSet(Set)}. This class may throw
+     * exceptions when accessed by concurrent threads without synchronization.
+     *
+     * @return a new identity hash set
+     * @since 4.1
+     */
+    public static <E> Set<E> identityHashSet() {
+        return Collections.newSetFromMap(new IdentityHashMap<E, Boolean>());
+    }
+
     //-----------------------------------------------------------------------
     /**
      * Returns a synchronized set backed by the given set.
@@ -255,7 +278,7 @@ public class SetUtils {
      * avoid non-deterministic behavior:
      *
      * <pre>
-     * Set s = SetUtils.synchronizedSet(mySet);
+     * Set s = SetUtils.synchronizedSortedSet(mySet);
      * synchronized (s) {
      *     Iterator i = s.iterator();
      *     while (i.hasNext()) {
