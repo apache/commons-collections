@@ -117,7 +117,7 @@ public class IterableUtils {
      * @return a new iterable, combining the provided iterables
      */
     public static <E> Iterable<E> chainedIterable(final Iterable<? extends E>... iterables) {
-        return new AbstractIterable<E>() {
+        return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
                 return new LazyIteratorChain<E>() {
@@ -156,7 +156,7 @@ public class IterableUtils {
             throw new NullPointerException("predicate must not be null.");
         }
 
-        return new AbstractIterable<E>() {
+        return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
                 return IteratorUtils.filteredIterator(emptyIteratorIfNull(iterable), predicate);
@@ -185,7 +185,7 @@ public class IterableUtils {
             throw new IllegalArgumentException("maxSize parameter must not be negative.");
         }
 
-        return new AbstractIterable<E>() {
+        return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
                 return IteratorUtils.boundedIterator(emptyIteratorIfNull(iterable), maxSize);
@@ -211,14 +211,14 @@ public class IterableUtils {
      * @return a view of the iterable, providing an infinite loop over its elements
      */
     public static <E> Iterable<E> loopingIterable(final Iterable<E> iterable) {
-        return new AbstractIterable<E>() {
+        return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
                 return new LazyIteratorChain<E>() {
                     @Override
                     protected Iterator<? extends E> nextIterator(int count) {
                         if (iterable != null) {
-                            if (isEmpty(iterable)) {
+                            if (IterableUtils.isEmpty(iterable)) {
                                 return null;
                             } else {
                                 return iterable.iterator();
@@ -252,7 +252,7 @@ public class IterableUtils {
             throw new IllegalArgumentException("elementsToSkip parameter must not be negative.");
         }
 
-        return new AbstractIterable<E>() {
+        return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
                 return IteratorUtils.skippingIterator(emptyIteratorIfNull(iterable), elementsToSkip);
@@ -281,7 +281,7 @@ public class IterableUtils {
             throw new NullPointerException("transformer must not be null.");
         }
 
-        return new AbstractIterable<O>() {
+        return new FluentIterable<O>() {
             @Override
             public Iterator<O> iterator() {
                 return IteratorUtils.transformedIterator(emptyIteratorIfNull(iterable), transformer);
@@ -302,7 +302,7 @@ public class IterableUtils {
      * @return a unique view of the specified iterable
      */
     public static <E> Iterable<E> uniqueIterable(final Iterable<E> iterable) {
-        return new AbstractIterable<E>() {
+        return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
                 return new UniqueFilterIterator<E>(emptyIteratorIfNull(iterable));
@@ -490,13 +490,4 @@ public class IterableUtils {
                                       transformer, delimiter, prefix, suffix);
     }
 
-    // Inner classes
-    // ----------------------------------------------------------------------
-
-    private static abstract class AbstractIterable<E> implements Iterable<E> {
-        @Override
-        public String toString() {
-            return IterableUtils.toString(this);
-        }
-    }
 }
