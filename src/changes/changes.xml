@@ -22,6 +22,14 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-464" dev="tn" type="add">
+      Added new class "FluentIterable" to support a fluent API for manipulating
+      Iterable instances. Additionally various supporting methods have been
+      added to "IterableUtils" and "IteratorUtils".
+    </action>
+    <action issue="COLLECTIONS-464" dev="tn" type="add">
+      Added new decorator "SkippingIterator" and factory methods "IteratorUtils#skippingIterator(...)".
+    </action>
     <action issue="COLLECTIONS-556" dev="tn" type="add">
       Added method "SetUtils#identityHashSet()" which returns a new identity HashSet
       using reference-equality instead of object-equality.
