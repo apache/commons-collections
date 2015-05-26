@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 
+import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.iterators.ArrayIterator;
 import org.apache.commons.collections4.iterators.ArrayListIterator;
 import org.apache.commons.collections4.iterators.BoundedIterator;
@@ -55,6 +56,7 @@ import org.apache.commons.collections4.iterators.PeekingIterator;
 import org.apache.commons.collections4.iterators.PushbackIterator;
 import org.apache.commons.collections4.iterators.SingletonIterator;
 import org.apache.commons.collections4.iterators.SingletonListIterator;
+import org.apache.commons.collections4.iterators.SkippingIterator;
 import org.apache.commons.collections4.iterators.TransformIterator;
 import org.apache.commons.collections4.iterators.UnmodifiableIterator;
 import org.apache.commons.collections4.iterators.UnmodifiableListIterator;
@@ -117,9 +119,25 @@ public class IteratorUtils {
     public static final OrderedMapIterator EMPTY_ORDERED_MAP_ITERATOR = EmptyOrderedMapIterator.INSTANCE;
 
     /**
+     * Default prefix used while converting an Iterator to its String representation.
+     */
+    private static final String DEFAULT_TOSTRING_PREFIX = "[";
+
+    /**
+     * Default suffix used while converting an Iterator to its String representation.
+     */
+    private static final String DEFAULT_TOSTRING_SUFFIX = "]";
+
+    /**
+     * Default delimiter used to delimit elements while converting an Iterator
+     * to its String representation.
+     */
+    private static final String DEFAULT_TOSTRING_DELIMITER = ", ";
+
+    /**
      * IteratorUtils is not normally instantiated.
      */
-    private IteratorUtils() {}
+    private IteratorUtils() {}    
 
     // Empty
     //-----------------------------------------------------------------------
@@ -443,7 +461,7 @@ public class IteratorUtils {
      * @param iterator  the iterator to decorate
      * @param max  the maximum number of elements returned by this iterator
      * @return a new bounded iterator
-     * @throws IllegalArgumentException if the iterator is null or either offset or max is negative
+     * @throws IllegalArgumentException if the iterator is null or max is negative
      * @since 4.1
      */
     public static <E> BoundedIterator<E> boundedIterator(final Iterator<? extends E> iterator, long max) {
@@ -469,6 +487,22 @@ public class IteratorUtils {
     public static <E> BoundedIterator<E> boundedIterator(final Iterator<? extends E> iterator,
                                                          long offset, long max) {
         return new BoundedIterator<E>(iterator, offset, max);
+    }
+
+    // Skipping
+    //-----------------------------------------------------------------------
+    /**
+     * Decorates the specified iterator to skip the first N elements.
+     *
+     * @param <E>  the element type
+     * @param iterator  the iterator to decorate
+     * @param offset  the first number of elements to skip
+     * @return a new skipping iterator
+     * @throws IllegalArgumentException if the iterator is null or offset is negative
+     * @since 4.1
+     */
+    public static <E> SkippingIterator<E> skippingIterator(final Iterator<E> iterator, long offset) {
+        return new SkippingIterator<E>(iterator, offset);
     }
 
     // Unmodifiable
@@ -1136,6 +1170,232 @@ public class IteratorUtils {
             // ignore
         }
         return singletonIterator(obj);
+    }
+
+    // Utility methods
+    //-----------------------------------------------------------------------
+
+    /**
+     * Answers true if a predicate is true for any element of the iterator.
+     * <p>
+     * A <code>null</code> or empty iterator returns false.
+     *
+     * @param <E>  the type of object the {@link Iterator} contains
+     * @param input  the {@link Iterator} to use, may be null
+     * @param predicate  the predicate to use, may not be null
+     * @return true if any element of the collection matches the predicate, false otherwise
+     * @throws NullPointerException if predicate is null
+     * @since 4.1
+     */
+    public static <E> boolean matchesAny(final Iterator<E> iterator, final Predicate<? super E> predicate) {
+        if (predicate == null) {
+            throw new NullPointerException("Predicate must not be null");
+        }
+
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                final E element = iterator.next();
+                if (predicate.evaluate(element)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Answers true if a predicate is true for every element of an iterator.
+     * <p>
+     * A <code>null</code> or empty iterator returns true.
+     *
+     * @param <E>  the type of object the {@link Iterator} contains
+     * @param input  the {@link Iterator} to use, may be null
+     * @param predicate  the predicate to use, may not be null
+     * @return true if every element of the collection matches the predicate or if the
+     *   collection is empty, false otherwise
+     * @throws NullPointerException if predicate is null
+     * @since 4.1
+     */
+    public static <E> boolean matchesAll(final Iterator<E> iterator, final Predicate<? super E> predicate) {
+        if (predicate == null) {
+            throw new NullPointerException("Predicate must not be null");
+        }
+
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                final E element = iterator.next();
+                if (!predicate.evaluate(element)) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Checks if the given iterator is empty.
+     * <p>
+     * A <code>null</code> or empty iterator returns true.
+     *
+     * @param iterator  the {@link Iterator} to use, may be null
+     * @return true if the iterator is exhausted or null, false otherwise
+     * @since 4.1
+     */
+    public static boolean isEmpty(final Iterator<?> iterator) {
+        return iterator == null || !iterator.hasNext();
+    }
+
+    /**
+     * Checks if the object is contained in the given iterator.
+     * <p>
+     * A <code>null</code> or empty iterator returns false.
+     *
+     * @param <E>  the type of object the {@link Iterator} contains
+     * @param iterator  the iterator to check, may be null
+     * @param object  the object to check
+     * @return true if the object is contained in the iterator, false otherwise
+     * @since 4.1
+     */
+    public static <E> boolean contains(final Iterator<E> iterator, final Object object) {
+        return matchesAny(iterator, EqualPredicate.equalPredicate(object));
+    }
+
+    /**
+     * Returns the <code>index</code>-th value in {@link Iterator}, throwing
+     * <code>IndexOutOfBoundsException</code> if there is no such element.
+     * <p>
+     * The Iterator is advanced to <code>index</code> (or to the end, if
+     * <code>index</code> exceeds the number of entries) as a side effect of this method.
+     *
+     * @param <E>  the type of object in the {@link Iterator}
+     * @param iterator  the iterator to get a value from
+     * @param index  the index to get
+     * @return the object at the specified index
+     * @throws IndexOutOfBoundsException if the index is invalid
+     * @throws IllegalArgumentException if the object type is invalid
+     * @since 4.1
+     */
+    public static <E> E get(final Iterator<E> iterator, final int index) {
+        int i = index;
+        CollectionUtils.checkIndexBounds(i);
+        while (iterator.hasNext()) {
+            i--;
+            if (i == -1) {
+                return iterator.next();
+            }
+            iterator.next();
+        }
+        throw new IndexOutOfBoundsException("Entry does not exist: " + i);
+    }
+
+    /**
+     * Returns the number of elements contained in the given iterator.
+     * <p>
+     * A <code>null</code> or empty iterator returns {@code 0}.
+     *
+     * @param iterator  the iterator to check, may be null
+     * @return the number of elements contained in the iterator
+     * @since 4.1
+     */
+    public static int size(final Iterator<?> iterator) {
+        int size = 0;
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                iterator.next();
+                size++;
+            }
+        }
+        return size;
+    }
+
+    /**
+     * Returns a string representation of the elements of the specified iterator.
+     * <p>
+     * The string representation consists of a list of the iterator's elements,
+     * enclosed in square brackets ({@code "[]"}). Adjacent elements are separated
+     * by the characters {@code ", "} (a comma followed by a space). Elements are
+     * converted to strings as by {@code String.valueOf(Object)}.
+     *
+     * @param <E>  the element type
+     * @param iterable  the iterator to convert to a string
+     * @return a string representation of {@code iterator}
+     * @since 4.1
+     */
+    public static <E> String toString(final Iterator<E> iterator) {
+        return toString(iterator, TransformerUtils.stringValueTransformer(),
+                        DEFAULT_TOSTRING_DELIMITER, DEFAULT_TOSTRING_PREFIX,
+                        DEFAULT_TOSTRING_SUFFIX);
+    }
+
+    /**
+     * Returns a string representation of the elements of the specified iterator.
+     * <p>
+     * The string representation consists of a list of the iterable's elements,
+     * enclosed in square brackets ({@code "[]"}). Adjacent elements are separated
+     * by the characters {@code ", "} (a comma followed by a space). Elements are
+     * converted to strings as by using the provided {@code transformer}.
+     *
+     * @param <E>  the element type
+     * @param iterable  the iterator to convert to a string, may be null
+     * @param transformer  the transformer used to get a string representation of an element
+     * @return a string representation of {@code iterator}
+     * @throws NullPointerException if {@code transformer} is null
+     * @since 4.1
+     */
+    public static <E> String toString(final Iterator<E> iterator,
+                                      final Transformer<? super E, String> transformer) {
+        return toString(iterator, transformer, DEFAULT_TOSTRING_DELIMITER,
+                        DEFAULT_TOSTRING_PREFIX, DEFAULT_TOSTRING_SUFFIX);
+    }
+
+    /**
+     * Returns a string representation of the elements of the specified iterator.
+     * <p>
+     * The string representation consists of a list of the iterator's elements,
+     * enclosed by the provided {@code prefix} and {@code suffix}. Adjacent elements
+     * are separated by the provided {@code delimiter}. Elements are converted to
+     * strings as by using the provided {@code transformer}.
+     *
+     * @param <E>  the element type
+     * @param iterator  the iterator to convert to a string, may be null
+     * @param transformer  the transformer used to get a string representation of an element
+     * @param delimiter  the string to delimit elements
+     * @param prefix  the prefix, prepended to the string representation
+     * @param suffix  the suffix, appended to the string representation
+     * @return a string representation of {@code iterator}
+     * @throws NullPointerException if either transformer, delimiter, prefix or suffix is null
+     * @since 4.1
+     */
+    public static <E> String toString(final Iterator<E> iterator,
+                                      final Transformer<? super E, String> transformer,
+                                      final String delimiter,
+                                      final String prefix,
+                                      final String suffix) {
+        if (transformer == null) {
+            throw new NullPointerException("transformer may not be null");
+        }
+        if (delimiter == null) {
+            throw new NullPointerException("delimiter may not be null");
+        }
+        if (prefix == null) {
+            throw new NullPointerException("prefix may not be null");
+        }
+        if (suffix == null) {
+            throw new NullPointerException("suffix may not be null");
+        }
+        final StringBuilder stringBuilder = new StringBuilder(prefix);
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                final E element = iterator.next();
+                stringBuilder.append(transformer.transform(element));
+                stringBuilder.append(delimiter);
+            }
+            if(stringBuilder.length() > prefix.length()) {
+                stringBuilder.setLength(stringBuilder.length() - delimiter.length());
+            }
+        }
+        stringBuilder.append(suffix);
+        return stringBuilder.toString();
     }
 
 }

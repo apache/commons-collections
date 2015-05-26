@@ -40,8 +40,8 @@
       Added clarification to javadoc of "TreeBag#add(Object)" wrt null arguments.
     </action>
     <action issue="COLLECTIONS-427" dev="tn" type="add" due-to="Gonçalo Marques">
-      Added "toString(...)" methods to newly created "IteratorUtils" class to get a
-      string representation of an Iterable instance similar to "Arrays#toString(...)".
+      Added "toString(...)" methods to newly created "IterableUtils" and existing "IteratorUtils"
+      to get a string representation of an Iterable/Iterator instance similar to "Arrays#toString(...)".
     </action>
     <action issue="COLLECTIONS-427" dev="tn" type="fix">
       Reverted performance improvement for "SetUniqueList#retainAll(Collection)"

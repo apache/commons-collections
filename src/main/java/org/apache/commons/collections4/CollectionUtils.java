@@ -1384,18 +1384,11 @@ public class CollectionUtils {
      * @return the object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      * @throws IllegalArgumentException if the object type is invalid
+     * @deprecated since 4.1, use {@code IteratorUtils.get(Iterator, int)} instead
      */
+    @Deprecated
     public static <T> T get(final Iterator<T> iterator, final int index) {
-        int i = index;
-        checkIndexBounds(i);
-        while (iterator.hasNext()) {
-            i--;
-            if (i == -1) {
-                return iterator.next();
-            }
-            iterator.next();
-        }
-        throw new IndexOutOfBoundsException("Entry does not exist: " + i);
+        return IteratorUtils.get(iterator, index);
     }
 
     /**
@@ -1432,7 +1425,7 @@ public class CollectionUtils {
      * @param index the index to check.
      * @throws IndexOutOfBoundsException if the index is negative.
      */
-    private static void checkIndexBounds(final int index) {
+    static void checkIndexBounds(final int index) {
         if (index < 0) {
             throw new IndexOutOfBoundsException("Index cannot be negative: " + index);
         }
@@ -1449,13 +1442,11 @@ public class CollectionUtils {
      * @param <T> the type of object in the {@link Iterable}.
      * @return the object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
+     * @deprecated since 4.1, use {@code IterableUtils.get(Iterable, int)} instead
      */
+    @Deprecated
     public static <T> T get(final Iterable<T> iterable, final int index) {
-        checkIndexBounds(index);
-        if (iterable instanceof List<?>) {
-            return ((List<T>) iterable).get(index);
-        }
-        return get(iterable.iterator(), index);
+        return IterableUtils.get(iterable, index);
     }
 
     /**

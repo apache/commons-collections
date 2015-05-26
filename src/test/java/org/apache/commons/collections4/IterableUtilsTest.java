@@ -65,12 +65,8 @@ public class IterableUtilsTest extends BulkTest {
         result = IterableUtils.toString(new ArrayList<Integer>());
         assertEquals("[]", result);
 
-        try {
-            IterableUtils.toString(null);
-            fail("expecting IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
-            // expected
-        }
+        result = IterableUtils.toString(null);
+        assertEquals("[]", result);
 
         result = IterableUtils.toString(iterableA, new Transformer<Integer, String>() {
             public String transform(Integer input) {
@@ -87,17 +83,13 @@ public class IterableUtilsTest extends BulkTest {
         });
         assertEquals("[]", result);
 
-        try {
-            IterableUtils.toString(null, new Transformer<Integer, String>() {
-                public String transform(Integer input) {
-                    fail("not supposed to reach here");
-                    return "";
-                }
-            });
-            fail("expecting IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
-            // expected
-        }
+        result = IterableUtils.toString(null, new Transformer<Integer, String>() {
+            public String transform(Integer input) {
+                fail("not supposed to reach here");
+                return "";
+            }
+        });
+        assertEquals("[]", result);
     }
     
     public void testToStringDelimiter() {
@@ -137,22 +129,18 @@ public class IterableUtilsTest extends BulkTest {
     }
     
     public void testToStringWithNullArguments() {
-        try {
-            IterableUtils.toString(null, new Transformer<Integer, String>() {
-                public String transform(Integer input) {
-                    fail("not supposed to reach here");
-                    return "";
-                }
-            }, "", "(", ")");
-            fail("expecting IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
-            // expected
-        }
+        String result = IterableUtils.toString(null, new Transformer<Integer, String>() {
+            public String transform(Integer input) {
+                fail("not supposed to reach here");
+                return "";
+            }
+        }, "", "(", ")");
+        assertEquals("()", result);
 
         try {
             IterableUtils.toString(new ArrayList<Integer>(), null, "", "(", ")");
-            fail("expecting IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException ex) {
             // expected
         }
 
@@ -163,8 +151,8 @@ public class IterableUtilsTest extends BulkTest {
                     return "";
                 }
             }, null, "(", ")");
-            fail("expecting IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException ex) {
             // expected
         }
 
@@ -175,8 +163,8 @@ public class IterableUtilsTest extends BulkTest {
                     return "";
                 }
             }, "", null, ")");
-            fail("expecting IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException ex) {
             // expected
         }
 
@@ -187,8 +175,8 @@ public class IterableUtilsTest extends BulkTest {
                     return "";
                 }
             }, "", "(", null);
-            fail("expecting IllegalArgumentException");
-        } catch (final IllegalArgumentException iae) {
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException ex) {
             // expected
         }
     }
