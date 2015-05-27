@@ -17,11 +17,14 @@
 package org.apache.commons.collections4;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.collections4.iterators.LazyIteratorChain;
+import org.apache.commons.collections4.iterators.ReverseListIterator;
 import org.apache.commons.collections4.iterators.UniqueFilterIterator;
+import org.apache.commons.collections4.iterators.ZippingIterator;
 
 /**
  * Provides utility methods and decorators for {@link Iterable} instances.
@@ -136,6 +139,37 @@ public class IterableUtils {
         };
     }
 
+    // Collated
+    // ----------------------------------------------------------------------
+
+    /**
+     * Combines the two provided iterables into an ordered iterable using the
+     * provided comparator. If the comparator is null, natural ordering will be
+     * used.
+     * <p>
+     * The returned iterable's iterator supports {@code remove()} when the corresponding
+     * input iterator supports it.
+     *
+     * @param <E>  the element type
+     * @param a  the first iterable, may be null
+     * @param b  the second iterable, may be null
+     * @param comparator  the comparator defining an ordering over the elements,
+     *   may be null, in which case natural ordering will be used
+     * @return a filtered view on the specified iterable
+     */
+    public static <E> Iterable<E> collatedIterable(final Iterable<E> a,
+                                                   final Iterable<E> b,
+                                                   final Comparator<? super E> comparator) {
+        return new FluentIterable<E>() {
+            @Override
+            public Iterator<E> iterator() {
+                return IteratorUtils.collatedIterator(comparator,
+                                                      emptyIteratorIfNull(a),
+                                                      emptyIteratorIfNull(b));
+            }
+        };
+    }
+
     // Filtered
     // ----------------------------------------------------------------------
 
@@ -151,7 +185,8 @@ public class IterableUtils {
      * @return a filtered view on the specified iterable
      * @throws NullPointerException if predicate is null
      */
-    public static <E> Iterable<E> filteredIterable(final Iterable<E> iterable, final Predicate<? super E> predicate) {
+    public static <E> Iterable<E> filteredIterable(final Iterable<E> iterable,
+                                                   final Predicate<? super E> predicate) {
         if (predicate == null) {
             throw new NullPointerException("predicate must not be null.");
         }
@@ -232,6 +267,38 @@ public class IterableUtils {
         };
     }
 
+    // Reversed
+    // ----------------------------------------------------------------------
+
+    /**
+     * Returns a reversed view of the given iterable.
+     * <p>
+     * In case the provided iterable is a {@link List} instance, a 
+     * {@link ReverseListIterator} will be used to reverse the traversal
+     * order, otherwise an intermediate {@link List} needs to be
+     * created.
+     * <p>
+     * The returned iterable's iterator supports {@code remove()} if the
+     * provided iterable is a {@link List} instance.
+     *
+     * @param <E>  the element type
+     * @param iterable  the iterable to use, may be null
+     * @return a reversed view of the specified iterable
+     * @see ReverseListIterator
+     */
+    public static <E> Iterable<E> reversedIterable(final Iterable<E> iterable) {
+        return new FluentIterable<E>() {
+            @Override
+            public Iterator<E> iterator() {
+                final List<E> list = (iterable instanceof List<?>) ?
+                        (List<E>) iterable :
+                        IteratorUtils.toList(emptyIteratorIfNull(iterable));
+
+                return new ReverseListIterator<E>(list);
+            }
+        };
+    }
+
     // Skipping
     // ----------------------------------------------------------------------
 
@@ -276,7 +343,8 @@ public class IterableUtils {
      * @return a transformed view of the specified iterable
      * @throws NullPointerException if transformer is null
      */
-    public static <I, O> Iterable<O> transformedIterable(final Iterable<I> iterable, final Transformer<? super I, ? extends O> transformer) {
+    public static <I, O> Iterable<O> transformedIterable(final Iterable<I> iterable,
+                                                         final Transformer<? super I, ? extends O> transformer) {
         if (transformer == null) {
             throw new NullPointerException("transformer must not be null.");
         }
@@ -306,6 +374,58 @@ public class IterableUtils {
             @Override
             public Iterator<E> iterator() {
                 return new UniqueFilterIterator<E>(emptyIteratorIfNull(iterable));
+            }            
+        };
+    }
+
+    // Zipping
+    // ----------------------------------------------------------------------
+
+    /**
+     * Interleaves two iterables into a single iterable.
+     * <p>
+     * The returned iterable has an iterator that traverses the elements in {@code a}
+     * and {@code b} in alternating order. The source iterators are not polled until
+     * necessary.
+     * <p>
+     * The returned iterable's iterator supports {@code remove()} when the corresponding
+     * input iterator supports it.
+     *
+     * @param <E>  the element type
+     * @param a  the first iterable
+     * @param b  the second iterable
+     * @return a new iterable, interleaving the provided iterables
+     */
+    @SuppressWarnings("unchecked")
+    public static <E> Iterable<E> zippingIterable(final Iterable<E> a, final Iterable<E> b) {
+        return zippingIterable(new Iterable[] {a, b});
+    }
+
+    /**
+     * Interleaves two iterables into a single iterable.
+     * <p>
+     * The returned iterable has an iterator that traverses the elements in {@code a}
+     * and {@code b} in alternating order. The source iterators are not polled until
+     * necessary.
+     * <p>
+     * The returned iterable's iterator supports {@code remove()} when the corresponding
+     * input iterator supports it.
+     *
+     * @param <E>  the element type
+     * @param a  the first iterable
+     * @param b  the second iterable
+     * @return a new iterable, interleaving the provided iterables
+     */
+    public static <E> Iterable<E> zippingIterable(final Iterable<E>... iterables) {
+        return new FluentIterable<E>() {
+            @Override
+            public Iterator<E> iterator() {
+                @SuppressWarnings("unchecked")
+                Iterator<E>[] iterators = new Iterator[iterables.length];
+                for (int i = 0; i < iterables.length; i++) {
+                    iterators[i] = emptyIteratorIfNull(iterables[i]);
+                }
+                return new ZippingIterator<E>(iterators);
             }            
         };
     }

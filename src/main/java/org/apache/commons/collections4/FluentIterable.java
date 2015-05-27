@@ -18,6 +18,7 @@ package org.apache.commons.collections4;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
@@ -152,6 +153,55 @@ public class FluentIterable<E> implements Iterable<E> {
     }
 
     /**
+     * Returns a new FluentIterable whose iterator will traverse the
+     * elements of the current and provided iterable in natural order.
+     * <p>
+     * Example: natural ordering
+     * <ul>
+     *   <li>this contains elements [1, 3, 5, 7]
+     *   <li>other contains elements [2, 4, 6, 8]
+     * </ul>
+     * <p>
+     * The returned iterable will traverse the elements in the following
+     * order: [1, 2, 3, 4, 5, 6, 7, 8]
+     * <p>
+     * A <code>null</code> iterable will be treated as an empty iterable.
+     *
+     * @param other  the other iterable to collate, may be null
+     * @return a new iterable, collating this iterable with the other in natural order
+     * @see {@link org.apache.commons.collections4.iterators.CollatingIterator CollatingIterator}
+     */
+    public FluentIterable<E> collate(final Iterable<E> other) {
+        return of(IterableUtils.collatedIterable(iterable, other, null));
+    }
+
+    /**
+     * Returns a new FluentIterable whose iterator will traverse the
+     * elements of the current and provided iterable according to the
+     * ordering defined by an comparator.
+     * <p>
+     * Example: descending order
+     * <ul>
+     *   <li>this contains elements [7, 5, 3, 1]
+     *   <li>other contains elements [8, 6, 4, 2]
+     * </ul>
+     * <p>
+     * The returned iterable will traverse the elements in the following
+     * order: [8, 7, 6, 5, 4, 3, 2, 1]
+     * <p>
+     * A <code>null</code> iterable will be treated as an empty iterable.
+     *
+     * @param other  the other iterable to collate, may be null
+     * @param comparator  the comparator to define an ordering, may be null,
+     *   in which case natural ordering will be used
+     * @return a new iterable, collating this iterable with the other in natural order
+     * @see {@link org.apache.commons.collections4.iterators.CollatingIterator CollatingIterator}
+     */
+    public FluentIterable<E> collate(final Iterable<E> other, Comparator<? super E> comparator) {
+        return of(IterableUtils.collatedIterable(iterable, other, comparator));
+    }
+
+    /**
      * This method fully traverses an iterator of this iterable and returns
      * a new iterable with the same contents, but without any reference
      * to the originating iterables and/or iterators.
@@ -203,6 +253,16 @@ public class FluentIterable<E> implements Iterable<E> {
     }
 
     /**
+     * Returns a new FluentIterable whose iterator will traverse the
+     * elements from this iterable in reverse order.
+     *
+     * @return a new iterable, providing a reversed view of this iterable
+     */
+    public FluentIterable<E> reverse() {
+        return of(IterableUtils.reversedIterable(iterable));
+    }
+
+    /**
      * Returns a new FluentIterable whose iterator will skip the first
      * N elements from this iterable.
      *
@@ -236,7 +296,36 @@ public class FluentIterable<E> implements Iterable<E> {
     public FluentIterable<E> unique() {
         return of(IterableUtils.uniqueIterable(iterable));
     }
-    
+
+    /**
+     * Returns a new FluentIterable whose iterator will traverse
+     * the elements of this iterable and the provided elements in
+     * alternating order.
+     *
+     * @param elements  the elements to interleave
+     * @return a new iterable, interleaving this iterable with the elements
+     */
+    @SuppressWarnings("unchecked")
+    public FluentIterable<E> zip(final E... elements) {
+        return zip(Arrays.asList(elements));
+    }
+
+    /**
+     * Returns a new FluentIterable whose iterator will traverse
+     * the elements of this iterable and the other iterable in
+     * alternating order.
+     *
+     * @param other  the other iterable to interleave
+     * @return a new iterable, interleaving this iterable with others
+     */
+    public FluentIterable<E> zip(final Iterable<E>... others) {
+        @SuppressWarnings("unchecked")
+        Iterable<E>[] iterables = new Iterable[1 + others.length];
+        iterables[0] = iterable;
+        System.arraycopy(others, 0, iterables, 1, others.length);
+        return of(IterableUtils.zippingIterable(iterables));
+    }
+
     // convenience methods
     // ----------------------------------------------------------------------
 
@@ -357,10 +446,10 @@ public class FluentIterable<E> implements Iterable<E> {
     }
 
     /**
-     * Returns a list containing all elements of this iterable by traversing
-     * its iterator.
+     * Returns a list containing all elements of this iterable by
+     * traversing its iterator.
      * <p>
-     * The returned list is mutable.
+     * The returned list is guaranteed to be mutable.
      *
      * @return a list of the iterable contents
      */
