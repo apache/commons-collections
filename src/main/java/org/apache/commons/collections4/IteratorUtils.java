@@ -1176,6 +1176,28 @@ public class IteratorUtils {
     //-----------------------------------------------------------------------
 
     /**
+     * Applies the closure to each element of the provided iterator.
+     *
+     * @param <E>  the element type
+     * @param iterator  the iterator to use, may be null
+     * @param closure  the closure to apply to each element, may not be null
+     * @throws NullPointerException if closure is null
+     * @since 4.1
+     */
+    public static <E> void apply(final Iterator<E> iterator, final Closure<? super E> closure) {
+        if (closure == null) {
+            throw new NullPointerException("Closure must not be null");
+        }
+
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                final E element = iterator.next();
+                closure.execute(element);
+            }
+        }
+    }
+
+    /**
      * Answers true if a predicate is true for any element of the iterator.
      * <p>
      * A <code>null</code> or empty iterator returns false.

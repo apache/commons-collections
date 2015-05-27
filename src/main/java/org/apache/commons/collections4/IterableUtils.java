@@ -446,6 +446,18 @@ public class IterableUtils {
     }
 
     /**
+     * Applies the closure to each element of the provided iterable.
+     *
+     * @param <E>  the element type
+     * @param iterable  the iterator to use, may be null
+     * @param closure  the closure to apply to each element, may not be null
+     * @throws NullPointerException if closure is null
+     */
+    public static <E> void apply(final Iterable<E> iterable, final Closure<? super E> closure) {
+        IteratorUtils.apply(emptyIteratorIfNull(iterable), closure);
+    }
+
+    /**
      * Answers true if a predicate is true for every element of an iterable.
      * <p>
      * A <code>null</code> or empty iterable returns true.

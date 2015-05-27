@@ -345,6 +345,16 @@ public class FluentIterable<E> implements Iterable<E> {
     }
 
     /**
+     * Applies the closure to all elements contained in this iterable.
+     *
+     * @param closure  the closure to apply to each element, may not be null
+     * @throws NullPointerException if closure is null
+     */
+    public void apply(final Closure<? super E> closure) {
+        IterableUtils.apply(iterable, closure);
+    }
+
+    /**
      * Checks if all elements contained in this iterable are matching the
      * provided predicate.
      * <p>
