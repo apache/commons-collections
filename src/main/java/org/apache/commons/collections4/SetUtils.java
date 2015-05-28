@@ -167,6 +167,7 @@ public class SetUtils {
      * using {@link java.util.Collections#synchronizedSet(Set)}. This class may throw
      * exceptions when accessed by concurrent threads without synchronization.
      *
+     * @param <E>  the element type
      * @return a new identity hash set
      * @since 4.1
      */

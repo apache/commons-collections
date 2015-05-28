@@ -36,7 +36,7 @@ import java.util.List;
  *       new collection or array (e.g. toList());
  *   <li>utility methods which answer questions about the FluentIterable's
  *       contents (e.g. size(), anyMatch(Predicate)).
- *   <li> 
+ *   <li>
  * </ul>
  * <p>
  * The following example outputs the first 3 even numbers in the range [1, 10]
@@ -279,6 +279,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * Returns a new FluentIterable whose iterator will return all elements
      * of this iterable transformed by the provided transformer.
      *
+     * @param <O>  the output element type
      * @param transformer  the transformer applied to each element
      * @return a new iterable, providing a transformed view of this iterable
      * @throws NullPointerException if transformer is null
@@ -315,7 +316,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * the elements of this iterable and the other iterable in
      * alternating order.
      *
-     * @param other  the other iterable to interleave
+     * @param others  the iterables to interleave
      * @return a new iterable, interleaving this iterable with others
      */
     public FluentIterable<E> zip(final Iterable<E>... others) {
@@ -394,7 +395,7 @@ public class FluentIterable<E> implements Iterable<E> {
 
     /**
      * Checks if the object is contained in this iterable.
-     * 
+     *
      * @param object  the object to check
      * @return true if the object is contained in this iterable, false otherwise
      */
@@ -447,7 +448,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * Returns an array containing all elements of this iterable by traversing
      * its iterator.
      *
-     * @param arrayClass  the class of array to create 
+     * @param arrayClass  the class of array to create
      * @return an array of the iterable contents
      * @throws ClassCastException if arrayClass is invalid
      */

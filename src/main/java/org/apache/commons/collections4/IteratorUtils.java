@@ -138,7 +138,7 @@ public class IteratorUtils {
     /**
      * IteratorUtils is not normally instantiated.
      */
-    private IteratorUtils() {}    
+    private IteratorUtils() {}
 
     // Empty
     //-----------------------------------------------------------------------
@@ -937,7 +937,7 @@ public class IteratorUtils {
      * @param <E>  the element type
      * @param a  the first iterator to interleave
      * @param b  the second iterator to interleave
-     * @param c  the third iterator to interleave 
+     * @param c  the third iterator to interleave
      * @return an iterator, interleaving the decorated iterators
      * @throws IllegalArgumentException if any iterator is null
      * @since 4.1
@@ -1250,7 +1250,7 @@ public class IteratorUtils {
      * A <code>null</code> or empty iterator returns false.
      *
      * @param <E>  the type of object the {@link Iterator} contains
-     * @param input  the {@link Iterator} to use, may be null
+     * @param iterator  the {@link Iterator} to use, may be null
      * @param predicate  the predicate to use, may not be null
      * @return true if any element of the collection matches the predicate, false otherwise
      * @throws NullPointerException if predicate is null
@@ -1278,7 +1278,7 @@ public class IteratorUtils {
      * A <code>null</code> or empty iterator returns true.
      *
      * @param <E>  the type of object the {@link Iterator} contains
-     * @param input  the {@link Iterator} to use, may be null
+     * @param iterator  the {@link Iterator} to use, may be null
      * @param predicate  the predicate to use, may not be null
      * @return true if every element of the collection matches the predicate or if the
      *   collection is empty, false otherwise
@@ -1386,7 +1386,7 @@ public class IteratorUtils {
      * converted to strings as by {@code String.valueOf(Object)}.
      *
      * @param <E>  the element type
-     * @param iterable  the iterator to convert to a string
+     * @param iterator  the iterator to convert to a string
      * @return a string representation of {@code iterator}
      * @since 4.1
      */
@@ -1405,7 +1405,7 @@ public class IteratorUtils {
      * converted to strings as by using the provided {@code transformer}.
      *
      * @param <E>  the element type
-     * @param iterable  the iterator to convert to a string, may be null
+     * @param iterator  the iterator to convert to a string, may be null
      * @param transformer  the transformer used to get a string representation of an element
      * @return a string representation of {@code iterator}
      * @throws NullPointerException if {@code transformer} is null
