@@ -73,6 +73,10 @@
       <id>matth</id>
     </developer>
     <developer>
+      <name>Dipanjan Laha</name>
+      <id>dlaha</id>
+    </developer>
+    <developer>
       <name>Geir Magnusson</name>
       <id>geirm</id>
     </developer>
@@ -83,6 +87,10 @@
     <developer>
       <name>Craig McClanahan</name>
       <id>craigmcc</id>
+    </developer>
+    <developer>
+      <name>Thomas Neidhart</name>
+      <id>tn</id>
     </developer>
     <developer>
       <name>Adrian Nistor</name>
@@ -103,10 +111,6 @@
     <developer>
       <name>Henri Yandell</name>
       <id>bayard</id>
-    </developer>
-    <developer>
-      <name>Dipanjan Laha</name>
-      <id>dlaha</id>
     </developer>
   </developers>
 
