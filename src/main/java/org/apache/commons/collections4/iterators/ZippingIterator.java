@@ -27,9 +27,9 @@ import org.apache.commons.collections4.FluentIterable;
  * Provides an interleaved iteration over the elements contained in a
  * collection of Iterators.
  * <p>
- * Given two {@link Iterator} instances <code>A</code> and
- * <code>B</code>, the {@link #next} method on this iterator will
- * alternate between <code>A.next()</code> and <code>B.next()</code>.
+ * Given two {@link Iterator} instances {@code A} and {@code B}, the
+ * {@link #next} method on this iterator will switch between {@code A.next()}
+ * and {@code B.next()} until both iterators are exhausted.
  *
  * @since 4.1
  * @version $Id$
@@ -38,8 +38,10 @@ public class ZippingIterator<E> implements Iterator<E> {
 
     /** The {@link Iterator}s to evaluate. */
     private final Iterator<Iterator<? extends E>> iterators;
+
     /** The next iterator to use for next(). */
     private Iterator<? extends E> nextIterator = null;
+
     /** The last iterator which was used for next(). */
     private Iterator<? extends E> lastReturned = null;
 
@@ -50,8 +52,8 @@ public class ZippingIterator<E> implements Iterator<E> {
      * Constructs a new <code>ZippingIterator</code> that will provide
      * interleaved iteration over the two given iterators.
      *
-     * @param a the first child iterator
-     * @param b the second child iterator
+     * @param a  the first child iterator
+     * @param b  the second child iterator
      * @throws NullPointerException if either iterator is null
      */
     @SuppressWarnings("unchecked")
@@ -60,19 +62,34 @@ public class ZippingIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Constructs a new <code>ZippingIterator</code> that will use the
-     * specified comparator to provide ordered iteration over the array of
-     * iterators.
+     * Constructs a new <code>ZippingIterator</code> that will provide
+     * interleaved iteration over the three given iterators.
      *
-     * @param iterators the array of iterators
-     * @throws NullPointerException if iterators array is or contains null
+     * @param a  the first child iterator
+     * @param b  the second child iterator
+     * @param c  the third child iterator
+     * @throws NullPointerException if either iterator is null
+     */
+    @SuppressWarnings("unchecked")
+    public ZippingIterator(final Iterator<? extends E> a,
+                           final Iterator<? extends E> b,
+                           final Iterator<? extends E> c) {
+        this(new Iterator[] {a, b, c});
+    }
+
+    /**
+     * Constructs a new <code>ZippingIterator</code> that will provide
+     * interleaved iteration of the specified iterators.
+     *
+     * @param iterators  the array of iterators
+     * @throws NullPointerException if any iterator is null
      */
     public ZippingIterator(final Iterator<? extends E>... iterators) {
-        // create a mutable list
+        // create a mutable list to be able to remove exhausted iterators
         final List<Iterator<? extends E>> list = new ArrayList<Iterator<? extends E>>();
-        for (Iterator<? extends E> iterator : iterators) {
+        for (final Iterator<? extends E> iterator : iterators) {
             if (iterator == null) {
-                throw new NullPointerException("Iterator must not be null");
+                throw new NullPointerException("Iterator must not be null.");
             }
             list.add(iterator);
         }
@@ -83,21 +100,21 @@ public class ZippingIterator<E> implements Iterator<E> {
     // -------------------------------------------------------------------
 
     /**
-     * Returns <code>true</code> if any child iterator has remaining elements.
+     * Returns {@code true} if any child iterator has remaining elements.
      *
      * @return true if this iterator has remaining elements
      */
     public boolean hasNext() {
         // the next iterator has already been determined
-        // this might happen if hasNext() was called multiple
+        // this might happen if hasNext() is called multiple
         if (nextIterator != null) {
             return true;
         }
 
         while(iterators.hasNext()) {
-            final Iterator<? extends E> iterator = iterators.next();
-            if (iterator.hasNext()) {
-                nextIterator = iterator;
+            final Iterator<? extends E> childIterator = iterators.next();
+            if (childIterator.hasNext()) {
+                nextIterator = childIterator;
                 return true;
             } else {
                 // iterator is exhausted, remove it

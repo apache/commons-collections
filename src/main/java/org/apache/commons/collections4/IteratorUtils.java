@@ -61,6 +61,7 @@ import org.apache.commons.collections4.iterators.TransformIterator;
 import org.apache.commons.collections4.iterators.UnmodifiableIterator;
 import org.apache.commons.collections4.iterators.UnmodifiableListIterator;
 import org.apache.commons.collections4.iterators.UnmodifiableMapIterator;
+import org.apache.commons.collections4.iterators.ZippingIterator;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -489,22 +490,6 @@ public class IteratorUtils {
         return new BoundedIterator<E>(iterator, offset, max);
     }
 
-    // Skipping
-    //-----------------------------------------------------------------------
-    /**
-     * Decorates the specified iterator to skip the first N elements.
-     *
-     * @param <E>  the element type
-     * @param iterator  the iterator to decorate
-     * @param offset  the first number of elements to skip
-     * @return a new skipping iterator
-     * @throws IllegalArgumentException if the iterator is null or offset is negative
-     * @since 4.1
-     */
-    public static <E> SkippingIterator<E> skippingIterator(final Iterator<E> iterator, long offset) {
-        return new SkippingIterator<E>(iterator, offset);
-    }
-
     // Unmodifiable
     //-----------------------------------------------------------------------
     /**
@@ -912,6 +897,68 @@ public class IteratorUtils {
      */
     public static <E> Iterator<E> pushbackIterator(final Iterator<? extends E> iterator) {
         return PushbackIterator.pushbackIterator(iterator);
+    }
+
+    // Skipping
+    //-----------------------------------------------------------------------
+    /**
+     * Decorates the specified iterator to skip the first N elements.
+     *
+     * @param <E>  the element type
+     * @param iterator  the iterator to decorate
+     * @param offset  the first number of elements to skip
+     * @return a new skipping iterator
+     * @throws IllegalArgumentException if the iterator is null or offset is negative
+     * @since 4.1
+     */
+    public static <E> SkippingIterator<E> skippingIterator(final Iterator<E> iterator, long offset) {
+        return new SkippingIterator<E>(iterator, offset);
+    }
+
+    // Zipping
+    //-----------------------------------------------------------------------
+    /**
+     * Returns an iterator that interleaves elements from the decorated iterators.
+     *
+     * @param <E>  the element type
+     * @param a  the first iterator to interleave
+     * @param b  the second iterator to interleave
+     * @return an iterator, interleaving the decorated iterators
+     * @throws IllegalArgumentException if any iterator is null
+     * @since 4.1
+     */
+    public static <E> ZippingIterator<E> zippingIterator(final Iterator<? extends E> a, final Iterator<? extends E> b) {
+        return new ZippingIterator<E>(a, b);
+    }
+
+    /**
+     * Returns an iterator that interleaves elements from the decorated iterators.
+     *
+     * @param <E>  the element type
+     * @param a  the first iterator to interleave
+     * @param b  the second iterator to interleave
+     * @param c  the third iterator to interleave 
+     * @return an iterator, interleaving the decorated iterators
+     * @throws IllegalArgumentException if any iterator is null
+     * @since 4.1
+     */
+    public static <E> ZippingIterator<E> zippingIterator(final Iterator<? extends E> a,
+                                                         final Iterator<? extends E> b,
+                                                         final Iterator<? extends E> c) {
+        return new ZippingIterator<E>(a, b, c);
+    }
+
+    /**
+     * Returns an iterator that interleaves elements from the decorated iterators.
+     *
+     * @param <E>  the element type
+     * @param iterators  the array of iterators to interleave
+     * @return an iterator, interleaving the decorated iterators
+     * @throws IllegalArgumentException if any iterator is null
+     * @since 4.1
+     */
+    public static <E> ZippingIterator<E> zippingIterator(final Iterator<? extends E>... iterators) {
+        return new ZippingIterator<E>(iterators);
     }
 
     // Views

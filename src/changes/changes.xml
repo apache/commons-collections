@@ -28,6 +28,9 @@
       added to "IterableUtils" and "IteratorUtils".
     </action>
     <action issue="COLLECTIONS-464" dev="tn" type="add">
+      Added new "ZippingIterator" and factory methods "IteratorUtils#zippingIterator(...)".
+    </action>
+    <action issue="COLLECTIONS-464" dev="tn" type="add">
       Added new decorator "SkippingIterator" and factory methods "IteratorUtils#skippingIterator(...)".
     </action>
     <action issue="COLLECTIONS-556" dev="tn" type="add">
