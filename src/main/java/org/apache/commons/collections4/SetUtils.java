@@ -19,19 +19,15 @@ package org.apache.commons.collections4;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.IdentityHashMap;
-import java.util.NavigableSet;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import org.apache.commons.collections4.set.ListOrderedSet;
-import org.apache.commons.collections4.set.PredicatedNavigableSet;
 import org.apache.commons.collections4.set.PredicatedSet;
 import org.apache.commons.collections4.set.PredicatedSortedSet;
-import org.apache.commons.collections4.set.TransformedNavigableSet;
 import org.apache.commons.collections4.set.TransformedSet;
 import org.apache.commons.collections4.set.TransformedSortedSet;
-import org.apache.commons.collections4.set.UnmodifiableNavigableSet;
 import org.apache.commons.collections4.set.UnmodifiableSet;
 import org.apache.commons.collections4.set.UnmodifiableSortedSet;
 
@@ -356,64 +352,6 @@ public class SetUtils {
     public static <E> SortedSet<E> transformedSortedSet(final SortedSet<E> set,
                                                         final Transformer<? super E, ? extends E> transformer) {
         return TransformedSortedSet.transformingSortedSet(set, transformer);
-    }
-
-    // NavigableSet
-    //-----------------------------------------------------------------------
-    /**
-     * Returns an unmodifiable navigable set backed by the given navigable set.
-     * <p>
-     * This method uses the implementation in the decorators subpackage.
-     *
-     * @param <E> the element type
-     * @param set  the navigable set to make unmodifiable, must not be null
-     * @return an unmodifiable set backed by the given set
-     * @throws IllegalArgumentException  if the set is null
-     * @since 4.1
-     */
-    public static <E> SortedSet<E> unmodifiableNavigableSet(final NavigableSet<E> set) {
-        return UnmodifiableNavigableSet.unmodifiableNavigableSet(set);
-    }
-
-    /**
-     * Returns a predicated (validating) navigable set backed by the given navigable set.
-     * <p>
-     * Only objects that pass the test in the given predicate can be added to the set.
-     * Trying to add an invalid object results in an IllegalArgumentException.
-     * It is important not to use the original set after invoking this method,
-     * as it is a backdoor for adding invalid objects.
-     *
-     * @param <E> the element type
-     * @param set  the navigable set to predicate, must not be null
-     * @param predicate  the predicate for the navigable set, must not be null
-     * @return a predicated navigable set backed by the given navigable set
-     * @throws IllegalArgumentException  if the Set or Predicate is null
-     * @since 4.1
-     */
-    public static <E> SortedSet<E> predicatedNavigableSet(final NavigableSet<E> set, final Predicate<? super E> predicate) {
-        return PredicatedNavigableSet.predicatedNavigableSet(set, predicate);
-    }
-
-    /**
-     * Returns a transformed navigable set backed by the given navigable set.
-     * <p>
-     * Each object is passed through the transformer as it is added to the
-     * Set. It is important not to use the original set after invoking this
-     * method, as it is a backdoor for adding untransformed objects.
-     * <p>
-     * Existing entries in the specified set will not be transformed.
-     * If you want that behaviour, see {@link TransformedNavigableSet#transformedNavigableSet}.
-     *
-     * @param <E> the element type
-     * @param set  the navigable set to transform, must not be null
-     * @param transformer  the transformer for the set, must not be null
-     * @return a transformed set backed by the given set
-     * @throws IllegalArgumentException  if the Set or Transformer is null
-     * @since 4.1
-     */
-    public static <E> SortedSet<E> transformedNavigableSet(final NavigableSet<E> set,
-                                                           final Transformer<? super E, ? extends E> transformer) {
-        return TransformedNavigableSet.transformingNavigableSet(set, transformer);
     }
 
 }
