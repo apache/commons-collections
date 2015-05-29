@@ -75,10 +75,10 @@ public class TransformerUtils {
      * @param <I>  the input type
      * @param <O>  the output type
      * @return the transformer
-     * @see org.apache.commons.collections4.functors.ExceptionTransformer
+     * @see ExceptionTransformer
      */
     public static <I, O> Transformer<I, O> exceptionTransformer() {
-        return ExceptionTransformer.<I, O>exceptionTransformer();
+        return ExceptionTransformer.exceptionTransformer();
     }
 
     /**
@@ -87,10 +87,10 @@ public class TransformerUtils {
      * @param <I>  the input type
      * @param <O>  the output type
      * @return the transformer
-     * @see org.apache.commons.collections4.functors.ConstantTransformer
+     * @see ConstantTransformer
      */
     public static <I, O> Transformer<I, O> nullTransformer() {
-        return ConstantTransformer.<I, O>nullTransformer();
+        return ConstantTransformer.nullTransformer();
     }
 
     /**
@@ -100,16 +100,15 @@ public class TransformerUtils {
      *
      * @param <T>  the input/output type
      * @return the transformer
-     * @see org.apache.commons.collections4.functors.NOPTransformer
+     * @see NOPTransformer
      */
     public static <T> Transformer<T, T> nopTransformer() {
-        return NOPTransformer.<T>nopTransformer();
+        return NOPTransformer.nopTransformer();
     }
 
     /**
-     * Gets a transformer that returns a clone of the input
-     * object. The input object will be cloned using one of these
-     * techniques (in order):
+     * Gets a transformer that returns a clone of the input object.
+     * The input object will be cloned using one of these techniques (in order):
      * <ul>
      * <li>public clone method
      * <li>public copy constructor
@@ -118,10 +117,10 @@ public class TransformerUtils {
      *
      * @param <T>  the input/output type
      * @return the transformer
-     * @see org.apache.commons.collections4.functors.CloneTransformer
+     * @see CloneTransformer
      */
     public static <T> Transformer<T, T> cloneTransformer() {
-        return CloneTransformer.<T>cloneTransformer();
+        return CloneTransformer.cloneTransformer();
     }
 
     /**
@@ -132,7 +131,7 @@ public class TransformerUtils {
      * @param <O>  the output type
      * @param constantToReturn  the constant object to return each time in the transformer
      * @return the transformer.
-     * @see org.apache.commons.collections4.functors.ConstantTransformer
+     * @see ConstantTransformer
      */
     public static <I, O> Transformer<I, O> constantTransformer(final O constantToReturn) {
         return ConstantTransformer.constantTransformer(constantToReturn);
@@ -146,7 +145,7 @@ public class TransformerUtils {
      * @param closure  the closure to run each time in the transformer, not null
      * @return the transformer
      * @throws IllegalArgumentException if the closure is null
-     * @see org.apache.commons.collections4.functors.ClosureTransformer
+     * @see ClosureTransformer
      */
     public static <T> Transformer<T, T> asTransformer(final Closure<? super T> closure) {
         return ClosureTransformer.closureTransformer(closure);
@@ -160,7 +159,7 @@ public class TransformerUtils {
      * @param predicate  the predicate to run each time in the transformer, not null
      * @return the transformer
      * @throws IllegalArgumentException if the predicate is null
-     * @see org.apache.commons.collections4.functors.PredicateTransformer
+     * @see PredicateTransformer
      */
     public static <T> Transformer<T, Boolean> asTransformer(final Predicate<? super T> predicate) {
         return PredicateTransformer.predicateTransformer(predicate);
@@ -175,7 +174,7 @@ public class TransformerUtils {
      * @param factory  the factory to run each time in the transformer, not null
      * @return the transformer
      * @throws IllegalArgumentException if the factory is null
-     * @see org.apache.commons.collections4.functors.FactoryTransformer
+     * @see FactoryTransformer
      */
     public static <I, O> Transformer<I, O> asTransformer(final Factory<? extends O> factory) {
         return FactoryTransformer.factoryTransformer(factory);
@@ -189,7 +188,7 @@ public class TransformerUtils {
      * @param transformers  an array of transformers to chain
      * @return the transformer
      * @throws IllegalArgumentException if the transformers array or any of the transformers is null
-     * @see org.apache.commons.collections4.functors.ChainedTransformer
+     * @see ChainedTransformer
      */
     public static <T> Transformer<T, T> chainedTransformer(
             final Transformer<? super T, ? extends T>... transformers) {
@@ -205,7 +204,7 @@ public class TransformerUtils {
      * @param transformers  a collection of transformers to chain
      * @return the transformer
      * @throws IllegalArgumentException if the transformers collection or any of the transformers is null
-     * @see org.apache.commons.collections4.functors.ChainedTransformer
+     * @see ChainedTransformer
      */
     public static <T> Transformer<T, T> chainedTransformer(
             final Collection<? extends Transformer<? super T, ? extends T>> transformers) {
@@ -221,7 +220,7 @@ public class TransformerUtils {
      * @param trueTransformer  the transformer called if the predicate is true
      * @return the transformer
      * @throws IllegalArgumentException if either the predicate or transformer is null
-     * @see org.apache.commons.collections4.functors.IfTransformer
+     * @see IfTransformer
      * @since 4.1
      */
     public static <T> Transformer<T, T> ifTransformer(final Predicate<? super T> predicate,
@@ -240,7 +239,7 @@ public class TransformerUtils {
      * @param falseTransformer  the transformer called if the predicate is false
      * @return the transformer
      * @throws IllegalArgumentException if either the predicate or transformer is null
-     * @see org.apache.commons.collections4.functors.IfTransformer
+     * @see IfTransformer
      * @since 4.1
      */
     public static <I, O> Transformer<I, O> ifTransformer(final Predicate<? super I> predicate,
@@ -260,7 +259,7 @@ public class TransformerUtils {
      * @param falseTransformer  the transformer called if the predicate is false
      * @return the transformer
      * @throws IllegalArgumentException if either the predicate or transformer is null
-     * @see org.apache.commons.collections4.functors.SwitchTransformer
+     * @see SwitchTransformer
      * @deprecated as of 4.1, use {@link #ifTransformer(Predicate, Transformer, Transformer))
      */
     @SuppressWarnings("unchecked")
@@ -286,11 +285,11 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if the either array is null or empty
      * @throws IllegalArgumentException if any element in the arrays is null
      * @throws IllegalArgumentException if the arrays are different sizes
-     * @see org.apache.commons.collections4.functors.SwitchTransformer
+     * @see SwitchTransformer
      */
     public static <I, O> Transformer<I, O> switchTransformer(final Predicate<? super I>[] predicates,
             final Transformer<? super I, ? extends O>[] transformers) {
-        return SwitchTransformer.<I, O>switchTransformer(predicates, transformers, null);
+        return SwitchTransformer.switchTransformer(predicates, transformers, null);
     }
 
     /**
@@ -309,12 +308,12 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if the either array is null or empty
      * @throws IllegalArgumentException if any element in the arrays is null
      * @throws IllegalArgumentException if the arrays are different sizes
-     * @see org.apache.commons.collections4.functors.SwitchTransformer
+     * @see SwitchTransformer
      */
     public static <I, O> Transformer<I, O> switchTransformer(final Predicate<? super I>[] predicates,
             final Transformer<? super I, ? extends O>[] transformers,
             final Transformer<? super I, ? extends O> defaultTransformer) {
-        return SwitchTransformer.<I, O>switchTransformer(predicates, transformers, defaultTransformer);
+        return SwitchTransformer.switchTransformer(predicates, transformers, defaultTransformer);
     }
 
     /**
@@ -336,11 +335,11 @@ public class TransformerUtils {
      * @throws IllegalArgumentException if the map is null or empty
      * @throws IllegalArgumentException if any transformer in the map is null
      * @throws ClassCastException  if the map elements are of the wrong type
-     * @see org.apache.commons.collections4.functors.SwitchTransformer
+     * @see SwitchTransformer
      */
     public static <I, O> Transformer<I, O> switchTransformer(
             final Map<Predicate<I>, Transformer<I, O>> predicatesAndTransformers) {
-        return SwitchTransformer.<I, O>switchTransformer(predicatesAndTransformers);
+        return SwitchTransformer.switchTransformer(predicatesAndTransformers);
     }
 
     /**
@@ -358,7 +357,7 @@ public class TransformerUtils {
      * @return the transformer
      * @throws IllegalArgumentException if the map is null or empty
      * @throws IllegalArgumentException if any transformer in the map is null
-     * @see org.apache.commons.collections4.functors.SwitchTransformer
+     * @see SwitchTransformer
      */
     @SuppressWarnings("unchecked")
     public static <I, O> Transformer<I, O> switchMapTransformer(
@@ -376,7 +375,7 @@ public class TransformerUtils {
             preds[i] = EqualPredicate.<I>equalPredicate(entry.getKey());
             trs[i++] = entry.getValue();
         }
-        return TransformerUtils.<I, O>switchTransformer(preds, trs, def);
+        return TransformerUtils.switchTransformer(preds, trs, def);
     }
 
     /**
@@ -384,10 +383,10 @@ public class TransformerUtils {
      *
      * @param <T>  the output type
      * @return the transformer
-     * @see org.apache.commons.collections4.functors.InstantiateTransformer
+     * @see InstantiateTransformer
      */
     public static <T> Transformer<Class<? extends T>, T> instantiateTransformer() {
-        return InstantiateTransformer.<T>instantiateTransformer();
+        return InstantiateTransformer.instantiateTransformer();
     }
 
     /**
@@ -400,11 +399,11 @@ public class TransformerUtils {
      * @param args  the arguments to pass to the constructor, can be null
      * @return the transformer
      * @throws IllegalArgumentException if the paramTypes and args don't match
-     * @see org.apache.commons.collections4.functors.InstantiateTransformer
+     * @see InstantiateTransformer
      */
     public static <T> Transformer<Class<? extends T>, T> instantiateTransformer(
             final Class<?>[] paramTypes, final Object[] args) {
-        return InstantiateTransformer.<T>instantiateTransformer(paramTypes, args);
+        return InstantiateTransformer.instantiateTransformer(paramTypes, args);
     }
 
     /**
@@ -414,8 +413,9 @@ public class TransformerUtils {
      * @param <I>  the input type
      * @param <O>  the output type
      * @param map  the map to use to transform the objects
-     * @return the transformer, or a {@link ConstantTransformer#NULL_INSTANCE} if the {@code map} is {@code null}
-     * @see org.apache.commons.collections4.functors.MapTransformer
+     * @return the transformer, or {@link ConstantTransformer#nullTransformer()} if the
+     *   {@code map} is {@code null}
+     * @see MapTransformer
      */
     public static <I, O> Transformer<I, O> mapTransformer(final Map<? super I, ? extends O> map) {
         return MapTransformer.mapTransformer(map);
@@ -435,10 +435,10 @@ public class TransformerUtils {
      * @param methodName  the method name to call on the input object, may not be null
      * @return the transformer
      * @throws IllegalArgumentException if the methodName is null.
-     * @see org.apache.commons.collections4.functors.InvokerTransformer
+     * @see InvokerTransformer
      */
     public static <I, O> Transformer<I, O> invokerTransformer(final String methodName) {
-        return InvokerTransformer.<I, O>invokerTransformer(methodName, null, null);
+        return InvokerTransformer.invokerTransformer(methodName, null, null);
     }
 
     /**
@@ -453,11 +453,11 @@ public class TransformerUtils {
      * @param args  the arguments
      * @return the transformer
      * @throws IllegalArgumentException if the method name is null or the paramTypes and args don't match
-     * @see org.apache.commons.collections4.functors.InvokerTransformer
+     * @see InvokerTransformer
      */
     public static <I, O> Transformer<I, O> invokerTransformer(final String methodName, final Class<?>[] paramTypes,
                                                               final Object[] args) {
-        return InvokerTransformer.<I, O>invokerTransformer(methodName, paramTypes, args);
+        return InvokerTransformer.invokerTransformer(methodName, paramTypes, args);
     }
 
     /**
@@ -467,10 +467,10 @@ public class TransformerUtils {
      *
      * @param <T>  the input type
      * @return the transformer
-     * @see org.apache.commons.collections4.functors.StringValueTransformer
+     * @see StringValueTransformer
      */
     public static <T> Transformer<T, String> stringValueTransformer() {
-        return StringValueTransformer.<T>stringValueTransformer();
+        return StringValueTransformer.stringValueTransformer();
     }
 
 }
