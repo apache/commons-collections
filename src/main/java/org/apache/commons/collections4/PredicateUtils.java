@@ -85,10 +85,10 @@ public class PredicateUtils {
      *
      * @param <T>  the type that the predicate queries
      * @return the predicate
-     * @see org.apache.commons.collections4.functors.ExceptionPredicate
+     * @see ExceptionPredicate
      */
     public static <T> Predicate<T> exceptionPredicate() {
-        return ExceptionPredicate.<T>exceptionPredicate();
+        return ExceptionPredicate.exceptionPredicate();
     }
 
     /**
@@ -96,7 +96,7 @@ public class PredicateUtils {
      *
      * @param <T>  the type that the predicate queries
      * @return the predicate
-     * @see org.apache.commons.collections4.functors.TruePredicate
+     * @see TruePredicate
      */
     public static <T> Predicate<T> truePredicate() {
         return TruePredicate.truePredicate();
@@ -107,10 +107,10 @@ public class PredicateUtils {
      *
      * @param <T>  the type that the predicate queries
      * @return the predicate
-     * @see org.apache.commons.collections4.functors.FalsePredicate
+     * @see FalsePredicate
      */
     public static <T> Predicate<T> falsePredicate() {
-        return FalsePredicate.<T> falsePredicate();
+        return FalsePredicate.falsePredicate();
     }
 
     /**
@@ -118,7 +118,7 @@ public class PredicateUtils {
      *
      * @param <T>  the type that the predicate queries
      * @return the predicate
-     * @see org.apache.commons.collections4.functors.NullPredicate
+     * @see NullPredicate
      */
     public static <T> Predicate<T> nullPredicate() {
         return NullPredicate.nullPredicate();
@@ -129,10 +129,10 @@ public class PredicateUtils {
      *
      * @param <T>  the type that the predicate queries
      * @return the predicate
-     * @see org.apache.commons.collections4.functors.NotNullPredicate
+     * @see NotNullPredicate
      */
     public static <T> Predicate<T> notNullPredicate() {
-        return NotNullPredicate.<T>notNullPredicate();
+        return NotNullPredicate.notNullPredicate();
     }
 
     /**
@@ -142,7 +142,7 @@ public class PredicateUtils {
      * @param <T>  the type that the predicate queries
      * @param value  the value to compare against
      * @return the predicate
-     * @see org.apache.commons.collections4.functors.EqualPredicate
+     * @see EqualPredicate
      */
     public static <T> Predicate<T> equalPredicate(final T value) {
         return EqualPredicate.equalPredicate(value);
@@ -155,10 +155,10 @@ public class PredicateUtils {
      * @param <T>  the type that the predicate queries
      * @param value  the value to compare against
      * @return the predicate
-     * @see org.apache.commons.collections4.functors.IdentityPredicate
+     * @see IdentityPredicate
      */
     public static <T> Predicate<T> identityPredicate(final T value) {
-        return IdentityPredicate.<T>identityPredicate(value);
+        return IdentityPredicate.identityPredicate(value);
     }
 
     /**
@@ -169,7 +169,7 @@ public class PredicateUtils {
      * @param type  the type to check for, may not be null
      * @return the predicate
      * @throws IllegalArgumentException if the class is null
-     * @see org.apache.commons.collections4.functors.InstanceofPredicate
+     * @see InstanceofPredicate
      */
     public static Predicate<Object> instanceofPredicate(final Class<?> type) {
         return InstanceofPredicate.instanceOfPredicate(type);
@@ -184,11 +184,11 @@ public class PredicateUtils {
      *
      * @param <T>  the type that the predicate queries
      * @return the predicate
-     * @see org.apache.commons.collections4.functors.UniquePredicate
+     * @see UniquePredicate
      */
     public static <T> Predicate<T> uniquePredicate() {
         // must return new instance each time
-        return UniquePredicate.<T>uniquePredicate();
+        return UniquePredicate.uniquePredicate();
     }
 
     /**
@@ -205,8 +205,8 @@ public class PredicateUtils {
      * @param methodName  the method name to call on the input object, may not be null
      * @return the predicate
      * @throws IllegalArgumentException if the methodName is null.
-     * @see org.apache.commons.collections4.functors.InvokerTransformer
-     * @see org.apache.commons.collections4.functors.TransformerPredicate
+     * @see InvokerTransformer
+     * @see TransformerPredicate
      */
     public static <T> Predicate<T> invokerPredicate(final String methodName) {
         // reuse transformer as it has caching - this is lazy really, should have inner class here
@@ -230,8 +230,8 @@ public class PredicateUtils {
      * @return the predicate
      * @throws IllegalArgumentException if the method name is null
      * @throws IllegalArgumentException if the paramTypes and args don't match
-     * @see org.apache.commons.collections4.functors.InvokerTransformer
-     * @see org.apache.commons.collections4.functors.TransformerPredicate
+     * @see InvokerTransformer
+     * @see TransformerPredicate
      */
     public static <T> Predicate<T> invokerPredicate(final String methodName, final Class<?>[] paramTypes,
                                                     final Object[] args) {
@@ -251,11 +251,11 @@ public class PredicateUtils {
      * @param predicate2  the second predicate, may not be null
      * @return the <code>and</code> predicate
      * @throws IllegalArgumentException if either predicate is null
-     * @see org.apache.commons.collections4.functors.AndPredicate
+     * @see AndPredicate
      */
     public static <T> Predicate<T> andPredicate(final Predicate<? super T> predicate1,
                                                 final Predicate<? super T> predicate2) {
-        return AndPredicate.<T>andPredicate(predicate1, predicate2);
+        return AndPredicate.andPredicate(predicate1, predicate2);
     }
 
     /**
@@ -268,7 +268,7 @@ public class PredicateUtils {
      * @return the <code>all</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
-     * @see org.apache.commons.collections4.functors.AllPredicate
+     * @see AllPredicate
      */
     public static <T> Predicate<T> allPredicate(final Predicate<? super T>... predicates) {
         return AllPredicate.allPredicate(predicates);
@@ -284,7 +284,7 @@ public class PredicateUtils {
      * @return the <code>all</code> predicate
      * @throws IllegalArgumentException if the predicates collection is null
      * @throws IllegalArgumentException if any predicate in the collection is null
-     * @see org.apache.commons.collections4.functors.AllPredicate
+     * @see AllPredicate
      */
     public static <T> Predicate<T> allPredicate(final Collection<? extends Predicate<? super T>> predicates) {
         return AllPredicate.allPredicate(predicates);
@@ -299,11 +299,11 @@ public class PredicateUtils {
      * @param predicate2  the second predicate, may not be null
      * @return the <code>or</code> predicate
      * @throws IllegalArgumentException if either predicate is null
-     * @see org.apache.commons.collections4.functors.OrPredicate
+     * @see OrPredicate
      */
     public static <T> Predicate<T> orPredicate(final Predicate<? super T> predicate1,
                                                final Predicate<? super T> predicate2) {
-        return OrPredicate.<T>orPredicate(predicate1, predicate2);
+        return OrPredicate.orPredicate(predicate1, predicate2);
     }
 
     /**
@@ -316,7 +316,7 @@ public class PredicateUtils {
      * @return the <code>any</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
-     * @see org.apache.commons.collections4.functors.AnyPredicate
+     * @see AnyPredicate
      */
     public static <T> Predicate<T> anyPredicate(final Predicate<? super T>... predicates) {
         return AnyPredicate.anyPredicate(predicates);
@@ -332,7 +332,7 @@ public class PredicateUtils {
      * @return the <code>any</code> predicate
      * @throws IllegalArgumentException if the predicates collection is null
      * @throws IllegalArgumentException if any predicate in the collection is null
-     * @see org.apache.commons.collections4.functors.AnyPredicate
+     * @see AnyPredicate
      */
     public static <T> Predicate<T> anyPredicate(final Collection<? extends Predicate<? super T>> predicates) {
         return AnyPredicate.anyPredicate(predicates);
@@ -347,12 +347,12 @@ public class PredicateUtils {
      * @param predicate2  the second predicate, may not be null
      * @return the <code>either</code> predicate
      * @throws IllegalArgumentException if either predicate is null
-     * @see org.apache.commons.collections4.functors.OnePredicate
+     * @see OnePredicate
      */
     public static <T> Predicate<T> eitherPredicate(final Predicate<? super T> predicate1,
                                                    final Predicate<? super T> predicate2) {
         @SuppressWarnings("unchecked")
-        final Predicate<T> onePredicate = PredicateUtils.<T>onePredicate(predicate1, predicate2);
+        final Predicate<T> onePredicate = PredicateUtils.onePredicate(predicate1, predicate2);
         return onePredicate;
     }
 
@@ -366,7 +366,7 @@ public class PredicateUtils {
      * @return the <code>one</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
-     * @see org.apache.commons.collections4.functors.OnePredicate
+     * @see OnePredicate
      */
     public static <T> Predicate<T> onePredicate(final Predicate<? super T>... predicates) {
         return OnePredicate.onePredicate(predicates);
@@ -382,7 +382,7 @@ public class PredicateUtils {
      * @return the <code>one</code> predicate
      * @throws IllegalArgumentException if the predicates collection is null
      * @throws IllegalArgumentException if any predicate in the collection is null
-     * @see org.apache.commons.collections4.functors.OnePredicate
+     * @see OnePredicate
      */
     public static <T> Predicate<T> onePredicate(final Collection<? extends Predicate<? super T>> predicates) {
         return OnePredicate.onePredicate(predicates);
@@ -397,12 +397,12 @@ public class PredicateUtils {
      * @param predicate2  the second predicate, may not be null
      * @return the <code>neither</code> predicate
      * @throws IllegalArgumentException if either predicate is null
-     * @see org.apache.commons.collections4.functors.NonePredicate
+     * @see NonePredicate
      */
     public static <T> Predicate<T> neitherPredicate(final Predicate<? super T> predicate1,
                                                     final Predicate<? super T> predicate2) {
         @SuppressWarnings("unchecked")
-        final Predicate<T> nonePredicate = PredicateUtils.<T>nonePredicate(predicate1, predicate2);
+        final Predicate<T> nonePredicate = PredicateUtils.nonePredicate(predicate1, predicate2);
         return nonePredicate;
     }
 
@@ -416,7 +416,7 @@ public class PredicateUtils {
      * @return the <code>none</code> predicate
      * @throws IllegalArgumentException if the predicates array is null
      * @throws IllegalArgumentException if any predicate in the array is null
-     * @see org.apache.commons.collections4.functors.NonePredicate
+     * @see NonePredicate
      */
     public static <T> Predicate<T> nonePredicate(final Predicate<? super T>... predicates) {
         return NonePredicate.nonePredicate(predicates);
@@ -432,7 +432,7 @@ public class PredicateUtils {
      * @return the <code>none</code> predicate
      * @throws IllegalArgumentException if the predicates collection is null
      * @throws IllegalArgumentException if any predicate in the collection is null
-     * @see org.apache.commons.collections4.functors.NonePredicate
+     * @see NonePredicate
      */
     public static <T> Predicate<T> nonePredicate(final Collection<? extends Predicate<? super T>> predicates) {
         return NonePredicate.nonePredicate(predicates);
@@ -446,7 +446,7 @@ public class PredicateUtils {
      * @param predicate  the predicate to not
      * @return the <code>not</code> predicate
      * @throws IllegalArgumentException if the predicate is null
-     * @see org.apache.commons.collections4.functors.NotPredicate
+     * @see NotPredicate
      */
     public static <T> Predicate<T> notPredicate(final Predicate<? super T> predicate) {
         return NotPredicate.notPredicate(predicate);
@@ -464,7 +464,7 @@ public class PredicateUtils {
      * @param transformer  the transformer to wrap, may not be null
      * @return the transformer wrapping predicate
      * @throws IllegalArgumentException if the transformer is null
-     * @see org.apache.commons.collections4.functors.TransformerPredicate
+     * @see TransformerPredicate
      */
     public static <T> Predicate<T> asPredicate(final Transformer<? super T, Boolean> transformer) {
         return TransformerPredicate.transformerPredicate(transformer);
@@ -482,7 +482,7 @@ public class PredicateUtils {
      * @param predicate  the predicate to wrap, may not be null
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null.
-     * @see org.apache.commons.collections4.functors.NullIsExceptionPredicate
+     * @see NullIsExceptionPredicate
      */
     public static <T> Predicate<T> nullIsExceptionPredicate(final Predicate<? super T> predicate){
         return NullIsExceptionPredicate.nullIsExceptionPredicate(predicate);
@@ -497,7 +497,7 @@ public class PredicateUtils {
      * @param predicate  the predicate to wrap, may not be null
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null.
-     * @see org.apache.commons.collections4.functors.NullIsFalsePredicate
+     * @see NullIsFalsePredicate
      */
     public static <T> Predicate<T> nullIsFalsePredicate(final Predicate<? super T> predicate){
         return NullIsFalsePredicate.nullIsFalsePredicate(predicate);
@@ -512,7 +512,7 @@ public class PredicateUtils {
      * @param predicate  the predicate to wrap, may not be null
      * @return the predicate
      * @throws IllegalArgumentException if the predicate is null.
-     * @see org.apache.commons.collections4.functors.NullIsTruePredicate
+     * @see NullIsTruePredicate
      */
     public static <T> Predicate<T> nullIsTruePredicate(final Predicate<? super T> predicate){
         return NullIsTruePredicate.nullIsTruePredicate(predicate);
@@ -529,12 +529,12 @@ public class PredicateUtils {
      * @param predicate  the predicate to call with the result of the transform
      * @return the predicate
      * @throws IllegalArgumentException if the transformer or the predicate is null
-     * @see org.apache.commons.collections4.functors.TransformedPredicate
+     * @see TransformedPredicate
      * @since 3.1
      */
     public static <T> Predicate<T> transformedPredicate(
             final Transformer<? super T, ? extends T> transformer, final Predicate<? super T> predicate) {
-        return TransformedPredicate.<T>transformedPredicate(transformer, predicate);
+        return TransformedPredicate.transformedPredicate(transformer, predicate);
     }
 
 }
