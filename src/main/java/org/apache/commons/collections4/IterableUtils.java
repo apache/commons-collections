@@ -53,7 +53,8 @@ public class IterableUtils {
      * @return a new iterable, combining the provided iterables
      */
     @SuppressWarnings("unchecked")
-    public static <E> Iterable<E> chainedIterable(final Iterable<? extends E> a, final Iterable<? extends E> b) {
+    public static <E> Iterable<E> chainedIterable(final Iterable<? extends E> a,
+                                                  final Iterable<? extends E> b) {
         return chainedIterable(new Iterable[] {a, b});
     }
 
@@ -155,8 +156,8 @@ public class IterableUtils {
      *   may be null, in which case natural ordering will be used
      * @return a filtered view on the specified iterable
      */
-    public static <E> Iterable<E> collatedIterable(final Iterable<E> a,
-                                                   final Iterable<E> b,
+    public static <E> Iterable<E> collatedIterable(final Iterable<? extends E> a,
+                                                   final Iterable<? extends E> b,
                                                    final Comparator<? super E> comparator) {
         return new FluentIterable<E>() {
             @Override
@@ -395,7 +396,8 @@ public class IterableUtils {
      * @return a new iterable, interleaving the provided iterables
      */
     @SuppressWarnings("unchecked")
-    public static <E> Iterable<E> zippingIterable(final Iterable<E> a, final Iterable<E> b) {
+    public static <E> Iterable<E> zippingIterable(final Iterable<? extends E> a,
+                                                  final Iterable<? extends E> b) {
         return zippingIterable(new Iterable[] {a, b});
     }
 
@@ -413,12 +415,12 @@ public class IterableUtils {
      * @param iterables  the array of iterables to interleave
      * @return a new iterable, interleaving the provided iterables
      */
-    public static <E> Iterable<E> zippingIterable(final Iterable<E>... iterables) {
+    public static <E> Iterable<E> zippingIterable(final Iterable<? extends E>... iterables) {
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
                 @SuppressWarnings("unchecked")
-                Iterator<E>[] iterators = new Iterator[iterables.length];
+                Iterator<? extends E>[] iterators = new Iterator[iterables.length];
                 for (int i = 0; i < iterables.length; i++) {
                     iterators[i] = emptyIteratorIfNull(iterables[i]);
                 }

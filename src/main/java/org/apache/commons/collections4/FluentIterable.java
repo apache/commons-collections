@@ -148,7 +148,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * @param other  the other iterable to combine, may be null
      * @return a new iterable, combining this iterable with other
      */
-    public FluentIterable<E> append(final Iterable<E> other) {
+    public FluentIterable<E> append(final Iterable<? extends E> other) {
         return of(IterableUtils.chainedIterable(iterable, other));
     }
 
@@ -171,7 +171,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * @return a new iterable, collating this iterable with the other in natural order
      * @see {@link org.apache.commons.collections4.iterators.CollatingIterator CollatingIterator}
      */
-    public FluentIterable<E> collate(final Iterable<E> other) {
+    public FluentIterable<E> collate(final Iterable<? extends E> other) {
         return of(IterableUtils.collatedIterable(iterable, other, null));
     }
 
@@ -197,7 +197,8 @@ public class FluentIterable<E> implements Iterable<E> {
      * @return a new iterable, collating this iterable with the other in natural order
      * @see {@link org.apache.commons.collections4.iterators.CollatingIterator CollatingIterator}
      */
-    public FluentIterable<E> collate(final Iterable<E> other, Comparator<? super E> comparator) {
+    public FluentIterable<E> collate(final Iterable<? extends E> other,
+                                     final Comparator<? super E> comparator) {
         return of(IterableUtils.collatedIterable(iterable, other, comparator));
     }
 
@@ -226,7 +227,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * @return a new iterable, providing a filtered view of this iterable
      * @throws NullPointerException if predicate is null
      */
-    public FluentIterable<E> filter(final Predicate<E> predicate) {
+    public FluentIterable<E> filter(final Predicate<? super E> predicate) {
         return of(IterableUtils.filteredIterable(iterable, predicate));
     }
 
@@ -300,26 +301,25 @@ public class FluentIterable<E> implements Iterable<E> {
 
     /**
      * Returns a new FluentIterable whose iterator will traverse
-     * the elements of this iterable and the provided elements in
+     * the elements of this iterable and the other iterable in
      * alternating order.
      *
-     * @param elements  the elements to interleave
-     * @return a new iterable, interleaving this iterable with the elements
+     * @param other  the other iterable to interleave
+     * @return a new iterable, interleaving this iterable with others
      */
-    @SuppressWarnings("unchecked")
-    public FluentIterable<E> zip(final E... elements) {
-        return zip(Arrays.asList(elements));
+    public FluentIterable<E> zip(final Iterable<? extends E> other) {
+        return of(IterableUtils.zippingIterable(iterable, other));
     }
 
     /**
      * Returns a new FluentIterable whose iterator will traverse
-     * the elements of this iterable and the other iterable in
+     * the elements of this iterable and the other iterables in
      * alternating order.
      *
      * @param others  the iterables to interleave
      * @return a new iterable, interleaving this iterable with others
      */
-    public FluentIterable<E> zip(final Iterable<E>... others) {
+    public FluentIterable<E> zip(final Iterable<? extends E>... others) {
         @SuppressWarnings("unchecked")
         Iterable<E>[] iterables = new Iterable[1 + others.length];
         iterables[0] = iterable;
