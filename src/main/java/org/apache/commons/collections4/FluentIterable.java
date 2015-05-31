@@ -238,7 +238,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * @return a new iterable, providing a bounded view of this iterable
      * @throws IllegalArgumentException if maxSize is negative
      */
-    public FluentIterable<E> limit(final int maxSize) {
+    public FluentIterable<E> limit(final long maxSize) {
         return of(IterableUtils.boundedIterable(iterable, maxSize));
     }
 
@@ -271,7 +271,7 @@ public class FluentIterable<E> implements Iterable<E> {
      *   the first N elements
      * @throws IllegalArgumentException if elementsToSkip is negative
      */
-    public FluentIterable<E> skip(int elementsToSkip) {
+    public FluentIterable<E> skip(final long elementsToSkip) {
         return of(IterableUtils.skippingIterable(iterable, elementsToSkip));
     }
 

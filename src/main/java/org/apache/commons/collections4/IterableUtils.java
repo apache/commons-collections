@@ -213,7 +213,7 @@ public class IterableUtils {
      * @return a bounded view on the specified iterable
      * @throws IllegalArgumentException if maxSize is negative
      */
-    public static <E> Iterable<E> boundedIterable(final Iterable<E> iterable, final int maxSize) {
+    public static <E> Iterable<E> boundedIterable(final Iterable<E> iterable, final long maxSize) {
         if (maxSize < 0) {
             throw new IllegalArgumentException("maxSize parameter must not be negative.");
         }
@@ -311,7 +311,7 @@ public class IterableUtils {
      * @return a view of the specified iterable, skipping the first N elements
      * @throws IllegalArgumentException if elementsToSkip is negative
      */
-    public static <E> Iterable<E> skippingIterable(final Iterable<E> iterable, final int elementsToSkip) {
+    public static <E> Iterable<E> skippingIterable(final Iterable<E> iterable, final long elementsToSkip) {
         if (elementsToSkip < 0) {
             throw new IllegalArgumentException("elementsToSkip parameter must not be negative.");
         }
