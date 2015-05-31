@@ -21,42 +21,40 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.NavigableSet;
 import java.util.SortedSet;
 
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.iterators.UnmodifiableIterator;
 
 /**
- * Decorates another <code>SortedSet</code> to ensure it can't be altered.
- * <p>
- * This class is Serializable from Commons Collections 3.1.
+ * Decorates another <code>NavigableSet</code> to ensure it can't be altered.
  * <p>
  * Attempts to modify it will result in an UnsupportedOperationException.
  *
- * @since 3.0
+ * @since 4.1
  * @version $Id$
  */
-public final class UnmodifiableSortedSet<E>
-        extends AbstractSortedSetDecorator<E>
+public final class UnmodifiableNavigableSet<E>
+        extends AbstractNavigableSetDecorator<E>
         implements Unmodifiable {
 
     /** Serialization version */
-    private static final long serialVersionUID = -725356885467962424L;
+    private static final long serialVersionUID = 20150528L;
 
     /**
      * Factory method to create an unmodifiable set.
      *
      * @param <E> the element type
      * @param set  the set to decorate, must not be null
-     * @return a new unmodifiable {@link SortedSet}
+     * @return a new unmodifiable {@link NavigableSet}
      * @throws IllegalArgumentException if set is null
-     * @since 4.0
      */
-    public static <E> SortedSet<E> unmodifiableSortedSet(final SortedSet<E> set) {
+    public static <E> NavigableSet<E> unmodifiableNavigableSet(final NavigableSet<E> set) {
         if (set instanceof Unmodifiable) {
             return set;
         }
-        return new UnmodifiableSortedSet<E>(set);
+        return new UnmodifiableNavigableSet<E>(set);
     }
 
     //-----------------------------------------------------------------------
@@ -66,7 +64,7 @@ public final class UnmodifiableSortedSet<E>
      * @param set  the set to decorate, must not be null
      * @throws IllegalArgumentException if set is null
      */
-    private UnmodifiableSortedSet(final SortedSet<E> set) {
+    private UnmodifiableNavigableSet(final NavigableSet<E> set) {
         super(set);
     }
 
@@ -106,23 +104,54 @@ public final class UnmodifiableSortedSet<E>
         throw new UnsupportedOperationException();
     }
 
+    // SortedSet
     //-----------------------------------------------------------------------
     @Override
     public SortedSet<E> subSet(final E fromElement, final E toElement) {
         final SortedSet<E> sub = decorated().subSet(fromElement, toElement);
-        return unmodifiableSortedSet(sub);
+        return UnmodifiableSortedSet.unmodifiableSortedSet(sub);
     }
 
     @Override
     public SortedSet<E> headSet(final E toElement) {
         final SortedSet<E> head = decorated().headSet(toElement);
-        return unmodifiableSortedSet(head);
+        return UnmodifiableSortedSet.unmodifiableSortedSet(head);
     }
 
     @Override
     public SortedSet<E> tailSet(final E fromElement) {
         final SortedSet<E> tail = decorated().tailSet(fromElement);
-        return unmodifiableSortedSet(tail);
+        return UnmodifiableSortedSet.unmodifiableSortedSet(tail);
+    }
+
+    // NavigableSet
+    //-----------------------------------------------------------------------
+    @Override
+    public NavigableSet<E> descendingSet() {
+        return unmodifiableNavigableSet(decorated().descendingSet());
+    }
+
+    @Override
+    public Iterator<E> descendingIterator() {
+        return UnmodifiableIterator.unmodifiableIterator(decorated().descendingIterator());
+    }
+
+    @Override
+    public NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement, boolean toInclusive) {
+        final NavigableSet<E> sub = decorated().subSet(fromElement, fromInclusive, toElement, toInclusive);
+        return unmodifiableNavigableSet(sub);
+    }
+
+    @Override
+    public NavigableSet<E> headSet(E toElement, boolean inclusive) {
+        final NavigableSet<E> head = decorated().headSet(toElement, inclusive);
+        return unmodifiableNavigableSet(head);
+    }
+
+    @Override
+    public NavigableSet<E> tailSet(E fromElement, boolean inclusive) {
+        final NavigableSet<E> tail = decorated().tailSet(fromElement, inclusive);
+        return unmodifiableNavigableSet(tail);
     }
 
     //-----------------------------------------------------------------------

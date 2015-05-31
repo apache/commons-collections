@@ -30,7 +30,11 @@ import org.apache.commons.collections4.Predicate;
  * If an object cannot be added to the set, an IllegalArgumentException is thrown.
  * <p>
  * One usage would be to ensure that no null entries are added to the set.
- * <pre>SortedSet set = PredicatedSortedSet.decorate(new TreeSet(), NotNullPredicate.INSTANCE);</pre>
+ * <pre>
+ * SortedSet set =
+ *   PredicatedSortedSet.predicatedSortedSet(new TreeSet(),
+ *                                           NotNullPredicate.notNullPredicate());
+ * </pre>
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
@@ -106,13 +110,13 @@ public class PredicatedSortedSet<E> extends PredicatedSet<E> implements SortedSe
     }
 
     public SortedSet<E> headSet(final E toElement) {
-        final SortedSet<E> sub = decorated().headSet(toElement);
-        return new PredicatedSortedSet<E>(sub, predicate);
+        final SortedSet<E> head = decorated().headSet(toElement);
+        return new PredicatedSortedSet<E>(head, predicate);
     }
 
     public SortedSet<E> tailSet(final E fromElement) {
-        final SortedSet<E> sub = decorated().tailSet(fromElement);
-        return new PredicatedSortedSet<E>(sub, predicate);
+        final SortedSet<E> tail = decorated().tailSet(fromElement);
+        return new PredicatedSortedSet<E>(tail, predicate);
     }
 
 }

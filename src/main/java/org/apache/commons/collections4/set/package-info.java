@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 /**
- * This package contains implementations of the {@link java.util.Set Set} and
- * {@link java.util.SortedSet SortedSet} interfaces.
+ * This package contains implementations of the {@link java.util.Set Set},
+ * {@link java.util.SortedSet SortedSet} and
+ * {@link java.util.NavigableSet NavigableSet} interfaces.
  * <p>
  * The implementations are in the form of direct implementations and decorators.
  * A decorator wraps another implementation of the interface to add some

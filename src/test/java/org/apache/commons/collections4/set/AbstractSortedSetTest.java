@@ -173,7 +173,6 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
         final int lobound = length / 3;
         final int hibound = lobound * 2;
         return new TestSortedSetSubSet(hibound, true);
-
     }
 
     /**
