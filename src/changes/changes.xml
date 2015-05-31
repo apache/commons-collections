@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-565" dev="tn" type="add">
+      Added decorators for "NavigableSet" interface.
+    </action>
     <action issue="COLLECTIONS-464" dev="tn" type="add">
       Added new class "FluentIterable" to support a fluent API for manipulating
       Iterable instances. Additionally various supporting methods have been
@@ -98,10 +101,6 @@
     <action issue="COLLECTIONS-540" dev="tn" type="fix" due-to="Daniel Stewart, Issam El Atif">
       Added overloaded method "CollectionUtils#get(Enumeration, int)" and simplified
       code for "CollectionUtils#get(Object, int)".
-    </action>
-    <action issue="COLLECTIONS-518" dev="tn" type="fix" due-to="Dipanjan Laha">
-      The abstract decorator "AbstractIterableGetMapDecorator" was not declared
-      abstract.
     </action>
     <action issue="COLLECTIONS-536" dev="tn" type="fix" due-to="Tagir Valeev">
       Improved check for null input in "MapUtils#putAll(Map, Object[])".

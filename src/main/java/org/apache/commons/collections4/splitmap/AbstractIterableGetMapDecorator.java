@@ -31,7 +31,7 @@ import org.apache.commons.collections4.map.EntrySetToMapIteratorAdapter;
  * @since 4.0
  * @version $Id$
  */
-public abstract class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> {
+public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> {
 
     /** The map to decorate */
     transient Map<K, V> map;
