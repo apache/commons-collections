@@ -105,8 +105,8 @@ public class MultiMapUtilsTest {
     }
 
     @Test
-    public void testGetList() {
-        assertNull(MultiMapUtils.getList(null, "key1"));
+    public void testGetValuesAsList() {
+        assertNull(MultiMapUtils.getValuesAsList(null, "key1"));
 
         String values[] = { "v1", "v2", "v3" };
         final MultiValuedMap<String, String> map = new MultiValuedHashMap<String, String>();
@@ -114,7 +114,7 @@ public class MultiMapUtilsTest {
             map.put("key1", val);
         }
 
-        List<String> list = MultiMapUtils.getList(map, "key1");
+        List<String> list = MultiMapUtils.getValuesAsList(map, "key1");
         int i = 0;
         for (String val : list) {
             assertTrue(val.equals(values[i++]));
@@ -122,8 +122,8 @@ public class MultiMapUtilsTest {
     }
 
     @Test
-    public void testGetSet() {
-        assertNull(MultiMapUtils.getList(null, "key1"));
+    public void testGetValuesAsSet() {
+        assertNull(MultiMapUtils.getValuesAsList(null, "key1"));
 
         String values[] = { "v1", "v2", "v3" };
         final MultiValuedMap<String, String> map = new MultiValuedHashMap<String, String>();
@@ -132,7 +132,7 @@ public class MultiMapUtilsTest {
             map.put("key1", val);
         }
 
-        Set<String> set = MultiMapUtils.getSet(map, "key1");
+        Set<String> set = MultiMapUtils.getValuesAsSet(map, "key1");
         assertEquals(3, set.size());
         for (String val : values) {
             assertTrue(set.contains(val));
@@ -140,8 +140,8 @@ public class MultiMapUtilsTest {
     }
 
     @Test
-    public void testGetBag() {
-        assertNull(MultiMapUtils.getBag(null, "key1"));
+    public void testGetValuesAsBag() {
+        assertNull(MultiMapUtils.getValuesAsBag(null, "key1"));
 
         String values[] = { "v1", "v2", "v3" };
         final MultiValuedMap<String, String> map = new MultiValuedHashMap<String, String>();
@@ -150,7 +150,7 @@ public class MultiMapUtilsTest {
             map.put("key1", val);
         }
 
-        Bag<String> bag = MultiMapUtils.getBag(map, "key1");
+        Bag<String> bag = MultiMapUtils.getValuesAsBag(map, "key1");
         assertEquals(6, bag.size());
         for (String val : values) {
             assertTrue(bag.contains(val));
