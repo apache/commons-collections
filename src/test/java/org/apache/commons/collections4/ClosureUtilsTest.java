@@ -16,19 +16,23 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import junit.framework.TestCase;
-
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.functors.ExceptionClosure;
 import org.apache.commons.collections4.functors.FalsePredicate;
 import org.apache.commons.collections4.functors.NOPClosure;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.Test;
 
 /**
  * Tests the ClosureUtils class.
@@ -36,7 +40,7 @@ import org.apache.commons.collections4.functors.TruePredicate;
  * @since 3.0
  * @version $Id$
  */
-public class ClosureUtilsTest extends TestCase {
+public class ClosureUtilsTest {
 
     private static final Object cString = "Hello";
 
@@ -64,6 +68,7 @@ public class ClosureUtilsTest extends TestCase {
     // exceptionClosure
     //------------------------------------------------------------------
 
+    @Test
     public void testExceptionClosure() {
         assertNotNull(ClosureUtils.exceptionClosure());
         assertSame(ClosureUtils.exceptionClosure(), ClosureUtils.exceptionClosure());
@@ -82,6 +87,7 @@ public class ClosureUtilsTest extends TestCase {
     // nopClosure
     //------------------------------------------------------------------
 
+    @Test
     public void testNopClosure() {
         final StringBuilder buf = new StringBuilder("Hello");
         ClosureUtils.nopClosure().execute(null);
@@ -93,6 +99,7 @@ public class ClosureUtilsTest extends TestCase {
     // invokeClosure
     //------------------------------------------------------------------
 
+    @Test
     public void testInvokeClosure() {
         StringBuffer buf = new StringBuffer("Hello"); // Only StringBuffer has setLength() method
         ClosureUtils.invokerClosure("reverse").execute(buf);
@@ -105,6 +112,7 @@ public class ClosureUtilsTest extends TestCase {
     // forClosure
     //------------------------------------------------------------------
 
+    @Test
     public void testForClosure() {
         final MockClosure<Object> cmd = new MockClosure<Object>();
         ClosureUtils.forClosure(5, cmd).execute(null);
@@ -119,6 +127,7 @@ public class ClosureUtilsTest extends TestCase {
     // whileClosure
     //------------------------------------------------------------------
 
+    @Test
     public void testWhileClosure() {
         MockClosure<Object> cmd = new MockClosure<Object>();
         ClosureUtils.whileClosure(FalsePredicate.falsePredicate(), cmd).execute(null);
@@ -145,6 +154,7 @@ public class ClosureUtilsTest extends TestCase {
     // doWhileClosure
     //------------------------------------------------------------------
 
+    @Test
     public void testDoWhileClosure() {
         MockClosure<Object> cmd = new MockClosure<Object>();
         ClosureUtils.doWhileClosure(cmd, FalsePredicate.falsePredicate()).execute(null);
@@ -163,6 +173,7 @@ public class ClosureUtilsTest extends TestCase {
     // chainedClosure
     //------------------------------------------------------------------
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testChainedClosure() {
         MockClosure<Object> a = new MockClosure<Object>();
@@ -218,6 +229,7 @@ public class ClosureUtilsTest extends TestCase {
     // ifClosure
     //------------------------------------------------------------------
 
+    @Test
     public void testIfClosure() {
         MockClosure<Object> a = new MockClosure<Object>();
         MockClosure<Object> b = null;
@@ -244,6 +256,7 @@ public class ClosureUtilsTest extends TestCase {
     // switchClosure
     //------------------------------------------------------------------
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testSwitchClosure() {
         final MockClosure<String> a = new MockClosure<String>();
@@ -335,6 +348,7 @@ public class ClosureUtilsTest extends TestCase {
     // switchMapClosure
     //------------------------------------------------------------------
 
+    @Test
     public void testSwitchMapClosure() {
         final MockClosure<String> a = new MockClosure<String>();
         final MockClosure<String> b = new MockClosure<String>();
@@ -377,6 +391,7 @@ public class ClosureUtilsTest extends TestCase {
     // asClosure
     //------------------------------------------------------------------
 
+    @Test
     public void testTransformerClosure() {
         final MockTransformer<Object> mock = new MockTransformer<Object>();
         final Closure<Object> closure = ClosureUtils.asClosure(mock);
@@ -392,9 +407,10 @@ public class ClosureUtilsTest extends TestCase {
     //------------------------------------------------------------------
 
     /**
-     * Test that all Closure singletones hold singleton pattern in
+     * Test that all Closure singletons hold singleton pattern in
      * serialization/deserialization process.
      */
+    @Test
     public void testSingletonPatternInSerialization() {
         final Object[] singletones = new Object[] {
                 ExceptionClosure.INSTANCE,

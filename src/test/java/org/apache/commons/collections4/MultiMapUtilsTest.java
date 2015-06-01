@@ -16,13 +16,18 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.collections4.multimap.MultiValuedHashMap;
-
-import junit.framework.Test;
+import org.junit.Test;
 
 /**
  * Tests for MultiMapUtils
@@ -30,16 +35,9 @@ import junit.framework.Test;
  * @since 4.1
  * @version $Id$
  */
-public class MultiMapUtilsTest extends BulkTest {
+public class MultiMapUtilsTest {
 
-    public static Test suite() {
-        return BulkTest.makeSuite(MultiMapUtilsTest.class);
-    }
-
-    public MultiMapUtilsTest(String name) {
-        super(name);
-    }
-
+    @Test
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public void testEmptyUnmodifiableMultiValuedMap() {
         final MultiValuedMap map = MultiMapUtils.EMPTY_MULTI_VALUED_MAP;
@@ -51,6 +49,7 @@ public class MultiMapUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testTypeSafeEmptyMultiValuedMap() {
         final MultiValuedMap<String, String> map = MultiMapUtils.<String, String>emptyMultiValuedMap();
         assertTrue(map.isEmpty());
@@ -61,6 +60,7 @@ public class MultiMapUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testEmptyIfNull() {
         assertTrue(MultiMapUtils.emptyIfNull(null).isEmpty());
 
@@ -69,22 +69,26 @@ public class MultiMapUtilsTest extends BulkTest {
         assertFalse(MultiMapUtils.emptyIfNull(map).isEmpty());
     }
 
+    @Test
     public void testIsEmptyWithEmptyMap() {
         final MultiValuedMap<Object, Object> map = new MultiValuedHashMap<Object, Object>();
         assertEquals(true, MultiMapUtils.isEmpty(map));
     }
 
+    @Test
     public void testIsEmptyWithNonEmptyMap() {
         final MultiValuedMap<String, String> map = new MultiValuedHashMap<String, String>();
         map.put("item", "value");
         assertEquals(false, MultiMapUtils.isEmpty(map));
     }
 
+    @Test
     public void testIsEmptyWithNull() {
         final MultiValuedMap<Object, Object> map = null;
         assertEquals(true, MultiMapUtils.isEmpty(map));
     }
 
+    @Test
     public void testGetCollection() {
         assertNull(MultiMapUtils.getCollection(null, "key1"));
 
@@ -100,6 +104,7 @@ public class MultiMapUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testGetList() {
         assertNull(MultiMapUtils.getList(null, "key1"));
 
@@ -116,6 +121,7 @@ public class MultiMapUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testGetSet() {
         assertNull(MultiMapUtils.getList(null, "key1"));
 
@@ -133,6 +139,7 @@ public class MultiMapUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testGetBag() {
         assertNull(MultiMapUtils.getBag(null, "key1"));
 

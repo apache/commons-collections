@@ -16,7 +16,9 @@
  */
 package org.apache.commons.collections4;
 
-import junit.framework.Test;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.bag.PredicatedBag;
@@ -29,31 +31,21 @@ import org.apache.commons.collections4.bag.TreeBag;
 import org.apache.commons.collections4.bag.UnmodifiableBag;
 import org.apache.commons.collections4.bag.UnmodifiableSortedBag;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.Test;
 
 /**
  * Tests for BagUtils factory methods.
  *
  * @version $Id$
  */
-public class BagUtilsTest extends BulkTest {
+public class BagUtilsTest {
 
-    public BagUtilsTest(final String name) {
-        super(name);
-    }
-
-
-    public static Test suite() {
-        return BulkTest.makeSuite(BagUtilsTest.class);
-    }
-
-    //----------------------------------------------------------------------
-
-    protected Class<?> stringClass = this.getName().getClass();
     protected Predicate<Object> truePredicate = TruePredicate.truePredicate();
     protected Transformer<Object, Object> nopTransformer = TransformerUtils.nopTransformer();
 
     //----------------------------------------------------------------------
 
+    @Test
     public void testSynchronizedBag() {
         Bag<Object> bag = BagUtils.synchronizedBag(new HashBag<Object>());
         assertTrue("Returned object should be a SynchronizedBag.",
@@ -66,6 +58,7 @@ public class BagUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testUnmodifiableBag() {
         Bag<Object> bag = BagUtils.unmodifiableBag(new HashBag<Object>());
         assertTrue("Returned object should be an UnmodifiableBag.",
@@ -80,6 +73,7 @@ public class BagUtilsTest extends BulkTest {
         assertSame("UnmodifiableBag shall not be decorated", bag, BagUtils.unmodifiableBag(bag));
     }
 
+    @Test
     public void testPredicatedBag() {
         Bag<Object> bag = BagUtils.predicatedBag(new HashBag<Object>(), truePredicate);
         assertTrue("Returned object should be a PredicatedBag.",
@@ -98,7 +92,8 @@ public class BagUtilsTest extends BulkTest {
         }
     }
 
-     public void testTransformedBag() {
+    @Test
+    public void testTransformedBag() {
         Bag<Object> bag = BagUtils.transformingBag(new HashBag<Object>(), nopTransformer);
         assertTrue("Returned object should be an TransformedBag.",
             bag instanceof TransformedBag);
@@ -116,6 +111,7 @@ public class BagUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testSynchronizedSortedBag() {
         Bag<Object> bag = BagUtils.synchronizedSortedBag(new TreeBag<Object>());
         assertTrue("Returned object should be a SynchronizedSortedBag.",
@@ -128,6 +124,7 @@ public class BagUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testUnmodifiableSortedBag() {
         SortedBag<Object> bag = BagUtils.unmodifiableSortedBag(new TreeBag<Object>());
         assertTrue("Returned object should be an UnmodifiableSortedBag.",
@@ -142,6 +139,7 @@ public class BagUtilsTest extends BulkTest {
         assertSame("UnmodifiableSortedBag shall not be decorated", bag, BagUtils.unmodifiableSortedBag(bag));
     }
 
+    @Test
     public void testPredicatedSortedBag() {
         Bag<Object> bag = BagUtils.predicatedSortedBag(new TreeBag<Object>(), truePredicate);
         assertTrue("Returned object should be a PredicatedSortedBag.",
@@ -160,6 +158,7 @@ public class BagUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testTransformedSortedBag() {
         Bag<Object> bag = BagUtils.transformingSortedBag(new TreeBag<Object>(), nopTransformer);
         assertTrue("Returned object should be an TransformedSortedBag",

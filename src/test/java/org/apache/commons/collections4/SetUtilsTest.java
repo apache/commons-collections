@@ -16,33 +16,27 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.set.PredicatedSet;
+import org.junit.Test;
 
 /**
  * Tests for SetUtils.
  *
  * @version $Id$
  */
-public class SetUtilsTest extends BulkTest {
+public class SetUtilsTest {
 
-    public SetUtilsTest(final String name) {
-        super(name);
-    }
-
-    public static Test suite() {
-        return BulkTest.makeSuite(SetUtilsTest.class);
-    }
-
-    public void testNothing() {
-    }
-
+    @Test
     public void testpredicatedSet() {
         final Predicate<Object> predicate = new Predicate<Object>() {
             public boolean evaluate(final Object o) {
@@ -65,6 +59,7 @@ public class SetUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testEmptyIfNull() {
         assertTrue(SetUtils.emptyIfNull(null).isEmpty());
 
@@ -72,6 +67,7 @@ public class SetUtilsTest extends BulkTest {
         assertSame(set, SetUtils.emptyIfNull(set));
     }
 
+    @Test
     public void testEquals() {
         final Collection<String> data = Arrays.asList("a", "b", "c");
 
@@ -87,6 +83,7 @@ public class SetUtilsTest extends BulkTest {
         assertEquals(true, SetUtils.isEqualSet(null, null));
     }
 
+    @Test
     public void testHashCode() {
         final Collection<String> data = Arrays.asList("a", "b", "c");
 
@@ -102,6 +99,7 @@ public class SetUtilsTest extends BulkTest {
         assertEquals(0, SetUtils.hashCodeForSet(null));
     }
 
+    @Test
     public void testNewIdentityHashSet() {
         Set<String> set = SetUtils.newIdentityHashSet();
         String a = new String("a");

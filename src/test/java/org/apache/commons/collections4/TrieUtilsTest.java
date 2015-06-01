@@ -16,29 +16,24 @@
  */
 package org.apache.commons.collections4;
 
-import junit.framework.Test;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.apache.commons.collections4.trie.PatriciaTrie;
 import org.apache.commons.collections4.trie.UnmodifiableTrie;
+import org.junit.Test;
 
 /**
  * Tests for TrieUtils factory methods.
  *
  * @version $Id$
  */
-public class TrieUtilsTest extends BulkTest {
-
-    public TrieUtilsTest(final String name) {
-        super(name);
-    }
-
-
-    public static Test suite() {
-        return BulkTest.makeSuite(TrieUtilsTest.class);
-    }
+public class TrieUtilsTest {
 
     //----------------------------------------------------------------------
 
+    @Test
     public void testUnmodifiableTrie() {
         Trie<String, Object> trie = TrieUtils.unmodifiableTrie(new PatriciaTrie<Object>());
         assertTrue("Returned object should be an UnmodifiableTrie.",

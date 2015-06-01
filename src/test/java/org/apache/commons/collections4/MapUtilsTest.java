@@ -16,6 +16,12 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Collection;
@@ -30,8 +36,6 @@ import java.util.TreeMap;
 import java.util.List;
 import java.util.ArrayList;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
 import org.apache.commons.collections4.keyvalue.DefaultKeyValue;
 import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
@@ -39,6 +43,7 @@ import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.collections4.map.LazyMap;
 import org.apache.commons.collections4.map.MultiValueMap;
 import org.apache.commons.collections4.map.PredicatedMap;
+import org.junit.Test;
 
 /**
  * Tests for MapUtils.
@@ -46,15 +51,7 @@ import org.apache.commons.collections4.map.PredicatedMap;
  * @version $Id$
  */
 @SuppressWarnings("boxing")
-public class MapUtilsTest extends BulkTest {
-
-    public MapUtilsTest(final String name) {
-        super(name);
-    }
-
-    public static Test suite() {
-        return BulkTest.makeSuite(MapUtilsTest.class);
-    }
+public class MapUtilsTest {
 
     public Predicate<Object> getPredicate() {
         return new Predicate<Object>() {
@@ -64,6 +61,7 @@ public class MapUtilsTest extends BulkTest {
         };
     }
 
+    @Test
     public void testPredicatedMap() {
         final Predicate<Object> p = getPredicate();
         Map<Object, Object> map = MapUtils.predicatedMap(new HashMap<Object, Object>(), p, p);
@@ -76,6 +74,7 @@ public class MapUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testLazyMapFactory() {
         final Factory<Integer> factory = FactoryUtils.constantFactory(Integer.valueOf(5));
         Map<Object, Object> map = MapUtils.lazyMap(new HashMap<Object, Object>(), factory);
@@ -109,6 +108,7 @@ public class MapUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testLazyMapTransformer() {
         final Map<Object, Object> map = MapUtils.lazyMap(new HashMap<Object, Object>(), new Transformer<Object, Object>() {
             public Object transform(final Object mapKey) {
@@ -129,6 +129,7 @@ public class MapUtilsTest extends BulkTest {
         assertSame(i1, i2);
     }
 
+    @Test
     public void testInvertMap() {
         final Map<String, String> in = new HashMap<String, String>(5, 1);
         in.put("1", "A");
@@ -155,6 +156,7 @@ public class MapUtilsTest extends BulkTest {
         assertEquals( "5", out.get("E"));
     }
 
+    @Test
     public void testPutAll_Map_array() {
         try {
             MapUtils.putAll(null, null);
@@ -266,6 +268,7 @@ public class MapUtilsTest extends BulkTest {
         assertEquals(3, test.size());
     }
 
+    @Test
     public void testConvertResourceBundle() {
         final Map<String, String> in = new HashMap<String, String>( 5 , 1 );
         in.put("1", "A");
@@ -296,6 +299,7 @@ public class MapUtilsTest extends BulkTest {
         assertTrue( in.equals(out));
     }
 
+    @Test
     public void testDebugAndVerbosePrintCasting() {
         final Map<Integer, String> inner = new HashMap<Integer, String>(2, 1);
         inner.put(2, "B");
@@ -315,6 +319,7 @@ public class MapUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testDebugAndVerbosePrintNullMap() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
@@ -334,6 +339,7 @@ public class MapUtilsTest extends BulkTest {
         assertEquals(EXPECTED_OUT, out.toString());
     }
 
+    @Test
     public void testVerbosePrintNullLabel() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
@@ -357,6 +363,7 @@ public class MapUtilsTest extends BulkTest {
         assertEquals(EXPECTED_OUT, out.toString());
     }
 
+    @Test
     public void testDebugPrintNullLabel() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
@@ -380,6 +387,7 @@ public class MapUtilsTest extends BulkTest {
         assertEquals(EXPECTED_OUT, out.toString());
     }
 
+    @Test
     public void testVerbosePrintNullLabelAndMap() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
@@ -392,6 +400,7 @@ public class MapUtilsTest extends BulkTest {
         assertEquals(EXPECTED_OUT, out.toString());
     }
 
+    @Test
     public void testDebugPrintNullLabelAndMap() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
@@ -404,6 +413,7 @@ public class MapUtilsTest extends BulkTest {
         assertEquals(EXPECTED_OUT, out.toString());
     }
 
+    @Test
     public void testVerbosePrintNullStream() {
         try {
             MapUtils.verbosePrint(null, "Map", new HashMap<Object, Object>());
@@ -412,6 +422,7 @@ public class MapUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testDebugPrintNullStream() {
         try {
             MapUtils.debugPrint(null, "Map", new HashMap<Object, Object>());
@@ -420,6 +431,7 @@ public class MapUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testDebugPrintNullKey() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
@@ -439,6 +451,7 @@ public class MapUtilsTest extends BulkTest {
         assertEquals(EXPECTED_OUT, out.toString());
     }
 
+    @Test
     public void testVerbosePrintNullKey() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
@@ -458,6 +471,7 @@ public class MapUtilsTest extends BulkTest {
         assertEquals(EXPECTED_OUT, out.toString());
     }
 
+    @Test
     public void testDebugPrintNullKeyToMap1() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
@@ -477,6 +491,7 @@ public class MapUtilsTest extends BulkTest {
         assertEquals(EXPECTED_OUT, out.toString());
     }
 
+    @Test
     public void testVerbosePrintNullKeyToMap1() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
@@ -496,6 +511,7 @@ public class MapUtilsTest extends BulkTest {
         assertEquals(EXPECTED_OUT, out.toString());
     }
 
+    @Test
     public void testDebugPrintNullKeyToMap2() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
@@ -520,6 +536,7 @@ public class MapUtilsTest extends BulkTest {
         assertEquals(EXPECTED_OUT, out.toString());
     }
 
+    @Test
     public void testVerbosePrintNullKeyToMap2() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
@@ -544,6 +561,7 @@ public class MapUtilsTest extends BulkTest {
         assertEquals(EXPECTED_OUT, out.toString());
     }
 
+    @Test
     public void testVerbosePrint() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
@@ -579,6 +597,7 @@ public class MapUtilsTest extends BulkTest {
         assertEquals(EXPECTED_OUT, out.toString());
     }
 
+    @Test
     public void testDebugPrint() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
@@ -614,6 +633,7 @@ public class MapUtilsTest extends BulkTest {
         assertEquals(EXPECTED_OUT, out.toString());
     }
 
+    @Test
     public void testVerbosePrintSelfReference() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
@@ -660,6 +680,7 @@ public class MapUtilsTest extends BulkTest {
         assertEquals(EXPECTED_OUT, out.toString());
     }
 
+    @Test
     public void testDebugPrintSelfReference() {
         final ByteArrayOutputStream out = new ByteArrayOutputStream();
         final PrintStream outPrint = new PrintStream(out);
@@ -708,6 +729,7 @@ public class MapUtilsTest extends BulkTest {
 
     //-----------------------------------------------------------------------
 
+    @Test
     public void testEmptyIfNull() {
         assertTrue(MapUtils.emptyIfNull(null).isEmpty());
 
@@ -715,38 +737,45 @@ public class MapUtilsTest extends BulkTest {
         assertSame(map, MapUtils.emptyIfNull(map));
     }
 
+    @Test
     public void testIsEmptyWithEmptyMap() {
         final Map<Object, Object> map = new HashMap<Object, Object>();
         assertEquals(true, MapUtils.isEmpty(map));
     }
 
+    @Test
     public void testIsEmptyWithNonEmptyMap() {
         final Map<String, String> map = new HashMap<String, String>();
         map.put("item", "value");
         assertEquals(false, MapUtils.isEmpty(map));
     }
 
+    @Test
     public void testIsEmptyWithNull() {
         final Map<Object, Object> map = null;
         assertEquals(true, MapUtils.isEmpty(map));
     }
 
+    @Test
     public void testIsNotEmptyWithEmptyMap() {
         final Map<Object, Object> map = new HashMap<Object, Object>();
         assertEquals(false, MapUtils.isNotEmpty(map));
     }
 
+    @Test
     public void testIsNotEmptyWithNonEmptyMap() {
         final Map<String, String> map = new HashMap<String, String>();
         map.put("item", "value");
         assertEquals(true, MapUtils.isNotEmpty(map));
     }
 
+    @Test
     public void testIsNotEmptyWithNull() {
         final Map<Object, Object> map = null;
         assertEquals(false, MapUtils.isNotEmpty(map));
     }
 
+    @Test
     public void testPopulateMap() {
         // Setup Test Data
         final List<String> list = new ArrayList<String>();
@@ -801,6 +830,7 @@ public class MapUtilsTest extends BulkTest {
 
     }
 
+    @Test
     public void testPopulateMultiMap() {
         // Setup Test Data
         final List<X> list = new ArrayList<X>();
@@ -825,6 +855,7 @@ public class MapUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testIterableMap() {
         try {
             MapUtils.iterableMap(null);
@@ -842,6 +873,7 @@ public class MapUtilsTest extends BulkTest {
         assertSame(hMap, MapUtils.iterableMap(hMap));
     }
 
+    @Test
     public void testIterableSortedMap() {
         try {
             MapUtils.iterableSortedMap(null);

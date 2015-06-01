@@ -16,12 +16,20 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.collections4.functors.NOPTransformer;
 import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.collections4.splitmap.TransformedSplitMap;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for {@link TransformedSplitMap}
@@ -30,7 +38,7 @@ import org.apache.commons.collections4.splitmap.TransformedSplitMap;
  * @version $Id$
  */
 @SuppressWarnings("boxing")
-public class SplitMapUtilsTest extends BulkTest {
+public class SplitMapUtilsTest {
     private Map<String, Integer> backingMap;
     private TransformedSplitMap<String, String, String, Integer> transformedMap;
 
@@ -40,13 +48,8 @@ public class SplitMapUtilsTest extends BulkTest {
         }
     };
 
-    public SplitMapUtilsTest(final String testName) {
-        super(testName);
-    }
-
-    @Override
-    protected void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() throws Exception {
         backingMap = new HashMap<String, Integer>();
         transformedMap = TransformedSplitMap.transformingMap(backingMap, NOPTransformer.<String> nopTransformer(),
                 stringToInt);
@@ -57,6 +60,7 @@ public class SplitMapUtilsTest extends BulkTest {
 
     // -----------------------------------------------------------------------
 
+    @Test
     public void testReadableMap() {
         final IterableMap<String, Integer> map = SplitMapUtils.readableMap(transformedMap);
 
@@ -118,11 +122,13 @@ public class SplitMapUtilsTest extends BulkTest {
         assertSame(map, SplitMapUtils.readableMap(map));
     }
 
+    @Test
     public void testAlreadyReadableMap() {
         final HashedMap<String, Integer> hashedMap = new HashedMap<String, Integer>();
         assertSame(hashedMap, SplitMapUtils.readableMap(hashedMap));
     }
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testWritableMap() {
         final Map<String, String> map = SplitMapUtils.writableMap(transformedMap);
@@ -197,6 +203,7 @@ public class SplitMapUtilsTest extends BulkTest {
         assertSame(map, SplitMapUtils.writableMap((Put<String, String>) map));
     }
 
+    @Test
     public void testAlreadyWritableMap() {
         final HashedMap<String, String> hashedMap = new HashedMap<String, String>();
         assertSame(hashedMap, SplitMapUtils.writableMap(hashedMap));

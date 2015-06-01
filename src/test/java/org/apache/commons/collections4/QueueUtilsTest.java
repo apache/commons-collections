@@ -16,39 +16,32 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.LinkedList;
 import java.util.Queue;
-
-import junit.framework.Test;
 
 import org.apache.commons.collections4.functors.TruePredicate;
 import org.apache.commons.collections4.queue.PredicatedQueue;
 import org.apache.commons.collections4.queue.TransformedQueue;
 import org.apache.commons.collections4.queue.UnmodifiableQueue;
+import org.junit.Test;
 
 /**
  * Tests for QueueUtils factory methods.
  * 
  * @version $Id$
  */
-public class QueueUtilsTest extends BulkTest {
+public class QueueUtilsTest {
 
-    public QueueUtilsTest(final String name) {
-        super(name);
-    }
-
-    public static Test suite() {
-        return BulkTest.makeSuite(QueueUtilsTest.class);
-    }
-
-    // ----------------------------------------------------------------------
-
-    protected Class<?> stringClass = this.getName().getClass();
     protected Predicate<Object> truePredicate = TruePredicate.truePredicate();
     protected Transformer<Object, Object> nopTransformer = TransformerUtils.nopTransformer();
 
     // ----------------------------------------------------------------------
 
+    @Test
     public void testUnmodifiableQueue() {
         Queue<Object> queue = QueueUtils.unmodifiableQueue(new LinkedList<Object>());
         assertTrue("Returned object should be an UnmodifiableQueue.", queue instanceof UnmodifiableQueue);
@@ -62,6 +55,7 @@ public class QueueUtilsTest extends BulkTest {
         assertSame("UnmodifiableQueue shall not be decorated", queue, QueueUtils.unmodifiableQueue(queue));
     }
 
+    @Test
     public void testPredicatedQueue() {
         Queue<Object> queue = QueueUtils.predicatedQueue(new LinkedList<Object>(), truePredicate);
         assertTrue("Returned object should be a PredicatedQueue.", queue instanceof PredicatedQueue);
@@ -79,6 +73,7 @@ public class QueueUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testTransformedQueue() {
         Queue<Object> queue = QueueUtils.transformingQueue(new LinkedList<Object>(), nopTransformer);
         assertTrue("Returned object should be an TransformedQueue.", queue instanceof TransformedQueue);
@@ -96,6 +91,7 @@ public class QueueUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testEmptyQueue() {
         Queue<Object> queue = QueueUtils.emptyQueue();
         assertTrue("Returned object should be an UnmodifiableQueue.", queue instanceof UnmodifiableQueue);

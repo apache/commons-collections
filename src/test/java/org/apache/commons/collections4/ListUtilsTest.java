@@ -16,6 +16,12 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -23,17 +29,17 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.list.PredicatedList;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for ListUtils.
  *
  * @version $Id$
  */
-public class ListUtilsTest extends BulkTest {
+public class ListUtilsTest {
 
     private static final String a = "a";
     private static final String b = "b";
@@ -45,26 +51,16 @@ public class ListUtilsTest extends BulkTest {
     private String[] fullArray;
     private List<String> fullList;
 
-    public ListUtilsTest(final String name) {
-        super(name);
-    }
-
-    public static Test suite() {
-        return BulkTest.makeSuite(ListUtilsTest.class);
-    }
-
-    @Override
+    @Before
     public void setUp() {
         fullArray = new String[]{a, b, c, d, e};
         fullList = new ArrayList<String>(Arrays.asList(fullArray));
     }
 
-    public void testNothing() {
-    }
-
     /**
      * Tests intersecting a non-empty list with an empty list.
      */
+    @Test
     public void testIntersectNonEmptyWithEmptyList() {
         final List<String> empty = Collections.<String>emptyList();
         assertTrue("result not empty", ListUtils.intersection(empty, fullList).isEmpty());
@@ -73,14 +69,16 @@ public class ListUtilsTest extends BulkTest {
     /**
      * Tests intersecting a non-empty list with an empty list.
      */
+    @Test
     public void testIntersectEmptyWithEmptyList() {
         final List<?> empty = Collections.EMPTY_LIST;
         assertTrue("result not empty", ListUtils.intersection(empty, empty).isEmpty());
     }
 
     /**
-     * Tests intersecting a non-empty list with an subset of iteself.
+     * Tests intersecting a non-empty list with an subset of itself.
      */
+    @Test
     public void testIntersectNonEmptySubset() {
         // create a copy
         final List<String> other = new ArrayList<String>(fullList);
@@ -94,8 +92,9 @@ public class ListUtilsTest extends BulkTest {
     }
 
     /**
-     * Tests intersecting a non-empty list with an subset of iteself.
+     * Tests intersecting a non-empty list with an subset of itself.
      */
+    @Test
     public void testIntersectListWithNoOverlapAndDifferentTypes() {
         @SuppressWarnings("boxing")
         final List<Integer> other = Arrays.asList(1, 23);
@@ -103,8 +102,9 @@ public class ListUtilsTest extends BulkTest {
     }
 
     /**
-     * Tests intersecting a non-empty list with iteself.
+     * Tests intersecting a non-empty list with itself.
      */
+    @Test
     public void testIntersectListWithSelf() {
         assertEquals(fullList, ListUtils.intersection(fullList, fullList));
     }
@@ -112,6 +112,7 @@ public class ListUtilsTest extends BulkTest {
     /**
      * Tests intersecting two lists in different orders.
      */
+    @Test
     public void testIntersectionOrderInsensitivity() {
         final List<String> one = new ArrayList<String>();
         final List<String> two = new ArrayList<String>();
@@ -124,6 +125,7 @@ public class ListUtilsTest extends BulkTest {
         assertEquals(ListUtils.intersection(one,two),ListUtils.intersection(two, one));
     }
 
+    @Test
     public void testPredicatedList() {
         final Predicate<Object> predicate = new Predicate<Object>() {
             public boolean evaluate(final Object o) {
@@ -146,6 +148,7 @@ public class ListUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testLazyList() {
         final List<Integer> list = ListUtils.lazyList(new ArrayList<Integer>(), new Factory<Integer>() {
 
@@ -164,6 +167,7 @@ public class ListUtilsTest extends BulkTest {
         assertEquals(6, list.size());
     }
 
+    @Test
     public void testEmptyIfNull() {
         assertTrue(ListUtils.emptyIfNull(null).isEmpty());
 
@@ -171,6 +175,7 @@ public class ListUtilsTest extends BulkTest {
         assertSame(list, ListUtils.emptyIfNull(list));
     }
 
+    @Test
     public void testDefaultIfNull() {
         assertTrue(ListUtils.defaultIfNull(null, Collections.emptyList()).isEmpty());
 
@@ -178,6 +183,7 @@ public class ListUtilsTest extends BulkTest {
         assertSame(list, ListUtils.defaultIfNull(list, Collections.<Long>emptyList()));
     }
 
+    @Test
     public void testEquals() {
         final Collection<String> data = Arrays.asList("a", "b", "c");
 
@@ -193,6 +199,7 @@ public class ListUtilsTest extends BulkTest {
         assertEquals(true, ListUtils.isEqualList(null, null));
     }
 
+    @Test
     public void testHashCode() {
         final Collection<String> data = Arrays.asList("a", "b", "c");
 
@@ -208,6 +215,7 @@ public class ListUtilsTest extends BulkTest {
         assertEquals(0, ListUtils.hashCodeForList(null));
     }
 
+    @Test
     public void testRetainAll() {
         final List<String> sub = new ArrayList<String>();
         sub.add(a);
@@ -227,6 +235,7 @@ public class ListUtilsTest extends BulkTest {
         } catch(final NullPointerException npe){} // this is what we want
     }
 
+    @Test
     public void testRemoveAll() {
         final List<String> sub = new ArrayList<String>();
         sub.add(a);
@@ -244,6 +253,7 @@ public class ListUtilsTest extends BulkTest {
         } catch(final NullPointerException npe) {} // this is what we want
     }
 
+    @Test
     public void testSubtract() {
         final List<String> list = new ArrayList<String>();
         list.add(a);
@@ -270,6 +280,7 @@ public class ListUtilsTest extends BulkTest {
         } catch(final NullPointerException npe) {} // this is what we want
     }
 
+    @Test
     public void testSubtractNullElement() {
         final List<String> list = new ArrayList<String>();
         list.add(a);
@@ -294,6 +305,7 @@ public class ListUtilsTest extends BulkTest {
     /**
      * Tests the <code>indexOf</code> method in <code>ListUtils</code> class..
      */
+    @Test
     public void testIndexOf() {
         Predicate<String> testPredicate = EqualPredicate.equalPredicate("d");
         int index = ListUtils.indexOf(fullList, testPredicate);
@@ -307,6 +319,7 @@ public class ListUtilsTest extends BulkTest {
         assertEquals(ListUtils.indexOf(fullList, null), -1);
     }
 
+    @Test
     @SuppressWarnings("boxing") // OK in test code
     public void testLongestCommonSubsequence() {
 
@@ -348,6 +361,7 @@ public class ListUtilsTest extends BulkTest {
         assertTrue(lcs.isEmpty());
     }
 
+    @Test
     public void testLongestCommonSubsequenceWithString() {
 
       try {
@@ -383,8 +397,9 @@ public class ListUtilsTest extends BulkTest {
       lcs = ListUtils.longestCommonSubsequence(banana, zorro);
 
       assertEquals(0, lcs.length());
-  }
+    }
 
+    @Test
     @SuppressWarnings("boxing") // OK in test code
     public void testPartition() {
         final List<Integer> strings = new ArrayList<Integer>();
@@ -421,6 +436,7 @@ public class ListUtilsTest extends BulkTest {
         }
     };
 
+    @Test
     @SuppressWarnings("boxing") // OK in test code
     public void testSelect() {
         final List<Integer> list = new ArrayList<Integer>();
@@ -438,6 +454,7 @@ public class ListUtilsTest extends BulkTest {
         assertEquals(2, output2.iterator().next());
     }
 
+    @Test
     @SuppressWarnings("boxing") // OK in test code
     public void testSelectRejected() {
         final List<Long> list = new ArrayList<Long>();

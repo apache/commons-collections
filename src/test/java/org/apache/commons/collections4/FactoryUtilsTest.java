@@ -16,6 +16,13 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -36,25 +43,12 @@ import org.junit.Test;
  * @since 3.0
  * @version $Id$
  */
-public class FactoryUtilsTest extends junit.framework.TestCase {
-
-    /**
-     * Set up instance variables required by this test case.
-     */
-    @Override
-    public void setUp() {
-    }
-
-    /**
-     * Tear down instance variables required by this test case.
-     */
-    @Override
-    public void tearDown() {
-    }
+public class FactoryUtilsTest {
 
     // exceptionFactory
     //------------------------------------------------------------------
 
+    @Test
     public void testExceptionFactory() {
         assertNotNull(FactoryUtils.exceptionFactory());
         assertSame(FactoryUtils.exceptionFactory(), FactoryUtils.exceptionFactory());
@@ -73,6 +67,7 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
     // nullFactory
     //------------------------------------------------------------------
 
+    @Test
     public void testNullFactory() {
         final Factory<Object> factory = FactoryUtils.nullFactory();
         assertNotNull(factory);
@@ -83,6 +78,7 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
     // constantFactory
     //------------------------------------------------------------------
 
+    @Test
     public void testConstantFactoryNull() {
         final Factory<Object> factory = FactoryUtils.constantFactory(null);
         assertNotNull(factory);
@@ -90,6 +86,7 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
         assertNull(created);
     }
 
+    @Test
     public void testConstantFactoryConstant() {
         final Integer constant = Integer.valueOf(9);
         final Factory<Integer> factory = FactoryUtils.constantFactory(constant);
@@ -101,10 +98,12 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
     // prototypeFactory
     //------------------------------------------------------------------
 
+    @Test
     public void testPrototypeFactoryNull() {
         assertSame(ConstantFactory.NULL_INSTANCE, FactoryUtils.prototypeFactory(null));
     }
 
+    @Test
     public void testPrototypeFactoryPublicCloneMethod() throws Exception {
         final Date proto = new Date();
         final Factory<Date> factory = FactoryUtils.prototypeFactory(proto);
@@ -123,6 +122,7 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
         in.close();
     }
 
+    @Test
     public void testPrototypeFactoryPublicCopyConstructor() throws Exception {
         final Mock1 proto = new Mock1(6);
         Factory<Object> factory = FactoryUtils.<Object>prototypeFactory(proto);
@@ -149,6 +149,7 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
         in.close();
     }
 
+    @Test
     public void testPrototypeFactoryPublicSerialization() throws Exception {
         final Integer proto = Integer.valueOf(9);
         final Factory<Integer> factory = FactoryUtils.prototypeFactory(proto);
@@ -167,6 +168,7 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
         in.close();
     }
 
+    @Test
     public void testPrototypeFactoryPublicSerializationError() {
         final Mock2 proto = new Mock2(new Object());
         final Factory<Object> factory = FactoryUtils.<Object>prototypeFactory(proto);
@@ -180,6 +182,7 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
         fail();
     }
 
+    @Test
     public void testPrototypeFactoryPublicBad() {
         final Object proto = new Object();
         try {
@@ -296,6 +299,7 @@ public class FactoryUtilsTest extends junit.framework.TestCase {
      * Test that all Factory singletones hold singleton pattern in
      * serialization/deserialization process.
      */
+    @Test
     public void testSingletonPatternInSerialization() {
         final Object[] singletones = new Object[] {
                 ExceptionFactory.INSTANCE,

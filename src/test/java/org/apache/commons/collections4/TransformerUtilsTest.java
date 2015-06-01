@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -32,6 +37,7 @@ import org.apache.commons.collections4.functors.FalsePredicate;
 import org.apache.commons.collections4.functors.NOPTransformer;
 import org.apache.commons.collections4.functors.StringValueTransformer;
 import org.apache.commons.collections4.functors.TruePredicate;
+import org.junit.Test;
 
 /**
  * Tests the TransformerUtils class.
@@ -39,29 +45,16 @@ import org.apache.commons.collections4.functors.TruePredicate;
  * @since 3.0
  * @version $Id$
  */
-public class TransformerUtilsTest extends junit.framework.TestCase {
+public class TransformerUtilsTest {
 
     private static final Object cObject = new Object();
     private static final Object cString = "Hello";
     private static final Object cInteger = Integer.valueOf(6);
 
-    /**
-     * Set up instance variables required by this test case.
-     */
-    @Override
-    public void setUp() {
-    }
-
-    /**
-     * Tear down instance variables required by this test case.
-     */
-    @Override
-    public void tearDown() {
-    }
-
     // exceptionTransformer
     //------------------------------------------------------------------
 
+    @Test
     public void testExceptionTransformer() {
         assertNotNull(TransformerUtils.exceptionTransformer());
         assertSame(TransformerUtils.exceptionTransformer(), TransformerUtils.exceptionTransformer());
@@ -80,6 +73,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     // nullTransformer
     //------------------------------------------------------------------
 
+    @Test
     public void testNullTransformer() {
         assertNotNull(TransformerUtils.nullTransformer());
         assertSame(TransformerUtils.nullTransformer(), TransformerUtils.nullTransformer());
@@ -92,6 +86,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     // nopTransformer
     //------------------------------------------------------------------
 
+    @Test
     public void testNopTransformer() {
         assertNotNull(TransformerUtils.nullTransformer());
         assertSame(TransformerUtils.nullTransformer(), TransformerUtils.nullTransformer());
@@ -104,6 +99,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     // constantTransformer
     //------------------------------------------------------------------
 
+    @Test
     public void testConstantTransformer() {
         assertEquals(cObject, TransformerUtils.constantTransformer(cObject).transform(null));
         assertEquals(cObject, TransformerUtils.constantTransformer(cObject).transform(cObject));
@@ -115,6 +111,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     // cloneTransformer
     //------------------------------------------------------------------
 
+    @Test
     public void testCloneTransformer() {
         assertEquals(null, TransformerUtils.cloneTransformer().transform(null));
         assertEquals(cString, TransformerUtils.cloneTransformer().transform(cString));
@@ -130,6 +127,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     // mapTransformer
     //------------------------------------------------------------------
 
+    @Test
     @SuppressWarnings("boxing") // OK in test code
     public void testMapTransformer() {
         final Map<Object, Integer> map = new HashMap<Object, Integer>();
@@ -146,6 +144,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     // commandTransformer
     //------------------------------------------------------------------
 
+    @Test
     public void testExecutorTransformer() {
         assertEquals(null, TransformerUtils.asTransformer(ClosureUtils.nopClosure()).transform(null));
         assertEquals(cObject, TransformerUtils.asTransformer(ClosureUtils.nopClosure()).transform(cObject));
@@ -162,6 +161,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     // predicateTransformer
     //------------------------------------------------------------------
 
+    @Test
     public void testPredicateTransformer() {
         assertEquals(Boolean.TRUE, TransformerUtils.asTransformer(TruePredicate.truePredicate()).transform(null));
         assertEquals(Boolean.TRUE, TransformerUtils.asTransformer(TruePredicate.truePredicate()).transform(cObject));
@@ -178,6 +178,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     // factoryTransformer
     //------------------------------------------------------------------
 
+    @Test
     public void testFactoryTransformer() {
         assertEquals(null, TransformerUtils.asTransformer(FactoryUtils.nullFactory()).transform(null));
         assertEquals(null, TransformerUtils.asTransformer(FactoryUtils.nullFactory()).transform(cObject));
@@ -194,6 +195,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     // chainedTransformer
     //------------------------------------------------------------------
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testChainedTransformer() {
         final Transformer<Object, Object> a = TransformerUtils.<Object, Object>constantTransformer("A");
@@ -238,6 +240,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     // ifTransformer
     //------------------------------------------------------------------
 
+    @Test
     public void testIfTransformer() {
         final Transformer<Object, String> a = TransformerUtils.constantTransformer("A");
         final Transformer<Object, String> b = TransformerUtils.constantTransformer("B");
@@ -281,6 +284,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     // switchTransformer
     //------------------------------------------------------------------
 
+    @Test
     @SuppressWarnings("unchecked")
     public void testSwitchTransformer() {
         final Transformer<String, String> a = TransformerUtils.constantTransformer("A");
@@ -346,6 +350,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     // switchMapTransformer
     //------------------------------------------------------------------
 
+    @Test
     public void testSwitchMapTransformer() {
         final Transformer<String, String> a = TransformerUtils.constantTransformer("A");
         final Transformer<String, String> b = TransformerUtils.constantTransformer("B");
@@ -374,6 +379,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     // invokerTransformer
     //------------------------------------------------------------------
 
+    @Test
     public void testInvokerTransformer() {
         final List<Object> list = new ArrayList<Object>();
         assertEquals(Integer.valueOf(0), TransformerUtils.invokerTransformer("size").transform(list));
@@ -394,6 +400,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     // invokerTransformer2
     //------------------------------------------------------------------
 
+    @Test
     public void testInvokerTransformer2() {
         final List<Object> list = new ArrayList<Object>();
         assertEquals(Boolean.FALSE, TransformerUtils.invokerTransformer("contains",
@@ -430,6 +437,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     // stringValueTransformer
     //------------------------------------------------------------------
 
+    @Test
     public void testStringValueTransformer() {
         assertNotNull( "StringValueTransformer should NEVER return a null value.",
            TransformerUtils.stringValueTransformer().transform(null));
@@ -442,6 +450,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
     // instantiateFactory
     //------------------------------------------------------------------
 
+    @Test
     public void testInstantiateTransformerNull() {
         try {
             TransformerUtils.instantiateTransformer(null, new Object[] { "str" });
@@ -472,6 +481,7 @@ public class TransformerUtilsTest extends junit.framework.TestCase {
      * Test that all Transformer singletons hold singleton pattern in
      * serialization/deserialization process.
      */
+    @Test
     public void testSingletonPatternInSerialization() {
         final Object[] singletones = new Object[] {
                 CloneTransformer.INSTANCE,
