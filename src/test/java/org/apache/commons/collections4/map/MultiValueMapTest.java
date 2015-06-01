@@ -35,6 +35,7 @@ import org.apache.commons.collections4.MultiMap;
  * @since 3.2
  * @version $Id$
  */
+@Deprecated
 public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     public MultiValueMapTest(final String testName) {
