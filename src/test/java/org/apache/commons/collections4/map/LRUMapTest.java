@@ -62,12 +62,59 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getCompatibilityVersion() {
-        return "4";
+    public LRUMap<K, V> getMap() {
+        return (LRUMap<K, V>) super.getMap();
     }
 
     //-----------------------------------------------------------------------
+    public void testCtors() {
+        try {
+            new LRUMap<K, V>(0);
+            fail("maxSize must be positive");
+        } catch(IllegalArgumentException ex) {
+            // expected
+        }
+
+        try {
+            new LRUMap<K, V>(-1, 12, 0.75f, false);
+            fail("maxSize must be positive");
+        } catch(IllegalArgumentException ex) {
+            // expected
+        }
+
+        try {
+            new LRUMap<K, V>(10, -1);
+            fail("initialSize must not be negative");
+        } catch(IllegalArgumentException ex) {
+            // expected
+        }
+
+        try {
+            new LRUMap<K, V>(10, 12);
+            fail("initialSize must not be larger than maxSize");
+        } catch(IllegalArgumentException ex) {
+            // expected
+        }
+
+        try {
+            new LRUMap<K, V>(10, -1, 0.75f, false);
+            fail("initialSize must not be negative");
+        } catch(IllegalArgumentException ex) {
+            // expected
+        }
+
+        try {
+            new LRUMap<K, V>(10, 12, 0.75f, false);
+            fail("initialSize must not be larger than maxSize");
+        } catch(IllegalArgumentException ex) {
+            // expected
+        }
+    }
+
     public void testLRU() {
         if (!isPutAddSupported() || !isPutChangeSupported()) {
             return;
@@ -873,6 +920,11 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
                 + counter[0] + " did succeed", counter[0] >= threads.length);
     }
 
+    @Override
+    public String getCompatibilityVersion() {
+        return "4";
+    }
+
 //    public void testCreate() throws Exception {
 //        resetEmpty();
 //        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/LRUMap.emptyCollection.version4.obj");
@@ -880,11 +932,4 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 //        writeExternalFormToDisk((java.io.Serializable) map, "src/test/resources/data/test/LRUMap.fullCollection.version4.obj");
 //    }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public LRUMap<K, V> getMap() {
-        return (LRUMap<K, V>) super.getMap();
-    }
 }

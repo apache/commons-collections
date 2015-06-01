@@ -91,6 +91,19 @@ public class LRUMap<K, V>
      * Constructs a new, empty map with the specified maximum size.
      *
      * @param maxSize  the maximum size of the map
+     * @param initialSize  the initial size of the map
+     * @throws IllegalArgumentException if the maximum size is less than one
+     * @throws IllegalArgumentException if the initial size is negative or larger than the maximum size
+     * @since 4.1
+     */
+    public LRUMap(final int maxSize, final int initialSize) {
+        this(maxSize, initialSize, DEFAULT_LOAD_FACTOR);
+    }
+
+    /**
+     * Constructs a new, empty map with the specified maximum size.
+     *
+     * @param maxSize  the maximum size of the map
      * @param scanUntilRemovable  scan until a removeable entry is found, default false
      * @throws IllegalArgumentException if the maximum size is less than one
      * @since 3.1
@@ -100,10 +113,11 @@ public class LRUMap<K, V>
     }
 
     /**
-     * Constructs a new, empty map with the specified initial capacity and
+     * Constructs a new, empty map with the specified max capacity and
      * load factor.
      *
      * @param maxSize  the maximum size of the map
+     * @param initialSize  the initial size of the map
      * @param loadFactor  the load factor
      * @throws IllegalArgumentException if the maximum size is less than one
      * @throws IllegalArgumentException if the load factor is less than zero
@@ -113,8 +127,22 @@ public class LRUMap<K, V>
     }
 
     /**
-     * Constructs a new, empty map with the specified initial capacity and
+     * Constructs a new, empty map with the specified max / initial capacity and
      * load factor.
+     *
+     * @param maxSize  the maximum size of the map
+     * @param loadFactor  the load factor
+     * @throws IllegalArgumentException if the maximum size is less than one
+     * @throws IllegalArgumentException if the initial size is negative or larger than the maximum size
+     * @throws IllegalArgumentException if the load factor is less than zero
+     * @since 4.1
+     */
+    public LRUMap(final int maxSize, final int initialSize, final float loadFactor) {
+        this(maxSize, initialSize, loadFactor, false);
+    }
+
+    /**
+     * Constructs a new, empty map with the specified max capacity and load factor.
      *
      * @param maxSize  the maximum size of the map
      * @param loadFactor  the load factor
@@ -124,9 +152,28 @@ public class LRUMap<K, V>
      * @since 3.1
      */
     public LRUMap(final int maxSize, final float loadFactor, final boolean scanUntilRemovable) {
-        super(maxSize < 1 ? DEFAULT_CAPACITY : maxSize, loadFactor);
+        this(maxSize, maxSize, loadFactor, scanUntilRemovable);
+    }
+
+    /**
+     * Constructs a new, empty map with the specified max / initial capacity and load factor.
+     *
+     * @param maxSize  the maximum size of the map
+     * @param initialSize  the initial size of the map
+     * @param loadFactor  the load factor
+     * @param scanUntilRemovable  scan until a removeable entry is found, default false
+     * @throws IllegalArgumentException if the maximum size is less than one
+     * @throws IllegalArgumentException if the initial size is negative or larger than the maximum size
+     * @throws IllegalArgumentException if the load factor is less than zero
+     * @since 4.1
+     */
+    public LRUMap(final int maxSize, final int initialSize, final float loadFactor, final boolean scanUntilRemovable) {
+        super(initialSize, loadFactor);
         if (maxSize < 1) {
             throw new IllegalArgumentException("LRUMap max size must be greater than 0");
+        }
+        if (initialSize > maxSize) {
+            throw new IllegalArgumentException("LRUMap initial size must not be greather than max size");
         }
         this.maxSize = maxSize;
         this.scanUntilRemovable = scanUntilRemovable;
