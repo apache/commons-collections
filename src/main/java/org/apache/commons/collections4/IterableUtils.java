@@ -28,6 +28,11 @@ import org.apache.commons.collections4.iterators.ZippingIterator;
 
 /**
  * Provides utility methods and decorators for {@link Iterable} instances.
+ * <p>
+ * <b>Note</b>: by design, all provided utility methods will treat a {@code null}
+ * {@link Iterable} parameters the same way as an empty iterable. All other required
+ * parameters which are null, e.g. a {@link Predicate}, will result in a
+ * {@link NullPointerException}.
  *
  * @since 4.1
  * @version $Id$
@@ -485,6 +490,32 @@ public class IterableUtils {
      */
     public static <E> boolean matchesAny(final Iterable<E> iterable, final Predicate<? super E> predicate) {
         return IteratorUtils.matchesAny(emptyIteratorIfNull(iterable), predicate);
+    }
+
+    /**
+     * Counts the number of elements in the input iterable that match the predicate.
+     * <p>
+     * A <code>null</code> iterable matches no elements.
+     *
+     * @param <E>  the type of object the {@link Iterable} contains
+     * @param input  the {@link Iterable} to get the input from, may be null
+     * @param predicate  the predicate to use, may not be null
+     * @return the number of matches for the predicate in the collection
+     * @throws NullPointerException if predicate is null
+     */
+    public static <E> long frequency(final Iterable<E> input, final Predicate<? super E> predicate) {
+        if (predicate == null) {
+            throw new NullPointerException("Predicate must not be null.");
+        }
+        long count = 0;
+        if (input != null) {
+            for (final E o : input) {
+                if (predicate.evaluate(o)) {
+                    count++;
+                }
+            }
+        }
+        return count;
     }
 
     /**

@@ -806,7 +806,7 @@ public class CollectionUtils {
      * @param transformer  the transformer to perform, may be null
      */
     public static <C> void transform(final Collection<C> collection,
-            final Transformer<? super C, ? extends C> transformer) {
+                                     final Transformer<? super C, ? extends C> transformer) {
 
         if (collection != null && transformer != null) {
             if (collection instanceof List<?>) {
@@ -832,17 +832,11 @@ public class CollectionUtils {
      * @param input  the {@link Iterable} to get the input from, may be null
      * @param predicate  the predicate to use, may be null
      * @return the number of matches for the predicate in the collection
+     * @deprecated since 4.1, use {@link IterableUtils#frequency(Iterable, Predicate)} instead
      */
+    @Deprecated
     public static <C> int countMatches(final Iterable<C> input, final Predicate<? super C> predicate) {
-        int count = 0;
-        if (input != null && predicate != null) {
-            for (final C o : input) {
-                if (predicate.evaluate(o)) {
-                    count++;
-                }
-            }
-        }
-        return count;
+        return predicate == null ? 0 : (int) IterableUtils.frequency(input, predicate);
     }
 
     /**
@@ -855,16 +849,11 @@ public class CollectionUtils {
      * @param input  the {@link Iterable} to get the input from, may be null
      * @param predicate  the predicate to use, may be null
      * @return true if at least one element of the collection matches the predicate
+     * @deprecated since 4.1, use {@link IterableUtils#matchesAny(Iterable, Predicate)} instead
      */
+    @Deprecated
     public static <C> boolean exists(final Iterable<C> input, final Predicate<? super C> predicate) {
-        if (input != null && predicate != null) {
-            for (final C o : input) {
-                if (predicate.evaluate(o)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return predicate == null ? false : IterableUtils.matchesAny(input, predicate);
     }
 
     /**
@@ -880,20 +869,11 @@ public class CollectionUtils {
      * @return true if every element of the collection matches the predicate or if the
      * collection is empty, false otherwise
      * @since 4.0
+     * @deprecated since 4.1, use {@link IterableUtils#matchesAll(Iterable, Predicate)} instead
      */
+    @Deprecated
     public static <C> boolean matchesAll(final Iterable<C> input, final Predicate<? super C> predicate) {
-        if (predicate == null) {
-            return false;
-        }
-
-        if (input != null) {
-            for (final C o : input) {
-                if (!predicate.evaluate(o)) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        return predicate == null ? false : IterableUtils.matchesAll(input, predicate);
     }
 
     /**
@@ -909,7 +889,7 @@ public class CollectionUtils {
      * @throws NullPointerException if the input collection is null
      */
     public static <O> Collection<O> select(final Iterable<? extends O> inputCollection,
-            final Predicate<? super O> predicate) {
+                                           final Predicate<? super O> predicate) {
         final Collection<O> answer = inputCollection instanceof Collection<?> ?
                 new ArrayList<O>(((Collection<?>) inputCollection).size()) : new ArrayList<O>();
         return select(inputCollection, predicate, answer);
@@ -957,7 +937,7 @@ public class CollectionUtils {
      * @throws NullPointerException if the input collection is null
      */
     public static <O> Collection<O> selectRejected(final Iterable<? extends O> inputCollection,
-            final Predicate<? super O> predicate) {
+                                                   final Predicate<? super O> predicate) {
         final Collection<O> answer = inputCollection instanceof Collection<?> ?
                 new ArrayList<O>(((Collection<?>) inputCollection).size()) : new ArrayList<O>();
         return selectRejected(inputCollection, predicate, answer);
@@ -1020,7 +1000,7 @@ public class CollectionUtils {
      * @since 4.1
      */
     public static <O> List<List<O>> partition(final Iterable<? extends O> inputCollection,
-            final Predicate<? super O> predicate) {
+                                              final Predicate<? super O> predicate) {
 
         @SuppressWarnings({ "unchecked", "rawtypes" }) // safe
         final Factory<List<O>> factory = FactoryUtils.instantiateFactory((Class) ArrayList.class);
@@ -1103,7 +1083,7 @@ public class CollectionUtils {
      * @since 4.1
      */
     public static <O> List<List<O>> partition(final Iterable<? extends O> inputCollection,
-            final Predicate<? super O>... predicates) {
+                                              final Predicate<? super O>... predicates) {
 
         @SuppressWarnings({ "unchecked", "rawtypes" }) // safe
         final Factory<List<O>> factory = FactoryUtils.instantiateFactory((Class) ArrayList.class);
@@ -1392,35 +1372,6 @@ public class CollectionUtils {
     }
 
     /**
-     * Returns the <code>index</code>-th value in the {@link Enumeration}, throwing
-     * <code>IndexOutOfBoundsException</code> if there is no such element.
-     * <p>
-     * The Enumeration is advanced to <code>index</code> (or to the end, if
-     * <code>index</code> exceeds the number of entries) as a side effect of this method.
-     *
-     * @param e  the enumeration to get a value from
-     * @param index  the index to get
-     * @param <T> the type of object in the {@link Enumeration}
-     * @return the object at the specified index
-     * @throws IndexOutOfBoundsException if the index is invalid
-     * @throws IllegalArgumentException if the object type is invalid
-     * @since 4.1
-     */
-    public static <T> T get(final Enumeration<T> e, final int index) {
-        int i = index;
-        checkIndexBounds(i);
-        while (e.hasMoreElements()) {
-            i--;
-            if (i == -1) {
-                return e.nextElement();
-            } else {
-                e.nextElement();
-            }
-        }
-        throw new IndexOutOfBoundsException("Entry does not exist: " + i);
-    }
-
-    /**
      * Ensures an index is not negative.
      * @param index the index to check.
      * @throws IndexOutOfBoundsException if the index is negative.
@@ -1487,18 +1438,21 @@ public class CollectionUtils {
         if (object instanceof Map<?,?>) {
             final Map<?, ?> map = (Map<?, ?>) object;
             final Iterator<?> iterator = map.entrySet().iterator();
-            return get(iterator, i);
+            return IteratorUtils.get(iterator, i);
         } else if (object instanceof Object[]) {
             return ((Object[]) object)[i];
         } else if (object instanceof Iterator<?>) {
             final Iterator<?> it = (Iterator<?>) object;
-            return get(it, i);
+            return IteratorUtils.get(it, i);
+        } else if (object instanceof Iterable<?>) {
+            final Iterable<?> iterable = (Iterable<?>) object;
+            return IterableUtils.get(iterable, i);
         } else if (object instanceof Collection<?>) {
             final Iterator<?> iterator = ((Collection<?>) object).iterator();
-            return get(iterator, i);
+            return IteratorUtils.get(iterator, i);
         } else if (object instanceof Enumeration<?>) {
             final Enumeration<?> it = (Enumeration<?>) object;
-            return get(it, i);
+            return EnumerationUtils.get(it, i);
         } else if (object == null) {
             throw new IllegalArgumentException("Unsupported object type: null");
         } else {
@@ -1552,14 +1506,12 @@ public class CollectionUtils {
             total = ((Map<?, ?>) object).size();
         } else if (object instanceof Collection<?>) {
             total = ((Collection<?>) object).size();
+        } else if (object instanceof Iterable<?>) {
+            total = IterableUtils.size((Iterable<?>) object);
         } else if (object instanceof Object[]) {
             total = ((Object[]) object).length;
         } else if (object instanceof Iterator<?>) {
-            final Iterator<?> it = (Iterator<?>) object;
-            while (it.hasNext()) {
-                total++;
-                it.next();
-            }
+            total = IteratorUtils.size((Iterator<?>) object);
         } else if (object instanceof Enumeration<?>) {
             final Enumeration<?> it = (Enumeration<?>) object;
             while (it.hasMoreElements()) {
@@ -1601,6 +1553,8 @@ public class CollectionUtils {
             return true;
         } else if (object instanceof Collection<?>) {
             return ((Collection<?>) object).isEmpty();
+        } else if (object instanceof Iterable<?>) {
+            return IterableUtils.isEmpty((Iterable<?>) object);
         } else if (object instanceof Map<?, ?>) {
             return ((Map<?, ?>) object).isEmpty();
         } else if (object instanceof Object[]) {
@@ -2031,7 +1985,7 @@ public class CollectionUtils {
      * @since 4.1
      */
     public static <E> boolean contains(final Collection<? extends E> collection, final E object,
-            final Equator<? super E> equator) {
+                                       final Equator<? super E> equator) {
         for (final E obj : collection) {
             if (equator.equate(obj, object)) {
                 return true;

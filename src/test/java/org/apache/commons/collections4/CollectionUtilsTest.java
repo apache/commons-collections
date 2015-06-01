@@ -785,6 +785,7 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
+    @Deprecated
     public void getFromIterator() throws Exception {
         // Iterator, entry exists
         Iterator<Integer> iterator = iterableA.iterator();
@@ -803,6 +804,7 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
+    @Deprecated
     public void getFromEnumeration() throws Exception {
         // Enumeration, entry exists
         final Vector<String> vector = new Vector<String>();
@@ -824,6 +826,7 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
+    @Deprecated
     public void getFromIterable() throws Exception {
         // Collection, entry exists
         final Bag<String> bag = new HashBag<String>();
@@ -849,7 +852,7 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test(expected = IndexOutOfBoundsException.class)
-    public void getFromPrimativeArray() throws Exception {
+    public void getFromPrimitiveArray() throws Exception {
         // Primitive array, entry exists
         final int[] array = new int[2];
         array[0] = 10;
@@ -1126,6 +1129,7 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
+    @Deprecated
     public void countMatches() {
         assertEquals(4, CollectionUtils.countMatches(iterableB, EQUALS_TWO));
         assertEquals(0, CollectionUtils.countMatches(iterableA, null));
@@ -1134,6 +1138,7 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
+    @Deprecated
     public void exists() {
         final List<Integer> list = new ArrayList<Integer>();
         assertFalse(CollectionUtils.exists(null, null));
@@ -1834,6 +1839,7 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
+    @Deprecated
     public void testMatchesAll() {
         assertFalse(CollectionUtils.matchesAll(null, null));
         assertFalse(CollectionUtils.matchesAll(collectionA, null));

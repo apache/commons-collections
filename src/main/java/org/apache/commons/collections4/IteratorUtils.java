@@ -927,7 +927,8 @@ public class IteratorUtils {
      * @throws IllegalArgumentException if any iterator is null
      * @since 4.1
      */
-    public static <E> ZippingIterator<E> zippingIterator(final Iterator<? extends E> a, final Iterator<? extends E> b) {
+    public static <E> ZippingIterator<E> zippingIterator(final Iterator<? extends E> a,
+                                                         final Iterator<? extends E> b) {
         return new ZippingIterator<E>(a, b);
     }
 
@@ -1176,8 +1177,8 @@ public class IteratorUtils {
         if (obj instanceof Iterator) {
             return (Iterator<?>) obj;
         }
-        if (obj instanceof Collection) {
-            return ((Collection<?>) obj).iterator();
+        if (obj instanceof Iterable) {
+            return ((Iterable<?>) obj).iterator();
         }
         if (obj instanceof Object[]) {
             return new ObjectArrayIterator<Object>((Object[]) obj);

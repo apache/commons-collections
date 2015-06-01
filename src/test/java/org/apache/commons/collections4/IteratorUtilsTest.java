@@ -16,6 +16,12 @@
  */
 package org.apache.commons.collections4;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -23,13 +29,13 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-import junit.framework.Test;
-
 import org.apache.commons.collections4.iterators.EmptyIterator;
 import org.apache.commons.collections4.iterators.EmptyListIterator;
 import org.apache.commons.collections4.iterators.EmptyMapIterator;
 import org.apache.commons.collections4.iterators.EmptyOrderedIterator;
 import org.apache.commons.collections4.iterators.EmptyOrderedMapIterator;
+import org.junit.Before;
+import org.junit.Test;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -42,16 +48,33 @@ import static org.easymock.EasyMock.replay;
  *
  * @version $Id$
  */
-public class IteratorUtilsTest extends BulkTest {
+public class IteratorUtilsTest {
 
-    public IteratorUtilsTest(final String name) {
-        super(name);
+    /**
+     * Collection of {@link Integer}s
+     */
+    private List<Integer> collectionA = null;
+
+    private Iterable<Integer> iterableA = null;
+
+    @Before
+    public void setUp() {
+        collectionA = new ArrayList<Integer>();
+        collectionA.add(1);
+        collectionA.add(2);
+        collectionA.add(2);
+        collectionA.add(3);
+        collectionA.add(3);
+        collectionA.add(3);
+        collectionA.add(4);
+        collectionA.add(4);
+        collectionA.add(4);
+        collectionA.add(4);
+
+        iterableA = collectionA;
     }
 
-    public static Test suite() {
-        return BulkTest.makeSuite(IteratorUtilsTest.class);
-    }
-
+    @Test
     public void testAsIterable() {
         final List<Integer> list = new ArrayList<Integer>();
         list.add(Integer.valueOf(0));
@@ -72,6 +95,7 @@ public class IteratorUtilsTest extends BulkTest {
         assertFalse("should not be able to iterate twice", IteratorUtils.asIterable(iterator).iterator().hasNext());
     }
 
+    @Test
     public void testAsIterableNull() {
         try {
             IteratorUtils.asIterable(null);
@@ -81,6 +105,7 @@ public class IteratorUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testAsMultipleIterable() {
         final List<Integer> list = new ArrayList<Integer>();
         list.add(Integer.valueOf(0));
@@ -107,6 +132,7 @@ public class IteratorUtilsTest extends BulkTest {
         assertTrue(expected > 0);
     }
 
+    @Test
     public void testAsMultipleIterableNull() {
         try {
             IteratorUtils.asMultipleUseIterable(null);
@@ -116,6 +142,7 @@ public class IteratorUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testToList() {
         final List<Object> list = new ArrayList<Object>();
         list.add(Integer.valueOf(1));
@@ -125,6 +152,7 @@ public class IteratorUtilsTest extends BulkTest {
         assertEquals(list, result);
     }
 
+    @Test
     public void testToArray() {
         final List<Object> list = new ArrayList<Object>();
         list.add(Integer.valueOf(1));
@@ -134,6 +162,7 @@ public class IteratorUtilsTest extends BulkTest {
         assertEquals(list, Arrays.asList(result));
     }
 
+    @Test
     public void testToArray2() {
         final List<String> list = new ArrayList<String>();
         list.add("One");
@@ -143,6 +172,7 @@ public class IteratorUtilsTest extends BulkTest {
         assertEquals(list, Arrays.asList(result));
     }
 
+    @Test
     public void testArrayIterator() {
         final Object[] objArray = {"a", "b", "c"};
         ResettableIterator<Object> iterator = IteratorUtils.arrayIterator(objArray);
@@ -263,6 +293,7 @@ public class IteratorUtilsTest extends BulkTest {
         }
     }
 
+    @Test
     public void testArrayListIterator() {
         final Object[] objArray = {"a", "b", "c", "d"};
         ResettableListIterator<Object> iterator = IteratorUtils.arrayListIterator(objArray);
@@ -454,6 +485,7 @@ public class IteratorUtilsTest extends BulkTest {
     /**
      * Test empty iterator
      */
+    @Test
     public void testEmptyIterator() {
         assertSame(EmptyIterator.INSTANCE, IteratorUtils.EMPTY_ITERATOR);
         assertSame(EmptyIterator.RESETTABLE_INSTANCE, IteratorUtils.EMPTY_ITERATOR);
@@ -480,6 +512,7 @@ public class IteratorUtilsTest extends BulkTest {
     /**
      * Test empty list iterator
      */
+    @Test
     public void testEmptyListIterator() {
         assertSame(EmptyListIterator.INSTANCE, IteratorUtils.EMPTY_LIST_ITERATOR);
         assertSame(EmptyListIterator.RESETTABLE_INSTANCE, IteratorUtils.EMPTY_LIST_ITERATOR);
@@ -520,6 +553,7 @@ public class IteratorUtilsTest extends BulkTest {
     /**
      * Test empty map iterator
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testEmptyMapIterator() {
         assertSame(EmptyMapIterator.INSTANCE, IteratorUtils.EMPTY_MAP_ITERATOR);
@@ -559,6 +593,7 @@ public class IteratorUtilsTest extends BulkTest {
     /**
      * Test empty map iterator
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testEmptyOrderedIterator() {
         assertSame(EmptyOrderedIterator.INSTANCE, IteratorUtils.EMPTY_ORDERED_ITERATOR);
@@ -590,6 +625,7 @@ public class IteratorUtilsTest extends BulkTest {
     /**
      * Test empty map iterator
      */
+    @Test
     @SuppressWarnings("unchecked")
     public void testEmptyOrderedMapIterator() {
         assertSame(EmptyOrderedMapIterator.INSTANCE, IteratorUtils.EMPTY_ORDERED_MAP_ITERATOR);
@@ -633,6 +669,7 @@ public class IteratorUtilsTest extends BulkTest {
     /**
      * Test next() and hasNext() for an immutable Iterator.
      */
+    @Test
     public void testUnmodifiableIteratorIteration() {
         final Iterator<String> iterator = getImmutableIterator();
 
@@ -659,6 +696,7 @@ public class IteratorUtilsTest extends BulkTest {
      * Test next(), hasNext(), previous() and hasPrevious() for an immutable
      * ListIterator.
      */
+    @Test
     public void testUnmodifiableListIteratorIteration() {
         final ListIterator<String> listIterator = getImmutableListIterator();
 
@@ -709,6 +747,7 @@ public class IteratorUtilsTest extends BulkTest {
     /**
      * Test remove() for an immutable Iterator.
      */
+    @Test
     public void testUnmodifiableIteratorImmutability() {
         final Iterator<String> iterator = getImmutableIterator();
 
@@ -735,6 +774,7 @@ public class IteratorUtilsTest extends BulkTest {
     /**
      * Test remove() for an immutable ListIterator.
      */
+    @Test
     public void testUnmodifiableListIteratorImmutability() {
         final ListIterator<String> listIterator = getImmutableListIterator();
 
@@ -792,6 +832,7 @@ public class IteratorUtilsTest extends BulkTest {
     /**
      * Tests method nodeListIterator(NodeList)
      */
+    @Test
     public void testNodeListIterator() {
         final Node[] nodes = createNodes();
         final NodeList nodeList = createNodeList(nodes);
@@ -812,6 +853,7 @@ public class IteratorUtilsTest extends BulkTest {
     /**
      * Tests method nodeListIterator(Node)
      */
+    @Test
     public void testNodeIterator() {
         final Node[] nodes = createNodes();
         final NodeList nodeList = createNodeList(nodes);
@@ -861,6 +903,24 @@ public class IteratorUtilsTest extends BulkTest {
                 return nodes.length;
             }
         };
+    }
+
+    @Test
+    public void getFromIterator() throws Exception {
+        // Iterator, entry exists
+        Iterator<Integer> iterator = iterableA.iterator();
+        assertEquals(1, (int) IteratorUtils.get(iterator, 0));
+        iterator = iterableA.iterator();
+        assertEquals(2, (int) IteratorUtils.get(iterator, 1));
+
+        // Iterator, non-existent entry
+        try {
+            IteratorUtils.get(iterator, 10);
+            fail("Expecting IndexOutOfBoundsException.");
+        } catch (final IndexOutOfBoundsException e) {
+            // expected
+        }
+        assertTrue(!iterator.hasNext());
     }
 
 }

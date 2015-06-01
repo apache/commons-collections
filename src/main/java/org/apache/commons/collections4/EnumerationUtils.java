@@ -37,6 +37,35 @@ public class EnumerationUtils {
     private EnumerationUtils() {}
 
     /**
+     * Returns the <code>index</code>-th value in the {@link Enumeration}, throwing
+     * <code>IndexOutOfBoundsException</code> if there is no such element.
+     * <p>
+     * The Enumeration is advanced to <code>index</code> (or to the end, if
+     * <code>index</code> exceeds the number of entries) as a side effect of this method.
+     *
+     * @param e  the enumeration to get a value from
+     * @param index  the index to get
+     * @param <T> the type of object in the {@link Enumeration}
+     * @return the object at the specified index
+     * @throws IndexOutOfBoundsException if the index is invalid
+     * @throws IllegalArgumentException if the object type is invalid
+     * @since 4.1
+     */
+    public static <T> T get(final Enumeration<T> e, final int index) {
+        int i = index;
+        CollectionUtils.checkIndexBounds(i);
+        while (e.hasMoreElements()) {
+            i--;
+            if (i == -1) {
+                return e.nextElement();
+            } else {
+                e.nextElement();
+            }
+        }
+        throw new IndexOutOfBoundsException("Entry does not exist: " + i);
+    }
+
+    /**
      * Creates a list based on an enumeration.
      *
      * <p>As the enumeration is traversed, an ArrayList of its values is
