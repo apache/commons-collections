@@ -117,7 +117,6 @@ public class LRUMap<K, V>
      * load factor.
      *
      * @param maxSize  the maximum size of the map
-     * @param initialSize  the initial size of the map
      * @param loadFactor  the load factor
      * @throws IllegalArgumentException if the maximum size is less than one
      * @throws IllegalArgumentException if the load factor is less than zero
@@ -131,6 +130,7 @@ public class LRUMap<K, V>
      * load factor.
      *
      * @param maxSize  the maximum size of the map
+     * @param initialSize  the initial size of the map
      * @param loadFactor  the load factor
      * @throws IllegalArgumentException if the maximum size is less than one
      * @throws IllegalArgumentException if the initial size is negative or larger than the maximum size
@@ -167,7 +167,11 @@ public class LRUMap<K, V>
      * @throws IllegalArgumentException if the load factor is less than zero
      * @since 4.1
      */
-    public LRUMap(final int maxSize, final int initialSize, final float loadFactor, final boolean scanUntilRemovable) {
+    public LRUMap(final int maxSize,
+                  final int initialSize,
+                  final float loadFactor,
+                  final boolean scanUntilRemovable) {
+
         super(initialSize, loadFactor);
         if (maxSize < 1) {
             throw new IllegalArgumentException("LRUMap max size must be greater than 0");
