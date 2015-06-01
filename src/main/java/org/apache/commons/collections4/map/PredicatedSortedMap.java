@@ -22,7 +22,7 @@ import java.util.SortedMap;
 import org.apache.commons.collections4.Predicate;
 
 /**
- * Decorates another <code>SortedMap </code> to validate that additions
+ * Decorates another <code>SortedMap</code> to validate that additions
  * match a specified predicate.
  * <p>
  * This map exists to provide validation for the decorated map.
@@ -30,7 +30,12 @@ import org.apache.commons.collections4.Predicate;
  * If an object cannot be added to the map, an IllegalArgumentException is thrown.
  * <p>
  * One usage would be to ensure that no null keys are added to the map.
- * <pre>SortedMap map = PredicatedSortedSet.decorate(new TreeMap(), NotNullPredicate.INSTANCE, null);</pre>
+ * <pre>
+ *   SortedMap map =
+ *     PredicatedSortedMap.predicatedSortedMap(new TreeMap(),
+ *                                             NotNullPredicate.notNullPredicate(),
+ *                                             null);
+ * </pre>
  * <p>
  * <strong>Note that PredicatedSortedMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
