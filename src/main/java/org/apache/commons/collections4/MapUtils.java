@@ -74,6 +74,7 @@ import org.apache.commons.collections4.map.UnmodifiableSortedMap;
  * @since 1.0
  * @version $Id$
  */
+@SuppressWarnings("deprecation")
 public class MapUtils {
 
     /**
@@ -916,7 +917,6 @@ public class MapUtils {
      *  If <code>null</code>, the text 'null' is output.
      * @throws NullPointerException if the stream is <code>null</code>
      */
-    @SuppressWarnings("deprecation")
     public static void verbosePrint(final PrintStream out, final Object label, final Map<?, ?> map) {
         verbosePrintInternal(out, label, map, new ArrayStack<Map<?, ?>>(), false);
     }
@@ -939,7 +939,6 @@ public class MapUtils {
      *   If <code>null</code>, the text 'null' is output.
      * @throws NullPointerException if the stream is <code>null</code>
      */
-    @SuppressWarnings("deprecation")
     public static void debugPrint(final PrintStream out, final Object label, final Map<?, ?> map) {
         verbosePrintInternal(out, label, map, new ArrayStack<Map<?, ?>>(), true);
     }
@@ -969,7 +968,6 @@ public class MapUtils {
      * @param debug  flag indicating whether type names should be output.
      * @throws NullPointerException if the stream is <code>null</code>
      */
-    @SuppressWarnings("deprecation")
     private static void verbosePrintInternal(final PrintStream out, final Object label, final Map<?, ?> map,
                                              final ArrayStack<Map<?, ?>> lineage, final boolean debug) {
         printIndent(out, lineage.size());
@@ -1440,7 +1438,9 @@ public class MapUtils {
      * @return a multi-value map backed by the given map which returns ArrayLists of values.
      * @see MultiValueMap
      * @since 3.2
+     * @deprecated since 4.1, use {@link MultiValuedMap} instead
      */
+    @Deprecated
     public static <K, V> MultiValueMap<K, V> multiValueMap(final Map<K, ? super Collection<V>> map) {
         return MultiValueMap.<K, V>multiValueMap(map);
     }
@@ -1453,12 +1453,14 @@ public class MapUtils {
      * @param <V>  the value type
      * @param <C>  the collection class type
      * @param map  the map to decorate
-     * @param collectionClass  the type of collections to return from the map (must contain public no-arg constructor
-     *   and extend Collection).
+     * @param collectionClass  the type of collections to return from the map
+     *   (must contain public no-arg constructor and extend Collection)
      * @return a multi-value map backed by the given map which returns collections of the specified type
      * @see MultiValueMap
      * @since 3.2
+     * @deprecated since 4.1, use {@link MultiValuedMap} instead
      */
+    @Deprecated
     public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(final Map<K, C> map,
             final Class<C> collectionClass) {
         return MultiValueMap.multiValueMap(map, collectionClass);
@@ -1477,7 +1479,9 @@ public class MapUtils {
      *   created by the specified collection factory
      * @see MultiValueMap
      * @since 3.2
+     * @deprecated since 4.1, use {@link MultiValuedMap} instead
      */
+    @Deprecated
     public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(final Map<K, C> map,
             final Factory<C> collectionFactory) {
         return MultiValueMap.multiValueMap(map, collectionFactory);

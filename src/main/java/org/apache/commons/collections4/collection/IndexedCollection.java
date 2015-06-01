@@ -43,6 +43,8 @@ import org.apache.commons.collections4.map.MultiValueMap;
  */
 public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
 
+    // TODO: replace with MultiValuedMap
+
     /** Serialization version */
     private static final long serialVersionUID = -5512610452568370038L;
 

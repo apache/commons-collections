@@ -41,7 +41,9 @@ import java.util.Collection;
  *
  * @since 2.0
  * @version $Id$
+ * @deprecated since 4.1, use {@link MultiValuedMap} instead
  */
+@Deprecated
 public interface MultiMap<K, V> extends IterableMap<K, Object> {
 
     /**
