@@ -49,9 +49,9 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
      * @param <C> the list type
      * @param map the map to wrap, must not be null
      * @param listClazz the collection class
-     * @throws IllegalArgumentException if the map is null
+     * @throws NullPointerException if the map is null
      */
-    protected <C extends List<V>> AbstractListValuedMap(Map<K, ? super C> map, Class<C> listClazz) {
+    protected <C extends List<V>> AbstractListValuedMap(final Map<K, ? super C> map, Class<C> listClazz) {
         super(map, listClazz);
     }
 
@@ -62,11 +62,11 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
      * @param map the map to wrap, must not be null
      * @param listClazz the collection class
      * @param initialListCapacity the initial size of the values list
-     * @throws IllegalArgumentException if the map is null or if
-     *         initialListCapacity is negative
+     * @throws NullPointerException if the map is null
+     * @throws IllegalArgumentException if initialListCapacity is negative
      */
-    protected <C extends List<V>> AbstractListValuedMap(Map<K, ? super C> map, Class<C> listClazz,
-            int initialListCapacity) {
+    protected <C extends List<V>> AbstractListValuedMap(final Map<K, ? super C> map, Class<C> listClazz,
+                                                        final int initialListCapacity) {
         super(map, listClazz, initialListCapacity);
     }
 
@@ -75,8 +75,7 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
      * return an empty list in case the mapping is not present
      *
      * @param key the key to retrieve
-     * @return the <code>List</code> of values, will return an empty
-     *         <code>List</code> for no mapping
+     * @return the <code>List</code> of values, will return an empty {@link List} for no mapping
      * @throws ClassCastException if the key is of an invalid type
      */
     @Override

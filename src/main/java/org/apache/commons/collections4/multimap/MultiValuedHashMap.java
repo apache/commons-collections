@@ -163,8 +163,7 @@ public class MultiValuedHashMap<K, V> extends AbstractMultiValuedMap<K, V> {
      *
      * @param initialCapacity the initial capacity of the underlying hash map
      * @param loadFactor the load factor of the underlying hash map
-     * @param initialCollectionCapacity the initial capacity of the Collection
-     *        of values
+     * @param initialCollectionCapacity the initial capacity of the Collection of values
      */
     @SuppressWarnings("unchecked")
     public MultiValuedHashMap(int initialCapacity, float loadFactor, int initialCollectionCapacity) {
@@ -211,17 +210,13 @@ public class MultiValuedHashMap<K, V> extends AbstractMultiValuedMap<K, V> {
 
     /**
      * Creates a MultiValuedHashMap which creates the value collections using
-     * the supplied <code>collectionClazz</code> and the initial collection
-     * capacity .
+     * the supplied <code>collectionClazz</code> and the initial collection capacity.
      *
-     * @param initialCapacity the initial capacity of the underlying
-     *        <code>HashMap</code>
-     * @param loadFactor the load factor of the underlying <code>HashMap</code>
-     * @param initialCollectionCapacity the initial capacity of the
-     *        <code>Collection</code>
      * @param <C> the collection type
-     * @param collectionClazz the class of the <code>Collection</code> to use to
-     *        create the value collections
+     * @param initialCapacity the initial capacity of the underlying <code>HashMap</code>
+     * @param loadFactor the load factor of the underlying <code>HashMap</code>
+     * @param initialCollectionCapacity the initial capacity of the <code>Collection</code>
+     * @param collectionClazz the class of the <code>Collection</code> to use to create the value collections
      */
     protected <C extends Collection<V>> MultiValuedHashMap(int initialCapacity, float loadFactor,
             final Class<C> collectionClazz, int initialCollectionCapacity) {

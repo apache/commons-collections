@@ -60,8 +60,8 @@ public class UnmodifiableMultiValuedMap<K, V>
      * @throws IllegalArgumentException if map is null
      */
     @SuppressWarnings("unchecked")
-    public static <K, V> UnmodifiableMultiValuedMap<K, V>
-            unmodifiableMultiValuedMap(MultiValuedMap<? extends K, ? extends V> map) {
+    public static <K, V> UnmodifiableMultiValuedMap<K, V> unmodifiableMultiValuedMap(
+            MultiValuedMap<? extends K, ? extends V> map) {
         if (map instanceof Unmodifiable) {
             return (UnmodifiableMultiValuedMap<K, V>) map;
         }

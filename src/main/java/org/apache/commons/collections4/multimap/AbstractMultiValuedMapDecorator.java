@@ -29,8 +29,9 @@ import org.apache.commons.collections4.MultiValuedMap;
 /**
  * Decorates another <code>MultiValuedMap</code> to provide additional behaviour.
  * <p>
- * Each method call made on this <code>MultiValuedMap</code> is forwarded to the decorated <code>MultiValuedMap</code>.
- * This class is used as a framework to build to extensions such as synchronized and unmodifiable behaviour.
+ * Each method call made on this <code>MultiValuedMap</code> is forwarded to the
+ * decorated <code>MultiValuedMap</code>. This class is used as a framework to build
+ * to extensions such as synchronized and unmodifiable behaviour.
  *
  * @param <K> the type of key elements
  * @param <V> the type of value elements
@@ -51,12 +52,11 @@ public class AbstractMultiValuedMapDecorator<K, V>
      * Constructor that wraps (not copies).
      *
      * @param map the map to decorate, must not be null
-     * @throws IllegalArgumentException if the map is null
+     * @throws NullPointerException if the map is null
      */
     protected AbstractMultiValuedMapDecorator(final MultiValuedMap<K, V> map) {
         if (map == null) {
-            throw new IllegalArgumentException(
-                    "MultiValuedMap must not be null");
+            throw new NullPointerException("MultiValuedMap must not be null.");
         }
         this.map = map;
     }

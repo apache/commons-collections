@@ -47,7 +47,7 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
      * @param <C> the set type
      * @param map the map to wrap, must not be null
      * @param setClazz the collection class
-     * @throws IllegalArgumentException if the map is null
+     * @throws NullPointerException if the map is null
      */
     protected <C extends Set<V>> AbstractSetValuedMap(Map<K, ? super C> map, Class<C> setClazz) {
         super(map, setClazz);
@@ -60,8 +60,8 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
      * @param map the map to wrap, must not be null
      * @param setClazz the collection class
      * @param initialSetCapacity the initial size of the values set
-     * @throws IllegalArgumentException if the map is null or if
-     *         initialSetCapacity is negative
+     * @throws NullPointerException if the map is null
+     * @throws IllegalArgumentException if initialSetCapacity is negative
      */
     protected <C extends Set<V>> AbstractSetValuedMap(Map<K, ? super C> map, Class<C> setClazz,
             int initialSetCapacity) {

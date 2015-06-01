@@ -77,13 +77,13 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
      * @param <C>  the collection type
      * @param map  the map to wrap, must not be null
      * @param collectionClazz  the collection class
-     * @throws IllegalArgumentException if the map is null
+     * @throws NullPointerException if the map is null
      */
     @SuppressWarnings("unchecked")
     protected <C extends Collection<V>> AbstractMultiValuedMap(final Map<K, ? super C> map,
                                                                final Class<C> collectionClazz) {
         if (map == null) {
-            throw new IllegalArgumentException("Map must not be null");
+            throw new NullPointerException("Map must not be null.");
         }
         this.map = (Map<K, Collection<V>>) map;
         this.collectionFactory = new InstantiateFactory<C>(collectionClazz);
@@ -96,14 +96,14 @@ public class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Seria
      * @param map the map to wrap, must not be null
      * @param collectionClazz the collection class
      * @param initialCollectionCapacity the initial capacity of the collection
-     * @throws IllegalArgumentException if the map is null or if
-     *         initialCollectionCapacity is negative
+     * @throws NullPointerException if the map is null
+     * @throws IllegalArgumentException if initialCollectionCapacity is negative
      */
     @SuppressWarnings("unchecked")
     protected <C extends Collection<V>> AbstractMultiValuedMap(final Map<K, ? super C> map,
             final Class<C> collectionClazz, final int initialCollectionCapacity) {
         if (map == null) {
-            throw new IllegalArgumentException("Map must not be null");
+            throw new NullPointerException("Map must not be null.");
         }
         if (initialCollectionCapacity < 0) {
             throw new IllegalArgumentException("Illegal Capacity: " + initialCollectionCapacity);
