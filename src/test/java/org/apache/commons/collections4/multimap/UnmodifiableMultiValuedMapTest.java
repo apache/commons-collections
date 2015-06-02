@@ -79,8 +79,9 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
     public void testDecoratorFactoryNullMap() {
         try {
             UnmodifiableMultiValuedMap.unmodifiableMultiValuedMap(null);
-            fail();
-        } catch (IllegalArgumentException e) {
+            fail("map must not be null");
+        } catch (NullPointerException e) {
+            // expected
         }
     }
 
