@@ -172,7 +172,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * @see {@link org.apache.commons.collections4.iterators.CollatingIterator CollatingIterator}
      */
     public FluentIterable<E> collate(final Iterable<? extends E> other) {
-        return of(IterableUtils.collatedIterable(iterable, other, null));
+        return of(IterableUtils.collatedIterable(null, iterable, other));
     }
 
     /**
@@ -191,15 +191,15 @@ public class FluentIterable<E> implements Iterable<E> {
      * <p>
      * A <code>null</code> iterable will be treated as an empty iterable.
      *
-     * @param other  the other iterable to collate, may be null
      * @param comparator  the comparator to define an ordering, may be null,
      *   in which case natural ordering will be used
+     * @param other  the other iterable to collate, may be null
      * @return a new iterable, collating this iterable with the other in natural order
      * @see {@link org.apache.commons.collections4.iterators.CollatingIterator CollatingIterator}
      */
     public FluentIterable<E> collate(final Iterable<? extends E> other,
                                      final Comparator<? super E> comparator) {
-        return of(IterableUtils.collatedIterable(iterable, other, comparator));
+        return of(IterableUtils.collatedIterable(comparator, iterable, other));
     }
 
     /**
@@ -465,7 +465,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * @return a list of the iterable contents
      */
     public List<E> toList() {
-        return IteratorUtils.toList(iterator());
+        return IterableUtils.toList(iterable);
     }
 
     /** {@inheritDoc} */

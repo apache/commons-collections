@@ -163,8 +163,35 @@ public class IterableUtils {
      * @return a filtered view on the specified iterable
      */
     public static <E> Iterable<E> collatedIterable(final Iterable<? extends E> a,
-                                                   final Iterable<? extends E> b,
-                                                   final Comparator<? super E> comparator) {
+                                                   final Iterable<? extends E> b) {
+        return new FluentIterable<E>() {
+            @Override
+            public Iterator<E> iterator() {
+                return IteratorUtils.collatedIterator(null,
+                                                      emptyIteratorIfNull(a),
+                                                      emptyIteratorIfNull(b));
+            }
+        };
+    }
+
+    /**
+     * Combines the two provided iterables into an ordered iterable using the
+     * provided comparator. If the comparator is null, natural ordering will be
+     * used.
+     * <p>
+     * The returned iterable's iterator supports {@code remove()} when the corresponding
+     * input iterator supports it.
+     *
+     * @param <E>  the element type
+     * @param comparator  the comparator defining an ordering over the elements,
+     *   may be null, in which case natural ordering will be used
+     * @param a  the first iterable, may be null
+     * @param b  the second iterable, may be null
+     * @return a filtered view on the specified iterable
+     */
+    public static <E> Iterable<E> collatedIterable(final Comparator<? super E> comparator,
+                                                   final Iterable<? extends E> a,
+                                                   final Iterable<? extends E> b) {
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
@@ -627,6 +654,17 @@ public class IterableUtils {
         } else {
             return IteratorUtils.size(emptyIteratorIfNull(iterable));
         }
+    }
+
+    /**
+     * Gets a new list with the contents of the provided iterable.
+     *
+     * @param <E>  the element type
+     * @param iterator  the iterable to use, may be null
+     * @return a list of the iterator contents
+     */
+    public static <E> List<E> toList(final Iterable<E> iterable) {
+        return IteratorUtils.toList(emptyIteratorIfNull(iterable));
     }
 
     /**
