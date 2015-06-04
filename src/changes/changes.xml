@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-566" dev="tn" type="fix">
+      "IteratorUtils#collate(...)" methods did not use natural ordering when a
+      null comparator was provided.
+    </action>
     <action issue="COLLECTIONS-557" dev="tn" type="add" due-to="Philippe Mouawad">
       Added support to specify the initial size of a "LRUMap".
     </action>
