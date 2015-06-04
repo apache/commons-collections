@@ -148,18 +148,15 @@ public class IterableUtils {
     // ----------------------------------------------------------------------
 
     /**
-     * Combines the two provided iterables into an ordered iterable using the
-     * provided comparator. If the comparator is null, natural ordering will be
-     * used.
+     * Combines the two provided iterables into an ordered iterable using 
+     * natural ordering.
      * <p>
-     * The returned iterable's iterator supports {@code remove()} when the corresponding
-     * input iterator supports it.
+     * The returned iterable's iterator supports {@code remove()} when the
+     * corresponding input iterator supports it.
      *
      * @param <E>  the element type
      * @param a  the first iterable, may be null
      * @param b  the second iterable, may be null
-     * @param comparator  the comparator defining an ordering over the elements,
-     *   may be null, in which case natural ordering will be used
      * @return a filtered view on the specified iterable
      */
     public static <E> Iterable<E> collatedIterable(final Iterable<? extends E> a,
