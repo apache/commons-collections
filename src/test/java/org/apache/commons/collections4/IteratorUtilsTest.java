@@ -16,14 +16,13 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.apache.commons.collections4.functors.EqualPredicate.*;
+import static org.easymock.EasyMock.*;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -38,10 +37,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.replay;
 
 /**
  * Tests for IteratorUtils.
@@ -903,6 +898,52 @@ public class IteratorUtilsTest {
                 return nodes.length;
             }
         };
+    }
+
+    // -----------------------------------------------------------------------
+    @Test
+    public void apply() {
+        final List<Integer> listA = new ArrayList<Integer>();
+        listA.add(1);
+
+        final List<Integer> listB = new ArrayList<Integer>();
+        listB.add(2);
+
+        final Closure<List<Integer>> testClosure = ClosureUtils.invokerClosure("clear");
+        final Collection<List<Integer>> col = new ArrayList<List<Integer>>();
+        col.add(listA);
+        col.add(listB);
+        IteratorUtils.apply(col.iterator(), testClosure);
+        assertTrue(listA.isEmpty() && listB.isEmpty());
+        try {
+            IteratorUtils.apply(col.iterator(), null);
+            fail("expecting NullPointerException");
+        } catch (NullPointerException npe) {
+            // expected
+        }
+
+        IteratorUtils.apply(null, testClosure);
+
+        // null should be OK
+        col.add(null);
+        IteratorUtils.apply(col.iterator(), testClosure);
+    }
+
+    @Test
+    public void find() {
+        Predicate<Number> testPredicate = equalPredicate((Number) 4);
+        Integer test = IteratorUtils.find(iterableA.iterator(), testPredicate);
+        assertTrue(test.equals(4));
+        testPredicate = equalPredicate((Number) 45);
+        test = IteratorUtils.find(iterableA.iterator(), testPredicate);
+        assertTrue(test == null);
+        assertNull(IteratorUtils.find(null,testPredicate));
+        try {
+            assertNull(IteratorUtils.find(iterableA.iterator(), null));
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+            // expected
+        }
     }
 
     @Test

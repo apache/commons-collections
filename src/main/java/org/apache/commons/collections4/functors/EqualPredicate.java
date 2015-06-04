@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4.functors;
 
-import static org.apache.commons.collections4.functors.NullPredicate.nullPredicate;
+import static org.apache.commons.collections4.functors.NullPredicate.*;
 
 import java.io.Serializable;
 
@@ -47,7 +47,6 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
      * @param <T> the type that the predicate queries
      * @param object  the object to compare to
      * @return the predicate
-     * @throws IllegalArgumentException if the predicate is null
      */
     public static <T> Predicate<T> equalPredicate(final T object) {
         if (object == null) {
@@ -63,7 +62,6 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
      * @param object  the object to compare to
      * @param equator  the equator to use for comparison
      * @return the predicate
-     * @throws IllegalArgumentException if the predicate is null
      * @since 4.0
      */
     public static <T> Predicate<T> equalPredicate(final T object, final Equator<T> equator) {

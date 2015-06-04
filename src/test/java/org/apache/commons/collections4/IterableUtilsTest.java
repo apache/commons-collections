@@ -16,10 +16,8 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.apache.commons.collections4.functors.EqualPredicate.*;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -56,18 +54,18 @@ public class IterableUtilsTest {
 
     @Before
     public void setUp() {
-        List<Integer> listA = new ArrayList<Integer>();
-        listA.add(1);
-        listA.add(2);
-        listA.add(2);
-        listA.add(3);
-        listA.add(3);
-        listA.add(3);
-        listA.add(4);
-        listA.add(4);
-        listA.add(4);
-        listA.add(4);
-        iterableA = listA;
+        Collection<Integer> collectionA = new ArrayList<Integer>();
+        collectionA.add(1);
+        collectionA.add(2);
+        collectionA.add(2);
+        collectionA.add(3);
+        collectionA.add(3);
+        collectionA.add(3);
+        collectionA.add(4);
+        collectionA.add(4);
+        collectionA.add(4);
+        collectionA.add(4);
+        iterableA = collectionA;
 
         Collection<Long> collectionB = new LinkedList<Long>();
         collectionB.add(5L);
@@ -92,6 +90,91 @@ public class IterableUtilsTest {
     };
 
     // -----------------------------------------------------------------------
+    @Test
+    public void apply() {
+        final List<Integer> listA = new ArrayList<Integer>();
+        listA.add(1);
+
+        final List<Integer> listB = new ArrayList<Integer>();
+        listB.add(2);
+
+        final Closure<List<Integer>> testClosure = ClosureUtils.invokerClosure("clear");
+        final Collection<List<Integer>> col = new ArrayList<List<Integer>>();
+        col.add(listA);
+        col.add(listB);
+        IterableUtils.apply(col, testClosure);
+        assertTrue(listA.isEmpty() && listB.isEmpty());
+        try {
+            IterableUtils.apply(col, null);
+            fail("expecting NullPointerException");
+        } catch (NullPointerException npe) {
+            // expected
+        }
+
+        IterableUtils.apply(null, testClosure);
+
+        // null should be OK
+        col.add(null);
+        IterableUtils.apply(col, testClosure);
+    }
+
+    @Test(expected = FunctorException.class)
+    public void applyFailure() {
+        final Closure<String> testClosure = ClosureUtils.invokerClosure("clear");
+        final Collection<String> col = new ArrayList<String>();
+        col.add("x");
+        IterableUtils.apply(col, testClosure);
+    }
+
+    @Test
+    public void containsWithEquator() {
+        final List<String> base = new ArrayList<String>();
+        base.add("AC");
+        base.add("BB");
+        base.add("CA");
+
+        final Equator<String> secondLetterEquator = new Equator<String>() {
+
+            public boolean equate(String o1, String o2) {
+                return o1.charAt(1) == o2.charAt(1);
+            }
+
+            public int hash(String o) {
+                return o.charAt(1);
+            }
+
+        };
+
+        assertFalse(base.contains("CC"));
+        assertTrue(IterableUtils.contains(base, "AC", secondLetterEquator));
+        assertTrue(IterableUtils.contains(base, "CC", secondLetterEquator));
+        assertFalse(IterableUtils.contains(base, "CX", secondLetterEquator));
+        assertFalse(IterableUtils.contains(null, null, secondLetterEquator));
+
+        try {
+            IterableUtils.contains(base, "AC", null);
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+        } // this is what we want
+    }
+
+    @Test
+    public void find() {
+        Predicate<Number> testPredicate = equalPredicate((Number) 4);
+        Integer test = IterableUtils.find(iterableA, testPredicate);
+        assertTrue(test.equals(4));
+        testPredicate = equalPredicate((Number) 45);
+        test = IterableUtils.find(iterableA, testPredicate);
+        assertTrue(test == null);
+        assertNull(IterableUtils.find(null,testPredicate));
+        try {
+            assertNull(IterableUtils.find(iterableA, null));
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+            // expected
+        }
+    }
+
     @Test
     public void frequency() {
         assertEquals(4, IterableUtils.frequency(iterableB, EQUALS_TWO));

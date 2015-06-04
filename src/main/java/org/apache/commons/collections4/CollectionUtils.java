@@ -650,16 +650,11 @@ public class CollectionUtils {
      * @param collection  the collection to search, may be null
      * @param predicate  the predicate to use, may be null
      * @return the first element of the collection which matches the predicate or null if none could be found
+     * @deprecated since 4.1, use {@link IterableUtils#find(Iterable, Predicate)} instead
      */
+    @Deprecated
     public static <T> T find(final Iterable<T> collection, final Predicate<? super T> predicate) {
-        if (collection != null && predicate != null) {
-            for (final T item : collection) {
-                if (predicate.evaluate(item)) {
-                    return item;
-                }
-            }
-        }
-        return null;
+        return predicate != null ? IterableUtils.find(collection, predicate) : null;
     }
 
     /**
@@ -672,12 +667,12 @@ public class CollectionUtils {
      * @param collection  the collection to get the input from, may be null
      * @param closure  the closure to perform, may be null
      * @return closure
+     * @deprecated since 4.1, use {@link IterableUtils#apply(Iterable, Closure)} instead
      */
+    @Deprecated
     public static <T, C extends Closure<? super T>> C forAllDo(final Iterable<T> collection, final C closure) {
-        if (collection != null && closure != null) {
-            for (final T element : collection) {
-                closure.execute(element);
-            }
+        if (closure != null) {
+            IterableUtils.apply(collection, closure);
         }
         return closure;
     }
@@ -693,12 +688,12 @@ public class CollectionUtils {
      * @param closure  the closure to perform, may be null
      * @return closure
      * @since 4.0
+     * @deprecated since 4.1, use {@link IteratorUtils#apply(Iterator, Closure)} instead
      */
+    @Deprecated
     public static <T, C extends Closure<? super T>> C forAllDo(final Iterator<T> iterator, final C closure) {
-        if (iterator != null && closure != null) {
-            while (iterator.hasNext()) {
-                closure.execute(iterator.next());
-            }
+        if (closure != null) {
+            IteratorUtils.apply(iterator, closure);
         }
         return closure;
     }
@@ -1966,32 +1961,6 @@ public class CollectionUtils {
             }
         }
         return list;
-    }
-
-    /**
-     * This method checks, if any of the elements in <code>collection</code> is
-     * equal to <code>object</code>. Object equality is tested with an
-     * <code>equator</code> unlike <code>collection.contains(object)</code>
-     * which uses {@link Object#equals(Object)}.
-     *
-     * @param <E> the type of object the {@link Collection} contains
-     * @param collection the collection from which items are compared
-     * @param object the object to compare with the collection's entries
-     * @param equator the equator to use to check, if the item if equal to any
-     *        of the collection's entries.
-     * @return true if <code>object</code> is in <code>collection</code>
-     *         according to <code>equator</code>
-     * @throws NullPointerException if any parameter is null
-     * @since 4.1
-     */
-    public static <E> boolean contains(final Collection<? extends E> collection, final E object,
-                                       final Equator<? super E> equator) {
-        for (final E obj : collection) {
-            if (equator.equate(obj, object)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     //-----------------------------------------------------------------------

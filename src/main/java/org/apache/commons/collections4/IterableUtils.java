@@ -21,6 +21,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.iterators.LazyIteratorChain;
 import org.apache.commons.collections4.iterators.ReverseListIterator;
 import org.apache.commons.collections4.iterators.UniqueFilterIterator;
@@ -462,6 +463,21 @@ public class IterableUtils {
     }
 
     /**
+     * Finds the first element in the given iterable which matches the given predicate.
+     * <p>
+     * A <code>null</code> or empty iterator returns null.
+     *
+     * @param <E>  the element type
+     * @param iterable  the iterable to search, may be null
+     * @param predicate  the predicate to use, may not be null
+     * @return the first element of the iterable which matches the predicate or null if none could be found
+     * @throws NullPointerException if predicate is null
+     */
+    public static <E> E find(final Iterable<E> iterable, final Predicate<? super E> predicate) {
+        return IteratorUtils.find(emptyIteratorIfNull(iterable), predicate);
+    }
+
+    /**
      * Answers true if a predicate is true for every element of an iterable.
      * <p>
      * A <code>null</code> or empty iterable returns true.
@@ -550,6 +566,31 @@ public class IterableUtils {
         } else {
             return IteratorUtils.contains(emptyIteratorIfNull(iterable), object);
         }
+    }
+
+    /**
+     * Checks if the object is contained in the given iterable. Object equality
+     * is tested with an {@code equator} unlike {@link #contains(Iterable, Object)}
+     * which uses {@link Object#equals(Object)}.
+     * <p>
+     * A <code>null</code> or empty iterable returns false.
+     * A <code>null</code> object will not be passed to the equator, instead a
+     * {@link org.apache.commons.collections4.functors.NullPredicate NullPredicate}
+     * will be used.
+     *
+     * @param <E>  the type of object the {@link Iterable} contains
+     * @param iterable  the iterable to check, may be null
+     * @param object  the object to check
+     * @param equator  the equator to use to check, may not be null
+     * @return true if the object is contained in the iterable, false otherwise
+     * @throws NullPointerException if equator is null
+     */
+    public static <E> boolean contains(final Iterable<? extends E> iterable, final E object,
+                                       final Equator<? super E> equator) {
+        if (equator == null) {
+            throw new NullPointerException("Equator must not be null.");
+        }
+        return matchesAny(iterable, EqualPredicate.equalPredicate(object, equator));
     }
 
     /**

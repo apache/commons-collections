@@ -16,13 +16,8 @@
  */
 package org.apache.commons.collections4;
 
-import static org.apache.commons.collections4.functors.EqualPredicate.equalPredicate;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.apache.commons.collections4.functors.EqualPredicate.*;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -612,6 +607,7 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
+    @Deprecated
     public void find() {
         Predicate<Number> testPredicate = equalPredicate((Number) 4);
         Integer test = CollectionUtils.find(collectionA, testPredicate);
@@ -625,6 +621,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
+    @Deprecated
     public void forAllDoCollection() {
         final Closure<List<? extends Number>> testClosure = ClosureUtils.invokerClosure("clear");
         final Collection<List<? extends Number>> col = new ArrayList<List<? extends Number>>();
@@ -645,6 +642,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
+    @Deprecated
     public void forAllDoIterator() {
         final Closure<List<? extends Number>> testClosure = ClosureUtils.invokerClosure("clear");
         final Collection<List<? extends Number>> col = new ArrayList<List<? extends Number>>();
@@ -664,6 +662,7 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test(expected = FunctorException.class)
+    @Deprecated
     public void forAllDoFailure() {
         final Closure<String> testClosure = ClosureUtils.invokerClosure("clear");
         final Collection<String> col = new ArrayList<String>();
@@ -1701,9 +1700,9 @@ public class CollectionUtilsTest extends MockTestCase {
     @Test
     public void getIterator() {
         final Iterator<Integer> it = collectionA.iterator();
-        assertEquals(Integer.valueOf(2), CollectionUtils.get(it, 2));
+        assertEquals(Integer.valueOf(2), CollectionUtils.get((Object) it, 2));
         assertTrue(it.hasNext());
-        assertEquals(Integer.valueOf(4), CollectionUtils.get(it, 6));
+        assertEquals(Integer.valueOf(4), CollectionUtils.get((Object) it, 6));
         assertFalse(it.hasNext());
     }
 
@@ -1963,40 +1962,4 @@ public class CollectionUtilsTest extends MockTestCase {
         } // this is what we want
     }
 
-    @Test
-    public void testContainsWithEquator() {
-        final List<String> base = new ArrayList<String>();
-        base.add("AC");
-        base.add("BB");
-        base.add("CA");
-
-        final Equator<String> secondLetterEquator = new Equator<String>() {
-
-            public boolean equate(String o1, String o2) {
-                return o1.charAt(1) == o2.charAt(1);
-            }
-
-            public int hash(String o) {
-                return o.charAt(1);
-            }
-
-        };
-
-        assertFalse(base.contains("CC"));
-        assertTrue(CollectionUtils.contains(base, "AC", secondLetterEquator));
-        assertTrue(CollectionUtils.contains(base, "CC", secondLetterEquator));
-        assertFalse(CollectionUtils.contains(base, "CX", secondLetterEquator));
-
-        try {
-            CollectionUtils.contains(null, null, secondLetterEquator);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-        } // this is what we want
-
-        try {
-            CollectionUtils.contains(base, "AC", null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-        } // this is what we want
-      }
 }
