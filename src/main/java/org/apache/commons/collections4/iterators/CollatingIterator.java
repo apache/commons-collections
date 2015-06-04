@@ -77,8 +77,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * manually added using the {@link #addIterator(Iterator)} method.
      *
      * @param comp the comparator to use to sort; must not be null,
-     *   unless you'll be invoking {@link #setComparator(Comparator)}
-     *   later on.
+     *   unless you'll be invoking {@link #setComparator(Comparator)} later on.
      */
     public CollatingIterator(final Comparator<? super E> comp) {
         this(comp, 2);
@@ -91,10 +90,9 @@ public class CollatingIterator<E> implements Iterator<E> {
      * {@link #addIterator(Iterator)} method.
      *
      * @param comp the comparator to use to sort; must not be null,
-     *   unless you'll be invoking {@link #setComparator(Comparator)}
-     *   later on.
+     *   unless you'll be invoking {@link #setComparator(Comparator)} later on.
      * @param initIterCapacity the initial capacity for the internal list of
-     * child iterators
+     *   child iterators
      */
     public CollatingIterator(final Comparator<? super E> comp, final int initIterCapacity) {
         iterators = new ArrayList<Iterator<? extends E>>(initIterCapacity);
@@ -107,8 +105,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * iterators.
      *
      * @param comp the comparator to use to sort; must not be null,
-     *   unless you'll be invoking {@link #setComparator(Comparator)}
-     *   later on.
+     *   unless you'll be invoking {@link #setComparator(Comparator)} later on.
      * @param a the first child ordered iterator
      * @param b the second child ordered iterator
      * @throws NullPointerException if either iterator is null
@@ -126,8 +123,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      * iterators.
      *
      * @param comp the comparator to use to sort; must not be null,
-     *   unless you'll be invoking {@link #setComparator(Comparator)}
-     *   later on.
+     *   unless you'll be invoking {@link #setComparator(Comparator)} later on.
      * @param iterators the array of iterators
      * @throws NullPointerException if iterators array is or contains null
      */
@@ -144,13 +140,11 @@ public class CollatingIterator<E> implements Iterator<E> {
      * iterators.
      *
      * @param comp the comparator to use to sort; must not be null,
-     *   unless you'll be invoking {@link #setComparator(Comparator)}
-     *   later on.
+     *   unless you'll be invoking {@link #setComparator(Comparator)} later on.
      * @param iterators the collection of iterators
-     * @throws NullPointerException if the iterators collection is or contains
-     * null
+     * @throws NullPointerException if the iterators collection is or contains null
      * @throws ClassCastException if the iterators collection contains an
-     * element that's not an {@link Iterator}
+     *   element that's not an {@link Iterator}
      */
     public CollatingIterator(final Comparator<? super E> comp, final Collection<Iterator<? extends E>> iterators) {
         this(comp, iterators.size());
@@ -259,8 +253,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Removes the last returned element from the child iterator that produced
-     * it.
+     * Removes the last returned element from the child iterator that produced it.
      *
      * @throws IllegalStateException if there is no last returned element, or if
      * the last returned element has already been removed
