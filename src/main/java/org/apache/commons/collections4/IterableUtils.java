@@ -40,6 +40,33 @@ import org.apache.commons.collections4.iterators.ZippingIterator;
  */
 public class IterableUtils {
 
+    /**
+     * An empty iterable.
+     */
+    @SuppressWarnings("rawtypes")
+    static final FluentIterable EMPTY_ITERABLE = new FluentIterable<Object>() {
+        @Override
+        public Iterator<Object> iterator() {
+            return IteratorUtils.emptyIterator();
+        }
+    };
+
+    // Empty
+    // ----------------------------------------------------------------------
+
+    /**
+     * Gets an empty iterable.
+     * <p>
+     * This iterable does not contain any elements.
+     *
+     * @param <E>  the element type
+     * @return an empty iterable
+     */
+    @SuppressWarnings("unchecked") // OK, empty collection is compatible with any type
+    public static <E> Iterable<E> emptyIterable() {
+        return EMPTY_ITERABLE;
+    }
+
     // Chained
     // ----------------------------------------------------------------------
 

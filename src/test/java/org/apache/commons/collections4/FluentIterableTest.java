@@ -103,6 +103,19 @@ public class FluentIterableTest {
 
     // -----------------------------------------------------------------------
     @Test
+    public void factoryMethodOf() {
+        List<Integer> result = FluentIterable.of(1, 2, 3, 4, 5).toList();
+        assertEquals(Arrays.asList(1, 2, 3, 4, 5), result);
+
+        result = FluentIterable.of(new Integer[0]).toList();
+        assertTrue(result.isEmpty());
+
+        final Iterable<Integer> it = null;
+        result = FluentIterable.of(it).toList();
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
     public void appendElements() {
         FluentIterable<Integer> it = FluentIterable.of(iterableA).append(10, 20, 30);
         assertEquals(IterableUtils.size(iterableA) + 3, IterableUtils.size(it));
@@ -270,6 +283,24 @@ public class FluentIterableTest {
     }
 
     @Test
+    public void zip() {
+        List<Integer> result = FluentIterable.of(iterableOdd).zip(iterableEven).toList();
+        List<Integer> combinedList = new ArrayList<Integer>();
+        CollectionUtils.addAll(combinedList, iterableOdd);
+        CollectionUtils.addAll(combinedList, iterableEven);
+        Collections.sort(combinedList);
+        assertEquals(combinedList, result);
+
+        result = FluentIterable.of(iterableOdd).zip((Iterable<Integer>) null).toList();
+        List<Integer> expected = IterableUtils.toList(iterableOdd);
+        assertEquals(expected, result);
+        
+        result = FluentIterable.of(Arrays.asList(1, 4, 7)).zip(Arrays.asList(2, 5, 8), Arrays.asList(3, 6, 9)).toList();
+        combinedList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        assertEquals(combinedList, result);
+    }
+
+    @Test
     public void allMatch() {
         assertTrue(FluentIterable.of(iterableEven).allMatch(EVEN));
         assertFalse(FluentIterable.of(iterableOdd).allMatch(EVEN));
@@ -301,6 +332,13 @@ public class FluentIterableTest {
     public void isEmpty() {
         assertTrue(FluentIterable.of(emptyIterable).isEmpty());
         assertFalse(FluentIterable.of(iterableOdd).isEmpty());
+    }
+
+    @Test
+    public void size() {
+        assertEquals(0, FluentIterable.of((Iterable<?>) null).size());
+        assertEquals(0, FluentIterable.of(emptyIterable).size());
+        assertEquals(IterableUtils.toList(iterableOdd).size(), FluentIterable.of(iterableOdd).size());
     }
 
     @Test

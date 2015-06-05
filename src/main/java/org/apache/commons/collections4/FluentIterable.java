@@ -91,14 +91,15 @@ public class FluentIterable<E> implements Iterable<E> {
      * corresponding input iterator supports it.
      *
      * @param <T>  the element type
-     * @param iterable  the iterable to wrap into a FluentIterable
+     * @param iterable  the iterable to wrap into a FluentIterable, may be null
      * @return a new FluentIterable wrapping the provided iterable
      */
     public static <T> FluentIterable<T> of(final Iterable<T> iterable) {
         if (iterable == null) {
-            throw new NullPointerException("Iterable must not be null");
-        }
-        if (iterable instanceof FluentIterable<?>) {
+            @SuppressWarnings("unchecked")
+            final FluentIterable<T> empty = IterableUtils.EMPTY_ITERABLE;
+            return empty;
+        } else if (iterable instanceof FluentIterable<?>) {
             return (FluentIterable<T>) iterable;
         } else {
             return new FluentIterable<T>(iterable);
