@@ -148,7 +148,7 @@ public class IterableUtils {
     // ----------------------------------------------------------------------
 
     /**
-     * Combines the two provided iterables into an ordered iterable using 
+     * Combines the two provided iterables into an ordered iterable using
      * natural ordering.
      * <p>
      * The returned iterable's iterator supports {@code remove()} when the
@@ -657,7 +657,7 @@ public class IterableUtils {
      * Gets a new list with the contents of the provided iterable.
      *
      * @param <E>  the element type
-     * @param iterator  the iterable to use, may be null
+     * @param iterable  the iterable to use, may be null
      * @return a list of the iterator contents
      */
     public static <E> List<E> toList(final Iterable<E> iterable) {
