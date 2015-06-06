@@ -1070,12 +1070,6 @@ public class CollectionUtilsTest extends MockTestCase {
         }
     };
 
-    private static Predicate<Number> EVEN = new Predicate<Number>() {
-        public boolean evaluate(final Number input) {
-            return input.intValue() % 2 == 0;
-        }
-    };
-
 //Up to here
     @Test
     public void filter() {
@@ -1171,6 +1165,34 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
+    public void selectWithOutputCollections() {
+        List<Integer> input = new ArrayList<Integer>();
+        input.add(1);
+        input.add(2);
+        input.add(3);
+        input.add(4);
+        
+        List<Integer> output = new ArrayList<Integer>();
+        List<Integer> rejected = new ArrayList<Integer>();
+
+        CollectionUtils.select(input, EQUALS_TWO, output, rejected);
+
+        // output contains 2
+        assertEquals(1, output.size());
+        assertEquals(2, CollectionUtils.extractSingleton(output).intValue());
+        
+        // rejected contains 1, 3, and 4
+        Integer[] expected = {1, 3, 4};
+        Assert.assertArrayEquals(expected, rejected.toArray());
+        
+        output.clear();
+        rejected.clear();
+        CollectionUtils.select((List<Integer>) null, EQUALS_TWO, output, rejected);
+        assertTrue(output.isEmpty());
+        assertTrue(rejected.isEmpty());
+    }
+
+    @Test
     public void selectRejected() {
         final List<Long> list = new ArrayList<Long>();
         list.add(1L);
@@ -1189,89 +1211,6 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(output1.contains(4L));
     }
 
-    @SuppressWarnings("unchecked")
-    @Test
-    public void partition() {
-        List<Integer> input = new ArrayList<Integer>();
-        input.add(1);
-        input.add(2);
-        input.add(3);
-        input.add(4);
-        List<List<Integer>> partitions = CollectionUtils.partition(input, EQUALS_TWO);
-        assertEquals(2, partitions.size());
-        
-        // first partition contains 2
-        Collection<Integer> partition = partitions.get(0);
-        assertEquals(1, partition.size());
-        assertEquals(2, CollectionUtils.extractSingleton(partition).intValue());
-        
-        // second partition contains 1, 3, and 4
-        Integer[] expected = {1, 3, 4};
-        partition = partitions.get(1);
-        Assert.assertArrayEquals(expected, partition.toArray());
-        
-        partitions = CollectionUtils.partition((List<Integer>) null, EQUALS_TWO);
-        assertTrue(partitions.isEmpty());
-        
-        partitions = CollectionUtils.partition(input);
-        assertEquals(1, partitions.size());
-        assertEquals(input, partitions.get(0));
-    }
-
-    @Test
-    public void partitionWithOutputCollections() {
-        List<Integer> input = new ArrayList<Integer>();
-        input.add(1);
-        input.add(2);
-        input.add(3);
-        input.add(4);
-        
-        List<Integer> output = new ArrayList<Integer>();
-        List<Integer> rejected = new ArrayList<Integer>();
-
-        CollectionUtils.partition(input, EQUALS_TWO, output, rejected);
-
-        // output contains 2
-        assertEquals(1, output.size());
-        assertEquals(2, CollectionUtils.extractSingleton(output).intValue());
-        
-        // rejected contains 1, 3, and 4
-        Integer[] expected = {1, 3, 4};
-        Assert.assertArrayEquals(expected, rejected.toArray());
-        
-        output.clear();
-        rejected.clear();
-        CollectionUtils.partition((List<Integer>) null, EQUALS_TWO, output, rejected);
-        assertTrue(output.isEmpty());
-        assertTrue(rejected.isEmpty());
-    }
-
-    @Test
-    public void partitionMultiplePredicates() {
-        List<Integer> input = new ArrayList<Integer>();
-        input.add(1);
-        input.add(2);
-        input.add(3);
-        input.add(4);
-        @SuppressWarnings("unchecked")
-        List<List<Integer>> partitions = CollectionUtils.partition(input, EQUALS_TWO, EVEN);
-
-        // first partition contains 2
-        Collection<Integer> partition = partitions.get(0);
-        assertEquals(1, partition.size());
-        assertEquals(2, partition.iterator().next().intValue());
-        
-        // second partition contains 4
-        partition = partitions.get(1);
-        assertEquals(1, partition.size());
-        assertEquals(4, partition.iterator().next().intValue());
-        
-        // third partition contains 1 and 3
-        Integer[] expected = {1, 3};
-        partition = partitions.get(2);
-        Assert.assertArrayEquals(expected, partition.toArray());
-    }
-    
     @Test
     public void collect() {
         final Transformer<Number, Long> transformer = TransformerUtils.constantTransformer(2L);

@@ -19,7 +19,6 @@ package org.apache.commons.collections4;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -919,6 +918,48 @@ public class CollectionUtils {
     }
 
     /**
+     * Selects all elements from inputCollection into an output and rejected collection,
+     * based on the evaluation of the given predicate.
+     * <p>
+     * Elements matching the predicate are added to the <code>outputCollection</code>,
+     * all other elements are added to the <code>rejectedCollection</code>.
+     * <p>
+     * If the input predicate is <code>null</code>, no elements are added to
+     * <code>outputCollection</code> or <code>rejectedCollection</code>.
+     * <p>
+     * Note: calling the method is equivalent to the following code snippet:
+     * <pre>
+     *   select(inputCollection, predicate, outputCollection);
+     *   selectRejected(inputCollection, predicate, rejectedCollection);
+     * </pre>
+     *
+     * @param <O>  the type of object the {@link Iterable} contains
+     * @param <R>  the type of the output {@link Collection}
+     * @param inputCollection  the collection to get the input from, may be null
+     * @param predicate  the predicate to use, may be null
+     * @param outputCollection  the collection to output selected elements into, may not be null if the
+     *   inputCollection and predicate are not null
+     * @param rejectedCollection  the collection to output rejected elements into, may not be null if the
+     *   inputCollection or predicate are not null
+     * @return the outputCollection
+     * @since 4.1
+     */
+    public static <O, R extends Collection<? super O>> R select(final Iterable<? extends O> inputCollection,
+            final Predicate<? super O> predicate, R outputCollection, R rejectedCollection) {
+
+        if (inputCollection != null && predicate != null) {
+            for (final O element : inputCollection) {
+                if (predicate.evaluate(element)) {
+                    outputCollection.add(element);
+                } else {
+                    rejectedCollection.add(element);
+                }
+            }
+        }
+        return outputCollection;
+    }
+
+    /**
      * Selects all elements from inputCollection which don't match the given
      * predicate into an output collection.
      * <p>
@@ -964,206 +1005,6 @@ public class CollectionUtils {
             }
         }
         return outputCollection;
-    }
-
-    /**
-     * Partitions all elements from inputCollection into separate output collections,
-     * based on the evaluation of the given predicate.
-     * <p>
-     * For each predicate, the result will contain a list holding all elements of the
-     * input collection matching the predicate. The last list will hold all elements
-     * which didn't match any predicate:
-     * <pre>
-     *  [C1, R] = partition(I, P1) with
-     *  I = input collection
-     *  P1 = first predicate
-     *  C1 = collection of elements matching P1
-     *  R = collection of elements rejected by all predicates
-     * </pre>
-     * <p>
-     * If the input collection is <code>null</code>, an empty list will be returned.
-     * If the input predicate is <code>null</code>, all elements of the input collection
-     * will be added to the rejected collection.
-     * <p>
-     * Example: for an input list [1, 2, 3, 4, 5] calling partition with a predicate [x &lt; 3]
-     * will result in the following output: [[1, 2], [3, 4, 5]].
-     *
-     * @param <O>  the type of object the {@link Iterable} contains
-     * @param inputCollection  the collection to get the input from, may be null
-     * @param predicate  the predicate to use, may be null
-     * @return a list containing the output collections
-     * @since 4.1
-     */
-    public static <O> List<List<O>> partition(final Iterable<? extends O> inputCollection,
-                                              final Predicate<? super O> predicate) {
-
-        @SuppressWarnings({ "unchecked", "rawtypes" }) // safe
-        final Factory<List<O>> factory = FactoryUtils.instantiateFactory((Class) ArrayList.class);
-        @SuppressWarnings("unchecked") // safe
-        final Predicate<? super O>[] predicates = new Predicate[] { predicate };
-        return partition(inputCollection, factory, predicates);
-    }
-
-    /**
-     * Partitions all elements from inputCollection into an output and rejected collection,
-     * based on the evaluation of the given predicate.
-     * <p>
-     * Elements matching the predicate are added to the <code>outputCollection</code>,
-     * all other elements are added to the <code>rejectedCollection</code>.
-     * <p>
-     * If the input predicate is <code>null</code>, no elements are added to
-     * <code>outputCollection</code> or <code>rejectedCollection</code>.
-     * <p>
-     * Note: calling the method is equivalent to the following code snippet:
-     * <pre>
-     *   select(inputCollection, predicate, outputCollection);
-     *   selectRejected(inputCollection, predicate, rejectedCollection);
-     * </pre>
-     *
-     * @param <O>  the type of object the {@link Iterable} contains
-     * @param <R>  the type of the output {@link Collection}
-     * @param inputCollection  the collection to get the input from, may be null
-     * @param predicate  the predicate to use, may be null
-     * @param outputCollection  the collection to output selected elements into, may not be null if the
-     *   inputCollection and predicate are not null
-     * @param rejectedCollection  the collection to output rejected elements into, may not be null if the
-     *   inputCollection or predicate are not null
-     * @since 4.1
-     */
-    public static <O, R extends Collection<? super O>> void partition(final Iterable<? extends O> inputCollection,
-            final Predicate<? super O> predicate, R outputCollection, R rejectedCollection) {
-
-        if (inputCollection != null && predicate != null) {
-            for (final O element : inputCollection) {
-                if (predicate.evaluate(element)) {
-                    outputCollection.add(element);
-                } else {
-                    rejectedCollection.add(element);
-                }
-            }
-        }
-    }
-
-    /**
-     * Partitions all elements from inputCollection into separate output collections,
-     * based on the evaluation of the given predicates.
-     * <p>
-     * For each predicate, the result will contain a list holding all elements of the
-     * input collection matching the predicate. The last list will hold all elements
-     * which didn't match any predicate:
-     * <pre>
-     *  [C1, C2, R] = partition(I, P1, P2) with
-     *  I = input collection
-     *  P1 = first predicate
-     *  P2 = second predicate
-     *  C1 = collection of elements matching P1
-     *  C2 = collection of elements matching P2
-     *  R = collection of elements rejected by all predicates
-     * </pre>
-     * <p>
-     * <b>Note</b>: elements are only added to the output collection of the first matching
-     * predicate, determined by the order of arguments.
-     * <p>
-     * If the input collection is <code>null</code>, an empty list will be returned.
-     * If the input predicate is <code>null</code>, all elements of the input collection
-     * will be added to the rejected collection.
-     * <p>
-     * Example: for an input list [1, 2, 3, 4, 5] calling partition with predicates [x &lt; 3]
-     * and [x &lt; 5] will result in the following output: [[1, 2], [3, 4], [5]].
-     *
-     * @param <O>  the type of object the {@link Iterable} contains
-     * @param inputCollection  the collection to get the input from, may be null
-     * @param predicates  the predicates to use, may be null
-     * @return a list containing the output collections
-     * @since 4.1
-     */
-    public static <O> List<List<O>> partition(final Iterable<? extends O> inputCollection,
-                                              final Predicate<? super O>... predicates) {
-
-        @SuppressWarnings({ "unchecked", "rawtypes" }) // safe
-        final Factory<List<O>> factory = FactoryUtils.instantiateFactory((Class) ArrayList.class);
-        return partition(inputCollection, factory, predicates);
-    }
-
-    /**
-     * Partitions all elements from inputCollection into separate output collections,
-     * based on the evaluation of the given predicates.
-     * <p>
-     * For each predicate, the returned list will contain a collection holding
-     * all elements of the input collection matching the predicate. The last collection
-     * contained in the list will hold all elements which didn't match any predicate:
-     * <pre>
-     *  [C1, C2, R] = partition(I, P1, P2) with
-     *  I = input collection
-     *  P1 = first predicate
-     *  P2 = second predicate
-     *  C1 = collection of elements matching P1
-     *  C2 = collection of elements matching P2
-     *  R = collection of elements rejected by all predicates
-     * </pre>
-     * <p>
-     * <b>Note</b>: elements are only added to the output collection of the first matching
-     * predicate, determined by the order of arguments.
-     * <p>
-     * If the input collection is <code>null</code>, an empty list will be returned.
-     * If no predicates have been provided, all elements of the input collection
-     * will be added to the rejected collection.
-     * <p>
-     * Example: for an input list [1, 2, 3, 4, 5] calling partition with predicates [x &lt; 3]
-     * and [x &lt; 5] will result in the following output: [[1, 2], [3, 4], [5]].
-     *
-     * @param <O>  the type of object the {@link Iterable} contains
-     * @param <R>  the type of the output {@link Collection}
-     * @param inputCollection  the collection to get the input from, may be null
-     * @param partitionFactory  the factory used to create the output collections
-     * @param predicates  the predicates to use, may be empty
-     * @return a list containing the output collections
-     * @since 4.1
-     */
-    public static <O, R extends Collection<O>> List<R> partition(final Iterable<? extends O> inputCollection,
-            final Factory<R> partitionFactory, final Predicate<? super O>... predicates) {
-
-        if (inputCollection == null) {
-            return Collections.emptyList();
-        }
-
-        if (predicates == null || predicates.length < 1) {
-            // return the entire input collection as a single partition
-            final R singlePartition = partitionFactory.create();
-            select(inputCollection, PredicateUtils.truePredicate(), singlePartition);
-            return Collections.singletonList(singlePartition);
-        }
-
-        // create the empty partitions
-        final int numberOfPredicates = predicates.length;
-        final int numberOfPartitions = numberOfPredicates + 1;
-        final List<R> partitions = new ArrayList<R>(numberOfPartitions);
-        for (int i = 0; i < numberOfPartitions; ++i) {
-            partitions.add(partitionFactory.create());
-        }
-
-        // for each element in inputCollection:
-        // find the first predicate that evaluates to true.
-        // if there is a predicate, add the element to the corresponding partition.
-        // if there is no predicate, add it to the last, catch-all partition.
-        for (final O element : inputCollection) {
-            boolean elementAssigned = false;
-            for (int i = 0; i < numberOfPredicates; ++i) {
-                if (predicates[i].evaluate(element)) {
-                    partitions.get(i).add(element);
-                    elementAssigned = true;
-                    break;
-                }
-            }
-
-            if (!elementAssigned) {
-                // no predicates evaluated to true
-                // add element to last partition
-                partitions.get(numberOfPredicates).add(element);
-            }
-        }
-
-        return partitions;
     }
 
     /**

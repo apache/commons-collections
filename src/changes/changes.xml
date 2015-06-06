@@ -98,7 +98,7 @@
       that are prefixed by the given search key in some rare cases.
     </action>
     <action issue="COLLECTIONS-511" dev="tn" type="add" due-to="Nathan Blomquist, Brent Worden">
-      Added new methods "CollectionUtils#partition(...)" to partition an input collection
+      Added new methods "IterableUtils#partition(...)" to partition an input collection
       into separate output collections based on evaluation of one or more predicates.
     </action>
     <action issue="COLLECTIONS-537" dev="tn" type="fix" due-to="Frank Jakop">

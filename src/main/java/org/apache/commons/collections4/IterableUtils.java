@@ -16,7 +16,9 @@
  */
 package org.apache.commons.collections4;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
@@ -678,6 +680,178 @@ public class IterableUtils {
         } else {
             return IteratorUtils.size(emptyIteratorIfNull(iterable));
         }
+    }
+
+    /**
+     * Partitions all elements from iterable into separate output collections,
+     * based on the evaluation of the given predicate.
+     * <p>
+     * For each predicate, the result will contain a list holding all elements of the
+     * input iterable matching the predicate. The last list will hold all elements
+     * which didn't match any predicate:
+     * <pre>
+     *  [C1, R] = partition(I, P1) with
+     *  I = input
+     *  P1 = first predicate
+     *  C1 = collection of elements matching P1
+     *  R = collection of elements rejected by all predicates
+     * </pre>
+     * <p>
+     * If the input iterable is <code>null</code>, the same is returned as for an
+     * empty iterable.
+     * <p>
+     * Example: for an input list [1, 2, 3, 4, 5] calling partition with a predicate [x &lt; 3]
+     * will result in the following output: [[1, 2], [3, 4, 5]].
+     *
+     * @param <O>  the type of object the {@link Iterable} contains
+     * @param iterable  the iterable to partition, may be null
+     * @param predicate  the predicate to use, may not be null
+     * @return a list containing the output collections
+     * @throws NullPointerException if predicate is null
+     */
+    public static <O> List<List<O>> partition(final Iterable<? extends O> iterable,
+                                              final Predicate<? super O> predicate) {
+        if (predicate == null) {
+            throw new NullPointerException("Predicate must not be null.");
+        }
+        @SuppressWarnings({ "unchecked", "rawtypes" }) // safe
+        final Factory<List<O>> factory = FactoryUtils.instantiateFactory((Class) ArrayList.class);
+        @SuppressWarnings("unchecked") // safe
+        final Predicate<? super O>[] predicates = new Predicate[] { predicate };
+        return partition(iterable, factory, predicates);
+    }
+
+    /**
+     * Partitions all elements from iterable into separate output collections,
+     * based on the evaluation of the given predicates.
+     * <p>
+     * For each predicate, the result will contain a list holding all elements of the
+     * input iterable matching the predicate. The last list will hold all elements
+     * which didn't match any predicate:
+     * <pre>
+     *  [C1, C2, R] = partition(I, P1, P2) with
+     *  I = input
+     *  P1 = first predicate
+     *  P2 = second predicate
+     *  C1 = collection of elements matching P1
+     *  C2 = collection of elements matching P2
+     *  R = collection of elements rejected by all predicates
+     * </pre>
+     * <p>
+     * <b>Note</b>: elements are only added to the output collection of the first matching
+     * predicate, determined by the order of arguments.
+     * <p>
+     * If the input iterable is <code>null</code>, the same is returned as for an
+     * empty iterable.
+     * <p>
+     * Example: for an input list [1, 2, 3, 4, 5] calling partition with predicates [x &lt; 3]
+     * and [x &lt; 5] will result in the following output: [[1, 2], [3, 4], [5]].
+     *
+     * @param <O>  the type of object the {@link Iterable} contains
+     * @param iterable  the collection to get the input from, may be null
+     * @param predicates  the predicates to use, may not be null
+     * @return a list containing the output collections
+     * @throws NullPointerException if any predicate is null
+     */
+    public static <O> List<List<O>> partition(final Iterable<? extends O> iterable,
+                                              final Predicate<? super O>... predicates) {
+
+        @SuppressWarnings({ "unchecked", "rawtypes" }) // safe
+        final Factory<List<O>> factory = FactoryUtils.instantiateFactory((Class) ArrayList.class);
+        return partition(iterable, factory, predicates);
+    }
+
+    /**
+     * Partitions all elements from iterable into separate output collections,
+     * based on the evaluation of the given predicates.
+     * <p>
+     * For each predicate, the returned list will contain a collection holding
+     * all elements of the input iterable matching the predicate. The last collection
+     * contained in the list will hold all elements which didn't match any predicate:
+     * <pre>
+     *  [C1, C2, R] = partition(I, P1, P2) with
+     *  I = input
+     *  P1 = first predicate
+     *  P2 = second predicate
+     *  C1 = collection of elements matching P1
+     *  C2 = collection of elements matching P2
+     *  R = collection of elements rejected by all predicates
+     * </pre>
+     * <p>
+     * <b>Note</b>: elements are only added to the output collection of the first matching
+     * predicate, determined by the order of arguments.
+     * <p>
+     * If the input iterable is <code>null</code>, the same is returned as for an
+     * empty iterable.
+     * If no predicates have been provided, all elements of the input collection
+     * will be added to the rejected collection.
+     * <p>
+     * Example: for an input list [1, 2, 3, 4, 5] calling partition with predicates [x &lt; 3]
+     * and [x &lt; 5] will result in the following output: [[1, 2], [3, 4], [5]].
+     *
+     * @param <O>  the type of object the {@link Iterable} contains
+     * @param <R>  the type of the output {@link Collection}
+     * @param iterable  the collection to get the input from, may be null
+     * @param partitionFactory  the factory used to create the output collections
+     * @param predicates  the predicates to use, may not be null
+     * @return a list containing the output collections
+     * @throws NullPointerException if any predicate is null
+     */
+    public static <O, R extends Collection<O>> List<R> partition(final Iterable<? extends O> iterable,
+            final Factory<R> partitionFactory, final Predicate<? super O>... predicates) {
+
+        if (iterable == null) {
+            final Iterable<O> empty = emptyIterable();
+            return partition(empty, partitionFactory, predicates);
+        }
+
+        if (predicates == null) {
+            throw new NullPointerException("Predicates must not be null.");
+        }
+
+        for (Predicate<?> p : predicates) {
+            if (p == null) {
+                throw new NullPointerException("Predicate must not be null.");
+            }
+        }
+
+        if (predicates.length < 1) {
+            // return the entire input collection as a single partition
+            final R singlePartition = partitionFactory.create();
+            CollectionUtils.addAll(singlePartition, iterable);
+            return Collections.singletonList(singlePartition);
+        }
+
+        // create the empty partitions
+        final int numberOfPredicates = predicates.length;
+        final int numberOfPartitions = numberOfPredicates + 1;
+        final List<R> partitions = new ArrayList<R>(numberOfPartitions);
+        for (int i = 0; i < numberOfPartitions; ++i) {
+            partitions.add(partitionFactory.create());
+        }
+
+        // for each element in inputCollection:
+        // find the first predicate that evaluates to true.
+        // if there is a predicate, add the element to the corresponding partition.
+        // if there is no predicate, add it to the last, catch-all partition.
+        for (final O element : iterable) {
+            boolean elementAssigned = false;
+            for (int i = 0; i < numberOfPredicates; ++i) {
+                if (predicates[i].evaluate(element)) {
+                    partitions.get(i).add(element);
+                    elementAssigned = true;
+                    break;
+                }
+            }
+
+            if (!elementAssigned) {
+                // no predicates evaluated to true
+                // add element to last partition
+                partitions.get(numberOfPredicates).add(element);
+            }
+        }
+
+        return partitions;
     }
 
     /**

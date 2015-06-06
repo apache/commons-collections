@@ -26,6 +26,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.collections4.bag.HashBag;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -86,6 +87,12 @@ public class IterableUtilsTest {
     private static Predicate<Number> EQUALS_TWO = new Predicate<Number>() {
         public boolean evaluate(final Number input) {
             return input.intValue() == 2;
+        }
+    };
+
+    private static Predicate<Number> EVEN = new Predicate<Number>() {
+        public boolean evaluate(final Number input) {
+            return input.intValue() % 2 == 0;
         }
     };
 
@@ -269,6 +276,76 @@ public class IterableUtilsTest {
         IterableUtils.get(bag, 1);
     }
 
+    @SuppressWarnings("unchecked")
+    @Test
+    public void partition() {
+        List<Integer> input = new ArrayList<Integer>();
+        input.add(1);
+        input.add(2);
+        input.add(3);
+        input.add(4);
+        List<List<Integer>> partitions = IterableUtils.partition(input, EQUALS_TWO);
+        assertEquals(2, partitions.size());
+        
+        // first partition contains 2
+        Collection<Integer> partition = partitions.get(0);
+        assertEquals(1, partition.size());
+        assertEquals(2, CollectionUtils.extractSingleton(partition).intValue());
+        
+        // second partition contains 1, 3, and 4
+        Integer[] expected = {1, 3, 4};
+        partition = partitions.get(1);
+        Assert.assertArrayEquals(expected, partition.toArray());
+        
+        partitions = IterableUtils.partition((List<Integer>) null, EQUALS_TWO);
+        assertEquals(2, partitions.size());
+        assertTrue(partitions.get(0).isEmpty());
+        assertTrue(partitions.get(1).isEmpty());
+
+        partitions = IterableUtils.partition(input);
+        assertEquals(1, partitions.size());
+        assertEquals(input, partitions.get(0));
+
+        try {
+            IterableUtils.partition(input, (Predicate<Integer>) null);
+            fail("expecting NullPointerException");
+        } catch (NullPointerException npe) {
+            // expected
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Test
+    public void partitionMultiplePredicates() {
+        List<Integer> input = new ArrayList<Integer>();
+        input.add(1);
+        input.add(2);
+        input.add(3);
+        input.add(4);
+        List<List<Integer>> partitions = IterableUtils.partition(input, EQUALS_TWO, EVEN);
+
+        // first partition contains 2
+        Collection<Integer> partition = partitions.get(0);
+        assertEquals(1, partition.size());
+        assertEquals(2, partition.iterator().next().intValue());
+        
+        // second partition contains 4
+        partition = partitions.get(1);
+        assertEquals(1, partition.size());
+        assertEquals(4, partition.iterator().next().intValue());
+        
+        // third partition contains 1 and 3
+        Integer[] expected = {1, 3};
+        partition = partitions.get(2);
+        Assert.assertArrayEquals(expected, partition.toArray());
+
+        try {
+            IterableUtils.partition(input, EQUALS_TWO, null);
+        } catch (NullPointerException npe) {
+            // expected
+        }
+    }
+    
     @Test
     public void testToString() {
         String result = IterableUtils.toString(iterableA);
