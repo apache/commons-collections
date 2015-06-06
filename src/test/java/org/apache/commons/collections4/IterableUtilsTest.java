@@ -20,10 +20,13 @@ import static org.apache.commons.collections4.functors.EqualPredicate.*;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.collections4.bag.HashBag;
 import org.junit.Assert;
@@ -198,6 +201,72 @@ public class IterableUtilsTest {
     }
 
     @Test
+    public void cardinality() {
+        // null iterable test
+        assertEquals(0, IterableUtils.cardinality(null, 1));
+
+        assertEquals(1, IterableUtils.cardinality(iterableA, 1));
+        assertEquals(2, IterableUtils.cardinality(iterableA, 2));
+        assertEquals(3, IterableUtils.cardinality(iterableA, 3));
+        assertEquals(4, IterableUtils.cardinality(iterableA, 4));
+        assertEquals(0, IterableUtils.cardinality(iterableA, 5));
+
+        assertEquals(0, IterableUtils.cardinality(iterableB, 1L));
+        assertEquals(4, IterableUtils.cardinality(iterableB, 2L));
+        assertEquals(3, IterableUtils.cardinality(iterableB, 3L));
+        assertEquals(2, IterableUtils.cardinality(iterableB, 4L));
+        assertEquals(1, IterableUtils.cardinality(iterableB, 5L));
+
+        // Ensure that generic bounds accept valid parameters, but return
+        // expected results
+        // e.g. no longs in the "int" Iterable<Number>, and vice versa.
+        Iterable<Number> iterableIntAsNumber = Arrays.<Number>asList(1, 2, 3, 4, 5);
+        Iterable<Number> iterableLongAsNumber = Arrays.<Number>asList(1L, 2L, 3L, 4L, 5L);
+        assertEquals(0, IterableUtils.cardinality(iterableIntAsNumber, 2L));
+        assertEquals(0, IterableUtils.cardinality(iterableLongAsNumber, 2));
+
+        final Set<String> set = new HashSet<String>();
+        set.add("A");
+        set.add("C");
+        set.add("E");
+        set.add("E");
+        assertEquals(1, IterableUtils.cardinality(set, "A"));
+        assertEquals(0, IterableUtils.cardinality(set, "B"));
+        assertEquals(1, IterableUtils.cardinality(set, "C"));
+        assertEquals(0, IterableUtils.cardinality(set, "D"));
+        assertEquals(1, IterableUtils.cardinality(set, "E"));
+
+        final Bag<String> bag = new HashBag<String>();
+        bag.add("A", 3);
+        bag.add("C");
+        bag.add("E");
+        bag.add("E");
+        assertEquals(3, IterableUtils.cardinality(bag, "A"));
+        assertEquals(0, IterableUtils.cardinality(bag, "B"));
+        assertEquals(1, IterableUtils.cardinality(bag, "C"));
+        assertEquals(0, IterableUtils.cardinality(bag, "D"));
+        assertEquals(2, IterableUtils.cardinality(bag, "E"));
+    }
+
+    @Test
+    public void cardinalityOfNull() {
+        final List<String> list = new ArrayList<String>();
+        assertEquals(0, IterableUtils.cardinality(list, null));
+        list.add("A");
+        assertEquals(0, IterableUtils.cardinality(list, null));
+        list.add(null);
+        assertEquals(1, IterableUtils.cardinality(list, null));
+        list.add("B");
+        assertEquals(1, IterableUtils.cardinality(list, null));
+        list.add(null);
+        assertEquals(2, IterableUtils.cardinality(list, null));
+        list.add("B");
+        assertEquals(2, IterableUtils.cardinality(list, null));
+        list.add(null);
+        assertEquals(3, IterableUtils.cardinality(list, null));
+    }
+
+    @Test
     public void find() {
         Predicate<Number> testPredicate = equalPredicate((Number) 4);
         Integer test = IterableUtils.find(iterableA, testPredicate);
@@ -215,19 +284,19 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void frequency() {
-        assertEquals(4, IterableUtils.frequency(iterableB, EQUALS_TWO));
-        assertEquals(0, IterableUtils.frequency(null, EQUALS_TWO));
+    public void countMatches() {
+        assertEquals(4, IterableUtils.countMatches(iterableB, EQUALS_TWO));
+        assertEquals(0, IterableUtils.countMatches(null, EQUALS_TWO));
 
         try {
-            assertEquals(0, IterableUtils.frequency(iterableA, null));
+            assertEquals(0, IterableUtils.countMatches(iterableA, null));
             fail("predicate must not be null");
         } catch (NullPointerException ex) {
             // expected
         }
 
         try {
-            assertEquals(0, IterableUtils.frequency(null, null));
+            assertEquals(0, IterableUtils.countMatches(null, null));
             fail("predicate must not be null");
         } catch (NullPointerException ex) {
             // expected

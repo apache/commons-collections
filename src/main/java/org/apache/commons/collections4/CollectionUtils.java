@@ -614,29 +614,16 @@ public class CollectionUtils {
      * @param coll the {@link Iterable} to search
      * @param <O> the type of object that the {@link Iterable} may contain.
      * @return the the number of occurrences of obj in coll
+     * @throws NullPointerException if coll is null
+     * @deprecated since 4.1, use {@link IterableUtils#cardinality(Iterable, Object)} instead.
+     *   Be aware that the order of parameters has changed.
      */
+    @Deprecated
     public static <O> int cardinality(final O obj, final Iterable<? super O> coll) {
-        if (coll instanceof Set<?>) {
-            return ((Set<? super O>) coll).contains(obj) ? 1 : 0;
+        if (coll == null) {
+            throw new NullPointerException("coll must not be null.");
         }
-        if (coll instanceof Bag<?>) {
-            return ((Bag<? super O>) coll).getCount(obj);
-        }
-        int count = 0;
-        if (obj == null) {
-            for (final Object element : coll) {
-                if (element == null) {
-                    count++;
-                }
-            }
-        } else {
-            for (final Object element : coll) {
-                if (obj.equals(element)) {
-                    count++;
-                }
-            }
-        }
-        return count;
+        return IterableUtils.cardinality(coll, obj);
     }
 
     /**
@@ -820,11 +807,11 @@ public class CollectionUtils {
      * @param input  the {@link Iterable} to get the input from, may be null
      * @param predicate  the predicate to use, may be null
      * @return the number of matches for the predicate in the collection
-     * @deprecated since 4.1, use {@link IterableUtils#frequency(Iterable, Predicate)} instead
+     * @deprecated since 4.1, use {@link IterableUtils#countMatches(Iterable, Predicate)} instead
      */
     @Deprecated
     public static <C> int countMatches(final Iterable<C> input, final Predicate<? super C> predicate) {
-        return predicate == null ? 0 : (int) IterableUtils.frequency(input, predicate);
+        return predicate == null ? 0 : (int) IterableUtils.countMatches(input, predicate);
     }
 
     /**

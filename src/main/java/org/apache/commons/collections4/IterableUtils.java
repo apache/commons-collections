@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.iterators.LazyIteratorChain;
@@ -238,14 +239,14 @@ public class IterableUtils {
      *
      * @param <E>  the element type
      * @param iterable  the iterable to filter, may be null
-     * @param predicate  the predicate used to filter elements, must not be null
+     * @param predicate  the predicate used to filter elements, may not be null
      * @return a filtered view on the specified iterable
      * @throws NullPointerException if predicate is null
      */
     public static <E> Iterable<E> filteredIterable(final Iterable<E> iterable,
                                                    final Predicate<? super E> predicate) {
         if (predicate == null) {
-            throw new NullPointerException("predicate must not be null.");
+            throw new NullPointerException("Predicate must not be null.");
         }
 
         return new FluentIterable<E>() {
@@ -274,7 +275,7 @@ public class IterableUtils {
      */
     public static <E> Iterable<E> boundedIterable(final Iterable<E> iterable, final long maxSize) {
         if (maxSize < 0) {
-            throw new IllegalArgumentException("maxSize parameter must not be negative.");
+            throw new IllegalArgumentException("MaxSize parameter must not be negative.");
         }
 
         return new FluentIterable<E>() {
@@ -372,7 +373,7 @@ public class IterableUtils {
      */
     public static <E> Iterable<E> skippingIterable(final Iterable<E> iterable, final long elementsToSkip) {
         if (elementsToSkip < 0) {
-            throw new IllegalArgumentException("elementsToSkip parameter must not be negative.");
+            throw new IllegalArgumentException("ElementsToSkip parameter must not be negative.");
         }
 
         return new FluentIterable<E>() {
@@ -403,7 +404,7 @@ public class IterableUtils {
     public static <I, O> Iterable<O> transformedIterable(final Iterable<I> iterable,
                                                          final Transformer<? super I, ? extends O> transformer) {
         if (transformer == null) {
-            throw new NullPointerException("transformer must not be null.");
+            throw new NullPointerException("Transformer must not be null.");
         }
 
         return new FluentIterable<O>() {
@@ -540,13 +541,13 @@ public class IterableUtils {
 
     /**
      * Returns an empty iterator if the argument is <code>null</code>,
-     * or returns {@code iterable.iterator()} otherwise.
+     * or {@code iterable.iterator()} otherwise.
      *
      * @param <E> the element type
      * @param iterable  the iterable, possibly <code>null</code>
-     * @return an empty collection if the argument is <code>null</code>
+     * @return an empty iterator if the argument is <code>null</code>
      */
-    public static <E> Iterator<E> emptyIteratorIfNull(final Iterable<E> iterable) {
+    private static <E> Iterator<E> emptyIteratorIfNull(final Iterable<E> iterable) {
         return iterable != null ? iterable.iterator() : IteratorUtils.<E>emptyIterator();
     }
 
@@ -635,19 +636,11 @@ public class IterableUtils {
      * @return the number of matches for the predicate in the collection
      * @throws NullPointerException if predicate is null
      */
-    public static <E> long frequency(final Iterable<E> input, final Predicate<? super E> predicate) {
+    public static <E> long countMatches(final Iterable<E> input, final Predicate<? super E> predicate) {
         if (predicate == null) {
             throw new NullPointerException("Predicate must not be null.");
         }
-        long count = 0;
-        if (input != null) {
-            for (final E o : input) {
-                if (predicate.evaluate(o)) {
-                    count++;
-                }
-            }
-        }
-        return count;
+        return size(filteredIterable(input, predicate));
     }
 
     /**
@@ -707,6 +700,24 @@ public class IterableUtils {
             throw new NullPointerException("Equator must not be null.");
         }
         return matchesAny(iterable, EqualPredicate.equalPredicate(object, equator));
+    }
+
+    /**
+     * Returns the number of occurrences of the provided object in the iterable.
+     *
+     * @param <E>  the type of object that the {@link Iterable} may contain
+     * @param iterable  the {@link Iterable} to search
+     * @param obj  the object to find the cardinality of
+     * @return the the number of occurrences of obj in iterable
+     */
+    public static <E, T extends E> int cardinality(final Iterable<E> iterable, final T obj) {
+        if (iterable instanceof Set<?>) {
+            return ((Set<E>) iterable).contains(obj) ? 1 : 0;
+        }
+        if (iterable instanceof Bag<?>) {
+            return ((Bag<E>) iterable).getCount(obj);
+        }
+        return size(filteredIterable(iterable, EqualPredicate.<E>equalPredicate(obj)));
     }
 
     /**

@@ -188,6 +188,7 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
+    @Deprecated
     public void cardinality() {
         assertEquals(1, CollectionUtils.cardinality(1, iterableA));
         assertEquals(2, CollectionUtils.cardinality(2, iterableA));
@@ -231,6 +232,7 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
+    @Deprecated
     public void cardinalityOfNull() {
         final List<String> list = new ArrayList<String>();
         assertEquals(0, CollectionUtils.cardinality(null, list));
@@ -671,6 +673,7 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
+    @Deprecated
     public void forAllButLastDoCollection() {
         final Closure<List<? extends Number>> testClosure = ClosureUtils.invokerClosure("clear");
         final Collection<List<? extends Number>> col = new ArrayList<List<? extends Number>>();
