@@ -712,6 +712,7 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
+    @Deprecated
     public void forAllButLastDoIterator() {
         final Closure<List<? extends Number>> testClosure = ClosureUtils.invokerClosure("clear");
         final Collection<List<? extends Number>> col = new ArrayList<List<? extends Number>>();

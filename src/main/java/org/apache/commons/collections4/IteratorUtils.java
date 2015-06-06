@@ -1252,6 +1252,37 @@ public class IteratorUtils {
     }
 
     /**
+     * Executes the given closure on each but the last element in the iterator.
+     * <p>
+     * If the input iterator is null no change is made.
+     *
+     * @param <E>  the type of object the {@link Iterator} contains
+     * @param <C>  the closure type
+     * @param iterator  the iterator to get the input from, may be null
+     * @param closure  the closure to perform, may not be null
+     * @return the last element in the iterator, or null if iterator is null or empty
+     * @throws NullPointerException if closure is null
+     * @since 4.1
+     */
+    public static <E, C extends Closure<? super E>> E applyForAllButLast(final Iterator<E> iterator,
+                                                                         final C closure) {
+        if (closure == null) {
+            throw new NullPointerException("Closure must not be null.");
+        }
+        if (iterator != null) {
+            while (iterator.hasNext()) {
+                final E element = iterator.next();
+                if (iterator.hasNext()) {
+                    closure.execute(element);
+                } else {
+                    return element;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
      * Finds the first element in the given iterator which matches the given predicate.
      * <p>
      * A <code>null</code> or empty iterator returns null.

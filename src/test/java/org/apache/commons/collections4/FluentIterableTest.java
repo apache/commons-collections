@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -280,6 +281,23 @@ public class FluentIterableTest {
         // empty iterable
         result = FluentIterable.of(emptyIterable).unique().toList();
         assertEquals(0, result.size());
+    }
+
+    @Test
+    public void unmodifiable() {
+        FluentIterable<Integer> iterable1 = FluentIterable.of(iterableA).unmodifiable();
+        Iterator<Integer> it = iterable1.iterator();
+        assertEquals(1, it.next().intValue());
+        try {
+            it.remove();
+            fail("expecting UnsupportedOperationException");
+        } catch (UnsupportedOperationException ise) {
+            // expected
+        }
+
+        // calling unmodifiable on an already unmodifiable iterable shall return the same instance
+        FluentIterable<Integer> iterable2 = iterable1.unmodifiable();
+        assertSame(iterable1, iterable2);
     }
 
     @Test

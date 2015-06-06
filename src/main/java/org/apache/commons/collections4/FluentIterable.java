@@ -301,6 +301,16 @@ public class FluentIterable<E> implements Iterable<E> {
     }
 
     /**
+     * Returns a new FluentIterable whose iterator will return an unmodifiable
+     * view of this iterable.
+     *
+     * @return a new iterable, providing an unmodifiable view of this iterable
+     */
+    public FluentIterable<E> unmodifiable() {
+        return of(IterableUtils.unmodifiableIterable(iterable));
+    }
+
+    /**
      * Returns a new FluentIterable whose iterator will traverse
      * the elements of this iterable and the other iterable in
      * alternating order.

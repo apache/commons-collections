@@ -235,7 +235,7 @@ public class IterableUtils {
      * Returns a view of the given iterable that only contains elements matching
      * the provided predicate.
      * <p>
-     * The returned iterable's iterator does not supports {@code remove()}.
+     * The returned iterable's iterator does not support {@code remove()}.
      *
      * @param <E>  the element type
      * @param iterable  the iterable to filter, may be null
@@ -397,7 +397,7 @@ public class IterableUtils {
      * @param <I>  the input element type
      * @param <O>  the output element type
      * @param iterable  the iterable to transform, may be null
-     * @param transformer  the transformer , must not be null
+     * @param transformer  the transformer, must not be null
      * @return a transformed view of the specified iterable
      * @throws NullPointerException if transformer is null
      */
@@ -421,10 +421,10 @@ public class IterableUtils {
     /**
      * Returns a unique view of the given iterable.
      * <p>
-     * The returned iterable's iterator does not supports {@code remove()}.
+     * The returned iterable's iterator does not support {@code remove()}.
      *
      * @param <E>  the element type
-     * @param iterable  the iterable to transform, may be null
+     * @param iterable  the iterable to use, may be null
      * @return a unique view of the specified iterable
      */
     public static <E> Iterable<E> uniqueIterable(final Iterable<E> iterable) {
@@ -434,6 +434,44 @@ public class IterableUtils {
                 return new UniqueFilterIterator<E>(emptyIteratorIfNull(iterable));
             }
         };
+    }
+
+    // Unmodifiable
+    // ----------------------------------------------------------------------
+
+    /**
+     * Returns an unmodifiable view of the given iterable.
+     * <p>
+     * The returned iterable's iterator does not support {@code remove()}.
+     *
+     * @param <E>  the element type
+     * @param iterable  the iterable to use, may be null
+     * @return an unmodifiable view of the specified iterable
+     */
+    public static <E> Iterable<E> unmodifiableIterable(final Iterable<E> iterable) {
+        if (iterable instanceof UnmodifiableIterable<?>) {
+            return iterable;
+        }
+        @SuppressWarnings("unchecked") // safe
+        final Iterable<E> it = iterable != null ? iterable : EMPTY_ITERABLE;
+        return new UnmodifiableIterable<E>(it);
+    }
+
+    /**
+     * Inner class to distinguish unmodifiable instances.
+     */
+    private static final class UnmodifiableIterable<E> extends FluentIterable<E> {
+        private final Iterable<E> unmodifiable;
+
+        public UnmodifiableIterable(final Iterable<E> iterable) {
+            super();
+            this.unmodifiable = iterable;
+        }
+
+        @Override
+        public Iterator<E> iterator() {
+            return IteratorUtils.unmodifiableIterator(unmodifiable.iterator());
+        }
     }
 
     // Zipping
@@ -513,6 +551,22 @@ public class IterableUtils {
      */
     public static <E> void apply(final Iterable<E> iterable, final Closure<? super E> closure) {
         IteratorUtils.apply(emptyIteratorIfNull(iterable), closure);
+    }
+
+    /**
+     * Executes the given closure on each but the last element in the iterable.
+     * <p>
+     * If the input iterable is null no change is made.
+     *
+     * @param <E>  the type of object the {@link Iterable} contains
+     * @param <C>  the closure type
+     * @param iterable  the iterable to get the input from, may be null
+     * @param closure  the closure to perform, may not be null
+     * @return the last element in the iterable, or null if iterable is null or empty
+     */
+    public static <E, C extends Closure<? super E>> E applyForAllButLast(final Iterable<E> iterable,
+                                                                         final C closure) {
+        return IteratorUtils.applyForAllButLast(emptyIteratorIfNull(iterable), closure);
     }
 
     /**

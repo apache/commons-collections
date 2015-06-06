@@ -708,10 +708,12 @@ public class CollectionUtils {
      * @param closure  the closure to perform, may be null
      * @return the last element in the collection, or null if either collection or closure is null
      * @since 4.0
+     * @deprecated since 4.1, use {@link IterableUtils#applyForAllButLast(Iterable, Closure)} instead
      */
+    @Deprecated
     public static <T, C extends Closure<? super T>> T forAllButLastDo(final Iterable<T> collection,
                                                                       final C closure) {
-        return collection != null && closure != null ? forAllButLastDo(collection.iterator(), closure) : null;
+        return closure != null ? IterableUtils.applyForAllButLast(collection, closure) : null;
     }
 
     /**
@@ -725,19 +727,11 @@ public class CollectionUtils {
      * @param closure  the closure to perform, may be null
      * @return the last element in the collection, or null if either iterator or closure is null
      * @since 4.0
+     * @deprecated since 4.1, use {@link IteratorUtils#applyForAllButLast(Iterator, Closure)} instead
      */
+    @Deprecated
     public static <T, C extends Closure<? super T>> T forAllButLastDo(final Iterator<T> iterator, final C closure) {
-        if (iterator != null && closure != null) {
-            while (iterator.hasNext()) {
-                final T element = iterator.next();
-                if (iterator.hasNext()) {
-                    closure.execute(element);
-                } else {
-                    return element;
-                }
-            }
-        }
-        return null;
+        return closure != null ? IteratorUtils.applyForAllButLast(iterator, closure) : null;
     }
 
     /**
