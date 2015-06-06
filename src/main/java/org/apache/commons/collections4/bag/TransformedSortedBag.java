@@ -113,14 +113,17 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
 
     //-----------------------------------------------------------------------
 
+    @Override
     public E first() {
         return getSortedBag().first();
     }
 
+    @Override
     public E last() {
         return getSortedBag().last();
     }
 
+    @Override
     public Comparator<? super E> comparator() {
         return getSortedBag().comparator();
     }

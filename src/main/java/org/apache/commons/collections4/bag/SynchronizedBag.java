@@ -101,18 +101,21 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
 
     //-----------------------------------------------------------------------
 
+    @Override
     public boolean add(final E object, final int count) {
         synchronized (lock) {
             return getBag().add(object, count);
         }
     }
 
+    @Override
     public boolean remove(final Object object, final int count) {
         synchronized (lock) {
             return getBag().remove(object, count);
         }
     }
 
+    @Override
     public Set<E> uniqueSet() {
         synchronized (lock) {
             final Set<E> set = getBag().uniqueSet();
@@ -120,6 +123,7 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
         }
     }
 
+    @Override
     public int getCount(final Object object) {
         synchronized (lock) {
             return getBag().getCount(object);

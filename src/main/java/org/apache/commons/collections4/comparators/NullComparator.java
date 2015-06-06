@@ -135,6 +135,7 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      *  "higher" than (greater than, after, etc.) <code>o2</code>; or
      *  <code>0</code> if <code>o1</code> and <code>o2</code> are equal.
      **/
+    @Override
     public int compare(final E o1, final E o2) {
         if(o1 == o2) { return 0; }
         if(o1 == null) { return this.nullsAreHigh ? 1 : -1; }

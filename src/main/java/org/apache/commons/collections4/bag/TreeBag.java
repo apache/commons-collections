@@ -97,14 +97,17 @@ public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Seria
 
     //-----------------------------------------------------------------------
 
+    @Override
     public E first() {
         return getMap().firstKey();
     }
 
+    @Override
     public E last() {
         return getMap().lastKey();
     }
 
+    @Override
     public Comparator<? super E> comparator() {
         return getMap().comparator();
     }

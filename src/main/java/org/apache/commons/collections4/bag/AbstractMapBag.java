@@ -27,8 +27,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.commons.collections4.set.UnmodifiableSet;
 import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
  * Abstract implementation of the {@link Bag} interface to simplify the creation
@@ -86,6 +86,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      *
      * @return current size of the bag
      */
+    @Override
     public int size() {
         return size;
     }
@@ -95,6 +96,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      *
      * @return true if bag is empty
      */
+    @Override
     public boolean isEmpty() {
         return map.isEmpty();
     }
@@ -106,6 +108,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param object the object to search for
      * @return the number of occurrences of the object, zero if not found
      */
+    @Override
     public int getCount(final Object object) {
         final MutableInteger count = map.get(object);
         if (count != null) {
@@ -122,6 +125,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param object the object to search for
      * @return true if the bag contains the given element
      */
+    @Override
     public boolean contains(final Object object) {
         return map.containsKey(object);
     }
@@ -132,6 +136,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param coll the collection to check against
      * @return <code>true</code> if the Bag contains all the collection
      */
+    @Override
     public boolean containsAll(final Collection<?> coll) {
         if (coll instanceof Bag) {
             return containsAll((Bag<?>) coll);
@@ -164,6 +169,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      *
      * @return the iterator
      */
+    @Override
     public Iterator<E> iterator() {
         return new BagIterator<E>(this);
     }
@@ -193,11 +199,13 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         }
 
         /** {@inheritDoc} */
+        @Override
         public boolean hasNext() {
             return itemCount > 0 || entryIterator.hasNext();
         }
 
         /** {@inheritDoc} */
+        @Override
         public E next() {
             if (parent.modCount != mods) {
                 throw new ConcurrentModificationException();
@@ -212,6 +220,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
         }
 
         /** {@inheritDoc} */
+        @Override
         public void remove() {
             if (parent.modCount != mods) {
                 throw new ConcurrentModificationException();
@@ -237,6 +246,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param object the object to add
      * @return <code>true</code> if the object was not already in the <code>uniqueSet</code>
      */
+    @Override
     public boolean add(final E object) {
         return add(object, 1);
     }
@@ -248,6 +258,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param nCopies the number of copies to add
      * @return <code>true</code> if the object was not already in the <code>uniqueSet</code>
      */
+    @Override
     public boolean add(final E object, final int nCopies) {
         modCount++;
         if (nCopies > 0) {
@@ -269,6 +280,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param coll the collection to add
      * @return <code>true</code> if this call changed the bag
      */
+    @Override
     public boolean addAll(final Collection<? extends E> coll) {
         boolean changed = false;
         final Iterator<? extends E> i = coll.iterator();
@@ -283,6 +295,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     /**
      * Clears the bag by clearing the underlying map.
      */
+    @Override
     public void clear() {
         modCount++;
         map.clear();
@@ -295,6 +308,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param object the object to remove
      * @return true if the bag changed
      */
+    @Override
     public boolean remove(final Object object) {
         final MutableInteger mut = map.get(object);
         if (mut == null) {
@@ -313,6 +327,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param nCopies the number of copies to remove
      * @return true if the bag changed
      */
+    @Override
     public boolean remove(final Object object, final int nCopies) {
         final MutableInteger mut = map.get(object);
         if (mut == null) {
@@ -339,6 +354,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param coll the collection to use
      * @return true if the bag changed
      */
+    @Override
     public boolean removeAll(final Collection<?> coll) {
         boolean result = false;
         if (coll != null) {
@@ -358,6 +374,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      * @param coll the collection to retain
      * @return true if this call changed the collection
      */
+    @Override
     public boolean retainAll(final Collection<?> coll) {
         if (coll instanceof Bag) {
             return retainAll((Bag<?>) coll);
@@ -429,6 +446,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      *
      * @return an array of all of this bag's elements
      */
+    @Override
     public Object[] toArray() {
         final Object[] result = new Object[size()];
         int i = 0;
@@ -454,6 +472,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      *   a supertype of the runtime type of the elements in this list
      * @throws NullPointerException if the specified array is null
      */
+    @Override
     public <T> T[] toArray(T[] array) {
         final int size = size();
         if (array.length < size) {
@@ -484,6 +503,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
      *
      * @return the set of unique elements in this bag
      */
+    @Override
     public Set<E> uniqueSet() {
         if (uniqueSet == null) {
             uniqueSet = UnmodifiableSet.<E> unmodifiableSet(map.keySet());

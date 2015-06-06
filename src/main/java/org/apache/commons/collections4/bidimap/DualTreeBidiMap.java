@@ -128,22 +128,27 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
 
     //-----------------------------------------------------------------------
 
+    @Override
     public Comparator<? super K> comparator() {
         return ((SortedMap<K, V>) normalMap).comparator();
     }
 
+    @Override
     public Comparator<? super V> valueComparator() {
         return ((SortedMap<V, K>) reverseMap).comparator();
     }
 
+    @Override
     public K firstKey() {
         return ((SortedMap<K, V>) normalMap).firstKey();
     }
 
+    @Override
     public K lastKey() {
         return ((SortedMap<K, V>) normalMap).lastKey();
     }
 
+    @Override
     public K nextKey(final K key) {
         if (isEmpty()) {
             return null;
@@ -160,6 +165,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
         return null;
     }
 
+    @Override
     public K previousKey(final K key) {
         if (isEmpty()) {
             return null;
@@ -199,16 +205,19 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
 
     //-----------------------------------------------------------------------
 
+    @Override
     public SortedMap<K, V> headMap(final K toKey) {
         final SortedMap<K, V> sub = ((SortedMap<K, V>) normalMap).headMap(toKey);
         return new ViewMap<K, V>(this, sub);
     }
 
+    @Override
     public SortedMap<K, V> tailMap(final K fromKey) {
         final SortedMap<K, V> sub = ((SortedMap<K, V>) normalMap).tailMap(fromKey);
         return new ViewMap<K, V>(this, sub);
     }
 
+    @Override
     public SortedMap<K, V> subMap(final K fromKey, final K toKey) {
         final SortedMap<K, V> sub = ((SortedMap<K, V>) normalMap).subMap(fromKey, toKey);
         return new ViewMap<K, V>(this, sub);
@@ -307,30 +316,36 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
             iterator = new ArrayList<Map.Entry<K, V>>(parent.entrySet()).listIterator();
         }
 
+        @Override
         public boolean hasNext() {
             return iterator.hasNext();
         }
 
+        @Override
         public K next() {
             last = iterator.next();
             return last.getKey();
         }
 
+        @Override
         public boolean hasPrevious() {
             return iterator.hasPrevious();
         }
 
+        @Override
         public K previous() {
             last = iterator.previous();
             return last.getKey();
         }
 
+        @Override
         public void remove() {
             iterator.remove();
             parent.remove(last.getKey());
             last = null;
         }
 
+        @Override
         public K getKey() {
             if (last == null) {
                 throw new IllegalStateException(
@@ -339,6 +354,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
             return last.getKey();
         }
 
+        @Override
         public V getValue() {
             if (last == null) {
                 throw new IllegalStateException(
@@ -347,6 +363,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
             return last.getValue();
         }
 
+        @Override
         public V setValue(final V value) {
             if (last == null) {
                 throw new IllegalStateException(
@@ -365,6 +382,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
             return oldValue;
         }
 
+        @Override
         public void reset() {
             iterator = new ArrayList<Map.Entry<K, V>>(parent.entrySet()).listIterator();
             last = null;

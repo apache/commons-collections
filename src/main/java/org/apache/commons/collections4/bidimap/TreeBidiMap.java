@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections4.bidimap;
 
+import static org.apache.commons.collections4.bidimap.TreeBidiMap.DataElement.KEY;
+import static org.apache.commons.collections4.bidimap.TreeBidiMap.DataElement.VALUE;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -34,9 +37,6 @@ import org.apache.commons.collections4.OrderedIterator;
 import org.apache.commons.collections4.OrderedMapIterator;
 import org.apache.commons.collections4.iterators.EmptyOrderedMapIterator;
 import org.apache.commons.collections4.keyvalue.UnmodifiableMapEntry;
-
-import static org.apache.commons.collections4.bidimap.TreeBidiMap.DataElement.KEY;
-import static org.apache.commons.collections4.bidimap.TreeBidiMap.DataElement.VALUE;
 
 /**
  * Red-Black tree-based implementation of BidiMap where all objects added
@@ -137,6 +137,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      *
      * @return the number of key-value mappings in this map
      */
+    @Override
     public int size() {
         return nodeCount;
     }
@@ -146,6 +147,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      *
      * @return true if the map is empty
      */
+    @Override
     public boolean isEmpty() {
         return nodeCount == 0;
     }
@@ -160,6 +162,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * @throws ClassCastException if the key is of an inappropriate type
      * @throws NullPointerException if the key is null
      */
+    @Override
     public boolean containsKey(final Object key) {
         checkKey(key);
         return lookupKey(key) != null;
@@ -175,6 +178,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * @throws ClassCastException if the value is of an inappropriate type
      * @throws NullPointerException if the value is null
      */
+    @Override
     public boolean containsValue(final Object value) {
         checkValue(value);
         return lookupValue(value) != null;
@@ -192,6 +196,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * @throws ClassCastException if the key is of an inappropriate type
      * @throws NullPointerException if the key is null
      */
+    @Override
     public V get(final Object key) {
         checkKey(key);
         final Node<K, V> node = lookupKey(key);
@@ -222,6 +227,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * @throws ClassCastException if the key is of an inappropriate type
      * @throws NullPointerException if the key is null
      */
+    @Override
     public V put(final K key, final V value) {
         final V result = get(key);
         doPut(key, value);
@@ -235,6 +241,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      *
      * @param map  the map to copy from
      */
+    @Override
     public void putAll(final Map<? extends K, ? extends V> map) {
         for (final Map.Entry<? extends K, ? extends V> e : map.entrySet()) {
             put(e.getKey(), e.getValue());
@@ -252,6 +259,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * @throws ClassCastException if the key is of an inappropriate type
      * @throws NullPointerException if the key is null
      */
+    @Override
     public V remove(final Object key) {
         return doRemoveKey(key);
     }
@@ -259,6 +267,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     /**
      * Removes all mappings from this map.
      */
+    @Override
     public void clear() {
         modify();
 
@@ -280,6 +289,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * @throws ClassCastException if the value is of an inappropriate type
      * @throws NullPointerException if the value is null
      */
+    @Override
     public K getKey(final Object value) {
         checkValue(value);
         final Node<K, V> node = lookupValue(value);
@@ -297,6 +307,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * @throws ClassCastException if the value is of an inappropriate type
      * @throws NullPointerException if the value is null
      */
+    @Override
     public K removeValue(final Object value) {
         return doRemoveValue(value);
     }
@@ -308,6 +319,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * @return the first (lowest) key currently in this sorted map
      * @throws NoSuchElementException if this map is empty
      */
+    @Override
     public K firstKey() {
         if (nodeCount == 0) {
             throw new NoSuchElementException("Map is empty");
@@ -321,6 +333,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * @return the last (highest) key currently in this sorted map
      * @throws NoSuchElementException if this map is empty
      */
+    @Override
     public K lastKey() {
         if (nodeCount == 0) {
             throw new NoSuchElementException("Map is empty");
@@ -336,6 +349,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * @param key the key to search for next from
      * @return the next key, null if no match or at end
      */
+    @Override
     public K nextKey(final K key) {
         checkKey(key);
         final Node<K, V> node = nextGreater(lookupKey(key), KEY);
@@ -350,6 +364,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * @param key the key to search for previous from
      * @return the previous key, null if no match or at start
      */
+    @Override
     public K previousKey(final K key) {
         checkKey(key);
         final Node<K, V> node = nextSmaller(lookupKey(key), KEY);
@@ -369,6 +384,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      *
      * @return a set view of the keys contained in this map.
      */
+    @Override
     public Set<K> keySet() {
         if (keySet == null) {
             keySet = new KeyView(KEY);
@@ -390,6 +406,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      *
      * @return a set view of the values contained in this map.
      */
+    @Override
     public Set<V> values() {
         if (valuesSet == null) {
             valuesSet = new ValueView(KEY);
@@ -412,6 +429,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      *
      * @return a set view of the values contained in this map.
      */
+    @Override
     public Set<Map.Entry<K, V>> entrySet() {
         if (entrySet == null) {
             entrySet = new EntryView();
@@ -420,6 +438,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public OrderedMapIterator<K, V> mapIterator() {
         if (isEmpty()) {
             return EmptyOrderedMapIterator.<K, V>emptyOrderedMapIterator();
@@ -433,6 +452,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      *
      * @return the inverse map
      */
+    @Override
     public OrderedBidiMap<V, K> inverseBidiMap() {
         if (inverse == null) {
             inverse = new Inverse();
@@ -1701,6 +1721,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             super(orderType);
         }
 
+        @Override
         public K getKey() {
             if (lastReturnedNode == null) {
                 throw new IllegalStateException(
@@ -1709,6 +1730,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return lastReturnedNode.getKey();
         }
 
+        @Override
         public V getValue() {
             if (lastReturnedNode == null) {
                 throw new IllegalStateException(
@@ -1717,14 +1739,17 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return lastReturnedNode.getValue();
         }
 
+        @Override
         public V setValue(final V obj) {
             throw new UnsupportedOperationException();
         }
 
+        @Override
         public K next() {
             return navigateNext().getKey();
         }
 
+        @Override
         public K previous() {
             return navigatePrevious().getKey();
         }
@@ -1742,6 +1767,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             super(orderType);
         }
 
+        @Override
         public V getKey() {
             if (lastReturnedNode == null) {
                 throw new IllegalStateException(
@@ -1750,6 +1776,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return lastReturnedNode.getValue();
         }
 
+        @Override
         public K getValue() {
             if (lastReturnedNode == null) {
                 throw new IllegalStateException(
@@ -1758,14 +1785,17 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return lastReturnedNode.getKey();
         }
 
+        @Override
         public K setValue(final K obj) {
             throw new UnsupportedOperationException();
         }
 
+        @Override
         public V next() {
             return navigateNext().getValue();
         }
 
+        @Override
         public V previous() {
             return navigatePrevious().getValue();
         }
@@ -1783,10 +1813,12 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             super(KEY);
         }
 
+        @Override
         public Map.Entry<K, V> next() {
             return navigateNext();
         }
 
+        @Override
         public Map.Entry<K, V> previous() {
             return navigatePrevious();
         }
@@ -1804,10 +1836,12 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             super(VALUE);
         }
 
+        @Override
         public Map.Entry<V, K> next() {
             return createEntry(navigateNext());
         }
 
+        @Override
         public Map.Entry<V, K> previous() {
             return createEntry(navigatePrevious());
         }
@@ -1976,6 +2010,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
          *
          * @return the key corresponding to this entry.
          */
+        @Override
         public K getKey() {
             return key;
         }
@@ -1985,6 +2020,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
          *
          * @return the value corresponding to this entry.
          */
+        @Override
         public V getValue() {
             return value;
         }
@@ -1996,6 +2032,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
          * @return does not return
          * @throws UnsupportedOperationException always
          */
+        @Override
         public V setValue(final V ignored) throws UnsupportedOperationException {
             throw new UnsupportedOperationException("Map.Entry.setValue is not supported");
         }
@@ -2046,30 +2083,37 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         /** Store the entrySet once created. */
         private Set<Map.Entry<V, K>> inverseEntrySet;
 
+        @Override
         public int size() {
             return TreeBidiMap.this.size();
         }
 
+        @Override
         public boolean isEmpty() {
             return TreeBidiMap.this.isEmpty();
         }
 
+        @Override
         public K get(final Object key) {
             return TreeBidiMap.this.getKey(key);
         }
 
+        @Override
         public V getKey(final Object value) {
             return TreeBidiMap.this.get(value);
         }
 
+        @Override
         public boolean containsKey(final Object key) {
             return TreeBidiMap.this.containsValue(key);
         }
 
+        @Override
         public boolean containsValue(final Object value) {
             return TreeBidiMap.this.containsKey(value);
         }
 
+        @Override
         public V firstKey() {
             if (TreeBidiMap.this.nodeCount == 0) {
                 throw new NoSuchElementException("Map is empty");
@@ -2077,6 +2121,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return leastNode(TreeBidiMap.this.rootNode[VALUE.ordinal()], VALUE).getValue();
         }
 
+        @Override
         public V lastKey() {
             if (TreeBidiMap.this.nodeCount == 0) {
                 throw new NoSuchElementException("Map is empty");
@@ -2084,42 +2129,50 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return greatestNode(TreeBidiMap.this.rootNode[VALUE.ordinal()], VALUE).getValue();
         }
 
+        @Override
         public V nextKey(final V key) {
             checkKey(key);
             final Node<K, V> node = nextGreater(TreeBidiMap.this.<V>lookup(key, VALUE), VALUE);
             return node == null ? null : node.getValue();
         }
 
+        @Override
         public V previousKey(final V key) {
             checkKey(key);
             final Node<K, V> node = TreeBidiMap.this.nextSmaller(TreeBidiMap.this.<V>lookup(key, VALUE), VALUE);
             return node == null ? null : node.getValue();
         }
 
+        @Override
         public K put(final V key, final K value) {
             final K result = get(key);
             TreeBidiMap.this.doPut(value, key);
             return result;
         }
 
+        @Override
         public void putAll(final Map<? extends V, ? extends K> map) {
             for (final Map.Entry<? extends V, ? extends K> e : map.entrySet()) {
                 put(e.getKey(), e.getValue());
             }
         }
 
+        @Override
         public K remove(final Object key) {
             return TreeBidiMap.this.removeValue(key);
         }
 
+        @Override
         public V removeValue(final Object value) {
             return TreeBidiMap.this.remove(value);
         }
 
+        @Override
         public void clear() {
             TreeBidiMap.this.clear();
         }
 
+        @Override
         public Set<V> keySet() {
             if (inverseKeySet == null) {
                 inverseKeySet = new ValueView(VALUE);
@@ -2127,6 +2180,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return inverseKeySet;
         }
 
+        @Override
         public Set<K> values() {
             if (inverseValuesSet == null) {
                 inverseValuesSet = new KeyView(VALUE);
@@ -2134,6 +2188,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return inverseValuesSet;
         }
 
+        @Override
         public Set<Map.Entry<V, K>> entrySet() {
             if (inverseEntrySet == null) {
                 inverseEntrySet = new InverseEntryView();
@@ -2141,6 +2196,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return inverseEntrySet;
         }
 
+        @Override
         public OrderedMapIterator<V, K> mapIterator() {
             if (isEmpty()) {
                 return EmptyOrderedMapIterator.<V, K>emptyOrderedMapIterator();
@@ -2148,6 +2204,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             return new InverseViewMapIterator(VALUE);
         }
 
+        @Override
         public OrderedBidiMap<K, V> inverseBidiMap() {
             return TreeBidiMap.this;
         }

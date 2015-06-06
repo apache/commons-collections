@@ -77,6 +77,7 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
      * @param obj2  the second object to transform then compare
      * @return negative if obj1 is less, positive if greater, zero if equal
      */
+    @Override
     public int compare(final I obj1, final I obj2) {
         final O value1 = this.transformer.transform(obj1);
         final O value2 = this.transformer.transform(obj2);

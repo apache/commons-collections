@@ -148,10 +148,12 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public boolean isFull() {
         return decorated().isFull();
     }
 
+    @Override
     public int maxSize() {
         return decorated().maxSize();
     }

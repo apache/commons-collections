@@ -105,54 +105,67 @@ public abstract class AbstractCollectionDecorator<E>
 
     //-----------------------------------------------------------------------
 
+    @Override
     public boolean add(final E object) {
         return decorated().add(object);
     }
 
+    @Override
     public boolean addAll(final Collection<? extends E> coll) {
         return decorated().addAll(coll);
     }
 
+    @Override
     public void clear() {
         decorated().clear();
     }
 
+    @Override
     public boolean contains(final Object object) {
         return decorated().contains(object);
     }
 
+    @Override
     public boolean isEmpty() {
         return decorated().isEmpty();
     }
 
+    @Override
     public Iterator<E> iterator() {
         return decorated().iterator();
     }
 
+    @Override
     public boolean remove(final Object object) {
         return decorated().remove(object);
     }
 
+    @Override
     public int size() {
         return decorated().size();
     }
 
+    @Override
     public Object[] toArray() {
         return decorated().toArray();
     }
 
+    @Override
     public <T> T[] toArray(final T[] object) {
         return decorated().toArray(object);
     }
 
+    @Override
     public boolean containsAll(final Collection<?> coll) {
         return decorated().containsAll(coll);
     }
 
+    @Override
     public boolean removeAll(final Collection<?> coll) {
         return decorated().removeAll(coll);
     }
 
+    @Override
     public boolean retainAll(final Collection<?> coll) {
         return decorated().retainAll(coll);
     }

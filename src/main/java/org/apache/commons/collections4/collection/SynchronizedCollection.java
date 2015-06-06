@@ -102,36 +102,42 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
 
     //-----------------------------------------------------------------------
 
+    @Override
     public boolean add(final E object) {
         synchronized (lock) {
             return decorated().add(object);
         }
     }
 
+    @Override
     public boolean addAll(final Collection<? extends E> coll) {
         synchronized (lock) {
             return decorated().addAll(coll);
         }
     }
 
+    @Override
     public void clear() {
         synchronized (lock) {
             decorated().clear();
         }
     }
 
+    @Override
     public boolean contains(final Object object) {
         synchronized (lock) {
             return decorated().contains(object);
         }
     }
 
+    @Override
     public boolean containsAll(final Collection<?> coll) {
         synchronized (lock) {
             return decorated().containsAll(coll);
         }
     }
 
+    @Override
     public boolean isEmpty() {
         synchronized (lock) {
             return decorated().isEmpty();
@@ -149,40 +155,47 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
      *
      * @return an iterator that must be manually synchronized on the collection
      */
+    @Override
     public Iterator<E> iterator() {
         return decorated().iterator();
     }
 
+    @Override
     public Object[] toArray() {
         synchronized (lock) {
             return decorated().toArray();
         }
     }
 
+    @Override
     public <T> T[] toArray(final T[] object) {
         synchronized (lock) {
             return decorated().toArray(object);
         }
     }
 
+    @Override
     public boolean remove(final Object object) {
         synchronized (lock) {
             return decorated().remove(object);
         }
     }
 
+    @Override
     public boolean removeAll(final Collection<?> coll) {
         synchronized (lock) {
             return decorated().removeAll(coll);
         }
     }
 
+    @Override
     public boolean retainAll(final Collection<?> coll) {
         synchronized (lock) {
             return decorated().retainAll(coll);
         }
     }
 
+    @Override
     public int size() {
         synchronized (lock) {
             return decorated().size();

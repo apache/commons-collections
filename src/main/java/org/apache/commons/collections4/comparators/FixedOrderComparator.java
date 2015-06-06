@@ -224,6 +224,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      *  to this Comparator and an alternative behavior has not been set
      *  via {@link #setUnknownObjectBehavior(UnknownObjectBehavior)}.
      */
+    @Override
     public int compare(final T obj1, final T obj2) {
         isLocked = true;
         final Integer position1 = map.get(obj1);

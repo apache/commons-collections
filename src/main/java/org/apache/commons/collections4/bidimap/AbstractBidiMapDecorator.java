@@ -66,14 +66,17 @@ public abstract class AbstractBidiMapDecorator<K, V>
         return decorated().mapIterator();
     }
 
+    @Override
     public K getKey(final Object value) {
         return decorated().getKey(value);
     }
 
+    @Override
     public K removeValue(final Object value) {
         return decorated().removeValue(value);
     }
 
+    @Override
     public BidiMap<V, K> inverseBidiMap() {
         return decorated().inverseBidiMap();
     }

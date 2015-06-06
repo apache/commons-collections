@@ -134,6 +134,7 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      * @return negative if obj1 is less, positive if greater, zero if equal
      * @throws NullPointerException when either argument <code>null</code>
      */
+    @Override
     public int compare(final Boolean b1, final Boolean b2) {
         final boolean v1 = b1.booleanValue();
         final boolean v2 = b2.booleanValue();

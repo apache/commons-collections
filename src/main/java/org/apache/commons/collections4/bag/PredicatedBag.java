@@ -31,7 +31,9 @@ import org.apache.commons.collections4.collection.PredicatedCollection;
  * If an object cannot be added to the bag, an {@link IllegalArgumentException} is thrown.
  * <p>
  * One usage would be to ensure that no null entries are added to the bag.
- * <pre>Bag bag = PredicatedBag.decorate(new HashBag(), NotNullPredicate.INSTANCE);</pre>
+ * <pre>
+ * Bag bag = PredicatedBag.predicatedBag(new HashBag(), NotNullPredicate.INSTANCE);
+ * </pre>
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
@@ -99,19 +101,23 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
 
     //-----------------------------------------------------------------------
 
+    @Override
     public boolean add(final E object, final int count) {
         validate(object);
         return decorated().add(object, count);
     }
 
+    @Override
     public boolean remove(final Object object, final int count) {
         return decorated().remove(object, count);
     }
 
+    @Override
     public Set<E> uniqueSet() {
         return decorated().uniqueSet();
     }
 
+    @Override
     public int getCount(final Object object) {
         return decorated().getCount(object);
     }

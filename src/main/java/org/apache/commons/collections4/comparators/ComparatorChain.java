@@ -263,6 +263,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      * @return -1, 0, or 1
      * @throws UnsupportedOperationException if the ComparatorChain does not contain at least one Comparator
      */
+    @Override
     public int compare(final E o1, final E o2) throws UnsupportedOperationException {
         if (isLocked == false) {
             checkChainIntegrity();

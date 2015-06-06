@@ -30,7 +30,9 @@ import org.apache.commons.collections4.SortedBag;
  * If an object cannot be added to the bag, an {@link IllegalArgumentException} is thrown.
  * <p>
  * One usage would be to ensure that no null entries are added to the bag.
- * <pre>SortedBag bag = PredicatedSortedBag.decorate(new TreeBag(), NotNullPredicate.INSTANCE);</pre>
+ * <pre>
+ * SortedBag bag = PredicatedSortedBag.predicatedSortedBag(new TreeBag(), NotNullPredicate.INSTANCE);
+ * </pre>
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
@@ -88,14 +90,17 @@ public class PredicatedSortedBag<E> extends PredicatedBag<E> implements SortedBa
 
     //-----------------------------------------------------------------------
 
+    @Override
     public E first() {
         return decorated().first();
     }
 
+    @Override
     public E last() {
         return decorated().last();
     }
 
+    @Override
     public Comparator<? super E> comparator() {
         return decorated().comparator();
     }

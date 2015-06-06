@@ -72,6 +72,7 @@ public class ReverseComparator<E> implements Comparator<E>, Serializable {
      * @param obj2  the second object to compare
      * @return negative if obj1 is less, positive if greater, zero if equal
      */
+    @Override
     public int compare(final E obj1, final E obj2) {
         return comparator.compare(obj2, obj1);
     }

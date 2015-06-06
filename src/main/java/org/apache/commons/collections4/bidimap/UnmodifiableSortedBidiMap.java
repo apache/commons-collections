@@ -20,13 +20,13 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 
-import org.apache.commons.collections4.set.UnmodifiableSet;
 import org.apache.commons.collections4.OrderedMapIterator;
 import org.apache.commons.collections4.SortedBidiMap;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.iterators.UnmodifiableOrderedMapIterator;
 import org.apache.commons.collections4.map.UnmodifiableEntrySet;
 import org.apache.commons.collections4.map.UnmodifiableSortedMap;
+import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
  * Decorates another {@link SortedBidiMap} to ensure it can't be altered.
