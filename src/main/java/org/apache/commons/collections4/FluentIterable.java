@@ -449,10 +449,7 @@ public class FluentIterable<E> implements Iterable<E> {
         if (collection == null) {
             throw new NullPointerException("Collection must not be null");
         }
-
-        for (final E element : iterable) {
-            collection.add(element);
-        }
+        CollectionUtils.addAll(collection, iterable);
     }
 
     /**
@@ -468,8 +465,8 @@ public class FluentIterable<E> implements Iterable<E> {
     }
 
     /**
-     * Returns a list containing all elements of this iterable by
-     * traversing its iterator.
+     * Returns a mutable list containing all elements of this iterable
+     * by traversing its iterator.
      * <p>
      * The returned list is guaranteed to be mutable.
      *

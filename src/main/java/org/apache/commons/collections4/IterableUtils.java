@@ -27,7 +27,6 @@ import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.iterators.LazyIteratorChain;
 import org.apache.commons.collections4.iterators.ReverseListIterator;
 import org.apache.commons.collections4.iterators.UniqueFilterIterator;
-import org.apache.commons.collections4.iterators.ZippingIterator;
 
 /**
  * Provides utility methods and decorators for {@link Iterable} instances.
@@ -452,9 +451,7 @@ public class IterableUtils {
         if (iterable instanceof UnmodifiableIterable<?>) {
             return iterable;
         }
-        @SuppressWarnings("unchecked") // safe
-        final Iterable<E> it = iterable != null ? iterable : EMPTY_ITERABLE;
-        return new UnmodifiableIterable<E>(it);
+        return new UnmodifiableIterable<E>(emptyIfNull(iterable));
     }
 
     /**
@@ -521,13 +518,25 @@ public class IterableUtils {
                 for (int i = 0; i < iterables.length; i++) {
                     iterators[i] = emptyIteratorIfNull(iterables[i]);
                 }
-                return new ZippingIterator<E>(iterators);
+                return IteratorUtils.zippingIterator(iterators);
             }
         };
     }
 
     // Utility methods
     // ----------------------------------------------------------------------
+
+    /**
+     * Returns an immutable empty iterable if the argument is null,
+     * or the argument itself otherwise.
+     *
+     * @param <E> the element type
+     * @param iterable  the iterable, may be null
+     * @return an empty iterable if the argument is null
+     */
+    public static <E> Iterable<E> emptyIfNull(final Iterable<E> iterable) {
+        return iterable == null ? IterableUtils.<E>emptyIterable() : iterable;
+    }
 
     /**
      * Returns an empty iterator if the argument is <code>null</code>,
