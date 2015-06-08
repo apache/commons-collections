@@ -1238,7 +1238,7 @@ public class IteratorUtils {
      * @throws NullPointerException if closure is null
      * @since 4.1
      */
-    public static <E> void apply(final Iterator<E> iterator, final Closure<? super E> closure) {
+    public static <E> void forEach(final Iterator<E> iterator, final Closure<? super E> closure) {
         if (closure == null) {
             throw new NullPointerException("Closure must not be null");
         }
@@ -1264,8 +1264,7 @@ public class IteratorUtils {
      * @throws NullPointerException if closure is null
      * @since 4.1
      */
-    public static <E, C extends Closure<? super E>> E applyForAllButLast(final Iterator<E> iterator,
-                                                                         final C closure) {
+    public static <E> E forEachButLast(final Iterator<E> iterator, final Closure<? super E> closure) {
         if (closure == null) {
             throw new NullPointerException("Closure must not be null.");
         }

@@ -101,7 +101,7 @@ public class IterableUtilsTest {
 
     // -----------------------------------------------------------------------
     @Test
-    public void apply() {
+    public void forEach() {
         final List<Integer> listA = new ArrayList<Integer>();
         listA.add(1);
 
@@ -112,32 +112,32 @@ public class IterableUtilsTest {
         final Collection<List<Integer>> col = new ArrayList<List<Integer>>();
         col.add(listA);
         col.add(listB);
-        IterableUtils.apply(col, testClosure);
+        IterableUtils.forEach(col, testClosure);
         assertTrue(listA.isEmpty() && listB.isEmpty());
         try {
-            IterableUtils.apply(col, null);
+            IterableUtils.forEach(col, null);
             fail("expecting NullPointerException");
         } catch (NullPointerException npe) {
             // expected
         }
 
-        IterableUtils.apply(null, testClosure);
+        IterableUtils.forEach(null, testClosure);
 
         // null should be OK
         col.add(null);
-        IterableUtils.apply(col, testClosure);
+        IterableUtils.forEach(col, testClosure);
     }
 
     @Test(expected = FunctorException.class)
-    public void applyFailure() {
+    public void forEachFailure() {
         final Closure<String> testClosure = ClosureUtils.invokerClosure("clear");
         final Collection<String> col = new ArrayList<String>();
         col.add("x");
-        IterableUtils.apply(col, testClosure);
+        IterableUtils.forEach(col, testClosure);
     }
 
     @Test
-    public void applyForAllButLast() {
+    public void forEachButLast() {
         final List<Integer> listA = new ArrayList<Integer>();
         listA.add(1);
 
@@ -148,23 +148,23 @@ public class IterableUtilsTest {
         final Collection<List<Integer>> col = new ArrayList<List<Integer>>();
         col.add(listA);
         col.add(listB);
-        List<Integer> last = IterableUtils.applyForAllButLast(col, testClosure);
+        List<Integer> last = IterableUtils.forEachButLast(col, testClosure);
         assertTrue(listA.isEmpty() && !listB.isEmpty());
         assertSame(listB, last);
 
         try {
-            IterableUtils.apply(col, null);
+            IterableUtils.forEachButLast(col, null);
             fail("expecting NullPointerException");
         } catch (NullPointerException npe) {
             // expected
         }
 
-        IterableUtils.apply(null, testClosure);
+        IterableUtils.forEachButLast(null, testClosure);
 
         // null should be OK
         col.add(null);
         col.add(null);
-        last = IterableUtils.applyForAllButLast(col, testClosure);
+        last = IterableUtils.forEachButLast(col, testClosure);
         assertNull(last);
     }
 
@@ -201,69 +201,69 @@ public class IterableUtilsTest {
     }
 
     @Test
-    public void cardinality() {
+    public void frequency() {
         // null iterable test
-        assertEquals(0, IterableUtils.cardinality(null, 1));
+        assertEquals(0, IterableUtils.frequency(null, 1));
 
-        assertEquals(1, IterableUtils.cardinality(iterableA, 1));
-        assertEquals(2, IterableUtils.cardinality(iterableA, 2));
-        assertEquals(3, IterableUtils.cardinality(iterableA, 3));
-        assertEquals(4, IterableUtils.cardinality(iterableA, 4));
-        assertEquals(0, IterableUtils.cardinality(iterableA, 5));
+        assertEquals(1, IterableUtils.frequency(iterableA, 1));
+        assertEquals(2, IterableUtils.frequency(iterableA, 2));
+        assertEquals(3, IterableUtils.frequency(iterableA, 3));
+        assertEquals(4, IterableUtils.frequency(iterableA, 4));
+        assertEquals(0, IterableUtils.frequency(iterableA, 5));
 
-        assertEquals(0, IterableUtils.cardinality(iterableB, 1L));
-        assertEquals(4, IterableUtils.cardinality(iterableB, 2L));
-        assertEquals(3, IterableUtils.cardinality(iterableB, 3L));
-        assertEquals(2, IterableUtils.cardinality(iterableB, 4L));
-        assertEquals(1, IterableUtils.cardinality(iterableB, 5L));
+        assertEquals(0, IterableUtils.frequency(iterableB, 1L));
+        assertEquals(4, IterableUtils.frequency(iterableB, 2L));
+        assertEquals(3, IterableUtils.frequency(iterableB, 3L));
+        assertEquals(2, IterableUtils.frequency(iterableB, 4L));
+        assertEquals(1, IterableUtils.frequency(iterableB, 5L));
 
         // Ensure that generic bounds accept valid parameters, but return
         // expected results
         // e.g. no longs in the "int" Iterable<Number>, and vice versa.
         Iterable<Number> iterableIntAsNumber = Arrays.<Number>asList(1, 2, 3, 4, 5);
         Iterable<Number> iterableLongAsNumber = Arrays.<Number>asList(1L, 2L, 3L, 4L, 5L);
-        assertEquals(0, IterableUtils.cardinality(iterableIntAsNumber, 2L));
-        assertEquals(0, IterableUtils.cardinality(iterableLongAsNumber, 2));
+        assertEquals(0, IterableUtils.frequency(iterableIntAsNumber, 2L));
+        assertEquals(0, IterableUtils.frequency(iterableLongAsNumber, 2));
 
         final Set<String> set = new HashSet<String>();
         set.add("A");
         set.add("C");
         set.add("E");
         set.add("E");
-        assertEquals(1, IterableUtils.cardinality(set, "A"));
-        assertEquals(0, IterableUtils.cardinality(set, "B"));
-        assertEquals(1, IterableUtils.cardinality(set, "C"));
-        assertEquals(0, IterableUtils.cardinality(set, "D"));
-        assertEquals(1, IterableUtils.cardinality(set, "E"));
+        assertEquals(1, IterableUtils.frequency(set, "A"));
+        assertEquals(0, IterableUtils.frequency(set, "B"));
+        assertEquals(1, IterableUtils.frequency(set, "C"));
+        assertEquals(0, IterableUtils.frequency(set, "D"));
+        assertEquals(1, IterableUtils.frequency(set, "E"));
 
         final Bag<String> bag = new HashBag<String>();
         bag.add("A", 3);
         bag.add("C");
         bag.add("E");
         bag.add("E");
-        assertEquals(3, IterableUtils.cardinality(bag, "A"));
-        assertEquals(0, IterableUtils.cardinality(bag, "B"));
-        assertEquals(1, IterableUtils.cardinality(bag, "C"));
-        assertEquals(0, IterableUtils.cardinality(bag, "D"));
-        assertEquals(2, IterableUtils.cardinality(bag, "E"));
+        assertEquals(3, IterableUtils.frequency(bag, "A"));
+        assertEquals(0, IterableUtils.frequency(bag, "B"));
+        assertEquals(1, IterableUtils.frequency(bag, "C"));
+        assertEquals(0, IterableUtils.frequency(bag, "D"));
+        assertEquals(2, IterableUtils.frequency(bag, "E"));
     }
 
     @Test
-    public void cardinalityOfNull() {
+    public void frequencyOfNull() {
         final List<String> list = new ArrayList<String>();
-        assertEquals(0, IterableUtils.cardinality(list, null));
+        assertEquals(0, IterableUtils.frequency(list, null));
         list.add("A");
-        assertEquals(0, IterableUtils.cardinality(list, null));
+        assertEquals(0, IterableUtils.frequency(list, null));
         list.add(null);
-        assertEquals(1, IterableUtils.cardinality(list, null));
+        assertEquals(1, IterableUtils.frequency(list, null));
         list.add("B");
-        assertEquals(1, IterableUtils.cardinality(list, null));
+        assertEquals(1, IterableUtils.frequency(list, null));
         list.add(null);
-        assertEquals(2, IterableUtils.cardinality(list, null));
+        assertEquals(2, IterableUtils.frequency(list, null));
         list.add("B");
-        assertEquals(2, IterableUtils.cardinality(list, null));
+        assertEquals(2, IterableUtils.frequency(list, null));
         list.add(null);
-        assertEquals(3, IterableUtils.cardinality(list, null));
+        assertEquals(3, IterableUtils.frequency(list, null));
     }
 
     @Test

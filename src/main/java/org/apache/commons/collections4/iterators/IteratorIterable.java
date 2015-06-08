@@ -66,8 +66,7 @@ public class IteratorIterable<E> implements Iterable<E> {
      * Factory method to create an {@link Iterator Iterator} from another
      * iterator over objects of a different subtype.
      */
-    private static <E> Iterator<E> createTypesafeIterator(
-            final Iterator<? extends E> iterator) {
+    private static <E> Iterator<E> createTypesafeIterator(final Iterator<? extends E> iterator) {
         return new Iterator<E>() {
             public boolean hasNext() {
                 return iterator.hasNext();

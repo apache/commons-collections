@@ -970,7 +970,7 @@ public class IteratorUtilsTest {
 
     // -----------------------------------------------------------------------
     @Test
-    public void apply() {
+    public void forEach() {
         final List<Integer> listA = new ArrayList<Integer>();
         listA.add(1);
 
@@ -981,24 +981,24 @@ public class IteratorUtilsTest {
         final Collection<List<Integer>> col = new ArrayList<List<Integer>>();
         col.add(listA);
         col.add(listB);
-        IteratorUtils.apply(col.iterator(), testClosure);
+        IteratorUtils.forEach(col.iterator(), testClosure);
         assertTrue(listA.isEmpty() && listB.isEmpty());
         try {
-            IteratorUtils.apply(col.iterator(), null);
+            IteratorUtils.forEach(col.iterator(), null);
             fail("expecting NullPointerException");
         } catch (NullPointerException npe) {
             // expected
         }
 
-        IteratorUtils.apply(null, testClosure);
+        IteratorUtils.forEach(null, testClosure);
 
         // null should be OK
         col.add(null);
-        IteratorUtils.apply(col.iterator(), testClosure);
+        IteratorUtils.forEach(col.iterator(), testClosure);
     }
 
     @Test
-    public void applyForAllButLast() {
+    public void forEachButLast() {
         final List<Integer> listA = new ArrayList<Integer>();
         listA.add(1);
 
@@ -1009,23 +1009,23 @@ public class IteratorUtilsTest {
         final Collection<List<Integer>> col = new ArrayList<List<Integer>>();
         col.add(listA);
         col.add(listB);
-        List<Integer> last = IteratorUtils.applyForAllButLast(col.iterator(), testClosure);
+        List<Integer> last = IteratorUtils.forEachButLast(col.iterator(), testClosure);
         assertTrue(listA.isEmpty() && !listB.isEmpty());
         assertSame(listB, last);
 
         try {
-            IteratorUtils.apply(col.iterator(), null);
+            IteratorUtils.forEachButLast(col.iterator(), null);
             fail("expecting NullPointerException");
         } catch (NullPointerException npe) {
             // expected
         }
 
-        IteratorUtils.apply(null, testClosure);
+        IteratorUtils.forEachButLast(null, testClosure);
 
         // null should be OK
         col.add(null);
         col.add(null);
-        last = IteratorUtils.applyForAllButLast(col.iterator(), testClosure);
+        last = IteratorUtils.forEachButLast(col.iterator(), testClosure);
         assertNull(last);
     }
 

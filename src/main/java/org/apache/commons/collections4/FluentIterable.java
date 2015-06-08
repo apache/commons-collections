@@ -23,6 +23,8 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.collections4.iterators.SingletonIterator;
+
 /**
  * A FluentIterable provides a powerful yet simple API for manipulating
  * Iterable instances in a fluent manner.
@@ -68,6 +70,30 @@ public class FluentIterable<E> implements Iterable<E> {
 
     // Static factory methods
     // ----------------------------------------------------------------------
+
+    /**
+     * Creates a new empty FluentIterable.
+     *
+     * @param <T>  the element type
+     * @return a new empty FluentIterable
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> FluentIterable<T> empty() {
+        return IterableUtils.EMPTY_ITERABLE;
+    }
+
+    /**
+     * Creates a new FluentIterable of the single provided element.
+     * <p>
+     * The returned iterable's iterator does not support {@code remove()}.
+     *
+     * @param <T>  the element type
+     * @param singleton  the singleton element
+     * @return a new FluentIterable containing the singleton
+     */
+    public static <T> FluentIterable<T> of(final T singleton) {
+        return of(IteratorUtils.asIterable(new SingletonIterator<T>(singleton, false)));
+    }
 
     /**
      * Creates a new FluentIterable from the provided elements.
@@ -357,16 +383,6 @@ public class FluentIterable<E> implements Iterable<E> {
     }
 
     /**
-     * Applies the closure to all elements contained in this iterable.
-     *
-     * @param closure  the closure to apply to each element, may not be null
-     * @throws NullPointerException if closure is null
-     */
-    public void apply(final Closure<? super E> closure) {
-        IterableUtils.apply(iterable, closure);
-    }
-
-    /**
      * Checks if all elements contained in this iterable are matching the
      * provided predicate.
      * <p>
@@ -412,6 +428,16 @@ public class FluentIterable<E> implements Iterable<E> {
      */
     public boolean contains(final Object object) {
         return IterableUtils.contains(iterable, object);
+    }
+
+    /**
+     * Applies the closure to all elements contained in this iterable.
+     *
+     * @param closure  the closure to apply to each element, may not be null
+     * @throws NullPointerException if closure is null
+     */
+    public void forEach(final Closure<? super E> closure) {
+        IterableUtils.forEach(iterable, closure);
     }
 
     /**

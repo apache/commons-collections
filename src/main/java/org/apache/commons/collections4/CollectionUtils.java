@@ -615,7 +615,7 @@ public class CollectionUtils {
      * @param <O> the type of object that the {@link Iterable} may contain.
      * @return the the number of occurrences of obj in coll
      * @throws NullPointerException if coll is null
-     * @deprecated since 4.1, use {@link IterableUtils#cardinality(Iterable, Object)} instead.
+     * @deprecated since 4.1, use {@link IterableUtils#frequency(Iterable, Object)} instead.
      *   Be aware that the order of parameters has changed.
      */
     @Deprecated
@@ -623,7 +623,7 @@ public class CollectionUtils {
         if (coll == null) {
             throw new NullPointerException("coll must not be null.");
         }
-        return IterableUtils.cardinality(coll, obj);
+        return IterableUtils.frequency(coll, obj);
     }
 
     /**
@@ -653,12 +653,12 @@ public class CollectionUtils {
      * @param collection  the collection to get the input from, may be null
      * @param closure  the closure to perform, may be null
      * @return closure
-     * @deprecated since 4.1, use {@link IterableUtils#apply(Iterable, Closure)} instead
+     * @deprecated since 4.1, use {@link IterableUtils#forEach(Iterable, Closure)} instead
      */
     @Deprecated
     public static <T, C extends Closure<? super T>> C forAllDo(final Iterable<T> collection, final C closure) {
         if (closure != null) {
-            IterableUtils.apply(collection, closure);
+            IterableUtils.forEach(collection, closure);
         }
         return closure;
     }
@@ -674,12 +674,12 @@ public class CollectionUtils {
      * @param closure  the closure to perform, may be null
      * @return closure
      * @since 4.0
-     * @deprecated since 4.1, use {@link IteratorUtils#apply(Iterator, Closure)} instead
+     * @deprecated since 4.1, use {@link IteratorUtils#forEach(Iterator, Closure)} instead
      */
     @Deprecated
     public static <T, C extends Closure<? super T>> C forAllDo(final Iterator<T> iterator, final C closure) {
         if (closure != null) {
-            IteratorUtils.apply(iterator, closure);
+            IteratorUtils.forEach(iterator, closure);
         }
         return closure;
     }
@@ -695,12 +695,12 @@ public class CollectionUtils {
      * @param closure  the closure to perform, may be null
      * @return the last element in the collection, or null if either collection or closure is null
      * @since 4.0
-     * @deprecated since 4.1, use {@link IterableUtils#applyForAllButLast(Iterable, Closure)} instead
+     * @deprecated since 4.1, use {@link IterableUtils#forEachButLast(Iterable, Closure)} instead
      */
     @Deprecated
     public static <T, C extends Closure<? super T>> T forAllButLastDo(final Iterable<T> collection,
                                                                       final C closure) {
-        return closure != null ? IterableUtils.applyForAllButLast(collection, closure) : null;
+        return closure != null ? IterableUtils.forEachButLast(collection, closure) : null;
     }
 
     /**
@@ -714,11 +714,11 @@ public class CollectionUtils {
      * @param closure  the closure to perform, may be null
      * @return the last element in the collection, or null if either iterator or closure is null
      * @since 4.0
-     * @deprecated since 4.1, use {@link IteratorUtils#applyForAllButLast(Iterator, Closure)} instead
+     * @deprecated since 4.1, use {@link IteratorUtils#forEachButLast(Iterator, Closure)} instead
      */
     @Deprecated
     public static <T, C extends Closure<? super T>> T forAllButLastDo(final Iterator<T> iterator, final C closure) {
-        return closure != null ? IteratorUtils.applyForAllButLast(iterator, closure) : null;
+        return closure != null ? IteratorUtils.forEachButLast(iterator, closure) : null;
     }
 
     /**

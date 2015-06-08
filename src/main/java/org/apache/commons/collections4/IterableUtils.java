@@ -559,8 +559,8 @@ public class IterableUtils {
      * @param closure  the closure to apply to each element, may not be null
      * @throws NullPointerException if closure is null
      */
-    public static <E> void apply(final Iterable<E> iterable, final Closure<? super E> closure) {
-        IteratorUtils.apply(emptyIteratorIfNull(iterable), closure);
+    public static <E> void forEach(final Iterable<E> iterable, final Closure<? super E> closure) {
+        IteratorUtils.forEach(emptyIteratorIfNull(iterable), closure);
     }
 
     /**
@@ -574,9 +574,8 @@ public class IterableUtils {
      * @param closure  the closure to perform, may not be null
      * @return the last element in the iterable, or null if iterable is null or empty
      */
-    public static <E, C extends Closure<? super E>> E applyForAllButLast(final Iterable<E> iterable,
-                                                                         final C closure) {
-        return IteratorUtils.applyForAllButLast(emptyIteratorIfNull(iterable), closure);
+    public static <E> E forEachButLast(final Iterable<E> iterable, final Closure<? super E> closure) {
+        return IteratorUtils.forEachButLast(emptyIteratorIfNull(iterable), closure);
     }
 
     /**
@@ -710,7 +709,7 @@ public class IterableUtils {
      * @param obj  the object to find the cardinality of
      * @return the the number of occurrences of obj in iterable
      */
-    public static <E, T extends E> int cardinality(final Iterable<E> iterable, final T obj) {
+    public static <E, T extends E> int frequency(final Iterable<E> iterable, final T obj) {
         if (iterable instanceof Set<?>) {
             return ((Set<E>) iterable).contains(obj) ? 1 : 0;
         }
