@@ -16,8 +16,13 @@
  */
 package org.apache.commons.collections4;
 
-import static org.apache.commons.collections4.functors.EqualPredicate.*;
-import static org.junit.Assert.*;
+import static org.apache.commons.collections4.functors.EqualPredicate.equalPredicate;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -88,12 +93,14 @@ public class IterableUtilsTest {
     }
 
     private static Predicate<Number> EQUALS_TWO = new Predicate<Number>() {
+        @Override
         public boolean evaluate(final Number input) {
             return input.intValue() == 2;
         }
     };
 
     private static Predicate<Number> EVEN = new Predicate<Number>() {
+        @Override
         public boolean evaluate(final Number input) {
             return input.intValue() % 2 == 0;
         }
@@ -177,10 +184,12 @@ public class IterableUtilsTest {
 
         final Equator<String> secondLetterEquator = new Equator<String>() {
 
+            @Override
             public boolean equate(String o1, String o2) {
                 return o1.charAt(1) == o2.charAt(1);
             }
 
+            @Override
             public int hash(String o) {
                 return o.charAt(1);
             }
@@ -349,6 +358,7 @@ public class IterableUtilsTest {
         }
 
         Predicate<Integer> lessThanFive = new Predicate<Integer>() {
+            @Override
             public boolean evaluate(Integer object) {
                 return object < 5;
             }
@@ -356,6 +366,7 @@ public class IterableUtilsTest {
         assertTrue(IterableUtils.matchesAll(iterableA, lessThanFive));
 
         Predicate<Integer> lessThanFour = new Predicate<Integer>() {
+            @Override
             public boolean evaluate(Integer object) {
                 return object < 4;
             }
@@ -446,7 +457,7 @@ public class IterableUtilsTest {
             // expected
         }
     }
-    
+
     @Test
     public void testToString() {
         String result = IterableUtils.toString(iterableA);
@@ -459,6 +470,7 @@ public class IterableUtilsTest {
         assertEquals("[]", result);
 
         result = IterableUtils.toString(iterableA, new Transformer<Integer, String>() {
+            @Override
             public String transform(Integer input) {
                 return new Integer(input * 2).toString();
             }
@@ -466,6 +478,7 @@ public class IterableUtilsTest {
         assertEquals("[2, 4, 4, 6, 6, 6, 8, 8, 8, 8]", result);
 
         result = IterableUtils.toString(new ArrayList<Integer>(), new Transformer<Integer, String>() {
+            @Override
             public String transform(Integer input) {
                 fail("not supposed to reach here");
                 return "";
@@ -474,6 +487,7 @@ public class IterableUtilsTest {
         assertEquals("[]", result);
 
         result = IterableUtils.toString(null, new Transformer<Integer, String>() {
+            @Override
             public String transform(Integer input) {
                 fail("not supposed to reach here");
                 return "";
@@ -486,6 +500,7 @@ public class IterableUtilsTest {
     public void testToStringDelimiter() {
         
         Transformer<Integer, String> transformer = new Transformer<Integer, String>() {
+            @Override
             public String transform(Integer input) {
                 return new Integer(input * 2).toString();
             }
@@ -522,6 +537,7 @@ public class IterableUtilsTest {
     @Test
     public void testToStringWithNullArguments() {
         String result = IterableUtils.toString(null, new Transformer<Integer, String>() {
+            @Override
             public String transform(Integer input) {
                 fail("not supposed to reach here");
                 return "";
@@ -538,6 +554,7 @@ public class IterableUtilsTest {
 
         try {
             IterableUtils.toString(new ArrayList<Integer>(), new Transformer<Integer, String>() {
+                @Override
                 public String transform(Integer input) {
                     fail("not supposed to reach here");
                     return "";
@@ -550,6 +567,7 @@ public class IterableUtilsTest {
 
         try {
             IterableUtils.toString(new ArrayList<Integer>(), new Transformer<Integer, String>() {
+                @Override
                 public String transform(Integer input) {
                     fail("not supposed to reach here");
                     return "";
@@ -562,6 +580,7 @@ public class IterableUtilsTest {
 
         try {
             IterableUtils.toString(new ArrayList<Integer>(), new Transformer<Integer, String>() {
+                @Override
                 public String transform(Integer input) {
                     fail("not supposed to reach here");
                     return "";

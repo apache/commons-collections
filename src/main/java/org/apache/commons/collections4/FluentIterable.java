@@ -195,7 +195,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * @see {@link org.apache.commons.collections4.iterators.CollatingIterator CollatingIterator}
      */
     public FluentIterable<E> collate(final Iterable<? extends E> other) {
-        return of(IterableUtils.collatedIterable(null, iterable, other));
+        return of(IterableUtils.collatedIterable(iterable, other));
     }
 
     /**
@@ -361,6 +361,7 @@ public class FluentIterable<E> implements Iterable<E> {
     // ----------------------------------------------------------------------
 
     /** {@inheritDoc} */
+    @Override
     public Iterator<E> iterator() {
         return iterable.iterator();
     }
@@ -477,7 +478,7 @@ public class FluentIterable<E> implements Iterable<E> {
      *
      * @param arrayClass  the class of array to create
      * @return an array of the iterable contents
-     * @throws ClassCastException if arrayClass is invalid
+     * @throws ArrayStoreException if arrayClass is invalid
      */
     public E[] toArray(final Class<E> arrayClass) {
         return IteratorUtils.toArray(iterator(), arrayClass);
