@@ -32,10 +32,17 @@ import org.apache.commons.collections4.iterators.UniqueFilterIterator;
 /**
  * Provides utility methods and decorators for {@link Iterable} instances.
  * <p>
- * <b>Note</b>: by design, all provided utility methods will treat a {@code null}
- * {@link Iterable} parameters the same way as an empty iterable. All other required
- * parameters which are null, e.g. a {@link Predicate}, will result in a
- * {@link NullPointerException}.
+ * <b>Note</b>: this util class has been designed for fail-fast argument checking.
+ * <ul>
+ * <li>
+ * all decorator methods are <b>NOT</b> null-safe wrt the provided Iterable argument, i.e.
+ * they will throw a {@link NullPointerException} if a null Iterable is passed as argument.
+ * <li>
+ * all other utility methods are null-safe wrt the provided Iterable argument, i.e. they will
+ * treat a null Iterable the same way as an empty one. Other arguments which are null,
+ * e.g. a {@link Predicate}, will result in a {@link NullPointerException}. Exception: passing
+ * a null {@link Comparator} is equivalent to a Comparator with natural ordering.
+ * </ul>
  *
  * @since 4.1
  * @version $Id$
@@ -83,9 +90,10 @@ public class IterableUtils {
      * input iterator supports it.
      *
      * @param <E>  the element type
-     * @param a  the first iterable
-     * @param b  the second iterable
+     * @param a  the first iterable, may not be null
+     * @param b  the second iterable, may not be null
      * @return a new iterable, combining the provided iterables
+     * @throws NullPointerException if either a or b is null
      */
     @SuppressWarnings("unchecked")
     public static <E> Iterable<E> chainedIterable(final Iterable<? extends E> a,
@@ -104,10 +112,11 @@ public class IterableUtils {
      * input iterator supports it.
      *
      * @param <E>  the element type
-     * @param a  the first iterable
-     * @param b  the second iterable
-     * @param c  the third iterable
+     * @param a  the first iterable, may not be null
+     * @param b  the second iterable, may not be null
+     * @param c  the third iterable, may not be null
      * @return a new iterable, combining the provided iterables
+     * @throws NullPointerException if either of the provided iterables is null
      */
     @SuppressWarnings("unchecked")
     public static <E> Iterable<E> chainedIterable(final Iterable<? extends E> a,
@@ -127,11 +136,12 @@ public class IterableUtils {
      * input iterator supports it.
      *
      * @param <E>  the element type
-     * @param a  the first iterable
-     * @param b  the second iterable
-     * @param c  the third iterable
-     * @param d  the fourth iterable
+     * @param a  the first iterable, may not be null
+     * @param b  the second iterable, may not be null
+     * @param c  the third iterable, may not be null
+     * @param d  the fourth iterable, may not be null
      * @return a new iterable, combining the provided iterables
+     * @throws NullPointerException if either of the provided iterables is null
      */
     @SuppressWarnings("unchecked")
     public static <E> Iterable<E> chainedIterable(final Iterable<? extends E> a,
@@ -152,10 +162,12 @@ public class IterableUtils {
      * input iterator supports it.
      *
      * @param <E>  the element type
-     * @param iterables  the iterables to combine
+     * @param iterables  the iterables to combine, may not be null
      * @return a new iterable, combining the provided iterables
+     * @throws NullPointerException if either of the provided iterables is null
      */
     public static <E> Iterable<E> chainedIterable(final Iterable<? extends E>... iterables) {
+        checkNotNull(iterables);
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
@@ -165,7 +177,7 @@ public class IterableUtils {
                         if (count > iterables.length) {
                             return null;
                         } else {
-                            return emptyIteratorIfNull(iterables[count - 1]);
+                            return iterables[count - 1].iterator();
                         }
                     }
                 };
@@ -184,18 +196,18 @@ public class IterableUtils {
      * corresponding input iterator supports it.
      *
      * @param <E>  the element type
-     * @param a  the first iterable, may be null
-     * @param b  the second iterable, may be null
+     * @param a  the first iterable, may not be null
+     * @param b  the second iterable, may not be null
      * @return a filtered view on the specified iterable
+     * @throws NullPointerException if either of the provided iterables is null
      */
     public static <E> Iterable<E> collatedIterable(final Iterable<? extends E> a,
                                                    final Iterable<? extends E> b) {
+        checkNotNull(a, b);
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
-                return IteratorUtils.collatedIterator(null,
-                                                      emptyIteratorIfNull(a),
-                                                      emptyIteratorIfNull(b));
+                return IteratorUtils.collatedIterator(null, a.iterator(), b.iterator());
             }
         };
     }
@@ -211,19 +223,19 @@ public class IterableUtils {
      * @param <E>  the element type
      * @param comparator  the comparator defining an ordering over the elements,
      *   may be null, in which case natural ordering will be used
-     * @param a  the first iterable, may be null
-     * @param b  the second iterable, may be null
+     * @param a  the first iterable, may not be null
+     * @param b  the second iterable, may not be null
      * @return a filtered view on the specified iterable
+     * @throws NullPointerException if either of the provided iterables is null
      */
     public static <E> Iterable<E> collatedIterable(final Comparator<? super E> comparator,
                                                    final Iterable<? extends E> a,
                                                    final Iterable<? extends E> b) {
+        checkNotNull(a, b);
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
-                return IteratorUtils.collatedIterator(comparator,
-                                                      emptyIteratorIfNull(a),
-                                                      emptyIteratorIfNull(b));
+                return IteratorUtils.collatedIterator(comparator, a.iterator(), b.iterator());
             }
         };
     }
@@ -238,17 +250,17 @@ public class IterableUtils {
      * The returned iterable's iterator does not support {@code remove()}.
      *
      * @param <E>  the element type
-     * @param iterable  the iterable to filter, may be null
+     * @param iterable  the iterable to filter, may not be null
      * @param predicate  the predicate used to filter elements, may not be null
      * @return a filtered view on the specified iterable
-     * @throws NullPointerException if predicate is null
+     * @throws NullPointerException if either iterable or predicate is null
      */
     public static <E> Iterable<E> filteredIterable(final Iterable<E> iterable,
                                                    final Predicate<? super E> predicate) {
+        checkNotNull(iterable);
         if (predicate == null) {
             throw new NullPointerException("Predicate must not be null.");
         }
-
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
@@ -268,12 +280,14 @@ public class IterableUtils {
      * input iterator supports it.
      *
      * @param <E>  the element type
-     * @param iterable  the iterable to limit, may be null
+     * @param iterable  the iterable to limit, may not be null
      * @param maxSize  the maximum number of elements, must not be negative
      * @return a bounded view on the specified iterable
      * @throws IllegalArgumentException if maxSize is negative
+     * @throws NullPointerException if iterable is null
      */
     public static <E> Iterable<E> boundedIterable(final Iterable<E> iterable, final long maxSize) {
+        checkNotNull(iterable);
         if (maxSize < 0) {
             throw new IllegalArgumentException("MaxSize parameter must not be negative.");
         }
@@ -281,7 +295,7 @@ public class IterableUtils {
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
-                return IteratorUtils.boundedIterator(emptyIteratorIfNull(iterable), maxSize);
+                return IteratorUtils.boundedIterator(iterable.iterator(), maxSize);
             }
         };
     }
@@ -300,24 +314,22 @@ public class IterableUtils {
      * is empty.
      *
      * @param <E>  the element type
-     * @param iterable  the iterable to loop, may be null
+     * @param iterable  the iterable to loop, may not be null
      * @return a view of the iterable, providing an infinite loop over its elements
+     * @throws NullPointerException if iterable is null
      */
     public static <E> Iterable<E> loopingIterable(final Iterable<E> iterable) {
+        checkNotNull(iterable);
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
                 return new LazyIteratorChain<E>() {
                     @Override
                     protected Iterator<? extends E> nextIterator(int count) {
-                        if (iterable != null) {
-                            if (IterableUtils.isEmpty(iterable)) {
-                                return null;
-                            } else {
-                                return iterable.iterator();
-                            }
-                        } else {
+                        if (IterableUtils.isEmpty(iterable)) {
                             return null;
+                        } else {
+                            return iterable.iterator();
                         }
                     }
                 };
@@ -339,18 +351,19 @@ public class IterableUtils {
      * provided iterable is a {@link List} instance.
      *
      * @param <E>  the element type
-     * @param iterable  the iterable to use, may be null
+     * @param iterable  the iterable to use, may not be null
      * @return a reversed view of the specified iterable
+     * @throws NullPointerException if iterable is null
      * @see ReverseListIterator
      */
     public static <E> Iterable<E> reversedIterable(final Iterable<E> iterable) {
+        checkNotNull(iterable);
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
                 final List<E> list = (iterable instanceof List<?>) ?
                         (List<E>) iterable :
-                        IteratorUtils.toList(emptyIteratorIfNull(iterable));
-
+                        IteratorUtils.toList(iterable.iterator());
                 return new ReverseListIterator<E>(list);
             }
         };
@@ -366,12 +379,14 @@ public class IterableUtils {
      * input iterator supports it.
      *
      * @param <E>  the element type
-     * @param iterable  the iterable to use, may be null
+     * @param iterable  the iterable to use, may not be null
      * @param elementsToSkip  the number of elements to skip from the start, must not be negative
      * @return a view of the specified iterable, skipping the first N elements
      * @throws IllegalArgumentException if elementsToSkip is negative
+     * @throws NullPointerException if iterable is null
      */
     public static <E> Iterable<E> skippingIterable(final Iterable<E> iterable, final long elementsToSkip) {
+        checkNotNull(iterable);
         if (elementsToSkip < 0) {
             throw new IllegalArgumentException("ElementsToSkip parameter must not be negative.");
         }
@@ -379,7 +394,7 @@ public class IterableUtils {
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
-                return IteratorUtils.skippingIterator(emptyIteratorIfNull(iterable), elementsToSkip);
+                return IteratorUtils.skippingIterator(iterable.iterator(), elementsToSkip);
             }
         };
     }
@@ -396,21 +411,21 @@ public class IterableUtils {
      *
      * @param <I>  the input element type
      * @param <O>  the output element type
-     * @param iterable  the iterable to transform, may be null
+     * @param iterable  the iterable to transform, may not be null
      * @param transformer  the transformer, must not be null
      * @return a transformed view of the specified iterable
-     * @throws NullPointerException if transformer is null
+     * @throws NullPointerException if either iterable or transformer is null
      */
     public static <I, O> Iterable<O> transformedIterable(final Iterable<I> iterable,
                                                          final Transformer<? super I, ? extends O> transformer) {
+        checkNotNull(iterable);
         if (transformer == null) {
             throw new NullPointerException("Transformer must not be null.");
         }
-
         return new FluentIterable<O>() {
             @Override
             public Iterator<O> iterator() {
-                return IteratorUtils.transformedIterator(emptyIteratorIfNull(iterable), transformer);
+                return IteratorUtils.transformedIterator(iterable.iterator(), transformer);
             }
         };
     }
@@ -424,14 +439,16 @@ public class IterableUtils {
      * The returned iterable's iterator does not support {@code remove()}.
      *
      * @param <E>  the element type
-     * @param iterable  the iterable to use, may be null
+     * @param iterable  the iterable to use, may not be null
      * @return a unique view of the specified iterable
+     * @throws NullPointerException if iterable is null
      */
     public static <E> Iterable<E> uniqueIterable(final Iterable<E> iterable) {
+        checkNotNull(iterable);
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
-                return new UniqueFilterIterator<E>(emptyIteratorIfNull(iterable));
+                return new UniqueFilterIterator<E>(iterable.iterator());
             }
         };
     }
@@ -445,14 +462,16 @@ public class IterableUtils {
      * The returned iterable's iterator does not support {@code remove()}.
      *
      * @param <E>  the element type
-     * @param iterable  the iterable to use, may be null
+     * @param iterable  the iterable to use, may not be null
      * @return an unmodifiable view of the specified iterable
+     * @throws NullPointerException if iterable is null
      */
     public static <E> Iterable<E> unmodifiableIterable(final Iterable<E> iterable) {
+        checkNotNull(iterable);
         if (iterable instanceof UnmodifiableIterable<?>) {
             return iterable;
         }
-        return new UnmodifiableIterable<E>(emptyIfNull(iterable));
+        return new UnmodifiableIterable<E>(iterable);
     }
 
     /**
@@ -486,14 +505,21 @@ public class IterableUtils {
      * input iterator supports it.
      *
      * @param <E>  the element type
-     * @param a  the first iterable
-     * @param b  the second iterable
+     * @param a  the first iterable, may not be null
+     * @param b  the second iterable, may not be null
      * @return a new iterable, interleaving the provided iterables
+     * @throws NullPointerException if either a or b is null
      */
-    @SuppressWarnings("unchecked")
     public static <E> Iterable<E> zippingIterable(final Iterable<? extends E> a,
                                                   final Iterable<? extends E> b) {
-        return zippingIterable(new Iterable[] {a, b});
+        checkNotNull(a);
+        checkNotNull(b);
+        return new FluentIterable<E>() {
+            @Override
+            public Iterator<E> iterator() {
+                return IteratorUtils.zippingIterator(a.iterator(), b.iterator());
+            }
+        };
     }
 
     /**
@@ -507,17 +533,22 @@ public class IterableUtils {
      * input iterator supports it.
      *
      * @param <E>  the element type
-     * @param iterables  the array of iterables to interleave
+     * @param iterables  the array of iterables to interleave, may not be null
      * @return a new iterable, interleaving the provided iterables
+     * @throws NullPointerException if either of the provided iterables is null
      */
-    public static <E> Iterable<E> zippingIterable(final Iterable<? extends E>... iterables) {
+    public static <E> Iterable<E> zippingIterable(final Iterable<? extends E> first,
+                                                  final Iterable<? extends E>... others) {
+        checkNotNull(first);
+        checkNotNull(others);
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
-                @SuppressWarnings("unchecked")
-                Iterator<? extends E>[] iterators = new Iterator[iterables.length];
-                for (int i = 0; i < iterables.length; i++) {
-                    iterators[i] = emptyIteratorIfNull(iterables[i]);
+                @SuppressWarnings("unchecked") // safe
+                Iterator<? extends E>[] iterators = new Iterator[others.length + 1];
+                iterators[0] = first.iterator();
+                for (int i = 0; i < others.length; i++) {
+                    iterators[i + 1] = others[i].iterator();
                 }
                 return IteratorUtils.zippingIterator(iterators);
             }
@@ -537,18 +568,6 @@ public class IterableUtils {
      */
     public static <E> Iterable<E> emptyIfNull(final Iterable<E> iterable) {
         return iterable == null ? IterableUtils.<E>emptyIterable() : iterable;
-    }
-
-    /**
-     * Returns an empty iterator if the argument is <code>null</code>,
-     * or {@code iterable.iterator()} otherwise.
-     *
-     * @param <E> the element type
-     * @param iterable  the iterable, possibly <code>null</code>
-     * @return an empty iterator if the argument is <code>null</code>
-     */
-    private static <E> Iterator<E> emptyIteratorIfNull(final Iterable<E> iterable) {
-        return iterable != null ? iterable.iterator() : IteratorUtils.<E>emptyIterator();
     }
 
     /**
@@ -639,7 +658,7 @@ public class IterableUtils {
         if (predicate == null) {
             throw new NullPointerException("Predicate must not be null.");
         }
-        return size(filteredIterable(input, predicate));
+        return size(filteredIterable(emptyIfNull(input), predicate));
     }
 
     /**
@@ -716,7 +735,7 @@ public class IterableUtils {
         if (iterable instanceof Bag<?>) {
             return ((Bag<E>) iterable).getCount(obj);
         }
-        return size(filteredIterable(iterable, EqualPredicate.<E>equalPredicate(obj)));
+        return size(filteredIterable(emptyIfNull(iterable), EqualPredicate.<E>equalPredicate(obj)));
     }
 
     /**
@@ -971,7 +990,7 @@ public class IterableUtils {
     public static <E> String toString(final Iterable<E> iterable,
                                       final Transformer<? super E, String> transformer) {
         if (transformer == null) {
-            throw new NullPointerException("transformer may not be null");
+            throw new NullPointerException("Transformer must not be null.");
         }
         return IteratorUtils.toString(emptyIteratorIfNull(iterable), transformer);
     }
@@ -1000,6 +1019,48 @@ public class IterableUtils {
                                       final String suffix) {
         return IteratorUtils.toString(emptyIteratorIfNull(iterable),
                                       transformer, delimiter, prefix, suffix);
+    }
+
+    // Helper methods
+    // ----------------------------------------------------------------------
+
+    /**
+     * Fail-fast check for null arguments.
+     *
+     * @param iterable  the iterable to check
+     * @throws NullPointerException if iterable is null
+     */
+    static void checkNotNull(final Iterable<?> iterable) {
+        if (iterable == null) {
+            throw new NullPointerException("Iterable must not be null.");
+        }
+    }
+
+    /**
+     * Fail-fast check for null arguments.
+     *
+     * @param iterable  the iterable to check
+     * @throws NullPointerException if the argument or any of its contents is null
+     */
+    static void checkNotNull(final Iterable<?>... iterables) {
+        if (iterables == null) {
+            throw new NullPointerException("Iterables must not be null.");
+        }
+        for (final Iterable<?> iterable : iterables) {
+            checkNotNull(iterable);
+        }
+    }
+
+    /**
+     * Returns an empty iterator if the argument is <code>null</code>,
+     * or {@code iterable.iterator()} otherwise.
+     *
+     * @param <E> the element type
+     * @param iterable  the iterable, possibly <code>null</code>
+     * @return an empty iterator if the argument is <code>null</code>
+     */
+    private static <E> Iterator<E> emptyIteratorIfNull(final Iterable<E> iterable) {
+        return iterable != null ? iterable.iterator() : IteratorUtils.<E>emptyIterator();
     }
 
 }

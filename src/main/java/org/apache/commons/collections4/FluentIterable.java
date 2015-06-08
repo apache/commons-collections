@@ -117,15 +117,13 @@ public class FluentIterable<E> implements Iterable<E> {
      * corresponding input iterator supports it.
      *
      * @param <T>  the element type
-     * @param iterable  the iterable to wrap into a FluentIterable, may be null
+     * @param iterable  the iterable to wrap into a FluentIterable, may not be null
      * @return a new FluentIterable wrapping the provided iterable
+     * @throws NullPointerException if iterable is null
      */
     public static <T> FluentIterable<T> of(final Iterable<T> iterable) {
-        if (iterable == null) {
-            @SuppressWarnings("unchecked")
-            final FluentIterable<T> empty = IterableUtils.EMPTY_ITERABLE;
-            return empty;
-        } else if (iterable instanceof FluentIterable<?>) {
+        IterableUtils.checkNotNull(iterable);
+        if (iterable instanceof FluentIterable<?>) {
             return (FluentIterable<T>) iterable;
         } else {
             return new FluentIterable<T>(iterable);
@@ -169,11 +167,10 @@ public class FluentIterable<E> implements Iterable<E> {
      * Returns a new FluentIterable whose iterator will first traverse
      * the elements of the current iterable, followed by the elements
      * of the provided iterable.
-     * <p>
-     * A <code>null</code> iterable will be treated as an empty iterable.
      *
-     * @param other  the other iterable to combine, may be null
+     * @param other  the other iterable to combine, may not be null
      * @return a new iterable, combining this iterable with other
+     * @throws NullPointerException if other is null
      */
     public FluentIterable<E> append(final Iterable<? extends E> other) {
         return of(IterableUtils.chainedIterable(iterable, other));
@@ -191,11 +188,10 @@ public class FluentIterable<E> implements Iterable<E> {
      * <p>
      * The returned iterable will traverse the elements in the following
      * order: [1, 2, 3, 4, 5, 6, 7, 8]
-     * <p>
-     * A <code>null</code> iterable will be treated as an empty iterable.
      *
-     * @param other  the other iterable to collate, may be null
+     * @param other  the other iterable to collate, may not be null
      * @return a new iterable, collating this iterable with the other in natural order
+     * @throws NullPointerException if other is null
      * @see {@link org.apache.commons.collections4.iterators.CollatingIterator CollatingIterator}
      */
     public FluentIterable<E> collate(final Iterable<? extends E> other) {
@@ -215,13 +211,12 @@ public class FluentIterable<E> implements Iterable<E> {
      * <p>
      * The returned iterable will traverse the elements in the following
      * order: [8, 7, 6, 5, 4, 3, 2, 1]
-     * <p>
-     * A <code>null</code> iterable will be treated as an empty iterable.
      *
      * @param comparator  the comparator to define an ordering, may be null,
      *   in which case natural ordering will be used
-     * @param other  the other iterable to collate, may be null
+     * @param other  the other iterable to collate, may not be null
      * @return a new iterable, collating this iterable with the other in natural order
+     * @throws NullPointerException if other is null
      * @see {@link org.apache.commons.collections4.iterators.CollatingIterator CollatingIterator}
      */
     public FluentIterable<E> collate(final Iterable<? extends E> other,
@@ -341,8 +336,9 @@ public class FluentIterable<E> implements Iterable<E> {
      * the elements of this iterable and the other iterable in
      * alternating order.
      *
-     * @param other  the other iterable to interleave
+     * @param other  the other iterable to interleave, may not be null
      * @return a new iterable, interleaving this iterable with others
+     * @throws NullPointerException if other is null
      */
     public FluentIterable<E> zip(final Iterable<? extends E> other) {
         return of(IterableUtils.zippingIterable(iterable, other));
@@ -353,15 +349,12 @@ public class FluentIterable<E> implements Iterable<E> {
      * the elements of this iterable and the other iterables in
      * alternating order.
      *
-     * @param others  the iterables to interleave
+     * @param others  the iterables to interleave, may not be null
      * @return a new iterable, interleaving this iterable with others
+     * @throws NullPointerException if either of the provided iterables is null
      */
     public FluentIterable<E> zip(final Iterable<? extends E>... others) {
-        @SuppressWarnings("unchecked")
-        Iterable<E>[] iterables = new Iterable[1 + others.length];
-        iterables[0] = iterable;
-        System.arraycopy(others, 0, iterables, 1, others.length);
-        return of(IterableUtils.zippingIterable(iterables));
+        return of(IterableUtils.zippingIterable(iterable, others));
     }
 
     // convenience methods

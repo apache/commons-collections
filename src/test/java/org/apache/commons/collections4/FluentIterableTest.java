@@ -105,15 +105,25 @@ public class FluentIterableTest {
     // -----------------------------------------------------------------------
     @Test
     public void factoryMethodOf() {
-        List<Integer> result = FluentIterable.of(1, 2, 3, 4, 5).toList();
+        FluentIterable<Integer> iterable = FluentIterable.of(1, 2, 3, 4, 5);
+        List<Integer> result = iterable.toList();
         assertEquals(Arrays.asList(1, 2, 3, 4, 5), result);
+
+        iterable = FluentIterable.of(1);
+        assertEquals(1, iterable.size());
+        assertFalse(iterable.isEmpty());
+        assertEquals(Arrays.asList(1), iterable.toList());
 
         result = FluentIterable.of(new Integer[0]).toList();
         assertTrue(result.isEmpty());
 
         final Iterable<Integer> it = null;
-        result = FluentIterable.of(it).toList();
-        assertTrue(result.isEmpty());
+        try {
+            FluentIterable.of(it).toList();
+            fail("expecting NullPointerException");
+        } catch (NullPointerException npe) {
+            // expected
+        }
     }
 
     @Test
@@ -151,9 +161,12 @@ public class FluentIterableTest {
         Collections.sort(combinedList);
         assertEquals(combinedList, result);
 
-        result = FluentIterable.of(iterableOdd).collate(null).toList();
-        List<Integer> expected = IterableUtils.toList(iterableOdd);
-        assertEquals(expected, result);
+        try {
+            FluentIterable.of(iterableOdd).collate(null).toList();
+            fail("expecting NullPointerException");
+        } catch (NullPointerException npe) {
+            // expected
+        }
     }
 
     @Test
@@ -309,9 +322,12 @@ public class FluentIterableTest {
         Collections.sort(combinedList);
         assertEquals(combinedList, result);
 
-        result = FluentIterable.of(iterableOdd).zip((Iterable<Integer>) null).toList();
-        List<Integer> expected = IterableUtils.toList(iterableOdd);
-        assertEquals(expected, result);
+        try {
+            FluentIterable.of(iterableOdd).zip((Iterable<Integer>) null).toList();
+            fail("expecting NullPointerException");
+        } catch (NullPointerException npe) {
+            // expected
+        }
         
         result = FluentIterable.of(Arrays.asList(1, 4, 7)).zip(Arrays.asList(2, 5, 8), Arrays.asList(3, 6, 9)).toList();
         combinedList = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9);
@@ -354,7 +370,12 @@ public class FluentIterableTest {
 
     @Test
     public void size() {
-        assertEquals(0, FluentIterable.of((Iterable<?>) null).size());
+        try {
+            FluentIterable.of((Iterable<?>) null).size();
+            fail("expecting NullPointerException");
+        } catch (NullPointerException npe) {
+            // expected
+        }
         assertEquals(0, FluentIterable.of(emptyIterable).size());
         assertEquals(IterableUtils.toList(iterableOdd).size(), FluentIterable.of(iterableOdd).size());
     }
