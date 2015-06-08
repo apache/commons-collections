@@ -61,7 +61,7 @@ import org.apache.commons.collections4.iterators.SingletonIterator;
  *
  * @param <E>  the element type
  * @since 4.1
- * @version $Id: $
+ * @version $Id$
  */
 public class FluentIterable<E> implements Iterable<E> {
 
