@@ -49,7 +49,7 @@ public abstract class AbstractMapBag<E> implements Bag<E> {
     private int size;
     /** The modification count for fail fast iterators */
     private transient int modCount;
-    /** The modification count for fail fast iterators */
+    /** Unique view of the elements */
     private transient Set<E> uniqueSet;
 
     /**

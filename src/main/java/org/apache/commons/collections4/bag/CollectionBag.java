@@ -104,7 +104,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
      * every object contained in this object.
      *
      * @param coll  the collection to check against
-     * @return <code>true</code> if the Bag contains at least on of every object in the collection
+     * @return <code>true</code> if the Bag contains at least one of every object in the collection
      */
     @Override
     public boolean containsAll(final Collection<?> coll) {
