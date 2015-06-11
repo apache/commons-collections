@@ -1,0 +1,78 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.commons.collections4.multiset;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.HashMap;
+
+import org.apache.commons.collections4.MultiSet;
+
+/**
+ * Implements {@link MultiSet}, using a {@link HashMap} to provide the
+ * data storage. This is the standard implementation of a multiset.
+ * <p>
+ * A {@link MultiSet} stores each object in the collection together with a
+ * count of occurrences. Extra methods on the interface allow multiple copies
+ * of an object to be added or removed at once.
+ *
+ * @since 4.1
+ * @version $Id$
+ */
+public class HashMultiSet<E> extends AbstractMapMultiSet<E> implements Serializable {
+
+    /** Serial version lock */
+    private static final long serialVersionUID = 20150610L;
+
+    /**
+     * Constructs an empty {@link HashMultiSet}.
+     */
+    public HashMultiSet() {
+        super(new HashMap<E, MutableInteger>());
+    }
+
+    /**
+     * Constructs a bag containing all the members of the given collection.
+     *
+     * @param coll  a collection to copy into this bag
+     */
+    public HashMultiSet(final Collection<? extends E> coll) {
+        this();
+        addAll(coll);
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Write the bag out using a custom routine.
+     */
+    private void writeObject(final ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+        super.doWriteObject(out);
+    }
+
+    /**
+     * Read the bag in using a custom routine.
+     */
+    private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject();
+        super.doReadObject(new HashMap<E, MutableInteger>(), in);
+    }
+
+}
