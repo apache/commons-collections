@@ -21,12 +21,10 @@ import java.util.Set;
 /**
  * Defines a map that holds a set of values against each key.
  * <p>
- * A <code>SetValuedMap</code> is a Map with slightly different semantics:
+ * A {@code SetValuedMap} is a Map with slightly different semantics:
  * <ul>
- * <li>Putting a value into the map will add the value to a <code>Set</code> at
- * that key.</li>
- * <li>Getting a value will return a <code>Set</code>, holding all the values
- * put to that key.</li>
+ *   <li>Putting a value into the map will add the value to a {@link Set} at that key.</li>
+ *   <li>Getting a value will return a {@link Set}, holding all the values put to that key.</li>
  * </ul>
  *
  * @since 4.1
@@ -37,16 +35,17 @@ public interface SetValuedMap<K, V> extends MultiValuedMap<K, V> {
     /**
      * Gets the set of values associated with the specified key.
      * <p>
-     * Implementations typically return an empty <code>Set</code> if no values
+     * Implementations typically return an empty {@code Set} if no values
      * have been mapped to the key.
      * <p>
      *
      * @param key the key to retrieve
-     * @return the <code>Set</code> of values, implementations should return an
-     *         empty Set for no mapping
+     * @return the {@code Set} of values, implementations should return an
+     *   empty {@code Set} for no mapping
      * @throws ClassCastException if the key is of an invalid type
      * @throws NullPointerException if the key is null and null keys are invalid
      */
+    @Override
     Set<V> get(Object key);
 
     /**
@@ -57,12 +56,12 @@ public interface SetValuedMap<K, V> extends MultiValuedMap<K, V> {
      * specified key, an empty, unmodifiable set will be returned.
      *
      * @param key the key to remove values from
-     * @return the <code>Set</code> of values removed, implementations should
-     *         return <code>null</code> for no mapping found, but may return an
-     *         empty collection
+     * @return the {@code Set} of values removed, implementations should
+     *   return null for no mapping found, but may return an empty collection
      * @throws UnsupportedOperationException if the map is unmodifiable
      * @throws ClassCastException if the key is of an invalid type
      * @throws NullPointerException if the key is null and null keys are invalid
      */
+    @Override
     Set<V> remove(Object key);
 }

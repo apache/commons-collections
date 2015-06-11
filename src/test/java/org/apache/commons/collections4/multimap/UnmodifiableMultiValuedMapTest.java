@@ -25,9 +25,9 @@ import java.util.Set;
 
 import junit.framework.Test;
 
-import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.BulkTest;
 import org.apache.commons.collections4.MapIterator;
+import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.Unmodifiable;
 
@@ -47,10 +47,12 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         return BulkTest.makeSuite(UnmodifiableMultiValuedMapTest.class);
     }
     
+    @Override
     public boolean isAddSupported() {
         return false;
     }
 
+    @Override
     public boolean isRemoveSupported() {
         return false;
     }
@@ -60,6 +62,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         return UnmodifiableMultiValuedMap.<K, V> unmodifiableMultiValuedMap(new MultiValuedHashMap<K, V>());
     }
 
+    @Override
     protected MultiValuedMap<K, V> makeFullMap() {
         final MultiValuedMap<K, V> map = new MultiValuedHashMap<K, V>();
         addSampleMappings(map);
@@ -229,7 +232,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
     @SuppressWarnings("unchecked")
     public void testUnmodifiableKeys() {
         resetFull();
-        Bag<K> keys = getMap().keys();
+        MultiSet<K> keys = getMap().keys();
         try {
             keys.add((K) "four");
             fail();

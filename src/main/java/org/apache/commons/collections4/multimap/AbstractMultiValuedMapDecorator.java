@@ -22,8 +22,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.MapIterator;
+import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
 
 /**
@@ -65,78 +65,97 @@ public class AbstractMultiValuedMapDecorator<K, V>
         return map;
     }
 
+    @Override
     public int size() {
         return decorated().size();
     }
 
+    @Override
     public boolean isEmpty() {
         return decorated().isEmpty();
     }
 
+    @Override
     public boolean containsKey(Object key) {
         return decorated().containsKey(key);
     }
 
+    @Override
     public boolean containsValue(Object value) {
         return decorated().containsValue(value);
     }
 
+    @Override
     public boolean containsMapping(Object key, Object value) {
         return decorated().containsMapping(key, value);
     }
 
+    @Override
     public Collection<V> get(Object key) {
         return decorated().get(key);
     }
 
+    @Override
     public Collection<V> remove(Object key) {
         return decorated().remove(key);
     }
 
+    @Override
     public boolean removeMapping(K key, V item) {
         return decorated().removeMapping(key, item);
     }
 
+    @Override
     public void clear() {
         decorated().clear();
     }
 
+    @Override
     public boolean put(K key, V value) {
         return decorated().put(key, value);
     }
 
+    @Override
     public Set<K> keySet() {
         return decorated().keySet();
     }
 
+    @Override
     public Collection<Entry<K, V>> entries() {
         return decorated().entries();
     }
 
-    public Bag<K> keys() {
+    @Override
+    public MultiSet<K> keys() {
         return decorated().keys();
     }
 
+    @Override
     public Collection<V> values() {
         return decorated().values();
     }
 
+    @Override
     public Map<K, Collection<V>> asMap() {
         return decorated().asMap();
     }
 
+    @Override
     public boolean putAll(K key, Iterable<? extends V> values) {
         return decorated().putAll(key, values);
     }
 
+    @Override
     public void putAll(Map<? extends K, ? extends V> m) {
         decorated().putAll(m);
     }
 
+    @Override
     public void putAll(MultiValuedMap<? extends K, ? extends V> m) {
         decorated().putAll(m);
     }
 
+    @Override
     public MapIterator<K, V> mapIterator() {
         return decorated().mapIterator();
     }

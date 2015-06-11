@@ -21,10 +21,10 @@ import java.util.List;
 /**
  * Defines a map that holds a list of values against each key.
  * <p>
- * A <code>ListValuedMap</code> is a Map with slightly different semantics:
+ * A {@code ListValuedMap} is a Map with slightly different semantics:
  * <ul>
- *   <li>Putting a value into the map will add the value to a Collection at that key.</li>
- *   <li>Getting a value will return a Collection, holding all the values put to that key.</li>
+ *   <li>Putting a value into the map will add the value to a {@link List} at that key.</li>
+ *   <li>Getting a value will return a {@link List}, holding all the values put to that key.</li>
  * </ul>
  *
  * @since 4.1
@@ -40,12 +40,13 @@ public interface ListValuedMap<K, V> extends MultiValuedMap<K, V> {
      * returned list will update the underlying {@code ListValuedMap} and
      * vice-versa.
      *
-     * @param key the key to retrieve
-     * @return the <code>List</code> of values, implementations should return an
-     *         empty list for no mapping
+     * @param key  the key to retrieve
+     * @return the {@code List} of values, implementations should return an
+     *   empty {@code List} for no mapping
      * @throws ClassCastException if the key is of an invalid type
      * @throws NullPointerException if the key is null and null keys are invalid
      */
+    @Override
     List<V> get(Object key);
 
     /**
@@ -55,13 +56,14 @@ public interface ListValuedMap<K, V> extends MultiValuedMap<K, V> {
      * propagated to this list-valued map. In case no mapping was stored for the
      * specified key, an empty, unmodifiable list will be returned.
      *
-     * @param key the key to remove values from
-     * @return the <code>List</code> of values removed, implementations
-     *         typically return an empty, unmodifiable List for no mapping found
+     * @param key  the key to remove values from
+     * @return the {@code List} of values removed, implementations
+     *   typically return an empty, unmodifiable {@code List} for no mapping found
      * @throws UnsupportedOperationException if the map is unmodifiable
      * @throws ClassCastException if the key is of an invalid type
      * @throws NullPointerException if the key is null and null keys are invalid
      */
+    @Override
     List<V> remove(Object key);
 
 }

@@ -21,14 +21,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.MapIterator;
+import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.Unmodifiable;
-import org.apache.commons.collections4.bag.UnmodifiableBag;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.apache.commons.collections4.iterators.UnmodifiableMapIterator;
 import org.apache.commons.collections4.map.UnmodifiableMap;
+import org.apache.commons.collections4.multiset.UnmodifiableMultiSet;
 import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
@@ -53,11 +53,11 @@ public class UnmodifiableMultiValuedMap<K, V>
      * <p>
      * If the map passed in is already unmodifiable, it is returned.
      *
-     * @param <K> the type of key elements
-     * @param <V> the type of value elements
-     * @param map the map to decorate, must not be null
+     * @param <K>  the type of key elements
+     * @param <V>  the type of value elements
+     * @param map  the map to decorate, may not be null
      * @return an unmodifiable MultiValuedMap
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      */
     @SuppressWarnings("unchecked")
     public static <K, V> UnmodifiableMultiValuedMap<K, V> unmodifiableMultiValuedMap(
@@ -71,8 +71,8 @@ public class UnmodifiableMultiValuedMap<K, V>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param map the MultiValuedMap to decorate, must not be null
-     * @throws IllegalArgumentException if the map is null
+     * @param map  the MultiValuedMap to decorate, may not be null
+     * @throws NullPointerException if the map is null
      */
     @SuppressWarnings("unchecked")
     private UnmodifiableMultiValuedMap(final MultiValuedMap<? extends K, ? extends V> map) {
@@ -106,22 +106,22 @@ public class UnmodifiableMultiValuedMap<K, V>
 
     @Override
     public Set<K> keySet() {
-        return UnmodifiableSet.<K>unmodifiableSet(decorated().keySet());
+        return UnmodifiableSet.unmodifiableSet(decorated().keySet());
     }
 
     @Override
     public Collection<Entry<K, V>> entries() {
-        return UnmodifiableCollection.<Entry<K, V>>unmodifiableCollection(decorated().entries());
+        return UnmodifiableCollection.unmodifiableCollection(decorated().entries());
     }
 
     @Override
-    public Bag<K> keys() {
-        return UnmodifiableBag.<K>unmodifiableBag(decorated().keys());
+    public MultiSet<K> keys() {
+        return UnmodifiableMultiSet.unmodifiableMultiSet(decorated().keys());
     }
 
     @Override
     public Collection<V> values() {
-        return UnmodifiableCollection.<V>unmodifiableCollection(decorated().values());
+        return UnmodifiableCollection.unmodifiableCollection(decorated().values());
     }
 
     @Override
