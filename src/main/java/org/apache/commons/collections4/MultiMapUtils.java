@@ -18,7 +18,6 @@ package org.apache.commons.collections4;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -111,7 +110,7 @@ public class MultiMapUtils {
         if (map != null) {
             return map.get(key);
         }
-        return Collections.emptyList();
+        return null;
     }
 
     // TODO: review the getValuesAsXXX methods - depending on the actual MultiValuedMap type, changes
