@@ -39,11 +39,11 @@ import org.apache.commons.collections4.MultiValuedMap;
  * @since 4.1
  * @version $Id$
  */
-public class AbstractMultiValuedMapDecorator<K, V>
+public abstract class AbstractMultiValuedMapDecorator<K, V>
         implements MultiValuedMap<K, V>, Serializable {
 
     /** Serialization version */
-    private static final long serialVersionUID = -9184930955231260637L;
+    private static final long serialVersionUID = 20150612L;
 
     /** MultiValuedMap to decorate */
     private final MultiValuedMap<K, V> map;
@@ -51,7 +51,7 @@ public class AbstractMultiValuedMapDecorator<K, V>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param map the map to decorate, must not be null
+     * @param map  the map to decorate, must not be null
      * @throws NullPointerException if the map is null
      */
     protected AbstractMultiValuedMapDecorator(final MultiValuedMap<K, V> map) {
@@ -61,6 +61,11 @@ public class AbstractMultiValuedMapDecorator<K, V>
         this.map = map;
     }
 
+    /**
+     * The decorated multi-valued map.
+     *
+     * @return the map to decorate
+     */
     protected MultiValuedMap<K, V> decorated() {
         return map;
     }
@@ -76,32 +81,32 @@ public class AbstractMultiValuedMapDecorator<K, V>
     }
 
     @Override
-    public boolean containsKey(Object key) {
+    public boolean containsKey(final Object key) {
         return decorated().containsKey(key);
     }
 
     @Override
-    public boolean containsValue(Object value) {
+    public boolean containsValue(final Object value) {
         return decorated().containsValue(value);
     }
 
     @Override
-    public boolean containsMapping(Object key, Object value) {
+    public boolean containsMapping(final Object key, final Object value) {
         return decorated().containsMapping(key, value);
     }
 
     @Override
-    public Collection<V> get(Object key) {
+    public Collection<V> get(final K key) {
         return decorated().get(key);
     }
 
     @Override
-    public Collection<V> remove(Object key) {
+    public Collection<V> remove(final Object key) {
         return decorated().remove(key);
     }
 
     @Override
-    public boolean removeMapping(K key, V item) {
+    public boolean removeMapping(final Object key, final Object item) {
         return decorated().removeMapping(key, item);
     }
 
@@ -146,13 +151,13 @@ public class AbstractMultiValuedMapDecorator<K, V>
     }
 
     @Override
-    public void putAll(Map<? extends K, ? extends V> m) {
-        decorated().putAll(m);
+    public boolean putAll(Map<? extends K, ? extends V> map) {
+        return decorated().putAll(map);
     }
 
     @Override
-    public void putAll(MultiValuedMap<? extends K, ? extends V> m) {
-        decorated().putAll(m);
+    public boolean putAll(MultiValuedMap<? extends K, ? extends V> map) {
+        return decorated().putAll(map);
     }
 
     @Override

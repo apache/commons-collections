@@ -53,9 +53,9 @@ public class MultiValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, 
     @SuppressWarnings("unchecked")
     public void testSetValuedMapAdd() {
         final SetValuedMap<K, V> setMap = MultiValuedHashMap.setValuedHashMap();
-        assertTrue(setMap.get("whatever") instanceof Set);
+        assertTrue(setMap.get((K) "whatever") instanceof Set);
 
-        Set<V> set = setMap.get("A");
+        Set<V> set = setMap.get((K) "A");
         assertTrue(set.add((V) "a1"));
         assertTrue(set.add((V) "a2"));
         assertFalse(set.add((V) "a1"));
@@ -66,9 +66,9 @@ public class MultiValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, 
     @SuppressWarnings("unchecked")
     public void testSetValuedMapRemove() {
         final SetValuedMap<K, V> setMap = MultiValuedHashMap.setValuedHashMap();
-        assertTrue(setMap.get("whatever") instanceof Set);
+        assertTrue(setMap.get((K) "whatever") instanceof Set);
 
-        Set<V> set = setMap.get("A");
+        Set<V> set = setMap.get((K) "A");
         assertTrue(set.add((V) "a1"));
         assertTrue(set.add((V) "a2"));
         assertFalse(set.add((V) "a1"));
@@ -86,9 +86,9 @@ public class MultiValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, 
     @SuppressWarnings("unchecked")
     public void testSetValuedMapRemoveViaIterator() {
         final SetValuedMap<K, V> setMap = MultiValuedHashMap.setValuedHashMap();
-        assertTrue(setMap.get("whatever") instanceof Set);
+        assertTrue(setMap.get((K) "whatever") instanceof Set);
 
-        Set<V> set = setMap.get("A");
+        Set<V> set = setMap.get((K) "A");
         set.add((V) "a1");
         set.add((V) "a2");
         set.add((V) "a1");
@@ -105,8 +105,8 @@ public class MultiValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, 
     @SuppressWarnings("unchecked")
     public void testListValuedMapAdd() {
         final ListValuedMap<K, V> listMap = MultiValuedHashMap.listValuedHashMap();
-        assertTrue(listMap.get("whatever") instanceof List);
-        List<V> list = listMap.get("A");
+        assertTrue(listMap.get((K) "whatever") instanceof List);
+        List<V> list = listMap.get((K) "A");
         list.add((V) "a1");
         assertEquals(1, listMap.size());
         assertTrue(listMap.containsKey("A"));
@@ -115,7 +115,7 @@ public class MultiValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, 
     @SuppressWarnings("unchecked")
     public void testListValuedMapAddViaListIterator() {
         final ListValuedMap<K, V> listMap = MultiValuedHashMap.listValuedHashMap();
-        ListIterator<V> listIt = listMap.get("B").listIterator();
+        ListIterator<V> listIt = listMap.get((K) "B").listIterator();
         assertFalse(listIt.hasNext());
         listIt.add((V) "b1");
         listIt.add((V) "b2");
@@ -129,7 +129,7 @@ public class MultiValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, 
     @SuppressWarnings("unchecked")
     public void testListValuedMapRemove() {
         final ListValuedMap<K, V> listMap = MultiValuedHashMap.listValuedHashMap();
-        List<V> list = listMap.get("A");
+        List<V> list = listMap.get((K) "A");
         list.add((V) "a1");
         list.add((V) "a2");
         list.add((V) "a3");
@@ -146,12 +146,12 @@ public class MultiValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, 
     @SuppressWarnings("unchecked")
     public void testListValuedMapRemoveViaListIterator() {
         final ListValuedMap<K, V> listMap = MultiValuedHashMap.listValuedHashMap();
-        ListIterator<V> listIt = listMap.get("B").listIterator();
+        ListIterator<V> listIt = listMap.get((K) "B").listIterator();
         listIt.add((V) "b1");
         listIt.add((V) "b2");
         assertEquals(2, listMap.size());
         assertTrue(listMap.containsKey("B"));
-        listIt = listMap.get("B").listIterator();
+        listIt = listMap.get((K) "B").listIterator();
         while (listIt.hasNext()) {
             listIt.next();
             listIt.remove();
@@ -160,7 +160,7 @@ public class MultiValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, 
         listIt.add((V) "b1");
         listIt.add((V) "b2");
         assertTrue(listMap.containsKey("B"));
-        assertEquals(2, listMap.get("B").size());
+        assertEquals(2, listMap.get((K) "B").size());
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -170,8 +170,8 @@ public class MultiValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, 
 
         map1.put("a", "a1");
         map1.put("a", "a2");
-        map2.put("a", "a2");
         map2.put("a", "a1");
+        map2.put("a", "a2");
         assertEquals(map1, map2);
         assertEquals(map1.hashCode(), map2.hashCode());
 

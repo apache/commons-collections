@@ -63,7 +63,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
             assertEquals(true, map.containsKey(Integer.valueOf((String) els[i])));
             assertEquals(false, map.containsKey(els[i]));
             assertEquals(true, map.containsValue(els[i]));
-            assertEquals(true, map.get(Integer.valueOf((String) els[i])).contains(els[i]));
+            assertEquals(true, map.get((K) Integer.valueOf((String) els[i])).contains(els[i]));
         }
 
         Collection<V> coll = map.remove(els[0]);
@@ -86,7 +86,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
             assertEquals(true, map.containsValue(Integer.valueOf((String) els[i])));
             assertEquals(false, map.containsValue(els[i]));
             assertEquals(true, map.containsKey(els[i]));
-            assertEquals(true, map.get(els[i]).contains(Integer.valueOf((String) els[i])));
+            assertEquals(true, map.get((K) els[i]).contains(Integer.valueOf((String) els[i])));
         }
         assertEquals(true, map.remove(els[0]).contains(Integer.valueOf((String) els[0])));
     }
@@ -105,11 +105,11 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
                         null,
                         (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(3, trans.size());
-        assertEquals(true, trans.get("A").contains("1"));
-        assertEquals(true, trans.get("B").contains("2"));
-        assertEquals(true, trans.get("C").contains("3"));
+        assertEquals(true, trans.get((K) "A").contains("1"));
+        assertEquals(true, trans.get((K) "B").contains("2"));
+        assertEquals(true, trans.get((K) "C").contains("3"));
         trans.put((K) "D", (V) "4");
-        assertEquals(true, trans.get("D").contains(Integer.valueOf(4)));
+        assertEquals(true, trans.get((K) "D").contains(Integer.valueOf(4)));
     }
 
     @SuppressWarnings("unchecked")
@@ -125,11 +125,11 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
                         null,
                         (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(3, trans.size());
-        assertEquals(true, trans.get("A").contains(Integer.valueOf(1)));
-        assertEquals(true, trans.get("B").contains(Integer.valueOf(2)));
-        assertEquals(true, trans.get("C").contains(Integer.valueOf(3)));
+        assertEquals(true, trans.get((K) "A").contains(Integer.valueOf(1)));
+        assertEquals(true, trans.get((K) "B").contains(Integer.valueOf(2)));
+        assertEquals(true, trans.get((K) "C").contains(Integer.valueOf(3)));
         trans.put((K) "D", (V) "4");
-        assertEquals(true, trans.get("D").contains(Integer.valueOf(4)));
+        assertEquals(true, trans.get((K) "D").contains(Integer.valueOf(4)));
     }
 
 //    public void testCreate() throws Exception {

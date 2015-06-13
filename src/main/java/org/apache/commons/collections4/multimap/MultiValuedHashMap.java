@@ -53,7 +53,7 @@ import org.apache.commons.collections4.SetValuedMap;
 public class MultiValuedHashMap<K, V> extends AbstractMultiValuedMap<K, V> {
 
     /** Serialization Version */
-    private static final long serialVersionUID = -5845183518195365857L;
+    private static final long serialVersionUID = 20150612L;
 
     /**
      * The initial capacity used when none specified in constructor.
@@ -220,13 +220,14 @@ public class MultiValuedHashMap<K, V> extends AbstractMultiValuedMap<K, V> {
      */
     protected <C extends Collection<V>> MultiValuedHashMap(int initialCapacity, float loadFactor,
             final Class<C> collectionClazz, int initialCollectionCapacity) {
-        super(new HashMap<K, Collection<V>>(initialCapacity, loadFactor), collectionClazz, initialCollectionCapacity);
+        super(new HashMap<K, Collection<V>>(initialCapacity, loadFactor), collectionClazz,
+                                            initialCollectionCapacity);
     }
 
     /** Inner class for ListValuedMap */
     private static class ListValuedHashMap<K, V> extends AbstractListValuedMap<K, V> {
 
-        private static final long serialVersionUID = 3667581458573135234L;
+        private static final long serialVersionUID = 20150612L;
 
         public <C extends List<V>> ListValuedHashMap(Class<C> listClazz) {
             super(new HashMap<K, List<V>>(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR), listClazz);
@@ -242,7 +243,7 @@ public class MultiValuedHashMap<K, V> extends AbstractMultiValuedMap<K, V> {
     /** Inner class for SetValuedMap */
     private static class SetValuedHashMap<K, V> extends AbstractSetValuedMap<K, V> {
 
-        private static final long serialVersionUID = -3817515514829894543L;
+        private static final long serialVersionUID = 20150612L;
 
         public <C extends Set<V>> SetValuedHashMap(Class<C> setClazz) {
             super(new HashMap<K, Set<V>>(DEFAULT_INITIAL_CAPACITY, DEFAULT_LOAD_FACTOR), setClazz);

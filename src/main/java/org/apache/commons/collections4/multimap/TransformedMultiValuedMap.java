@@ -17,13 +17,12 @@
 package org.apache.commons.collections4.multimap;
 
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.FluentIterable;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.Transformer;
-import org.apache.commons.collections4.map.LinkedMap;
 
 /**
  * Decorates another <code>MultiValuedMap</code> to transform objects that are added.
@@ -41,7 +40,7 @@ import org.apache.commons.collections4.map.LinkedMap;
 public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecorator<K, V> {
 
     /** Serialization Version */
-    private static final long serialVersionUID = -1254147899086470720L;
+    private static final long serialVersionUID = 20150612L;
 
     /** The key transformer */
     private final Transformer<? super K, ? extends K> keyTransformer;
@@ -56,8 +55,8 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
      * NOT transformed. Contrast this with
      * {@link #transformedMap(MultiValuedMap, Transformer, Transformer)}.
      *
-     * @param <K>  the key type
-     * @param <V>  the value type
+     * @param <K> the key type
+     * @param <V> the value type
      * @param map  the MultiValuedMap to decorate, may not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no conversion
      * @param valueTransformer  the transformer to use for value conversion, null means no conversion
@@ -78,8 +77,8 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
      * be transformed by this method. Contrast this with
      * {@link #transformingMap(MultiValuedMap, Transformer, Transformer)}.
      *
-     * @param <K>  the key type
-     * @param <V>  the value type
+     * @param <K> the key type
+     * @param <V> the value type
      * @param map  the MultiValuedMap to decorate, may not be null
      * @param keyTransformer  the transformer to use for key conversion, null means no conversion
      * @param valueTransformer  the transformer to use for value conversion, null means no conversion
@@ -91,11 +90,10 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
             final Transformer<? super V, ? extends V> valueTransformer) {
         final TransformedMultiValuedMap<K, V> decorated =
                 new TransformedMultiValuedMap<K, V>(map, keyTransformer, valueTransformer);
-        if (map.size() > 0) {
-            MultiValuedMap<K, V> transformed = decorated.transformMultiValuedMap(map);
+        if (!map.isEmpty()) {
+            final MultiValuedMap<K, V> mapCopy = new MultiValuedHashMap<K, V>(map);
             decorated.clear();
-            // to avoid double transform
-            decorated.decorated().putAll(transformed);
+            decorated.putAll(mapCopy);
         }
         return decorated;
     }
@@ -112,8 +110,9 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
      * @param valueTransformer  the transformer to use for value conversion, null means no conversion
      * @throws NullPointerException if map is null
      */
-    protected TransformedMultiValuedMap(MultiValuedMap<K, V> map,
-            Transformer<? super K, ? extends K> keyTransformer, Transformer<? super V, ? extends V> valueTransformer) {
+    protected TransformedMultiValuedMap(final MultiValuedMap<K, V> map,
+            final Transformer<? super K, ? extends K> keyTransformer,
+            final Transformer<? super V, ? extends V> valueTransformer) {
         super(map);
         this.keyTransformer = keyTransformer;
         this.valueTransformer = valueTransformer;
@@ -149,83 +148,44 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
         return valueTransformer.transform(object);
     }
 
-    /**
-     * Transforms a map.
-     * <p>
-     * The transformer itself may throw an exception if necessary.
-     *
-     * @param map  the map to transform
-     * @return the transformed object
-     */
-    @SuppressWarnings("unchecked")
-    protected Map<K, V> transformMap(final Map<? extends K, ? extends V> map) {
-        if (map.isEmpty()) {
-            return (Map<K, V>) map;
-        }
-        final Map<K, V> result = new LinkedMap<K, V>(map.size());
-
-        for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
-            result.put(transformKey(entry.getKey()), transformValue(entry.getValue()));
-        }
-        return result;
-    }
-
-    /**
-     * Transforms a MultiValuedMap.
-     * <p>
-     * The transformer itself may throw an exception if necessary.
-     *
-     * @param map  the MultiValuedMap to transform
-     * @return the transformed object
-     */
-    @SuppressWarnings("unchecked")
-    protected MultiValuedMap<K, V> transformMultiValuedMap(
-            final MultiValuedMap<? extends K, ? extends V> map) {
-        if (map.isEmpty()) {
-            return (MultiValuedMap<K, V>) map;
-        }
-        final MultiValuedMap<K, V> result = new MultiValuedHashMap<K, V>();
-
-        for (final Map.Entry<? extends K, ? extends V> entry : map.entries()) {
-            result.put(transformKey(entry.getKey()), transformValue(entry.getValue()));
-        }
-        return result;
+    @Override
+    public boolean put(final K key, final V value) {
+        return decorated().put(transformKey(key), transformValue(value));
     }
 
     @Override
-    public boolean put(K key, V value) {
-        K transformedKey = transformKey(key);
-        V transformedValue = transformValue(value);
-        return decorated().put(transformedKey, transformedValue);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public boolean putAll(K key, Iterable<? extends V> values) {
+    public boolean putAll(final K key, final Iterable<? extends V> values) {
         if (values == null) {
             throw new NullPointerException("Values must not be null.");
         }
 
-        Iterator<V> it = (Iterator<V>) values.iterator();
-        if (!it.hasNext()) {
-            return false;
-        }
-        K transformedKey = transformKey(key);
-        List<V> transformedValues = new LinkedList<V>();
-        while (it.hasNext()) {
-            transformedValues.add(transformValue(it.next()));
-        }
-        return decorated().putAll(transformedKey, transformedValues);
+        final Iterable<V> transformedValues = FluentIterable.of(values).transform(valueTransformer);
+        final Iterator<? extends V> it = transformedValues.iterator();
+        return it.hasNext() && CollectionUtils.addAll(decorated().get(transformKey(key)), it);
     }
 
     @Override
-    public void putAll(Map<? extends K, ? extends V> m) {
-        decorated().putAll(transformMap(m));
+    public boolean putAll(final Map<? extends K, ? extends V> map) {
+        if (map == null) {
+            throw new NullPointerException("Map must not be null.");
+        }
+        boolean changed = false;
+        for (Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
+            changed |= put(entry.getKey(), entry.getValue());
+        }
+        return changed;
     }
 
     @Override
-    public void putAll(MultiValuedMap<? extends K, ? extends V> m) {
-        decorated().putAll(transformMultiValuedMap(m));
+    public boolean putAll(final MultiValuedMap<? extends K, ? extends V> map) {
+        if (map == null) {
+            throw new NullPointerException("Map must not be null.");
+        }
+        boolean changed = false;
+        for (Map.Entry<? extends K, ? extends V> entry : map.entries()) {
+            changed |= put(entry.getKey(), entry.getValue());
+        }
+        return changed;
     }
 
 }

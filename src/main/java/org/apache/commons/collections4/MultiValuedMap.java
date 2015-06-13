@@ -73,7 +73,6 @@ public interface MultiValuedMap<K, V> {
      *
      * @param key  key whose presence in this map is to be tested
      * @return true if this map contains a mapping for the specified key
-     * @throws ClassCastException if the key is of an inappropriate type for this map (optional)
      * @throws NullPointerException if the specified key is null and this map
      *   does not permit null keys (optional)
      */
@@ -84,8 +83,6 @@ public interface MultiValuedMap<K, V> {
      *
      * @param value  the value to search for
      * @return true if the map contains the value
-     * @throws ClassCastException if the type of the specified value is not compatible
-     *   with the used collection (optional)
      * @throws NullPointerException if the value is null and null values are not supported
      *   by the used collection types (optional)
      */
@@ -110,10 +107,9 @@ public interface MultiValuedMap<K, V> {
      * @param key  the key to retrieve
      * @return the {@code Collection} of values, implementations should
      *   return an empty collection for no mapping
-     * @throws ClassCastException if the key is of an invalid type (optional)
      * @throws NullPointerException if the key is null and null keys are invalid (optional)
      */
-    Collection<V> get(Object key);
+    Collection<V> get(K key);
 
     // Modification operations
 
@@ -135,7 +131,6 @@ public interface MultiValuedMap<K, V> {
      *   type does not allow duplicate values, e.g. when using a Set
      * @throws UnsupportedOperationException if the put operation is not supported by
      *   this multi-valued map, e.g. if it is unmodifiable
-     * @throws ClassCastException if the key or value is of an invalid type (optional)
      * @throws NullPointerException if the key or value is null and null is invalid (optional)
      * @throws IllegalArgumentException if some aspect of the specified key or value prevents
      *   it from being stored in this multi-valued map
@@ -168,15 +163,13 @@ public interface MultiValuedMap<K, V> {
      * @param map  mappings to be stored in this map, may not be null
      * @throws UnsupportedOperationException if the {@code putAll} operation is
      *   not supported by this map
-     * @throws ClassCastException if the class of a key or value in the
-     *   specified map prevents it from being stored in this map (optional)
      * @throws NullPointerException if the specified map is null, or if this map
      *   does not permit null keys or values, and the specified map
      *   contains null keys or values (optional)
      * @throws IllegalArgumentException if some property of a key or value in
      *   the specified map prevents it from being stored in this map
      */
-    void putAll(Map<? extends K, ? extends V> map);
+    boolean putAll(Map<? extends K, ? extends V> map);
 
     /**
      * Copies all mappings from the specified map to this multi-valued map
@@ -192,15 +185,13 @@ public interface MultiValuedMap<K, V> {
      * @param map  mappings to be stored in this map, may not be null
      * @throws UnsupportedOperationException if the {@code putAll} operation is
      *   not supported by this map
-     * @throws ClassCastException if the class of a key or value in the
-     *   specified map prevents it from being stored in this map (optional)
      * @throws NullPointerException if the specified map is null, or if this map
      *   does not permit null keys or values, and the specified map
      *   contains null keys or values (optional)
      * @throws IllegalArgumentException if some property of a key or value in
      *   the specified map prevents it from being stored in this map
      */
-    void putAll(MultiValuedMap<? extends K, ? extends V> map);
+    boolean putAll(MultiValuedMap<? extends K, ? extends V> map);
 
     /**
      * Removes all values associated with the specified key.
@@ -212,7 +203,6 @@ public interface MultiValuedMap<K, V> {
      * @param key  the key to remove values from
      * @return the values that were removed
      * @throws UnsupportedOperationException if the map is unmodifiable
-     * @throws ClassCastException if the key is of an invalid type (optional)
      * @throws NullPointerException if the key is null and null keys are invalid (optional)
      */
     Collection<V> remove(Object key);
@@ -230,10 +220,9 @@ public interface MultiValuedMap<K, V> {
      * @param item  the item to remove
      * @return true if the mapping was removed, false otherwise
      * @throws UnsupportedOperationException if the map is unmodifiable
-     * @throws ClassCastException if the key or value is of an invalid type (optional)
      * @throws NullPointerException if the key or value is null and null is invalid (optional)
      */
-    boolean removeMapping(K key, V item);
+    boolean removeMapping(Object key, Object item);
 
     /**
      * Removes all of the mappings from this map (optional operation).

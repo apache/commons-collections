@@ -42,19 +42,19 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * @since 4.1
  * @version $Id$
  */
-public class UnmodifiableMultiValuedMap<K, V>
+public final class UnmodifiableMultiValuedMap<K, V>
         extends AbstractMultiValuedMapDecorator<K, V> implements Unmodifiable {
 
     /** Serialization version */
-    private static final long serialVersionUID = 1418669828214151566L;
+    private static final long serialVersionUID = 20150612L;
 
     /**
      * Factory method to create an unmodifiable MultiValuedMap.
      * <p>
      * If the map passed in is already unmodifiable, it is returned.
      *
-     * @param <K>  the type of key elements
-     * @param <V>  the type of value elements
+     * @param <K> the type of key elements
+     * @param <V> the type of value elements
      * @param map  the map to decorate, may not be null
      * @return an unmodifiable MultiValuedMap
      * @throws NullPointerException if map is null
@@ -80,12 +80,12 @@ public class UnmodifiableMultiValuedMap<K, V>
     }
 
     @Override
-    public Collection<V> remove(Object key) {
+    public Collection<V> remove(final Object key) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean removeMapping(K key, V item) {
+    public boolean removeMapping(final Object key, final Object item) {
         throw new UnsupportedOperationException();
     }
 
@@ -95,12 +95,12 @@ public class UnmodifiableMultiValuedMap<K, V>
     }
 
     @Override
-    public Collection<V> get(Object key) {
-        return UnmodifiableCollection.<V>unmodifiableCollection(decorated().get(key));
+    public Collection<V> get(final K key) {
+        return UnmodifiableCollection.unmodifiableCollection(decorated().get(key));
     }
 
     @Override
-    public boolean put(K key, V value) {
+    public boolean put(final K key, final V value) {
         throw new UnsupportedOperationException();
     }
 
@@ -126,26 +126,26 @@ public class UnmodifiableMultiValuedMap<K, V>
 
     @Override
     public Map<K, Collection<V>> asMap() {
-        return UnmodifiableMap.<K, Collection<V>>unmodifiableMap(decorated().asMap());
+        return UnmodifiableMap.unmodifiableMap(decorated().asMap());
     }
 
     @Override
     public MapIterator<K, V> mapIterator() {
-        return UnmodifiableMapIterator.<K, V>unmodifiableMapIterator(decorated().mapIterator());
+        return UnmodifiableMapIterator.unmodifiableMapIterator(decorated().mapIterator());
     }
 
     @Override
-    public boolean putAll(K key, Iterable<? extends V> values) {
+    public boolean putAll(final K key, final Iterable<? extends V> values) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void putAll(Map<? extends K, ? extends V> m) {
+    public boolean putAll(final Map<? extends K, ? extends V> map) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void putAll(MultiValuedMap<? extends K, ? extends V> m) {
+    public boolean putAll(final MultiValuedMap<? extends K, ? extends V> map) {
         throw new UnsupportedOperationException();
     }
 

@@ -43,11 +43,10 @@ public interface ListValuedMap<K, V> extends MultiValuedMap<K, V> {
      * @param key  the key to retrieve
      * @return the {@code List} of values, implementations should return an
      *   empty {@code List} for no mapping
-     * @throws ClassCastException if the key is of an invalid type
      * @throws NullPointerException if the key is null and null keys are invalid
      */
     @Override
-    List<V> get(Object key);
+    List<V> get(K key);
 
     /**
      * Removes all values associated with the specified key.
@@ -60,7 +59,6 @@ public interface ListValuedMap<K, V> extends MultiValuedMap<K, V> {
      * @return the {@code List} of values removed, implementations
      *   typically return an empty, unmodifiable {@code List} for no mapping found
      * @throws UnsupportedOperationException if the map is unmodifiable
-     * @throws ClassCastException if the key is of an invalid type
      * @throws NullPointerException if the key is null and null keys are invalid
      */
     @Override

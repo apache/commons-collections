@@ -18,6 +18,7 @@ package org.apache.commons.collections4;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -57,8 +58,8 @@ public class MultiMapUtils {
     /**
      * Returns immutable EMPTY_MULTI_VALUED_MAP with generic type safety.
      *
-     * @param <K>  the type of key in the map
-     * @param <V>  the type of value in the map
+     * @param <K> the type of key in the map
+     * @param <V> the type of value in the map
      * @return immutable and empty <code>MultiValuedMap</code>
      */
     @SuppressWarnings("unchecked")
@@ -72,8 +73,8 @@ public class MultiMapUtils {
      * Returns an immutable empty <code>MultiValuedMap</code> if the argument is
      * <code>null</code>, or the argument itself otherwise.
      *
-     * @param <K>  the type of key in the map
-     * @param <V>  the type of value in the map
+     * @param <K> the type of key in the map
+     * @param <V> the type of value in the map
      * @param map  the map, may be null
      * @return an empty {@link MultiValuedMap} if the argument is null
      */
@@ -100,8 +101,8 @@ public class MultiMapUtils {
     /**
      * Gets a Collection from <code>MultiValuedMap</code> in a null-safe manner.
      *
-     * @param <K>  the key type
-     * @param <V>  the value type
+     * @param <K> the key type
+     * @param <V> the value type
      * @param map  the {@link MultiValuedMap} to use
      * @param key  the key to look up
      * @return the Collection in the {@link MultiValuedMap}, or null if input map is null
@@ -110,7 +111,7 @@ public class MultiMapUtils {
         if (map != null) {
             return map.get(key);
         }
-        return null;
+        return Collections.emptyList();
     }
 
     // TODO: review the getValuesAsXXX methods - depending on the actual MultiValuedMap type, changes
@@ -119,8 +120,8 @@ public class MultiMapUtils {
     /**
      * Gets a List from <code>MultiValuedMap</code> in a null-safe manner.
      *
-     * @param <K>  the key type
-     * @param <V>  the value type
+     * @param <K> the key type
+     * @param <V> the value type
      * @param map  the {@link MultiValuedMap} to use
      * @param key  the key to look up
      * @return the Collection in the {@link MultiValuedMap} as List, or null if input map is null
@@ -139,8 +140,8 @@ public class MultiMapUtils {
     /**
      * Gets a Set from <code>MultiValuedMap</code> in a null-safe manner.
      *
-     * @param <K>  the key type
-     * @param <V>  the value type
+     * @param <K> the key type
+     * @param <V> the value type
      * @param map  the {@link MultiValuedMap} to use
      * @param key  the key to look up
      * @return the Collection in the {@link MultiValuedMap} as Set, or null if input map is null
@@ -159,8 +160,8 @@ public class MultiMapUtils {
     /**
      * Gets a Bag from <code>MultiValuedMap</code> in a null-safe manner.
      *
-     * @param <K>  the key type
-     * @param <V>  the value type
+     * @param <K> the key type
+     * @param <V> the value type
      * @param map  the {@link MultiValuedMap} to use
      * @param key  the key to look up
      * @return the Collection in the {@link MultiValuedMap} as Bag, or null if input map is null
@@ -183,8 +184,8 @@ public class MultiMapUtils {
      * Creates a {@link ListValuedMap} with an {@link java.util.ArrayList ArrayList} as
      * collection class to store the values mapped to a key.
      *
-     * @param <K>  the key type
-     * @param <V>  the value type
+     * @param <K> the key type
+     * @param <V> the value type
      * @return a new <code>ListValuedMap</code>
      */
     public static <K, V> ListValuedMap<K, V> newListValuedHashMap() {
@@ -195,9 +196,9 @@ public class MultiMapUtils {
      * Creates a {@link ListValuedMap} with a {@link java.util.HashMap HashMap} as its internal
      * storage which maps the keys to list of type <code>listClass</code>.
      *
-     * @param <K>  the key type
-     * @param <V>  the value type
-     * @param <C>  the List class type
+     * @param <K> the key type
+     * @param <V> the value type
+     * @param <C> the List class type
      * @param listClass the class of the list
      * @return a new {@link ListValuedMap}
      */
@@ -209,8 +210,8 @@ public class MultiMapUtils {
      * Creates a {@link SetValuedMap} with an {@link java.util.HashSet HashSet} as
      * collection class to store the values mapped to a key.
      *
-     * @param <K>  the key type
-     * @param <V>  the value type
+     * @param <K> the key type
+     * @param <V> the value type
      * @return a new {@link SetValuedMap}
      */
     public static <K, V> SetValuedMap<K, V> newSetValuedHashMap() {
@@ -221,9 +222,9 @@ public class MultiMapUtils {
      * Creates a {@link SetValuedMap} with a {@link java.util.HashMap HashMap} as its internal
      * storage which maps the keys to a set of type <code>setClass</code>
      *
-     * @param <K>  the key type
-     * @param <V>  the value type
-     * @param <C>  the Set class type
+     * @param <K> the key type
+     * @param <V> the value type
+     * @param <C> the Set class type
      * @param setClass  the class of the set
      * @return a new {@link SetValuedMap}
      */
@@ -238,11 +239,11 @@ public class MultiMapUtils {
      * Returns an <code>UnmodifiableMultiValuedMap</code> backed by the given
      * map.
      *
-     * @param <K>  the key type
-     * @param <V>  the value type
+     * @param <K> the key type
+     * @param <V> the value type
      * @param map  the {@link MultiValuedMap} to decorate, must not be null
      * @return an unmodifiable {@link MultiValuedMap} backed by the provided map
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      */
     public static <K, V> MultiValuedMap<K, V> unmodifiableMultiValuedMap(
             final MultiValuedMap<? extends K, ? extends V> map) {
@@ -264,13 +265,13 @@ public class MultiMapUtils {
      * If there are any elements already in the map being decorated, they are
      * NOT transformed.
      *
-     * @param <K>  the key type
-     * @param <V>  the value type
-     * @param map the {@link MultiValuedMap} to transform, must not be null, typically empty
-     * @param keyTransformer the transformer for the map keys, null means no transformation
-     * @param valueTransformer the transformer for the map values, null means no transformation
+     * @param <K> the key type
+     * @param <V> the value type
+     * @param map  the {@link MultiValuedMap} to transform, must not be null, typically empty
+     * @param keyTransformer  the transformer for the map keys, null means no transformation
+     * @param valueTransformer  the transformer for the map values, null means no transformation
      * @return a transformed <code>MultiValuedMap</code> backed by the given map
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      */
     public static <K, V> MultiValuedMap<K, V> transformedMultiValuedMap(final MultiValuedMap<K, V> map,
             final Transformer<? super K, ? extends K> keyTransformer,

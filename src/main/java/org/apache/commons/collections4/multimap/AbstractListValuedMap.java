@@ -18,11 +18,9 @@ package org.apache.commons.collections4.multimap;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.collections4.ListValuedMap;
@@ -41,14 +39,14 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
         implements ListValuedMap<K, V> {
 
     /** The serialization version */
-    private static final long serialVersionUID = 6024950625989666915L;
+    private static final long serialVersionUID = 20150612L;
 
     /**
      * A constructor that wraps, not copies
      *
      * @param <C> the list type
-     * @param map the map to wrap, must not be null
-     * @param listClazz the collection class
+     * @param map  the map to wrap, must not be null
+     * @param listClazz  the collection class
      * @throws NullPointerException if the map is null
      */
     protected <C extends List<V>> AbstractListValuedMap(final Map<K, ? super C> map, Class<C> listClazz) {
@@ -59,11 +57,11 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
      * A constructor that wraps, not copies
      *
      * @param <C> the list type
-     * @param map the map to wrap, must not be null
-     * @param listClazz the collection class
-     * @param initialListCapacity the initial size of the values list
-     * @throws NullPointerException if the map is null
-     * @throws IllegalArgumentException if initialListCapacity is negative
+     * @param map  the map to wrap, must not be null
+     * @param listClazz  the collection class
+     * @param initialListCapacity  the initial size of the values list
+     * @throws NullPointerException  if the map is null
+     * @throws IllegalArgumentException  if initialListCapacity is negative
      */
     protected <C extends List<V>> AbstractListValuedMap(final Map<K, ? super C> map, Class<C> listClazz,
                                                         final int initialListCapacity) {
@@ -71,15 +69,23 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
     }
 
     /**
+     * Creates a new value collection using the provided factory.
+     * @return a new list
+     */
+    @Override
+    protected List<V> createCollection() {
+        return (List<V>) super.createCollection();
+    }
+
+    /**
      * Gets the list of values associated with the specified key. This would
      * return an empty list in case the mapping is not present
      *
-     * @param key the key to retrieve
-     * @return the <code>List</code> of values, will return an empty {@link List} for no mapping
-     * @throws ClassCastException if the key is of an invalid type
+     * @param key  the key to retrieve
+     * @return the {@code List} of values, will return an empty {@link List} for no mapping
      */
     @Override
-    public List<V> get(Object key) {
+    public List<V> get(final K key) {
         return new WrappedList(key);
     }
 
@@ -88,10 +94,9 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
      * <p>
      * A subsequent <code>get(Object)</code> would return an empty list.
      *
-     * @param key the key to remove values from
+     * @param key  the key to remove values from
      * @return the <code>List</code> of values removed, will return an empty,
-     *         unmodifiable list for no mapping found.
-     * @throws ClassCastException if the key is of an invalid type
+     *   unmodifiable list for no mapping found.
      */
     @Override
     public List<V> remove(Object key) {
@@ -103,42 +108,15 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
-            return false;
+        if (obj instanceof ListValuedMap) {
+            return asMap().equals(((ListValuedMap<?, ?>) obj).asMap());
         }
-        if (obj instanceof ListValuedMap == false) {
-            return false;
-        }
-        ListValuedMap<?, ?> other = (ListValuedMap<?, ?>) obj;
-        if (other.size() != size()) {
-            return false;
-        }
-        Iterator<?> it = keySet().iterator();
-        while (it.hasNext()) {
-            Object key = it.next();
-            List<?> list = get(key);
-            List<?> otherList = other.get(key);
-            if (otherList == null) {
-                return false;
-            }
-            if (ListUtils.isEqualList(list, otherList) == false) {
-                return false;
-            }
-        }
-        return true;
+        return false;
     }
 
     @Override
     public int hashCode() {
-        int h = 0;
-        Iterator<Entry<K, Collection<V>>> it = getMap().entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<K, Collection<V>> entry = it.next();
-            K key = entry.getKey();
-            List<V> valueList = (List<V>) entry.getValue();
-            h += (key == null ? 0 : key.hashCode()) ^ ListUtils.hashCodeForList(valueList);
-        }
-        return h;
+        return asMap().hashCode();
     }
 
     /**
@@ -146,60 +124,70 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
      */
     private class WrappedList extends WrappedCollection implements List<V> {
 
-        public WrappedList(Object key) {
+        public WrappedList(final K key) {
             super(key);
         }
 
-        @SuppressWarnings("unchecked")
+        @Override
+        protected List<V> getMapping() {
+            return (List<V>) getMap().get(key);
+        }
+
+        @Override
         public void add(int index, V value) {
-            List<V> list = (List<V>) getMapping();
+            List<V> list = getMapping();
             if (list == null) {
-                list = (List<V>) AbstractListValuedMap.this.createCollection();
-                list.add(index, value);
-                getMap().put((K) key, list);
+                list = createCollection();
+                getMap().put(key, list);
             }
             list.add(index, value);
         }
 
-        @SuppressWarnings("unchecked")
+        @Override
         public boolean addAll(int index, Collection<? extends V> c) {
-            List<V> list = (List<V>) getMapping();
+            List<V> list = getMapping();
             if (list == null) {
-                list = (List<V>) createCollection();
-                boolean result = list.addAll(index, c);
-                if (result) {
-                    getMap().put((K) key, list);
+                list = createCollection();
+                boolean changed = list.addAll(index, c);
+                if (changed) {
+                    getMap().put(key, list);
                 }
-                return result;
+                return changed;
             }
             return list.addAll(index, c);
         }
 
+        @Override
         public V get(int index) {
-            final List<V> list = ListUtils.emptyIfNull((List<V>) getMapping());
+            final List<V> list = ListUtils.emptyIfNull(getMapping());
             return list.get(index);
         }
 
+        @Override
         public int indexOf(Object o) {
-            final List<V> list = ListUtils.emptyIfNull((List<V>) getMapping());
+            final List<V> list = ListUtils.emptyIfNull(getMapping());
             return list.indexOf(o);
         }
 
+        @Override
         public int lastIndexOf(Object o) {
-            final List<V> list = ListUtils.emptyIfNull((List<V>) getMapping());
-            return list.indexOf(o);
+            final List<V> list = ListUtils.emptyIfNull(getMapping());
+            return list.lastIndexOf(o);
         }
 
+        @Override
         public ListIterator<V> listIterator() {
             return new ValuesListIterator(key);
         }
 
+        @Override
         public ListIterator<V> listIterator(int index) {
             return new ValuesListIterator(key, index);
         }
 
+        @Override
         public V remove(int index) {
-            final List<V> list = ListUtils.emptyIfNull((List<V>) getMapping());
+            final List<V> list = ListUtils.emptyIfNull(getMapping());
             V value = list.remove(index);
             if (list.isEmpty()) {
                 AbstractListValuedMap.this.remove(key);
@@ -207,101 +195,100 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
             return value;
         }
 
+        @Override
         public V set(int index, V value) {
-            final List<V> list = ListUtils.emptyIfNull((List<V>) getMapping());
+            final List<V> list = ListUtils.emptyIfNull(getMapping());
             return list.set(index, value);
         }
 
+        @Override
         public List<V> subList(int fromIndex, int toIndex) {
-            final List<V> list = ListUtils.emptyIfNull((List<V>) getMapping());
+            final List<V> list = ListUtils.emptyIfNull(getMapping());
             return list.subList(fromIndex, toIndex);
         }
 
         @Override
         public boolean equals(Object other) {
-            final List<V> list = (List<V>) getMapping();
+            final List<V> list = getMapping();
             if (list == null) {
                 return Collections.emptyList().equals(other);
-            }
-            if (other == null) {
-                return false;
             }
             if (!(other instanceof List)) {
                 return false;
             }
             List<?> otherList = (List<?>) other;
-            if (ListUtils.isEqualList(list, otherList) == false) {
-                return false;
-            }
-            return true;
+            return ListUtils.isEqualList(list, otherList);
         }
 
         @Override
         public int hashCode() {
-            final List<V> list = (List<V>) getMapping();
-            if (list == null) {
-                return Collections.emptyList().hashCode();
-            }
+            final List<V> list = getMapping();
             return ListUtils.hashCodeForList(list);
         }
 
     }
 
-    /** Values ListItrerator */
-    private class ValuesListIterator implements ListIterator<V>{
+    /** Values ListIterator */
+    private class ValuesListIterator implements ListIterator<V> {
 
-        private final Object key;
-
+        private final K key;
         private List<V> values;
         private ListIterator<V> iterator;
 
-        public ValuesListIterator(Object key){
+        public ValuesListIterator(final K key) {
             this.key = key;
             this.values = ListUtils.emptyIfNull((List<V>) getMap().get(key));
             this.iterator = values.listIterator();
         }
 
-        public ValuesListIterator(Object key, int index){
+        public ValuesListIterator(final K key, int index) {
             this.key = key;
             this.values = ListUtils.emptyIfNull((List<V>) getMap().get(key));
             this.iterator = values.listIterator(index);
         }
 
-        @SuppressWarnings("unchecked")
+        @Override
         public void add(V value) {
             if (getMap().get(key) == null) {
-                List<V> list = (List<V>) createCollection();
-                getMap().put((K) key, list);
+                List<V> list = createCollection();
+                getMap().put(key, list);
                 this.values = list;
                 this.iterator = list.listIterator();
             }
-        this.iterator.add(value);
+            this.iterator.add(value);
         }
 
+        @Override
         public boolean hasNext() {
             return iterator.hasNext();
         }
 
+        @Override
         public boolean hasPrevious() {
             return iterator.hasPrevious();
         }
 
+        @Override
         public V next() {
             return iterator.next();
         }
 
+        @Override
         public int nextIndex() {
             return iterator.nextIndex();
         }
 
+        @Override
         public V previous() {
             return iterator.previous();
         }
 
+        @Override
         public int previousIndex() {
             return iterator.previousIndex();
         }
 
+        @Override
         public void remove() {
             iterator.remove();
             if (values.isEmpty()) {
@@ -309,6 +296,7 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
             }
         }
 
+        @Override
         public void set(V value) {
             iterator.set(value);
         }
