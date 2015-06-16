@@ -103,5 +103,5 @@ public abstract class AbstractMultiSetDecorator<E>
     public Set<Entry<E>> entrySet() {
         return decorated().entrySet();
     }
-    
+
 }

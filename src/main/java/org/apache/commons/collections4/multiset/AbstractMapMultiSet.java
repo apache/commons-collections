@@ -660,8 +660,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractCollection<E> imple
 
         /**
          * Constructor.
-         * @param entry  the entry to decorate
-         * @param parent  the parent map
+         * @param parentEntry  the entry to decorate
          */
         protected MultiSetEntry(final Map.Entry<E, MutableInteger> parentEntry) {
             this.parentEntry = parentEntry;
@@ -681,7 +680,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractCollection<E> imple
         public String toString() {
             return String.format("%s:%d", getElement(), getCount());
         }
-        
+
     }
 
     //-----------------------------------------------------------------------

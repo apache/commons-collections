@@ -44,7 +44,8 @@ public class SkippingIterator<E> extends AbstractIteratorDecorator<E> {
      *
      * @param iterator  the iterator to be decorated
      * @param offset  the index of the first element of the decorated iterator to return
-     * @throws IllegalArgumentException if iterator is null, or offset is negative
+     * @throws NullPointerException if iterator is null
+     * @throws IllegalArgumentException if offset is negative
      */
     public SkippingIterator(final Iterator<E> iterator, final long offset) {
         super(iterator);

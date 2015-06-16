@@ -343,7 +343,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
         if (values instanceof Collection<?>) {
             Collection<? extends V> valueCollection = (Collection<? extends V>) values;
-            return !valueCollection.isEmpty() && get(key).addAll(valueCollection); 
+            return !valueCollection.isEmpty() && get(key).addAll(valueCollection);
         } else {
             Iterator<? extends V> it = values.iterator();
             return it.hasNext() && CollectionUtils.addAll(get(key), it);

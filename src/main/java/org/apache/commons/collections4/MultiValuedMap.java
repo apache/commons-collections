@@ -161,6 +161,7 @@ public interface MultiValuedMap<K, V> {
      * while the operation is in progress.
      *
      * @param map  mappings to be stored in this map, may not be null
+     * @return true if the map changed as a result of this operation
      * @throws UnsupportedOperationException if the {@code putAll} operation is
      *   not supported by this map
      * @throws NullPointerException if the specified map is null, or if this map
@@ -183,6 +184,7 @@ public interface MultiValuedMap<K, V> {
      * while the operation is in progress.
      *
      * @param map  mappings to be stored in this map, may not be null
+     * @return true if the map changed as a result of this operation
      * @throws UnsupportedOperationException if the {@code putAll} operation is
      *   not supported by this map
      * @throws NullPointerException if the specified map is null, or if this map

@@ -68,7 +68,7 @@ public class IterableUtils {
      * <p>
      * This iterable does not contain any elements.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @return an empty iterable
      */
     @SuppressWarnings("unchecked") // OK, empty collection is compatible with any type
@@ -89,7 +89,7 @@ public class IterableUtils {
      * The returned iterable's iterator supports {@code remove()} when the corresponding
      * input iterator supports it.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param a  the first iterable, may not be null
      * @param b  the second iterable, may not be null
      * @return a new iterable, combining the provided iterables
@@ -111,7 +111,7 @@ public class IterableUtils {
      * The returned iterable's iterator supports {@code remove()} when the corresponding
      * input iterator supports it.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param a  the first iterable, may not be null
      * @param b  the second iterable, may not be null
      * @param c  the third iterable, may not be null
@@ -135,7 +135,7 @@ public class IterableUtils {
      * The returned iterable's iterator supports {@code remove()} when the corresponding
      * input iterator supports it.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param a  the first iterable, may not be null
      * @param b  the second iterable, may not be null
      * @param c  the third iterable, may not be null
@@ -161,7 +161,7 @@ public class IterableUtils {
      * The returned iterable's iterator supports {@code remove()} when the corresponding
      * input iterator supports it.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param iterables  the iterables to combine, may not be null
      * @return a new iterable, combining the provided iterables
      * @throws NullPointerException if either of the provided iterables is null
@@ -195,7 +195,7 @@ public class IterableUtils {
      * The returned iterable's iterator supports {@code remove()} when the
      * corresponding input iterator supports it.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param a  the first iterable, may not be null
      * @param b  the second iterable, may not be null
      * @return a filtered view on the specified iterable
@@ -220,7 +220,7 @@ public class IterableUtils {
      * The returned iterable's iterator supports {@code remove()} when the corresponding
      * input iterator supports it.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param comparator  the comparator defining an ordering over the elements,
      *   may be null, in which case natural ordering will be used
      * @param a  the first iterable, may not be null
@@ -249,7 +249,7 @@ public class IterableUtils {
      * <p>
      * The returned iterable's iterator does not support {@code remove()}.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param iterable  the iterable to filter, may not be null
      * @param predicate  the predicate used to filter elements, may not be null
      * @return a filtered view on the specified iterable
@@ -279,7 +279,7 @@ public class IterableUtils {
      * The returned iterable's iterator supports {@code remove()} when the corresponding
      * input iterator supports it.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param iterable  the iterable to limit, may not be null
      * @param maxSize  the maximum number of elements, must not be negative
      * @return a bounded view on the specified iterable
@@ -313,7 +313,7 @@ public class IterableUtils {
      * iterator's {@code hasNext()} method returns {@code true} until {@code iterable}
      * is empty.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param iterable  the iterable to loop, may not be null
      * @return a view of the iterable, providing an infinite loop over its elements
      * @throws NullPointerException if iterable is null
@@ -350,7 +350,7 @@ public class IterableUtils {
      * The returned iterable's iterator supports {@code remove()} if the
      * provided iterable is a {@link List} instance.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param iterable  the iterable to use, may not be null
      * @return a reversed view of the specified iterable
      * @throws NullPointerException if iterable is null
@@ -378,7 +378,7 @@ public class IterableUtils {
      * The returned iterable's iterator supports {@code remove()} when the corresponding
      * input iterator supports it.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param iterable  the iterable to use, may not be null
      * @param elementsToSkip  the number of elements to skip from the start, must not be negative
      * @return a view of the specified iterable, skipping the first N elements
@@ -438,7 +438,7 @@ public class IterableUtils {
      * <p>
      * The returned iterable's iterator does not support {@code remove()}.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param iterable  the iterable to use, may not be null
      * @return a unique view of the specified iterable
      * @throws NullPointerException if iterable is null
@@ -461,7 +461,7 @@ public class IterableUtils {
      * <p>
      * The returned iterable's iterator does not support {@code remove()}.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param iterable  the iterable to use, may not be null
      * @return an unmodifiable view of the specified iterable
      * @throws NullPointerException if iterable is null
@@ -504,7 +504,7 @@ public class IterableUtils {
      * The returned iterable's iterator supports {@code remove()} when the corresponding
      * input iterator supports it.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param a  the first iterable, may not be null
      * @param b  the second iterable, may not be null
      * @return a new iterable, interleaving the provided iterables
@@ -532,8 +532,9 @@ public class IterableUtils {
      * The returned iterable's iterator supports {@code remove()} when the corresponding
      * input iterator supports it.
      *
-     * @param <E>  the element type
-     * @param iterables  the array of iterables to interleave, may not be null
+     * @param <E> the element type
+     * @param first  the first iterable, may not be null
+     * @param others  the array of iterables to interleave, may not be null
      * @return a new iterable, interleaving the provided iterables
      * @throws NullPointerException if either of the provided iterables is null
      */
@@ -573,7 +574,7 @@ public class IterableUtils {
     /**
      * Applies the closure to each element of the provided iterable.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param iterable  the iterator to use, may be null
      * @param closure  the closure to apply to each element, may not be null
      * @throws NullPointerException if closure is null
@@ -587,8 +588,7 @@ public class IterableUtils {
      * <p>
      * If the input iterable is null no change is made.
      *
-     * @param <E>  the type of object the {@link Iterable} contains
-     * @param <C>  the closure type
+     * @param <E> the type of object the {@link Iterable} contains
      * @param iterable  the iterable to get the input from, may be null
      * @param closure  the closure to perform, may not be null
      * @return the last element in the iterable, or null if iterable is null or empty
@@ -602,7 +602,7 @@ public class IterableUtils {
      * <p>
      * A <code>null</code> or empty iterator returns null.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param iterable  the iterable to search, may be null
      * @param predicate  the predicate to use, may not be null
      * @return the first element of the iterable which matches the predicate or null if none could be found
@@ -617,7 +617,7 @@ public class IterableUtils {
      * <p>
      * A <code>null</code> or empty iterable returns true.
      *
-     * @param <E>  the type of object the {@link Iterable} contains
+     * @param <E> the type of object the {@link Iterable} contains
      * @param iterable  the {@link Iterable} to use, may be null
      * @param predicate  the predicate to use, may not be null
      * @return true if every element of the collection matches the predicate or if the
@@ -633,7 +633,7 @@ public class IterableUtils {
      * <p>
      * A <code>null</code> or empty iterable returns false.
      *
-     * @param <E>  the type of object the {@link Iterable} contains
+     * @param <E> the type of object the {@link Iterable} contains
      * @param iterable  the {@link Iterable} to use, may be null
      * @param predicate  the predicate to use, may not be null
      * @return true if any element of the collection matches the predicate, false otherwise
@@ -648,7 +648,7 @@ public class IterableUtils {
      * <p>
      * A <code>null</code> iterable matches no elements.
      *
-     * @param <E>  the type of object the {@link Iterable} contains
+     * @param <E> the type of object the {@link Iterable} contains
      * @param input  the {@link Iterable} to get the input from, may be null
      * @param predicate  the predicate to use, may not be null
      * @return the number of matches for the predicate in the collection
@@ -682,7 +682,7 @@ public class IterableUtils {
      * <p>
      * A <code>null</code> or empty iterable returns false.
      *
-     * @param <E>  the type of object the {@link Iterable} contains
+     * @param <E> the type of object the {@link Iterable} contains
      * @param iterable  the iterable to check, may be null
      * @param object  the object to check
      * @return true if the object is contained in the iterable, false otherwise
@@ -705,7 +705,7 @@ public class IterableUtils {
      * {@link org.apache.commons.collections4.functors.NullPredicate NullPredicate}
      * will be used.
      *
-     * @param <E>  the type of object the {@link Iterable} contains
+     * @param <E> the type of object the {@link Iterable} contains
      * @param iterable  the iterable to check, may be null
      * @param object  the object to check
      * @param equator  the equator to use to check, may not be null
@@ -723,7 +723,8 @@ public class IterableUtils {
     /**
      * Returns the number of occurrences of the provided object in the iterable.
      *
-     * @param <E>  the type of object that the {@link Iterable} may contain
+     * @param <E> the element type that the {@link Iterable} may contain
+     * @param <T> the element type of the object to find
      * @param iterable  the {@link Iterable} to search
      * @param obj  the object to find the cardinality of
      * @return the the number of occurrences of obj in iterable
@@ -949,7 +950,7 @@ public class IterableUtils {
     /**
      * Gets a new list with the contents of the provided iterable.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param iterable  the iterable to use, may be null
      * @return a list of the iterator contents
      */
@@ -965,7 +966,7 @@ public class IterableUtils {
      * by the characters {@code ", "} (a comma followed by a space). Elements are
      * converted to strings as by {@code String.valueOf(Object)}.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param iterable  the iterable to convert to a string, may be null
      * @return a string representation of {@code iterable}
      */
@@ -981,7 +982,7 @@ public class IterableUtils {
      * by the characters {@code ", "} (a comma followed by a space). Elements are
      * converted to strings as by using the provided {@code transformer}.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param iterable  the iterable to convert to a string, may be null
      * @param transformer  the transformer used to get a string representation of an element
      * @return a string representation of {@code iterable}
@@ -1003,7 +1004,7 @@ public class IterableUtils {
      * are separated by the provided {@code delimiter}. Elements are converted to
      * strings as by using the provided {@code transformer}.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param iterable  the iterable to convert to a string, may be null
      * @param transformer  the transformer used to get a string representation of an element
      * @param delimiter  the string to delimit elements

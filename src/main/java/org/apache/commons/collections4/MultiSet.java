@@ -50,7 +50,7 @@ public interface MultiSet<E> extends Collection<E> {
      * <p>
      * If the provided count is zero, the object will be removed from the
      * {@link #uniqueSet()}.
-     * 
+     *
      * @param object  the object to update
      * @param count  the number of occurrences of the object
      * @return the number of occurrences of the object before this operation, zero
