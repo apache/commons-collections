@@ -1524,18 +1524,20 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
+    @Deprecated
     public void testSynchronizedCollection() {
         Collection<Object> col = CollectionUtils.synchronizedCollection(new ArrayList<Object>());
         assertTrue("Returned object should be a SynchronizedCollection.", col instanceof SynchronizedCollection);
         try {
             CollectionUtils.synchronizedCollection(null);
-            fail("Expecting IllegalArgumentException for null collection.");
-        } catch (final IllegalArgumentException ex) {
+            fail("Expecting NullPointerException for null collection.");
+        } catch (final NullPointerException ex) {
             // expected
         }
     }
 
     @Test
+    @Deprecated
     public void testUnmodifiableCollection() {
         Collection<Object> col = CollectionUtils.unmodifiableCollection(new ArrayList<Object>());
         assertTrue("Returned object should be a UnmodifiableCollection.", col instanceof UnmodifiableCollection);

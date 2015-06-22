@@ -1808,7 +1808,9 @@ public class CollectionUtils {
      * @param collection  the collection to synchronize, must not be null
      * @return a synchronized collection backed by the given collection
      * @throws IllegalArgumentException  if the collection is null
+     * @deprecated since 4.1, use {@link java.util.Collections#synchronizedCollection(Collection)} instead
      */
+    @Deprecated
     public static <C> Collection<C> synchronizedCollection(final Collection<C> collection) {
         return SynchronizedCollection.synchronizedCollection(collection);
     }
@@ -1822,7 +1824,9 @@ public class CollectionUtils {
      * @param collection  the collection to make unmodifiable, must not be null
      * @return an unmodifiable collection backed by the given collection
      * @throws IllegalArgumentException  if the collection is null
+     * @deprecated since 4.1, use {@link java.util.Collections#unmodifiableCollection(Collection)} instead
      */
+    @Deprecated
     public static <C> Collection<C> unmodifiableCollection(final Collection<? extends C> collection) {
         return UnmodifiableCollection.unmodifiableCollection(collection);
     }
