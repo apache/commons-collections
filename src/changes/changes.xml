@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-572" dev="tn" type="add">
+      Added set operations to "SetUtils": union, difference, intersection and disjunction.
+      The operations return a view of the result that is backed by the input sets.
+    </action>
     <action issue="COLLECTIONS-570" dev="tn" type="update">
       All constructors and static factory methods will now throw a "NullPointerException" if
       a required input argument is null. Previously sometimes a "IllegalArgumentException" was used.
