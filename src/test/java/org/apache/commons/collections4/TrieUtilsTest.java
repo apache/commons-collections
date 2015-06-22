@@ -16,9 +16,7 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import org.apache.commons.collections4.trie.PatriciaTrie;
 import org.apache.commons.collections4.trie.UnmodifiableTrie;
@@ -40,8 +38,8 @@ public class TrieUtilsTest {
             trie instanceof UnmodifiableTrie);
         try {
             TrieUtils.unmodifiableTrie(null);
-            fail("Expecting IllegalArgumentException for null trie.");
-        } catch (final IllegalArgumentException ex) {
+            fail("Expecting NullPointerException for null trie.");
+        } catch (final NullPointerException ex) {
             // expected
         }
         

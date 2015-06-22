@@ -36,12 +36,12 @@ public class AbstractOrderedMapIteratorDecorator<K, V> implements OrderedMapIter
      * Constructor that decorates the specified iterator.
      *
      * @param iterator  the iterator to decorate, must not be null
-     * @throws IllegalArgumentException if the collection is null
+     * @throws NullPointerException if the iterator is null
      */
     public AbstractOrderedMapIteratorDecorator(final OrderedMapIterator<K, V> iterator) {
         super();
         if (iterator == null) {
-            throw new IllegalArgumentException("OrderedMapIterator must not be null");
+            throw new NullPointerException("OrderedMapIterator must not be null");
         }
         this.iterator = iterator;
     }

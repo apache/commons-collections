@@ -168,7 +168,7 @@ public class PredicateUtils {
      *
      * @param type  the type to check for, may not be null
      * @return the predicate
-     * @throws IllegalArgumentException if the class is null
+     * @throws NullPointerException if the class is null
      * @see InstanceofPredicate
      */
     public static Predicate<Object> instanceofPredicate(final Class<?> type) {
@@ -204,7 +204,7 @@ public class PredicateUtils {
      * @param <T>  the type that the predicate queries
      * @param methodName  the method name to call on the input object, may not be null
      * @return the predicate
-     * @throws IllegalArgumentException if the methodName is null.
+     * @throws NullPointerException if the methodName is null.
      * @see InvokerTransformer
      * @see TransformerPredicate
      */
@@ -228,7 +228,7 @@ public class PredicateUtils {
      * @param paramTypes  the parameter types
      * @param args  the arguments
      * @return the predicate
-     * @throws IllegalArgumentException if the method name is null
+     * @throws NullPointerException if the method name is null
      * @throws IllegalArgumentException if the paramTypes and args don't match
      * @see InvokerTransformer
      * @see TransformerPredicate
@@ -250,7 +250,7 @@ public class PredicateUtils {
      * @param predicate1  the first predicate, may not be null
      * @param predicate2  the second predicate, may not be null
      * @return the <code>and</code> predicate
-     * @throws IllegalArgumentException if either predicate is null
+     * @throws NullPointerException if either predicate is null
      * @see AndPredicate
      */
     public static <T> Predicate<T> andPredicate(final Predicate<? super T> predicate1,
@@ -266,8 +266,8 @@ public class PredicateUtils {
      * @param <T>  the type that the predicate queries
      * @param predicates  an array of predicates to check, may not be null
      * @return the <code>all</code> predicate
-     * @throws IllegalArgumentException if the predicates array is null
-     * @throws IllegalArgumentException if any predicate in the array is null
+     * @throws NullPointerException if the predicates array is null
+     * @throws NullPointerException if any predicate in the array is null
      * @see AllPredicate
      */
     public static <T> Predicate<T> allPredicate(final Predicate<? super T>... predicates) {
@@ -282,8 +282,8 @@ public class PredicateUtils {
      * @param <T>  the type that the predicate queries
      * @param predicates  a collection of predicates to check, may not be null
      * @return the <code>all</code> predicate
-     * @throws IllegalArgumentException if the predicates collection is null
-     * @throws IllegalArgumentException if any predicate in the collection is null
+     * @throws NullPointerException if the predicates collection is null
+     * @throws NullPointerException if any predicate in the collection is null
      * @see AllPredicate
      */
     public static <T> Predicate<T> allPredicate(final Collection<? extends Predicate<? super T>> predicates) {
@@ -298,7 +298,7 @@ public class PredicateUtils {
      * @param predicate1  the first predicate, may not be null
      * @param predicate2  the second predicate, may not be null
      * @return the <code>or</code> predicate
-     * @throws IllegalArgumentException if either predicate is null
+     * @throws NullPointerException if either predicate is null
      * @see OrPredicate
      */
     public static <T> Predicate<T> orPredicate(final Predicate<? super T> predicate1,
@@ -314,8 +314,8 @@ public class PredicateUtils {
      * @param <T>  the type that the predicate queries
      * @param predicates  an array of predicates to check, may not be null
      * @return the <code>any</code> predicate
-     * @throws IllegalArgumentException if the predicates array is null
-     * @throws IllegalArgumentException if any predicate in the array is null
+     * @throws NullPointerException if the predicates array is null
+     * @throws NullPointerException if any predicate in the array is null
      * @see AnyPredicate
      */
     public static <T> Predicate<T> anyPredicate(final Predicate<? super T>... predicates) {
@@ -330,8 +330,8 @@ public class PredicateUtils {
      * @param <T>  the type that the predicate queries
      * @param predicates  a collection of predicates to check, may not be null
      * @return the <code>any</code> predicate
-     * @throws IllegalArgumentException if the predicates collection is null
-     * @throws IllegalArgumentException if any predicate in the collection is null
+     * @throws NullPointerException if the predicates collection is null
+     * @throws NullPointerException if any predicate in the collection is null
      * @see AnyPredicate
      */
     public static <T> Predicate<T> anyPredicate(final Collection<? extends Predicate<? super T>> predicates) {
@@ -346,7 +346,7 @@ public class PredicateUtils {
      * @param predicate1  the first predicate, may not be null
      * @param predicate2  the second predicate, may not be null
      * @return the <code>either</code> predicate
-     * @throws IllegalArgumentException if either predicate is null
+     * @throws NullPointerException if either predicate is null
      * @see OnePredicate
      */
     public static <T> Predicate<T> eitherPredicate(final Predicate<? super T> predicate1,
@@ -364,8 +364,8 @@ public class PredicateUtils {
      * @param <T>  the type that the predicate queries
      * @param predicates  an array of predicates to check, may not be null
      * @return the <code>one</code> predicate
-     * @throws IllegalArgumentException if the predicates array is null
-     * @throws IllegalArgumentException if any predicate in the array is null
+     * @throws NullPointerException if the predicates array is null
+     * @throws NullPointerException if any predicate in the array is null
      * @see OnePredicate
      */
     public static <T> Predicate<T> onePredicate(final Predicate<? super T>... predicates) {
@@ -380,8 +380,8 @@ public class PredicateUtils {
      * @param <T>  the type that the predicate queries
      * @param predicates  a collection of predicates to check, may not be null
      * @return the <code>one</code> predicate
-     * @throws IllegalArgumentException if the predicates collection is null
-     * @throws IllegalArgumentException if any predicate in the collection is null
+     * @throws NullPointerException if the predicates collection is null
+     * @throws NullPointerException if any predicate in the collection is null
      * @see OnePredicate
      */
     public static <T> Predicate<T> onePredicate(final Collection<? extends Predicate<? super T>> predicates) {
@@ -396,7 +396,7 @@ public class PredicateUtils {
      * @param predicate1  the first predicate, may not be null
      * @param predicate2  the second predicate, may not be null
      * @return the <code>neither</code> predicate
-     * @throws IllegalArgumentException if either predicate is null
+     * @throws NullPointerException if either predicate is null
      * @see NonePredicate
      */
     public static <T> Predicate<T> neitherPredicate(final Predicate<? super T> predicate1,
@@ -414,8 +414,8 @@ public class PredicateUtils {
      * @param <T>  the type that the predicate queries
      * @param predicates  an array of predicates to check, may not be null
      * @return the <code>none</code> predicate
-     * @throws IllegalArgumentException if the predicates array is null
-     * @throws IllegalArgumentException if any predicate in the array is null
+     * @throws NullPointerException if the predicates array is null
+     * @throws NullPointerException if any predicate in the array is null
      * @see NonePredicate
      */
     public static <T> Predicate<T> nonePredicate(final Predicate<? super T>... predicates) {
@@ -430,8 +430,8 @@ public class PredicateUtils {
      * @param <T>  the type that the predicate queries
      * @param predicates  a collection of predicates to check, may not be null
      * @return the <code>none</code> predicate
-     * @throws IllegalArgumentException if the predicates collection is null
-     * @throws IllegalArgumentException if any predicate in the collection is null
+     * @throws NullPointerException if the predicates collection is null
+     * @throws NullPointerException if any predicate in the collection is null
      * @see NonePredicate
      */
     public static <T> Predicate<T> nonePredicate(final Collection<? extends Predicate<? super T>> predicates) {
@@ -445,7 +445,7 @@ public class PredicateUtils {
      * @param <T>  the type that the predicate queries
      * @param predicate  the predicate to not
      * @return the <code>not</code> predicate
-     * @throws IllegalArgumentException if the predicate is null
+     * @throws NullPointerException if the predicate is null
      * @see NotPredicate
      */
     public static <T> Predicate<T> notPredicate(final Predicate<? super T> predicate) {
@@ -463,7 +463,7 @@ public class PredicateUtils {
      * @param <T>  the type that the predicate queries
      * @param transformer  the transformer to wrap, may not be null
      * @return the transformer wrapping predicate
-     * @throws IllegalArgumentException if the transformer is null
+     * @throws NullPointerException if the transformer is null
      * @see TransformerPredicate
      */
     public static <T> Predicate<T> asPredicate(final Transformer<? super T, Boolean> transformer) {
@@ -481,7 +481,7 @@ public class PredicateUtils {
      * @param <T>  the type that the predicate queries
      * @param predicate  the predicate to wrap, may not be null
      * @return the predicate
-     * @throws IllegalArgumentException if the predicate is null.
+     * @throws NullPointerException if the predicate is null.
      * @see NullIsExceptionPredicate
      */
     public static <T> Predicate<T> nullIsExceptionPredicate(final Predicate<? super T> predicate){
@@ -496,7 +496,7 @@ public class PredicateUtils {
      * @param <T>  the type that the predicate queries
      * @param predicate  the predicate to wrap, may not be null
      * @return the predicate
-     * @throws IllegalArgumentException if the predicate is null.
+     * @throws NullPointerException if the predicate is null.
      * @see NullIsFalsePredicate
      */
     public static <T> Predicate<T> nullIsFalsePredicate(final Predicate<? super T> predicate){
@@ -511,7 +511,7 @@ public class PredicateUtils {
      * @param <T>  the type that the predicate queries
      * @param predicate  the predicate to wrap, may not be null
      * @return the predicate
-     * @throws IllegalArgumentException if the predicate is null.
+     * @throws NullPointerException if the predicate is null.
      * @see NullIsTruePredicate
      */
     public static <T> Predicate<T> nullIsTruePredicate(final Predicate<? super T> predicate){
@@ -528,7 +528,7 @@ public class PredicateUtils {
      * @param transformer  the transformer to call first
      * @param predicate  the predicate to call with the result of the transform
      * @return the predicate
-     * @throws IllegalArgumentException if the transformer or the predicate is null
+     * @throws NullPointerException if the transformer or the predicate is null
      * @see TransformedPredicate
      * @since 3.1
      */

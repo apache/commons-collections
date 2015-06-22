@@ -16,11 +16,7 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -137,13 +133,13 @@ public class ListUtilsTest {
         try {
             ListUtils.predicatedList(new ArrayList<Object>(), null);
             fail("Expecting IllegalArgumentException for null predicate.");
-        } catch (final IllegalArgumentException ex) {
+        } catch (final NullPointerException ex) {
             // expected
         }
         try {
             ListUtils.predicatedList(null, predicate);
             fail("Expecting IllegalArgumentException for null list.");
-        } catch (final IllegalArgumentException ex) {
+        } catch (final NullPointerException ex) {
             // expected
         }
     }
@@ -326,17 +322,17 @@ public class ListUtilsTest {
         try {
             ListUtils.longestCommonSubsequence((List<?>) null, null);
             fail("failed to check for null argument");
-        } catch (final IllegalArgumentException e) {}
+        } catch (final NullPointerException e) {}
 
         try {
             ListUtils.longestCommonSubsequence(Arrays.asList('A'), null);
             fail("failed to check for null argument");
-        } catch (final IllegalArgumentException e) {}
+        } catch (final NullPointerException e) {}
 
         try {
             ListUtils.longestCommonSubsequence(null, Arrays.asList('A'));
             fail("failed to check for null argument");
-        } catch (final IllegalArgumentException e) {}
+        } catch (final NullPointerException e) {}
 
         @SuppressWarnings("unchecked")
         List<Character> lcs = ListUtils.longestCommonSubsequence(Collections.EMPTY_LIST, Collections.EMPTY_LIST);
@@ -367,17 +363,17 @@ public class ListUtilsTest {
       try {
           ListUtils.longestCommonSubsequence((String) null, null);
           fail("failed to check for null argument");
-      } catch (final IllegalArgumentException e) {}
+      } catch (final NullPointerException e) {}
 
       try {
           ListUtils.longestCommonSubsequence("A", null);
           fail("failed to check for null argument");
-      } catch (final IllegalArgumentException e) {}
+      } catch (final NullPointerException e) {}
 
       try {
           ListUtils.longestCommonSubsequence(null, "A");
           fail("failed to check for null argument");
-      } catch (final IllegalArgumentException e) {}
+      } catch (final NullPointerException e) {}
 
       String lcs = ListUtils.longestCommonSubsequence("", "");
       assertEquals(0, lcs.length());
@@ -416,7 +412,7 @@ public class ListUtilsTest {
         try {
             ListUtils.partition(null, 3);
             fail("failed to check for null argument");
-        } catch (final IllegalArgumentException e) {}
+        } catch (final NullPointerException e) {}
 
         try {
             ListUtils.partition(strings, 0);

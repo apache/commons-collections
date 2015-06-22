@@ -52,7 +52,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
      * @param <E> the type of the elements in the collection
      * @param coll  the <code>BoundedCollection</code> to decorate, must not be null
      * @return a new unmodifiable bounded collection
-     * @throws IllegalArgumentException if {@code coll} is {@code null}
+     * @throws NullPointerException if {@code coll} is {@code null}
      * @since 4.0
      */
     public static <E> BoundedCollection<E> unmodifiableBoundedCollection(final BoundedCollection<? extends E> coll) {
@@ -73,13 +73,14 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
      * @param <E> the type of the elements in the collection
      * @param coll  the <code>BoundedCollection</code> to decorate, must not be null
      * @return a new unmodifiable bounded collection
-     * @throws IllegalArgumentException if {@code coll} is {@code null}
+     * @throws NullPointerException if coll is null
+     * @throws IllegalArgumentException if coll is not a {@code BoundedCollection}
      * @since 4.0
      */
     @SuppressWarnings("unchecked")
     public static <E> BoundedCollection<E> unmodifiableBoundedCollection(Collection<? extends E> coll) {
         if (coll == null) {
-            throw new IllegalArgumentException("The collection must not be null");
+            throw new NullPointerException("Collection must not be null.");
         }
 
         // handle decorators
@@ -95,7 +96,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
         }
 
         if (coll instanceof BoundedCollection == false) {
-            throw new IllegalArgumentException("The collection is not a bounded collection");
+            throw new IllegalArgumentException("Collection is not a bounded collection.");
         }
         return new UnmodifiableBoundedCollection<E>((BoundedCollection<E>) coll);
     }
@@ -104,7 +105,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
      * Constructor that wraps (not copies).
      *
      * @param coll  the collection to decorate, must not be null
-     * @throws IllegalArgumentException if coll is null
+     * @throws NullPointerException if coll is null
      */
     @SuppressWarnings("unchecked") // safe to upcast
     private UnmodifiableBoundedCollection(final BoundedCollection<? extends E> coll) {

@@ -92,7 +92,7 @@ public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMap
         try {
             UnmodifiableOrderedMapIterator.unmodifiableOrderedMapIterator(null);
             fail();
-        } catch (final IllegalArgumentException ex) {}
+        } catch (final NullPointerException ex) {}
     }
 
 }

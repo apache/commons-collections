@@ -49,7 +49,7 @@ public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorat
      * Constructor that wraps (not copies).
      *
      * @param list  the list to decorate, must not be null
-     * @throws IllegalArgumentException if list is null
+     * @throws NullPointerException if list is null
      */
     protected AbstractListDecorator(final List<E> list) {
         super(list);

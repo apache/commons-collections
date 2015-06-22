@@ -90,7 +90,7 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
         try {
             UnmodifiableMapIterator.unmodifiableMapIterator(null);
             fail();
-        } catch (final IllegalArgumentException ex) {}
+        } catch (final NullPointerException ex) {}
     }
 
 }

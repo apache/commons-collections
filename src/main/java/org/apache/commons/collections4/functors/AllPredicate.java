@@ -49,8 +49,8 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> {
      * @param <T> the type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null
      * @return the <code>all</code> predicate
-     * @throws IllegalArgumentException if the predicates array is null
-     * @throws IllegalArgumentException if any predicate in the array is null
+     * @throws NullPointerException if the predicates array is null
+     * @throws NullPointerException if any predicate in the array is null
      */
     public static <T> Predicate<T> allPredicate(final Predicate<? super T>... predicates) {
         FunctorUtils.validate(predicates);
@@ -73,8 +73,8 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> {
      * @param <T> the type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null
      * @return the <code>all</code> predicate
-     * @throws IllegalArgumentException if the predicates array is null
-     * @throws IllegalArgumentException if any predicate in the array is null
+     * @throws NullPointerException if the predicates array is null
+     * @throws NullPointerException if any predicate in the array is null
      */
     public static <T> Predicate<T> allPredicate(final Collection<? extends Predicate<? super T>> predicates) {
         final Predicate<? super T>[] preds = validate(predicates);

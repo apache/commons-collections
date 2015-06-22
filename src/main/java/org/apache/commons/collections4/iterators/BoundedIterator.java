@@ -57,11 +57,12 @@ public class BoundedIterator<E> implements Iterator<E> {
      * @param iterator  the iterator to be decorated
      * @param offset  the index of the first element of the decorated iterator to return
      * @param max  the maximum number of elements of the decorated iterator to return
-     * @throws IllegalArgumentException if iterator is null, or either offset or max is negative
+     * @throws NullPointerException if iterator is null
+     * @throws IllegalArgumentException if either offset or max is negative
      */
     public BoundedIterator(final Iterator<? extends E> iterator, final long offset, final long max) {
         if (iterator == null) {
-            throw new IllegalArgumentException("Iterator must not be null");
+            throw new NullPointerException("Iterator must not be null");
         }
         if (offset < 0) {
             throw new IllegalArgumentException("Offset parameter must not be negative.");

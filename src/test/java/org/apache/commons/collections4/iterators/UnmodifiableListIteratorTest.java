@@ -88,7 +88,7 @@ public class UnmodifiableListIteratorTest<E> extends AbstractListIteratorTest<E>
         try {
             UnmodifiableListIterator.umodifiableListIterator(null);
             fail();
-        } catch (final IllegalArgumentException ex) {}
+        } catch (final NullPointerException ex) {}
     }
 
 }

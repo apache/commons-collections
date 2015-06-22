@@ -110,7 +110,7 @@ public class UnmodifiableSortedBidiMapTest<K extends Comparable<K>, V extends Co
         try {
             UnmodifiableSortedBidiMap.unmodifiableSortedBidiMap(null);
             fail();
-        } catch (final IllegalArgumentException ex) {}
+        } catch (final NullPointerException ex) {}
     }
 
 }

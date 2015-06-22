@@ -54,7 +54,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
      * @param <T> the type of the elements in the collection
      * @param coll  the collection to decorate, must not be null
      * @return a new synchronized collection
-     * @throws IllegalArgumentException if collection is null
+     * @throws NullPointerException if collection is null
      * @since 4.0
      */
     public static <T> SynchronizedCollection<T> synchronizedCollection(final Collection<T> coll) {
@@ -66,11 +66,11 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
      * Constructor that wraps (not copies).
      *
      * @param collection  the collection to decorate, must not be null
-     * @throws IllegalArgumentException if the collection is null
+     * @throws NullPointerException if the collection is null
      */
     protected SynchronizedCollection(final Collection<E> collection) {
         if (collection == null) {
-            throw new IllegalArgumentException("Collection must not be null");
+            throw new NullPointerException("Collection must not be null.");
         }
         this.collection = collection;
         this.lock = this;
@@ -81,11 +81,14 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
      *
      * @param collection  the collection to decorate, must not be null
      * @param lock  the lock object to use, must not be null
-     * @throws IllegalArgumentException if the collection is null
+     * @throws NullPointerException if the collection or lock is null
      */
     protected SynchronizedCollection(final Collection<E> collection, final Object lock) {
         if (collection == null) {
-            throw new IllegalArgumentException("Collection must not be null");
+            throw new NullPointerException("Collection must not be null.");
+        }
+        if (lock == null) {
+            throw new NullPointerException("Lock must not be null.");
         }
         this.collection = collection;
         this.lock = lock;

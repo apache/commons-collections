@@ -115,7 +115,7 @@ public class FactoryUtils {
      * @param <T> the type that the factory creates
      * @param classToInstantiate  the Class to instantiate each time in the factory
      * @return the <code>reflection</code> factory
-     * @throws IllegalArgumentException if the classToInstantiate is null
+     * @throws NullPointerException if the classToInstantiate is null
      */
     public static <T> Factory<T> instantiateFactory(final Class<T> classToInstantiate) {
         return InstantiateFactory.instantiateFactory(classToInstantiate, null, null);
@@ -132,7 +132,7 @@ public class FactoryUtils {
      * @param paramTypes  parameter types for the constructor, can be null
      * @param args  the arguments to pass to the constructor, can be null
      * @return the <code>reflection</code> factory
-     * @throws IllegalArgumentException if the classToInstantiate is null
+     * @throws NullPointerException if the classToInstantiate is null
      * @throws IllegalArgumentException if the paramTypes and args don't match
      * @throws IllegalArgumentException if the constructor doesn't exist
      */

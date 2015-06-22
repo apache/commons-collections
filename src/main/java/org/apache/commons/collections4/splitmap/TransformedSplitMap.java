@@ -55,7 +55,7 @@ import org.apache.commons.collections4.map.LinkedMap;
  * @since 4.0
  * @version $Id$
  *
- * @see org.apache.commons.collections4.SplitMapUtils#readableMap(Get)
+ * @see org.apache.commons.collections4.SplitMapUtils#readableMap(org.apache.commons.collections4.Get)
  * @see org.apache.commons.collections4.SplitMapUtils#writableMap(Put)
  */
 public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecorator<K, V>
@@ -80,12 +80,10 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
      * @param <U>  the input value type
      * @param <V>  the output value type
      * @param map the map to decorate, must not be null
-     * @param keyTransformer the transformer to use for key conversion, null
-     *   means no transformation
-     * @param valueTransformer the transformer to use for value conversion, null
-     *   means no transformation
+     * @param keyTransformer the transformer to use for key conversion, must not be null
+     * @param valueTransformer the transformer to use for value conversion, must not be null
      * @return a new transformed map
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map or either of the transformers is null
      */
     public static <J, K, U, V> TransformedSplitMap<J, K, U, V> transformingMap(final Map<K, V> map,
             final Transformer<? super J, ? extends K> keyTransformer,
@@ -101,21 +99,19 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
      * are NOT transformed.
      *
      * @param map the map to decorate, must not be null
-     * @param keyTransformer the transformer to use for key conversion, null
-     * means no conversion
-     * @param valueTransformer the transformer to use for value conversion, null
-     * means no conversion
-     * @throws IllegalArgumentException if map is null
+     * @param keyTransformer the transformer to use for key conversion, must not be null
+     * @param valueTransformer the transformer to use for value conversion, must not be null
+     * @throws NullPointerException if map or either of the transformers is null
      */
     protected TransformedSplitMap(final Map<K, V> map, final Transformer<? super J, ? extends K> keyTransformer,
             final Transformer<? super U, ? extends V> valueTransformer) {
         super(map);
         if (keyTransformer == null) {
-            throw new IllegalArgumentException("keyTransformer cannot be null");
+            throw new NullPointerException("KeyTransformer must not be null.");
         }
         this.keyTransformer = keyTransformer;
         if (valueTransformer == null) {
-            throw new IllegalArgumentException("valueTransformer cannot be null");
+            throw new NullPointerException("ValueTransformer must not be null.");
         }
         this.valueTransformer = valueTransformer;
     }

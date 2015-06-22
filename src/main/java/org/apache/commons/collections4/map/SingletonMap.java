@@ -43,7 +43,7 @@ import org.apache.commons.collections4.keyvalue.TiedMapEntry;
  * <p>
  * If trying to remove or clear the map, an UnsupportedOperationException is thrown.
  * If trying to put a new mapping into the map, an  IllegalArgumentException is thrown.
- * The put method will only suceed if the key specified is the same as the
+ * The put method will only succeed if the key specified is the same as the
  * singleton key.
  * <p>
  * The key and value can be obtained by:

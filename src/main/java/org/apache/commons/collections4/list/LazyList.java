@@ -72,7 +72,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
      * @param list  the list to decorate, must not be null
      * @param factory  the factory to use for creation, must not be null
      * @return a new lazy list
-     * @throws IllegalArgumentException if list or factory is null
+     * @throws NullPointerException if list or factory is null
      * @since 4.0
      */
     public static <E> LazyList<E> lazyList(final List<E> list, final Factory<? extends E> factory) {
@@ -85,7 +85,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
      *
      * @param list  the list to decorate, must not be null
      * @param factory  the factory to use for creation, must not be null
-     * @throws IllegalArgumentException if list or factory is null
+     * @throws NullPointerException if list or factory is null
      */
     protected LazyList(final List<E> list, final Factory<? extends E> factory) {
         super(list);

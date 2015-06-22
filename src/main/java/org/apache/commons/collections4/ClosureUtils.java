@@ -125,7 +125,7 @@ public class ClosureUtils {
      * @param predicate  the predicate to use as an end of loop test, not null
      * @param closure  the closure to call repeatedly, not null
      * @return the <code>while</code> closure
-     * @throws IllegalArgumentException if either argument is null
+     * @throws NullPointerException if either argument is null
      */
     public static <E> Closure<E> whileClosure(final Predicate<? super E> predicate, final Closure<? super E> closure) {
         return WhileClosure.<E>whileClosure(predicate, closure, false);
@@ -141,7 +141,7 @@ public class ClosureUtils {
      * @param closure  the closure to call repeatedly, not null
      * @param predicate  the predicate to use as an end of loop test, not null
      * @return the <code>do-while</code> closure
-     * @throws IllegalArgumentException if either argument is null
+     * @throws NullPointerException if either argument is null
      */
     public static <E> Closure<E> doWhileClosure(final Closure<? super E> closure,
                                                 final Predicate<? super E> predicate) {
@@ -158,7 +158,7 @@ public class ClosureUtils {
      * @param <E>  the type that the closure acts on
      * @param methodName  the name of the method
      * @return the <code>invoker</code> closure
-     * @throws IllegalArgumentException if the method name is null
+     * @throws NullPointerException if the method name is null
      */
     public static <E> Closure<E> invokerClosure(final String methodName) {
         // reuse transformer as it has caching - this is lazy really, should have inner class here
@@ -177,7 +177,7 @@ public class ClosureUtils {
      * @param paramTypes  the parameter types
      * @param args  the arguments
      * @return the <code>invoker</code> closure
-     * @throws IllegalArgumentException if the method name is null
+     * @throws NullPointerException if the method name is null
      * @throws IllegalArgumentException if the paramTypes and args don't match
      */
     public static <E> Closure<E> invokerClosure(final String methodName, final Class<?>[] paramTypes,
@@ -195,8 +195,8 @@ public class ClosureUtils {
      * @param <E>  the type that the closure acts on
      * @param closures  an array of closures to chain
      * @return the <code>chained</code> closure
-     * @throws IllegalArgumentException if the closures array is null
-     * @throws IllegalArgumentException if any closure in the array is null
+     * @throws NullPointerException if the closures array is null
+     * @throws NullPointerException if any closure in the array is null
      */
     public static <E> Closure<E> chainedClosure(final Closure<? super E>... closures) {
         return ChainedClosure.chainedClosure(closures);
@@ -212,9 +212,9 @@ public class ClosureUtils {
      * @param <E>  the type that the closure acts on
      * @param closures  a collection of closures to chain
      * @return the <code>chained</code> closure
-     * @throws IllegalArgumentException if the closures collection is null
+     * @throws NullPointerException if the closures collection is null
+     * @throws NullPointerException if any closure in the collection is null
      * @throws IllegalArgumentException if the closures collection is empty
-     * @throws IllegalArgumentException if any closure in the collection is null
      */
     public static <E> Closure<E> chainedClosure(final Collection<? extends Closure<? super E>> closures) {
         return ChainedClosure.chainedClosure(closures);
@@ -230,8 +230,7 @@ public class ClosureUtils {
      * @param predicate  the validating predicate
      * @param trueClosure  the closure called if the predicate is true
      * @return the <code>if</code> closure
-     * @throws IllegalArgumentException if the predicate is null
-     * @throws IllegalArgumentException if the closure is null
+     * @throws NullPointerException if the predicate or closure is null
      * @since 3.2
      */
     public static <E> Closure<E> ifClosure(final Predicate<? super E> predicate,
@@ -250,8 +249,7 @@ public class ClosureUtils {
      * @param trueClosure  the closure called if the predicate is true
      * @param falseClosure  the closure called if the predicate is false
      * @return the <code>switch</code> closure
-     * @throws IllegalArgumentException if the predicate is null
-     * @throws IllegalArgumentException if either closure is null
+     * @throws NullPointerException if the predicate or either closure is null
      */
     public static <E> Closure<E> ifClosure(final Predicate<? super E> predicate,
                                            final Closure<? super E> trueClosure,
@@ -273,9 +271,9 @@ public class ClosureUtils {
      * @param predicates  an array of predicates to check, not null
      * @param closures  an array of closures to call, not null
      * @return the <code>switch</code> closure
-     * @throws IllegalArgumentException if the either array is null
-     * @throws IllegalArgumentException if any element in the arrays is null
-     * @throws IllegalArgumentException if the arrays are different sizes
+     * @throws NullPointerException if the either array is null
+     * @throws NullPointerException if any element in the arrays is null
+     * @throws IllegalArgumentException if the arrays have different sizes
      */
     public static <E> Closure<E> switchClosure(final Predicate<? super E>[] predicates,
                                                final Closure<? super E>[] closures) {
@@ -298,8 +296,8 @@ public class ClosureUtils {
      * @param closures  an array of closures to call, not null
      * @param defaultClosure  the default to call if no predicate matches
      * @return the <code>switch</code> closure
-     * @throws IllegalArgumentException if the either array is null
-     * @throws IllegalArgumentException if any element in the arrays is null
+     * @throws NullPointerException if the either array is null
+     * @throws NullPointerException if any element in the arrays is null
      * @throws IllegalArgumentException if the arrays are different sizes
      */
     public static <E> Closure<E> switchClosure(final Predicate<? super E>[] predicates,
@@ -324,9 +322,9 @@ public class ClosureUtils {
      * @param <E>  the type that the closure acts on
      * @param predicatesAndClosures  a map of predicates to closures
      * @return the <code>switch</code> closure
-     * @throws IllegalArgumentException if the map is null
+     * @throws NullPointerException if the map is null
+     * @throws NullPointerException if any closure in the map is null
      * @throws IllegalArgumentException if the map is empty
-     * @throws IllegalArgumentException if any closure in the map is null
      * @throws ClassCastException  if the map elements are of the wrong type
      */
     public static <E> Closure<E> switchClosure(final Map<Predicate<E>, Closure<E>> predicatesAndClosures) {
@@ -347,14 +345,14 @@ public class ClosureUtils {
      * @param <E>  the type that the closure acts on
      * @param objectsAndClosures  a map of objects to closures
      * @return the closure
-     * @throws IllegalArgumentException if the map is null
+     * @throws NullPointerException if the map is null
+     * @throws NullPointerException if any closure in the map is null
      * @throws IllegalArgumentException if the map is empty
-     * @throws IllegalArgumentException if any closure in the map is null
      */
     @SuppressWarnings("unchecked")
     public static <E> Closure<E> switchMapClosure(final Map<? extends E, Closure<E>> objectsAndClosures) {
         if (objectsAndClosures == null) {
-            throw new IllegalArgumentException("The object and closure map must not be null");
+            throw new NullPointerException("The object and closure map must not be null");
         }
         final Closure<? super E> def = objectsAndClosures.remove(null);
         final int size = objectsAndClosures.size();

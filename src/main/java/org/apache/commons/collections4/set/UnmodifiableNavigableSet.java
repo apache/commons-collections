@@ -48,7 +48,7 @@ public final class UnmodifiableNavigableSet<E>
      * @param <E> the element type
      * @param set  the set to decorate, must not be null
      * @return a new unmodifiable {@link NavigableSet}
-     * @throws IllegalArgumentException if set is null
+     * @throws NullPointerException if set is null
      */
     public static <E> NavigableSet<E> unmodifiableNavigableSet(final NavigableSet<E> set) {
         if (set instanceof Unmodifiable) {
@@ -62,7 +62,7 @@ public final class UnmodifiableNavigableSet<E>
      * Constructor that wraps (not copies).
      *
      * @param set  the set to decorate, must not be null
-     * @throws IllegalArgumentException if set is null
+     * @throws NullPointerException if set is null
      */
     private UnmodifiableNavigableSet(final NavigableSet<E> set) {
         super(set);

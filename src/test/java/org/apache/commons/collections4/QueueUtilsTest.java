@@ -16,9 +16,7 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -47,8 +45,8 @@ public class QueueUtilsTest {
         assertTrue("Returned object should be an UnmodifiableQueue.", queue instanceof UnmodifiableQueue);
         try {
             QueueUtils.unmodifiableQueue(null);
-            fail("Expecting IllegalArgumentException for null queue.");
-        } catch (final IllegalArgumentException ex) {
+            fail("Expecting NullPointerException for null queue.");
+        } catch (final NullPointerException ex) {
             // expected
         }
         
@@ -61,14 +59,14 @@ public class QueueUtilsTest {
         assertTrue("Returned object should be a PredicatedQueue.", queue instanceof PredicatedQueue);
         try {
             QueueUtils.predicatedQueue(null, truePredicate);
-            fail("Expecting IllegalArgumentException for null queue.");
-        } catch (final IllegalArgumentException ex) {
+            fail("Expecting NullPointerException for null queue.");
+        } catch (final NullPointerException ex) {
             // expected
         }
         try {
             QueueUtils.predicatedQueue(new LinkedList<Object>(), null);
-            fail("Expecting IllegalArgumentException for null predicate.");
-        } catch (final IllegalArgumentException ex) {
+            fail("Expecting NullPointerException for null predicate.");
+        } catch (final NullPointerException ex) {
             // expected
         }
     }
@@ -79,14 +77,14 @@ public class QueueUtilsTest {
         assertTrue("Returned object should be an TransformedQueue.", queue instanceof TransformedQueue);
         try {
             QueueUtils.transformingQueue(null, nopTransformer);
-            fail("Expecting IllegalArgumentException for null queue.");
-        } catch (final IllegalArgumentException ex) {
+            fail("Expecting NullPointerException for null queue.");
+        } catch (final NullPointerException ex) {
             // expected
         }
         try {
             QueueUtils.transformingQueue(new LinkedList<Object>(), null);
-            fail("Expecting IllegalArgumentException for null transformer.");
-        } catch (final IllegalArgumentException ex) {
+            fail("Expecting NullPointerException for null transformer.");
+        } catch (final NullPointerException ex) {
             // expected
         }
     }

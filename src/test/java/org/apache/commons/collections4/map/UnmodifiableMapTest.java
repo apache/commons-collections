@@ -78,7 +78,7 @@ public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         try {
             UnmodifiableMap.unmodifiableMap(null);
             fail();
-        } catch (final IllegalArgumentException ex) {}
+        } catch (final NullPointerException ex) {}
     }
 
     //-----------------------------------------------------------------------

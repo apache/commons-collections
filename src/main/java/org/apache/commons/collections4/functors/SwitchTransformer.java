@@ -50,8 +50,8 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * @param transformers  matching array of transformers, cloned, no nulls
      * @param defaultTransformer  the transformer to use if no match, null means return null
      * @return the <code>chained</code> transformer
-     * @throws IllegalArgumentException if array is null
-     * @throws IllegalArgumentException if any element in the array is null
+     * @throws NullPointerException if array is null
+     * @throws NullPointerException if any element in the array is null
      */
     @SuppressWarnings("unchecked")
     public static <I, O> Transformer<I, O> switchTransformer(final Predicate<? super I>[] predicates,
@@ -84,8 +84,8 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * @param <O>  the output type
      * @param map  a map of predicates to transformers
      * @return the <code>switch</code> transformer
-     * @throws IllegalArgumentException if the map is null
-     * @throws IllegalArgumentException if any transformer in the map is null
+     * @throws NullPointerException if the map is null
+     * @throws NullPointerException if any transformer in the map is null
      * @throws ClassCastException  if the map elements are of the wrong type
      */
     @SuppressWarnings("unchecked")
@@ -93,7 +93,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
             final Map<? extends Predicate<? super I>, ? extends Transformer<? super I, ? extends O>> map) {
 
         if (map == null) {
-            throw new IllegalArgumentException("The predicate and transformer map must not be null");
+            throw new NullPointerException("The predicate and transformer map must not be null");
         }
         if (map.size() == 0) {
             return ConstantTransformer.<I, O>nullTransformer();

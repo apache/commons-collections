@@ -72,7 +72,7 @@ public class PredicatedMap<K, V>
      * @param keyPredicate  the predicate to validate the keys, null means no check
      * @param valuePredicate  the predicate to validate to values, null means no check
      * @return a new predicated map
-     * @throws IllegalArgumentException if the map is null
+     * @throws NullPointerException if the map is null
      * @since 4.0
      */
     public static <K, V> PredicatedMap<K, V> predicatedMap(final Map<K, V> map,
@@ -88,7 +88,7 @@ public class PredicatedMap<K, V>
      * @param map  the map to decorate, must not be null
      * @param keyPredicate  the predicate to validate the keys, null means no check
      * @param valuePredicate  the predicate to validate to values, null means no check
-     * @throws IllegalArgumentException if the map is null
+     * @throws NullPointerException if the map is null
      */
     protected PredicatedMap(final Map<K, V> map, final Predicate<? super K> keyPredicate,
                             final Predicate<? super V> valuePredicate) {

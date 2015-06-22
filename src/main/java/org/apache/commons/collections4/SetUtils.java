@@ -202,7 +202,7 @@ public class SetUtils {
      * @param <E> the element type
      * @param set  the set to synchronize, must not be null
      * @return a synchronized set backed by the given set
-     * @throws IllegalArgumentException  if the set is null
+     * @throws NullPointerException if the set is null
      */
     public static <E> Set<E> synchronizedSet(final Set<E> set) {
         return Collections.synchronizedSet(set);
@@ -216,7 +216,7 @@ public class SetUtils {
      * @param <E> the element type
      * @param set  the set to make unmodifiable, must not be null
      * @return an unmodifiable set backed by the given set
-     * @throws IllegalArgumentException  if the set is null
+     * @throws NullPointerException if the set is null
      */
     public static <E> Set<E> unmodifiableSet(final Set<? extends E> set) {
         return UnmodifiableSet.unmodifiableSet(set);
@@ -234,7 +234,7 @@ public class SetUtils {
      * @param set  the set to predicate, must not be null
      * @param predicate  the predicate for the set, must not be null
      * @return a predicated set backed by the given set
-     * @throws IllegalArgumentException  if the Set or Predicate is null
+     * @throws NullPointerException if the set or predicate is null
      */
     public static <E> Set<E> predicatedSet(final Set<E> set, final Predicate<? super E> predicate) {
         return PredicatedSet.predicatedSet(set, predicate);
@@ -254,7 +254,7 @@ public class SetUtils {
      * @param set  the set to transform, must not be null
      * @param transformer  the transformer for the set, must not be null
      * @return a transformed set backed by the given set
-     * @throws IllegalArgumentException  if the Set or Transformer is null
+     * @throws NullPointerException if the set or transformer is null
      */
     public static <E> Set<E> transformedSet(final Set<E> set,
                                             final Transformer<? super E, ? extends E> transformer) {
@@ -271,7 +271,7 @@ public class SetUtils {
      * @param <E> the element type
      * @param set  the set to order, must not be null
      * @return an ordered set backed by the given set
-     * @throws IllegalArgumentException  if the Set is null
+     * @throws NullPointerException if the set is null
      */
     public static <E> Set<E> orderedSet(final Set<E> set) {
         return ListOrderedSet.listOrderedSet(set);
@@ -300,7 +300,7 @@ public class SetUtils {
      * @param <E> the element type
      * @param set  the sorted set to synchronize, must not be null
      * @return a synchronized set backed by the given set
-     * @throws IllegalArgumentException  if the set is null
+     * @throws NullPointerException if the set is null
      */
     public static <E> SortedSet<E> synchronizedSortedSet(final SortedSet<E> set) {
         return Collections.synchronizedSortedSet(set);
@@ -314,7 +314,7 @@ public class SetUtils {
      * @param <E> the element type
      * @param set  the sorted set to make unmodifiable, must not be null
      * @return an unmodifiable set backed by the given set
-     * @throws IllegalArgumentException  if the set is null
+     * @throws NullPointerException if the set is null
      */
     public static <E> SortedSet<E> unmodifiableSortedSet(final SortedSet<E> set) {
         return UnmodifiableSortedSet.unmodifiableSortedSet(set);
@@ -332,7 +332,7 @@ public class SetUtils {
      * @param set  the sorted set to predicate, must not be null
      * @param predicate  the predicate for the sorted set, must not be null
      * @return a predicated sorted set backed by the given sorted set
-     * @throws IllegalArgumentException  if the Set or Predicate is null
+     * @throws NullPointerException if the set or predicate is null
      */
     public static <E> SortedSet<E> predicatedSortedSet(final SortedSet<E> set,
                                                        final Predicate<? super E> predicate) {
@@ -353,7 +353,7 @@ public class SetUtils {
      * @param set  the set to transform, must not be null
      * @param transformer  the transformer for the set, must not be null
      * @return a transformed set backed by the given set
-     * @throws IllegalArgumentException  if the Set or Transformer is null
+     * @throws NullPointerException if the set or transformer is null
      */
     public static <E> SortedSet<E> transformedSortedSet(final SortedSet<E> set,
                                                         final Transformer<? super E, ? extends E> transformer) {
@@ -370,7 +370,7 @@ public class SetUtils {
      * @param <E> the element type
      * @param set  the navigable set to make unmodifiable, must not be null
      * @return an unmodifiable set backed by the given set
-     * @throws IllegalArgumentException  if the set is null
+     * @throws NullPointerException if the set is null
      * @since 4.1
      */
     public static <E> SortedSet<E> unmodifiableNavigableSet(final NavigableSet<E> set) {
@@ -389,7 +389,7 @@ public class SetUtils {
      * @param set  the navigable set to predicate, must not be null
      * @param predicate  the predicate for the navigable set, must not be null
      * @return a predicated navigable set backed by the given navigable set
-     * @throws IllegalArgumentException  if the Set or Predicate is null
+     * @throws NullPointerException if the set or predicate is null
      * @since 4.1
      */
     public static <E> SortedSet<E> predicatedNavigableSet(final NavigableSet<E> set,
@@ -411,7 +411,7 @@ public class SetUtils {
      * @param set  the navigable set to transform, must not be null
      * @param transformer  the transformer for the set, must not be null
      * @return a transformed set backed by the given set
-     * @throws IllegalArgumentException  if the Set or Transformer is null
+     * @throws NullPointerException if the set or transformer is null
      * @since 4.1
      */
     public static <E> SortedSet<E> transformedNavigableSet(final NavigableSet<E> set,

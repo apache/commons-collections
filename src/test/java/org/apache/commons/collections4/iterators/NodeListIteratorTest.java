@@ -15,16 +15,14 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import static org.easymock.EasyMock.*;
+
 import java.util.Iterator;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
-
-import static org.easymock.EasyMock.createMock;
-import static org.easymock.EasyMock.expect;
-import static org.easymock.EasyMock.replay;
 
 /**
  * Tests the NodeListIterator.
@@ -112,8 +110,8 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
     public void testNullConstructor(){
         try{
             new NodeListIterator((Node) null);
-            fail("IllegalArgumentException expected!");
-        }catch(final IllegalArgumentException e){
+            fail("NullPointerException expected!");
+        }catch(final NullPointerException e){
             // expected.
         }
     }

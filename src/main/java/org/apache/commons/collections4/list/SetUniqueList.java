@@ -65,12 +65,12 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * @param <E>  the element type
      * @param list  the list to decorate, must not be null
      * @return a new {@link SetUniqueList}
-     * @throws IllegalArgumentException if list is null
+     * @throws NullPointerException if list is null
      * @since 4.0
      */
     public static <E> SetUniqueList<E> setUniqueList(final List<E> list) {
         if (list == null) {
-            throw new IllegalArgumentException("List must not be null");
+            throw new NullPointerException("List must not be null");
         }
         if (list.isEmpty()) {
             return new SetUniqueList<E>(list, new HashSet<E>());
@@ -90,12 +90,12 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      *
      * @param set  the set to decorate, must not be null
      * @param list  the list to decorate, must not be null
-     * @throws IllegalArgumentException if set or list is null
+     * @throws NullPointerException if set or list is null
      */
     protected SetUniqueList(final List<E> list, final Set<E> set) {
         super(list);
         if (set == null) {
-            throw new IllegalArgumentException("Set must not be null");
+            throw new NullPointerException("Set must not be null");
         }
         this.set = set;
     }

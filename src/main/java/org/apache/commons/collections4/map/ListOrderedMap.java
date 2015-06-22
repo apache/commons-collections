@@ -94,7 +94,7 @@ public class ListOrderedMap<K, V>
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @return a new list ordered map
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      * @since 4.0
      */
     public static <K, V> ListOrderedMap<K, V> listOrderedMap(final Map<K, V> map) {
@@ -116,7 +116,7 @@ public class ListOrderedMap<K, V>
      * Constructor that wraps (not copies).
      *
      * @param map  the map to decorate, must not be null
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      */
     protected ListOrderedMap(final Map<K, V> map) {
         super(map);

@@ -42,11 +42,11 @@ public final class UnmodifiableIterator<E> implements Iterator<E>, Unmodifiable 
      * @param <E>  the element type
      * @param iterator  the iterator to decorate
      * @return a new unmodifiable iterator
-     * @throws IllegalArgumentException if the iterator is null
+     * @throws NullPointerException if the iterator is null
      */
     public static <E> Iterator<E> unmodifiableIterator(final Iterator<? extends E> iterator) {
         if (iterator == null) {
-            throw new IllegalArgumentException("Iterator must not be null");
+            throw new NullPointerException("Iterator must not be null");
         }
         if (iterator instanceof Unmodifiable) {
             @SuppressWarnings("unchecked") // safe to upcast

@@ -55,7 +55,7 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
      * @param bag  the bag to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
      * @return a new predicated Bag
-     * @throws IllegalArgumentException if bag or predicate is null
+     * @throws NullPointerException if bag or predicate is null
      * @throws IllegalArgumentException if the bag contains invalid elements
      * @since 4.0
      */
@@ -72,7 +72,7 @@ public class PredicatedBag<E> extends PredicatedCollection<E> implements Bag<E> 
      *
      * @param bag  the bag to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
-     * @throws IllegalArgumentException if bag or predicate is null
+     * @throws NullPointerException if bag or predicate is null
      * @throws IllegalArgumentException if the bag contains invalid elements
      */
     protected PredicatedBag(final Bag<E> bag, final Predicate<? super E> predicate) {

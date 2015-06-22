@@ -41,13 +41,13 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
      * @param <V>  the value type
      * @param iterator  the iterator to decorate
      * @return a new unmodifiable ordered map iterator
-     * @throws IllegalArgumentException if the iterator is null
+     * @throws NullPointerException if the iterator is null
      */
     public static <K, V> OrderedMapIterator<K, V> unmodifiableOrderedMapIterator(
             final OrderedMapIterator<K, ? extends V> iterator) {
 
         if (iterator == null) {
-            throw new IllegalArgumentException("OrderedMapIterator must not be null");
+            throw new NullPointerException("OrderedMapIterator must not be null");
         }
         if (iterator instanceof Unmodifiable) {
             @SuppressWarnings("unchecked") // safe to upcast

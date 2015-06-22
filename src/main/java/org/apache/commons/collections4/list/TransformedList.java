@@ -53,7 +53,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
      * @param list  the list to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed list
-     * @throws IllegalArgumentException if list or transformer is null
+     * @throws NullPointerException if list or transformer is null
      * @since 4.0
      */
     public static <E> TransformedList<E> transformingList(final List<E> list,
@@ -73,13 +73,13 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
      * @param list  the list to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed List
-     * @throws IllegalArgumentException if list or transformer is null
+     * @throws NullPointerException if list or transformer is null
      * @since 4.0
      */
     public static <E> TransformedList<E> transformedList(final List<E> list,
                                                          final Transformer<? super E, ? extends E> transformer) {
         final TransformedList<E> decorated = new TransformedList<E>(list, transformer);
-        if (transformer != null && list != null && list.size() > 0) {
+        if (list.size() > 0) {
             @SuppressWarnings("unchecked") // list is of type E
             final E[] values = (E[]) list.toArray(); // NOPMD - false positive for generics
             list.clear();
@@ -99,7 +99,7 @@ public class TransformedList<E> extends TransformedCollection<E> implements List
      *
      * @param list  the list to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
-     * @throws IllegalArgumentException if list or transformer is null
+     * @throws NullPointerException if list or transformer is null
      */
     protected TransformedList(final List<E> list, final Transformer<? super E, ? extends E> transformer) {
         super(list, transformer);

@@ -49,7 +49,7 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
      * @param <V>  the value type
      * @param trie  the trie to decorate, must not be null
      * @return a new unmodifiable trie
-     * @throws IllegalArgumentException if trie is null
+     * @throws NullPointerException if trie is null
      */
     public static <K, V> Trie<K, V> unmodifiableTrie(final Trie<K, ? extends V> trie) {
         if (trie instanceof Unmodifiable) {
@@ -65,11 +65,11 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
      * Constructor that wraps (not copies).
      *
      * @param trie  the trie to decorate, must not be null
-     * @throws IllegalArgumentException if trie is null
+     * @throws NullPointerException if trie is null
      */
     public UnmodifiableTrie(final Trie<K, ? extends V> trie) {
         if (trie == null) {
-            throw new IllegalArgumentException("Trie must not be null");
+            throw new NullPointerException("Trie must not be null");
         }
         @SuppressWarnings("unchecked") // safe to upcast
         final Trie<K, V> tmpTrie = (Trie<K, V>) trie;

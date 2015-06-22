@@ -80,7 +80,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @param map  the map to decorate, must not be null
      * @param defaultValue  the default value to return when the key is not found
      * @return a new defaulting map
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      * @since 4.0
      */
     public static <K, V> DefaultedMap<K, V> defaultedMap(final Map<K, V> map, final V defaultValue) {
@@ -98,7 +98,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @param map  the map to decorate, must not be null
      * @param factory  the factory to use to create entries, must not be null
      * @return a new defaulting map
-     * @throws IllegalArgumentException if map or factory is null
+     * @throws NullPointerException if map or factory is null
      * @since 4.0
      */
     public static <K, V> DefaultedMap<K, V> defaultedMap(final Map<K, V> map, final Factory<? extends V> factory) {
@@ -120,7 +120,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @param map  the map to decorate, must not be null
      * @param transformer  the transformer to use as a factory to create entries, must not be null
      * @return a new defaulting map
-     * @throws IllegalArgumentException if map or factory is null
+     * @throws NullPointerException if map or factory is null
      * @since 4.0
      */
     public static <K, V> Map<K, V> defaultedMap(final Map<K, V> map,
@@ -159,12 +159,12 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      *
      * @param map  the map to decorate, must not be null
      * @param defaultValueTransformer  the value transformer to use
-     * @throws IllegalArgumentException if map or transformer is null
+     * @throws NullPointerException if map or transformer is null
      */
     protected DefaultedMap(final Map<K, V> map, final Transformer<? super K, ? extends V> defaultValueTransformer) {
         super(map);
         if (defaultValueTransformer == null) {
-            throw new IllegalArgumentException("transformer must not be null");
+            throw new NullPointerException("Transformer must not be null.");
         }
         this.value = defaultValueTransformer;
     }

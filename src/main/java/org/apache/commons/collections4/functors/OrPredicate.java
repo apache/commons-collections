@@ -43,12 +43,12 @@ public final class OrPredicate<T> implements PredicateDecorator<T>, Serializable
      * @param predicate1  the first predicate to check, not null
      * @param predicate2  the second predicate to check, not null
      * @return the <code>and</code> predicate
-     * @throws IllegalArgumentException if either predicate is null
+     * @throws NullPointerException if either predicate is null
      */
     public static <T> Predicate<T> orPredicate(final Predicate<? super T> predicate1,
                                                final Predicate<? super T> predicate2) {
         if (predicate1 == null || predicate2 == null) {
-            throw new IllegalArgumentException("Predicate must not be null");
+            throw new NullPointerException("Predicate must not be null");
         }
         return new OrPredicate<T>(predicate1, predicate2);
     }

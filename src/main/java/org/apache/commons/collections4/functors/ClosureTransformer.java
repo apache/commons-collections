@@ -42,11 +42,11 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
      * @param <T>  the type of the object to transform
      * @param closure  the closure to call, not null
      * @return the <code>closure</code> transformer
-     * @throws IllegalArgumentException if the closure is null
+     * @throws NullPointerException if the closure is null
      */
     public static <T> Transformer<T, T> closureTransformer(final Closure<? super T> closure) {
         if (closure == null) {
-            throw new IllegalArgumentException("Closure must not be null");
+            throw new NullPointerException("Closure must not be null");
         }
         return new ClosureTransformer<T>(closure);
     }

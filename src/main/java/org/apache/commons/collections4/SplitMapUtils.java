@@ -20,11 +20,11 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections4.set.UnmodifiableSet;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.apache.commons.collections4.iterators.UnmodifiableMapIterator;
 import org.apache.commons.collections4.map.EntrySetToMapIteratorAdapter;
 import org.apache.commons.collections4.map.UnmodifiableEntrySet;
+import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
  * Utilities for working with "split maps:" objects that implement {@link Put}
@@ -205,15 +205,17 @@ public class SplitMapUtils {
      * @param <V> the value type
      * @param get to wrap, must not be null
      * @return {@link IterableMap}
+     * @throws NullPointerException if the argument is null
      */
     @SuppressWarnings("unchecked")
     public static <K, V> IterableMap<K, V> readableMap(final Get<K, V> get) {
         if (get == null) {
-            throw new IllegalArgumentException("Get must not be null");
+            throw new NullPointerException("Get must not be null");
         }
         if (get instanceof Map) {
-            return get instanceof IterableMap ? ((IterableMap<K, V>) get) : MapUtils
-                    .iterableMap((Map<K, V>) get);
+            return get instanceof IterableMap ?
+                    ((IterableMap<K, V>) get) :
+                    MapUtils.iterableMap((Map<K, V>) get);
         }
         return new WrappedGet<K, V>(get);
     }
@@ -229,11 +231,12 @@ public class SplitMapUtils {
      * @param <V> the element type
      * @param put to wrap, must not be null
      * @return {@link Map}
+     * @throws NullPointerException if the argument is null
      */
     @SuppressWarnings("unchecked")
     public static <K, V> Map<K, V> writableMap(final Put<K, V> put) {
         if (put == null) {
-            throw new IllegalArgumentException("Put must not be null");
+            throw new NullPointerException("Put must not be null");
         }
         if (put instanceof Map) {
             return (Map<K, V>) put;

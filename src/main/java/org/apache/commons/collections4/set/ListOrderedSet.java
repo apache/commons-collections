@@ -70,16 +70,16 @@ public class ListOrderedSet<E>
      * @param set the set to decorate, must be empty and not null
      * @param list the list to decorate, must be empty and not null
      * @return a new ordered set
-     * @throws IllegalArgumentException if set or list is null
+     * @throws NullPointerException if set or list is null
      * @throws IllegalArgumentException if either the set or list is not empty
      * @since 4.0
      */
     public static <E> ListOrderedSet<E> listOrderedSet(final Set<E> set, final List<E> list) {
         if (set == null) {
-            throw new IllegalArgumentException("Set must not be null");
+            throw new NullPointerException("Set must not be null");
         }
         if (list == null) {
-            throw new IllegalArgumentException("List must not be null");
+            throw new NullPointerException("List must not be null");
         }
         if (set.size() > 0 || list.size() > 0) {
             throw new IllegalArgumentException("Set and List must be empty");
@@ -95,7 +95,7 @@ public class ListOrderedSet<E>
      * @param <E> the element type
      * @param set the set to decorate, must not be null
      * @return a new ordered set
-     * @throws IllegalArgumentException if set is null
+     * @throws NullPointerException if set is null
      * @since 4.0
      */
     public static <E> ListOrderedSet<E> listOrderedSet(final Set<E> set) {
@@ -113,12 +113,12 @@ public class ListOrderedSet<E>
      * @param <E> the element type
      * @param list the list to decorate, must not be null
      * @return a new ordered set
-     * @throws IllegalArgumentException if list is null
+     * @throws NullPointerException if list is null
      * @since 4.0
      */
     public static <E> ListOrderedSet<E> listOrderedSet(final List<E> list) {
         if (list == null) {
-            throw new IllegalArgumentException("List must not be null");
+            throw new NullPointerException("List must not be null");
         }
         CollectionUtils.filter(list, UniquePredicate.uniquePredicate());
         final Set<E> set = new HashSet<E>(list);
@@ -157,12 +157,12 @@ public class ListOrderedSet<E>
      *
      * @param set the set to decorate, must not be null
      * @param list the list to decorate, must not be null
-     * @throws IllegalArgumentException if set or list is null
+     * @throws NullPointerException if set or list is null
      */
     protected ListOrderedSet(final Set<E> set, final List<E> list) {
         super(set);
         if (list == null) {
-            throw new IllegalArgumentException("List must not be null");
+            throw new NullPointerException("List must not be null");
         }
         setOrder = list;
     }

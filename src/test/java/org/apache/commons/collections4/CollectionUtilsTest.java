@@ -581,7 +581,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertFalse(CollectionUtils.isEqualCollection(collectionA, collB, defaultEquator));
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected=NullPointerException.class)
     public void testIsEqualCollectionNullEquator() {
         CollectionUtils.isEqualCollection(collectionA, collectionA, null);
     }
@@ -1324,14 +1324,14 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue("returned object should be a PredicatedCollection", collection instanceof PredicatedCollection);
         try {
             CollectionUtils.predicatedCollection(new ArrayList<Number>(), null);
-            fail("Expecting IllegalArgumentException for null predicate.");
-        } catch (final IllegalArgumentException ex) {
+            fail("Expecting NullPointerException for null predicate.");
+        } catch (final NullPointerException ex) {
             // expected
         }
         try {
             CollectionUtils.predicatedCollection(null, predicate);
-            fail("Expecting IllegalArgumentException for null collection.");
-        } catch (final IllegalArgumentException ex) {
+            fail("Expecting NullPointerException for null collection.");
+        } catch (final NullPointerException ex) {
             // expected
         }
     }
@@ -1499,14 +1499,14 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue("returned object should be a TransformedCollection", collection instanceof TransformedCollection);
         try {
             CollectionUtils.transformingCollection(new ArrayList<Object>(), null);
-            fail("Expecting IllegalArgumentException for null transformer.");
-        } catch (final IllegalArgumentException ex) {
+            fail("Expecting NullPointerException for null transformer.");
+        } catch (final NullPointerException ex) {
             // expected
         }
         try {
             CollectionUtils.transformingCollection(null, transformer);
-            fail("Expecting IllegalArgumentException for null collection.");
-        } catch (final IllegalArgumentException ex) {
+            fail("Expecting NullPointerException for null collection.");
+        } catch (final NullPointerException ex) {
             // expected
         }
     }
@@ -1543,8 +1543,8 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue("Returned object should be a UnmodifiableCollection.", col instanceof UnmodifiableCollection);
         try {
             CollectionUtils.unmodifiableCollection(null);
-            fail("Expecting IllegalArgumentException for null collection.");
-        } catch (final IllegalArgumentException ex) {
+            fail("Expecting NullPointerException for null collection.");
+        } catch (final NullPointerException ex) {
             // expected
         }
     }
@@ -1676,8 +1676,8 @@ public class CollectionUtilsTest extends MockTestCase {
         ArrayList<String> coll = null;
         try {
             CollectionUtils.extractSingleton(coll);
-            fail("expected IllegalArgumentException from extractSingleton(null)");
-        } catch (final IllegalArgumentException e) {
+            fail("expected NullPointerException from extractSingleton(null)");
+        } catch (final NullPointerException e) {
         }
         coll = new ArrayList<String>();
         try {
@@ -1703,12 +1703,12 @@ public class CollectionUtilsTest extends MockTestCase {
         expect(iterator.next()).andReturn(t);
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected=NullPointerException.class)
     public void collateException1() {
         CollectionUtils.collate(collectionA, null);
     }
 
-    @Test(expected=IllegalArgumentException.class)
+    @Test(expected=NullPointerException.class)
     public void collateException2() {
         CollectionUtils.collate(collectionA, collectionC, null);
     }

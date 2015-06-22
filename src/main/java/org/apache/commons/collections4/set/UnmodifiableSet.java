@@ -46,7 +46,7 @@ public final class UnmodifiableSet<E>
      * @param <E> the element type
      * @param set  the set to decorate, must not be null
      * @return a new unmodifiable set
-     * @throws IllegalArgumentException if set is null
+     * @throws NullPointerException if set is null
      * @since 4.0
      */
     public static <E> Set<E> unmodifiableSet(final Set<? extends E> set) {
@@ -63,7 +63,7 @@ public final class UnmodifiableSet<E>
      * Constructor that wraps (not copies).
      *
      * @param set  the set to decorate, must not be null
-     * @throws IllegalArgumentException if set is null
+     * @throws NullPointerException if set is null
      */
     @SuppressWarnings("unchecked") // safe to upcast
     private UnmodifiableSet(final Set<? extends E> set) {

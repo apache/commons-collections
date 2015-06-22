@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-570" dev="tn" type="update">
+      All constructors and static factory methods will now throw a "NullPointerException" if
+      a required input argument is null. Previously sometimes a "IllegalArgumentException" was used.
+    </action>
     <action issue="COLLECTIONS-571" dev="tn" type="update">
       Deprecated methods "synchronizedCollection(Collection)" and "unmodifiableCollection(Collection)"
       in class "CollectionUtils", the corresponding methods in "java.util.Collections" should be used instead.

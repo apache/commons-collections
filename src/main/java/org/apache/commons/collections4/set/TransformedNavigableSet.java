@@ -48,7 +48,7 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed {@link NavigableSet}
-     * @throws IllegalArgumentException if set or transformer is null
+     * @throws NullPointerException if set or transformer is null
      */
     public static <E> TransformedNavigableSet<E> transformingNavigableSet(final NavigableSet<E> set,
             final Transformer<? super E, ? extends E> transformer) {
@@ -67,13 +67,13 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed {@link NavigableSet}
-     * @throws IllegalArgumentException if set or transformer is null
+     * @throws NullPointerException if set or transformer is null
      */
     public static <E> TransformedNavigableSet<E> transformedNavigableSet(final NavigableSet<E> set,
             final Transformer<? super E, ? extends E> transformer) {
 
         final TransformedNavigableSet<E> decorated = new TransformedNavigableSet<E>(set, transformer);
-        if (transformer != null && set != null && set.size() > 0) {
+        if (set.size() > 0) {
             @SuppressWarnings("unchecked") // set is type E
             final E[] values = (E[]) set.toArray(); // NOPMD - false positive for generics
             set.clear();
@@ -93,7 +93,7 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
      *
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
-     * @throws IllegalArgumentException if set or transformer is null
+     * @throws NullPointerException if set or transformer is null
      */
     protected TransformedNavigableSet(final NavigableSet<E> set,
                                       final Transformer<? super E, ? extends E> transformer) {

@@ -36,11 +36,11 @@ public abstract class AbstractMapEntryDecorator<K, V> implements Map.Entry<K, V>
      * Constructor that wraps (not copies).
      *
      * @param entry  the <code>Map.Entry</code> to decorate, must not be null
-     * @throws IllegalArgumentException if the collection is null
+     * @throws NullPointerException if the collection is null
      */
     public AbstractMapEntryDecorator(final Map.Entry<K, V> entry) {
         if (entry == null) {
-            throw new IllegalArgumentException("Map Entry must not be null");
+            throw new NullPointerException("Map Entry must not be null.");
         }
         this.entry = entry;
     }

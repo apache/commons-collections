@@ -41,7 +41,7 @@ public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> 
      * @param <E> the type of the elements in the bag
      * @param bag  the sorted bag to decorate, must not be null
      * @return a SortedBag that complies to the Collection contract
-     * @throws IllegalArgumentException if bag is null
+     * @throws NullPointerException if bag is null
      */
     public static <E> SortedBag<E> collectionSortedBag(final SortedBag<E> bag) {
         return new CollectionSortedBag<E>(bag);
@@ -52,7 +52,7 @@ public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> 
      * Constructor that wraps (not copies).
      *
      * @param bag  the sorted bag to decorate, must not be null
-     * @throws IllegalArgumentException if bag is null
+     * @throws NullPointerException if bag is null
      */
     public CollectionSortedBag(final SortedBag<E> bag) {
         super(bag);

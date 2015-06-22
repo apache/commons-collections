@@ -94,7 +94,7 @@ public class UnmodifiableBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
         try {
             UnmodifiableBidiMap.unmodifiableBidiMap(null);
             fail();
-        } catch (final IllegalArgumentException ex) {}
+        } catch (final NullPointerException ex) {}
     }
     
 }

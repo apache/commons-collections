@@ -80,7 +80,7 @@ public class ListUtils {
      * Returns a new list containing all elements that are contained in
      * both given lists.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param list1  the first list
      * @param list2  the second list
      * @return  the intersection of those two lists
@@ -117,10 +117,10 @@ public class ListUtils {
      * contains one occurrence, then the returned list will still contain
      * one occurrence.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param list1  the list to subtract from
      * @param list2  the list to subtract
-     * @return  a new list containing the results
+     * @return a new list containing the results
      * @throws NullPointerException if either list is null
      */
     public static <E> List<E> subtract(final List<E> list1, final List<? extends E> list2) {
@@ -138,7 +138,7 @@ public class ListUtils {
      * Returns the sum of the given lists.  This is their intersection
      * subtracted from their union.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param list1  the first list
      * @param list2  the second list
      * @return  a new list containing the sum of those lists
@@ -153,10 +153,10 @@ public class ListUtils {
      * first list.  The {@link List#addAll(Collection)} operation is
      * used to append the two given lists into a new list.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param list1  the first list
      * @param list2  the second list
-     * @return  a new list containing the union of those lists
+     * @return a new list containing the union of those lists
      * @throws NullPointerException if either list is null
      */
     public static <E> List<E> union(final List<? extends E> list1, final List<? extends E> list2) {
@@ -171,14 +171,11 @@ public class ListUtils {
      * <p>
      * A <code>null</code> predicate matches no elements.
      *
-     * @param <E>  the element type
-     * @param inputCollection
-     *            the collection to get the input from, may not be null
-     * @param predicate
-     *            the predicate to use, may be null
+     * @param <E> the element type
+     * @param inputCollection  the collection to get the input from, may not be null
+     * @param predicate  the predicate to use, may be null
      * @return the elements matching the predicate (new list)
-     * @throws NullPointerException
-     *             if the input list is null
+     * @throws NullPointerException if the input list is null
      *
      * @since 4.0
      * @see CollectionUtils#select(Iterable, Predicate)
@@ -192,17 +189,13 @@ public class ListUtils {
      * Selects all elements from inputCollection which don't match the given
      * predicate into an output collection.
      * <p>
-     * If the input predicate is <code>null</code>, the result is an empty
-     * list.
+     * If the input predicate is <code>null</code>, the result is an empty list.
      *
-     * @param <E>  the element type
-     * @param inputCollection
-     *            the collection to get the input from, may not be null
-     * @param predicate
-     *            the predicate to use, may be null
+     * @param <E> the element type
+     * @param inputCollection the collection to get the input from, may not be null
+     * @param predicate the predicate to use, may be null
      * @return the elements <b>not</b> matching the predicate (new list)
-     * @throws NullPointerException
-     *             if the input collection is null
+     * @throws NullPointerException if the input collection is null
      *
      * @since 4.0
      * @see CollectionUtils#selectRejected(Iterable, Predicate)
@@ -378,10 +371,10 @@ public class ListUtils {
      *
      * This method is just a wrapper for {@link Collections#synchronizedList(List)}.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param list  the list to synchronize, must not be null
      * @return a synchronized list backed by the given list
-     * @throws IllegalArgumentException  if the list is null
+     * @throws NullPointerException if the list is null
      */
     public static <E> List<E> synchronizedList(final List<E> list) {
         return Collections.synchronizedList(list);
@@ -395,7 +388,7 @@ public class ListUtils {
      * @param <E>  the element type
      * @param list  the list to make unmodifiable, must not be null
      * @return an unmodifiable list backed by the given list
-     * @throws IllegalArgumentException  if the list is null
+     * @throws NullPointerException if the list is null
      */
     public static <E> List<E> unmodifiableList(final List<? extends E> list) {
         return UnmodifiableList.unmodifiableList(list);
@@ -409,11 +402,11 @@ public class ListUtils {
      * It is important not to use the original list after invoking this method,
      * as it is a backdoor for adding invalid objects.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param list  the list to predicate, must not be null
      * @param predicate  the predicate for the list, must not be null
      * @return a predicated list backed by the given list
-     * @throws IllegalArgumentException  if the List or Predicate is null
+     * @throws NullPointerException if the List or Predicate is null
      */
     public static <E> List<E> predicatedList(final List<E> list, final Predicate<E> predicate) {
         return PredicatedList.predicatedList(list, predicate);
@@ -433,11 +426,11 @@ public class ListUtils {
      * Existing entries in the specified list will not be transformed.
      * If you want that behaviour, see {@link TransformedList#transformedList}.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param list  the list to predicate, must not be null
      * @param transformer  the transformer for the list, must not be null
      * @return a transformed list backed by the given list
-     * @throws IllegalArgumentException  if the List or Transformer is null
+     * @throws NullPointerException if the List or Transformer is null
      */
     public static <E> List<E> transformedList(final List<E> list,
                                               final Transformer<? super E, ? extends E> transformer) {
@@ -468,11 +461,11 @@ public class ListUtils {
      * instance is the fourth element in the list.  The first, second,
      * and third element are all set to <code>null</code>.
      *
-     * @param <E>  the element type
+     * @param <E> the element type
      * @param list  the list to make lazy, must not be null
      * @param factory  the factory for creating new objects, must not be null
      * @return a lazy list backed by the given list
-     * @throws IllegalArgumentException  if the List or Factory is null
+     * @throws NullPointerException if the List or Factory is null
      */
     public static <E> List<E> lazyList(final List<E> list, final Factory<? extends E> factory) {
         return LazyList.lazyList(list, factory);
@@ -487,7 +480,7 @@ public class ListUtils {
      * @param <E>  the element type
      * @param list  the list whose size to fix, must not be null
      * @return a fixed-size list backed by that list
-     * @throws IllegalArgumentException  if the List is null
+     * @throws NullPointerException  if the List is null
      */
     public static <E> List<E> fixedSizeList(final List<E> list) {
         return FixedSizeList.fixedSizeList(list);
@@ -525,7 +518,7 @@ public class ListUtils {
      * @param a  the first list
      * @param b  the second list
      * @return the longest common subsequence
-     * @throws IllegalArgumentException if either list is {@code null}
+     * @throws NullPointerException if either list is {@code null}
      * @since 4.0
      */
     public static <E> List<E> longestCommonSubsequence(final List<E> a, final List<E> b) {
@@ -540,16 +533,16 @@ public class ListUtils {
      * @param b  the second list
      * @param equator  the equator used to test object equality
      * @return the longest common subsequence
-     * @throws IllegalArgumentException if either list or the equator is {@code null}
+     * @throws NullPointerException if either list or the equator is {@code null}
      * @since 4.0
      */
     public static <E> List<E> longestCommonSubsequence(final List<E> a, final List<E> b,
                                                        final Equator<? super E> equator) {
         if (a == null || b == null) {
-            throw new IllegalArgumentException("List must not be null");
+            throw new NullPointerException("List must not be null");
         }
         if (equator == null) {
-          throw new IllegalArgumentException("Equator must not be null");
+          throw new NullPointerException("Equator must not be null");
         }
 
         final SequencesComparator<E> comparator = new SequencesComparator<E>(a, b, equator);
@@ -568,12 +561,12 @@ public class ListUtils {
      * @param a  the first sequence
      * @param b  the second sequence
      * @return the longest common subsequence as {@link String}
-     * @throws IllegalArgumentException if either sequence is {@code null}
+     * @throws NullPointerException if either sequence is {@code null}
      * @since 4.0
      */
     public static String longestCommonSubsequence(final CharSequence a, final CharSequence b) {
         if (a == null || b == null) {
-            throw new IllegalArgumentException("CharSequence must not be null");
+            throw new NullPointerException("CharSequence must not be null");
         }
         final List<Character> lcs = longestCommonSubsequence(new CharSequenceAsList( a ), new CharSequenceAsList( b ));
         final StringBuilder sb = new StringBuilder();
@@ -644,16 +637,17 @@ public class ListUtils {
      * <p>
      * Adapted from http://code.google.com/p/guava-libraries/
      *
-     * @param <T>  the element type
+     * @param <T> the element type
      * @param list  the list to return consecutive sublists of
      * @param size  the desired size of each sublist (the last may be smaller)
      * @return a list of consecutive sublists
-     * @throws IllegalArgumentException if list is {@code null} or size is not strictly positive
+     * @throws NullPointerException if list is null
+     * @throws IllegalArgumentException if size is not strictly positive
      * @since 4.0
      */
     public static <T> List<List<T>> partition(final List<T> list, final int size) {
         if (list == null) {
-            throw new IllegalArgumentException("List must not be null");
+            throw new NullPointerException("List must not be null");
         }
         if (size <= 0) {
             throw new IllegalArgumentException("Size must be greater than 0");

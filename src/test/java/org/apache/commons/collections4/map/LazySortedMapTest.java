@@ -16,7 +16,7 @@
  */
 package org.apache.commons.collections4.map;
 
-import static org.apache.commons.collections4.map.LazySortedMap.lazySortedMap;
+import static org.apache.commons.collections4.map.LazySortedMap.*;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -103,14 +103,14 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         assertTrue(map instanceof LazySortedMap);
          try {
             map = lazySortedMap(new TreeMap<Integer, Number>(), (Transformer<Integer, Number>) null);
-            fail("Expecting IllegalArgumentException for null transformer");
-        } catch (final IllegalArgumentException e) {
+            fail("Expecting NullPointerException for null transformer");
+        } catch (final NullPointerException e) {
             // expected
         }
         try {
             map = lazySortedMap((SortedMap<Integer,Number>) null, transformer);
-            fail("Expecting IllegalArgumentException for null map");
-        } catch (final IllegalArgumentException e) {
+            fail("Expecting NullPointerException for null map");
+        } catch (final NullPointerException e) {
             // expected
         }
     }

@@ -49,7 +49,7 @@ public final class UnmodifiableQueue<E>
      * @param <E> the type of the elements in the queue
      * @param queue  the queue to decorate, must not be null
      * @return an unmodifiable Queue
-     * @throws IllegalArgumentException if queue is null
+     * @throws NullPointerException if queue is null
      */
     public static <E> Queue<E> unmodifiableQueue(final Queue<? extends E> queue) {
         if (queue instanceof Unmodifiable) {
@@ -65,7 +65,7 @@ public final class UnmodifiableQueue<E>
      * Constructor that wraps (not copies).
      *
      * @param queue  the queue to decorate, must not be null
-     * @throws IllegalArgumentException if queue is null
+     * @throws NullPointerException if queue is null
      */
     @SuppressWarnings("unchecked") // safe to upcast
     private UnmodifiableQueue(final Queue<? extends E> queue) {

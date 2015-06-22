@@ -24,13 +24,13 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections4.set.UnmodifiableSet;
 import org.apache.commons.collections4.IterableMap;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.apache.commons.collections4.iterators.EntrySetMapIterator;
 import org.apache.commons.collections4.iterators.UnmodifiableMapIterator;
+import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
  * Decorates another <code>Map</code> to ensure it can't be altered.
@@ -56,7 +56,7 @@ public final class UnmodifiableMap<K, V>
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @return a new unmodifiable map
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      * @since 4.0
      */
     public static <K, V> Map<K, V> unmodifiableMap(final Map<? extends K, ? extends V> map) {
@@ -73,7 +73,7 @@ public final class UnmodifiableMap<K, V>
      * Constructor that wraps (not copies).
      *
      * @param map  the map to decorate, must not be null
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      */
     @SuppressWarnings("unchecked") // safe to upcast
     private UnmodifiableMap(final Map<? extends K, ? extends V> map) {

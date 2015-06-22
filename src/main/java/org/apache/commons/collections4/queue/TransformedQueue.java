@@ -48,7 +48,7 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
      * @param queue  the queue to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed Queue
-     * @throws IllegalArgumentException if queue or transformer is null
+     * @throws NullPointerException if queue or transformer is null
      */
     public static <E> TransformedQueue<E> transformingQueue(final Queue<E> queue,
                                                             final Transformer<? super E, ? extends E> transformer) {
@@ -67,7 +67,7 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
      * @param queue  the queue to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed Queue
-     * @throws IllegalArgumentException if queue or transformer is null
+     * @throws NullPointerException if queue or transformer is null
      * @since 4.0
      */
     public static <E> TransformedQueue<E> transformedQueue(final Queue<E> queue,
@@ -94,7 +94,7 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
      *
      * @param queue  the queue to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
-     * @throws IllegalArgumentException if queue or transformer is null
+     * @throws NullPointerException if queue or transformer is null
      */
     protected TransformedQueue(final Queue<E> queue, final Transformer<? super E, ? extends E> transformer) {
         super(queue, transformer);

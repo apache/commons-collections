@@ -54,7 +54,7 @@ public class PredicatedNavigableSet<E> extends PredicatedSortedSet<E> implements
      * @param set  the set to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
      * @return a new predicated navigable set.
-     * @throws IllegalArgumentException if set or predicate is null
+     * @throws NullPointerException if set or predicate is null
      * @throws IllegalArgumentException if the set contains invalid elements
      * @since 4.0
      */
@@ -72,7 +72,7 @@ public class PredicatedNavigableSet<E> extends PredicatedSortedSet<E> implements
      *
      * @param set  the set to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
-     * @throws IllegalArgumentException if set or predicate is null
+     * @throws NullPointerException if set or predicate is null
      * @throws IllegalArgumentException if the set contains invalid elements
      */
     protected PredicatedNavigableSet(final NavigableSet<E> set, final Predicate<? super E> predicate) {

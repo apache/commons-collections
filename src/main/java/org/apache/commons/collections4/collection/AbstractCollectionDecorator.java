@@ -73,11 +73,11 @@ public abstract class AbstractCollectionDecorator<E>
      * Constructor that wraps (not copies).
      *
      * @param coll  the collection to decorate, must not be null
-     * @throws IllegalArgumentException if the collection is null
+     * @throws NullPointerException if the collection is null
      */
     protected AbstractCollectionDecorator(final Collection<E> coll) {
         if (coll == null) {
-            throw new IllegalArgumentException("Collection must not be null");
+            throw new NullPointerException("Collection must not be null.");
         }
         this.collection = coll;
     }

@@ -430,7 +430,8 @@ public class IteratorUtils {
      * @param iterator  the iterator to decorate
      * @param max  the maximum number of elements returned by this iterator
      * @return a new bounded iterator
-     * @throws IllegalArgumentException if the iterator is null or max is negative
+     * @throws NullPointerException if the iterator is null
+     * @throws IllegalArgumentException if max is negative
      * @since 4.1
      */
     public static <E> BoundedIterator<E> boundedIterator(final Iterator<? extends E> iterator, long max) {
@@ -450,7 +451,8 @@ public class IteratorUtils {
      * @param offset  the index of the first element of the decorated iterator to return
      * @param max  the maximum number of elements returned by this iterator
      * @return a new bounded iterator
-     * @throws IllegalArgumentException if the iterator is null or either offset or max is negative
+     * @throws NullPointerException if the iterator is null
+     * @throws IllegalArgumentException if either offset or max is negative
      * @since 4.1
      */
     public static <E> BoundedIterator<E> boundedIterator(final Iterator<? extends E> iterator,

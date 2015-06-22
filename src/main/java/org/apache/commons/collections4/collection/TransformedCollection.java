@@ -55,7 +55,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * @param coll  the collection to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed collection
-     * @throws IllegalArgumentException if collection or transformer is null
+     * @throws NullPointerException if collection or transformer is null
      * @since 4.0
      */
     public static <E> TransformedCollection<E> transformingCollection(final Collection<E> coll,
@@ -75,7 +75,7 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      * @param collection  the collection to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed Collection
-     * @throws IllegalArgumentException if collection or transformer is null
+     * @throws NullPointerException if collection or transformer is null
      * @since 4.0
      */
     public static <E> TransformedCollection<E> transformedCollection(final Collection<E> collection,
@@ -103,12 +103,12 @@ public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
      *
      * @param coll  the collection to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
-     * @throws IllegalArgumentException if collection or transformer is null
+     * @throws NullPointerException if collection or transformer is null
      */
     protected TransformedCollection(final Collection<E> coll, final Transformer<? super E, ? extends E> transformer) {
         super(coll);
         if (transformer == null) {
-            throw new IllegalArgumentException("Transformer must not be null");
+            throw new NullPointerException("Transformer must not be null");
         }
         this.transformer = transformer;
     }

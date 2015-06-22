@@ -53,6 +53,9 @@ public class ReverseListIterator<E> implements ResettableListIterator<E> {
      */
     public ReverseListIterator(final List<E> list) {
         super();
+        if (list == null) {
+            throw new NullPointerException("List must not be null.");
+        }
         this.list = list;
         iterator = list.listIterator(list.size());
     }

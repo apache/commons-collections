@@ -269,6 +269,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      * progress.
      *
      * @param map mappings to be stored in this map, may not be null
+     * @return true if the map changed as a result of this operation
      * @throws NullPointerException if map is null
      */
     @Override
@@ -292,6 +293,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      * while the operation is in progress.
      *
      * @param map mappings to be stored in this map, may not be null
+     * @return true if the map changed as a result of this operation
      * @throws NullPointerException if map is null
      */
     @Override

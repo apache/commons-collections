@@ -21,9 +21,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections4.set.AbstractSetDecorator;
 import org.apache.commons.collections4.iterators.AbstractIteratorDecorator;
 import org.apache.commons.collections4.keyvalue.AbstractMapEntryDecorator;
+import org.apache.commons.collections4.set.AbstractSetDecorator;
 
 /**
  * An abstract base class that simplifies the task of creating map decorators.
@@ -56,7 +56,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
      * Constructor that wraps (not copies).
      *
      * @param map  the map to decorate, must not be null
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      */
     protected AbstractInputCheckedMapDecorator(final Map<K, V> map) {
         super(map);

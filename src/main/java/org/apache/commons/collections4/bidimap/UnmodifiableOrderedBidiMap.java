@@ -49,7 +49,7 @@ public final class UnmodifiableOrderedBidiMap<K, V>
      * @param <V> the value type
      * @param map  the map to decorate, must not be null
      * @return an unmodifiable OrderedBidiMap
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      * @since 4.0
      */
     public static <K, V> OrderedBidiMap<K, V> unmodifiableOrderedBidiMap(
@@ -67,7 +67,7 @@ public final class UnmodifiableOrderedBidiMap<K, V>
      * Constructor that wraps (not copies).
      *
      * @param map  the map to decorate, must not be null
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      */
     @SuppressWarnings("unchecked") // safe to upcast
     private UnmodifiableOrderedBidiMap(final OrderedBidiMap<? extends K, ? extends V> map) {

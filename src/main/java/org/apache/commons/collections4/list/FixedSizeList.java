@@ -49,7 +49,7 @@ public class FixedSizeList<E>
      * @param <E> the type of the elements in the list
      * @param list  the list to decorate, must not be null
      * @return a new fixed size list
-     * @throws IllegalArgumentException if list is null
+     * @throws NullPointerException if list is null
      * @since 4.0
      */
     public static <E> FixedSizeList<E> fixedSizeList(final List<E> list) {
@@ -61,7 +61,7 @@ public class FixedSizeList<E>
      * Constructor that wraps (not copies).
      *
      * @param list  the list to decorate, must not be null
-     * @throws IllegalArgumentException if list is null
+     * @throws NullPointerException if list is null
      */
     protected FixedSizeList(final List<E> list) {
         super(list);

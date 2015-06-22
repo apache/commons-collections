@@ -94,7 +94,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * @param coll  the collection to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
      * @return a new predicated collection
-     * @throws IllegalArgumentException if collection or predicate is null
+     * @throws NullPointerException if collection or predicate is null
      * @throws IllegalArgumentException if the collection contains invalid elements
      * @since 4.0
      */
@@ -112,13 +112,13 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      *
      * @param coll  the collection to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
-     * @throws IllegalArgumentException if collection or predicate is null
+     * @throws NullPointerException if collection or predicate is null
      * @throws IllegalArgumentException if the collection contains invalid elements
      */
     protected PredicatedCollection(final Collection<E> coll, final Predicate<? super E> predicate) {
         super(coll);
         if (predicate == null) {
-            throw new IllegalArgumentException("Predicate must not be null");
+            throw new NullPointerException("Predicate must not be null.");
         }
         this.predicate = predicate;
         for (final E item : coll) {
@@ -216,11 +216,11 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * Constructs a PredicatedCollectionBuilder with the specified Predicate.
          *
          * @param predicate  the predicate to use
-         * @throws IllegalArgumentException if predicate is null
+         * @throws NullPointerException if predicate is null
          */
         public Builder(final Predicate<? super E> predicate) {
             if (predicate == null) {
-                throw new IllegalArgumentException("Predicate must not be null");
+                throw new NullPointerException("Predicate must not be null");
             }
             this.predicate = predicate;
         }
@@ -282,11 +282,12 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          *
          * @param list  the List to decorate, must not be null
          * @return the decorated list.
-         * @throws IllegalArgumentException if list is null or contains invalid elements
+         * @throws NullPointerException if list is null
+         * @throws IllegalArgumentException if list contains invalid elements
          */
         public List<E> createPredicatedList(final List<E> list) {
             if (list == null) {
-                throw new IllegalArgumentException("list must not be null");
+                throw new NullPointerException("List must not be null.");
             }
             final List<E> predicatedList = PredicatedList.predicatedList(list, predicate);
             predicatedList.addAll(accepted);
@@ -314,11 +315,12 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          *
          * @param set  the set to decorate, must not be null
          * @return the decorated set.
-         * @throws IllegalArgumentException if set is null or contains invalid elements
+         * @throws NullPointerException if set is null
+         * @throws IllegalArgumentException if set contains invalid elements
          */
         public Set<E> createPredicatedSet(final Set<E> set) {
             if (set == null) {
-                throw new IllegalArgumentException("set must not be null");
+                throw new NullPointerException("Set must not be null.");
             }
             final PredicatedSet<E> predicatedSet = PredicatedSet.predicatedSet(set, predicate);
             predicatedSet.addAll(accepted);
@@ -346,11 +348,12 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          *
          * @param bag  the bag to decorate, must not be null
          * @return the decorated bag.
-         * @throws IllegalArgumentException if bag is null or contains invalid elements
+         * @throws NullPointerException if bag is null
+         * @throws IllegalArgumentException if bag contains invalid elements
          */
         public Bag<E> createPredicatedBag(final Bag<E> bag) {
             if (bag == null) {
-                throw new IllegalArgumentException("bag must not be null");
+                throw new NullPointerException("Bag must not be null.");
             }
             final PredicatedBag<E> predicatedBag = PredicatedBag.predicatedBag(bag, predicate);
             predicatedBag.addAll(accepted);
@@ -378,11 +381,12 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          *
          * @param queue  the queue to decorate, must not be null
          * @return the decorated queue.
-         * @throws IllegalArgumentException if queue is null or contains invalid elements
+         * @throws NullPointerException if queue is null
+         * @throws IllegalArgumentException if queue contains invalid elements
          */
         public Queue<E> createPredicatedQueue(final Queue<E> queue) {
             if (queue == null) {
-                throw new IllegalArgumentException("queue must not be null");
+                throw new NullPointerException("queue must not be null");
             }
             final PredicatedQueue<E> predicatedQueue = PredicatedQueue.predicatedQueue(queue, predicate);
             predicatedQueue.addAll(accepted);

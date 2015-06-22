@@ -50,7 +50,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      * @param predicate  predicate to switch on
      * @param trueClosure  closure used if true
      * @return the <code>if</code> closure
-     * @throws IllegalArgumentException if either argument is null
+     * @throws NullPointerException if either argument is null
      * @since 3.2
      */
     public static <E> Closure<E> ifClosure(final Predicate<? super E> predicate, final Closure<? super E> trueClosure) {
@@ -65,16 +65,16 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      * @param trueClosure  closure used if true
      * @param falseClosure  closure used if false
      * @return the <code>if</code> closure
-     * @throws IllegalArgumentException if any argument is null
+     * @throws NullPointerException if any argument is null
      */
     public static <E> Closure<E> ifClosure(final Predicate<? super E> predicate,
                                            final Closure<? super E> trueClosure,
                                            final Closure<? super E> falseClosure) {
         if (predicate == null) {
-            throw new IllegalArgumentException("Predicate must not be null");
+            throw new NullPointerException("Predicate must not be null");
         }
         if (trueClosure == null || falseClosure == null) {
-            throw new IllegalArgumentException("Closures must not be null");
+            throw new NullPointerException("Closures must not be null");
         }
         return new IfClosure<E>(predicate, trueClosure, falseClosure);
     }

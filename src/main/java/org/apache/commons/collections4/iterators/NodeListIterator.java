@@ -17,6 +17,7 @@ package org.apache.commons.collections4.iterators;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -42,11 +43,11 @@ public class NodeListIterator implements Iterator<Node> {
      * the specified node's childNodes.
      *
      * @param node Node, who's child nodes are wrapped by this class. Must not be null
-     * @throws IllegalArgumentException if node is null
+     * @throws NullPointerException if node is null
      */
     public NodeListIterator(final Node node) {
         if (node == null) {
-            throw new IllegalArgumentException("node must not be null!");
+            throw new NullPointerException("Node must not be null.");
         }
         this.nodeList = node.getChildNodes();
     }
@@ -56,11 +57,11 @@ public class NodeListIterator implements Iterator<Node> {
      * <code>org.w3c.NodeList</code>
      *
      * @param nodeList node list, which is wrapped by this class. Must not be null
-     * @throws IllegalArgumentException if nodeList is null
+     * @throws NullPointerException if nodeList is null
      */
     public NodeListIterator(final NodeList nodeList) {
         if (nodeList == null) {
-            throw new IllegalArgumentException("nodeList must not be null!");
+            throw new NullPointerException("NodeList must not be null.");
         }
         this.nodeList = nodeList;
     }

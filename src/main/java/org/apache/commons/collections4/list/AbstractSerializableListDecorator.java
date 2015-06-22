@@ -38,7 +38,7 @@ public abstract class AbstractSerializableListDecorator<E>
      * Constructor that wraps (not copies).
      *
      * @param list  the list to decorate, must not be null
-     * @throws IllegalArgumentException if list is null
+     * @throws NullPointerException if list is null
      */
     protected AbstractSerializableListDecorator(final List<E> list) {
         super(list);

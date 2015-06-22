@@ -52,7 +52,7 @@ public final class UnmodifiableSortedBag<E>
      * @param <E> the type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @return an unmodifiable SortedBag
-     * @throws IllegalArgumentException if bag is null
+     * @throws NullPointerException if bag is null
      * @since 4.0
      */
     public static <E> SortedBag<E> unmodifiableSortedBag(final SortedBag<E> bag) {
@@ -67,7 +67,7 @@ public final class UnmodifiableSortedBag<E>
      * Constructor that wraps (not copies).
      *
      * @param bag  the bag to decorate, must not be null
-     * @throws IllegalArgumentException if bag is null
+     * @throws NullPointerException if bag is null
      */
     private UnmodifiableSortedBag(final SortedBag<E> bag) {
         super(bag);

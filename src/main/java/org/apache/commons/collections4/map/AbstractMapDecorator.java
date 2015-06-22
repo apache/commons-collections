@@ -55,11 +55,11 @@ public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, 
      * Constructor that wraps (not copies).
      *
      * @param map  the map to decorate, must not be null
-     * @throws IllegalArgumentException if the collection is null
+     * @throws NullPointerException if the map is null
      */
     protected AbstractMapDecorator(final Map<K, V> map) {
         if (map == null) {
-            throw new IllegalArgumentException("Map must not be null");
+            throw new NullPointerException("Map must not be null.");
         }
         this.map = map;
     }

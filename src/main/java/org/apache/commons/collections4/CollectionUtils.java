@@ -545,14 +545,14 @@ public class CollectionUtils {
      * @param b  the second collection, must not be null
      * @param equator  the Equator used for testing equality
      * @return <code>true</code> iff the collections contain the same elements with the same cardinalities.
-     * @throws IllegalArgumentException if the equator is null
+     * @throws NullPointerException if the equator is null
      * @since 4.0
      */
     public static <E> boolean isEqualCollection(final Collection<? extends E> a,
                                                 final Collection<? extends E> b,
                                                 final Equator<? super E> equator) {
         if (equator == null) {
-            throw new IllegalArgumentException("equator may not be null");
+            throw new NullPointerException("Equator must not be null.");
         }
 
         if(a.size() != b.size()) {
@@ -1509,7 +1509,7 @@ public class CollectionUtils {
      * @param a  the first collection, must not be null
      * @param b  the second collection, must not be null
      * @return a new sorted List, containing the elements of Collection a and b
-     * @throws IllegalArgumentException if either collection is null
+     * @throws NullPointerException if either collection is null
      * @since 4.0
      */
     public static <O extends Comparable<? super O>> List<O> collate(Iterable<? extends O> a,
@@ -1529,7 +1529,7 @@ public class CollectionUtils {
      * @param includeDuplicates  if {@code true} duplicate elements will be retained, otherwise
      *   they will be removed in the output collection
      * @return a new sorted List, containing the elements of Collection a and b
-     * @throws IllegalArgumentException if either collection is null
+     * @throws NullPointerException if either collection is null
      * @since 4.0
      */
     public static <O extends Comparable<? super O>> List<O> collate(final Iterable<? extends O> a,
@@ -1549,7 +1549,7 @@ public class CollectionUtils {
      * @param b  the second collection, must not be null
      * @param c  the comparator to use for the merge.
      * @return a new sorted List, containing the elements of Collection a and b
-     * @throws IllegalArgumentException if either collection or the comparator is null
+     * @throws NullPointerException if either collection or the comparator is null
      * @since 4.0
      */
     public static <O> List<O> collate(final Iterable<? extends O> a, final Iterable<? extends O> b,
@@ -1570,17 +1570,17 @@ public class CollectionUtils {
      * @param includeDuplicates  if {@code true} duplicate elements will be retained, otherwise
      *   they will be removed in the output collection
      * @return a new sorted List, containing the elements of Collection a and b
-     * @throws IllegalArgumentException if either collection or the comparator is null
+     * @throws NullPointerException if either collection or the comparator is null
      * @since 4.0
      */
     public static <O> List<O> collate(final Iterable<? extends O> a, final Iterable<? extends O> b,
                                       final Comparator<? super O> c, final boolean includeDuplicates) {
 
         if (a == null || b == null) {
-            throw new IllegalArgumentException("The collections must not be null");
+            throw new NullPointerException("The collections must not be null");
         }
         if (c == null) {
-            throw new IllegalArgumentException("The comparator must not be null");
+            throw new NullPointerException("The comparator must not be null");
         }
 
         // if both Iterables are a Collection, we can estimate the size
@@ -1807,7 +1807,7 @@ public class CollectionUtils {
      * @param <C>  the type of object the {@link Collection} contains
      * @param collection  the collection to synchronize, must not be null
      * @return a synchronized collection backed by the given collection
-     * @throws IllegalArgumentException  if the collection is null
+     * @throws NullPointerException if the collection is null
      * @deprecated since 4.1, use {@link java.util.Collections#synchronizedCollection(Collection)} instead
      */
     @Deprecated
@@ -1823,7 +1823,7 @@ public class CollectionUtils {
      * @param <C>  the type of object the {@link Collection} contains
      * @param collection  the collection to make unmodifiable, must not be null
      * @return an unmodifiable collection backed by the given collection
-     * @throws IllegalArgumentException  if the collection is null
+     * @throws NullPointerException if the collection is null
      * @deprecated since 4.1, use {@link java.util.Collections#unmodifiableCollection(Collection)} instead
      */
     @Deprecated
@@ -1839,11 +1839,11 @@ public class CollectionUtils {
      * It is important not to use the original collection after invoking this method,
      * as it is a backdoor for adding invalid objects.
      *
+     * @param <C> the type of objects in the Collection.
      * @param collection  the collection to predicate, must not be null
      * @param predicate  the predicate for the collection, must not be null
-     * @param <C> the type of objects in the Collection.
      * @return a predicated collection backed by the given collection
-     * @throws IllegalArgumentException  if the Collection is null
+     * @throws NullPointerException if the Collection is null
      */
     public static <C> Collection<C> predicatedCollection(final Collection<C> collection,
                                                          final Predicate<? super C> predicate) {
@@ -1860,11 +1860,11 @@ public class CollectionUtils {
      * Existing entries in the specified collection will not be transformed.
      * If you want that behaviour, see {@link TransformedCollection#transformedCollection}.
      *
-     * @param <E>  the type of object the {@link Collection} contains
+     * @param <E> the type of object the {@link Collection} contains
      * @param collection  the collection to predicate, must not be null
      * @param transformer  the transformer for the collection, must not be null
      * @return a transformed collection backed by the given collection
-     * @throws IllegalArgumentException  if the Collection or Transformer is null
+     * @throws NullPointerException if the Collection or Transformer is null
      */
     public static <E> Collection<E> transformingCollection(final Collection<E> collection,
             final Transformer<? super E, ? extends E> transformer) {
@@ -1876,11 +1876,15 @@ public class CollectionUtils {
      * @param <E> collection type
      * @param collection to read
      * @return sole member of collection
-     * @throws IllegalArgumentException if collection is null/empty or contains more than one element
+     * @throws NullPointerException if collection is null
+     * @throws IllegalArgumentException if collection is empty or contains more than one element
      * @since 4.0
      */
     public static <E> E extractSingleton(final Collection<E> collection) {
-        if (collection == null || collection.size() != 1) {
+        if (collection == null) {
+            throw new NullPointerException("Collection must not be null.");
+        }
+        if (collection.size() != 1) {
             throw new IllegalArgumentException("Can extract singleton only when collection size == 1");
         }
         return collection.iterator().next();

@@ -56,7 +56,7 @@ public class PredicatedSortedSet<E> extends PredicatedSet<E> implements SortedSe
      * @param set  the set to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
      * @return a new predicated sorted set.
-     * @throws IllegalArgumentException if set or predicate is null
+     * @throws NullPointerException if set or predicate is null
      * @throws IllegalArgumentException if the set contains invalid elements
      * @since 4.0
      */
@@ -74,7 +74,7 @@ public class PredicatedSortedSet<E> extends PredicatedSet<E> implements SortedSe
      *
      * @param set  the set to decorate, must not be null
      * @param predicate  the predicate to use for validation, must not be null
-     * @throws IllegalArgumentException if set or predicate is null
+     * @throws NullPointerException if set or predicate is null
      * @throws IllegalArgumentException if the set contains invalid elements
      */
     protected PredicatedSortedSet(final SortedSet<E> set, final Predicate<? super E> predicate) {

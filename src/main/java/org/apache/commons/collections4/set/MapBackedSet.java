@@ -53,7 +53,7 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
      * @param <V> the dummy value type in the map
      * @param map  the map to decorate, must not be null
      * @return a new map backed set
-     * @throws IllegalArgumentException if set is null
+     * @throws NullPointerException if map is null
      * @since 4.0
      */
     public static <E, V> MapBackedSet<E, V> mapBackedSet(final Map<E, ? super V> map) {
@@ -68,13 +68,10 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
      * @param map  the map to decorate, must not be null
      * @param dummyValue  the dummy value to use
      * @return a new map backed set
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      * @since 4.0
      */
     public static <E, V> MapBackedSet<E, V> mapBackedSet(final Map<E, ? super V> map, final V dummyValue) {
-        if (map == null) {
-            throw new IllegalArgumentException("The map must not be null");
-        }
         return new MapBackedSet<E, V>(map, dummyValue);
     }
 
@@ -84,10 +81,13 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
      *
      * @param map  the map to decorate, must not be null
      * @param dummyValue  the dummy value to use
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      */
     private MapBackedSet(final Map<E, ? super V> map, final V dummyValue) {
         super();
+        if (map == null) {
+            throw new NullPointerException("The map must not be null");
+        }
         this.map = map;
         this.dummyValue = dummyValue;
     }

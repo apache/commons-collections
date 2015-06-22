@@ -25,10 +25,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 
-import org.apache.commons.collections4.set.UnmodifiableSet;
 import org.apache.commons.collections4.BoundedMap;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
+import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
  * Decorates another <code>SortedMap</code> to fix the size blocking add/remove.
@@ -68,7 +68,7 @@ public class FixedSizeSortedMap<K, V>
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @return a new fixed size sorted map
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      * @since 4.0
      */
     public static <K, V> FixedSizeSortedMap<K, V> fixedSizeSortedMap(final SortedMap<K, V> map) {
@@ -80,7 +80,7 @@ public class FixedSizeSortedMap<K, V>
      * Constructor that wraps (not copies).
      *
      * @param map  the map to decorate, must not be null
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      */
     protected FixedSizeSortedMap(final SortedMap<K, V> map) {
         super(map);

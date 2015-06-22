@@ -45,8 +45,8 @@ public final class AnyPredicate<T> extends AbstractQuantifierPredicate<T> {
      * @param <T> the type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null
      * @return the <code>any</code> predicate
-     * @throws IllegalArgumentException if the predicates array is null
-     * @throws IllegalArgumentException if any predicate in the array is null
+     * @throws NullPointerException if the predicates array is null
+     * @throws NullPointerException if any predicate in the array is null
      */
     @SuppressWarnings("unchecked")
     public static <T> Predicate<T> anyPredicate(final Predicate<? super T>... predicates) {
@@ -69,8 +69,8 @@ public final class AnyPredicate<T> extends AbstractQuantifierPredicate<T> {
      * @param <T> the type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null
      * @return the <code>all</code> predicate
-     * @throws IllegalArgumentException if the predicates array is null
-     * @throws IllegalArgumentException if any predicate in the array is null
+     * @throws NullPointerException if the predicates array is null
+     * @throws NullPointerException if any predicate in the array is null
      */
     @SuppressWarnings("unchecked")
     public static <T> Predicate<T> anyPredicate(final Collection<? extends Predicate<? super T>> predicates) {

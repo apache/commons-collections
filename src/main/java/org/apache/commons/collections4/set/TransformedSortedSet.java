@@ -50,7 +50,7 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed {@link SortedSet}
-     * @throws IllegalArgumentException if set or transformer is null
+     * @throws NullPointerException if set or transformer is null
      * @since 4.0
      */
     public static <E> TransformedSortedSet<E> transformingSortedSet(final SortedSet<E> set,
@@ -70,14 +70,14 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed {@link SortedSet}
-     * @throws IllegalArgumentException if set or transformer is null
+     * @throws NullPointerException if set or transformer is null
      * @since 4.0
      */
     public static <E> TransformedSortedSet<E> transformedSortedSet(final SortedSet<E> set,
             final Transformer<? super E, ? extends E> transformer) {
 
         final TransformedSortedSet<E> decorated = new TransformedSortedSet<E>(set, transformer);
-        if (transformer != null && set != null && set.size() > 0) {
+        if (set.size() > 0) {
             @SuppressWarnings("unchecked") // set is type E
             final E[] values = (E[]) set.toArray(); // NOPMD - false positive for generics
             set.clear();
@@ -97,7 +97,7 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      *
      * @param set  the set to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
-     * @throws IllegalArgumentException if set or transformer is null
+     * @throws NullPointerException if set or transformer is null
      */
     protected TransformedSortedSet(final SortedSet<E> set, final Transformer<? super E, ? extends E> transformer) {
         super(set, transformer);

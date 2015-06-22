@@ -48,11 +48,12 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
      * @param <O>  the output type
      * @param methodName  the method name to call
      * @return an invoker transformer
+     * @throws NullPointerException if methodName is null
      * @since 3.1
      */
     public static <I, O> Transformer<I, O> invokerTransformer(final String methodName) {
         if (methodName == null) {
-            throw new IllegalArgumentException("The method to invoke must not be null");
+            throw new NullPointerException("The method to invoke must not be null");
         }
         return new InvokerTransformer<I, O>(methodName);
     }
@@ -66,11 +67,13 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
      * @param paramTypes  the parameter types of the method
      * @param args  the arguments to pass to the method
      * @return an invoker transformer
+     * @throws NullPointerException if methodName is null
+     * @throws IllegalArgumentException if paramTypes does not match args
      */
     public static <I, O> Transformer<I, O> invokerTransformer(final String methodName, final Class<?>[] paramTypes,
                                                               final Object[] args) {
         if (methodName == null) {
-            throw new IllegalArgumentException("The method to invoke must not be null");
+            throw new NullPointerException("The method to invoke must not be null");
         }
         if (((paramTypes == null) && (args != null))
             || ((paramTypes != null) && (args == null))

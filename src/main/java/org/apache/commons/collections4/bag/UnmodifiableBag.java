@@ -52,7 +52,7 @@ public final class UnmodifiableBag<E>
      * @param <E> the type of the elements in the bag
      * @param bag  the bag to decorate, must not be null
      * @return an unmodifiable Bag
-     * @throws IllegalArgumentException if bag is null
+     * @throws NullPointerException if bag is null
      * @since 4.0
      */
     public static <E> Bag<E> unmodifiableBag(final Bag<? extends E> bag) {
@@ -69,7 +69,7 @@ public final class UnmodifiableBag<E>
      * Constructor that wraps (not copies).
      *
      * @param bag  the bag to decorate, must not be null
-     * @throws IllegalArgumentException if bag is null
+     * @throws NullPointerException if bag is null
      */
     @SuppressWarnings("unchecked") // safe to upcast
     private UnmodifiableBag(final Bag<? extends E> bag) {

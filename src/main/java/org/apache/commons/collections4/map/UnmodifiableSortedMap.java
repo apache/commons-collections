@@ -26,9 +26,9 @@ import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
 
-import org.apache.commons.collections4.set.UnmodifiableSet;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
+import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
  * Decorates another <code>SortedMap</code> to ensure it can't be altered.
@@ -54,7 +54,7 @@ public final class UnmodifiableSortedMap<K, V>
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @return a new unmodifiable sorted map
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      * @since 4.0
      */
     public static <K, V> SortedMap<K, V> unmodifiableSortedMap(final SortedMap<K, ? extends V> map) {
@@ -71,7 +71,7 @@ public final class UnmodifiableSortedMap<K, V>
      * Constructor that wraps (not copies).
      *
      * @param map  the map to decorate, must not be null
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      */
     @SuppressWarnings("unchecked") // safe to upcast
     private UnmodifiableSortedMap(final SortedMap<K, ? extends V> map) {

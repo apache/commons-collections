@@ -89,12 +89,13 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param <V>  the value type
      * @param map  the map to decorate, not null
      * @return a new multi key map
-     * @throws IllegalArgumentException if the map is null or not empty
+     * @throws NullPointerException if map is null
+     * @throws IllegalArgumentException if the map is not empty
      * @since 4.0
      */
     public static <K, V> MultiKeyMap<K, V> multiKeyMap(final AbstractHashedMap<MultiKey<? extends K>, V> map) {
         if (map == null) {
-            throw new IllegalArgumentException("Map must not be null");
+            throw new NullPointerException("Map must not be null");
         }
         if (map.size() > 0) {
             throw new IllegalArgumentException("Map must be empty");

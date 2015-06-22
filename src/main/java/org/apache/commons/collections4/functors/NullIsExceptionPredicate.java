@@ -41,11 +41,11 @@ public final class NullIsExceptionPredicate<T> implements PredicateDecorator<T>,
      * @param <T> the type that the predicate queries
      * @param predicate  the predicate to decorate, not null
      * @return the predicate
-     * @throws IllegalArgumentException if the predicate is null
+     * @throws NullPointerException if the predicate is null
      */
     public static <T> Predicate<T> nullIsExceptionPredicate(final Predicate<? super T> predicate) {
         if (predicate == null) {
-            throw new IllegalArgumentException("Predicate must not be null");
+            throw new NullPointerException("Predicate must not be null");
         }
         return new NullIsExceptionPredicate<T>(predicate);
     }

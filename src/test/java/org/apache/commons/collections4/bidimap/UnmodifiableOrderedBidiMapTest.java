@@ -104,6 +104,6 @@ public class UnmodifiableOrderedBidiMapTest<K extends Comparable<K>, V extends C
         try {
             UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(null);
             fail();
-        } catch (final IllegalArgumentException ex) {}
+        } catch (final NullPointerException ex) {}
     }
 }

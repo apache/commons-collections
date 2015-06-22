@@ -49,7 +49,7 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed SortedBag
-     * @throws IllegalArgumentException if bag or transformer is null
+     * @throws NullPointerException if bag or transformer is null
      * @since 4.0
      */
     public static <E> TransformedSortedBag<E> transformingSortedBag(final SortedBag<E> bag,
@@ -69,14 +69,14 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
      * @return a new transformed SortedBag
-     * @throws IllegalArgumentException if bag or transformer is null
+     * @throws NullPointerException if bag or transformer is null
      * @since 4.0
      */
     public static <E> TransformedSortedBag<E> transformedSortedBag(final SortedBag<E> bag,
             final Transformer<? super E, ? extends E> transformer) {
 
         final TransformedSortedBag<E>  decorated = new TransformedSortedBag<E>(bag, transformer);
-        if (transformer != null && bag != null && bag.size() > 0) {
+        if (bag.size() > 0) {
             @SuppressWarnings("unchecked") // bag is type E
             final E[] values = (E[]) bag.toArray(); // NOPMD - false positive for generics
             bag.clear();
@@ -96,7 +96,7 @@ public class TransformedSortedBag<E> extends TransformedBag<E> implements Sorted
      *
      * @param bag  the bag to decorate, must not be null
      * @param transformer  the transformer to use for conversion, must not be null
-     * @throws IllegalArgumentException if bag or transformer is null
+     * @throws NullPointerException if bag or transformer is null
      */
     protected TransformedSortedBag(final SortedBag<E> bag, final Transformer<? super E, ? extends E> transformer) {
         super(bag, transformer);

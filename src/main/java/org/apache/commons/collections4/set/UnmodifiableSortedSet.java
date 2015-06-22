@@ -49,7 +49,7 @@ public final class UnmodifiableSortedSet<E>
      * @param <E> the element type
      * @param set  the set to decorate, must not be null
      * @return a new unmodifiable {@link SortedSet}
-     * @throws IllegalArgumentException if set is null
+     * @throws NullPointerException if set is null
      * @since 4.0
      */
     public static <E> SortedSet<E> unmodifiableSortedSet(final SortedSet<E> set) {
@@ -64,7 +64,7 @@ public final class UnmodifiableSortedSet<E>
      * Constructor that wraps (not copies).
      *
      * @param set  the set to decorate, must not be null
-     * @throws IllegalArgumentException if set is null
+     * @throws NullPointerException if set is null
      */
     private UnmodifiableSortedSet(final SortedSet<E> set) {
         super(set);

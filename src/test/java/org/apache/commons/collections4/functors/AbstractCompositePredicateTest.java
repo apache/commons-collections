@@ -16,14 +16,14 @@
  */
 package org.apache.commons.collections4.functors;
 
-import org.apache.commons.collections4.Predicate;
-import org.junit.Assert;
-import org.junit.Test;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+
+import org.apache.commons.collections4.Predicate;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * Base class for tests of composite predicates.
@@ -100,7 +100,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     /**
      * Tests <code>getInstance</code> with a null predicate array.
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public final void nullArrayToGetInstance() {
         getPredicateInstance((Predicate<T>[]) null);
     }
@@ -109,7 +109,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
      * Tests <code>getInstance</code> with a single null element in the predicate array.
      */
     @SuppressWarnings({"unchecked"})
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public final void nullElementInArrayToGetInstance() {
         getPredicateInstance(new Predicate[] { null });
     }
@@ -118,7 +118,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
      * Tests <code>getInstance</code> with two null elements in the predicate array.
      */
     @SuppressWarnings({"unchecked"})
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public final void nullElementsInArrayToGetInstance() {
         getPredicateInstance(new Predicate[] { null, null });
     }
@@ -127,7 +127,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     /**
      * Tests <code>getInstance</code> with a null predicate collection
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public final void nullCollectionToGetInstance() {
         getPredicateInstance((Collection<Predicate<T>>) null);
     }
@@ -135,7 +135,7 @@ public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPred
     /**
      * Tests <code>getInstance</code> with a predicate collection that contains null elements
      */
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = NullPointerException.class)
     public final void nullElementsInCollectionToGetInstance() {
         final Collection<Predicate<T>> coll = new ArrayList<Predicate<T>>();
         coll.add(null);

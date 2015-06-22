@@ -40,11 +40,11 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
      * @param <E>  the element type
      * @param iterator  the iterator to decorate
      * @return a new unmodifiable list iterator
-     * @throws IllegalArgumentException if the iterator is null
+     * @throws NullPointerException if the iterator is null
      */
     public static <E> ListIterator<E> umodifiableListIterator(final ListIterator<? extends E> iterator) {
         if (iterator == null) {
-            throw new IllegalArgumentException("ListIterator must not be null");
+            throw new NullPointerException("ListIterator must not be null");
         }
         if (iterator instanceof Unmodifiable) {
             @SuppressWarnings("unchecked") // safe to upcast

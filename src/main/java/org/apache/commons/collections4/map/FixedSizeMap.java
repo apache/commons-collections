@@ -24,9 +24,9 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections4.set.UnmodifiableSet;
 import org.apache.commons.collections4.BoundedMap;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
+import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
  * Decorates another <code>Map</code> to fix the size, preventing add/remove.
@@ -66,7 +66,7 @@ public class FixedSizeMap<K, V>
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @return a new fixed size map
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      * @since 4.0
      */
     public static <K, V> FixedSizeMap<K, V> fixedSizeMap(final Map<K, V> map) {
@@ -78,7 +78,7 @@ public class FixedSizeMap<K, V>
      * Constructor that wraps (not copies).
      *
      * @param map  the map to decorate, must not be null
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      */
     protected FixedSizeMap(final Map<K, V> map) {
         super(map);

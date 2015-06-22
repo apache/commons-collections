@@ -104,7 +104,7 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
         try {
             UnmodifiableQueue.unmodifiableQueue(null);
             fail();
-        } catch (final IllegalArgumentException ex) {}
+        } catch (final NullPointerException ex) {}
     }
 
     //-----------------------------------------------------------------------

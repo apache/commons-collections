@@ -48,7 +48,7 @@ public final class UnmodifiableList<E>
      * @param <E> the type of the elements in the list
      * @param list  the list to decorate, must not be null
      * @return a new unmodifiable list
-     * @throws IllegalArgumentException if list is null
+     * @throws NullPointerException if list is null
      * @since 4.0
      */
     public static <E> List<E> unmodifiableList(final List<? extends E> list) {
@@ -65,7 +65,7 @@ public final class UnmodifiableList<E>
      * Constructor that wraps (not copies).
      *
      * @param list  the list to decorate, must not be null
-     * @throws IllegalArgumentException if list is null
+     * @throws NullPointerException if list is null
      */
     @SuppressWarnings("unchecked") // safe to upcast
     public UnmodifiableList(final List<? extends E> list) {

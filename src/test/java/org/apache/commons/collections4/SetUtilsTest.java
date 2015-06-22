@@ -16,10 +16,7 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertSame;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -47,14 +44,14 @@ public class SetUtilsTest {
         assertTrue("returned object should be a PredicatedSet", set instanceof PredicatedSet);
         try {
             SetUtils.predicatedSet(new HashSet<Object>(), null);
-            fail("Expecting IllegalArgumentException for null predicate.");
-        } catch (final IllegalArgumentException ex) {
+            fail("Expecting NullPointerException for null predicate.");
+        } catch (final NullPointerException ex) {
             // expected
         }
         try {
             SetUtils.predicatedSet(null, predicate);
-            fail("Expecting IllegalArgumentException for null set.");
-        } catch (final IllegalArgumentException ex) {
+            fail("Expecting NullPointerException for null set.");
+        } catch (final NullPointerException ex) {
             // expected
         }
     }

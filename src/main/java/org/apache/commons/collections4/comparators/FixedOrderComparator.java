@@ -87,12 +87,12 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      * The array is copied, so later changes will not affect the comparator.
      *
      * @param items  the items that the comparator can compare in order
-     * @throws IllegalArgumentException if the array is null
+     * @throws NullPointerException if the array is null
      */
     public FixedOrderComparator(final T... items) {
         super();
         if (items == null) {
-            throw new IllegalArgumentException("The list of items must not be null");
+            throw new NullPointerException("The list of items must not be null");
         }
         for (final T item : items) {
             add(item);
@@ -106,12 +106,12 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      * The list is copied, so later changes will not affect the comparator.
      *
      * @param items  the items that the comparator can compare in order
-     * @throws IllegalArgumentException if the list is null
+     * @throws NullPointerException if the list is null
      */
     public FixedOrderComparator(final List<T> items) {
         super();
         if (items == null) {
-            throw new IllegalArgumentException("The list of items must not be null");
+            throw new NullPointerException("The list of items must not be null");
         }
         for (final T t : items) {
             add(t);
@@ -157,12 +157,12 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      * @param unknownObjectBehavior  the flag for unknown behaviour -
      * UNKNOWN_AFTER, UNKNOWN_BEFORE or UNKNOWN_THROW_EXCEPTION
      * @throws UnsupportedOperationException if a comparison has been performed
-     * @throws IllegalArgumentException if the unknown flag is not valid
+     * @throws NullPointerException if unknownObjectBehavior is null
      */
     public void setUnknownObjectBehavior(final UnknownObjectBehavior unknownObjectBehavior) {
         checkLocked();
         if (unknownObjectBehavior == null) {
-            throw new IllegalArgumentException("Unknown object behavior must not be null");
+            throw new NullPointerException("Unknown object behavior must not be null");
         }
         this.unknownObjectBehavior = unknownObjectBehavior;
     }

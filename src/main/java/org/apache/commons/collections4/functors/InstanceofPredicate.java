@@ -40,11 +40,11 @@ public final class InstanceofPredicate implements Predicate<Object>, Serializabl
      *
      * @param type  the type to check for, may not be null
      * @return the predicate
-     * @throws IllegalArgumentException if the class is null
+     * @throws NullPointerException if the class is null
      */
     public static Predicate<Object> instanceOfPredicate(final Class<?> type) {
         if (type == null) {
-            throw new IllegalArgumentException("The type to check instanceof must not be null");
+            throw new NullPointerException("The type to check instanceof must not be null");
         }
         return new InstanceofPredicate(type);
     }

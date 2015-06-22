@@ -38,7 +38,7 @@ public abstract class AbstractSerializableSetDecorator<E>
      * Constructor.
      *
      * @param set  the list to decorate, must not be null
-     * @throws IllegalArgumentException if set is null
+     * @throws NullPointerException if set is null
      */
     protected AbstractSerializableSetDecorator(final Set<E> set) {
         super(set);

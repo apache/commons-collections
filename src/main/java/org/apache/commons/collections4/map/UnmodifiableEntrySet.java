@@ -22,10 +22,10 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections4.set.AbstractSetDecorator;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.iterators.AbstractIteratorDecorator;
 import org.apache.commons.collections4.keyvalue.AbstractMapEntryDecorator;
+import org.apache.commons.collections4.set.AbstractSetDecorator;
 
 /**
  * Decorates a map entry <code>Set</code> to ensure it can't be altered.
@@ -48,7 +48,7 @@ public final class UnmodifiableEntrySet<K, V>
      * @param <V>  the value type
      * @param set  the set to decorate, must not be null
      * @return a new unmodifiable entry set
-     * @throws IllegalArgumentException if set is null
+     * @throws NullPointerException if set is null
      * @since 4.0
      */
     public static <K, V> Set<Map.Entry<K, V>> unmodifiableEntrySet(final Set<Map.Entry<K, V>> set) {
@@ -63,7 +63,7 @@ public final class UnmodifiableEntrySet<K, V>
      * Constructor that wraps (not copies).
      *
      * @param set  the set to decorate, must not be null
-     * @throws IllegalArgumentException if set is null
+     * @throws NullPointerException if set is null
      */
     private UnmodifiableEntrySet(final Set<Map.Entry<K, V>> set) {
         super(set);

@@ -48,7 +48,7 @@ public final class UnmodifiableCollection<E>
      * @param <T> the type of the elements in the collection
      * @param coll  the collection to decorate, must not be null
      * @return an unmodifiable collection
-     * @throws IllegalArgumentException if collection is null
+     * @throws NullPointerException if collection is null
      * @since 4.0
      */
     public static <T> Collection<T> unmodifiableCollection(final Collection<? extends T> coll) {
@@ -65,7 +65,7 @@ public final class UnmodifiableCollection<E>
      * Constructor that wraps (not copies).
      *
      * @param coll  the collection to decorate, must not be null
-     * @throws IllegalArgumentException if collection is null
+     * @throws NullPointerException if collection is null
      */
     @SuppressWarnings("unchecked") // safe to upcast
     private UnmodifiableCollection(final Collection<? extends E> coll) {

@@ -46,15 +46,15 @@ public final class TransformedPredicate<T> implements PredicateDecorator<T>, Ser
      * @param transformer  the transformer to call
      * @param predicate  the predicate to call with the result of the transform
      * @return the predicate
-     * @throws IllegalArgumentException if the transformer or the predicate is null
+     * @throws NullPointerException if the transformer or the predicate is null
      */
     public static <T> Predicate<T> transformedPredicate(final Transformer<? super T, ? extends T> transformer,
                                                         final Predicate<? super T> predicate) {
         if (transformer == null) {
-            throw new IllegalArgumentException("The transformer to call must not be null");
+            throw new NullPointerException("The transformer to call must not be null");
         }
         if (predicate == null) {
-            throw new IllegalArgumentException("The predicate to call must not be null");
+            throw new NullPointerException("The predicate to call must not be null");
         }
         return new TransformedPredicate<T>(transformer, predicate);
     }

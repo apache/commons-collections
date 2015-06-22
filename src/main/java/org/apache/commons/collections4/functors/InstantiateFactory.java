@@ -51,12 +51,14 @@ public class InstantiateFactory<T> implements Factory<T>, Serializable {
      * @param paramTypes  the constructor parameter types, cloned
      * @param args  the constructor arguments, cloned
      * @return a new instantiate factory
+     * @throws NullPointerException if classToInstantiate is null
+     * @throws IllegalArgumentException if paramTypes does not match args
      */
     public static <T> Factory<T> instantiateFactory(final Class<T> classToInstantiate,
                                                     final Class<?>[] paramTypes,
                                                     final Object[] args) {
         if (classToInstantiate == null) {
-            throw new IllegalArgumentException("Class to instantiate must not be null");
+            throw new NullPointerException("Class to instantiate must not be null");
         }
         if (paramTypes == null && args != null
             || paramTypes != null && args == null

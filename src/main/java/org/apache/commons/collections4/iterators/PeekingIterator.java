@@ -53,11 +53,11 @@ public class PeekingIterator<E> implements Iterator<E> {
      * @param <E>  the element type
      * @param iterator  the iterator to decorate
      * @return a new peeking iterator
-     * @throws IllegalArgumentException if the iterator is null
+     * @throws NullPointerException if the iterator is null
      */
     public static <E> PeekingIterator<E> peekingIterator(final Iterator<? extends E> iterator) {
         if (iterator == null) {
-            throw new IllegalArgumentException("Iterator must not be null");
+            throw new NullPointerException("Iterator must not be null");
         }
         if (iterator instanceof PeekingIterator<?>) {
             @SuppressWarnings("unchecked") // safe cast

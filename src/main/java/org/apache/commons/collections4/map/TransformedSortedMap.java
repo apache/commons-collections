@@ -60,7 +60,7 @@ public class TransformedSortedMap<K, V>
      * @param keyTransformer  the predicate to validate the keys, null means no transformation
      * @param valueTransformer  the predicate to validate to values, null means no transformation
      * @return a new transformed sorted map
-     * @throws IllegalArgumentException if the map is null
+     * @throws NullPointerException if the map is null
      * @since 4.0
      */
     public static <K, V> TransformedSortedMap<K, V> transformingSortedMap(final SortedMap<K, V> map,
@@ -83,7 +83,7 @@ public class TransformedSortedMap<K, V>
      * @param keyTransformer  the transformer to use for key conversion, null means no transformation
      * @param valueTransformer  the transformer to use for value conversion, null means no transformation
      * @return a new transformed sorted map
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      * @since 4.0
      */
     public static <K, V> TransformedSortedMap<K, V> transformedSortedMap(final SortedMap<K, V> map,
@@ -110,7 +110,7 @@ public class TransformedSortedMap<K, V>
      * @param map  the map to decorate, must not be null
      * @param keyTransformer  the predicate to validate the keys, null means no transformation
      * @param valueTransformer  the predicate to validate to values, null means no transformation
-     * @throws IllegalArgumentException if the map is null
+     * @throws NullPointerException if the map is null
      */
     protected TransformedSortedMap(final SortedMap<K, V> map,
             final Transformer<? super K, ? extends K> keyTransformer,

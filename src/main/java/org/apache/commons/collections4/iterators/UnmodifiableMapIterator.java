@@ -40,12 +40,12 @@ public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, U
      * @param <V>  the value type
      * @param iterator  the iterator to decorate
      * @return a new unmodifiable map iterator
-     * @throws IllegalArgumentException if the iterator is null
+     * @throws NullPointerException if the iterator is null
      */
     public static <K, V> MapIterator<K, V> unmodifiableMapIterator(
             final MapIterator<? extends K, ? extends V> iterator) {
         if (iterator == null) {
-            throw new IllegalArgumentException("MapIterator must not be null");
+            throw new NullPointerException("MapIterator must not be null");
         }
         if (iterator instanceof Unmodifiable) {
             @SuppressWarnings("unchecked") // safe to upcast

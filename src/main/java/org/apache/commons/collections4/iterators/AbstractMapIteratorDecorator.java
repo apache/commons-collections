@@ -36,12 +36,12 @@ public class AbstractMapIteratorDecorator<K, V> implements MapIterator<K, V> {
      * Constructor that decorates the specified iterator.
      *
      * @param iterator  the iterator to decorate, must not be null
-     * @throws IllegalArgumentException if the collection is null
+     * @throws NullPointerException if the iterator is null
      */
     public AbstractMapIteratorDecorator(final MapIterator<K, V> iterator) {
         super();
         if (iterator == null) {
-            throw new IllegalArgumentException("MapIterator must not be null");
+            throw new NullPointerException("MapIterator must not be null");
         }
         this.iterator = iterator;
     }

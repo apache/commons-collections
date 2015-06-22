@@ -96,7 +96,7 @@ public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest
         try {
             UnmodifiableBoundedCollection.unmodifiableBoundedCollection(null);
             fail();
-        } catch (final IllegalArgumentException ex) {}
+        } catch (final NullPointerException ex) {}
     }
     
 }

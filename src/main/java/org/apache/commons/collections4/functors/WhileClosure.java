@@ -48,15 +48,15 @@ public class WhileClosure<E> implements Closure<E>, Serializable {
      * @param closure  the closure the execute, not null
      * @param doLoop  true to act as a do-while loop, always executing the closure once
      * @return the <code>while</code> closure
-     * @throws IllegalArgumentException if the predicate or closure is null
+     * @throws NullPointerException if the predicate or closure is null
      */
     public static <E> Closure<E> whileClosure(final Predicate<? super E> predicate,
                                               final Closure<? super E> closure, final boolean doLoop) {
         if (predicate == null) {
-            throw new IllegalArgumentException("Predicate must not be null");
+            throw new NullPointerException("Predicate must not be null");
         }
         if (closure == null) {
-            throw new IllegalArgumentException("Closure must not be null");
+            throw new NullPointerException("Closure must not be null");
         }
         return new WhileClosure<E>(predicate, closure, doLoop);
     }

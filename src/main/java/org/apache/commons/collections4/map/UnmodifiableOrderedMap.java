@@ -24,12 +24,12 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.collections4.set.UnmodifiableSet;
 import org.apache.commons.collections4.OrderedMap;
 import org.apache.commons.collections4.OrderedMapIterator;
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.apache.commons.collections4.iterators.UnmodifiableOrderedMapIterator;
+import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
  * Decorates another <code>OrderedMap</code> to ensure it can't be altered.
@@ -54,7 +54,7 @@ public final class UnmodifiableOrderedMap<K, V> extends AbstractOrderedMapDecora
      * @param <V>  the value type
      * @param map  the map to decorate, must not be null
      * @return a new ordered map
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      * @since 4.0
      */
     public static <K, V> OrderedMap<K, V> unmodifiableOrderedMap(final OrderedMap<? extends K, ? extends V> map) {
@@ -71,7 +71,7 @@ public final class UnmodifiableOrderedMap<K, V> extends AbstractOrderedMapDecora
      * Constructor that wraps (not copies).
      *
      * @param map  the map to decorate, must not be null
-     * @throws IllegalArgumentException if map is null
+     * @throws NullPointerException if map is null
      */
     @SuppressWarnings("unchecked") // safe to upcast
     private UnmodifiableOrderedMap(final OrderedMap<? extends K, ? extends V> map) {

@@ -36,12 +36,12 @@ public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
      * Constructor that decorates the specified iterator.
      *
      * @param iterator  the iterator to decorate, must not be null
-     * @throws IllegalArgumentException if the collection is null
+     * @throws NullPointerException if the iterator is null
      */
     public AbstractListIteratorDecorator(final ListIterator<E> iterator) {
         super();
         if (iterator == null) {
-            throw new IllegalArgumentException("ListIterator must not be null");
+            throw new NullPointerException("ListIterator must not be null");
         }
         this.iterator = iterator;
     }

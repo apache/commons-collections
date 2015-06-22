@@ -89,7 +89,7 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
         try {
             UnmodifiableList.unmodifiableList(null);
             fail();
-        } catch (final IllegalArgumentException ex) {}
+        } catch (final NullPointerException ex) {}
     }
 
     @SuppressWarnings("unchecked")

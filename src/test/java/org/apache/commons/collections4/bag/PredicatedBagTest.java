@@ -116,8 +116,8 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
         }
         try {
             decorateBag(new HashBag<T>(), null);
-            fail("Expecting IllegalArgumentException for null predicate.");
-        } catch (final IllegalArgumentException e) {
+            fail("Expecting NullPointerException for null predicate.");
+        } catch (final NullPointerException e) {
             // expected
         }
     }
