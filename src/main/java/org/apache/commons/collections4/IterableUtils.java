@@ -613,6 +613,22 @@ public class IterableUtils {
     }
 
     /**
+     * Returns the index of the first element in the specified iterable that
+     * matches the given predicate.
+     * <p>
+     * A <code>null</code> or empty iterable returns -1.
+     *
+     * @param <E> the element type
+     * @param iterable  the iterable to search, may be null
+     * @param predicate  the predicate to use, may not be null
+     * @return the index of the first element which matches the predicate or -1 if none matches
+     * @throws NullPointerException if predicate is null
+     */
+    public static <E> int indexOf(final Iterable<E> iterable, final Predicate<? super E> predicate) {
+        return IteratorUtils.indexOf(emptyIteratorIfNull(iterable), predicate);
+    }
+
+    /**
      * Answers true if a predicate is true for every element of an iterable.
      * <p>
      * A <code>null</code> or empty iterable returns true.

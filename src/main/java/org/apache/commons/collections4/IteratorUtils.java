@@ -1282,6 +1282,35 @@ public class IteratorUtils {
     }
 
     /**
+     * Returns the index of the first element in the specified iterator that
+     * matches the given predicate.
+     * <p>
+     * A <code>null</code> or empty iterator returns -1.
+     *
+     * @param <E> the element type
+     * @param iterator  the iterator to search, may be null
+     * @param predicate  the predicate to use, may not be null
+     * @return the index of the first element which matches the predicate or -1 if none matches
+     * @throws NullPointerException if predicate is null
+     * @since 4.1
+     */
+    public static <E> int indexOf(final Iterator<E> iterator, final Predicate<? super E> predicate) {
+        if (predicate == null) {
+            throw new NullPointerException("Predicate must not be null");
+        }
+
+        if (iterator != null) {
+            for(int index = 0; iterator.hasNext(); index++) {
+                final E element = iterator.next();
+                if (predicate.evaluate(element)) {
+                    return index;
+                }
+            }
+        }
+        return -1;
+    }
+
+    /**
      * Answers true if a predicate is true for any element of the iterator.
      * <p>
      * A <code>null</code> or empty iterator returns false.
@@ -1294,19 +1323,7 @@ public class IteratorUtils {
      * @since 4.1
      */
     public static <E> boolean matchesAny(final Iterator<E> iterator, final Predicate<? super E> predicate) {
-        if (predicate == null) {
-            throw new NullPointerException("Predicate must not be null");
-        }
-
-        if (iterator != null) {
-            while (iterator.hasNext()) {
-                final E element = iterator.next();
-                if (predicate.evaluate(element)) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return indexOf(iterator, predicate) != -1;
     }
 
     /**

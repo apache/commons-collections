@@ -19,8 +19,10 @@ package org.apache.commons.collections4;
 import java.io.PrintStream;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.ArrayDeque;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -918,7 +920,7 @@ public class MapUtils {
      * @throws NullPointerException if the stream is <code>null</code>
      */
     public static void verbosePrint(final PrintStream out, final Object label, final Map<?, ?> map) {
-        verbosePrintInternal(out, label, map, new ArrayStack<Map<?, ?>>(), false);
+        verbosePrintInternal(out, label, map, new ArrayDeque<Map<?, ?>>(), false);
     }
 
     /**
@@ -940,7 +942,7 @@ public class MapUtils {
      * @throws NullPointerException if the stream is <code>null</code>
      */
     public static void debugPrint(final PrintStream out, final Object label, final Map<?, ?> map) {
-        verbosePrintInternal(out, label, map, new ArrayStack<Map<?, ?>>(), true);
+        verbosePrintInternal(out, label, map, new ArrayDeque<Map<?, ?>>(), true);
     }
 
     // Implementation methods
@@ -969,7 +971,7 @@ public class MapUtils {
      * @throws NullPointerException if the stream is <code>null</code>
      */
     private static void verbosePrintInternal(final PrintStream out, final Object label, final Map<?, ?> map,
-                                             final ArrayStack<Map<?, ?>> lineage, final boolean debug) {
+                                             final Deque<Map<?, ?>> lineage, final boolean debug) {
         printIndent(out, lineage.size());
 
         if (map == null) {
@@ -988,7 +990,7 @@ public class MapUtils {
         printIndent(out, lineage.size());
         out.println("{");
 
-        lineage.push(map);
+        lineage.addLast(map);
 
         for (final Map.Entry<?, ?> entry : map.entrySet()) {
             final Object childKey = entry.getKey();
@@ -1005,7 +1007,9 @@ public class MapUtils {
                 out.print(childKey);
                 out.print(" = ");
 
-                final int lineageIndex = lineage.indexOf(childValue);
+                final int lineageIndex =
+                        IterableUtils.indexOf(lineage,
+                                              PredicateUtils.equalPredicate(childValue));
                 if (lineageIndex == -1) {
                     out.print(childValue);
                 } else if (lineage.size() - 1 == lineageIndex) {
@@ -1026,7 +1030,7 @@ public class MapUtils {
             }
         }
 
-        lineage.pop();
+        lineage.removeLast();
 
         printIndent(out, lineage.size());
         out.println(debug ? "} " + map.getClass().getName() : "}");

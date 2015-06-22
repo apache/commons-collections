@@ -293,6 +293,23 @@ public class IterableUtilsTest {
     }
 
     @Test
+    public void indexOf() {
+        Predicate<Number> testPredicate = equalPredicate((Number) 4);
+        int index = IterableUtils.indexOf(iterableA, testPredicate);
+        assertEquals(6, index);
+        testPredicate = equalPredicate((Number) 45);
+        index = IterableUtils.indexOf(iterableA, testPredicate);
+        assertEquals(-1, index);
+        assertEquals(-1, IterableUtils.indexOf(null, testPredicate));
+        try {
+            assertNull(IterableUtils.indexOf(iterableA, null));
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+            // expected
+        }
+    }
+
+    @Test
     public void countMatches() {
         assertEquals(4, IterableUtils.countMatches(iterableB, EQUALS_TWO));
         assertEquals(0, IterableUtils.countMatches(null, EQUALS_TWO));
