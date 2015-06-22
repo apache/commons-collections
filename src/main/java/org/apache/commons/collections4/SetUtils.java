@@ -598,7 +598,7 @@ public class SetUtils {
      * If the decorated sets change, this view will change as well. The contents
      * of this view can be transferred to another instance via the {@link #copyInto(Set)}
      * and {@link #toSet()} methods.
-     * 
+     *
      * @param <E> the element type
      * @since 4.1
      */
@@ -624,6 +624,7 @@ public class SetUtils {
         /**
          * Copies the contents of this view into the provided set.
          *
+         * @param <S> the set type
          * @param set  the set for copying the contents
          */
         public <S extends Set<E>> void copyInto(final S set) {
