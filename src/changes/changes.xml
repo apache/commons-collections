@@ -44,7 +44,7 @@
     <action issue="COLLECTIONS-565" dev="tn" type="add">
       Added decorators for "NavigableSet" interface.
     </action>
-    <action issue="COLLECTIONS-464" dev="tn" type="add">
+    <action issue="COLLECTIONS-464,COLLECTIONS-442" dev="tn" type="add">
       Added new class "FluentIterable" to support a fluent API for manipulating
       Iterable instances. Additionally various supporting methods have been
       added to "IterableUtils" and "IteratorUtils".
