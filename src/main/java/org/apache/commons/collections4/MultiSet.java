@@ -122,7 +122,9 @@ public interface MultiSet<E> extends Collection<E> {
      * Uniqueness constraints are the same as those in {@link java.util.Set}.
      * <p>
      * The returned set is backed by this multiset, so any change to either
-     * is immediately reflected in the other.
+     * is immediately reflected in the other. Only removal operations are
+     * supporting, in which case all occurrences of the removed elements
+     * are removed from the backing multiset.
      *
      * @return the Set of unique MultiSet elements
      */
