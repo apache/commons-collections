@@ -28,10 +28,9 @@
  * <p>
  * The following decorators are provided in the package:
  * <ul>
+ *   <li>Predicated   - ensures that only elements that are valid according to a predicate can be added
  *   <li>Synchronized - synchronizes method access for multi-threaded environments
  *   <li>Unmodifiable - ensures the multiset cannot be altered
- *   <li>Predicated - ensures that only elements that are valid according to a predicate can be added
- *   <li>Transformed - transforms each element added to the multiset
  * </ul>
  *
  * @version $Id$
