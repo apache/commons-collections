@@ -1906,5 +1906,69 @@ public class CollectionUtilsTest extends MockTestCase {
         } catch (final NullPointerException npe) {
         } // this is what we want
     }
-
+    
+    @Test
+    public void testDeepMege() {
+    	@SuppressWarnings("unchecked")
+		List<List<List<String>>> listOfLists = new ArrayList<List<List<String>>>(
+				Arrays.asList(
+						new ArrayList<List<String>>(Arrays.asList(
+								new ArrayList<String>(Arrays.asList("a",
+										"b", "c", "d")),
+								new ArrayList<String>(Arrays.asList("a",
+										"e", "f")))),
+						new ArrayList<List<String>>(Arrays.asList(
+								new ArrayList<String>(Arrays.asList("b",
+										"c", "g", "h")),
+								new ArrayList<String>(Arrays.asList("i",
+										"j", "k"))))));
+    	ArrayList<String> resultList = CollectionUtils.deepMerge(listOfLists, new ArrayList<String>());
+    	assertEquals(14,resultList.size());
+    	assertEquals("a", resultList.get(0));
+    	assertEquals("e", resultList.get(5));
+    	assertEquals("b", resultList.get(7));
+    	assertEquals("k", resultList.get(13));
+		    	
+    	@SuppressWarnings("unchecked")
+		HashSet<Set<List<String>>> setOfLists = new HashSet<Set<List<String>>>(
+				(Collection<? extends Set<List<String>>>) Arrays.asList(
+						new HashSet<List<String>>(Arrays.asList(
+								new ArrayList<String>(Arrays.asList("a",
+										"b", "c", "d")),
+								new ArrayList<String>(Arrays.asList("a",
+										"e", "f")))),
+						new ArrayList<List<String>>(Arrays.asList(
+								new ArrayList<String>(Arrays.asList("b",
+										"c", "g", "h")),
+								new ArrayList<String>(Arrays.asList("i",
+										"j", "k"))))));
+    	HashSet<String> resultSet = CollectionUtils.deepMerge(setOfLists, new HashSet<String>());
+      	assertEquals(11,resultSet.size());
+    	assertTrue(resultSet.contains("a"));
+    	assertTrue(resultSet.contains("e"));
+    	assertTrue(resultSet.contains("g"));
+    	assertTrue(resultSet.contains("k"));
+        try {
+            CollectionUtils.deepMerge(null, new HashSet<String>());
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+        } // this is what we want
+        try {
+            CollectionUtils.deepMerge(setOfLists, null);
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+        } // this is what we want
+        try {
+            CollectionUtils.deepMerge(null, null);
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+        } // this is what we want
+        try {
+            List<Integer> failureList = CollectionUtils.deepMerge(setOfLists, new ArrayList<Integer>());
+            @SuppressWarnings("unused")
+			Integer integ = failureList.get(0);
+            fail("expecting ClassCastException");
+        } catch (final ClassCastException npe) {
+        } // this is what we want
+    }
 }

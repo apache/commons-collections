@@ -435,7 +435,7 @@ public class CollectionUtils {
      * Only those elements present in the collection will appear as
      * keys in the map.
      *
-     * @param <O>  the type of object in the returned {@link Map}. This is a super type of <I>.
+     * @param <O>  the type of object in the returned {@link Map}. This is a super type of {@literal <I>}.
      * @param coll  the collection to get the cardinality map for, must not be null
      * @return the populated cardinality map
      */
@@ -486,7 +486,7 @@ public class CollectionUtils {
      * <ul>
      *    <li><code>a.size()</code> and <code>b.size()</code> represent the
      *    total cardinality of <i>a</i> and <i>b</i>, resp. </li>
-     *    <li><code>a.size() < Integer.MAXVALUE</code></li>
+     *    <li><code>a.size() {@literal <} Integer.MAXVALUE</code></li>
      * </ul>
      *
      * @param a  the first (sub?) collection, must not be null
@@ -835,7 +835,7 @@ public class CollectionUtils {
      * Answers true if a predicate is true for every element of a
      * collection.
      * <p>
-     * A <code>null</code> predicate returns false.<br/>
+     * A <code>null</code> predicate returns false.<br>
      * A <code>null</code> or empty collection returns true.
      *
      * @param <C>  the type of object the {@link Iterable} contains
@@ -1889,4 +1889,66 @@ public class CollectionUtils {
         }
         return collection.iterator().next();
     }
+    
+    /**
+     * Method recursively finds deepest content of nested iterables and 
+     * merge them into one chosen {@link Collection}. Method accepts 
+     * {@link Iterable} argument only if it has at least one level of nesting.
+     * {@code Collection} argument must bound deepest elements type. Because in Java
+     * don't exist any good and convenient way to check bound type there is no way
+     * to prevent inserting bad values to wrong bounded types. It's possible to create
+     * list with non valid bounded type. It will result ClassCastException throw at runtime
+     * if {@code collection} won't be cast to proper type.      
+     * <p>
+     * Current implementation have time complexity {@literal O(n^k)} 
+     * where {@literal k} is a level of iterables (1 = no nested).
+     * </p><p>
+     * <b>Example:</b><br>
+     * <code>{@literal List<String> list = 
+     * CollectionUtils.mergeDeep(Set<Set<Set<Set<String>>>> setOfSets, new ArrayList<String>)}</code>
+     * </p>
+     * 	If one banch of set contains ("foo","bar"), and second one contains 
+     * ("faz" "foz") than after method use {@code list} instance contains ("foo", "bar", "faz", "foz").
+     * @param <E> deepest element type of iterableOfiterables parameter
+     * @param <T> {@code collection} with bounded {@literal <E>} 
+     * @param iterableOfIterables an {@code object} which implements {@code Iterable} interface and has
+     *  nested another {@code iterable} object 
+     * @param collectionToFill an {@code collection} instance to fill up by deepest {@code iterable} content  
+     * @return {@code collectionToFIll} parameter filled up by deep content {@code iterableOfIterables} parameter
+     * @throws NullPointerException when one of a parameters is null
+     * @throws ClassCastException at runtime if {@code collectionToFill} is not bounded with valid parameter
+     * @since 4.1 
+     */
+	public static <T extends Collection<E>,E> T deepMerge(final Iterable<? extends Iterable<?>> iterableOfIterables, 
+			final T collectionToFill) {
+		Iterator<? extends Iterable<?>> iterator = iterableOfIterables.iterator();
+		if (!iterator.hasNext()) {
+			return collectionToFill;
+		}
+		while (iterator.hasNext()) {
+			deepMergeRecursion(iterator.next(), collectionToFill);
+		}
+		return collectionToFill;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static <T extends Collection<E>,E> void deepMergeRecursion(final Iterable<?> iterable,
+			final T collectionToFill ) {
+		Iterator<?> iterator = iterable.iterator();
+		if (!iterator.hasNext()) {
+			return;
+		}
+		Object firstElement = iterator.next();
+		if (!(firstElement instanceof Iterable<?>)) {
+			collectionToFill.add((E)firstElement);
+			while (iterator.hasNext()) {
+				collectionToFill.add((E)iterator.next());
+			}
+			return;
+		}
+		deepMergeRecursion((Iterable<?>) firstElement, collectionToFill);
+		while (iterator.hasNext()) {
+			deepMergeRecursion((Iterable<?>) iterator.next(), collectionToFill);
+		}
+	}
 }
