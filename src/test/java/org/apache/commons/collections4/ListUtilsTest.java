@@ -316,7 +316,7 @@ public class ListUtilsTest {
     }
 
     @Test
-    @SuppressWarnings("boxing") // OK in test code
+    @SuppressWarnings({ "boxing", "deprecation" }) // OK in test code
     public void testLongestCommonSubsequence() {
 
         try {
@@ -330,12 +330,12 @@ public class ListUtilsTest {
         } catch (final NullPointerException e) {}
 
         try {
-            ListUtils.longestCommonSubsequence(null, Arrays.asList('A'));
+        	ListUtils.longestCommonSubsequence(null, Arrays.asList('A'));
             fail("failed to check for null argument");
         } catch (final NullPointerException e) {}
 
-        @SuppressWarnings("unchecked")
-        List<Character> lcs = ListUtils.longestCommonSubsequence(Collections.EMPTY_LIST, Collections.EMPTY_LIST);
+		@SuppressWarnings("unchecked")
+		List<Character> lcs = ListUtils.longestCommonSubsequence(Collections.EMPTY_LIST, Collections.EMPTY_LIST);
         assertEquals(0, lcs.size());
 
         List<Character> list1 = Arrays.asList('B', 'A', 'N', 'A', 'N', 'A');
@@ -355,9 +355,22 @@ public class ListUtilsTest {
         lcs = ListUtils.longestCommonSubsequence(list1, listZorro);
 
         assertTrue(lcs.isEmpty());
+        
+        List<Character> listAnarchy = Arrays.asList('A', 'N', 'A', 'R', 'C', 'H', 'Y');
+        lcs = ListUtils.longestCommonSubsequence(list1, list2, listAnarchy);
+        
+        expected = Arrays.asList('A', 'N', 'A');
+        assertEquals(expected, lcs);
+        
+        List<Character> listNation = Arrays.asList('N', 'A', 'T', 'I', 'O', 'N');
+        lcs = ListUtils.longestCommonSubsequence(list1, list2, listAnarchy, listNation);
+        
+        expected = Arrays.asList('A', 'N');
+        assertEquals(expected, lcs);
     }
 
-    @Test
+	@SuppressWarnings("deprecation")
+	@Test
     public void testLongestCommonSubsequenceWithString() {
 
       try {
@@ -393,6 +406,11 @@ public class ListUtilsTest {
       lcs = ListUtils.longestCommonSubsequence(banana, zorro);
 
       assertEquals(0, lcs.length());
+      
+      String anarchy = "ANARCHY";
+      String nation = "NATION";
+      lcs = ListUtils.longestCommonSubsequence(banana, ananas, anarchy, nation);
+      assertEquals(lcs, "AN");
     }
 
     @Test
