@@ -1922,9 +1922,6 @@ public class CollectionUtils {
 	public static <T extends Collection<E>,E> T deepMerge(final Iterable<? extends Iterable<?>> iterableOfIterables, 
 			final T collectionToFill) {
 		Iterator<? extends Iterable<?>> iterator = iterableOfIterables.iterator();
-		if (!iterator.hasNext()) {
-			return collectionToFill;
-		}
 		while (iterator.hasNext()) {
 			deepMergeRecursion(iterator.next(), collectionToFill);
 		}
