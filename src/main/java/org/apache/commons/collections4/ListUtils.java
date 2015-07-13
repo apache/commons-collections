@@ -589,7 +589,6 @@ public class ListUtils {
 				comparator = new SequencesComparator<E>(lcs, additionalList,
 						equator);
 				script = comparator.getScript();
-				visitor = new LcsVisitor<E>();
 				script.visit(visitor);
 				lcs = visitor.getSubSequence();
 			}
@@ -695,7 +694,7 @@ public class ListUtils {
         public LcsVisitor() {
             sequence = new ArrayList<E>();
         }
-
+        
         public void visitInsertCommand(final E object) {}
 
         public void visitDeleteCommand(final E object) {}
