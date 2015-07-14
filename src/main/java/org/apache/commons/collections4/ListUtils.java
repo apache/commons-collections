@@ -26,7 +26,6 @@ import java.util.List;
 
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.functors.DefaultEquator;
-import org.apache.commons.collections4.iterators.ArrayIterator;
 import org.apache.commons.collections4.list.FixedSizeList;
 import org.apache.commons.collections4.list.LazyList;
 import org.apache.commons.collections4.list.PredicatedList;
@@ -514,8 +513,7 @@ public class ListUtils {
     //-----------------------------------------------------------------------
     /**
      * Returns the longest common subsequence (LCS) of two sequences (lists).
-     * @deprecated since 4.1, use 
-     * {@link ListUtils#longestCommonSubsequence(List, List, List...)} instead.
+     *
      * @param <E>  the element type
      * @param a  the first list
      * @param b  the second list
@@ -523,84 +521,74 @@ public class ListUtils {
      * @throws NullPointerException if either list is {@code null}
      * @since 4.0
      */
-    @Deprecated
     public static <E> List<E> longestCommonSubsequence(final List<E> a, final List<E> b) {
       return longestCommonSubsequence( a, b, DefaultEquator.defaultEquator() );
     }
     
-    /**
-     * Returns the longest common subsequence (LCS) of two or more sequences (lists).
-     * 
-     * @param <E>  the element type
-     * @param a  the first list
-     * @param b  the second list
-     * @param lists the third and more lists
-     * @return the longest common subsequence
-     * @throws NullPointerException if either list is {@code null}
-     * @since 4.0
-     */
-    @SuppressWarnings("rawtypes")
-	public static <E> List<E> longestCommonSubsequence(final List<E> a, final List<E> b,
-    		final List...lists) {
-		List<E> lcs = longestCommonSubsequence(DefaultEquator.defaultEquator(), a, b);
-    	if (lists != null) {
-    		for (ArrayIterator<List<E>> iterator = new ArrayIterator<List<E>>(lists); iterator
-					.hasNext();) {
-				List<E> list = iterator.next();
-				lcs = longestCommonSubsequence(DefaultEquator.defaultEquator(), lcs, list);
-			}
-    	}
-    	return lcs;
+	/**
+	 * Returns the longest common subsequence (LCS) from lists 
+	 * which are stored inside another list. This method is more 
+	 * optimized to do multiple searches than 
+	 * {@link ListUtils#longestCommonSubsequence(List, List)}.
+	 * 
+	 * @param <E> the element type
+	 * @param listOflists an {@code list} which contains {@code lists} of {@literal <E>}  
+	 * @throws NullPointerException if any of input parameters are {@code null}
+	 * @return longest common subsequence or immutable empty list if input {@code list} is empty
+	 * @since 4.1
+	 */
+	public static <E> List<E> longestCommonSubsequence(final List<List<E>> listOfLists) {
+		return longestCommonSubsequence(listOfLists, DefaultEquator.defaultEquator());
     }
         
-    /**
-     * Returns the longest common subsequence (LCS) of two or more sequences (lists).
-     * 
-     * @param <E>  the element type
-     * @param equator  the equator used to test object equality
-     * @param a  the first list
-     * @param b  the second list
-     * @param lists the third and more lists
-     * @return the longest common subsequence
-     * @throws NullPointerException if either list or the equator is {@code null}
-     * @since 4.0
-     */
-	@SuppressWarnings("rawtypes")
-	public static <E> List<E> longestCommonSubsequence(
-			final Equator<? super E> equator, final List<E> a, final List<E> b,
-			final List... lists) {
-		if (a == null || b == null) {
-			throw new NullPointerException("List must not be null");
+	/**
+	 * Returns the longest common subsequence (LCS) from lists 
+	 * which are stored inside another list. This method is more 
+	 * optimized to do multiple searches than 
+	 * {@link ListUtils#longestCommonSubsequence(List, List, Equator)}.
+	 * 
+	 * @param <E> the element type
+	 * @param listOflists an {@code list} which contains {@code lists} of {@literal <E>}  
+	 * @param equator the equator used to test object equality
+	 * @throws NullPointerException if any of input parameters are {@code null}
+	 * @return longest common subsequence or immutable empty list if input {@code list} is empty
+	 * @since 4.1
+	 */
+	public static <E> List<E> longestCommonSubsequence(final List<List<E>> listOflists,
+			final Equator<? super E> equator) {
+		if (listOflists == null) {
+			throw new NullPointerException("Input parameter listOflists can't be null");
 		}
 		if (equator == null) {
-			throw new NullPointerException("Equator must not be null");
+			throw new NullPointerException("Equator can't be null");
 		}
-
-		SequencesComparator<E> comparator = new SequencesComparator<E>(a, b,
-				equator);
+		if (listOflists.size() == 0) {
+			return Collections.emptyList();
+		}
+		if (listOflists.size() == 1) {
+			return listOflists.get(0);
+		}
+		Iterator<List<E>> iterator = listOflists.iterator();
+		SequencesComparator<E> comparator = new SequencesComparator<E>(
+				iterator.next(), iterator.next(), equator);
 		EditScript<E> script = comparator.getScript();
 		LcsVisitor<E> visitor = new LcsVisitor<E>();
 		script.visit(visitor);
 		List<E> lcs = visitor.getSubSequence();
-		if (lists != null) {
-			for (ArrayIterator<List<E>> iterator = new ArrayIterator<List<E>>(
-					lists); iterator.hasNext();) {
-				List<E> additionalList = iterator.next();
-				comparator = new SequencesComparator<E>(lcs, additionalList,
-						equator);
-				script = comparator.getScript();
-				script.visit(visitor);
-				lcs = visitor.getSubSequence();
-			}
+		while (iterator.hasNext()) {
+			comparator = new SequencesComparator<E>(lcs, iterator.next(),
+					equator);
+			script = comparator.getScript();
+			visitor.sequence = new ArrayList<E>();
+			script.visit(visitor);
+			lcs = visitor.getSubSequence();
 		}
 		return lcs;
 	}
-
+	
     /**
      * Returns the longest common subsequence (LCS) of two sequences (lists).
-     * @deprecated since 4.1, use 
-     * {@link ListUtils#longestCommonSubsequence(List, List, List...)} instead.
-     * Be aware that the order of parameters has changed.
+     *
      * @param <E>  the element type
      * @param a  the first list
      * @param b  the second list
@@ -609,7 +597,6 @@ public class ListUtils {
      * @throws NullPointerException if either list or the equator is {@code null}
      * @since 4.0
      */
-	@Deprecated
     public static <E> List<E> longestCommonSubsequence(final List<E> a, final List<E> b,
                                                        final Equator<? super E> equator) {
         if (a == null || b == null) {
@@ -631,15 +618,13 @@ public class ListUtils {
      * <p>
      * This is a convenience method for using {@link #longestCommonSubsequence(List, List)}
      * with {@link CharSequence} instances.
-     * @deprecated since 4.1, use 
-     * {@link ListUtils#longestCommonSubsequence(CharSequence, CharSequence, CharSequence...)} instead.
+     *
      * @param a  the first sequence
      * @param b  the second sequence
      * @return the longest common subsequence as {@link String}
      * @throws NullPointerException if either sequence is {@code null}
      * @since 4.0
      */
-    @Deprecated
     public static String longestCommonSubsequence(final CharSequence a, final CharSequence b) {
         if (a == null || b == null) {
             throw new NullPointerException("CharSequence must not be null");
@@ -651,40 +636,7 @@ public class ListUtils {
         }
         return sb.toString();
     }
-    
-    /**
-     * Returns the longest common subsequence (LCS) of two or more {@link CharSequence} objects.
-     * <p>
-     * This is a convenience method for using {@link #longestCommonSubsequence(List, List, List...)}
-     * with {@link CharSequence} instances.
-     *
-     * @param a  the first sequence
-     * @param b  the second sequence
-     * @param charSequences the third or more sequences
-     * @return the longest common subsequence as {@link String}
-     * @throws NullPointerException if either sequence is {@code null}
-     * @since 4.1
-     */
-    public static String longestCommonSubsequence(final CharSequence a, final CharSequence b,
-    		final CharSequence...charSequences ) {
-        if (a == null || b == null) {
-            throw new NullPointerException("CharSequence must not be null");
-        }
-        List<Character> lcs = longestCommonSubsequence(new CharSequenceAsList( a ), new CharSequenceAsList( b ));
-        if (charSequences != null) {
-        	for (ArrayIterator<CharSequence> iterator = new ArrayIterator<CharSequence>(charSequences); iterator
-					.hasNext();) {
-				CharSequence charSequence = iterator.next();
-				lcs = longestCommonSubsequence(lcs, new CharSequenceAsList(charSequence));
-			}
-        }
-        final StringBuilder sb = new StringBuilder();
-        for ( Character ch : lcs ) {
-          sb.append(ch);
-        }
-        return sb.toString();
-    }
-    
+
     /**
      * A helper class used to construct the longest common subsequence.
      */
@@ -694,7 +646,7 @@ public class ListUtils {
         public LcsVisitor() {
             sequence = new ArrayList<E>();
         }
-        
+
         public void visitInsertCommand(final E object) {}
 
         public void visitDeleteCommand(final E object) {}

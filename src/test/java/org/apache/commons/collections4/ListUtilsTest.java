@@ -316,7 +316,7 @@ public class ListUtilsTest {
     }
 
     @Test
-    @SuppressWarnings({ "boxing", "deprecation" }) // OK in test code
+    @SuppressWarnings({ "boxing"}) // OK in test code
     public void testLongestCommonSubsequence() {
 
         try {
@@ -357,19 +357,22 @@ public class ListUtilsTest {
         assertTrue(lcs.isEmpty());
         
         List<Character> listAnarchy = Arrays.asList('A', 'N', 'A', 'R', 'C', 'H', 'Y');
-        lcs = ListUtils.longestCommonSubsequence(list1, list2, listAnarchy);
+        @SuppressWarnings("unchecked")
+		List<List<Character>> listOfLists1 = Arrays.asList(list1, list2, listAnarchy);
+        lcs = ListUtils.longestCommonSubsequence(listOfLists1);
         
         expected = Arrays.asList('A', 'N', 'A');
         assertEquals(expected, lcs);
         
         List<Character> listNation = Arrays.asList('N', 'A', 'T', 'I', 'O', 'N');
-        lcs = ListUtils.longestCommonSubsequence(list1, list2, listAnarchy, listNation);
+        @SuppressWarnings("unchecked")
+		List<List<Character>> listOfLists2 = Arrays.asList(list1, list2, listAnarchy, listNation);
+        lcs = ListUtils.longestCommonSubsequence(listOfLists2);
         
         expected = Arrays.asList('A', 'N');
         assertEquals(expected, lcs);
     }
 
-	@SuppressWarnings("deprecation")
 	@Test
     public void testLongestCommonSubsequenceWithString() {
 
@@ -406,11 +409,6 @@ public class ListUtilsTest {
       lcs = ListUtils.longestCommonSubsequence(banana, zorro);
 
       assertEquals(0, lcs.length());
-      
-      String anarchy = "ANARCHY";
-      String nation = "NATION";
-      lcs = ListUtils.longestCommonSubsequence(banana, ananas, anarchy, nation);
-      assertEquals(lcs, "AN");
     }
 
     @Test
