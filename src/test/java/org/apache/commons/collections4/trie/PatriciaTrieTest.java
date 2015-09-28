@@ -345,6 +345,26 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
         assertEquals(2, aTree.prefixMap("点").values().size());
     }
 
+    public void testPrefixMapSizes2() {
+        final char u8000 = Character.toChars(32768)[0]; // U+8000 (1000000000000000)
+        final char char_b = 'b'; // 1100010
+
+        final PatriciaTrie<String> trie = new PatriciaTrie<String>();
+        final String prefixString = "" + char_b;
+        final String longerString = prefixString + u8000;
+
+        assertEquals(1, prefixString.length());
+        assertEquals(2, longerString.length());
+
+        assertTrue(longerString.startsWith(prefixString));
+
+        trie.put(prefixString, "prefixString");
+        trie.put(longerString, "longerString");
+
+        assertEquals(2, trie.prefixMap(prefixString).size());
+        assertTrue(trie.prefixMap(prefixString).containsKey(longerString));
+    }
+
     //-----------------------------------------------------------------------
 
     @Override
