@@ -274,7 +274,7 @@ public class MultiKey<K> implements Serializable {
      * only stable for the same process).
      * @return the instance with recalculated hash code
      */
-    private Object readResolve() {
+    protected Object readResolve() {
         calculateHashCode(keys);
         return this;
     }

@@ -22,6 +22,9 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-576" dev="tn" type="fix" due-to="Stephan Roch">
+      Subclasses of MultiKey did not re-calculate their hashcode after de-serialization.
+    </action>
     <action issue="COLLECTIONS-572" dev="tn" type="add">
       Added set operations to "SetUtils": union, difference, intersection and disjunction.
       The operations return a view of the result that is backed by the input sets.
