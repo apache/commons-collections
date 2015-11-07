@@ -168,7 +168,8 @@ public class SetUniqueList extends AbstractSerializableListDecorator {
     }
 
     /**
-     * Adds a collection of objects to the end of the list avoiding duplicates.
+     * Adds a collection of objects a specific index in the list avoiding 
+     * duplicates. 
      * <p>
      * Only elements that are not already in this list will be added, and
      * duplicates from the specified collection will be ignored.
@@ -187,7 +188,12 @@ public class SetUniqueList extends AbstractSerializableListDecorator {
 
         // adds all elements
         for (final Iterator it = coll.iterator(); it.hasNext();) {
-            add(it.next());
+            int sizeBeforeAddNext = size();
+            add(index, it.next());
+            // if it was inserted, then increase the target index
+            if (sizeBeforeAddNext != size()) {
+                index++;
+            }            
         }
 
         // compares sizes to detect if collection changed

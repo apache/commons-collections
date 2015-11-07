@@ -23,6 +23,10 @@
 
   <release version="3.2.2" date="20XX-XX-XX" description="This is a bugfix release.">
 
+    <action issue="COLLECTIONS-249" dev="bayard" type="fix" due-to="Joe Kelly">
+      "SetUniqueList.addAll(int, Collection)" now correctly add the collection at the
+      provided index.
+    </action>
     <action issue="COLLECTIONS-219" dev="scolebourne" type="fix" due-to="Tom Leccese">
       "CollectionUtils#removeAll" wrongly called "ListUtils#retainAll".
     </action>
@@ -73,10 +77,6 @@
     <action issue="COLLECTIONS-261" dev="bayard" type="fix" due-to="ori">
       "Flat3Map#remove(Object)" will now return the correct value mapped to the removed key
       if the size of the map is less or equal 3.
-    </action>
-    <action issue="COLLECTIONS-249" dev="bayard" type="fix" due-to="Joe Kelly">
-      "SetUniqueList.addAll(int, Collection)" now correctly add the collection at the
-      provided index.
     </action>
     <action issue="COLLECTIONS-228" dev="scolebourne" type="fix">
       "MultiValueMap#put(Object, Object)" and "MultiValueMap#putAll(Object, Collection)"
