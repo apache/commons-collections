@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import junit.framework.Test;
@@ -248,6 +249,16 @@ public class TestMultiValueMap extends TestCase {
         map.put("A", "AA");
         assertEquals(true, map.containsValue("A", "AA"));
         assertEquals(false, map.containsValue("A", "AB"));
+    }
+
+    public void testPut_ReturnValue() {
+        MultiValueMap test = new MultiValueMap();
+        assertNotNull(test.put("key", "object1"));
+        assertNotNull(test.put("key", "object2"));
+
+        List coll = Arrays.asList(new String[]{"uno", "un"});
+        assertTrue(test.putAll("key", coll));
+        assertFalse(test.putAll("key", new ArrayList()));
     }
 
     public void testPutAll_Map1() {

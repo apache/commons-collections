@@ -30,6 +30,10 @@
       "SetUniqueList.addAll(int, Collection)" now correctly add the collection at the
       provided index.
     </action>
+    <action issue="COLLECTIONS-228" dev="scolebourne" type="fix">
+      "MultiValueMap#put(Object, Object)" and "MultiValueMap#putAll(Object, Collection)"
+      now correctly return if the map has changed by this operation.
+    </action>
     <action issue="COLLECTIONS-219" dev="scolebourne" type="fix" due-to="Tom Leccese">
       "CollectionUtils#removeAll" wrongly called "ListUtils#retainAll".
     </action>
@@ -77,10 +81,6 @@
     <action issue="COLLECTIONS-261" dev="bayard" type="fix" due-to="ori">
       "Flat3Map#remove(Object)" will now return the correct value mapped to the removed key
       if the size of the map is less or equal 3.
-    </action>
-    <action issue="COLLECTIONS-228" dev="scolebourne" type="fix">
-      "MultiValueMap#put(Object, Object)" and "MultiValueMap#putAll(Object, Collection)"
-      now correctly return if the map has changed by this operation.
     </action>
     <action issue="COLLECTIONS-217" dev="scolebourne" type="fix" due-to="Matt Bishop">
       Calling "setValue(Object)" on any Entry returned by a "Flat3Map" will now
