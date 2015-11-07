@@ -23,6 +23,9 @@
 
   <release version="3.2.2" date="20XX-XX-XX" description="This is a bugfix release.">
 
+    <action issue="COLLECTIONS-350" dev="bayard" type="fix" due-to="Michael Akerman">
+      Removed debug output in "MapUtils#getNumber(Map)".
+    </action>
     <action issue="COLLECTIONS-335" dev="jochen" type="fix" due-to="sebb">
       Fixed cache assignment for "TreeBidiMap#entrySet".
     </action>
@@ -54,9 +57,6 @@
     <action issue="COLLECTIONS-359" dev="bayard" type="fix" due-to="Mark Shead">
       "ListUtils#intersection(List, List)" will now also work correctly if there
       are duplicate elements in the provided lists.
-    </action>
-    <action issue="COLLECTIONS-350" dev="bayard" type="fix" due-to="Michael Akerman">
-      Removed debug output in "MapUtils#getNumber(Map)".
     </action>
     <action issue="COLLECTIONS-334" dev="jochen" type="fix" due-to="sebb">
       Synchronized access to lock in "StaticBucketMap#size()".

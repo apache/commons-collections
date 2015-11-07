@@ -204,7 +204,7 @@ public class MapUtils {
                         return NumberFormat.getInstance().parse(text);
                         
                     } catch (ParseException e) {
-                        logInfo(e);
+                        // failure means null is returned
                     }
                 }
             }
