@@ -51,9 +51,6 @@
       SetUniqueList.set(int, E) now works correctly if the object to be inserted
       is already placed at the given position.
     </action>
-    <action issue="COLLECTIONS-364" dev="sebb" type="fix">
-      "DualTreeBidiMap" now uses the correct comparator for the reverse map during de-serialization.
-    </action>
     <action issue="COLLECTIONS-359" dev="bayard" type="fix" due-to="Mark Shead">
       "ListUtils#intersection(List, List)" will now also work correctly if there
       are duplicate elements in the provided lists.
