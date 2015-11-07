@@ -63,12 +63,12 @@ public class TestLinkedMap extends AbstractTestOrderedMap {
     public void testReset() {
         resetEmpty();
         OrderedMap ordered = (OrderedMap) map;
-        ((ResettableIterator) ordered.mapIterator()).reset();
+        ((ResettableIterator) (Object) ordered.mapIterator()).reset();
         
         resetFull();
         ordered = (OrderedMap) map;
         List list = new ArrayList(ordered.keySet());
-        ResettableIterator it = (ResettableIterator) ordered.mapIterator();
+        ResettableIterator it = (ResettableIterator) (Object) ordered.mapIterator();
         assertSame(list.get(0), it.next());
         assertSame(list.get(1), it.next());
         it.reset();
