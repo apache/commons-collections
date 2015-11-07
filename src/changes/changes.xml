@@ -37,24 +37,8 @@
       SetUniqueList.set(int, E) now works correctly if the object to be inserted
       is already placed at the given position.
     </action>
-    <action issue="COLLECTIONS-441" dev="tn" type="fix" due-to="Thomas Vahrst">
-      MultiKeyMap.clone() now correctly calls super.clone().
-    </action>
-    <action issue="COLLECTIONS-411" dev="tn" type="fix" due-to="Adrian Nistor">
-      Fixed possible "IndexOutOfBoundsException" in "ListOrderedMap#putAll".
-    </action>
-    <action issue="COLLECTIONS-400" dev="tn" type="fix" due-to="Shin Hwei Tan">
-      Added missing null check in "CollectionUtils#addIgnoreNull(Collection, Object)".
-    </action>
-    <action issue="COLLECTIONS-380" dev="tn" type="fix" due-to="Dave Brosius">
-      Fixed infinite loop when calling "UnmodifiableBoundedCollection#unmodifiableBoundedCollection()".
-    </action>
     <action issue="COLLECTIONS-364" dev="sebb" type="fix">
       "DualTreeBidiMap" now uses the correct comparator for the reverse map during de-serialization.
-    </action>
-    <action issue="COLLECTIONS-360" dev="jochen" type="fix" due-to="Sai Zhang">
-      "FilterListIterator#hasNext" does not throw a NullPointerException anymore
-      to comply to the Java iterator specification.
     </action>
     <action issue="COLLECTIONS-359" dev="bayard" type="fix" due-to="Mark Shead">
       "ListUtils#intersection(List, List)" will now also work correctly if there
@@ -101,9 +85,6 @@
     <action issue="COLLECTIONS-217" dev="scolebourne" type="fix" due-to="Matt Bishop">
       Calling "setValue(Object)" on any Entry returned by a "Flat3Map" will now
       correctly set the value for the current entry.
-    </action>
-    <action issue="COLLECTIONS-216" dev="scolebourne" type="fix" due-to="Hendrik Maryns">
-      "MultiKey#toString()" will now use "Arrays#toString(List)".
     </action>
     -->
   </release>
