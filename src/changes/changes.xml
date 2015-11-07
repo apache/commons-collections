@@ -29,6 +29,10 @@
     <action issue="COLLECTIONS-335" dev="jochen" type="fix" due-to="sebb">
       Fixed cache assignment for "TreeBidiMap#entrySet".
     </action>
+    <action issue="COLLECTIONS-294" dev="bayard" type="fix" due-to="Benjamin Bentmann">
+      "CaseInsensitiveMap" will now convert input strings to lower-case in a
+      locale-independent manner.
+    </action>
     <action issue="COLLECTIONS-266" dev="bayard" type="fix" due-to="Joerg Schaible">
       "MultiKey" will now be correctly serialized/de-serialized.
     </action>
@@ -70,10 +74,6 @@
     </action>
     <action issue="COLLECTIONS-304" dev="bayard" type="fix" due-to="Rafał Figas,Bjorn Townsend">
       "SetUniqueList#set(int, Object)" will now correctly enforce the uniqueness constraint.
-    </action>
-    <action issue="COLLECTIONS-294" dev="bayard" type="fix" due-to="Benjamin Bentmann">
-      "CaseInsensitiveMap" will now convert input strings to lower-case in a
-      locale-independant manner.
     </action>
     <action issue="COLLECTIONS-261" dev="bayard" type="fix" due-to="ori">
       "Flat3Map#remove(Object)" will now return the correct value mapped to the removed key
