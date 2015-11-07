@@ -1119,7 +1119,7 @@ public class CollectionUtils {
      * @since Commons Collections 3.2
      */
     public static Collection removeAll(Collection collection, Collection remove) {
-        return ListUtils.retainAll(collection, remove);
+        return ListUtils.removeAll(collection, remove);
     }
 
     //-----------------------------------------------------------------------

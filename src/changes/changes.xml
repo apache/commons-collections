@@ -22,6 +22,10 @@
   <body>
 
   <release version="3.2.2" date="20XX-XX-XX" description="This is a bugfix release.">
+
+    <action issue="COLLECTIONS-219" dev="scolebourne" type="fix" due-to="Tom Leccese">
+      "CollectionUtils#removeAll" wrongly called "ListUtils#retainAll".
+    </action>
   
   <!--  Bugfixes planned to backport from 4.0
   
@@ -93,9 +97,6 @@
     <action issue="COLLECTIONS-228" dev="scolebourne" type="fix">
       "MultiValueMap#put(Object, Object)" and "MultiValueMap#putAll(Object, Collection)"
       now correctly return if the map has changed by this operation.
-    </action>
-    <action issue="COLLECTIONS-219" dev="scolebourne" type="fix" due-to="Tom Leccese">
-      "CollectionUtils#removeAll" wrongly called "ListUtils#retainAll".
     </action>
     <action issue="COLLECTIONS-217" dev="scolebourne" type="fix" due-to="Matt Bishop">
       Calling "setValue(Object)" on any Entry returned by a "Flat3Map" will now

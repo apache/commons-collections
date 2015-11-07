@@ -1239,7 +1239,73 @@ public class TestCollectionUtils extends TestCase {
         assertEquals(eltc,eltb);
     }
     
-     public void testTransformedCollection() {
+    // -----------------------------------------------------------------------
+
+    public void testRetainAll() {
+        final List base = new ArrayList();
+        base.add("A");
+        base.add("B");
+        base.add("C");
+        final List sub = new ArrayList();
+        sub.add("A");
+        sub.add("C");
+        sub.add("X");
+
+        final Collection result = CollectionUtils.retainAll(base, sub);
+        assertEquals(2, result.size());
+        assertEquals(true, result.contains("A"));
+        assertFalse(result.contains("B"));
+        assertEquals(true, result.contains("C"));
+        assertEquals(3, base.size());
+        assertEquals(true, base.contains("A"));
+        assertEquals(true, base.contains("B"));
+        assertEquals(true, base.contains("C"));
+        assertEquals(3, sub.size());
+        assertEquals(true, sub.contains("A"));
+        assertEquals(true, sub.contains("C"));
+        assertEquals(true, sub.contains("X"));
+
+        try {
+            CollectionUtils.retainAll(null, null);
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+        } // this is what we want
+    }
+
+    public void testRemoveAll() {
+        final List base = new ArrayList();
+        base.add("A");
+        base.add("B");
+        base.add("C");
+        final List sub = new ArrayList();
+        sub.add("A");
+        sub.add("C");
+        sub.add("X");
+
+        final Collection result = CollectionUtils.removeAll(base, sub);
+        assertEquals(1, result.size());
+        assertFalse(result.contains("A"));
+        assertEquals(true, result.contains("B"));
+        assertFalse(result.contains("C"));
+        assertEquals(3, base.size());
+        assertEquals(true, base.contains("A"));
+        assertEquals(true, base.contains("B"));
+        assertEquals(true, base.contains("C"));
+        assertEquals(3, sub.size());
+        assertEquals(true, sub.contains("A"));
+        assertEquals(true, sub.contains("C"));
+        assertEquals(true, sub.contains("X"));
+
+        try {
+            CollectionUtils.removeAll(null, null);
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+        } // this is what we want
+    }
+    
+    // -----------------------------------------------------------------------
+    
+    public void testTransformedCollection() {
         Transformer transformer = TransformerUtils.nopTransformer();
         Collection collection = 
             CollectionUtils.transformedCollection(new ArrayList(), transformer);
