@@ -486,7 +486,22 @@ public class TestSetUniqueList extends AbstractTestList {
         decoratedList.add(1, s2);
         assertEquals(4, decoratedList.size());
     }
-    
+
+    public void testSetCollections444() {
+        final SetUniqueList lset = new SetUniqueList(new ArrayList(), new HashSet());
+        // Duplicate element
+        final Integer obj1 = new Integer(1);
+        final Integer obj2 = new Integer(2);
+        lset.add(obj1);
+        lset.add(obj2);
+        lset.set(0, obj1);
+        assertEquals(2, lset.size());
+        assertSame(obj1, lset.get(0));
+        assertSame(obj2, lset.get(1));
+        assertTrue(lset.contains(obj1));
+        assertTrue(lset.contains(obj2));
+    }
+
     //-----------------------------------------------------------------------
     public String getCompatibilityVersion() {
         return "3.1";

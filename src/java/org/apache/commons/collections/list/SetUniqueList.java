@@ -216,17 +216,17 @@ public class SetUniqueList extends AbstractSerializableListDecorator {
     public Object set(int index, Object object) {
         int pos = indexOf(object);
         Object removed = super.set(index, object);
-
+        
         if (pos != -1 && pos != index) {
             // the object is already in the unique list
             // (and it hasn't been swapped with itself)
-            super.remove(pos);  // remove the duplicate by index
+            super.remove(pos); // remove the duplicate by index
         }
 
-        set.add(object);      // add the new item to the unique set
-        set.remove(removed);  // remove the item deleted by the set
+        set.remove(removed); // remove the item deleted by the set
+        set.add(object); // add the new item to the unique set
 
-        return removed;  // return the item deleted by the set
+        return removed; // return the item deleted by the set        
     }
 
     public boolean remove(Object object) {

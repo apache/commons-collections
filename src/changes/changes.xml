@@ -29,6 +29,10 @@
       permission to read system properties, the "File#separator" field will
       be used instead.
     </action>
+    <action issue="COLLECTIONS-444" dev="tn" type="fix" due-to="Thomas Vahrst, John Vasileff">
+      SetUniqueList.set(int, Object) now works correctly if the object to be inserted
+      is already placed at the given position.
+    </action>
     <action issue="COLLECTIONS-350" dev="bayard" type="fix" due-to="Michael Akerman">
       Removed debug output in "MapUtils#getNumber(Map)".
     </action>
@@ -77,10 +81,6 @@
     <action issue="COLLECTIONS-447" dev="tn" type="fix" due-to="Jeffrey Barnes">
       Tree traversal with a TreeListIterator will not be affected anymore by
       the removal of an element directly after a call to previous().
-    </action>
-    <action issue="COLLECTIONS-444" dev="tn" type="fix" due-to="Thomas Vahrst, John Vasileff">
-      SetUniqueList.set(int, E) now works correctly if the object to be inserted
-      is already placed at the given position.
     </action>
     <action issue="COLLECTIONS-359" dev="bayard" type="fix" due-to="Mark Shead">
       "ListUtils#intersection(List, List)" will now also work correctly if there
