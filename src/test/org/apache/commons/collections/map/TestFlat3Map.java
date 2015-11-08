@@ -20,6 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Iterator;
 import java.util.Map;
 
 import junit.framework.Test;
@@ -40,8 +41,10 @@ public class TestFlat3Map extends AbstractTestIterableMap {
 
     private static final Integer ONE = new Integer(1);
     private static final Integer TWO = new Integer(2);
+    private static final Integer THREE = new Integer(3);
     private static final String TEN = "10";
     private static final String TWENTY = "20";
+    private static final String THIRTY = "30";
         
     public TestFlat3Map(String testName) {
         super(testName);
@@ -59,6 +62,64 @@ public class TestFlat3Map extends AbstractTestIterableMap {
         return new Flat3Map();
     }
 
+    //-----------------------------------------------------------------------
+    public void testEntryIteratorSetValue1() throws Exception {
+        final Flat3Map map = new Flat3Map();
+        map.put(ONE, TEN);
+        map.put(TWO, TWENTY);
+        map.put(THREE, THIRTY);
+
+        final Iterator it = map.entrySet().iterator();
+        final Map.Entry entry = (Map.Entry) it.next();
+        entry.setValue("NewValue");
+        assertEquals(3, map.size());
+        assertEquals(true, map.containsKey(ONE));
+        assertEquals(true, map.containsKey(TWO));
+        assertEquals(true, map.containsKey(THREE));
+        assertEquals("NewValue", map.get(ONE));
+        assertEquals(TWENTY, map.get(TWO));
+        assertEquals(THIRTY, map.get(THREE));
+    }
+
+    public void testEntryIteratorSetValue2() throws Exception {
+        final Flat3Map map = new Flat3Map();
+        map.put(ONE, TEN);
+        map.put(TWO, TWENTY);
+        map.put(THREE, THIRTY);
+
+        final Iterator it = map.entrySet().iterator();
+        it.next();
+        final Map.Entry entry = (Map.Entry) it.next();
+        entry.setValue("NewValue");
+        assertEquals(3, map.size());
+        assertEquals(true, map.containsKey(ONE));
+        assertEquals(true, map.containsKey(TWO));
+        assertEquals(true, map.containsKey(THREE));
+        assertEquals(TEN, map.get(ONE));
+        assertEquals("NewValue", map.get(TWO));
+        assertEquals(THIRTY, map.get(THREE));
+    }
+
+    public void testEntryIteratorSetValue3() throws Exception {
+        final Flat3Map map = new Flat3Map();
+        map.put(ONE, TEN);
+        map.put(TWO, TWENTY);
+        map.put(THREE, THIRTY);
+
+        final Iterator it = map.entrySet().iterator();
+        it.next();
+        it.next();
+        final Map.Entry entry = (Map.Entry) it.next();
+        entry.setValue("NewValue");
+        assertEquals(3, map.size());
+        assertEquals(true, map.containsKey(ONE));
+        assertEquals(true, map.containsKey(TWO));
+        assertEquals(true, map.containsKey(THREE));
+        assertEquals(TEN, map.get(ONE));
+        assertEquals(TWENTY, map.get(TWO));
+        assertEquals("NewValue", map.get(THREE));
+    }
+    
     //-----------------------------------------------------------------------
     public void testEquals1() {
         Flat3Map map1 = new Flat3Map();

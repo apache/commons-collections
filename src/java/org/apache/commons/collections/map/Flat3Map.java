@@ -804,10 +804,13 @@ public class Flat3Map implements IterableMap, Serializable, Cloneable {
             switch (nextIndex) {
                 case 3: 
                     parent.value3 = value;
+                    break;
                 case 2:
                     parent.value2 = value;
+                    break;
                 case 1:
                     parent.value1 = value;
+                    break;
             }
             return old;
         }
