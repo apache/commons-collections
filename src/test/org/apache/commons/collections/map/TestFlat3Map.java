@@ -205,6 +205,21 @@ public class TestFlat3Map extends AbstractTestIterableMap {
         assertSame(TWO, cloned.get(TWENTY));
     }
     
+    public void testCollections261() {
+        final Flat3Map m = new Flat3Map();
+        m.put( Integer.valueOf(1), Integer.valueOf(1) );
+        m.put( Integer.valueOf(0), Integer.valueOf(0) );
+        assertEquals( Integer.valueOf(1), m.remove( Integer.valueOf(1) ) ); 
+        assertEquals( Integer.valueOf(0), m.remove( Integer.valueOf(0) ) ); 
+
+        m.put( Integer.valueOf(2), Integer.valueOf(2) );
+        m.put( Integer.valueOf(1), Integer.valueOf(1) );
+        m.put( Integer.valueOf(0), Integer.valueOf(0) );
+        assertEquals( Integer.valueOf(2), m.remove( Integer.valueOf(2) ) ); 
+        assertEquals( Integer.valueOf(1), m.remove( Integer.valueOf(1) ) ); 
+        assertEquals( Integer.valueOf(0), m.remove( Integer.valueOf(0) ) ); 
+    }
+
     public void testSerialisation0() throws Exception {
         Flat3Map map = new Flat3Map();
         ByteArrayOutputStream bout = new ByteArrayOutputStream();

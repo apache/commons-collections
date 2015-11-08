@@ -42,6 +42,10 @@
     <action issue="COLLECTIONS-266" dev="bayard" type="fix" due-to="Joerg Schaible">
       "MultiKey" will now be correctly serialized/de-serialized.
     </action>
+    <action issue="COLLECTIONS-261" dev="bayard" type="fix" due-to="ori">
+      "Flat3Map#remove(Object)" will now return the correct value mapped to the removed key
+      if the size of the map is less or equal 3.
+    </action>
     <action issue="COLLECTIONS-249" dev="bayard" type="fix" due-to="Joe Kelly">
       "SetUniqueList.addAll(int, Collection)" now correctly add the collection at the
       provided index.
@@ -84,10 +88,6 @@
     </action>
     <action issue="COLLECTIONS-304" dev="bayard" type="fix" due-to="Rafał Figas,Bjorn Townsend">
       "SetUniqueList#set(int, Object)" will now correctly enforce the uniqueness constraint.
-    </action>
-    <action issue="COLLECTIONS-261" dev="bayard" type="fix" due-to="ori">
-      "Flat3Map#remove(Object)" will now return the correct value mapped to the removed key
-      if the size of the map is less or equal 3.
     </action>
     -->
   </release>
