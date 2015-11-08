@@ -26,6 +26,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
+import java.security.AccessController;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -165,10 +166,22 @@ public class ExtendedProperties extends Hashtable {
     /**
      * File separator.
      */
-    protected String fileSeparator = System.getProperty("file.separator");
+    protected String fileSeparator;
+    {
+        try {
+            fileSeparator = (String) AccessController.doPrivileged(
+                new java.security.PrivilegedAction() {
+                    public Object run() {
+                        return System.getProperty("file.separator");
+                    }
+                });
+        } catch (SecurityException ex) {
+            fileSeparator = File.separator;
+        }
+    }
 
     /**
-     * Has this configuration been intialized.
+     * Has this configuration been initialized.
      */
     protected boolean isInitialized = false;
 

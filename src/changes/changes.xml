@@ -23,6 +23,12 @@
 
   <release version="3.2.2" date="20XX-XX-XX" description="This is a bugfix release.">
 
+    <action issue="COLLECTIONS-538" dev="tn" type="fix" due-to="Trejkaz">
+      "ExtendedProperties" will now use a privileged action to access the
+      "file.separator" system property. In case the class does not have
+      permission to read system properties, the "File#separator" field will
+      be used instead.
+    </action>
     <action issue="COLLECTIONS-350" dev="bayard" type="fix" due-to="Michael Akerman">
       Removed debug output in "MapUtils#getNumber(Map)".
     </action>

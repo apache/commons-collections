@@ -19,6 +19,7 @@ package org.apache.commons.collections;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.security.Permission;
 import java.util.Properties;
 
 import junit.framework.Test;
@@ -312,6 +313,31 @@ public class TestExtendedProperties extends TestCase {
 
         assertEquals("foo", extended.getString("test"));
         assertEquals("class", extended.getString("resource.loader"));
+    }
+
+    public void testActiveSecurityManager() {
+        SecurityManager manager = new SecurityManager() {
+
+            public void checkPropertyAccess(String key) {
+                throw new SecurityException();
+            }
+
+            public void checkPermission(Permission perm) {
+            }
+            
+        };
+
+        System.setSecurityManager(manager);
+
+        try {
+            ExtendedProperties properties = new ExtendedProperties();
+            assertNotNull(properties);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            fail("failed to instantiate ExtendedProperties");
+        } finally {
+            System.setSecurityManager(null);
+        }
     }
 
 }
