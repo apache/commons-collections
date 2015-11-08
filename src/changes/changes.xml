@@ -35,6 +35,9 @@
     <action issue="COLLECTIONS-335" dev="jochen" type="fix" due-to="sebb">
       Fixed cache assignment for "TreeBidiMap#entrySet".
     </action>
+    <action issue="COLLECTIONS-334" dev="jochen" type="fix" due-to="sebb">
+      Synchronized access to lock in "StaticBucketMap#size()".
+    </action>
     <action issue="COLLECTIONS-294" dev="bayard" type="fix" due-to="Benjamin Bentmann">
       "CaseInsensitiveMap" will now convert input strings to lower-case in a
       locale-independent manner.
@@ -75,9 +78,6 @@
     <action issue="COLLECTIONS-359" dev="bayard" type="fix" due-to="Mark Shead">
       "ListUtils#intersection(List, List)" will now also work correctly if there
       are duplicate elements in the provided lists.
-    </action>
-    <action issue="COLLECTIONS-334" dev="jochen" type="fix" due-to="sebb">
-      Synchronized access to lock in "StaticBucketMap#size()".
     </action>
     <action issue="COLLECTIONS-330" dev="mbenson" type="fix" due-to="Joerg Schaible">
       "LRUMap#keySet()#remove(Object)" will not throw a "ConcurrentModificationException" anymore.
