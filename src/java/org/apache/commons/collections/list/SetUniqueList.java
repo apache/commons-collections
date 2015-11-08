@@ -277,7 +277,35 @@ public class SetUniqueList extends AbstractSerializableListDecorator {
     }
 
     public List subList(int fromIndex, int toIndex) {
-        return new SetUniqueList(super.subList(fromIndex, toIndex), set);
+        List superSubList = super.subList(fromIndex, toIndex);
+        Set subSet = createSetBasedOnList(set, superSubList);
+        return new SetUniqueList(superSubList, subSet);
+    }
+
+    /**
+     * Create a new {@link Set} with the same type as the provided {@code set}
+     * and populate it with all elements of {@code list}.
+     *
+     * @param set  the {@link Set} to be used as return type, must not be null
+     * @param list  the {@link List} to populate the {@link Set}
+     * @return a new {@link Set} populated with all elements of the provided
+     *   {@link List}
+     */
+    protected Set createSetBasedOnList(Set set, List list) {
+        Set subSet = null;
+        if(set.getClass().equals(HashSet.class)) {
+            subSet = new HashSet();
+        } else {
+            try {
+                subSet = (Set) set.getClass().newInstance();
+            } catch(InstantiationException ie) {
+                subSet = new HashSet();
+            } catch(IllegalAccessException iae) {
+                subSet = new HashSet();
+            }
+        }
+        subSet.addAll(list);
+        return subSet;        
     }
 
     //-----------------------------------------------------------------------

@@ -38,6 +38,10 @@
     <action issue="COLLECTIONS-334" dev="jochen" type="fix" due-to="sebb">
       Synchronized access to lock in "StaticBucketMap#size()".
     </action>
+    <action issue="COLLECTIONS-307" dev="bayard" type="fix" due-to="Christian Semrau">
+      "SetUniqueList#subList()#contains(Object)" will now correctly check the subList
+      rather than the parent list.
+    </action>
     <action issue="COLLECTIONS-294" dev="bayard" type="fix" due-to="Benjamin Bentmann">
       "CaseInsensitiveMap" will now convert input strings to lower-case in a
       locale-independent manner.
@@ -81,10 +85,6 @@
     </action>
     <action issue="COLLECTIONS-330" dev="mbenson" type="fix" due-to="Joerg Schaible">
       "LRUMap#keySet()#remove(Object)" will not throw a "ConcurrentModificationException" anymore.
-    </action>
-    <action issue="COLLECTIONS-307" dev="bayard" type="fix" due-to="Christian Semrau">
-      "SetUniqueList#subList()#contains(Object)" will now correctly check the subList
-      rather than the parent list.
     </action>
     <action issue="COLLECTIONS-304" dev="bayard" type="fix" due-to="Rafał Figas,Bjorn Townsend">
       "SetUniqueList#set(int, Object)" will now correctly enforce the uniqueness constraint.
