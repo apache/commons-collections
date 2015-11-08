@@ -23,6 +23,12 @@
 
   <release version="3.2.2" date="20XX-XX-XX" description="This is a bugfix release.">
 
+    <action issue="COLLECTIONS-580" dev="tn" type="update">
+      De-serialization of "InvokerTransformer" is disabled by default as this
+      can be exploited for remote code execution attacks. To re-enable the
+      feature the system property "org.apache.commons.collections.invokertransformer.enableDeserialization"
+      needs to be set to "true".
+    </action>
     <action issue="COLLECTIONS-538" dev="tn" type="fix" due-to="Trejkaz">
       "ExtendedProperties" will now use a privileged action to access the
       "file.separator" system property. In case the class does not have

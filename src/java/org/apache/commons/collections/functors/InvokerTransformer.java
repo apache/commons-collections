@@ -16,9 +16,13 @@
  */
 package org.apache.commons.collections.functors;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 
 import org.apache.commons.collections.FunctorException;
 import org.apache.commons.collections.Transformer;
@@ -35,7 +39,11 @@ public class InvokerTransformer implements Transformer, Serializable {
 
     /** The serial version */
     private static final long serialVersionUID = -8653385846894047688L;
-    
+
+    /** System property key to enable de-serialization */
+    public final static String DESERIALIZE
+        = "org.apache.commons.collections.invokertransformer.enableDeserialization";
+
     /** The method name to call */
     private final String iMethodName;
     /** The array of reflection parameter types */
@@ -134,4 +142,28 @@ public class InvokerTransformer implements Transformer, Serializable {
         }
     }
 
+    /**
+     * Overrides the default readObject implementation to prevent
+     * de-serialization (see COLLECTIONS-580).
+     */
+    private void readObject(ObjectInputStream is) throws ClassNotFoundException, IOException {
+        String deserializeProperty;
+        
+        try {
+            deserializeProperty = 
+                (String) AccessController.doPrivileged(new PrivilegedAction() {
+                    public Object run() {
+                        return System.getProperty(DESERIALIZE);
+                    }
+                });
+        } catch (SecurityException ex) {
+            deserializeProperty = null;
+        }
+
+        if (deserializeProperty == null || !deserializeProperty.equalsIgnoreCase("true")) {
+            throw new UnsupportedOperationException("Deserialization of InvokerTransformer is disabled, ");
+        }
+        
+        is.defaultReadObject();
+    }
 }
