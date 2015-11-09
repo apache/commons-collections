@@ -88,13 +88,6 @@
       Tree traversal with a TreeListIterator will not be affected anymore by
       the removal of an element directly after a call to previous().
     </action>
-    <action issue="COLLECTIONS-359" dev="bayard" type="fix" due-to="Mark Shead">
-      "ListUtils#intersection(List, List)" will now also work correctly if there
-      are duplicate elements in the provided lists.
-    </action>
-    <action issue="COLLECTIONS-330" dev="mbenson" type="fix" due-to="Joerg Schaible">
-      "LRUMap#keySet()#remove(Object)" will not throw a "ConcurrentModificationException" anymore.
-    </action>
     -->
   </release>
   </body>
