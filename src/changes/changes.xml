@@ -21,7 +21,7 @@
   </properties>
   <body>
 
-  <release version="3.2.2" date="20XX-XX-XX" description="This is a bugfix release.">
+  <release version="3.2.2" date="2015-11-16" description="This is a bugfix release.">
     <action issue="COLLECTIONS-580" dev="tn" type="update">
       De-serialization of "InvokerTransformer" is disabled by default as this
       can be exploited for remote code execution attacks. To re-enable the
