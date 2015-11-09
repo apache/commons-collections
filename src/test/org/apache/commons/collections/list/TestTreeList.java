@@ -242,4 +242,19 @@ public class TestTreeList extends AbstractTestList {
         assertEquals(false, li.hasNext());
     }
 
+    public void testBugCollections447() {
+        final List treeList = new TreeList();
+        treeList.add("A");
+        treeList.add("B");
+        treeList.add("C");
+        treeList.add("D");
+        final ListIterator li = treeList.listIterator();
+        assertEquals("A", li.next());
+        assertEquals("B", li.next());
+        assertEquals("B", li.previous());
+        li.remove(); // Deletes "B"
+        // previous() after remove() should move to
+        // the element before the one just removed
+        assertEquals("A", li.previous());
+    }    
 }

@@ -881,15 +881,14 @@ public class TreeList extends AbstractList {
             if (currentIndex == -1) {
                 throw new IllegalStateException();
             }
-            if (nextIndex == currentIndex) {
-                // remove() following previous()
-                next = next.next();
-                parent.remove(currentIndex);
-            } else {
+            parent.remove(currentIndex);
+            if (nextIndex != currentIndex) {
                 // remove() following next()
-                parent.remove(currentIndex);
                 nextIndex--;
             }
+            // the AVL node referenced by next may have become stale after a remove
+            // reset it now: will be retrieved by next call to next()/previous() via nextIndex
+            next = null;
             current = null;
             currentIndex = -1;
             expectedModCount++;
