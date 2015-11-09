@@ -44,17 +44,19 @@ public class TestInvokerTransformer extends BulkTest {
         Assert.assertNull(System.getProperty(InvokerTransformer.DESERIALIZE));
         System.setProperty(InvokerTransformer.DESERIALIZE, "true");
 
-        InvokerTransformer transformer = new InvokerTransformer("toString", new Class[0], new Object[0]);
-        byte[] data = serialize(transformer);
-        Assert.assertNotNull(data);
         try {
-            Object obj = deserialize(data);
-            Assert.assertTrue(obj instanceof InvokerTransformer);
-        } catch (UnsupportedOperationException ex) {
-            fail("de-serialization of InvokerTransformer should be enabled");
+            InvokerTransformer transformer = new InvokerTransformer("toString", new Class[0], new Object[0]);
+            byte[] data = serialize(transformer);
+            Assert.assertNotNull(data);
+            try {
+                Object obj = deserialize(data);
+                Assert.assertTrue(obj instanceof InvokerTransformer);
+            } catch (UnsupportedOperationException ex) {
+                fail("de-serialization of InvokerTransformer should be enabled");
+            }
+        } finally {
+            System.clearProperty(InvokerTransformer.DESERIALIZE);
         }
-        
-        System.clearProperty(InvokerTransformer.DESERIALIZE);
     }
     
     private byte[] serialize(InvokerTransformer transformer) throws IOException {

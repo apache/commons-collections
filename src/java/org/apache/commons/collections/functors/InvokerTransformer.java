@@ -18,6 +18,7 @@ package org.apache.commons.collections.functors;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -29,6 +30,17 @@ import org.apache.commons.collections.Transformer;
 
 /**
  * Transformer implementation that creates a new object instance by reflection.
+ * <p>
+ * <b>WARNING:</b> from v3.2.2 onwards this class will throw an
+ * {@link UnsupportedOperationException} when trying to de-serialize an
+ * instance from a {@link ObjectOutputStream} to prevent potential
+ * remote code execution exploits.
+ * <p>
+ * In order to re-enable de-serialization of {@code InvokerTransformer}
+ * instances, the following system property can be used (via -Dproperty=true):
+ * <pre>
+ * org.apache.commons.collections.invokertransformer.enableDeserialization
+ * </pre>
  * 
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
@@ -160,8 +172,10 @@ public class InvokerTransformer implements Transformer, Serializable {
             deserializeProperty = null;
         }
 
-        if (deserializeProperty == null || !deserializeProperty.equalsIgnoreCase("true")) {
-            throw new UnsupportedOperationException("Deserialization of InvokerTransformer is disabled, ");
+        if (!"true".equalsIgnoreCase(deserializeProperty)) {
+            throw new UnsupportedOperationException(
+                    "Deserialization of InvokerTransformer is disabled for security reasons. " +
+                    "To re-enable it set system property '" + DESERIALIZE + "' to 'true'");
         }
         
         is.defaultReadObject();
