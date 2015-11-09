@@ -27,7 +27,7 @@
                 <include>LICENSE.txt</include>
                 <include>NOTICE.txt</include>
                 <include>README.txt</include>
-                <include>RELEASE-NOTES.html</include>
+                <include>RELEASE-NOTES.txt</include>
             </includes>
         </fileSet>
         <fileSet>

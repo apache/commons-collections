@@ -36,7 +36,7 @@
                 <include>project.xml</include>
                 <include>PROPOSAL.html</include>
                 <include>README.txt</include>
-                <include>RELEASE-NOTES.html</include>
+                <include>RELEASE-NOTES.txt</include>
             </includes>
         </fileSet>
         <fileSet>

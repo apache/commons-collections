@@ -1,0 +1,67 @@
+              Apache Commons Collections
+                    Version 3.2.2
+                    RELEASE NOTES
+
+
+INTRODUCTION:
+
+Commons collections is a project to develop and maintain collection classes
+based on and inspired by the JDK collection framework.
+This release is JDK1.3 compatible, and does not use JDK1.5 generics.
+
+This v3.2.2 release is a bugfix release, fixing several bugs present in the previous
+releases of the 3.2 branch. Additionally, this release provides a mitigation for a
+known remote code exploitation via the standard java object serialization mechanism.
+By default, de-serialization of "InvokerTransformer" instances is prohibited and
+will result in an exception. For more details, please refer to COLLECTIONS-580.
+
+All users are strongly encouraged to updated to this release.
+
+
+Changes in this version include:
+
+CHANGES
+=======
+
+o COLLECTIONS-580:  De-serialization of "InvokerTransformer" is disabled by default as this
+                    can be exploited for remote code execution attacks. To re-enable the
+                    feature the system property
+                    "org.apache.commons.collections.invokertransformer.enableDeserialization"
+                    needs to be set to "true". 
+
+BUGFIXES
+========
+
+o COLLECTIONS-538:  "ExtendedProperties" will now use a privileged action to access the
+                    "file.separator" system property. In case the class does not have
+                    permission to read system properties, the "File#separator" field will
+                    be used instead. Thanks to Trejkaz. 
+o COLLECTIONS-447:  Tree traversal with a TreeListIterator will not be affected anymore by
+                    the removal of an element directly after a call to previous(). Thanks to Jeffrey Barnes. 
+o COLLECTIONS-444:  SetUniqueList.set(int, Object) now works correctly if the object to be inserted
+                    is already placed at the given position. Thanks to Thomas Vahrst, John Vasileff. 
+o COLLECTIONS-350:  Removed debug output in "MapUtils#getNumber(Map)". Thanks to Michael Akerman. 
+o COLLECTIONS-335:  Fixed cache assignment for "TreeBidiMap#entrySet". Thanks to sebb. 
+o COLLECTIONS-334:  Synchronized access to lock in "StaticBucketMap#size()". Thanks to sebb. 
+o COLLECTIONS-307:  "SetUniqueList#subList()#contains(Object)" will now correctly check the subList
+                    rather than the parent list. Thanks to Christian Semrau. 
+o COLLECTIONS-304:  "SetUniqueList#set(int, Object)" will now correctly enforce the uniqueness constraint.
+                    Thanks to Rafa? Figas,Bjorn Townsend. 
+o COLLECTIONS-294:  "CaseInsensitiveMap" will now convert input strings to lower-case in a
+                    locale-independent manner. Thanks to Benjamin Bentmann. 
+o COLLECTIONS-266:  "MultiKey" will now be correctly serialized/de-serialized. Thanks to Joerg Schaible. 
+o COLLECTIONS-261:  "Flat3Map#remove(Object)" will now return the correct value mapped to the removed key
+                    if the size of the map is less or equal 3. Thanks to ori. 
+o COLLECTIONS-249:  "SetUniqueList.addAll(int, Collection)" now correctly add the collection at the
+                    provided index. Thanks to Joe Kelly. 
+o COLLECTIONS-228:  "MultiValueMap#put(Object, Object)" and "MultiValueMap#putAll(Object, Collection)"
+                    now correctly return if the map has changed by this operation. 
+o COLLECTIONS-219:  "CollectionUtils#removeAll" wrongly called "ListUtils#retainAll". Thanks to Tom Leccese. 
+o COLLECTIONS-217:  Calling "setValue(Object)" on any Entry returned by a "Flat3Map" will now
+                    correctly set the value for the current entry. Thanks to Matt Bishop. 
+
+ 
+For complete information on Apache Commons Collections, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Collections website:
+
+http://commons.apache.org/collections/
