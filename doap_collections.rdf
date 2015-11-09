@@ -1,34 +1,66 @@
 <?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
 <rdf:RDF xmlns="http://usefulinc.com/ns/doap#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:asfext="http://projects.apache.org/ns/asfext#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:doap="http://usefulinc.com/ns/doap#" xml:lang="en">
-  <Project rdf:about="http://jakarta.apache.org/commons/collections/">
-    <name>Apache Jakarta Commons Collections</name>
-    <homepage rdf:resource="http://jakarta.apache.org/commons/collections/"/>
+  <Project rdf:about="http://commons.apache.org/collections/">
+    <name>Apache Commons Collections</name>
+    <homepage rdf:resource="http://commons.apache.org/collections/"/>
     <programming-language>Java</programming-language>
     <category rdf:resource="http://projects.apache.org/category/library"/>
     <license rdf:resource="http://usefulinc.com/doap/licenses/asl20"/>
-    <bug-database rdf:resource="http://issues.apache.org/bugzilla/buglist.cgi?product=Commons&amp;component=collections"/>
-    <download-page rdf:resource="http://jakarta.apache.org/site/downloads/downloads_commons-collections.cgi"/>
-    <asfext:pmc rdf:resource="http://jakarta.apache.org/"/>
+    <bug-database rdf:resource="http://issues.apache.org/jira/browse/COLLECTIONS"/>
+    <download-page rdf:resource="http://commons.apache.org/collections/download_collections.cgi"/>
+    <asfext:pmc rdf:resource="http://commons.apache.org/"/>
     <shortdesc xml:lang="en">Commons Collections</shortdesc>
     <description xml:lang="en">Types that extend and augment the Java Collections Framework.</description>
     <repository>
       <SVNRepository>
-        <browse rdf:resource="http://svn.apache.org/repos/asf/jakarta/commons/proper/collections/trunk"/>
-        <location rdf:resource="http://svn.apache.org/repos/asf/jakarta/commons/proper/collections"/>
+        <browse rdf:resource="http://svn.apache.org/repos/asf/commons/proper/collections/trunk"/>
+        <location rdf:resource="http://svn.apache.org/repos/asf/commons/proper/collections"/>
       </SVNRepository>
     </repository>
     <release>
-      <revision>
+      <Version>
         <name>commons-collections</name>
-        <created>2004-06-23</created>
-        <version>3.1</version>
-      </revision>
-      <revision>
-        <name>commons-collections</name>
-        <created>2004-06-23</created>
-        <version>2.1.1</version>
-      </revision>
+        <created>2008-04-15</created>
+        <revision>3.2.1</revision>
+      </Version>
     </release>
-    <mailing-list rdf:resource="http://jakarta.apache.org/site/mail2.html#Commons"/>
+    <release>
+      <Version>
+        <name>commons-collections</name>
+        <created>2006-05-14</created>
+        <revision>3.2</revision>
+      </Version>
+    </release>
+    <release>
+      <Version>
+        <name>commons-collections</name>
+        <created>2004-06-23</created>
+        <revision>3.1</revision>
+      </Version>
+    </release>
+    <release>
+      <Version>
+        <name>commons-collections</name>
+        <created>2004-06-23</created>
+        <revision>2.1.1</revision>
+      </Version>
+    </release>
+    <mailing-list rdf:resource="http://commons.apache.org/mail-lists.html"/>
   </Project>
 </rdf:RDF>
