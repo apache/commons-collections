@@ -27,7 +27,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>commons-collections</groupId>
   <artifactId>commons-collections</artifactId>
-  <version>3.2.2-SNAPSHOT</version>
+  <version>3.2.2</version>
   <name>Apache Commons Collections</name>
 
   <inceptionYear>2001</inceptionYear>
@@ -381,8 +381,8 @@
     <maven.compile.source>1.2</maven.compile.source>
     <maven.compile.target>1.2</maven.compile.target>
     <commons.componentid>collections</commons.componentid>
-    <commons.release.version>3.2.1</commons.release.version>
-    <commons.rc.version>RC1</commons.rc.version>
+    <commons.release.version>3.2.2</commons.release.version>
+    <commons.rc.version>RC2</commons.rc.version>
     <commons.binary.suffix>-bin</commons.binary.suffix>
     <commons.jira.id>COLLECTIONS</commons.jira.id>
     <commons.jira.pid>12310465</commons.jira.pid>
