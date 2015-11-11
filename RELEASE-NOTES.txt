@@ -12,8 +12,9 @@ This release is JDK1.3 compatible, and does not use JDK1.5 generics.
 This v3.2.2 release is a bugfix release, fixing several bugs present in the previous
 releases of the 3.2 branch. Additionally, this release provides a mitigation for a
 known remote code exploitation via the standard java object serialization mechanism.
-By default, de-serialization of "InvokerTransformer" instances is prohibited and
-will result in an exception. For more details, please refer to COLLECTIONS-580.
+By default, serialization support for unsafe classes in the functor package is
+disabled and will result in an exception when either trying to serialize or de-serialize
+an instance of these classes. For more details, please refer to COLLECTIONS-580.
 
 All users are strongly encouraged to updated to this release.
 
@@ -23,11 +24,14 @@ Changes in this version include:
 CHANGES
 =======
 
-o COLLECTIONS-580:  De-serialization of "InvokerTransformer" is disabled by default as this
-                    can be exploited for remote code execution attacks. To re-enable the
-                    feature the system property
-                    "org.apache.commons.collections.invokertransformer.enableDeserialization"
-                    needs to be set to "true". 
+o COLLECTIONS-580:  Serialization support for unsafe classes in the functor package is
+                    disabled by default as this can be exploited for remote code execution
+                    attacks. To re-enable the feature the system property
+                    "org.apache.commons.collections.enableUnsafeSerialization" needs to be
+                    set to "true".
+                    Classes considered to be unsafe are: CloneTransformer, ForClosure,
+                    InstantiateFactory, InstantiateTransformer, InvokerTransformer,
+                    PrototypeCloneFactory, PrototypeSerializationFactory, WhileClosure.
 
 BUGFIXES
 ========

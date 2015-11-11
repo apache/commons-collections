@@ -21,12 +21,15 @@
   </properties>
   <body>
 
-  <release version="3.2.2" date="20XX-XX-XX" description="This is a bugfix release.">
+  <release version="3.2.2" date="2015-11-18" description="This is a bugfix release.">
     <action issue="COLLECTIONS-580" dev="tn" type="update">
-      De-serialization of "InvokerTransformer" is disabled by default as this
-      can be exploited for remote code execution attacks. To re-enable the
-      feature the system property "org.apache.commons.collections.invokertransformer.enableDeserialization"
+      Serialization support for unsafe classes in the functor package is disabled
+      by default as this can be exploited for remote code execution attacks.
+      To re-enable the feature the system property "org.apache.commons.collections.enableUnsafeSerialization"
       needs to be set to "true".
+      Classes considered to be unsafe are: CloneTransformer, ForClosure, InstantiateFactory,
+      InstantiateTransformer, InvokerTransformer, PrototypeCloneFactory,
+      PrototypeSerializationFactory, WhileClosure.
     </action>
     <action issue="COLLECTIONS-538" dev="tn" type="fix" due-to="Trejkaz">
       "ExtendedProperties" will now use a privileged action to access the
