@@ -19,27 +19,27 @@ package org.apache.commons.collections.functors;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class TestInvokerTransformer extends AbstractTestSerialization {
+public class TestWhileClosure extends AbstractTestSerialization {
 
     // conventional
     // ------------------------------------------------------------------------
 
-    public TestInvokerTransformer(String testName) {
+    public TestWhileClosure(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        return new TestSuite(TestInvokerTransformer.class);
+        return new TestSuite(TestWhileClosure.class);
     }
 
     // ------------------------------------------------------------------------
 
     public Object makeObject() {
-        return new InvokerTransformer("toString", new Class[0], new Object[0]);
+        return new WhileClosure(FalsePredicate.INSTANCE, NOPClosure.INSTANCE, true);
     }
 
     public Class getTestClass() {
-        return InvokerTransformer.class;
+        return WhileClosure.class;
     }
 
 }

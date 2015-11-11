@@ -16,6 +16,9 @@
  */
 package org.apache.commons.collections.functors;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import org.apache.commons.collections.Transformer;
@@ -24,7 +27,17 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation that returns a clone of the input object.
  * <p>
  * Clone is performed using <code>PrototypeFactory.getInstance(input).create()</code>.
- * 
+ * <p>
+ * <b>WARNING:</b> from v3.2.2 onwards this class will throw an
+ * {@link UnsupportedOperationException} when trying to serialize or
+ * de-serialize an instance to prevent potential remote code execution exploits.
+ * <p>
+ * In order to re-enable serialization support for {@code CloneTransformer}
+ * the following system property can be used (via -Dproperty=true):
+ * <pre>
+ * org.apache.commons.collections.enableUnsafeSerialization
+ * </pre>
+ *
  * @since Commons Collections 3.0
  * @version $Revision$ $Date$
  *
@@ -68,4 +81,21 @@ public class CloneTransformer implements Transformer, Serializable {
         return PrototypeFactory.getInstance(input).create();
     }
 
+    /**
+     * Overrides the default writeObject implementation to prevent
+     * serialization (see COLLECTIONS-580).
+     */
+    private void writeObject(ObjectOutputStream os) throws IOException {
+        FunctorUtils.checkUnsafeSerialization(CloneTransformer.class);
+        os.defaultWriteObject();
+    }
+
+    /**
+     * Overrides the default readObject implementation to prevent
+     * de-serialization (see COLLECTIONS-580).
+     */
+    private void readObject(ObjectInputStream is) throws ClassNotFoundException, IOException {
+        FunctorUtils.checkUnsafeSerialization(CloneTransformer.class);
+        is.defaultReadObject();
+    }
 }

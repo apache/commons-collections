@@ -19,27 +19,27 @@ package org.apache.commons.collections.functors;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
-public class TestInvokerTransformer extends AbstractTestSerialization {
+public class TestInstantiateTransformer extends AbstractTestSerialization {
 
     // conventional
     // ------------------------------------------------------------------------
 
-    public TestInvokerTransformer(String testName) {
+    public TestInstantiateTransformer(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        return new TestSuite(TestInvokerTransformer.class);
+        return new TestSuite(TestInstantiateTransformer.class);
     }
 
     // ------------------------------------------------------------------------
 
     public Object makeObject() {
-        return new InvokerTransformer("toString", new Class[0], new Object[0]);
+        return new InstantiateTransformer(new Class[0], new Object[0]);
     }
 
     public Class getTestClass() {
-        return InvokerTransformer.class;
+        return InstantiateTransformer.class;
     }
 
 }

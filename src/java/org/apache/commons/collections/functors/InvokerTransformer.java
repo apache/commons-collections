@@ -22,8 +22,6 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.security.AccessController;
-import java.security.PrivilegedAction;
 
 import org.apache.commons.collections.FunctorException;
 import org.apache.commons.collections.Transformer;
@@ -32,14 +30,13 @@ import org.apache.commons.collections.Transformer;
  * Transformer implementation that creates a new object instance by reflection.
  * <p>
  * <b>WARNING:</b> from v3.2.2 onwards this class will throw an
- * {@link UnsupportedOperationException} when trying to de-serialize an
- * instance from a {@link ObjectOutputStream} to prevent potential
- * remote code execution exploits.
+ * {@link UnsupportedOperationException} when trying to serialize or
+ * de-serialize an instance to prevent potential remote code execution exploits.
  * <p>
- * In order to re-enable de-serialization of {@code InvokerTransformer}
- * instances, the following system property can be used (via -Dproperty=true):
+ * In order to re-enable serialization support for {@code InvokerTransformer}
+ * the following system property can be used (via -Dproperty=true):
  * <pre>
- * org.apache.commons.collections.invokertransformer.enableDeserialization
+ * org.apache.commons.collections.enableUnsafeSerialization
  * </pre>
  * 
  * @since Commons Collections 3.0
@@ -51,10 +48,6 @@ public class InvokerTransformer implements Transformer, Serializable {
 
     /** The serial version */
     private static final long serialVersionUID = -8653385846894047688L;
-
-    /** System property key to enable de-serialization */
-    public final static String DESERIALIZE
-        = "org.apache.commons.collections.invokertransformer.enableDeserialization";
 
     /** The method name to call */
     private final String iMethodName;
@@ -155,29 +148,20 @@ public class InvokerTransformer implements Transformer, Serializable {
     }
 
     /**
+     * Overrides the default writeObject implementation to prevent
+     * serialization (see COLLECTIONS-580).
+     */
+    private void writeObject(ObjectOutputStream os) throws IOException {
+        FunctorUtils.checkUnsafeSerialization(InvokerTransformer.class);
+        os.defaultWriteObject();
+    }
+
+    /**
      * Overrides the default readObject implementation to prevent
      * de-serialization (see COLLECTIONS-580).
      */
     private void readObject(ObjectInputStream is) throws ClassNotFoundException, IOException {
-        String deserializeProperty;
-        
-        try {
-            deserializeProperty = 
-                (String) AccessController.doPrivileged(new PrivilegedAction() {
-                    public Object run() {
-                        return System.getProperty(DESERIALIZE);
-                    }
-                });
-        } catch (SecurityException ex) {
-            deserializeProperty = null;
-        }
-
-        if (!"true".equalsIgnoreCase(deserializeProperty)) {
-            throw new UnsupportedOperationException(
-                    "Deserialization of InvokerTransformer is disabled for security reasons. " +
-                    "To re-enable it set system property '" + DESERIALIZE + "' to 'true'");
-        }
-        
+        FunctorUtils.checkUnsafeSerialization(InvokerTransformer.class);
         is.defaultReadObject();
     }
 }

@@ -17,29 +17,32 @@
 package org.apache.commons.collections.functors;
 
 import junit.framework.Test;
+import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-public class TestInvokerTransformer extends AbstractTestSerialization {
-
-    // conventional
-    // ------------------------------------------------------------------------
-
-    public TestInvokerTransformer(String testName) {
+/**
+ * Entry point for all Functor tests.
+ */
+public class TestAll extends TestCase {
+    
+    public TestAll(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        return new TestSuite(TestInvokerTransformer.class);
+        TestSuite suite = new TestSuite();
+        suite.addTest(TestCloneTransformer.suite());
+        suite.addTest(TestForClosure.suite());
+        suite.addTest(TestInstantiateTransformer.suite());
+        suite.addTest(TestInstantiateFactory.suite());
+        suite.addTest(TestInvokerTransformer.suite());
+        suite.addTest(TestWhileClosure.suite());
+        return suite;
     }
-
-    // ------------------------------------------------------------------------
-
-    public Object makeObject() {
-        return new InvokerTransformer("toString", new Class[0], new Object[0]);
+        
+    public static void main(String args[]) {
+        String[] testCaseName = { TestAll.class.getName() };
+        junit.textui.TestRunner.main(testCaseName);
     }
-
-    public Class getTestClass() {
-        return InvokerTransformer.class;
-    }
-
+    
 }

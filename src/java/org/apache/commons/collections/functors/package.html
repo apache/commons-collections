@@ -24,4 +24,32 @@ This package contains implementations of the
 {@link org.apache.commons.collections.Factory Factory} interfaces.
 These provide simple callbacks for processing with collections.
 </p>
+<p>
+<b>WARNING:</b> from v3.2.2 onwards this several classes in this package will
+throw an {@link UnsupportedOperationException} when trying to serialize or
+de-serialize an instance to prevent potential remote code execution exploits.
+</p>
+<p>
+Classes considered to be unsafe are:
+</p>
+<ul>
+  <li>CloneTransformer</li>
+  <li>ForClosure</li>
+  <li>InstantiateFactory</li>
+  <li>InstantiateTransformer</li>
+  <li>InvokerTransformer</li>
+  <li>WhileClosure</li>
+</ul>
+<p>
+In order to re-enable serialization support for these unsafe classes, the
+following system property can be used (via -Dproperty=true):
+<pre>
+org.apache.commons.collections.enableUnsafeSerialization
+</pre>
+<p>
+Be warned though that enabling serialization support for these unsafe classes
+makes your application vulnerable to known exploits and you must ensure that
+your application does not de-serialize objects from untrusted sources.
+</p>
+
 </BODY>

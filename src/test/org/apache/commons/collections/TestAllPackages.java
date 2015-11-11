@@ -40,6 +40,7 @@ public class TestAllPackages extends TestCase {
         suite.addTest(org.apache.commons.collections.buffer.TestAll.suite());
         suite.addTest(org.apache.commons.collections.collection.TestAll.suite());
         suite.addTest(org.apache.commons.collections.comparators.TestAll.suite());
+        suite.addTest(org.apache.commons.collections.functors.TestAll.suite());
         suite.addTest(org.apache.commons.collections.iterators.TestAll.suite());
         suite.addTest(org.apache.commons.collections.keyvalue.TestAll.suite());
         suite.addTest(org.apache.commons.collections.list.TestAll.suite());
