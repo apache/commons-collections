@@ -382,6 +382,7 @@
     <maven.compile.target>1.2</maven.compile.target>
     <commons.componentid>collections</commons.componentid>
     <commons.release.version>3.2.1</commons.release.version>
+    <commons.rc.version>RC1</commons.rc.version>
     <commons.binary.suffix>-bin</commons.binary.suffix>
     <commons.jira.id>COLLECTIONS</commons.jira.id>
     <commons.jira.pid>12310465</commons.jira.pid>
@@ -390,49 +391,64 @@
   <build>
     <sourceDirectory>src/java</sourceDirectory>
     <testSourceDirectory>src/test</testSourceDirectory>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-            <configuration>
-              <includes>
-                <include>org/apache/commons/collections/TestAllPackages.java</include>
-              </includes>
-          </configuration>
-        </plugin>
-        <plugin>
-          <artifactId>maven-antrun-plugin</artifactId>
-          <executions>
-            <execution>
-              <phase>package</phase>
-              <configuration>
-                <tasks>
-                  <ant antfile="build-testframework.xml" target="jar">
-                    <property name="component.version"    value="${project.version}"/>
-                    <property name="test.classes"         value="${project.build.directory}/test-classes"/>
-                    <property name="dist.home"            value="${project.build.directory}"/>
-                    <property name="maven.compile.source" value="${maven.compile.source}"/>
-                    <property name="maven.compile.target" value="${maven.compile.target}"/>
-                  </ant>
-                </tasks>
-              </configuration>
-              <goals>
-                <goal>run</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <artifactId>maven-assembly-plugin</artifactId>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
           <configuration>
-            <descriptors>
-              <descriptor>src/assembly/bin.xml</descriptor>
-              <descriptor>src/assembly/src.xml</descriptor>
-            </descriptors>
-            <tarLongFileMode>gnu</tarLongFileMode>
-          </configuration>
-        </plugin>
-      </plugins>
-    </build>
+            <includes>
+              <include>org/apache/commons/collections/TestAllPackages.java</include>
+            </includes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <configuration>
+              <tasks>
+                <ant antfile="build-testframework.xml" target="jar">
+                  <property name="component.version"    value="${project.version}"/>
+                  <property name="test.classes"         value="${project.build.directory}/test-classes"/>
+                  <property name="dist.home"            value="${project.build.directory}"/>
+                  <property name="maven.compile.source" value="${maven.compile.source}"/>
+                  <property name="maven.compile.target" value="${maven.compile.target}"/>
+                </ant>
+              </tasks>
+            </configuration>
+            <goals>
+              <goal>run</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptors>
+            <descriptor>src/assembly/bin.xml</descriptor>
+            <descriptor>src/assembly/src.xml</descriptor>
+          </descriptors>
+          <tarLongFileMode>gnu</tarLongFileMode>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.rat</groupId>
+        <artifactId>apache-rat-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <exclude>src/test/resources/data/test/*</exclude>
+            <exclude>maven-eclipse.xml</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
 
 </project>
