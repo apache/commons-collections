@@ -16,34 +16,34 @@
  */
 package org.apache.commons.collections.functors;
 
+import java.util.ArrayList;
+
+import org.apache.commons.collections.Factory;
+
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-/**
- * Entry point for all Functor tests.
- */
-public class TestAll extends TestCase {
-    
-    public TestAll(String testName) {
+public class TestPrototypeFactory extends AbstractTestSerialization {
+
+    // conventional
+    // ------------------------------------------------------------------------
+
+    public TestPrototypeFactory(String testName) {
         super(testName);
     }
 
     public static Test suite() {
-        TestSuite suite = new TestSuite();
-        suite.addTest(TestCloneTransformer.suite());
-        suite.addTest(TestForClosure.suite());
-        suite.addTest(TestInstantiateTransformer.suite());
-        suite.addTest(TestInstantiateFactory.suite());
-        suite.addTest(TestInvokerTransformer.suite());
-        suite.addTest(TestPrototypeFactory.suite());
-        suite.addTest(TestWhileClosure.suite());
-        return suite;
+        return new TestSuite(TestPrototypeFactory.class);
     }
-        
-    public static void main(String args[]) {
-        String[] testCaseName = { TestAll.class.getName() };
-        junit.textui.TestRunner.main(testCaseName);
+
+    // ------------------------------------------------------------------------
+
+    public Object makeObject() {
+        return PrototypeFactory.getInstance(new ArrayList());
     }
-    
+
+    public Class getTestClass() {
+        return Factory.class;
+    }
+
 }
