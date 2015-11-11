@@ -129,68 +129,6 @@ public class TestFactoryUtils extends junit.framework.TestCase {
         assertSame(ConstantFactory.NULL_INSTANCE, FactoryUtils.prototypeFactory(null));
     }
 
-    public void testPrototypeFactoryPublicCloneMethod() throws Exception {
-        Date proto = new Date();
-        Factory factory = FactoryUtils.prototypeFactory(proto);
-        assertNotNull(factory);
-        Object created = factory.create();
-        assertTrue(proto != created);
-        assertEquals(proto, created);
-        
-        // check serialisation works
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutputStream out = new ObjectOutputStream(buffer);
-        out.writeObject(factory);
-        out.close();
-        ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
-        Object dest = in.readObject();
-        in.close();
-    }
-
-    public void testPrototypeFactoryPublicCopyConstructor() throws Exception {
-        Mock1 proto = new Mock1(6);
-        Factory factory = FactoryUtils.prototypeFactory(proto);
-        assertNotNull(factory);
-        Object created = factory.create();
-        assertTrue(proto != created);
-        assertEquals(proto, created);
-        
-        // check serialisation works
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutputStream out = new ObjectOutputStream(buffer);
-        try {
-            out.writeObject(factory);
-        } catch (NotSerializableException ex) {
-            out.close();
-        }
-        factory = FactoryUtils.prototypeFactory(new Mock2("S"));
-        buffer = new ByteArrayOutputStream();
-        out = new ObjectOutputStream(buffer);
-        out.writeObject(factory);
-        out.close();
-        ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
-        Object dest = in.readObject();
-        in.close();
-    }
-
-    public void testPrototypeFactoryPublicSerialization() throws Exception {
-        Integer proto = new Integer(9);
-        Factory factory = FactoryUtils.prototypeFactory(proto);
-        assertNotNull(factory);
-        Object created = factory.create();
-        assertTrue(proto != created);
-        assertEquals(proto, created);
-        
-        // check serialisation works
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutputStream out = new ObjectOutputStream(buffer);
-        out.writeObject(factory);
-        out.close();
-        ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
-        Object dest = in.readObject();
-        in.close();
-    }
-
     public void testPrototypeFactoryPublicSerializationError() {
         Mock2 proto = new Mock2(new Object());
         Factory factory = FactoryUtils.prototypeFactory(proto);
