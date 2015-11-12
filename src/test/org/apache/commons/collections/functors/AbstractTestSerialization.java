@@ -60,7 +60,7 @@ public abstract class AbstractTestSerialization extends BulkTest {
     //-----------------------------------------------------------------------
     
     public void testSerializationDisabled() throws Exception {
-        Assert.assertNull(System.getProperty(FunctorUtils.UNSAFE_SERIALIZABLE_PROPERTY));
+        Assert.assertFalse("true".equalsIgnoreCase(System.getProperty(FunctorUtils.UNSAFE_SERIALIZABLE_PROPERTY)));
         Object object = makeObject();
         try {
             serialize(object);
@@ -82,7 +82,7 @@ public abstract class AbstractTestSerialization extends BulkTest {
     }
 
     public void testSerializationEnabled() throws Exception {
-        Assert.assertNull(System.getProperty(FunctorUtils.UNSAFE_SERIALIZABLE_PROPERTY));
+        Assert.assertFalse("true".equalsIgnoreCase(System.getProperty(FunctorUtils.UNSAFE_SERIALIZABLE_PROPERTY)));
         System.setProperty(FunctorUtils.UNSAFE_SERIALIZABLE_PROPERTY, "true");
 
         try {
@@ -96,7 +96,7 @@ public abstract class AbstractTestSerialization extends BulkTest {
                 fail("de-serialization of " + getTestClass().getName() + " should be enabled");
             }
         } finally {
-            System.clearProperty(FunctorUtils.UNSAFE_SERIALIZABLE_PROPERTY);
+            System.setProperty(FunctorUtils.UNSAFE_SERIALIZABLE_PROPERTY, "false");
         }
     }
     

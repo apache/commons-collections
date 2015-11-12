@@ -207,17 +207,17 @@ public class TestFlat3Map extends AbstractTestIterableMap {
     
     public void testCollections261() {
         final Flat3Map m = new Flat3Map();
-        m.put( Integer.valueOf(1), Integer.valueOf(1) );
-        m.put( Integer.valueOf(0), Integer.valueOf(0) );
-        assertEquals( Integer.valueOf(1), m.remove( Integer.valueOf(1) ) ); 
-        assertEquals( Integer.valueOf(0), m.remove( Integer.valueOf(0) ) ); 
+        m.put( new Integer(1), new Integer(1) );
+        m.put( new Integer(0), new Integer(0) );
+        assertEquals( new Integer(1), m.remove( new Integer(1) ) ); 
+        assertEquals( new Integer(0), m.remove( new Integer(0) ) ); 
 
-        m.put( Integer.valueOf(2), Integer.valueOf(2) );
-        m.put( Integer.valueOf(1), Integer.valueOf(1) );
-        m.put( Integer.valueOf(0), Integer.valueOf(0) );
-        assertEquals( Integer.valueOf(2), m.remove( Integer.valueOf(2) ) ); 
-        assertEquals( Integer.valueOf(1), m.remove( Integer.valueOf(1) ) ); 
-        assertEquals( Integer.valueOf(0), m.remove( Integer.valueOf(0) ) ); 
+        m.put( new Integer(2), new Integer(2) );
+        m.put( new Integer(1), new Integer(1) );
+        m.put( new Integer(0), new Integer(0) );
+        assertEquals( new Integer(2), m.remove( new Integer(2) ) ); 
+        assertEquals( new Integer(1), m.remove( new Integer(1) ) ); 
+        assertEquals( new Integer(0), m.remove( new Integer(0) ) ); 
     }
 
     public void testSerialisation0() throws Exception {

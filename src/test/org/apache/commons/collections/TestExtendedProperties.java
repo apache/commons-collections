@@ -319,7 +319,9 @@ public class TestExtendedProperties extends TestCase {
         SecurityManager manager = new SecurityManager() {
 
             public void checkPropertyAccess(String key) {
-                throw new SecurityException();
+                if ("file.separator".equals(key)) {
+                    throw new SecurityException();
+                }
             }
 
             public void checkPermission(Permission perm) {
@@ -333,7 +335,6 @@ public class TestExtendedProperties extends TestCase {
             ExtendedProperties properties = new ExtendedProperties();
             assertNotNull(properties);
         } catch (Exception ex) {
-            ex.printStackTrace();
             fail("failed to instantiate ExtendedProperties");
         } finally {
             System.setSecurityManager(null);

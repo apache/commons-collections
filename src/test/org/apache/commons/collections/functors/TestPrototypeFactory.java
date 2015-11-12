@@ -75,7 +75,7 @@ public class TestPrototypeFactory extends AbstractTestSerialization {
             Object dest = in.readObject();
             in.close();
         } finally {
-            System.clearProperty(FunctorUtils.UNSAFE_SERIALIZABLE_PROPERTY);
+            System.setProperty(FunctorUtils.UNSAFE_SERIALIZABLE_PROPERTY, "false");
         }
     }
 
@@ -106,7 +106,7 @@ public class TestPrototypeFactory extends AbstractTestSerialization {
             Object dest = in.readObject();
             in.close();
         } finally {
-            System.clearProperty(FunctorUtils.UNSAFE_SERIALIZABLE_PROPERTY);
+            System.setProperty(FunctorUtils.UNSAFE_SERIALIZABLE_PROPERTY, "false");
         }
     }
 
@@ -129,7 +129,7 @@ public class TestPrototypeFactory extends AbstractTestSerialization {
             Object dest = in.readObject();
             in.close();
         } finally {
-            System.clearProperty(FunctorUtils.UNSAFE_SERIALIZABLE_PROPERTY);
+            System.setProperty(FunctorUtils.UNSAFE_SERIALIZABLE_PROPERTY, "false");
         }
     }
 
