@@ -30,6 +30,12 @@ import org.apache.commons.collections4.FunctorException;
 
 /**
  * Factory implementation that creates a new instance each time based on a prototype.
+ * <p>
+ * <b>WARNING:</b> from v4.1 onwards {@link Factory} instances returned by
+ * {@link #prototypeFactory(Object)} will <b>not</b> be serializable anymore in order
+ * to prevent potential remote code execution exploits. Please refer to
+ * <a href="https://issues.apache.org/jira/browse/COLLECTIONS-580">COLLECTIONS-580</a>
+ * for more details.
  *
  * @since 3.0
  * @version $Id$
@@ -91,10 +97,7 @@ public class PrototypeFactory {
     /**
      * PrototypeCloneFactory creates objects by copying a prototype using the clone method.
      */
-    static class PrototypeCloneFactory<T> implements Factory<T>, Serializable {
-
-        /** The serial version */
-        private static final long serialVersionUID = 5604271422565175555L;
+    static class PrototypeCloneFactory<T> implements Factory<T> {
 
         /** The object to clone each time */
         private final T iPrototype;
@@ -126,6 +129,7 @@ public class PrototypeFactory {
          *
          * @return the new object
          */
+        @Override
         @SuppressWarnings("unchecked")
         public T create() {
             // needed for post-serialization
@@ -148,10 +152,7 @@ public class PrototypeFactory {
     /**
      * PrototypeSerializationFactory creates objects by cloning a prototype using serialization.
      */
-    static class PrototypeSerializationFactory<T extends Serializable> implements Factory<T>, Serializable {
-
-        /** The serial version */
-        private static final long serialVersionUID = -8704966966139178833L;
+    static class PrototypeSerializationFactory<T extends Serializable> implements Factory<T> {
 
         /** The object to clone via serialization each time */
         private final T iPrototype;
@@ -169,6 +170,7 @@ public class PrototypeFactory {
          *
          * @return the new object
          */
+        @Override
         @SuppressWarnings("unchecked")
         public T create() {
             final ByteArrayOutputStream baos = new ByteArrayOutputStream(512);

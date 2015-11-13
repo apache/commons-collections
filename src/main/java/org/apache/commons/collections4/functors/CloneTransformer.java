@@ -16,22 +16,22 @@
  */
 package org.apache.commons.collections4.functors;
 
-import java.io.Serializable;
-
 import org.apache.commons.collections4.Transformer;
 
 /**
  * Transformer implementation that returns a clone of the input object.
  * <p>
  * Clone is performed using <code>PrototypeFactory.prototypeFactory(input).create()</code>.
+ * <p>
+ * <b>WARNING:</b> from v4.1 onwards this class will <b>not</b> be serializable anymore
+ * in order to prevent potential remote code execution exploits. Please refer to
+ * <a href="https://issues.apache.org/jira/browse/COLLECTIONS-580">COLLECTIONS-580</a>
+ * for more details.
  *
  * @since 3.0
  * @version $Id$
  */
-public class CloneTransformer<T> implements Transformer<T, T>, Serializable {
-
-    /** Serial version UID */
-    private static final long serialVersionUID = -8188742709499652567L;
+public class CloneTransformer<T> implements Transformer<T, T> {
 
     /** Singleton predicate instance */
     @SuppressWarnings("rawtypes") // the singleton instance works for all types
@@ -46,7 +46,7 @@ public class CloneTransformer<T> implements Transformer<T, T>, Serializable {
      */
     @SuppressWarnings("unchecked") // the singleton instance works for all types
     public static <T> Transformer<T, T> cloneTransformer() {
-        return (Transformer<T, T>) INSTANCE;
+        return INSTANCE;
     }
 
     /**
@@ -62,15 +62,12 @@ public class CloneTransformer<T> implements Transformer<T, T>, Serializable {
      * @param input  the input object to transform
      * @return the transformed result
      */
+    @Override
     public T transform(final T input) {
         if (input == null) {
             return null;
         }
         return PrototypeFactory.prototypeFactory(input).create();
-    }
-
-    private Object readResolve() {
-        return INSTANCE;
     }
 
 }

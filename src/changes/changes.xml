@@ -22,6 +22,13 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-580" dev="tn" type="update">
+      Serialization support for unsafe classes in the functor package
+      has been removed as this can be exploited for remote code execution
+      attacks. Classes considered to be unsafe are: CloneTransformer,
+      ForClosure, InstantiateFactory, InstantiateTransformer, InvokerTransformer,
+      PrototypeCloneFactory, PrototypeSerializationFactory, WhileClosure.
+    </action>
     <action issue="COLLECTIONS-576" dev="tn" type="fix" due-to="Stephan Roch">
       Subclasses of MultiKey did not re-calculate their hashcode after de-serialization.
     </action>

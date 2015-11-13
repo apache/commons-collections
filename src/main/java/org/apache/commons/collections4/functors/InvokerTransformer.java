@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.functors;
 
-import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -25,14 +24,16 @@ import org.apache.commons.collections4.Transformer;
 
 /**
  * Transformer implementation that creates a new object instance by reflection.
+ * <p>
+ * <b>WARNING:</b> from v4.1 onwards this class will <b>not</b> be serializable anymore
+ * in order to prevent potential remote code execution exploits. Please refer to
+ * <a href="https://issues.apache.org/jira/browse/COLLECTIONS-580">COLLECTIONS-580</a>
+ * for more details.
  *
  * @since 3.0
  * @version $Id$
  */
-public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable {
-
-    /** The serial version */
-    private static final long serialVersionUID = -8653385846894047688L;
+public class InvokerTransformer<I, O> implements Transformer<I, O> {
 
     /** The method name to call */
     private final String iMethodName;
@@ -121,6 +122,7 @@ public class InvokerTransformer<I, O> implements Transformer<I, O>, Serializable
      * @param input  the input object to transform
      * @return the transformed result, null if null input
      */
+    @Override
     @SuppressWarnings("unchecked")
     public O transform(final Object input) {
         if (input == null) {
