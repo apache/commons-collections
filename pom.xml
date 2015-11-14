@@ -483,15 +483,15 @@
     <commons.release.desc>(Java 5.0+)</commons.release.desc>
 
     <!-- Previous 3.x release series -->
-    <commons.release.2.version>3.2.1</commons.release.2.version>
-    <commons.release.2.desc>(Requires Java 1.2 or later)</commons.release.2.desc>
+    <commons.release.2.version>3.2.2</commons.release.2.version>
+    <commons.release.2.desc>(Requires Java 1.3 or later)</commons.release.2.desc>
     <!-- Override generated name -->
     <commons.release.2.name>commons-collections-${commons.release.2.version}</commons.release.2.name>
 
     <commons.jira.id>COLLECTIONS</commons.jira.id>
     <commons.jira.pid>12310465</commons.jira.pid>
     <!-- The RC version used in the staging repository URL. -->
-    <commons.rc.version>RC5</commons.rc.version>
+    <commons.rc.version>RC1</commons.rc.version>
     <checkstyle.version>2.9.1</checkstyle.version>
 
     <commons.site.path>collections</commons.site.path>
