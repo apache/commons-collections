@@ -16,14 +16,14 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.NotSerializableException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.TimeZone;
@@ -106,15 +106,6 @@ public class FactoryUtilsTest {
         final Date created = factory.create();
         assertTrue(proto != created);
         assertEquals(proto, created);
-
-        // check serialisation works
-        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        final ObjectOutputStream out = new ObjectOutputStream(buffer);
-        out.writeObject(factory);
-        out.close();
-        final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
-        in.readObject();
-        in.close();
     }
 
     @Test
@@ -125,23 +116,6 @@ public class FactoryUtilsTest {
         final Object created = factory.create();
         assertTrue(proto != created);
         assertEquals(proto, created);
-
-        // check serialisation works
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        ObjectOutputStream out = new ObjectOutputStream(buffer);
-        try {
-            out.writeObject(factory);
-        } catch (final NotSerializableException ex) {
-            out.close();
-        }
-        factory = FactoryUtils.<Object>prototypeFactory(new Mock2("S"));
-        buffer = new ByteArrayOutputStream();
-        out = new ObjectOutputStream(buffer);
-        out.writeObject(factory);
-        out.close();
-        final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
-        in.readObject();
-        in.close();
     }
 
     @Test
@@ -152,15 +126,6 @@ public class FactoryUtilsTest {
         final Integer created = factory.create();
         assertTrue(proto != created);
         assertEquals(proto, created);
-
-        // check serialisation works
-        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        final ObjectOutputStream out = new ObjectOutputStream(buffer);
-        out.writeObject(factory);
-        out.close();
-        final ObjectInputStream in = new ObjectInputStream(new ByteArrayInputStream(buffer.toByteArray()));
-        in.readObject();
-        in.close();
     }
 
     @Test

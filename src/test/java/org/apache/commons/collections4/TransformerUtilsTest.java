@@ -16,7 +16,10 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,7 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.collections4.functors.CloneTransformer;
 import org.apache.commons.collections4.functors.ConstantTransformer;
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.functors.ExceptionTransformer;
@@ -247,6 +249,7 @@ public class TransformerUtilsTest {
         assertEquals("B", TransformerUtils.ifTransformer(FalsePredicate.falsePredicate(), a, b).transform(null));
 
         Predicate<Integer> lessThanFivePredicate = new Predicate<Integer>() {
+            @Override
             public boolean evaluate(Integer value) {
                 return value < 5;
             }
@@ -481,7 +484,6 @@ public class TransformerUtilsTest {
     @Test
     public void testSingletonPatternInSerialization() {
         final Object[] singletones = new Object[] {
-                CloneTransformer.INSTANCE,
                 ExceptionTransformer.INSTANCE,
                 NOPTransformer.INSTANCE,
                 StringValueTransformer.stringValueTransformer(),
