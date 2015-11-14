@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections4.map;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -385,6 +390,39 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
         assertEquals(true, map.removeMapping("A", "AB"));
         assertEquals(true, map.removeMapping("A", "AA"));
         assertEquals(new MultiValueMap<K, V>(), map);
+    }
+
+    public void testUnsafeDeSerialization() throws Exception {
+        MultiValueMap map1 = MultiValueMap.multiValueMap(new HashMap(), ArrayList.class);
+        byte[] bytes = serialize(map1);
+        Object result = deserialize(bytes);
+        assertEquals(map1, result);
+        
+        MultiValueMap map2 = MultiValueMap.multiValueMap(new HashMap(), (Class) String.class);
+        bytes = serialize(map2);
+        try {
+            result = deserialize(bytes);
+            fail("unsafe clazz accepted when de-serializing MultiValueMap");
+        } catch (UnsupportedOperationException ex) {
+            // expected
+        }
+    }
+
+    private byte[] serialize(Object object) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
+
+        oos.writeObject(object);
+        oos.close();
+
+        return baos.toByteArray();
+    }
+    
+    private Object deserialize(byte[] data) throws IOException, ClassNotFoundException {
+        ByteArrayInputStream bais = new ByteArrayInputStream(data);
+        ObjectInputStream iis = new ObjectInputStream(bais);
+        
+        return iis.readObject();
     }
 
     //-----------------------------------------------------------------------

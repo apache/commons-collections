@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
 import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -209,6 +208,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @param value the value to remove
      * @return {@code true} if the mapping was removed, {@code false} otherwise
      */
+    @Override
     public boolean removeMapping(final Object key, final Object value) {
         final Collection<V> valuesForKey = getCollection(key);
         if (valuesForKey == null) {
@@ -434,14 +434,18 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
                 }
                 final K key = keyIterator.next();
                 final Transformer<V, Entry<K, V>> transformer = new Transformer<V, Entry<K, V>>() {
+                    @Override
                     public Entry<K, V> transform(final V input) {
                         return new Entry<K, V>() {
+                            @Override
                             public K getKey() {
                                 return key;
                             }
+                            @Override
                             public V getValue() {
                                 return input;
                             }
+                            @Override
                             public V setValue(V value) {
                                 throw new UnsupportedOperationException();
                             }
@@ -519,6 +523,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
             this.iterator = values.iterator();
         }
 
+        @Override
         public void remove() {
             iterator.remove();
             if (values.isEmpty()) {
@@ -526,10 +531,12 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
             }
         }
 
+        @Override
         public boolean hasNext() {
             return iterator.hasNext();
         }
 
+        @Override
         public V next() {
             return iterator.next();
         }
@@ -549,11 +556,20 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
             this.clazz = clazz;
         }
 
+        @Override
         public T create() {
             try {
                 return clazz.newInstance();
             } catch (final Exception ex) {
                 throw new FunctorException("Cannot instantiate class: " + clazz, ex);
+            }
+        }
+
+        private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
+            is.defaultReadObject();
+            // ensure that the de-serialized class is a Collection, COLLECTIONS-580
+            if (clazz != null && !Collection.class.isAssignableFrom(clazz)) {
+                throw new UnsupportedOperationException();
             }
         }
     }

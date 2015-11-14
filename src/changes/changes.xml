@@ -29,6 +29,11 @@
       ForClosure, InstantiateFactory, InstantiateTransformer, InvokerTransformer,
       PrototypeCloneFactory, PrototypeSerializationFactory, WhileClosure.
     </action>
+    <action issue="COLLECTIONS-580" dev="tn" type="fix">
+      Added validation when de-serializing a "MultiValueMap#ReflectionFactory":
+      only Collection classes are allowed, otherwise an UnsupportedOperationException
+      will be thrown during de-serialization.
+    </action>
     <action issue="COLLECTIONS-576" dev="tn" type="fix" due-to="Stephan Roch">
       Subclasses of MultiKey did not re-calculate their hashcode after de-serialization.
     </action>
