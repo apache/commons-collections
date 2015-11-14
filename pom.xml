@@ -27,7 +27,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>commons-collections</groupId>
   <artifactId>commons-collections</artifactId>
-  <version>3.2.2-SNAPSHOT</version>
+  <version>3.2.3-SNAPSHOT</version>
   <name>Apache Commons Collections</name>
 
   <inceptionYear>2001</inceptionYear>
