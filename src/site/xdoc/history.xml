@@ -105,6 +105,14 @@ Notably MultiValueMap is a new more flexible implementation of MultiHashMap.
 </p>
 
 <p>
+<b>Collections 3.2.2</b> Serialization support for unsafe classes in the functor package is disabled by default as 
+this can be exploited for remote code execution attacks. To re-enable the feature the system property 
+"org.apache.commons.collections.enableUnsafeSerialization" needs to be set to "true". Classes considered to be 
+unsafe are: CloneTransformer, ForClosure, InstantiateFactory, InstantiateTransformer, InvokerTransformer, 
+PrototypeCloneFactory, PrototypeSerializationFactory, WhileClosure. Fixes COLLECTIONS-580. Other bug fixes as well.
+</p>
+
+<p>
 <b>Collections 4.0</b> represented a major revamp of collections by supporting
 new language features introduced with Java 1.5, mainly support for generics.
 </p>
