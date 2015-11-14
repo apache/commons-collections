@@ -56,7 +56,14 @@ import org.apache.commons.collections4.functors.SwitchTransformer;
  * <li>Exception - always throws an exception
  * <li>StringValue - returns a <code>java.lang.String</code> representation of the input object
  * </ul>
- * All the supplied transformers are Serializable.
+ * <p>
+ * Since v4.1 only transformers which are considered to be unsafe are
+ * Serializable. Transformers considered to be unsafe for serialization are:
+ * <ul>
+ * <li>Invoker
+ * <li>Clone
+ * <li>Instantiate
+ * </ul>
  *
  * @since 3.0
  * @version $Id$

@@ -37,7 +37,6 @@ import org.apache.commons.collections4.functors.WhileClosure;
  * <li>Invoker - invokes a method on the input object
  * <li>For - repeatedly calls a closure for a fixed number of times
  * <li>While - repeatedly calls a closure while a predicate is true
- * <li>DoWhile - repeatedly calls a closure while a predicate is true
  * <li>Chained - chains two or more closures together
  * <li>If - calls one closure or another based on a predicate
  * <li>Switch - calls one closure based on one or more predicates
@@ -46,7 +45,14 @@ import org.apache.commons.collections4.functors.WhileClosure;
  * <li>NOP - does nothing
  * <li>Exception - always throws an exception
  * </ul>
- * All the supplied closures are Serializable.
+ * <p>
+ * Since v4.1 only closures which are considered to be unsafe are
+ * Serializable. Closures considered to be unsafe for serialization are:
+ * <ul>
+ * <li>Invoker
+ * <li>For
+ * <li>While
+ * </ul>
  *
  * @since 3.0
  * @version $Id$
