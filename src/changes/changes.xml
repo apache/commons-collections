@@ -34,6 +34,11 @@
       only Collection classes are allowed, otherwise an UnsupportedOperationException
       will be thrown during de-serialization.
     </action>
+    <action issue="COLLECTIONS-567" dev="tn" type="add">
+      Added new MultiSet interface which is intended to be a replacement for
+      the Bag interface. The main difference is that a MultiSet is fully compatible
+      to the Collection contract.
+    </action>
     <action issue="COLLECTIONS-576" dev="tn" type="fix" due-to="Stephan Roch">
       Subclasses of MultiKey did not re-calculate their hashcode after de-serialization.
     </action>
