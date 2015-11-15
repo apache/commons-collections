@@ -26,11 +26,14 @@ import java.util.Queue;
 import java.util.Set;
 
 import org.apache.commons.collections4.Bag;
+import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.bag.HashBag;
 import org.apache.commons.collections4.bag.PredicatedBag;
 import org.apache.commons.collections4.functors.NotNullPredicate;
 import org.apache.commons.collections4.list.PredicatedList;
+import org.apache.commons.collections4.multiset.HashMultiSet;
+import org.apache.commons.collections4.multiset.PredicatedMultiSet;
 import org.apache.commons.collections4.queue.PredicatedQueue;
 import org.apache.commons.collections4.set.PredicatedSet;
 
@@ -325,6 +328,40 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
             final PredicatedSet<E> predicatedSet = PredicatedSet.predicatedSet(set, predicate);
             predicatedSet.addAll(accepted);
             return predicatedSet;
+        }
+
+        /**
+         * Create a new predicated multiset filled with the accepted elements.
+         * <p>
+         * The builder is not modified by this method, so it is possible to create more collections
+         * or add more elements afterwards. Further changes will not propagate to the returned multiset.
+         *
+         * @return a new predicated multiset.
+         */
+        public MultiSet<E> createPredicatedMultiSet() {
+            return createPredicatedMultiSet(new HashMultiSet<E>());
+        }
+
+        /**
+         * Decorates the given multiset with validating behavior using the predicate. All accepted elements
+         * are appended to the multiset. If the multiset already contains elements, they are validated.
+         * <p>
+         * The builder is not modified by this method, so it is possible to create more collections
+         * or add more elements afterwards. Further changes will not propagate to the returned multiset.
+         *
+         * @param bag  the multiset to decorate, must not be null
+         * @return the decorated multiset.
+         * @throws NullPointerException if multiset is null
+         * @throws IllegalArgumentException if multiset contains invalid elements
+         */
+        public MultiSet<E> createPredicatedMultiSet(final MultiSet<E> multiset) {
+            if (multiset == null) {
+                throw new NullPointerException("MultiSet must not be null.");
+            }
+            final PredicatedMultiSet<E> predicatedMultiSet =
+                    PredicatedMultiSet.predicatedMultiSet(multiset, predicate);
+            predicatedMultiSet.addAll(accepted);
+            return predicatedMultiSet;
         }
 
         /**

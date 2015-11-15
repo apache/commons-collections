@@ -555,9 +555,9 @@ public abstract class AbstractMapMultiSet<E> extends AbstractCollection<E> imple
         private final AbstractMapMultiSet<E> parent;
 
         /**
-         * Constructs a new view of the BidiMap.
+         * Constructs a new view of the MultiSet.
          *
-         * @param parent  the parent BidiMap
+         * @param parent  the parent MultiSet
          */
         protected EntrySet(final AbstractMapMultiSet<E> parent) {
             this.parent = parent;

@@ -123,8 +123,8 @@ public interface MultiSet<E> extends Collection<E> {
      * <p>
      * The returned set is backed by this multiset, so any change to either
      * is immediately reflected in the other. Only removal operations are
-     * supporting, in which case all occurrences of the removed elements
-     * are removed from the backing multiset.
+     * supported, in which case all occurrences of the element are removed
+     * from the backing multiset.
      *
      * @return the Set of unique MultiSet elements
      */

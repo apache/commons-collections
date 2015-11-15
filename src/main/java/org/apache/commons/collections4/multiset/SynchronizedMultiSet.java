@@ -44,7 +44,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
      * @return a new synchronized MultiSet
      * @throws NullPointerException if multiset is null
      */
-    public static <E> SynchronizedMultiSet<E> synchronizedBag(final MultiSet<E> multiset) {
+    public static <E> SynchronizedMultiSet<E> synchronizedMultiSet(final MultiSet<E> multiset) {
         return new SynchronizedMultiSet<E>(multiset);
     }
 

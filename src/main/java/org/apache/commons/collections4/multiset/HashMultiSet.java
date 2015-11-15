@@ -47,9 +47,9 @@ public class HashMultiSet<E> extends AbstractMapMultiSet<E> implements Serializa
     }
 
     /**
-     * Constructs a bag containing all the members of the given collection.
+     * Constructs a multiset containing all the members of the given collection.
      *
-     * @param coll  a collection to copy into this bag
+     * @param coll  a collection to copy into this multiset
      */
     public HashMultiSet(final Collection<? extends E> coll) {
         this();
@@ -58,7 +58,7 @@ public class HashMultiSet<E> extends AbstractMapMultiSet<E> implements Serializa
 
     //-----------------------------------------------------------------------
     /**
-     * Write the bag out using a custom routine.
+     * Write the multiset out using a custom routine.
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -66,7 +66,7 @@ public class HashMultiSet<E> extends AbstractMapMultiSet<E> implements Serializa
     }
 
     /**
-     * Read the bag in using a custom routine.
+     * Read the multiset in using a custom routine.
      */
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
