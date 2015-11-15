@@ -267,14 +267,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractCollection<E> imple
 
     @Override
     public boolean remove(final Object object) {
-        final MutableInteger mut = map.get(object);
-        if (mut == null) {
-            return false;
-        }
-        modCount++;
-        map.remove(object);
-        size -= mut.value;
-        return true;
+        return remove(object, 1) != 0;
     }
 
     @Override
