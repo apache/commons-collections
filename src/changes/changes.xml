@@ -22,6 +22,10 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-551" dev="tn" type="update">
+      Deprecated various method in "CollectionUtils" in favor of similar
+      methods in the newly introduced "IterableUtils".
+    </action>
     <action issue="COLLECTIONS-580" dev="tn" type="update">
       Serialization support for unsafe classes in the functor package
       has been removed as this can be exploited for remote code execution
