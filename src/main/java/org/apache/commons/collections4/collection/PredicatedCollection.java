@@ -349,7 +349,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          * The builder is not modified by this method, so it is possible to create more collections
          * or add more elements afterwards. Further changes will not propagate to the returned multiset.
          *
-         * @param bag  the multiset to decorate, must not be null
+         * @param multiset  the multiset to decorate, must not be null
          * @return the decorated multiset.
          * @throws NullPointerException if multiset is null
          * @throws IllegalArgumentException if multiset contains invalid elements
