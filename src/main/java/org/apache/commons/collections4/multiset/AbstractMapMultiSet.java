@@ -558,7 +558,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractCollection<E> imple
 
         @Override
         public int size() {
-            return parent.entrySet.size();
+            return parent.map.entrySet().size();
         }
 
         @Override
