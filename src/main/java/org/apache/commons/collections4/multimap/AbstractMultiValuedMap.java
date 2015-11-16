@@ -716,6 +716,28 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
             };
         }
 
+        @Override
+        public String toString() {
+            if (size() == 0) {
+                return "[]";
+            }
+            final StringBuilder buf = new StringBuilder();
+            buf.append('[');
+            final Iterator<K> it = KeysMultiSet.this.uniqueSet().iterator();
+            while (it.hasNext()) {
+                final Object current = it.next();
+                final int count = getCount(current);
+                buf.append(current);
+                buf.append(':');
+                buf.append(count);
+                if (it.hasNext()) {
+                    buf.append(", ");
+                }
+            }
+            buf.append(']');
+            return buf.toString();
+        }
+
     }
 
     /**
