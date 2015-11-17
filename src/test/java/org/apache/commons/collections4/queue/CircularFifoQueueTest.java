@@ -423,6 +423,30 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         }
     }
 
+    public void testGet() throws Exception {
+        // based on bug 33071
+        final CircularFifoQueue<Integer> fifo = new CircularFifoQueue<Integer>(5);
+        fifo.add(1);
+        fifo.add(2);
+        fifo.add(3);
+        fifo.add(4);
+        fifo.add(5);  // end=0
+        fifo.add(6);  // end=1
+        fifo.add(7);  // end=2
+
+        assertEquals(3, fifo.get(0).intValue());
+        assertEquals(4, fifo.get(1).intValue());
+        assertEquals(5, fifo.get(2).intValue());
+        assertEquals(6, fifo.get(3).intValue());
+        assertEquals(7, fifo.get(4).intValue());
+
+        assertEquals(7, fifo.get(-1).intValue());
+        assertEquals(6, fifo.get(-2).intValue());
+        assertEquals(5, fifo.get(-3).intValue());
+        assertEquals(4, fifo.get(-4).intValue());
+        assertEquals(3, fifo.get(-5).intValue());
+    }
+
     @Override
     public String getCompatibilityVersion() {
         return "4";
