@@ -42,18 +42,20 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         return BulkTest.makeSuite(TransformedMultiValuedMapTest.class);
     }
 
+    // -----------------------------------------------------------------------
     @Override
     public MultiValuedMap<K, V> makeObject() {
-        return TransformedMultiValuedMap.transformingMap(new MultiValuedHashMap<K, V>(),
+        return TransformedMultiValuedMap.transformingMap(new ArrayListValuedHashMap<K, V>(),
                 TransformerUtils.<K> nopTransformer(), TransformerUtils.<V> nopTransformer());
     }
 
+    // -----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testKeyTransformedMap() {
         final Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
 
         MultiValuedMap<K, V> map = TransformedMultiValuedMap.transformingMap(
-                new MultiValuedHashMap<K, V>(),
+                new ArrayListValuedHashMap<K, V>(),
                 (Transformer<? super K, ? extends K>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER,
                 null);
         assertEquals(0, map.size());
@@ -77,7 +79,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         final Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
 
         MultiValuedMap<K, V> map = TransformedMultiValuedMap.transformingMap(
-                new MultiValuedHashMap<K, V>(), null,
+                new ArrayListValuedHashMap<K, V>(), null,
                 (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, map.size());
         for (int i = 0; i < els.length; i++) {
@@ -94,7 +96,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
     // -----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testFactory_Decorate() {
-        final MultiValuedMap<K, V> base = new MultiValuedHashMap<K, V>();
+        final MultiValuedMap<K, V> base = new ArrayListValuedHashMap<K, V>();
         base.put((K) "A", (V) "1");
         base.put((K) "B", (V) "2");
         base.put((K) "C", (V) "3");
@@ -114,7 +116,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
 
     @SuppressWarnings("unchecked")
     public void testFactory_decorateTransform() {
-        final MultiValuedMap<K, V> base = new MultiValuedHashMap<K, V>();
+        final MultiValuedMap<K, V> base = new ArrayListValuedHashMap<K, V>();
         base.put((K) "A", (V) "1");
         base.put((K) "B", (V) "2");
         base.put((K) "C", (V) "3");
@@ -132,11 +134,11 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         assertEquals(true, trans.get((K) "D").contains(Integer.valueOf(4)));
     }
 
-//    public void testCreate() throws Exception {
-//        writeExternalFormToDisk((java.io.Serializable) makeObject(),
-//                "src/test/resources/data/test/TransformedMultiValuedMap.emptyCollection.version4.1.obj");
-//        writeExternalFormToDisk((java.io.Serializable) makeFullMap(),
-//                "src/test/resources/data/test/TransformedMultiValuedMap.fullCollection.version4.1.obj");
-//    }
+    public void testCreate() throws Exception {
+        writeExternalFormToDisk((java.io.Serializable) makeObject(),
+                "src/test/resources/data/test/TransformedMultiValuedMap.emptyCollection.version4.1.obj");
+        writeExternalFormToDisk((java.io.Serializable) makeFullMap(),
+                "src/test/resources/data/test/TransformedMultiValuedMap.fullCollection.version4.1.obj");
+    }
 
 }

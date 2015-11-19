@@ -36,36 +36,38 @@ import org.apache.commons.collections4.SetValuedMap;
 public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<K, V>
     implements SetValuedMap<K, V> {
 
-    /** Serialization version */
-    private static final long serialVersionUID = 20150612L;
-
     /**
-     * A constructor that wraps, not copies
-     *
-     * @param <C> the set type
-     * @param map  the map to wrap, must not be null
-     * @param setClazz  the collection class
-     * @throws NullPointerException if the map is null
+     * Constructor needed for subclass serialisation.
      */
-    protected <C extends Set<V>> AbstractSetValuedMap(Map<K, ? super C> map, Class<C> setClazz) {
-        super(map, setClazz);
+    protected AbstractSetValuedMap() {
+        super();
     }
 
     /**
      * A constructor that wraps, not copies
      *
-     * @param <C> the set type
      * @param map  the map to wrap, must not be null
-     * @param setClazz  the collection class
-     * @param initialSetCapacity  the initial size of the values set
      * @throws NullPointerException if the map is null
-     * @throws IllegalArgumentException if initialSetCapacity is negative
      */
-    protected <C extends Set<V>> AbstractSetValuedMap(Map<K, ? super C> map, Class<C> setClazz,
-            int initialSetCapacity) {
-        super(map, setClazz, initialSetCapacity);
+    protected AbstractSetValuedMap(Map<K, ? extends Set<V>> map) {
+        super(map);
     }
 
+    // -----------------------------------------------------------------------
+    @Override
+    @SuppressWarnings("unchecked")
+    protected Map<K, Set<V>> getMap() {
+        return (Map<K, Set<V>>) super.getMap();
+    }
+
+    /**
+     * Creates a new value collection using the provided factory.
+     * @return a new list
+     */
+    @Override
+    protected abstract Set<V> createCollection();
+
+    // -----------------------------------------------------------------------
     /**
      * Gets the set of values associated with the specified key. This would
      * return an empty set in case the mapping is not present
@@ -90,25 +92,10 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
      */
     @Override
     public Set<V> remove(Object key) {
-        return SetUtils.emptyIfNull((Set<V>) getMap().remove(key));
+        return SetUtils.emptyIfNull(getMap().remove(key));
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj instanceof SetValuedMap) {
-            return asMap().equals(((SetValuedMap<?, ?>) obj).asMap());
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return asMap().hashCode();
-    }
-
+    // -----------------------------------------------------------------------
     /**
      * Wrapped set to handle add and remove on the collection returned by
      * {@code get(Object)}.

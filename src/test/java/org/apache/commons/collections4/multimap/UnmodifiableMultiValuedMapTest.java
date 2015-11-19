@@ -47,6 +47,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         return BulkTest.makeSuite(UnmodifiableMultiValuedMapTest.class);
     }
     
+    // -----------------------------------------------------------------------
     @Override
     public boolean isAddSupported() {
         return false;
@@ -59,16 +60,18 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
 
     @Override
     public MultiValuedMap<K, V> makeObject() {
-        return UnmodifiableMultiValuedMap.<K, V> unmodifiableMultiValuedMap(new MultiValuedHashMap<K, V>());
+        return UnmodifiableMultiValuedMap.<K, V> unmodifiableMultiValuedMap(
+                new ArrayListValuedHashMap<K, V>());
     }
 
     @Override
     protected MultiValuedMap<K, V> makeFullMap() {
-        final MultiValuedMap<K, V> map = new MultiValuedHashMap<K, V>();
+        final MultiValuedMap<K, V> map = new ArrayListValuedHashMap<K, V>();
         addSampleMappings(map);
         return UnmodifiableMultiValuedMap.<K, V> unmodifiableMultiValuedMap(map);
     }
 
+    // -----------------------------------------------------------------------
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
@@ -259,11 +262,11 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         }
     }
 
-//    public void testCreate() throws Exception {
-//        writeExternalFormToDisk((java.io.Serializable) makeObject(),
-//                "src/test/resources/data/test/UnmodifiableMultiValuedMap.emptyCollection.version4.1.obj");
-//        writeExternalFormToDisk((java.io.Serializable) makeFullMap(),
-//                "src/test/resources/data/test/UnmodifiableMultiValuedMap.fullCollection.version4.1.obj");
-//    }
+    public void testCreate() throws Exception {
+        writeExternalFormToDisk((java.io.Serializable) makeObject(),
+                "src/test/resources/data/test/UnmodifiableMultiValuedMap.emptyCollection.version4.1.obj");
+        writeExternalFormToDisk((java.io.Serializable) makeFullMap(),
+                "src/test/resources/data/test/UnmodifiableMultiValuedMap.fullCollection.version4.1.obj");
+    }
 
 }

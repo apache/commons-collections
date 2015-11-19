@@ -38,34 +38,28 @@ import org.apache.commons.collections4.ListValuedMap;
 public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap<K, V>
         implements ListValuedMap<K, V> {
 
-    /** The serialization version */
-    private static final long serialVersionUID = 20150612L;
-
     /**
-     * A constructor that wraps, not copies
-     *
-     * @param <C> the list type
-     * @param map  the map to wrap, must not be null
-     * @param listClazz  the collection class
-     * @throws NullPointerException if the map is null
+     * Constructor needed for subclass serialisation.
      */
-    protected <C extends List<V>> AbstractListValuedMap(final Map<K, ? super C> map, Class<C> listClazz) {
-        super(map, listClazz);
+    protected AbstractListValuedMap() {
+        super();
     }
 
     /**
      * A constructor that wraps, not copies
      *
-     * @param <C> the list type
      * @param map  the map to wrap, must not be null
-     * @param listClazz  the collection class
-     * @param initialListCapacity  the initial size of the values list
-     * @throws NullPointerException  if the map is null
-     * @throws IllegalArgumentException  if initialListCapacity is negative
+     * @throws NullPointerException if the map is null
      */
-    protected <C extends List<V>> AbstractListValuedMap(final Map<K, ? super C> map, Class<C> listClazz,
-                                                        final int initialListCapacity) {
-        super(map, listClazz, initialListCapacity);
+    protected AbstractListValuedMap(final Map<K, ? extends List<V>> map) {
+        super(map);
+    }
+
+    // -----------------------------------------------------------------------
+    @Override
+    @SuppressWarnings("unchecked")
+    protected Map<K, List<V>> getMap() {
+        return (Map<K, List<V>>) super.getMap();
     }
 
     /**
@@ -73,10 +67,9 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
      * @return a new list
      */
     @Override
-    protected List<V> createCollection() {
-        return (List<V>) super.createCollection();
-    }
+    protected abstract List<V> createCollection();
 
+    // -----------------------------------------------------------------------
     /**
      * Gets the list of values associated with the specified key. This would
      * return an empty list in case the mapping is not present
@@ -100,25 +93,10 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
      */
     @Override
     public List<V> remove(Object key) {
-        return ListUtils.emptyIfNull((List<V>) getMap().remove(key));
+        return ListUtils.emptyIfNull(getMap().remove(key));
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj instanceof ListValuedMap) {
-            return asMap().equals(((ListValuedMap<?, ?>) obj).asMap());
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return asMap().hashCode();
-    }
-
+    // -----------------------------------------------------------------------
     /**
      * Wrapped list to handle add and remove on the list returned by get(object)
      */
@@ -130,7 +108,7 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
 
         @Override
         protected List<V> getMapping() {
-            return (List<V>) getMap().get(key);
+            return getMap().get(key);
         }
 
         @Override
@@ -237,13 +215,13 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
 
         public ValuesListIterator(final K key) {
             this.key = key;
-            this.values = ListUtils.emptyIfNull((List<V>) getMap().get(key));
+            this.values = ListUtils.emptyIfNull(getMap().get(key));
             this.iterator = values.listIterator();
         }
 
         public ValuesListIterator(final K key, int index) {
             this.key = key;
-            this.values = ListUtils.emptyIfNull((List<V>) getMap().get(key));
+            this.values = ListUtils.emptyIfNull(getMap().get(key));
             this.iterator = values.listIterator(index);
         }
 

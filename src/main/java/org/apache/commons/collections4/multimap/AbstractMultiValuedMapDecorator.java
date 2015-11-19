@@ -61,6 +61,7 @@ public abstract class AbstractMultiValuedMapDecorator<K, V>
         this.map = map;
     }
 
+    // -----------------------------------------------------------------------
     /**
      * The decorated multi-valued map.
      *
@@ -70,6 +71,7 @@ public abstract class AbstractMultiValuedMapDecorator<K, V>
         return map;
     }
 
+    // -----------------------------------------------------------------------
     @Override
     public int size() {
         return decorated().size();

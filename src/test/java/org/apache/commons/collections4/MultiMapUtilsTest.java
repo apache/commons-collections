@@ -26,7 +26,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.collections4.multimap.MultiValuedHashMap;
+import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.Test;
 
 /**
@@ -64,20 +64,20 @@ public class MultiMapUtilsTest {
     public void testEmptyIfNull() {
         assertTrue(MultiMapUtils.emptyIfNull(null).isEmpty());
 
-        final MultiValuedMap<String, String> map = new MultiValuedHashMap<String, String>();
+        final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<String, String>();
         map.put("item", "value");
         assertFalse(MultiMapUtils.emptyIfNull(map).isEmpty());
     }
 
     @Test
     public void testIsEmptyWithEmptyMap() {
-        final MultiValuedMap<Object, Object> map = new MultiValuedHashMap<Object, Object>();
+        final MultiValuedMap<Object, Object> map = new ArrayListValuedHashMap<Object, Object>();
         assertEquals(true, MultiMapUtils.isEmpty(map));
     }
 
     @Test
     public void testIsEmptyWithNonEmptyMap() {
-        final MultiValuedMap<String, String> map = new MultiValuedHashMap<String, String>();
+        final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<String, String>();
         map.put("item", "value");
         assertEquals(false, MultiMapUtils.isEmpty(map));
     }
@@ -93,7 +93,7 @@ public class MultiMapUtilsTest {
         assertNull(MultiMapUtils.getCollection(null, "key1"));
 
         String values[] = { "v1", "v2", "v3" };
-        final MultiValuedMap<String, String> map = new MultiValuedHashMap<String, String>();
+        final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<String, String>();
         for (String val : values) {
             map.put("key1", val);
         }
@@ -109,7 +109,7 @@ public class MultiMapUtilsTest {
         assertNull(MultiMapUtils.getValuesAsList(null, "key1"));
 
         String values[] = { "v1", "v2", "v3" };
-        final MultiValuedMap<String, String> map = new MultiValuedHashMap<String, String>();
+        final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<String, String>();
         for (String val : values) {
             map.put("key1", val);
         }
@@ -126,7 +126,7 @@ public class MultiMapUtilsTest {
         assertNull(MultiMapUtils.getValuesAsList(null, "key1"));
 
         String values[] = { "v1", "v2", "v3" };
-        final MultiValuedMap<String, String> map = new MultiValuedHashMap<String, String>();
+        final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<String, String>();
         for (String val : values) {
             map.put("key1", val);
             map.put("key1", val);
@@ -144,7 +144,7 @@ public class MultiMapUtilsTest {
         assertNull(MultiMapUtils.getValuesAsBag(null, "key1"));
 
         String values[] = { "v1", "v2", "v3" };
-        final MultiValuedMap<String, String> map = new MultiValuedHashMap<String, String>();
+        final MultiValuedMap<String, String> map = new ArrayListValuedHashMap<String, String>();
         for (String val : values) {
             map.put("key1", val);
             map.put("key1", val);

@@ -16,7 +16,9 @@
  */
 package org.apache.commons.collections4.multimap;
 
-import java.io.Serializable;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.reflect.Array;
 import java.util.AbstractCollection;
 import java.util.ArrayList;
@@ -27,13 +29,11 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.IteratorUtils;
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.Transformer;
-import org.apache.commons.collections4.functors.InstantiateFactory;
 import org.apache.commons.collections4.iterators.EmptyMapIterator;
 import org.apache.commons.collections4.iterators.IteratorChain;
 import org.apache.commons.collections4.iterators.LazyIteratorChain;
@@ -50,13 +50,7 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * @since 4.1
  * @version $Id$
  */
-public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V>, Serializable {
-
-    /** Serialization Version */
-    private static final long serialVersionUID = 20150612L;
-
-    /** The factory for creating value collections. */
-    private final Factory<? extends Collection<V>> collectionFactory;
+public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V> {
 
     /** The values view */
     private transient Collection<V> valuesView;
@@ -68,60 +62,55 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     private transient KeysMultiSet keysMultiSetView;
 
     /** The map used to store the data */
-    private final Map<K, Collection<V>> map;
+    private transient Map<K, Collection<V>> map;
+
+    /**
+     * Constructor needed for subclass serialisation.
+     */
+    protected AbstractMultiValuedMap() {
+        super();
+    }
 
     /**
      * Constructor that wraps (not copies).
      *
      * @param <C> the collection type
      * @param map  the map to wrap, must not be null
-     * @param collectionClazz  the collection class
      * @throws NullPointerException if the map is null
      */
     @SuppressWarnings("unchecked")
-    protected <C extends Collection<V>> AbstractMultiValuedMap(final Map<K, ? super C> map,
-                                                               final Class<C> collectionClazz) {
+    protected AbstractMultiValuedMap(final Map<K, ? extends Collection<V>> map) {
         if (map == null) {
             throw new NullPointerException("Map must not be null.");
         }
         this.map = (Map<K, Collection<V>>) map;
-        this.collectionFactory = new InstantiateFactory<C>(collectionClazz);
     }
 
-    /**
-     * Constructor that wraps (not copies).
-     *
-     * @param <C> the collection type
-     * @param map  the map to wrap, must not be null
-     * @param collectionClazz  the collection class
-     * @param initialCollectionCapacity  the initial capacity of the collection
-     * @throws NullPointerException  if the map is null
-     * @throws IllegalArgumentException  if initialCollectionCapacity is negative
-     */
-    @SuppressWarnings("unchecked")
-    protected <C extends Collection<V>> AbstractMultiValuedMap(final Map<K, ? super C> map,
-            final Class<C> collectionClazz, final int initialCollectionCapacity) {
-        if (map == null) {
-            throw new NullPointerException("Map must not be null.");
-        }
-        if (initialCollectionCapacity < 0) {
-            throw new IllegalArgumentException("InitialCapacity must not be negative.");
-        }
-        this.map = (Map<K, Collection<V>>) map;
-        this.collectionFactory = new InstantiateFactory<C>(collectionClazz,
-                new Class[] { Integer.TYPE },
-                new Object[] { Integer.valueOf(initialCollectionCapacity) });
-    }
-
+    // -----------------------------------------------------------------------
     /**
      * Gets the map being wrapped.
      *
      * @return the wrapped map
      */
-    protected Map<K, Collection<V>> getMap() {
+    protected Map<K, ? extends Collection<V>> getMap() {
         return map;
     }
 
+    /**
+     * Sets the map being wrapped.
+     * <p>
+     * <b>NOTE:</b> this method should only be used during deserialization
+     *
+     * @param map the map to wrap
+     */
+    @SuppressWarnings("unchecked")
+    protected void setMap(Map<K, ? extends Collection<V>> map) {
+        this.map = (Map<K, Collection<V>>) map;
+    }
+
+    protected abstract Collection<V> createCollection();
+
+    // -----------------------------------------------------------------------
     @Override
     public boolean containsKey(Object key) {
         return getMap().containsKey(key);
@@ -250,7 +239,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         if (coll == null) {
             coll = createCollection();
             if (coll.add(value)) {
-                getMap().put(key, coll);
+                map.put(key, coll);
                 return true;
             } else {
                 return false;
@@ -325,8 +314,10 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public Map<K, Collection<V>> asMap() {
-        return getMap();
+        // TODO: return a view of the map
+        return (Map<K, Collection<V>>) getMap();
     }
 
     /**
@@ -373,18 +364,12 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
     @Override
     public int hashCode() {
-        return getMap().hashCode();
+        return asMap().hashCode();
     }
 
     @Override
     public String toString() {
-        return getMap().toString();
-    }
-
-    // -----------------------------------------------------------------------
-
-    protected Collection<V> createCollection() {
-        return collectionFactory.create();
+        return asMap().toString();
     }
 
     // -----------------------------------------------------------------------
@@ -903,6 +888,46 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         @Override
         public V next() {
             return iterator.next();
+        }
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Write the map out using a custom routine.
+     * @param out the output stream
+     * @throws IOException any of the usual I/O related exceptions
+     */
+    protected void doWriteObject(final ObjectOutputStream out) throws IOException {
+        out.writeInt(map.size());
+        for (final Map.Entry<K, Collection<V>> entry : map.entrySet()) {
+            out.writeObject(entry.getKey());
+            out.writeInt(entry.getValue().size());
+            for (final V value : entry.getValue()) {
+                out.writeObject(value);
+            }
+        }
+    }
+
+    /**
+     * Read the map in using a custom routine.
+     * @param in the input stream
+     * @throws IOException any of the usual I/O related exceptions
+     * @throws ClassNotFoundException if the stream contains an object which class can not be loaded
+     * @throws ClassCastException if the stream does not contain the correct objects
+     */
+    protected void doReadObject(final ObjectInputStream in)
+            throws IOException, ClassNotFoundException {
+        final int entrySize = in.readInt();
+        for (int i = 0; i < entrySize; i++) {
+            @SuppressWarnings("unchecked") // This will fail at runtime if the stream is incorrect
+            final K key = (K) in.readObject();
+            final Collection<V> values = get(key);
+            final int valueSize = in.readInt();
+            for (int j = 0; j < valueSize; j++) {
+                @SuppressWarnings("unchecked") // see above
+                V value = (V) in.readObject();
+                values.add(value);
+            }
         }
     }
 

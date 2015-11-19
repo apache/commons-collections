@@ -91,7 +91,7 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
         final TransformedMultiValuedMap<K, V> decorated =
                 new TransformedMultiValuedMap<K, V>(map, keyTransformer, valueTransformer);
         if (!map.isEmpty()) {
-            final MultiValuedMap<K, V> mapCopy = new MultiValuedHashMap<K, V>(map);
+            final MultiValuedMap<K, V> mapCopy = new ArrayListValuedHashMap<K, V>(map);
             decorated.clear();
             decorated.putAll(mapCopy);
         }
