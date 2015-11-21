@@ -22,6 +22,13 @@
   <body>
 
   <release version="4.1" date="TBD" description="">
+    <action issue="COLLECTIONS-508" dev="tn" type="add">
+      Added new interfaces "MultiValuedMap", "ListValuedMap" and "SetValuedMap"
+      as a replacement for "MultiMap". Decorators and implementations reside in
+      the "multimap" package and a "MultiMapUtils" class has been added.
+      The existing interface "MultiMap" as well as the concrete implementation
+      "MultiValueMap" has been deprecated.
+    </action>
     <action issue="COLLECTIONS-551" dev="tn" type="update">
       Deprecated various method in "CollectionUtils" in favor of similar
       methods in the newly introduced "IterableUtils".
