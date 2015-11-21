@@ -20,16 +20,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Array;
-import java.util.AbstractCollection;
-import java.util.AbstractSet;
-import java.util.Collection;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.commons.collections4.MultiSet;
-import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
 import org.apache.commons.collections4.iterators.AbstractIteratorDecorator;
 
 /**
@@ -43,7 +38,7 @@ import org.apache.commons.collections4.iterators.AbstractIteratorDecorator;
  * @since 4.1
  * @version $Id$
  */
-public abstract class AbstractMapMultiSet<E> extends AbstractCollection<E> implements MultiSet<E> {
+public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
     /** The map to use to store the data */
     private transient Map<E, MutableInteger> map;
@@ -51,10 +46,6 @@ public abstract class AbstractMapMultiSet<E> extends AbstractCollection<E> imple
     private transient int size;
     /** The modification count for fail fast iterators */
     private transient int modCount;
-    /** View of the elements */
-    private transient Set<E> uniqueSet;
-    /** View of the entries */
-    private transient Set<Entry<E>> entrySet;
 
     /**
      * Constructor needed for subclass serialisation.
@@ -78,10 +69,21 @@ public abstract class AbstractMapMultiSet<E> extends AbstractCollection<E> imple
      * Utility method for implementations to access the map that backs this multiset.
      * Not intended for interactive use outside of subclasses.
      *
-     * @return the map being used by the Bag
+     * @return the map being used by the MultiSet
      */
     protected Map<E, MutableInteger> getMap() {
         return map;
+    }
+
+    /**
+     * Sets the map being wrapped.
+     * <p>
+     * <b>NOTE:</b> this method should only be used during deserialization
+     *
+     * @param map the map to wrap
+     */
+    protected void setMap(Map<E, MutableInteger> map) {
+        this.map = map;
     }
 
     //-----------------------------------------------------------------------
@@ -121,21 +123,6 @@ public abstract class AbstractMapMultiSet<E> extends AbstractCollection<E> imple
         return 0;
     }
 
-    @Override
-    public int setCount(final E object, final int count) {
-        if (count < 0) {
-            throw new IllegalArgumentException("Count must not be negative.");
-        }
-
-        int oldCount = getCount(object);
-        if (oldCount < count) {
-            add(object, count - oldCount);
-        } else {
-            remove(object, oldCount - count);
-        }
-        return oldCount;
-    }
-
     //-----------------------------------------------------------------------
     /**
      * Determines if the multiset contains the given element by checking if the
@@ -158,13 +145,13 @@ public abstract class AbstractMapMultiSet<E> extends AbstractCollection<E> imple
      */
     @Override
     public Iterator<E> iterator() {
-        return new MultiSetIterator<E>(this);
+        return new MapBasedMultiSetIterator<E>(this);
     }
 
     /**
      * Inner class iterator for the MultiSet.
      */
-    static class MultiSetIterator<E> implements Iterator<E> {
+    private static class MapBasedMultiSetIterator<E> implements Iterator<E> {
         private final AbstractMapMultiSet<E> parent;
         private final Iterator<Map.Entry<E, MutableInteger>> entryIterator;
         private Map.Entry<E, MutableInteger> current;
@@ -177,7 +164,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractCollection<E> imple
          *
          * @param parent the parent multiset
          */
-        public MultiSetIterator(final AbstractMapMultiSet<E> parent) {
+        public MapBasedMultiSetIterator(final AbstractMapMultiSet<E> parent) {
             this.parent = parent;
             this.entryIterator = parent.map.entrySet().iterator();
             this.current = null;
@@ -228,12 +215,6 @@ public abstract class AbstractMapMultiSet<E> extends AbstractCollection<E> imple
 
     //-----------------------------------------------------------------------
     @Override
-    public boolean add(final E object) {
-        add(object, 1);
-        return true;
-    }
-
-    @Override
     public int add(final E object, final int occurrences) {
         if (occurrences < 0) {
             throw new IllegalArgumentException("Occurrences must not be negative.");
@@ -266,11 +247,6 @@ public abstract class AbstractMapMultiSet<E> extends AbstractCollection<E> imple
     }
 
     @Override
-    public boolean remove(final Object object) {
-        return remove(object, 1) != 0;
-    }
-
-    @Override
     public int remove(final Object object, final int occurrences) {
         if (occurrences < 0) {
             throw new IllegalArgumentException("Occurrences must not be negative.");
@@ -292,18 +268,6 @@ public abstract class AbstractMapMultiSet<E> extends AbstractCollection<E> imple
             }
         }
         return oldCount;
-    }
-
-    @Override
-    public boolean removeAll(final Collection<?> coll) {
-        boolean result = false;
-        final Iterator<?> i = coll.iterator();
-        while (i.hasNext()) {
-            final Object obj = i.next();
-            final boolean changed = remove(obj, getCount(obj)) != 0;
-            result = result || changed;
-        }
-        return result;
     }
 
     //-----------------------------------------------------------------------
@@ -337,164 +301,22 @@ public abstract class AbstractMapMultiSet<E> extends AbstractCollection<E> imple
     }
 
     //-----------------------------------------------------------------------
-    /**
-     * Returns an array of all of this multiset's elements.
-     *
-     * @return an array of all of this multiset's elements
-     */
     @Override
-    public Object[] toArray() {
-        final Object[] result = new Object[size()];
-        int i = 0;
-        final Iterator<E> it = map.keySet().iterator();
-        while (it.hasNext()) {
-            final E current = it.next();
-            for (int index = getCount(current); index > 0; index--) {
-                result[i++] = current;
-            }
-        }
-        return result;
+    protected Iterator<E> createUniqueSetIterator() {
+        return new UniqueSetIterator<E>(getMap().keySet().iterator(), this);
     }
 
-    /**
-     * Returns an array of all of this multiset's elements.
-     * If the input array has more elements than are in the multiset,
-     * trailing elements will be set to null.
-     *
-     * @param <T> the type of the array elements
-     * @param array the array to populate
-     * @return an array of all of this multiset's elements
-     * @throws ArrayStoreException if the runtime type of the specified array is not
-     *   a supertype of the runtime type of the elements in this list
-     * @throws NullPointerException if the specified array is null
-     */
     @Override
-    public <T> T[] toArray(T[] array) {
-        final int size = size();
-        if (array.length < size) {
-            @SuppressWarnings("unchecked") // safe as both are of type T
-            final T[] unchecked = (T[]) Array.newInstance(array.getClass().getComponentType(), size);
-            array = unchecked;
-        }
-
-        int i = 0;
-        final Iterator<E> it = map.keySet().iterator();
-        while (it.hasNext()) {
-            final E current = it.next();
-            for (int index = getCount(current); index > 0; index--) {
-                // unsafe, will throw ArrayStoreException if types are not compatible, see javadoc
-                @SuppressWarnings("unchecked")
-                final T unchecked = (T) current;
-                array[i++] = unchecked;
-            }
-        }
-        while (i < array.length) {
-            array[i++] = null;
-        }
-        return array;
+    protected int uniqueElements() {
+        return map.size();
     }
 
-    /**
-     * Returns a view of the underlying map's key set.
-     *
-     * @return the set of unique elements in this multiset
-     */
     @Override
-    public Set<E> uniqueSet() {
-        if (uniqueSet == null) {
-            uniqueSet = new UniqueSet<E>(this);
-        }
-        return uniqueSet;
-    }
-
-    /**
-     * Creates a unique set iterator.
-     * Subclasses can override this to return iterators with different properties.
-     *
-     * @param iterator  the iterator to decorate
-     * @return the uniqueSet iterator
-     */
-    protected Iterator<E> createUniqueSetIterator(final Iterator<E> iterator) {
-        return new UniqueSetIterator<E>(iterator, this);
-    }
-
-    /**
-     * Returns an unmodifiable view of the underlying map's key set.
-     *
-     * @return the set of unique elements in this multiset
-     */
-    @Override
-    public Set<Entry<E>> entrySet() {
-        if (entrySet == null) {
-            entrySet = new EntrySet<E>(this);
-        }
-        return entrySet;
-    }
-
-    /**
-     * Creates an entry set iterator.
-     * Subclasses can override this to return iterators with different properties.
-     *
-     * @param iterator  the iterator to decorate
-     * @return the entrySet iterator
-     */
-    protected Iterator<Entry<E>> createEntrySetIterator(final Iterator<Map.Entry<E, MutableInteger>> iterator) {
-        return new EntrySetIterator<E>(iterator, this);
+    protected Iterator<Entry<E>> createEntrySetIterator() {
+        return new EntrySetIterator<E>(map.entrySet().iterator(), this);
     }
 
     //-----------------------------------------------------------------------
-    /**
-     * Inner class UniqueSet.
-     */
-    protected static class UniqueSet<E> extends AbstractCollectionDecorator<E> implements Set<E> {
-
-        /** Serialization version */
-        private static final long serialVersionUID = 20150610L;
-
-        /** The parent multiset */
-        protected final AbstractMapMultiSet<E> parent;
-
-        /**
-         * Constructs a new unique element view of the MultiSet.
-         *
-         * @param parent  the parent MultiSet
-         */
-        protected UniqueSet(final AbstractMapMultiSet<E> parent) {
-            super(parent.map.keySet());
-            this.parent = parent;
-        }
-
-        @Override
-        public Iterator<E> iterator() {
-            return parent.createUniqueSetIterator(super.iterator());
-        }
-
-        @Override
-        public boolean contains(final Object key) {
-            return parent.contains(key);
-        }
-
-        @Override
-        public boolean remove(final Object key) {
-            return parent.remove(key, parent.getCount(key)) != 0;
-        }
-
-        @Override
-        public boolean equals(final Object object) {
-            return object == this || decorated().equals(object);
-        }
-
-        @Override
-        public int hashCode() {
-            return decorated().hashCode();
-        }
-
-        @Override
-        public void clear() {
-            parent.clear();
-        }
-    }
-
     /**
      * Inner class UniqueSetIterator.
      */
@@ -536,61 +358,6 @@ public abstract class AbstractMapMultiSet<E> extends AbstractCollection<E> imple
             parent.remove(lastElement, count);
             lastElement = null;
             canRemove = false;
-        }
-    }
-
-    //-----------------------------------------------------------------------
-    /**
-     * Inner class EntrySet.
-     */
-    protected static class EntrySet<E> extends AbstractSet<Entry<E>> {
-
-        private final AbstractMapMultiSet<E> parent;
-
-        /**
-         * Constructs a new view of the MultiSet.
-         *
-         * @param parent  the parent MultiSet
-         */
-        protected EntrySet(final AbstractMapMultiSet<E> parent) {
-            this.parent = parent;
-        }
-
-        @Override
-        public int size() {
-            return parent.map.entrySet().size();
-        }
-
-        @Override
-        public Iterator<Entry<E>> iterator() {
-            return parent.createEntrySetIterator(parent.map.entrySet().iterator());
-        }
-
-        @Override
-        public boolean contains(final Object obj) {
-            if (obj instanceof Entry<?> == false) {
-                return false;
-            }
-            final Entry<?> entry = (Entry<?>) obj;
-            final Object element = entry.getElement();
-            return parent.getCount(element) == entry.getCount();
-        }
-
-        @Override
-        public boolean remove(final Object obj) {
-            if (obj instanceof Entry<?> == false) {
-                return false;
-            }
-            final Entry<?> entry = (Entry<?>) obj;
-            final Object element = entry.getElement();
-            if (parent.contains(element)) {
-                final int count = parent.getCount(element);
-                if (entry.getCount() == count) {
-                    parent.remove(element, count);
-                    return true;
-                }
-            }
-            return false;
         }
     }
 
@@ -647,7 +414,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractCollection<E> imple
     /**
      * Inner class MultiSetEntry.
      */
-    protected static class MultiSetEntry<E> implements Entry<E> {
+    protected static class MultiSetEntry<E> extends AbstractEntry<E> {
 
         protected final Map.Entry<E, MutableInteger> parentEntry;
 
@@ -668,20 +435,15 @@ public abstract class AbstractMapMultiSet<E> extends AbstractCollection<E> imple
         public int getCount() {
             return parentEntry.getValue().value;
         }
-
-        @Override
-        public String toString() {
-            return String.format("%s:%d", getElement(), getCount());
-        }
-
     }
 
     //-----------------------------------------------------------------------
     /**
-     * Write the map out using a custom routine.
+     * Write the multiset out using a custom routine.
      * @param out the output stream
      * @throws IOException any of the usual I/O related exceptions
      */
+    @Override
     protected void doWriteObject(final ObjectOutputStream out) throws IOException {
         out.writeInt(map.size());
         for (final Map.Entry<E, MutableInteger> entry : map.entrySet()) {
@@ -691,16 +453,15 @@ public abstract class AbstractMapMultiSet<E> extends AbstractCollection<E> imple
     }
 
     /**
-     * Read the map in using a custom routine.
-     * @param map the map to use
+     * Read the multiset in using a custom routine.
      * @param in the input stream
      * @throws IOException any of the usual I/O related exceptions
      * @throws ClassNotFoundException if the stream contains an object which class can not be loaded
      * @throws ClassCastException if the stream does not contain the correct objects
      */
-    protected void doReadObject(final Map<E, MutableInteger> map, final ObjectInputStream in)
+    @Override
+    protected void doReadObject(final ObjectInputStream in)
             throws IOException, ClassNotFoundException {
-        this.map = map;
         final int entrySize = in.readInt();
         for (int i = 0; i < entrySize; i++) {
             @SuppressWarnings("unchecked") // This will fail at runtime if the stream is incorrect
@@ -709,6 +470,64 @@ public abstract class AbstractMapMultiSet<E> extends AbstractCollection<E> imple
             map.put(obj, new MutableInteger(count));
             size += count;
         }
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Returns an array of all of this multiset's elements.
+     *
+     * @return an array of all of this multiset's elements
+     */
+    @Override
+    public Object[] toArray() {
+        final Object[] result = new Object[size()];
+        int i = 0;
+        for (final Map.Entry<E, MutableInteger> entry : map.entrySet()) {
+            final E current = entry.getKey();
+            final MutableInteger count = entry.getValue();
+            for (int index = count.value; index > 0; index--) {
+                result[i++] = current;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Returns an array of all of this multiset's elements.
+     * If the input array has more elements than are in the multiset,
+     * trailing elements will be set to null.
+     *
+     * @param <T> the type of the array elements
+     * @param array the array to populate
+     * @return an array of all of this multiset's elements
+     * @throws ArrayStoreException if the runtime type of the specified array is not
+     *   a supertype of the runtime type of the elements in this list
+     * @throws NullPointerException if the specified array is null
+     */
+    @Override
+    public <T> T[] toArray(T[] array) {
+        final int size = size();
+        if (array.length < size) {
+            @SuppressWarnings("unchecked") // safe as both are of type T
+            final T[] unchecked = (T[]) Array.newInstance(array.getClass().getComponentType(), size);
+            array = unchecked;
+        }
+
+        int i = 0;
+        for (final Map.Entry<E, MutableInteger> entry : map.entrySet()) {
+            final E current = entry.getKey();
+            final MutableInteger count = entry.getValue();
+            for (int index = count.value; index > 0; index--) {
+                // unsafe, will throw ArrayStoreException if types are not compatible, see javadoc
+                @SuppressWarnings("unchecked")
+                final T unchecked = (T) current;
+                array[i++] = unchecked;
+            }
+        }
+        while (i < array.length) {
+            array[i++] = null;
+        }
+        return array;
     }
 
     //-----------------------------------------------------------------------
@@ -742,32 +561,4 @@ public abstract class AbstractMapMultiSet<E> extends AbstractCollection<E> imple
         }
         return total;
     }
-
-    /**
-     * Implement a toString() method suitable for debugging.
-     *
-     * @return a debugging toString
-     */
-    @Override
-    public String toString() {
-        if (size() == 0) {
-            return "[]";
-        }
-        final StringBuilder buf = new StringBuilder();
-        buf.append('[');
-        final Iterator<E> it = uniqueSet().iterator();
-        while (it.hasNext()) {
-            final Object current = it.next();
-            final int count = getCount(current);
-            buf.append(current);
-            buf.append(':');
-            buf.append(count);
-            if (it.hasNext()) {
-                buf.append(", ");
-            }
-        }
-        buf.append(']');
-        return buf.toString();
-    }
-
 }
