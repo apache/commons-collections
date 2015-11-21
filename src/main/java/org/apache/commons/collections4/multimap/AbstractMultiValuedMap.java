@@ -19,7 +19,6 @@ package org.apache.commons.collections4.multimap;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.lang.reflect.Array;
 import java.util.AbstractCollection;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,7 +38,8 @@ import org.apache.commons.collections4.iterators.IteratorChain;
 import org.apache.commons.collections4.iterators.LazyIteratorChain;
 import org.apache.commons.collections4.iterators.TransformIterator;
 import org.apache.commons.collections4.keyvalue.AbstractMapEntry;
-import org.apache.commons.collections4.set.UnmodifiableSet;
+import org.apache.commons.collections4.multiset.AbstractMultiSet;
+import org.apache.commons.collections4.multiset.UnmodifiableMultiSet;
 
 /**
  * Abstract implementation of the {@link MultiValuedMap} interface to simplify
@@ -59,7 +59,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     private transient EntryValues entryValuesView;
 
     /** The KeyMultiSet view */
-    private transient KeysMultiSet keysMultiSetView;
+    private transient MultiSet<K> keysMultiSetView;
 
     /** The map used to store the data */
     private transient Map<K, Collection<V>> map;
@@ -308,8 +308,10 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      */
     @Override
     public MultiSet<K> keys() {
-        return keysMultiSetView != null ? keysMultiSetView
-                                        : (keysMultiSetView = new KeysMultiSet());
+        if (keysMultiSetView == null) {
+            keysMultiSetView = UnmodifiableMultiSet.unmodifiableMultiSet(new KeysMultiSet());
+        }
+        return keysMultiSetView;
     }
 
     @Override
@@ -526,17 +528,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     /**
      * Inner class that provides a MultiSet<K> keys view.
      */
-    private class KeysMultiSet implements MultiSet<K> {
-
-        @Override
-        public boolean addAll(Collection<? extends K> c) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public void clear() {
-            throw new UnsupportedOperationException();
-        }
+    private class KeysMultiSet extends AbstractMultiSet<K> {
 
         @Override
         public boolean contains(Object o) {
@@ -549,45 +541,13 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         }
 
         @Override
-        public Object[] toArray() {
-            final Object[] result = new Object[size()];
-            int i = 0;
-            final Iterator<K> it = getMap().keySet().iterator();
-            while (it.hasNext()) {
-                final K current = it.next();
-                for (int index = getCount(current); index > 0; index--) {
-                    result[i++] = current;
-                }
-            }
-            return result;
+        public int size() {
+            return AbstractMultiValuedMap.this.size();
         }
 
         @Override
-        public <T> T[] toArray(T[] array) {
-            final int size = size();
-            if (array.length < size) {
-                @SuppressWarnings("unchecked")
-                // safe as both are of type T
-                final T[] unchecked = (T[]) Array.newInstance(array.getClass().getComponentType(), size);
-                array = unchecked;
-            }
-
-            int i = 0;
-            final Iterator<K> it = getMap().keySet().iterator();
-            while (it.hasNext()) {
-                final K current = it.next();
-                for (int index = getCount(current); index > 0; index--) {
-                    // unsafe, will throw ArrayStoreException if types are not
-                    // compatible, see javadoc
-                    @SuppressWarnings("unchecked")
-                    final T unchecked = (T) current;
-                    array[i++] = unchecked;
-                }
-            }
-            while (i < array.length) {
-                array[i++] = null;
-            }
-            return array;
+        protected int uniqueElements() {
+            return getMap().size();
         }
 
         @Override
@@ -601,127 +561,28 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         }
 
         @Override
-        public int setCount(K object, int count) {
-            throw new UnsupportedOperationException();
+        protected Iterator<MultiSet.Entry<K>> createEntrySetIterator() {
+            final MapEntryTransformer transformer = new MapEntryTransformer();
+            return IteratorUtils.transformedIterator(map.entrySet().iterator(), transformer);
         }
 
-        @Override
-        public boolean add(K object) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public int add(K object, int nCopies) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public boolean remove(Object object) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public int remove(Object object, int nCopies) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Set<K> uniqueSet() {
-            return UnmodifiableSet.unmodifiableSet(keySet());
-        }
-
-        @Override
-        public Set<MultiSet.Entry<K>> entrySet() {
-            // TODO: implement
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public int size() {
-            return AbstractMultiValuedMap.this.size();
-        }
-
-        @Override
-        public boolean containsAll(Collection<?> coll) {
-            final Iterator<?> e = coll.iterator();
-            while (e.hasNext()) {
-                if(!contains(e.next())) {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        @Override
-        public boolean removeAll(Collection<?> coll) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public boolean retainAll(Collection<?> coll) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public Iterator<K> iterator() {
-            return new LazyIteratorChain<K>() {
-
-                final Iterator<K> keyIterator = getMap().keySet().iterator();
-
-                @Override
-                protected Iterator<? extends K> nextIterator(int count) {
-                    if (!keyIterator.hasNext()) {
-                        return null;
+        private final class MapEntryTransformer
+            implements Transformer<Map.Entry<K, Collection<V>>, MultiSet.Entry<K>> {
+            @Override
+            public MultiSet.Entry<K> transform(final Map.Entry<K, Collection<V>> mapEntry) {
+                return new AbstractMultiSet.AbstractEntry<K>() {
+                    @Override
+                    public K getElement() {
+                        return mapEntry.getKey();
                     }
-                    final K key = keyIterator.next();
-                    final Iterator<V> colIterator = getMap().get(key).iterator();
-                    Iterator<K> nextIt = new Iterator<K>() {
 
-                        @Override
-                        public boolean hasNext() {
-                            return colIterator.hasNext();
-                        }
-
-                        @Override
-                        public K next() {
-                            colIterator.next();// Increment the iterator
-                            // The earlier statement would throw
-                            // NoSuchElementException anyway in case it ends
-                            return key;
-                        }
-
-                        @Override
-                        public void remove() {
-                            throw new UnsupportedOperationException();
-                        }
-                    };
-                    return nextIt;
-                }
-            };
-        }
-
-        @Override
-        public String toString() {
-            if (size() == 0) {
-                return "[]";
+                    @Override
+                    public int getCount() {
+                        return mapEntry.getValue().size();
+                    }
+                };
             }
-            final StringBuilder buf = new StringBuilder();
-            buf.append('[');
-            final Iterator<K> it = KeysMultiSet.this.uniqueSet().iterator();
-            while (it.hasNext()) {
-                final Object current = it.next();
-                final int count = getCount(current);
-                buf.append(current);
-                buf.append(':');
-                buf.append(count);
-                if (it.hasNext()) {
-                    buf.append(", ");
-                }
-            }
-            buf.append(']');
-            return buf.toString();
         }
-
     }
 
     /**
