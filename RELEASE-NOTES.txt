@@ -1,364 +1,163 @@
 
               Apache Commons Collections
-                     Version 4.0
+                     Version 4.1
                     RELEASE NOTES
 
 INTRODUCTION:
 
-Commons collections is a project to develop and maintain collection classes
-based on and inspired by the JDK collection framework.
-This version uses the generics features of Java 5 and is not compatible with
-earlier JDK versions.
+Apache Commons Collections is a project to develop and maintain collection
+classes based on and inspired by the JDK collection framework.
 
-The process of generifying an API is complex.
-For commons-collections, we have chosen to break the API in various ways.
-The aim behind this is to provide an API design that better suits generics.
-We have also removed all deprecated classes and fixed oddities in the previous
-API that we couldn't fix due to backwards compatibility restrictions.
+This v4.1 release is a minor and security release, fixing several bugs present in
+previous releases of the 4.X branch. Additionally, this release provides a mitigation
+for a known remote code exploitation via the standard java object serialization
+mechanism. Serialization support for unsafe classes in the functor package has been
+completely removed (classes do not implement the Serializable interface anymore).
+For more details, please refer to COLLECTIONS-580.
 
-As such, this release can not be considered to be a simple, drop-in, replacement
-for commons-collections. To help with the migration to this new version, the
-package has changed to "org.apache.commons.collections4", thus it is possible
-to have both commons-collections versions in the classpath.
+All users are strongly encouraged to updated to this release.
 
-These release notes will try to guide you in the process of upgrading, however you
-should remember that this is a new API based on the original, so some concepts
-have changed.
 
 Compatibility
 -------------
 
- o Java 5 or later is required.
- o This release is not source or binary compatible with previous releases of
-   Commons Collections. This includes releases from the 3.x branch as well as
-   preceding alpha releases for 4.0 (see details of changes below).
+ o Java 6 or later is now required (previous version 4.0 required Java 5).
+ o This release is source and binary compatible with the previous 4.0 release
+   of Commons Collections with the exception that some classes in the functor
+   package do not implement the Serializable interface anymore (see COLLECTIONS-580). 
  o some unit tests are disabled when executed with an IBM JDK 6 due to a faulty
    java.util.TreeMap implementation.
 
+Major changes since 4.0
+-----------------------
 
-Major changes since 3.2.1
--------------------------
-
- o Use of generics and other language features introduced in Java 5 (varargs, Iterable)
- o Removed deprecated classes / methods and features which are now supported by the JDK
- o Replaced Buffer interface with java.util.Queue
- o Added concept of split maps with respective interfaces Put / Get (see also package splitmap)
- o Added new Trie interface together with an implementation of a Patricia Trie
+ o Added interface MultiSet (package multiset)
+ o Added interface MultiValuedMap, ListValuedMap and SetValuedMap (package multimap) 
+ o Added fluent API for Iterable instances (class FluentIterable)
 
 
-Changes since 4.0-alpha1
-------------------------
+Changes
+-------
 
- o [COLLECTIONS-502] Resolved generic parameter inconsistency for various static fields, e.g. BagUtils.EMPTY_BAG,
-                     TruePredicate.INSTANCE and many others. All accessible static fields use raw types so that
-                     they can be used directly without explicit casting. To avoid compiler warnings about unchecked
-                     conversion and/or rawtypes use the corresponding factory methods, e.g. BagUtils.emptyBag(). 
- o [COLLECTIONS-501] Renamed methods "V MultiKeyMap#remove(Object, Object, ...)" to
-                     "V MultiKeyMap#removeMultiKey(Object, Object, ...)" to avoid future conflicts
-                     with a default method of the Map interface in Java 8.
- o [COLLECTIONS-500] Renamed "V MultiMap#remove(K, V)" to "boolean MultiMap#removeMapping(K, V)"
-                     to avoid future conflicts with a default method of the Map interface in Java 8.
- o [COLLECTIONS-499] Refactored the test framework for Bag implementations to extend from
-                     "AbstractCollectionTest" by decorating the concrete Bag instance with
-                     a CollectionBag or CollectionSortedBag. 
- o [COLLECTIONS-498] "CollectionBag" will now also respect the contract of the decorated bag in case
-                     a null argument is provided to either removeAll or retainAll.
- o [COLLECTIONS-497] Added bag decorator "CollectionSortedBag" which decorates a SortedBag to make it
-                     comply with the Collection contract.
- o [COLLECTIONS-496] "UnmodifiableBoundedCollection" does now also implement the marker interface "Unmodifiable"
-                     similar as all other unmodifiable decorators.
- o [COLLECTIONS-495] "UnmodifiableTrie#unmodifiableTrie(Trie)" will not decorate again an already unmodifiable Trie.
-                     Also the return type has been changed to "Trie" to be consistent with other Unmodifiable decorators.
- o [COLLECTIONS-494] Moved "Equator" interface to base package for consistency. Thanks to Emmanuel Bourg.
- o [COLLECTIONS-488] Added "CollectionsUtils#matchesAll(Iterable, Predicate)" to test if all elements
-                     of a collection match a given predicate. Thanks to Josh Cain.
- o [COLLECTIONS-485] Accept wildcard input where possible, e.g. in copy-constructors, Unmodifiable* decorators
-                     and iterators. Thanks to Hollis Waite.
- o [COLLECTIONS-481] No collision detection/resolution was performed when calling "CompositeSet#addComposited(...)"
-                     with more than one Set as argument. Additionally use varargs parameters instead of arrays
-                     in CompositeSet and CompositeCollection constructor and addComposited method. Thanks to Hollis Waite.
- o [COLLECTIONS-480] Narrow return type of "BidiMap#values()" to Set as the values are required to be unique. Thanks to Hollis Waite.
- o [COLLECTIONS-468] Renamed CompliantBag to CollectionBag.
- o [COLLECTIONS-475] Fixed conversion of timeout parameters in "PassiveExpiringMap".
-
-
-Removed classes
----------------
-
- o [COLLECTIONS-458] Removed unused class "AbstractUntypedCollectionDecorator<E, D>"
- o [COLLECTIONS-432] Removed "Buffer" interface and all its implementations and related classes.
-                     Replaced by "java.util.Queue", see also section [New classes]
-                     
-   - PriorityBuffer: use either java.util.PriorityQueue or java.util.concurrent.PriorityBlockingQueue
-   - SynchronizedBuffer: use the corresponding *BlockingQueue classes in java.util.concurrent
-   - BoundedBuffer: use either ArrayBlockingBuffer(capacity) or LinkedBlockingBuffer(capacity) in java.util.concurrent
-   - UnboundedFifoBuffer: use either java.util.LinkedList or java.util.concurrent.LinkedBlockingBuffer
-                     
- o [COLLECTIONS-351] Removed features now supported by the JDK or other Apache Commons libraries
- 
-   - FastArrayList: use java.util.concurrent.CopyOnWriteArrayList
-   - FastHashMap: use java.util.concurrent.ConcurrentHashMap, but beware of null keys and values
-   - FastTreeSet: no direct replacement, use ConcurrentHashMap or a synchronized TreeMap
-   - IdentityMap: use java.util.IdentityHashMap
-   - ExtendedProperties: use commons-configuration
-   - Synchronized[List,Set,SortedSet]: use java.util.Collections.synchronized*()
-   - Typed* decorators: use generics for type safety, or java.util.Collections.checked*()
-   - [List,Set,Map]Utils.EMPTY_*: use the corresponding fields in java.util.Collections
- 
- o [COLLECTIONS-229] Removed deprecated collection classes and methods
-
-
-New classes
------------
-
- o [COLLECTIONS-497] CollectionSortedBag - decorates a SortedBag to make it comply with the Collection contract.
- o [COLLECTIONS-468] CollectionBag - decorates another Bag to make it comply with the Collection contract.
- o [COLLECTIONS-463] PushbackIterator - supports pushback of elements during iteration. Thanks to Andy Seaborne, Claude Warren.
- o [COLLECTIONS-462] PeekingIterator - supports one-element lookahead during iteration. Thanks to Andy Seaborne, Claude Warren.
- o [COLLECTIONS-432] CircularFifoQueue - analogous class to CircularFifoBuffer for the Queue interface
-                     PredicatedQueue - analogous class to PredicatedBuffer
-                     TransformedQueue - analogous class to TransformedBuffer
-                     UnmodifiableQueue - analogous class to UnmodifiableBuffer
-                     QueueUtils - analogous class to BufferUtils
- o [COLLECTIONS-422] PermutationIterator - generates unordered permutations of a collection. Thanks to Benoit Corne. 
- o [COLLECTIONS-404] SequencesComparator - an implementation of Eugene Myers difference algorithm in package o.a.c.c.sequence. Thanks to Jordane Sarda.
- o [COLLECTIONS-396] LazyIteratorChain - a variant of IteratorChain which supports lazy initialization. Thanks to Jeff Rodriguez.
- o [COLLECTIONS-322] NodeListIterator - supports iteration over a org.w3c.dom.NodeList. Thanks to Thomas Vahrst. 
- o [COLLECTIONS-313] CatchAndRethrowClosure - re-throws any checked exception as unchecked "FunctorException". Thanks to David J. M. Karlsen. 
- o [COLLECTIONS-275] IndexedCollection - collection decorator which provides a map-like view on an existing collection. Thanks to Stephen Kestle. 
- o [COLLECTIONS-258] DualLinkedHashBidiMap - bidi map implementation using LinkedHashMap instances. Thanks to Nathan Blomquist. 
- o [COLLECTIONS-242] Equator - interface for testing object equality. 
- o [COLLECTIONS-241] PassiveExpiringMap - map decorator which passively expires entries. Thanks to Elifarley Callado Coelho.
- o [COLLECTIONS-225] PatriciaTrie - PATRICIA trie implementation for the new Trie interface, together with Unmodifiable and
-                     Synchronized decorators. Thanks to Sam Berlin and Roger Kapsi.
- o [COLLECTIONS-8  ] ComparatorPredicate - predicate to compare objects against a fixed instance. Thanks to Rune Peter Bjørnstad.
- o [None           ] Put / Get - interfaces for split maps
- o [None           ] SplitMapUtils / splitmap.TransformedSplitMap - utilities and implementation for split maps
-
-
-New methods in *Utils
----------------------
-
- o [COLLECTIONS-488] Added "CollectionsUtils#matchesAll(Iterable, Predicate)" to test if all elements
-                     of a collection match a given predicate. Thanks to Josh Cain.
- o [COLLECTIONS-456] ListUtils#longestCommonSubsequence(...) to get the longest common subsequence of arbitrary lists or CharSequences.
- o [COLLECTIONS-450] CollectionUtils#forAllButLastDo(Collection, Closure) and forAllButLastDo(Iterator, Closure). Thanks to J. Moldawski.
- o [COLLECTIONS-446] CollectionUtils#isEqualCollection(Collection, Collection, Equator). Thanks to Matt Lachman.
- o [COLLECTIONS-436] *Utils#emptyIfNull(*) methods in classes CollectionUtils, ListUtils, SetUtils and MapUtils. Thanks to Arman Sharif.
- o [COLLECTIONS-429] CollectionUtils#containsAll(Collection, Collection) with guaranteed runtime complexity of O(n + m)
-   +COLLECTIONS-434] and space complexity of O(n). This method may yield much better performance than Collection.containsAll(Collection)
-                     depending on the use-case and type of collection used. Thanks to Adrian Nistor, Mert Guldur.
- o [COLLECTIONS-422] CollectionUtils#permutations(Collection) to generate all permutations of a collection. Thanks to Benoit Corne. 
- o [COLLECTIONS-405] ListUtils#select() and ListUtils#selectRejected() methods. Thanks to Adam Dyga. 
- o [COLLECTIONS-393] ListUtils#partition() to split a List into consecutive sublists. Thanks to Chris Shayan. 
- o [COLLECTIONS-383] CollectionUtils#forAllDo(Iterator, Closure). Thanks to Adrian Cumiskey.  
- o [COLLECTIONS-375] ListUtils#defaultIfNull(List, List). Thanks to Ivan Hristov. 
- o [COLLECTIONS-361] CollectionUtils#filterInverse(Iterable, Predicate). Thanks to Jean-Noel Rouvignac.  
- o [COLLECTIONS-306] CollectionUtils#subtract(Iterable, Iterable, Predicate). Thanks to Chris Shayan.  
- o [COLLECTIONS-296] CollectionUtils#collate(...) to merge two sorted Collections using the standard O(n) merge algorithm. Thanks to Julius Davies.  
- o [COLLECTIONS-286] CollectionUtils#extractSingleton(Collection). Thanks to Geoffrey De Smet.  
- o [COLLECTIONS-263] MapUtils#populateMap(MultiMap, ...) to support also "MultiMap" instances as input. Thanks to John Hunsley.  
- o [COLLECTIONS-235] ListUtils#indexOf(List, Predicate). Thanks to Nathan Egge. 
- o [COLLECTIONS-194] MapUtils#populateMap(Map, Iterable, Transformer, ...). Thanks to Dave Meikle. 
+o [COLLECTIONS-580]: Serialization support for unsafe classes in the functor package
+                     has been removed as this can be exploited for remote code execution
+                     attacks. Classes considered to be unsafe are: CloneTransformer,
+                     ForClosure, InstantiateFactory, InstantiateTransformer, InvokerTransformer,
+                     PrototypeCloneFactory, PrototypeSerializationFactory, WhileClosure. 
+o [COLLECTIONS-551]: Deprecated various method in "CollectionUtils" in favor of similar
+                     methods in the newly introduced "IterableUtils". 
+o [COLLECTIONS-570]: All constructors and static factory methods will now throw a "NullPointerException"
+                     if a required input argument is null. Previously sometimes a "IllegalArgumentException"
+                     was used. 
+o [COLLECTIONS-571]: Deprecated methods "synchronizedCollection(Collection)" and
+                     "unmodifiableCollection(Collection)" in class "CollectionUtils", the corresponding
+                     methods in "java.util.Collections" should be used instead. 
+o [COLLECTIONS-562]: Upgraded minimum java requirement to Java 6 (up from Java 5). 
 
 
 New features
 ------------
 
- o [COLLECTIONS-399] Added new method "get(int)" to "CircularFifoQueue". Thanks to Sebb.
- o [COLLECTIONS-327] Added serialVersionUID fields for "CompositeCollection", "CompositeSet", "EmptyMapMutator", "EmptySetMutator". Thanks to sebb. 
- o [COLLECTIONS-293] Added support for using custom "Equator" objects in "EqualPredicate". Thanks to Stephen Kestle. 
- o [COLLECTIONS-289] Added method "CollatingIterator#getIteratorIndex()". Thanks to Fredrik Kjellberg.
- o [COLLECTIONS-285] Added serialization support for "TreeBidiMap". Thanks to Christian Gruenberg. 
- o [COLLECTIONS-272] Added serialization support for "FixedOrderComparator" and "TransformingComparator". Thanks to Chaitanya Mutyala. 
- o [COLLECTIONS-260] Added constructor "TransformingComparator(Transformer)". Thanks to Stephen Kestle. 
- o [COLLECTIONS-237] Added method "MultiValueMap#iterator()" to return a flattened version of "entrySet().iterator()".
-                     Clarified javadoc for "entrySet()" that the returned Entry objects are unflattened, i.e. the Entry object
-                     for a given key contains all values mapped to this key. Thanks to Nils Kaiser, Alan Mehlo. 
- o [COLLECTIONS-226] Added method "ListOrderedMap#putAll(int, Map)". Thanks to Vasily Ivanov. 
- o [COLLECTIONS-213] Added support for resettable iterators in "IteratorIterable". Thanks to Dusan Chromy. 
-
-
-Changed classes / methods
--------------------------
-
- o [COLLECTIONS-502] Resolved generic parameter inconsistency for various static fields, e.g. BagUtils.EMPTY_BAG,
-                     TruePredicate.INSTANCE and many others. All accessible static fields use raw types so that
-                     they can be used directly without explicit casting. To avoid compiler warnings about unchecked
-                     conversion and/or rawtypes use the corresponding factory methods, e.g. BagUtils.emptyBag(). 
- o [COLLECTIONS-501] Renamed methods "V MultiKeyMap#remove(Object, Object, ...)" to
-                     "V MultiKeyMap#removeMultiKey(Object, Object, ...)" to avoid future conflicts
-                     with a default method of the Map interface in Java 8.
- o [COLLECTIONS-500] Renamed "V MultiMap#remove(K, V)" to "boolean MultiMap#removeMapping(K, V)"
-                     to avoid future conflicts with a default method of the Map interface in Java 8.
- o [COLLECTIONS-499] Refactored the test framework for Bag implementations to extend from
-                     "AbstractCollectionTest" by decorating the concrete Bag instance with
-                     a CollectionBag or CollectionSortedBag. 
- o [COLLECTIONS-496] "UnmodifiableBoundedCollection" does now also implement the marker interface "Unmodifiable"
-                     similar as all other unmodifiable decorators.
- o [COLLECTIONS-495] "UnmodifiableTrie#unmodifiableTrie(Trie)" will not decorate again an already unmodifiable Trie.
-                     Also the return type has been changed to "Trie" to be consistent with other Unmodifiable decorators.
- o [COLLECTIONS-494] Moved "Equator" interface to base package for consistency. Thanks to Emmanuel Bourg.
- o [COLLECTIONS-485] Accept wildcard input where possible, e.g. in copy-constructors, Unmodifiable* decorators
-                     and iterators. Thanks to Hollis Waite.
- o [COLLECTIONS-480] Narrow return type of "BidiMap#values()" to Set as the values are required to be unique. Thanks to Hollis Waite.
- o [COLLECTIONS-473] Made field "collection" in class "AbstractCollectionDecorator" private and added
-                     setter "setCollection(Collection)" with scope protected to set the decorated collection
-                     during de-serialization.
- o [COLLECTIONS-466] Replaced "Collection" with "Iterable" for method arguments where applicable.
- o [COLLECTIONS-460] Changed "IteratorChain" to use internally a "Queue" instead of a "List". Iterators are
-                     removed from the queue once used and can be garbage collected after being exhausted.
-                     Additionally removed the methods "setIterator(Iterator)" and "getIterators()".
- o [COLLECTIONS-459] Removed method "setArray(Object)" in class ArrayIterator and method "setArray(Object[])"
-                     in class ObjectArrayIterator and made fields array, startIndex and endIndex final and package private.
- o [COLLECTIONS-455] Changed scope of various fields to private / package private where appropriate.
- o [COLLECTIONS-454] An iterator over a "Flat3Map#entrySet()" will now return independent Map.Entry objects that will
-                     not change anymore when the iterator progresses.
- o [COLLECTIONS-453] Several closure and transformer implementations in the functor package will now copy
-                     an array as input parameter to their constructor (e.g. ChainedClosure).
- o [COLLECTIONS-452] Change base package to "org.apache.commons.collections4".
- o [COLLECTIONS-451] The constructors for all *Utils classes are now private to prevent instantiation. 
- o [COLLECTIONS-424] "CompositeSet" does not inherit from "CompositeCollection" anymore. The inner class "SetMutator"
-                     has been updated accordingly. Thanks to Michael Pradel.
- o [COLLECTIONS-382] Change maven coordinates to "org.apache.commons.commons-collections4". Thanks to Olivier Lamy. 
- o [COLLECTIONS-381] Move the project structure to a standard maven layout. Thanks to Olivier Lamy. 
- o [COLLECTIONS-372] TransformingComparator now supports different types for its input/output values. 
- o [COLLECTIONS-362] "CollectionUtils#filter(Iterable, Predicate)" will now return whether the collection has been modified.
-                     Thanks to Jean-Noel Rouvignac. 
- o [COLLECTIONS-341] "NOPClosure" is now a final class. Thanks to Goran Hacek. 
- o [COLLECTIONS-324] Fields transformer and decorated in class "TransformingComparator" are now final. Thanks to sebb. 
- o [COLLECTIONS-307] "SetUniqueList#subList()" will now return an unmodifiable list as changes to it may invalidate the parent list.
-                     Thanks to Christian Semrau, Thomas Vahrst. 
- o [COLLECTIONS-298] Calling "CollectionUtils#sizeIsEmpty(null)" will now return true. Thanks to Benjamin Bentmann. 
- o [COLLECTIONS-280] The predicate that rejected an object to be added to a "PredicatedCollection" is now contained in the
-                     respective exception message. Thanks to Chris Lewis. 
- o [COLLECTIONS-265] "TreeBag" will now only accept "Comparable" objects as input when used with natural ordering. Thanks to David Saff. 
- o [COLLECTIONS-251] The static factory methods have been renamed from "getInstance()" to a camel-case version of the class name,
-   +COLLECTIONS-321] e.g. "truePredicate()" for class "TruePredicate". Thanks to Stephen Kestle.
- o [COLLECTIONS-240] "MultiValueMap" is now serializable. Thanks to Wouter de Vaal. 
- o [COLLECTIONS-231] Return concrete class in static factory methods instead of base class interface
-                     (except for Unmodifiable decorators). Thanks to Torsten Curdt. 
- o [COLLECTIONS-230] "CollectionUtils#size(Collection)" now returns 0 when called with null as input. Thanks to Stepan Koltsov,sebb.
-   +COLLECTIONS-297]
-   +COLLECTIONS-318]
- o [COLLECTIONS-223] "CollectionUtils#addAll(...)" methods now return if the collection has been changed by this operation.
-                     Thanks to Vasily Ivanov. 
- o [COLLECTIONS-221] "CompositeCollection", "CompositeMap" and "CompositeSet" are now serializable. Thanks to Pal Denes. 
- o [COLLECTIONS-218] The "CollectionUtils#select(Collection, Predicate, Collection)" method will now return the output collection. 
- o [COLLECTIONS-182] "CollectionUtils#forAllDo(Collection, Closure)" now returns the provided closure. Thanks to Jim Cakalic. 
- o [COLLECTIONS-110] Make generic versions of all classes in collections.
-   +COLLECTIONS-243]
-   +COLLECTIONS-245]
-   +COLLECTIONS-247]
-   +COLLECTIONS-253]
-   +COLLECTIONS-273]
-   +COLLECTIONS-282]     
- o [None           ] Switch Abstract*Decorator classes to expose decorated() protected method instead of the decorated collection directly.
-                     Each class overrides decorated() to add its type covariantly, thus getList()/getSet() etc. methods are removed
- o [None           ] ArrayStack is now deprecated and will be removed in the next major release. It is replaced by the java.util.Deque
-                     interface available from Java 6.
+o [COLLECTIONS-508]: Added new interfaces "MultiValuedMap", "ListValuedMap" and "SetValuedMap"
+                     as a replacement for "MultiMap". Decorators and implementations reside in
+                     the "multimap" package and a "MultiMapUtils" class has been added.
+                     The existing interface "MultiMap" as well as the concrete implementation
+                     "MultiValueMap" has been deprecated. 
+o [COLLECTIONS-567]: Added new MultiSet interface which is intended to be a replacement for
+                     the Bag interface. The main difference is that a MultiSet is fully compatible
+                     to the Collection contract. 
+o [COLLECTIONS-572]: Added set operations to "SetUtils": union, difference, intersection and disjunction.
+                     The operations return a view of the result that is backed by the input sets. 
+o [COLLECTIONS-557]: Added support to specify the initial size of a "LRUMap". Thanks to Philippe Mouawad. 
+o [COLLECTIONS-565]: Added decorators for "NavigableSet" interface. 
+o [COLLECTIONS-464]
+  +COLLECTIONS-442]: Added new class "FluentIterable" to support a fluent API for manipulating
+                     Iterable instances. Additionally various supporting methods have been
+                     added to "IterableUtils" and "IteratorUtils". 
+o [COLLECTIONS-464]: Added new "ZippingIterator" and factory methods "IteratorUtils#zippingIterator(...)". 
+o [COLLECTIONS-464]: Added new decorator "SkippingIterator" and factory methods "IteratorUtils#skippingIterator(...)". 
+o [COLLECTIONS-556]: Added method "SetUtils#newIdentityHashSet()" which returns a new identity HashSet
+                     using reference-equality instead of object-equality. 
+o [COLLECTIONS-395]: Added method "LRUMap#get(Object, boolean)" that allows to query the map
+                     without affecting the least recently used order. Thanks to David Hawthorne. 
+o [COLLECTIONS-427]: Added "toString(...)" methods to newly created "IterableUtils" and existing "IteratorUtils"
+                     to get a string representation of an Iterable/Iterator instance similar to "Arrays#toString(...)".
+                     Thanks to Gonçalo Marques. 
+o [COLLECTIONS-539]: Changed scope of "CircularFifoQueue#isAtFullCapacity()" to public. Thanks to Guram Savinov. 
+o [COLLECTIONS-511]: Added new methods "IterableUtils#partition(...)" to partition an input collection
+                     into separate output collections based on evaluation of one or more predicates.
+                     Thanks to Nathan Blomquist, Brent Worden. 
+o [COLLECTIONS-529]: Added methods "removeAll(...)" and "retainAll(...)" to "CollectionUtils" that perform
+                     equality checks using the provided "Equator" object instead of "Object#equals()".
+                     Thanks to Alexander Muthmann, Dipanjan Laha. 
+o [COLLECTIONS-503]: Added new transformer "IfTransformer" and factory methods "TransformerUtils#ifTransformer(...)"
+                     which replace "TransformerUtils#switchTransformer(Predicate, Transformer, Transformer)".
+                     Thanks to Josh Cain. 
+o [COLLECTIONS-471]: Added new decorator "BoundedIterator" and factory methods "IteratorUtils#boundedIterator(...)".
+                     Thanks to Radford Tam. 
 
 
 Fixed Bugs
 ----------
 
- o [COLLECTIONS-498] "CollectionBag" will now also respect the contract of the decorated bag in case
-                     a null argument is provided to either removeAll or retainAll.
- o [COLLECTIONS-481] No collision detection/resolution was performed when calling "CompositeSet#addComposited(...)"
-                     with more than one Set as argument. Additionally use varargs parameters instead of arrays
-                     in CompositeSet and CompositeCollection constructor and addComposited method. Thanks to Hollis Waite.
- o [COLLECTIONS-475] Fixed conversion of timeout parameters in "PassiveExpiringMap".
- o [COLLECTIONS-474] ListOrderedMap#putAll(index, Object, Object) does not throw an exception anymore if the
-                     map contains null values. Additionally added javadoc clarification on the supported bounds
-                     for the index parameter. Thanks to Ning Chen.
- o [COLLECTIONS-472] Improved performance of "AbstractMapBag#containsAll(Collection)" by returning immediately
-                     after a difference has been found. Thanks to Adrian Nistor.
- o [COLLECTIONS-461] Added additional clarification to javadoc of interface "Put" wrt return type of
-                     "put(Object, Object)" method. Thanks to Matt Benson, sebb. 
- o [COLLECTIONS-447] Tree traversal with a TreeListIterator will not be affected anymore by the removal of an element directly after
-                     a call to previous(). Thanks to Jeffrey Barnes. 
- o [COLLECTIONS-445] Adapt and/or ignore several unit tests when run on a IBM J9 VM (specification version 1.6.0) due to a faulty
-                     "java.util.TreeMap" implementation. 
- o [COLLECTIONS-444] SetUniqueList.set(int, E) now works correctly if the object to be inserted is already placed at the given position.
-                     Thanks to Thomas Vahrst, John Vasileff. 
- o [COLLECTIONS-441] MultiKeyMap.clone() now correctly calls super.clone(). Thanks to Thomas Vahrst. 
- o [COLLECTIONS-433] Improve performance of "TreeList#addAll" and "TreeList(Collection)" by converting the input collection into an
-                     AVL tree and efficiently merge it into the existing tree. Thanks to Jeffrey Barnes. 
- o [COLLECTIONS-427] Fixed performance issue in "SetUniqueList#retainAll" method for large collections. Thanks to Mert Guldur. 
- o [COLLECTIONS-426] Fixed performance issue in "ListOrderedSet#retainAll" method for large collections. Thanks to Adrian Nistor. 
- o [COLLECTIONS-425] Improved performance of "ListOrderedMap#remove(Object)" method. Thanks to Adrian Nistor. 
- o [COLLECTIONS-421] Update javadoc for "ListUtils#lazyList()" and "ListUtils#fixedSizeList()". Thanks to Benedikt Ritter. 
- o [COLLECTIONS-419] Added clarifying javadoc wrt runtime complexity of "AbstractDualBidiMap#retainAll". Thanks to Adrian Nistor. 
- o [COLLECTIONS-417] Added clarifying javadoc wrt runtime complexity of "AbstractLinkedList#retainAll". Thanks to Adrian Nistor. 
- o [COLLECTIONS-415] Added clarifying javadoc wrt runtime complexity of "AbstractLinkedList#removeAll". Thanks to Adrian Nistor. 
- o [COLLECTIONS-414] Fixed several compilation issues with older Java 1.6 compilers. 
- o [COLLECTIONS-413] Improved performance of "removeAll()" method for sets returned by "DualHashBidiMap#entrySet()". Thanks to Adrian Nistor. 
- o [COLLECTIONS-412] Improved performance of "CollectionUtils#subtract" methods. Thanks to Adrian Nistor. 
- o [COLLECTIONS-411] Fixed possible "IndexOutOfBoundsException" in "ListOrderedMap#putAll". Thanks to Adrian Nistor. 
- o [COLLECTIONS-410] Improved performance of "SetUniqueList#addAll" method. Thanks to Adrian Nistor. 
- o [COLLECTIONS-409] Improved performance of "ListOrderedSet#addAll" method. Thanks to Adrian Nistor. 
- o [COLLECTIONS-408] Improved performance of "SetUniqueList#removeAll". Thanks to Adrian Nistor. 
- o [COLLECTIONS-407] Improved performance of "ListOrderedSet#remove(Object)" in case the object is  not contained in the Set. Thanks to Adrian Nistor. 
- o [COLLECTIONS-406] Improved performance of "ListUtils#subtract" method. Thanks to Adrian Nistor. 
- o [COLLECTIONS-400] Added missing null check in "CollectionUtils#addIgnoreNull(Collection, Object)". Thanks to Shin Hwei Tan. 
- o [COLLECTIONS-391] Fixed javadoc for "MapUtils#toProperties(Map)". Thanks to Shin Hwei Tan. 
- o [COLLECTIONS-389] Clarified javadoc for "TransformerUtils#mapTransformer" for null input. Thanks to Shin Hwei Tan. 
- o [COLLECTIONS-388] Clarified javadoc for "FactoryUtils#prototypeFactory" for null input. Thanks to Shin Hwei Tan. 
- o [COLLECTIONS-384] Fixed inconsistent javadoc for "MapUtils#synchronizedMap(Map)". Thanks to Shin Hwei Tan. 
- o [COLLECTIONS-380] Fixed infinite loop when calling "UnmodifiableBoundedCollection#unmodifiableBoundedCollection()". Thanks to Dave Brosius. 
- o [COLLECTIONS-379] Fixed javadoc for several methods wrt expected NullPointerExceptions. Thanks to Shin Hwei Tan. 
- o [COLLECTIONS-364] "DualTreeBidiMap" now uses the correct comparator for the reverse map during de-serialization. 
- o [COLLECTIONS-363] "TransformedMap" in the package "splitmap" can now be serialized. 
- o [COLLECTIONS-360] "FilterListIterator#hasNext" does not throw a NullPointerException anymore to comply to the Java iterator specification.
-                     Thanks to Sai Zhang. 
- o [COLLECTIONS-359] "ListUtils#intersection(List, List)" will now also work correctly if there are duplicate elements in the provided lists.
-                     Thanks to Mark Shead. 
- o [COLLECTIONS-352] "AbstractCollectionDecorator" will now use internally "decorated()" to access the decorated collection. Thanks to Adam Gent. 
- o [COLLECTIONS-350] Removed debug output in "MapUtils#getNumber(Map)". Thanks to Michael Akerman. 
- o [COLLECTIONS-348] Fixed javadoc for all "transformedXXX(XXX)" methods in the respective Utils classes to clarify that existing objects in the
-                     list are not transformed. Thanks to Paul Benedict. 
- o [COLLECTIONS-343] Singleton classes in package "functors" are now correctly de-serialized. Thanks to Goran Hacek. 
- o [COLLECTIONS-340] Removed broken methods "equals(Object)" and "hashCode()" in class "NOPClosure". Thanks to Goran Hacek. 
- o [COLLECTIONS-336] Simplified exceptions as the cause is available from the parent. Thanks to sebb. 
- o [COLLECTIONS-335] Fixed cache assignment for "TreeBidiMap#entrySet". Thanks to sebb. 
- o [COLLECTIONS-334] Synchronized access to lock in "StaticBucketMap#size()". Thanks to sebb. 
- o [COLLECTIONS-332] Added clarification to javadoc of "ListOrderedMap" that "IdentityMap" and "CaseInsensitiveMap" are not supported.
-                     Thanks to Tom Parker. 
- o [COLLECTIONS-331] Improve javadoc of "CollatingIterator" wrt the used "Comparator" and throw a NullPointerException in "CollatingIterator#least"
-                     if no comparator is set. Thanks to Michael Krkoska. 
- o [COLLECTIONS-330] "LRUMap#keySet()#remove(Object)" will not throw a "ConcurrentModificationException" anymore. Thanks to Joerg Schaible. 
- o [COLLECTIONS-328] Improved performance of "ListUtils#intersection(List, List)". Thanks to Thomas Rogan, Jilles van Gurp. 
- o [COLLECTIONS-323] Changed behavior of "CaseInsensitiveMap" constructor to be compliant with "HashMap" in case the initial capacity is set to zero.
-                     Thanks to Maarten Brak. 
- o [COLLECTIONS-320] Improved performance of "StaticBucketMap#putAll(Map)" by iterating over the entry set. Thanks to sebb. 
- o [COLLECTIONS-319] Avoid redundant null check in "IteratorUtils#getIterator(Object)". Thanks to sebb. 
- o [COLLECTIONS-317] Use a private method to populate the object in "AbstractHashedMap(Map)". Thanks to sebb. 
- o [COLLECTIONS-316] Fixed javadoc of "LRUMap" wrt to the maxSize parameter of the constructor. Thanks to ori. 
- o [COLLECTIONS-312] Use of final keyword where applicable, minor performance improvements by properly initializing the capacity of newly created
-                     collections when known in advance. Thanks to Peter Lawrey, Gary Gregory. 
- o [COLLECTIONS-307] "SetUniqueList#subList()#contains(Object)" will now correctly check the subList rather than the parent list.
-                     Thanks to Christian Semrau. 
- o [COLLECTIONS-304] "SetUniqueList#set(int, Object)" will now correctly enforce the uniqueness constraint. Thanks to Rafał Figas,Bjorn Townsend. 
- o [COLLECTIONS-303] Improved javadoc for "Unmodifiable*" classes wrt behavior when the users tries to modify the collection. Thanks to Emmanuel Bourg. 
- o [COLLECTIONS-294] "CaseInsensitiveMap" will now convert input strings to lower-case in a locale-independant manner. Thanks to Benjamin Bentmann. 
- o [COLLECTIONS-256] Fixed javadoc for "ListUtils#transformedList(List)" to clarify that existing objects in the list are not transformed.
-   +COLLECTIONS-288] Thanks to Paul Benedict. 
- o [COLLECTIONS-266] "MultiKey" will now be correctly serialized/de-serialized. Thanks to Joerg Schaible. 
- o [COLLECTIONS-262] Fixed javadoc for methods "firstKey()" and "lastKey()" in class "AbstractLinkedMap". Thanks to Lisen Mu. 
- o [COLLECTIONS-261] "Flat3Map#remove(Object)" will now return the correct value mapped to the removed key if the size of the map is less or equal 3.
-                     Thanks to ori. 
- o [COLLECTIONS-255] Removed unused variables in "TreeBidiMap". Thanks to Henri Yandell. 
- o [COLLECTIONS-249] "SetUniqueList.addAll(int, Collection)" now correctly add the collection at the provided index. Thanks to Joe Kelly. 
- o [COLLECTIONS-232] Fixed several unit tests which were using parameters to "assertEquals(...)" in wrong order. Thanks to Mark Hindess. 
- o [COLLECTIONS-228] "MultiValueMap#put(Object, Object)" and "MultiValueMap#putAll(Object, Collection)" now correctly return if the map
-                     has changed by this operation. 
- o [COLLECTIONS-219] "CollectionUtils#removeAll" wrongly called "ListUtils#retainAll". Thanks to Tom Leccese. 
- o [COLLECTIONS-217] Calling "setValue(Object)" on any Entry returned by a "Flat3Map" will now correctly set the value for the current entry.
-                     Thanks to Matt Bishop. 
- o [COLLECTIONS-216] "MultiKey#toString()" will now use "Arrays#toString(List)". Thanks to Hendrik Maryns. 
+o [COLLECTIONS-580]: Added validation when de-serializing a "MultiValueMap#ReflectionFactory":
+                     only Collection classes are allowed, otherwise an UnsupportedOperationException
+                     will be thrown during de-serialization. 
+o [COLLECTIONS-576]: Subclasses of MultiKey did not re-calculate their hashcode after de-serialization.
+                     Thanks to Stephan Roch. 
+o [COLLECTIONS-566]: "IteratorUtils#collate(...)" methods did not use natural ordering when a
+                     null comparator was provided. 
+o [COLLECTIONS-558]: Changed return type of "ListOrderedSet#remove(int)" from Object to the generic
+                     type parameter. Thanks to Felix Rabe. 
+o [COLLECTIONS-555]: Added clarification to javadoc of "TreeBag#add(Object)" wrt null arguments.
+                     Thanks to M Kim. 
+o [COLLECTIONS-427]: Reverted performance improvement for "SetUniqueList#retainAll(Collection)"
+                     introduced in 4.0. Added clarifying javadoc wrt runtime complexity instead. 
+o [COLLECTIONS-426]: Reverted performance improvement for "ListOrderedSet#retainAll(Collection)"
+                     introduced in 4.0. Added clarifying javadoc wrt runtime complexity instead. 
+o [COLLECTIONS-530]: Added a Builder for "PredicatedCollection". Elements added to the builder
+                     that fail the predicate will not throw an IllegalArgumentException. The builder
+                     supports creating predicated lists, bags, sets and queues. Thanks to Erik. 
+o [COLLECTIONS-545]: Documented runtime complexity of "CollectionUtils#removeAll(Collection, Collection).
+                     Thanks to Oswaldo Olivo. 
+o [COLLECTIONS-543]: "AbstractCollectionDecorator" doesn't forward equals and hashCode anymore. 
+o [COLLECTIONS-544]: Documented runtime complexity of "CollectionUtils#retainAll(Collection, Collection).
+                     Thanks to Oswaldo Olivo. 
+o [COLLECTIONS-542]: "AbstractHashedMap" still inherits from "AbstractMap", contrary to what
+                     the class javadoc stated. The inheritance will now be removed in v5.0. 
+o [COLLECTIONS-525]: The map returned by "PatriciaTrie#prefixMap()" did not contain all keys
+                     that are prefixed by the given search key in some rare cases. Thanks to Zigler Zhang. 
+o [COLLECTIONS-537]: Harmonized signature of factory methods for functor-related classes which take
+                     a collection as input with their array counterparts. Thanks to Frank Jakop. 
+o [COLLECTIONS-540]: Added overloaded method "CollectionUtils#get(Enumeration, int)" and simplified
+                     code for "CollectionUtils#get(Object, int)". Thanks to Daniel Stewart, Issam El Atif. 
+o [COLLECTIONS-536]: Improved check for null input in "MapUtils#putAll(Map, Object[])". Thanks to Tagir Valeev. 
+o [COLLECTIONS-534]: Added clarifying javadoc wrt runtime complexity of "CollectionBag#retainAll".
+                     Thanks to Oswaldo Olivo. 
+o [COLLECTIONS-531]: Use correct type bounds in
+                     "CollectionUtils#isEqualCollection(Collection, Collection, Equator)" to
+                     prevent a "ClassCastException" at runtime for invalid inputs. Thanks to Dipanjan Laha. 
+o [COLLECTIONS-523]: Removed unneeded private method in "PassiveExpiringMap". Thanks to Thiago Andrade. 
+o [COLLECTIONS-516]: Added clarification to the javadoc of "MapUtils#toProperties(Map)" in case
+                     of null keys/values. Thanks to Cyrille Artho. 
+o [COLLECTIONS-524]: "ListOrderedSet#listOrderedSet(List)" did not remove duplicates from the
+                     input list as advertised in the javadoc. Thanks to J Goodfellow. 
+o [COLLECTIONS-521]: "MultiKeyMap" was throwing a "NullPointerException" for various operations
+                     if two key arguments have been used and the second was "null". Thanks to Maxime Nay. 
+o [COLLECTIONS-522]: Updated code example for "PredicatedList". Thanks to Erik. 
+o [COLLECTIONS-512]: "TransformingComparator" and "FixedOrderComparator" did not comply with
+                     the contract of "Object#equals". Thanks to Cyrille Artho. 
+o [COLLECTIONS-510]: Fix compilation errors when using source level 1.8 and a recent java 8 compiler.
+                     Thanks to Hollis Waite. 
+o [COLLECTIONS-509]: Clarified javadoc of "CollectionBag" wrt changes from the original Bag interface. 
+o [COLLECTIONS-507]: Removed wrong type bounds for "ComparatorUtils#chainedComparator(...)". Thanks to Gerson. 
+o [COLLECTIONS-506]: Added javadoc clarification to class "CollectionUtils" that input objects which
+                     override "Object#equals(Object)" must also maintain the general contract of
+                     "Object#hashCode()" as various utility methods take advantage of sets/maps/bags.
+                     Thanks to Anthony Communier. 
 
-
-For complete information on Commons Collections, including instructions on how to submit bug reports,
-patches, or suggestions for improvement, see the Apache Commons Collections website:
+ 
+For complete information on Apache Commons Collections, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Apache Commons Collections website:
 
 http://commons.apache.org/proper/commons-collections/
