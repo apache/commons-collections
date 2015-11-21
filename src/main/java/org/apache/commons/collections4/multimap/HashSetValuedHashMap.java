@@ -1,3 +1,19 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.apache.commons.collections4.multimap;
 
 import java.io.IOException;
@@ -9,10 +25,9 @@ import java.util.HashSet;
 import java.util.Map;
 
 import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.SetValuedMap;
 
 /**
- * Implements a {@link SetValuedMap}, using a {@link HashMap} to provide data
+ * Implements a {@code SetValuedMap}, using a {@link HashMap} to provide data
  * storage and {@link HashSet}s as value collections. This is the standard
  * implementation of a SetValuedMap.
  * <p>
@@ -47,7 +62,7 @@ public class HashSetValuedHashMap<K, V> extends AbstractSetValuedMap<K, V>
 
     /**
      * Creates an empty HashSetValuedHashMap with the default initial
-     * map capacity (16) and the default initial set capacity (3). 
+     * map capacity (16) and the default initial set capacity (3).
      */
     public HashSetValuedHashMap() {
         this(DEFAULT_INITIAL_MAP_CAPACITY, DEFAULT_INITIAL_SET_CAPACITY);
@@ -55,7 +70,7 @@ public class HashSetValuedHashMap<K, V> extends AbstractSetValuedMap<K, V>
 
     /**
      * Creates an empty HashSetValuedHashMap with the default initial
-     * map capacity (16) and the specified initial set capacity. 
+     * map capacity (16) and the specified initial set capacity.
      *
      * @param initialSetCapacity  the initial capacity used for value collections
      */
@@ -65,7 +80,7 @@ public class HashSetValuedHashMap<K, V> extends AbstractSetValuedMap<K, V>
 
     /**
      * Creates an empty HashSetValuedHashMap with the specified initial
-     * map and list capacities. 
+     * map and list capacities.
      *
      * @param initialMapCapacity  the initial hashmap capacity
      * @param initialSetCapacity  the initial capacity used for value collections
@@ -106,7 +121,7 @@ public class HashSetValuedHashMap<K, V> extends AbstractSetValuedMap<K, V>
         oos.defaultWriteObject();
         doWriteObject(oos);
     }
-    
+
     private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
         ois.defaultReadObject();
         setMap(new HashMap<K, HashSet<V>>());

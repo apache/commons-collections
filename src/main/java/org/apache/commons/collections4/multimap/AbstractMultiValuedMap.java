@@ -74,7 +74,6 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     /**
      * Constructor that wraps (not copies).
      *
-     * @param <C> the collection type
      * @param map  the map to wrap, must not be null
      * @throws NullPointerException if the map is null
      */
