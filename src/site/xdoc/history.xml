@@ -121,6 +121,18 @@ been replaced by java.util.Queue. Also added were several new Iterators as well 
 an implementation of a Patricia Trie.
 </p>
 
+<p>
+<b>Collections 4.1</b> fixed some bugs in v4.0 and adds a few new enhancements.
+The most notable changes are new interfaces MultiSet (a replacement for the Bag
+interface which is fully compliant to the general Collection contract) and
+MultiValuedMapeList (a replacement for the MultiMap interface) as well as fluent
+API for Iterable instances (FluentIterable).
+</p>
+<p>
+Additionally, serialization support for unsafe classes in the functor package
+has been completely removed (see entry for Collections 3.2.2 for more details). 
+</p>
+
 </section>
 
 </body>
