@@ -683,30 +683,6 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         assertTrue(col.contains("uno"));
     }
 
-    @SuppressWarnings("unchecked")
-    public void testAsMapPut() {
-        if (!isAddSupported()) {
-            return;
-        }
-        resetEmpty();
-        Map<K, Collection<V>> mapCol = getMap().asMap();
-        Collection<V> col = (Collection<V>) Arrays.asList("un", "uno");
-        mapCol.put((K) "one", col);
-        assertEquals(2, getMap().size());
-        assertTrue(getMap().containsKey("one"));
-        assertTrue(getMap().containsValue("un"));
-        assertTrue(getMap().containsValue("uno"));
-
-        resetFull();
-        mapCol = getMap().asMap();
-        col = mapCol.get("one");
-        col.add((V) "one");
-        assertEquals(7, getMap().size());
-        assertTrue(getMap().containsValue("one"));
-        assertTrue(getMap().containsValue("un"));
-        assertTrue(getMap().containsValue("uno"));
-    }
-
     public void testAsMapRemove() {
         if (!isRemoveSupported()) {
             return;
@@ -1141,23 +1117,31 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 
         @Override
         public boolean isPutAddSupported() {
-            return AbstractMultiValuedMapTest.this.isAddSupported();
+            return false;
         }
 
         @Override
         public boolean isPutChangeSupported() {
-            return AbstractMultiValuedMapTest.this.isAddSupported();
+            return false;
         }
 
         @Override
         public boolean isRemoveSupported() {
             return AbstractMultiValuedMapTest.this.isRemoveSupported();
         }
+        
+        @Override
+        public boolean areEqualElementsDistinguishable() {
+            // work-around for a problem with the EntrySet: the entries contain
+            // the wrapped collection, which will be automatically cleared
+            // when the associated key is removed from the map as the collection
+            // is not cached atm.
+            return true;
+        }
 
         @Override
         public boolean isTestSerialization() {
             return false;
         }
-
     }
 }

@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.AbstractCollection;
+import java.util.AbstractMap;
+import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -33,11 +35,13 @@ import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.Transformer;
+import org.apache.commons.collections4.iterators.AbstractIteratorDecorator;
 import org.apache.commons.collections4.iterators.EmptyMapIterator;
 import org.apache.commons.collections4.iterators.IteratorChain;
 import org.apache.commons.collections4.iterators.LazyIteratorChain;
 import org.apache.commons.collections4.iterators.TransformIterator;
 import org.apache.commons.collections4.keyvalue.AbstractMapEntry;
+import org.apache.commons.collections4.keyvalue.UnmodifiableMapEntry;
 import org.apache.commons.collections4.multiset.AbstractMultiSet;
 import org.apache.commons.collections4.multiset.UnmodifiableMultiSet;
 
@@ -60,6 +64,9 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
     /** The KeyMultiSet view */
     private transient MultiSet<K> keysMultiSetView;
+
+    /** The AsMap view */
+    private transient AsMap asMapView;
 
     /** The map used to store the data */
     private transient Map<K, Collection<V>> map;
@@ -140,6 +147,10 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      */
     @Override
     public Collection<V> get(final K key) {
+        return wrappedCollection(key);
+    }
+
+    Collection<V> wrappedCollection(final K key) {
         return new WrappedCollection(key);
     }
 
@@ -324,10 +335,8 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public Map<K, Collection<V>> asMap() {
-        // TODO: return a view of the map
-        return (Map<K, Collection<V>>) getMap();
+        return asMapView != null ? asMapView : (asMapView = new AsMap(map));
     }
 
     /**
@@ -764,6 +773,131 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         @Override
         public V next() {
             return iterator.next();
+        }
+    }
+
+    /**
+     * Inner class that provides the AsMap view.
+     */
+    private class AsMap extends AbstractMap<K, Collection<V>> {
+        final transient Map<K, Collection<V>> decoratedMap;
+
+        AsMap(final Map<K, Collection<V>> map) {
+          this.decoratedMap = map;
+        }
+
+        @Override
+        public Set<Map.Entry<K, Collection<V>>> entrySet() {
+          return new AsMapEntrySet();
+        }
+
+        @Override
+        public boolean containsKey(Object key) {
+            return decoratedMap.containsKey(key);
+        }
+
+        @Override
+        public Collection<V> get(Object key) {
+          Collection<V> collection = decoratedMap.get(key);
+          if (collection == null) {
+            return null;
+          }
+          @SuppressWarnings("unchecked")
+          K k = (K) key;
+          return wrappedCollection(k);
+        }
+
+        @Override
+        public Set<K> keySet() {
+          return AbstractMultiValuedMap.this.keySet();
+        }
+
+        @Override
+        public int size() {
+          return decoratedMap.size();
+        }
+
+        @Override
+        public Collection<V> remove(Object key) {
+          Collection<V> collection = decoratedMap.remove(key);
+          if (collection == null) {
+            return null;
+          }
+
+          final Collection<V> output = createCollection();
+          output.addAll(collection);
+          collection.clear();
+          return output;
+        }
+
+        @Override
+        public boolean equals(Object object) {
+          return this == object || decoratedMap.equals(object);
+        }
+
+        @Override
+        public int hashCode() {
+          return decoratedMap.hashCode();
+        }
+
+        @Override
+        public String toString() {
+          return decoratedMap.toString();
+        }
+
+        @Override
+        public void clear() {
+            AbstractMultiValuedMap.this.clear();
+        }
+
+        class AsMapEntrySet extends AbstractSet<Map.Entry<K, Collection<V>>> {
+
+            @Override
+            public Iterator<Map.Entry<K, Collection<V>>> iterator() {
+                return new AsMapEntrySetIterator(decoratedMap.entrySet().iterator());
+            }
+
+            @Override
+            public int size() {
+              return AsMap.this.size();
+            }
+
+            @Override
+            public void clear() {
+                AsMap.this.clear();
+            }
+
+            @Override
+            public boolean contains(Object o) {
+                return decoratedMap.entrySet().contains(o);
+            }
+
+            @Override
+            public boolean remove(Object o) {
+                if (!contains(o)) {
+                    return false;
+                }
+                Map.Entry<?, ?> entry = (Map.Entry<?, ?>) o;
+                AbstractMultiValuedMap.this.remove(entry.getKey());
+                return true;
+            }
+        }
+
+        /**
+         * EntrySet iterator for the asMap view.
+         */
+        class AsMapEntrySetIterator extends AbstractIteratorDecorator<Map.Entry<K, Collection<V>>> {
+
+            AsMapEntrySetIterator(Iterator<Map.Entry<K, Collection<V>>> iterator) {
+                super(iterator);
+            }
+
+            @Override
+            public Map.Entry<K, Collection<V>> next() {
+                final Map.Entry<K, Collection<V>> entry = super.next();
+                final K key = entry.getKey();
+                return new UnmodifiableMapEntry<K, Collection<V>>(key, wrappedCollection(key));
+            }
         }
     }
 

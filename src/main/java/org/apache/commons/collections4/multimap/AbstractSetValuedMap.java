@@ -78,6 +78,11 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
      */
     @Override
     public Set<V> get(final K key) {
+        return wrappedCollection(key);
+    }
+
+    @Override
+    Set<V> wrappedCollection(final K key) {
         return new WrappedSet(key);
     }
 

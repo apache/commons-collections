@@ -287,6 +287,10 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         return true;
     }
 
+    public boolean areEqualElementsDistinguishable() {
+        return false;
+    }
+
     /**
      *  Returns the set of keys in the mappings used to test the map.  This
      *  method must return an array with the same length as {@link
@@ -1585,6 +1589,11 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
 
         public boolean isGetStructuralModify() {
             return AbstractMapTest.this.isGetStructuralModify();
+        }
+
+        @Override
+        public boolean areEqualElementsDistinguishable() {
+            return AbstractMapTest.this.areEqualElementsDistinguishable();
         }
 
         @Override
