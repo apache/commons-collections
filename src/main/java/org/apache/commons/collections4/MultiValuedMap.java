@@ -17,7 +17,6 @@
 package org.apache.commons.collections4;
 
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -301,7 +300,7 @@ public interface MultiValuedMap<K, V> {
      * will update the underlying multi-valued map, and vice versa. The map does
      * not support {@code put} or {@code putAll}, nor do its entries support
      * {@link Map.Entry#setValue setValue} and iterators support
-     * {@link Iterator#remove remove}.
+     * {@link java.util.Iterator#remove remove}.
      *
      * @return a map view of the mappings in this multi-valued map
      */
