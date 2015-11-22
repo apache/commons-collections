@@ -140,7 +140,6 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      */
     @Override
     public Collection<V> get(final K key) {
-        // TODO: wrap collection based on class type - needed for proper equals
         return new WrappedCollection(key);
     }
 
@@ -194,9 +193,19 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         return getMap().keySet();
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This implementation does <b>not</b> cache the total size
+     * of the multi-valued map, but rather calculates it by iterating
+     * over the entries of the underlying map.
+     */
     @Override
     public int size() {
-        // TODO: cache the total size
+        // the total size should be cached to improve performance
+        // but this requires that all modifications of the multimap
+        // (including the wrapped collections and entry/value
+        // collections) are tracked.
         int size = 0;
         for (final Collection<V> col : getMap().values()) {
             size += col.size();
@@ -376,9 +385,16 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     // -----------------------------------------------------------------------
 
     /**
-     * Wrapped collection to handle add and remove on the collection returned by get(object)
+     * Wrapped collection to handle add and remove on the collection returned
+     * by get(object).
+     * <p>
+     * Currently, the wrapped collection is not cached and has to be retrieved
+     * from the underlying map. This is safe, but not very efficient and
+     * should be improved in subsequent releases. For this purpose, the
+     * scope of this collection is set to package private to simplify later
+     * refactoring.
      */
-    protected class WrappedCollection implements Collection<V> {
+    class WrappedCollection implements Collection<V> {
 
         protected final K key;
 

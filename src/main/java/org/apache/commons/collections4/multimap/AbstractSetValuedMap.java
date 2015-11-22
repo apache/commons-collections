@@ -100,7 +100,7 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
      * Wrapped set to handle add and remove on the collection returned by
      * {@code get(Object)}.
      */
-    protected class WrappedSet extends WrappedCollection implements Set<V> {
+    private class WrappedSet extends WrappedCollection implements Set<V> {
 
         public WrappedSet(final K key) {
             super(key);
