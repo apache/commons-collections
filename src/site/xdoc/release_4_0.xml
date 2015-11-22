@@ -23,9 +23,6 @@
 <body>
 
 <section name="Release notes for v4.0">
-<p>
-These are the release notes for Commons Collections v4.0:
-</p>
 <hr />
 <p>
 Commons collections is a project to develop and maintain collection classes based on and inspired
@@ -50,9 +47,8 @@ These release notes will try to guide you in the process of upgrading, however y
 should remember that this is a new API based on the original, so some concepts
 have changed.
 </p>
-<hr />
 
-<center><h3>Compatibility</h3></center>
+<h3>Compatibility</h3>
 <ul>
  <li>Java 5 or later is required</li>
  <li>This release is <b>not</b> source or binary compatible with previous releases of
@@ -60,7 +56,7 @@ have changed.
      preceding alpha releases for 4.0 (see details of changes below)</li>
 </ul>
 
-<center><h3>Major changes since 3.2.1</h3></center>
+<h3>Major changes since 3.2.1</h3>
 <ul>
 <li>Use of generics and other language features introduced in Java 5 (varargs, Iterable)</li>
 <li>Removed deprecated classes / methods and features which are now supported by the JDK</li>
@@ -69,7 +65,7 @@ have changed.
 <li>Added new Trie interface together with an implementation of a Patricia Trie</li>
 </ul>
 
-<center><h3>Removed Classes</h3></center>
+<h3>Removed Classes</h3>
 <ul>
 <li>Removed unused class "AbstractUntypedCollectionDecorator"</li>
 <li>Removed "Buffer" interface and all its implementations and related classes.
@@ -96,7 +92,7 @@ have changed.
 <li>Removed deprecated collection classes and methods</li>
 </ul>
 
-<center><h3>New Classes</h3></center>
+<h3>New Classes</h3>
 <ul>
 <li>CollectionSortedBag - decorates a SortedBag to make it comply with the Collection contract.</li>
 <li>CollectionBag - decorates another Bag to make it comply with the Collection contract.</li>
@@ -122,7 +118,7 @@ have changed.
 <li>SplitMapUtils / splitmap.TransformedSplitMap - utilities and implementation for split maps</li>
 </ul>
 
-<center><h3>Enhancements</h3></center>
+<h3>Enhancements</h3>
 <ul>
 <li>Added CollectionsUtils#matchesAll(Iterable, Predicate) to test if all elements of a collection match a given predicate.</li>
 <li>ListUtils#longestCommonSubsequence(...) to get the longest common subsequence of arbitrary lists or CharSequences.</li>
@@ -154,7 +150,7 @@ have changed.
 <li>Added support for resettable iterators in "IteratorIterable". Thanks to Dusan Chromy.</li>
 </ul>
 
-<center><h3>Changed classes / methods</h3></center>
+<h3>Changed classes / methods</h3>
 <ul>
 <li>Resolved generic parameter inconsistency for various static fields, e.g. BagUtils.EMPTY_BAG,
     TruePredicate.INSTANCE and many others. All accessible static fields use raw types so that
@@ -206,7 +202,7 @@ have changed.
 <li>ArrayStack is now deprecated and will be removed in the next major release. It is replaced by the java.util.Deque interface available from Java 6.</li>
 </ul>
 
-<center><h3>Bugfixes</h3></center>
+<h3>Bugfixes</h3>
 <ul>
 <li>"CollectionBag" will now also respect the contract of the decorated bag in case a null argument is provided to either removeAll or retainAll.</li>
 <li>Fixed collision detection/resolution when calling "CompositeSet#addComposited(...)" with more than one Set as argument.</li>

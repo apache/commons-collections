@@ -32,7 +32,7 @@ Major changes since 4.0
 -----------------------
 
  o Added interface MultiSet (package multiset)
- o Added interface MultiValuedMap, ListValuedMap and SetValuedMap (package multimap) 
+ o Added interfaces MultiValuedMap, ListValuedMap and SetValuedMap (package multimap) 
  o Added fluent API for Iterable instances (class FluentIterable)
 
 

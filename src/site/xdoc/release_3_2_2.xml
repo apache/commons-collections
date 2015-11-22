@@ -23,9 +23,6 @@
 <body>
 
 <section name="Release notes for v3.2.2">
-<p>
-These are the release notes for Commons Collections v3.2.2:
-</p>
 <hr />
 <p>
 Commons collections is a project to develop and maintain collection classes
@@ -43,9 +40,8 @@ an instance of these classes. For more details, please refer to COLLECTIONS-580.
 <p>
 All users are strongly encouraged to updated to this release.
 </p>
-<hr />
 
-<center><h3>COMPATIBILITY</h3></center>
+<h3>Compatibility</h3>
 <p>
 This release is fully source and binary compatible with v3.2. For changes since the
 v3.1 see the <a href="release_3_2.html">v3.2 Release Notes</a>. Note that the method 
@@ -53,10 +49,10 @@ v3.1 see the <a href="release_3_2.html">v3.2 Release Notes</a>. Note that the me
 added.
 </p>
 
-<center><h3>Changes</h3></center>
+<h3>Security Changes</h3>
 <table>
 <tr>
- <td>COLLECTIONS-580</td>
+ <td><b>COLLECTIONS-580</b></td>
  <td>Serialization support for unsafe classes in the functor package is
      disabled by default as this can be exploited for remote code execution
      attacks. To re-enable the feature the system property
@@ -67,81 +63,9 @@ added.
 </tr>
 </table>
 
-<center><h3>Bugfixes</h3></center>
-<table>
-<tr>
- <td>COLLECTIONS-538</td>
- <td>"ExtendedProperties" will now use a privileged action to access the "file.separator" system property.
-     In case the class does not have permission to read system properties, the "File#separator" field will
-     be used instead. Thanks to Trejkaz.</td>
-</tr>
-<tr>
- <td>COLLECTIONS-447</td>
- <td>Tree traversal with a TreeListIterator will not be affected anymore by
-     the removal of an element directly after a call to previous(). Thanks to Jeffrey Barnes.</td>
-</tr>
-<tr>
- <td>COLLECTIONS-444</td>
- <td>SetUniqueList.set(int, Object) now works correctly if the object to be inserted
-     is already placed at the given position. Thanks to Thomas Vahrst, John Vasileff.</td>
-</tr>
-<tr>
- <td>COLLECTIONS-350</td>
- <td>Removed debug output in "MapUtils#getNumber(Map)". Thanks to Michael Akerman.</td>
-</tr>
-<tr>
- <td>COLLECTIONS-335</td>
- <td>Fixed cache assignment for "TreeBidiMap#entrySet". Thanks to sebb.</td>
-</tr>
-<tr>
- <td>COLLECTIONS-334</td>
- <td>Synchronized access to lock in "StaticBucketMap#size()". Thanks to sebb.</td>
-</tr>
-<tr>
- <td>COLLECTIONS-307</td>
- <td>"SetUniqueList#subList()#contains(Object)" will now correctly check the subList
-     rather than the parent list. Thanks to Christian Semrau.</td>
-</tr>
-<tr>
- <td>COLLECTIONS-304</td>
- <td>"SetUniqueList#set(int, Object)" will now correctly enforce the uniqueness constraint.
-     Thanks to Rafa? Figas,Bjorn Townsend.</td>
-</tr>
-<tr>
- <td>COLLECTIONS-294</td>
- <td>"CaseInsensitiveMap" will now convert input strings to lower-case in a
-     locale-independent manner. Thanks to Benjamin Bentmann.</td>
-</tr>
-<tr>
- <td>COLLECTIONS-266</td>
- <td>"MultiKey" will now be correctly serialized/de-serialized. Thanks to Joerg Schaible.</td>
-</tr>
-<tr>
- <td>COLLECTIONS-261</td>
- <td>"Flat3Map#remove(Object)" will now return the correct value mapped to the removed key
-     if the size of the map is less or equal 3. Thanks to ori.</td>
-</tr>
-<tr>
- <td>COLLECTIONS-249</td>
- <td>"SetUniqueList.addAll(int, Collection)" now correctly add the collection at the
-     provided index. Thanks to Joe Kelly.</td>
-</tr>
-<tr>
- <td>COLLECTIONS-228</td>
- <td>"MultiValueMap#put(Object, Object)" and "MultiValueMap#putAll(Object, Collection)"
-     now correctly return if the map has changed by this operation.</td>
-</tr>
-<tr>
- <td>COLLECTIONS-219</td>
- <td>"CollectionUtils#removeAll" wrongly called "ListUtils#retainAll". Thanks to Tom Leccese.</td>
-</tr>
-<tr>
- <td>COLLECTIONS-217</td>
- <td>Calling "setValue(Object)" on any Entry returned by a "Flat3Map" will now
-     correctly set the value for the current entry. Thanks to Matt Bishop.</td>
-</tr>
-</table>   
-
+<p>
+For a full list of changes in this release, refer to the <a href="changes-report.html#a3.2.2">Change report</a>.
+</p>
 </section>
 
 </body>
