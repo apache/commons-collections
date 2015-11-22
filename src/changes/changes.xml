@@ -21,7 +21,7 @@
   </properties>
   <body>
 
-  <release version="4.1" date="TBD" description="">
+  <release version="4.1" date="2015-11-28" description="This is a security and minor release.">
     <action issue="COLLECTIONS-508" dev="tn" type="add">
       Added new interfaces "MultiValuedMap", "ListValuedMap" and "SetValuedMap"
       as a replacement for "MultiMap". Decorators and implementations reside in
