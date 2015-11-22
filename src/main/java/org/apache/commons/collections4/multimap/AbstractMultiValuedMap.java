@@ -383,12 +383,12 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
     @Override
     public int hashCode() {
-        return asMap().hashCode();
+        return getMap().hashCode();
     }
 
     @Override
     public String toString() {
-        return asMap().toString();
+        return getMap().toString();
     }
 
     // -----------------------------------------------------------------------
