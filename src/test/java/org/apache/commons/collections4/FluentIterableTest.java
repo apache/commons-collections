@@ -239,7 +239,7 @@ public class FluentIterableTest {
         assertEquals(expectedSum, sum.get());
 
         try {
-            FluentIterable.of(iterableA).forEach(null);
+            FluentIterable.of(iterableA).forEach((Closure<Integer>) null);
             fail("expecting NullPointerException");
         } catch (NullPointerException npe) {
             // expected
