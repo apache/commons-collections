@@ -134,11 +134,11 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         assertEquals(true, trans.get((K) "D").contains(Integer.valueOf(4)));
     }
 
-    public void testCreate() throws Exception {
-        writeExternalFormToDisk((java.io.Serializable) makeObject(),
-                "src/test/resources/data/test/TransformedMultiValuedMap.emptyCollection.version4.1.obj");
-        writeExternalFormToDisk((java.io.Serializable) makeFullMap(),
-                "src/test/resources/data/test/TransformedMultiValuedMap.fullCollection.version4.1.obj");
-    }
+//    public void testCreate() throws Exception {
+//        writeExternalFormToDisk((java.io.Serializable) makeObject(),
+//                "src/test/resources/data/test/TransformedMultiValuedMap.emptyCollection.version4.1.obj");
+//        writeExternalFormToDisk((java.io.Serializable) makeFullMap(),
+//                "src/test/resources/data/test/TransformedMultiValuedMap.fullCollection.version4.1.obj");
+//    }
 
 }

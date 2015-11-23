@@ -146,11 +146,11 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         assertNotSame(map1.hashCode(), map2.hashCode());
     }
 
-    public void testCreate() throws Exception {
-        writeExternalFormToDisk((java.io.Serializable) makeObject(),
-                "src/test/resources/data/test/ArrayListValuedHashMap.emptyCollection.version4.1.obj");
-        writeExternalFormToDisk((java.io.Serializable) makeFullMap(),
-                "src/test/resources/data/test/ArrayListValuedHashMap.fullCollection.version4.1.obj");
-    }
+//    public void testCreate() throws Exception {
+//        writeExternalFormToDisk((java.io.Serializable) makeObject(),
+//                "src/test/resources/data/test/ArrayListValuedHashMap.emptyCollection.version4.1.obj");
+//        writeExternalFormToDisk((java.io.Serializable) makeFullMap(),
+//                "src/test/resources/data/test/ArrayListValuedHashMap.fullCollection.version4.1.obj");
+//    }
 
 }
