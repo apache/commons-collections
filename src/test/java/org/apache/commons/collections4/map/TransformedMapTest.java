@@ -68,7 +68,9 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertEquals(null, map.remove(els[0]));
         assertEquals(els[0], map.remove(Integer.valueOf((String) els[0])));
 
-        map = TransformedMap.transformingMap(new HashMap(), null, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
+        map = TransformedMap.transformingMap(new HashMap(), null,
+                                             // cast needed for eclipse compiler
+                                             (Transformer) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, map.size());
         for (int i = 0; i < els.length; i++) {
             map.put((K) els[i], (V) els[i]);

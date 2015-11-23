@@ -16,8 +16,13 @@
  */
 package org.apache.commons.collections4;
 
-import static org.apache.commons.collections4.functors.EqualPredicate.*;
-import static org.junit.Assert.*;
+import static org.apache.commons.collections4.functors.EqualPredicate.equalPredicate;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -109,7 +114,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     private Iterable<Number> iterableB2 = null;
 
-    private Collection<Integer> emptyCollection = new ArrayList<Integer>(1);
+    private final Collection<Integer> emptyCollection = new ArrayList<Integer>(1);
 
     @Before
     public void setUp() {
@@ -439,6 +444,7 @@ public class CollectionUtilsTest extends MockTestCase {
     public void testSubtractWithPredicate() {
         // greater than 3
         final Predicate<Number> predicate = new Predicate<Number>() {
+            @Override
             public boolean evaluate(final Number n) {
                 return n.longValue() > 3L;
             }
@@ -559,6 +565,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
         // odd / even equator
         final Equator<Integer> e = new Equator<Integer>() {
+            @Override
             public boolean equate(final Integer o1, final Integer o2) {
                 if (o1.intValue() % 2 == 0 ^ o2.intValue() % 2 == 0) {
                     return false;
@@ -567,6 +574,7 @@ public class CollectionUtilsTest extends MockTestCase {
                 }
             }
 
+            @Override
             public int hash(final Integer o) {
                 return o.intValue() % 2 == 0 ? Integer.valueOf(0).hashCode() : Integer.valueOf(1).hashCode();
             }
@@ -621,43 +629,41 @@ public class CollectionUtilsTest extends MockTestCase {
         assertNull(CollectionUtils.find(collectionA, null));
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     @Deprecated
     public void forAllDoCollection() {
-        final Closure<List<? extends Number>> testClosure = ClosureUtils.invokerClosure("clear");
-        final Collection<List<? extends Number>> col = new ArrayList<List<? extends Number>>();
+        final Closure<Collection<Integer>> testClosure = ClosureUtils.invokerClosure("clear");
+        final Collection<Collection<Integer>> col = new ArrayList<Collection<Integer>>();
         col.add(collectionA);
-        col.add(collectionB);
-        Closure<List<? extends Number>> resultClosure = CollectionUtils.forAllDo(col, testClosure);
+        col.add(collectionC);
+        Closure<Collection<Integer>> resultClosure = CollectionUtils.forAllDo(col, testClosure);
         assertSame(testClosure, resultClosure);
-        assertTrue(collectionA.isEmpty() && collectionB.isEmpty());
+        assertTrue(collectionA.isEmpty() && collectionC.isEmpty());
         // fix for various java 1.6 versions: keep the cast
-        resultClosure = CollectionUtils.forAllDo(col, (Closure<List<? extends Number>>) null);
+        resultClosure = CollectionUtils.forAllDo(col, (Closure<Collection<Integer>>) null);
         assertNull(resultClosure);
-        assertTrue(collectionA.isEmpty() && collectionB.isEmpty());
-        resultClosure = CollectionUtils.forAllDo((Collection) null, testClosure);
+        assertTrue(collectionA.isEmpty() && collectionC.isEmpty());
+        resultClosure = CollectionUtils.forAllDo((Collection<Collection<Integer>>) null, testClosure);
         col.add(null);
         // null should be OK
         CollectionUtils.forAllDo(col, testClosure);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Test
     @Deprecated
     public void forAllDoIterator() {
-        final Closure<List<? extends Number>> testClosure = ClosureUtils.invokerClosure("clear");
-        final Collection<List<? extends Number>> col = new ArrayList<List<? extends Number>>();
+        final Closure<Collection<Integer>> testClosure = ClosureUtils.invokerClosure("clear");
+        final Collection<Collection<Integer>> col = new ArrayList<Collection<Integer>>();
         col.add(collectionA);
-        col.add(collectionB);
-        Closure<List<? extends Number>> resultClosure = CollectionUtils.forAllDo(col.iterator(), testClosure);
+        col.add(collectionC);
+        Closure<Collection<Integer>> resultClosure = CollectionUtils.forAllDo(col.iterator(), testClosure);
         assertSame(testClosure, resultClosure);
-        assertTrue(collectionA.isEmpty() && collectionB.isEmpty());
+        assertTrue(collectionA.isEmpty() && collectionC.isEmpty());
         // fix for various java 1.6 versions: keep the cast
-        resultClosure = CollectionUtils.forAllDo(col.iterator(), (Closure<List<? extends Number>>) null);
+        resultClosure = CollectionUtils.forAllDo(col.iterator(), (Closure<Collection<Integer>>) null);
         assertNull(resultClosure);
-        assertTrue(collectionA.isEmpty() && collectionB.isEmpty());
-        resultClosure = CollectionUtils.forAllDo((Iterator) null, testClosure);
+        assertTrue(collectionA.isEmpty() && collectionC.isEmpty());
+        resultClosure = CollectionUtils.forAllDo((Iterator<Collection<Integer>>) null, testClosure);
         col.add(null);
         // null should be OK
         CollectionUtils.forAllDo(col.iterator(), testClosure);
@@ -696,6 +702,7 @@ public class CollectionUtilsTest extends MockTestCase {
         Collection<String> strings = Arrays.asList("a", "b", "c");
         final StringBuffer result = new StringBuffer();
         result.append(CollectionUtils.forAllButLastDo(strings, new Closure<String>() {
+            @Override
             public void execute(String input) {
                 result.append(input+";");
             }
@@ -705,6 +712,7 @@ public class CollectionUtilsTest extends MockTestCase {
         Collection<String> oneString = Arrays.asList("a");
         final StringBuffer resultOne = new StringBuffer();
         resultOne.append(CollectionUtils.forAllButLastDo(oneString, new Closure<String>() {
+            @Override
             public void execute(String input) {
                 resultOne.append(input+";");
             }
@@ -1069,6 +1077,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     // -----------------------------------------------------------------------
     private static Predicate<Number> EQUALS_TWO = new Predicate<Number>() {
+        @Override
         public boolean evaluate(final Number input) {
             return input.intValue() == 2;
         }
@@ -1256,6 +1265,7 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     Transformer<Object, Integer> TRANSFORM_TO_INTEGER = new Transformer<Object, Integer>() {
+        @Override
         public Integer transform(final Object input) {
             return Integer.valueOf(((Long)input).intValue());
         }
@@ -1292,6 +1302,7 @@ public class CollectionUtilsTest extends MockTestCase {
         set.add(2L);
         set.add(3L);
         CollectionUtils.transform(set, new Transformer<Object, Integer>() {
+            @Override
             public Integer transform(final Object input) {
                 return 4;
             }
@@ -1789,6 +1800,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertFalse(CollectionUtils.matchesAll(collectionA, null));
 
         Predicate<Integer> lessThanFive = new Predicate<Integer>() {
+            @Override
             public boolean evaluate(Integer object) {
                 return object < 5;
             }
@@ -1796,6 +1808,7 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue(CollectionUtils.matchesAll(collectionA, lessThanFive));
 
         Predicate<Integer> lessThanFour = new Predicate<Integer>() {
+            @Override
             public boolean evaluate(Integer object) {
                 return object < 4;
             }
@@ -1821,10 +1834,12 @@ public class CollectionUtilsTest extends MockTestCase {
         // use an equator which compares the second letter only
         final Collection<String> result = CollectionUtils.removeAll(base, remove, new Equator<String>() {
 
+            @Override
             public boolean equate(String o1, String o2) {
                 return o1.charAt(1) == o2.charAt(1);
             }
 
+            @Override
             public int hash(String o) {
                 return o.charAt(1);
             }
@@ -1871,10 +1886,12 @@ public class CollectionUtilsTest extends MockTestCase {
         // use an equator which compares the second letter only
         final Collection<String> result = CollectionUtils.retainAll(base, retain, new Equator<String>() {
 
+            @Override
             public boolean equate(String o1, String o2) {
                 return o1.charAt(1) == o2.charAt(1);
             }
 
+            @Override
             public int hash(String o) {
                 return o.charAt(1);
             }
