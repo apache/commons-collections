@@ -43,6 +43,11 @@
 Apache Commons Collections
 ===================
 
+[![Build Status](https://travis-ci.org/apache/commons-collections.svg?branch=master)](https://travis-ci.org/apache/commons-collections)
+[![Coverage Status](https://coveralls.io/repos/apache/commons-collections/badge.svg?branch=master)](https://coveralls.io/r/apache/commons-collections)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/)
+[![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+
 The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.
 
 Documentation
