@@ -217,8 +217,8 @@ public class IterableUtils {
      * provided comparator. If the comparator is null, natural ordering will be
      * used.
      * <p>
-     * The returned iterable's iterator supports {@code remove()} when the corresponding
-     * input iterator supports it.
+     * The returned iterable's iterator supports {@code remove()} when the
+     * corresponding input iterator supports it.
      *
      * @param <E> the element type
      * @param comparator  the comparator defining an ordering over the elements,
@@ -247,7 +247,8 @@ public class IterableUtils {
      * Returns a view of the given iterable that only contains elements matching
      * the provided predicate.
      * <p>
-     * The returned iterable's iterator does not support {@code remove()}.
+     * The returned iterable's iterator supports {@code remove()} when the
+     * corresponding input iterator supports it.
      *
      * @param <E> the element type
      * @param iterable  the iterable to filter, may not be null
@@ -436,7 +437,9 @@ public class IterableUtils {
     /**
      * Returns a unique view of the given iterable.
      * <p>
-     * The returned iterable's iterator does not support {@code remove()}.
+     * The returned iterable's iterator supports {@code remove()} when the
+     * corresponding input iterator supports it. Calling {@code remove()}
+     * will only remove a single element from the underlying iterator.
      *
      * @param <E> the element type
      * @param iterable  the iterable to use, may not be null
