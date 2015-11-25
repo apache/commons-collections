@@ -44,7 +44,7 @@ Apache Commons Collections
 ===================
 
 [![Build Status](https://travis-ci.org/apache/commons-collections.svg?branch=master)](https://travis-ci.org/apache/commons-collections)
-[![Coverage Status](https://coveralls.io/repos/apache/commons-collections/badge.svg?branch=master)](https://coveralls.io/r/apache/commons-collections)
+[![Coverage Status](https://coveralls.io/repos/apache/commons-collections/badge.svg?branch=trunk&service=github)](https://coveralls.io/github/apache/commons-collections?branch=trunk)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/)
 [![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
 
