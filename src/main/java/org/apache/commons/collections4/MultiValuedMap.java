@@ -299,8 +299,7 @@ public interface MultiValuedMap<K, V> {
      * Changes to the returned map or the collections that serve as its values
      * will update the underlying multi-valued map, and vice versa. The map does
      * not support {@code put} or {@code putAll}, nor do its entries support
-     * {@link Map.Entry#setValue setValue} and iterators support
-     * {@link java.util.Iterator#remove remove}.
+     * {@link Map.Entry#setValue setValue}.
      *
      * @return a map view of the mappings in this multi-valued map
      */
