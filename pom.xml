@@ -695,7 +695,7 @@
       <id>travis</id>
       <activation>
         <property>
-          <name>env.TRAVIS</name>
+          <name>TRAVIS</name>
           <value>true</value>
         </property>
       </activation>
