@@ -639,6 +639,7 @@
             <exclude>site-content/**/*</exclude>
             <exclude>src/test/resources/data/test/*</exclude>
             <exclude>maven-eclipse.xml</exclude>
+            <exclude>.travis.yml</exclude>
           </excludes>
         </configuration>
       </plugin>
@@ -695,7 +696,7 @@
       <id>travis</id>
       <activation>
         <property>
-          <name>TRAVIS</name>
+          <name>env.TRAVIS</name>
           <value>true</value>
         </property>
       </activation>
