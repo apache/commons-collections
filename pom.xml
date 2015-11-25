@@ -699,6 +699,9 @@
           <value>true</value>
         </property>
       </activation>
+      <properties>
+        <buildnumber.skip>true</buildnumber.skip>
+      </properties>
       <build>
         <plugins>
           <plugin>
