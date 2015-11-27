@@ -24,7 +24,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.apache.commons</groupId>
   <artifactId>commons-collections4</artifactId>
-  <version>4.1-SNAPSHOT</version>
+  <version>4.2-SNAPSHOT</version>
   <name>Apache Commons Collections</name>
 
   <inceptionYear>2001</inceptionYear>
@@ -479,8 +479,8 @@
     <commons.componentid>collections4</commons.componentid>
 
     <!-- Current 4.x release series -->
-    <commons.release.version>4.0</commons.release.version>
-    <commons.release.desc>(Java 5.0+)</commons.release.desc>
+    <commons.release.version>4.1</commons.release.version>
+    <commons.release.desc>(Java 6.0+)</commons.release.desc>
 
     <!-- Previous 3.x release series -->
     <commons.release.2.version>3.2.2</commons.release.2.version>
@@ -639,6 +639,7 @@
             <exclude>site-content/**/*</exclude>
             <exclude>src/test/resources/data/test/*</exclude>
             <exclude>maven-eclipse.xml</exclude>
+            <exclude>.travis.yml</exclude>
           </excludes>
         </configuration>
       </plugin>
