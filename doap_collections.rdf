@@ -36,6 +36,13 @@
     <release>
       <Version>
         <name>commons-collections</name>
+        <created>2015-11-27</created>
+        <revision>4.1</revision>
+      </Version>
+    </release>
+    <release>
+      <Version>
+        <name>commons-collections</name>
         <created>2013-11-24</created>
         <revision>4.0</revision>
       </Version>
