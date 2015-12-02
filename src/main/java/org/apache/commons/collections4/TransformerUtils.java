@@ -57,7 +57,7 @@ import org.apache.commons.collections4.functors.SwitchTransformer;
  * <li>StringValue - returns a <code>java.lang.String</code> representation of the input object
  * </ul>
  * <p>
- * Since v4.1 only transformers which are considered to be unsafe are
+ * Since v4.1 only transformers which are considered to be safe are
  * Serializable. Transformers considered to be unsafe for serialization are:
  * <ul>
  * <li>Invoker

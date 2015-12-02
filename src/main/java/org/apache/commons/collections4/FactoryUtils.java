@@ -32,7 +32,7 @@ import org.apache.commons.collections4.functors.PrototypeFactory;
  * <li>Exception - always throws an exception
  * </ul>
  * <p>
- * Since v4.1 only factories which are considered to be unsafe are
+ * Since v4.1 only factories which are considered to be safe are
  * Serializable. Factories considered to be unsafe for serialization are:
  * <ul>
  * <li>Prototype

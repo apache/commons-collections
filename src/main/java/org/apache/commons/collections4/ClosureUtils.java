@@ -46,7 +46,7 @@ import org.apache.commons.collections4.functors.WhileClosure;
  * <li>Exception - always throws an exception
  * </ul>
  * <p>
- * Since v4.1 only closures which are considered to be unsafe are
+ * Since v4.1 only closures which are considered to be safe are
  * Serializable. Closures considered to be unsafe for serialization are:
  * <ul>
  * <li>Invoker
