@@ -67,7 +67,7 @@ Alternatively you can pull it from the central Maven repositories:
 <dependency>
   <groupId>org.apache.commons</groupId>
   <artifactId>commons-collections4</artifactId>
-  <version>4.0</version>
+  <version>4.1</version>
 </dependency>
 ```
 
