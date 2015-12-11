@@ -91,6 +91,9 @@
           <ol>
             <li>Vulnerability Report for Oracle Weblogic Server:
                 <a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-4852">CVE-2015-4852</a></li>
+            <li>Vulnerability Report for Red Hat JBoss products:
+                <a href="http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2015-7501">CVE-2015-7501</a>
+                (<a href="https://access.redhat.com/security/cve/cve-2015-7501">Red Hat Portal</a>)</li>
             <li>Apache Commons
                 <a href="https://blogs.apache.org/foundation/entry/apache_commons_statement_to_widespread">statement</a>
                 to widespread Java object de-serialisation vulnerability</li>
