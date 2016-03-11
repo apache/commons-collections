@@ -29,6 +29,7 @@ import org.apache.commons.collections4.ResettableIterator;
  * The iterator implements a {@link #reset} method, allowing the reset of the iterator
  * back to the start if required.
  *
+ * @param <E> the type to iterate over
  * @since 3.0
  * @version $Id$
  */
