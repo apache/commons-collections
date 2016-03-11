@@ -21,7 +21,7 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections4.ResettableIterator;
 
 /**
- * An {@link Iterator} over an array of objects.
+ * An {@link java.util.Iterator Iterator} over an array of objects.
  * <p>
  * This iterator does not support {@link #remove}, as the object array cannot be
  * structurally modified.
