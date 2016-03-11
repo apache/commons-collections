@@ -580,7 +580,7 @@ public class ListUtils {
      * A helper class used to construct the longest common subsequence.
      */
     private static final class LcsVisitor<E> implements CommandVisitor<E> {
-        private ArrayList<E> sequence;
+        private final ArrayList<E> sequence;
 
         public LcsVisitor() {
             sequence = new ArrayList<E>();

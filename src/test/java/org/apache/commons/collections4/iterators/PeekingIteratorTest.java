@@ -34,7 +34,7 @@ import org.junit.Test;
  */
 public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
 
-    private String[] testArray = { "a", "b", "c" };
+    private final String[] testArray = { "a", "b", "c" };
 
     private List<E> testList;
     

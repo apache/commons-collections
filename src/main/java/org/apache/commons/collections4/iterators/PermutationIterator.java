@@ -46,12 +46,12 @@ public class PermutationIterator<E> implements Iterator<List<E>> {
     /**
      * Permutation is done on theses keys to handle equal objects.
      */
-    private int[] keys;
+    private final int[] keys;
 
     /**
      * Mapping between keys and objects.
      */
-    private Map<Integer, E> objectMap;
+    private final Map<Integer, E> objectMap;
 
     /**
      * Direction table used in the algorithm:
@@ -60,7 +60,7 @@ public class PermutationIterator<E> implements Iterator<List<E>> {
      *   <li>true is right</li>
      * </ul>
      */
-    private boolean[] direction;
+    private final boolean[] direction;
 
     /**
      * Next permutation to return. When a permutation is requested

@@ -30,7 +30,7 @@ import org.junit.Test;
 public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
 
     /** Test array of size 7 */
-    private String[] testArray = {
+    private final String[] testArray = {
         "a", "b", "c", "d", "e", "f", "g"
     };
 

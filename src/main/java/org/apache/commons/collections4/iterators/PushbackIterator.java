@@ -39,7 +39,7 @@ public class PushbackIterator<E> implements Iterator<E> {
     private final Iterator<? extends E> iterator;
 
     /** The LIFO queue containing the pushed back items. */
-    private Deque<E> items = new ArrayDeque<E>();
+    private final Deque<E> items = new ArrayDeque<E>();
 
     //-----------------------------------------------------------------------
     /**
