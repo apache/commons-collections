@@ -353,6 +353,7 @@ public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
 
     //-----------------------------------------------------------------------
     static class LeafFinder implements Transformer<Object, Object> {
+        @Override
         public Object transform(final Object input) {
             if (input instanceof Forest) {
                 return ((Forest) input).treeIterator();

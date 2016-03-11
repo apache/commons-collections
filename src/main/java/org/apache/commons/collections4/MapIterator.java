@@ -52,6 +52,7 @@ public interface MapIterator<K, V> extends Iterator<K> {
      *
      * @return <code>true</code> if the iterator has more elements
      */
+    @Override
     boolean hasNext();
 
     /**
@@ -60,6 +61,7 @@ public interface MapIterator<K, V> extends Iterator<K> {
      * @return the next key in the iteration
      * @throws java.util.NoSuchElementException if the iteration is finished
      */
+    @Override
     K next();
 
     //-----------------------------------------------------------------------
@@ -92,6 +94,7 @@ public interface MapIterator<K, V> extends Iterator<K> {
      * @throws IllegalStateException if <code>remove()</code> has already been called
      *  since the last call to <code>next()</code>
      */
+    @Override
     void remove();
 
     /**

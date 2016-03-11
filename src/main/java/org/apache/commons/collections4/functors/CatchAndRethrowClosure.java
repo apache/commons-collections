@@ -55,6 +55,7 @@ public abstract class CatchAndRethrowClosure<E> implements Closure<E> {
      * @throws FunctorException (runtime) if the closure execution resulted in a
      *             checked exception.
      */
+    @Override
     public void execute(final E input) {
         try {
             executeAndThrow(input);

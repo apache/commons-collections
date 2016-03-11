@@ -132,37 +132,49 @@ public class MapPerformance {
     // ----------------------------------------------------------------------
 
     private static class DummyMap<K, V> implements Map<K, V> {
+        @Override
         public void clear() {
         }
+        @Override
         public boolean containsKey(final Object key) {
             return false;
         }
+        @Override
         public boolean containsValue(final Object value) {
             return false;
         }
+        @Override
         public Set<Map.Entry<K, V>> entrySet() {
             return null;
         }
+        @Override
         public V get(final Object key) {
             return null;
         }
+        @Override
         public boolean isEmpty() {
             return false;
         }
+        @Override
         public Set<K> keySet() {
             return null;
         }
+        @Override
         public V put(final K key, final V value) {
             return null;
         }
+        @Override
         public void putAll(final Map<? extends K, ? extends V> t) {
         }
+        @Override
         public V remove(final Object key) {
             return null;
         }
+        @Override
         public int size() {
             return 0;
         }
+        @Override
         public Collection<V> values() {
             return null;
         }

@@ -35,6 +35,7 @@ import org.apache.commons.collections4.TransformerUtils;
 public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
 
     private static class StringToInteger implements Transformer<Object, Object> {
+        @Override
         public Object transform(final Object input) {
             return Integer.valueOf((String) input);
         }

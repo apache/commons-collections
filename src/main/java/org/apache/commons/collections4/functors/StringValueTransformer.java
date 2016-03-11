@@ -60,6 +60,7 @@ public final class StringValueTransformer<T> implements Transformer<T, String>, 
      * @param input  the input object to transform
      * @return the transformed result
      */
+    @Override
     public String transform(final T input) {
         return String.valueOf(input);
     }

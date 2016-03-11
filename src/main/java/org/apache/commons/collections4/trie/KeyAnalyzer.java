@@ -134,6 +134,7 @@ public abstract class KeyAnalyzer<K> implements Comparator<K>, Serializable {
      */
     public abstract boolean isPrefix(K prefix, int offsetInBits, int lengthInBits, K key);
 
+    @Override
     @SuppressWarnings("unchecked")
     public int compare(final K o1, final K o2) {
         if (o1 == null) {

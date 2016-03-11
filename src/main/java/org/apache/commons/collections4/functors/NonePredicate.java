@@ -90,6 +90,7 @@ public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> {
      * @param object  the input object
      * @return true if none of decorated predicates return true
      */
+    @Override
     public boolean evaluate(final T object) {
         for (final Predicate<? super T> iPredicate : iPredicates) {
             if (iPredicate.evaluate(object)) {

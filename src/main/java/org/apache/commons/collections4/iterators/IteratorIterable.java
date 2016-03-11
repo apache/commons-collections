@@ -68,14 +68,17 @@ public class IteratorIterable<E> implements Iterable<E> {
      */
     private static <E> Iterator<E> createTypesafeIterator(final Iterator<? extends E> iterator) {
         return new Iterator<E>() {
+            @Override
             public boolean hasNext() {
                 return iterator.hasNext();
             }
 
+            @Override
             public E next() {
                 return iterator.next();
             }
 
+            @Override
             public void remove() {
                 iterator.remove();
             }
@@ -120,6 +123,7 @@ public class IteratorIterable<E> implements Iterable<E> {
      *
      * @return the iterator
      */
+    @Override
     public Iterator<E> iterator() {
         if (iterator instanceof ResettableIterator) {
             ((ResettableIterator<? extends E>)iterator).reset();

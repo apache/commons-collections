@@ -771,10 +771,12 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
     //-----------------------------------------------------------------------
 
+    @Override
     public Comparator<? super K> comparator() {
         return getKeyAnalyzer();
     }
 
+    @Override
     public K firstKey() {
         if (size() == 0) {
             throw new NoSuchElementException();
@@ -782,6 +784,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         return firstEntry().getKey();
     }
 
+    @Override
     public K lastKey() {
         final TrieEntry<K, V> entry = lastEntry();
         if (entry != null) {
@@ -790,6 +793,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         throw new NoSuchElementException();
     }
 
+    @Override
     public K nextKey(final K key) {
         if (key == null) {
             throw new NullPointerException();
@@ -802,6 +806,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         return null;
     }
 
+    @Override
     public K previousKey(final K key) {
         if (key == null) {
             throw new NullPointerException();
@@ -814,10 +819,12 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         return null;
     }
 
+    @Override
     public OrderedMapIterator<K, V> mapIterator() {
         return new TrieMapIterator();
     }
 
+    @Override
     public SortedMap<K, V> prefixMap(final K key) {
         return getPrefixMapByBits(key, 0, lengthInBits(key));
     }
@@ -858,14 +865,17 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         return new PrefixRangeMap(key, offsetInBits, lengthInBits);
     }
 
+    @Override
     public SortedMap<K, V> headMap(final K toKey) {
         return new RangeEntryMap(null, toKey);
     }
 
+    @Override
     public SortedMap<K, V> subMap(final K fromKey, final K toKey) {
         return new RangeEntryMap(fromKey, toKey);
     }
 
+    @Override
     public SortedMap<K, V> tailMap(final K fromKey) {
         return new RangeEntryMap(fromKey, null);
     }
@@ -1422,6 +1432,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
          * An {@link Iterator} that returns {@link Entry} Objects.
          */
         private class EntryIterator extends TrieIterator<Map.Entry<K,V>> {
+            @Override
             public Map.Entry<K,V> next() {
                 return nextEntry();
             }
@@ -1464,6 +1475,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
          * An {@link Iterator} that returns Key Objects.
          */
         private class KeyIterator extends TrieIterator<K> {
+            @Override
             public K next() {
                 return nextEntry().getKey();
             }
@@ -1511,6 +1523,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
          * An {@link Iterator} that returns Value Objects.
          */
         private class ValueIterator extends TrieIterator<V> {
+            @Override
             public V next() {
                 return nextEntry().getValue();
             }
@@ -1567,10 +1580,12 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             return AbstractPatriciaTrie.this.nextEntry(prior);
         }
 
+        @Override
         public boolean hasNext() {
             return next != null;
         }
 
+        @Override
         public void remove() {
             if (current == null) {
                 throw new IllegalStateException();
@@ -1595,10 +1610,12 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
         protected TrieEntry<K, V> previous; // the previous node to return
 
+        @Override
         public K next() {
             return nextEntry().getKey();
         }
 
+        @Override
         public K getKey() {
             if (current == null) {
                 throw new IllegalStateException();
@@ -1606,6 +1623,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             return current.getKey();
         }
 
+        @Override
         public V getValue() {
             if (current == null) {
                 throw new IllegalStateException();
@@ -1613,6 +1631,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             return current.getValue();
         }
 
+        @Override
         public V setValue(final V value) {
             if (current == null) {
                 throw new IllegalStateException();
@@ -1620,10 +1639,12 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             return current.setValue(value);
         }
 
+        @Override
         public boolean hasPrevious() {
             return previous != null;
         }
 
+        @Override
         public K previous() {
             return previousEntry().getKey();
         }
@@ -1687,6 +1708,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
          */
         protected abstract boolean isToInclusive();
 
+        @Override
         public Comparator<? super K> comparator() {
             return AbstractPatriciaTrie.this.comparator();
         }
@@ -1734,6 +1756,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             return entrySet;
         }
 
+        @Override
         public SortedMap<K, V> subMap(final K fromKey, final K toKey) {
             if (!inRange2(fromKey)) {
                 throw new IllegalArgumentException("FromKey is out of range: " + fromKey);
@@ -1746,6 +1769,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             return createRangeMap(fromKey, isFromInclusive(), toKey, isToInclusive());
         }
 
+        @Override
         public SortedMap<K, V> headMap(final K toKey) {
             if (!inRange2(toKey)) {
                 throw new IllegalArgumentException("ToKey is out of range: " + toKey);
@@ -1753,6 +1777,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             return createRangeMap(getFromKey(), isFromInclusive(), toKey, isToInclusive());
         }
 
+        @Override
         public SortedMap<K, V> tailMap(final K fromKey) {
             if (!inRange2(fromKey)) {
                 throw new IllegalArgumentException("FromKey is out of range: " + fromKey);
@@ -1860,7 +1885,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
            this.toInclusive = toInclusive;
        }
 
-       public K firstKey() {
+       @Override
+    public K firstKey() {
            Map.Entry<K,V> e = null;
            if (fromKey == null) {
                e = firstEntry();
@@ -1879,7 +1905,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
            return first;
        }
 
-       public K lastKey() {
+       @Override
+    public K lastKey() {
            Map.Entry<K,V> e;
            if (toKey == null) {
                e = lastEntry();
@@ -2049,6 +2076,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
                 return next != null && !compare(next.key, excludedKey);
             }
 
+            @Override
             public Map.Entry<K,V> next() {
                 if (next == null || compare(next.key, excludedKey)) {
                     throw new NoSuchElementException();
@@ -2130,6 +2158,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             return size;
         }
 
+        @Override
         public K firstKey() {
             fixup();
 
@@ -2148,6 +2177,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             return first;
         }
 
+        @Override
         public K lastKey() {
             fixup();
 
@@ -2284,10 +2314,12 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
                 this.entry = entry;
             }
 
+            @Override
             public boolean hasNext() {
                 return hit == 0;
             }
 
+            @Override
             public Map.Entry<K, V> next() {
                 if (hit != 0) {
                     throw new NoSuchElementException();
@@ -2297,6 +2329,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
                 return entry;
             }
 
+            @Override
             public void remove() {
                 if (hit != 1) {
                     throw new IllegalStateException();
@@ -2333,6 +2366,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
                 this.lengthInBits = lengthInBits;
             }
 
+            @Override
             public Map.Entry<K,V> next() {
                 final Map.Entry<K, V> entry = nextEntry();
                 if (lastOne) {

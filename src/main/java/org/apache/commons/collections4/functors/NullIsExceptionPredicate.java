@@ -69,6 +69,7 @@ public final class NullIsExceptionPredicate<T> implements PredicateDecorator<T>,
      * @return true if decorated predicate returns true
      * @throws FunctorException if input is null
      */
+    @Override
     public boolean evaluate(final T object) {
         if (object == null) {
             throw new FunctorException("Input Object must not be null");
@@ -82,6 +83,7 @@ public final class NullIsExceptionPredicate<T> implements PredicateDecorator<T>,
      * @return the predicate as the only element in an array
      * @since 3.1
      */
+    @Override
     @SuppressWarnings("unchecked")
     public Predicate<? super T>[] getPredicates() {
         return new Predicate[] { iPredicate };

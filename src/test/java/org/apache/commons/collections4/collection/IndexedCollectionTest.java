@@ -53,6 +53,7 @@ public class IndexedCollectionTest extends AbstractCollectionTest<String> {
     private static final class IntegerTransformer implements Transformer<String, Integer>, Serializable {
         private static final long serialVersionUID = 809439581555072949L;
 
+        @Override
         public Integer transform(final String input) {
             return Integer.valueOf(input);
         }

@@ -67,6 +67,7 @@ public final class NullIsFalsePredicate<T> implements PredicateDecorator<T>, Ser
      * @param object  the input object
      * @return true if decorated predicate returns true, false if input is null
      */
+    @Override
     public boolean evaluate(final T object) {
         if (object == null) {
             return false;
@@ -80,6 +81,7 @@ public final class NullIsFalsePredicate<T> implements PredicateDecorator<T>, Ser
      * @return the predicate as the only element in an array
      * @since 3.1
      */
+    @Override
     @SuppressWarnings("unchecked")
     public Predicate<? super T>[] getPredicates() {
         return new Predicate[] { iPredicate };

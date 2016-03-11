@@ -71,6 +71,7 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      * @throws NullPointerException (optional) if the map limits the values to
      *  non-null and null was specified
      */
+    @Override
     V put(K key, V value);
 
     /**
@@ -140,5 +141,6 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      *
      * @return a set view of the values contained in this map
      */
+    @Override
     Set<V> values();
 }

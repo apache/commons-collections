@@ -107,6 +107,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
      *
      * @return true if there is a next element to return
      */
+    @Override
     public boolean hasNext() {
         return this.index < this.endIndex;
     }
@@ -118,6 +119,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
      * @throws NoSuchElementException if all the elements in the array
      *    have already been returned
      */
+    @Override
     public E next() {
         if (hasNext() == false) {
             throw new NoSuchElementException();
@@ -130,6 +132,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
      *
      * @throws UnsupportedOperationException always
      */
+    @Override
     public void remove() {
         throw new UnsupportedOperationException("remove() method is not supported for an ObjectArrayIterator");
     }
@@ -167,6 +170,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
     /**
      * Resets the iterator back to the start index.
      */
+    @Override
     public void reset() {
         this.index = this.startIndex;
     }

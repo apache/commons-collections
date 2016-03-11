@@ -171,10 +171,12 @@ public class FixedSizeList<E>
         }
     }
 
+    @Override
     public boolean isFull() {
         return true;
     }
 
+    @Override
     public int maxSize() {
         return size();
     }

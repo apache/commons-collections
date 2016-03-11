@@ -82,6 +82,7 @@ public class FilterIterator<E> implements Iterator<E> {
      * @return true if there is another object that matches the predicate
      * @throws NullPointerException if either the iterator or predicate are null
      */
+    @Override
     public boolean hasNext() {
         return nextObjectSet || setNextObject();
     }
@@ -94,6 +95,7 @@ public class FilterIterator<E> implements Iterator<E> {
      * @throws NoSuchElementException if there are no more elements that
      *  match the predicate
      */
+    @Override
     public E next() {
         if (!nextObjectSet) {
             if (!setNextObject()) {
@@ -115,6 +117,7 @@ public class FilterIterator<E> implements Iterator<E> {
      * @throws IllegalStateException if <code>hasNext()</code> has already
      *  been called.
      */
+    @Override
     public void remove() {
         if (nextObjectSet) {
             throw new IllegalStateException("remove() cannot be called");

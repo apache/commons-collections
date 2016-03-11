@@ -133,6 +133,7 @@ public class SingletonMap<K, V>
      *
      * @return the key
      */
+    @Override
     public K getKey() {
         return key;
     }
@@ -142,6 +143,7 @@ public class SingletonMap<K, V>
      *
      * @return the value
      */
+    @Override
     public V getValue() {
         return value;
     }
@@ -165,6 +167,7 @@ public class SingletonMap<K, V>
      *
      * @return true always
      */
+    @Override
     public boolean isFull() {
         return true;
     }
@@ -174,6 +177,7 @@ public class SingletonMap<K, V>
      *
      * @return 1 always
      */
+    @Override
     public int maxSize() {
         return 1;
     }
@@ -186,6 +190,7 @@ public class SingletonMap<K, V>
      * @param key  the key
      * @return the mapped value, null if no match
      */
+    @Override
     public V get(final Object key) {
         if (isEqualKey(key)) {
             return value;
@@ -198,6 +203,7 @@ public class SingletonMap<K, V>
      *
      * @return the size of 1
      */
+    @Override
     public int size() {
         return 1;
     }
@@ -207,6 +213,7 @@ public class SingletonMap<K, V>
      *
      * @return false always
      */
+    @Override
     public boolean isEmpty() {
         return false;
     }
@@ -218,6 +225,7 @@ public class SingletonMap<K, V>
      * @param key  the key to search for
      * @return true if the map contains the key
      */
+    @Override
     public boolean containsKey(final Object key) {
         return isEqualKey(key);
     }
@@ -228,6 +236,7 @@ public class SingletonMap<K, V>
      * @param value  the value to search for
      * @return true if the map contains the key
      */
+    @Override
     public boolean containsValue(final Object value) {
         return isEqualValue(value);
     }
@@ -244,6 +253,7 @@ public class SingletonMap<K, V>
      * @return the value previously mapped to this key, null if none
      * @throws IllegalArgumentException if the key does not match
      */
+    @Override
     public V put(final K key, final V value) {
         if (isEqualKey(key)) {
             return setValue(value);
@@ -262,6 +272,7 @@ public class SingletonMap<K, V>
      * @throws NullPointerException if the map is null
      * @throws IllegalArgumentException if the key does not match
      */
+    @Override
     public void putAll(final Map<? extends K, ? extends V> map) {
         switch (map.size()) {
             case 0:
@@ -284,6 +295,7 @@ public class SingletonMap<K, V>
      * @return the value mapped to the removed key, null if key not in map
      * @throws UnsupportedOperationException always
      */
+    @Override
     public V remove(final Object key) {
         throw new UnsupportedOperationException();
     }
@@ -291,6 +303,7 @@ public class SingletonMap<K, V>
     /**
      * Unsupported operation.
      */
+    @Override
     public void clear() {
         throw new UnsupportedOperationException();
     }
@@ -303,6 +316,7 @@ public class SingletonMap<K, V>
      *
      * @return the entrySet view
      */
+    @Override
     public Set<Map.Entry<K, V>> entrySet() {
         final Map.Entry<K, V> entry = new TiedMapEntry<K, V>(this, getKey());
         return Collections.singleton(entry);
@@ -315,6 +329,7 @@ public class SingletonMap<K, V>
      *
      * @return the keySet view
      */
+    @Override
     public Set<K> keySet() {
         return Collections.singleton(key);
     }
@@ -326,6 +341,7 @@ public class SingletonMap<K, V>
      *
      * @return the values view
      */
+    @Override
     public Collection<V> values() {
         return new SingletonValues<V>(this);
     }
@@ -333,6 +349,7 @@ public class SingletonMap<K, V>
     /**
      * {@inheritDoc}
      */
+    @Override
     public OrderedMapIterator<K, V> mapIterator() {
         return new SingletonMapIterator<K, V>(this);
     }
@@ -342,6 +359,7 @@ public class SingletonMap<K, V>
      *
      * @return the key
      */
+    @Override
     public K firstKey() {
         return getKey();
     }
@@ -351,6 +369,7 @@ public class SingletonMap<K, V>
      *
      * @return the key
      */
+    @Override
     public K lastKey() {
         return getKey();
     }
@@ -361,6 +380,7 @@ public class SingletonMap<K, V>
      * @param key  the next key
      * @return null always
      */
+    @Override
     public K nextKey(final K key) {
         return null;
     }
@@ -371,6 +391,7 @@ public class SingletonMap<K, V>
      * @param key  the next key
      * @return null always
      */
+    @Override
     public K previousKey(final K key) {
         return null;
     }
@@ -410,10 +431,12 @@ public class SingletonMap<K, V>
             this.parent = parent;
         }
 
+        @Override
         public boolean hasNext() {
             return hasNext;
         }
 
+        @Override
         public K next() {
             if (hasNext == false) {
                 throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
@@ -423,10 +446,12 @@ public class SingletonMap<K, V>
             return parent.getKey();
         }
 
+        @Override
         public boolean hasPrevious() {
             return hasNext == false;
         }
 
+        @Override
         public K previous() {
             if (hasNext == true) {
                 throw new NoSuchElementException(AbstractHashedMap.NO_PREVIOUS_ENTRY);
@@ -435,10 +460,12 @@ public class SingletonMap<K, V>
             return parent.getKey();
         }
 
+        @Override
         public void remove() {
             throw new UnsupportedOperationException();
         }
 
+        @Override
         public K getKey() {
             if (canGetSet == false) {
                 throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
@@ -446,6 +473,7 @@ public class SingletonMap<K, V>
             return parent.getKey();
         }
 
+        @Override
         public V getValue() {
             if (canGetSet == false) {
                 throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
@@ -453,6 +481,7 @@ public class SingletonMap<K, V>
             return parent.getValue();
         }
 
+        @Override
         public V setValue(final V value) {
             if (canGetSet == false) {
                 throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
@@ -460,6 +489,7 @@ public class SingletonMap<K, V>
             return parent.setValue(value);
         }
 
+        @Override
         public void reset() {
             hasNext = true;
         }

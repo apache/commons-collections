@@ -231,6 +231,7 @@ public class IteratorChain<E> implements Iterator<E> {
      *
      * @return true if elements remain
      */
+    @Override
     public boolean hasNext() {
         lockChain();
         updateCurrentIterator();
@@ -246,6 +247,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * @throws java.util.NoSuchElementException if all the Iterators are
      * exhausted
      */
+    @Override
     public E next() {
         lockChain();
         updateCurrentIterator();
@@ -267,6 +269,7 @@ public class IteratorChain<E> implements Iterator<E> {
      * or the remove method has already been called after the last call to the
      * next method.
      */
+    @Override
     public void remove() {
         lockChain();
         if (currentIterator == null) {

@@ -104,6 +104,7 @@ public class ZippingIterator<E> implements Iterator<E> {
      *
      * @return true if this iterator has remaining elements
      */
+    @Override
     public boolean hasNext() {
         // the next iterator has already been determined
         // this might happen if hasNext() is called multiple
@@ -130,6 +131,7 @@ public class ZippingIterator<E> implements Iterator<E> {
      * @return the next interleaved element
      * @throws NoSuchElementException if no child iterator has any more elements
      */
+    @Override
     public E next() throws NoSuchElementException {
         if (!hasNext()) {
             throw new NoSuchElementException();
@@ -147,6 +149,7 @@ public class ZippingIterator<E> implements Iterator<E> {
      * @throws IllegalStateException if there is no last returned element, or if
      *   the last returned element has already been removed
      */
+    @Override
     public void remove() {
         if (lastReturned == null) {
             throw new IllegalStateException("No value can be removed at present");

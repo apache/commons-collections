@@ -95,6 +95,7 @@ public class PermutationIterator<E> implements Iterator<List<E>> {
      * Indicates if there are more permutation available.
      * @return true if there are more permutations, otherwise false
      */
+    @Override
     public boolean hasNext() {
         return nextPermutation != null;
     }
@@ -104,6 +105,7 @@ public class PermutationIterator<E> implements Iterator<List<E>> {
      * @return a list of the permutator's elements representing a permutation
      * @throws NoSuchElementException if there are no more permutations
      */
+    @Override
     public List<E> next() {
         if (!hasNext()) {
             throw new NoSuchElementException();
@@ -149,6 +151,7 @@ public class PermutationIterator<E> implements Iterator<List<E>> {
         return result;
     }
 
+    @Override
     public void remove() {
         throw new UnsupportedOperationException("remove() is not supported");
     }

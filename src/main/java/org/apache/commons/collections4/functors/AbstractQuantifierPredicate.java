@@ -49,6 +49,7 @@ public abstract class AbstractQuantifierPredicate<T> implements PredicateDecorat
      * @return a copy of the predicates
      * @since 3.1
      */
+    @Override
     public Predicate<? super T>[] getPredicates() {
         return FunctorUtils.<T>copy(iPredicates);
     }

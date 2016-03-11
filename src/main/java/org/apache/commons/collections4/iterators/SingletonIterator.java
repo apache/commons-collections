@@ -71,6 +71,7 @@ public class SingletonIterator<E>
      *
      * @return true if the single object hasn't been returned yet
      */
+    @Override
     public boolean hasNext() {
         return beforeFirst && !removed;
     }
@@ -84,6 +85,7 @@ public class SingletonIterator<E>
      * @throws NoSuchElementException if the single object has already
      *    been returned
      */
+    @Override
     public E next() {
         if (!beforeFirst || removed) {
             throw new NoSuchElementException();
@@ -101,6 +103,7 @@ public class SingletonIterator<E>
      *        method.
      * @throws UnsupportedOperationException if remove is not supported
      */
+    @Override
     public void remove() {
         if (removeAllowed) {
             if (removed || beforeFirst) {
@@ -116,6 +119,7 @@ public class SingletonIterator<E>
     /**
      * Reset the iterator to the start.
      */
+    @Override
     public void reset() {
         beforeFirst = true;
     }

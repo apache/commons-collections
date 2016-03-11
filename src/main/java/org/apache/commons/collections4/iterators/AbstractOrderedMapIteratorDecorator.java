@@ -58,41 +58,49 @@ public class AbstractOrderedMapIteratorDecorator<K, V> implements OrderedMapIter
     //-----------------------------------------------------------------------
 
     /** {@inheritDoc} */
+    @Override
     public boolean hasNext() {
         return iterator.hasNext();
     }
 
     /** {@inheritDoc} */
+    @Override
     public K next() {
         return iterator.next();
     }
 
     /** {@inheritDoc} */
+    @Override
     public boolean hasPrevious() {
         return iterator.hasPrevious();
     }
 
     /** {@inheritDoc} */
+    @Override
     public K previous() {
         return iterator.previous();
     }
 
     /** {@inheritDoc} */
+    @Override
     public void remove() {
         iterator.remove();
     }
 
     /** {@inheritDoc} */
+    @Override
     public K getKey() {
         return iterator.getKey();
     }
 
     /** {@inheritDoc} */
+    @Override
     public V getValue() {
         return iterator.getValue();
     }
 
     /** {@inheritDoc} */
+    @Override
     public V setValue(final V obj) {
         return iterator.setValue(obj);
     }

@@ -37,18 +37,21 @@ import org.apache.commons.collections4.functors.NOPTransformer;
 public class TransformedSplitMapTest extends BulkTest {
 
     private final Transformer<Integer, String> intToString = new Transformer<Integer, String>() {
+        @Override
         public String transform(final Integer input) {
             return String.valueOf(input);
         }
     };
 
     private final Transformer<Object, Class<?>> objectToClass = new Transformer<Object, Class<?>>() {
+        @Override
         public java.lang.Class<?> transform(final Object input) {
             return input == null ? null : input.getClass();
         }
     };
 
     private final Transformer<String, Integer> stringToInt = new Transformer<String, Integer>() {
+        @Override
         public Integer transform(final String input) {
             return Integer.valueOf(input);
         }

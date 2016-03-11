@@ -113,29 +113,35 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public E first() {
         return getSortedSet().first();
     }
 
+    @Override
     public E last() {
         return getSortedSet().last();
     }
 
+    @Override
     public Comparator<? super E> comparator() {
         return getSortedSet().comparator();
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public SortedSet<E> subSet(final E fromElement, final E toElement) {
         final SortedSet<E> set = getSortedSet().subSet(fromElement, toElement);
         return new TransformedSortedSet<E>(set, transformer);
     }
 
+    @Override
     public SortedSet<E> headSet(final E toElement) {
         final SortedSet<E> set = getSortedSet().headSet(toElement);
         return new TransformedSortedSet<E>(set, transformer);
     }
 
+    @Override
     public SortedSet<E> tailSet(final E fromElement) {
         final SortedSet<E> set = getSortedSet().tailSet(fromElement);
         return new TransformedSortedSet<E>(set, transformer);

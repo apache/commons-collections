@@ -162,6 +162,7 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
      * @return {@code true} if the comparison succeeds according to the selected criterion
      * @throws IllegalStateException if the criterion is invalid (really not possible)
      */
+    @Override
     public boolean evaluate(final T target) {
 
         boolean result = false;

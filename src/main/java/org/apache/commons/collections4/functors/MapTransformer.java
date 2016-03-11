@@ -70,6 +70,7 @@ public final class MapTransformer<I, O> implements Transformer<I, O>, Serializab
      * @param input  the input object to transform
      * @return the transformed result
      */
+    @Override
     public O transform(final I input) {
         return iMap.get(input);
     }

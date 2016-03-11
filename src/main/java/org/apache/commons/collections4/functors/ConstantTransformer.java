@@ -86,6 +86,7 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
      * @param input  the input object which is ignored
      * @return the stored constant
      */
+    @Override
     public O transform(final I input) {
         return iConstant;
     }

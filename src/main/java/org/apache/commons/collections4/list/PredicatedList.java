@@ -106,29 +106,35 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
 
     //-----------------------------------------------------------------------
 
+    @Override
     public E get(final int index) {
         return decorated().get(index);
     }
 
+    @Override
     public int indexOf(final Object object) {
         return decorated().indexOf(object);
     }
 
+    @Override
     public int lastIndexOf(final Object object) {
         return decorated().lastIndexOf(object);
     }
 
+    @Override
     public E remove(final int index) {
         return decorated().remove(index);
     }
 
     //-----------------------------------------------------------------------
 
+    @Override
     public void add(final int index, final E object) {
         validate(object);
         decorated().add(index, object);
     }
 
+    @Override
     public boolean addAll(final int index, final Collection<? extends E> coll) {
         for (final E aColl : coll) {
             validate(aColl);
@@ -136,19 +142,23 @@ public class PredicatedList<E> extends PredicatedCollection<E> implements List<E
         return decorated().addAll(index, coll);
     }
 
+    @Override
     public ListIterator<E> listIterator() {
         return listIterator(0);
     }
 
+    @Override
     public ListIterator<E> listIterator(final int i) {
         return new PredicatedListIterator(decorated().listIterator(i));
     }
 
+    @Override
     public E set(final int index, final E object) {
         validate(object);
         return decorated().set(index, object);
     }
 
+    @Override
     public List<E> subList(final int fromIndex, final int toIndex) {
         final List<E> sub = decorated().subList(fromIndex, toIndex);
         return new PredicatedList<E>(sub, predicate);

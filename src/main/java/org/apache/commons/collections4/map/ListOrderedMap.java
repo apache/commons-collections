@@ -163,6 +163,7 @@ public class ListOrderedMap<K, V>
      * @return the first key currently in this map
      * @throws NoSuchElementException if this map is empty
      */
+    @Override
     public K firstKey() {
         if (size() == 0) {
             throw new NoSuchElementException("Map is empty");
@@ -176,6 +177,7 @@ public class ListOrderedMap<K, V>
      * @return the last key currently in this map
      * @throws NoSuchElementException if this map is empty
      */
+    @Override
     public K lastKey() {
         if (size() == 0) {
             throw new NoSuchElementException("Map is empty");
@@ -190,6 +192,7 @@ public class ListOrderedMap<K, V>
      * @param key  the key to find previous for
      * @return the next key, null if no match or at start
      */
+    @Override
     public K nextKey(final Object key) {
         final int index = insertOrder.indexOf(key);
         if (index >= 0 && index < size() - 1) {
@@ -205,6 +208,7 @@ public class ListOrderedMap<K, V>
      * @param key  the key to find previous for
      * @return the previous key, null if no match or at start
      */
+    @Override
     public K previousKey(final Object key) {
         final int index = insertOrder.indexOf(key);
         if (index > 0) {
@@ -525,6 +529,7 @@ public class ListOrderedMap<K, V>
         @Override
         public Iterator<V> iterator() {
             return new AbstractUntypedIteratorDecorator<Map.Entry<Object, V>, V>(parent.entrySet().iterator()) {
+                @Override
                 public V next() {
                     return getIterator().next().getValue();
                 }
@@ -575,6 +580,7 @@ public class ListOrderedMap<K, V>
         @Override
         public Iterator<K> iterator() {
             return new AbstractUntypedIteratorDecorator<Map.Entry<K, Object>, K>(parent.entrySet().iterator()) {
+                @Override
                 public K next() {
                     return getIterator().next().getKey();
                 }
@@ -673,6 +679,7 @@ public class ListOrderedMap<K, V>
             this.parent = parent;
         }
 
+        @Override
         public Map.Entry<K, V> next() {
             last = getIterator().next();
             return new ListOrderedMapEntry<K, V>(parent, last);
@@ -718,26 +725,31 @@ public class ListOrderedMap<K, V>
             this.iterator = parent.insertOrder.listIterator();
         }
 
+        @Override
         public boolean hasNext() {
             return iterator.hasNext();
         }
 
+        @Override
         public K next() {
             last = iterator.next();
             readable = true;
             return last;
         }
 
+        @Override
         public boolean hasPrevious() {
             return iterator.hasPrevious();
         }
 
+        @Override
         public K previous() {
             last = iterator.previous();
             readable = true;
             return last;
         }
 
+        @Override
         public void remove() {
             if (readable == false) {
                 throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
@@ -747,6 +759,7 @@ public class ListOrderedMap<K, V>
             readable = false;
         }
 
+        @Override
         public K getKey() {
             if (readable == false) {
                 throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
@@ -754,6 +767,7 @@ public class ListOrderedMap<K, V>
             return last;
         }
 
+        @Override
         public V getValue() {
             if (readable == false) {
                 throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
@@ -761,6 +775,7 @@ public class ListOrderedMap<K, V>
             return parent.get(last);
         }
 
+        @Override
         public V setValue(final V value) {
             if (readable == false) {
                 throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
@@ -768,6 +783,7 @@ public class ListOrderedMap<K, V>
             return parent.map.put(last, value);
         }
 
+        @Override
         public void reset() {
             iterator = parent.insertOrder.listIterator();
             last = null;

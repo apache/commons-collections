@@ -48,6 +48,7 @@ public interface SortedBidiMap<K, V> extends OrderedBidiMap<K, V>, SortedMap<K, 
      *
      * @return an inverted bidirectional map
      */
+    @Override
     SortedBidiMap<V, K> inverseBidiMap();
 
     /**

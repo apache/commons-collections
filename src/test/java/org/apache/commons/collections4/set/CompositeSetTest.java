@@ -97,16 +97,19 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
         set.setMutator(new SetMutator<E>() {
             private static final long serialVersionUID = 1L;
 
+            @Override
             public void resolveCollision(final CompositeSet<E> comp, final Set<E> existing,
                 final Set<E> added, final Collection<E> intersects) {
                 //noop
             }
 
+            @Override
             public boolean add(final CompositeSet<E> composite,
                     final List<Set<E>> collections, final E obj) {
                 throw new UnsupportedOperationException();
             }
 
+            @Override
             public boolean addAll(final CompositeSet<E> composite,
                     final List<Set<E>> collections, final Collection<? extends E> coll) {
                 throw new UnsupportedOperationException();

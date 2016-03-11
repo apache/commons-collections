@@ -68,6 +68,7 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
      * @param input  the input object to transform
      * @return the transformed result
      */
+    @Override
     public Boolean transform(final T input) {
         return Boolean.valueOf(iPredicate.evaluate(input));
     }

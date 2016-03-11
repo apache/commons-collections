@@ -92,6 +92,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      *
      * @return total number of elements in all contained containers
      */
+    @Override
     public int size() {
         int size = 0;
         for (final Set<E> item : all) {
@@ -107,6 +108,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      *
      * @return true if all of the contained sets are empty
      */
+    @Override
     public boolean isEmpty() {
         for (final Set<E> item : all) {
             if (item.isEmpty() == false) {
@@ -124,6 +126,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * @param obj  the object to search for
      * @return true if obj is contained in any of the contained sets
      */
+    @Override
     public boolean contains(final Object obj) {
         for (final Set<E> item : all) {
             if (item.contains(obj)) {
@@ -143,6 +146,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      *  the order they were added, but this behavior should not be relied upon.
      * @see IteratorChain
      */
+    @Override
     public Iterator<E> iterator() {
         if (all.isEmpty()) {
             return EmptyIterator.<E>emptyIterator();
@@ -159,6 +163,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      *
      * @return an object array of all the elements in the collection
      */
+    @Override
     public Object[] toArray() {
         final Object[] result = new Object[size()];
         int i = 0;
@@ -176,6 +181,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * @param array  the array to use, populating if possible
      * @return an array of all the elements in the collection
      */
+    @Override
     @SuppressWarnings("unchecked")
     public <T> T[] toArray(final T[] array) {
         final int size = size();
@@ -209,6 +215,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * @throws NullPointerException if the object cannot be added because its null
      * @throws IllegalArgumentException if the object cannot be added
      */
+    @Override
     public boolean add(final E obj) {
         if (mutator == null) {
            throw new UnsupportedOperationException(
@@ -224,6 +231,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * @param obj  object to be removed
      * @return true if the object is removed, false otherwise
      */
+    @Override
     public boolean remove(final Object obj) {
         for (final Set<E> set : getSets()) {
             if (set.contains(obj)) {
@@ -242,6 +250,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * @param coll  the collection to check for
      * @return true if all elements contained
      */
+    @Override
     public boolean containsAll(final Collection<?> coll) {
         for (final Object item : coll) {
             if (contains(item) == false) {
@@ -262,6 +271,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * @throws NullPointerException if the object cannot be added because its null
      * @throws IllegalArgumentException if the object cannot be added
      */
+    @Override
     public boolean addAll(final Collection<? extends E> coll) {
         if (mutator == null) {
             throw new UnsupportedOperationException(
@@ -279,6 +289,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * @return true if the composite was modified
      * @throws UnsupportedOperationException if removeAll is unsupported
      */
+    @Override
     public boolean removeAll(final Collection<?> coll) {
         if (coll.size() == 0) {
             return false;
@@ -300,6 +311,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * @return true if the composite was modified
      * @throws UnsupportedOperationException if retainAll is unsupported
      */
+    @Override
     public boolean retainAll(final Collection<?> coll) {
         boolean changed = false;
         for (final Collection<E> item : all) {
@@ -315,6 +327,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      *
      * @throws UnsupportedOperationException if clear is unsupported
      */
+    @Override
     public void clear() {
         for (final Collection<E> coll : all) {
             coll.clear();

@@ -94,23 +94,28 @@ public class PredicatedQueue<E> extends PredicatedCollection<E> implements Queue
      * @return the result of adding to the underlying queue
      * @throws IllegalArgumentException if the add is invalid
      */
+    @Override
     public boolean offer(final E object) {
         validate(object);
         return decorated().offer(object);
     }
 
+    @Override
     public E poll() {
         return decorated().poll();
     }
 
+    @Override
     public E peek() {
         return decorated().peek();
     }
 
+    @Override
     public E element() {
         return decorated().element();
     }
 
+    @Override
     public E remove() {
         return decorated().remove();
     }

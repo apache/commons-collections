@@ -61,6 +61,7 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
      *
      * @return <code>true</code> if the iterator has more elements
      */
+    @Override
     public boolean hasNext() {
         return iterator.hasNext();
     }
@@ -71,6 +72,7 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
      * @return the next key in the iteration
      * @throws java.util.NoSuchElementException if the iteration is finished
      */
+    @Override
     public K next() {
         last = iterator.next();
         canRemove = true;
@@ -88,6 +90,7 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
      * @throws IllegalStateException if <code>remove()</code> has already been called
      *  since the last call to <code>next()</code>
      */
+    @Override
     public void remove() {
         if (canRemove == false) {
             throw new IllegalStateException("Iterator remove() can only be called once after next()");
@@ -105,6 +108,7 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
      * @return the current key
      * @throws IllegalStateException if <code>next()</code> has not yet been called
      */
+    @Override
     public K getKey() {
         if (last == null) {
             throw new IllegalStateException("Iterator getKey() can only be called after next() and before remove()");
@@ -119,6 +123,7 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
      * @return the current value
      * @throws IllegalStateException if <code>next()</code> has not yet been called
      */
+    @Override
     public V getValue() {
         if (last == null) {
             throw new IllegalStateException("Iterator getValue() can only be called after next() and before remove()");
@@ -136,6 +141,7 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
      * @throws IllegalStateException if <code>remove()</code> has been called since the
      *  last call to <code>next()</code>
      */
+    @Override
     public V setValue(final V value) {
         if (last == null) {
             throw new IllegalStateException("Iterator setValue() can only be called after next() and before remove()");
@@ -147,6 +153,7 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
     /**
      * Resets the state of the iterator.
      */
+    @Override
     public void reset() {
         iterator = map.entrySet().iterator();
         last = null;

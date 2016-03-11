@@ -127,6 +127,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         setUpTest();
         c.setMutator(new CompositeCollection.CollectionMutator<E>() {
 
+            @Override
             public boolean add(final CompositeCollection<E> composite, final List<Collection<E>> collections, final E obj) {
                 for (final Collection<E> coll : collections) {
                     coll.add(obj);
@@ -134,6 +135,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
                 return true;
             }
 
+            @Override
             public boolean addAll(final CompositeCollection<E> composite,
                     final List<Collection<E>> collections, final Collection<? extends E> coll) {
                 for (final Collection<E> collection : collections) {
@@ -142,6 +144,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
                 return true;
             }
 
+            @Override
             public boolean remove(final CompositeCollection<E> composite,
                     final List<Collection<E>> collections, final Object obj) {
                 for (final Collection<E> collection : collections) {
@@ -243,6 +246,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     public void testAddAllMutator() {
         setUpTest();
         c.setMutator(new CompositeCollection.CollectionMutator<E>() {
+            @Override
             public boolean add(final CompositeCollection<E> composite,
                     final List<Collection<E>> collections, final E obj) {
                 for (final Collection<E> collection : collections) {
@@ -251,6 +255,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
                 return true;
             }
 
+            @Override
             public boolean addAll(final CompositeCollection<E> composite,
                     final List<Collection<E>> collections, final Collection<? extends E> coll) {
                 for (final Collection<E> collection : collections) {
@@ -259,6 +264,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
                 return true;
             }
 
+            @Override
             public boolean remove(final CompositeCollection<E> composite,
                     final List<Collection<E>> collections, final Object obj) {
                 return false;
@@ -276,6 +282,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     public void testAddMutator() {
         setUpTest();
         c.setMutator(new CompositeCollection.CollectionMutator<E>() {
+            @Override
             public boolean add(final CompositeCollection<E> composite,
                     final List<Collection<E>> collections, final E obj) {
                 for (final Collection<E> collection : collections) {
@@ -284,6 +291,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
                 return true;
             }
 
+            @Override
             public boolean addAll(final CompositeCollection<E> composite,
                     final List<Collection<E>> collections, final Collection<? extends E> coll) {
                 for (final Collection<E> collection : collections) {
@@ -292,6 +300,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
                 return true;
             }
 
+            @Override
             public boolean remove(final CompositeCollection<E> composite,
                     final List<Collection<E>> collections, final Object obj) {
                 return false;

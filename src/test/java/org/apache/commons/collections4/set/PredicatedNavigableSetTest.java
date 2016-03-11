@@ -64,6 +64,7 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
 //--------------------------------------------------------------------
     protected Predicate<E> testPredicate =
         new Predicate<E>() {
+            @Override
             public boolean evaluate(final E o) {
                 return o instanceof String && ((String) o).startsWith("A");
             }

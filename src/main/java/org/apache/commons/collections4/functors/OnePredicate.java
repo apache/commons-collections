@@ -91,6 +91,7 @@ public final class OnePredicate<T> extends AbstractQuantifierPredicate<T> {
      * @param object  the input object
      * @return true if only one decorated predicate returns true
      */
+    @Override
     public boolean evaluate(final T object) {
         boolean match = false;
         for (final Predicate<? super T> iPredicate : iPredicates) {

@@ -68,36 +68,42 @@ public class FilterListIteratorTest extends TestCase {
         }
 
         truePred = new Predicate<Integer>() {
+            @Override
             public boolean evaluate(final Integer x) {
                 return true;
             }
         };
 
         falsePred = new Predicate<Integer>() {
+            @Override
             public boolean evaluate(final Integer x) {
                 return true;
             }
         };
 
         evenPred = new Predicate<Integer>() {
+            @Override
             public boolean evaluate(final Integer x) {
                 return x % 2 == 0;
             }
         };
 
         oddPred = new Predicate<Integer>() {
+            @Override
             public boolean evaluate(final Integer x) {
                 return x % 2 != 0; //works for all numbers, not just >= 0 as is the case for "x % 2 == 1"
             }
         };
 
         threePred = new Predicate<Integer>() {
+            @Override
             public boolean evaluate(final Integer x) {
                 return x % 3 == 0;
             }
         };
 
         fourPred = new Predicate<Integer>() {
+            @Override
             public boolean evaluate(final Integer x) {
                 return x % 4 == 0;
             }

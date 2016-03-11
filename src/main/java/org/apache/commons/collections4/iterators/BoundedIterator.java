@@ -90,6 +90,7 @@ public class BoundedIterator<E> implements Iterator<E> {
 
     //-----------------------------------------------------------------------
 
+    @Override
     public boolean hasNext() {
         if (!checkBounds()) {
             return false;
@@ -108,6 +109,7 @@ public class BoundedIterator<E> implements Iterator<E> {
         return true;
     }
 
+    @Override
     public E next() {
         if (!checkBounds()) {
             throw new NoSuchElementException();
@@ -125,6 +127,7 @@ public class BoundedIterator<E> implements Iterator<E> {
      * {@link IllegalStateException} if no explicit call to {@link #next()} has been made prior
      * to calling {@link #remove()}.
      */
+    @Override
     public void remove() {
         if (pos <= offset) {
             throw new IllegalStateException("remove() can not be called before calling next()");

@@ -38,6 +38,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
 
         private static final long serialVersionUID = 1L;
 
+        @Override
         public long expirationTime(final Integer key, final String value) {
             // odd keys expire immediately, even keys never expire
             if (key == null) {

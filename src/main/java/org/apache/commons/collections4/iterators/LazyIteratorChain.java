@@ -108,6 +108,7 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
      *
      * @return true if elements remain
      */
+    @Override
     public boolean hasNext() {
         updateCurrentIterator();
         lastUsedIterator = currentIterator;
@@ -121,6 +122,7 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
      * @return element from the current Iterator
      * @throws java.util.NoSuchElementException if all the Iterators are exhausted
      */
+    @Override
     public E next() {
         updateCurrentIterator();
         lastUsedIterator = currentIterator;
@@ -140,6 +142,7 @@ public abstract class LazyIteratorChain<E> implements Iterator<E> {
      * @throws IllegalStateException if the next method has not yet been called,
      *   or the remove method has already been called after the last call to the next method.
      */
+    @Override
     public void remove() {
         if (currentIterator == null) {
             updateCurrentIterator();

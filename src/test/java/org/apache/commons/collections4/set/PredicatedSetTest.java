@@ -58,6 +58,7 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
 
     protected Predicate<E> testPredicate =
         new Predicate<E>() {
+            @Override
             public boolean evaluate(final E o) {
                 return o instanceof String;
             }

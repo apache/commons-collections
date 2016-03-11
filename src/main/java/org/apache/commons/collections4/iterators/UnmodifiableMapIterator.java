@@ -67,26 +67,32 @@ public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, U
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public boolean hasNext() {
         return iterator.hasNext();
     }
 
+    @Override
     public K next() {
         return iterator.next();
     }
 
+    @Override
     public K getKey() {
         return iterator.getKey();
     }
 
+    @Override
     public V getValue() {
         return iterator.getValue();
     }
 
+    @Override
     public V setValue(final V value) {
         throw new UnsupportedOperationException("setValue() is not supported");
     }
 
+    @Override
     public void remove() {
         throw new UnsupportedOperationException("remove() is not supported");
     }

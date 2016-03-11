@@ -36,6 +36,7 @@ public interface OrderedMap<K, V> extends IterableMap<K, V> {
      *
      * @return a map iterator
      */
+    @Override
     OrderedMapIterator<K, V> mapIterator();
 
     /**

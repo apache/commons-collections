@@ -43,6 +43,7 @@ public class SplitMapUtilsTest {
     private TransformedSplitMap<String, String, String, Integer> transformedMap;
 
     private final Transformer<String, Integer> stringToInt = new Transformer<String, Integer>() {
+        @Override
         public Integer transform(final String input) {
             return Integer.valueOf(input);
         }
@@ -85,6 +86,7 @@ public class SplitMapUtilsTest {
         int sz = map.size();
 
         attemptPutOperation(new Runnable() {
+            @Override
             public void run() {
                 map.clear();
             }
@@ -93,6 +95,7 @@ public class SplitMapUtilsTest {
         assertEquals(sz, map.size());
 
         attemptPutOperation(new Runnable() {
+            @Override
             public void run() {
                 map.put("foo", 100);
             }
@@ -103,6 +106,7 @@ public class SplitMapUtilsTest {
         m.put("bar", 200);
         m.put("baz", 300);
         attemptPutOperation(new Runnable() {
+            @Override
             public void run() {
                 map.putAll(m);
             }
@@ -133,46 +137,55 @@ public class SplitMapUtilsTest {
     public void testWritableMap() {
         final Map<String, String> map = SplitMapUtils.writableMap(transformedMap);
         attemptGetOperation(new Runnable() {
+            @Override
             public void run() {
                 map.get(null);
             }
         });
         attemptGetOperation(new Runnable() {
+            @Override
             public void run() {
                 map.entrySet();
             }
         });
         attemptGetOperation(new Runnable() {
+            @Override
             public void run() {
                 map.keySet();
             }
         });
         attemptGetOperation(new Runnable() {
+            @Override
             public void run() {
                 map.values();
             }
         });
         attemptGetOperation(new Runnable() {
+            @Override
             public void run() {
                 map.size();
             }
         });
         attemptGetOperation(new Runnable() {
+            @Override
             public void run() {
                 map.isEmpty();
             }
         });
         attemptGetOperation(new Runnable() {
+            @Override
             public void run() {
                 map.containsKey(null);
             }
         });
         attemptGetOperation(new Runnable() {
+            @Override
             public void run() {
                 map.containsValue(null);
             }
         });
         attemptGetOperation(new Runnable() {
+            @Override
             public void run() {
                 map.remove(null);
             }

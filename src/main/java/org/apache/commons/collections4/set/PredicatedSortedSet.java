@@ -92,28 +92,34 @@ public class PredicatedSortedSet<E> extends PredicatedSet<E> implements SortedSe
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public Comparator<? super E> comparator() {
         return decorated().comparator();
     }
 
+    @Override
     public E first() {
         return decorated().first();
     }
 
+    @Override
     public E last() {
         return decorated().last();
     }
 
+    @Override
     public SortedSet<E> subSet(final E fromElement, final E toElement) {
         final SortedSet<E> sub = decorated().subSet(fromElement, toElement);
         return new PredicatedSortedSet<E>(sub, predicate);
     }
 
+    @Override
     public SortedSet<E> headSet(final E toElement) {
         final SortedSet<E> head = decorated().headSet(toElement);
         return new PredicatedSortedSet<E>(head, predicate);
     }
 
+    @Override
     public SortedSet<E> tailSet(final E fromElement) {
         final SortedSet<E> tail = decorated().tailSet(fromElement);
         return new PredicatedSortedSet<E>(tail, predicate);

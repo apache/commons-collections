@@ -199,14 +199,17 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public V put(final J key, final U value) {
         return decorated().put(transformKey(key), transformValue(value));
     }
 
+    @Override
     public void putAll(final Map<? extends J, ? extends U> mapToCopy) {
         decorated().putAll(transformMap(mapToCopy));
     }
 
+    @Override
     public void clear() {
         decorated().clear();
     }

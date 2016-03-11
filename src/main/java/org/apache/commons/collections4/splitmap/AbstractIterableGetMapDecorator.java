@@ -64,38 +64,47 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
         return map;
     }
 
+    @Override
     public boolean containsKey(final Object key) {
         return decorated().containsKey(key);
     }
 
+    @Override
     public boolean containsValue(final Object value) {
         return decorated().containsValue(value);
     }
 
+    @Override
     public Set<Map.Entry<K, V>> entrySet() {
         return decorated().entrySet();
     }
 
+    @Override
     public V get(final Object key) {
         return decorated().get(key);
     }
 
+    @Override
     public V remove(final Object key) {
         return decorated().remove(key);
     }
 
+    @Override
     public boolean isEmpty() {
         return decorated().isEmpty();
     }
 
+    @Override
     public Set<K> keySet() {
         return decorated().keySet();
     }
 
+    @Override
     public int size() {
         return decorated().size();
     }
 
+    @Override
     public Collection<V> values() {
         return decorated().values();
     }
@@ -104,6 +113,7 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
      * Get a MapIterator over this Get.
      * @return MapIterator<K, V>
      */
+    @Override
     public MapIterator<K, V> mapIterator() {
         return new EntrySetToMapIteratorAdapter<K, V>(entrySet());
     }

@@ -60,6 +60,7 @@ public final class TruePredicate<T> implements Predicate<T>, Serializable {
      * @param object  the input object
      * @return true always
      */
+    @Override
     public boolean evaluate(final T object) {
         return true;
     }

@@ -856,6 +856,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
             super(parent);
         }
 
+        @Override
         public Map.Entry<K, V> next() {
             return nextEntry();
         }
@@ -872,6 +873,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
             super((AbstractReferenceMap<K, Object>) parent);
         }
 
+        @Override
         public K next() {
             return nextEntry().getKey();
         }
@@ -887,6 +889,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
             super((AbstractReferenceMap<Object, V>) parent);
         }
 
+        @Override
         public V next() {
             return nextEntry().getValue();
         }
@@ -901,10 +904,12 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
             super(parent);
         }
 
+        @Override
         public K next() {
             return nextEntry().getKey();
         }
 
+        @Override
         public K getKey() {
             final HashEntry<K, V> current = currentEntry();
             if (current == null) {
@@ -913,6 +918,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
             return current.getKey();
         }
 
+        @Override
         public V getValue() {
             final HashEntry<K, V> current = currentEntry();
             if (current == null) {
@@ -921,6 +927,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
             return current.getValue();
         }
 
+        @Override
         public V setValue(final V value) {
             final HashEntry<K, V> current = currentEntry();
             if (current == null) {

@@ -64,6 +64,7 @@ public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 //--------------------------------------------------------------------
     protected Predicate<E> testPredicate =
         new Predicate<E>() {
+            @Override
             public boolean evaluate(final E o) {
                 return o instanceof String && ((String) o).startsWith("A");
             }

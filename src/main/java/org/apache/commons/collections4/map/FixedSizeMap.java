@@ -159,10 +159,12 @@ public class FixedSizeMap<K, V>
         return UnmodifiableCollection.unmodifiableCollection(coll);
     }
 
+    @Override
     public boolean isFull() {
         return true;
     }
 
+    @Override
     public int maxSize() {
         return size();
     }

@@ -123,6 +123,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * @param key  the key
      * @return the mapped value, null if no match
      */
+    @Override
     public V get(final Object key) {
         if (delegateMap != null) {
             return delegateMap.get(key);
@@ -171,6 +172,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      *
      * @return the size
      */
+    @Override
     public int size() {
         if (delegateMap != null) {
             return delegateMap.size();
@@ -183,6 +185,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      *
      * @return true if the map is currently size zero
      */
+    @Override
     public boolean isEmpty() {
         return size() == 0;
     }
@@ -194,6 +197,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * @param key  the key to search for
      * @return true if the map contains the key
      */
+    @Override
     public boolean containsKey(final Object key) {
         if (delegateMap != null) {
             return delegateMap.containsKey(key);
@@ -241,6 +245,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * @param value  the value to search for
      * @return true if the map contains the key
      */
+    @Override
     public boolean containsValue(final Object value) {
         if (delegateMap != null) {
             return delegateMap.containsValue(value);
@@ -287,6 +292,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * @param value  the value to add
      * @return the value previously mapped to this key, null if none
      */
+    @Override
     public V put(final K key, final V value) {
         if (delegateMap != null) {
             return delegateMap.put(key, value);
@@ -371,6 +377,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * @param map  the map to add
      * @throws NullPointerException if the map is null
      */
+    @Override
     public void putAll(final Map<? extends K, ? extends V> map) {
         final int size = map.size();
         if (size == 0) {
@@ -434,6 +441,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * @param key  the mapping to remove
      * @return the value mapped to the removed key, null if key not in map
      */
+    @Override
     public V remove(final Object key) {
         if (delegateMap != null) {
             return delegateMap.remove(key);
@@ -582,6 +590,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      * Clears the map, resetting the size to zero and nullifying references
      * to avoid garbage collection issues.
      */
+    @Override
     public void clear() {
         if (delegateMap != null) {
             delegateMap.clear();  // should aid gc
@@ -606,6 +615,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      *
      * @return the map iterator
      */
+    @Override
     public MapIterator<K, V> mapIterator() {
         if (delegateMap != null) {
             return delegateMap.mapIterator();
@@ -629,10 +639,12 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             this.parent = parent;
         }
 
+        @Override
         public boolean hasNext() {
             return nextIndex < parent.size;
         }
 
+        @Override
         public K next() {
             if (hasNext() == false) {
                 throw new NoSuchElementException(AbstractHashedMap.NO_NEXT_ENTRY);
@@ -642,6 +654,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             return getKey();
         }
 
+        @Override
         public void remove() {
             if (canRemove == false) {
                 throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
@@ -651,6 +664,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             canRemove = false;
         }
 
+        @Override
         public K getKey() {
             if (canRemove == false) {
                 throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
@@ -666,6 +680,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             throw new IllegalStateException("Invalid map index: " + nextIndex);
         }
 
+        @Override
         public V getValue() {
             if (canRemove == false) {
                 throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
@@ -681,6 +696,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             throw new IllegalStateException("Invalid map index: " + nextIndex);
         }
 
+        @Override
         public V setValue(final V value) {
             if (canRemove == false) {
                 throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
@@ -702,6 +718,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             return old;
         }
 
+        @Override
         public void reset() {
             nextIndex = 0;
             canRemove = false;
@@ -726,6 +743,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      *
      * @return the entrySet view
      */
+    @Override
     public Set<Map.Entry<K, V>> entrySet() {
         if (delegateMap != null) {
             return delegateMap.entrySet();
@@ -802,6 +820,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             this.removed = flag;
         }
 
+        @Override
         public K getKey() {
             if (removed) {
                 throw new IllegalStateException(AbstractHashedMap.GETKEY_INVALID);
@@ -817,6 +836,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             throw new IllegalStateException("Invalid map index: " + index);
         }
 
+        @Override
         public V getValue() {
             if (removed) {
                 throw new IllegalStateException(AbstractHashedMap.GETVALUE_INVALID);
@@ -832,6 +852,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             throw new IllegalStateException("Invalid map index: " + index);
         }
 
+        @Override
         public V setValue(final V value) {
             if (removed) {
                 throw new IllegalStateException(AbstractHashedMap.SETVALUE_INVALID);
@@ -933,6 +954,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             super(parent);
         }
 
+        @Override
         public Map.Entry<K, V> next() {
             return nextEntry();
         }
@@ -945,6 +967,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      *
      * @return the keySet view
      */
+    @Override
     public Set<K> keySet() {
         if (delegateMap != null) {
             return delegateMap.keySet();
@@ -1007,6 +1030,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             super((Flat3Map<K, Object>) parent);
         }
 
+        @Override
         public K next() {
             return nextEntry().getKey();
         }
@@ -1019,6 +1043,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
      *
      * @return the values view
      */
+    @Override
     public Collection<V> values() {
         if (delegateMap != null) {
             return delegateMap.values();
@@ -1074,6 +1099,7 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             super((Flat3Map<Object, V>) parent);
         }
 
+        @Override
         public V next() {
             return nextEntry().getValue();
         }

@@ -66,10 +66,12 @@ public class NodeListIterator implements Iterator<Node> {
         this.nodeList = nodeList;
     }
 
+    @Override
     public boolean hasNext() {
         return nodeList == null ? false : index < nodeList.getLength();
     }
 
+    @Override
     public Node next() {
         if (nodeList != null && index < nodeList.getLength()) {
             return nodeList.item(index++);
@@ -82,6 +84,7 @@ public class NodeListIterator implements Iterator<Node> {
      *
      * @throws UnsupportedOperationException always
      */
+    @Override
     public void remove() {
         throw new UnsupportedOperationException("remove() method not supported for a NodeListIterator.");
     }

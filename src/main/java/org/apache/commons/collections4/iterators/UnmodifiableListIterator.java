@@ -66,38 +66,47 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
     }
 
     //-----------------------------------------------------------------------
+    @Override
     public boolean hasNext() {
         return iterator.hasNext();
     }
 
+    @Override
     public E next() {
         return iterator.next();
     }
 
+    @Override
     public int nextIndex() {
         return iterator.nextIndex();
     }
 
+    @Override
     public boolean hasPrevious() {
         return iterator.hasPrevious();
     }
 
+    @Override
     public E previous() {
         return iterator.previous();
     }
 
+    @Override
     public int previousIndex() {
         return iterator.previousIndex();
     }
 
+    @Override
     public void remove() {
         throw new UnsupportedOperationException("remove() is not supported");
     }
 
+    @Override
     public void set(final E obj) {
         throw new UnsupportedOperationException("set() is not supported");
     }
 
+    @Override
     public void add(final E obj) {
         throw new UnsupportedOperationException("add() is not supported");
     }

@@ -353,6 +353,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
     @Test
     public void testRemoveUnsupported() {
         Iterator<E> mockIterator = new AbstractIteratorDecorator<E>(testList.iterator()) {
+            @Override
             public void remove() {
                 throw new UnsupportedOperationException();
             }

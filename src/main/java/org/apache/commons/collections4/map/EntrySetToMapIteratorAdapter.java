@@ -52,6 +52,7 @@ public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, Re
     /**
      * {@inheritDoc}
      */
+    @Override
     public K getKey() {
         return current().getKey();
     }
@@ -59,6 +60,7 @@ public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, Re
     /**
      * {@inheritDoc}
      */
+    @Override
     public V getValue() {
         return current().getValue();
     }
@@ -66,6 +68,7 @@ public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, Re
     /**
      * {@inheritDoc}
      */
+    @Override
     public V setValue(final V value) {
         return current().setValue(value);
     }
@@ -73,6 +76,7 @@ public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, Re
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean hasNext() {
         return iterator.hasNext();
     }
@@ -80,6 +84,7 @@ public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, Re
     /**
      * {@inheritDoc}
      */
+    @Override
     public K next() {
         entry = iterator.next();
         return getKey();
@@ -88,6 +93,7 @@ public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, Re
     /**
      * {@inheritDoc}
      */
+    @Override
     public synchronized void reset() {
         iterator = entrySet.iterator();
     }
@@ -95,6 +101,7 @@ public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, Re
     /**
      * {@inheritDoc}
      */
+    @Override
     public void remove() {
         iterator.remove();
         entry = null;

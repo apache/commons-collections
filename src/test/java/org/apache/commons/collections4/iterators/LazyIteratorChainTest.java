@@ -107,6 +107,7 @@ public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
     public void testRemoveFromFilteredIterator() {
 
         final Predicate<Integer> myPredicate = new Predicate<Integer>() {
+            @Override
             public boolean evaluate(final Integer i) {
                 return i.compareTo(Integer.valueOf(4)) < 0;
             }

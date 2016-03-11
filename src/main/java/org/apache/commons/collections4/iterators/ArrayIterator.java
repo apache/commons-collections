@@ -131,6 +131,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      *
      * @return true if there is a next element to return
      */
+    @Override
     public boolean hasNext() {
         return index < endIndex;
     }
@@ -142,6 +143,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      * @throws NoSuchElementException if all the elements in the array
      *  have already been returned
      */
+    @Override
     @SuppressWarnings("unchecked")
     public E next() {
         if (hasNext() == false) {
@@ -155,6 +157,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      *
      * @throws UnsupportedOperationException always
      */
+    @Override
     public void remove() {
         throw new UnsupportedOperationException("remove() method is not supported");
     }
@@ -193,6 +196,7 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
     /**
      * Resets the iterator back to the start index.
      */
+    @Override
     public void reset() {
         this.index = this.startIndex;
     }

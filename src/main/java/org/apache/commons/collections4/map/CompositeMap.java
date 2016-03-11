@@ -173,6 +173,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      *
      * @throws UnsupportedOperationException if any of the composited Maps do not support clear()
      */
+    @Override
     public void clear() {
         for (int i = this.composite.length - 1; i >= 0; --i) {
             this.composite[i].clear();
@@ -195,6 +196,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @throws NullPointerException if the key is {@code null} and this map
      *            does not not permit {@code null} keys (optional).
      */
+    @Override
     public boolean containsKey(final Object key) {
         for (int i = this.composite.length - 1; i >= 0; --i) {
             if (this.composite[i].containsKey(key)) {
@@ -220,6 +222,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @throws NullPointerException if the value is {@code null} and this map
      *            does not not permit {@code null} values (optional).
      */
+    @Override
     public boolean containsValue(final Object value) {
         for (int i = this.composite.length - 1; i >= 0; --i) {
             if (this.composite[i].containsValue(value)) {
@@ -246,6 +249,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @see CompositeSet
      * @return a set view of the mappings contained in this map.
      */
+    @Override
     public Set<Map.Entry<K, V>> entrySet() {
         final CompositeSet<Map.Entry<K, V>> entries = new CompositeSet<Map.Entry<K,V>>();
         for (int i = composite.length - 1; i >= 0; --i) {
@@ -278,6 +282,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      *
      * @see #containsKey(Object)
      */
+    @Override
     public V get(final Object key) {
         for (int i = this.composite.length - 1; i >= 0; --i) {
             if (this.composite[i].containsKey(key)) {
@@ -292,6 +297,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      *
      * @return {@code true} if this map contains no key-value mappings.
      */
+    @Override
     public boolean isEmpty() {
         for (int i = this.composite.length - 1; i >= 0; --i) {
             if (!this.composite[i].isEmpty()) {
@@ -316,6 +322,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      *
      * @return a set view of the keys contained in this map.
      */
+    @Override
     public Set<K> keySet() {
         final CompositeSet<K> keys = new CompositeSet<K>();
         for (int i = this.composite.length - 1; i >= 0; --i) {
@@ -349,6 +356,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      *            keys or values, and the specified key or value is
      *            {@code null}.
      */
+    @Override
     public V put(final K key, final V value) {
         if (this.mutator == null) {
             throw new UnsupportedOperationException("No mutator specified");
@@ -378,6 +386,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      *         this map does not permit {@code null} keys or values, and the
      *         specified map contains {@code null} keys or values.
      */
+    @Override
     public void putAll(final Map<? extends K, ? extends V> map) {
         if (this.mutator == null) {
             throw new UnsupportedOperationException("No mutator specified");
@@ -410,6 +419,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @throws UnsupportedOperationException if the {@code remove} method is
      *         not supported by the composited map containing the key
      */
+    @Override
     public V remove(final Object key) {
         for (int i = this.composite.length - 1; i >= 0; --i) {
             if (this.composite[i].containsKey(key)) {
@@ -426,6 +436,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      *
      * @return the number of key-value mappings in this map.
      */
+    @Override
     public int size() {
         int size = 0;
         for (int i = this.composite.length - 1; i >= 0; --i) {
@@ -447,6 +458,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      *
      * @return a collection view of the values contained in this map.
      */
+    @Override
     public Collection<V> values() {
         final CompositeCollection<V> values = new CompositeCollection<V>();
         for (int i = composite.length - 1; i >= 0; --i) {

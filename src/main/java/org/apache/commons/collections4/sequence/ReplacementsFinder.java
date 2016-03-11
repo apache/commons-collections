@@ -74,6 +74,7 @@ public class ReplacementsFinder<T> implements CommandVisitor<T> {
      *
      * @param object  object to insert
      */
+    @Override
     public void visitInsertCommand(final T object) {
         pendingInsertions.add(object);
     }
@@ -86,6 +87,7 @@ public class ReplacementsFinder<T> implements CommandVisitor<T> {
      *
      * @param object  synchronization object detected
      */
+    @Override
     public void visitKeepCommand(final T object) {
         if (pendingDeletions.isEmpty() && pendingInsertions.isEmpty()) {
             ++skipped;
@@ -102,6 +104,7 @@ public class ReplacementsFinder<T> implements CommandVisitor<T> {
      *
      * @param object  object to delete
      */
+    @Override
     public void visitDeleteCommand(final T object) {
         pendingDeletions.add(object);
     }

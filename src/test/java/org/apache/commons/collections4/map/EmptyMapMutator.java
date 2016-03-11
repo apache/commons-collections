@@ -28,6 +28,7 @@ class EmptyMapMutator<K,V> implements CompositeMap.MapMutator<K,V> {
     /** Serialization version */
     private static final long serialVersionUID = -2729718980002476794L;
 
+    @Override
     public void resolveCollision(final CompositeMap<K,V> composite,
     final Map<K,V> existing,
     final Map<K,V> added,
@@ -35,10 +36,12 @@ class EmptyMapMutator<K,V> implements CompositeMap.MapMutator<K,V> {
         // Do nothing
     }
 
+    @Override
     public V put(final CompositeMap<K, V> map, final Map<K, V>[] composited, final K key, final V value) {
         return composited[0].put(key, value);
     }
 
+    @Override
     public void putAll(final CompositeMap<K, V> map, final Map<K, V>[] composited, final Map<? extends K, ? extends V> t) {
         composited[0].putAll(t);
     }

@@ -111,22 +111,27 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
 
     //-----------------------------------------------------------------------
 
+    @Override
     public boolean offer(final E obj) {
         return getQueue().offer(transform(obj));
     }
 
+    @Override
     public E poll() {
         return getQueue().poll();
     }
 
+    @Override
     public E peek() {
         return getQueue().peek();
     }
 
+    @Override
     public E element() {
         return getQueue().element();
     }
 
+    @Override
     public E remove() {
         return getQueue().remove();
     }

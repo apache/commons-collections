@@ -103,6 +103,7 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> {
      * @param object  the input object
      * @return true if all decorated predicates return true
      */
+    @Override
     public boolean evaluate(final T object) {
         for (final Predicate<? super T> iPredicate : iPredicates) {
             if (!iPredicate.evaluate(object)) {

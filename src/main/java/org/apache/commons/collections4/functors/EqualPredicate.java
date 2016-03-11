@@ -101,6 +101,7 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
      * @param object  the input object
      * @return true if input object equals stored value
      */
+    @Override
     public boolean evaluate(final T object) {
         if (equator != null) {
             return equator.equate(iValue, object);

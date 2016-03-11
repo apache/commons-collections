@@ -162,14 +162,17 @@ public class SequencesComparatorTest {
             index = 0;
         }
 
+        @Override
         public void visitInsertCommand(final T object) {
             v.add(index++, object);
         }
 
+        @Override
         public void visitKeepCommand(final T object) {
             ++index;
         }
 
+        @Override
         public void visitDeleteCommand(final T object) {
             v.remove(index);
         }

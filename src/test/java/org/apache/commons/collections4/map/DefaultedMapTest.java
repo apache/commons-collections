@@ -106,6 +106,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     public void testMapGet4() {
         final HashMap<K, V> base = new HashMap<K, V>();
         final Map<K, V> map = DefaultedMap.defaultedMap(base, new Transformer<K, V>() {
+            @Override
             public V transform(final K input) {
                 if (input instanceof String) {
                     return (V) "NULL";

@@ -67,6 +67,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
      *
      * @return <code>true</code> if there are more elements
      */
+    @Override
     public boolean hasNext() {
         return collection.size() > 0;
     }
@@ -80,6 +81,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
      * @throws NoSuchElementException if there are no elements
      *         at all.  Use {@link #hasNext} to avoid this error.
      */
+    @Override
     public E next() {
         if (collection.size() == 0) {
             throw new NoSuchElementException("There are no elements for this iterator to loop on");
@@ -102,6 +104,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
      * next has been performed. If the {@link #reset} is called, then remove may
      * not be called until {@link #next} is called again.
      */
+    @Override
     public void remove() {
         iterator.remove();
     }
@@ -109,6 +112,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
     /**
      * Resets the iterator back to the start of the collection.
      */
+    @Override
     public void reset() {
         iterator = collection.iterator();
     }

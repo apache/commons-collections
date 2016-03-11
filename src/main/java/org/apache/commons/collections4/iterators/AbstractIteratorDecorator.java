@@ -40,6 +40,7 @@ public abstract class AbstractIteratorDecorator<E> extends AbstractUntypedIterat
     }
 
     /** {@inheritDoc} */
+    @Override
     public E next() {
         return getIterator().next();
     }

@@ -107,6 +107,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      *
      * @param input  the input object passed to each closure
      */
+    @Override
     public void execute(final E input) {
         for (final Closure<? super E> iClosure : iClosures) {
             iClosure.execute(input);

@@ -36,14 +36,17 @@ class EmptySetMutator<E> implements CompositeSet.SetMutator<E> {
         this.contained = set;
     }
 
+    @Override
     public void resolveCollision(final CompositeSet<E> comp, final Set<E> existing, final Set<E> added, final Collection<E> intersects) {
         throw new IllegalArgumentException();
     }
 
+    @Override
     public boolean add(final CompositeSet<E> composite, final List<Set<E>> collections, final E obj) {
         return contained.add(obj);
     }
 
+    @Override
     public boolean addAll(final CompositeSet<E> composite, final List<Set<E>> collections, final Collection<? extends E> coll) {
         return contained.addAll(coll);
     }

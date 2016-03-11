@@ -69,6 +69,7 @@ public final class TransformerPredicate<T> implements Predicate<T>, Serializable
      * @return true if decorated transformer returns Boolean.TRUE
      * @throws FunctorException if the transformer returns an invalid type
      */
+    @Override
     public boolean evaluate(final T object) {
         final Boolean result = iTransformer.transform(object);
         if (result == null) {

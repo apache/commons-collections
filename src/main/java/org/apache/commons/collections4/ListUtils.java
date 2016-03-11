@@ -586,10 +586,13 @@ public class ListUtils {
             sequence = new ArrayList<E>();
         }
 
+        @Override
         public void visitInsertCommand(final E object) {}
 
+        @Override
         public void visitDeleteCommand(final E object) {}
 
+        @Override
         public void visitKeepCommand(final E object) {
             sequence.add(object);
         }
