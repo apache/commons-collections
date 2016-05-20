@@ -1794,4 +1794,13 @@ public class MapUtils {
                                                         new AbstractSortedMapDecorator<K, V>(sortedMap) {};
     }
 
+    /**
+     * Gets the given map size or 0 if the map is null
+     * @param map a Map or null
+     * @return the given map size or 0 if the map is null
+     */
+    public static int size(Map<?, ?> map) {
+        return map == null ? 0 : map.size();
+    }
+
 }

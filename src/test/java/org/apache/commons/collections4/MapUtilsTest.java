@@ -16,7 +16,11 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -890,4 +894,21 @@ public class MapUtilsTest {
         assertSame(iMap, MapUtils.iterableMap(iMap));
     }
 
+    @Test 
+    public void testSize0() {
+        assertEquals(0, MapUtils.size(new HashMap<Object, Object>()));
+    }
+
+    @Test 
+    public void testSizeNull() {
+        assertEquals(0, MapUtils.size(null));
+    }
+
+    @Test 
+    public void testSize() {
+        final HashMap<Object, Object> map = new HashMap<Object, Object>();
+        map.put("A", "1");
+        map.put("B", "2");
+        assertEquals(2, MapUtils.size(map));
+    }
 }
