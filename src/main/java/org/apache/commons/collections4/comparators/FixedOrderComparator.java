@@ -214,7 +214,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      * Compares two objects according to the order of this Comparator.
      * <p>
      * It is important to note that this class will throw an IllegalArgumentException
-     * in the case of an unrecognised object. This is not specified in the
+     * in the case of an unrecognized object. This is not specified in the
      * Comparator interface, but is the most appropriate exception.
      *
      * @param obj1  the first object to compare
