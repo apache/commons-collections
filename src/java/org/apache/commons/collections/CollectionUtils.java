@@ -888,7 +888,7 @@ public class CollectionUtils {
      * 
      * @param object  the object to get the size of
      * @return the size of the specified collection
-     * @throws IllegalArgumentException thrown if object is not recognised or null
+     * @throws IllegalArgumentException thrown if object is not recognized or null
      * @since Commons Collections 3.1
      */
     public static int size(Object object) {
@@ -940,7 +940,7 @@ public class CollectionUtils {
      * 
      * @param object  the object to get the size of, not null
      * @return true if empty
-     * @throws IllegalArgumentException thrown if object is not recognised or null
+     * @throws IllegalArgumentException thrown if object is not recognized or null
      * @since Commons Collections 3.2
      */
     public static boolean sizeIsEmpty(Object object) {
