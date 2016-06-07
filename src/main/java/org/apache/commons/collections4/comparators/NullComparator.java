@@ -66,7 +66,7 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      *  non-<code>null</code> objects.  This argument cannot be
      *  <code>null</code>
      *
-     *  @exception NullPointerException if <code>nonNullComparator</code> is
+     *  @throws NullPointerException if <code>nonNullComparator</code> is
      *  <code>null</code>
      **/
     public NullComparator(final Comparator<? super E> nonNullComparator) {
@@ -106,7 +106,7 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      *  that <code>null</code> should be compared as lower than a
      *  non-<code>null</code> object.
      *
-     *  @exception NullPointerException if <code>nonNullComparator</code> is
+     *  @throws NullPointerException if <code>nonNullComparator</code> is
      *  <code>null</code>
      **/
     public NullComparator(final Comparator<? super E> nonNullComparator, final boolean nullsAreHigh) {

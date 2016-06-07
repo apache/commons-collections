@@ -161,7 +161,7 @@ public class ComparatorChain<E> implements Comparator<E>, Serializable {
      *
      * @param index      index of the Comparator to replace
      * @param comparator Comparator to place at the given index
-     * @exception IndexOutOfBoundsException
+     * @throws IndexOutOfBoundsException
      *                   if index &lt; 0 or index &gt;= size()
      */
     public void setComparator(final int index, final Comparator<E> comparator) throws IndexOutOfBoundsException {

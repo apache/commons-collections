@@ -102,8 +102,8 @@ public class EnumerationIterator<E> implements Iterator<E> {
      * If so, the first occurrence of the last returned object from this
      * iterator will be removed from the collection.
      *
-     * @exception IllegalStateException <code>next()</code> not called.
-     * @exception UnsupportedOperationException if no associated collection
+     * @throws IllegalStateException <code>next()</code> not called.
+     * @throws UnsupportedOperationException if no associated collection
      */
     @Override
     public void remove() {
