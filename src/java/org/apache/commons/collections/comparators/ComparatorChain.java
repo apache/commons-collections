@@ -168,7 +168,7 @@ public class ComparatorChain implements Comparator, Serializable {
      * 
      * @param index      index of the Comparator to replace
      * @param comparator Comparator to place at the given index
-     * @exception IndexOutOfBoundsException
+     * @throws IndexOutOfBoundsException
      *                   if index &lt; 0 or index &gt;= size()
      */
     public void setComparator(int index, Comparator comparator) 
@@ -260,7 +260,7 @@ public class ComparatorChain implements Comparator, Serializable {
      * @param o1  the first object to compare
      * @param o2  the second object to compare
      * @return -1, 0, or 1
-     * @exception UnsupportedOperationException
+     * @throws UnsupportedOperationException
      *                   if the ComparatorChain does not contain at least one
      *                   Comparator
      */

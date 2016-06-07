@@ -664,7 +664,7 @@ public class CursorableLinkedList implements List, Serializable {
      *               be stored, if it is big enough; otherwise, a new array of the
      *               same runtime type is allocated for this purpose.
      * @return an array containing the elements of this list.
-     * @exception ArrayStoreException
+     * @throws ArrayStoreException
      *                   if the runtime type of the specified array
      *                   is not a supertype of the runtime type of every element in
      *                   this list.

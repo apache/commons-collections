@@ -259,7 +259,7 @@ public abstract class AbstractTestObject extends BulkTest {
      * 
      * @param o Object to serialize
      * @param path path to write the serialized Object
-     * @exception IOException
+     * @throws IOException
      */
     protected void writeExternalFormToDisk(Serializable o, String path) throws IOException {
         FileOutputStream fileStream = new FileOutputStream(path);
@@ -272,7 +272,7 @@ public abstract class AbstractTestObject extends BulkTest {
      * 
      * @param o Object to convert to bytes
      * @return serialized form of the Object
-     * @exception IOException
+     * @throws IOException
      */
     protected byte[] writeExternalFormToBytes(Serializable o) throws IOException {
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
@@ -287,8 +287,8 @@ public abstract class AbstractTestObject extends BulkTest {
      * 
      * @param path path to the serialized Object
      * @return the Object at the given path
-     * @exception IOException
-     * @exception ClassNotFoundException
+     * @throws IOException
+     * @throws ClassNotFoundException
      */
     protected Object readExternalFormFromDisk(String path) throws IOException, ClassNotFoundException {
         FileInputStream stream = new FileInputStream(path);
@@ -301,8 +301,8 @@ public abstract class AbstractTestObject extends BulkTest {
      * 
      * @param b byte array containing a serialized Object
      * @return Object contained in the bytes
-     * @exception IOException
-     * @exception ClassNotFoundException
+     * @throws IOException
+     * @throws ClassNotFoundException
      */
     protected Object readExternalFormFromBytes(byte[] b) throws IOException, ClassNotFoundException {
         ByteArrayInputStream stream = new ByteArrayInputStream(b);

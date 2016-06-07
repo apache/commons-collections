@@ -178,7 +178,7 @@ public class FastArrayList extends ArrayList {
      * @param index Index at which to insert this element
      * @param element The element to be inserted
      *
-     * @exception IndexOutOfBoundsException if the index is out of range
+     * @throws IndexOutOfBoundsException if the index is out of range
      */
     public void add(int index, Object element) {
 
@@ -230,7 +230,7 @@ public class FastArrayList extends ArrayList {
      * @param index Index at which insertion takes place
      * @param collection The collection to be added
      *
-     * @exception IndexOutOfBoundsException if the index is out of range
+     * @throws IndexOutOfBoundsException if the index is out of range
      */
     public boolean addAll(int index, Collection collection) {
 
@@ -254,7 +254,7 @@ public class FastArrayList extends ArrayList {
      * Remove all of the elements from this list.  The list will be empty
      * after this call returns.
      *
-     * @exception UnsupportedOperationException if <code>clear()</code>
+     * @throws UnsupportedOperationException if <code>clear()</code>
      *  is not supported by this list
      */
     public void clear() {
@@ -405,7 +405,7 @@ public class FastArrayList extends ArrayList {
      *
      * @param index The index of the element to return
      *
-     * @exception IndexOutOfBoundsException if the index is out of range
+     * @throws IndexOutOfBoundsException if the index is out of range
      */
     public Object get(int index) {
 
@@ -576,7 +576,7 @@ public class FastArrayList extends ArrayList {
      *
      * @param index The starting position of the iterator to return
      * @return the list iterator
-     * @exception IndexOutOfBoundsException if the index is out of range
+     * @throws IndexOutOfBoundsException if the index is out of range
      */
     public ListIterator listIterator(int index) {
         if (fast) {
@@ -593,7 +593,7 @@ public class FastArrayList extends ArrayList {
      *
      * @param index Index of the element to be removed
      *
-     * @exception IndexOutOfBoundsException if the index is out of range
+     * @throws IndexOutOfBoundsException if the index is out of range
      */
     public Object remove(int index) {
 
@@ -643,7 +643,7 @@ public class FastArrayList extends ArrayList {
      *
      * @param collection Collection containing elements to be removed
      *
-     * @exception UnsupportedOperationException if this optional operation
+     * @throws UnsupportedOperationException if this optional operation
      *  is not supported by this list
      */
     public boolean removeAll(Collection collection) {
@@ -670,7 +670,7 @@ public class FastArrayList extends ArrayList {
      *
      * @param collection Collection containing elements to be retained
      *
-     * @exception UnsupportedOperationException if this optional operation
+     * @throws UnsupportedOperationException if this optional operation
      *  is not supported by this list
      */
     public boolean retainAll(Collection collection) {
@@ -702,7 +702,7 @@ public class FastArrayList extends ArrayList {
      * @param index Index of the element to replace
      * @param element The new element to be stored
      *
-     * @exception IndexOutOfBoundsException if the index is out of range
+     * @throws IndexOutOfBoundsException if the index is out of range
      */
     public Object set(int index, Object element) {
 
@@ -743,7 +743,7 @@ public class FastArrayList extends ArrayList {
      * @param fromIndex The starting index of the sublist view
      * @param toIndex The index after the end of the sublist view
      *
-     * @exception IndexOutOfBoundsException if an index is out of range
+     * @throws IndexOutOfBoundsException if an index is out of range
      */
     public List subList(int fromIndex, int toIndex) {
         if (fast) {
@@ -780,7 +780,7 @@ public class FastArrayList extends ArrayList {
      *
      * @param array Array defining the element type of the returned list
      *
-     * @exception ArrayStoreException if the runtime type of <code>array</code>
+     * @throws ArrayStoreException if the runtime type of <code>array</code>
      *  is not a supertype of the runtime type of every element in this list
      */
     public Object[] toArray(Object array[]) {
