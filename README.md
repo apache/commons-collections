@@ -43,23 +43,18 @@
 Apache Commons Collections
 ===================
 
-[![Build Status](https://travis-ci.org/apache/commons-collections.svg?branch=trunk)](https://travis-ci.org/apache/commons-collections)
-[![Coverage Status](https://coveralls.io/repos/apache/commons-collections/badge.svg?branch=trunk&service=github)](https://coveralls.io/github/apache/commons-collections?branch=trunk)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/)
-[![License](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
-
 The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.
 
 Documentation
 -------------
 
-More information can be found on the [homepage](https://commons.apache.org/proper/commons-collections).
-The [JavaDoc](https://commons.apache.org/proper/commons-collections/javadocs/api-release) can be browsed.
+More information can be found on the [Apache Commons Collections homepage](https://commons.apache.org/proper/commons-collections4).
+The [JavaDoc](https://commons.apache.org/proper/commons-collections4/javadocs/api-release) can be browsed.
 Questions related to the usage of Apache Commons Collections should be posted to the [user mailing list][ml].
 
 Where can I get the latest release?
 -----------------------------------
-You can download source and binaries from our [download page](https://commons.apache.org/proper/commons-collections/download_collections.cgi).
+You can download source and binaries from our [download page](https://commons.apache.org/proper/commons-collections4/download_collections4.cgi).
 
 Alternatively you can pull it from the central Maven repositories:
 
@@ -74,7 +69,7 @@ Alternatively you can pull it from the central Maven repositories:
 Contributing
 ------------
 
-We accept PRs via github. The [developer mailing list][ml] is the main channel of communication for contributors.
+We accept Pull Requests via GitHub. The [developer mailing list][ml] is the main channel of communication for contributors.
 There are some guidelines which will make applying PRs easier for us:
 + No tabs! Please use spaces for indentation.
 + Respect the code style.
@@ -86,7 +81,9 @@ You can learn more about contributing via GitHub in our [contribution guidelines
 
 License
 -------
-Code is under the [Apache Licence v2](https://www.apache.org/licenses/LICENSE-2.0.txt).
+This code is under the [Apache Licence v2](https://www.apache.org/licenses/LICENSE-2.0).
+
+See the `NOTICE.txt` file for required notices and attributions.
 
 Donations
 ---------
@@ -96,8 +93,8 @@ Additional Resources
 --------------------
 
 + [Apache Commons Homepage](https://commons.apache.org/)
-+ [Apache Bugtracker (JIRA)](https://issues.apache.org/jira/)
++ [Apache Bugtracker (JIRA)](https://issues.apache.org/jira/browse/@JIRA_ID@)
 + [Apache Commons Twitter Account](https://twitter.com/ApacheCommons)
-+ #apachecommons IRC channel on freenode.org
++ `#apache-commons` IRC channel on `irc.freenode.org`
 
 [ml]:https://commons.apache.org/mail-lists.html
