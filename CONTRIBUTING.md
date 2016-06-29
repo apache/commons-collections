@@ -62,11 +62,11 @@ Making Changes
 
 + Create a _topic branch_ for your isolated work.
   * Usually you should base your branch on the `master` or `trunk` branch.
-  * A good topic branch name can be the JIRA bug id plus a keyword, e.g. `VFS-614-MonitorInputStream`.
+  * A good topic branch name can be the JIRA bug id plus a keyword, e.g. `COLLECTIONS-123-InputStream`.
   * If you have submitted multiple JIRA issues, try to maintain separate branches and pull requests.
 + Make commits of logical units.
   * Make sure your commit messages are meaningful and in the proper format. Your commit message should contain the key of the JIRA issue.
-  * e.g. `VFS-614: Close input stream early`
+  * e.g. `COLLECTIONS-123: Close input stream earlier`
 + Respect the original code style:
   + Only use spaces for indentation.
   + Create minimal diffs - disable _On Save_ actions like _Reformat Source Code_ or _Organize Imports_. If you feel the source code should be reformatted create a separate PR for this change first.
