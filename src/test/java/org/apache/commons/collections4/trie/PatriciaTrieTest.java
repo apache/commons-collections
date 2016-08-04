@@ -16,15 +16,20 @@
  */
 package org.apache.commons.collections4.trie;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ConcurrentModificationException;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Set;
 import java.util.SortedMap;
 
 import junit.framework.Test;
 
 import org.apache.commons.collections4.BulkTest;
+import org.apache.commons.collections4.Trie;
 import org.apache.commons.collections4.map.AbstractSortedMapTest;
 import org.junit.Assert;
 
@@ -363,6 +368,49 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
 
         assertEquals(2, trie.prefixMap(prefixString).size());
         assertTrue(trie.prefixMap(prefixString).containsKey(longerString));
+    }
+
+    public void testPrefixMapClear() {
+        Trie<String, Integer> trie = new PatriciaTrie<Integer>();
+        trie.put("Anna", 1);
+        trie.put("Anael", 2);
+        trie.put("Analu", 3);
+        trie.put("Andreas", 4);
+        trie.put("Andrea", 5);
+        trie.put("Andres", 6);
+        trie.put("Anatole", 7);
+        SortedMap<String, Integer> prefixMap = trie.prefixMap("And");
+        assertEquals(new HashSet<String>(Arrays.asList("Andrea", "Andreas", "Andres")), prefixMap.keySet());
+        assertEquals(Arrays.asList(5, 4, 6), new ArrayList<Integer>(prefixMap.values()));
+
+        prefixMap.clear();
+        assertTrue(prefixMap.keySet().isEmpty());
+        assertTrue(prefixMap.values().isEmpty());
+        assertEquals(new HashSet<String>(Arrays.asList("Anael", "Analu", "Anatole", "Anna")), trie.keySet());
+        assertEquals(Arrays.asList(2, 3, 7, 1), new ArrayList<Integer>(trie.values()));
+    }
+
+    public void testPrefixMapClearUsingRemove() {
+        Trie<String, Integer> trie = new PatriciaTrie<Integer>();
+        trie.put("Anna", 1);
+        trie.put("Anael", 2);
+        trie.put("Analu", 3);
+        trie.put("Andreas", 4);
+        trie.put("Andrea", 5);
+        trie.put("Andres", 6);
+        trie.put("Anatole", 7);
+        SortedMap<String, Integer> prefixMap = trie.prefixMap("And");
+        assertEquals(new HashSet<String>(Arrays.asList("Andrea", "Andreas", "Andres")), prefixMap.keySet());
+        assertEquals(Arrays.asList(5, 4, 6), new ArrayList<Integer>(prefixMap.values()));
+
+        Set<String> keys = new HashSet<String>(prefixMap.keySet());
+        for (final String key : keys) {
+            prefixMap.remove(key);
+        }
+        assertTrue(prefixMap.keySet().isEmpty());
+        assertTrue(prefixMap.values().isEmpty());
+        assertEquals(new HashSet<String>(Arrays.asList("Anael", "Analu", "Anatole", "Anna")), trie.keySet());
+        assertEquals(Arrays.asList(2, 3, 7, 1), new ArrayList<Integer>(trie.values()));
     }
 
     //-----------------------------------------------------------------------

@@ -2258,6 +2258,25 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
                                                  final K toKey, final boolean toInclusive) {
             return new RangeEntryMap(fromKey, fromInclusive, toKey, toInclusive);
         }
+
+        @Override
+        public void clear() {
+            Iterator<K> it = AbstractPatriciaTrie.this.keySet().iterator();
+            boolean doDelete = false;
+            while (it.hasNext()) {
+                K currentKey = it.next();
+                if(currentKey.equals(toKey)){
+                    doDelete = false;
+                }
+                if(doDelete){
+                    it.remove();
+                }
+                if(currentKey.equals(fromKey)){
+                    doDelete = true;
+                }
+            }
+            super.clear();
+        }
     }
 
     /**
