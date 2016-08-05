@@ -21,9 +21,12 @@
   </properties>
   <body>
   <release version="4.2" date="YYYY-MM-DD" description="New features">
-  <action issue="COLLECTIONS-589" dev="ggregory" type="add" due-to="Gary Gregory">
+    <action issue="COLLECTIONS-589" dev="ggregory" type="add" due-to="Gary Gregory">
       Add null-safe MapUtils.size(Map&lt;?, ?>) method. 
-  </action>
+    </action>
+    <action issue="COLLECTIONS-586" dev="ggregory" type="add" due-to="Shailender Bathula, Gary Gregory">
+      PatriciaTrie prefixMap clear throws NullPointerException. 
+    </action>
   </release>
   <release version="4.1" date="2015-11-28" description="This is a security and minor release.">
     <action issue="COLLECTIONS-508" dev="tn" type="add">

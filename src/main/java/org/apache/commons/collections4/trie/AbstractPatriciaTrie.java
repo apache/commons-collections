@@ -2261,21 +2261,13 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
         @Override
         public void clear() {
-            Iterator<Map.Entry<K,V>> it = AbstractPatriciaTrie.this.entrySet().iterator();
-            boolean doDelete = false;
+            Iterator<Map.Entry<K, V>> it = AbstractPatriciaTrie.this.entrySet().iterator();
+            Set<K> currentKeys = keySet();
             while (it.hasNext()) {
-                K currentKey = it.next().getKey();
-                if(currentKey.equals(toKey)){
-                    doDelete = false;
-                }
-                if(doDelete){
+                if (currentKeys.contains(it.next().getKey())) {
                     it.remove();
                 }
-                if(currentKey.equals(fromKey)){
-                    doDelete = true;
-                }
             }
-            super.clear();
         }
     }
 
