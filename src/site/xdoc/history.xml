@@ -125,7 +125,7 @@ an implementation of a Patricia Trie.
 <b>Collections 4.1</b> fixed some bugs in v4.0 and adds a few new enhancements.
 The most notable changes are new interfaces MultiSet (a replacement for the Bag
 interface which is fully compliant to the general Collection contract) and
-MultiValuedMapeList (a replacement for the MultiMap interface) as well as fluent
+MultiValuedMapList (a replacement for the MultiMap interface) as well as fluent
 API for Iterable instances (FluentIterable).
 </p>
 <p>
