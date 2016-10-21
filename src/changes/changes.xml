@@ -22,7 +22,7 @@
   <body>
   <release version="4.2" date="YYYY-MM-DD" description="New features">
     <action issue="COLLECTIONS-594" dev="ggregory" type="fix" due-to="Javen O'Neal">
-      Website spelling error: MultiValuedMapeList. 
+      Web site spelling error: MultiValuedMapeList. 
     </action>
     <action issue="COLLECTIONS-589" dev="ggregory" type="add" due-to="Gary Gregory">
       Add null-safe MapUtils.size(Map&lt;?, ?>) method. 
