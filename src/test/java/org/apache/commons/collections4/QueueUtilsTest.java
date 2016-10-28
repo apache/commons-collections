@@ -23,6 +23,7 @@ import java.util.Queue;
 
 import org.apache.commons.collections4.functors.TruePredicate;
 import org.apache.commons.collections4.queue.PredicatedQueue;
+import org.apache.commons.collections4.queue.SynchronizedQueue;
 import org.apache.commons.collections4.queue.TransformedQueue;
 import org.apache.commons.collections4.queue.UnmodifiableQueue;
 import org.junit.Test;
@@ -38,6 +39,18 @@ public class QueueUtilsTest {
     protected Transformer<Object, Object> nopTransformer = TransformerUtils.nopTransformer();
 
     // ----------------------------------------------------------------------
+
+    @Test
+    public void testSynchronizedQueue() {
+        Queue<Object> queue = QueueUtils.synchronizedQueue(new LinkedList<Object>());
+        assertTrue("Returned object should be a SynchronizedQueue.", queue instanceof SynchronizedQueue);
+        try {
+            QueueUtils.synchronizedQueue(null);
+            fail("Expecting NullPointerException for null queue.");
+        } catch (final NullPointerException ex) {
+            // expected
+        }
+    }
 
     @Test
     public void testUnmodifiableQueue() {
