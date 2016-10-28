@@ -20,6 +20,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import org.apache.commons.collections4.queue.PredicatedQueue;
+import org.apache.commons.collections4.queue.SynchronizedQueue;
 import org.apache.commons.collections4.queue.TransformedQueue;
 import org.apache.commons.collections4.queue.UnmodifiableQueue;
 
@@ -43,6 +44,37 @@ public class QueueUtils {
     private QueueUtils() {}
 
     //-----------------------------------------------------------------------
+
+    /**
+     * Returns a synchronized (thread-safe) queue backed by the given queue.
+     * In order to guarantee serial access, it is critical that all access to the
+     * backing queue is accomplished through the returned queue.
+     * <p>
+     * It is imperative that the user manually synchronize on the returned queue
+     * when iterating over it:
+     *
+     * <pre>
+     * Queue queue = QueueUtils.synchronizedQueue(new CircularFifoQueue());
+     * ...
+     * synchronized(queue) {
+     *     Iterator i = queue.iterator(); // Must be in synchronized block
+     *     while (i.hasNext())
+     *         foo(i.next());
+     *     }
+     * }
+     * </pre>
+     *
+     * Failure to follow this advice may result in non-deterministic behavior.
+     *
+     * @param <E> the element type
+     * @param queue the queue to synchronize, must not be null
+     * @return a synchronized queue backed by that queue
+     * @throws NullPointerException if the queue is null
+     * @since 4.2
+     */
+    public static <E> Queue<E> synchronizedQueue(final Queue<E> queue) {
+        return SynchronizedQueue.synchronizedQueue(queue);
+    }
 
     /**
      * Returns an unmodifiable queue backed by the given queue.
