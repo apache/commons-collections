@@ -93,7 +93,7 @@ Additional Resources
 --------------------
 
 + [Apache Commons Homepage](https://commons.apache.org/)
-+ [Apache Bugtracker (JIRA)](https://issues.apache.org/jira/browse/@JIRA_ID@)
++ [Apache Bugtracker (JIRA)](https://issues.apache.org/jira/browse/COLLECTIONS)
 + [Apache Commons Twitter Account](https://twitter.com/ApacheCommons)
 + `#apache-commons` IRC channel on `irc.freenode.org`
 
