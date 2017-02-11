@@ -48,13 +48,13 @@ The Apache Commons Collections package contains types that extend and augment th
 Documentation
 -------------
 
-More information can be found on the [Apache Commons Collections homepage](https://commons.apache.org/proper/commons-collections4).
-The [JavaDoc](https://commons.apache.org/proper/commons-collections4/javadocs/api-release) can be browsed.
+More information can be found on the [Apache Commons Collections homepage](https://commons.apache.org/proper/commons-collections).
+The [JavaDoc](https://commons.apache.org/proper/commons-collections/javadocs/api-release) can be browsed.
 Questions related to the usage of Apache Commons Collections should be posted to the [user mailing list][ml].
 
 Where can I get the latest release?
 -----------------------------------
-You can download source and binaries from our [download page](https://commons.apache.org/proper/commons-collections4/download_collections4.cgi).
+You can download source and binaries from our [download page](https://commons.apache.org/proper/commons-collections/download_collections.cgi).
 
 Alternatively you can pull it from the central Maven repositories:
 
