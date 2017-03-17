@@ -15,3 +15,7 @@ site-content
 .settings
 .classpath
 .project
+
+# VI[M] files
+.*.swp
+*~
