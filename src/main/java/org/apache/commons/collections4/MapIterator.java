@@ -31,14 +31,14 @@ import java.util.Iterator;
  * In use, this iterator iterates through the keys in the map. After each call
  * to <code>next()</code>, the <code>getValue()</code> method provides direct
  * access to the value. The value can also be set using <code>setValue()</code>.
- * <pre>
+ * <pre>{@code
  * MapIterator<String,Integer> it = map.mapIterator();
  * while (it.hasNext()) {
  *   String key = it.next();
  *   Integer value = it.getValue();
  *   it.setValue(value + 1);
  * }
- * </pre>
+ * }</pre>
  *
  * @param <K> the type of the keys in the map
  * @param <V> the type of the values in the map
