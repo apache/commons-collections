@@ -1108,7 +1108,6 @@ public class CollectionUtils {
      * @return a boolean indicating whether the collection has changed or not.
      * @throws NullPointerException if the collection or iterator is null
      */
-    @SuppressWarnings("unchecked")
     public static <C> boolean addAll(final Collection<C> collection, final Iterable<? extends C> iterable) {
         if (iterable instanceof Collection<?>) {
             return collection.addAll((Collection<? extends C>) iterable);
