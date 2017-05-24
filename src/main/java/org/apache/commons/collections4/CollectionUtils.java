@@ -19,12 +19,12 @@ package org.apache.commons.collections4;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
@@ -180,8 +180,7 @@ public class CollectionUtils {
      * undesirable. This implementation only implements Collection.
      */
     @SuppressWarnings("rawtypes") // we deliberately use the raw type here
-    public static final Collection EMPTY_COLLECTION =
-        UnmodifiableCollection.unmodifiableCollection(new ArrayList<Object>());
+    public static final Collection EMPTY_COLLECTION = Collections.emptyList();
 
     /**
      * <code>CollectionUtils</code> should not normally be instantiated.
@@ -209,9 +208,8 @@ public class CollectionUtils {
      * @param collection the collection, possibly <code>null</code>
      * @return an empty collection if the argument is <code>null</code>
      */
-    @SuppressWarnings("unchecked") // OK, empty collection is compatible with any type
     public static <T> Collection<T> emptyIfNull(final Collection<T> collection) {
-        return collection == null ? EMPTY_COLLECTION : collection;
+        return collection == null ? CollectionUtils.<T>emptyCollection() : collection;
     }
 
     /**
@@ -389,9 +387,7 @@ public class CollectionUtils {
                     }
                 }
 
-                if (foundCurrentElement) {
-                    continue;
-                } else {
+                if (!foundCurrentElement) {
                     return false;
                 }
             }
@@ -830,7 +826,7 @@ public class CollectionUtils {
      */
     @Deprecated
     public static <C> boolean exists(final Iterable<C> input, final Predicate<? super C> predicate) {
-        return predicate == null ? false : IterableUtils.matchesAny(input, predicate);
+        return predicate != null && IterableUtils.matchesAny(input, predicate);
     }
 
     /**
@@ -850,7 +846,7 @@ public class CollectionUtils {
      */
     @Deprecated
     public static <C> boolean matchesAll(final Iterable<C> input, final Predicate<? super C> predicate) {
-        return predicate == null ? false : IterableUtils.matchesAll(input, predicate);
+        return predicate != null && IterableUtils.matchesAll(input, predicate);
     }
 
     /**
@@ -1266,9 +1262,6 @@ public class CollectionUtils {
         } else if (object instanceof Iterable<?>) {
             final Iterable<?> iterable = (Iterable<?>) object;
             return IterableUtils.get(iterable, i);
-        } else if (object instanceof Collection<?>) {
-            final Iterator<?> iterator = ((Collection<?>) object).iterator();
-            return IteratorUtils.get(iterator, i);
         } else if (object instanceof Enumeration<?>) {
             final Enumeration<?> it = (Enumeration<?>) object;
             return EnumerationUtils.get(it, i);
@@ -1631,7 +1624,7 @@ public class CollectionUtils {
      */
     public static <E> Collection<List<E>> permutations(final Collection<E> collection) {
         final PermutationIterator<E> it = new PermutationIterator<E>(collection);
-        final Collection<List<E>> result = new LinkedList<List<E>>();
+        final Collection<List<E>> result = new ArrayList<List<E>>();
         while (it.hasNext()) {
             result.add(it.next());
         }
