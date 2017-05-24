@@ -21,6 +21,9 @@
   </properties>
   <body>
   <release version="4.2" date="YYYY-MM-DD" description="New features">
+    <action issue="COLLECTIONS-602" dev="kinow" type="update" due-to="John Mark">
+      Improve efficiency of DefaultedMap.get
+    </action>
     <action issue="COLLECTIONS-603" dev="kinow" type="fix" due-to="Artem Konovalov">
       Small improvements for generics, conditional statements, and warnings suppressions.
     </action>

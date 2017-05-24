@@ -198,11 +198,10 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
     @Override
     @SuppressWarnings("unchecked")
     public V get(final Object key) {
-        // create value for key if key is not currently in the map
-        if (map.containsKey(key) == false) {
-            return value.transform((K) key);
-        }
-        return map.get(key);
+        V v;
+        return (((v = map.get(key)) != null) || map.containsKey(key))
+          ? v
+          : value.transform((K) key);
     }
 
     // no need to wrap keySet, entrySet or values as they are views of
