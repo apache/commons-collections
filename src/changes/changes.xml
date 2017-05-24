@@ -24,7 +24,7 @@
     <action issue="COLLECTIONS-602" dev="kinow" type="update" due-to="John Mark">
       Improve efficiency of DefaultedMap.get
     </action>
-    <action issue="COLLECTIONS-603" dev="kinow" type="fix" due-to="Artem Konovalov">
+    <action issue="COLLECTIONS-603" dev="kinow" type="update" due-to="Artem Konovalov">
       Small improvements for generics, conditional statements, and warnings suppressions.
     </action>
     <action issue="COLLECTIONS-594" dev="ggregory" type="fix" due-to="Javen O'Neal">
