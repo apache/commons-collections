@@ -560,6 +560,13 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
+    public void testIsEqualCollectionWithNulls() {
+        assertTrue(CollectionUtils.isEqualCollection(null, null));
+        assertFalse(CollectionUtils.isEqualCollection(collectionA, null));
+        assertFalse(CollectionUtils.isEqualCollection(null, collectionA));
+    }
+
+    @Test
     public void testIsEqualCollectionEquator() {
         final Collection<Integer> collB = CollectionUtils.collect(collectionB, TRANSFORM_TO_INTEGER);
 
@@ -592,6 +599,25 @@ public class CollectionUtilsTest extends MockTestCase {
     @Test(expected=NullPointerException.class)
     public void testIsEqualCollectionNullEquator() {
         CollectionUtils.isEqualCollection(collectionA, collectionA, null);
+    }
+
+    @Test
+    public void testIsEqualCollectionEquatorWithNulls() {
+        Equator<Object> equator = new Equator<Object>() {
+            @Override
+            public boolean equate(Object o1, Object o2) {
+                return false;
+            }
+
+            @Override
+            public int hash(Object o) {
+                return 0;
+            }
+        };
+
+        assertTrue(CollectionUtils.isEqualCollection(null, null, equator));
+        assertFalse(CollectionUtils.isEqualCollection(collectionA, null, equator));
+        assertFalse(CollectionUtils.isEqualCollection(null, collectionA, equator));
     }
 
     @Test

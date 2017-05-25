@@ -503,12 +503,21 @@ public class CollectionUtils {
      * That is, iff the cardinality of <i>e</i> in <i>a</i> is
      * equal to the cardinality of <i>e</i> in <i>b</i>,
      * for each element <i>e</i> in <i>a</i> or <i>b</i>.
+     * <p>
+     * {@code null}s are handled without exceptions. Two {@code null}
+     * references are considered to be equal.
      *
      * @param a  the first collection, must not be null
      * @param b  the second collection, must not be null
      * @return <code>true</code> iff the collections contain the same elements with the same cardinalities.
      */
     public static boolean isEqualCollection(final Collection<?> a, final Collection<?> b) {
+        if(a == null && b == null) {
+            return true;
+        }
+        if(a == null || b == null) {
+            return false;
+        }
         if(a.size() != b.size()) {
             return false;
         }
@@ -532,6 +541,9 @@ public class CollectionUtils {
      * equal to the cardinality of <i>e</i> in <i>b</i>,
      * for each element <i>e</i> in <i>a</i> or <i>b</i>.
      * <p>
+     * {@code null}s are handled without exceptions. Two {@code null}
+     * references are considered to be equal.
+     * <p>
      * <b>Note:</b> from version 4.1 onwards this method requires the input
      * collections and equator to be of compatible type (using bounded wildcards).
      * Providing incompatible arguments (e.g. by casting to their rawtypes)
@@ -548,6 +560,14 @@ public class CollectionUtils {
     public static <E> boolean isEqualCollection(final Collection<? extends E> a,
                                                 final Collection<? extends E> b,
                                                 final Equator<? super E> equator) {
+        if(a == null && b == null) {
+            return true;
+        }
+
+        if(a == null || b == null) {
+            return false;
+        }
+
         if (equator == null) {
             throw new NullPointerException("Equator must not be null.");
         }
