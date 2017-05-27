@@ -560,20 +560,8 @@ public class CollectionUtils {
     public static <E> boolean isEqualCollection(final Collection<? extends E> a,
                                                 final Collection<? extends E> b,
                                                 final Equator<? super E> equator) {
-        if(a == null && b == null) {
-            return true;
-        }
-
-        if(a == null || b == null) {
-            return false;
-        }
-
         if (equator == null) {
             throw new NullPointerException("Equator must not be null.");
-        }
-
-        if(a.size() != b.size()) {
-            return false;
         }
 
         @SuppressWarnings({ "unchecked", "rawtypes" })
