@@ -108,6 +108,10 @@
       <name>Henri Yandell</name>
       <id>bayard</id>
     </developer>
+    <developer>
+      <name>Rob Tompkins</name>
+      <id>chtompki</id>
+    </developer>
   </developers>
 
   <contributors>
@@ -473,6 +477,7 @@
        properties that depend on the componentid.
     -->
     <commons.componentid>collections4</commons.componentid>
+    <commons.module.name>org.apache.commons.collections4</commons.module.name>
 
     <!-- Current 4.x release series -->
     <commons.release.version>4.1</commons.release.version>
