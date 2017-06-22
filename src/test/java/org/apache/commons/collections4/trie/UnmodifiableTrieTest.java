@@ -17,11 +17,16 @@
 package org.apache.commons.collections4.trie;
 
 import junit.framework.Test;
-
 import org.apache.commons.collections4.BulkTest;
+import org.apache.commons.collections4.OrderedMapIterator;
 import org.apache.commons.collections4.Trie;
 import org.apache.commons.collections4.Unmodifiable;
+import org.apache.commons.collections4.bidimap.DualTreeBidiMap;
 import org.apache.commons.collections4.map.AbstractSortedMapTest;
+import org.apache.commons.collections4.map.LRUMap;
+
+import java.util.Comparator;
+import java.util.SortedMap;
 
 /**
  * Extension of {@link AbstractSortedMapTest} for exercising the
@@ -84,6 +89,48 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
             UnmodifiableTrie.unmodifiableTrie(null);
             fail();
         } catch (final NullPointerException ex) {}
+    }
+
+    public void testPrefixMap() {
+
+        LRUMap<String, Integer> lRUMap = new LRUMap<String, Integer>();
+        PatriciaTrie<Object> patriciaTrie = new PatriciaTrie<Object>(lRUMap);
+        UnmodifiableTrie<String, Object> unmodifiableTrie = new UnmodifiableTrie<String, Object>(patriciaTrie);
+        SortedMap<String, Object> sortedMap = unmodifiableTrie.prefixMap("a");
+
+        assertTrue(sortedMap.isEmpty());
+
+    }
+
+    public void testMapIterator() {
+
+        PatriciaTrie<Object> patriciaTrie = new PatriciaTrie<Object>();
+        UnmodifiableTrie<String, Object> unmodifiableTrie = new UnmodifiableTrie<String, Object>(patriciaTrie);
+        OrderedMapIterator<String, Object> orderedMapIterator = unmodifiableTrie.mapIterator();
+
+        assertFalse(orderedMapIterator.hasPrevious());
+
+    }
+
+    public void testPreviousKey() {
+
+        PatriciaTrie<Integer> patriciaTrie = new PatriciaTrie<Integer>();
+        UnmodifiableTrie<String, Object> unmodifiableTrie = new UnmodifiableTrie<String, Object>(patriciaTrie);
+        String string = unmodifiableTrie.previousKey("a");
+
+        assertNull(string);
+
+    }
+
+    public void testComparatorIsNotNull() {
+
+        DualTreeBidiMap<String, String> dualTreeBidiMap = new DualTreeBidiMap<String, String>();
+        PatriciaTrie<String> patriciaTrie = new PatriciaTrie<String>(dualTreeBidiMap);
+        UnmodifiableTrie<String, String> unmodifiableTrie = new UnmodifiableTrie<String, String>(patriciaTrie);
+        Comparator<? super String> comparator = unmodifiableTrie.comparator();
+
+        assertNotNull(comparator);
+
     }
 
     //-----------------------------------------------------------------------

@@ -38,6 +38,21 @@ public class HashMultiSetTest<T> extends AbstractMultiSetTest<T> {
         return BulkTest.makeSuite(HashMultiSetTest.class);
     }
 
+    public void testCreatesHashMultiSetTakingNoArguments() {
+
+        HashMultiSet<Object> hashMultiSet = new HashMultiSet<Object>();
+        HashMultiSet<Object> hashMultiSetTwo = new HashMultiSet<Object>(hashMultiSet);
+
+        assertTrue(hashMultiSet.isEmpty());
+        assertEquals(0, hashMultiSet.size());
+
+        assertTrue(hashMultiSetTwo.isEmpty());
+        assertEquals(0, hashMultiSetTwo.size());
+
+        assertTrue(hashMultiSetTwo.equals(hashMultiSet));
+
+    }
+
     //-----------------------------------------------------------------------
 
     @Override
