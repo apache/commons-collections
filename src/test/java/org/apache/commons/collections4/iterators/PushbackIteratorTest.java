@@ -17,13 +17,9 @@
  */
 package org.apache.commons.collections4.iterators;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-
 import org.junit.Test;
+
+import java.util.*;
 
 /**
  * Tests the PushbackIterator.
@@ -108,6 +104,22 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
         assertEquals("x", iter.next());
         assertEquals("b", iter.next());
         validate(iter, "c");
+    }
+
+    @Test
+    public void testPushbackIteratorThrowsNullPointerException(){
+
+        try {
+
+            PushbackIterator.pushbackIterator( null );
+
+            fail("NullPointerException should have been thrown.");
+
+        }catch (NullPointerException e){
+
+        }
+
+
     }
 
     private void validate(Iterator<E> iter, Object... items) {

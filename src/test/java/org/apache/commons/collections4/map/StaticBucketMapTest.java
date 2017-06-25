@@ -96,5 +96,22 @@ public class StaticBucketMapTest<K, V> extends AbstractIterableMapTest<K, V> {
             assertEquals("String: " + str, false, map.containsValue(str));
         }
     }
+    
+    public void testAtomicThrowsNullPointerException(){
+
+        final StaticBucketMap<K, V> map = new StaticBucketMap<K, V>();
+
+        try {
+
+            map.atomic( null );
+
+            fail("NullPointerException should have been thrown.");
+
+        }catch (NullPointerException e){
+
+        }
+
+
+    }
 
 }

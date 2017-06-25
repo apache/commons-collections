@@ -16,10 +16,11 @@
  */
 package org.apache.commons.collections4.map;
 
+import org.apache.commons.collections4.IterableMap;
+import org.junit.Test;
+
 import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.commons.collections4.IterableMap;
 
 /**
  * Extension of {@link AbstractMapTest} for exercising the {@link FixedSizeMap}
@@ -61,15 +62,17 @@ public class FixedSizeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         return "4";
     }
 
-//    public void testCreate() throws Exception {
-//        resetEmpty();
-//        writeExternalFormToDisk(
-//            (java.io.Serializable) map,
-//            "src/test/resources/data/test/FixedSizeMap.emptyCollection.version4.obj");
-//        resetFull();
-//        writeExternalFormToDisk(
-//            (java.io.Serializable) map,
-//            "src/test/resources/data/test/FixedSizeMap.fullCollection.version4.obj");
-//    }
+    @Test(expected = IllegalArgumentException.class)
+    public void testPutAllThrowsIllegalArgumentException(){
+
+        FixedSizeMap fixedSizeMap = new FixedSizeMap( new HashedMap() );
+
+        Map testMap = new ListOrderedMap();
+
+        testMap.put(null, "Test");
+
+        fixedSizeMap.putAll( testMap );
+
+    }
 
 }
