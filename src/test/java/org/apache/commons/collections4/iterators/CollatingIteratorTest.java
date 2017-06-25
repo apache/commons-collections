@@ -16,12 +16,14 @@
  */
 package org.apache.commons.collections4.iterators;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-
 import org.apache.commons.collections4.comparators.ComparableComparator;
+import org.junit.Test;
+
+import java.lang.reflect.Array;
+import java.util.*;
+
+import static org.easymock.EasyMock.mock;
+
 
 /**
  * Unit test suite for {@link CollatingIterator}.
@@ -258,5 +260,111 @@ public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {
        }
        assertEquals("wrong size", i, l1.size() + l2.size());
     }
+
+    @Test
+    public void testSetComparatorThrowsIllegalStateException() {
+
+        CollatingIterator<Iterator<String>> collatingIterator = new CollatingIterator<Iterator<String>>(null, 1);
+
+        assertFalse(collatingIterator.hasNext());
+
+
+        try {
+            collatingIterator.setComparator(null);
+            fail("Expecting exception: IllegalStateException");
+        } catch(IllegalStateException e) {
+            assertEquals("Can't do that after next or hasNext has been called.",e.getMessage());
+            assertEquals(CollatingIterator.class.getName(), e.getStackTrace()[0].getClassName());
+        }
+
+    }
+
+
+    @Test
+    public void testSetIteratorThrowsNullPointerException() {
+
+        Comparator<Iterator<String>> comparator = (Comparator<Iterator<String>>) mock(Comparator.class);
+        CollatingIterator<Iterator<String>> collatingIterator = new CollatingIterator<Iterator<String>>(comparator);
+
+        try {
+            collatingIterator.setIterator(1, null);
+            fail("Expecting exception: NullPointerException");
+        } catch(NullPointerException e) {
+            assertEquals("Iterator must not be null",e.getMessage());
+            assertEquals(CollatingIterator.class.getName(), e.getStackTrace()[0].getClassName());
+        }
+
+    }
+
+
+    @Test
+    public void testSetIteratorThrowsArrayIndexOutOfBoundsException() {
+
+        CollatingIterator<Integer> collatingIterator = new CollatingIterator<Integer>();
+
+        try {
+            collatingIterator.setIterator(-12, collatingIterator);
+            fail("Expecting exception: ArrayIndexOutOfBoundsException");
+
+        } catch(ArrayIndexOutOfBoundsException e) {
+
+        }
+
+    }
+
+
+    @Test
+    public void testCreatesCollatingIteratorTakingThreeArguments() {
+
+        Comparator<Object> comparator = (Comparator<Object>) mock(Comparator.class);
+        CollatingIterator<Integer> collatingIterator = new CollatingIterator<Integer>(comparator);
+        collatingIterator.addIterator(collatingIterator);
+        List<Iterator<? extends Integer>> list = collatingIterator.getIterators();
+
+        assertEquals(1, list.size());
+
+        Comparator<Object> comparatorTwo = (Comparator<Object>) mock(Comparator.class);
+        CollatingIterator<Integer> collatingIteratorTwo = new CollatingIterator<Integer>(comparatorTwo, list);
+
+        assertEquals(1, list.size());
+
+    }
+
+
+    @Test
+    public void testFailsToCreateCollatingIteratorTakingThreeArgumentsThrowsNullPointerException() {
+
+        Iterator<Iterator<String>>[] iteratorArray = (Iterator<Iterator<String>>[]) Array.newInstance(Iterator.class, 2);
+        CollatingIterator<Iterator<String>> collatingIterator = null;
+
+        try {
+            collatingIterator = new CollatingIterator<Iterator<String>>(null, iteratorArray);
+            fail("Expecting exception: NullPointerException");
+        } catch(NullPointerException e) {
+            assertEquals("Iterator must not be null",e.getMessage());
+            assertEquals(CollatingIterator.class.getName(), e.getStackTrace()[0].getClassName());
+        }
+
+    }
+
+
+    @Test
+    public void testGetIteratorIndexThrowsIllegalStateException() {
+
+        Comparator<Object> comparator = (Comparator<Object>) mock(Comparator.class);
+        Iterator<Iterator<String>>[] iteratorArray = (Iterator<Iterator<String>>[]) Array.newInstance(Iterator.class, 0);
+        CollatingIterator<Object> collatingIterator = new CollatingIterator<Object>(comparator, iteratorArray);
+
+        try {
+            collatingIterator.getIteratorIndex();
+            fail("Expecting exception: IllegalStateException");
+        } catch(IllegalStateException e) {
+            assertEquals("No value has been returned yet",e.getMessage());
+            assertEquals(CollatingIterator.class.getName(), e.getStackTrace()[0].getClassName());
+        }
+
+    }
+
+
 }
 

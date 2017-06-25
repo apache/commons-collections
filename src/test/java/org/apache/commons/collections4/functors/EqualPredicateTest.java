@@ -18,6 +18,7 @@ package org.apache.commons.collections4.functors;
 
 import static org.apache.commons.collections4.functors.EqualPredicate.equalPredicate;
 import static org.apache.commons.collections4.functors.NullPredicate.nullPredicate;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 
 import org.apache.commons.collections4.Predicate;
@@ -25,6 +26,7 @@ import org.junit.Test;
 
 
 public class EqualPredicateTest extends AbstractPredicateTest {
+
     private static final EqualsTestObject FALSE_OBJECT = new EqualsTestObject(false);
     private static final EqualsTestObject TRUE_OBJECT = new EqualsTestObject(true);
 
@@ -50,6 +52,17 @@ public class EqualPredicateTest extends AbstractPredicateTest {
     public void testPredicateTypeCanBeSuperClassOfObject() throws Exception {
         final Predicate<Number> predicate = equalPredicate((Number) 4);
         assertTrue(predicate, 4);
+    }
+
+    @Test
+    public void testCreatesEqualPredicateAndCallsGetValue() {
+
+        Integer integer = new Integer(4143);
+        DefaultEquator<Integer> defaultEquator = DefaultEquator.defaultEquator();
+        EqualPredicate<Integer> equalPredicate = new EqualPredicate<Integer>(integer, defaultEquator);
+
+        assertEquals(integer, equalPredicate.getValue());
+
     }
 
     public static class EqualsTestObject {
