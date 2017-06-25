@@ -94,4 +94,13 @@ public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
         assertEquals("obj != deserialize(serialize(obj))",comp,dest);
     }
 
+    @Test
+    public void testEqualsReturnsFalseWithNonNullParameter() throws Exception {
+
+        final Comparator<?> comp = new ReverseComparator<String>(new ComparableComparator<String>());
+
+        assertFalse( comp.equals(new String("a")) );
+
+    }
+
 }

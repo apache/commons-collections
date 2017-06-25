@@ -123,6 +123,15 @@ public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainT
         assertTrue(chain.compare(Integer.valueOf(4), Integer.valueOf(4)) == 0);
     }
 
+    @Test
+    public void testEqualsReturnsFalseWithNonNullParameter() throws Exception {
+
+        final ComparatorChain<?> compChain = new ComparatorChain<Object>();
+
+        assertFalse( compChain.equals(new String("a")) );
+
+    }
+
     @Override
     public List<PseudoRow> getComparableObjectsOrdered() {
         final List<PseudoRow> list = new LinkedList<PseudoRow>();
