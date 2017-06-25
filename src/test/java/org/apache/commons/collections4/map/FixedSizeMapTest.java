@@ -62,7 +62,7 @@ public class FixedSizeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         return "4";
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testPutAllThrowsIllegalArgumentException(){
 
         FixedSizeMap fixedSizeMap = new FixedSizeMap( new HashedMap() );
@@ -71,7 +71,16 @@ public class FixedSizeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
         testMap.put(null, "Test");
 
-        fixedSizeMap.putAll( testMap );
+        try {
+
+            fixedSizeMap.putAll( testMap );
+
+            fail("IllegalArgumentException should have been thrown.");
+
+        }catch (IllegalArgumentException e){
+
+        }
+
 
     }
 
