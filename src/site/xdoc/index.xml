@@ -63,8 +63,9 @@ The JavaDoc API documents are available online:
 <li>The <a href="apidocs/index.html">latest SVN</a></li>
 </ul>
 <p>
-The <a href="source-repository.html">subversion repository</a> can be
-<a href="http://svn.apache.org/viewvc/commons/proper/collections/trunk/">browsed</a>.
+The <a href="source-repository.html">git repository</a> can be
+<a href="https://git-wip-us.apache.org/repos/asf?p=commons-collections.git">browsed</a>, and we have a mirror
+ on <a href="https://github.com/apache/commons-collections">GitHub</a>.
 </p>
 </section>
 <!-- ================================================== -->
