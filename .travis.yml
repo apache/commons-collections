@@ -6,10 +6,5 @@ jdk:
   - openjdk7
   - oraclejdk8
 
-# only build trunk
-branches:
-  only:
-    - trunk
-
 after_success:
   - mvn clean test jacoco:report coveralls:report
