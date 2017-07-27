@@ -30,6 +30,9 @@
     <action issue="COLLECTIONS-603" dev="kinow" type="update" due-to="Artem Konovalov">
       Small improvements for generics, conditional statements, and warnings suppressions.
     </action>
+    <action issue="COLLECTIONS-655" dev="ggregory" type="update">
+      Update platform from Java 6 to Java 7.
+    </action>
     <action issue="COLLECTIONS-594" dev="ggregory" type="fix" due-to="Javen O'Neal">
       Web site spelling error: MultiValuedMapeList. 
     </action>
