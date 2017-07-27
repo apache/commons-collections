@@ -52,7 +52,7 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
      */
     public static <E> TransformedNavigableSet<E> transformingNavigableSet(final NavigableSet<E> set,
             final Transformer<? super E, ? extends E> transformer) {
-        return new TransformedNavigableSet<E>(set, transformer);
+        return new TransformedNavigableSet<>(set, transformer);
     }
 
     /**
@@ -72,7 +72,7 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
     public static <E> TransformedNavigableSet<E> transformedNavigableSet(final NavigableSet<E> set,
             final Transformer<? super E, ? extends E> transformer) {
 
-        final TransformedNavigableSet<E> decorated = new TransformedNavigableSet<E>(set, transformer);
+        final TransformedNavigableSet<E> decorated = new TransformedNavigableSet<>(set, transformer);
         if (set.size() > 0) {
             @SuppressWarnings("unchecked") // set is type E
             final E[] values = (E[]) set.toArray(); // NOPMD - false positive for generics

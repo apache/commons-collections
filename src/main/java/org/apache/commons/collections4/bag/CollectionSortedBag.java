@@ -44,7 +44,7 @@ public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> 
      * @throws NullPointerException if bag is null
      */
     public static <E> SortedBag<E> collectionSortedBag(final SortedBag<E> bag) {
-        return new CollectionSortedBag<E>(bag);
+        return new CollectionSortedBag<>(bag);
     }
 
     //-----------------------------------------------------------------------

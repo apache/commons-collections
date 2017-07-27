@@ -68,9 +68,9 @@ public class InstantiateFactory<T> implements Factory<T> {
         }
 
         if (paramTypes == null || paramTypes.length == 0) {
-            return new InstantiateFactory<T>(classToInstantiate);
+            return new InstantiateFactory<>(classToInstantiate);
         }
-        return new InstantiateFactory<T>(classToInstantiate, paramTypes, args);
+        return new InstantiateFactory<>(classToInstantiate, paramTypes, args);
     }
 
     /**

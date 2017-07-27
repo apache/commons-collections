@@ -200,7 +200,7 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
      * @return The ordered list of keys.
      */
     public List<K> asList() {
-        return new LinkedMapList<K>(this);
+        return new LinkedMapList<>(this);
     }
 
     /**

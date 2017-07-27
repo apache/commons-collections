@@ -52,14 +52,14 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
 
     @Override
     public DualTreeBidiMap<K, V> makeObject() {
-        return new DualTreeBidiMap<K, V>(
-                new ReverseComparator<K>(ComparableComparator.<K> comparableComparator()),
-                new ReverseComparator<V>(ComparableComparator.<V> comparableComparator()));
+        return new DualTreeBidiMap<>(
+                new ReverseComparator<>(ComparableComparator.<K> comparableComparator()),
+                new ReverseComparator<>(ComparableComparator.<V> comparableComparator()));
     }
 
     @Override
     public TreeMap<K, V> makeConfirmedMap() {
-        return new TreeMap<K, V>(new ReverseComparator<K>(ComparableComparator.<K>comparableComparator()));
+        return new TreeMap<>(new ReverseComparator<>(ComparableComparator.<K>comparableComparator()));
     }
 
     public void testComparator() {
@@ -70,7 +70,7 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
     }
 
     public void testComparator2() {
-        final DualTreeBidiMap<String, Integer> dtbm = new DualTreeBidiMap<String, Integer>(
+        final DualTreeBidiMap<String, Integer> dtbm = new DualTreeBidiMap<>(
                 String.CASE_INSENSITIVE_ORDER, null);
         dtbm.put("two", 0);
         dtbm.put("one", 1);
@@ -107,7 +107,7 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
     }
 
     public void testCollections364() throws Exception {
-        final DualTreeBidiMap<String, Integer> original = new DualTreeBidiMap<String, Integer>(
+        final DualTreeBidiMap<String, Integer> original = new DualTreeBidiMap<>(
                 String.CASE_INSENSITIVE_ORDER, new IntegerComparator());
         final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         final ObjectOutputStream out = new ObjectOutputStream(buffer);
@@ -130,7 +130,7 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
 
         // Sort by the comparator used in the makeEmptyBidiMap() method
         List<K> newSortedKeys = getAsList(getSampleKeys());
-        Collections.sort(newSortedKeys, new ReverseComparator<K>(ComparableComparator.<K>comparableComparator()));
+        Collections.sort(newSortedKeys, new ReverseComparator<>(ComparableComparator.<K>comparableComparator()));
         newSortedKeys = Collections.unmodifiableList(newSortedKeys);
 
         final Iterator<K> mapIter = sm.keySet().iterator();

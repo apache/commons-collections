@@ -47,12 +47,12 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
 
     @Override
     public void setUp() {
-        list = new CursorableLinkedList<E>();
+        list = new CursorableLinkedList<>();
     }
 
     @Override
     public CursorableLinkedList<E> makeObject() {
-        return new CursorableLinkedList<E>();
+        return new CursorableLinkedList<>();
     }
 
     @SuppressWarnings("unchecked")
@@ -75,7 +75,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         list.add(7,(E) Integer.valueOf(5));
         assertEquals("[-2, -1, 0, 1, 2, 3, 4, 5]",list.toString());
 
-        final List<E> list2 = new LinkedList<E>();
+        final List<E> list2 = new LinkedList<>();
         list2.add((E) "A");
         list2.add((E) "B");
         list2.add((E) "C");
@@ -140,7 +140,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
     @SuppressWarnings("unchecked")
     public void testContainsAll() {
         assertTrue(list.containsAll(list));
-        final java.util.List<E> list2 = new java.util.LinkedList<E>();
+        final java.util.List<E> list2 = new java.util.LinkedList<>();
         assertTrue(list.containsAll(list2));
         list2.add((E) "A");
         assertTrue(!list.containsAll(list2));
@@ -836,11 +836,11 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         assertTrue(list.equals(list));
         assertEquals(list.hashCode(),list.hashCode());
 
-        final CursorableLinkedList<E> list2 = new CursorableLinkedList<E>();
+        final CursorableLinkedList<E> list2 = new CursorableLinkedList<>();
         assertTrue(!list.equals(list2));
         assertTrue(!list2.equals(list));
 
-        final java.util.List<E> list3 = new java.util.LinkedList<E>();
+        final java.util.List<E> list3 = new java.util.LinkedList<>();
         assertTrue(!list.equals(list3));
         assertTrue(!list3.equals(list));
         assertTrue(list2.equals(list3));
@@ -1178,7 +1178,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         list.add((E) "4");
         list.add((E) "5");
 
-        final HashSet<E> set = new HashSet<E>();
+        final HashSet<E> set = new HashSet<>();
         set.add((E) "A");
         set.add((E) "2");
         set.add((E) "C");
@@ -1260,7 +1260,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
         list.add((E) "5");
         list.add((E) "5");
 
-        final HashSet<E> set = new HashSet<E>();
+        final HashSet<E> set = new HashSet<>();
         set.add((E) "A");
         set.add((E) "2");
         set.add((E) "C");
@@ -1501,7 +1501,7 @@ public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
      */
     @Override
     public String[] ignoredTests() {
-        final ArrayList<String> list = new ArrayList<String>();
+        final ArrayList<String> list = new ArrayList<>();
         final String prefix = "CursorableLinkedListTest";
         final String bulk = ".bulkTestSubList";
         final String[] ignored = new String[] {

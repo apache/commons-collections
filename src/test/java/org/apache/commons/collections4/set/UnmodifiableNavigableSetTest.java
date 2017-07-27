@@ -54,7 +54,7 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
 
     @Override
     public UnmodifiableNavigableSet<E> makeFullCollection() {
-        final TreeSet<E> set = new TreeSet<E>();
+        final TreeSet<E> set = new TreeSet<>();
         set.addAll(Arrays.asList(getFullElements()));
         return (UnmodifiableNavigableSet<E>) UnmodifiableNavigableSet.unmodifiableNavigableSet(set);
     }
@@ -73,7 +73,7 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
     @SuppressWarnings("unchecked")
     protected void setupSet() {
         set = makeFullCollection();
-        array = new ArrayList<E>();
+        array = new ArrayList<>();
         array.add((E) Integer.valueOf(1));
     }
 

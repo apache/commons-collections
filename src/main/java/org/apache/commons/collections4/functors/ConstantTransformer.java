@@ -37,7 +37,7 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
 
     /** Returns null each time */
     @SuppressWarnings("rawtypes")
-    public static final Transformer NULL_INSTANCE = new ConstantTransformer<Object, Object>(null);
+    public static final Transformer NULL_INSTANCE = new ConstantTransformer<>(null);
 
     /** The closures to call in turn */
     private final O iConstant;
@@ -66,7 +66,7 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
         if (constantToReturn == null) {
             return nullTransformer();
         }
-        return new ConstantTransformer<I, O>(constantToReturn);
+        return new ConstantTransformer<>(constantToReturn);
     }
 
     /**

@@ -64,7 +64,7 @@ public class SingletonMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     @Override
     @SuppressWarnings("unchecked")
     public SingletonMap<K, V> makeFullMap() {
-        return new SingletonMap<K, V>((K) ONE, (V) TWO);
+        return new SingletonMap<>((K) ONE, (V) TWO);
     }
 
     @Override

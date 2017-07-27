@@ -73,7 +73,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * @since 4.1
      */
     public static <E> Builder<E> builder(final Predicate<? super E> predicate) {
-        return new Builder<E>(predicate);
+        return new Builder<>(predicate);
     }
 
     /**
@@ -84,7 +84,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      * @since 4.1
      */
     public static <E> Builder<E> notNullBuilder() {
-        return new Builder<E>(NotNullPredicate.<E>notNullPredicate());
+        return new Builder<>(NotNullPredicate.<E>notNullPredicate());
     }
 
     /**
@@ -103,7 +103,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
      */
     public static <T> PredicatedCollection<T> predicatedCollection(final Collection<T> coll,
                                                                    final Predicate<? super T> predicate) {
-        return new PredicatedCollection<T>(coll, predicate);
+        return new PredicatedCollection<>(coll, predicate);
     }
 
     //-----------------------------------------------------------------------
@@ -209,10 +209,10 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
         private final Predicate<? super E> predicate;
 
         /** The buffer containing valid elements. */
-        private final List<E> accepted = new ArrayList<E>();
+        private final List<E> accepted = new ArrayList<>();
 
         /** The buffer containing rejected elements. */
-        private final List<E> rejected = new ArrayList<E>();
+        private final List<E> rejected = new ArrayList<>();
 
         // -----------------------------------------------------------------------
         /**

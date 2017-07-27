@@ -51,7 +51,7 @@ public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public SingletonIterator<E> makeObject() {
-        return new SingletonIterator<E>((E) testValue);
+        return new SingletonIterator<>((E) testValue);
     }
 
     @Override
@@ -84,7 +84,7 @@ public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
 
     @SuppressWarnings("unchecked")
     public void testSingletonIteratorRemove() {
-        final ResettableIterator<E> iter = new SingletonIterator<E>((E) "xyzzy");
+        final ResettableIterator<E> iter = new SingletonIterator<>((E) "xyzzy");
         assertTrue(iter.hasNext());
         assertEquals("xyzzy",iter.next());
         iter.remove();

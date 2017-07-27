@@ -98,7 +98,7 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testFactory_Decorate() {
-        final Map<K, V> base = new HashMap<K, V>();
+        final Map<K, V> base = new HashMap<>();
         base.put((K) "A", (V) "1");
         base.put((K) "B", (V) "2");
         base.put((K) "C", (V) "3");
@@ -118,7 +118,7 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testFactory_decorateTransform() {
-        final Map<K, V> base = new HashMap<K, V>();
+        final Map<K, V> base = new HashMap<>();
         base.put((K) "A", (V) "1");
         base.put((K) "B", (V) "2");
         base.put((K) "C", (V) "3");

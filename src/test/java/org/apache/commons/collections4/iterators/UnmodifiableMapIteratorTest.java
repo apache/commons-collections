@@ -48,7 +48,7 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
     @Override
     @SuppressWarnings("unchecked")
     public IterableMap<K, V> getMap() {
-        final IterableMap<K, V> testMap = new DualHashBidiMap<K, V>();
+        final IterableMap<K, V> testMap = new DualHashBidiMap<>();
         testMap.put((K) "A", (V) "a");
         testMap.put((K) "B", (V)"b");
         testMap.put((K) "C", (V) "c");
@@ -58,7 +58,7 @@ public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K
     @Override
     @SuppressWarnings("unchecked")
     public Map<K, V> getConfirmedMap() {
-        final Map<K, V> testMap = new HashMap<K, V>();
+        final Map<K, V> testMap = new HashMap<>();
         testMap.put((K) "A", (V) "a");
         testMap.put((K) "B", (V)"b");
         testMap.put((K) "C", (V) "c");

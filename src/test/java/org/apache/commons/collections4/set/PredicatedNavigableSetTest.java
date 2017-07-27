@@ -56,7 +56,7 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
 
     @Override
     public NavigableSet<E> makeFullCollection() {
-        final TreeSet<E> set = new TreeSet<E>();
+        final TreeSet<E> set = new TreeSet<>();
         set.addAll(Arrays.asList(getFullElements()));
         return PredicatedNavigableSet.predicatedNavigableSet(set, truePredicate);
     }
@@ -96,7 +96,7 @@ public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
     @SuppressWarnings("unchecked")
     public void testIllegalAddAll() {
         final NavigableSet<E> set = makeTestSet();
-        final Set<E> elements = new TreeSet<E>();
+        final Set<E> elements = new TreeSet<>();
         elements.add((E) "Aone");
         elements.add((E) "Atwo");
         elements.add((E) "Bthree");

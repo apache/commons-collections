@@ -39,14 +39,14 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
 
     @Override
     public ListIterator<E> makeEmptyIterator() {
-        return new ReverseListIterator<E>(new ArrayList<E>());
+        return new ReverseListIterator<>(new ArrayList<E>());
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public ReverseListIterator<E> makeObject() {
-        final List<E> list = new ArrayList<E>(Arrays.asList((E[]) testArray));
-        return new ReverseListIterator<E>(list);
+        final List<E> list = new ArrayList<>(Arrays.asList((E[]) testArray));
+        return new ReverseListIterator<>(list);
     }
 
     // overrides
@@ -77,7 +77,7 @@ public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
 
     @Override
     public void testWalkForwardAndBack() {
-        final ArrayList<E> list = new ArrayList<E>();
+        final ArrayList<E> list = new ArrayList<>();
         final ListIterator<E> it = makeObject();
         while (it.hasNext()) {
             list.add(it.next());

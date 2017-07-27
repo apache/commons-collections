@@ -53,7 +53,7 @@ public final class UnmodifiableIterator<E> implements Iterator<E>, Unmodifiable 
             final Iterator<E> tmpIterator = (Iterator<E>) iterator;
             return tmpIterator;
         }
-        return new UnmodifiableIterator<E>(iterator);
+        return new UnmodifiableIterator<>(iterator);
     }
 
     //-----------------------------------------------------------------------

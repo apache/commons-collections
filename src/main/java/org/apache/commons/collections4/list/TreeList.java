@@ -84,7 +84,7 @@ public class TreeList<E> extends AbstractList<E> {
     public TreeList(final Collection<? extends E> coll) {
         super();
         if (!coll.isEmpty()) {
-            root = new AVLNode<E>(coll);
+            root = new AVLNode<>(coll);
             size = coll.size();
         }
     }
@@ -145,7 +145,7 @@ public class TreeList<E> extends AbstractList<E> {
         // override to go 75% faster
         // cannot use EmptyIterator as iterator.add() must work
         checkInterval(fromIndex, 0, size());
-        return new TreeListIterator<E>(this, fromIndex);
+        return new TreeListIterator<>(this, fromIndex);
     }
 
     /**
@@ -201,7 +201,7 @@ public class TreeList<E> extends AbstractList<E> {
         modCount++;
         checkInterval(index, 0, size());
         if (root == null) {
-            root = new AVLNode<E>(index, obj, null, null);
+            root = new AVLNode<>(index, obj, null, null);
         } else {
             root = root.insert(index, obj);
         }
@@ -225,7 +225,7 @@ public class TreeList<E> extends AbstractList<E> {
             return false;
         }
         modCount += c.size();
-        final AVLNode<E> cTree = new AVLNode<E>(c);
+        final AVLNode<E> cTree = new AVLNode<>(c);
         root = root == null ? cTree : root.addAll(cTree, size);
         size += c.size();
         return true;
@@ -372,7 +372,7 @@ public class TreeList<E> extends AbstractList<E> {
                         final int absolutePositionOfParent, final AVLNode<E> prev, final AVLNode<E> next) {
             final int mid = start + (end - start) / 2;
             if (start < mid) {
-                left = new AVLNode<E>(iterator, start, mid - 1, mid, prev, this);
+                left = new AVLNode<>(iterator, start, mid - 1, mid, prev, this);
             } else {
                 leftIsPrevious = true;
                 left = prev;
@@ -380,7 +380,7 @@ public class TreeList<E> extends AbstractList<E> {
             value = iterator.next();
             relativePosition = mid - absolutePositionOfParent;
             if (mid < end) {
-                right = new AVLNode<E>(iterator, mid + 1, end, mid, this, next);
+                right = new AVLNode<>(iterator, mid + 1, end, mid, this, next);
             } else {
                 rightIsNext = true;
                 right = next;
@@ -501,7 +501,7 @@ public class TreeList<E> extends AbstractList<E> {
 
         private AVLNode<E> insertOnLeft(final int indexRelativeToMe, final E obj) {
             if (getLeftSubTree() == null) {
-                setLeft(new AVLNode<E>(-1, obj, this, left), null);
+                setLeft(new AVLNode<>(-1, obj, this, left), null);
             } else {
                 setLeft(left.insert(indexRelativeToMe, obj), null);
             }
@@ -516,7 +516,7 @@ public class TreeList<E> extends AbstractList<E> {
 
         private AVLNode<E> insertOnRight(final int indexRelativeToMe, final E obj) {
             if (getRightSubTree() == null) {
-                setRight(new AVLNode<E>(+1, obj, right, this), null);
+                setRight(new AVLNode<>(+1, obj, right, this), null);
             } else {
                 setRight(right.insert(indexRelativeToMe, obj), null);
             }
@@ -828,7 +828,7 @@ public class TreeList<E> extends AbstractList<E> {
                 // find a subtree, s, that is no taller than me. (While we are
                 // navigating left, we store the nodes we encounter in a stack
                 // so that we can re-balance them in step 4.)
-                final Deque<AVLNode<E>> sAncestors = new ArrayDeque<AVLNode<E>>();
+                final Deque<AVLNode<E>> sAncestors = new ArrayDeque<>();
                 AVLNode<E> s = otherTree;
                 int sAbsolutePosition = s.relativePosition + currentSize;
                 int sParentAbsolutePosition = 0;
@@ -868,7 +868,7 @@ public class TreeList<E> extends AbstractList<E> {
             }
             otherTree = otherTree.removeMin();
 
-            final Deque<AVLNode<E>> sAncestors = new ArrayDeque<AVLNode<E>>();
+            final Deque<AVLNode<E>> sAncestors = new ArrayDeque<>();
             AVLNode<E> s = this;
             int sAbsolutePosition = s.relativePosition;
             int sParentAbsolutePosition = 0;

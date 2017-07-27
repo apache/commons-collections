@@ -66,7 +66,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
 
     @Override
     protected MultiValuedMap<K, V> makeFullMap() {
-        final MultiValuedMap<K, V> map = new ArrayListValuedHashMap<K, V>();
+        final MultiValuedMap<K, V> map = new ArrayListValuedHashMap<>();
         addSampleMappings(map);
         return UnmodifiableMultiValuedMap.<K, V> unmodifiableMultiValuedMap(map);
     }

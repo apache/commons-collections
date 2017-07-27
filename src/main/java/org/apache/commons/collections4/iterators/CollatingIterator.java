@@ -95,7 +95,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      *   child iterators
      */
     public CollatingIterator(final Comparator<? super E> comp, final int initIterCapacity) {
-        iterators = new ArrayList<Iterator<? extends E>>(initIterCapacity);
+        iterators = new ArrayList<>(initIterCapacity);
         setComparator(comp);
     }
 
@@ -289,7 +289,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      */
     private void start() {
         if (values == null) {
-            values = new ArrayList<E>(iterators.size());
+            values = new ArrayList<>(iterators.size());
             valueSet = new BitSet(iterators.size());
             for (int i = 0; i < iterators.size(); i++) {
                 values.add(null);

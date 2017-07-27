@@ -47,7 +47,7 @@ public final class NullIsExceptionPredicate<T> implements PredicateDecorator<T>,
         if (predicate == null) {
             throw new NullPointerException("Predicate must not be null");
         }
-        return new NullIsExceptionPredicate<T>(predicate);
+        return new NullIsExceptionPredicate<>(predicate);
     }
 
     /**

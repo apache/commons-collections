@@ -37,7 +37,7 @@ public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
      */
     @Override
     public Map.Entry<K, V> makeMapEntry() {
-        return new UnmodifiableMapEntry<K, V>(null, null);
+        return new UnmodifiableMapEntry<>(null, null);
     }
 
     /**
@@ -47,7 +47,7 @@ public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
      */
     @Override
     public Map.Entry<K, V> makeMapEntry(final K key, final V value) {
-        return new UnmodifiableMapEntry<K, V>(key, value);
+        return new UnmodifiableMapEntry<>(key, value);
     }
 
     //-----------------------------------------------------------------------
@@ -59,18 +59,18 @@ public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
     @SuppressWarnings("unchecked")
     public void testConstructors() {
         // 1. test key-value constructor
-        Map.Entry<K, V> entry = new UnmodifiableMapEntry<K, V>((K) key, (V) value);
+        Map.Entry<K, V> entry = new UnmodifiableMapEntry<>((K) key, (V) value);
         assertSame(key, entry.getKey());
         assertSame(value, entry.getValue());
 
         // 2. test pair constructor
-        final KeyValue<K, V> pair = new DefaultKeyValue<K, V>((K) key, (V) value);
-        entry = new UnmodifiableMapEntry<K, V>(pair);
+        final KeyValue<K, V> pair = new DefaultKeyValue<>((K) key, (V) value);
+        entry = new UnmodifiableMapEntry<>(pair);
         assertSame(key, entry.getKey());
         assertSame(value, entry.getValue());
 
         // 3. test copy constructor
-        final Map.Entry<K, V> entry2 = new UnmodifiableMapEntry<K, V>(entry);
+        final Map.Entry<K, V> entry2 = new UnmodifiableMapEntry<>(entry);
         assertSame(key, entry2.getKey());
         assertSame(value, entry2.getValue());
 

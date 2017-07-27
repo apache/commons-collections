@@ -57,7 +57,7 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
             final Trie<K, V> tmpTrie = (Trie<K, V>) trie;
             return tmpTrie;
         }
-        return new UnmodifiableTrie<K, V>(trie);
+        return new UnmodifiableTrie<>(trie);
     }
 
     //-----------------------------------------------------------------------

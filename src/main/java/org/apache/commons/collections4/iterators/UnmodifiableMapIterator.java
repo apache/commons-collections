@@ -52,7 +52,7 @@ public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, U
             final MapIterator<K, V> tmpIterator = (MapIterator<K, V>) iterator;
             return tmpIterator;
         }
-        return new UnmodifiableMapIterator<K, V>(iterator);
+        return new UnmodifiableMapIterator<>(iterator);
     }
 
     //-----------------------------------------------------------------------

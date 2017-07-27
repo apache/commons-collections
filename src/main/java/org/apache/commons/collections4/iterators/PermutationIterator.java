@@ -82,13 +82,13 @@ public class PermutationIterator<E> implements Iterator<List<E>> {
         direction = new boolean[coll.size()];
         Arrays.fill(direction, false);
         int value = 1;
-        objectMap = new HashMap<Integer, E>();
+        objectMap = new HashMap<>();
         for (E e : coll) {
             objectMap.put(Integer.valueOf(value), e);
             keys[value - 1] = value;
             value++;
         }
-        nextPermutation = new ArrayList<E>(coll);
+        nextPermutation = new ArrayList<>(coll);
     }
 
     /**
@@ -139,7 +139,7 @@ public class PermutationIterator<E> implements Iterator<List<E>> {
         direction[indexOfLargestMobileInteger + offset] = tmpDirection;
 
         // reverse the direction of all integers larger than k and build the result
-        final List<E> nextP = new ArrayList<E>();
+        final List<E> nextP = new ArrayList<>();
         for (int i = 0; i < keys.length; i++) {
             if (keys[i] > largestKey) {
                 direction[i] = !direction[i];

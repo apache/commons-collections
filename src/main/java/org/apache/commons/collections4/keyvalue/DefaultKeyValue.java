@@ -109,7 +109,7 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
      * @return a MapEntry instance
      */
     public Map.Entry<K, V> toMapEntry() {
-        return new DefaultMapEntry<K, V>(this);
+        return new DefaultMapEntry<>(this);
     }
 
     //-----------------------------------------------------------------------

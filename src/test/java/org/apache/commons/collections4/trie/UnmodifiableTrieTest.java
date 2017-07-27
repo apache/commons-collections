@@ -64,7 +64,7 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
 
     @Override
     public Trie<String, V> makeFullMap() {
-        final Trie<String, V> m = new PatriciaTrie<V>();
+        final Trie<String, V> m = new PatriciaTrie<>();
         addSampleMappings(m);
         return UnmodifiableTrie.unmodifiableTrie(m);
     }

@@ -97,7 +97,7 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
      */
     @Override
     public SortedBag<T> makeConfirmedCollection() {
-        return new TreeBag<T>();
+        return new TreeBag<>();
     }
 
     //-----------------------------------------------------------------------

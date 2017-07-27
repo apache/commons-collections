@@ -32,6 +32,6 @@ public abstract class AbstractIterableMap<K, V> implements IterableMap<K, V> {
      */
     @Override
     public MapIterator<K, V> mapIterator() {
-        return new EntrySetToMapIteratorAdapter<K, V>(entrySet());
+        return new EntrySetToMapIteratorAdapter<>(entrySet());
     }
 }

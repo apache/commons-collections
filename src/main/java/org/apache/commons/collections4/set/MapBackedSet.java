@@ -72,7 +72,7 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
      * @since 4.0
      */
     public static <E, V> MapBackedSet<E, V> mapBackedSet(final Map<E, ? super V> map, final V dummyValue) {
-        return new MapBackedSet<E, V>(map, dummyValue);
+        return new MapBackedSet<>(map, dummyValue);
     }
 
     //-----------------------------------------------------------------------

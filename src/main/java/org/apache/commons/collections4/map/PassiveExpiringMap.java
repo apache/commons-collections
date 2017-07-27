@@ -200,7 +200,7 @@ public class PassiveExpiringMap<K, V>
     }
 
     /** map used to manage expiration times for the actual map entries. */
-    private final Map<Object, Long> expirationMap = new HashMap<Object, Long>();
+    private final Map<Object, Long> expirationMap = new HashMap<>();
 
     /** the policy used to determine time-to-live values for map entries. */
     private final ExpirationPolicy<K, V> expiringPolicy;

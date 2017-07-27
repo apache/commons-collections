@@ -114,7 +114,7 @@ public class ArrayListValuedHashMap<K, V> extends AbstractListValuedMap<K, V>
     // -----------------------------------------------------------------------
     @Override
     protected ArrayList<V> createCollection() {
-        return new ArrayList<V>(initialListCapacity);
+        return new ArrayList<>(initialListCapacity);
     }
 
     // -----------------------------------------------------------------------

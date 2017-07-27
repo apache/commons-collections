@@ -90,7 +90,7 @@ public class PredicatedSetTest<E> extends AbstractSetTest<E> {
     @SuppressWarnings("unchecked")
     public void testIllegalAddAll() {
         final Set<E> set = makeTestSet();
-        final Set<E> elements = new HashSet<E>();
+        final Set<E> elements = new HashSet<>();
         elements.add((E) "one");
         elements.add((E) "two");
         elements.add((E) Integer.valueOf(3));

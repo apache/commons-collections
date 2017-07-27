@@ -50,7 +50,7 @@ public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
 
     @Override
     public Set<E> makeFullCollection() {
-        final HashSet<E> set = new HashSet<E>();
+        final HashSet<E> set = new HashSet<>();
         set.addAll(Arrays.asList(getFullElements()));
         return UnmodifiableSet.unmodifiableSet(set);
     }

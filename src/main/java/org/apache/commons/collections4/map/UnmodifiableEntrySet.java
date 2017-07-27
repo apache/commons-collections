@@ -55,7 +55,7 @@ public final class UnmodifiableEntrySet<K, V>
         if (set instanceof Unmodifiable) {
             return set;
         }
-        return new UnmodifiableEntrySet<K, V>(set);
+        return new UnmodifiableEntrySet<>(set);
     }
 
     //-----------------------------------------------------------------------

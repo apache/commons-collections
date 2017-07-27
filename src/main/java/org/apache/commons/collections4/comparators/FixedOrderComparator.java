@@ -60,7 +60,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
     }
 
     /** Internal map of object to position */
-    private final Map<T, Integer> map = new HashMap<T, Integer>();
+    private final Map<T, Integer> map = new HashMap<>();
 
     /** Counter used in determining the position in the map */
     private int counter = 0;

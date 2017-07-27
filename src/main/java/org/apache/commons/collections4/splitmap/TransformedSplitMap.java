@@ -88,7 +88,7 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
     public static <J, K, U, V> TransformedSplitMap<J, K, U, V> transformingMap(final Map<K, V> map,
             final Transformer<? super J, ? extends K> keyTransformer,
             final Transformer<? super U, ? extends V> valueTransformer) {
-        return new TransformedSplitMap<J, K, U, V>(map, keyTransformer, valueTransformer);
+        return new TransformedSplitMap<>(map, keyTransformer, valueTransformer);
     }
 
     //-----------------------------------------------------------------------
@@ -180,7 +180,7 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
         if (map.isEmpty()) {
             return (Map<K, V>) map;
         }
-        final Map<K, V> result = new LinkedMap<K, V>(map.size());
+        final Map<K, V> result = new LinkedMap<>(map.size());
 
         for (final Map.Entry<? extends J, ? extends U> entry : map.entrySet()) {
             result.put(transformKey(entry.getKey()), transformValue(entry.getValue()));

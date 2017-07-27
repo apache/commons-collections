@@ -126,7 +126,7 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
         if (criterion == null) {
             throw new NullPointerException("Criterion must not be null.");
         }
-        return new ComparatorPredicate<T>(object, comparator, criterion);
+        return new ComparatorPredicate<>(object, comparator, criterion);
     }
 
     /**

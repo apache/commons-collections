@@ -49,7 +49,7 @@ public class TransformerClosure<E> implements Closure<E>, Serializable {
         if (transformer == null) {
             return NOPClosure.<E>nopClosure();
         }
-        return new TransformerClosure<E>(transformer);
+        return new TransformerClosure<>(transformer);
     }
 
     /**

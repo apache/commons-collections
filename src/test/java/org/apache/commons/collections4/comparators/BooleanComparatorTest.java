@@ -47,7 +47,7 @@ public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {
 
     @Override
     public List<Boolean> getComparableObjectsOrdered() {
-        final List<Boolean> list = new ArrayList<Boolean>();
+        final List<Boolean> list = new ArrayList<>();
         list.add(new Boolean(false));
         list.add(Boolean.FALSE);
         list.add(new Boolean(false));

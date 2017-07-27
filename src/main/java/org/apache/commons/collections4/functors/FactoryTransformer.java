@@ -48,7 +48,7 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
         if (factory == null) {
             throw new NullPointerException("Factory must not be null");
         }
-        return new FactoryTransformer<I, O>(factory);
+        return new FactoryTransformer<>(factory);
     }
 
     /**

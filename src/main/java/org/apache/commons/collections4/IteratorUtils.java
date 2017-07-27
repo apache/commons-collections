@@ -208,7 +208,7 @@ public class IteratorUtils {
      * @return a singleton iterator over the object
      */
     public static <E> ResettableIterator<E> singletonIterator(final E object) {
-        return new SingletonIterator<E>(object);
+        return new SingletonIterator<>(object);
     }
 
     /**
@@ -222,7 +222,7 @@ public class IteratorUtils {
      * @return a singleton list iterator over the object
      */
     public static <E> ListIterator<E> singletonListIterator(final E object) {
-        return new SingletonListIterator<E>(object);
+        return new SingletonListIterator<>(object);
     }
 
     // Arrays
@@ -236,7 +236,7 @@ public class IteratorUtils {
      * @throws NullPointerException if array is null
      */
     public static <E> ResettableIterator<E> arrayIterator(final E... array) {
-        return new ObjectArrayIterator<E>(array);
+        return new ObjectArrayIterator<>(array);
     }
 
     /**
@@ -252,7 +252,7 @@ public class IteratorUtils {
      * @throws NullPointerException if array is null
      */
     public static <E> ResettableIterator<E> arrayIterator(final Object array) {
-        return new ArrayIterator<E>(array);
+        return new ArrayIterator<>(array);
     }
 
     /**
@@ -267,7 +267,7 @@ public class IteratorUtils {
      * @throws NullPointerException if array is null
      */
     public static <E> ResettableIterator<E> arrayIterator(final E[] array, final int start) {
-        return new ObjectArrayIterator<E>(array, start);
+        return new ObjectArrayIterator<>(array, start);
     }
 
     /**
@@ -286,7 +286,7 @@ public class IteratorUtils {
      * @throws NullPointerException if array is null
      */
     public static <E> ResettableIterator<E> arrayIterator(final Object array, final int start) {
-        return new ArrayIterator<E>(array, start);
+        return new ArrayIterator<>(array, start);
     }
 
     /**
@@ -302,7 +302,7 @@ public class IteratorUtils {
      * @throws NullPointerException if array is null
      */
     public static <E> ResettableIterator<E> arrayIterator(final E[] array, final int start, final int end) {
-        return new ObjectArrayIterator<E>(array, start, end);
+        return new ObjectArrayIterator<>(array, start, end);
     }
 
     /**
@@ -321,7 +321,7 @@ public class IteratorUtils {
      * @throws NullPointerException if array is null
      */
     public static <E> ResettableIterator<E> arrayIterator(final Object array, final int start, final int end) {
-        return new ArrayIterator<E>(array, start, end);
+        return new ArrayIterator<>(array, start, end);
     }
 
     //-----------------------------------------------------------------------
@@ -334,7 +334,7 @@ public class IteratorUtils {
      * @throws NullPointerException if array is null
      */
     public static <E> ResettableListIterator<E> arrayListIterator(final E... array) {
-        return new ObjectArrayListIterator<E>(array);
+        return new ObjectArrayListIterator<>(array);
     }
 
     /**
@@ -350,7 +350,7 @@ public class IteratorUtils {
      * @throws NullPointerException if array is null
      */
     public static <E> ResettableListIterator<E> arrayListIterator(final Object array) {
-        return new ArrayListIterator<E>(array);
+        return new ArrayListIterator<>(array);
     }
 
     /**
@@ -364,7 +364,7 @@ public class IteratorUtils {
      * @throws NullPointerException if array is null
      */
     public static <E> ResettableListIterator<E> arrayListIterator(final E[] array, final int start) {
-        return new ObjectArrayListIterator<E>(array, start);
+        return new ObjectArrayListIterator<>(array, start);
     }
 
     /**
@@ -382,7 +382,7 @@ public class IteratorUtils {
      * @throws NullPointerException if array is null
      */
     public static <E> ResettableListIterator<E> arrayListIterator(final Object array, final int start) {
-        return new ArrayListIterator<E>(array, start);
+        return new ArrayListIterator<>(array, start);
     }
 
     /**
@@ -398,7 +398,7 @@ public class IteratorUtils {
      * @throws NullPointerException if array is null
      */
     public static <E> ResettableListIterator<E> arrayListIterator(final E[] array, final int start, final int end) {
-        return new ObjectArrayListIterator<E>(array, start, end);
+        return new ObjectArrayListIterator<>(array, start, end);
     }
 
     /**
@@ -417,7 +417,7 @@ public class IteratorUtils {
      * @throws NullPointerException if array is null
      */
     public static <E> ResettableListIterator<E> arrayListIterator(final Object array, final int start, final int end) {
-        return new ArrayListIterator<E>(array, start, end);
+        return new ArrayListIterator<>(array, start, end);
     }
 
     // Bounded
@@ -457,7 +457,7 @@ public class IteratorUtils {
      */
     public static <E> BoundedIterator<E> boundedIterator(final Iterator<? extends E> iterator,
                                                          long offset, long max) {
-        return new BoundedIterator<E>(iterator, offset, max);
+        return new BoundedIterator<>(iterator, offset, max);
     }
 
     // Unmodifiable
@@ -520,7 +520,7 @@ public class IteratorUtils {
                                                   final Iterator<? extends E> iterator2) {
         // keep a version with two iterators to avoid the following warning in client code (Java 5 & 6)
         // "A generic array of E is created for a varargs parameter"
-        return new IteratorChain<E>(iterator1, iterator2);
+        return new IteratorChain<>(iterator1, iterator2);
     }
 
     /**
@@ -533,7 +533,7 @@ public class IteratorUtils {
      * @throws NullPointerException if iterators array is null or contains a null
      */
     public static <E> Iterator<E> chainedIterator(final Iterator<? extends E>... iterators) {
-        return new IteratorChain<E>(iterators);
+        return new IteratorChain<>(iterators);
     }
 
     /**
@@ -547,7 +547,7 @@ public class IteratorUtils {
      * @throws ClassCastException if the iterators collection contains the wrong object type
      */
     public static <E> Iterator<E> chainedIterator(final Collection<Iterator<? extends E>> iterators) {
-        return new IteratorChain<E>(iterators);
+        return new IteratorChain<>(iterators);
     }
 
     // Collated
@@ -575,7 +575,7 @@ public class IteratorUtils {
         @SuppressWarnings("unchecked")
         final Comparator<E> comp =
             comparator == null ? ComparatorUtils.NATURAL_COMPARATOR : (Comparator<E>) comparator;
-        return new CollatingIterator<E>(comp, iterator1, iterator2);
+        return new CollatingIterator<>(comp, iterator1, iterator2);
     }
 
     /**
@@ -599,7 +599,7 @@ public class IteratorUtils {
         @SuppressWarnings("unchecked")
         final Comparator<E> comp =
             comparator == null ? ComparatorUtils.NATURAL_COMPARATOR : (Comparator<E>) comparator;
-        return new CollatingIterator<E>(comp, iterators);
+        return new CollatingIterator<>(comp, iterators);
     }
 
     /**
@@ -624,7 +624,7 @@ public class IteratorUtils {
         @SuppressWarnings("unchecked")
         final Comparator<E> comp =
             comparator == null ? ComparatorUtils.NATURAL_COMPARATOR : (Comparator<E>) comparator;
-        return new CollatingIterator<E>(comp, iterators);
+        return new CollatingIterator<>(comp, iterators);
     }
 
     // Object Graph
@@ -685,7 +685,7 @@ public class IteratorUtils {
      */
     public static <E> Iterator<E> objectGraphIterator(final E root,
             final Transformer<? super E, ? extends E> transformer) {
-        return new ObjectGraphIterator<E>(root, transformer);
+        return new ObjectGraphIterator<>(root, transformer);
     }
 
     // Transformed
@@ -712,7 +712,7 @@ public class IteratorUtils {
         if (transform == null) {
             throw new NullPointerException("Transformer must not be null");
         }
-        return new TransformIterator<I, O>(iterator, transform);
+        return new TransformIterator<>(iterator, transform);
     }
 
     // Filtered
@@ -737,7 +737,7 @@ public class IteratorUtils {
         if (predicate == null) {
             throw new NullPointerException("Predicate must not be null");
         }
-        return new FilterIterator<E>(iterator, predicate);
+        return new FilterIterator<>(iterator, predicate);
     }
 
     /**
@@ -761,7 +761,7 @@ public class IteratorUtils {
         if (predicate == null) {
             throw new NullPointerException("Predicate must not be null");
         }
-        return new FilterListIterator<E>(listIterator, predicate);
+        return new FilterListIterator<>(listIterator, predicate);
     }
 
     // Looping
@@ -782,7 +782,7 @@ public class IteratorUtils {
         if (coll == null) {
             throw new NullPointerException("Collection must not be null");
         }
-        return new LoopingIterator<E>(coll);
+        return new LoopingIterator<>(coll);
     }
 
     /**
@@ -801,7 +801,7 @@ public class IteratorUtils {
         if (list == null) {
             throw new NullPointerException("List must not be null");
         }
-        return new LoopingListIterator<E>(list);
+        return new LoopingListIterator<>(list);
     }
 
     // org.w3c.dom.NodeList iterators
@@ -892,7 +892,7 @@ public class IteratorUtils {
      * @since 4.1
      */
     public static <E> SkippingIterator<E> skippingIterator(final Iterator<E> iterator, long offset) {
-        return new SkippingIterator<E>(iterator, offset);
+        return new SkippingIterator<>(iterator, offset);
     }
 
     // Zipping
@@ -909,7 +909,7 @@ public class IteratorUtils {
      */
     public static <E> ZippingIterator<E> zippingIterator(final Iterator<? extends E> a,
                                                          final Iterator<? extends E> b) {
-        return new ZippingIterator<E>(a, b);
+        return new ZippingIterator<>(a, b);
     }
 
     /**
@@ -926,7 +926,7 @@ public class IteratorUtils {
     public static <E> ZippingIterator<E> zippingIterator(final Iterator<? extends E> a,
                                                          final Iterator<? extends E> b,
                                                          final Iterator<? extends E> c) {
-        return new ZippingIterator<E>(a, b, c);
+        return new ZippingIterator<>(a, b, c);
     }
 
     /**
@@ -939,7 +939,7 @@ public class IteratorUtils {
      * @since 4.1
      */
     public static <E> ZippingIterator<E> zippingIterator(final Iterator<? extends E>... iterators) {
-        return new ZippingIterator<E>(iterators);
+        return new ZippingIterator<>(iterators);
     }
 
     // Views
@@ -956,7 +956,7 @@ public class IteratorUtils {
         if (enumeration == null) {
             throw new NullPointerException("Enumeration must not be null");
         }
-        return new EnumerationIterator<E>(enumeration);
+        return new EnumerationIterator<>(enumeration);
     }
 
     /**
@@ -977,7 +977,7 @@ public class IteratorUtils {
         if (removeCollection == null) {
             throw new NullPointerException("Collection must not be null");
         }
-        return new EnumerationIterator<E>(enumeration, removeCollection);
+        return new EnumerationIterator<>(enumeration, removeCollection);
     }
 
     /**
@@ -992,7 +992,7 @@ public class IteratorUtils {
         if (iterator == null) {
             throw new NullPointerException("Iterator must not be null");
         }
-        return new IteratorEnumeration<E>(iterator);
+        return new IteratorEnumeration<>(iterator);
     }
 
     /**
@@ -1008,7 +1008,7 @@ public class IteratorUtils {
         if (iterator == null) {
             throw new NullPointerException("Iterator must not be null");
         }
-        return new IteratorIterable<E>(iterator, false);
+        return new IteratorIterable<>(iterator, false);
     }
 
     /**
@@ -1024,7 +1024,7 @@ public class IteratorUtils {
         if (iterator == null) {
             throw new NullPointerException("Iterator must not be null");
         }
-        return new IteratorIterable<E>(iterator, true);
+        return new IteratorIterable<>(iterator, true);
     }
 
     /**
@@ -1042,7 +1042,7 @@ public class IteratorUtils {
         if (iterator == null) {
             throw new NullPointerException("Iterator must not be null");
         }
-        return new ListIteratorWrapper<E>(iterator);
+        return new ListIteratorWrapper<>(iterator);
     }
 
     /**
@@ -1124,7 +1124,7 @@ public class IteratorUtils {
         if (estimatedSize < 1) {
             throw new IllegalArgumentException("Estimated size must be greater than 0");
         }
-        final List<E> list = new ArrayList<E>(estimatedSize);
+        final List<E> list = new ArrayList<>(estimatedSize);
         while (iterator.hasNext()) {
             list.add(iterator.next());
         }
@@ -1163,10 +1163,10 @@ public class IteratorUtils {
             return ((Iterable<?>) obj).iterator();
         }
         if (obj instanceof Object[]) {
-            return new ObjectArrayIterator<Object>((Object[]) obj);
+            return new ObjectArrayIterator<>((Object[]) obj);
         }
         if (obj instanceof Enumeration) {
-            return new EnumerationIterator<Object>((Enumeration<?>) obj);
+            return new EnumerationIterator<>((Enumeration<?>) obj);
         }
         if (obj instanceof Map) {
             return ((Map<?, ?>) obj).values().iterator();
@@ -1178,9 +1178,9 @@ public class IteratorUtils {
             return new NodeListIterator((Node) obj);
         }
         if (obj instanceof Dictionary) {
-            return new EnumerationIterator<Object>(((Dictionary<?, ?>) obj).elements());
+            return new EnumerationIterator<>(((Dictionary<?, ?>) obj).elements());
         } else if (obj.getClass().isArray()) {
-            return new ArrayIterator<Object>(obj);
+            return new ArrayIterator<>(obj);
         }
         try {
             final Method method = obj.getClass().getMethod("iterator", (Class[]) null);

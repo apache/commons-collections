@@ -38,7 +38,7 @@ public class ArrayStackTest<E> extends AbstractArrayListTest<E> {
 
     @Override
     public ArrayStack<E> makeObject() {
-        return new ArrayStack<E>();
+        return new ArrayStack<>();
     }
 
     //-----------------------------------------------------------------------

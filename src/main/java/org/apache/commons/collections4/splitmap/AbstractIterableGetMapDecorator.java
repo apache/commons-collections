@@ -115,7 +115,7 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
      */
     @Override
     public MapIterator<K, V> mapIterator() {
-        return new EntrySetToMapIteratorAdapter<K, V>(entrySet());
+        return new EntrySetToMapIteratorAdapter<>(entrySet());
     }
 
     @Override

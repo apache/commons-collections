@@ -108,7 +108,7 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         assertTrue(!map.containsKey(Integer.valueOf(3)));
         assertTrue(!map.containsValue(Integer.valueOf(3)));
 
-        final Map<K, V> map2 = new HashMap<K, V>();
+        final Map<K, V> map2 = new HashMap<>();
         map2.put((K) "A", (V) "a");
         map2.put((K) "B", (V) "b");
         map2.put((K) "C", (V) "c");

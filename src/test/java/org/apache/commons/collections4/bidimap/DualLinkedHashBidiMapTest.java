@@ -40,7 +40,7 @@ public class DualLinkedHashBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
      */
     @Override
     public DualLinkedHashBidiMap<K, V> makeObject() {
-        return new DualLinkedHashBidiMap<K, V>();
+        return new DualLinkedHashBidiMap<>();
     }
 
     @Override

@@ -108,7 +108,7 @@ public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
      */
     @Override
     public SortedSet<E> makeConfirmedCollection() {
-        return new TreeSet<E>();
+        return new TreeSet<>();
     }
 
     //-----------------------------------------------------------------------

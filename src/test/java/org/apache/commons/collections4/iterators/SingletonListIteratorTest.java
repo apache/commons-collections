@@ -50,7 +50,7 @@ public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public SingletonListIterator<E> makeObject() {
-        return new SingletonListIterator<E>((E) testValue);
+        return new SingletonListIterator<>((E) testValue);
     }
 
     @Override

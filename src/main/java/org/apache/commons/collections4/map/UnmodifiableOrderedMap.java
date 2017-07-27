@@ -63,7 +63,7 @@ public final class UnmodifiableOrderedMap<K, V> extends AbstractOrderedMapDecora
             final OrderedMap<K, V> tmpMap = (OrderedMap<K, V>) map;
             return tmpMap;
         }
-        return new UnmodifiableOrderedMap<K, V>(map);
+        return new UnmodifiableOrderedMap<>(map);
     }
 
     //-----------------------------------------------------------------------

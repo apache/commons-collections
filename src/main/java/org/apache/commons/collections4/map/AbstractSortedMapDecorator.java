@@ -124,7 +124,7 @@ public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecora
      */
     @Override
     public OrderedMapIterator<K, V> mapIterator() {
-        return new SortedMapIterator<K, V>(entrySet());
+        return new SortedMapIterator<>(entrySet());
     }
 
     /**
@@ -150,7 +150,7 @@ public abstract class AbstractSortedMapDecorator<K, V> extends AbstractMapDecora
         @Override
         public synchronized void reset() {
             super.reset();
-            iterator = new ListIteratorWrapper<Map.Entry<K, V>>(iterator);
+            iterator = new ListIteratorWrapper<>(iterator);
         }
 
         /**

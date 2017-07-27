@@ -59,7 +59,7 @@ public abstract class AbstractMockPredicateTest<T> {
     @Before
     public final void createVerifyList()
     {
-        mockPredicatesToVerify = new ArrayList<Predicate<? super T>>();
+        mockPredicatesToVerify = new ArrayList<>();
     }
 
     /**

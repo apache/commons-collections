@@ -314,7 +314,7 @@ class BulkTestSuiteMaker {
          result.setName(prefix);
 
          final BulkTest bulk = makeFirstTestCase(startingClass);
-         ignored = new ArrayList<String>();
+         ignored = new ArrayList<>();
          final String[] s = bulk.ignoredTests();
          if (s != null) {
              ignored.addAll(Arrays.asList(s));

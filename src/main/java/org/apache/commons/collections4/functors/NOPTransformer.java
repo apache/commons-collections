@@ -33,7 +33,7 @@ public class NOPTransformer<T> implements Transformer<T, T>, Serializable {
 
     /** Singleton predicate instance */
     @SuppressWarnings("rawtypes")
-    public static final Transformer INSTANCE = new NOPTransformer<Object>();
+    public static final Transformer INSTANCE = new NOPTransformer<>();
 
     /**
      * Factory returning the singleton instance.

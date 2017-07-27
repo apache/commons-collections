@@ -46,7 +46,7 @@ public final class NullIsFalsePredicate<T> implements PredicateDecorator<T>, Ser
         if (predicate == null) {
             throw new NullPointerException("Predicate must not be null");
         }
-        return new NullIsFalsePredicate<T>(predicate);
+        return new NullIsFalsePredicate<>(predicate);
     }
 
     /**

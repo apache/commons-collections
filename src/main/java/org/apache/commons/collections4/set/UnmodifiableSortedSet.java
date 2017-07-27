@@ -56,7 +56,7 @@ public final class UnmodifiableSortedSet<E>
         if (set instanceof Unmodifiable) {
             return set;
         }
-        return new UnmodifiableSortedSet<E>(set);
+        return new UnmodifiableSortedSet<>(set);
     }
 
     //-----------------------------------------------------------------------

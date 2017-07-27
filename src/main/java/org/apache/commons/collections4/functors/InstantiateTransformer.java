@@ -37,7 +37,7 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
 
     /** Singleton instance that uses the no arg constructor */
     @SuppressWarnings("rawtypes")
-    private static final Transformer NO_ARG_INSTANCE = new InstantiateTransformer<Object>();
+    private static final Transformer NO_ARG_INSTANCE = new InstantiateTransformer<>();
 
     /** The constructor parameter types */
     private final Class<?>[] iParamTypes;
@@ -73,9 +73,9 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
         }
 
         if (paramTypes == null || paramTypes.length == 0) {
-            return new InstantiateTransformer<T>();
+            return new InstantiateTransformer<>();
         }
-        return new InstantiateTransformer<T>(paramTypes, args);
+        return new InstantiateTransformer<>(paramTypes, args);
     }
 
     /**

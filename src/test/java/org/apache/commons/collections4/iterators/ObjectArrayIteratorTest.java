@@ -35,30 +35,30 @@ public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public ObjectArrayIterator<E> makeEmptyIterator() {
-        return new ObjectArrayIterator<E>((E[]) new Object[0]);
+        return new ObjectArrayIterator<>((E[]) new Object[0]);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public ObjectArrayIterator<E> makeObject() {
-        return new ObjectArrayIterator<E>((E[]) testArray);
+        return new ObjectArrayIterator<>((E[]) testArray);
     }
 
     @SuppressWarnings("unchecked")
     public ObjectArrayIterator<E> makeArrayIterator() {
-        return new ObjectArrayIterator<E>();
+        return new ObjectArrayIterator<>();
     }
 
     public ObjectArrayIterator<E> makeArrayIterator(final E[] array) {
-        return new ObjectArrayIterator<E>(array);
+        return new ObjectArrayIterator<>(array);
     }
 
     public ObjectArrayIterator<E> makeArrayIterator(final E[] array, final int index) {
-        return new ObjectArrayIterator<E>(array, index);
+        return new ObjectArrayIterator<>(array, index);
     }
 
     public ObjectArrayIterator<E> makeArrayIterator(final E[] array, final int start, final int end) {
-        return new ObjectArrayIterator<E>(array, start, end);
+        return new ObjectArrayIterator<>(array, start, end);
     }
 
     @Override

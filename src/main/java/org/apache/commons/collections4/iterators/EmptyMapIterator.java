@@ -33,7 +33,7 @@ public class EmptyMapIterator<K, V> extends AbstractEmptyMapIterator<K, V> imple
      * @since 3.1
      */
     @SuppressWarnings("rawtypes")
-    public static final MapIterator INSTANCE = new EmptyMapIterator<Object, Object>();
+    public static final MapIterator INSTANCE = new EmptyMapIterator<>();
 
     /**
      * Get a typed instance of the iterator.

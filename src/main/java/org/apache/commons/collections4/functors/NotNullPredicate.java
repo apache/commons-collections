@@ -33,7 +33,7 @@ public final class NotNullPredicate<T> implements Predicate<T>, Serializable {
 
     /** Singleton predicate instance */
     @SuppressWarnings("rawtypes")
-    public static final Predicate INSTANCE = new NotNullPredicate<Object>();
+    public static final Predicate INSTANCE = new NotNullPredicate<>();
 
     /**
      * Factory returning the singleton instance.

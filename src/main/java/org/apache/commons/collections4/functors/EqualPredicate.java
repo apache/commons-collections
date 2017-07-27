@@ -50,7 +50,7 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
         if (object == null) {
             return NullPredicate.nullPredicate();
         }
-        return new EqualPredicate<T>(object);
+        return new EqualPredicate<>(object);
     }
 
     /**
@@ -66,7 +66,7 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
         if (object == null) {
             return NullPredicate.nullPredicate();
         }
-        return new EqualPredicate<T>(object, equator);
+        return new EqualPredicate<>(object, equator);
     }
 
     /**

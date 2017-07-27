@@ -58,7 +58,7 @@ public class WhileClosure<E> implements Closure<E> {
         if (closure == null) {
             throw new NullPointerException("Closure must not be null");
         }
-        return new WhileClosure<E>(predicate, closure, doLoop);
+        return new WhileClosure<>(predicate, closure, doLoop);
     }
 
     /**

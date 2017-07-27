@@ -44,12 +44,12 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
     // -----------------------------------------------------------------------
     @Override
     public SetValuedMap<K, V> makeObject() {
-        return new HashSetValuedHashMap<K, V>();
+        return new HashSetValuedHashMap<>();
     }
 
     @Override
     public MultiValuedMap<K, V> makeConfirmedMap() {
-        return new HashSetValuedHashMap<K, V>();
+        return new HashSetValuedHashMap<>();
     }
 
     // -----------------------------------------------------------------------

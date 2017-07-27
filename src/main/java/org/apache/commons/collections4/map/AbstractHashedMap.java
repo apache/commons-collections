@@ -533,7 +533,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * @return the newly created entry
      */
     protected HashEntry<K, V> createEntry(final HashEntry<K, V> next, final int hashCode, final K key, final V value) {
-        return new HashEntry<K, V>(next, hashCode, convertKey(key), value);
+        return new HashEntry<>(next, hashCode, convertKey(key), value);
     }
 
     /**
@@ -757,7 +757,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         if (size == 0) {
             return EmptyMapIterator.<K, V>emptyMapIterator();
         }
-        return new HashMapIterator<K, V>(this);
+        return new HashMapIterator<>(this);
     }
 
     /**
@@ -813,7 +813,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
         if (entrySet == null) {
-            entrySet = new EntrySet<K, V>(this);
+            entrySet = new EntrySet<>(this);
         }
         return entrySet;
     }
@@ -828,7 +828,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         if (size() == 0) {
             return EmptyIterator.<Map.Entry<K, V>>emptyIterator();
         }
-        return new EntrySetIterator<K, V>(this);
+        return new EntrySetIterator<>(this);
     }
 
     /**
@@ -908,7 +908,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     @Override
     public Set<K> keySet() {
         if (keySet == null) {
-            keySet = new KeySet<K>(this);
+            keySet = new KeySet<>(this);
         }
         return keySet;
     }
@@ -923,7 +923,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         if (size() == 0) {
             return EmptyIterator.<K>emptyIterator();
         }
-        return new KeySetIterator<K>(this);
+        return new KeySetIterator<>(this);
     }
 
     /**
@@ -993,7 +993,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
     @Override
     public Collection<V> values() {
         if (values == null) {
-            values = new Values<V>(this);
+            values = new Values<>(this);
         }
         return values;
     }
@@ -1008,7 +1008,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
         if (size() == 0) {
             return EmptyIterator.<V>emptyIterator();
         }
-        return new ValuesIterator<V>(this);
+        return new ValuesIterator<>(this);
     }
 
     /**

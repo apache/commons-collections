@@ -53,7 +53,7 @@ public class FixedSizeList<E>
      * @since 4.0
      */
     public static <E> FixedSizeList<E> fixedSizeList(final List<E> list) {
-        return new FixedSizeList<E>(list);
+        return new FixedSizeList<>(list);
     }
 
     //-----------------------------------------------------------------------
@@ -151,7 +151,7 @@ public class FixedSizeList<E>
     @Override
     public List<E> subList(final int fromIndex, final int toIndex) {
         final List<E> sub = decorated().subList(fromIndex, toIndex);
-        return new FixedSizeList<E>(sub);
+        return new FixedSizeList<>(sub);
     }
 
     /**

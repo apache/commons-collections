@@ -39,12 +39,12 @@ public class TreeBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> e
 
     @Override
     public BidiMap<K, V> makeObject() {
-        return new TreeBidiMap<K, V>();
+        return new TreeBidiMap<>();
     }
 
     @Override
     public TreeMap<K, V> makeConfirmedMap() {
-        return new TreeMap<K, V>();
+        return new TreeMap<>();
     }
 
     /**

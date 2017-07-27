@@ -104,7 +104,7 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
 
     @SuppressWarnings("unchecked")
     public void testIllegalDecorate() {
-        final HashMultiSet<Object> elements = new HashMultiSet<Object>();
+        final HashMultiSet<Object> elements = new HashMultiSet<>();
         elements.add("one");
         elements.add("two");
         elements.add(Integer.valueOf(3));

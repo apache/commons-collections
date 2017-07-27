@@ -46,7 +46,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     private static final long serialVersionUID = 5155253417231339498L;
 
     /** The root node of the {@link Trie}. */
-    private transient TrieEntry<K, V> root = new TrieEntry<K, V>(null, null, -1);
+    private transient TrieEntry<K, V> root = new TrieEntry<>(null, null, -1);
 
     /**
      * Each of these fields are initialized to contain an instance of the
@@ -158,7 +158,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         if (!KeyAnalyzer.isOutOfBoundsIndex(bitIndex)) {
             if (KeyAnalyzer.isValidBitIndex(bitIndex)) { // in 99.999...9% the case
                 /* NEW KEY+VALUE TUPLE */
-                final TrieEntry<K, V> t = new TrieEntry<K, V>(key, value, bitIndex);
+                final TrieEntry<K, V> t = new TrieEntry<>(key, value, bitIndex);
                 addEntry(t, lengthInBits);
                 incrementSize();
                 return null;
@@ -281,7 +281,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
      */
     public Map.Entry<K, V> select(final K key) {
         final int lengthInBits = lengthInBits(key);
-        final Reference<Map.Entry<K, V>> reference = new Reference<Map.Entry<K,V>>();
+        final Reference<Map.Entry<K, V>> reference = new Reference<>();
         if (!selectR(root.left, -1, key, lengthInBits, reference)) {
             return reference.get();
         }
@@ -910,7 +910,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
         final int bitIndex = bitIndex(key, found.key);
         if (KeyAnalyzer.isValidBitIndex(bitIndex)) {
-            final TrieEntry<K, V> added = new TrieEntry<K, V>(key, null, bitIndex);
+            final TrieEntry<K, V> added = new TrieEntry<>(key, null, bitIndex);
             addEntry(added, lengthInBits);
             incrementSize(); // must increment because remove will decrement
             final TrieEntry<K, V> ceil = nextEntry(added);
@@ -972,7 +972,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
         final int bitIndex = bitIndex(key, found.key);
         if (KeyAnalyzer.isValidBitIndex(bitIndex)) {
-            final TrieEntry<K, V> added = new TrieEntry<K, V>(key, null, bitIndex);
+            final TrieEntry<K, V> added = new TrieEntry<>(key, null, bitIndex);
             addEntry(added, lengthInBits);
             incrementSize(); // must increment because remove will decrement
             final TrieEntry<K, V> ceil = nextEntry(added);
@@ -1027,7 +1027,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
         final int bitIndex = bitIndex(key, found.key);
         if (KeyAnalyzer.isValidBitIndex(bitIndex)) {
-            final TrieEntry<K, V> added = new TrieEntry<K, V>(key, null, bitIndex);
+            final TrieEntry<K, V> added = new TrieEntry<>(key, null, bitIndex);
             addEntry(added, lengthInBits);
             incrementSize(); // must increment because remove will decrement
             final TrieEntry<K, V> prior = previousEntry(added);
@@ -1068,7 +1068,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
         final int bitIndex = bitIndex(key, found.key);
         if (KeyAnalyzer.isValidBitIndex(bitIndex)) {
-            final TrieEntry<K, V> added = new TrieEntry<K, V>(key, null, bitIndex);
+            final TrieEntry<K, V> added = new TrieEntry<>(key, null, bitIndex);
             addEntry(added, lengthInBits);
             incrementSize(); // must increment because remove will decrement
             final TrieEntry<K, V> floor = previousEntry(added);
@@ -2427,7 +2427,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     @SuppressWarnings("unchecked") // This will fail at runtime if the stream is incorrect
     private void readObject(final ObjectInputStream stream) throws IOException, ClassNotFoundException{
         stream.defaultReadObject();
-        root = new TrieEntry<K, V>(null, null, -1);
+        root = new TrieEntry<>(null, null, -1);
         int size = stream.readInt();
         for(int i = 0; i < size; i++){
             K k = (K) stream.readObject();

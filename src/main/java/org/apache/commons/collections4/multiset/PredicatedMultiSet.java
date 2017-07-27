@@ -61,7 +61,7 @@ public class PredicatedMultiSet<E> extends PredicatedCollection<E> implements Mu
      */
     public static <E> PredicatedMultiSet<E> predicatedMultiSet(final MultiSet<E> multiset,
                                                                final Predicate<? super E> predicate) {
-        return new PredicatedMultiSet<E>(multiset, predicate);
+        return new PredicatedMultiSet<>(multiset, predicate);
     }
 
     //-----------------------------------------------------------------------

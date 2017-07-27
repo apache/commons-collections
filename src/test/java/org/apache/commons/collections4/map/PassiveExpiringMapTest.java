@@ -75,24 +75,24 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
     }
 
     private Map<Integer, String> makeDecoratedTestMap() {
-        final Map<Integer, String> m = new HashMap<Integer, String>();
+        final Map<Integer, String> m = new HashMap<>();
         m.put(Integer.valueOf(1), "one");
         m.put(Integer.valueOf(2), "two");
         m.put(Integer.valueOf(3), "three");
         m.put(Integer.valueOf(4), "four");
         m.put(Integer.valueOf(5), "five");
         m.put(Integer.valueOf(6), "six");
-        return new PassiveExpiringMap<Integer, String>(new TestExpirationPolicy(), m);
+        return new PassiveExpiringMap<>(new TestExpirationPolicy(), m);
     }
 
     @Override
     public Map<K, V> makeObject() {
-        return new PassiveExpiringMap<K, V>();
+        return new PassiveExpiringMap<>();
     }
 
     private Map<Integer, String> makeTestMap() {
         final Map<Integer, String> m =
-                new PassiveExpiringMap<Integer, String>(new TestExpirationPolicy());
+                new PassiveExpiringMap<>(new TestExpirationPolicy());
         m.put(Integer.valueOf(1), "one");
         m.put(Integer.valueOf(2), "two");
         m.put(Integer.valueOf(3), "three");
@@ -105,7 +105,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
     public void testConstructors() {
         try {
             final Map<String, String> map = null;
-            new PassiveExpiringMap<String, String>(map);
+            new PassiveExpiringMap<>(map);
             fail("constructor - exception should have been thrown.");
         } catch (final NullPointerException ex) {
             // success
@@ -113,7 +113,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
 
         try {
             final ExpirationPolicy<String, String> policy = null;
-            new PassiveExpiringMap<String, String>(policy);
+            new PassiveExpiringMap<>(policy);
             fail("constructor - exception should have been thrown.");
         } catch (final NullPointerException ex) {
             // success
@@ -221,7 +221,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
 
     public void testZeroTimeToLive() {
         // item should not be available
-        final PassiveExpiringMap<String, String> m = new PassiveExpiringMap<String, String>(0L);
+        final PassiveExpiringMap<String, String> m = new PassiveExpiringMap<>(0L);
         m.put("a", "b");
         assertNull(m.get("a"));
     }
@@ -229,9 +229,9 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
     public void testExpiration() {
         validateExpiration(new PassiveExpiringMap<String, String>(500), 500);
         validateExpiration(new PassiveExpiringMap<String, String>(1000), 1000);
-        validateExpiration(new PassiveExpiringMap<String, String>(
+        validateExpiration(new PassiveExpiringMap<>(
                 new PassiveExpiringMap.ConstantTimeToLiveExpirationPolicy<String, String>(500)), 500);
-        validateExpiration(new PassiveExpiringMap<String, String>(
+        validateExpiration(new PassiveExpiringMap<>(
                 new PassiveExpiringMap.ConstantTimeToLiveExpirationPolicy<String, String>(1, TimeUnit.SECONDS)), 1000);
     }
 

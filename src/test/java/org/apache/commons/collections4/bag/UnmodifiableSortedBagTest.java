@@ -50,7 +50,7 @@ public class UnmodifiableSortedBagTest<E> extends AbstractSortedBagTest<E> {
 
     @Override
     public SortedBag<E> makeFullCollection() {
-        final SortedBag<E> bag = new TreeBag<E>();
+        final SortedBag<E> bag = new TreeBag<>();
         bag.addAll(Arrays.asList(getFullElements()));
         return UnmodifiableSortedBag.unmodifiableSortedBag(bag);
     }

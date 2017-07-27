@@ -61,7 +61,7 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> {
             return coerce(predicates[0]);
         }
 
-        return new AllPredicate<T>(FunctorUtils.copy(predicates));
+        return new AllPredicate<>(FunctorUtils.copy(predicates));
     }
 
     /**
@@ -84,7 +84,7 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> {
         if (preds.length == 1) {
             return coerce(preds[0]);
         }
-        return new AllPredicate<T>(preds);
+        return new AllPredicate<>(preds);
     }
 
     /**

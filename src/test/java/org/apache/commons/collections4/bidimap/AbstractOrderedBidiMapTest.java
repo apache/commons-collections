@@ -123,7 +123,7 @@ public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTe
 
         resetFull();
         bidi = getMap();
-        final List<K> list = new ArrayList<K>(confirmed.keySet());
+        final List<K> list = new ArrayList<>(confirmed.keySet());
         Collections.reverse(list);
         final Iterator<K> it = list.iterator();
         K confirmedLast = it.next();

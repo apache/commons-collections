@@ -55,7 +55,7 @@ public final class UnmodifiableSet<E>
             final Set<E> tmpSet = (Set<E>) set;
             return tmpSet;
         }
-        return new UnmodifiableSet<E>(set);
+        return new UnmodifiableSet<>(set);
     }
 
     //-----------------------------------------------------------------------

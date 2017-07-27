@@ -322,7 +322,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
 
     @SuppressWarnings("unchecked")
     protected <E> List<E> getAsList(final Object[] o) {
-        final ArrayList<E> result = new ArrayList<E>();
+        final ArrayList<E> result = new ArrayList<>();
         for (final Object element : o) {
             result.add((E) element);
         }
@@ -451,14 +451,14 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * @return a map that is known to be valid
      */
     public Map<K, V> makeConfirmedMap() {
-        return new HashMap<K, V>();
+        return new HashMap<>();
     }
 
     /**
      * Creates a new Map Entry that is independent of the first and the map.
      */
     public static <K, V> Map.Entry<K, V> cloneMapEntry(final Map.Entry<K, V> entry) {
-        final HashMap<K, V> map = new HashMap<K, V>();
+        final HashMap<K, V> map = new HashMap<>();
         map.put(entry.getKey(), entry.getValue());
         return map.entrySet().iterator().next();
     }
@@ -1128,7 +1128,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         resetFull();
         final Set<Map.Entry<K, V>> entrySet = getMap().entrySet();
         final Map.Entry<K, V> entry = entrySet.iterator().next();
-        final HashMap<K, V> temp = new HashMap<K, V>();
+        final HashMap<K, V> temp = new HashMap<>();
         temp.put(entry.getKey(), (V) "A VERY DIFFERENT VALUE");
         final Map.Entry<K, V> test = temp.entrySet().iterator().next();
         assertEquals(false, entrySet.contains(test));
@@ -1175,7 +1175,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         final Set<Map.Entry<K, V>> entrySet = getMap().entrySet();
         final Map.Entry<K, V> entry = entrySet.iterator().next();
         final K key = entry.getKey();
-        final HashMap<K, V> temp = new HashMap<K, V>();
+        final HashMap<K, V> temp = new HashMap<>();
         temp.put(entry.getKey(), (V) "A VERY DIFFERENT VALUE");
         final Map.Entry<K, V> test = temp.entrySet().iterator().next();
 
@@ -1405,7 +1405,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         final Set<Map.Entry<K, V>> entrySet = getMap().entrySet();
         for (int i = 0; i < sampleKeys.length; i++) {
             try {
-                entrySet.remove(new DefaultMapEntry<K, V>(sampleKeys[i], sampleValues[i]));
+                entrySet.remove(new DefaultMapEntry<>(sampleKeys[i], sampleValues[i]));
             } catch (final UnsupportedOperationException e) {
                 // if entrySet removal is unsupported, just skip this test
                 return;
@@ -1436,7 +1436,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             return;
         }
         final Set<Map.Entry<K, V>> entrySet = getMap().entrySet();
-        final HashSet<Map.Entry<K, V>> comparisonSet = new HashSet<Map.Entry<K, V>>(entrySet);
+        final HashSet<Map.Entry<K, V>> comparisonSet = new HashSet<>(entrySet);
         try {
             assertFalse(entrySet.removeAll(Collections.<Map.Entry<K, V>> emptySet()));
         } catch (final UnsupportedOperationException e) {
@@ -1471,7 +1471,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
             return;
         }
         final Set<Map.Entry<K, V>> entrySet = getMap().entrySet();
-        final HashSet<Map.Entry<K, V>> comparisonSet = new HashSet<Map.Entry<K, V>>(entrySet);
+        final HashSet<Map.Entry<K, V>> comparisonSet = new HashSet<>(entrySet);
         try {
             assertFalse(entrySet.retainAll(comparisonSet));
         } catch (final UnsupportedOperationException e) {
@@ -2011,7 +2011,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     public void verifyValues() {
-        final List<V> known = new ArrayList<V>(getConfirmed().values());
+        final List<V> known = new ArrayList<>(getConfirmed().values());
 
         // bug in IBM JDK: IBM J9 VM build 2.4, JRE 1.6.0 IBM J9 2.4 Linux x86-32 jvmxi3260sr12-20121024_126067
         // a call to values() on an empty map retrieved via TreeMap#headMap or tailMap
@@ -2019,7 +2019,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         // it will also not recover, as the value view is cached internally
         values = getMap().values();
 
-        final List<V> test = new ArrayList<V>(values);
+        final List<V> test = new ArrayList<>(values);
 
         final int size = getConfirmed().size();
         final boolean empty = getConfirmed().isEmpty();

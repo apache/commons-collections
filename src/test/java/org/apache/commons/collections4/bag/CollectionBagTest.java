@@ -59,7 +59,7 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
      */
     @Override
     public Collection<T> makeConfirmedCollection() {
-        return new ArrayList<T>();
+        return new ArrayList<>();
     }
 
     /**

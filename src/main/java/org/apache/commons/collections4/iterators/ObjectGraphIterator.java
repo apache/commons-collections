@@ -77,7 +77,7 @@ import org.apache.commons.collections4.Transformer;
 public class ObjectGraphIterator<E> implements Iterator<E> {
 
     /** The stack of iterators */
-    private final Deque<Iterator<? extends E>> stack = new ArrayDeque<Iterator<? extends E>>(8);
+    private final Deque<Iterator<? extends E>> stack = new ArrayDeque<>(8);
     /** The root object in the tree */
     private E root;
     /** The transformer to use */

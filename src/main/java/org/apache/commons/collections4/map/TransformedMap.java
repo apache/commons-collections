@@ -76,7 +76,7 @@ public class TransformedMap<K, V>
     public static <K, V> TransformedMap<K, V> transformingMap(final Map<K, V> map,
             final Transformer<? super K, ? extends K> keyTransformer,
             final Transformer<? super V, ? extends V> valueTransformer) {
-        return new TransformedMap<K, V>(map, keyTransformer, valueTransformer);
+        return new TransformedMap<>(map, keyTransformer, valueTransformer);
     }
 
     /**
@@ -99,7 +99,7 @@ public class TransformedMap<K, V>
     public static <K, V> TransformedMap<K, V> transformedMap(final Map<K, V> map,
             final Transformer<? super K, ? extends K> keyTransformer,
             final Transformer<? super V, ? extends V> valueTransformer) {
-        final TransformedMap<K, V> decorated = new TransformedMap<K, V>(map, keyTransformer, valueTransformer);
+        final TransformedMap<K, V> decorated = new TransformedMap<>(map, keyTransformer, valueTransformer);
         if (map.size() > 0) {
             final Map<K, V> transformed = decorated.transformMap(map);
             decorated.clear();
@@ -198,7 +198,7 @@ public class TransformedMap<K, V>
         if (map.isEmpty()) {
             return (Map<K, V>) map;
         }
-        final Map<K, V> result = new LinkedMap<K, V>(map.size());
+        final Map<K, V> result = new LinkedMap<>(map.size());
 
         for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
             result.put(transformKey(entry.getKey()), transformValue(entry.getValue()));

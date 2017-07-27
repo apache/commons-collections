@@ -509,7 +509,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         Node<K, V> node = rootNode[KEY.ordinal()];
         if (node == null) {
             // map is empty
-            final Node<K, V> root = new Node<K, V>(key, value);
+            final Node<K, V> root = new Node<>(key, value);
             rootNode[KEY.ordinal()] = root;
             rootNode[VALUE.ordinal()] = root;
             grow();
@@ -526,7 +526,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
                     if (node.getLeft(KEY) != null) {
                         node = node.getLeft(KEY);
                     } else {
-                        final Node<K, V> newNode = new Node<K, V>(key, value);
+                        final Node<K, V> newNode = new Node<>(key, value);
 
                         insertValue(newNode);
                         node.setLeft(newNode, KEY);
@@ -540,7 +540,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
                     if (node.getRight(KEY) != null) {
                         node = node.getRight(KEY);
                     } else {
-                        final Node<K, V> newNode = new Node<K, V>(key, value);
+                        final Node<K, V> newNode = new Node<>(key, value);
 
                         insertValue(newNode);
                         node.setRight(newNode, KEY);
@@ -1847,7 +1847,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         }
 
         private Map.Entry<V, K> createEntry(final Node<K, V> node) {
-            return new UnmodifiableMapEntry<V, K>(node.getValue(), node.getKey());
+            return new UnmodifiableMapEntry<>(node.getValue(), node.getKey());
         }
     }
 

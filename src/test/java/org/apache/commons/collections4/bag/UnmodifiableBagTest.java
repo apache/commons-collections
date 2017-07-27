@@ -50,7 +50,7 @@ public class UnmodifiableBagTest<E> extends AbstractBagTest<E> {
 
     @Override
     public Bag<E> makeFullCollection() {
-        final Bag<E> bag = new HashBag<E>();
+        final Bag<E> bag = new HashBag<>();
         bag.addAll(Arrays.asList(getFullElements()));
         return UnmodifiableBag.unmodifiableBag(bag);
     }

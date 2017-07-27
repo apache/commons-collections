@@ -100,7 +100,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
         if (map.size() > 0) {
             throw new IllegalArgumentException("Map must be empty");
         }
-        return new MultiKeyMap<K, V>(map);
+        return new MultiKeyMap<>(map);
     }
 
     //-----------------------------------------------------------------------
@@ -185,7 +185,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
             }
             entry = entry.next;
         }
-        decorated().addMapping(index, hashCode, new MultiKey<K>(key1, key2), value);
+        decorated().addMapping(index, hashCode, new MultiKey<>(key1, key2), value);
         return null;
     }
 
@@ -317,7 +317,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
             }
             entry = entry.next;
         }
-        decorated().addMapping(index, hashCode, new MultiKey<K>(key1, key2, key3), value);
+        decorated().addMapping(index, hashCode, new MultiKey<>(key1, key2, key3), value);
         return null;
     }
 
@@ -459,7 +459,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
             }
             entry = entry.next;
         }
-        decorated().addMapping(index, hashCode, new MultiKey<K>(key1, key2, key3, key4), value);
+        decorated().addMapping(index, hashCode, new MultiKey<>(key1, key2, key3, key4), value);
         return null;
     }
 
@@ -612,7 +612,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
             }
             entry = entry.next;
         }
-        decorated().addMapping(index, hashCode, new MultiKey<K>(key1, key2, key3, key4, key5), value);
+        decorated().addMapping(index, hashCode, new MultiKey<>(key1, key2, key3, key4, key5), value);
         return null;
     }
 

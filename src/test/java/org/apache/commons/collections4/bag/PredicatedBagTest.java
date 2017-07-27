@@ -104,7 +104,7 @@ public class PredicatedBagTest<T> extends AbstractBagTest<T> {
 
     @SuppressWarnings("unchecked")
     public void testIllegalDecorate() {
-        final HashBag<Object> elements = new HashBag<Object>();
+        final HashBag<Object> elements = new HashBag<>();
         elements.add("one");
         elements.add("two");
         elements.add(Integer.valueOf(3));

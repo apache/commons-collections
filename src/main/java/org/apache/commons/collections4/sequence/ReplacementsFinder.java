@@ -63,8 +63,8 @@ public class ReplacementsFinder<T> implements CommandVisitor<T> {
      * @param handler  handler to call when synchronized sequences are found
      */
     public ReplacementsFinder(final ReplacementsHandler<T> handler) {
-        pendingInsertions = new ArrayList<T>();
-        pendingDeletions  = new ArrayList<T>();
+        pendingInsertions = new ArrayList<>();
+        pendingDeletions  = new ArrayList<>();
         skipped           = 0;
         this.handler      = handler;
     }

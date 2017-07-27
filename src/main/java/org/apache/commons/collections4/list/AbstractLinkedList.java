@@ -125,12 +125,12 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
     @Override
     public ListIterator<E> listIterator() {
-        return new LinkedListIterator<E>(this, 0);
+        return new LinkedListIterator<>(this, 0);
     }
 
     @Override
     public ListIterator<E> listIterator(final int fromIndex) {
-        return new LinkedListIterator<E>(this, fromIndex);
+        return new LinkedListIterator<>(this, fromIndex);
     }
 
     //-----------------------------------------------------------------------
@@ -210,7 +210,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      */
     @Override
     public List<E> subList(final int fromIndexInclusive, final int toIndexExclusive) {
-        return new LinkedSubList<E>(this, fromIndexInclusive, toIndexExclusive);
+        return new LinkedSubList<>(this, fromIndexInclusive, toIndexExclusive);
     }
 
     //-----------------------------------------------------------------------
@@ -459,7 +459,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @return  newly created node
      */
     protected Node<E> createHeaderNode() {
-        return new Node<E>();
+        return new Node<>();
     }
 
     /**
@@ -471,7 +471,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @return a new node containing the value
      */
     protected Node<E> createNode(final E value) {
-        return new Node<E>(value);
+        return new Node<>(value);
     }
 
     /**
@@ -608,7 +608,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @return a new list iterator on the given sublist
      */
     protected ListIterator<E> createSubListListIterator(final LinkedSubList<E> subList, final int fromIndex) {
-        return new LinkedSubListIterator<E>(subList, fromIndex);
+        return new LinkedSubListIterator<>(subList, fromIndex);
     }
 
     //-----------------------------------------------------------------------
@@ -1080,7 +1080,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
         @Override
         public List<E> subList(final int fromIndexInclusive, final int toIndexExclusive) {
-            return new LinkedSubList<E>(parent, fromIndexInclusive + offset, toIndexExclusive + offset);
+            return new LinkedSubList<>(parent, fromIndexInclusive + offset, toIndexExclusive + offset);
         }
 
         protected void rangeCheck(final int index, final int beyond) {

@@ -41,7 +41,7 @@ public class QueueUtilsTest {
 
     @Test
     public void testUnmodifiableQueue() {
-        Queue<Object> queue = QueueUtils.unmodifiableQueue(new LinkedList<Object>());
+        Queue<Object> queue = QueueUtils.unmodifiableQueue(new LinkedList<>());
         assertTrue("Returned object should be an UnmodifiableQueue.", queue instanceof UnmodifiableQueue);
         try {
             QueueUtils.unmodifiableQueue(null);
@@ -55,7 +55,7 @@ public class QueueUtilsTest {
 
     @Test
     public void testPredicatedQueue() {
-        Queue<Object> queue = QueueUtils.predicatedQueue(new LinkedList<Object>(), truePredicate);
+        Queue<Object> queue = QueueUtils.predicatedQueue(new LinkedList<>(), truePredicate);
         assertTrue("Returned object should be a PredicatedQueue.", queue instanceof PredicatedQueue);
         try {
             QueueUtils.predicatedQueue(null, truePredicate);
@@ -64,7 +64,7 @@ public class QueueUtilsTest {
             // expected
         }
         try {
-            QueueUtils.predicatedQueue(new LinkedList<Object>(), null);
+            QueueUtils.predicatedQueue(new LinkedList<>(), null);
             fail("Expecting NullPointerException for null predicate.");
         } catch (final NullPointerException ex) {
             // expected
@@ -73,7 +73,7 @@ public class QueueUtilsTest {
 
     @Test
     public void testTransformedQueue() {
-        Queue<Object> queue = QueueUtils.transformingQueue(new LinkedList<Object>(), nopTransformer);
+        Queue<Object> queue = QueueUtils.transformingQueue(new LinkedList<>(), nopTransformer);
         assertTrue("Returned object should be an TransformedQueue.", queue instanceof TransformedQueue);
         try {
             QueueUtils.transformingQueue(null, nopTransformer);
@@ -82,7 +82,7 @@ public class QueueUtilsTest {
             // expected
         }
         try {
-            QueueUtils.transformingQueue(new LinkedList<Object>(), null);
+            QueueUtils.transformingQueue(new LinkedList<>(), null);
             fail("Expecting NullPointerException for null transformer.");
         } catch (final NullPointerException ex) {
             // expected

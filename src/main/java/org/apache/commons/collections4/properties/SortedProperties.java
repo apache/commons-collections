@@ -41,7 +41,7 @@ public class SortedProperties extends Properties {
     @Override
     public synchronized Enumeration<Object> keys() {
         final Set<Object> keySet = keySet();
-        final List<String> keys = new ArrayList<String>(keySet.size());
+        final List<String> keys = new ArrayList<>(keySet.size());
         for (final Object key : keySet) {
             keys.add(key.toString());
         }

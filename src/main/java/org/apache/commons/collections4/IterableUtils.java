@@ -365,7 +365,7 @@ public class IterableUtils {
                 final List<E> list = (iterable instanceof List<?>) ?
                         (List<E>) iterable :
                         IteratorUtils.toList(iterable.iterator());
-                return new ReverseListIterator<E>(list);
+                return new ReverseListIterator<>(list);
             }
         };
     }
@@ -451,7 +451,7 @@ public class IterableUtils {
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
-                return new UniqueFilterIterator<E>(iterable.iterator());
+                return new UniqueFilterIterator<>(iterable.iterator());
             }
         };
     }
@@ -474,7 +474,7 @@ public class IterableUtils {
         if (iterable instanceof UnmodifiableIterable<?>) {
             return iterable;
         }
-        return new UnmodifiableIterable<E>(iterable);
+        return new UnmodifiableIterable<>(iterable);
     }
 
     /**
@@ -937,7 +937,7 @@ public class IterableUtils {
         // create the empty partitions
         final int numberOfPredicates = predicates.length;
         final int numberOfPartitions = numberOfPredicates + 1;
-        final List<R> partitions = new ArrayList<R>(numberOfPartitions);
+        final List<R> partitions = new ArrayList<>(numberOfPartitions);
         for (int i = 0; i < numberOfPartitions; ++i) {
             partitions.add(partitionFactory.create());
         }

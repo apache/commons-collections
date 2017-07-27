@@ -72,7 +72,7 @@ public class FixedSizeSortedMap<K, V>
      * @since 4.0
      */
     public static <K, V> FixedSizeSortedMap<K, V> fixedSizeSortedMap(final SortedMap<K, V> map) {
-        return new FixedSizeSortedMap<K, V>(map);
+        return new FixedSizeSortedMap<>(map);
     }
 
     //-----------------------------------------------------------------------
@@ -158,17 +158,17 @@ public class FixedSizeSortedMap<K, V>
     //-----------------------------------------------------------------------
     @Override
     public SortedMap<K, V> subMap(final K fromKey, final K toKey) {
-        return new FixedSizeSortedMap<K, V>(getSortedMap().subMap(fromKey, toKey));
+        return new FixedSizeSortedMap<>(getSortedMap().subMap(fromKey, toKey));
     }
 
     @Override
     public SortedMap<K, V> headMap(final K toKey) {
-        return new FixedSizeSortedMap<K, V>(getSortedMap().headMap(toKey));
+        return new FixedSizeSortedMap<>(getSortedMap().headMap(toKey));
     }
 
     @Override
     public SortedMap<K, V> tailMap(final K fromKey) {
-        return new FixedSizeSortedMap<K, V>(getSortedMap().tailMap(fromKey));
+        return new FixedSizeSortedMap<>(getSortedMap().tailMap(fromKey));
     }
 
     @Override

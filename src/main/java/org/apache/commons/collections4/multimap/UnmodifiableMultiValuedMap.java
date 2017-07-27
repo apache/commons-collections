@@ -65,7 +65,7 @@ public final class UnmodifiableMultiValuedMap<K, V>
         if (map instanceof Unmodifiable) {
             return (UnmodifiableMultiValuedMap<K, V>) map;
         }
-        return new UnmodifiableMultiValuedMap<K, V>(map);
+        return new UnmodifiableMultiValuedMap<>(map);
     }
 
     /**

@@ -33,7 +33,7 @@ public final class NullPredicate<T> implements Predicate<T>, Serializable {
 
     /** Singleton predicate instance */
     @SuppressWarnings("rawtypes")
-    public static final Predicate INSTANCE = new NullPredicate<Object>();
+    public static final Predicate INSTANCE = new NullPredicate<>();
 
     /**
      * Factory returning the singleton instance.

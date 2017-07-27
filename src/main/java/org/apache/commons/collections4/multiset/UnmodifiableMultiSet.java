@@ -58,7 +58,7 @@ public final class UnmodifiableMultiSet<E>
             final MultiSet<E> tmpMultiSet = (MultiSet<E>) multiset;
             return tmpMultiSet;
         }
-        return new UnmodifiableMultiSet<E>(multiset);
+        return new UnmodifiableMultiSet<>(multiset);
     }
 
     //-----------------------------------------------------------------------

@@ -41,7 +41,7 @@ public class HashBagTest<T> extends AbstractBagTest<T> {
 
     @Override
     public Bag<T> makeObject() {
-        return new HashBag<T>();
+        return new HashBag<>();
     }
 
     @Override

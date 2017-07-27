@@ -34,7 +34,7 @@ public class MultiSetUtils {
      */
     @SuppressWarnings("rawtypes") // OK, empty multiset is compatible with any type
     public static final MultiSet EMPTY_MULTISET =
-        UnmodifiableMultiSet.unmodifiableMultiSet(new HashMultiSet<Object>());
+        UnmodifiableMultiSet.unmodifiableMultiSet(new HashMultiSet<>());
 
     /**
      * Instantiation of MultiSetUtils is not intended or required.

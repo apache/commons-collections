@@ -84,7 +84,7 @@ public abstract class AbstractSetTest<E> extends AbstractCollectionTest<E> {
      */
     @Override
     public Collection<E> makeConfirmedCollection() {
-        return new HashSet<E>();
+        return new HashSet<>();
     }
 
     /**

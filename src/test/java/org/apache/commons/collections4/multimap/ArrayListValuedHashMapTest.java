@@ -44,7 +44,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
     // -----------------------------------------------------------------------
     @Override
     public ListValuedMap<K, V> makeObject() {
-        return new ArrayListValuedHashMap<K, V>();
+        return new ArrayListValuedHashMap<>();
     }
 
     // -----------------------------------------------------------------------

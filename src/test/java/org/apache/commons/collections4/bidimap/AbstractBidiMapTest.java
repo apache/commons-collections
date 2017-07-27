@@ -127,8 +127,8 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
 
     public void verifyInverse() {
         assertEquals(map.size(), ((BidiMap<K, V>) map).inverseBidiMap().size());
-        final Map<K, V> map1 = new HashMap<K, V>(map);
-        final Map<V, K> map2 = new HashMap<V, K>(((BidiMap<K, V>) map).inverseBidiMap());
+        final Map<K, V> map1 = new HashMap<>(map);
+        final Map<V, K> map2 = new HashMap<>(((BidiMap<K, V>) map).inverseBidiMap());
         final Set<K> keys1 = map1.keySet();
         final Set<V> keys2 = map2.keySet();
         final Collection<V> values1 = map1.values();
@@ -319,7 +319,7 @@ public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<
     }
 
     private void removeByEntrySet(final BidiMap<?, ?> map, final Object key, final Object value) {
-        final Map<Object, Object> temp = new HashMap<Object, Object>();
+        final Map<Object, Object> temp = new HashMap<>();
         temp.put(key, value);
         map.entrySet().remove(temp.entrySet().iterator().next());
 

@@ -76,7 +76,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
      * @since 4.0
      */
     public static <E> LazyList<E> lazyList(final List<E> list, final Factory<? extends E> factory) {
-        return new LazyList<E>(list, factory);
+        return new LazyList<>(list, factory);
     }
 
     //-----------------------------------------------------------------------
@@ -135,7 +135,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
     @Override
     public List<E> subList(final int fromIndex, final int toIndex) {
         final List<E> sub = decorated().subList(fromIndex, toIndex);
-        return new LazyList<E>(sub, factory);
+        return new LazyList<>(sub, factory);
     }
 
 }

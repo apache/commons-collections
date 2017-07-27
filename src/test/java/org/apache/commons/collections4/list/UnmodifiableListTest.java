@@ -37,14 +37,14 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
     //-----------------------------------------------------------------------
     @Override
     public UnmodifiableList<E> makeObject() {
-        return new UnmodifiableList<E>(new ArrayList<E>());
+        return new UnmodifiableList<>(new ArrayList<E>());
     }
 
     @Override
     public UnmodifiableList<E> makeFullCollection() {
-        final ArrayList<E> list = new ArrayList<E>();
+        final ArrayList<E> list = new ArrayList<>();
         list.addAll(Arrays.asList(getFullElements()));
-        return new UnmodifiableList<E>(list);
+        return new UnmodifiableList<>(list);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class UnmodifiableListTest<E> extends AbstractListTest<E> {
     @SuppressWarnings("unchecked")
     protected void setupList() {
         list = makeFullCollection();
-        array = new ArrayList<E>();
+        array = new ArrayList<>();
         array.add((E) Integer.valueOf(1));
     }
 

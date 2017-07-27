@@ -40,7 +40,7 @@ public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
 
     @Override
     public ListOrderedSet<E> makeObject() {
-        return new ListOrderedSet<E>();
+        return new ListOrderedSet<>();
     }
 
     @SuppressWarnings("unchecked")
@@ -134,7 +134,7 @@ public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
         assertSame(ONE, set.get(1));
         assertSame(TWO, set.get(2));
 
-        final List<E> list = new ArrayList<E>();
+        final List<E> list = new ArrayList<>();
         list.add((E) ZERO);
         list.add((E) TWO);
 

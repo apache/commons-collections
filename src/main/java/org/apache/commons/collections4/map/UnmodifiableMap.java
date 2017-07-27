@@ -65,7 +65,7 @@ public final class UnmodifiableMap<K, V>
             final Map<K, V> tmpMap = (Map<K, V>) map;
             return tmpMap;
         }
-        return new UnmodifiableMap<K, V>(map);
+        return new UnmodifiableMap<>(map);
     }
 
     //-----------------------------------------------------------------------
@@ -134,7 +134,7 @@ public final class UnmodifiableMap<K, V>
             final MapIterator<K, V> it = ((IterableMap<K, V>) map).mapIterator();
             return UnmodifiableMapIterator.unmodifiableMapIterator(it);
         }
-        final MapIterator<K, V> it = new EntrySetMapIterator<K, V>(map);
+        final MapIterator<K, V> it = new EntrySetMapIterator<>(map);
         return UnmodifiableMapIterator.unmodifiableMapIterator(it);
     }
 

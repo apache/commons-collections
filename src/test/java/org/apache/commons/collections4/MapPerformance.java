@@ -41,13 +41,13 @@ public class MapPerformance {
     }
 
     private static void testAll() {
-        final Map<String, String> dummyMap = new DummyMap<String, String>();
-        final Map<String, String> hashMap = new HashMap<String, String>();
+        final Map<String, String> dummyMap = new DummyMap<>();
+        final Map<String, String> hashMap = new HashMap<>();
 //        hashMap.put("Alpha", "A");
 //        hashMap.put("Beta", "B");
 //        hashMap.put("Gamma", "C");
 //        hashMap.put("Delta", "D");
-        final Map<String, String> flatMap = new Flat3Map<String, String>(hashMap);
+        final Map<String, String> flatMap = new Flat3Map<>(hashMap);
         System.out.println(flatMap);
 //        Map<String, String> unmodHashMap = Collections.unmodifiableMap(new HashMap<String, String>(hashMap));
 //        Map fastHashMap = new FastHashMap(hashMap);

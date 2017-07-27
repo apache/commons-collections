@@ -49,7 +49,7 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
 
     @Override
     public MultiSet<E> makeFullCollection() {
-        final MultiSet<E> multiset = new HashMultiSet<E>();
+        final MultiSet<E> multiset = new HashMultiSet<>();
         multiset.addAll(Arrays.asList(getFullElements()));
         return UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
     }

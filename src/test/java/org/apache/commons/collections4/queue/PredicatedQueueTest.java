@@ -54,19 +54,19 @@ public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
 
     @Override
     public Queue<E> makeFullCollection() {
-        final Queue<E> queue = new LinkedList<E>();
+        final Queue<E> queue = new LinkedList<>();
         queue.addAll(Arrays.asList(getFullElements()));
         return decorateCollection(queue, truePredicate);
     }
 
     @Override
     public Collection<E> makeConfirmedCollection() {
-        return new LinkedList<E>();
+        return new LinkedList<>();
     }
 
     @Override
     public Collection<E> makeConfirmedFullCollection() {
-        final List<E> list = new LinkedList<E>();
+        final List<E> list = new LinkedList<>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }

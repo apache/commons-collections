@@ -61,7 +61,7 @@ public final class UnmodifiableBag<E>
             final Bag<E> tmpBag = (Bag<E>) bag;
             return tmpBag;
         }
-        return new UnmodifiableBag<E>(bag);
+        return new UnmodifiableBag<>(bag);
     }
 
     //-----------------------------------------------------------------------

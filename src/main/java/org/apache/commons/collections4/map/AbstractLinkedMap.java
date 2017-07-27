@@ -285,7 +285,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
      */
     @Override
     protected LinkEntry<K, V> createEntry(final HashEntry<K, V> next, final int hashCode, final K key, final V value) {
-        return new LinkEntry<K, V>(next, hashCode, convertKey(key), value);
+        return new LinkEntry<>(next, hashCode, convertKey(key), value);
     }
 
     /**
@@ -344,7 +344,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         if (size == 0) {
             return EmptyOrderedMapIterator.<K, V>emptyOrderedMapIterator();
         }
-        return new LinkMapIterator<K, V>(this);
+        return new LinkMapIterator<>(this);
     }
 
     /**
@@ -407,7 +407,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         if (size() == 0) {
             return EmptyOrderedIterator.<Map.Entry<K, V>>emptyOrderedIterator();
         }
-        return new EntrySetIterator<K, V>(this);
+        return new EntrySetIterator<>(this);
     }
 
     /**
@@ -443,7 +443,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         if (size() == 0) {
             return EmptyOrderedIterator.<K>emptyOrderedIterator();
         }
-        return new KeySetIterator<K>(this);
+        return new KeySetIterator<>(this);
     }
 
     /**
@@ -480,7 +480,7 @@ public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> im
         if (size() == 0) {
             return EmptyOrderedIterator.<V>emptyOrderedIterator();
         }
-        return new ValuesIterator<V>(this);
+        return new ValuesIterator<>(this);
     }
 
     /**

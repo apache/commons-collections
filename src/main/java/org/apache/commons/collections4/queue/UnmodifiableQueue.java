@@ -57,7 +57,7 @@ public final class UnmodifiableQueue<E>
             final Queue<E> tmpQueue = (Queue<E>) queue;
             return tmpQueue;
         }
-        return new UnmodifiableQueue<E>(queue);
+        return new UnmodifiableQueue<>(queue);
     }
 
     //-----------------------------------------------------------------------

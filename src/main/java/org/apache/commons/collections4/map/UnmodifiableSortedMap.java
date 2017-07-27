@@ -63,7 +63,7 @@ public final class UnmodifiableSortedMap<K, V>
             final SortedMap<K, V> tmpMap = (SortedMap<K, V>) map;
             return tmpMap;
         }
-        return new UnmodifiableSortedMap<K, V>(map);
+        return new UnmodifiableSortedMap<>(map);
     }
 
     //-----------------------------------------------------------------------
@@ -159,17 +159,17 @@ public final class UnmodifiableSortedMap<K, V>
 
     @Override
     public SortedMap<K, V> subMap(final K fromKey, final K toKey) {
-        return new UnmodifiableSortedMap<K, V>(decorated().subMap(fromKey, toKey));
+        return new UnmodifiableSortedMap<>(decorated().subMap(fromKey, toKey));
     }
 
     @Override
     public SortedMap<K, V> headMap(final K toKey) {
-        return new UnmodifiableSortedMap<K, V>(decorated().headMap(toKey));
+        return new UnmodifiableSortedMap<>(decorated().headMap(toKey));
     }
 
     @Override
     public SortedMap<K, V> tailMap(final K fromKey) {
-        return new UnmodifiableSortedMap<K, V>(decorated().tailMap(fromKey));
+        return new UnmodifiableSortedMap<>(decorated().tailMap(fromKey));
     }
 
 }

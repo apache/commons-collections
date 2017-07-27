@@ -55,12 +55,12 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
      */
     @Override
     public Collection<E> makeObject() {
-        return new CompositeCollection<E>();
+        return new CompositeCollection<>();
     }
 
     @Override
     public Collection<E> makeConfirmedCollection() {
-        return new HashSet<E>();
+        return new HashSet<>();
     }
 
     @Override
@@ -74,10 +74,10 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
      */
     @Override
     public Collection<E> makeFullCollection() {
-        final CompositeCollection<E> compositeCollection = new CompositeCollection<E>();
+        final CompositeCollection<E> compositeCollection = new CompositeCollection<>();
         final E[] elements = getFullElements();
         for (final E element : elements) {
-            final Collection<E> summand = new HashSet<E>();
+            final Collection<E> summand = new HashSet<>();
             summand.add(element);
             compositeCollection.addComposited(summand);
         }
@@ -89,7 +89,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
      */
     @Override
     public Collection<E> makeConfirmedFullCollection() {
-        final Collection<E> collection = new HashSet<E>();
+        final Collection<E> collection = new HashSet<>();
         collection.addAll(Arrays.asList(getFullElements()));
         return collection;
     }
@@ -117,9 +117,9 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     protected Collection<E> two;
 
     protected void setUpTest() {
-        c = new CompositeCollection<E>();
-        one = new HashSet<E>();
-        two = new HashSet<E>();
+        c = new CompositeCollection<>();
+        one = new HashSet<>();
+        two = new HashSet<>();
     }
 
     @SuppressWarnings("serial")
@@ -158,7 +158,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     @SuppressWarnings("unchecked")
     public void testSize() {
         setUpTest();
-        final HashSet<E> set = new HashSet<E>();
+        final HashSet<E> set = new HashSet<>();
         set.add((E) "a");
         set.add((E) "b");
         c.addComposited(set);
@@ -168,11 +168,11 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     @SuppressWarnings("unchecked")
     public void testMultipleCollectionsSize() {
         setUpTest();
-        final HashSet<E> set = new HashSet<E>();
+        final HashSet<E> set = new HashSet<>();
         set.add((E) "a");
         set.add((E) "b");
         c.addComposited(set);
-        final HashSet<E> other = new HashSet<E>();
+        final HashSet<E> other = new HashSet<>();
         other.add((E) "c");
         c.addComposited(other);
         assertEquals(set.size() + other.size(), c.size());
@@ -182,7 +182,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
     public void testIsEmpty() {
         setUpTest();
         assertTrue(c.isEmpty());
-        final HashSet<E> empty = new HashSet<E>();
+        final HashSet<E> empty = new HashSet<>();
         c.addComposited(empty);
         assertTrue(c.isEmpty());
         empty.add((E) "a");
@@ -332,7 +332,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         one.add((E) "1");
         two.add((E) "2");
         c.addComposited(one, two);
-        final Collection<E> toCollection = new HashSet<E>();
+        final Collection<E> toCollection = new HashSet<>();
         toCollection.addAll(c);
         assertTrue(toCollection.containsAll(c));
         assertEquals(c.size(), toCollection.size());
@@ -358,7 +358,7 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         two.add((E) "2");
         two.add((E) "1");
         // need separate list to remove, as otherwise one clears itself
-        final Collection<E> removing = new ArrayList<E>(one);
+        final Collection<E> removing = new ArrayList<>(one);
         c.addComposited(one, two);
         c.removeAll(removing);
         assertTrue(!c.contains("1"));

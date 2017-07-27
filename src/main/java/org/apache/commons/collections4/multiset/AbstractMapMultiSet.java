@@ -145,7 +145,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
      */
     @Override
     public Iterator<E> iterator() {
-        return new MapBasedMultiSetIterator<E>(this);
+        return new MapBasedMultiSetIterator<>(this);
     }
 
     /**
@@ -303,7 +303,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
     //-----------------------------------------------------------------------
     @Override
     protected Iterator<E> createUniqueSetIterator() {
-        return new UniqueSetIterator<E>(getMap().keySet().iterator(), this);
+        return new UniqueSetIterator<>(getMap().keySet().iterator(), this);
     }
 
     @Override
@@ -313,7 +313,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
     @Override
     protected Iterator<Entry<E>> createEntrySetIterator() {
-        return new EntrySetIterator<E>(map.entrySet().iterator(), this);
+        return new EntrySetIterator<>(map.entrySet().iterator(), this);
     }
 
     //-----------------------------------------------------------------------
@@ -395,7 +395,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 
         @Override
         public Entry<E> next() {
-            last = new MultiSetEntry<E>(decorated.next());
+            last = new MultiSetEntry<>(decorated.next());
             canRemove = true;
             return last;
         }

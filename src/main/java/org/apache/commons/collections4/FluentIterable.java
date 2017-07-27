@@ -92,7 +92,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * @return a new FluentIterable containing the singleton
      */
     public static <T> FluentIterable<T> of(final T singleton) {
-        return of(IteratorUtils.asIterable(new SingletonIterator<T>(singleton, false)));
+        return of(IteratorUtils.asIterable(new SingletonIterator<>(singleton, false)));
     }
 
     /**
@@ -126,7 +126,7 @@ public class FluentIterable<E> implements Iterable<E> {
         if (iterable instanceof FluentIterable<?>) {
             return (FluentIterable<T>) iterable;
         } else {
-            return new FluentIterable<T>(iterable);
+            return new FluentIterable<>(iterable);
         }
     }
 

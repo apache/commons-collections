@@ -48,7 +48,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
     private CollectionMutator<E> mutator;
 
     /** Collections in the composite */
-    private final List<Collection<E>> all = new ArrayList<Collection<E>>();
+    private final List<Collection<E>> all = new ArrayList<>();
 
     /**
      * Create an empty CompositeCollection.
@@ -156,7 +156,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
         if (all.isEmpty()) {
             return EmptyIterator.<E>emptyIterator();
         }
-        final IteratorChain<E> chain = new IteratorChain<E>();
+        final IteratorChain<E> chain = new IteratorChain<>();
         for (final Collection<E> item : all) {
             chain.addIterator(item.iterator());
         }
@@ -401,7 +401,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      *         The new collection is <i>not</i> backed by this composite.
      */
     public Collection<E> toCollection() {
-        return new ArrayList<E>(this);
+        return new ArrayList<>(this);
     }
 
     /**

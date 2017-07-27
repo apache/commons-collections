@@ -43,7 +43,7 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public void setUp() {
-        list1 = new ArrayList<E>();
+        list1 = new ArrayList<>();
         list1.add((E) "One");
         list1.add((E) "Two");
         list1.add((E) "Three");
@@ -54,13 +54,13 @@ public class ListIteratorWrapper2Test<E> extends AbstractIteratorTest<E> {
 
     @Override
     public ResettableListIterator<E> makeEmptyIterator() {
-        final ArrayList<E> list = new ArrayList<E>();
-        return new ListIteratorWrapper<E>(list.listIterator());
+        final ArrayList<E> list = new ArrayList<>();
+        return new ListIteratorWrapper<>(list.listIterator());
     }
 
     @Override
     public ResettableListIterator<E> makeObject() {
-        return new ListIteratorWrapper<E>(list1.listIterator());
+        return new ListIteratorWrapper<>(list1.listIterator());
     }
 
     public void testIterator() {

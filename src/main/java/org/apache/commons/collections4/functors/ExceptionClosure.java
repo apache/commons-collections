@@ -34,7 +34,7 @@ public final class ExceptionClosure<E> implements Closure<E>, Serializable {
 
     /** Singleton predicate instance */
     @SuppressWarnings("rawtypes") // the static instance works for all types
-    public static final Closure INSTANCE = new ExceptionClosure<Object>();
+    public static final Closure INSTANCE = new ExceptionClosure<>();
 
     /**
      * Factory returning the singleton instance.

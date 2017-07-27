@@ -67,18 +67,18 @@ public class PrototypeFactory {
         }
         try {
             final Method method = prototype.getClass().getMethod("clone", (Class[]) null);
-            return new PrototypeCloneFactory<T>(prototype, method);
+            return new PrototypeCloneFactory<>(prototype, method);
 
         } catch (final NoSuchMethodException ex) {
             try {
                 prototype.getClass().getConstructor(new Class<?>[] { prototype.getClass() });
-                return new InstantiateFactory<T>(
+                return new InstantiateFactory<>(
                     (Class<T>) prototype.getClass(),
                     new Class<?>[] { prototype.getClass() },
                     new Object[] { prototype });
             } catch (final NoSuchMethodException ex2) {
                 if (prototype instanceof Serializable) {
-                    return (Factory<T>) new PrototypeSerializationFactory<Serializable>((Serializable) prototype);
+                    return (Factory<T>) new PrototypeSerializationFactory<>((Serializable) prototype);
                 }
             }
         }

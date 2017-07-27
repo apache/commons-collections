@@ -55,7 +55,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     private SetMutator<E> mutator;
 
     /** Sets in the composite */
-    private final List<Set<E>> all = new ArrayList<Set<E>>();
+    private final List<Set<E>> all = new ArrayList<>();
 
     /**
      * Create an empty CompositeSet.
@@ -151,7 +151,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
         if (all.isEmpty()) {
             return EmptyIterator.<E>emptyIterator();
         }
-        final IteratorChain<E> chain = new IteratorChain<E>();
+        final IteratorChain<E> chain = new IteratorChain<>();
         for (final Set<E> item : all) {
             chain.addIterator(item.iterator());
         }
@@ -410,7 +410,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      *   The new collection is <i>not</i> backed by this composite.
      */
     public Set<E> toSet() {
-        return new HashSet<E>(this);
+        return new HashSet<>(this);
     }
 
     /**

@@ -83,7 +83,7 @@ public class ListOrderedMap<K, V>
     private static final long serialVersionUID = 2728177751851003750L;
 
     /** Internal list to hold the sequence of objects */
-    private final List<K> insertOrder = new ArrayList<K>();
+    private final List<K> insertOrder = new ArrayList<>();
 
     /**
      * Factory method to create an ordered map.
@@ -98,7 +98,7 @@ public class ListOrderedMap<K, V>
      * @since 4.0
      */
     public static <K, V> ListOrderedMap<K, V> listOrderedMap(final Map<K, V> map) {
-        return new ListOrderedMap<K, V>(map);
+        return new ListOrderedMap<>(map);
     }
 
     //-----------------------------------------------------------------------
@@ -154,7 +154,7 @@ public class ListOrderedMap<K, V>
     //-----------------------------------------------------------------------
     @Override
     public OrderedMapIterator<K, V> mapIterator() {
-        return new ListOrderedMapIterator<K, V>(this);
+        return new ListOrderedMapIterator<>(this);
     }
 
     /**
@@ -292,7 +292,7 @@ public class ListOrderedMap<K, V>
      */
     @Override
     public Set<K> keySet() {
-        return new KeySetView<K>(this);
+        return new KeySetView<>(this);
     }
 
     /**
@@ -322,7 +322,7 @@ public class ListOrderedMap<K, V>
      */
     @Override
     public Collection<V> values() {
-        return new ValuesView<V>(this);
+        return new ValuesView<>(this);
     }
 
     /**
@@ -336,7 +336,7 @@ public class ListOrderedMap<K, V>
      * @since 3.2
      */
     public List<V> valueList() {
-        return new ValuesView<V>(this);
+        return new ValuesView<>(this);
     }
 
     /**
@@ -348,7 +348,7 @@ public class ListOrderedMap<K, V>
      */
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
-        return new EntrySetView<K, V>(this, this.insertOrder);
+        return new EntrySetView<>(this, this.insertOrder);
     }
 
     //-----------------------------------------------------------------------
@@ -665,7 +665,7 @@ public class ListOrderedMap<K, V>
 
         @Override
         public Iterator<Map.Entry<K, V>> iterator() {
-            return new ListOrderedIterator<K, V>(parent, insertOrder);
+            return new ListOrderedIterator<>(parent, insertOrder);
         }
     }
 
@@ -682,7 +682,7 @@ public class ListOrderedMap<K, V>
         @Override
         public Map.Entry<K, V> next() {
             last = getIterator().next();
-            return new ListOrderedMapEntry<K, V>(parent, last);
+            return new ListOrderedMapEntry<>(parent, last);
         }
 
         @Override

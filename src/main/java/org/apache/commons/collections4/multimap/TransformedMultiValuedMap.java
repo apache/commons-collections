@@ -66,7 +66,7 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
     public static <K, V> TransformedMultiValuedMap<K, V> transformingMap(final MultiValuedMap<K, V> map,
             final Transformer<? super K, ? extends K> keyTransformer,
             final Transformer<? super V, ? extends V> valueTransformer) {
-        return new TransformedMultiValuedMap<K, V>(map, keyTransformer, valueTransformer);
+        return new TransformedMultiValuedMap<>(map, keyTransformer, valueTransformer);
     }
 
     /**
@@ -89,9 +89,9 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
             final Transformer<? super K, ? extends K> keyTransformer,
             final Transformer<? super V, ? extends V> valueTransformer) {
         final TransformedMultiValuedMap<K, V> decorated =
-                new TransformedMultiValuedMap<K, V>(map, keyTransformer, valueTransformer);
+                new TransformedMultiValuedMap<>(map, keyTransformer, valueTransformer);
         if (!map.isEmpty()) {
-            final MultiValuedMap<K, V> mapCopy = new ArrayListValuedHashMap<K, V>(map);
+            final MultiValuedMap<K, V> mapCopy = new ArrayListValuedHashMap<>(map);
             decorated.clear();
             decorated.putAll(mapCopy);
         }

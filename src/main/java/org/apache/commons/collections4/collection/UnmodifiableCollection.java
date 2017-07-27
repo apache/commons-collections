@@ -57,7 +57,7 @@ public final class UnmodifiableCollection<E>
             final Collection<T> tmpColl = (Collection<T>) coll;
             return tmpColl;
         }
-        return new UnmodifiableCollection<T>(coll);
+        return new UnmodifiableCollection<>(coll);
     }
 
     //-----------------------------------------------------------------------

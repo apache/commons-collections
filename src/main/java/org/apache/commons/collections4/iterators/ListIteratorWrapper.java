@@ -57,7 +57,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
     /** The underlying iterator being decorated. */
     private final Iterator<? extends E> iterator;
     /** The list being used to cache the iterator. */
-    private final List<E> list = new ArrayList<E>();
+    private final List<E> list = new ArrayList<>();
 
     /** The current index of this iterator. */
     private int currentIndex = 0;

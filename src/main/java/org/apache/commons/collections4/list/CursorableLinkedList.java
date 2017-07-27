@@ -88,7 +88,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
     @Override
     protected void init() {
         super.init();
-        cursors = new ArrayList<WeakReference<Cursor<E>>>();
+        cursors = new ArrayList<>();
     }
 
     //-----------------------------------------------------------------------
@@ -202,7 +202,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      *      (index &lt; 0 || index &gt; size()).
      */
     public CursorableLinkedList.Cursor<E> cursor(final int fromIndex) {
-        final Cursor<E> cursor = new Cursor<E>(this, fromIndex);
+        final Cursor<E> cursor = new Cursor<>(this, fromIndex);
         registerCursor(cursor);
         return cursor;
     }
@@ -277,7 +277,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
                 it.remove();
             }
         }
-        cursors.add(new WeakReference<Cursor<E>>(cursor));
+        cursors.add(new WeakReference<>(cursor));
     }
 
     /**
@@ -387,7 +387,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
      */
     @Override
     protected ListIterator<E> createSubListListIterator(final LinkedSubList<E> subList, final int fromIndex) {
-        final SubCursor<E> cursor = new SubCursor<E>(subList, fromIndex);
+        final SubCursor<E> cursor = new SubCursor<>(subList, fromIndex);
         registerCursor(cursor);
         return cursor;
     }

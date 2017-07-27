@@ -113,7 +113,7 @@ public class HashSetValuedHashMap<K, V> extends AbstractSetValuedMap<K, V>
     // -----------------------------------------------------------------------
     @Override
     protected HashSet<V> createCollection() {
-        return new HashSet<V>(initialSetCapacity);
+        return new HashSet<>(initialSetCapacity);
     }
 
     // -----------------------------------------------------------------------

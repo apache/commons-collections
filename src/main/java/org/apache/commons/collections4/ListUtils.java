@@ -87,7 +87,7 @@ public class ListUtils {
      * @throws NullPointerException if either list is null
      */
     public static <E> List<E> intersection(final List<? extends E> list1, final List<? extends E> list2) {
-        final List<E> result = new ArrayList<E>();
+        final List<E> result = new ArrayList<>();
 
         List<? extends E> smaller = list1;
         List<? extends E> larger = list2;
@@ -96,7 +96,7 @@ public class ListUtils {
             larger = list1;
         }
 
-        final HashSet<E> hashSet = new HashSet<E>(smaller);
+        final HashSet<E> hashSet = new HashSet<>(smaller);
 
         for (final E e : larger) {
             if (hashSet.contains(e)) {
@@ -124,8 +124,8 @@ public class ListUtils {
      * @throws NullPointerException if either list is null
      */
     public static <E> List<E> subtract(final List<E> list1, final List<? extends E> list2) {
-        final ArrayList<E> result = new ArrayList<E>();
-        final HashBag<E> bag = new HashBag<E>(list2);
+        final ArrayList<E> result = new ArrayList<>();
+        final HashBag<E> bag = new HashBag<>(list2);
         for (final E e : list1) {
             if (!bag.remove(e, 1)) {
                 result.add(e);
@@ -160,7 +160,7 @@ public class ListUtils {
      * @throws NullPointerException if either list is null
      */
     public static <E> List<E> union(final List<? extends E> list1, final List<? extends E> list2) {
-        final ArrayList<E> result = new ArrayList<E>(list1);
+        final ArrayList<E> result = new ArrayList<>(list1);
         result.addAll(list2);
         return result;
     }
@@ -309,7 +309,7 @@ public class ListUtils {
      * @since 3.2
      */
     public static <E> List<E> retainAll(final Collection<E> collection, final Collection<?> retain) {
-        final List<E> list = new ArrayList<E>(Math.min(collection.size(), retain.size()));
+        final List<E> list = new ArrayList<>(Math.min(collection.size(), retain.size()));
 
         for (final E obj : collection) {
             if (retain.contains(obj)) {
@@ -343,7 +343,7 @@ public class ListUtils {
      * @since 3.2
      */
     public static <E> List<E> removeAll(final Collection<E> collection, final Collection<?> remove) {
-        final List<E> list = new ArrayList<E>();
+        final List<E> list = new ArrayList<>();
         for (final E obj : collection) {
             if (!remove.contains(obj)) {
                 list.add(obj);
@@ -545,9 +545,9 @@ public class ListUtils {
           throw new NullPointerException("Equator must not be null");
         }
 
-        final SequencesComparator<E> comparator = new SequencesComparator<E>(a, b, equator);
+        final SequencesComparator<E> comparator = new SequencesComparator<>(a, b, equator);
         final EditScript<E> script = comparator.getScript();
-        final LcsVisitor<E> visitor = new LcsVisitor<E>();
+        final LcsVisitor<E> visitor = new LcsVisitor<>();
         script.visit(visitor);
         return visitor.getSubSequence();
     }
@@ -583,7 +583,7 @@ public class ListUtils {
         private final ArrayList<E> sequence;
 
         public LcsVisitor() {
-            sequence = new ArrayList<E>();
+            sequence = new ArrayList<>();
         }
 
         @Override
@@ -655,7 +655,7 @@ public class ListUtils {
         if (size <= 0) {
             throw new IllegalArgumentException("Size must be greater than 0");
         }
-        return new Partition<T>(list, size);
+        return new Partition<>(list, size);
     }
 
     /**

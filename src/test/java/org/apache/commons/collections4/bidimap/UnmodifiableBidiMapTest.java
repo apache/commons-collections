@@ -47,14 +47,14 @@ public class UnmodifiableBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
 
     @Override
     public BidiMap<K, V> makeFullMap() {
-        final BidiMap<K, V> bidi = new DualHashBidiMap<K, V>();
+        final BidiMap<K, V> bidi = new DualHashBidiMap<>();
         addSampleMappings(bidi);
         return UnmodifiableBidiMap.unmodifiableBidiMap(bidi);
     }
 
     @Override
     public Map<K, V> makeConfirmedMap() {
-        return new HashMap<K, V>();
+        return new HashMap<>();
     }
 
     /**

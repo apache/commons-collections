@@ -70,7 +70,7 @@ public class FixedSizeMap<K, V>
      * @since 4.0
      */
     public static <K, V> FixedSizeMap<K, V> fixedSizeMap(final Map<K, V> map) {
-        return new FixedSizeMap<K, V>(map);
+        return new FixedSizeMap<>(map);
     }
 
     //-----------------------------------------------------------------------

@@ -33,7 +33,7 @@ public final class NOPClosure<E> implements Closure<E>, Serializable {
 
     /** Singleton predicate instance */
     @SuppressWarnings("rawtypes")
-    public static final Closure INSTANCE = new NOPClosure<Object>();
+    public static final Closure INSTANCE = new NOPClosure<>();
 
     /**
      * Factory returning the singleton instance.

@@ -40,12 +40,12 @@ public class EnumerationUtilsTest {
 
     @Test
     public void testToListWithStringTokenizer() {
-        final List<String> expectedList1 = new ArrayList<String>();
+        final List<String> expectedList1 = new ArrayList<>();
         final StringTokenizer st = new StringTokenizer(TO_LIST_FIXTURE);
              while (st.hasMoreTokens()) {
                  expectedList1.add(st.nextToken());
              }
-        final List<String> expectedList2 = new ArrayList<String>();
+        final List<String> expectedList2 = new ArrayList<>();
         expectedList2.add("this");
         expectedList2.add("is");
         expectedList2.add("a");
@@ -58,7 +58,7 @@ public class EnumerationUtilsTest {
 
     @Test
     public void testToListWithHashtable() {
-        final Hashtable<String, Integer> expected = new Hashtable<String, Integer>();
+        final Hashtable<String, Integer> expected = new Hashtable<>();
         expected.put("one", Integer.valueOf(1));
         expected.put("two", Integer.valueOf(2));
         expected.put("three", Integer.valueOf(3));
@@ -68,7 +68,7 @@ public class EnumerationUtilsTest {
         assertTrue(actualEltList.contains(Integer.valueOf(1)));
         assertTrue(actualEltList.contains(Integer.valueOf(2)));
         assertTrue(actualEltList.contains(Integer.valueOf(3)));
-        final List<Integer> expectedEltList = new ArrayList<Integer>();
+        final List<Integer> expectedEltList = new ArrayList<>();
         expectedEltList.add(Integer.valueOf(1));
         expectedEltList.add(Integer.valueOf(2));
         expectedEltList.add(Integer.valueOf(3));
@@ -80,7 +80,7 @@ public class EnumerationUtilsTest {
         assertTrue(actualKeyList.contains("one"));
         assertTrue(actualKeyList.contains("two"));
         assertTrue(actualKeyList.contains("three"));
-        final List<String> expectedKeyList = new ArrayList<String>();
+        final List<String> expectedKeyList = new ArrayList<>();
         expectedKeyList.add("one");
         expectedKeyList.add("two");
         expectedKeyList.add("three");
@@ -90,7 +90,7 @@ public class EnumerationUtilsTest {
     @Test
     public void getFromEnumeration() throws Exception {
         // Enumeration, entry exists
-        final Vector<String> vector = new Vector<String>();
+        final Vector<String> vector = new Vector<>();
         vector.addElement("zero");
         vector.addElement("one");
         Enumeration<String> en = vector.elements();

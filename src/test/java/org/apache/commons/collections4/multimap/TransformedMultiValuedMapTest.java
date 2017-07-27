@@ -96,7 +96,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
     // -----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testFactory_Decorate() {
-        final MultiValuedMap<K, V> base = new ArrayListValuedHashMap<K, V>();
+        final MultiValuedMap<K, V> base = new ArrayListValuedHashMap<>();
         base.put((K) "A", (V) "1");
         base.put((K) "B", (V) "2");
         base.put((K) "C", (V) "3");
@@ -116,7 +116,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
 
     @SuppressWarnings("unchecked")
     public void testFactory_decorateTransform() {
-        final MultiValuedMap<K, V> base = new ArrayListValuedHashMap<K, V>();
+        final MultiValuedMap<K, V> base = new ArrayListValuedHashMap<>();
         base.put((K) "A", (V) "1");
         base.put((K) "B", (V) "2");
         base.put((K) "C", (V) "3");

@@ -73,7 +73,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
      */
     @Override
     public Collection<T> makeConfirmedCollection() {
-        final ArrayList<T> list = new ArrayList<T>();
+        final ArrayList<T> list = new ArrayList<>();
         return list;
     }
 
@@ -202,7 +202,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         multiset.add((T) "B");
         multiset.add((T) "C");
         assertEquals("Should have count of 4", 4, multiset.size());
-        final List<String> delete = new ArrayList<String>();
+        final List<String> delete = new ArrayList<>();
         delete.add("A");
         delete.add("B");
         multiset.removeAll(delete);
@@ -243,15 +243,15 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         }
         
         final MultiSet<T> multiset = makeObject();
-        final List<String> known = new ArrayList<String>();
-        final List<String> known1A = new ArrayList<String>();
+        final List<String> known = new ArrayList<>();
+        final List<String> known1A = new ArrayList<>();
         known1A.add("A");
-        final List<String> known2A = new ArrayList<String>();
+        final List<String> known2A = new ArrayList<>();
         known2A.add("A");
         known2A.add("A");
-        final List<String> known1B = new ArrayList<String>();
+        final List<String> known1B = new ArrayList<>();
         known1B.add("B");
-        final List<String> known1A1B = new ArrayList<String>();
+        final List<String> known1A1B = new ArrayList<>();
         known1A1B.add("A");
         known1A1B.add("B");
 
@@ -328,7 +328,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         multiset.add((T) "B");
         multiset.add((T) "B");
         multiset.add((T) "C");
-        final List<String> retains = new ArrayList<String>();
+        final List<String> retains = new ArrayList<>();
         retains.add("B");
         retains.add("C");
         multiset.retainAll(retains);
@@ -543,7 +543,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         }
 
         final MultiSet<T> multiset = makeObject();
-        final MultiSet<T> multiset2 = new HashMultiSet<T>();
+        final MultiSet<T> multiset2 = new HashMultiSet<>();
         assertEquals(true, multiset.equals(multiset2));
         multiset.add((T) "A");
         assertEquals(false, multiset.equals(multiset2));
@@ -654,14 +654,14 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         public void resetEmpty() {
             AbstractMultiSetTest.this.resetEmpty();
             TestMultiSetUniqueSet.this.setCollection(AbstractMultiSetTest.this.getCollection().uniqueSet());
-            TestMultiSetUniqueSet.this.setConfirmed(new HashSet<T>(AbstractMultiSetTest.this.getConfirmed()));
+            TestMultiSetUniqueSet.this.setConfirmed(new HashSet<>(AbstractMultiSetTest.this.getConfirmed()));
         }
 
         @Override
         public void resetFull() {
             AbstractMultiSetTest.this.resetFull();
             TestMultiSetUniqueSet.this.setCollection(AbstractMultiSetTest.this.getCollection().uniqueSet());
-            TestMultiSetUniqueSet.this.setConfirmed(new HashSet<T>(AbstractMultiSetTest.this.getConfirmed()));
+            TestMultiSetUniqueSet.this.setConfirmed(new HashSet<>(AbstractMultiSetTest.this.getConfirmed()));
         }
 
         @Override

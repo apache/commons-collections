@@ -66,7 +66,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
             return (Transformer<I, O>) (defaultTransformer == null ? ConstantTransformer.<I, O>nullTransformer() :
                                                                      defaultTransformer);
         }
-        return new SwitchTransformer<I, O>(predicates, transformers, defaultTransformer);
+        return new SwitchTransformer<>(predicates, transformers, defaultTransformer);
     }
 
     /**
@@ -114,7 +114,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
             transformers[i] = entry.getValue();
             i++;
         }
-        return new SwitchTransformer<I, O>(false, preds, transformers, defaultTransformer);
+        return new SwitchTransformer<>(false, preds, transformers, defaultTransformer);
     }
 
     /**

@@ -50,7 +50,7 @@ public final class OrPredicate<T> implements PredicateDecorator<T>, Serializable
         if (predicate1 == null || predicate2 == null) {
             throw new NullPointerException("Predicate must not be null");
         }
-        return new OrPredicate<T>(predicate1, predicate2);
+        return new OrPredicate<>(predicate1, predicate2);
     }
 
     /**

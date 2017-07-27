@@ -57,7 +57,7 @@ public final class OnePredicate<T> extends AbstractQuantifierPredicate<T> {
         if (predicates.length == 1) {
             return (Predicate<T>) predicates[0];
         }
-        return new OnePredicate<T>(FunctorUtils.copy(predicates));
+        return new OnePredicate<>(FunctorUtils.copy(predicates));
     }
 
     /**
@@ -71,7 +71,7 @@ public final class OnePredicate<T> extends AbstractQuantifierPredicate<T> {
      */
     public static <T> Predicate<T> onePredicate(final Collection<? extends Predicate<? super T>> predicates) {
         final Predicate<? super T>[] preds = FunctorUtils.validate(predicates);
-        return new OnePredicate<T>(preds);
+        return new OnePredicate<>(preds);
     }
 
     /**

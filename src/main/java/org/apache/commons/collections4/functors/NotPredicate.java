@@ -46,7 +46,7 @@ public final class NotPredicate<T> implements PredicateDecorator<T>, Serializabl
         if (predicate == null) {
             throw new NullPointerException("Predicate must not be null");
         }
-        return new NotPredicate<T>(predicate);
+        return new NotPredicate<>(predicate);
     }
 
     /**

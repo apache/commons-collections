@@ -50,7 +50,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     @Override
     @SuppressWarnings("unchecked")
     public void testMapGet() {
-        final Map<K, V> map = new DefaultedMap<K, V>((V) "NULL");
+        final Map<K, V> map = new DefaultedMap<>((V) "NULL");
 
         assertEquals(0, map.size());
         assertEquals(false, map.containsKey("NotInMap"));
@@ -66,7 +66,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testMapGet2() {
-        final HashMap<K, V> base = new HashMap<K, V>();
+        final HashMap<K, V> base = new HashMap<>();
         final Map<K, V> map = DefaultedMap.defaultedMap(base, (V) "NULL");
 
         assertEquals(0, map.size());
@@ -85,7 +85,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testMapGet3() {
-        final HashMap<K, V> base = new HashMap<K, V>();
+        final HashMap<K, V> base = new HashMap<>();
         final Map<K, V> map = DefaultedMap.defaultedMap(base, ConstantFactory.constantFactory((V) "NULL"));
 
         assertEquals(0, map.size());
@@ -104,7 +104,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testMapGet4() {
-        final HashMap<K, V> base = new HashMap<K, V>();
+        final HashMap<K, V> base = new HashMap<>();
         final Map<K, V> map = DefaultedMap.defaultedMap(base, new Transformer<K, V>() {
             @Override
             public V transform(final K input) {

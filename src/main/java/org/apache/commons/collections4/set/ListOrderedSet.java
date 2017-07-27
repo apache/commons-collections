@@ -84,7 +84,7 @@ public class ListOrderedSet<E>
         if (set.size() > 0 || list.size() > 0) {
             throw new IllegalArgumentException("Set and List must be empty");
         }
-        return new ListOrderedSet<E>(set, list);
+        return new ListOrderedSet<>(set, list);
     }
 
     /**
@@ -99,7 +99,7 @@ public class ListOrderedSet<E>
      * @since 4.0
      */
     public static <E> ListOrderedSet<E> listOrderedSet(final Set<E> set) {
-        return new ListOrderedSet<E>(set);
+        return new ListOrderedSet<>(set);
     }
 
     /**
@@ -121,9 +121,9 @@ public class ListOrderedSet<E>
             throw new NullPointerException("List must not be null");
         }
         CollectionUtils.filter(list, UniquePredicate.uniquePredicate());
-        final Set<E> set = new HashSet<E>(list);
+        final Set<E> set = new HashSet<>(list);
 
-        return new ListOrderedSet<E>(set, list);
+        return new ListOrderedSet<>(set, list);
     }
 
     // -----------------------------------------------------------------------
@@ -135,7 +135,7 @@ public class ListOrderedSet<E>
      */
     public ListOrderedSet() {
         super(new HashSet<E>());
-        setOrder = new ArrayList<E>();
+        setOrder = new ArrayList<>();
     }
 
     /**
@@ -146,7 +146,7 @@ public class ListOrderedSet<E>
      */
     protected ListOrderedSet(final Set<E> set) {
         super(set);
-        setOrder = new ArrayList<E>(set);
+        setOrder = new ArrayList<>(set);
     }
 
     /**
@@ -186,7 +186,7 @@ public class ListOrderedSet<E>
 
     @Override
     public OrderedIterator<E> iterator() {
-        return new OrderedSetIterator<E>(setOrder.listIterator(), decorated());
+        return new OrderedSetIterator<>(setOrder.listIterator(), decorated());
     }
 
     @Override
@@ -320,7 +320,7 @@ public class ListOrderedSet<E>
     public boolean addAll(final int index, final Collection<? extends E> coll) {
         boolean changed = false;
         // collect all elements to be added for performance reasons
-        final List<E> toAdd = new ArrayList<E>();
+        final List<E> toAdd = new ArrayList<>();
         for (final E e : coll) {
             if (contains(e)) {
                 continue;

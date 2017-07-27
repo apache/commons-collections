@@ -34,7 +34,7 @@ public final class ExceptionPredicate<T> implements Predicate<T>, Serializable {
 
     /** Singleton predicate instance */
     @SuppressWarnings("rawtypes") // the static instance works for all types
-    public static final Predicate INSTANCE = new ExceptionPredicate<Object>();
+    public static final Predicate INSTANCE = new ExceptionPredicate<>();
 
     /**
      * Factory returning the singleton instance.

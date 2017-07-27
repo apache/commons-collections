@@ -54,7 +54,7 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
 
     @Override
     public UnmodifiableSortedSet<E> makeFullCollection() {
-        final TreeSet<E> set = new TreeSet<E>();
+        final TreeSet<E> set = new TreeSet<>();
         set.addAll(Arrays.asList(getFullElements()));
         return (UnmodifiableSortedSet<E>) UnmodifiableSortedSet.unmodifiableSortedSet(set);
     }
@@ -73,7 +73,7 @@ public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
     @SuppressWarnings("unchecked")
     protected void setupSet() {
         set = makeFullCollection();
-        array = new ArrayList<E>();
+        array = new ArrayList<>();
         array.add((E) Integer.valueOf(1));
     }
 

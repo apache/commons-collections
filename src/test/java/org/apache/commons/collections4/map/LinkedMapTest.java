@@ -46,7 +46,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @Override
     public LinkedMap<K, V> makeObject() {
-        return new LinkedMap<K, V>();
+        return new LinkedMap<>();
     }
 
     /**
@@ -71,7 +71,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         resetFull();
         ordered = getMap();
-        final List<K> list = new ArrayList<K>(ordered.keySet());
+        final List<K> list = new ArrayList<>(ordered.keySet());
         final ResettableIterator<K> it = (ResettableIterator<K>) ordered.mapIterator();
         assertSame(list.get(0), it.next());
         assertSame(list.get(1), it.next());
@@ -186,7 +186,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         resetFull();
         lm = getMap();
-        final List<K> list = new ArrayList<K>();
+        final List<K> list = new ArrayList<>();
         for (final MapIterator<K, V> it = lm.mapIterator(); it.hasNext();) {
             list.add(it.next());
         }
@@ -214,7 +214,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
             lm.remove(lm.size());
         } catch (final IndexOutOfBoundsException ex) {}
 
-        final List<K> list = new ArrayList<K>();
+        final List<K> list = new ArrayList<>();
         for (final MapIterator<K, V> it = lm.mapIterator(); it.hasNext();) {
             list.add(it.next());
         }
@@ -275,7 +275,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testClone() {
-        final LinkedMap<K, V> map = new LinkedMap<K, V>(10);
+        final LinkedMap<K, V> map = new LinkedMap<>(10);
         map.put((K) "1", (V) "1");
         final Map<K, V> cloned = map.clone();
         assertEquals(map.size(), cloned.size());
@@ -301,7 +301,7 @@ public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
      * Test for <a href="https://issues.apache.org/jira/browse/COLLECTIONS-323">COLLECTIONS-323</a>.
      */
     public void testInitialCapacityZero() {
-        final LinkedMap<String,String> map = new LinkedMap<String,String>(0);
+        final LinkedMap<String,String> map = new LinkedMap<>(0);
         assertEquals(1, map.data.length);
     }
 }

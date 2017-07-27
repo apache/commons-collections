@@ -60,7 +60,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
      */
     @Override
     public SortedMap<K, V> makeConfirmedMap() {
-        return new TreeMap<K, V>();
+        return new TreeMap<>();
     }
 
     //-----------------------------------------------------------------------
@@ -99,22 +99,22 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
 
     //-----------------------------------------------------------------------
     public BulkTest bulkTestHeadMap() {
-        return new TestHeadMap<K, V>(this);
+        return new TestHeadMap<>(this);
     }
 
     public BulkTest bulkTestTailMap() {
-        return new TestTailMap<K, V>(this);
+        return new TestTailMap<>(this);
     }
 
     public BulkTest bulkTestSubMap() {
-        return new TestSubMap<K, V>(this);
+        return new TestSubMap<>(this);
     }
 
     public static abstract class TestViewMap <K, V> extends AbstractSortedMapTest<K, V> {
         protected final AbstractMapTest<K, V> main;
-        protected final List<K> subSortedKeys = new ArrayList<K>();
-        protected final List<V> subSortedValues = new ArrayList<V>();
-        protected final List<V> subSortedNewValues = new ArrayList<V>();
+        protected final List<K> subSortedKeys = new ArrayList<>();
+        protected final List<V> subSortedValues = new ArrayList<>();
+        protected final List<V> subSortedNewValues = new ArrayList<>();
 
         public TestViewMap(final String name, final AbstractMapTest<K, V> main) {
             super(name);

@@ -54,7 +54,7 @@ public final class UnmodifiableNavigableSet<E>
         if (set instanceof Unmodifiable) {
             return set;
         }
-        return new UnmodifiableNavigableSet<E>(set);
+        return new UnmodifiableNavigableSet<>(set);
     }
 
     //-----------------------------------------------------------------------

@@ -33,7 +33,7 @@ public final class FalsePredicate<T> implements Predicate<T>, Serializable {
 
     /** Singleton predicate instance */
     @SuppressWarnings("rawtypes") // the static instance works for all types
-    public static final Predicate INSTANCE = new FalsePredicate<Object>();
+    public static final Predicate INSTANCE = new FalsePredicate<>();
 
     /**
      * Get a typed instance.

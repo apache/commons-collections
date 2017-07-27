@@ -57,7 +57,7 @@ public final class UnmodifiableList<E>
             final List<E> tmpList = (List<E>) list;
             return tmpList;
         }
-        return new UnmodifiableList<E>(list);
+        return new UnmodifiableList<>(list);
     }
 
     //-----------------------------------------------------------------------
@@ -142,7 +142,7 @@ public final class UnmodifiableList<E>
     @Override
     public List<E> subList(final int fromIndex, final int toIndex) {
         final List<E> sub = decorated().subList(fromIndex, toIndex);
-        return new UnmodifiableList<E>(sub);
+        return new UnmodifiableList<>(sub);
     }
 
 }

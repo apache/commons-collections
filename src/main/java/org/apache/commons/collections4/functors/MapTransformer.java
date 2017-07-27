@@ -50,7 +50,7 @@ public final class MapTransformer<I, O> implements Transformer<I, O>, Serializab
         if (map == null) {
             return ConstantTransformer.<I, O>nullTransformer();
         }
-        return new MapTransformer<I, O>(map);
+        return new MapTransformer<>(map);
     }
 
     /**

@@ -60,7 +60,7 @@ public final class UnmodifiableSortedBidiMap<K, V>
             final SortedBidiMap<K, V> tmpMap = (SortedBidiMap<K, V>) map;
             return tmpMap;
         }
-        return new UnmodifiableSortedBidiMap<K, V>(map);
+        return new UnmodifiableSortedBidiMap<>(map);
     }
 
     //-----------------------------------------------------------------------
@@ -131,7 +131,7 @@ public final class UnmodifiableSortedBidiMap<K, V>
     @Override
     public SortedBidiMap<V, K> inverseBidiMap() {
         if (inverse == null) {
-            inverse = new UnmodifiableSortedBidiMap<V, K>(decorated().inverseBidiMap());
+            inverse = new UnmodifiableSortedBidiMap<>(decorated().inverseBidiMap());
             inverse.inverse = this;
         }
         return inverse;

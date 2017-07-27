@@ -48,7 +48,7 @@ public class SynchronizedBag<E> extends SynchronizedCollection<E> implements Bag
      * @since 4.0
      */
     public static <E> SynchronizedBag<E> synchronizedBag(final Bag<E> bag) {
-        return new SynchronizedBag<E>(bag);
+        return new SynchronizedBag<>(bag);
     }
 
     //-----------------------------------------------------------------------

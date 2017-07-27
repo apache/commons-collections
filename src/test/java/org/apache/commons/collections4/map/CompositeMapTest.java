@@ -43,7 +43,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Override
     public CompositeMap<K, V> makeObject() {
-        final CompositeMap<K, V> map = new CompositeMap<K, V>();
+        final CompositeMap<K, V> map = new CompositeMap<>();
         map.addComposited(new HashMap<K, V>());
         map.setMutator( new EmptyMapMutator<K, V>() );
         return map;
@@ -51,7 +51,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     private Map<K, V> buildOne() {
-        final HashMap<K, V> map = new HashMap<K, V>();
+        final HashMap<K, V> map = new HashMap<>();
         map.put((K) "1", (V) "one");
         map.put((K) "2", (V) "two");
         return map;
@@ -59,22 +59,22 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public Map<K, V> buildTwo() {
-        final HashMap<K, V> map = new HashMap<K, V>();
+        final HashMap<K, V> map = new HashMap<>();
         map.put((K) "3", (V) "three");
         map.put((K) "4", (V) "four");
         return map;
     }
 
     public void testGet() {
-        final CompositeMap<K, V> map = new CompositeMap<K, V>(buildOne(), buildTwo());
+        final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
         assertEquals("one", map.get("1"));
         assertEquals("four", map.get("4"));
     }
 
     @SuppressWarnings("unchecked")
     public void testAddComposited() {
-        final CompositeMap<K, V> map = new CompositeMap<K, V>(buildOne(), buildTwo());
-        final HashMap<K, V> three = new HashMap<K, V>();
+        final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
+        final HashMap<K, V> three = new HashMap<>();
         three.put((K) "5", (V) "five");
         map.addComposited(three);
         assertTrue(map.containsKey("5"));
@@ -88,8 +88,8 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testRemoveComposited() {
-        final CompositeMap<K, V> map = new CompositeMap<K, V>(buildOne(), buildTwo());
-        final HashMap<K, V> three = new HashMap<K, V>();
+        final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
+        final HashMap<K, V> three = new HashMap<>();
         three.put((K) "5", (V) "five");
         map.addComposited(three);
         assertTrue(map.containsKey("5"));
@@ -104,8 +104,8 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testRemoveFromUnderlying() {
-        final CompositeMap<K, V> map = new CompositeMap<K, V>(buildOne(), buildTwo());
-        final HashMap<K, V> three = new HashMap<K, V>();
+        final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
+        final HashMap<K, V> three = new HashMap<>();
         three.put((K) "5", (V) "five");
         map.addComposited(three);
         assertTrue(map.containsKey("5"));
@@ -117,8 +117,8 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testRemoveFromComposited() {
-        final CompositeMap<K, V> map = new CompositeMap<K, V>(buildOne(), buildTwo());
-        final HashMap<K, V> three = new HashMap<K, V>();
+        final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
+        final HashMap<K, V> three = new HashMap<>();
         three.put((K) "5", (V) "five");
         map.addComposited(three);
         assertTrue(map.containsKey("5"));
@@ -129,7 +129,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     public void testResolveCollision() {
-        final CompositeMap<K, V> map = new CompositeMap<K, V>(buildOne(), buildTwo(),
+        final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo(),
             new CompositeMap.MapMutator<K, V>() {
             private static final long serialVersionUID = 1L;
 
@@ -159,7 +159,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testPut() {
-        final CompositeMap<K, V> map = new CompositeMap<K, V>(buildOne(), buildTwo(),
+        final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo(),
             new CompositeMap.MapMutator<K, V>() {
             private static final long serialVersionUID = 1L;
             @Override
@@ -188,7 +188,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     public void testPutAll() {
-        final CompositeMap<K, V> map = new CompositeMap<K, V>(buildOne(), buildTwo(),
+        final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo(),
             new CompositeMap.MapMutator<K, V>() {
             private static final long serialVersionUID = 1L;
             @Override

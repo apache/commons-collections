@@ -59,7 +59,7 @@ public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Override
     public IterableMap<K, V> makeFullMap() {
-        final Map<K, V> m = new HashMap<K, V>();
+        final Map<K, V> m = new HashMap<>();
         addSampleMappings(m);
         return (IterableMap<K, V>) UnmodifiableMap.unmodifiableMap(m);
     }

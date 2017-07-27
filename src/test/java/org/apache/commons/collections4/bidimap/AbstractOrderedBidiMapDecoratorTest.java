@@ -38,12 +38,12 @@ public class AbstractOrderedBidiMapDecoratorTest<K, V>
      */
     @Override
     public OrderedBidiMap<K, V> makeObject() {
-        return new TestOrderedBidiMap<K, V>();
+        return new TestOrderedBidiMap<>();
     }
 
     @Override
     public SortedMap<K, V> makeConfirmedMap() {
-        return new TreeMap<K, V>();
+        return new TreeMap<>();
     }
 
     @Override
@@ -79,7 +79,7 @@ public class AbstractOrderedBidiMapDecoratorTest<K, V>
         @Override
         public OrderedBidiMap<V, K> inverseBidiMap() {
             if (inverse == null) {
-                inverse = new TestOrderedBidiMap<V, K>(decorated().inverseBidiMap());
+                inverse = new TestOrderedBidiMap<>(decorated().inverseBidiMap());
                 inverse.inverse = this;
             }
             return inverse;

@@ -45,7 +45,7 @@ public class BagUtilsTest {
 
     @Test
     public void testSynchronizedBag() {
-        Bag<Object> bag = BagUtils.synchronizedBag(new HashBag<Object>());
+        Bag<Object> bag = BagUtils.synchronizedBag(new HashBag<>());
         assertTrue("Returned object should be a SynchronizedBag.",
             bag instanceof SynchronizedBag);
         try {
@@ -58,7 +58,7 @@ public class BagUtilsTest {
 
     @Test
     public void testUnmodifiableBag() {
-        Bag<Object> bag = BagUtils.unmodifiableBag(new HashBag<Object>());
+        Bag<Object> bag = BagUtils.unmodifiableBag(new HashBag<>());
         assertTrue("Returned object should be an UnmodifiableBag.",
             bag instanceof UnmodifiableBag);
         try {
@@ -73,7 +73,7 @@ public class BagUtilsTest {
 
     @Test
     public void testPredicatedBag() {
-        Bag<Object> bag = BagUtils.predicatedBag(new HashBag<Object>(), truePredicate);
+        Bag<Object> bag = BagUtils.predicatedBag(new HashBag<>(), truePredicate);
         assertTrue("Returned object should be a PredicatedBag.",
             bag instanceof PredicatedBag);
         try {
@@ -83,7 +83,7 @@ public class BagUtilsTest {
             // expected
         }
         try {
-            BagUtils.predicatedBag(new HashBag<Object>(), null);
+            BagUtils.predicatedBag(new HashBag<>(), null);
             fail("Expecting NullPointerException for null predicate.");
         } catch (final NullPointerException ex) {
             // expected
@@ -92,7 +92,7 @@ public class BagUtilsTest {
 
     @Test
     public void testTransformedBag() {
-        Bag<Object> bag = BagUtils.transformingBag(new HashBag<Object>(), nopTransformer);
+        Bag<Object> bag = BagUtils.transformingBag(new HashBag<>(), nopTransformer);
         assertTrue("Returned object should be an TransformedBag.",
             bag instanceof TransformedBag);
         try {
@@ -102,7 +102,7 @@ public class BagUtilsTest {
             // expected
         }
         try {
-            BagUtils.transformingBag(new HashBag<Object>(), null);
+            BagUtils.transformingBag(new HashBag<>(), null);
             fail("Expecting NullPointerException for null transformer.");
         } catch (final NullPointerException ex) {
             // expected
@@ -111,7 +111,7 @@ public class BagUtilsTest {
 
     @Test
     public void testSynchronizedSortedBag() {
-        Bag<Object> bag = BagUtils.synchronizedSortedBag(new TreeBag<Object>());
+        Bag<Object> bag = BagUtils.synchronizedSortedBag(new TreeBag<>());
         assertTrue("Returned object should be a SynchronizedSortedBag.",
             bag instanceof SynchronizedSortedBag);
         try {
@@ -124,7 +124,7 @@ public class BagUtilsTest {
 
     @Test
     public void testUnmodifiableSortedBag() {
-        SortedBag<Object> bag = BagUtils.unmodifiableSortedBag(new TreeBag<Object>());
+        SortedBag<Object> bag = BagUtils.unmodifiableSortedBag(new TreeBag<>());
         assertTrue("Returned object should be an UnmodifiableSortedBag.",
             bag instanceof UnmodifiableSortedBag);
         try {
@@ -139,7 +139,7 @@ public class BagUtilsTest {
 
     @Test
     public void testPredicatedSortedBag() {
-        Bag<Object> bag = BagUtils.predicatedSortedBag(new TreeBag<Object>(), truePredicate);
+        Bag<Object> bag = BagUtils.predicatedSortedBag(new TreeBag<>(), truePredicate);
         assertTrue("Returned object should be a PredicatedSortedBag.",
             bag instanceof PredicatedSortedBag);
         try {
@@ -149,7 +149,7 @@ public class BagUtilsTest {
             // expected
         }
         try {
-            BagUtils.predicatedSortedBag(new TreeBag<Object>(), null);
+            BagUtils.predicatedSortedBag(new TreeBag<>(), null);
             fail("Expecting NullPointerException for null predicate.");
         } catch (final NullPointerException ex) {
             // expected
@@ -158,7 +158,7 @@ public class BagUtilsTest {
 
     @Test
     public void testTransformedSortedBag() {
-        Bag<Object> bag = BagUtils.transformingSortedBag(new TreeBag<Object>(), nopTransformer);
+        Bag<Object> bag = BagUtils.transformingSortedBag(new TreeBag<>(), nopTransformer);
         assertTrue("Returned object should be an TransformedSortedBag",
             bag instanceof TransformedSortedBag);
         try {
@@ -168,7 +168,7 @@ public class BagUtilsTest {
             // expected
         }
         try {
-            BagUtils.transformingSortedBag(new TreeBag<Object>(), null);
+            BagUtils.transformingSortedBag(new TreeBag<>(), null);
             fail("Expecting NullPointerException for null transformer.");
         } catch (final NullPointerException ex) {
             // expected

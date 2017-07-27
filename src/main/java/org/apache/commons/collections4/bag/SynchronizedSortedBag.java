@@ -48,7 +48,7 @@ public class SynchronizedSortedBag<E> extends SynchronizedBag<E> implements Sort
      * @since 4.0
      */
     public static <E> SynchronizedSortedBag<E> synchronizedSortedBag(final SortedBag<E> bag) {
-        return new SynchronizedSortedBag<E>(bag);
+        return new SynchronizedSortedBag<>(bag);
     }
 
     //-----------------------------------------------------------------------

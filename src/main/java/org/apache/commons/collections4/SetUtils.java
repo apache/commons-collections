@@ -62,7 +62,7 @@ public class SetUtils {
      */
     @SuppressWarnings("rawtypes")
     public static final SortedSet EMPTY_SORTED_SET =
-            UnmodifiableSortedSet.unmodifiableSortedSet(new TreeSet<Object>());
+            UnmodifiableSortedSet.unmodifiableSortedSet(new TreeSet<>());
 
     /**
      * Get a typed empty unmodifiable sorted set.
@@ -637,7 +637,7 @@ public class SetUtils {
          * @return a new set containing all elements of this view
          */
         public Set<E> toSet() {
-            final Set<E> set = new HashSet<E>(size());
+            final Set<E> set = new HashSet<>(size());
             copyInto(set);
             return set;
         }

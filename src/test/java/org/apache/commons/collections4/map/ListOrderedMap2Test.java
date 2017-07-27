@@ -44,7 +44,7 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @Override
     public ListOrderedMap<K, V> makeObject() {
-        return new ListOrderedMap<K, V>();
+        return new ListOrderedMap<>();
     }
 
     /**
@@ -114,7 +114,7 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
 
         resetFull();
         lom = getMap();
-        final List<K> list = new ArrayList<K>();
+        final List<K> list = new ArrayList<>();
         for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext();) {
             list.add(it.next());
         }
@@ -142,7 +142,7 @@ public class ListOrderedMap2Test<K, V> extends AbstractOrderedMapTest<K, V> {
             lom.remove(lom.size());
         } catch (final IndexOutOfBoundsException ex) {}
 
-        final List<K> list = new ArrayList<K>();
+        final List<K> list = new ArrayList<>();
         for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext();) {
             list.add(it.next());
         }

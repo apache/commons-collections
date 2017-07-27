@@ -56,7 +56,7 @@ public final class TransformedPredicate<T> implements PredicateDecorator<T>, Ser
         if (predicate == null) {
             throw new NullPointerException("The predicate to call must not be null");
         }
-        return new TransformedPredicate<T>(transformer, predicate);
+        return new TransformedPredicate<>(transformer, predicate);
     }
 
     /**

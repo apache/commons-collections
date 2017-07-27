@@ -42,7 +42,7 @@ public class HashMultiSetTest<T> extends AbstractMultiSetTest<T> {
 
     @Override
     public MultiSet<T> makeObject() {
-        return new HashMultiSet<T>();
+        return new HashMultiSet<>();
     }
 
     @Override

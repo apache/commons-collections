@@ -84,7 +84,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @since 4.0
      */
     public static <K, V> DefaultedMap<K, V> defaultedMap(final Map<K, V> map, final V defaultValue) {
-        return new DefaultedMap<K, V>(map, ConstantTransformer.constantTransformer(defaultValue));
+        return new DefaultedMap<>(map, ConstantTransformer.constantTransformer(defaultValue));
     }
 
     /**
@@ -105,7 +105,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
         if (factory == null) {
             throw new IllegalArgumentException("Factory must not be null");
         }
-        return new DefaultedMap<K, V>(map, FactoryTransformer.factoryTransformer(factory));
+        return new DefaultedMap<>(map, FactoryTransformer.factoryTransformer(factory));
     }
 
     /**
@@ -128,7 +128,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
         if (transformer == null) {
            throw new IllegalArgumentException("Transformer must not be null");
        }
-       return new DefaultedMap<K, V>(map, transformer);
+       return new DefaultedMap<>(map, transformer);
     }
 
     //-----------------------------------------------------------------------

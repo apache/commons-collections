@@ -78,7 +78,7 @@ public class PredicatedMap<K, V>
     public static <K, V> PredicatedMap<K, V> predicatedMap(final Map<K, V> map,
                                                            final Predicate<? super K> keyPredicate,
                                                            final Predicate<? super V> valuePredicate) {
-        return new PredicatedMap<K, V>(map, keyPredicate, valuePredicate);
+        return new PredicatedMap<>(map, keyPredicate, valuePredicate);
     }
 
     //-----------------------------------------------------------------------

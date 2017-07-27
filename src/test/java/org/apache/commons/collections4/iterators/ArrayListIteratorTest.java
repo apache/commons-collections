@@ -33,16 +33,16 @@ public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
 
     @Override
     public ArrayListIterator<E> makeEmptyIterator() {
-        return new ArrayListIterator<E>(new Object[0]);
+        return new ArrayListIterator<>(new Object[0]);
     }
 
     @Override
     public ArrayListIterator<E> makeObject() {
-        return new ArrayListIterator<E>(testArray);
+        return new ArrayListIterator<>(testArray);
     }
 
     public ArrayListIterator<E> makeArrayListIterator(final Object array) {
-        return new ArrayListIterator<E>(array);
+        return new ArrayListIterator<>(array);
     }
 
     @Override

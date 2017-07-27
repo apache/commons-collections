@@ -54,7 +54,7 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
             final OrderedMapIterator<K, V> tmpIterator = (OrderedMapIterator<K, V>) iterator;
             return tmpIterator;
         }
-        return new UnmodifiableOrderedMapIterator<K, V>(iterator);
+        return new UnmodifiableOrderedMapIterator<>(iterator);
     }
 
     //-----------------------------------------------------------------------

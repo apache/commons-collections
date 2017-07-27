@@ -46,7 +46,7 @@ public final class IdentityPredicate<T> implements Predicate<T>, Serializable {
         if (object == null) {
             return NullPredicate.<T>nullPredicate();
         }
-        return new IdentityPredicate<T>(object);
+        return new IdentityPredicate<>(object);
     }
 
     /**

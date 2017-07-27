@@ -281,7 +281,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
             Node<K, V> n = buckets[hash];
 
             if (n == null) {
-                n = new Node<K, V>();
+                n = new Node<>();
                 n.key = key;
                 n.value = value;
                 buckets[hash] = n;
@@ -304,7 +304,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
 
             // The key was not found in the current list of nodes, add it to the end
             //  in a new node.
-            final Node<K, V> newNode = new Node<K, V>();
+            final Node<K, V> newNode = new Node<>();
             newNode.key = key;
             newNode.value = value;
             n.next = newNode;
@@ -504,7 +504,7 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
 
     //-----------------------------------------------------------------------
     private class BaseIterator {
-        private final ArrayList<Map.Entry<K, V>> current = new ArrayList<Map.Entry<K,V>>();
+        private final ArrayList<Map.Entry<K, V>> current = new ArrayList<>();
         private int bucket;
         private Map.Entry<K, V> last;
 

@@ -55,7 +55,7 @@ public class ForClosure<E> implements Closure<E> {
         if (count == 1) {
             return (Closure<E>) closure;
         }
-        return new ForClosure<E>(count, closure);
+        return new ForClosure<>(count, closure);
     }
 
     /**

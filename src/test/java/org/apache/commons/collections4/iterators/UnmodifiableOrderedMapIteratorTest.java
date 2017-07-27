@@ -60,7 +60,7 @@ public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMap
     @Override
     @SuppressWarnings("unchecked")
     public Map<K, V> getConfirmedMap() {
-        final Map<K, V> testMap = new TreeMap<K, V>();
+        final Map<K, V> testMap = new TreeMap<>();
         testMap.put((K) "A", (V) "a");
         testMap.put((K) "B", (V) "b");
         testMap.put((K) "C", (V) "c");

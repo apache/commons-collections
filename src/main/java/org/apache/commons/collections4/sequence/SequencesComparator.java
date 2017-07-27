@@ -126,7 +126,7 @@ public class SequencesComparator<T> {
      *         sequences
      */
     public EditScript<T> getScript() {
-        final EditScript<T> script = new EditScript<T>();
+        final EditScript<T> script = new EditScript<>();
         buildScript(0, sequence1.size(), 0, sequence2.size(), script);
         return script;
     }
@@ -262,15 +262,15 @@ public class SequencesComparator<T> {
             int j = start2;
             while (i < end1 || j < end2) {
                 if (i < end1 && j < end2 && equator.equate(sequence1.get(i), sequence2.get(j))) {
-                    script.append(new KeepCommand<T>(sequence1.get(i)));
+                    script.append(new KeepCommand<>(sequence1.get(i)));
                     ++i;
                     ++j;
                 } else {
                     if (end1 - start1 > end2 - start2) {
-                        script.append(new DeleteCommand<T>(sequence1.get(i)));
+                        script.append(new DeleteCommand<>(sequence1.get(i)));
                         ++i;
                     } else {
-                        script.append(new InsertCommand<T>(sequence2.get(j)));
+                        script.append(new InsertCommand<>(sequence2.get(j)));
                         ++j;
                     }
                 }
@@ -282,7 +282,7 @@ public class SequencesComparator<T> {
                         start2, middle.getStart() - middle.getDiag(),
                         script);
             for (int i = middle.getStart(); i < middle.getEnd(); ++i) {
-                script.append(new KeepCommand<T>(sequence1.get(i)));
+                script.append(new KeepCommand<>(sequence1.get(i)));
             }
             buildScript(middle.getEnd(), end1,
                         middle.getEnd() - middle.getDiag(), end2,

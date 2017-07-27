@@ -59,7 +59,7 @@ public final class UnmodifiableSortedBag<E>
         if (bag instanceof Unmodifiable) {
             return bag;
         }
-        return new UnmodifiableSortedBag<E>(bag);
+        return new UnmodifiableSortedBag<>(bag);
     }
 
     //-----------------------------------------------------------------------

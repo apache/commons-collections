@@ -167,7 +167,7 @@ public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest
         assertEquals(true, it.hasNext());
 
         assertEquals(true, it.hasNext());
-        final Set<K> set = new HashSet<K>();
+        final Set<K> set = new HashSet<>();
         while (it.hasNext()) {
             // getKey
             final K key = it.next();

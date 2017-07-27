@@ -58,7 +58,7 @@ public final class UnmodifiableBidiMap<K, V>
             final BidiMap<K, V> tmpMap = (BidiMap<K, V>) map;
             return tmpMap;
         }
-        return new UnmodifiableBidiMap<K, V>(map);
+        return new UnmodifiableBidiMap<>(map);
     }
 
     //-----------------------------------------------------------------------
@@ -127,7 +127,7 @@ public final class UnmodifiableBidiMap<K, V>
     @Override
     public synchronized BidiMap<V, K> inverseBidiMap() {
         if (inverse == null) {
-            inverse = new UnmodifiableBidiMap<V, K>(decorated().inverseBidiMap());
+            inverse = new UnmodifiableBidiMap<>(decorated().inverseBidiMap());
             inverse.inverse = this;
         }
         return inverse;

@@ -39,7 +39,7 @@ public class SingletonIterator2Test<E> extends AbstractIteratorTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public SingletonIterator<E> makeEmptyIterator() {
-        final SingletonIterator<E> iter = new SingletonIterator<E>((E) testValue);
+        final SingletonIterator<E> iter = new SingletonIterator<>((E) testValue);
         iter.next();
         iter.remove();
         iter.reset();
@@ -49,7 +49,7 @@ public class SingletonIterator2Test<E> extends AbstractIteratorTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public SingletonIterator<E> makeObject() {
-        return new SingletonIterator<E>((E) testValue, false);
+        return new SingletonIterator<>((E) testValue, false);
     }
 
     @Override

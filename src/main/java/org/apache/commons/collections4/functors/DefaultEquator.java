@@ -34,7 +34,7 @@ public class DefaultEquator<T> implements Equator<T>, Serializable {
 
     /** Static instance */
     @SuppressWarnings("rawtypes") // the static instance works for all types
-    public static final DefaultEquator INSTANCE = new DefaultEquator<Object>();
+    public static final DefaultEquator INSTANCE = new DefaultEquator<>();
 
     /**
      * Hashcode used for <code>null</code> objects.

@@ -92,7 +92,7 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
 
         assertEquals(true, it.hasNext());
         assertEquals(false, it.hasPrevious());
-        final Set<K> set = new HashSet<K>();
+        final Set<K> set = new HashSet<>();
         while (it.hasNext()) {
             // getKey
             final K key = it.next();
@@ -143,12 +143,12 @@ public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIt
         final OrderedMapIterator<K, V> it = makeObject();
         final Map<K, V> map = getMap();
 
-        assertEquals("keySet() not consistent", new ArrayList<K>(map.keySet()), new ArrayList<K>(map.keySet()));
+        assertEquals("keySet() not consistent", new ArrayList<>(map.keySet()), new ArrayList<>(map.keySet()));
 
         final Iterator<K> it2 = map.keySet().iterator();
         assertEquals(true, it.hasNext());
         assertEquals(true, it2.hasNext());
-        final List<K> list = new ArrayList<K>();
+        final List<K> list = new ArrayList<>();
         while (it.hasNext()) {
             final K key = it.next();
             assertEquals(it2.next(), key);

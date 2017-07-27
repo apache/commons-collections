@@ -67,7 +67,7 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
      */
     @Override
     public NavigableSet<E> makeConfirmedCollection() {
-        return new TreeSet<E>();
+        return new TreeSet<>();
     }
 
     //-----------------------------------------------------------------------

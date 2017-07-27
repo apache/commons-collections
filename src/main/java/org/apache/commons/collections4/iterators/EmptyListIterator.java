@@ -38,7 +38,7 @@ public class EmptyListIterator<E> extends AbstractEmptyIterator<E> implements
      * @since 3.1
      */
     @SuppressWarnings("rawtypes")
-    public static final ResettableListIterator RESETTABLE_INSTANCE = new EmptyListIterator<Object>();
+    public static final ResettableListIterator RESETTABLE_INSTANCE = new EmptyListIterator<>();
 
     /**
      * Singleton instance of the iterator.

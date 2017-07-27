@@ -85,7 +85,7 @@ public class DualHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements 
     @Override
     protected BidiMap<V, K> createBidiMap(final Map<V, K> normalMap, final Map<K, V> reverseMap,
                                           final BidiMap<K, V> inverseBidiMap) {
-        return new DualHashBidiMap<V, K>(normalMap, reverseMap, inverseBidiMap);
+        return new DualHashBidiMap<>(normalMap, reverseMap, inverseBidiMap);
     }
 
     // Serialization
@@ -97,8 +97,8 @@ public class DualHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements 
 
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        normalMap = new HashMap<K, V>();
-        reverseMap = new HashMap<V, K>();
+        normalMap = new HashMap<>();
+        reverseMap = new HashMap<>();
         @SuppressWarnings("unchecked") // will fail at runtime if stream is incorrect
         final Map<K, V> map = (Map<K, V>) in.readObject();
         putAll(map);

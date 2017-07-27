@@ -29,7 +29,7 @@ import org.easymock.IExpectationSetters;
  * that call the respective methods on all created mock objects.
  */
 public abstract class MockTestCase {
-    private final List<Object> mockObjects = new ArrayList<Object>();
+    private final List<Object> mockObjects = new ArrayList<>();
 
     @SuppressWarnings("unchecked")
     protected <T> T createMock(final Class<?> name) {

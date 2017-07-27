@@ -103,7 +103,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      */
     public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(final Map<K, ? super C> map,
                                                                                     final Class<C> collectionClass) {
-        return new MultiValueMap<K, V>(map, new ReflectionFactory<C>(collectionClass));
+        return new MultiValueMap<>(map, new ReflectionFactory<>(collectionClass));
     }
 
     /**
@@ -120,7 +120,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      */
     public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(final Map<K, ? super C> map,
             final Factory<C> collectionFactory) {
-        return new MultiValueMap<K, V>(map, collectionFactory);
+        return new MultiValueMap<>(map, collectionFactory);
     }
 
     //-----------------------------------------------------------------------
@@ -423,7 +423,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @since 4.0
      */
     public Iterator<Entry<K, V>> iterator() {
-        final Collection<K> allKeys = new ArrayList<K>(keySet());
+        final Collection<K> allKeys = new ArrayList<>(keySet());
         final Iterator<K> keyIterator = allKeys.iterator();
 
         return new LazyIteratorChain<Entry<K, V>>() {
@@ -452,7 +452,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
                         };
                     }
                 };
-                return new TransformIterator<V, Entry<K, V>>(new ValuesIterator(key), transformer);
+                return new TransformIterator<>(new ValuesIterator(key), transformer);
             }
         };
     }
@@ -491,7 +491,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     private class Values extends AbstractCollection<V> {
         @Override
         public Iterator<V> iterator() {
-            final IteratorChain<V> chain = new IteratorChain<V>();
+            final IteratorChain<V> chain = new IteratorChain<>();
             for (final K k : keySet()) {
                 chain.addIterator(new ValuesIterator(k));
             }

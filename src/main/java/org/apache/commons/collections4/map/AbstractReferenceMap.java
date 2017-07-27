@@ -175,7 +175,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      */
     @Override
     protected void init() {
-        queue = new ReferenceQueue<Object>();
+        queue = new ReferenceQueue<>();
     }
 
     //-----------------------------------------------------------------------
@@ -304,7 +304,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      */
     @Override
     public MapIterator<K, V> mapIterator() {
-        return new ReferenceMapIterator<K, V>(this);
+        return new ReferenceMapIterator<>(this);
     }
 
     /**
@@ -317,7 +317,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
         if (entrySet == null) {
-            entrySet = new ReferenceEntrySet<K, V>(this);
+            entrySet = new ReferenceEntrySet<>(this);
         }
         return entrySet;
     }
@@ -330,7 +330,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     @Override
     public Set<K> keySet() {
         if (keySet == null) {
-            keySet = new ReferenceKeySet<K>(this);
+            keySet = new ReferenceKeySet<>(this);
         }
         return keySet;
     }
@@ -343,7 +343,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     @Override
     public Collection<V> values() {
         if (values == null) {
-            values = new ReferenceValues<V>(this);
+            values = new ReferenceValues<>(this);
         }
         return values;
     }
@@ -469,7 +469,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     @Override
     protected ReferenceEntry<K, V> createEntry(final HashEntry<K, V> next, final int hashCode,
                                                final K key, final V value) {
-        return new ReferenceEntry<K, V>(this, next, hashCode, key, value);
+        return new ReferenceEntry<>(this, next, hashCode, key, value);
     }
 
     /**
@@ -479,7 +479,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      */
     @Override
     protected Iterator<Map.Entry<K, V>> createEntrySetIterator() {
-        return new ReferenceEntrySetIterator<K, V>(this);
+        return new ReferenceEntrySetIterator<>(this);
     }
 
     /**
@@ -489,7 +489,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      */
     @Override
     protected Iterator<K> createKeySetIterator() {
-        return new ReferenceKeySetIterator<K>(this);
+        return new ReferenceKeySetIterator<>(this);
     }
 
     /**
@@ -499,7 +499,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      */
     @Override
     protected Iterator<V> createValuesIterator() {
-        return new ReferenceValuesIterator<V>(this);
+        return new ReferenceValuesIterator<>(this);
     }
 
     //-----------------------------------------------------------------------
@@ -520,9 +520,9 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         @Override
         public <T> T[] toArray(final T[] arr) {
             // special implementation to handle disappearing entries
-            final ArrayList<Map.Entry<K, V>> list = new ArrayList<Map.Entry<K, V>>(size());
+            final ArrayList<Map.Entry<K, V>> list = new ArrayList<>(size());
             for (final Map.Entry<K, V> entry : this) {
-                list.add(new DefaultMapEntry<K, V>(entry));
+                list.add(new DefaultMapEntry<>(entry));
             }
             return list.toArray(arr);
         }
@@ -546,7 +546,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         @Override
         public <T> T[] toArray(final T[] arr) {
             // special implementation to handle disappearing keys
-            final List<K> list = new ArrayList<K>(size());
+            final List<K> list = new ArrayList<>(size());
             for (final K key : this) {
                 list.add(key);
             }
@@ -572,7 +572,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         @Override
         public <T> T[] toArray(final T[] arr) {
             // special implementation to handle disappearing values
-            final List<V> list = new ArrayList<V>(size());
+            final List<V> list = new ArrayList<>(size());
             for (final V value : this) {
                 list.add(value);
             }
@@ -710,10 +710,10 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
                 return referent;
             }
             if (type == ReferenceStrength.SOFT) {
-                return new SoftRef<T>(hash, referent, parent.queue);
+                return new SoftRef<>(hash, referent, parent.queue);
             }
             if (type == ReferenceStrength.WEAK) {
-                return new WeakRef<T>(hash, referent, parent.queue);
+                return new WeakRef<>(hash, referent, parent.queue);
             }
             throw new Error();
         }

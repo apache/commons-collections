@@ -48,7 +48,7 @@ public final class TransformerPredicate<T> implements Predicate<T>, Serializable
         if (transformer == null) {
             throw new NullPointerException("The transformer to call must not be null");
         }
-        return new TransformerPredicate<T>(transformer);
+        return new TransformerPredicate<>(transformer);
     }
 
     /**

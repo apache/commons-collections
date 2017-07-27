@@ -85,7 +85,7 @@ public class MapUtils {
      */
     @SuppressWarnings("rawtypes")
     public static final SortedMap EMPTY_SORTED_MAP =
-            UnmodifiableSortedMap.unmodifiableSortedMap(new TreeMap<Object, Object>());
+            UnmodifiableSortedMap.unmodifiableSortedMap(new TreeMap<>());
 
     /**
      * String used to indent the verbose and debug Map prints.
@@ -888,7 +888,7 @@ public class MapUtils {
      */
     public static Map<String, Object> toMap(final ResourceBundle resourceBundle) {
         final Enumeration<String> enumeration = resourceBundle.getKeys();
-        final Map<String, Object> map = new HashMap<String, Object>();
+        final Map<String, Object> map = new HashMap<>();
 
         while (enumeration.hasMoreElements()) {
             final String key = enumeration.nextElement();
@@ -1065,7 +1065,7 @@ public class MapUtils {
      * @throws NullPointerException if the map is null
      */
     public static <K, V> Map<V, K> invertMap(final Map<K, V> map) {
-        final Map<V, K> out = new HashMap<V, K>(map.size());
+        final Map<V, K> out = new HashMap<>(map.size());
         for (final Entry<K, V> entry : map.entrySet()) {
             out.put(entry.getValue(), entry.getKey());
         }

@@ -35,7 +35,7 @@ public class CloneTransformer<T> implements Transformer<T, T> {
 
     /** Singleton predicate instance */
     @SuppressWarnings("rawtypes") // the singleton instance works for all types
-    public static final Transformer INSTANCE = new CloneTransformer<Object>();
+    public static final Transformer INSTANCE = new CloneTransformer<>();
 
     /**
      * Factory returning the singleton instance.

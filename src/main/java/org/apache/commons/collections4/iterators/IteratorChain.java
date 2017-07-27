@@ -51,7 +51,7 @@ import java.util.Queue;
 public class IteratorChain<E> implements Iterator<E> {
 
     /** The chain of iterators */
-    private final Queue<Iterator<? extends E>> iteratorChain = new LinkedList<Iterator<? extends E>>();
+    private final Queue<Iterator<? extends E>> iteratorChain = new LinkedList<>();
 
     /** The current iterator */
     private Iterator<? extends E> currentIterator = null;

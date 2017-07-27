@@ -51,7 +51,7 @@ public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmod
             final ListIterator<E> tmpIterator = (ListIterator<E>) iterator;
             return tmpIterator;
         }
-        return new UnmodifiableListIterator<E>(iterator);
+        return new UnmodifiableListIterator<>(iterator);
     }
 
     //-----------------------------------------------------------------------
