@@ -508,10 +508,6 @@
     <commons.scmPubUrl>https://svn.apache.org/repos/infra/websites/production/commons/content/proper/commons-collections</commons.scmPubUrl>
     <commons.scmPubCheckoutDirectory>site-content</commons.scmPubCheckoutDirectory>
 
-    <!-- Override javadoc plugin version due to a vulnerability of the generated javadoc
-         see http://jira.codehaus.org/browse/MJAVADOC-370, remove after update to CP 32   -->
-    <commons.javadoc.version>2.9.1</commons.javadoc.version>
-
     <!-- Override default buildNumber timestamp format, needed for coveralls plugin -->
     <maven.buildNumber.timestampFormat>{0,date,yyyy-MM-dd HH:mm:ssZ}</maven.buildNumber.timestampFormat>
   </properties>
