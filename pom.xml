@@ -651,8 +651,6 @@
           <excludes>
             <exclude>site-content/**/*</exclude>
             <exclude>src/test/resources/data/test/*</exclude>
-            <exclude>maven-eclipse.xml</exclude>
-            <exclude>.travis.yml</exclude>
           </excludes>
         </configuration>
       </plugin>
