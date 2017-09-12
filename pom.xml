@@ -22,7 +22,6 @@
     <version>42</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.apache.commons</groupId>
   <artifactId>commons-collections4</artifactId>
   <version>4.2-SNAPSHOT</version>
   <name>Apache Commons Collections</name>
