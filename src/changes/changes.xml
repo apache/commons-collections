@@ -21,6 +21,9 @@
   </properties>
   <body>
   <release version="4.2" date="YYYY-MM-DD" description="New features">
+    <action issue="COLLECTIONS-653" dev="kinow" type="fix">
+      Update Javadoc to Build on Java 1.8
+    </action>
     <action issue="COLLECTIONS-606" dev="chtompki" type="fix" due-to="Vamsi Kavuri">
       Build status, Coverage status and Maven central weren't in README.md
     </action>
