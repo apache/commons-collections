@@ -31,7 +31,6 @@ import junit.framework.TestCase;
 /**
  * Unit tests for {@link org.apache.commons.collections4.keyvalue.MultiKey}.
  *
- * @version $Id$
  */
 public class MultiKeyTest extends TestCase {
 

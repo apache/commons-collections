@@ -73,7 +73,6 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * This class is {@link Serializable} starting with Commons Collections 3.1.
  *
  * @since 3.0
- * @version $Id$
  */
 public class ListOrderedMap<K, V>
         extends AbstractMapDecorator<K, V>

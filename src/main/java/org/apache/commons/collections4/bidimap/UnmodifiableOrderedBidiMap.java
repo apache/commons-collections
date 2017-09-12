@@ -32,7 +32,6 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class UnmodifiableOrderedBidiMap<K, V>
         extends AbstractOrderedBidiMapDecorator<K, V> implements Unmodifiable {

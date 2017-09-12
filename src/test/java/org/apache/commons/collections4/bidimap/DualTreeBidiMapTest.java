@@ -23,7 +23,6 @@ import org.apache.commons.collections4.BulkTest;
 /**
  * JUnit tests.
  *
- * @version $Id$
  */
 public class DualTreeBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractSortedBidiMapTest<K, V> {
 

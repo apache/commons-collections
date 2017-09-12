@@ -32,7 +32,6 @@ import org.apache.commons.collections4.OrderedMapIterator;
  * But, you might want that loophole, so this class is kept simple.
  *
  * @since 3.0
- * @version $Id$
  */
 public abstract class AbstractOrderedBidiMapDecorator<K, V>
         extends AbstractBidiMapDecorator<K, V>

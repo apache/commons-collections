@@ -29,7 +29,6 @@ import org.apache.commons.collections4.Predicate;
  * threw an exception.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> {
 

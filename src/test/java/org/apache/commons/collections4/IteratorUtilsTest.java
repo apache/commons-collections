@@ -50,7 +50,6 @@ import org.w3c.dom.NodeList;
 /**
  * Tests for IteratorUtils.
  *
- * @version $Id$
  */
 public class IteratorUtilsTest {
 

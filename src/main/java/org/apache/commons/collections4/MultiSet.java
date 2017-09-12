@@ -30,7 +30,6 @@ import java.util.Set;
  *
  * @param <E> the type held in the multiset
  * @since 4.1
- * @version $Id$
  */
 public interface MultiSet<E> extends Collection<E> {
 

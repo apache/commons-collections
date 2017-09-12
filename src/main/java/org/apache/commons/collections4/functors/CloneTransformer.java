@@ -29,7 +29,6 @@ import org.apache.commons.collections4.Transformer;
  * for more details.
  *
  * @since 3.0
- * @version $Id$
  */
 public class CloneTransformer<T> implements Transformer<T, T> {
 

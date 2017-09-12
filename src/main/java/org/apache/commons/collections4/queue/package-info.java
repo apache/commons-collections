@@ -29,6 +29,5 @@
  *   <li>Unmodifiable - ensures the collection cannot be altered
  * </ul>
  *
- * @version $Id$
  */
 package org.apache.commons.collections4.queue;

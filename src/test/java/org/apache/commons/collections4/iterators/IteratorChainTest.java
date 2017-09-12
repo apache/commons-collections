@@ -27,7 +27,6 @@ import org.apache.commons.collections4.Predicate;
 /**
  * Tests the IteratorChain class.
  *
- * @version $Id$
  */
 public class IteratorChainTest extends AbstractIteratorTest<String> {
 

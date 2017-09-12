@@ -34,7 +34,6 @@ import org.apache.commons.collections4.SortedBidiMap;
  * But, you might want that loophole, so this class is kept simple.
  *
  * @since 3.0
- * @version $Id$
  */
 public abstract class AbstractSortedBidiMapDecorator<K, V>
         extends AbstractOrderedBidiMapDecorator<K, V> implements SortedBidiMap<K, V> {

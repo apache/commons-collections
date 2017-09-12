@@ -31,7 +31,6 @@ import org.apache.commons.collections4.functors.NotNullPredicate;
 /**
  * Test the filter iterator.
  *
- * @version $Id$
  */
 public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
 

@@ -28,7 +28,6 @@ import org.apache.commons.collections4.map.ListOrderedMap;
 /**
  * Tests the UnmodifiableOrderedMapIterator.
  *
- * @version $Id$
  */
 public class UnmodifiableOrderedMapIteratorTest<K, V> extends AbstractOrderedMapIteratorTest<K, V> {
 

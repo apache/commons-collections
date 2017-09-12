@@ -37,7 +37,6 @@ import org.apache.commons.collections4.Predicate;
  * </pre>
  *
  * @since 4.1
- * @version $Id$
  */
 public class PredicatedNavigableSet<E> extends PredicatedSortedSet<E> implements NavigableSet<E> {
 

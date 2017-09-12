@@ -29,7 +29,6 @@ import org.apache.commons.collections4.Transformer;
  * @param <O> The output type for the transformer
  *
  * @since 4.1
- * @version $Id$
  */
 public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
 

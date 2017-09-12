@@ -28,7 +28,6 @@ import java.util.Set;
  * </ul>
  *
  * @since 4.1
- * @version $Id$
  */
 public interface SetValuedMap<K, V> extends MultiValuedMap<K, V> {
 

@@ -41,7 +41,6 @@ import java.util.List;
  * @see ReplacementsHandler
  *
  * @since 4.0
- * @version $Id$
  */
 public class EditScript<T> {
 

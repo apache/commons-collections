@@ -25,7 +25,6 @@ import org.apache.commons.collections4.multiset.UnmodifiableMultiSet;
  * Provides utility methods and decorators for {@link MultiSet} instances.
  *
  * @since 4.1
- * @version $Id$
  */
 public class MultiSetUtils {
 

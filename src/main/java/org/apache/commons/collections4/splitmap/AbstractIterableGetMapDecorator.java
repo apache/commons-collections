@@ -29,7 +29,6 @@ import org.apache.commons.collections4.map.EntrySetToMapIteratorAdapter;
  * {@link org.apache.commons.collections4.Get Get}&lt;K, V&gt; implementation.
  *
  * @since 4.0
- * @version $Id$
  */
 public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> {
 

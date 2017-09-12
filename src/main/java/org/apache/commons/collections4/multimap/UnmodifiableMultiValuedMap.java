@@ -40,7 +40,6 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * @param <V> the type of value elements
  *
  * @since 4.1
- * @version $Id$
  */
 public final class UnmodifiableMultiValuedMap<K, V>
         extends AbstractMultiValuedMapDecorator<K, V> implements Unmodifiable {

@@ -31,7 +31,6 @@ import org.apache.commons.collections4.BulkTest;
  * elements may be added; see {@link AbstractSetTest} for more details.
  *
  * @since 3.0
- * @version $Id$
  */
 public abstract class AbstractSortedSetTest<E> extends AbstractSetTest<E> {
 

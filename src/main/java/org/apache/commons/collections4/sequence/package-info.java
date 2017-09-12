@@ -72,6 +72,5 @@
  * method is also provided. This allows the user to keep track of the current index in
  * both arrays if he needs so.
  *
- * @version $Id$
  */
 package org.apache.commons.collections4.sequence;

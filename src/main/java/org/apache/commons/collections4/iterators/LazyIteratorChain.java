@@ -44,7 +44,6 @@ import java.util.Iterator;
  * function as an empty iterator.
  *
  * @since 4.0
- * @version $Id$
  */
 public abstract class LazyIteratorChain<E> implements Iterator<E> {
 

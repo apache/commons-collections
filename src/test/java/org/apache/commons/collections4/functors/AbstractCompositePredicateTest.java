@@ -29,7 +29,6 @@ import org.junit.Test;
  * Base class for tests of composite predicates.
  *
  * @since 3.0
- * @version $Id$
  */
 public abstract class AbstractCompositePredicateTest<T> extends AbstractMockPredicateTest<T> {
 

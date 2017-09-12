@@ -39,7 +39,6 @@ import org.apache.commons.collections4.map.MultiValueMap;
  * @param <C> the type of object in the collection.
  *
  * @since 4.0
- * @version $Id$
  */
 public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
 

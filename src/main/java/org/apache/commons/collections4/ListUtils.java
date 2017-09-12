@@ -39,7 +39,6 @@ import org.apache.commons.collections4.sequence.SequencesComparator;
  * Provides utility methods and decorators for {@link List} instances.
  *
  * @since 1.0
- * @version $Id$
  */
 public class ListUtils {
 

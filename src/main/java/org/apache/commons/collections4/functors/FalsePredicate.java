@@ -24,7 +24,6 @@ import org.apache.commons.collections4.Predicate;
  * Predicate implementation that always returns false.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class FalsePredicate<T> implements Predicate<T>, Serializable {
 

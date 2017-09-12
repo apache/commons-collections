@@ -37,7 +37,6 @@ import org.apache.commons.collections4.comparators.ReverseComparator;
 /**
  * JUnit tests.
  *
- * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<V>> extends AbstractSortedBidiMapTest<K, V> {

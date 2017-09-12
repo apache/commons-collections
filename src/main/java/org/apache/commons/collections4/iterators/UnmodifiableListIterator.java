@@ -26,7 +26,6 @@ import org.apache.commons.collections4.Unmodifiable;
  * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class UnmodifiableListIterator<E> implements ListIterator<E>, Unmodifiable {
 

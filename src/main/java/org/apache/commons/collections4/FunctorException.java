@@ -21,7 +21,6 @@ package org.apache.commons.collections4;
  * If required, a root cause error can be wrapped within this one.
  *
  * @since 3.0
- * @version $Id$
  */
 public class FunctorException extends RuntimeException {
 

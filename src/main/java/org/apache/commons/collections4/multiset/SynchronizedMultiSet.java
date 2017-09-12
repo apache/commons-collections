@@ -29,7 +29,6 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
  * Iterators must be separately synchronized around the loop.
  *
  * @since 4.1
- * @version $Id$
  */
 public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implements MultiSet<E> {
 

@@ -68,7 +68,6 @@ import org.apache.commons.collections4.iterators.EmptyMapIterator;
  * exceptions when accessed by concurrent threads without synchronization.
  *
  * @since 3.0
- * @version $Id$
  */
 public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneable {
 

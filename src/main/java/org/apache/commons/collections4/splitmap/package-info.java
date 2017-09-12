@@ -34,6 +34,5 @@
  *   <li>Transformed - transforms each element added
  * </ul>
  *
- * @version $Id$
  */
 package org.apache.commons.collections4.splitmap;

@@ -27,7 +27,6 @@ import org.apache.commons.collections4.Predicate;
 /**
  * Tests the LazyIteratorChain class.
  *
- * @version $Id$
  */
 public class LazyIteratorChainTest extends AbstractIteratorTest<String> {
 

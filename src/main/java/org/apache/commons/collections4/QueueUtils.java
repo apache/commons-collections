@@ -27,7 +27,6 @@ import org.apache.commons.collections4.queue.UnmodifiableQueue;
  * Provides utility methods and decorators for {@link Queue} instances.
  *
  * @since 4.0
- * @version $Id$
  */
 public class QueueUtils {
 

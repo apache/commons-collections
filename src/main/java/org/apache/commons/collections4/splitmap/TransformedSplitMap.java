@@ -53,7 +53,6 @@ import org.apache.commons.collections4.map.LinkedMap;
  * {@link org.apache.commons.collections4.Get Get} generalizations.
  *
  * @since 4.0
- * @version $Id$
  *
  * @see org.apache.commons.collections4.SplitMapUtils#readableMap(org.apache.commons.collections4.Get)
  * @see org.apache.commons.collections4.SplitMapUtils#writableMap(Put)

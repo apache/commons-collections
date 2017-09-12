@@ -31,7 +31,6 @@ import org.apache.commons.collections4.BidiMap;
  * Two <code>LinkedHashMap</code> instances are used in this class.
  * This provides fast lookups at the expense of storing two sets of map entries and two linked lists.
  *
- * @version $Id$
  * @since 4.0
  */
 public class DualLinkedHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements Serializable {

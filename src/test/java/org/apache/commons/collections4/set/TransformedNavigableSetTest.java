@@ -33,7 +33,6 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  * {@link TransformedNavigableSet} implementation.
  *
  * @since 4.1
- * @version $Id$
  */
 public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
 

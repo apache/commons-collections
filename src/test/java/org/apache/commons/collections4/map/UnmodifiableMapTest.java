@@ -27,7 +27,6 @@ import org.apache.commons.collections4.Unmodifiable;
  * {@link UnmodifiableMap} implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class UnmodifiableMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

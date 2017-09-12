@@ -25,7 +25,6 @@ import junit.framework.TestCase;
  * Test the DefaultKeyValue class.
  *
  * @since 3.0
- * @version $Id$
  */
 public class DefaultKeyValueTest<K, V> extends TestCase {
 

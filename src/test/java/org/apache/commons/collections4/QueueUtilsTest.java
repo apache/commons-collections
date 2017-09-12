@@ -30,7 +30,6 @@ import org.junit.Test;
 /**
  * Tests for QueueUtils factory methods.
  * 
- * @version $Id$
  */
 public class QueueUtilsTest {
 

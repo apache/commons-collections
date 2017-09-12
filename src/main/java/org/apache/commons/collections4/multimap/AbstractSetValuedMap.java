@@ -31,7 +31,6 @@ import org.apache.commons.collections4.SetValuedMap;
  * the Set implementation to use as values.
  *
  * @since 4.1
- * @version $Id$
  */
 public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<K, V>
     implements SetValuedMap<K, V> {

@@ -28,7 +28,6 @@ import java.util.List;
  * {@link CompositeCollection} implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
 

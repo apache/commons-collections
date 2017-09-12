@@ -34,7 +34,6 @@ import org.junit.Test;
 /**
  * Tests for BagUtils factory methods.
  *
- * @version $Id$
  */
 public class BagUtilsTest {
 

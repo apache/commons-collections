@@ -39,7 +39,6 @@ import org.apache.commons.collections4.OrderedMapIterator;
  * is related to the {@link Map} interface.
  *
  * @since 4.0
- * @version $Id$
  */
 abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 

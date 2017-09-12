@@ -26,7 +26,6 @@ import org.apache.commons.collections4.Transformer;
  * using the input parameter as a key.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class MapTransformer<I, O> implements Transformer<I, O>, Serializable {
 

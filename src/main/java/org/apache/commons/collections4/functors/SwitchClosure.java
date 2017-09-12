@@ -27,7 +27,6 @@ import org.apache.commons.collections4.Predicate;
  * like a switch statement.
  *
  * @since 3.0
- * @version $Id$
  */
 public class SwitchClosure<E> implements Closure<E>, Serializable {
 

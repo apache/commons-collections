@@ -25,7 +25,6 @@ import org.apache.commons.collections4.Closure;
  * Closure implementation that chains the specified closures together.
  *
  * @since 3.0
- * @version $Id$
  */
 public class ChainedClosure<E> implements Closure<E>, Serializable {
 

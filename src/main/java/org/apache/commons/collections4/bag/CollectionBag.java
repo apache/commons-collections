@@ -36,7 +36,6 @@ import org.apache.commons.collections4.Bag;
  * @see Bag
  * @param <E> the type held in the bag
  * @since 4.0
- * @version $Id$
  */
 public final class CollectionBag<E> extends AbstractBagDecorator<E> {
 

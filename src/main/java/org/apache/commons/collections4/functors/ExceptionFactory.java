@@ -25,7 +25,6 @@ import org.apache.commons.collections4.FunctorException;
  * Factory implementation that always throws an exception.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class ExceptionFactory<T> implements Factory<T>, Serializable {
 

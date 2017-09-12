@@ -26,7 +26,6 @@ import org.apache.commons.collections4.Unmodifiable;
  * {@link UnmodifiableSortedMap} implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 

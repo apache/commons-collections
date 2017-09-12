@@ -33,7 +33,6 @@ import org.apache.commons.collections4.functors.TruePredicate;
  * {@link PredicatedSortedSet} implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class PredicatedSortedSetTest<E> extends AbstractSortedSetTest<E> {
 

@@ -25,7 +25,6 @@ import java.util.SortedMap;
  * @param <V> the type of the values in the map
  *
  * @since 4.0
- * @version $Id$
  */
 public interface IterableSortedMap<K, V> extends SortedMap<K, V>, OrderedMap<K, V> {
 }

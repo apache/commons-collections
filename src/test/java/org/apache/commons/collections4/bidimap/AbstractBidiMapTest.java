@@ -31,7 +31,6 @@ import org.apache.commons.collections4.map.AbstractIterableMapTest;
 /**
  * Abstract test class for {@link BidiMap} methods and contracts.
  *
- * @version $Id$
  */
 public abstract class AbstractBidiMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

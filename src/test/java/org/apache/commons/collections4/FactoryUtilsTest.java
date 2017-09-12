@@ -36,7 +36,6 @@ import org.junit.Test;
  * Tests the org.apache.commons.collections.FactoryUtils class.
  *
  * @since 3.0
- * @version $Id$
  */
 public class FactoryUtilsTest {
 

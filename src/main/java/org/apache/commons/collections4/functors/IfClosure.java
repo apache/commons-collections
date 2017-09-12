@@ -26,7 +26,6 @@ import org.apache.commons.collections4.Predicate;
  * based on a predicate.
  *
  * @since 3.0
- * @version $Id$
  */
 public class IfClosure<E> implements Closure<E>, Serializable {
 

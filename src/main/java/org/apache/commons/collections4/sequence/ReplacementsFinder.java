@@ -46,7 +46,6 @@ import java.util.List;
  * @see SequencesComparator
  *
  * @since 4.0
- * @version $Id$
  */
 public class ReplacementsFinder<T> implements CommandVisitor<T> {
 

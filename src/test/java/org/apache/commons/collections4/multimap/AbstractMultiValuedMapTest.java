@@ -48,7 +48,6 @@ import org.apache.commons.collections4.set.AbstractSetTest;
  * necessary override the {@link #makeFullMap()} method.
  *
  * @since 4.1
- * @version $Id$
  */
 public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTest {
 

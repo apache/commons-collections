@@ -45,7 +45,6 @@ import org.apache.commons.collections4.Predicate;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since 3.0
- * @version $Id$
  */
 public class PredicatedMap<K, V>
         extends AbstractInputCheckedMapDecorator<K, V>

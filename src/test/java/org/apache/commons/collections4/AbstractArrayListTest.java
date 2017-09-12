@@ -23,7 +23,6 @@ import org.apache.commons.collections4.list.AbstractListTest;
 /**
  * Abstract test class for ArrayList.
  *
- * @version $Id$
  */
 public abstract class AbstractArrayListTest<E> extends AbstractListTest<E> {
 

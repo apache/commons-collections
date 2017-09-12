@@ -31,7 +31,6 @@ import org.junit.Test;
  * {@link LazyMap} implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {

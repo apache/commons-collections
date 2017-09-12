@@ -33,7 +33,6 @@ import java.util.Set;
  * Exceptions include <code>BidiMap</code> implementations, as they require unique values.
  *
  * @since 3.1
- * @version $Id$
  */
 public final class MapBackedSet<E, V> implements Set<E>, Serializable {
 

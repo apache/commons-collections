@@ -29,7 +29,6 @@ import org.apache.commons.collections4.Unmodifiable;
  * {@link UnmodifiableMultiSet} implementation.
  *
  * @since 4.1
- * @version $Id$
  */
 public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
 

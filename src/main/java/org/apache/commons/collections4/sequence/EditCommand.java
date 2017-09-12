@@ -43,7 +43,6 @@ package org.apache.commons.collections4.sequence;
  * @see EditScript
  *
  * @since 4.0
- * @version $Id$
  */
 public abstract class EditCommand<T> {
 

@@ -55,7 +55,6 @@ import org.apache.commons.collections4.trie.analyzer.StringKeyAnalyzer;
  * @see <a href="http://www.csse.monash.edu.au/~lloyd/tildeAlgDS/Tree/PATRICIA">PATRICIA</a>
  * @see <a href="http://www.imperialviolet.org/binary/critbit.pdf">Crit-Bit Tree</a>
  * @since 4.0
- * @version $Id$
  */
 public class PatriciaTrie<E> extends AbstractPatriciaTrie<String, E> {
 

@@ -43,7 +43,6 @@ import org.apache.commons.collections4.set.AbstractSetDecorator;
  * </p>
  *
  * @since 3.1
- * @version $Id$
  */
 abstract class AbstractInputCheckedMapDecorator<K, V>
         extends AbstractMapDecorator<K, V> {

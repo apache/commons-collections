@@ -32,7 +32,6 @@ import org.apache.commons.collections4.BulkTest;
  * {@link UnmodifiableSortedSet} implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class UnmodifiableSortedSetTest<E> extends AbstractSortedSetTest<E> {
     protected UnmodifiableSortedSet<E> set = null;

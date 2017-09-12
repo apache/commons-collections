@@ -54,7 +54,6 @@ import org.apache.commons.collections4.functors.DefaultEquator;
  * @see CommandVisitor
  *
  * @since 4.0
- * @version $Id$
  */
 public class SequencesComparator<T> {
 

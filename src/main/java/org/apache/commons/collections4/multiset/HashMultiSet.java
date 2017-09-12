@@ -32,7 +32,6 @@ import java.util.HashMap;
  * of an object to be added or removed at once.
  *
  * @since 4.1
- * @version $Id$
  */
 public class HashMultiSet<E> extends AbstractMapMultiSet<E> implements Serializable {
 

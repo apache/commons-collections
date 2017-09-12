@@ -25,7 +25,6 @@ import org.apache.commons.collections4.ResettableIterator;
  * Tests the SingletonIterator to ensure that the next() method will actually
  * perform the iteration rather than the hasNext() method.
  *
- * @version $Id$
  */
 public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
 

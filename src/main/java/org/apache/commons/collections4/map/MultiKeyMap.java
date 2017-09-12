@@ -72,7 +72,6 @@ import org.apache.commons.collections4.keyvalue.MultiKey;
  * by concurrent threads without synchronization.
  *
  * @since 3.1
- * @version $Id$
  */
 public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K>, V>
         implements Serializable, Cloneable {

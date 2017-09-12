@@ -30,7 +30,6 @@ import org.apache.commons.collections4.TransformerUtils;
  * implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
 

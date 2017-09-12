@@ -26,7 +26,6 @@ import junit.framework.TestCase;
 /**
  * Tests the LoopingListIterator class.
  *
- * @version $Id$
  */
 public class LoopingListIteratorTest extends TestCase {
 

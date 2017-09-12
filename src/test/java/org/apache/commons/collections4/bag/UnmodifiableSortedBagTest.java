@@ -30,7 +30,6 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
  * {@link UnmodifiableSortedBag} implementation.
  *
  * @since 4.0
- * @version $Id$
  */
 public class UnmodifiableSortedBagTest<E> extends AbstractSortedBagTest<E> {
 

@@ -60,7 +60,6 @@ import org.apache.commons.collections4.iterators.TransformIterator;
  * by concurrent threads without synchronization.
  *
  * @since 3.2
- * @version $Id$
  * @deprecated since 4.1, use {@link org.apache.commons.collections4.MultiValuedMap MultiValuedMap} instead
  */
 @Deprecated

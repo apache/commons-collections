@@ -31,7 +31,6 @@ import org.apache.commons.collections4.FunctorException;
  * for more details.
  *
  * @since 3.0
- * @version $Id$
  */
 public class InstantiateFactory<T> implements Factory<T> {
 

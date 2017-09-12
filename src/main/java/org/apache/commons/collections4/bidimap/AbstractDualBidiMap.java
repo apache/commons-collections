@@ -37,7 +37,6 @@ import org.apache.commons.collections4.keyvalue.AbstractMapEntryDecorator;
  * @see DualHashBidiMap
  * @see DualTreeBidiMap
  * @since 3.0
- * @version $Id$
  */
 public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
 

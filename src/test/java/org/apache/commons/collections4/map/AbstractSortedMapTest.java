@@ -29,7 +29,6 @@ import org.apache.commons.collections4.BulkTest;
 /**
  * Abstract test class for {@link java.util.SortedMap} methods and contracts.
  *
- * @version $Id$
  */
 public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> {
 

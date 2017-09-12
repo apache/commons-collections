@@ -24,7 +24,6 @@ import java.util.NoSuchElementException;
  * perform the iteration rather than the hasNext() method.
  * The code of this test was supplied by Mauricio S. Moura.
  *
- * @version $Id$
  */
 public class ArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 

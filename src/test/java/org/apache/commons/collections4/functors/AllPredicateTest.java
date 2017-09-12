@@ -30,7 +30,6 @@ import java.util.Collections;
  * Tests the org.apache.commons.collections.functors.AllPredicate class.
  *
  * @since 3.0
- * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {

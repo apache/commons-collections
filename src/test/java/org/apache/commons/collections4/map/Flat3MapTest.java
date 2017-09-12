@@ -33,7 +33,6 @@ import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
 /**
  * JUnit tests.
  *
- * @version $Id$
  */
 public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

@@ -38,7 +38,6 @@ import org.apache.commons.collections4.MultiValuedMap;
  * exceptions when accessed by concurrent threads without synchronization.
  *
  * @since 4.1
- * @version $Id$
  */
 public class ArrayListValuedHashMap<K, V> extends AbstractListValuedMap<K, V>
     implements Serializable {

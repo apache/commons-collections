@@ -26,7 +26,6 @@ import org.apache.commons.collections4.ComparatorUtils;
  * to its {@link #compare(Object, Object) compare} method.
  *
  * @since 2.0
- * @version $Id$
  *
  * @see java.util.Collections#reverseOrder()
  */

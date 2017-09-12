@@ -72,7 +72,6 @@ import org.apache.commons.collections4.Transformer;
  * more efficient (and convenient) than using nested for loops to extract a list.
  *
  * @since 3.1
- * @version $Id$
  */
 public class ObjectGraphIterator<E> implements Iterator<E> {
 

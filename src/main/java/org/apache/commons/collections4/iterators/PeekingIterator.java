@@ -28,7 +28,6 @@ import java.util.NoSuchElementException;
  * {@link #peek()} or {@link #element()}.
  *
  * @since 4.0
- * @version $Id$
  */
 public class PeekingIterator<E> implements Iterator<E> {
 

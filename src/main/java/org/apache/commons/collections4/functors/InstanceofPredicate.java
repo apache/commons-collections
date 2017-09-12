@@ -25,7 +25,6 @@ import org.apache.commons.collections4.Predicate;
  * the type stored in this predicate.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class InstanceofPredicate implements Predicate<Object>, Serializable {
 

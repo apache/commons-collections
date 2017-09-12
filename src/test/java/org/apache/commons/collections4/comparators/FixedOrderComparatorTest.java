@@ -27,7 +27,6 @@ import org.junit.Test;
 /**
  * Test class for FixedOrderComparator.
  *
- * @version $Id$
  */
 public class FixedOrderComparatorTest extends AbstractComparatorTest<String> {
 

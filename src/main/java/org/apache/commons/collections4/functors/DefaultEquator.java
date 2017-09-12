@@ -25,7 +25,6 @@ import org.apache.commons.collections4.Equator;
  *
  * @param <T>  the types of object this {@link Equator} can evaluate.
  * @since 4.0
- * @version $Id$
  */
 public class DefaultEquator<T> implements Equator<T>, Serializable {
 

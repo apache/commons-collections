@@ -57,7 +57,6 @@ import org.apache.commons.collections4.functors.FactoryTransformer;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since 3.0
- * @version $Id$
  */
 public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Serializable {
 

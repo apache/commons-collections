@@ -55,7 +55,6 @@ import org.apache.commons.collections4.Factory;
  *
  * @see GrowthList
  * @since 3.0
- * @version $Id$
  */
 public class LazyList<E> extends AbstractSerializableListDecorator<E> {
 

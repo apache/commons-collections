@@ -28,7 +28,6 @@ import org.apache.commons.collections4.KeyValue;
  * itself as a key or value.
  *
  * @since 3.0
- * @version $Id$
  */
 public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
 

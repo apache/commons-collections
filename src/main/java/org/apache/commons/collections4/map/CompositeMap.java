@@ -40,7 +40,6 @@ import org.apache.commons.collections4.collection.CompositeCollection;
  * exceptions when accessed by concurrent threads without synchronization.
  *
  * @since 3.0
- * @version $Id$
  */
 public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Serializable {
 

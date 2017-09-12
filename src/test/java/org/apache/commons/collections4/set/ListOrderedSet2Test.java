@@ -25,7 +25,6 @@ import java.util.List;
  * implementation.
  *
  * @since 3.1
- * @version $Id$
  */
 public class ListOrderedSet2Test<E> extends AbstractSetTest<E> {
 

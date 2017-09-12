@@ -50,7 +50,6 @@ import org.apache.commons.collections4.iterators.PermutationIterator;
  * NOTE: From 4.0, method parameters will take {@link Iterable} objects when possible.
  *
  * @since 1.0
- * @version $Id$
  */
 public class CollectionUtils {
 

@@ -42,7 +42,6 @@ import org.junit.Test;
  * Tests the TransformerUtils class.
  *
  * @since 3.0
- * @version $Id$
  */
 public class TransformerUtilsTest {
 

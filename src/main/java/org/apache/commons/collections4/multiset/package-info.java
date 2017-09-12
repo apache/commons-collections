@@ -31,6 +31,5 @@
  *   <li>Unmodifiable - ensures the multiset cannot be altered
  * </ul>
  *
- * @version $Id$
  */
 package org.apache.commons.collections4.multiset;

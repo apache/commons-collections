@@ -25,7 +25,6 @@ import org.apache.commons.collections4.map.LinkedMap;
  * JUnit test.
  *
  * @since 3.1
- * @version $Id$
  */
 public class MapBackedSet2Test<E> extends AbstractSetTest<E> {
 

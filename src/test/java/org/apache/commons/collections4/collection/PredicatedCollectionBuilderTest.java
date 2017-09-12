@@ -31,7 +31,6 @@ import org.junit.Test;
  * Tests the PredicatedCollection.Builder class.
  * 
  * @since 4.1
- * @version $Id$
  */
 public class PredicatedCollectionBuilderTest {
 

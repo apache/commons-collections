@@ -31,7 +31,6 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  *
  * @param <E> the type of the elements in the collection
  * @since 3.0
- * @version $Id$
  */
 public final class UnmodifiableCollection<E>
         extends AbstractCollectionDecorator<E>

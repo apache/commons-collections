@@ -27,7 +27,6 @@ import org.apache.commons.collections4.functors.TruePredicate;
  * {@link PredicatedSet} implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class PredicatedSetTest<E> extends AbstractSetTest<E> {
 

@@ -28,7 +28,6 @@ import org.apache.commons.collections4.SortedBag;
  * Extension of {@link AbstractBagTest} for exercising the {@link TreeBag}
  * implementation.
  *
- * @version $Id$
  */
 public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
 

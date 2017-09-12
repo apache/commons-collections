@@ -30,7 +30,6 @@ import org.apache.commons.collections4.AbstractObjectTest;
  * overriding the supportsXxx() methods if necessary.
  *
  * @since 3.0
- * @version $Id$
  */
 public abstract class AbstractIteratorTest<E> extends AbstractObjectTest {
 

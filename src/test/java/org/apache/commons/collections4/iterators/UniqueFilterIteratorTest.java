@@ -24,7 +24,6 @@ import java.util.NoSuchElementException;
 /**
  * Tests the UniqueFilterIterator class.
  *
- * @version $Id$
  */
 public class UniqueFilterIteratorTest<E> extends AbstractIteratorTest<E> {
 

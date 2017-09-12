@@ -35,7 +35,6 @@ import org.junit.Test;
  * Tests for {@link TransformedSplitMap}
  *
  * @since 4.0
- * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class SplitMapUtilsTest {

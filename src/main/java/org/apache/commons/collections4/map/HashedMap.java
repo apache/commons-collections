@@ -37,7 +37,6 @@ import java.util.Map;
  * exceptions when accessed by concurrent threads without synchronization.
  *
  * @since 3.0
- * @version $Id$
  */
 public class HashedMap<K, V>
         extends AbstractHashedMap<K, V> implements Serializable, Cloneable {

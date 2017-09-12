@@ -73,7 +73,6 @@ import org.apache.commons.collections4.keyvalue.UnmodifiableMapEntry;
  * UnsupportedOperationException on attempts to call that method.
  *
  * @since 3.0 (previously DoubleOrderedMap v2.0)
- * @version $Id$
  */
 public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     implements OrderedBidiMap<K, V>, Serializable {

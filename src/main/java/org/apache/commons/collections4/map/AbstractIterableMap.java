@@ -23,7 +23,6 @@ import org.apache.commons.collections4.MapIterator;
  * Provide a basic {@link IterableMap} implementation.
  *
  * @since 4.0
- * @version $Id$
  */
 public abstract class AbstractIterableMap<K, V> implements IterableMap<K, V> {
 

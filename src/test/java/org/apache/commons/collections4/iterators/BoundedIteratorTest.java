@@ -25,7 +25,6 @@ import org.junit.Test;
 /**
  * A unit test to test the basic functions of {@link BoundedIterator}.
  *
- * @version $Id$
  */
 public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
 

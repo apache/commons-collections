@@ -36,6 +36,5 @@
  *   <li>MapBackedSet - a set formed by decorating a Map
  * </ul>
  *
- * @version $Id$
  */
 package org.apache.commons.collections4.set;

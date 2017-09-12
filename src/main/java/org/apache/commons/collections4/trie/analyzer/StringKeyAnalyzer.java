@@ -22,7 +22,6 @@ import org.apache.commons.collections4.trie.KeyAnalyzer;
  * An {@link KeyAnalyzer} for {@link String}s.
  *
  * @since 4.0
- * @version $Id$
  */
 public class StringKeyAnalyzer extends KeyAnalyzer<String> {
 

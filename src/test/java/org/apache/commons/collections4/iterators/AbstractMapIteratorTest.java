@@ -32,7 +32,6 @@ import org.apache.commons.collections4.MapIterator;
  * overriding the supportsXxx() methods if necessary.
  *
  * @since 3.0
- * @version $Id$
  */
 public abstract class AbstractMapIteratorTest<K, V> extends AbstractIteratorTest<K> {
 

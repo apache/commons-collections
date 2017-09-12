@@ -26,7 +26,6 @@ import junit.framework.TestCase;
 /**
  * Tests the IteratorEnumeration.
  * 
- * @version $Id$
  */
 public class IteratorEnumerationTest extends TestCase {
     

@@ -27,7 +27,6 @@ import java.util.Set;
 /**
  * Test class for PermutationIterator.
  *
- * @version $Id$
  * @since 4.0
  */
 public class PermutationIteratorTest extends AbstractIteratorTest<List<Character>> {

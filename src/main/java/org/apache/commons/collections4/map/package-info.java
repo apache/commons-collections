@@ -49,7 +49,6 @@
  *   <li>ListOrdered - ensures that insertion order is retained
  * </ul>
  *
- * @version $Id$
  */
 package org.apache.commons.collections4.map;
 

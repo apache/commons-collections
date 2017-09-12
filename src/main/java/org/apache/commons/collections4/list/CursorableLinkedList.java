@@ -53,7 +53,6 @@ import java.util.ListIterator;
  *
  * @see java.util.LinkedList
  * @since 1.0
- * @version $Id$
  */
 public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Serializable {
 

@@ -27,7 +27,6 @@ import org.apache.commons.collections4.ResettableListIterator;
  * Tests the ListIteratorWrapper to insure that it simulates
  * a ListIterator correctly.
  *
- * @version $Id$
  */
 public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
 

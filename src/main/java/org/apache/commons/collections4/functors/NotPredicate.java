@@ -24,7 +24,6 @@ import org.apache.commons.collections4.Predicate;
  * Predicate implementation that returns the opposite of the decorated predicate.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class NotPredicate<T> implements PredicateDecorator<T>, Serializable {
 

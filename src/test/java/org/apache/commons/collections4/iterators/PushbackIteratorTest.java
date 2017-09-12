@@ -28,7 +28,6 @@ import org.junit.Test;
 /**
  * Tests the PushbackIterator.
  * 
- * @version $Id$
  */
 public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
 

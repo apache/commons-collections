@@ -26,7 +26,6 @@ import org.junit.Test;
 /**
  * Tests for ComparatorChain.
  *
- * @version $Id$
  */
 public class ComparatorChainTest extends AbstractComparatorTest<ComparatorChainTest.PseudoRow> {
 

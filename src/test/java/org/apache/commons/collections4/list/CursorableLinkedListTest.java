@@ -32,7 +32,6 @@ import org.apache.commons.collections4.BulkTest;
 /**
  * Test class.
  *
- * @version $Id$
  */
 public class CursorableLinkedListTest<E> extends AbstractLinkedListTest<E> {
     public CursorableLinkedListTest(final String testName) {

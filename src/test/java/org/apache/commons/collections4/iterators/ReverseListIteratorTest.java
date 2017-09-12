@@ -27,7 +27,6 @@ import org.apache.commons.collections4.ResettableListIterator;
 /**
  * Tests the ReverseListIterator.
  *
- * @version $Id$
  */
 public class ReverseListIteratorTest<E> extends AbstractListIteratorTest<E> {
 

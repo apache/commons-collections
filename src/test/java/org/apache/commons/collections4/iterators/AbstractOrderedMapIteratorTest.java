@@ -35,7 +35,6 @@ import org.apache.commons.collections4.OrderedMapIterator;
  * overriding the supportsXxx() methods if necessary.
  *
  * @since 3.0
- * @version $Id$
  */
 public abstract class AbstractOrderedMapIteratorTest<K, V> extends AbstractMapIteratorTest<K, V> {
 

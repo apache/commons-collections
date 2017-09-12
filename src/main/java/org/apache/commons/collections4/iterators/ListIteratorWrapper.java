@@ -43,7 +43,6 @@ import org.apache.commons.collections4.ResettableListIterator;
  * This class implements ResettableListIterator from Commons Collections 3.2.
  *
  * @since 2.1
- * @version $Id$
  */
 public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
 

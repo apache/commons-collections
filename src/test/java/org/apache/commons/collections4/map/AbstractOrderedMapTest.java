@@ -34,7 +34,6 @@ import org.apache.commons.collections4.iterators.AbstractOrderedMapIteratorTest;
 /**
  * Abstract test class for {@link OrderedMap} methods and contracts.
  *
- * @version $Id$
  */
 public abstract class AbstractOrderedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

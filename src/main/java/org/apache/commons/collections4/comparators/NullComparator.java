@@ -26,7 +26,6 @@ import org.apache.commons.collections4.ComparatorUtils;
  * other objects.
  *
  * @since 2.0
- * @version $Id$
  */
 public class NullComparator<E> implements Comparator<E>, Serializable {
 

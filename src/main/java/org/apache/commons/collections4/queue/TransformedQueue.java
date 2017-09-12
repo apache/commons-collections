@@ -30,7 +30,6 @@ import org.apache.commons.collections4.collection.TransformedCollection;
  * use the Integer form to remove objects.
  *
  * @since 4.0
- * @version $Id$
  */
 public class TransformedQueue<E> extends TransformedCollection<E> implements Queue<E> {
 

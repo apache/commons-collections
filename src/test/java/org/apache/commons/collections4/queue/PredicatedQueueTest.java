@@ -31,7 +31,6 @@ import org.apache.commons.collections4.functors.TruePredicate;
  * {@link PredicatedQueue} implementation.
  *
  * @since 4.0
- * @version $Id$
  */
 public class PredicatedQueueTest<E> extends AbstractQueueTest<E> {
 

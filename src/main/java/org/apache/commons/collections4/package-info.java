@@ -22,6 +22,5 @@
  *   <li>ArrayStack - a non synchronized Stack that follows the same API as {@code java.util Stack}
  * </ul>
  *
- * @version $Id$
  */
 package org.apache.commons.collections4;

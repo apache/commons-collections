@@ -32,7 +32,6 @@ import org.apache.commons.collections4.list.AbstractListTest;
 /**
  * JUnit tests.
  *
- * @version $Id$
  */
 public class LinkedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 

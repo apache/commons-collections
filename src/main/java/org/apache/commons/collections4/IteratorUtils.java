@@ -70,7 +70,6 @@ import org.w3c.dom.NodeList;
  * instances. The implementations are provided in the iterators subpackage.
  *
  * @since 2.1
- * @version $Id$
  */
 public class IteratorUtils {
     // validation is done in this class in certain cases because the

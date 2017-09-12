@@ -28,7 +28,6 @@ import org.apache.commons.collections4.Unmodifiable;
  * {@link UnmodifiableCollection} implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
 

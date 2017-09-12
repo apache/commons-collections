@@ -26,7 +26,6 @@ import org.apache.commons.collections4.comparators.ComparableComparator;
 /**
  * Unit test suite for {@link CollatingIterator}.
  *
- * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class CollatingIteratorTest extends AbstractIteratorTest<Integer> {

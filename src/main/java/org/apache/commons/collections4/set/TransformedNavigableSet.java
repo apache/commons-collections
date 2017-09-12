@@ -30,7 +30,6 @@ import org.apache.commons.collections4.Transformer;
  * use the Integer form to remove objects.
  *
  * @since 4.1
- * @version $Id$
  */
 public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implements NavigableSet<E> {
 

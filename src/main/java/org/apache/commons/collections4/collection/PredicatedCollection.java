@@ -54,7 +54,6 @@ import org.apache.commons.collections4.set.PredicatedSet;
  *
  * @param <E> the type of the elements in the collection
  * @since 3.0
- * @version $Id$
  */
 public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
 

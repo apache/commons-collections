@@ -27,7 +27,6 @@ import org.apache.commons.collections4.bidimap.DualHashBidiMap;
 /**
  * Tests the UnmodifiableMapIterator.
  *
- * @version $Id$
  */
 public class UnmodifiableMapIteratorTest<K, V> extends AbstractMapIteratorTest<K, V> {
 

@@ -25,7 +25,6 @@ import java.util.Iterator;
  *
  * @param <E> the type to iterate over
  * @since 3.0
- * @version $Id$
  */
 public interface OrderedIterator<E> extends Iterator<E> {
 

@@ -54,7 +54,6 @@ import org.apache.commons.collections4.set.AbstractSetTest;
  * {@link #makeFullCollection()} methods instead of {@link #resetEmpty()} and resetFull().
  *
  * @since 4.1
- * @version $Id$
  */
 public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> {
 

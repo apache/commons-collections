@@ -28,7 +28,6 @@ import java.util.Map;
  * {@link Object}.
  *
  * @since 4.0
- * @version $Id$
  *
  * @see Get
  */

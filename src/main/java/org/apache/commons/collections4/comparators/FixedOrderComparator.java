@@ -44,7 +44,6 @@ import java.util.Map;
  * This class is Serializable from Commons Collections 4.0.
  *
  * @since 3.0
- * @version $Id$
  */
 public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
 

@@ -28,7 +28,6 @@ import org.apache.commons.collections4.Factory;
  * use the prototype factory.
  *
  * @since 3.0
- * @version $Id$
  */
 public class ConstantFactory<T> implements Factory<T>, Serializable {
 

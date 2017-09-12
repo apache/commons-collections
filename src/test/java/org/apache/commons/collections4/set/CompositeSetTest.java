@@ -28,7 +28,6 @@ import org.apache.commons.collections4.set.CompositeSet.SetMutator;
  * {@link CompositeSet} implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class CompositeSetTest<E> extends AbstractSetTest<E> {
     public CompositeSetTest(final String name) {

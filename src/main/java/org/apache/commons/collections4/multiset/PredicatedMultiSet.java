@@ -39,7 +39,6 @@ import org.apache.commons.collections4.collection.PredicatedCollection;
  * </pre>
  *
  * @since 4.1
- * @version $Id$
  */
 public class PredicatedMultiSet<E> extends PredicatedCollection<E> implements MultiSet<E> {
 

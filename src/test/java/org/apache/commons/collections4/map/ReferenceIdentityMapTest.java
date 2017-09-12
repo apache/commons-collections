@@ -29,7 +29,6 @@ import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrengt
 /**
  * Tests for ReferenceIdentityMap.
  *
- * @version $Id$
  */
 public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

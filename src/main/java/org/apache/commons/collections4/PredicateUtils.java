@@ -67,7 +67,6 @@ import org.apache.commons.collections4.functors.UniquePredicate;
  * All the supplied predicates are Serializable.
  *
  * @since 3.0
- * @version $Id$
  */
 public class PredicateUtils {
 

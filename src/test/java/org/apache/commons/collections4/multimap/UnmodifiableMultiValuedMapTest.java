@@ -35,7 +35,6 @@ import org.apache.commons.collections4.Unmodifiable;
  * Tests for UnmodifiableMultiValuedMap
  * 
  * @since 4.1
- * @version $Id$
  */
 public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 

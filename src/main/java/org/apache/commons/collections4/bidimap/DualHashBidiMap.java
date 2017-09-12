@@ -37,7 +37,6 @@ import org.apache.commons.collections4.BidiMap;
  * and the flawed <code>createMap</code> method is ignored.
  *
  * @since 3.0
- * @version $Id$
  */
 public class DualHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements Serializable {
 

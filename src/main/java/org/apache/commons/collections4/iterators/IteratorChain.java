@@ -46,7 +46,6 @@ import java.util.Queue;
  * the queue.
  *
  * @since 2.1
- * @version $Id$
  */
 public class IteratorChain<E> implements Iterator<E> {
 

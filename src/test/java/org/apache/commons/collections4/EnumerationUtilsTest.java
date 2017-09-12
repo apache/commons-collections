@@ -32,7 +32,6 @@ import org.junit.Test;
 /**
  * Tests EnumerationUtils.
  *
- * @version $Id$
  */
 public class EnumerationUtilsTest {
 

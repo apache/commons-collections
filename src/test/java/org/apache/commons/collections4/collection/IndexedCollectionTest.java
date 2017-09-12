@@ -31,7 +31,6 @@ import org.apache.commons.collections4.Transformer;
  * {@link IndexedCollection} implementation.
  *
  * @since 4.0
- * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class IndexedCollectionTest extends AbstractCollectionTest<String> {

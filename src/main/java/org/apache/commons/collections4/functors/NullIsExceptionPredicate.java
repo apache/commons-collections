@@ -25,7 +25,6 @@ import org.apache.commons.collections4.Predicate;
  * Predicate implementation that throws an exception if the input is null.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class NullIsExceptionPredicate<T> implements PredicateDecorator<T>, Serializable {
 

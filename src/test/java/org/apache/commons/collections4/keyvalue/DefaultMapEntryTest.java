@@ -24,7 +24,6 @@ import org.apache.commons.collections4.KeyValue;
  * Test the DefaultMapEntry class.
  *
  * @since 3.0
- * @version $Id$
  */
 public class DefaultMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 

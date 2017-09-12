@@ -38,7 +38,6 @@ import java.util.NoSuchElementException;
  *
  * @param <E>  the type of the objects being permuted
  *
- * @version $Id$
  * @since 4.0
  */
 public class PermutationIterator<E> implements Iterator<List<E>> {

@@ -31,7 +31,6 @@ import java.util.Queue;
  * Test cases for CircularFifoQueue.
  *
  * @since 4.0
- * @version $Id$
  */
 public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
 

@@ -30,7 +30,6 @@ import org.apache.commons.collections4.functors.TruePredicate;
  * {@link PredicatedMultiSet} implementation.
  *
  * @since 4.1
- * @version $Id$
  */
 public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
 

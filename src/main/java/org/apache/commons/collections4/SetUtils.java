@@ -43,7 +43,6 @@ import org.apache.commons.collections4.set.UnmodifiableSortedSet;
  * {@link Set} and {@link SortedSet} instances.
  *
  * @since 2.1
- * @version $Id$
  */
 public class SetUtils {
 

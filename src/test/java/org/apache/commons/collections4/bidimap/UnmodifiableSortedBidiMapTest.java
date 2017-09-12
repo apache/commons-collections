@@ -28,7 +28,6 @@ import org.apache.commons.collections4.Unmodifiable;
 /**
  * JUnit tests.
  *
- * @version $Id$
  */
 public class UnmodifiableSortedBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractSortedBidiMapTest<K, V> {
 

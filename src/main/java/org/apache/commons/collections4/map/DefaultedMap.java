@@ -57,7 +57,6 @@ import org.apache.commons.collections4.functors.FactoryTransformer;
  * exceptions when accessed by concurrent threads without synchronization.
  *
  * @since 3.2
- * @version $Id$
  *
  * @see LazyMap
  */

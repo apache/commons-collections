@@ -25,7 +25,6 @@ import java.util.List;
  * Extension of {@link AbstractListTest} for exercising the {@link GrowthList}.
  *
  * @since 3.2
- * @version $Id$
  */
 public class GrowthListTest<E> extends AbstractListTest<E> {
 

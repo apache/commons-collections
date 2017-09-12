@@ -27,7 +27,6 @@ import org.apache.commons.collections4.Transformer;
 /**
  * Testcase.
  *
- * @version $Id$
  */
 public class ObjectGraphIteratorTest extends AbstractIteratorTest<Object> {
 

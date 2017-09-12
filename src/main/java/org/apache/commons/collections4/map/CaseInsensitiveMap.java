@@ -60,7 +60,6 @@ import java.util.Map;
  * </p>
  *
  * @since 3.0
- * @version $Id$
  */
 public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements Serializable, Cloneable {
 

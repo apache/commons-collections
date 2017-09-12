@@ -28,7 +28,6 @@ import java.util.Comparator;
  * @see #booleanComparator(boolean)
  *
  * @since 3.0
- * @version $Id$
  */
 public final class BooleanComparator implements Comparator<Boolean>, Serializable {
 

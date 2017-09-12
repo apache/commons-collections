@@ -28,7 +28,6 @@ import org.apache.commons.collections4.Unmodifiable;
 /**
  * JUnit tests.
  *
- * @version $Id$
  */
 public class UnmodifiableBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
 

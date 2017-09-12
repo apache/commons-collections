@@ -29,7 +29,6 @@ import java.util.SortedMap;
  * @param <K> the type of the keys in the map
  * @param <V> the type of the values in the map
  * @since 3.0
- * @version $Id$
  */
 public interface SortedBidiMap<K, V> extends OrderedBidiMap<K, V>, SortedMap<K, V> {
 

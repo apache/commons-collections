@@ -27,7 +27,6 @@ import org.apache.commons.collections4.functors.TruePredicate;
  * {@link PredicatedList} implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class PredicatedListTest<E> extends AbstractListTest<E> {
 

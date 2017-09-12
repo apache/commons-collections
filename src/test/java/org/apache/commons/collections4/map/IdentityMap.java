@@ -41,7 +41,6 @@ import java.util.Map;
  * test-class because it is still used by the ReferenceIdentityMapTest.
  *
  * @since 3.0
- * @version $Id$
  */
 public class IdentityMap<K, V>
         extends AbstractHashedMap<K, V> implements Serializable, Cloneable {

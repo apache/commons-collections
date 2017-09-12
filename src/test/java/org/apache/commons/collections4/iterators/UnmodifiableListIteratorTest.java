@@ -27,7 +27,6 @@ import org.apache.commons.collections4.Unmodifiable;
 /**
  * Tests the UnmodifiableListIterator.
  *
- * @version $Id$
  */
 public class UnmodifiableListIteratorTest<E> extends AbstractListIteratorTest<E> {
 

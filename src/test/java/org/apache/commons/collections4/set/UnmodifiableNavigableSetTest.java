@@ -32,7 +32,6 @@ import org.apache.commons.collections4.BulkTest;
  * {@link UnmodifiableNavigableSet} implementation.
  *
  * @since 4.1
- * @version $Id$
  */
 public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
     protected UnmodifiableNavigableSet<E> set = null;

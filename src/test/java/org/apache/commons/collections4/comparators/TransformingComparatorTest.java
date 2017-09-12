@@ -27,7 +27,6 @@ import org.apache.commons.collections4.TransformerUtils;
 /**
  * Test class for TransformingComparator.
  *
- * @version $Id$
  */
 public class TransformingComparatorTest extends AbstractComparatorTest<Integer> {
 

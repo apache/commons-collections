@@ -24,7 +24,6 @@ import org.apache.commons.collections4.BulkTest;
 /**
  * Tests for IteratorIterable.
  *
- * @version $Id$
  */
 public class IteratorIterableTest extends BulkTest {
 

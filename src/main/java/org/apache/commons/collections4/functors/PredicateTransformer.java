@@ -26,7 +26,6 @@ import org.apache.commons.collections4.Transformer;
  * and then returns the result.
  *
  * @since 3.0
- * @version $Id$
  */
 public class PredicateTransformer<T> implements Transformer<T, Boolean>, Serializable {
 

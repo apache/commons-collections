@@ -34,7 +34,6 @@ import org.apache.commons.collections4.Transformer;
  * creation of subclass implementations.
  *
  * @since 4.1
- * @version $Id$
  */
 public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implements MultiSet<E> {
 

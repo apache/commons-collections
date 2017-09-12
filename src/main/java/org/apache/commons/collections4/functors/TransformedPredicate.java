@@ -26,7 +26,6 @@ import org.apache.commons.collections4.Transformer;
  * another <code>Predicate</code>.
  *
  * @since 3.1
- * @version $Id$
  */
 public final class TransformedPredicate<T> implements PredicateDecorator<T>, Serializable {
 

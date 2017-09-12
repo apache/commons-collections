@@ -36,7 +36,6 @@ import org.apache.commons.collections4.comparators.TransformingComparator;
  * in the <code>comparators</code> subpackage.
  *
  * @since 2.1
- * @version $Id$
  */
 public class ComparatorUtils {
 

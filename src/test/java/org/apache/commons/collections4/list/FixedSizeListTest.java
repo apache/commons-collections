@@ -25,7 +25,6 @@ import java.util.List;
  * implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class FixedSizeListTest<E> extends AbstractListTest<E> {
 

@@ -29,7 +29,6 @@ import java.util.Collections;
  * Base class for tests of AnyPredicate, AllPredicate, and OnePredicate.
  *
  * @since 3.0
- * @version $Id$
  */
 public abstract class AbstractAnyAllOnePredicateTest<T> extends AbstractCompositePredicateTest<T> {
 

@@ -39,7 +39,6 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
  * protected methods from AbstractCollectionTest.
  *
  * @since 4.0
- * @version $Id$
  */
 public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
 

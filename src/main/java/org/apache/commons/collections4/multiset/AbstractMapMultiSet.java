@@ -36,7 +36,6 @@ import org.apache.commons.collections4.iterators.AbstractIteratorDecorator;
  * number of occurrences of that element in the multiset.
  *
  * @since 4.1
- * @version $Id$
  */
 public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
 

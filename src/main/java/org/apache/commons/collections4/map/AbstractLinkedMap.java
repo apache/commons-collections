@@ -57,7 +57,6 @@ import org.apache.commons.collections4.iterators.EmptyOrderedMapIterator;
  * methods exposed.
  *
  * @since 3.0
- * @version $Id$
  */
 public abstract class AbstractLinkedMap<K, V> extends AbstractHashedMap<K, V> implements OrderedMap<K, V> {
 

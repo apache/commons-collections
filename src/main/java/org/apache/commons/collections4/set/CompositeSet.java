@@ -44,7 +44,6 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * for more details.
  *
  * @since 3.0
- * @version $Id$
  */
 public class CompositeSet<E> implements Set<E>, Serializable {
 

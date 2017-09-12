@@ -41,7 +41,6 @@ import org.junit.Test;
  * Tests for FluentIterable.
  *
  * @since 4.1
- * @version $Id$
  */
 public class FluentIterableTest {
 

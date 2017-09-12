@@ -45,7 +45,6 @@ import java.util.List;
  * multiple comparisons after all the setup operations are complete.
  *
  * @since 2.0
- * @version $Id$
  */
 public class ComparatorChain<E> implements Comparator<E>, Serializable {
 

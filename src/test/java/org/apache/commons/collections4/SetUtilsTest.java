@@ -35,7 +35,6 @@ import org.junit.Test;
 /**
  * Tests for SetUtils.
  *
- * @version $Id$
  */
 public class SetUtilsTest {
 

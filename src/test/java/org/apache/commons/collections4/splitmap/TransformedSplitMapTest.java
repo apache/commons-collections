@@ -31,7 +31,6 @@ import org.apache.commons.collections4.functors.NOPTransformer;
  * Tests for {@link TransformedSplitMap}
  *
  * @since 4.0
- * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class TransformedSplitMapTest extends BulkTest {

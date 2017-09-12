@@ -23,7 +23,6 @@ import org.apache.commons.collections4.ResettableIterator;
  * Provides an implementation of an empty ordered iterator.
  *
  * @since 3.1
- * @version $Id$
  */
 public class EmptyOrderedIterator<E> extends AbstractEmptyIterator<E>
         implements OrderedIterator<E>, ResettableIterator<E> {

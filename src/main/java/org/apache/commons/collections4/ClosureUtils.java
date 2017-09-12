@@ -55,7 +55,6 @@ import org.apache.commons.collections4.functors.WhileClosure;
  * </ul>
  *
  * @since 3.0
- * @version $Id$
  */
 public class ClosureUtils {
 

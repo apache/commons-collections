@@ -17,6 +17,5 @@
 /**
  * This package contains various {@link org.apache.commons.collections4.trie.KeyAnalyzer} implementations.
  *
- * @version $Id$
  */
 package org.apache.commons.collections4.trie.analyzer;

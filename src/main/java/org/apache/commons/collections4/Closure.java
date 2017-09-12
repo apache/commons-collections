@@ -27,7 +27,6 @@ package org.apache.commons.collections4;
  *
  * @param <T> the type that the closure acts on
  * @since 1.0
- * @version $Id$
  */
 public interface Closure<T> {
 

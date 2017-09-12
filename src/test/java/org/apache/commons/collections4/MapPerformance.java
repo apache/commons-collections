@@ -26,7 +26,6 @@ import org.apache.commons.collections4.map.Flat3Map;
 /**
  * <code>MapPerformanceTest</code> is designed to perform basic Map performance tests.
  *
- * @version $Id$
  */
 public class MapPerformance {
 

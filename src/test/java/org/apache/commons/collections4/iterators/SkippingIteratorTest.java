@@ -25,7 +25,6 @@ import org.junit.Test;
 /**
  * A unit test to test the basic functions of {@link SkippingIterator}.
  *
- * @version $Id$
  */
 public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
 

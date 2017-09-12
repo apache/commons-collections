@@ -25,7 +25,6 @@ import java.util.Collection;
  * {@link CompositeMap} implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     /** used as a flag in MapMutator tests */

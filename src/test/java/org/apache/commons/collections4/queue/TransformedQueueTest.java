@@ -30,7 +30,6 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  * {@link TransformedQueue} implementation.
  *
  * @since 4.0
- * @version $Id$
  */
 public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
 

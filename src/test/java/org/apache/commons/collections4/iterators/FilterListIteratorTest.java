@@ -31,7 +31,6 @@ import org.junit.Assert;
 /**
  * Tests the FilterListIterator class.
  *
- * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class FilterListIteratorTest extends TestCase {

@@ -24,7 +24,6 @@ import org.apache.commons.collections4.BulkTest;
  * Unit tests.
  * {@link StaticBucketMap}.
  *
- * @version $Id$
  */
 public class StaticBucketMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

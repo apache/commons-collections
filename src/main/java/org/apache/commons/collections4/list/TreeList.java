@@ -53,7 +53,6 @@ import org.apache.commons.collections4.OrderedIterator;
  * does use slightly more memory.
  *
  * @since 3.1
- * @version $Id$
  */
 public class TreeList<E> extends AbstractList<E> {
 //    add; toArray; iterator; insert; get; indexOf; remove

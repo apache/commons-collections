@@ -58,7 +58,6 @@ import org.apache.commons.collections4.set.AbstractSetTest;
  * {@link #makeFullCollection()} methods instead of {@link #resetEmpty()} and resetFull(),
  * otherwise the collection will be wrapped by a {@link CollectionBag} decorator.
  *
- * @version $Id$
  */
 public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
 

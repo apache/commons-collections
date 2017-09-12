@@ -40,7 +40,6 @@ import java.util.Arrays;
  * </pre>
  *
  * @since 3.0
- * @version $Id$
  */
 public class MultiKey<K> implements Serializable {
     // This class could implement List, but that would confuse it's purpose

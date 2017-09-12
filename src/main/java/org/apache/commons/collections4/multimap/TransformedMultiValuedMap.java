@@ -35,7 +35,6 @@ import org.apache.commons.collections4.Transformer;
  * <strong>Note that TransformedMultiValuedMap is not synchronized and is not thread-safe.</strong>
  *
  * @since 4.1
- * @version $Id$
  */
 public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecorator<K, V> {
 

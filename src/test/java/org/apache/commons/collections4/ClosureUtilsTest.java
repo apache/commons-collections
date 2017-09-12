@@ -35,7 +35,6 @@ import org.junit.Test;
  * Tests the ClosureUtils class.
  *
  * @since 3.0
- * @version $Id$
  */
 public class ClosureUtilsTest {
 

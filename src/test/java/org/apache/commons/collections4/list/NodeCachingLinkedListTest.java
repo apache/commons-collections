@@ -26,7 +26,6 @@ import org.apache.commons.collections4.BulkTest;
 /**
  * Test class for NodeCachingLinkedList, a performance optimised LinkedList.
  *
- * @version $Id$
  */
 public class NodeCachingLinkedListTest<E> extends AbstractLinkedListTest<E> {
 

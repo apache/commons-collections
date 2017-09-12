@@ -57,7 +57,6 @@ import org.junit.Test;
 /**
  * Tests for CollectionUtils.
  *
- * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class CollectionUtilsTest extends MockTestCase {

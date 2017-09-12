@@ -23,7 +23,6 @@ import java.util.Map;
  * Test the TiedMapEntry class.
  *
  * @since 3.0
- * @version $Id$
  */
 public class TiedMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 

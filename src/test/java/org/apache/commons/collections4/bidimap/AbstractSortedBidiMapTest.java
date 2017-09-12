@@ -34,7 +34,6 @@ import org.apache.commons.collections4.map.AbstractSortedMapTest;
 /**
  * Abstract test class for {@link SortedBidiMap} methods and contracts.
  *
- * @version $Id$
  */
 public abstract class AbstractSortedBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractOrderedBidiMapTest<K, V> {
 

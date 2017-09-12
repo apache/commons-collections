@@ -29,7 +29,6 @@ package org.apache.commons.collections4.sequence;
  * @see EditScript
  *
  * @since 4.0
- * @version $Id$
  */
 public class DeleteCommand<T> extends EditCommand<T> {
 

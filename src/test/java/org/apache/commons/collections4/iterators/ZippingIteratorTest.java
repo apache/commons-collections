@@ -23,7 +23,6 @@ import org.apache.commons.collections4.IteratorUtils;
 /**
  * Unit test suite for {@link ZippingIterator}.
  *
- * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {

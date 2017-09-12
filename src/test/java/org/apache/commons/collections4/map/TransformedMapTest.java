@@ -30,7 +30,6 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  * implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

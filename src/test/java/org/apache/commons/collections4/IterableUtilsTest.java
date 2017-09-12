@@ -42,7 +42,6 @@ import org.junit.Test;
  * Tests for IterableUtils.
  *
  * @since 4.1
- * @version $Id$
  */
 public class IterableUtilsTest {
 

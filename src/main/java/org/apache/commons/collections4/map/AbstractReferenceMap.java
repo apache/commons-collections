@@ -77,7 +77,6 @@ import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
  *
  * @see java.lang.ref.Reference
  * @since 3.1 (extracted from ReferenceMap in 3.0)
- * @version $Id$
  */
 public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V> {
 

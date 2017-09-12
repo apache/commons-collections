@@ -28,7 +28,6 @@ import org.apache.commons.collections4.list.FixedSizeList;
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link UnmodifiableBoundedCollection} implementation.
  * 
- * @version $Id$
  */
 public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest<E> {
 

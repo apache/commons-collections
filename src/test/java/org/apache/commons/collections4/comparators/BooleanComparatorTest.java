@@ -25,7 +25,6 @@ import org.junit.Test;
 /**
  * Tests for {@link BooleanComparator}.
  *
- * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class BooleanComparatorTest extends AbstractComparatorTest<Boolean> {

@@ -41,7 +41,6 @@ import org.junit.Test;
  * Tests the PredicateUtils class.
  *
  * @since 3.0
- * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class PredicateUtilsTest extends AbstractPredicateTest {

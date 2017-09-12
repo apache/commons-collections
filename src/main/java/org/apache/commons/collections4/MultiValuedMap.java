@@ -43,7 +43,6 @@ import java.util.Set;
  * <p>
  *
  * @since 4.1
- * @version $Id$
  */
 public interface MultiValuedMap<K, V> {
     // Query operations

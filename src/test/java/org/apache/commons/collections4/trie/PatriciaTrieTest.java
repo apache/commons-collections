@@ -37,7 +37,6 @@ import org.junit.Assert;
  * JUnit tests for the PatriciaTrie.
  *
  * @since 4.0
- * @version $Id$
  */
 public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
 

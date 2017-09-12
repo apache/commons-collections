@@ -23,7 +23,6 @@ import java.util.List;
 /**
  * Tests for ComparableComparator.
  *
- * @version $Id$
  *
  */
 @SuppressWarnings("boxing")

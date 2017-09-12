@@ -31,7 +31,6 @@ import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
 /**
  * Abstract test class for {@link OrderedBidiMap} methods and contracts.
  *
- * @version $Id$
  */
 public abstract class AbstractOrderedBidiMapTest<K, V> extends AbstractBidiMapTest<K, V> {
 

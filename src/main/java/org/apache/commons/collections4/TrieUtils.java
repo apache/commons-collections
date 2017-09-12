@@ -22,7 +22,6 @@ import org.apache.commons.collections4.trie.UnmodifiableTrie;
  * A collection of {@link Trie} utilities.
  *
  * @since 4.0
- * @version $Id$
  */
 public class TrieUtils {
 

@@ -34,7 +34,6 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 4.1
- * @version $Id$
  */
 public final class UnmodifiableMultiSet<E>
         extends AbstractMultiSetDecorator<E> implements Unmodifiable {

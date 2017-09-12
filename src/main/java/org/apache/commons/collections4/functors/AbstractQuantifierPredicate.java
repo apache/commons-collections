@@ -24,7 +24,6 @@ import org.apache.commons.collections4.Predicate;
  * Abstract base class for quantification predicates, e.g. All, Any, None.
  *
  * @since 4.0
- * @version $Id$
  */
 public abstract class AbstractQuantifierPredicate<T> implements PredicateDecorator<T>, Serializable {
 

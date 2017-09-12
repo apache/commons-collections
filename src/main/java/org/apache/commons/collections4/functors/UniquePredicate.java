@@ -27,7 +27,6 @@ import org.apache.commons.collections4.Predicate;
  * passed into the predicate.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class UniquePredicate<T> implements Predicate<T>, Serializable {
 

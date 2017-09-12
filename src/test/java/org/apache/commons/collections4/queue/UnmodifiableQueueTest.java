@@ -29,7 +29,6 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
  * {@link UnmodifiableQueue} implementation.
  *
  * @since 4.0
- * @version $Id$
  */
 public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
 

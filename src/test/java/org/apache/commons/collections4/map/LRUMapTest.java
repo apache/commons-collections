@@ -32,7 +32,6 @@ import org.apache.commons.collections4.ResettableIterator;
 /**
  * JUnit tests.
  *
- * @version $Id$
  */
 public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 

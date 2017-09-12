@@ -27,7 +27,6 @@ import org.apache.commons.collections4.Closure;
  * for more details.
  *
  * @since 3.0
- * @version $Id$
  */
 public class ForClosure<E> implements Closure<E> {
 

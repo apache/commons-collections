@@ -25,7 +25,6 @@ import org.apache.commons.collections4.Unmodifiable;
  * Test the UnmodifiableMapEntry class.
  *
  * @since 3.0
- * @version $Id$
  */
 public class UnmodifiableMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
 

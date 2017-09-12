@@ -31,6 +31,5 @@
  *   <li>Indexed - provides a map-like view onto another collection
  * </ul>
  *
- * @version $Id$
  */
 package org.apache.commons.collections4.collection;

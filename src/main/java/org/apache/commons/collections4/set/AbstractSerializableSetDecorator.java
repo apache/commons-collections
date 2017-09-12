@@ -26,7 +26,6 @@ import java.util.Set;
  * Serializable subclass of AbstractSetDecorator.
  *
  * @since 3.1
- * @version $Id$
  */
 public abstract class AbstractSerializableSetDecorator<E>
         extends AbstractSetDecorator<E> {

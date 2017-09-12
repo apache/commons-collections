@@ -37,7 +37,6 @@ import org.apache.commons.collections4.ResettableListIterator;
  * @see java.util.ListIterator
  *
  * @since 3.0
- * @version $Id$
  */
 public class ArrayListIterator<E> extends ArrayIterator<E>
         implements ResettableListIterator<E> {

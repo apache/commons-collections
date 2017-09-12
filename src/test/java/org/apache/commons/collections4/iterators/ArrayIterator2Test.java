@@ -22,7 +22,6 @@ import java.util.NoSuchElementException;
 /**
  * Tests the ArrayIterator with primitive type arrays.
  *
- * @version $Id$
  */
 public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
 

@@ -32,7 +32,6 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 4.0
- * @version $Id$
  */
 public final class UnmodifiableQueue<E>
         extends AbstractQueueDecorator<E>

@@ -55,7 +55,6 @@ import org.apache.commons.collections4.BoundedMap;
  * <code>NullPointerException</code>'s when accessed by concurrent threads.
  *
  * @since 3.0 (previously in main package v1.0)
- * @version $Id$
  */
 public class LRUMap<K, V>
         extends AbstractLinkedMap<K, V> implements BoundedMap<K, V>, Serializable, Cloneable {

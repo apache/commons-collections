@@ -45,7 +45,6 @@ import org.apache.commons.collections4.iterators.UniqueFilterIterator;
  * </ul>
  *
  * @since 4.1
- * @version $Id$
  */
 public class IterableUtils {
 

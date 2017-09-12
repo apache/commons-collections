@@ -33,7 +33,6 @@ import org.apache.commons.collections4.ListValuedMap;
  * the List implementation to use as values.
  *
  * @since 4.1
- * @version $Id$
  */
 public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap<K, V>
         implements ListValuedMap<K, V> {

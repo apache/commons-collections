@@ -33,7 +33,6 @@ import org.apache.commons.collections4.iterators.UnmodifiableListIterator;
  * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class UnmodifiableList<E>
         extends AbstractSerializableListDecorator<E>

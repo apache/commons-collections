@@ -33,7 +33,6 @@ import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
  *
  * @param <E> the type of the elements in the queue
  * @since 4.0
- * @version $Id$
  */
 public abstract class AbstractQueueDecorator<E> extends AbstractCollectionDecorator<E>
         implements Queue<E> {

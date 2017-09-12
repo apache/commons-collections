@@ -22,7 +22,6 @@ import java.util.NoSuchElementException;
 /**
  * Tests the ObjectArrayIterator.
  *
- * @version $Id$
  */
 public class ObjectArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 

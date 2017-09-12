@@ -24,7 +24,6 @@ import org.apache.commons.collections4.map.HashedMap;
  * JUnit test.
  *
  * @since 3.1
- * @version $Id$
  */
 public class MapBackedSetTest<E> extends AbstractSetTest<E> {
 

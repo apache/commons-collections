@@ -28,7 +28,6 @@ import org.apache.commons.collections4.BulkTest;
  * implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class FixedSizeSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 

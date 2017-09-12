@@ -27,7 +27,6 @@ import org.apache.commons.collections4.ResettableIterator;
  * Adapts a Map entrySet to the MapIterator interface.
  *
  * @since 4.0
- * @version $Id$
  */
 public class EntrySetToMapIteratorAdapter<K, V> implements MapIterator<K, V>, ResettableIterator<K> {
 

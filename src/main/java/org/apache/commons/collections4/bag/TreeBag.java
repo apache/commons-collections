@@ -39,7 +39,6 @@ import org.apache.commons.collections4.SortedBag;
  * javadoc carefully as several methods violate the {@link Collection} interface specification.
  *
  * @since 3.0 (previously in main package v2.0)
- * @version $Id$
  */
 public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Serializable {
 

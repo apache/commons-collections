@@ -33,7 +33,6 @@ import org.junit.Test;
  * Tests for MultiMapUtils
  *
  * @since 4.1
- * @version $Id$
  */
 public class MultiMapUtilsTest {
 

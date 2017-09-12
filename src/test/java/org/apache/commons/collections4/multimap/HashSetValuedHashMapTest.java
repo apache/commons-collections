@@ -29,7 +29,6 @@ import org.apache.commons.collections4.SetValuedMap;
  * Test HashSetValuedHashMap
  *
  * @since 4.1
- * @version $Id$
  */
 public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 

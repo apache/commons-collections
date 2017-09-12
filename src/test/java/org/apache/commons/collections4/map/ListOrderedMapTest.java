@@ -33,7 +33,6 @@ import org.apache.commons.collections4.list.AbstractListTest;
  * implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 

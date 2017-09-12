@@ -26,7 +26,6 @@ import junit.framework.TestSuite;
 /**
  * Test the NullComparator.
  *
- * @version $Id$
  */
 public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<Integer> {
 

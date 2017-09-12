@@ -48,7 +48,6 @@ import org.junit.Test;
 /**
  * Tests for MapUtils.
  *
- * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class MapUtilsTest {

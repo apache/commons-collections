@@ -34,7 +34,6 @@ import org.apache.commons.collections4.set.TransformedSet;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since 3.0
- * @version $Id$
  */
 public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E> {
 

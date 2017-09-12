@@ -32,7 +32,6 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
  * Note: This test is mainly for serialization support, the CollectionSortedBag decorator
  * is extensively used and tested in AbstractSortedBagTest. 
  *
- * @version $Id$
  * @since 4.0
  */
 public class CollectionSortedBagTest<T> extends AbstractCollectionTest<T> {

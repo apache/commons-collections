@@ -50,7 +50,6 @@ import java.util.Iterator;
  *
  * @param <E> the type of the elements in the collection
  * @since 3.0
- * @version $Id$
  */
 public abstract class AbstractCollectionDecorator<E>
         implements Collection<E>, Serializable {

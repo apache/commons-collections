@@ -74,7 +74,6 @@ import org.apache.commons.collections4.Predicate;
  * return <code>true</code> if the comparator returns a value greater than <code>0</code>.</p>
  *
  * @since 4.0
- * @version $Id$
  */
 public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
 

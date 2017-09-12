@@ -74,7 +74,6 @@ import org.apache.commons.collections4.map.UnmodifiableSortedMap;
  *  </ul>
  *
  * @since 1.0
- * @version $Id$
  */
 @SuppressWarnings("deprecation")
 public class MapUtils {

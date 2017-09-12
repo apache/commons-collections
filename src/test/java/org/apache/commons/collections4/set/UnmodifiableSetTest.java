@@ -30,7 +30,6 @@ import org.apache.commons.collections4.Unmodifiable;
  * {@link UnmodifiableSet} implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class UnmodifiableSetTest<E> extends AbstractSetTest<E> {
 

@@ -30,7 +30,6 @@ import org.junit.Test;
 /**
  * Tests for ReverseComparator.
  *
- * @version $Id$
  */
 public class ReverseComparatorTest extends AbstractComparatorTest<Integer> {
 

@@ -39,7 +39,6 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * number of occurrences of that element in the bag.
  *
  * @since 3.0 (previously DefaultMapBag v2.0)
- * @version $Id$
  */
 public abstract class AbstractMapBag<E> implements Bag<E> {
 

@@ -34,7 +34,6 @@ import org.apache.commons.collections4.Transformer;
  *
  * @param <E> the type of the elements in the collection
  * @since 3.0
- * @version $Id$
  */
 public class TransformedCollection<E> extends AbstractCollectionDecorator<E> {
 

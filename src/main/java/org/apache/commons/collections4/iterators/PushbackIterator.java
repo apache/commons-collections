@@ -31,7 +31,6 @@ import java.util.Iterator;
  * result in an {@link UnsupportedOperationException}.
  *
  * @since 4.0
- * @version $Id$
  */
 public class PushbackIterator<E> implements Iterator<E> {
 

@@ -29,7 +29,6 @@ import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
  *
  * @param <E> the type of the elements in the list
  * @since 3.0
- * @version $Id$
  */
 public abstract class AbstractListDecorator<E> extends AbstractCollectionDecorator<E>
         implements List<E> {

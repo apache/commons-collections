@@ -26,7 +26,6 @@ import org.apache.commons.collections4.Transformer;
  * Internal utilities for functors.
  *
  * @since 3.0
- * @version $Id$
  */
 class FunctorUtils {
 

@@ -27,7 +27,6 @@ import org.apache.commons.collections4.iterators.EnumerationIterator;
  * Provides utility methods for {@link Enumeration} instances.
  *
  * @since 3.0
- * @version $Id$
  */
 public class EnumerationUtils {
 

@@ -24,7 +24,6 @@ import java.util.Comparator;
  *
  * @param <E> the type to iterate over
  * @since 2.0
- * @version $Id$
  */
 public interface SortedBag<E> extends Bag<E> {
 

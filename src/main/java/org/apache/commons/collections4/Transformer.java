@@ -33,7 +33,6 @@ package org.apache.commons.collections4;
  * @param <O> the output type from the transformer
  *
  * @since 1.0
- * @version $Id$
  */
 public interface Transformer<I, O> {
 

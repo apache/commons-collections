@@ -28,7 +28,6 @@ import org.apache.commons.collections4.BulkTest;
  * JUnit tests
  *
  * @since 3.1
- * @version $Id$
  */
 public class TreeListTest<E> extends AbstractListTest<E> {
 

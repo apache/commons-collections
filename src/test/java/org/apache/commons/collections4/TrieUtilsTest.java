@@ -25,7 +25,6 @@ import org.junit.Test;
 /**
  * Tests for TrieUtils factory methods.
  *
- * @version $Id$
  */
 public class TrieUtilsTest {
 

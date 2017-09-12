@@ -25,7 +25,6 @@ import org.apache.commons.collections4.Predicate;
  * Predicate implementation that always throws an exception.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class ExceptionPredicate<T> implements Predicate<T>, Serializable {
 

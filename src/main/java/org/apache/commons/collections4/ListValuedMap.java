@@ -28,7 +28,6 @@ import java.util.List;
  * </ul>
  *
  * @since 4.1
- * @version $Id$
  */
 public interface ListValuedMap<K, V> extends MultiValuedMap<K, V> {
 

@@ -26,7 +26,6 @@ import org.apache.commons.collections4.SortedBag;
  * Methods are forwarded directly to the decorated bag.
  *
  * @since 3.0
- * @version $Id$
  */
 public abstract class AbstractSortedBagDecorator<E>
         extends AbstractBagDecorator<E> implements SortedBag<E> {

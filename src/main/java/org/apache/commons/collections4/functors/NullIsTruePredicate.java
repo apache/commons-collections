@@ -24,7 +24,6 @@ import org.apache.commons.collections4.Predicate;
  * Predicate implementation that returns true if the input is null.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class NullIsTruePredicate<T> implements PredicateDecorator<T>, Serializable {
 

@@ -33,7 +33,6 @@ import org.junit.Test;
 /**
  * Tests for ListUtils.
  *
- * @version $Id$
  */
 public class ListUtilsTest {
 

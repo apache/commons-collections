@@ -25,7 +25,6 @@ import org.apache.commons.collections4.BulkTest;
 /**
  * JUnit tests.
  *
- * @version $Id$
  */
 public class TreeBidiMapTest<K extends Comparable<K>, V extends Comparable<V>> extends AbstractOrderedBidiMapTest<K, V> {
 

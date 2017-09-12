@@ -30,7 +30,6 @@ import org.apache.commons.collections4.functors.ConstantFactory;
  * {@link DefaultedMap} implementation.
  *
  * @since 3.2
- * @version $Id$
  */
 public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 

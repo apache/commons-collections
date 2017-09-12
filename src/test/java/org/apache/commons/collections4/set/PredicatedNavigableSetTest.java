@@ -33,7 +33,6 @@ import org.apache.commons.collections4.functors.TruePredicate;
  * {@link PredicatedNavigableSet} implementation.
  *
  * @since 4.1
- * @version $Id$
  */
 public class PredicatedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
 

@@ -29,7 +29,6 @@ import java.util.Set;
  * JUnit tests.
  *
  * @since 3.0
- * @version $Id$
  */
 public class SetUniqueListTest<E> extends AbstractListTest<E> {
 

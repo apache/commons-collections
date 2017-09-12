@@ -50,7 +50,6 @@ import org.apache.commons.collections4.map.AbstractSortedMapDecorator;
  * and the flawed <code>createMap</code> method is ignored.
  *
  * @since 3.0
- * @version $Id$
  */
 public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
         implements SortedBidiMap<K, V>, Serializable {

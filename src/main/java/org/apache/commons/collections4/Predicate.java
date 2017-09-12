@@ -31,7 +31,6 @@ package org.apache.commons.collections4;
  * @param <T> the type that the predicate queries
  *
  * @since 1.0
- * @version $Id$
  */
 public interface Predicate<T> {
 

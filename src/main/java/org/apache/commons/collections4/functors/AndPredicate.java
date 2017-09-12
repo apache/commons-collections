@@ -24,7 +24,6 @@ import org.apache.commons.collections4.Predicate;
  * Predicate implementation that returns true if both the predicates return true.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class AndPredicate<T> implements PredicateDecorator<T>, Serializable {
 

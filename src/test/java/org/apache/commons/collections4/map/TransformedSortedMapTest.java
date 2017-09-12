@@ -33,7 +33,6 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  * implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 

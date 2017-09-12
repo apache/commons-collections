@@ -115,7 +115,6 @@ package org.apache.commons.collections4.sequence;
  * </pre>
  *
  * @since 4.0
- * @version $Id$
  */
 public interface CommandVisitor<T> {
 

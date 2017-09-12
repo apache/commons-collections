@@ -34,7 +34,6 @@ import org.apache.commons.collections4.ResettableIterator;
  *
  * @param <E> the type of elements returned by this iterator
  * @since 1.0
- * @version $Id$
  */
 public class ArrayIterator<E> implements ResettableIterator<E> {
 

@@ -68,7 +68,6 @@ import java.io.Serializable;
  * @see java.lang.ref.Reference
  *
  * @since 3.0 (previously in main package v2.1)
- * @version $Id$
  */
 public class ReferenceMap<K, V> extends AbstractReferenceMap<K, V> implements Serializable {
 

@@ -26,7 +26,6 @@ import java.util.List;
  * {@link UnmodifiableList} implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class UnmodifiableListTest<E> extends AbstractListTest<E> {
 

@@ -30,7 +30,6 @@ import org.junit.Test;
 /**
  * Tests the PeekingIterator.
  *
- * @version $Id$
  */
 public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
 

@@ -52,7 +52,6 @@ import org.apache.commons.collections4.multiset.UnmodifiableMultiSet;
  * Subclasses specify a Map implementation to use as the internal storage.
  *
  * @since 4.1
- * @version $Id$
  */
 public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, V> {
 
