@@ -622,7 +622,7 @@ public class TreeList<E> extends AbstractList<E> {
             }
             if (getRightSubTree() == null) {
                 if (relativePosition > 0) {
-                    left.relativePosition += relativePosition + (relativePosition > 0 ? 0 : 1);
+                    left.relativePosition += relativePosition;
                 }
                 left.max().setRight(null, right);
                 return left;

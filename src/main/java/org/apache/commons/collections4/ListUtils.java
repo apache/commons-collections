@@ -673,9 +673,6 @@ public class ListUtils {
         @Override
         public List<T> get(final int index) {
             final int listSize = size();
-            if (listSize < 0) {
-                throw new IllegalArgumentException("negative size: " + listSize);
-            }
             if (index < 0) {
                 throw new IndexOutOfBoundsException("Index " + index + " must not be negative");
             }
