@@ -309,7 +309,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @see #iterator()
      */
     @Override
-    public Set<Entry<K, Object>> entrySet() {
+    public Set<Entry<K, Object>> entrySet() { // NOPMD
         return super.entrySet();
     }
 

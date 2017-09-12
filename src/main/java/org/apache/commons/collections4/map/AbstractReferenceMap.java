@@ -291,7 +291,8 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
     @Override
     public void clear() {
         super.clear();
-        while (queue.poll() != null) {} // drain the queue
+        // drain the queue
+        while (queue.poll() != null) {} // NOPMD
     }
 
     //-----------------------------------------------------------------------

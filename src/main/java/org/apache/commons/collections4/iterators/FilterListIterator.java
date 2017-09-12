@@ -132,10 +132,8 @@ public class FilterListIterator<E> implements ListIterator<E> {
 
     @Override
     public E next() {
-        if (!nextObjectSet) {
-            if (!setNextObject()) {
-                throw new NoSuchElementException();
-            }
+        if (!nextObjectSet && !setNextObject()) {
+            throw new NoSuchElementException();
         }
         nextIndex++;
         final E temp = nextObject;
@@ -150,10 +148,8 @@ public class FilterListIterator<E> implements ListIterator<E> {
 
     @Override
     public E previous() {
-        if (!previousObjectSet) {
-            if (!setPreviousObject()) {
-                throw new NoSuchElementException();
-            }
+        if (!previousObjectSet && !setPreviousObject()) {
+            throw new NoSuchElementException();
         }
         nextIndex--;
         final E temp = previousObject;

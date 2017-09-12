@@ -177,7 +177,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
                 // This is a very special and rare case.
 
                 /* REPLACE OLD KEY+VALUE */
-                if (found != root) {
+                if (found != root) { // NOPMD
                     incrementModCount();
                     return found.setKeyValue(key, value);
                 }

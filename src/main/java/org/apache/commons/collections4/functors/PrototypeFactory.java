@@ -193,12 +193,12 @@ public class PrototypeFactory {
                     if (bais != null) {
                         bais.close();
                     }
-                } catch (final IOException ex) {
+                } catch (final IOException ex) { //NOPMD
                     // ignore
                 }
                 try {
                     baos.close();
-                } catch (final IOException ex) {
+                } catch (final IOException ex) { //NOPMD
                     // ignore
                 }
             }
