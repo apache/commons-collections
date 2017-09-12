@@ -21,7 +21,7 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections4.ResettableListIterator;
 
 /**
- * <code>SingletonIterator</code> is an {@link ListIterator} over a single
+ * <code>SingletonIterator</code> is an {@link java.util.ListIterator} over a single
  * object instance.
  *
  * @since 2.1

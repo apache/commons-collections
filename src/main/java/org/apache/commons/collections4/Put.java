@@ -43,11 +43,19 @@ public interface Put<K, V> {
      * Note that the return type is Object, rather than V as in the Map interface.
      * See the class Javadoc for further info.
      *
+     * @param key key with which the specified value is to be associated
+     * @param value value to be associated with the specified key
+     * @return the previous value associated with <tt>key</tt>, or
+     *         <tt>null</tt> if there was no mapping for <tt>key</tt>.
+     *         (A <tt>null</tt> return can also indicate that the map
+     *         previously associated <tt>null</tt> with <tt>key</tt>,
+     *         if the implementation supports <tt>null</tt> values.)
      * @see Map#put(Object, Object)
      */
     Object put(K key, V value);
 
     /**
+     * @param t mappings to be stored in this map
      * @see Map#putAll(Map)
      */
     void putAll(Map<? extends K, ? extends V> t);

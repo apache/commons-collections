@@ -47,7 +47,7 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
      *
      * @param <I>  the input type
      * @param <O>  the output type
-     * @return Transformer<I, O> that always returns null.
+     * @return Transformer&lt;I, O&gt; that always returns null.
      */
     @SuppressWarnings("unchecked") // The null transformer works for all object types
     public static <I, O> Transformer<I, O> nullTransformer() {

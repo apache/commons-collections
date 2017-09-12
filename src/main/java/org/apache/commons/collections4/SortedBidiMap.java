@@ -53,7 +53,7 @@ public interface SortedBidiMap<K, V> extends OrderedBidiMap<K, V>, SortedMap<K, 
 
     /**
      * Get the comparator used for the values in the value-to-key map aspect.
-     * @return Comparator<? super V>
+     * @return Comparator&lt;? super V&gt;
      */
     Comparator<? super V> valueComparator();
 }

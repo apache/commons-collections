@@ -415,7 +415,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
 
     /**
      * Get the collection mutator to be used for this CompositeCollection.
-     * @return CollectionMutator<E>
+     * @return CollectionMutator&lt;E&gt;
      */
     protected CollectionMutator<E> getMutator() {
         return mutator;

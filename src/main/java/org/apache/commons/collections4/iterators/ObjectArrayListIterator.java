@@ -21,7 +21,7 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections4.ResettableListIterator;
 
 /**
- * Implements a {@link ListIterator} over an array of objects.
+ * Implements a {@link java.util.ListIterator} over an array of objects.
  * <p>
  * This iterator does not support {@link #add} or {@link #remove}, as the object array
  * cannot be structurally modified. The {@link #set} method is supported however.
@@ -168,9 +168,9 @@ public class ObjectArrayListIterator<E> extends ObjectArrayIterator<E>
      * This method sets the element that was returned by the last call
      * to {@link #next()} of {@link #previous()}.
      *
-     * <b>Note:</b> {@link ListIterator} implementations that support <code>add()</code>
+     * <b>Note:</b> {@link java.util.ListIterator} implementations that support <code>add()</code>
      * and <code>remove()</code> only allow <code>set()</code> to be called once per call
-     * to <code>next()</code> or <code>previous</code> (see the {@link ListIterator}
+     * to <code>next()</code> or <code>previous</code> (see the {@link java.util.ListIterator}
      * javadoc for more details). Since this implementation does not support
      * <code>add()</code> or <code>remove()</code>, <code>set()</code> may be
      * called as often as desired.

@@ -45,7 +45,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
     private static final long serialVersionUID = 5155253417231339498L;
 
-    /** The root node of the {@link Trie}. */
+    /** The root node of the {@link org.apache.commons.collections4.Trie}. */
     private transient TrieEntry<K, V> root = new TrieEntry<>(null, null, -1);
 
     /**
@@ -57,11 +57,11 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     private transient volatile Collection<V> values;
     private transient volatile Set<Map.Entry<K,V>> entrySet;
 
-    /** The current size of the {@link Trie}. */
+    /** The current size of the {@link org.apache.commons.collections4.Trie}. */
     private transient int size = 0;
 
     /**
-     * The number of times this {@link Trie} has been modified.
+     * The number of times this {@link org.apache.commons.collections4.Trie} has been modified.
      * It's used to detect concurrent modifications and fail-fast the {@link Iterator}s.
      */
     protected transient int modCount = 0;
@@ -71,8 +71,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     * Constructs a new {@link org.apache.commons.collections4.Trie Trie} using the given
-     * {@link KeyAnalyzer} and initializes the {@link org.apache.commons.collections4.Trie Trie}
+     * Constructs a new {@link org.apache.commons.collections4.Trie org.apache.commons.collections4.Trie Trie}
+     * using the given {@link KeyAnalyzer} and initializes the {@link org.apache.commons.collections4.Trie Trie}
      * with the values from the provided {@link Map}.
      */
     protected AbstractPatriciaTrie(final KeyAnalyzer<? super K> keyAnalyzer,
@@ -271,7 +271,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
      * <li>L = 1001100
      * </ol>
      *
-     * If the {@link Trie} contained 'H' and 'L', a lookup of 'D' would
+     * If the {@link org.apache.commons.collections4.Trie} contained 'H' and 'L', a lookup of 'D' would
      * return 'L', because the XOR distance between D &amp; L is smaller
      * than the XOR distance between D &amp; H.
      *
@@ -300,7 +300,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
      * <li>L = 1001100
      * </ol>
      *
-     * If the {@link Trie} contained 'H' and 'L', a lookup of 'D' would
+     * If the {@link org.apache.commons.collections4.Trie} contained 'H' and 'L', a lookup of 'D' would
      * return 'L', because the XOR distance between D &amp; L is smaller
      * than the XOR distance between D &amp; H.
      *
@@ -327,7 +327,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
      * <li>L = 1001100
      * </ol>
      *
-     * If the {@link Trie} contained 'H' and 'L', a lookup of 'D' would
+     * If the {@link org.apache.commons.collections4.Trie} contained 'H' and 'L', a lookup of 'D' would
      * return 'L', because the XOR distance between D &amp; L is smaller
      * than the XOR distance between D &amp; H.
      *
@@ -1268,7 +1268,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     *  A {@link Trie} is a set of {@link TrieEntry} nodes.
+     *  A {@link org.apache.commons.collections4.Trie} is a set of {@link TrieEntry} nodes.
      */
     protected static class TrieEntry<K,V> extends BasicEntry<K, V> {
 

@@ -28,11 +28,12 @@ import org.apache.commons.collections4.ResettableIterator;
  * operations use the same, exhausted source iterator.  To create a single use
  * iterable, construct a new {@link IteratorIterable} using a {@link Iterator}
  * that is NOT a {@link ResettableIterator} iterator:
- * <pre>
- *   Iterator<Integer> iterator = // some non-resettable iterator
- *   Iterable<Integer> iterable = new IteratorIterable<Integer>(iterator);
- * </pre>
  * </p>
+ *
+ * <pre>
+ *   Iterator&lt;Integer&gt; iterator = // some non-resettable iterator
+ *   Iterable&lt;Integer&gt; iterable = new IteratorIterable&lt;Integer&gt;(iterator);
+ * </pre>
  *
  * <p>
  * In the multiple use iterable case, the iterable is usable for any number of
@@ -40,22 +41,24 @@ import org.apache.commons.collections4.ResettableIterator;
  * the iterable supports multiple iterations, it does not support concurrent
  * iterations. To implicitly create a multiple use iterable, construct a new
  * {@link IteratorIterable} using a {@link ResettableIterator} iterator:
+ * </p>
+ *
  * <pre>
  *   Integer[] array = {Integer.valueOf(1),Integer.valueOf(2),Integer.valueOf(3)};
- *   Iterator<Integer> iterator = IteratorUtils.arrayIterator(array); // a resettable iterator
- *   Iterable<Integer> iterable = new IteratorIterable<Integer>(iterator);
+ *   Iterator&lt;Integer&gt; iterator = IteratorUtils.arrayIterator(array); // a resettable iterator
+ *   Iterable&lt;Integer&gt; iterable = new IteratorIterable&lt;Integer&gt;(iterator);
  * </pre>
- * </p>
  *
  * <p>
  * A multiple use iterable can also be explicitly constructed using any
  * {@link Iterator} and specifying <code>true</code> for the
  * <code>multipleUse</code> flag:
- * <pre>
- *   Iterator<Integer> iterator = // some non-resettable iterator
- *   Iterable<Integer> iterable = new IteratorIterable<Integer>(iterator, true);
- * </pre>
  * </p>
+ *
+ * <pre>
+ *   Iterator&lt;Integer&gt; iterator = // some non-resettable iterator
+ *   Iterable&lt;Integer&gt; iterable = new IteratorIterable&lt;Integer&gt;(iterator, true);
+ * </pre>
  *
  * @since 4.0
  * @version $Id$

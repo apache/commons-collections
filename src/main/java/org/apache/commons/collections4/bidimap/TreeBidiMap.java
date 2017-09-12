@@ -1431,6 +1431,10 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
 
     /**
      * Reads the content of the stream.
+     *
+     * @param stream the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
      */
     @SuppressWarnings("unchecked") // This will fail at runtime if the stream is incorrect
     private void readObject(final ObjectInputStream stream) throws IOException, ClassNotFoundException{
@@ -1446,6 +1450,9 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
 
     /**
      * Writes the content to the stream for serialization.
+     *
+     * @param stream  the output stream
+     * @throws IOException if an error occurs while writing to the stream
      */
     private void writeObject(final ObjectOutputStream stream) throws IOException{
         stream.defaultWriteObject();

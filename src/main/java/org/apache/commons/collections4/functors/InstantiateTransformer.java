@@ -48,7 +48,7 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
      * Get a typed no-arg instance.
      *
      * @param <T>  the type of the objects to be created
-     * @return Transformer<Class<? extends T>, T>
+     * @return Transformer&lt;Class&lt;? extends T&gt;, T&gt;
      */
     @SuppressWarnings("unchecked")
     public static <T> Transformer<Class<? extends T>, T> instantiateTransformer() {

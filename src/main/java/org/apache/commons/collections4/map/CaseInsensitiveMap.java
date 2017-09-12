@@ -46,16 +46,18 @@ import java.util.Map;
  * returns <code>"Four".</code>  The <code>Set</code> returned by <code>keySet()</code>
  * equals <code>{"one", "two", null}.</code>
  * <p>
- * <strong>This map will violate the detail of various Map and map view contracts.</note>
+ * <strong>This map will violate the detail of various Map and map view contracts.</strong>
  * As a general rule, don't compare this map to other maps. In particular, you can't
  * use decorators like {@link ListOrderedMap} on it, which silently assume that these
  * contracts are fulfilled.
+ * </p>
  * <p>
  * <strong>Note that CaseInsensitiveMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
  * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
+ * </p>
  *
  * @since 3.0
  * @version $Id$
@@ -144,6 +146,9 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
 
     /**
      * Write the map out using a custom routine.
+     *
+     * @param out  the output stream
+     * @throws IOException if an error occurs while writing to the stream
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -152,6 +157,10 @@ public class CaseInsensitiveMap<K, V> extends AbstractHashedMap<K, V> implements
 
     /**
      * Read the map in using a custom routine.
+     *
+     * @param in the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
      */
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();

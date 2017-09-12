@@ -34,7 +34,7 @@ import org.apache.commons.collections4.FunctorException;
  * };
  *
  * // use catch and re-throw closure
- * java.util.List<String> strList = // some list
+ * java.util.List&lt;String&gt; strList = // some list
  * try {
  *     CollectionUtils.forAllDo(strList, writer);
  * } catch (FunctorException ex) {

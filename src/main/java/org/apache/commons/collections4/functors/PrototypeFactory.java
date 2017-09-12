@@ -48,11 +48,13 @@ public class PrototypeFactory {
      * Creates a Factory that will return a clone of the same prototype object
      * each time the factory is used. The prototype will be cloned using one of these
      * techniques (in order):
+     * </p>
+     *
      * <ul>
-     * <li>public clone method
-     * <li>public copy constructor
-     * <li>serialization clone
-     * <ul>
+     * <li>public clone method</li>
+     * <li>public copy constructor</li>
+     * <li>serialization clone</li>
+     * </ul>
      *
      * @param <T>  the type the factory creates
      * @param prototype  the object to clone each time in the factory

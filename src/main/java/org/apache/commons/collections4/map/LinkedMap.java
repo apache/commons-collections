@@ -118,6 +118,9 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
 
     /**
      * Write the map out using a custom routine.
+     *
+     * @param out  the output stream
+     * @throws IOException if an error occurs while writing to the stream
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -126,6 +129,10 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
 
     /**
      * Read the map in using a custom routine.
+     *
+     * @param in the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
      */
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();

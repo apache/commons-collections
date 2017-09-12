@@ -1765,7 +1765,7 @@ public class MapUtils {
      * @param <K>  the key type
      * @param <V>  the value type
      * @param map to wrap if necessary.
-     * @return IterableMap<K, V>
+     * @return IterableMap&lt;K, V&gt;
      * @throws NullPointerException if map is null
      * @since 4.0
      */
@@ -1782,7 +1782,7 @@ public class MapUtils {
      * @param <K>  the key type
      * @param <V>  the value type
      * @param sortedMap to wrap if necessary
-     * @return {@link IterableSortedMap}<K, V>
+     * @return {@link IterableSortedMap}&lt;K, V&gt;
      * @throws NullPointerException if sortedMap is null
      * @since 4.0
      */

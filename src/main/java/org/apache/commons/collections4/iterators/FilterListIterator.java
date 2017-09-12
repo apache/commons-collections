@@ -112,7 +112,10 @@ public class FilterListIterator<E> implements ListIterator<E> {
     }
 
     //-----------------------------------------------------------------------
-    /** Not supported. */
+    /**
+     * Not supported.
+     * @param o the element to insert
+     */
     @Override
     public void add(final E o) {
         throw new UnsupportedOperationException("FilterListIterator.add(Object) is not supported.");
@@ -170,7 +173,11 @@ public class FilterListIterator<E> implements ListIterator<E> {
         throw new UnsupportedOperationException("FilterListIterator.remove() is not supported.");
     }
 
-    /** Not supported. */
+    /**
+     * Not supported.
+     * @param o the element with which to replace the last element returned by
+     *          {@code next} or {@code previous}
+     */
     @Override
     public void set(final E o) {
         throw new UnsupportedOperationException("FilterListIterator.set(Object) is not supported.");

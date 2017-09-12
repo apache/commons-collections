@@ -432,7 +432,7 @@ public class CollectionUtils {
      * Only those elements present in the collection will appear as
      * keys in the map.
      *
-     * @param <O>  the type of object in the returned {@link Map}. This is a super type of <I>.
+     * @param <O>  the type of object in the returned {@link Map}. This is a super type of &lt;I&gt;.
      * @param coll  the collection to get the cardinality map for, must not be null
      * @return the populated cardinality map
      */
@@ -483,7 +483,7 @@ public class CollectionUtils {
      * <ul>
      *    <li><code>a.size()</code> and <code>b.size()</code> represent the
      *    total cardinality of <i>a</i> and <i>b</i>, resp. </li>
-     *    <li><code>a.size() < Integer.MAXVALUE</code></li>
+     *    <li><code>a.size() &lt; Integer.MAXVALUE</code></li>
      * </ul>
      *
      * @param a  the first (sub?) collection, must not be null
@@ -833,7 +833,7 @@ public class CollectionUtils {
      * Answers true if a predicate is true for every element of a
      * collection.
      * <p>
-     * A <code>null</code> predicate returns false.<br/>
+     * A <code>null</code> predicate returns false.<br>
      * A <code>null</code> or empty collection returns true.
      *
      * @param <C>  the type of object the {@link Iterable} contains

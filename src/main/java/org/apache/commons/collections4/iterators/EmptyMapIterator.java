@@ -39,7 +39,7 @@ public class EmptyMapIterator<K, V> extends AbstractEmptyMapIterator<K, V> imple
      * Get a typed instance of the iterator.
      * @param <K> the key type
      * @param <V> the value type
-     * @return {@link MapIterator}<K, V>
+     * @return {@link MapIterator}&lt;K, V&gt;
      */
     @SuppressWarnings("unchecked")
     public static <K, V> MapIterator<K, V> emptyMapIterator() {

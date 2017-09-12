@@ -97,7 +97,7 @@ package org.apache.commons.collections4.sequence;
  *   }
  *
  *   private void display(String commandName, Object object) {
- *     System.out.println(commandName + " " + object + " ->" + this);
+ *     System.out.println(commandName + " " + object + " -&gt;" + this);
  *   }
  *
  *   public String toString() {

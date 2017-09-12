@@ -31,7 +31,7 @@ import org.apache.commons.collections4.iterators.IteratorEnumeration;
  * <p>
  * Overrides {@link Properties#keys()} to sort keys. Allows other methods on the superclass to work with sorted keys.
  * </p>
- * 
+ *
  * @since 4.2
  */
 public class SortedProperties extends Properties {
