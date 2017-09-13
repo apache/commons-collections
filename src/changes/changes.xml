@@ -21,6 +21,9 @@
   </properties>
   <body>
   <release version="4.2" date="YYYY-MM-DD" description="New features">
+    <action issue="COLLECTIONS-656" dev="ggregory" type="fix">
+      Fix site build on Java 8
+    </action>
     <action issue="COLLECTIONS-653" dev="kinow" type="fix">
       Update Javadoc to Build on Java 1.8
     </action>
