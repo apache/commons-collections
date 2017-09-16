@@ -260,7 +260,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     * Returns the {@link Entry} whose key is closest in a bitwise XOR
+     * Returns the {@link java.util.Map.Entry} whose key is closest in a bitwise XOR
      * metric to the given key. This is NOT lexicographic closeness.
      * For example, given the keys:
      *
@@ -275,7 +275,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
      * than the XOR distance between D &amp; H.
      *
      * @param key  the key to use in the search
-     * @return the {@link Entry} whose key is closest in a bitwise XOR metric
+     * @return the {@link java.util.Map.Entry} whose key is closest in a bitwise XOR metric
      *   to the provided key
      */
     public Map.Entry<K, V> select(final K key) {
