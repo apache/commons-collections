@@ -22,6 +22,5 @@
  * <ul>
  *   <li>SortedProperties- A drop-in replacement for Properties for sorting keys.</li>
  * </ul>
- * <p>
  */
 package org.apache.commons.collections4.properties;
