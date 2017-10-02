@@ -1064,7 +1064,7 @@ public class IteratorUtilsTest {
         assertEquals(-1, index);
         assertEquals(-1, IteratorUtils.indexOf(null, testPredicate));
         try {
-            assertNull(IteratorUtils.indexOf(iterableA.iterator(), null));
+            IteratorUtils.indexOf(iterableA.iterator(), null);
             fail("expecting NullPointerException");
         } catch (final NullPointerException npe) {
             // expected
