@@ -727,7 +727,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     /**
      * Tests Map.toString().  Since the format of the string returned by the
      * toString() method is not defined in the Map interface, there is no
-     * common way to test the results of the toString() method.  Thereforce,
+     * common way to test the results of the toString() method.  Therefore,
      * it is encouraged that Map implementations override this test with one
      * that checks the format matches any format defined in its API.  This
      * default implementation just verifies that the toString() method does
