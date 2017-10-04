@@ -21,6 +21,9 @@
   </properties>
   <body>
   <release version="4.2" date="YYYY-MM-DD" description="New features">
+    <action issue="COLLECTIONS-660" dev="kinow" type="fix">
+      Uncomment test in AbstractMapTest regarding LRUMap equals
+    </action>
     <action issue="COLLECTIONS-658" dev="britter" type="add">
       Add Automatic-Module-Name MANIFEST entry for Java 9 compatibility
     </action>
