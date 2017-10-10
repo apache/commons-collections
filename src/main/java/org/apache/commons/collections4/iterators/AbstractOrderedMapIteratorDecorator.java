@@ -24,7 +24,6 @@ import org.apache.commons.collections4.OrderedMapIterator;
  * All methods are forwarded to the decorated map iterator.
  *
  * @since 3.0
- * @version $Id$
  */
 public class AbstractOrderedMapIteratorDecorator<K, V> implements OrderedMapIterator<K, V> {
 

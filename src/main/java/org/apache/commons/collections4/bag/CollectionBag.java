@@ -36,7 +36,6 @@ import org.apache.commons.collections4.Bag;
  * @see Bag
  * @param <E> the type held in the bag
  * @since 4.0
- * @version $Id$
  */
 public final class CollectionBag<E> extends AbstractBagDecorator<E> {
 
@@ -52,7 +51,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
      * @throws NullPointerException if bag is null
      */
     public static <E> Bag<E> collectionBag(final Bag<E> bag) {
-        return new CollectionBag<E>(bag);
+        return new CollectionBag<>(bag);
     }
 
     //-----------------------------------------------------------------------
@@ -71,7 +70,7 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
      * Write the collection out using a custom routine.
      *
      * @param out  the output stream
-     * @throws IOException
+     * @throws IOException if an error occurs while writing to the stream
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -82,8 +81,8 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
      * Read the collection in using a custom routine.
      *
      * @param in  the input stream
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
      * @throws ClassCastException if deserialised object has wrong type
      */
     @SuppressWarnings("unchecked") // will throw CCE, see Javadoc

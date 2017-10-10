@@ -37,7 +37,6 @@ import org.apache.commons.collections4.MultiValuedMap;
  * @param <V> the type of value elements
  *
  * @since 4.1
- * @version $Id$
  */
 public abstract class AbstractMultiValuedMapDecorator<K, V>
         implements MultiValuedMap<K, V>, Serializable {

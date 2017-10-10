@@ -25,7 +25,6 @@ import org.apache.commons.collections4.ResettableIterator;
  * Tests the SingletonIterator to ensure that the next() method will actually
  * perform the iteration rather than the hasNext() method.
  *
- * @version $Id$
  */
 public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
 
@@ -51,7 +50,7 @@ public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public SingletonIterator<E> makeObject() {
-        return new SingletonIterator<E>((E) testValue);
+        return new SingletonIterator<>((E) testValue);
     }
 
     @Override
@@ -84,7 +83,7 @@ public class SingletonIteratorTest<E> extends AbstractIteratorTest<E> {
 
     @SuppressWarnings("unchecked")
     public void testSingletonIteratorRemove() {
-        final ResettableIterator<E> iter = new SingletonIterator<E>((E) "xyzzy");
+        final ResettableIterator<E> iter = new SingletonIterator<>((E) "xyzzy");
         assertTrue(iter.hasNext());
         assertEquals("xyzzy",iter.next());
         iter.remove();

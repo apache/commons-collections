@@ -48,7 +48,6 @@ import org.junit.Test;
 /**
  * Tests for MapUtils.
  *
- * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class MapUtilsTest {
@@ -65,7 +64,7 @@ public class MapUtilsTest {
     @Test
     public void testPredicatedMap() {
         final Predicate<Object> p = getPredicate();
-        Map<Object, Object> map = MapUtils.predicatedMap(new HashMap<Object, Object>(), p, p);
+        Map<Object, Object> map = MapUtils.predicatedMap(new HashMap<>(), p, p);
         assertTrue("returned object should be a PredicatedMap", map instanceof PredicatedMap);
         try {
             MapUtils.predicatedMap(null, p, p);
@@ -78,10 +77,10 @@ public class MapUtilsTest {
     @Test
     public void testLazyMapFactory() {
         final Factory<Integer> factory = FactoryUtils.constantFactory(Integer.valueOf(5));
-        Map<Object, Object> map = MapUtils.lazyMap(new HashMap<Object, Object>(), factory);
+        Map<Object, Object> map = MapUtils.lazyMap(new HashMap<>(), factory);
         assertTrue(map instanceof LazyMap);
         try {
-            map = MapUtils.lazyMap(new HashMap<Object, Object>(), (Factory<Object>) null);
+            map = MapUtils.lazyMap(new HashMap<>(), (Factory<Object>) null);
             fail("Expecting NullPointerException for null factory");
         } catch (final NullPointerException e) {
             // expected
@@ -93,10 +92,10 @@ public class MapUtilsTest {
             // expected
         }
         final Transformer<Object, Integer> transformer = TransformerUtils.asTransformer(factory);
-        map = MapUtils.lazyMap(new HashMap<Object, Object>(), transformer);
+        map = MapUtils.lazyMap(new HashMap<>(), transformer);
         assertTrue(map instanceof LazyMap);
         try {
-            map = MapUtils.lazyMap(new HashMap<Object, Object>(), (Transformer<Object, Object>) null);
+            map = MapUtils.lazyMap(new HashMap<>(), (Transformer<Object, Object>) null);
             fail("Expecting NullPointerException for null transformer");
         } catch (final NullPointerException e) {
             // expected
@@ -111,7 +110,7 @@ public class MapUtilsTest {
 
     @Test
     public void testLazyMapTransformer() {
-        final Map<Object, Object> map = MapUtils.lazyMap(new HashMap<Object, Object>(), new Transformer<Object, Object>() {
+        final Map<Object, Object> map = MapUtils.lazyMap(new HashMap<>(), new Transformer<Object, Object>() {
             @Override
             public Object transform(final Object mapKey) {
                 if (mapKey instanceof String) {
@@ -133,20 +132,20 @@ public class MapUtilsTest {
 
     @Test
     public void testInvertMap() {
-        final Map<String, String> in = new HashMap<String, String>(5, 1);
+        final Map<String, String> in = new HashMap<>(5, 1);
         in.put("1", "A");
         in.put("2", "B");
         in.put("3", "C");
         in.put("4", "D");
         in.put("5", "E");
 
-        final Set<String> inKeySet = new HashSet<String>(in.keySet());
-        final Set<String> inValSet = new HashSet<String>(in.values());
+        final Set<String> inKeySet = new HashSet<>(in.keySet());
+        final Set<String> inValSet = new HashSet<>(in.values());
 
         final Map<String, String> out =  MapUtils.invertMap(in);
 
-        final Set<String> outKeySet = new HashSet<String>(out.keySet());
-        final Set<String> outValSet = new HashSet<String>(out.values());
+        final Set<String> outKeySet = new HashSet<>(out.keySet());
+        final Set<String> outValSet = new HashSet<>(out.values());
 
         assertTrue( inKeySet.equals( outValSet ));
         assertTrue( inValSet.equals( outKeySet ));
@@ -243,9 +242,9 @@ public class MapUtilsTest {
 
         // map entry
         test = MapUtils.putAll(new HashMap<String, String>(), new Object[] {
-            new DefaultMapEntry<String, String>("RED", "#FF0000"),
-            new DefaultMapEntry<String, String>("GREEN", "#00FF00"),
-            new DefaultMapEntry<String, String>("BLUE", "#0000FF")
+            new DefaultMapEntry<>("RED", "#FF0000"),
+            new DefaultMapEntry<>("GREEN", "#00FF00"),
+            new DefaultMapEntry<>("BLUE", "#0000FF")
         });
         assertEquals(true, test.containsKey("RED"));
         assertEquals("#FF0000", test.get("RED"));
@@ -257,9 +256,9 @@ public class MapUtilsTest {
 
         // key value
         test = MapUtils.putAll(new HashMap<String, String>(), new Object[] {
-            new DefaultKeyValue<String, String>("RED", "#FF0000"),
-            new DefaultKeyValue<String, String>("GREEN", "#00FF00"),
-            new DefaultKeyValue<String, String>("BLUE", "#0000FF")
+            new DefaultKeyValue<>("RED", "#FF0000"),
+            new DefaultKeyValue<>("GREEN", "#00FF00"),
+            new DefaultKeyValue<>("BLUE", "#0000FF")
         });
         assertEquals(true, test.containsKey("RED"));
         assertEquals("#FF0000", test.get("RED"));
@@ -272,7 +271,7 @@ public class MapUtilsTest {
 
     @Test
     public void testConvertResourceBundle() {
-        final Map<String, String> in = new HashMap<String, String>( 5 , 1 );
+        final Map<String, String> in = new HashMap<>( 5 , 1 );
         in.put("1", "A");
         in.put("2", "B");
         in.put("3", "C");
@@ -303,11 +302,11 @@ public class MapUtilsTest {
 
     @Test
     public void testDebugAndVerbosePrintCasting() {
-        final Map<Integer, String> inner = new HashMap<Integer, String>(2, 1);
+        final Map<Integer, String> inner = new HashMap<>(2, 1);
         inner.put(2, "B");
         inner.put(3, "C");
 
-        final Map<Integer, Object> outer = new HashMap<Integer, Object>(2, 1);
+        final Map<Integer, Object> outer = new HashMap<>(2, 1);
         outer.put(0, inner);
         outer.put(1, "A");
 
@@ -348,7 +347,7 @@ public class MapUtilsTest {
 
         final String INDENT = "    ";
 
-        final Map<Integer, String> map = new TreeMap<Integer, String>();  // treeMap guarantees order across JDKs for test
+        final Map<Integer, String> map = new TreeMap<>();  // treeMap guarantees order across JDKs for test
         map.put(2, "B");
         map.put(3, "C");
         map.put(4, null);
@@ -372,7 +371,7 @@ public class MapUtilsTest {
 
         final String INDENT = "    ";
 
-        final Map<Integer, String> map = new TreeMap<Integer, String>();  // treeMap guarantees order across JDKs for test
+        final Map<Integer, String> map = new TreeMap<>();  // treeMap guarantees order across JDKs for test
         map.put(2, "B");
         map.put(3, "C");
         map.put(4, null);
@@ -418,7 +417,7 @@ public class MapUtilsTest {
     @Test
     public void testVerbosePrintNullStream() {
         try {
-            MapUtils.verbosePrint(null, "Map", new HashMap<Object, Object>());
+            MapUtils.verbosePrint(null, "Map", new HashMap<>());
             fail("Should generate NullPointerException");
         } catch (final NullPointerException expected) {
         }
@@ -427,7 +426,7 @@ public class MapUtilsTest {
     @Test
     public void testDebugPrintNullStream() {
         try {
-            MapUtils.debugPrint(null, "Map", new HashMap<Object, Object>());
+            MapUtils.debugPrint(null, "Map", new HashMap<>());
             fail("Should generate NullPointerException");
         } catch (final NullPointerException expected) {
         }
@@ -440,7 +439,7 @@ public class MapUtilsTest {
 
         final String INDENT = "    ";
 
-        final Map<Object, String> map = new HashMap<Object, String>();
+        final Map<Object, String> map = new HashMap<>();
         map.put(null, "A");
 
         outPrint.println("{");
@@ -460,7 +459,7 @@ public class MapUtilsTest {
 
         final String INDENT = "    ";
 
-        final Map<Object, String> map = new HashMap<Object, String>();
+        final Map<Object, String> map = new HashMap<>();
         map.put(null, "A");
 
         outPrint.println("{");
@@ -480,7 +479,7 @@ public class MapUtilsTest {
 
         final String INDENT = "    ";
 
-        final Map<Object, Map<?, ?>> map = new HashMap<Object, Map<?, ?>>();
+        final Map<Object, Map<?, ?>> map = new HashMap<>();
         map.put(null, map);
 
         outPrint.println("{");
@@ -500,7 +499,7 @@ public class MapUtilsTest {
 
         final String INDENT = "    ";
 
-        final Map<Object, Map<?, ?>> map = new HashMap<Object, Map<?, ?>>();
+        final Map<Object, Map<?, ?>> map = new HashMap<>();
         map.put(null, map);
 
         outPrint.println("{");
@@ -520,8 +519,8 @@ public class MapUtilsTest {
 
         final String INDENT = "    ";
 
-        final Map<Object, Object> map = new HashMap<Object, Object>();
-        final Map<Object, Object> map2= new HashMap<Object, Object>();
+        final Map<Object, Object> map = new HashMap<>();
+        final Map<Object, Object> map2= new HashMap<>();
         map.put(null, map2);
         map2.put("2", "B");
 
@@ -545,8 +544,8 @@ public class MapUtilsTest {
 
         final String INDENT = "    ";
 
-        final Map<Object, Object> map = new HashMap<Object, Object>();
-        final Map<Object, Object> map2= new HashMap<Object, Object>();
+        final Map<Object, Object> map = new HashMap<>();
+        final Map<Object, Object> map2= new HashMap<>();
         map.put(null, map2);
         map2.put("2", "B");
 
@@ -586,11 +585,11 @@ public class MapUtilsTest {
 
         out.reset();
 
-        final Map<Integer, String> inner = new TreeMap<Integer, String>();  // treeMap guarantees order across JDKs for test
+        final Map<Integer, String> inner = new TreeMap<>();  // treeMap guarantees order across JDKs for test
         inner.put(2, "B");
         inner.put(3, "C");
 
-        final Map<Integer, Object> outer = new TreeMap<Integer, Object>();
+        final Map<Integer, Object> outer = new TreeMap<>();
         outer.put(1, inner);
         outer.put(0, "A");
         outer.put(7, outer);
@@ -622,11 +621,11 @@ public class MapUtilsTest {
 
         out.reset();
 
-        final Map<Integer, String> inner = new TreeMap<Integer, String>();  // treeMap guarantees order across JDKs for test
+        final Map<Integer, String> inner = new TreeMap<>();  // treeMap guarantees order across JDKs for test
         inner.put(2, "B");
         inner.put(3, "C");
 
-        final Map<Integer, Object> outer = new TreeMap<Integer, Object>();
+        final Map<Integer, Object> outer = new TreeMap<>();
         outer.put(1, inner);
         outer.put(0, "A");
         outer.put(7, outer);
@@ -643,9 +642,9 @@ public class MapUtilsTest {
         final String LABEL = "Print Map";
         final String INDENT = "    ";
 
-        final Map<Integer, Object> grandfather = new TreeMap<Integer, Object>();// treeMap guarantees order across JDKs for test
-        final Map<Integer, Object> father = new TreeMap<Integer, Object>();
-        final Map<Integer, Object> son    = new TreeMap<Integer, Object>();
+        final Map<Integer, Object> grandfather = new TreeMap<>();// treeMap guarantees order across JDKs for test
+        final Map<Integer, Object> father = new TreeMap<>();
+        final Map<Integer, Object> son    = new TreeMap<>();
 
         grandfather.put(0, "A");
         grandfather.put(1, father);
@@ -690,9 +689,9 @@ public class MapUtilsTest {
         final String LABEL = "Print Map";
         final String INDENT = "    ";
 
-        final Map<Integer, Object> grandfather = new TreeMap<Integer, Object>();// treeMap guarantees order across JDKs for test
-        final Map<Integer, Object> father = new TreeMap<Integer, Object>();
-        final Map<Integer, Object> son    = new TreeMap<Integer, Object>();
+        final Map<Integer, Object> grandfather = new TreeMap<>();// treeMap guarantees order across JDKs for test
+        final Map<Integer, Object> father = new TreeMap<>();
+        final Map<Integer, Object> son    = new TreeMap<>();
 
         grandfather.put(0, "A");
         grandfather.put(1, father);
@@ -735,19 +734,19 @@ public class MapUtilsTest {
     public void testEmptyIfNull() {
         assertTrue(MapUtils.emptyIfNull(null).isEmpty());
 
-        final Map<Long, Long> map = new HashMap<Long, Long>();
+        final Map<Long, Long> map = new HashMap<>();
         assertSame(map, MapUtils.emptyIfNull(map));
     }
 
     @Test
     public void testIsEmptyWithEmptyMap() {
-        final Map<Object, Object> map = new HashMap<Object, Object>();
+        final Map<Object, Object> map = new HashMap<>();
         assertEquals(true, MapUtils.isEmpty(map));
     }
 
     @Test
     public void testIsEmptyWithNonEmptyMap() {
-        final Map<String, String> map = new HashMap<String, String>();
+        final Map<String, String> map = new HashMap<>();
         map.put("item", "value");
         assertEquals(false, MapUtils.isEmpty(map));
     }
@@ -760,13 +759,13 @@ public class MapUtilsTest {
 
     @Test
     public void testIsNotEmptyWithEmptyMap() {
-        final Map<Object, Object> map = new HashMap<Object, Object>();
+        final Map<Object, Object> map = new HashMap<>();
         assertEquals(false, MapUtils.isNotEmpty(map));
     }
 
     @Test
     public void testIsNotEmptyWithNonEmptyMap() {
-        final Map<String, String> map = new HashMap<String, String>();
+        final Map<String, String> map = new HashMap<>();
         map.put("item", "value");
         assertEquals(true, MapUtils.isNotEmpty(map));
     }
@@ -780,7 +779,7 @@ public class MapUtilsTest {
     @Test
     public void testPopulateMap() {
         // Setup Test Data
-        final List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<>();
         list.add("1");
         list.add("3");
         list.add("5");
@@ -790,7 +789,7 @@ public class MapUtilsTest {
         list.add("6");
 
         // Now test key transform population
-        Map<Object, Object> map = new HashMap<Object, Object>();
+        Map<Object, Object> map = new HashMap<>();
         MapUtils.populateMap(map, list, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(list.size(), map.size());
 
@@ -802,7 +801,7 @@ public class MapUtilsTest {
         }
 
         // Now test both Key-Value transform population
-        map = new HashMap<Object, Object>();
+        map = new HashMap<>();
         MapUtils.populateMap(map, list, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
 
         assertEquals(list.size(), map.size());
@@ -836,7 +835,7 @@ public class MapUtilsTest {
     @Test
     public void testPopulateMultiMap() {
         // Setup Test Data
-        final List<X> list = new ArrayList<X>();
+        final List<X> list = new ArrayList<>();
         list.add(new X(1, "x1"));
         list.add(new X(2, "x2"));
         list.add(new X(2, "x3"));
@@ -866,14 +865,14 @@ public class MapUtilsTest {
             fail("Should throw NullPointerException");
         } catch (final NullPointerException e) {
         }
-        final HashMap<String, String> map = new HashMap<String, String>();
+        final HashMap<String, String> map = new HashMap<>();
         map.put("foo", "foov");
         map.put("bar", "barv");
         map.put("baz", "bazv");
         final IterableMap<String, String> iMap = MapUtils.iterableMap(map);
         assertEquals(map, iMap);
         assertNotSame(map, iMap);
-        final HashedMap<String, String> hMap = new HashedMap<String, String>(map);
+        final HashedMap<String, String> hMap = new HashedMap<>(map);
         assertSame(hMap, MapUtils.iterableMap(hMap));
     }
 
@@ -884,7 +883,7 @@ public class MapUtilsTest {
             fail("Should throw NullPointerException");
         } catch (final NullPointerException e) {
         }
-        final TreeMap<String, String> map = new TreeMap<String, String>();
+        final TreeMap<String, String> map = new TreeMap<>();
         map.put("foo", "foov");
         map.put("bar", "barv");
         map.put("baz", "bazv");
@@ -896,7 +895,7 @@ public class MapUtilsTest {
 
     @Test 
     public void testSize0() {
-        assertEquals(0, MapUtils.size(new HashMap<Object, Object>()));
+        assertEquals(0, MapUtils.size(new HashMap<>()));
     }
 
     @Test 
@@ -906,7 +905,7 @@ public class MapUtilsTest {
 
     @Test 
     public void testSize() {
-        final HashMap<Object, Object> map = new HashMap<Object, Object>();
+        final HashMap<Object, Object> map = new HashMap<>();
         map.put("A", "1");
         map.put("B", "2");
         assertEquals(2, MapUtils.size(map));

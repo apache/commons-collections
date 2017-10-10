@@ -33,7 +33,6 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  * implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
@@ -144,7 +143,7 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testFactory_Decorate() {
-        final SortedMap<K, V> base = new TreeMap<K, V>();
+        final SortedMap<K, V> base = new TreeMap<>();
         base.put((K) "A", (V) "1");
         base.put((K) "B", (V) "2");
         base.put((K) "C", (V) "3");
@@ -164,7 +163,7 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
 
     @SuppressWarnings("unchecked")
     public void testFactory_decorateTransform() {
-        final SortedMap<K, V> base = new TreeMap<K, V>();
+        final SortedMap<K, V> base = new TreeMap<>();
         base.put((K) "A", (V) "1");
         base.put((K) "B", (V) "2");
         base.put((K) "C", (V) "3");

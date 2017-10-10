@@ -33,7 +33,6 @@ import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
 /**
  * JUnit tests.
  *
- * @version $Id$
  */
 public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
@@ -54,7 +53,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Override
     public Flat3Map<K, V> makeObject() {
-        return new Flat3Map<K, V>();
+        return new Flat3Map<>();
     }
 
     //-----------------------------------------------------------------------
@@ -410,7 +409,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
 //    }
 
     public void testCollections261() {
-        final Flat3Map<Integer, Integer> m = new Flat3Map<Integer, Integer>();
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         m.put( Integer.valueOf(1), Integer.valueOf(1) );
         m.put( Integer.valueOf(0), Integer.valueOf(0) );
         assertEquals( Integer.valueOf(1), m.remove( Integer.valueOf(1) ) ); 
@@ -425,7 +424,7 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
     }
 
     public void testToString() {
-        final Flat3Map<Integer, Integer> m = new Flat3Map<Integer, Integer>();
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         final String string0 = m.toString();
         assertNotNull(string0);
         m.put( Integer.valueOf(1), Integer.valueOf(1) );

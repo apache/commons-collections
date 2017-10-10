@@ -38,7 +38,6 @@ import org.apache.commons.collections4.FunctorException;
  * for more details.
  *
  * @since 3.0
- * @version $Id$
  */
 public class PrototypeFactory {
 
@@ -48,11 +47,13 @@ public class PrototypeFactory {
      * Creates a Factory that will return a clone of the same prototype object
      * each time the factory is used. The prototype will be cloned using one of these
      * techniques (in order):
+     * </p>
+     *
      * <ul>
-     * <li>public clone method
-     * <li>public copy constructor
-     * <li>serialization clone
-     * <ul>
+     * <li>public clone method</li>
+     * <li>public copy constructor</li>
+     * <li>serialization clone</li>
+     * </ul>
      *
      * @param <T>  the type the factory creates
      * @param prototype  the object to clone each time in the factory
@@ -67,18 +68,18 @@ public class PrototypeFactory {
         }
         try {
             final Method method = prototype.getClass().getMethod("clone", (Class[]) null);
-            return new PrototypeCloneFactory<T>(prototype, method);
+            return new PrototypeCloneFactory<>(prototype, method);
 
         } catch (final NoSuchMethodException ex) {
             try {
                 prototype.getClass().getConstructor(new Class<?>[] { prototype.getClass() });
-                return new InstantiateFactory<T>(
+                return new InstantiateFactory<>(
                     (Class<T>) prototype.getClass(),
                     new Class<?>[] { prototype.getClass() },
                     new Object[] { prototype });
             } catch (final NoSuchMethodException ex2) {
                 if (prototype instanceof Serializable) {
-                    return (Factory<T>) new PrototypeSerializationFactory<Serializable>((Serializable) prototype);
+                    return (Factory<T>) new PrototypeSerializationFactory<>((Serializable) prototype);
                 }
             }
         }
@@ -192,12 +193,12 @@ public class PrototypeFactory {
                     if (bais != null) {
                         bais.close();
                     }
-                } catch (final IOException ex) {
+                } catch (final IOException ex) { //NOPMD
                     // ignore
                 }
                 try {
                     baos.close();
-                } catch (final IOException ex) {
+                } catch (final IOException ex) { //NOPMD
                     // ignore
                 }
             }

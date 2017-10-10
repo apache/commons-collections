@@ -41,7 +41,6 @@ import org.junit.Test;
  * Tests for FluentIterable.
  *
  * @since 4.1
- * @version $Id$
  */
 public class FluentIterableTest {
 
@@ -72,7 +71,7 @@ public class FluentIterableTest {
 
     @Before
     public void setUp() {
-        Collection<Integer> collectionA = new ArrayList<Integer>();
+        Collection<Integer> collectionA = new ArrayList<>();
         collectionA.add(1);
         collectionA.add(2);
         collectionA.add(2);
@@ -85,7 +84,7 @@ public class FluentIterableTest {
         collectionA.add(4);
         iterableA = collectionA;
 
-        Collection<Long> collectionB = new LinkedList<Long>();
+        Collection<Long> collectionB = new LinkedList<>();
         collectionB.add(5L);
         collectionB.add(4L);
         collectionB.add(4L);
@@ -164,7 +163,7 @@ public class FluentIterableTest {
     @Test
     public void collate() {
         List<Integer> result = FluentIterable.of(iterableOdd).collate(iterableEven).toList();
-        List<Integer> combinedList = new ArrayList<Integer>();
+        List<Integer> combinedList = new ArrayList<>();
         CollectionUtils.addAll(combinedList, iterableOdd);
         CollectionUtils.addAll(combinedList, iterableEven);
         Collections.sort(combinedList);
@@ -186,7 +185,7 @@ public class FluentIterableTest {
                     .collate(iterableEven, ComparatorUtils.<Integer>naturalComparator())
                     .toList();
 
-        List<Integer> combinedList = new ArrayList<Integer>();
+        List<Integer> combinedList = new ArrayList<>();
         CollectionUtils.addAll(combinedList, iterableOdd);
         CollectionUtils.addAll(combinedList, iterableEven);
         Collections.sort(combinedList);
@@ -370,7 +369,7 @@ public class FluentIterableTest {
     @Test
     public void zip() {
         List<Integer> result = FluentIterable.of(iterableOdd).zip(iterableEven).toList();
-        List<Integer> combinedList = new ArrayList<Integer>();
+        List<Integer> combinedList = new ArrayList<>();
         CollectionUtils.addAll(combinedList, iterableOdd);
         CollectionUtils.addAll(combinedList, iterableEven);
         Collections.sort(combinedList);
@@ -449,7 +448,7 @@ public class FluentIterableTest {
 
     @Test
     public void eval() {
-        List<Integer> listNumbers = new ArrayList<Integer>();
+        List<Integer> listNumbers = new ArrayList<>();
         listNumbers.addAll(Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
         FluentIterable<Integer> iterable = FluentIterable.of(listNumbers).filter(EVEN);
         FluentIterable<Integer> materialized = iterable.eval();
@@ -472,20 +471,20 @@ public class FluentIterableTest {
 
     @Test
     public void copyInto() {
-        List<Integer> result = new ArrayList<Integer>();
+        List<Integer> result = new ArrayList<>();
         FluentIterable.of(iterableA).copyInto(result);
 
         List<Integer> expected = IterableUtils.toList(iterableA);
         assertEquals(expected.size(), result.size());
         assertEquals(expected, result);
 
-        result = new ArrayList<Integer>();
+        result = new ArrayList<>();
         result.add(10);
         result.add(9);
         result.add(8);
         FluentIterable.of(iterableA).copyInto(result);
 
-        expected = new ArrayList<Integer>();
+        expected = new ArrayList<>();
         expected.addAll(Arrays.asList(10, 9, 8));
         expected.addAll(IterableUtils.toList(iterableA));
         assertEquals(expected.size(), result.size());

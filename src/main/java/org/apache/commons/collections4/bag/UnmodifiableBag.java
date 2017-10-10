@@ -36,7 +36,6 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class UnmodifiableBag<E>
         extends AbstractBagDecorator<E> implements Unmodifiable {
@@ -61,7 +60,7 @@ public final class UnmodifiableBag<E>
             final Bag<E> tmpBag = (Bag<E>) bag;
             return tmpBag;
         }
-        return new UnmodifiableBag<E>(bag);
+        return new UnmodifiableBag<>(bag);
     }
 
     //-----------------------------------------------------------------------
@@ -81,7 +80,7 @@ public final class UnmodifiableBag<E>
      * Write the collection out using a custom routine.
      *
      * @param out  the output stream
-     * @throws IOException
+     * @throws IOException if an error occurs while writing to the stream
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -92,8 +91,8 @@ public final class UnmodifiableBag<E>
      * Read the collection in using a custom routine.
      *
      * @param in  the input stream
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
      * @throws ClassCastException if deserialised object has wrong type
      */
     @SuppressWarnings("unchecked") // will throw CCE, see Javadoc

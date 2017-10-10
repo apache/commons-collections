@@ -23,7 +23,6 @@ import java.util.NoSuchElementException;
 /**
  * Tests the ObjectArrayListIterator class.
  *
- * @version $Id$
  */
 public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
 
@@ -34,17 +33,17 @@ public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public ObjectArrayListIterator<E> makeEmptyIterator() {
-        return new ObjectArrayListIterator<E>((E[]) new Object[0]);
+        return new ObjectArrayListIterator<>((E[]) new Object[0]);
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public ObjectArrayListIterator<E> makeObject() {
-        return new ObjectArrayListIterator<E>((E[]) testArray);
+        return new ObjectArrayListIterator<>((E[]) testArray);
     }
 
     public ObjectArrayListIterator<E> makeArrayListIterator(final E[] array) {
-        return new ObjectArrayListIterator<E>(array);
+        return new ObjectArrayListIterator<>(array);
     }
 
     /**

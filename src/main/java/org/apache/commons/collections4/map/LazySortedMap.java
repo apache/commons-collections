@@ -54,7 +54,6 @@ import org.apache.commons.collections4.Transformer;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since 3.0
- * @version $Id$
  */
 public class LazySortedMap<K,V> extends LazyMap<K,V> implements SortedMap<K,V> {
 
@@ -74,7 +73,7 @@ public class LazySortedMap<K,V> extends LazyMap<K,V> implements SortedMap<K,V> {
      */
     public static <K, V> LazySortedMap<K, V> lazySortedMap(final SortedMap<K, V> map,
                                                            final Factory<? extends V> factory) {
-        return new LazySortedMap<K,V>(map, factory);
+        return new LazySortedMap<>(map, factory);
     }
 
     /**
@@ -90,7 +89,7 @@ public class LazySortedMap<K,V> extends LazyMap<K,V> implements SortedMap<K,V> {
      */
     public static <K, V> LazySortedMap<K, V> lazySortedMap(final SortedMap<K, V> map,
                                                            final Transformer<? super K, ? extends V> factory) {
-        return new LazySortedMap<K,V>(map, factory);
+        return new LazySortedMap<>(map, factory);
     }
 
     //-----------------------------------------------------------------------
@@ -145,19 +144,19 @@ public class LazySortedMap<K,V> extends LazyMap<K,V> implements SortedMap<K,V> {
     @Override
     public SortedMap<K,V> subMap(final K fromKey, final K toKey) {
         final SortedMap<K,V> map = getSortedMap().subMap(fromKey, toKey);
-        return new LazySortedMap<K,V>(map, factory);
+        return new LazySortedMap<>(map, factory);
     }
 
     @Override
     public SortedMap<K,V> headMap(final K toKey) {
         final SortedMap<K,V> map = getSortedMap().headMap(toKey);
-        return new LazySortedMap<K,V>(map, factory);
+        return new LazySortedMap<>(map, factory);
     }
 
     @Override
     public SortedMap<K,V> tailMap(final K fromKey) {
         final SortedMap<K,V> map = getSortedMap().tailMap(fromKey);
-        return new LazySortedMap<K,V>(map, factory);
+        return new LazySortedMap<>(map, factory);
     }
 
 }

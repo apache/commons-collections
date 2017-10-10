@@ -37,7 +37,6 @@ import org.apache.commons.collections4.SortedBag;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since 3.0
- * @version $Id$
  */
 public class PredicatedSortedBag<E> extends PredicatedBag<E> implements SortedBag<E> {
 
@@ -60,7 +59,7 @@ public class PredicatedSortedBag<E> extends PredicatedBag<E> implements SortedBa
      */
     public static <E> PredicatedSortedBag<E> predicatedSortedBag(final SortedBag<E> bag,
                                                                  final Predicate<? super E> predicate) {
-        return new PredicatedSortedBag<E>(bag, predicate);
+        return new PredicatedSortedBag<>(bag, predicate);
     }
 
     //-----------------------------------------------------------------------

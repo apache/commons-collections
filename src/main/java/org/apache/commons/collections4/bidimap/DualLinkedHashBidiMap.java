@@ -31,7 +31,6 @@ import org.apache.commons.collections4.BidiMap;
  * Two <code>LinkedHashMap</code> instances are used in this class.
  * This provides fast lookups at the expense of storing two sets of map entries and two linked lists.
  *
- * @version $Id$
  * @since 4.0
  */
 public class DualLinkedHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements Serializable {
@@ -80,7 +79,7 @@ public class DualLinkedHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> imple
     @Override
     protected BidiMap<V, K> createBidiMap(final Map<V, K> normalMap, final Map<K, V> reverseMap,
             final BidiMap<K, V> inverseBidiMap) {
-        return new DualLinkedHashBidiMap<V, K>(normalMap, reverseMap, inverseBidiMap);
+        return new DualLinkedHashBidiMap<>(normalMap, reverseMap, inverseBidiMap);
     }
 
     // Serialization
@@ -92,8 +91,8 @@ public class DualLinkedHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> imple
 
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();
-        normalMap = new LinkedHashMap<K, V>();
-        reverseMap = new LinkedHashMap<V, K>();
+        normalMap = new LinkedHashMap<>();
+        reverseMap = new LinkedHashMap<>();
         @SuppressWarnings("unchecked") // will fail at runtime if stream is incorrect
         final Map<K, V> map = (Map<K, V>) in.readObject();
         putAll(map);

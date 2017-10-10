@@ -54,7 +54,6 @@ import org.apache.commons.collections4.keyvalue.TiedMapEntry;
  * </ul>
  *
  * @since 3.1
- * @version $Id$
  */
 public class SingletonMap<K, V>
         implements OrderedMap<K, V>, BoundedMap<K, V>, KeyValue<K, V>, Serializable, Cloneable {
@@ -318,7 +317,7 @@ public class SingletonMap<K, V>
      */
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
-        final Map.Entry<K, V> entry = new TiedMapEntry<K, V>(this, getKey());
+        final Map.Entry<K, V> entry = new TiedMapEntry<>(this, getKey());
         return Collections.singleton(entry);
     }
 
@@ -343,7 +342,7 @@ public class SingletonMap<K, V>
      */
     @Override
     public Collection<V> values() {
-        return new SingletonValues<V>(this);
+        return new SingletonValues<>(this);
     }
 
     /**
@@ -351,7 +350,7 @@ public class SingletonMap<K, V>
      */
     @Override
     public OrderedMapIterator<K, V> mapIterator() {
-        return new SingletonMapIterator<K, V>(this);
+        return new SingletonMapIterator<>(this);
     }
 
     /**
@@ -534,7 +533,7 @@ public class SingletonMap<K, V>
         }
         @Override
         public Iterator<V> iterator() {
-            return new SingletonIterator<V>(parent.getValue(), false);
+            return new SingletonIterator<>(parent.getValue(), false);
         }
     }
 

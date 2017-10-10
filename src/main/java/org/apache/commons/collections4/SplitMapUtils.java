@@ -31,7 +31,6 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * and/or {@link Get} but not {@link Map}.
  *
  * @since 4.0
- * @version $Id$
  *
  * @see Get
  * @see Put
@@ -131,7 +130,7 @@ public class SplitMapUtils {
             if (get instanceof IterableGet) {
                 it = ((IterableGet<K, V>) get).mapIterator();
             } else {
-                it = new EntrySetToMapIteratorAdapter<K, V>(get.entrySet());
+                it = new EntrySetToMapIteratorAdapter<>(get.entrySet());
             }
             return UnmodifiableMapIterator.unmodifiableMapIterator(it);
         }
@@ -242,7 +241,7 @@ public class SplitMapUtils {
                     ((IterableMap<K, V>) get) :
                     MapUtils.iterableMap((Map<K, V>) get);
         }
-        return new WrappedGet<K, V>(get);
+        return new WrappedGet<>(get);
     }
 
     /**
@@ -266,7 +265,7 @@ public class SplitMapUtils {
         if (put instanceof Map) {
             return (Map<K, V>) put;
         }
-        return new WrappedPut<K, V>(put);
+        return new WrappedPut<>(put);
     }
 
 }

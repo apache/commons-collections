@@ -32,7 +32,6 @@ import org.apache.commons.collections4.BulkTest;
  * {@link UnmodifiableNavigableSet} implementation.
  *
  * @since 4.1
- * @version $Id$
  */
 public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
     protected UnmodifiableNavigableSet<E> set = null;
@@ -54,7 +53,7 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
 
     @Override
     public UnmodifiableNavigableSet<E> makeFullCollection() {
-        final TreeSet<E> set = new TreeSet<E>();
+        final TreeSet<E> set = new TreeSet<>();
         set.addAll(Arrays.asList(getFullElements()));
         return (UnmodifiableNavigableSet<E>) UnmodifiableNavigableSet.unmodifiableNavigableSet(set);
     }
@@ -73,7 +72,7 @@ public class UnmodifiableNavigableSetTest<E> extends AbstractNavigableSetTest<E>
     @SuppressWarnings("unchecked")
     protected void setupSet() {
         set = makeFullCollection();
-        array = new ArrayList<E>();
+        array = new ArrayList<>();
         array.add((E) Integer.valueOf(1));
     }
 

@@ -44,7 +44,6 @@ import org.apache.commons.collections4.BoundedCollection;
  * This queue prevents null objects from being added.
  *
  * @since 4.0
- * @version $Id$
  */
 public class CircularFifoQueue<E> extends AbstractCollection<E>
     implements Queue<E>, BoundedCollection<E>, Serializable {

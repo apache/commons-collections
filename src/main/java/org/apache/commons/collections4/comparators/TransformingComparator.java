@@ -30,7 +30,6 @@ import org.apache.commons.collections4.Transformer;
  * This class is Serializable from Commons Collections 4.0.
  *
  * @since 2.1
- * @version $Id$
  *
  * @see org.apache.commons.collections4.Transformer
  * @see org.apache.commons.collections4.comparators.ComparableComparator

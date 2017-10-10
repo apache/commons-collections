@@ -27,7 +27,6 @@ import java.util.Set;
 /**
  * Test class for PermutationIterator.
  *
- * @version $Id$
  * @since 4.0
  */
 public class PermutationIteratorTest extends AbstractIteratorTest<List<Character>> {
@@ -42,7 +41,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
 
     @Override
     public void setUp() {
-        testList = new ArrayList<Character>();
+        testList = new ArrayList<>();
         testList.addAll(Arrays.asList(testArray));
     }
 
@@ -60,12 +59,12 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
 
     @Override
     public PermutationIterator<Character> makeEmptyIterator() {
-        return new PermutationIterator<Character>(new ArrayList<Character>());
+        return new PermutationIterator<>(new ArrayList<Character>());
     }
 
     @Override
     public PermutationIterator<Character> makeObject() {
-        return new PermutationIterator<Character>(testList);
+        return new PermutationIterator<>(testList);
     }
 
     //-----------------------------------------------------------------------
@@ -74,11 +73,11 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
     public void testPermutationResultSize() {
         int factorial = 1;
         for (int i = 0; i < 8; i++, factorial*=i) {
-            List<Integer> list = new ArrayList<Integer>();
+            List<Integer> list = new ArrayList<>();
             for (int j = 0; j < i; j++) {
                 list.add(j);
             }
-            Iterator<List<Integer>> it = new PermutationIterator<Integer>(list);
+            Iterator<List<Integer>> it = new PermutationIterator<>(list);
             int count = 0;
             while (it.hasNext()) {
                 it.next();
@@ -93,12 +92,12 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
      */
     @SuppressWarnings("boxing") // OK in test code
     public void testPermutationExhaustivity() {
-        List<Character> perm1 = new ArrayList<Character>();
-        List<Character> perm2 = new ArrayList<Character>();
-        List<Character> perm3 = new ArrayList<Character>();
-        List<Character> perm4 = new ArrayList<Character>();
-        List<Character> perm5 = new ArrayList<Character>();
-        List<Character> perm6 = new ArrayList<Character>();
+        List<Character> perm1 = new ArrayList<>();
+        List<Character> perm2 = new ArrayList<>();
+        List<Character> perm3 = new ArrayList<>();
+        List<Character> perm4 = new ArrayList<>();
+        List<Character> perm5 = new ArrayList<>();
+        List<Character> perm6 = new ArrayList<>();
 
         perm1.add('A');
         perm2.add('A');
@@ -121,7 +120,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
         perm5.add('B');
         perm6.add('A');
 
-        List<List<Character>> results = new ArrayList<List<Character>>();
+        List<List<Character>> results = new ArrayList<>();
 
         PermutationIterator<Character> it = makeObject();
         while (it.hasNext()) {
@@ -142,8 +141,8 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
      * test checking that all the permutations are returned only once.
      */
     public void testPermutationUnicity() {
-        List<List<Character>> resultsList = new ArrayList<List<Character>>();
-        Set<List<Character>> resultsSet = new HashSet<List<Character>>();
+        List<List<Character>> resultsList = new ArrayList<>();
+        Set<List<Character>> resultsSet = new HashSet<>();
 
         PermutationIterator<Character> it = makeObject();
         while (it.hasNext()) {
@@ -157,7 +156,7 @@ public class PermutationIteratorTest extends AbstractIteratorTest<List<Character
     }
 
     public void testPermutationException() {
-        List<List<Character>> resultsList = new ArrayList<List<Character>>();
+        List<List<Character>> resultsList = new ArrayList<>();
 
         PermutationIterator<Character> it = makeObject();
         while (it.hasNext()) {

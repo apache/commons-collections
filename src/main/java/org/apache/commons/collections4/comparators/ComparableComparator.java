@@ -36,7 +36,6 @@ import java.util.Comparator;
  * details.
  *
  * @since 2.0
- * @version $Id$
  *
  * @see java.util.Collections#reverseOrder()
  */

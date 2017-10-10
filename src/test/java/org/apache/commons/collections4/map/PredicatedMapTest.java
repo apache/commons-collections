@@ -29,7 +29,6 @@ import org.apache.commons.collections4.functors.TruePredicate;
  * {@link PredicatedMap} implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
@@ -94,7 +93,7 @@ public class PredicatedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertTrue(!map.containsKey(Integer.valueOf(3)));
         assertTrue(!map.containsValue(Integer.valueOf(3)));
 
-        final Map<K, V> map2 = new HashMap<K, V>();
+        final Map<K, V> map2 = new HashMap<>();
         map2.put((K) "A", (V) "a");
         map2.put((K) "B", (V) "b");
         map2.put((K) "C", (V) "c");

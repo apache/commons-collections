@@ -32,7 +32,6 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class UnmodifiableOrderedBidiMap<K, V>
         extends AbstractOrderedBidiMapDecorator<K, V> implements Unmodifiable {
@@ -59,7 +58,7 @@ public final class UnmodifiableOrderedBidiMap<K, V>
             final OrderedBidiMap<K, V> tmpMap = (OrderedBidiMap<K, V>) map;
             return tmpMap;
         }
-        return new UnmodifiableOrderedBidiMap<K, V>(map);
+        return new UnmodifiableOrderedBidiMap<>(map);
     }
 
     //-----------------------------------------------------------------------
@@ -138,7 +137,7 @@ public final class UnmodifiableOrderedBidiMap<K, V>
      */
     public OrderedBidiMap<V, K> inverseOrderedBidiMap() {
         if (inverse == null) {
-            inverse = new UnmodifiableOrderedBidiMap<V, K>(decorated().inverseBidiMap());
+            inverse = new UnmodifiableOrderedBidiMap<>(decorated().inverseBidiMap());
             inverse.inverse = this;
         }
         return inverse;

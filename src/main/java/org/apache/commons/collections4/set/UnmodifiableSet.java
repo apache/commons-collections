@@ -31,7 +31,6 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class UnmodifiableSet<E>
         extends AbstractSerializableSetDecorator<E>
@@ -55,7 +54,7 @@ public final class UnmodifiableSet<E>
             final Set<E> tmpSet = (Set<E>) set;
             return tmpSet;
         }
-        return new UnmodifiableSet<E>(set);
+        return new UnmodifiableSet<>(set);
     }
 
     //-----------------------------------------------------------------------

@@ -25,7 +25,6 @@ import org.junit.Test;
 /**
  * A unit test to test the basic functions of {@link BoundedIterator}.
  *
- * @version $Id$
  */
 public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
 
@@ -50,12 +49,12 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
 
     @Override
     public Iterator<E> makeEmptyIterator() {
-        return new BoundedIterator<E>(Collections.<E>emptyList().iterator(), 0, 10);
+        return new BoundedIterator<>(Collections.<E>emptyList().iterator(), 0, 10);
     }
 
     @Override
     public Iterator<E> makeObject() {
-        return new BoundedIterator<E>(new ArrayList<E>(testList).iterator(), 1, testList.size() - 1);
+        return new BoundedIterator<>(new ArrayList<>(testList).iterator(), 1, testList.size() - 1);
     }
 
     // ---------------- Tests ---------------------
@@ -67,7 +66,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     public void testBounded() {
-        Iterator<E> iter = new BoundedIterator<E>(testList.iterator(), 2, 4);
+        Iterator<E> iter = new BoundedIterator<>(testList.iterator(), 2, 4);
 
         assertTrue(iter.hasNext());
         assertEquals("c", iter.next());
@@ -93,7 +92,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     public void testSameAsDecorated() {
-        Iterator<E> iter = new BoundedIterator<E>(testList.iterator(), 0,
+        Iterator<E> iter = new BoundedIterator<>(testList.iterator(), 0,
                                                   testList.size());
 
         assertTrue(iter.hasNext());
@@ -126,7 +125,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     public void testEmptyBounded() {
-        Iterator<E> iter = new BoundedIterator<E>(testList.iterator(), 3, 0);
+        Iterator<E> iter = new BoundedIterator<>(testList.iterator(), 3, 0);
         assertFalse(iter.hasNext());
         try {
             iter.next();
@@ -142,7 +141,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
     @Test
     public void testNegativeOffset() {
         try {
-            new BoundedIterator<E>(testList.iterator(), -1, 4);
+            new BoundedIterator<>(testList.iterator(), -1, 4);
             fail("Expected IllegalArgumentException.");
         } catch (IllegalArgumentException iae) { /* Success case */
         }
@@ -155,7 +154,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
     @Test
     public void testNegativeMax() {
         try {
-            new BoundedIterator<E>(testList.iterator(), 3, -1);
+            new BoundedIterator<>(testList.iterator(), 3, -1);
             fail("Expected IllegalArgumentException.");
         } catch (IllegalArgumentException iae) { /* Success case */
         }
@@ -168,7 +167,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     public void testOffsetGreaterThanSize() {
-        Iterator<E> iter = new BoundedIterator<E>(testList.iterator(), 10, 4);
+        Iterator<E> iter = new BoundedIterator<>(testList.iterator(), 10, 4);
         assertFalse(iter.hasNext());
         try {
             iter.next();
@@ -185,7 +184,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     public void testMaxGreaterThanSize() {
-        Iterator<E> iter = new BoundedIterator<E>(testList.iterator(), 1, 10);
+        Iterator<E> iter = new BoundedIterator<>(testList.iterator(), 1, 10);
 
         assertTrue(iter.hasNext());
         assertEquals("b", iter.next());
@@ -214,8 +213,8 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     public void testRemoveWithoutCallingNext() {
-        List<E> testListCopy = new ArrayList<E>(testList);
-        Iterator<E> iter = new BoundedIterator<E>(testListCopy.iterator(), 1, 5);
+        List<E> testListCopy = new ArrayList<>(testList);
+        Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
 
         try {
             iter.remove();
@@ -230,8 +229,8 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     public void testRemoveCalledTwice() {
-        List<E> testListCopy = new ArrayList<E>(testList);
-        Iterator<E> iter = new BoundedIterator<E>(testListCopy.iterator(), 1, 5);
+        List<E> testListCopy = new ArrayList<>(testList);
+        Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
 
         assertTrue(iter.hasNext());
         assertEquals("b", iter.next());
@@ -250,8 +249,8 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     public void testRemoveFirst() {
-        List<E> testListCopy = new ArrayList<E>(testList);
-        Iterator<E> iter = new BoundedIterator<E>(testListCopy.iterator(), 1, 5);
+        List<E> testListCopy = new ArrayList<>(testList);
+        Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
 
         assertTrue(iter.hasNext());
         assertEquals("b", iter.next());
@@ -282,8 +281,8 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     public void testRemoveMiddle() {
-        List<E> testListCopy = new ArrayList<E>(testList);
-        Iterator<E> iter = new BoundedIterator<E>(testListCopy.iterator(), 1, 5);
+        List<E> testListCopy = new ArrayList<>(testList);
+        Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
 
         assertTrue(iter.hasNext());
         assertEquals("b", iter.next());
@@ -314,8 +313,8 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     public void testRemoveLast() {
-        List<E> testListCopy = new ArrayList<E>(testList);
-        Iterator<E> iter = new BoundedIterator<E>(testListCopy.iterator(), 1, 5);
+        List<E> testListCopy = new ArrayList<>(testList);
+        Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
 
         assertTrue(iter.hasNext());
         assertEquals("b", iter.next());
@@ -359,7 +358,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
             }
         };
 
-        Iterator<E> iter = new BoundedIterator<E>(mockIterator, 1, 5);
+        Iterator<E> iter = new BoundedIterator<>(mockIterator, 1, 5);
         assertTrue(iter.hasNext());
         assertEquals("b", iter.next());
         try {

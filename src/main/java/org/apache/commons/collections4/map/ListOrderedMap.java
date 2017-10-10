@@ -73,7 +73,6 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * This class is {@link Serializable} starting with Commons Collections 3.1.
  *
  * @since 3.0
- * @version $Id$
  */
 public class ListOrderedMap<K, V>
         extends AbstractMapDecorator<K, V>
@@ -83,7 +82,7 @@ public class ListOrderedMap<K, V>
     private static final long serialVersionUID = 2728177751851003750L;
 
     /** Internal list to hold the sequence of objects */
-    private final List<K> insertOrder = new ArrayList<K>();
+    private final List<K> insertOrder = new ArrayList<>();
 
     /**
      * Factory method to create an ordered map.
@@ -98,7 +97,7 @@ public class ListOrderedMap<K, V>
      * @since 4.0
      */
     public static <K, V> ListOrderedMap<K, V> listOrderedMap(final Map<K, V> map) {
-        return new ListOrderedMap<K, V>(map);
+        return new ListOrderedMap<>(map);
     }
 
     //-----------------------------------------------------------------------
@@ -128,7 +127,7 @@ public class ListOrderedMap<K, V>
      * Write the map out using a custom routine.
      *
      * @param out  the output stream
-     * @throws IOException
+     * @throws IOException if an error occurs while writing to the stream
      * @since 3.1
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {
@@ -140,8 +139,8 @@ public class ListOrderedMap<K, V>
      * Read the map in using a custom routine.
      *
      * @param in  the input stream
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
      * @since 3.1
      */
     @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
@@ -154,7 +153,7 @@ public class ListOrderedMap<K, V>
     //-----------------------------------------------------------------------
     @Override
     public OrderedMapIterator<K, V> mapIterator() {
-        return new ListOrderedMapIterator<K, V>(this);
+        return new ListOrderedMapIterator<>(this);
     }
 
     /**
@@ -292,7 +291,7 @@ public class ListOrderedMap<K, V>
      */
     @Override
     public Set<K> keySet() {
-        return new KeySetView<K>(this);
+        return new KeySetView<>(this);
     }
 
     /**
@@ -322,7 +321,7 @@ public class ListOrderedMap<K, V>
      */
     @Override
     public Collection<V> values() {
-        return new ValuesView<V>(this);
+        return new ValuesView<>(this);
     }
 
     /**
@@ -336,7 +335,7 @@ public class ListOrderedMap<K, V>
      * @since 3.2
      */
     public List<V> valueList() {
-        return new ValuesView<V>(this);
+        return new ValuesView<>(this);
     }
 
     /**
@@ -348,7 +347,7 @@ public class ListOrderedMap<K, V>
      */
     @Override
     public Set<Map.Entry<K, V>> entrySet() {
-        return new EntrySetView<K, V>(this, this.insertOrder);
+        return new EntrySetView<>(this, this.insertOrder);
     }
 
     //-----------------------------------------------------------------------
@@ -665,7 +664,7 @@ public class ListOrderedMap<K, V>
 
         @Override
         public Iterator<Map.Entry<K, V>> iterator() {
-            return new ListOrderedIterator<K, V>(parent, insertOrder);
+            return new ListOrderedIterator<>(parent, insertOrder);
         }
     }
 
@@ -682,7 +681,7 @@ public class ListOrderedMap<K, V>
         @Override
         public Map.Entry<K, V> next() {
             last = getIterator().next();
-            return new ListOrderedMapEntry<K, V>(parent, last);
+            return new ListOrderedMapEntry<>(parent, last);
         }
 
         @Override

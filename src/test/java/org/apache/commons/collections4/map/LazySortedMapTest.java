@@ -34,7 +34,6 @@ import org.junit.Test;
  * {@link LazySortedMap} implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {

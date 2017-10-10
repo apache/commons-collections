@@ -26,7 +26,6 @@ import org.apache.commons.collections4.Transformer;
  * and then returns the input.
  *
  * @since 3.0
- * @version $Id$
  */
 public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
 
@@ -48,7 +47,7 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
         if (closure == null) {
             throw new NullPointerException("Closure must not be null");
         }
-        return new ClosureTransformer<T>(closure);
+        return new ClosureTransformer<>(closure);
     }
 
     /**

@@ -23,7 +23,6 @@ import org.apache.commons.collections4.ResettableIterator;
  * Provides an implementation of an empty map iterator.
  *
  * @since 3.1
- * @version $Id$
  */
 public class EmptyMapIterator<K, V> extends AbstractEmptyMapIterator<K, V> implements
         MapIterator<K, V>, ResettableIterator<K> {
@@ -33,13 +32,13 @@ public class EmptyMapIterator<K, V> extends AbstractEmptyMapIterator<K, V> imple
      * @since 3.1
      */
     @SuppressWarnings("rawtypes")
-    public static final MapIterator INSTANCE = new EmptyMapIterator<Object, Object>();
+    public static final MapIterator INSTANCE = new EmptyMapIterator<>();
 
     /**
      * Get a typed instance of the iterator.
      * @param <K> the key type
      * @param <V> the value type
-     * @return {@link MapIterator}<K, V>
+     * @return {@link MapIterator}&lt;K, V&gt;
      */
     @SuppressWarnings("unchecked")
     public static <K, V> MapIterator<K, V> emptyMapIterator() {

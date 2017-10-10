@@ -23,6 +23,5 @@
  * which is a single class that uses static methods to construct instances
  * of the classes in this package.
  *
- * @version $Id$
  */
 package org.apache.commons.collections4.iterators;

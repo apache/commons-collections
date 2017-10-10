@@ -23,7 +23,6 @@ import java.util.SortedMap;
  * more information, see <a href="http://en.wikipedia.org/wiki/Trie">Tries</a>.
  *
  * @since 4.0
- * @version $Id$
  */
 public interface Trie<K, V> extends IterableSortedMap<K, V> {
 

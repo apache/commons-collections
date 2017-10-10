@@ -29,7 +29,6 @@ import java.util.NoSuchElementException;
  * before that position.
  *
  * @since 4.1
- * @version $Id$
  */
 public class BoundedIterator<E> implements Iterator<E> {
 

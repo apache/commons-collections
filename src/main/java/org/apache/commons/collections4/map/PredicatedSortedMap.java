@@ -46,7 +46,6 @@ import org.apache.commons.collections4.Predicate;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since 3.0
- * @version $Id$
  */
 public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements SortedMap<K, V> {
 
@@ -70,7 +69,7 @@ public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements So
      */
     public static <K, V> PredicatedSortedMap<K, V> predicatedSortedMap(final SortedMap<K, V> map,
             final Predicate<? super K> keyPredicate, final Predicate<? super V> valuePredicate) {
-        return new PredicatedSortedMap<K, V>(map, keyPredicate, valuePredicate);
+        return new PredicatedSortedMap<>(map, keyPredicate, valuePredicate);
     }
 
     //-----------------------------------------------------------------------
@@ -116,19 +115,19 @@ public class PredicatedSortedMap<K, V> extends PredicatedMap<K, V> implements So
     @Override
     public SortedMap<K, V> subMap(final K fromKey, final K toKey) {
         final SortedMap<K, V> map = getSortedMap().subMap(fromKey, toKey);
-        return new PredicatedSortedMap<K, V>(map, keyPredicate, valuePredicate);
+        return new PredicatedSortedMap<>(map, keyPredicate, valuePredicate);
     }
 
     @Override
     public SortedMap<K, V> headMap(final K toKey) {
         final SortedMap<K, V> map = getSortedMap().headMap(toKey);
-        return new PredicatedSortedMap<K, V>(map, keyPredicate, valuePredicate);
+        return new PredicatedSortedMap<>(map, keyPredicate, valuePredicate);
     }
 
     @Override
     public SortedMap<K, V> tailMap(final K fromKey) {
         final SortedMap<K, V> map = getSortedMap().tailMap(fromKey);
-        return new PredicatedSortedMap<K, V>(map, keyPredicate, valuePredicate);
+        return new PredicatedSortedMap<>(map, keyPredicate, valuePredicate);
     }
 
 }

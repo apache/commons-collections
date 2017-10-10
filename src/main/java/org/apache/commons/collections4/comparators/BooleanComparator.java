@@ -28,7 +28,6 @@ import java.util.Comparator;
  * @see #booleanComparator(boolean)
  *
  * @since 3.0
- * @version $Id$
  */
 public final class BooleanComparator implements Comparator<Boolean>, Serializable {
 
@@ -48,12 +47,13 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
     /**
      * Returns a BooleanComparator instance that sorts
      * <code>true</code> values before <code>false</code> values.
-     * <p />
+     * <p>
      * Clients are encouraged to use the value returned from
      * this method instead of constructing a new instance
      * to reduce allocation and garbage collection overhead when
      * multiple BooleanComparators may be used in the same
      * virtual machine.
+     * </p>
      *
      * @return the true first singleton BooleanComparator
      */
@@ -64,12 +64,13 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
     /**
      * Returns a BooleanComparator instance that sorts
      * <code>false</code> values before <code>true</code> values.
-     * <p />
+     * <p>
      * Clients are encouraged to use the value returned from
      * this method instead of constructing a new instance
      * to reduce allocation and garbage collection overhead when
      * multiple BooleanComparators may be used in the same
      * virtual machine.
+     * </p>
      *
      * @return the false first singleton BooleanComparator
      */
@@ -81,12 +82,13 @@ public final class BooleanComparator implements Comparator<Boolean>, Serializabl
      * Returns a BooleanComparator instance that sorts
      * <code><i>trueFirst</i></code> values before
      * <code>&#x21;<i>trueFirst</i></code> values.
-     * <p />
+     * <p>
      * Clients are encouraged to use the value returned from
      * this method instead of constructing a new instance
      * to reduce allocation and garbage collection overhead when
      * multiple BooleanComparators may be used in the same
      * virtual machine.
+     * </p>
      *
      * @param trueFirst when <code>true</code>, sort
      * <code>true</code> <code>Boolean</code>s before <code>false</code>

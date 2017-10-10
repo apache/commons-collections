@@ -32,7 +32,6 @@ import org.apache.commons.collections4.Transformer;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since 3.0
- * @version $Id$
  */
 public class TransformedSortedSet<E> extends TransformedSet<E> implements SortedSet<E> {
 
@@ -55,7 +54,7 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
      */
     public static <E> TransformedSortedSet<E> transformingSortedSet(final SortedSet<E> set,
             final Transformer<? super E, ? extends E> transformer) {
-        return new TransformedSortedSet<E>(set, transformer);
+        return new TransformedSortedSet<>(set, transformer);
     }
 
     /**
@@ -76,7 +75,7 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
     public static <E> TransformedSortedSet<E> transformedSortedSet(final SortedSet<E> set,
             final Transformer<? super E, ? extends E> transformer) {
 
-        final TransformedSortedSet<E> decorated = new TransformedSortedSet<E>(set, transformer);
+        final TransformedSortedSet<E> decorated = new TransformedSortedSet<>(set, transformer);
         if (set.size() > 0) {
             @SuppressWarnings("unchecked") // set is type E
             final E[] values = (E[]) set.toArray(); // NOPMD - false positive for generics
@@ -132,19 +131,19 @@ public class TransformedSortedSet<E> extends TransformedSet<E> implements Sorted
     @Override
     public SortedSet<E> subSet(final E fromElement, final E toElement) {
         final SortedSet<E> set = getSortedSet().subSet(fromElement, toElement);
-        return new TransformedSortedSet<E>(set, transformer);
+        return new TransformedSortedSet<>(set, transformer);
     }
 
     @Override
     public SortedSet<E> headSet(final E toElement) {
         final SortedSet<E> set = getSortedSet().headSet(toElement);
-        return new TransformedSortedSet<E>(set, transformer);
+        return new TransformedSortedSet<>(set, transformer);
     }
 
     @Override
     public SortedSet<E> tailSet(final E fromElement) {
         final SortedSet<E> set = getSortedSet().tailSet(fromElement);
-        return new TransformedSortedSet<E>(set, transformer);
+        return new TransformedSortedSet<>(set, transformer);
     }
 
 }

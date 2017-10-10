@@ -39,7 +39,6 @@ import org.apache.commons.collections4.multimap.UnmodifiableMultiValuedMap;
  * </ul>
  *
  * @since 4.1
- * @version $Id$
  */
 public class MultiMapUtils {
 
@@ -132,7 +131,7 @@ public class MultiMapUtils {
             if (col instanceof List) {
                 return (List<V>) col;
             }
-            return new ArrayList<V>(col);
+            return new ArrayList<>(col);
         }
         return null;
     }
@@ -152,7 +151,7 @@ public class MultiMapUtils {
             if (col instanceof Set) {
                 return (Set<V>) col;
             }
-            return new HashSet<V>(col);
+            return new HashSet<>(col);
         }
         return null;
     }
@@ -172,7 +171,7 @@ public class MultiMapUtils {
             if (col instanceof Bag) {
                 return (Bag<V>) col;
             }
-            return new HashBag<V>(col);
+            return new HashBag<>(col);
         }
         return null;
     }
@@ -189,7 +188,7 @@ public class MultiMapUtils {
      * @return a new <code>ListValuedMap</code>
      */
     public static <K, V> ListValuedMap<K, V> newListValuedHashMap() {
-        return new ArrayListValuedHashMap<K, V>();
+        return new ArrayListValuedHashMap<>();
     }
 
     /**
@@ -201,7 +200,7 @@ public class MultiMapUtils {
      * @return a new {@link SetValuedMap}
      */
     public static <K, V> SetValuedMap<K, V> newSetValuedHashMap() {
-        return new HashSetValuedHashMap<K, V>();
+        return new HashSetValuedHashMap<>();
     }
 
     // MultiValuedMap Decorators

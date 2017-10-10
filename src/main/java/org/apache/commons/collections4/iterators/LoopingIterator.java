@@ -33,7 +33,6 @@ import org.apache.commons.collections4.ResettableIterator;
  * implementations will throw a ConcurrentModificationException.
  *
  * @since 3.0
- * @version $Id$
  */
 public class LoopingIterator<E> implements ResettableIterator<E> {
 

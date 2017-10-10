@@ -43,7 +43,6 @@ import org.apache.commons.collections4.set.UnmodifiableSortedSet;
  * {@link Set} and {@link SortedSet} instances.
  *
  * @since 2.1
- * @version $Id$
  */
 public class SetUtils {
 
@@ -62,7 +61,7 @@ public class SetUtils {
      */
     @SuppressWarnings("rawtypes")
     public static final SortedSet EMPTY_SORTED_SET =
-            UnmodifiableSortedSet.unmodifiableSortedSet(new TreeSet<Object>());
+            UnmodifiableSortedSet.unmodifiableSortedSet(new TreeSet<>());
 
     /**
      * Get a typed empty unmodifiable sorted set.
@@ -163,10 +162,10 @@ public class SetUtils {
      * Returns a new hash set that matches elements based on <code>==</code> not
      * <code>equals()</code>.
      * <p>
-     * <strong>This set will violate the detail of various Set contracts.</note>
+     * <strong>This set will violate the detail of various Set contracts.</strong>
      * As a general rule, don't compare this set to other sets. In particular, you can't
      * use decorators like {@link ListOrderedSet} on it, which silently assume that these
-     * contracts are fulfilled.</strong>
+     * contracts are fulfilled.
      * <p>
      * <strong>Note that the returned set is not synchronized and is not thread-safe.</strong>
      * If you wish to use this set from multiple threads concurrently, you must use
@@ -637,7 +636,7 @@ public class SetUtils {
          * @return a new set containing all elements of this view
          */
         public Set<E> toSet() {
-            final Set<E> set = new HashSet<E>(size());
+            final Set<E> set = new HashSet<>(size());
             copyInto(set);
             return set;
         }

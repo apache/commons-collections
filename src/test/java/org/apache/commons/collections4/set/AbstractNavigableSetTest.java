@@ -31,7 +31,6 @@ import org.apache.commons.collections4.BulkTest;
  * elements may be added; see {@link AbstractSetTest} for more details.
  *
  * @since 4.1
- * @version $Id$
  */
 public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<E> {
 
@@ -67,7 +66,7 @@ public abstract class AbstractNavigableSetTest<E> extends AbstractSortedSetTest<
      */
     @Override
     public NavigableSet<E> makeConfirmedCollection() {
-        return new TreeSet<E>();
+        return new TreeSet<>();
     }
 
     //-----------------------------------------------------------------------

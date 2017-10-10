@@ -27,7 +27,6 @@ import org.apache.commons.collections4.iterators.EnumerationIterator;
  * Provides utility methods for {@link Enumeration} instances.
  *
  * @since 3.0
- * @version $Id$
  */
 public class EnumerationUtils {
 
@@ -77,7 +76,7 @@ public class EnumerationUtils {
      * @throws NullPointerException if the enumeration parameter is <code>null</code>.
      */
     public static <E> List<E> toList(final Enumeration<? extends E> enumeration) {
-        return IteratorUtils.toList(new EnumerationIterator<E>(enumeration));
+        return IteratorUtils.toList(new EnumerationIterator<>(enumeration));
     }
 
     /**
@@ -88,7 +87,7 @@ public class EnumerationUtils {
      * @return a list containing all tokens of the given StringTokenizer
      */
     public static List<String> toList(final StringTokenizer stringTokenizer) {
-        final List<String> result = new ArrayList<String>(stringTokenizer.countTokens());
+        final List<String> result = new ArrayList<>(stringTokenizer.countTokens());
         while (stringTokenizer.hasMoreTokens()) {
             result.add(stringTokenizer.nextToken());
         }

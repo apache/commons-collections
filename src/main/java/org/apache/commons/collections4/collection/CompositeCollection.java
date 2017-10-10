@@ -37,7 +37,6 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  *
  * @param <E> the type of the elements in the collection
  * @since 3.0
- * @version $Id$
  */
 public class CompositeCollection<E> implements Collection<E>, Serializable {
 
@@ -48,7 +47,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
     private CollectionMutator<E> mutator;
 
     /** Collections in the composite */
-    private final List<Collection<E>> all = new ArrayList<Collection<E>>();
+    private final List<Collection<E>> all = new ArrayList<>();
 
     /**
      * Create an empty CompositeCollection.
@@ -156,7 +155,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
         if (all.isEmpty()) {
             return EmptyIterator.<E>emptyIterator();
         }
-        final IteratorChain<E> chain = new IteratorChain<E>();
+        final IteratorChain<E> chain = new IteratorChain<>();
         for (final Collection<E> item : all) {
             chain.addIterator(item.iterator());
         }
@@ -401,7 +400,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      *         The new collection is <i>not</i> backed by this composite.
      */
     public Collection<E> toCollection() {
-        return new ArrayList<E>(this);
+        return new ArrayList<>(this);
     }
 
     /**
@@ -415,7 +414,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
 
     /**
      * Get the collection mutator to be used for this CompositeCollection.
-     * @return CollectionMutator<E>
+     * @return CollectionMutator&lt;E&gt;
      */
     protected CollectionMutator<E> getMutator() {
         return mutator;

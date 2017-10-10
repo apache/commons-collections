@@ -73,7 +73,6 @@ import org.apache.commons.collections4.keyvalue.UnmodifiableMapEntry;
  * UnsupportedOperationException on attempts to call that method.
  *
  * @since 3.0 (previously DoubleOrderedMap v2.0)
- * @version $Id$
  */
 public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     implements OrderedBidiMap<K, V>, Serializable {
@@ -509,7 +508,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         Node<K, V> node = rootNode[KEY.ordinal()];
         if (node == null) {
             // map is empty
-            final Node<K, V> root = new Node<K, V>(key, value);
+            final Node<K, V> root = new Node<>(key, value);
             rootNode[KEY.ordinal()] = root;
             rootNode[VALUE.ordinal()] = root;
             grow();
@@ -526,7 +525,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
                     if (node.getLeft(KEY) != null) {
                         node = node.getLeft(KEY);
                     } else {
-                        final Node<K, V> newNode = new Node<K, V>(key, value);
+                        final Node<K, V> newNode = new Node<>(key, value);
 
                         insertValue(newNode);
                         node.setLeft(newNode, KEY);
@@ -540,7 +539,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
                     if (node.getRight(KEY) != null) {
                         node = node.getRight(KEY);
                     } else {
-                        final Node<K, V> newNode = new Node<K, V>(key, value);
+                        final Node<K, V> newNode = new Node<>(key, value);
 
                         insertValue(newNode);
                         node.setRight(newNode, KEY);
@@ -1431,6 +1430,10 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
 
     /**
      * Reads the content of the stream.
+     *
+     * @param stream the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
      */
     @SuppressWarnings("unchecked") // This will fail at runtime if the stream is incorrect
     private void readObject(final ObjectInputStream stream) throws IOException, ClassNotFoundException{
@@ -1446,6 +1449,9 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
 
     /**
      * Writes the content to the stream for serialization.
+     *
+     * @param stream  the output stream
+     * @throws IOException if an error occurs while writing to the stream
      */
     private void writeObject(final ObjectOutputStream stream) throws IOException{
         stream.defaultWriteObject();
@@ -1847,7 +1853,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
         }
 
         private Map.Entry<V, K> createEntry(final Node<K, V> node) {
-            return new UnmodifiableMapEntry<V, K>(node.getValue(), node.getKey());
+            return new UnmodifiableMapEntry<>(node.getValue(), node.getKey());
         }
     }
 

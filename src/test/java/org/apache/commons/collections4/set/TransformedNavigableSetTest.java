@@ -33,7 +33,6 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  * {@link TransformedNavigableSet} implementation.
  *
  * @since 4.1
- * @version $Id$
  */
 public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> {
 
@@ -56,7 +55,7 @@ public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> 
     @Override
     @SuppressWarnings("unchecked")
     public NavigableSet<E> makeFullCollection() {
-        final NavigableSet<E> set = new TreeSet<E>();
+        final NavigableSet<E> set = new TreeSet<>();
         set.addAll(Arrays.asList(getFullElements()));
         return TransformedNavigableSet.transformingNavigableSet(set,
                 (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
@@ -79,7 +78,7 @@ public class TransformedNavigableSetTest<E> extends AbstractNavigableSetTest<E> 
     }
 
     public void testTransformedSet_decorateTransform() {
-        final Set<Object> originalSet = new TreeSet<Object>();
+        final Set<Object> originalSet = new TreeSet<>();
         final Object[] els = new Object[] {"1", "3", "5", "7", "2", "4", "6"};
         Collections.addAll(originalSet, els);
         final Set<?> set = TransformedSet.transformedSet(originalSet,

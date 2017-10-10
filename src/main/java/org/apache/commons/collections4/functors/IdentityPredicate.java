@@ -25,7 +25,6 @@ import org.apache.commons.collections4.Predicate;
  * as the one stored in this predicate.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class IdentityPredicate<T> implements Predicate<T>, Serializable {
 
@@ -46,7 +45,7 @@ public final class IdentityPredicate<T> implements Predicate<T>, Serializable {
         if (object == null) {
             return NullPredicate.<T>nullPredicate();
         }
-        return new IdentityPredicate<T>(object);
+        return new IdentityPredicate<>(object);
     }
 
     /**

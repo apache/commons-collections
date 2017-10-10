@@ -35,7 +35,6 @@ import org.junit.Test;
 /**
  * Tests for SetUtils.
  *
- * @version $Id$
  */
 public class SetUtilsTest {
 
@@ -44,14 +43,14 @@ public class SetUtilsTest {
 
     @Before
     public void setUp() {
-        setA = new HashSet<Integer>();
+        setA = new HashSet<>();
         setA.add(1);
         setA.add(2);
         setA.add(3);
         setA.add(4);
         setA.add(5);
 
-        setB = new HashSet<Integer>();
+        setB = new HashSet<>();
         setB.add(3);
         setB.add(4);
         setB.add(5);
@@ -69,10 +68,10 @@ public class SetUtilsTest {
                 return o instanceof String;
             }
         };
-        Set<Object> set = SetUtils.predicatedSet(new HashSet<Object>(), predicate);
+        Set<Object> set = SetUtils.predicatedSet(new HashSet<>(), predicate);
         assertTrue("returned object should be a PredicatedSet", set instanceof PredicatedSet);
         try {
-            SetUtils.predicatedSet(new HashSet<Object>(), null);
+            SetUtils.predicatedSet(new HashSet<>(), null);
             fail("Expecting NullPointerException for null predicate.");
         } catch (final NullPointerException ex) {
             // expected
@@ -89,7 +88,7 @@ public class SetUtilsTest {
     public void testEmptyIfNull() {
         assertTrue(SetUtils.emptyIfNull(null).isEmpty());
 
-        final Set<Long> set = new HashSet<Long>();
+        final Set<Long> set = new HashSet<>();
         assertSame(set, SetUtils.emptyIfNull(set));
     }
 
@@ -97,8 +96,8 @@ public class SetUtilsTest {
     public void testEquals() {
         final Collection<String> data = Arrays.asList("a", "b", "c");
 
-        final Set<String> a = new HashSet<String>(data);
-        final Set<String> b = new HashSet<String>(data);
+        final Set<String> a = new HashSet<>(data);
+        final Set<String> b = new HashSet<>(data);
 
         assertEquals(true, a.equals(b));
         assertEquals(true, SetUtils.isEqualSet(a, b));
@@ -113,8 +112,8 @@ public class SetUtilsTest {
     public void testHashCode() {
         final Collection<String> data = Arrays.asList("a", "b", "c");
 
-        final Set<String> a = new HashSet<String>(data);
-        final Set<String> b = new HashSet<String>(data);
+        final Set<String> a = new HashSet<>(data);
+        final Set<String> b = new HashSet<>(data);
 
         assertEquals(true, a.hashCode() == b.hashCode());
         assertEquals(true, a.hashCode() == SetUtils.hashCodeForSet(a));

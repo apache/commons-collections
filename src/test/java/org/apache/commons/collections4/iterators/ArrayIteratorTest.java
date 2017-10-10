@@ -24,7 +24,6 @@ import java.util.NoSuchElementException;
  * perform the iteration rather than the hasNext() method.
  * The code of this test was supplied by Mauricio S. Moura.
  *
- * @version $Id$
  */
 public class ArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 
@@ -36,12 +35,12 @@ public class ArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 
     @Override
     public ArrayIterator<E> makeEmptyIterator() {
-        return new ArrayIterator<E>(new Object[0]);
+        return new ArrayIterator<>(new Object[0]);
     }
 
     @Override
     public ArrayIterator<E> makeObject() {
-        return new ArrayIterator<E>(testArray);
+        return new ArrayIterator<>(testArray);
     }
 
     @Override
@@ -70,7 +69,7 @@ public class ArrayIteratorTest<E> extends AbstractIteratorTest<E> {
 
     public void testNullArray() {
         try {
-            new ArrayIterator<Object>(null);
+            new ArrayIterator<>(null);
             fail("Constructor should throw a NullPointerException when constructed with a null array");
         } catch (final NullPointerException e) {
             // expected

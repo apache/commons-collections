@@ -26,7 +26,6 @@ import org.apache.commons.collections4.functors.UniquePredicate;
  * and duplicate Objects are skipped.
  *
  * @since 2.1
- * @version $Id$
  */
 public class UniqueFilterIterator<E> extends FilterIterator<E> {
 

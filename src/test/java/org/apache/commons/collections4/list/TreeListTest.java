@@ -28,7 +28,6 @@ import org.apache.commons.collections4.BulkTest;
  * JUnit tests
  *
  * @since 3.1
- * @version $Id$
  */
 public class TreeListTest<E> extends AbstractListTest<E> {
 
@@ -107,7 +106,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
     //-----------------------------------------------------------------------
     @Override
     public TreeList<E> makeObject() {
-        return new TreeList<E>();
+        return new TreeList<>();
     }
 
     //-----------------------------------------------------------------------
@@ -220,7 +219,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
     public void testBug35258() {
         final Object objectToRemove = Integer.valueOf(3);
 
-        final List<Integer> treelist = new TreeList<Integer>();
+        final List<Integer> treelist = new TreeList<>();
         treelist.add(Integer.valueOf(0));
         treelist.add(Integer.valueOf(1));
         treelist.add(Integer.valueOf(2));
@@ -248,7 +247,7 @@ public class TreeListTest<E> extends AbstractListTest<E> {
     }
 
     public void testBugCollections447() {
-        final List<String> treeList = new TreeList<String>();
+        final List<String> treeList = new TreeList<>();
         treeList.add("A");
         treeList.add("B");
         treeList.add("C");
@@ -274,11 +273,11 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         // when initializing the TreeList with another collection
 
         for (int size = 1; size < 1000; size++) {
-            List<Integer> other = new ArrayList<Integer>(size);
+            List<Integer> other = new ArrayList<>(size);
             for (int i = 0; i < size; i++) {
                 other.add(i);
             }
-            TreeList<Integer> l = new TreeList<Integer>(other);
+            TreeList<Integer> l = new TreeList<>(other);
             ListIterator<Integer> it = l.listIterator();
             int i = 0;
             while (it.hasNext()) {
@@ -304,11 +303,11 @@ public class TreeListTest<E> extends AbstractListTest<E> {
 
         int size = 1000;
         for (int i = 0; i < 100; i++) {
-            List<Integer> other = new ArrayList<Integer>(size);
+            List<Integer> other = new ArrayList<>(size);
             for (int j = i; j < size; j++) {
                 other.add(j);
             }
-            TreeList<Integer> l = new TreeList<Integer>();
+            TreeList<Integer> l = new TreeList<>();
             for (int j = 0; j < i; j++) {
                 l.add(j);
             }

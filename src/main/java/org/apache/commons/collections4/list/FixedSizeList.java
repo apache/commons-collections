@@ -34,7 +34,6 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since 3.0
- * @version $Id$
  */
 public class FixedSizeList<E>
         extends AbstractSerializableListDecorator<E>
@@ -53,7 +52,7 @@ public class FixedSizeList<E>
      * @since 4.0
      */
     public static <E> FixedSizeList<E> fixedSizeList(final List<E> list) {
-        return new FixedSizeList<E>(list);
+        return new FixedSizeList<>(list);
     }
 
     //-----------------------------------------------------------------------
@@ -151,7 +150,7 @@ public class FixedSizeList<E>
     @Override
     public List<E> subList(final int fromIndex, final int toIndex) {
         final List<E> sub = decorated().subList(fromIndex, toIndex);
-        return new FixedSizeList<E>(sub);
+        return new FixedSizeList<>(sub);
     }
 
     /**

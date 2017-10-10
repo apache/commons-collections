@@ -29,7 +29,6 @@ import org.apache.commons.collections4.Predicate;
  * for more details.
  *
  * @since 3.0
- * @version $Id$
  */
 public class WhileClosure<E> implements Closure<E> {
 
@@ -58,7 +57,7 @@ public class WhileClosure<E> implements Closure<E> {
         if (closure == null) {
             throw new NullPointerException("Closure must not be null");
         }
-        return new WhileClosure<E>(predicate, closure, doLoop);
+        return new WhileClosure<>(predicate, closure, doLoop);
     }
 
     /**

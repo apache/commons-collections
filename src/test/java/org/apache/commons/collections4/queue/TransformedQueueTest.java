@@ -30,7 +30,6 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  * {@link TransformedQueue} implementation.
  *
  * @since 4.0
- * @version $Id$
  */
 public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
 
@@ -41,12 +40,12 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
     //-----------------------------------------------------------------------
     @Override
     public Queue<E> makeConfirmedCollection() {
-        return new LinkedList<E>();
+        return new LinkedList<>();
     }
 
     @Override
     public Queue<E> makeConfirmedFullCollection() {
-        final Queue<E> list = new LinkedList<E>();
+        final Queue<E> list = new LinkedList<>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }
@@ -61,14 +60,14 @@ public class TransformedQueueTest<E> extends AbstractQueueTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public Queue<E> makeFullCollection() {
-        final Queue<E> list = new LinkedList<E>();
+        final Queue<E> list = new LinkedList<>();
         list.addAll(Arrays.asList(getFullElements()));
         return TransformedQueue.transformingQueue(list, (Transformer<E, E>) TransformedCollectionTest.NOOP_TRANSFORMER);
     }
 
     //-----------------------------------------------------------------------
     public void testTransformedQueue() {
-        final Queue<Object> queue = TransformedQueue.transformingQueue(new LinkedList<Object>(),
+        final Queue<Object> queue = TransformedQueue.transformingQueue(new LinkedList<>(),
                 TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, queue.size());
         final Object[] elements = new Object[] { "1", "3", "5", "7", "2", "4", "6" };

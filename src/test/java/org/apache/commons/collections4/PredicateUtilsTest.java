@@ -41,7 +41,6 @@ import org.junit.Test;
  * Tests the PredicateUtils class.
  *
  * @since 3.0
- * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class PredicateUtilsTest extends AbstractPredicateTest {
@@ -166,7 +165,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
                 FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate(), TruePredicate.truePredicate()}).evaluate(null));
         assertEquals(false, AllPredicate.allPredicate(new Predicate[] {
                 FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate()}).evaluate(null));
-        final Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
+        final Collection<Predicate<Object>> coll = new ArrayList<>();
         coll.add(TruePredicate.truePredicate());
         coll.add(TruePredicate.truePredicate());
         coll.add(TruePredicate.truePredicate());
@@ -225,7 +224,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
 
     @Test(expected=NullPointerException.class) 
     public void testAllPredicateEx6() {
-        final Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
+        final Collection<Predicate<Object>> coll = new ArrayList<>();
         coll.add(null);
         coll.add(null);
         AllPredicate.allPredicate(coll);
@@ -263,7 +262,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
                 FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate(), TruePredicate.truePredicate()}).evaluate(null));
         assertEquals(false, PredicateUtils.anyPredicate(new Predicate[] {
                 FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate()}).evaluate(null));
-        final Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
+        final Collection<Predicate<Object>> coll = new ArrayList<>();
         coll.add(TruePredicate.truePredicate());
         coll.add(TruePredicate.truePredicate());
         coll.add(TruePredicate.truePredicate());
@@ -322,7 +321,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
 
     @Test(expected=NullPointerException.class) 
     public void testAnyPredicateEx6() {
-        final Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
+        final Collection<Predicate<Object>> coll = new ArrayList<>();
         coll.add(null);
         coll.add(null);
         PredicateUtils.anyPredicate(coll);
@@ -363,7 +362,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
                 FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate(), TruePredicate.truePredicate()}).evaluate(null));
         assertEquals(false, PredicateUtils.onePredicate(new Predicate[] {
                 FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate()}).evaluate(null));
-        final Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
+        final Collection<Predicate<Object>> coll = new ArrayList<>();
         coll.add(TruePredicate.truePredicate());
         coll.add(TruePredicate.truePredicate());
         coll.add(TruePredicate.truePredicate());
@@ -423,7 +422,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
 
     @Test(expected=NullPointerException.class)
     public void testOnePredicateEx6() {
-        final Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
+        final Collection<Predicate<Object>> coll = new ArrayList<>();
         coll.add(null);
         coll.add(null);
         PredicateUtils.onePredicate(coll);
@@ -460,7 +459,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
                 FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate(), TruePredicate.truePredicate() }).evaluate(null));
         assertEquals(true, PredicateUtils.nonePredicate(new Predicate[] {
                 FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate() }).evaluate(null));
-        final Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
+        final Collection<Predicate<Object>> coll = new ArrayList<>();
         coll.add(TruePredicate.truePredicate());
         coll.add(TruePredicate.truePredicate());
         coll.add(TruePredicate.truePredicate());
@@ -519,7 +518,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
 
     @Test(expected=NullPointerException.class)
     public void testNonePredicateEx6() {
-        final Collection<Predicate<Object>> coll = new ArrayList<Predicate<Object>>();
+        final Collection<Predicate<Object>> coll = new ArrayList<>();
         coll.add(null);
         coll.add(null);
         PredicateUtils.nonePredicate(coll);
@@ -575,7 +574,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
 
     @Test
     public void testInvokerPredicate() {
-        final List<Object> list = new ArrayList<Object>();
+        final List<Object> list = new ArrayList<>();
         assertEquals(true, PredicateUtils.invokerPredicate("isEmpty").evaluate(list));
         list.add(new Object());
         assertEquals(false, PredicateUtils.invokerPredicate("isEmpty").evaluate(list));
@@ -601,7 +600,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
 
     @Test
     public void testInvokerPredicate2() {
-        final List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<>();
         assertEquals(false, PredicateUtils.invokerPredicate(
             "contains", new Class[] {Object.class}, new Object[] {cString}).evaluate(list));
         list.add(cString);
@@ -678,7 +677,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
                 TransformerUtils.nopTransformer(),
                 TruePredicate.truePredicate()).evaluate(new Object()));
 
-        final Map<Object, Object> map = new HashMap<Object, Object>();
+        final Map<Object, Object> map = new HashMap<>();
         map.put(Boolean.TRUE, "Hello");
         final Transformer<Object, Object> t = TransformerUtils.mapTransformer(map);
         final Predicate<Object> p = EqualPredicate.<Object>equalPredicate("Hello");

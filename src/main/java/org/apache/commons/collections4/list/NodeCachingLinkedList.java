@@ -37,7 +37,6 @@ import java.util.Collection;
  * <b>Note that this implementation is not synchronized.</b>
  *
  * @since 3.0
- * @version $Id$
  */
 public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements Serializable {
 
@@ -227,6 +226,9 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
     //-----------------------------------------------------------------------
     /**
      * Serializes the data held in this object to the stream specified.
+     *
+     * @param out  the output stream
+     * @throws IOException if an error occurs while writing to the stream
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -235,6 +237,10 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
 
     /**
      * Deserializes the data held in this object to the stream specified.
+     *
+     * @param in  the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
      */
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();

@@ -27,7 +27,6 @@ import org.apache.commons.collections4.Predicate;
  * like a switch statement.
  *
  * @since 3.0
- * @version $Id$
  */
 public class SwitchClosure<E> implements Closure<E>, Serializable {
 
@@ -65,7 +64,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
         if (predicates.length == 0) {
             return (Closure<E>) (defaultClosure == null ? NOPClosure.<E>nopClosure(): defaultClosure);
         }
-        return new SwitchClosure<E>(predicates, closures, defaultClosure);
+        return new SwitchClosure<>(predicates, closures, defaultClosure);
     }
 
     /**
@@ -105,7 +104,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
             closures[i] = entry.getValue();
             i++;
         }
-        return new SwitchClosure<E>(false, preds, closures, defaultClosure);
+        return new SwitchClosure<>(false, preds, closures, defaultClosure);
     }
 
     /**

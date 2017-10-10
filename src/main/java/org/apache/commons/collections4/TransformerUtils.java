@@ -66,7 +66,6 @@ import org.apache.commons.collections4.functors.SwitchTransformer;
  * </ul>
  *
  * @since 3.0
- * @version $Id$
  */
 public class TransformerUtils {
 
@@ -117,10 +116,10 @@ public class TransformerUtils {
      * Gets a transformer that returns a clone of the input object.
      * The input object will be cloned using one of these techniques (in order):
      * <ul>
-     * <li>public clone method
-     * <li>public copy constructor
-     * <li>serialization clone
-     * <ul>
+     * <li>public clone method</li>
+     * <li>public copy constructor</li>
+     * <li>serialization clone</li>
+     * </ul>
      *
      * @param <T>  the input/output type
      * @return the transformer
@@ -267,7 +266,7 @@ public class TransformerUtils {
      * @return the transformer
      * @throws NullPointerException if either the predicate or transformer is null
      * @see SwitchTransformer
-     * @deprecated as of 4.1, use {@link #ifTransformer(Predicate, Transformer, Transformer))
+     * @deprecated as of 4.1, use {@link #ifTransformer(Predicate, Transformer, Transformer)}
      */
     @SuppressWarnings("unchecked")
     @Deprecated
@@ -430,12 +429,14 @@ public class TransformerUtils {
 
     /**
      * Gets a Transformer that invokes a method on the input object.
-     * The method must have no parameters. If the input object is null,
-     * null is returned.
+     * The method must have no parameters. If the input object is {@code null},
+     * {@code null} is returned.
+     *
      * <p>
      * For example, <code>TransformerUtils.invokerTransformer("getName");</code>
-     * will call the <code>getName/code> method on the input object to
+     * will call the <code>getName</code> method on the input object to
      * determine the transformer result.
+     * </p>
      *
      * @param <I>  the input type
      * @param <O>  the output type

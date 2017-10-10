@@ -25,7 +25,6 @@ import java.util.Collection;
  * {@link SynchronizedCollection} implementation.
  *
  * @since 3.1
- * @version $Id$
  */
 public class SynchronizedCollectionTest<E> extends AbstractCollectionTest<E> {
 
@@ -41,12 +40,12 @@ public class SynchronizedCollectionTest<E> extends AbstractCollectionTest<E> {
 
     @Override
     public Collection<E> makeConfirmedCollection() {
-        return new ArrayList<E>();
+        return new ArrayList<>();
     }
 
     @Override
     public Collection<E> makeConfirmedFullCollection() {
-        final ArrayList<E> list = new ArrayList<E>();
+        final ArrayList<E> list = new ArrayList<>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }

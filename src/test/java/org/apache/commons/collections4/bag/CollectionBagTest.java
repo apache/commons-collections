@@ -31,7 +31,6 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
  * Note: This test is mainly for serialization support, the CollectionBag decorator
  * is extensively used and tested in AbstractBagTest. 
  *
- * @version $Id$
  * @since 4.0
  */
 public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
@@ -59,7 +58,7 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
      */
     @Override
     public Collection<T> makeConfirmedCollection() {
-        return new ArrayList<T>();
+        return new ArrayList<>();
     }
 
     /**

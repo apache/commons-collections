@@ -26,7 +26,6 @@ import org.apache.commons.collections4.SortedBag;
  * methods and contracts.
  *
  * @since 3.0
- * @version $Id$
  */
 public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
 
@@ -97,7 +96,7 @@ public abstract class AbstractSortedBagTest<T> extends AbstractBagTest<T> {
      */
     @Override
     public SortedBag<T> makeConfirmedCollection() {
-        return new TreeBag<T>();
+        return new TreeBag<>();
     }
 
     //-----------------------------------------------------------------------

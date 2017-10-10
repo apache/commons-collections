@@ -29,7 +29,6 @@ import org.apache.commons.collections4.Transformer;
  * @param <O> The output type for the transformer
  *
  * @since 4.1
- * @version $Id$
  */
 public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
 
@@ -64,7 +63,7 @@ public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
             throw new NullPointerException("Transformers must not be null");
         }
 
-        return new IfTransformer<I, O>(predicate, trueTransformer, falseTransformer);
+        return new IfTransformer<>(predicate, trueTransformer, falseTransformer);
     }
 
     /**
@@ -90,7 +89,7 @@ public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
             throw new NullPointerException("Transformer must not be null");
         }
 
-        return new IfTransformer<T, T>(predicate, trueTransformer, NOPTransformer.<T>nopTransformer());
+        return new IfTransformer<>(predicate, trueTransformer, NOPTransformer.<T>nopTransformer());
     }
 
     /**

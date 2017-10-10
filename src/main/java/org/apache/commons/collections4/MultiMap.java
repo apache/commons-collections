@@ -40,7 +40,6 @@ import java.util.Collection;
  * as they were defined in the superinterface <code>Map</code> anyway.
  *
  * @since 2.0
- * @version $Id$
  * @deprecated since 4.1, use {@link MultiValuedMap} instead
  */
 @Deprecated

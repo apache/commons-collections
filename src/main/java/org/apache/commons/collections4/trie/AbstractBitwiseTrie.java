@@ -28,7 +28,6 @@ import org.apache.commons.collections4.Trie;
  * utility methods for actual bitwise {@link Trie} implementations.
  *
  * @since 4.0
- * @version $Id$
  */
 public abstract class AbstractBitwiseTrie<K, V> extends AbstractMap<K, V>
         implements Trie<K, V>, Serializable {

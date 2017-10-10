@@ -34,7 +34,6 @@ import org.apache.commons.collections4.set.TransformedSet;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since 3.0
- * @version $Id$
  */
 public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E> {
 
@@ -55,7 +54,7 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
      * @since 4.0
      */
     public static <E> Bag<E> transformingBag(final Bag<E> bag, final Transformer<? super E, ? extends E> transformer) {
-        return new TransformedBag<E>(bag, transformer);
+        return new TransformedBag<>(bag, transformer);
     }
 
     /**
@@ -74,7 +73,7 @@ public class TransformedBag<E> extends TransformedCollection<E> implements Bag<E
      * @since 4.0
      */
     public static <E> Bag<E> transformedBag(final Bag<E> bag, final Transformer<? super E, ? extends E> transformer) {
-        final TransformedBag<E> decorated = new TransformedBag<E>(bag, transformer);
+        final TransformedBag<E> decorated = new TransformedBag<>(bag, transformer);
         if (bag.size() > 0) {
             @SuppressWarnings("unchecked") // Bag is of type E
             final E[] values = (E[]) bag.toArray(); // NOPMD - false positive for generics

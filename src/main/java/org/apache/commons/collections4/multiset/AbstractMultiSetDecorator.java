@@ -27,7 +27,6 @@ import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
  * Methods are forwarded directly to the decorated multiset.
  *
  * @since 4.1
- * @version $Id$
  */
 public abstract class AbstractMultiSetDecorator<E>
         extends AbstractCollectionDecorator<E> implements MultiSet<E> {

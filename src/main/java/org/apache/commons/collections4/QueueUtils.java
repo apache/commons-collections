@@ -27,7 +27,6 @@ import org.apache.commons.collections4.queue.UnmodifiableQueue;
  * Provides utility methods and decorators for {@link Queue} instances.
  *
  * @since 4.0
- * @version $Id$
  */
 public class QueueUtils {
 
@@ -35,7 +34,7 @@ public class QueueUtils {
      * An empty unmodifiable queue.
      */
     @SuppressWarnings("rawtypes") // OK, empty queue is compatible with any type
-    public static final Queue EMPTY_QUEUE = UnmodifiableQueue.unmodifiableQueue(new LinkedList<Object>());
+    public static final Queue EMPTY_QUEUE = UnmodifiableQueue.unmodifiableQueue(new LinkedList<>());
 
     /**
      * <code>QueueUtils</code> should not normally be instantiated.

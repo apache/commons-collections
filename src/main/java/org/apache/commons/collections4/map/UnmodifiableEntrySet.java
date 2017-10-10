@@ -33,7 +33,6 @@ import org.apache.commons.collections4.set.AbstractSetDecorator;
  * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class UnmodifiableEntrySet<K, V>
         extends AbstractSetDecorator<Map.Entry<K, V>> implements Unmodifiable {
@@ -55,7 +54,7 @@ public final class UnmodifiableEntrySet<K, V>
         if (set instanceof Unmodifiable) {
             return set;
         }
-        return new UnmodifiableEntrySet<K, V>(set);
+        return new UnmodifiableEntrySet<>(set);
     }
 
     //-----------------------------------------------------------------------

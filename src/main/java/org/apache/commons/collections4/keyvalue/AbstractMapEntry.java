@@ -23,7 +23,6 @@ import java.util.Map;
  * {@link java.util.Map.Entry Map.Entry} implementations.
  *
  * @since 3.0
- * @version $Id$
  */
 public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> implements Map.Entry<K, V> {
 
@@ -49,7 +48,7 @@ public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> impl
      * @return the previous value
      */
     @Override
-    public V setValue(final V value) {
+    public V setValue(final V value) { // NOPMD
         return super.setValue(value);
     }
 

@@ -23,7 +23,6 @@ import org.apache.commons.collections4.map.AbstractMapTest;
 /**
  * Tests TreeMap.
  *
- * @version $Id$
  */
 public abstract class AbstractTreeMapTest<K, V> extends AbstractMapTest<K, V> {
 

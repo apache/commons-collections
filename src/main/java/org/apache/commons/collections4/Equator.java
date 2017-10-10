@@ -18,7 +18,6 @@ package org.apache.commons.collections4;
  *
  * @param <T> the types of object this {@link Equator} can evaluate.
  * @since 4.0
- * @version $Id$
  */
 public interface Equator<T> {
     /**

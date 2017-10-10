@@ -39,14 +39,13 @@ import org.apache.commons.collections4.OrderedMapIterator;
  * is related to the {@link Map} interface.
  *
  * @since 4.0
- * @version $Id$
  */
 abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
     private static final long serialVersionUID = 5155253417231339498L;
 
-    /** The root node of the {@link Trie}. */
-    private transient TrieEntry<K, V> root = new TrieEntry<K, V>(null, null, -1);
+    /** The root node of the {@link org.apache.commons.collections4.Trie}. */
+    private transient TrieEntry<K, V> root = new TrieEntry<>(null, null, -1);
 
     /**
      * Each of these fields are initialized to contain an instance of the
@@ -57,11 +56,11 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     private transient volatile Collection<V> values;
     private transient volatile Set<Map.Entry<K,V>> entrySet;
 
-    /** The current size of the {@link Trie}. */
+    /** The current size of the {@link org.apache.commons.collections4.Trie}. */
     private transient int size = 0;
 
     /**
-     * The number of times this {@link Trie} has been modified.
+     * The number of times this {@link org.apache.commons.collections4.Trie} has been modified.
      * It's used to detect concurrent modifications and fail-fast the {@link Iterator}s.
      */
     protected transient int modCount = 0;
@@ -71,8 +70,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     * Constructs a new {@link org.apache.commons.collections4.Trie Trie} using the given
-     * {@link KeyAnalyzer} and initializes the {@link org.apache.commons.collections4.Trie Trie}
+     * Constructs a new {@link org.apache.commons.collections4.Trie org.apache.commons.collections4.Trie Trie}
+     * using the given {@link KeyAnalyzer} and initializes the {@link org.apache.commons.collections4.Trie Trie}
      * with the values from the provided {@link Map}.
      */
     protected AbstractPatriciaTrie(final KeyAnalyzer<? super K> keyAnalyzer,
@@ -158,7 +157,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
         if (!KeyAnalyzer.isOutOfBoundsIndex(bitIndex)) {
             if (KeyAnalyzer.isValidBitIndex(bitIndex)) { // in 99.999...9% the case
                 /* NEW KEY+VALUE TUPLE */
-                final TrieEntry<K, V> t = new TrieEntry<K, V>(key, value, bitIndex);
+                final TrieEntry<K, V> t = new TrieEntry<>(key, value, bitIndex);
                 addEntry(t, lengthInBits);
                 incrementSize();
                 return null;
@@ -178,7 +177,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
                 // This is a very special and rare case.
 
                 /* REPLACE OLD KEY+VALUE */
-                if (found != root) {
+                if (found != root) { // NOPMD
                     incrementModCount();
                     return found.setKeyValue(key, value);
                 }
@@ -261,7 +260,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     * Returns the {@link Entry} whose key is closest in a bitwise XOR
+     * Returns the {@link java.util.Map.Entry} whose key is closest in a bitwise XOR
      * metric to the given key. This is NOT lexicographic closeness.
      * For example, given the keys:
      *
@@ -271,17 +270,17 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
      * <li>L = 1001100
      * </ol>
      *
-     * If the {@link Trie} contained 'H' and 'L', a lookup of 'D' would
+     * If the {@link org.apache.commons.collections4.Trie} contained 'H' and 'L', a lookup of 'D' would
      * return 'L', because the XOR distance between D &amp; L is smaller
      * than the XOR distance between D &amp; H.
      *
      * @param key  the key to use in the search
-     * @return the {@link Entry} whose key is closest in a bitwise XOR metric
+     * @return the {@link java.util.Map.Entry} whose key is closest in a bitwise XOR metric
      *   to the provided key
      */
     public Map.Entry<K, V> select(final K key) {
         final int lengthInBits = lengthInBits(key);
-        final Reference<Map.Entry<K, V>> reference = new Reference<Map.Entry<K,V>>();
+        final Reference<Map.Entry<K, V>> reference = new Reference<>();
         if (!selectR(root.left, -1, key, lengthInBits, reference)) {
             return reference.get();
         }
@@ -300,7 +299,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
      * <li>L = 1001100
      * </ol>
      *
-     * If the {@link Trie} contained 'H' and 'L', a lookup of 'D' would
+     * If the {@link org.apache.commons.collections4.Trie} contained 'H' and 'L', a lookup of 'D' would
      * return 'L', because the XOR distance between D &amp; L is smaller
      * than the XOR distance between D &amp; H.
      *
@@ -327,7 +326,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
      * <li>L = 1001100
      * </ol>
      *
-     * If the {@link Trie} contained 'H' and 'L', a lookup of 'D' would
+     * If the {@link org.apache.commons.collections4.Trie} contained 'H' and 'L', a lookup of 'D' would
      * return 'L', because the XOR distance between D &amp; L is smaller
      * than the XOR distance between D &amp; H.
      *
@@ -910,7 +909,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
         final int bitIndex = bitIndex(key, found.key);
         if (KeyAnalyzer.isValidBitIndex(bitIndex)) {
-            final TrieEntry<K, V> added = new TrieEntry<K, V>(key, null, bitIndex);
+            final TrieEntry<K, V> added = new TrieEntry<>(key, null, bitIndex);
             addEntry(added, lengthInBits);
             incrementSize(); // must increment because remove will decrement
             final TrieEntry<K, V> ceil = nextEntry(added);
@@ -972,7 +971,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
         final int bitIndex = bitIndex(key, found.key);
         if (KeyAnalyzer.isValidBitIndex(bitIndex)) {
-            final TrieEntry<K, V> added = new TrieEntry<K, V>(key, null, bitIndex);
+            final TrieEntry<K, V> added = new TrieEntry<>(key, null, bitIndex);
             addEntry(added, lengthInBits);
             incrementSize(); // must increment because remove will decrement
             final TrieEntry<K, V> ceil = nextEntry(added);
@@ -1027,7 +1026,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
         final int bitIndex = bitIndex(key, found.key);
         if (KeyAnalyzer.isValidBitIndex(bitIndex)) {
-            final TrieEntry<K, V> added = new TrieEntry<K, V>(key, null, bitIndex);
+            final TrieEntry<K, V> added = new TrieEntry<>(key, null, bitIndex);
             addEntry(added, lengthInBits);
             incrementSize(); // must increment because remove will decrement
             final TrieEntry<K, V> prior = previousEntry(added);
@@ -1068,7 +1067,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
         final int bitIndex = bitIndex(key, found.key);
         if (KeyAnalyzer.isValidBitIndex(bitIndex)) {
-            final TrieEntry<K, V> added = new TrieEntry<K, V>(key, null, bitIndex);
+            final TrieEntry<K, V> added = new TrieEntry<>(key, null, bitIndex);
             addEntry(added, lengthInBits);
             incrementSize(); // must increment because remove will decrement
             final TrieEntry<K, V> floor = previousEntry(added);
@@ -1268,7 +1267,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     }
 
     /**
-     *  A {@link Trie} is a set of {@link TrieEntry} nodes.
+     *  A {@link org.apache.commons.collections4.Trie} is a set of {@link TrieEntry} nodes.
      */
     protected static class TrieEntry<K,V> extends BasicEntry<K, V> {
 
@@ -2427,7 +2426,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     @SuppressWarnings("unchecked") // This will fail at runtime if the stream is incorrect
     private void readObject(final ObjectInputStream stream) throws IOException, ClassNotFoundException{
         stream.defaultReadObject();
-        root = new TrieEntry<K, V>(null, null, -1);
+        root = new TrieEntry<>(null, null, -1);
         int size = stream.readInt();
         for(int i = 0; i < size; i++){
             K k = (K) stream.readObject();

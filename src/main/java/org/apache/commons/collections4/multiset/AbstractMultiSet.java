@@ -34,7 +34,6 @@ import org.apache.commons.collections4.Transformer;
  * creation of subclass implementations.
  *
  * @since 4.1
- * @version $Id$
  */
 public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implements MultiSet<E> {
 
@@ -120,7 +119,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
      */
     @Override
     public Iterator<E> iterator() {
-        return new MultiSetIterator<E>(this);
+        return new MultiSetIterator<>(this);
     }
 
     /**
@@ -246,7 +245,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
      * @return a view of the set of unique elements
      */
     protected Set<E> createUniqueSet() {
-        return new UniqueSet<E>(this);
+        return new UniqueSet<>(this);
     }
 
     /**
@@ -284,7 +283,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
      * @return a view of the set of entries
      */
     protected Set<Entry<E>> createEntrySet() {
-        return new EntrySet<E>(this);
+        return new EntrySet<>(this);
     }
 
     /**

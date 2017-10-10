@@ -21,11 +21,29 @@
   </properties>
   <body>
   <release version="4.2" date="YYYY-MM-DD" description="New features">
+    <action issue="COLLECTIONS-660" dev="kinow" type="fix">
+      Uncomment test in AbstractMapTest regarding LRUMap equals
+    </action>
+    <action issue="COLLECTIONS-658" dev="britter" type="add">
+      Add Automatic-Module-Name MANIFEST entry for Java 9 compatibility
+    </action>
+    <action issue="COLLECTIONS-656" dev="ggregory" type="fix">
+      Fix site build on Java 8
+    </action>
+    <action issue="COLLECTIONS-653" dev="kinow" type="fix">
+      Update Javadoc to Build on Java 1.8
+    </action>
+    <action issue="COLLECTIONS-606" dev="chtompki" type="fix" due-to="Vamsi Kavuri">
+      Build status, Coverage status and Maven central weren't in README.md
+    </action>
     <action issue="COLLECTIONS-602" dev="kinow" type="update" due-to="John Mark">
       Improve efficiency of DefaultedMap.get
     </action>
     <action issue="COLLECTIONS-603" dev="kinow" type="update" due-to="Artem Konovalov">
       Small improvements for generics, conditional statements, and warnings suppressions.
+    </action>
+    <action issue="COLLECTIONS-655" dev="ggregory" type="update">
+      Update platform from Java 6 to Java 7.
     </action>
     <action issue="COLLECTIONS-594" dev="ggregory" type="fix" due-to="Javen O'Neal">
       Web site spelling error: MultiValuedMapeList. 
@@ -38,6 +56,9 @@
     </action>
     <action issue="COLLECTIONS-586" dev="ggregory" type="add" due-to="Shailender Bathula, Gary Gregory">
       PatriciaTrie prefixMap clear throws NullPointerException. 
+    </action>
+    <action issue="COLLECTIONS-654" dev="ggregory" type="add">
+       Add class SortedProperties to sort keys.
     </action>
   </release>
   <release version="4.1" date="2015-11-28" description="This is a security and minor release.">

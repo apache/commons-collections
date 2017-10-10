@@ -27,7 +27,6 @@ import org.apache.commons.collections4.Unmodifiable;
 /**
  * Tests the UnmodifiableIterator.
  *
- * @version $Id$
  */
 public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
 
@@ -45,7 +44,7 @@ public class UnmodifiableIteratorTest<E> extends AbstractIteratorTest<E> {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        testList = new ArrayList<E>(Arrays.asList((E[]) testArray));
+        testList = new ArrayList<>(Arrays.asList((E[]) testArray));
     }
 
     @Override

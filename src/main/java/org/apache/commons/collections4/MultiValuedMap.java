@@ -43,7 +43,6 @@ import java.util.Set;
  * <p>
  *
  * @since 4.1
- * @version $Id$
  */
 public interface MultiValuedMap<K, V> {
     // Query operations
@@ -299,7 +298,7 @@ public interface MultiValuedMap<K, V> {
      * Changes to the returned map or the collections that serve as its values
      * will update the underlying multi-valued map, and vice versa. The map does
      * not support {@code put} or {@code putAll}, nor do its entries support
-     * {@link Map.Entry#setValue setValue}.
+     * {@link java.util.Map.Entry#setValue(Object) setValue}.
      *
      * @return a map view of the mappings in this multi-valued map
      */

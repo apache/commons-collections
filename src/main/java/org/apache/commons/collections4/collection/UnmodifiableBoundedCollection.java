@@ -38,7 +38,6 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDecorator<E>
         implements BoundedCollection<E>, Unmodifiable {
@@ -61,7 +60,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
             final BoundedCollection<E> tmpColl = (BoundedCollection<E>) coll;
             return tmpColl;
         }
-        return new UnmodifiableBoundedCollection<E>(coll);
+        return new UnmodifiableBoundedCollection<>(coll);
     }
 
     /**
@@ -98,7 +97,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
         if (coll instanceof BoundedCollection == false) {
             throw new IllegalArgumentException("Collection is not a bounded collection.");
         }
-        return new UnmodifiableBoundedCollection<E>((BoundedCollection<E>) coll);
+        return new UnmodifiableBoundedCollection<>((BoundedCollection<E>) coll);
     }
 
     /**

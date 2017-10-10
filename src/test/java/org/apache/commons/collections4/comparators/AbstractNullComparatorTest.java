@@ -26,7 +26,6 @@ import junit.framework.TestSuite;
 /**
  * Test the NullComparator.
  *
- * @version $Id$
  */
 public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<Integer> {
 
@@ -52,12 +51,12 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
 
         @Override
         public Comparator<Integer> makeObject() {
-            return new NullComparator<Integer>();
+            return new NullComparator<>();
         }
 
         @Override
         public List<Integer> getComparableObjectsOrdered() {
-            final List<Integer> list = new LinkedList<Integer>();
+            final List<Integer> list = new LinkedList<>();
             list.add(Integer.valueOf(1));
             list.add(Integer.valueOf(2));
             list.add(Integer.valueOf(3));
@@ -94,12 +93,12 @@ public abstract class AbstractNullComparatorTest extends AbstractComparatorTest<
 
         @Override
         public Comparator<Integer> makeObject() {
-            return new NullComparator<Integer>(false);
+            return new NullComparator<>(false);
         }
 
         @Override
         public List<Integer> getComparableObjectsOrdered() {
-            final List<Integer> list = new LinkedList<Integer>();
+            final List<Integer> list = new LinkedList<>();
             list.add(null);
             list.add(Integer.valueOf(1));
             list.add(Integer.valueOf(2));

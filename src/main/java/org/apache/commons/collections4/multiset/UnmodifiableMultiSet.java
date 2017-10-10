@@ -34,7 +34,6 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 4.1
- * @version $Id$
  */
 public final class UnmodifiableMultiSet<E>
         extends AbstractMultiSetDecorator<E> implements Unmodifiable {
@@ -58,7 +57,7 @@ public final class UnmodifiableMultiSet<E>
             final MultiSet<E> tmpMultiSet = (MultiSet<E>) multiset;
             return tmpMultiSet;
         }
-        return new UnmodifiableMultiSet<E>(multiset);
+        return new UnmodifiableMultiSet<>(multiset);
     }
 
     //-----------------------------------------------------------------------
@@ -78,7 +77,7 @@ public final class UnmodifiableMultiSet<E>
      * Write the collection out using a custom routine.
      *
      * @param out  the output stream
-     * @throws IOException
+     * @throws IOException if an error occurs while writing to the stream
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -89,8 +88,8 @@ public final class UnmodifiableMultiSet<E>
      * Read the collection in using a custom routine.
      *
      * @param in  the input stream
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
      * @throws ClassCastException if deserialised object has wrong type
      */
     @SuppressWarnings("unchecked") // will throw CCE, see Javadoc

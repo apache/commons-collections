@@ -30,7 +30,6 @@ import org.apache.commons.collections4.collection.TransformedCollection;
  * use the Integer form to remove objects.
  *
  * @since 4.0
- * @version $Id$
  */
 public class TransformedQueue<E> extends TransformedCollection<E> implements Queue<E> {
 
@@ -52,7 +51,7 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
      */
     public static <E> TransformedQueue<E> transformingQueue(final Queue<E> queue,
                                                             final Transformer<? super E, ? extends E> transformer) {
-        return new TransformedQueue<E>(queue, transformer);
+        return new TransformedQueue<>(queue, transformer);
     }
 
     /**
@@ -73,7 +72,7 @@ public class TransformedQueue<E> extends TransformedCollection<E> implements Que
     public static <E> TransformedQueue<E> transformedQueue(final Queue<E> queue,
                                                            final Transformer<? super E, ? extends E> transformer) {
         // throws IAE if queue or transformer is null
-        final TransformedQueue<E> decorated = new TransformedQueue<E>(queue, transformer);
+        final TransformedQueue<E> decorated = new TransformedQueue<>(queue, transformer);
         if (queue.size() > 0) {
             @SuppressWarnings("unchecked") // queue is type <E>
             final E[] values = (E[]) queue.toArray(); // NOPMD - false positive for generics

@@ -55,7 +55,6 @@ import org.apache.commons.collections4.BoundedMap;
  * <code>NullPointerException</code>'s when accessed by concurrent threads.
  *
  * @since 3.0 (previously in main package v1.0)
- * @version $Id$
  */
 public class LRUMap<K, V>
         extends AbstractLinkedMap<K, V> implements BoundedMap<K, V>, Serializable, Cloneable {
@@ -198,8 +197,8 @@ public class LRUMap<K, V>
 
     /**
      * Constructor copying elements from another map.
-     * <p/>
-     * The maximum size is set from the map's size.
+     *
+     * <p>The maximum size is set from the map's size.</p>
      *
      * @param map  the map to copy
      * @param scanUntilRemovable  scan until a removeable entry is found, default false
@@ -482,6 +481,9 @@ public class LRUMap<K, V>
 
     /**
      * Write the map out using a custom routine.
+     *
+     * @param out  the output stream
+     * @throws IOException if an error occurs while writing to the stream
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -490,6 +492,10 @@ public class LRUMap<K, V>
 
     /**
      * Read the map in using a custom routine.
+     *
+     * @param in the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
      */
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
         in.defaultReadObject();

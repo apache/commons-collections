@@ -30,7 +30,6 @@ import org.apache.commons.collections4.TransformerUtils;
  * implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
 
@@ -51,24 +50,24 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
     //-----------------------------------------------------------------------
     @Override
     public Collection<Object> makeConfirmedCollection() {
-        return new ArrayList<Object>();
+        return new ArrayList<>();
     }
 
     @Override
     public Collection<Object> makeConfirmedFullCollection() {
-        final List<Object> list = new ArrayList<Object>();
+        final List<Object> list = new ArrayList<>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }
 
     @Override
     public Collection<Object> makeObject() {
-        return TransformedCollection.transformingCollection(new ArrayList<Object>(), NOOP_TRANSFORMER);
+        return TransformedCollection.transformingCollection(new ArrayList<>(), NOOP_TRANSFORMER);
     }
 
     @Override
     public Collection<Object> makeFullCollection() {
-        final List<Object> list = new ArrayList<Object>();
+        final List<Object> list = new ArrayList<>();
         list.addAll(Arrays.asList(getFullElements()));
         return TransformedCollection.transformingCollection(list, NOOP_TRANSFORMER);
     }
@@ -86,7 +85,7 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
 
     //-----------------------------------------------------------------------
     public void testTransformedCollection() {
-        final Collection<Object> coll = TransformedCollection.transformingCollection(new ArrayList<Object>(), STRING_TO_INTEGER_TRANSFORMER);
+        final Collection<Object> coll = TransformedCollection.transformingCollection(new ArrayList<>(), STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, coll.size());
         final Object[] elements = getFullElements();
         for (int i = 0; i < elements.length; i++) {
@@ -100,7 +99,7 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
     }
 
     public void testTransformedCollection_decorateTransform() {
-        final Collection<Object> originalCollection = new ArrayList<Object>();
+        final Collection<Object> originalCollection = new ArrayList<>();
         final Object[] elements = getFullElements();
         Collections.addAll(originalCollection, elements);
         final Collection<Object> collection = TransformedCollection.transformedCollection(originalCollection, TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);

@@ -27,7 +27,6 @@ import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrengt
 /**
  * Tests for ReferenceMap.
  *
- * @version $Id$
  */
 public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
@@ -41,7 +40,7 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Override
     public ReferenceMap<K, V> makeObject() {
-        return new ReferenceMap<K, V>(ReferenceStrength.WEAK, ReferenceStrength.WEAK);
+        return new ReferenceMap<>(ReferenceStrength.WEAK, ReferenceStrength.WEAK);
     }
 
     @Override
@@ -214,10 +213,10 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final K key = (K) new Object();
         final V value = (V) new Object();
 
-        keyReference = new WeakReference<K>(key);
-        valueReference = new WeakReference<V>(value);
+        keyReference = new WeakReference<>(key);
+        valueReference = new WeakReference<>(value);
 
-        final Map<K, V> testMap = new ReferenceMap<K, V>(ReferenceStrength.WEAK, ReferenceStrength.HARD, true);
+        final Map<K, V> testMap = new ReferenceMap<>(ReferenceStrength.WEAK, ReferenceStrength.HARD, true);
         testMap.put(key, value);
 
         assertEquals("In map", value, testMap.get(key));

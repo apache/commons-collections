@@ -29,7 +29,6 @@ import org.apache.commons.collections4.SetValuedMap;
  * Test HashSetValuedHashMap
  *
  * @since 4.1
- * @version $Id$
  */
 public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
@@ -44,12 +43,12 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
     // -----------------------------------------------------------------------
     @Override
     public SetValuedMap<K, V> makeObject() {
-        return new HashSetValuedHashMap<K, V>();
+        return new HashSetValuedHashMap<>();
     }
 
     @Override
     public MultiValuedMap<K, V> makeConfirmedMap() {
-        return new HashSetValuedHashMap<K, V>();
+        return new HashSetValuedHashMap<>();
     }
 
     // -----------------------------------------------------------------------

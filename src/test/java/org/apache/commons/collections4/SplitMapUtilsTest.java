@@ -35,7 +35,6 @@ import org.junit.Test;
  * Tests for {@link TransformedSplitMap}
  *
  * @since 4.0
- * @version $Id$
  */
 @SuppressWarnings("boxing")
 public class SplitMapUtilsTest {
@@ -51,7 +50,7 @@ public class SplitMapUtilsTest {
 
     @Before
     public void setUp() throws Exception {
-        backingMap = new HashMap<String, Integer>();
+        backingMap = new HashMap<>();
         transformedMap = TransformedSplitMap.transformingMap(backingMap, NOPTransformer.<String> nopTransformer(),
                 stringToInt);
         for (int i = 0; i < 10; i++) {
@@ -101,7 +100,7 @@ public class SplitMapUtilsTest {
             }
         });
 
-        final HashMap<String, Integer> m = new HashMap<String, Integer>();
+        final HashMap<String, Integer> m = new HashMap<>();
         m.put("foo", 100);
         m.put("bar", 200);
         m.put("baz", 300);
@@ -128,7 +127,7 @@ public class SplitMapUtilsTest {
 
     @Test
     public void testAlreadyReadableMap() {
-        final HashedMap<String, Integer> hashedMap = new HashedMap<String, Integer>();
+        final HashedMap<String, Integer> hashedMap = new HashedMap<>();
         assertSame(hashedMap, SplitMapUtils.readableMap(hashedMap));
     }
 
@@ -203,7 +202,7 @@ public class SplitMapUtilsTest {
         assertEquals(++sz, backingMap.size());
 
         // putall
-        final Map<String, String> more = new HashMap<String, String>();
+        final Map<String, String> more = new HashMap<>();
         more.put("foo", "77");
         more.put("bar", "88");
         more.put("baz", "99");
@@ -218,7 +217,7 @@ public class SplitMapUtilsTest {
 
     @Test
     public void testAlreadyWritableMap() {
-        final HashedMap<String, String> hashedMap = new HashedMap<String, String>();
+        final HashedMap<String, String> hashedMap = new HashedMap<>();
         assertSame(hashedMap, SplitMapUtils.writableMap(hashedMap));
     }
 

@@ -24,7 +24,6 @@ import org.apache.commons.collections4.ResettableListIterator;
 /**
  * Tests the SingletonListIterator.
  *
- * @version $Id$
  */
 public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
 
@@ -50,7 +49,7 @@ public class SingletonListIteratorTest<E> extends AbstractListIteratorTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public SingletonListIterator<E> makeObject() {
-        return new SingletonListIterator<E>((E) testValue);
+        return new SingletonListIterator<>((E) testValue);
     }
 
     @Override

@@ -27,7 +27,6 @@ import org.apache.commons.collections4.Closure;
  * for more details.
  *
  * @since 3.0
- * @version $Id$
  */
 public class ForClosure<E> implements Closure<E> {
 
@@ -55,7 +54,7 @@ public class ForClosure<E> implements Closure<E> {
         if (count == 1) {
             return (Closure<E>) closure;
         }
-        return new ForClosure<E>(count, closure);
+        return new ForClosure<>(count, closure);
     }
 
     /**

@@ -25,7 +25,6 @@ import org.apache.commons.collections4.Transformer;
  * Transformer implementation that calls a Factory and returns the result.
  *
  * @since 3.0
- * @version $Id$
  */
 public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable {
 
@@ -48,7 +47,7 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
         if (factory == null) {
             throw new NullPointerException("Factory must not be null");
         }
-        return new FactoryTransformer<I, O>(factory);
+        return new FactoryTransformer<>(factory);
     }
 
     /**

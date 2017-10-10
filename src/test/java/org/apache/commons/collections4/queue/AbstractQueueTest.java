@@ -39,7 +39,6 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
  * protected methods from AbstractCollectionTest.
  *
  * @since 4.0
- * @version $Id$
  */
 public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
 
@@ -87,7 +86,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      */
     @Override
     public Collection<E> makeConfirmedCollection() {
-        final ArrayList<E> list = new ArrayList<E>();
+        final ArrayList<E> list = new ArrayList<>();
         return list;
     }
 
@@ -96,7 +95,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
      */
     @Override
     public Collection<E> makeConfirmedFullCollection() {
-        final ArrayList<E> list = new ArrayList<E>();
+        final ArrayList<E> list = new ArrayList<>();
         list.addAll(Arrays.asList(getFullElements()));
         return list;
     }

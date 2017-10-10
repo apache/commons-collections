@@ -27,7 +27,6 @@ import org.apache.commons.collections4.TransformerUtils;
 /**
  * Test class for TransformingComparator.
  *
- * @version $Id$
  */
 public class TransformingComparatorTest extends AbstractComparatorTest<Integer> {
 
@@ -45,14 +44,14 @@ public class TransformingComparatorTest extends AbstractComparatorTest<Integer> 
 
     @Override
     public Comparator<Integer> makeObject() {
-       final Comparator<String> decorated = new ComparableComparator<String>();
+       final Comparator<String> decorated = new ComparableComparator<>();
        return ComparatorUtils.transformedComparator(decorated, TransformerUtils.<Integer>stringValueTransformer());
     }
 
     @Override
     @SuppressWarnings("boxing") // OK in test code
     public List<Integer> getComparableObjectsOrdered() {
-        final List<Integer> list = new LinkedList<Integer>();
+        final List<Integer> list = new LinkedList<>();
         list.add(1);
         list.add(2);
         list.add(3);
@@ -63,8 +62,8 @@ public class TransformingComparatorTest extends AbstractComparatorTest<Integer> 
 
     public void testEquals() {
         Transformer<String, String> t1 = TransformerUtils.nopTransformer();
-        TransformingComparator<String, String> comp1 = new TransformingComparator<String, String>(t1);
-        TransformingComparator<String, String> comp2 = new TransformingComparator<String, String>(t1, comp1);
+        TransformingComparator<String, String> comp1 = new TransformingComparator<>(t1);
+        TransformingComparator<String, String> comp2 = new TransformingComparator<>(t1, comp1);
 
         // Checks the contract: equals-hashcode on comp1 and comp2
         assertTrue("Contract failed: equals-hashcode",

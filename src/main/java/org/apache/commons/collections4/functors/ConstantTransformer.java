@@ -28,7 +28,6 @@ import org.apache.commons.collections4.Transformer;
  * use the prototype factory.
  *
  * @since 3.0
- * @version $Id$
  */
 public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializable {
 
@@ -37,7 +36,7 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
 
     /** Returns null each time */
     @SuppressWarnings("rawtypes")
-    public static final Transformer NULL_INSTANCE = new ConstantTransformer<Object, Object>(null);
+    public static final Transformer NULL_INSTANCE = new ConstantTransformer<>(null);
 
     /** The closures to call in turn */
     private final O iConstant;
@@ -47,7 +46,7 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
      *
      * @param <I>  the input type
      * @param <O>  the output type
-     * @return Transformer<I, O> that always returns null.
+     * @return Transformer&lt;I, O&gt; that always returns null.
      */
     @SuppressWarnings("unchecked") // The null transformer works for all object types
     public static <I, O> Transformer<I, O> nullTransformer() {
@@ -66,7 +65,7 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
         if (constantToReturn == null) {
             return nullTransformer();
         }
-        return new ConstantTransformer<I, O>(constantToReturn);
+        return new ConstantTransformer<>(constantToReturn);
     }
 
     /**

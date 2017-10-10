@@ -25,7 +25,6 @@ import org.apache.commons.collections4.Transformer;
  * <code>String.valueOf</code> on the input object.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class StringValueTransformer<T> implements Transformer<T, String>, Serializable {
 
@@ -33,7 +32,7 @@ public final class StringValueTransformer<T> implements Transformer<T, String>, 
     private static final long serialVersionUID = 7511110693171758606L;
 
     /** Singleton predicate instance */
-    private static final Transformer<Object, String> INSTANCE = new StringValueTransformer<Object>();
+    private static final Transformer<Object, String> INSTANCE = new StringValueTransformer<>();
 
     /**
      * Factory returning the singleton instance.

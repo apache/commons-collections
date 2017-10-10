@@ -25,7 +25,6 @@ import org.apache.commons.collections4.Unmodifiable;
  * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIterator<K, V>,
         Unmodifiable {
@@ -54,7 +53,7 @@ public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIte
             final OrderedMapIterator<K, V> tmpIterator = (OrderedMapIterator<K, V>) iterator;
             return tmpIterator;
         }
-        return new UnmodifiableOrderedMapIterator<K, V>(iterator);
+        return new UnmodifiableOrderedMapIterator<>(iterator);
     }
 
     //-----------------------------------------------------------------------

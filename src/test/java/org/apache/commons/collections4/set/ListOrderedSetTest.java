@@ -30,7 +30,6 @@ import org.apache.commons.collections4.IteratorUtils;
  * {@link ListOrderedSet} implementation.
  * 
  * @since 3.0
- * @version $Id$
  */
 public class ListOrderedSetTest<E>
     extends AbstractSetTest<E> {
@@ -145,7 +144,7 @@ public class ListOrderedSetTest<E>
         assertSame(ONE, set.get(1));
         assertSame(TWO, set.get(2));
 
-        final List<E> list = new ArrayList<E>();
+        final List<E> list = new ArrayList<>();
         list.add((E) ZERO);
         list.add((E) TWO);
 
@@ -182,14 +181,14 @@ public class ListOrderedSetTest<E>
 
     @SuppressWarnings("unchecked")
     public void testRetainAll() {
-        final List<E> list = new ArrayList<E>(10);
-        final Set<E> set = new HashSet<E>(10);
+        final List<E> list = new ArrayList<>(10);
+        final Set<E> set = new HashSet<>(10);
         final ListOrderedSet<E> orderedSet = ListOrderedSet.listOrderedSet(set, list);
         for (int i = 0; i < 10; ++i) {
             orderedSet.add((E) Integer.valueOf(10 - i - 1));
         }
 
-        final Collection<E> retained = new ArrayList<E>(5);
+        final Collection<E> retained = new ArrayList<>(5);
         for (int i = 0; i < 5; ++i) {
             retained.add((E) Integer.valueOf(i * 2));
         }
@@ -206,7 +205,7 @@ public class ListOrderedSetTest<E>
 
     @SuppressWarnings("unchecked")
     public void testDuplicates() {
-        final List<E> list = new ArrayList<E>(10);
+        final List<E> list = new ArrayList<>(10);
         list.add((E) Integer.valueOf(1));
         list.add((E) Integer.valueOf(2));
         list.add((E) Integer.valueOf(3));

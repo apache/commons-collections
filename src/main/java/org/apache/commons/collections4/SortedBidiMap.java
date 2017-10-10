@@ -29,7 +29,6 @@ import java.util.SortedMap;
  * @param <K> the type of the keys in the map
  * @param <V> the type of the values in the map
  * @since 3.0
- * @version $Id$
  */
 public interface SortedBidiMap<K, V> extends OrderedBidiMap<K, V>, SortedMap<K, V> {
 
@@ -53,7 +52,7 @@ public interface SortedBidiMap<K, V> extends OrderedBidiMap<K, V>, SortedMap<K, 
 
     /**
      * Get the comparator used for the values in the value-to-key map aspect.
-     * @return Comparator<? super V>
+     * @return Comparator&lt;? super V&gt;
      */
     Comparator<? super V> valueComparator();
 }

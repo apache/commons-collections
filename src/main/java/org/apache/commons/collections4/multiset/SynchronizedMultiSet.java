@@ -29,7 +29,6 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
  * Iterators must be separately synchronized around the loop.
  *
  * @since 4.1
- * @version $Id$
  */
 public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implements MultiSet<E> {
 
@@ -45,7 +44,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
      * @throws NullPointerException if multiset is null
      */
     public static <E> SynchronizedMultiSet<E> synchronizedMultiSet(final MultiSet<E> multiset) {
-        return new SynchronizedMultiSet<E>(multiset);
+        return new SynchronizedMultiSet<>(multiset);
     }
 
     //-----------------------------------------------------------------------
@@ -131,7 +130,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
     public Set<E> uniqueSet() {
         synchronized (lock) {
             final Set<E> set = decorated().uniqueSet();
-            return new SynchronizedSet<E>(set, lock);
+            return new SynchronizedSet<>(set, lock);
         }
     }
 
@@ -139,7 +138,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
     public Set<Entry<E>> entrySet() {
         synchronized (lock) {
             final Set<MultiSet.Entry<E>> set = decorated().entrySet();
-            return new SynchronizedSet<MultiSet.Entry<E>>(set, lock);
+            return new SynchronizedSet<>(set, lock);
         }
     }
 

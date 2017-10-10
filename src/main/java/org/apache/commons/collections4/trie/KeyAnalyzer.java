@@ -30,7 +30,6 @@ import java.util.Comparator;
  * {@link #EQUAL_BIT_KEY}).
  *
  * @since 4.0
- * @version $Id$
  */
 public abstract class KeyAnalyzer<K> implements Comparator<K>, Serializable {
 

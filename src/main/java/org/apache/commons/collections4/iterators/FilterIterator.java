@@ -28,7 +28,6 @@ import org.apache.commons.collections4.Predicate;
  * those elements that match the specified {@link Predicate Predicate}.
  *
  * @since 1.0
- * @version $Id$
  */
 public class FilterIterator<E> implements Iterator<E> {
 
@@ -97,10 +96,8 @@ public class FilterIterator<E> implements Iterator<E> {
      */
     @Override
     public E next() {
-        if (!nextObjectSet) {
-            if (!setNextObject()) {
-                throw new NoSuchElementException();
-            }
+        if (!nextObjectSet && !setNextObject()) {
+            throw new NoSuchElementException();
         }
         nextObjectSet = false;
         return nextObject;

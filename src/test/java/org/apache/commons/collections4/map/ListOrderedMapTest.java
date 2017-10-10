@@ -33,7 +33,6 @@ import org.apache.commons.collections4.list.AbstractListTest;
  * implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
@@ -117,7 +116,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         resetFull();
         lom = getMap();
-        final List<K> list = new ArrayList<K>();
+        final List<K> list = new ArrayList<>();
         for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext();) {
             list.add(it.next());
         }
@@ -173,7 +172,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
             lom.remove(lom.size());
         } catch (final IndexOutOfBoundsException ex) {}
 
-        final List<K> list = new ArrayList<K>();
+        final List<K> list = new ArrayList<>();
         for (final MapIterator<K, V> it = lom.mapIterator(); it.hasNext();) {
             list.add(it.next());
         }
@@ -222,7 +221,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         // put in a full map
         resetFull();
         lom = getMap();
-        final ListOrderedMap<K, V> lom2 = new ListOrderedMap<K, V>();
+        final ListOrderedMap<K, V> lom2 = new ListOrderedMap<>();
         lom2.putAll(lom);
 
         lom2.put(0, (K) "testInsert0", (V) "testInsert0v");
@@ -317,7 +316,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         assertEquals("testInsert2v", lom.getValue(2));
 
         // Create New Test Map and Add using putAll(int, Object, Object)
-        final Map<String, String> values = new ListOrderedMap<String, String>();
+        final Map<String, String> values = new ListOrderedMap<>();
         values.put("NewInsert0", "NewInsert0v");
         values.put("NewInsert1", "NewInsert1v");
         lom.putAll(1, values);
@@ -341,7 +340,7 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
             lom.put((K) Integer.valueOf(i), (V) Boolean.TRUE);
         }
 
-        final Map<K, V> map = new TreeMap<K, V>();
+        final Map<K, V> map = new TreeMap<>();
         for (int i = 0; i < size; i++) {
             map.put((K) Integer.valueOf(i), (V) Boolean.FALSE);
         }
@@ -389,11 +388,11 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     public void testCOLLECTIONS_474_nullValues () {
         Object key1 = new Object();
         Object key2 = new Object();
-        HashMap<Object, Object> hmap = new HashMap<Object, Object>();
+        HashMap<Object, Object> hmap = new HashMap<>();
         hmap.put(key1, null);
         hmap.put(key2, null);
         assertEquals("Should have two elements", 2, hmap.size());
-        ListOrderedMap<Object, Object> listMap = new ListOrderedMap<Object, Object>();
+        ListOrderedMap<Object, Object> listMap = new ListOrderedMap<>();
         listMap.put(key1, null);
         listMap.put(key2, null);
         assertEquals("Should have two elements", 2, listMap.size());
@@ -403,11 +402,11 @@ public class ListOrderedMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
     public void testCOLLECTIONS_474_nonNullValues () {
         Object key1 = new Object();
         Object key2 = new Object();
-        HashMap<Object, Object> hmap = new HashMap<Object, Object>();
+        HashMap<Object, Object> hmap = new HashMap<>();
         hmap.put(key1, "1");
         hmap.put(key2, "2");
         assertEquals("Should have two elements", 2, hmap.size());
-        ListOrderedMap<Object, Object> listMap = new ListOrderedMap<Object, Object>();
+        ListOrderedMap<Object, Object> listMap = new ListOrderedMap<>();
         listMap.put(key1, "3");
         listMap.put(key2, "4");
         assertEquals("Should have two elements", 2, listMap.size());

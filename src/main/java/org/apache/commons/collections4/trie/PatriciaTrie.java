@@ -24,10 +24,12 @@ import org.apache.commons.collections4.trie.analyzer.StringKeyAnalyzer;
  * Implementation of a PATRICIA Trie (Practical Algorithm to Retrieve Information
  * Coded in Alphanumeric).
  * <p>
- * A PATRICIA {@link Trie} is a compressed {@link Trie}. Instead of storing
- * all data at the edges of the {@link Trie} (and having empty internal nodes),
- * PATRICIA stores data in every node. This allows for very efficient traversal,
- * insert, delete, predecessor, successor, prefix, range, and {@link #select(Object)}
+ * A PATRICIA {@link org.apache.commons.collections4.Trie} is a compressed
+ * {@link org.apache.commons.collections4.Trie}. Instead of storing
+ * all data at the edges of the {@link org.apache.commons.collections4.Trie}
+ * (and having empty internal nodes), PATRICIA stores data in every node.
+ * This allows for very efficient traversal, insert, delete, predecessor,
+ * successor, prefix, range, and {@link #select(Object)}
  * operations. All operations are performed at worst in O(K) time, where K
  * is the number of bits in the largest item in the tree. In practice,
  * operations actually take O(A(K)) time, where A(K) is the average number of
@@ -38,21 +40,21 @@ import org.apache.commons.collections4.trie.analyzer.StringKeyAnalyzer;
  * K of them, described above) will perform a single bit comparison against
  * the given key, instead of comparing the entire key to another key.
  * <p>
- * The {@link Trie} can return operations in lexicographical order using the
- * 'prefixMap', 'submap', or 'iterator' methods. The {@link Trie} can also
+ * The {@link org.apache.commons.collections4.Trie} can return operations in
+ * lexicographical order using the 'prefixMap', 'submap', or 'iterator' methods.
+ * The {@link org.apache.commons.collections4.Trie} can also
  * scan for items that are 'bitwise' (using an XOR metric) by the 'select' method.
  * Bitwise closeness is determined by the {@link KeyAnalyzer} returning true or
  * false for a bit being set or not in a given key.
  * <p>
- * This PATRICIA {@link Trie} supports both variable length & fixed length
- * keys. Some methods, such as {@link #prefixMap(Object)} are suited only
- * to variable length keys.
+ * This PATRICIA {@link org.apache.commons.collections4.Trie} supports both variable
+ * length &amp; fixed length keys. Some methods, such as {@link #prefixMap(Object)}
+ * are suited only to variable length keys.
  *
  * @see <a href="http://en.wikipedia.org/wiki/Radix_tree">Radix Tree</a>
  * @see <a href="http://www.csse.monash.edu.au/~lloyd/tildeAlgDS/Tree/PATRICIA">PATRICIA</a>
  * @see <a href="http://www.imperialviolet.org/binary/critbit.pdf">Crit-Bit Tree</a>
  * @since 4.0
- * @version $Id$
  */
 public class PatriciaTrie<E> extends AbstractPatriciaTrie<String, E> {
 

@@ -31,7 +31,6 @@ import org.easymock.EasyMock;
  * provides methods to create and verify mock predicates to which to delegate.
  *
  * @since 3.0
- * @version $Id$
  */
 public abstract class AbstractMockPredicateTest<T> {
     /**
@@ -59,7 +58,7 @@ public abstract class AbstractMockPredicateTest<T> {
     @Before
     public final void createVerifyList()
     {
-        mockPredicatesToVerify = new ArrayList<Predicate<? super T>>();
+        mockPredicatesToVerify = new ArrayList<>();
     }
 
     /**

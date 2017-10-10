@@ -30,17 +30,19 @@ import org.apache.commons.collections4.set.AbstractSetDecorator;
  * <p>
  * The Map API is very difficult to decorate correctly, and involves implementing
  * lots of different classes. This class exists to provide a simpler API.
+ * </p>
  * <p>
  * Special hook methods are provided that are called when objects are added to
  * the map. By overriding these methods, the input can be validated or manipulated.
  * In addition to the main map methods, the entrySet is also affected, which is
  * the hardest part of writing map implementations.
+ * </p>
  * <p>
  * This class is package-scoped, and may be withdrawn or replaced in future
  * versions of Commons Collections.
+ * </p>
  *
  * @since 3.1
- * @version $Id$
  */
 abstract class AbstractInputCheckedMapDecorator<K, V>
         extends AbstractMapDecorator<K, V> {
@@ -68,10 +70,13 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
      * <p>
      * An implementation may validate the value and throw an exception
      * or it may transform the value into another object.
+     * </p>
      * <p>
      * This implementation returns the input value.
+     * </p>
      *
      * @param value  the value to check
+     * @return the input value
      * @throws UnsupportedOperationException if the map may not be changed by setValue
      * @throws IllegalArgumentException if the specified value is invalid
      * @throws ClassCastException if the class of the specified value is invalid

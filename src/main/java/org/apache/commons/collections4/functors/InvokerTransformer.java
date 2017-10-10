@@ -31,7 +31,6 @@ import org.apache.commons.collections4.Transformer;
  * for more details.
  *
  * @since 3.0
- * @version $Id$
  */
 public class InvokerTransformer<I, O> implements Transformer<I, O> {
 
@@ -56,7 +55,7 @@ public class InvokerTransformer<I, O> implements Transformer<I, O> {
         if (methodName == null) {
             throw new NullPointerException("The method to invoke must not be null");
         }
-        return new InvokerTransformer<I, O>(methodName);
+        return new InvokerTransformer<>(methodName);
     }
 
     /**
@@ -82,9 +81,9 @@ public class InvokerTransformer<I, O> implements Transformer<I, O> {
             throw new IllegalArgumentException("The parameter types must match the arguments");
         }
         if (paramTypes == null || paramTypes.length == 0) {
-            return new InvokerTransformer<I, O>(methodName);
+            return new InvokerTransformer<>(methodName);
         }
-        return new InvokerTransformer<I, O>(methodName, paramTypes, args);
+        return new InvokerTransformer<>(methodName, paramTypes, args);
     }
 
     /**

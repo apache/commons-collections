@@ -50,7 +50,6 @@ import org.apache.commons.collections4.iterators.PermutationIterator;
  * NOTE: From 4.0, method parameters will take {@link Iterable} objects when possible.
  *
  * @since 1.0
- * @version $Id$
  */
 public class CollectionUtils {
 
@@ -140,11 +139,11 @@ public class CollectionUtils {
          */
         public SetOperationCardinalityHelper(final Iterable<? extends O> a, final Iterable<? extends O> b) {
             super(a, b);
-            elements = new HashSet<O>();
+            elements = new HashSet<>();
             addAll(elements, a);
             addAll(elements, b);
             // the resulting list must contain at least each unique element, but may grow
-            newList = new ArrayList<O>(elements.size());
+            newList = new ArrayList<>(elements.size());
         }
 
         @Override
@@ -228,7 +227,7 @@ public class CollectionUtils {
      * @see Collection#addAll
      */
     public static <O> Collection<O> union(final Iterable<? extends O> a, final Iterable<? extends O> b) {
-        final SetOperationCardinalityHelper<O> helper = new SetOperationCardinalityHelper<O>(a, b);
+        final SetOperationCardinalityHelper<O> helper = new SetOperationCardinalityHelper<>(a, b);
         for (final O obj : helper) {
             helper.setCardinality(obj, helper.max(obj));
         }
@@ -252,7 +251,7 @@ public class CollectionUtils {
      * @see #containsAny
      */
     public static <O> Collection<O> intersection(final Iterable<? extends O> a, final Iterable<? extends O> b) {
-        final SetOperationCardinalityHelper<O> helper = new SetOperationCardinalityHelper<O>(a, b);
+        final SetOperationCardinalityHelper<O> helper = new SetOperationCardinalityHelper<>(a, b);
         for (final O obj : helper) {
             helper.setCardinality(obj, helper.min(obj));
         }
@@ -280,7 +279,7 @@ public class CollectionUtils {
      * @return the symmetric difference of the two collections
      */
     public static <O> Collection<O> disjunction(final Iterable<? extends O> a, final Iterable<? extends O> b) {
-        final SetOperationCardinalityHelper<O> helper = new SetOperationCardinalityHelper<O>(a, b);
+        final SetOperationCardinalityHelper<O> helper = new SetOperationCardinalityHelper<>(a, b);
         for (final O obj : helper) {
             helper.setCardinality(obj, helper.max(obj) - helper.min(obj));
         }
@@ -329,8 +328,8 @@ public class CollectionUtils {
     public static <O> Collection<O> subtract(final Iterable<? extends O> a,
                                              final Iterable<? extends O> b,
                                              final Predicate<O> p) {
-        final ArrayList<O> list = new ArrayList<O>();
-        final HashBag<O> bag = new HashBag<O>();
+        final ArrayList<O> list = new ArrayList<>();
+        final HashBag<O> bag = new HashBag<>();
         for (final O element : b) {
             if (p.evaluate(element)) {
                 bag.add(element);
@@ -371,7 +370,7 @@ public class CollectionUtils {
             return true;
         } else {
             final Iterator<?> it = coll1.iterator();
-            final Set<Object> elementsAlreadySeen = new HashSet<Object>();
+            final Set<Object> elementsAlreadySeen = new HashSet<>();
             for (final Object nextElement : coll2) {
                 if (elementsAlreadySeen.contains(nextElement)) {
                     continue;
@@ -432,12 +431,12 @@ public class CollectionUtils {
      * Only those elements present in the collection will appear as
      * keys in the map.
      *
-     * @param <O>  the type of object in the returned {@link Map}. This is a super type of <I>.
+     * @param <O>  the type of object in the returned {@link Map}. This is a super type of &lt;I&gt;.
      * @param coll  the collection to get the cardinality map for, must not be null
      * @return the populated cardinality map
      */
     public static <O> Map<O, Integer> getCardinalityMap(final Iterable<? extends O> coll) {
-        final Map<O, Integer> count = new HashMap<O, Integer>();
+        final Map<O, Integer> count = new HashMap<>();
         for (final O obj : coll) {
             final Integer c = count.get(obj);
             if (c == null) {
@@ -462,7 +461,7 @@ public class CollectionUtils {
      * @see Collection#containsAll
      */
     public static boolean isSubCollection(final Collection<?> a, final Collection<?> b) {
-        final CardinalityHelper<Object> helper = new CardinalityHelper<Object>(a, b);
+        final CardinalityHelper<Object> helper = new CardinalityHelper<>(a, b);
         for (final Object obj : a) {
             if (helper.freqA(obj) > helper.freqB(obj)) {
                 return false;
@@ -483,7 +482,7 @@ public class CollectionUtils {
      * <ul>
      *    <li><code>a.size()</code> and <code>b.size()</code> represent the
      *    total cardinality of <i>a</i> and <i>b</i>, resp. </li>
-     *    <li><code>a.size() < Integer.MAXVALUE</code></li>
+     *    <li><code>a.size() &lt; Integer.MAXVALUE</code></li>
      * </ul>
      *
      * @param a  the first (sub?) collection, must not be null
@@ -512,7 +511,7 @@ public class CollectionUtils {
         if(a.size() != b.size()) {
             return false;
         }
-        final CardinalityHelper<Object> helper = new CardinalityHelper<Object>(a, b);
+        final CardinalityHelper<Object> helper = new CardinalityHelper<>(a, b);
         if(helper.cardinalityA.size() != helper.cardinalityB.size()) {
             return false;
         }
@@ -833,7 +832,7 @@ public class CollectionUtils {
      * Answers true if a predicate is true for every element of a
      * collection.
      * <p>
-     * A <code>null</code> predicate returns false.<br/>
+     * A <code>null</code> predicate returns false.<br>
      * A <code>null</code> or empty collection returns true.
      *
      * @param <C>  the type of object the {@link Iterable} contains
@@ -1582,11 +1581,11 @@ public class CollectionUtils {
         final int totalSize = a instanceof Collection<?> && b instanceof Collection<?> ?
                 Math.max(1, ((Collection<?>) a).size() + ((Collection<?>) b).size()) : 10;
 
-        final Iterator<O> iterator = new CollatingIterator<O>(c, a.iterator(), b.iterator());
+        final Iterator<O> iterator = new CollatingIterator<>(c, a.iterator(), b.iterator());
         if (includeDuplicates) {
             return IteratorUtils.toList(iterator, totalSize);
         } else {
-            final ArrayList<O> mergedList = new ArrayList<O>(totalSize);
+            final ArrayList<O> mergedList = new ArrayList<>(totalSize);
 
             O lastItem = null;
             while (iterator.hasNext()) {
@@ -1623,8 +1622,8 @@ public class CollectionUtils {
      * @since 4.0
      */
     public static <E> Collection<List<E>> permutations(final Collection<E> collection) {
-        final PermutationIterator<E> it = new PermutationIterator<E>(collection);
-        final Collection<List<E>> result = new ArrayList<List<E>>();
+        final PermutationIterator<E> it = new PermutationIterator<>(collection);
+        final Collection<List<E>> result = new ArrayList<>();
         while (it.hasNext()) {
             result.add(it.next());
         }
@@ -1690,16 +1689,16 @@ public class CollectionUtils {
         final Transformer<E, EquatorWrapper<E>> transformer = new Transformer<E, EquatorWrapper<E>>() {
             @Override
             public EquatorWrapper<E> transform(E input) {
-                return new EquatorWrapper<E>(equator, input);
+                return new EquatorWrapper<>(equator, input);
             }
         };
 
         final Set<EquatorWrapper<E>> retainSet =
                 collect(retain, transformer, new HashSet<EquatorWrapper<E>>());
 
-        final List<E> list = new ArrayList<E>();
+        final List<E> list = new ArrayList<>();
         for (final E element : collection) {
-            if (retainSet.contains(new EquatorWrapper<E>(equator, element))) {
+            if (retainSet.contains(new EquatorWrapper<>(equator, element))) {
                 list.add(element);
             }
         }
@@ -1766,16 +1765,16 @@ public class CollectionUtils {
         final Transformer<E, EquatorWrapper<E>> transformer = new Transformer<E, EquatorWrapper<E>>() {
             @Override
             public EquatorWrapper<E> transform(E input) {
-                return new EquatorWrapper<E>(equator, input);
+                return new EquatorWrapper<>(equator, input);
             }
         };
 
         final Set<EquatorWrapper<E>> removeSet =
                 collect(remove, transformer, new HashSet<EquatorWrapper<E>>());
 
-        final List<E> list = new ArrayList<E>();
+        final List<E> list = new ArrayList<>();
         for (final E element : collection) {
-            if (!removeSet.contains(new EquatorWrapper<E>(equator, element))) {
+            if (!removeSet.contains(new EquatorWrapper<>(equator, element))) {
                 list.add(element);
             }
         }

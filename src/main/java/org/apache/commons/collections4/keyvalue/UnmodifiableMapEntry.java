@@ -26,7 +26,6 @@ import org.apache.commons.collections4.Unmodifiable;
  * UnsupportedOperationException when <code>setValue</code> is called.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class UnmodifiableMapEntry<K, V> extends AbstractMapEntry<K, V> implements Unmodifiable {
 

@@ -29,7 +29,6 @@ import org.apache.commons.collections4.map.AbstractReferenceMap.ReferenceStrengt
 /**
  * Tests for ReferenceIdentityMap.
  *
- * @version $Id$
  */
 public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
@@ -48,7 +47,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
 
     @Override
     public ReferenceIdentityMap<K, V> makeObject() {
-        return new ReferenceIdentityMap<K, V>(ReferenceStrength.WEAK, ReferenceStrength.WEAK);
+        return new ReferenceIdentityMap<>(ReferenceStrength.WEAK, ReferenceStrength.WEAK);
     }
 
     @Override
@@ -56,7 +55,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         // Testing against another [collections] class generally isn't a good idea,
         // but the closest alternative is IdentityHashMap, which propagates reference-equality down to keySet and values.
         // arguably ReferenceIdentityMap should do the same but that's a later discussion.
-        return new IdentityMap<K, V>();
+        return new IdentityMap<>();
     }
 
     @Override
@@ -88,7 +87,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testBasics() {
-        final IterableMap<K, V> map = new ReferenceIdentityMap<K, V>(ReferenceStrength.HARD, ReferenceStrength.HARD);
+        final IterableMap<K, V> map = new ReferenceIdentityMap<>(ReferenceStrength.HARD, ReferenceStrength.HARD);
         assertEquals(0, map.size());
 
         map.put((K) I1A, (V) I2A);
@@ -122,7 +121,7 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
     //-----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testHashEntry() {
-        final IterableMap<K, V> map = new ReferenceIdentityMap<K, V>(ReferenceStrength.HARD, ReferenceStrength.HARD);
+        final IterableMap<K, V> map = new ReferenceIdentityMap<>(ReferenceStrength.HARD, ReferenceStrength.HARD);
 
         map.put((K) I1A, (V) I2A);
         map.put((K) I1B, (V) I2A);
@@ -281,10 +280,10 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
         final K key = (K) new Object();
         final V value = (V) new Object();
 
-        keyReference = new WeakReference<K>(key);
-        valueReference = new WeakReference<V>(value);
+        keyReference = new WeakReference<>(key);
+        valueReference = new WeakReference<>(value);
 
-        final Map<K, V> testMap = new ReferenceIdentityMap<K, V>(ReferenceStrength.WEAK, ReferenceStrength.HARD, true);
+        final Map<K, V> testMap = new ReferenceIdentityMap<>(ReferenceStrength.WEAK, ReferenceStrength.HARD, true);
         testMap.put(key, value);
 
         assertEquals("In map", value, testMap.get(key));

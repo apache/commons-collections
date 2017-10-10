@@ -33,7 +33,6 @@ import org.apache.commons.collections4.iterators.UnmodifiableListIterator;
  * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class UnmodifiableList<E>
         extends AbstractSerializableListDecorator<E>
@@ -57,7 +56,7 @@ public final class UnmodifiableList<E>
             final List<E> tmpList = (List<E>) list;
             return tmpList;
         }
-        return new UnmodifiableList<E>(list);
+        return new UnmodifiableList<>(list);
     }
 
     //-----------------------------------------------------------------------
@@ -142,7 +141,7 @@ public final class UnmodifiableList<E>
     @Override
     public List<E> subList(final int fromIndex, final int toIndex) {
         final List<E> sub = decorated().subList(fromIndex, toIndex);
-        return new UnmodifiableList<E>(sub);
+        return new UnmodifiableList<>(sub);
     }
 
 }

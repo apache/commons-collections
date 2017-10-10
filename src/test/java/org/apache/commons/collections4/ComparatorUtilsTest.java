@@ -27,7 +27,6 @@ import org.junit.Test;
 /**
  * Tests ComparatorUtils.
  *
- * @version $Id$
  */
 public class ComparatorUtilsTest {
 

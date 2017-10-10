@@ -42,7 +42,6 @@ import org.junit.Test;
  * Tests for IterableUtils.
  *
  * @since 4.1
- * @version $Id$
  */
 public class IterableUtilsTest {
 
@@ -63,7 +62,7 @@ public class IterableUtilsTest {
 
     @Before
     public void setUp() {
-        Collection<Integer> collectionA = new ArrayList<Integer>();
+        Collection<Integer> collectionA = new ArrayList<>();
         collectionA.add(1);
         collectionA.add(2);
         collectionA.add(2);
@@ -76,7 +75,7 @@ public class IterableUtilsTest {
         collectionA.add(4);
         iterableA = collectionA;
 
-        Collection<Long> collectionB = new LinkedList<Long>();
+        Collection<Long> collectionB = new LinkedList<>();
         collectionB.add(5L);
         collectionB.add(4L);
         collectionB.add(4L);
@@ -109,14 +108,14 @@ public class IterableUtilsTest {
     // -----------------------------------------------------------------------
     @Test
     public void forEach() {
-        final List<Integer> listA = new ArrayList<Integer>();
+        final List<Integer> listA = new ArrayList<>();
         listA.add(1);
 
-        final List<Integer> listB = new ArrayList<Integer>();
+        final List<Integer> listB = new ArrayList<>();
         listB.add(2);
 
         final Closure<List<Integer>> testClosure = ClosureUtils.invokerClosure("clear");
-        final Collection<List<Integer>> col = new ArrayList<List<Integer>>();
+        final Collection<List<Integer>> col = new ArrayList<>();
         col.add(listA);
         col.add(listB);
         IterableUtils.forEach(col, testClosure);
@@ -138,21 +137,21 @@ public class IterableUtilsTest {
     @Test(expected = FunctorException.class)
     public void forEachFailure() {
         final Closure<String> testClosure = ClosureUtils.invokerClosure("clear");
-        final Collection<String> col = new ArrayList<String>();
+        final Collection<String> col = new ArrayList<>();
         col.add("x");
         IterableUtils.forEach(col, testClosure);
     }
 
     @Test
     public void forEachButLast() {
-        final List<Integer> listA = new ArrayList<Integer>();
+        final List<Integer> listA = new ArrayList<>();
         listA.add(1);
 
-        final List<Integer> listB = new ArrayList<Integer>();
+        final List<Integer> listB = new ArrayList<>();
         listB.add(2);
 
         final Closure<List<Integer>> testClosure = ClosureUtils.invokerClosure("clear");
-        final Collection<List<Integer>> col = new ArrayList<List<Integer>>();
+        final Collection<List<Integer>> col = new ArrayList<>();
         col.add(listA);
         col.add(listB);
         List<Integer> last = IterableUtils.forEachButLast(col, testClosure);
@@ -177,7 +176,7 @@ public class IterableUtilsTest {
 
     @Test
     public void containsWithEquator() {
-        final List<String> base = new ArrayList<String>();
+        final List<String> base = new ArrayList<>();
         base.add("AC");
         base.add("BB");
         base.add("CA");
@@ -234,7 +233,7 @@ public class IterableUtilsTest {
         assertEquals(0, IterableUtils.frequency(iterableIntAsNumber, 2L));
         assertEquals(0, IterableUtils.frequency(iterableLongAsNumber, 2));
 
-        final Set<String> set = new HashSet<String>();
+        final Set<String> set = new HashSet<>();
         set.add("A");
         set.add("C");
         set.add("E");
@@ -245,7 +244,7 @@ public class IterableUtilsTest {
         assertEquals(0, IterableUtils.frequency(set, "D"));
         assertEquals(1, IterableUtils.frequency(set, "E"));
 
-        final Bag<String> bag = new HashBag<String>();
+        final Bag<String> bag = new HashBag<>();
         bag.add("A", 3);
         bag.add("C");
         bag.add("E");
@@ -259,7 +258,7 @@ public class IterableUtilsTest {
 
     @Test
     public void frequencyOfNull() {
-        final List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<>();
         assertEquals(0, IterableUtils.frequency(list, null));
         list.add("A");
         assertEquals(0, IterableUtils.frequency(list, null));
@@ -302,7 +301,7 @@ public class IterableUtilsTest {
         assertEquals(-1, index);
         assertEquals(-1, IterableUtils.indexOf(null, testPredicate));
         try {
-            assertNull(IterableUtils.indexOf(iterableA, null));
+            IterableUtils.indexOf(iterableA, null);
             fail("expecting NullPointerException");
         } catch (final NullPointerException npe) {
             // expected
@@ -331,7 +330,7 @@ public class IterableUtilsTest {
 
     @Test
     public void matchesAny() {
-        final List<Integer> list = new ArrayList<Integer>();
+        final List<Integer> list = new ArrayList<>();
         
         try {
             assertFalse(IterableUtils.matchesAny(null, null));
@@ -397,7 +396,7 @@ public class IterableUtilsTest {
     @Test(expected = IndexOutOfBoundsException.class)
     public void getFromIterable() throws Exception {
         // Collection, entry exists
-        final Bag<String> bag = new HashBag<String>();
+        final Bag<String> bag = new HashBag<>();
         bag.add("element", 1);
         assertEquals("element", IterableUtils.get(bag, 0));
 
@@ -408,7 +407,7 @@ public class IterableUtilsTest {
     @SuppressWarnings("unchecked")
     @Test
     public void partition() {
-        List<Integer> input = new ArrayList<Integer>();
+        List<Integer> input = new ArrayList<>();
         input.add(1);
         input.add(2);
         input.add(3);
@@ -446,7 +445,7 @@ public class IterableUtilsTest {
     @SuppressWarnings("unchecked")
     @Test
     public void partitionMultiplePredicates() {
-        List<Integer> input = new ArrayList<Integer>();
+        List<Integer> input = new ArrayList<>();
         input.add(1);
         input.add(2);
         input.add(3);

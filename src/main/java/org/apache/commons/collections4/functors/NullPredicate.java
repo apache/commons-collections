@@ -24,7 +24,6 @@ import org.apache.commons.collections4.Predicate;
  * Predicate implementation that returns true if the input is null.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class NullPredicate<T> implements Predicate<T>, Serializable {
 
@@ -33,7 +32,7 @@ public final class NullPredicate<T> implements Predicate<T>, Serializable {
 
     /** Singleton predicate instance */
     @SuppressWarnings("rawtypes")
-    public static final Predicate INSTANCE = new NullPredicate<Object>();
+    public static final Predicate INSTANCE = new NullPredicate<>();
 
     /**
      * Factory returning the singleton instance.

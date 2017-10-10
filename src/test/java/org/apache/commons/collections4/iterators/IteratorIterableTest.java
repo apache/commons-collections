@@ -24,7 +24,6 @@ import org.apache.commons.collections4.BulkTest;
 /**
  * Tests for IteratorIterable.
  *
- * @version $Id$
  */
 public class IteratorIterableTest extends BulkTest {
 
@@ -37,7 +36,7 @@ public class IteratorIterableTest extends BulkTest {
     }
 
     private Iterator<Integer> createIterator() {
-        final List<Integer> list = new ArrayList<Integer>();
+        final List<Integer> list = new ArrayList<>();
         list.add(Integer.valueOf(0));
         list.add(Integer.valueOf(1));
         list.add(Integer.valueOf(2));

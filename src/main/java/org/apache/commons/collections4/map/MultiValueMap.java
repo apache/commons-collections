@@ -60,7 +60,6 @@ import org.apache.commons.collections4.iterators.TransformIterator;
  * by concurrent threads without synchronization.
  *
  * @since 3.2
- * @version $Id$
  * @deprecated since 4.1, use {@link org.apache.commons.collections4.MultiValuedMap MultiValuedMap} instead
  */
 @Deprecated
@@ -103,7 +102,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      */
     public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(final Map<K, ? super C> map,
                                                                                     final Class<C> collectionClass) {
-        return new MultiValueMap<K, V>(map, new ReflectionFactory<C>(collectionClass));
+        return new MultiValueMap<>(map, new ReflectionFactory<>(collectionClass));
     }
 
     /**
@@ -120,7 +119,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      */
     public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(final Map<K, ? super C> map,
             final Factory<C> collectionFactory) {
-        return new MultiValueMap<K, V>(map, collectionFactory);
+        return new MultiValueMap<>(map, collectionFactory);
     }
 
     //-----------------------------------------------------------------------
@@ -156,7 +155,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * Write the map out using a custom routine.
      *
      * @param out  the output stream
-     * @throws IOException
+     * @throws IOException if an error occurs while writing to the stream
      * @since 4.0
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {
@@ -168,8 +167,8 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * Read the map in using a custom routine.
      *
      * @param in  the input stream
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
      * @since 4.0
      */
     @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
@@ -310,7 +309,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @see #iterator()
      */
     @Override
-    public Set<Entry<K, Object>> entrySet() {
+    public Set<Entry<K, Object>> entrySet() { // NOPMD
         return super.entrySet();
     }
 
@@ -423,7 +422,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
      * @since 4.0
      */
     public Iterator<Entry<K, V>> iterator() {
-        final Collection<K> allKeys = new ArrayList<K>(keySet());
+        final Collection<K> allKeys = new ArrayList<>(keySet());
         final Iterator<K> keyIterator = allKeys.iterator();
 
         return new LazyIteratorChain<Entry<K, V>>() {
@@ -452,7 +451,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
                         };
                     }
                 };
-                return new TransformIterator<V, Entry<K, V>>(new ValuesIterator(key), transformer);
+                return new TransformIterator<>(new ValuesIterator(key), transformer);
             }
         };
     }
@@ -491,7 +490,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
     private class Values extends AbstractCollection<V> {
         @Override
         public Iterator<V> iterator() {
-            final IteratorChain<V> chain = new IteratorChain<V>();
+            final IteratorChain<V> chain = new IteratorChain<>();
             for (final K k : keySet()) {
                 chain.addIterator(new ValuesIterator(k));
             }

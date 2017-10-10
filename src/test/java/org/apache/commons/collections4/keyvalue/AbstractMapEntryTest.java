@@ -29,7 +29,6 @@ import junit.framework.TestCase;
  * type being tested.
  *
  * @since 3.0
- * @version $Id$
  */
 public abstract class AbstractMapEntryTest<K, V> extends TestCase {
 
@@ -64,7 +63,7 @@ public abstract class AbstractMapEntryTest<K, V> extends TestCase {
      * Makes a Map.Entry of a type that's known to work correctly.
      */
     public Map.Entry<K, V> makeKnownMapEntry(final K key, final V value) {
-        final Map<K, V> map = new HashMap<K, V>(1);
+        final Map<K, V> map = new HashMap<>(1);
         map.put(key, value);
         final Map.Entry<K, V> entry = map.entrySet().iterator().next();
         return entry;

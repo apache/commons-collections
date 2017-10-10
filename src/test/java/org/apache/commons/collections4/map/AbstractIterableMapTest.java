@@ -28,7 +28,6 @@ import org.apache.commons.collections4.iterators.AbstractMapIteratorTest;
 /**
  * Abstract test class for {@link IterableMap} methods and contracts.
  *
- * @version $Id$
  */
 public abstract class AbstractIterableMapTest<K, V> extends AbstractMapTest<K, V> {
 

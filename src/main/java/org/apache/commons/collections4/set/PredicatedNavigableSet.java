@@ -37,7 +37,6 @@ import org.apache.commons.collections4.Predicate;
  * </pre>
  *
  * @since 4.1
- * @version $Id$
  */
 public class PredicatedNavigableSet<E> extends PredicatedSortedSet<E> implements NavigableSet<E> {
 
@@ -60,7 +59,7 @@ public class PredicatedNavigableSet<E> extends PredicatedSortedSet<E> implements
      */
     public static <E> PredicatedNavigableSet<E> predicatedNavigableSet(final NavigableSet<E> set,
                                                                        final Predicate<? super E> predicate) {
-        return new PredicatedNavigableSet<E>(set, predicate);
+        return new PredicatedNavigableSet<>(set, predicate);
     }
 
     //-----------------------------------------------------------------------

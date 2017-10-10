@@ -25,7 +25,6 @@ import org.apache.commons.collections4.Closure;
  * Closure implementation that chains the specified closures together.
  *
  * @since 3.0
- * @version $Id$
  */
 public class ChainedClosure<E> implements Closure<E>, Serializable {
 
@@ -49,7 +48,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
         if (closures.length == 0) {
             return NOPClosure.<E>nopClosure();
         }
-        return new ChainedClosure<E>(closures);
+        return new ChainedClosure<>(closures);
     }
 
     /**
@@ -78,7 +77,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
             cmds[i++] = closure;
         }
         FunctorUtils.validate(cmds);
-        return new ChainedClosure<E>(false, cmds);
+        return new ChainedClosure<>(false, cmds);
     }
 
     /**

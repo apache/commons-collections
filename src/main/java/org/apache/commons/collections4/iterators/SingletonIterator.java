@@ -21,11 +21,10 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections4.ResettableIterator;
 
 /**
- * <code>SingletonIterator</code> is an {@link Iterator} over a single
+ * <code>SingletonIterator</code> is an {@link java.util.Iterator} over a single
  * object instance.
  *
  * @since 2.0
- * @version $Id$
  */
 public class SingletonIterator<E>
         implements ResettableIterator<E> {

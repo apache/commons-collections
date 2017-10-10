@@ -24,7 +24,6 @@ import org.apache.commons.collections4.Predicate;
  * Predicate implementation that always returns true.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class TruePredicate<T> implements Predicate<T>, Serializable {
 
@@ -33,7 +32,7 @@ public final class TruePredicate<T> implements Predicate<T>, Serializable {
 
     /** Singleton predicate instance */
     @SuppressWarnings("rawtypes")
-    public static final Predicate INSTANCE = new TruePredicate<Object>();
+    public static final Predicate INSTANCE = new TruePredicate<>();
 
     /**
      * Factory returning the singleton instance.

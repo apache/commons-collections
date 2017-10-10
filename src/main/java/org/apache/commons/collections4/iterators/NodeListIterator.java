@@ -28,7 +28,6 @@ import org.w3c.dom.NodeList;
  * removal of items.
  *
  * @since 4.0
- * @version $Id$
  * @see NodeList
  */
 public class NodeListIterator implements Iterator<Node> {

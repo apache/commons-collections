@@ -31,7 +31,6 @@ package org.apache.commons.collections4;
  * then the interface won't be there.
  *
  * @since 3.0
- * @version $Id$
  */
 public interface Unmodifiable {
     // marker interface - no methods to implement

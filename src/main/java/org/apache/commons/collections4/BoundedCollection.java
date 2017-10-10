@@ -29,7 +29,6 @@ import java.util.Collection;
  * @see CollectionUtils#maxSize
  *
  * @since 3.0
- * @version $Id$
  */
 public interface BoundedCollection<E> extends Collection<E> {
 

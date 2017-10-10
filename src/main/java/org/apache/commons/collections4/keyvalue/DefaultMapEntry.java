@@ -25,7 +25,6 @@ import org.apache.commons.collections4.KeyValue;
  * the {@link java.util.Map.Entry Map.Entry} contract from being broken.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class DefaultMapEntry<K, V> extends AbstractMapEntry<K, V> {
 

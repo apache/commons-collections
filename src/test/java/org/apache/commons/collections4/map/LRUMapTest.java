@@ -32,7 +32,6 @@ import org.apache.commons.collections4.ResettableIterator;
 /**
  * JUnit tests.
  *
- * @version $Id$
  */
 public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
@@ -46,7 +45,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @Override
     public LRUMap<K, V> makeObject() {
-        return new LRUMap<K, V>();
+        return new LRUMap<>();
     }
 
     /**
@@ -124,7 +123,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         Iterator<K> kit;
         Iterator<V> vit;
 
-        final LRUMap<K, V> map = new LRUMap<K, V>(2);
+        final LRUMap<K, V> map = new LRUMap<>(2);
         assertEquals(0, map.size());
         assertEquals(false, map.isFull());
         assertEquals(2, map.maxSize());
@@ -188,7 +187,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         resetFull();
         ordered = getMap();
-        final List<K> list = new ArrayList<K>(ordered.keySet());
+        final List<K> list = new ArrayList<>(ordered.keySet());
         final ResettableIterator<K> it = (ResettableIterator<K>) ordered.mapIterator();
         assertSame(list.get(0), it.next());
         assertSame(list.get(1), it.next());
@@ -322,7 +321,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testClone() {
-        final LRUMap<K, V> map = new LRUMap<K, V>(10);
+        final LRUMap<K, V> map = new LRUMap<>(10);
         map.put((K) "1", (V) "1");
         final Map<K, V> cloned = map.clone();
         assertEquals(map.size(), cloned.size());
@@ -331,7 +330,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testRemoveLRU() {
-        final MockLRUMapSubclass<K, String> map = new MockLRUMapSubclass<K, String>(2);
+        final MockLRUMapSubclass<K, String> map = new MockLRUMapSubclass<>(2);
         assertNull(map.entry);
         map.put((K) "A", "a");
         assertNull(map.entry);
@@ -372,7 +371,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testRemoveLRUBlocksRemove() {
-        final MockLRUMapSubclassBlocksRemove<K, V> map = new MockLRUMapSubclassBlocksRemove<K, V>(2, false);
+        final MockLRUMapSubclassBlocksRemove<K, V> map = new MockLRUMapSubclassBlocksRemove<>(2, false);
         assertEquals(0, map.size());
         map.put((K) "A", (V) "a");
         assertEquals(1, map.size());
@@ -388,7 +387,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testRemoveLRUBlocksRemoveScan() {
-        final MockLRUMapSubclassBlocksRemove<K, V> map = new MockLRUMapSubclassBlocksRemove<K, V>(2, true);
+        final MockLRUMapSubclassBlocksRemove<K, V> map = new MockLRUMapSubclassBlocksRemove<>(2, true);
         assertEquals(0, map.size());
         map.put((K) "A", (V) "a");
         assertEquals(1, map.size());
@@ -420,7 +419,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     @SuppressWarnings("unchecked")
     public void testRemoveLRUFirstBlocksRemove() {
-        final MockLRUMapSubclassFirstBlocksRemove<K, V> map = new MockLRUMapSubclassFirstBlocksRemove<K, V>(2);
+        final MockLRUMapSubclassFirstBlocksRemove<K, V> map = new MockLRUMapSubclassFirstBlocksRemove<>(2);
         assertEquals(0, map.size());
         map.put((K) "A", (V) "a");
         assertEquals(1, map.size());
@@ -484,7 +483,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         final SingleHashCode five = new SingleHashCode("5");
         final SingleHashCode six = new SingleHashCode("6");
 
-        final LRUMap<K, V> map = new LRUMap<K, V>(3, 1.0f);
+        final LRUMap<K, V> map = new LRUMap<>(3, 1.0f);
         final int hashIndex = map.hashIndex(map.hash(one), 4);
         map.put((K) one, (V) "A");
         map.put((K) two, (V) "B");
@@ -571,7 +570,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         final SingleHashCode two = new SingleHashCode("2");
         final SingleHashCode three = new SingleHashCode("3");
 
-        final LRUMap<K, V> map = new LRUMap<K, V>(3, 1.0f);
+        final LRUMap<K, V> map = new LRUMap<>(3, 1.0f);
         map.put((K) one, (V) "A");
         map.put((K) two, (V) "B");
         map.put((K) three, (V) "C");
@@ -591,9 +590,9 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     public void testSynchronizedRemoveFromMapIterator() throws InterruptedException {
 
-        final LRUMap<Object, Thread> map = new LRUMap<Object, Thread>(10000);
+        final LRUMap<Object, Thread> map = new LRUMap<>(10000);
 
-        final Map<Throwable, String> exceptions = new HashMap<Throwable, String>();
+        final Map<Throwable, String> exceptions = new HashMap<>();
         final ThreadGroup tg = new ThreadGroup(getName()) {
             @Override
             public void uncaughtException(final Thread t, final Throwable e) {
@@ -674,9 +673,9 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     public void testSynchronizedRemoveFromEntrySet() throws InterruptedException {
 
-        final Map<Object, Thread> map = new LRUMap<Object, Thread>(10000);
+        final Map<Object, Thread> map = new LRUMap<>(10000);
 
-        final Map<Throwable, String> exceptions = new HashMap<Throwable, String>();
+        final Map<Throwable, String> exceptions = new HashMap<>();
         final ThreadGroup tg = new ThreadGroup(getName()) {
             @Override
             public void uncaughtException(final Thread t, final Throwable e) {
@@ -757,9 +756,9 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     public void testSynchronizedRemoveFromKeySet() throws InterruptedException {
 
-        final Map<Object, Thread> map = new LRUMap<Object, Thread>(10000);
+        final Map<Object, Thread> map = new LRUMap<>(10000);
 
-        final Map<Throwable, String> exceptions = new HashMap<Throwable, String>();
+        final Map<Throwable, String> exceptions = new HashMap<>();
         final ThreadGroup tg = new ThreadGroup(getName()) {
             @Override
             public void uncaughtException(final Thread t, final Throwable e) {
@@ -840,9 +839,9 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
     public void testSynchronizedRemoveFromValues() throws InterruptedException {
 
-        final Map<Object, Thread> map = new LRUMap<Object, Thread>(10000);
+        final Map<Object, Thread> map = new LRUMap<>(10000);
 
-        final Map<Throwable, String> exceptions = new HashMap<Throwable, String>();
+        final Map<Throwable, String> exceptions = new HashMap<>();
         final ThreadGroup tg = new ThreadGroup(getName()) {
             @Override
             public void uncaughtException(final Thread t, final Throwable e) {

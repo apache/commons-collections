@@ -26,7 +26,6 @@ import org.apache.commons.collections4.Predicate;
  * as the one stored in this predicate by equals.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class EqualPredicate<T> implements Predicate<T>, Serializable {
 
@@ -50,7 +49,7 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
         if (object == null) {
             return NullPredicate.nullPredicate();
         }
-        return new EqualPredicate<T>(object);
+        return new EqualPredicate<>(object);
     }
 
     /**
@@ -66,7 +65,7 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
         if (object == null) {
             return NullPredicate.nullPredicate();
         }
-        return new EqualPredicate<T>(object, equator);
+        return new EqualPredicate<>(object, equator);
     }
 
     /**

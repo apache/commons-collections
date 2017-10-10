@@ -39,7 +39,6 @@ import java.util.Set;
  * @param <V> the type of the values in the map
  *
  * @since 3.0
- * @version $Id$
  */
 public interface BidiMap<K, V> extends IterableMap<K, V> {
 

@@ -41,7 +41,6 @@ import java.util.Map;
  * test-class because it is still used by the ReferenceIdentityMapTest.
  *
  * @since 3.0
- * @version $Id$
  */
 public class IdentityMap<K, V>
         extends AbstractHashedMap<K, V> implements Serializable, Cloneable {
@@ -141,7 +140,7 @@ public class IdentityMap<K, V>
     @Override
     protected IdentityEntry<K, V> createEntry(final HashEntry<K, V> next, final int hashCode,
                                               final K key, final V value) {
-        return new IdentityEntry<K, V>(next, hashCode, key, value);
+        return new IdentityEntry<>(next, hashCode, key, value);
     }
 
     //-----------------------------------------------------------------------

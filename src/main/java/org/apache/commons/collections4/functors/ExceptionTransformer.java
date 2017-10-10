@@ -25,7 +25,6 @@ import org.apache.commons.collections4.Transformer;
  * Transformer implementation that always throws an exception.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class ExceptionTransformer<I, O> implements Transformer<I, O>, Serializable {
 
@@ -34,7 +33,7 @@ public final class ExceptionTransformer<I, O> implements Transformer<I, O>, Seri
 
     /** Singleton predicate instance */
     @SuppressWarnings("rawtypes") // the static instance works for all types
-    public static final Transformer INSTANCE = new ExceptionTransformer<Object, Object>();
+    public static final Transformer INSTANCE = new ExceptionTransformer<>();
 
     /**
      * Factory returning the singleton instance.

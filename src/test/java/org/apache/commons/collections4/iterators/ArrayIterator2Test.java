@@ -22,7 +22,6 @@ import java.util.NoSuchElementException;
 /**
  * Tests the ArrayIterator with primitive type arrays.
  *
- * @version $Id$
  */
 public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
 
@@ -34,24 +33,24 @@ public class ArrayIterator2Test<E> extends AbstractIteratorTest<E> {
 
     @Override
     public ArrayIterator<E> makeEmptyIterator() {
-        return new ArrayIterator<E>(new int[0]);
+        return new ArrayIterator<>(new int[0]);
     }
 
     @Override
     public ArrayIterator<E> makeObject() {
-        return new ArrayIterator<E>(testArray);
+        return new ArrayIterator<>(testArray);
     }
 
     public ArrayIterator<E> makeArrayIterator(final Object array) {
-        return new ArrayIterator<E>(array);
+        return new ArrayIterator<>(array);
     }
 
     public ArrayIterator<E> makeArrayIterator(final Object array, final int index) {
-        return new ArrayIterator<E>(array, index);
+        return new ArrayIterator<>(array, index);
     }
 
     public ArrayIterator<E> makeArrayIterator(final Object array, final int start, final int end) {
-        return new ArrayIterator<E>(array, start, end);
+        return new ArrayIterator<>(array, start, end);
     }
 
     @Override

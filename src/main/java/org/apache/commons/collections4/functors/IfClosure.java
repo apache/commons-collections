@@ -26,7 +26,6 @@ import org.apache.commons.collections4.Predicate;
  * based on a predicate.
  *
  * @since 3.0
- * @version $Id$
  */
 public class IfClosure<E> implements Closure<E>, Serializable {
 
@@ -76,7 +75,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
         if (trueClosure == null || falseClosure == null) {
             throw new NullPointerException("Closures must not be null");
         }
-        return new IfClosure<E>(predicate, trueClosure, falseClosure);
+        return new IfClosure<>(predicate, trueClosure, falseClosure);
     }
 
     /**

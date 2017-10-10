@@ -31,7 +31,6 @@ import org.apache.commons.collections4.functors.NotNullPredicate;
 /**
  * Test the filter iterator.
  *
- * @version $Id$
  */
 public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
 
@@ -81,7 +80,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     @Override
     @SuppressWarnings("unchecked")
     public FilterIterator<E> makeObject() {
-        list = new ArrayList<E>(Arrays.asList((E[]) array));
+        list = new ArrayList<>(Arrays.asList((E[]) array));
         return makePassThroughFilter(list.iterator());
     }
 
@@ -119,7 +118,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
         final Iterator<E> iter1 = Collections.singleton((E) new Object()).iterator();
         final Iterator<E> iter2 = Collections.<E>emptyList().iterator();
 
-        final FilterIterator<E> filterIterator = new FilterIterator<E>(iter1);
+        final FilterIterator<E> filterIterator = new FilterIterator<>(iter1);
         filterIterator.setPredicate(truePredicate());
         // this iterator has elements
         assertEquals(true, filterIterator.hasNext());
@@ -136,7 +135,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     public void testSetPredicate() {
         final Iterator<E> iter = Collections.singleton((E) null).iterator();
 
-        final FilterIterator<E> filterIterator = new FilterIterator<E>(iter);
+        final FilterIterator<E> filterIterator = new FilterIterator<>(iter);
         filterIterator.setPredicate(truePredicate());
         // this predicate matches
         assertEquals(true, filterIterator.hasNext());
@@ -204,7 +203,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
                 @Override
                 public boolean evaluate(final E x) { return true; }
         };
-        return new FilterIterator<E>(i, pred);
+        return new FilterIterator<>(i, pred);
     }
 
     /**
@@ -219,7 +218,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
                 @Override
                 public boolean evaluate(final E x) { return false; }
         };
-        return new FilterIterator<E>(i, pred);
+        return new FilterIterator<>(i, pred);
     }
 }
 

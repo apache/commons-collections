@@ -25,11 +25,10 @@ import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.map.EntrySetToMapIteratorAdapter;
 
 /**
- * {@link IterableGet} that uses a {@link Map}<K, V> for the
- * {@link org.apache.commons.collections4.Get Get}<K, V> implementation.
+ * {@link IterableGet} that uses a {@link Map}&lt;K, V&gt; for the
+ * {@link org.apache.commons.collections4.Get Get}&lt;K, V&gt; implementation.
  *
  * @since 4.0
- * @version $Id$
  */
 public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> {
 
@@ -111,11 +110,11 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
 
     /**
      * Get a MapIterator over this Get.
-     * @return MapIterator<K, V>
+     * @return MapIterator&lt;K, V&gt;
      */
     @Override
     public MapIterator<K, V> mapIterator() {
-        return new EntrySetToMapIteratorAdapter<K, V>(entrySet());
+        return new EntrySetToMapIteratorAdapter<>(entrySet());
     }
 
     @Override

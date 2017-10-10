@@ -30,7 +30,6 @@ import org.apache.commons.collections4.functors.TruePredicate;
  * implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class PredicatedSortedBagTest<T> extends AbstractSortedBagTest<T> {
 

@@ -26,7 +26,6 @@ import org.apache.commons.collections4.Unmodifiable;
  * {@link UnmodifiableSortedMap} implementation.
  *
  * @since 3.0
- * @version $Id$
  */
 public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
@@ -58,7 +57,7 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
 
     @Override
     public SortedMap<K, V> makeFullMap() {
-        final SortedMap<K, V> m = new TreeMap<K, V>();
+        final SortedMap<K, V> m = new TreeMap<>();
         addSampleMappings(m);
         return UnmodifiableSortedMap.unmodifiableSortedMap(m);
     }

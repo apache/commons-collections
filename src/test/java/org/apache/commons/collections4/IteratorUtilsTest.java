@@ -50,7 +50,6 @@ import org.w3c.dom.NodeList;
 /**
  * Tests for IteratorUtils.
  *
- * @version $Id$
  */
 public class IteratorUtilsTest {
 
@@ -71,11 +70,11 @@ public class IteratorUtilsTest {
 
     private Iterable<Integer> iterableA = null;
 
-    private final Collection<Integer> emptyCollection = new ArrayList<Integer>(1);
+    private final Collection<Integer> emptyCollection = new ArrayList<>(1);
 
     @Before
     public void setUp() {
-        collectionA = new ArrayList<Integer>();
+        collectionA = new ArrayList<>();
         collectionA.add(1);
         collectionA.add(2);
         collectionA.add(2);
@@ -95,7 +94,7 @@ public class IteratorUtilsTest {
 
     @Test
     public void testAsIterable() {
-        final List<Integer> list = new ArrayList<Integer>();
+        final List<Integer> list = new ArrayList<>();
         list.add(Integer.valueOf(0));
         list.add(Integer.valueOf(1));
         list.add(Integer.valueOf(2));
@@ -126,7 +125,7 @@ public class IteratorUtilsTest {
 
     @Test
     public void testAsMultipleIterable() {
-        final List<Integer> list = new ArrayList<Integer>();
+        final List<Integer> list = new ArrayList<>();
         list.add(Integer.valueOf(0));
         list.add(Integer.valueOf(1));
         list.add(Integer.valueOf(2));
@@ -163,7 +162,7 @@ public class IteratorUtilsTest {
 
     @Test
     public void testToList() {
-        final List<Object> list = new ArrayList<Object>();
+        final List<Object> list = new ArrayList<>();
         list.add(Integer.valueOf(1));
         list.add("Two");
         list.add(null);
@@ -173,7 +172,7 @@ public class IteratorUtilsTest {
 
     @Test
     public void testToArray() {
-        final List<Object> list = new ArrayList<Object>();
+        final List<Object> list = new ArrayList<>();
         list.add(Integer.valueOf(1));
         list.add("Two");
         list.add(null);
@@ -183,7 +182,7 @@ public class IteratorUtilsTest {
 
     @Test
     public void testToArray2() {
-        final List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<>();
         list.add("One");
         list.add("Two");
         list.add(null);
@@ -480,7 +479,7 @@ public class IteratorUtilsTest {
      * Gets an immutable Iterator operating on the elements ["a", "b", "c", "d"].
      */
     private Iterator<String> getImmutableIterator() {
-        final List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<>();
         list.add("a");
         list.add("b");
         list.add("c");
@@ -492,7 +491,7 @@ public class IteratorUtilsTest {
      * Gets an immutable ListIterator operating on the elements ["a", "b", "c", "d"].
      */
     private ListIterator<String> getImmutableListIterator() {
-        final List<String> list = new ArrayList<String>();
+        final List<String> list = new ArrayList<>();
         list.add("a");
         list.add("b");
         list.add("c");
@@ -952,7 +951,7 @@ public class IteratorUtilsTest {
         List<Integer> result = IteratorUtils.toList(it);
         assertEquals(12, result.size());
 
-        List<Integer> combinedList = new ArrayList<Integer>();
+        List<Integer> combinedList = new ArrayList<>();
         combinedList.addAll(collectionOdd);
         combinedList.addAll(collectionEven);
         Collections.sort(combinedList);
@@ -980,14 +979,14 @@ public class IteratorUtilsTest {
     // -----------------------------------------------------------------------
     @Test
     public void forEach() {
-        final List<Integer> listA = new ArrayList<Integer>();
+        final List<Integer> listA = new ArrayList<>();
         listA.add(1);
 
-        final List<Integer> listB = new ArrayList<Integer>();
+        final List<Integer> listB = new ArrayList<>();
         listB.add(2);
 
         final Closure<List<Integer>> testClosure = ClosureUtils.invokerClosure("clear");
-        final Collection<List<Integer>> col = new ArrayList<List<Integer>>();
+        final Collection<List<Integer>> col = new ArrayList<>();
         col.add(listA);
         col.add(listB);
         IteratorUtils.forEach(col.iterator(), testClosure);
@@ -1008,14 +1007,14 @@ public class IteratorUtilsTest {
 
     @Test
     public void forEachButLast() {
-        final List<Integer> listA = new ArrayList<Integer>();
+        final List<Integer> listA = new ArrayList<>();
         listA.add(1);
 
-        final List<Integer> listB = new ArrayList<Integer>();
+        final List<Integer> listB = new ArrayList<>();
         listB.add(2);
 
         final Closure<List<Integer>> testClosure = ClosureUtils.invokerClosure("clear");
-        final Collection<List<Integer>> col = new ArrayList<List<Integer>>();
+        final Collection<List<Integer>> col = new ArrayList<>();
         col.add(listA);
         col.add(listB);
         List<Integer> last = IteratorUtils.forEachButLast(col.iterator(), testClosure);
@@ -1065,7 +1064,7 @@ public class IteratorUtilsTest {
         assertEquals(-1, index);
         assertEquals(-1, IteratorUtils.indexOf(null, testPredicate));
         try {
-            assertNull(IteratorUtils.indexOf(iterableA.iterator(), null));
+            IteratorUtils.indexOf(iterableA.iterator(), null);
             fail("expecting NullPointerException");
         } catch (final NullPointerException npe) {
             // expected

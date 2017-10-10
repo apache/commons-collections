@@ -26,7 +26,6 @@ import org.apache.commons.collections4.Unmodifiable;
  * Attempts to modify it will result in an UnsupportedOperationException.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class UnmodifiableIterator<E> implements Iterator<E>, Unmodifiable {
 
@@ -53,7 +52,7 @@ public final class UnmodifiableIterator<E> implements Iterator<E>, Unmodifiable 
             final Iterator<E> tmpIterator = (Iterator<E>) iterator;
             return tmpIterator;
         }
-        return new UnmodifiableIterator<E>(iterator);
+        return new UnmodifiableIterator<>(iterator);
     }
 
     //-----------------------------------------------------------------------

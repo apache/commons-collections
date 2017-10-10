@@ -24,7 +24,6 @@ import org.apache.commons.collections4.Predicate;
  * Predicate implementation that returns true if both the predicates return true.
  *
  * @since 3.0
- * @version $Id$
  */
 public final class AndPredicate<T> implements PredicateDecorator<T>, Serializable {
 
@@ -50,7 +49,7 @@ public final class AndPredicate<T> implements PredicateDecorator<T>, Serializabl
         if (predicate1 == null || predicate2 == null) {
             throw new NullPointerException("Predicate must not be null");
         }
-        return new AndPredicate<T>(predicate1, predicate2);
+        return new AndPredicate<>(predicate1, predicate2);
     }
 
     /**

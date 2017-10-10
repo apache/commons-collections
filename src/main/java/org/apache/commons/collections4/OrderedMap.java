@@ -24,7 +24,6 @@ package org.apache.commons.collections4;
  * @param <V> the type of the values in the map
  *
  * @since 3.0
- * @version $Id$
  */
 public interface OrderedMap<K, V> extends IterableMap<K, V> {
 

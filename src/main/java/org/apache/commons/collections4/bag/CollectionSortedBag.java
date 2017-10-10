@@ -28,7 +28,6 @@ import org.apache.commons.collections4.SortedBag;
  * Decorates another {@link SortedBag} to comply with the Collection contract.
  *
  * @since 4.0
- * @version $Id$
  */
 public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> {
 
@@ -44,7 +43,7 @@ public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> 
      * @throws NullPointerException if bag is null
      */
     public static <E> SortedBag<E> collectionSortedBag(final SortedBag<E> bag) {
-        return new CollectionSortedBag<E>(bag);
+        return new CollectionSortedBag<>(bag);
     }
 
     //-----------------------------------------------------------------------
@@ -63,7 +62,7 @@ public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> 
      * Write the collection out using a custom routine.
      *
      * @param out  the output stream
-     * @throws IOException
+     * @throws IOException if an error occurs while writing to the stream
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -74,8 +73,8 @@ public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> 
      * Read the collection in using a custom routine.
      *
      * @param in  the input stream
-     * @throws IOException
-     * @throws ClassNotFoundException
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
      * @throws ClassCastException if deserialised object has wrong type
      */
     @SuppressWarnings("unchecked") // will throw CCE, see Javadoc

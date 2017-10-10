@@ -52,7 +52,6 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * This class is Serializable from Commons Collections 3.1.
  *
  * @since 3.0
- * @version $Id$
  */
 public class FixedSizeSortedMap<K, V>
         extends AbstractSortedMapDecorator<K, V>
@@ -72,7 +71,7 @@ public class FixedSizeSortedMap<K, V>
      * @since 4.0
      */
     public static <K, V> FixedSizeSortedMap<K, V> fixedSizeSortedMap(final SortedMap<K, V> map) {
-        return new FixedSizeSortedMap<K, V>(map);
+        return new FixedSizeSortedMap<>(map);
     }
 
     //-----------------------------------------------------------------------
@@ -98,6 +97,9 @@ public class FixedSizeSortedMap<K, V>
     //-----------------------------------------------------------------------
     /**
      * Write the map out using a custom routine.
+     *
+     * @param out  the output stream
+     * @throws IOException if an error occurs while writing to the stream
      */
     private void writeObject(final ObjectOutputStream out) throws IOException {
         out.defaultWriteObject();
@@ -106,6 +108,10 @@ public class FixedSizeSortedMap<K, V>
 
     /**
      * Read the map in using a custom routine.
+     *
+     * @param in the input stream
+     * @throws IOException if an error occurs while reading from the stream
+     * @throws ClassNotFoundException if an object read from the stream can not be loaded
      */
     @SuppressWarnings("unchecked") // (1) should only fail if input stream is incorrect
     private void readObject(final ObjectInputStream in) throws IOException, ClassNotFoundException {
@@ -158,17 +164,17 @@ public class FixedSizeSortedMap<K, V>
     //-----------------------------------------------------------------------
     @Override
     public SortedMap<K, V> subMap(final K fromKey, final K toKey) {
-        return new FixedSizeSortedMap<K, V>(getSortedMap().subMap(fromKey, toKey));
+        return new FixedSizeSortedMap<>(getSortedMap().subMap(fromKey, toKey));
     }
 
     @Override
     public SortedMap<K, V> headMap(final K toKey) {
-        return new FixedSizeSortedMap<K, V>(getSortedMap().headMap(toKey));
+        return new FixedSizeSortedMap<>(getSortedMap().headMap(toKey));
     }
 
     @Override
     public SortedMap<K, V> tailMap(final K fromKey) {
-        return new FixedSizeSortedMap<K, V>(getSortedMap().tailMap(fromKey));
+        return new FixedSizeSortedMap<>(getSortedMap().tailMap(fromKey));
     }
 
     @Override

@@ -25,7 +25,6 @@ import org.apache.commons.collections4.BulkTest;
  * Extension of {@link AbstractBagTest} for exercising the {@link HashBag}
  * implementation.
  *
- * @version $Id$
  */
 public class HashBagTest<T> extends AbstractBagTest<T> {
 
@@ -41,7 +40,7 @@ public class HashBagTest<T> extends AbstractBagTest<T> {
 
     @Override
     public Bag<T> makeObject() {
-        return new HashBag<T>();
+        return new HashBag<>();
     }
 
     @Override
