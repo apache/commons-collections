@@ -72,7 +72,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
     public void verify() {
         super.verify();
         final Iterator<E> iterator1 = getCollection().iterator();
-        for (E e : getConfirmed()) {
+        for (final E e : getConfirmed()) {
             assertTrue(iterator1.hasNext());
             final Object o1 = iterator1.next();
             final Object o2 = e;

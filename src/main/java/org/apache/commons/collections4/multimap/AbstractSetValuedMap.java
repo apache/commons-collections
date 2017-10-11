@@ -119,7 +119,7 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
             if (!(other instanceof Set)) {
                 return false;
             }
-            Set<?> otherSet = (Set<?>) other;
+            final Set<?> otherSet = (Set<?>) other;
             return SetUtils.isEqualSet(set, otherSet);
         }
 

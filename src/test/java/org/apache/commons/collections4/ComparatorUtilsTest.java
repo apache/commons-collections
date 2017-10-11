@@ -46,7 +46,7 @@ public class ComparatorUtilsTest {
     @Test
     public void chainedComparator() {
         // simple test: chain 2 natural comparators
-        Comparator<Integer> comp = ComparatorUtils.chainedComparator(ComparatorUtils.<Integer>naturalComparator(),
+        final Comparator<Integer> comp = ComparatorUtils.chainedComparator(ComparatorUtils.<Integer>naturalComparator(),
                                                                      ComparatorUtils.<Integer>naturalComparator());
         assertTrue(comp.compare(1, 2) < 0);
         assertTrue(comp.compare(1, 1) == 0);
@@ -55,7 +55,7 @@ public class ComparatorUtilsTest {
 
     @Test
     public void max() {
-        Comparator<Integer> reversed =
+        final Comparator<Integer> reversed =
                 ComparatorUtils.reversedComparator(ComparatorUtils.<Integer>naturalComparator());
 
         assertEquals(Integer.valueOf(10), ComparatorUtils.max(1, 10, null));
@@ -67,21 +67,21 @@ public class ComparatorUtilsTest {
         try {
             ComparatorUtils.max(1, null, null);
             fail("expecting NullPointerException");
-        } catch (NullPointerException npe) {
+        } catch (final NullPointerException npe) {
             // expected
         }
 
         try {
             ComparatorUtils.max(null, 10, null);
             fail("expecting NullPointerException");
-        } catch (NullPointerException npe) {
+        } catch (final NullPointerException npe) {
             // expected
         }
     }
 
     @Test
     public void min() {
-        Comparator<Integer> reversed =
+        final Comparator<Integer> reversed =
                 ComparatorUtils.reversedComparator(ComparatorUtils.<Integer>naturalComparator());
 
         assertEquals(Integer.valueOf(1), ComparatorUtils.min(1, 10, null));
@@ -93,21 +93,21 @@ public class ComparatorUtilsTest {
         try {
             ComparatorUtils.min(1, null, null);
             fail("expecting NullPointerException");
-        } catch (NullPointerException npe) {
+        } catch (final NullPointerException npe) {
             // expected
         }
 
         try {
             ComparatorUtils.min(null, 10, null);
             fail("expecting NullPointerException");
-        } catch (NullPointerException npe) {
+        } catch (final NullPointerException npe) {
             // expected
         }
     }
 
     @Test
     public void nullLowComparator() {
-        Comparator<Integer> comp = ComparatorUtils.nullLowComparator(null);
+        final Comparator<Integer> comp = ComparatorUtils.nullLowComparator(null);
         assertTrue(comp.compare(null, 10) < 0);
         assertTrue(comp.compare(null, null) == 0);
         assertTrue(comp.compare(10, null) > 0);
@@ -115,7 +115,7 @@ public class ComparatorUtilsTest {
 
     @Test
     public void nullHighComparator() {
-        Comparator<Integer> comp = ComparatorUtils.nullHighComparator(null);
+        final Comparator<Integer> comp = ComparatorUtils.nullHighComparator(null);
         assertTrue(comp.compare(null, 10) > 0);
         assertTrue(comp.compare(null, null) == 0);
         assertTrue(comp.compare(10, null) < 0);

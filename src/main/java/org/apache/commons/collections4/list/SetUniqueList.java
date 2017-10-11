@@ -261,7 +261,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      */
     @Override
     public boolean retainAll(final Collection<?> coll) {
-        boolean result = set.retainAll(coll);
+        final boolean result = set.retainAll(coll);
         if (result == false) {
             return false;
         }

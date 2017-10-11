@@ -1439,10 +1439,10 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     private void readObject(final ObjectInputStream stream) throws IOException, ClassNotFoundException{
         stream.defaultReadObject();
         rootNode = new Node[2];
-        int size = stream.readInt();
+        final int size = stream.readInt();
         for(int i = 0; i < size; i++){
-            K k =(K) stream.readObject();
-            V v =(V) stream.readObject();
+            final K k =(K) stream.readObject();
+            final V v =(V) stream.readObject();
             put(k, v);
         }
     }

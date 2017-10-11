@@ -121,7 +121,7 @@ public class ArrayListValuedHashMap<K, V> extends AbstractListValuedMap<K, V>
      * Trims the capacity of all value collections to their current size.
      */
     public void trimToSize() {
-        for (Collection<V> coll : getMap().values()) {
+        for (final Collection<V> coll : getMap().values()) {
             final ArrayList<V> list = (ArrayList<V>) coll;
             list.trimToSize();
         }

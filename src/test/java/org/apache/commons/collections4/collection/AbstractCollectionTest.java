@@ -671,7 +671,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
         resetFull();
         elements = getOtherElements();
-        for (Object element : elements) {
+        for (final Object element : elements) {
             assertTrue("Full collection shouldn't contain element",
                     !getCollection().contains(element));
         }
@@ -861,7 +861,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
         resetEmpty();
         final E[] elements = getFullElements();
-        for (E element : elements) {
+        for (final E element : elements) {
             assertTrue("Shouldn't remove nonexistent element", !getCollection().remove(element));
             verify();
         }
@@ -869,7 +869,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         final E[] other = getOtherElements();
 
         resetFull();
-        for (E element : other) {
+        for (final E element : other) {
             assertTrue("Shouldn't remove nonexistent other element", !getCollection().remove(element));
             verify();
         }
@@ -939,7 +939,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         verify();
 
         assertTrue("Collection should shrink after removeAll", getCollection().size() < size);
-        for (E element : all) {
+        for (final E element : all) {
             assertTrue("Collection shouldn't contain removed element", !getCollection().contains(element));
         }
     }
@@ -991,7 +991,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
             getConfirmed().retainAll(elements.subList(min, max));
             verify();
 
-            for (E element : getCollection()) {
+            for (final E element : getCollection()) {
                 assertTrue("Collection only contains retained element", elements.subList(min, max).contains(element));
             }
         }

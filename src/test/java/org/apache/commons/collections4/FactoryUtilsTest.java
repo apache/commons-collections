@@ -110,7 +110,7 @@ public class FactoryUtilsTest {
     @Test
     public void testPrototypeFactoryPublicCopyConstructor() throws Exception {
         final Mock1 proto = new Mock1(6);
-        Factory<Object> factory = FactoryUtils.<Object>prototypeFactory(proto);
+        final Factory<Object> factory = FactoryUtils.<Object>prototypeFactory(proto);
         assertNotNull(factory);
         final Object created = factory.create();
         assertTrue(proto != created);

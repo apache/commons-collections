@@ -624,14 +624,14 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         final Object[] keys = getSampleKeys();
 
         resetEmpty();
-        for (Object key : keys) {
+        for (final Object key : keys) {
             assertTrue("Map must not contain key when map is empty",
                     !getMap().containsKey(key));
         }
         verify();
 
         resetFull();
-        for (Object key : keys) {
+        for (final Object key : keys) {
             assertTrue("Map must contain key for a mapping in the map. " +
                        "Missing: " + key, getMap().containsKey(key));
         }

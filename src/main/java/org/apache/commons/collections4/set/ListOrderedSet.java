@@ -235,14 +235,14 @@ public class ListOrderedSet<E>
      */
     @Override
     public boolean retainAll(final Collection<?> coll) {
-        boolean result = decorated().retainAll(coll);
+        final boolean result = decorated().retainAll(coll);
         if (result == false) {
             return false;
         }
         if (decorated().size() == 0) {
             setOrder.clear();
         } else {
-            for (Iterator<E> it = setOrder.iterator(); it.hasNext();) {
+            for (final Iterator<E> it = setOrder.iterator(); it.hasNext();) {
                 if (!decorated().contains(it.next())) {
                     it.remove();
                 }

@@ -65,7 +65,7 @@ public class MapUtilsTest {
     @Test
     public void testPredicatedMap() {
         final Predicate<Object> p = getPredicate();
-        Map<Object, Object> map = MapUtils.predicatedMap(new HashMap<>(), p, p);
+        final Map<Object, Object> map = MapUtils.predicatedMap(new HashMap<>(), p, p);
         assertTrue("returned object should be a PredicatedMap", map instanceof PredicatedMap);
         try {
             MapUtils.predicatedMap(null, p, p);
@@ -1142,7 +1142,7 @@ public class MapUtilsTest {
     	final Map<String, String> inMap = new HashMap<String, String>();
     	inMap.put("key1", "value1");
     	inMap.put("key2", "value2");
-        Map<String, String> map = MapUtils.orderedMap(inMap);
+        final Map<String, String> map = MapUtils.orderedMap(inMap);
         assertTrue("returned object should be a OrderedMap", map instanceof OrderedMap);
     }
     

@@ -1245,7 +1245,7 @@ public class CollectionUtils {
      * @throws IllegalArgumentException if the object type is invalid
      */
     public static Object get(final Object object, final int index) {
-        int i = index;
+        final int i = index;
         if (i < 0) {
             throw new IndexOutOfBoundsException("Index cannot be negative: " + i);
         }

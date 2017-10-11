@@ -128,7 +128,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
     @Override
     public boolean containsMapping(final Object key, final Object value) {
-        Collection<V> coll = getMap().get(key);
+        final Collection<V> coll = getMap().get(key);
         return coll != null && coll.contains(value);
     }
 
@@ -186,7 +186,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         if (coll == null) {
             return false;
         }
-        boolean changed = coll.remove(value);
+        final boolean changed = coll.remove(value);
         if (coll.isEmpty()) {
             getMap().remove(key);
         }
@@ -285,7 +285,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
             throw new NullPointerException("Map must not be null.");
         }
         boolean changed = false;
-        for (Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
+        for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
             changed |= put(entry.getKey(), entry.getValue());
         }
         return changed;
@@ -309,7 +309,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
             throw new NullPointerException("Map must not be null.");
         }
         boolean changed = false;
-        for (Map.Entry<? extends K, ? extends V> entry : map.entries()) {
+        for (final Map.Entry<? extends K, ? extends V> entry : map.entries()) {
             changed |= put(entry.getKey(), entry.getValue());
         }
         return changed;
@@ -353,10 +353,10 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         }
 
         if (values instanceof Collection<?>) {
-            Collection<? extends V> valueCollection = (Collection<? extends V>) values;
+            final Collection<? extends V> valueCollection = (Collection<? extends V>) values;
             return !valueCollection.isEmpty() && get(key).addAll(valueCollection);
         } else {
-            Iterator<? extends V> it = values.iterator();
+            final Iterator<? extends V> it = values.iterator();
             return it.hasNext() && CollectionUtils.addAll(get(key), it);
         }
     }
@@ -484,7 +484,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
                 return false;
             }
 
-            boolean result = coll.remove(item);
+            final boolean result = coll.remove(item);
             if (coll.isEmpty()) {
                 AbstractMultiValuedMap.this.remove(key);
             }
@@ -498,7 +498,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
                 return false;
             }
 
-            boolean result = coll.removeAll(c);
+            final boolean result = coll.removeAll(c);
             if (coll.isEmpty()) {
                 AbstractMultiValuedMap.this.remove(key);
             }
@@ -512,7 +512,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
                 return false;
             }
 
-            boolean result = coll.retainAll(c);
+            final boolean result = coll.retainAll(c);
             if (coll.isEmpty()) {
                 AbstractMultiValuedMap.this.remove(key);
             }
@@ -577,7 +577,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         @Override
         public int getCount(final Object object) {
             int count = 0;
-            Collection<V> col = AbstractMultiValuedMap.this.getMap().get(object);
+            final Collection<V> col = AbstractMultiValuedMap.this.getMap().get(object);
             if (col != null) {
                 count = col.size();
             }
@@ -797,11 +797,12 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
         @Override
         public Collection<V> get(final Object key) {
-          Collection<V> collection = decoratedMap.get(key);
+          final Collection<V> collection = decoratedMap.get(key);
           if (collection == null) {
             return null;
           }
           @SuppressWarnings("unchecked")
+        final
           K k = (K) key;
           return wrappedCollection(k);
         }
@@ -818,7 +819,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
 
         @Override
         public Collection<V> remove(final Object key) {
-          Collection<V> collection = decoratedMap.remove(key);
+          final Collection<V> collection = decoratedMap.remove(key);
           if (collection == null) {
             return null;
           }
@@ -876,7 +877,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
                 if (!contains(o)) {
                     return false;
                 }
-                Map.Entry<?, ?> entry = (Map.Entry<?, ?>) o;
+                final Map.Entry<?, ?> entry = (Map.Entry<?, ?>) o;
                 AbstractMultiValuedMap.this.remove(entry.getKey());
                 return true;
             }
@@ -934,6 +935,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
             final int valueSize = in.readInt();
             for (int j = 0; j < valueSize; j++) {
                 @SuppressWarnings("unchecked") // see above
+                final
                 V value = (V) in.readObject();
                 values.add(value);
             }

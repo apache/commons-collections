@@ -68,7 +68,7 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
 
     @Test
     public void testNormalIteration() {
-        PushbackIterator<E> iter = makeObject();
+        final PushbackIterator<E> iter = makeObject();
         assertEquals("a", iter.next());
         assertEquals("b", iter.next());
         assertEquals("c", iter.next());
@@ -78,7 +78,7 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
     @Test
     @SuppressWarnings("unchecked")
     public void testImmediatePushback() {
-        PushbackIterator<E> iter = makeObject();
+        final PushbackIterator<E> iter = makeObject();
         iter.pushback((E) "x");
         assertEquals("x", iter.next());
         assertEquals("a", iter.next());
@@ -88,7 +88,7 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
     @Test
     @SuppressWarnings("unchecked")
     public void testDelayedPushback() {
-        PushbackIterator<E> iter = makeObject();
+        final PushbackIterator<E> iter = makeObject();
         assertEquals("a", iter.next());
         iter.pushback((E) "x");
         assertEquals("x", iter.next());
@@ -99,7 +99,7 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
     @Test
     @SuppressWarnings("unchecked")
     public void testMultiplePushback() {
-        PushbackIterator<E> iter = makeObject();
+        final PushbackIterator<E> iter = makeObject();
         assertEquals("a", iter.next());
         iter.pushback((E) "x");
         iter.pushback((E) "y");
