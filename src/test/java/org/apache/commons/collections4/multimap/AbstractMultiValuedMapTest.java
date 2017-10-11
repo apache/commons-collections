@@ -1086,7 +1086,10 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         @Override
         @SuppressWarnings("unchecked")
         public Collection<V>[] getSampleValues() {
-            boolean isSetValuedMap = AbstractMultiValuedMapTest.this.getMap() instanceof SetValuedMap;
+            // Calling getMap() instead of makeObject() would make more sense, but due to concurrency
+            // issues, this may lead to intermittent issues. See COLLECTIONS-661. A better solution
+            // would be to re-design the tests, or add a boolean method to the parent.
+            boolean isSetValuedMap = AbstractMultiValuedMapTest.this.makeObject() instanceof SetValuedMap;
             V[] sampleValues = AbstractMultiValuedMapTest.this.getSampleValues();
             Collection<V>[] colArr = new Collection[3];
             for(int i = 0; i < 3; i++) {
@@ -1099,7 +1102,9 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         @Override
         @SuppressWarnings("unchecked")
         public Collection<V>[] getNewSampleValues() {
-            boolean isSetValuedMap = AbstractMultiValuedMapTest.this.getMap() instanceof SetValuedMap;
+            // See comment in getSampleValues() to understand why we are calling makeObject() and not
+            // getMap(). See COLLECTIONS-661 for more.
+            boolean isSetValuedMap = AbstractMultiValuedMapTest.this.makeObject() instanceof SetValuedMap;
             Object[] sampleValues = { "ein", "ek", "zwei", "duey", "drei", "teen" };
             Collection<V>[] colArr = new Collection[3];
             for (int i = 0; i < 3; i++) {

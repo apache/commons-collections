@@ -21,6 +21,9 @@
   </properties>
   <body>
   <release version="4.2" date="YYYY-MM-DD" description="New features">
+    <action issue="COLLECTIONS-661" dev="kinow" type="fix">
+      Intermittent test failures in Windows for HashSetValuedHashMap
+    </action>
     <action issue="COLLECTIONS-660" dev="kinow" type="fix">
       Uncomment test in AbstractMapTest regarding LRUMap equals
     </action>
