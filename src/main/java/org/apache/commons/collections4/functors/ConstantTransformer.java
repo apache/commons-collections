@@ -50,7 +50,7 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
      */
     @SuppressWarnings("unchecked") // The null transformer works for all object types
     public static <I, O> Transformer<I, O> nullTransformer() {
-        return (Transformer<I, O>) NULL_INSTANCE;
+        return NULL_INSTANCE;
     }
 
     /**

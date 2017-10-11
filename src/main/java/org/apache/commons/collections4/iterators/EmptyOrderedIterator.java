@@ -41,7 +41,7 @@ public class EmptyOrderedIterator<E> extends AbstractEmptyIterator<E>
      */
     @SuppressWarnings("unchecked")
     public static <E> OrderedIterator<E> emptyOrderedIterator() {
-        return (OrderedIterator<E>) INSTANCE;
+        return INSTANCE;
     }
 
     /**

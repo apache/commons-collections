@@ -43,7 +43,7 @@ public final class TruePredicate<T> implements Predicate<T>, Serializable {
      */
     @SuppressWarnings("unchecked")
     public static <T> Predicate<T> truePredicate() {
-        return (Predicate<T>) INSTANCE;
+        return INSTANCE;
     }
 
     /**

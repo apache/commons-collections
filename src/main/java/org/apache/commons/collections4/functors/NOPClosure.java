@@ -43,7 +43,7 @@ public final class NOPClosure<E> implements Closure<E>, Serializable {
      */
     @SuppressWarnings("unchecked")
     public static <E> Closure<E> nopClosure() {
-        return (Closure<E>) INSTANCE;
+        return INSTANCE;
     }
 
     /**

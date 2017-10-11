@@ -42,7 +42,7 @@ public class EmptyOrderedMapIterator<K, V> extends AbstractEmptyMapIterator<K, V
      */
     @SuppressWarnings("unchecked")
     public static <K, V> OrderedMapIterator<K, V> emptyOrderedMapIterator() {
-        return (OrderedMapIterator<K, V>) INSTANCE;
+        return INSTANCE;
     }
 
     /**

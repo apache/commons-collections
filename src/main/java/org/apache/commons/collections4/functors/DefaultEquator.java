@@ -48,7 +48,7 @@ public class DefaultEquator<T> implements Equator<T>, Serializable {
      */
     @SuppressWarnings("unchecked") // the static instance works for all types
     public static <T> DefaultEquator<T> defaultEquator() {
-        return (DefaultEquator<T>) DefaultEquator.INSTANCE;
+        return DefaultEquator.INSTANCE;
     }
 
     /**

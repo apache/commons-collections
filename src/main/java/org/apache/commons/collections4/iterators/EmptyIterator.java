@@ -52,7 +52,7 @@ public class EmptyIterator<E> extends AbstractEmptyIterator<E> implements Resett
      */
     @SuppressWarnings("unchecked")
     public static <E> ResettableIterator<E> resettableEmptyIterator() {
-        return (ResettableIterator<E>) RESETTABLE_INSTANCE;
+        return RESETTABLE_INSTANCE;
     }
 
     /**
@@ -62,7 +62,7 @@ public class EmptyIterator<E> extends AbstractEmptyIterator<E> implements Resett
      */
     @SuppressWarnings("unchecked")
     public static <E> Iterator<E> emptyIterator() {
-        return (Iterator<E>) INSTANCE;
+        return INSTANCE;
     }
 
     /**

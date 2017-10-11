@@ -51,7 +51,7 @@ public class ConstantFactory<T> implements Factory<T>, Serializable {
     @SuppressWarnings("unchecked") // The null factory works for all object types
     public static <T> Factory<T> constantFactory(final T constantToReturn) {
         if (constantToReturn == null) {
-            return (Factory<T>) NULL_INSTANCE;
+            return NULL_INSTANCE;
         }
         return new ConstantFactory<>(constantToReturn);
     }

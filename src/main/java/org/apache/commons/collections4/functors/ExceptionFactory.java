@@ -44,7 +44,7 @@ public final class ExceptionFactory<T> implements Factory<T>, Serializable {
      */
     @SuppressWarnings("unchecked") // the static instance works for all types
     public static <T> Factory<T> exceptionFactory() {
-        return (Factory<T>) INSTANCE;
+        return INSTANCE;
     }
 
     /**

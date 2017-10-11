@@ -43,7 +43,7 @@ public final class NullPredicate<T> implements Predicate<T>, Serializable {
      */
     @SuppressWarnings("unchecked")
     public static <T> Predicate<T> nullPredicate() {
-        return (Predicate<T>) INSTANCE;
+        return INSTANCE;
     }
 
     /**

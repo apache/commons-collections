@@ -44,7 +44,7 @@ public final class ExceptionPredicate<T> implements Predicate<T>, Serializable {
      */
     @SuppressWarnings("unchecked") // the static instance works for all types
     public static <T> Predicate<T> exceptionPredicate() {
-        return (Predicate<T>) INSTANCE;
+        return INSTANCE;
     }
 
     /**

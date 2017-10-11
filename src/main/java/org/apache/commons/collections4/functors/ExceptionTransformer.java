@@ -45,7 +45,7 @@ public final class ExceptionTransformer<I, O> implements Transformer<I, O>, Seri
      */
     @SuppressWarnings("unchecked") // the static instance works for all types
     public static <I, O> Transformer<I, O> exceptionTransformer() {
-        return (Transformer<I, O>) INSTANCE;
+        return INSTANCE;
     }
 
     /**
