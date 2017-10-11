@@ -180,12 +180,12 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
     }
 
     @Override
-    public K nextKey(final K key) {
+    public K nextKey(K key) {
         return delegate.nextKey(key);
     }
 
     @Override
-    public K previousKey(final K key) {
+    public K previousKey(K key) {
         return delegate.previousKey(key);
     }
 

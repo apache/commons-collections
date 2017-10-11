@@ -200,7 +200,7 @@ public class FluentIterableTest {
     public void filter() {
         Predicate<Integer> smallerThan3 = new Predicate<Integer>() {
             @Override
-            public boolean evaluate(final Integer object) {
+            public boolean evaluate(Integer object) {
                 return object.intValue() < 3;
             }
         };
@@ -225,7 +225,7 @@ public class FluentIterableTest {
         final AtomicInteger sum = new AtomicInteger(0);
         Closure<Integer> closure = new Closure<Integer>() {
             @Override
-            public void execute(final Integer input) {
+            public void execute(Integer input) {
                 sum.addAndGet(input);
             }
         };
@@ -317,7 +317,7 @@ public class FluentIterableTest {
     public void transform() {
         Transformer<Integer, Integer> squared = new Transformer<Integer, Integer>() {
             @Override
-            public Integer transform(final Integer object) {
+            public Integer transform(Integer object) {
                 return object * object;
             }
         };

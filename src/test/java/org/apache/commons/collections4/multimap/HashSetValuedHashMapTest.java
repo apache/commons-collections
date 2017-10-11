@@ -32,7 +32,7 @@ import org.apache.commons.collections4.SetValuedMap;
  */
 public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
-    public HashSetValuedHashMapTest(final String testName) {
+    public HashSetValuedHashMapTest(String testName) {
         super(testName);
     }
 

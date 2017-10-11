@@ -702,7 +702,7 @@ public class CollectionUtilsTest extends MockTestCase {
         final StringBuffer result = new StringBuffer();
         result.append(CollectionUtils.forAllButLastDo(strings, new Closure<String>() {
             @Override
-            public void execute(final String input) {
+            public void execute(String input) {
                 result.append(input+";");
             }
         }));
@@ -712,7 +712,7 @@ public class CollectionUtilsTest extends MockTestCase {
         final StringBuffer resultOne = new StringBuffer();
         resultOne.append(CollectionUtils.forAllButLastDo(oneString, new Closure<String>() {
             @Override
-            public void execute(final String input) {
+            public void execute(String input) {
                 resultOne.append(input+";");
             }
         }));
@@ -1800,7 +1800,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
         Predicate<Integer> lessThanFive = new Predicate<Integer>() {
             @Override
-            public boolean evaluate(final Integer object) {
+            public boolean evaluate(Integer object) {
                 return object < 5;
             }
         };
@@ -1808,7 +1808,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
         Predicate<Integer> lessThanFour = new Predicate<Integer>() {
             @Override
-            public boolean evaluate(final Integer object) {
+            public boolean evaluate(Integer object) {
                 return object < 4;
             }
         };
@@ -1834,12 +1834,12 @@ public class CollectionUtilsTest extends MockTestCase {
         final Collection<String> result = CollectionUtils.removeAll(base, remove, new Equator<String>() {
 
             @Override
-            public boolean equate(final String o1, final String o2) {
+            public boolean equate(String o1, String o2) {
                 return o1.charAt(1) == o2.charAt(1);
             }
 
             @Override
-            public int hash(final String o) {
+            public int hash(String o) {
                 return o.charAt(1);
             }
         });
@@ -1886,12 +1886,12 @@ public class CollectionUtilsTest extends MockTestCase {
         final Collection<String> result = CollectionUtils.retainAll(base, retain, new Equator<String>() {
 
             @Override
-            public boolean equate(final String o1, final String o2) {
+            public boolean equate(String o1, String o2) {
                 return o1.charAt(1) == o2.charAt(1);
             }
 
             @Override
-            public int hash(final String o) {
+            public int hash(String o) {
                 return o.charAt(1);
             }
         });

@@ -446,7 +446,7 @@ public class SetUtils {
 
         return new SetView<E>() {
             @Override
-            public boolean contains(final Object o) {
+            public boolean contains(Object o) {
                 return a.contains(o) || b.contains(o);
             }
 
@@ -488,14 +488,14 @@ public class SetUtils {
 
         final Predicate<E> notContainedInB = new Predicate<E>() {
             @Override
-            public boolean evaluate(final E object) {
+            public boolean evaluate(E object) {
                 return !b.contains(object);
             }
         };
 
         return new SetView<E>() {
             @Override
-            public boolean contains(final Object o) {
+            public boolean contains(Object o) {
                 return a.contains(o) && !b.contains(o);
             }
 
@@ -526,14 +526,14 @@ public class SetUtils {
 
         final Predicate<E> containedInB = new Predicate<E>() {
             @Override
-            public boolean evaluate(final E object) {
+            public boolean evaluate(E object) {
                 return b.contains(object);
             }
         };
 
         return new SetView<E>() {
             @Override
-            public boolean contains(final Object o) {
+            public boolean contains(Object o) {
                 return a.contains(o) && b.contains(o);
             }
 
@@ -570,7 +570,7 @@ public class SetUtils {
 
         return new SetView<E>() {
             @Override
-            public boolean contains(final Object o) {
+            public boolean contains(Object o) {
                 return a.contains(o) ^ b.contains(o);
             }
 

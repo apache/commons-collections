@@ -249,7 +249,7 @@ public class TransformerUtilsTest {
 
         Predicate<Integer> lessThanFivePredicate = new Predicate<Integer>() {
             @Override
-            public boolean evaluate(final Integer value) {
+            public boolean evaluate(Integer value) {
                 return value < 5;
             }
         };

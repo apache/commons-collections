@@ -407,7 +407,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
         }
     }
 
-    private byte[] serialize(final Object object) throws IOException {
+    private byte[] serialize(Object object) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(baos);
 
@@ -417,7 +417,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
         return baos.toByteArray();
     }
     
-    private Object deserialize(final byte[] data) throws IOException, ClassNotFoundException {
+    private Object deserialize(byte[] data) throws IOException, ClassNotFoundException {
         ByteArrayInputStream bais = new ByteArrayInputStream(data);
         ObjectInputStream iis = new ObjectInputStream(bais);
         

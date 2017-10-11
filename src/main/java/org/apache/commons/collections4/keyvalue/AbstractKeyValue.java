@@ -53,7 +53,7 @@ public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
         return key;
     }
 
-    protected K setKey(final K key) {
+    protected K setKey(K key) {
         final K old = this.key;
         this.key = key;
         return old;
@@ -69,7 +69,7 @@ public abstract class AbstractKeyValue<K, V> implements KeyValue<K, V> {
         return value;
     }
 
-    protected V setValue(final V value) {
+    protected V setValue(V value) {
         final V old = this.value;
         this.value = value;
         return old;

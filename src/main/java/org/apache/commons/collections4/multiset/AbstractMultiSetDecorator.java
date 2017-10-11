@@ -79,7 +79,7 @@ public abstract class AbstractMultiSetDecorator<E>
     }
 
     @Override
-    public int setCount(final E object, final int count) {
+    public int setCount(E object, int count) {
         return decorated().setCount(object, count);
     }
 

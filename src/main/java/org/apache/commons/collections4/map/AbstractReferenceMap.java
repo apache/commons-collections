@@ -1059,7 +1059,7 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      * @param type the type to check against.
      * @return true if keyType has the specified type
      */
-    protected boolean isKeyType(final ReferenceStrength type) {
+    protected boolean isKeyType(ReferenceStrength type) {
         return this.keyType == type;
     }
 }

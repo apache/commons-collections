@@ -824,13 +824,13 @@ public class MapUtilsTest {
         int key;
         String name;
 
-        public X(final int key, final String name) {
+        public X(int key, String name) {
             this.key = key;
             this.name = name;
         }
 
         @Override
-        public int compareTo(final X o) {
+        public int compareTo(X o) {
             return key - o.key | name.compareTo(o.name);
         }
 
@@ -850,7 +850,7 @@ public class MapUtilsTest {
         final MultiValueMap<Integer, X> map = MultiValueMap.multiValueMap(new TreeMap<Integer, Collection<X>>());
         MapUtils.populateMap(map, list, new Transformer<X, Integer>() {
             @Override
-            public Integer transform(final X input) {
+            public Integer transform(X input) {
                 return input.key;
             }
         }, TransformerUtils.<X> nopTransformer());

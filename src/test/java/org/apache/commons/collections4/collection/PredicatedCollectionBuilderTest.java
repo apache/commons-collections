@@ -137,7 +137,7 @@ public class PredicatedCollectionBuilderTest {
 
     private static class OddPredicate implements Predicate<Integer> {
         @Override
-        public boolean evaluate(final Integer value) {
+        public boolean evaluate(Integer value) {
             return value % 2 == 1;
         }
     }

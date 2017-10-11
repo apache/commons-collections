@@ -613,7 +613,7 @@ public class ListUtils {
       }
 
       @Override
-      public Character get( final int index ) {
+      public Character get( int index ) {
         return Character.valueOf(sequence.charAt( index ));
       }
 

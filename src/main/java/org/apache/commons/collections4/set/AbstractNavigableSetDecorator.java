@@ -64,22 +64,22 @@ public abstract class AbstractNavigableSetDecorator<E>
     //-----------------------------------------------------------------------
 
     @Override
-    public E lower(final E e) {
+    public E lower(E e) {
         return decorated().lower(e);
     }
 
     @Override
-    public E floor(final E e) {
+    public E floor(E e) {
         return decorated().floor(e);
     }
 
     @Override
-    public E ceiling(final E e) {
+    public E ceiling(E e) {
         return decorated().ceiling(e);
     }
 
     @Override
-    public E higher(final E e) {
+    public E higher(E e) {
         return decorated().higher(e);
     }
 
@@ -104,17 +104,17 @@ public abstract class AbstractNavigableSetDecorator<E>
     }
 
     @Override
-    public NavigableSet<E> subSet(final E fromElement, final boolean fromInclusive, final E toElement, final boolean toInclusive) {
+    public NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement, boolean toInclusive) {
         return decorated().subSet(fromElement, fromInclusive, toElement, toInclusive);
     }
 
     @Override
-    public NavigableSet<E> headSet(final E toElement, final boolean inclusive) {
+    public NavigableSet<E> headSet(E toElement, boolean inclusive) {
         return decorated().headSet(toElement, inclusive);
     }
 
     @Override
-    public NavigableSet<E> tailSet(final E fromElement, final boolean inclusive) {
+    public NavigableSet<E> tailSet(E fromElement, boolean inclusive) {
         return decorated().tailSet(fromElement, inclusive);
     }
 

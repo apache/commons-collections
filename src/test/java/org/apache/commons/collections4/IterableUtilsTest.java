@@ -184,12 +184,12 @@ public class IterableUtilsTest {
         final Equator<String> secondLetterEquator = new Equator<String>() {
 
             @Override
-            public boolean equate(final String o1, final String o2) {
+            public boolean equate(String o1, String o2) {
                 return o1.charAt(1) == o2.charAt(1);
             }
 
             @Override
-            public int hash(final String o) {
+            public int hash(String o) {
                 return o.charAt(1);
             }
 
@@ -375,7 +375,7 @@ public class IterableUtilsTest {
 
         Predicate<Integer> lessThanFive = new Predicate<Integer>() {
             @Override
-            public boolean evaluate(final Integer object) {
+            public boolean evaluate(Integer object) {
                 return object < 5;
             }
         };
@@ -383,7 +383,7 @@ public class IterableUtilsTest {
 
         Predicate<Integer> lessThanFour = new Predicate<Integer>() {
             @Override
-            public boolean evaluate(final Integer object) {
+            public boolean evaluate(Integer object) {
                 return object < 4;
             }
         };
@@ -487,7 +487,7 @@ public class IterableUtilsTest {
 
         result = IterableUtils.toString(iterableA, new Transformer<Integer, String>() {
             @Override
-            public String transform(final Integer input) {
+            public String transform(Integer input) {
                 return new Integer(input * 2).toString();
             }
         });
@@ -495,7 +495,7 @@ public class IterableUtilsTest {
 
         result = IterableUtils.toString(new ArrayList<Integer>(), new Transformer<Integer, String>() {
             @Override
-            public String transform(final Integer input) {
+            public String transform(Integer input) {
                 fail("not supposed to reach here");
                 return "";
             }
@@ -504,7 +504,7 @@ public class IterableUtilsTest {
 
         result = IterableUtils.toString(null, new Transformer<Integer, String>() {
             @Override
-            public String transform(final Integer input) {
+            public String transform(Integer input) {
                 fail("not supposed to reach here");
                 return "";
             }
@@ -517,7 +517,7 @@ public class IterableUtilsTest {
         
         Transformer<Integer, String> transformer = new Transformer<Integer, String>() {
             @Override
-            public String transform(final Integer input) {
+            public String transform(Integer input) {
                 return new Integer(input * 2).toString();
             }
         };
@@ -554,7 +554,7 @@ public class IterableUtilsTest {
     public void testToStringWithNullArguments() {
         String result = IterableUtils.toString(null, new Transformer<Integer, String>() {
             @Override
-            public String transform(final Integer input) {
+            public String transform(Integer input) {
                 fail("not supposed to reach here");
                 return "";
             }
@@ -571,7 +571,7 @@ public class IterableUtilsTest {
         try {
             IterableUtils.toString(new ArrayList<Integer>(), new Transformer<Integer, String>() {
                 @Override
-                public String transform(final Integer input) {
+                public String transform(Integer input) {
                     fail("not supposed to reach here");
                     return "";
                 }
@@ -584,7 +584,7 @@ public class IterableUtilsTest {
         try {
             IterableUtils.toString(new ArrayList<Integer>(), new Transformer<Integer, String>() {
                 @Override
-                public String transform(final Integer input) {
+                public String transform(Integer input) {
                     fail("not supposed to reach here");
                     return "";
                 }
@@ -597,7 +597,7 @@ public class IterableUtilsTest {
         try {
             IterableUtils.toString(new ArrayList<Integer>(), new Transformer<Integer, String>() {
                 @Override
-                public String transform(final Integer input) {
+                public String transform(Integer input) {
                     fail("not supposed to reach here");
                     return "";
                 }

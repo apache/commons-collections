@@ -433,7 +433,7 @@ public class IteratorUtils {
      * @throws IllegalArgumentException if max is negative
      * @since 4.1
      */
-    public static <E> BoundedIterator<E> boundedIterator(final Iterator<? extends E> iterator, final long max) {
+    public static <E> BoundedIterator<E> boundedIterator(final Iterator<? extends E> iterator, long max) {
         return boundedIterator(iterator, 0, max);
     }
 
@@ -455,7 +455,7 @@ public class IteratorUtils {
      * @since 4.1
      */
     public static <E> BoundedIterator<E> boundedIterator(final Iterator<? extends E> iterator,
-                                                         final long offset, final long max) {
+                                                         long offset, long max) {
         return new BoundedIterator<>(iterator, offset, max);
     }
 
@@ -890,7 +890,7 @@ public class IteratorUtils {
      * @throws IllegalArgumentException if offset is negative
      * @since 4.1
      */
-    public static <E> SkippingIterator<E> skippingIterator(final Iterator<E> iterator, final long offset) {
+    public static <E> SkippingIterator<E> skippingIterator(final Iterator<E> iterator, long offset) {
         return new SkippingIterator<>(iterator, offset);
     }
 

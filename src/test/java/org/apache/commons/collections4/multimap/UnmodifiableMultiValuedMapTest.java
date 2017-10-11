@@ -38,7 +38,7 @@ import org.apache.commons.collections4.Unmodifiable;
  */
 public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
-    public UnmodifiableMultiValuedMapTest(final String testName) {
+    public UnmodifiableMultiValuedMapTest(String testName) {
         super(testName);
     }
 

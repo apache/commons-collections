@@ -32,7 +32,7 @@ import org.apache.commons.collections4.MultiValuedMap;
  */
 public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
-    public ArrayListValuedHashMapTest(final String testName) {
+    public ArrayListValuedHashMapTest(String testName) {
         super(testName);
     }
 

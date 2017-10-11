@@ -57,7 +57,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
     /** MultiValuedHashMap created by reset(). */
     protected MultiValuedMap<K, V> confirmed;
 
-    public AbstractMultiValuedMapTest(final String testName) {
+    public AbstractMultiValuedMapTest(String testName) {
         super(testName);
     }
 
@@ -146,7 +146,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         return map;
     }
 
-    protected void addSampleMappings(final MultiValuedMap<? super K, ? super V> map) {
+    protected void addSampleMappings(MultiValuedMap<? super K, ? super V> map) {
         final K[] keys = getSampleKeys();
         final V[] values = getSampleValues();
         for (int i = 0; i < keys.length; i++) {
@@ -168,7 +168,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         return this.confirmed;
     }
 
-    public void setConfirmed(final MultiValuedMap<K, V> map) {
+    public void setConfirmed(MultiValuedMap<K, V> map) {
         this.confirmed = map;
     }
 
