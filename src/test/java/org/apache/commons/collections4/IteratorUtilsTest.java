@@ -32,16 +32,22 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Vector;
 
 import org.apache.commons.collections4.iterators.EmptyIterator;
 import org.apache.commons.collections4.iterators.EmptyListIterator;
 import org.apache.commons.collections4.iterators.EmptyMapIterator;
 import org.apache.commons.collections4.iterators.EmptyOrderedIterator;
 import org.apache.commons.collections4.iterators.EmptyOrderedMapIterator;
+import org.apache.commons.collections4.iterators.EnumerationIterator;
+import org.apache.commons.collections4.iterators.NodeListIterator;
+import org.apache.commons.collections4.iterators.ObjectArrayIterator;
 import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Node;
@@ -178,6 +184,13 @@ public class IteratorUtilsTest {
         list.add(null);
         final Object[] result = IteratorUtils.toArray(list.iterator());
         assertEquals(list, Arrays.asList(result));
+        
+        try {
+        	IteratorUtils.toArray(null);
+            fail("Expecting NullPointerException");
+        } catch (final NullPointerException ex) {
+            // success
+        }
     }
 
     @Test
@@ -188,6 +201,20 @@ public class IteratorUtilsTest {
         list.add(null);
         final String[] result = IteratorUtils.toArray(list.iterator(), String.class);
         assertEquals(list, Arrays.asList(result));
+        
+        try {
+        	IteratorUtils.toArray(list.iterator(), null);
+            fail("Expecting NullPointerException");
+        } catch (final NullPointerException ex) {
+            // success
+        }
+        
+        try {
+        	IteratorUtils.toArray(null, String.class);
+            fail("Expecting NullPointerException");
+        } catch (final NullPointerException ex) {
+            // success
+        }
     }
 
     @Test
@@ -1087,6 +1114,49 @@ public class IteratorUtilsTest {
             // expected
         }
         assertTrue(!iterator.hasNext());
+    }
+    
+    @Test
+    public void testGetIterator() {
+    	final Object[] objArray = {"a", "b", "c"};
+        final Map<String, String> inMap = new HashMap<String, String>();
+        final Node[] nodes = createNodes();
+        final NodeList nodeList = createNodeList(nodes); 
+        		
+        assertTrue("returns empty iterator when null passed", IteratorUtils.getIterator(null) instanceof EmptyIterator);
+        assertTrue("returns Iterator when Iterator directly ", IteratorUtils.getIterator(iterableA.iterator()) instanceof Iterator);
+        assertTrue("returns Iterator when iterable passed", IteratorUtils.getIterator(iterableA) instanceof Iterator);
+        assertTrue("returns ObjectArrayIterator when Object array passed", IteratorUtils.getIterator(objArray) instanceof ObjectArrayIterator);
+        assertTrue("returns Iterator when Map passed", IteratorUtils.getIterator(inMap) instanceof Iterator);
+        assertTrue("returns NodeListIterator when nodeList passed", IteratorUtils.getIterator(nodeList) instanceof NodeListIterator);
+        assertTrue("returns EnumerationIterator when Enumeration passed", IteratorUtils.getIterator(new Vector().elements()) instanceof EnumerationIterator);
+ 
+    }
+    
+    @Test
+    public void testToListIterator() {
+        final List<Integer> list = new ArrayList<>();
+        list.add(Integer.valueOf(0));
+        list.add(Integer.valueOf(1));
+        list.add(Integer.valueOf(2));
+        final Iterator<Integer> iterator = list.iterator();
+
+        final ListIterator<Integer> liItr = IteratorUtils.toListIterator(iterator);
+        int expected = 0;
+        while(liItr.hasNext()){
+        	assertEquals(expected, liItr.next().intValue());
+        	++expected;
+        }
+    }
+
+    @Test
+    public void testToListIteratorNull() {
+        try {
+            IteratorUtils.toListIterator(null);
+            fail("Expecting NullPointerException");
+        } catch (final NullPointerException ex) {
+            // success
+        }
     }
 
 }
