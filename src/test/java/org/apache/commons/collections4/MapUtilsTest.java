@@ -32,6 +32,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListResourceBundle;
 import java.util.Map;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
@@ -239,6 +240,9 @@ public class MapUtilsTest {
         assertEquals(true, test.containsKey("BLUE"));
         assertEquals("#0000FF", test.get("BLUE"));
         assertEquals(3, test.size());
+        
+        test = MapUtils.putAll(new HashMap<String, String>(), null);
+        assertEquals(0, test.size());
 
         // map entry
         test = MapUtils.putAll(new HashMap<String, String>(), new Object[] {
@@ -910,4 +914,236 @@ public class MapUtilsTest {
         map.put("B", "2");
         assertEquals(2, MapUtils.size(map));
     }
+    
+    @Test
+    public void testToProperties() {
+        final Map<String, String> in = new HashMap<String, String>();
+        in.put("key1", "A");
+        in.put("key2", "B");
+        in.put("key3", "C");
+
+        final Properties out =  MapUtils.toProperties(in);
+
+        assertEquals(in.get("key1"), out.get("key1"));
+        assertEquals(in.get("key2"), out.get("key2"));
+        assertEquals(in.get("key3"), out.get("key3"));
+    }
+    
+    @Test
+    public void testToPropertiesEmpty() {
+        final Map<String, String> in = null;
+        final Properties out =  MapUtils.toProperties(in);
+
+        assertEquals(out.size(), 0);
+    }
+    
+    @Test
+    public void testgetDoubleValue() {
+        final Map<String, Double> in = new HashMap<String, Double>();
+        in.put("key", 2.0);
+        
+        assertEquals(MapUtils.getDoubleValue(in,"key", 0.0), 2.0, 0);
+        assertEquals(MapUtils.getDoubleValue(in,"key"), 2.0, 0);
+        assertEquals(MapUtils.getDoubleValue(in,"noKey", 1.0), 1.0, 0);
+        assertEquals(MapUtils.getDoubleValue(in,"noKey"), 0, 0);
+        assertEquals(MapUtils.getDouble(in,"key", 0.0), 2.0, 0);
+        assertEquals(MapUtils.getDouble(in,"noKey", 1.0), 1.0, 0);
+
+        
+        final Map<String, String> inStr = new HashMap<String, String>();
+        inStr.put("str1", "2.0");
+        
+        assertEquals(MapUtils.getDoubleValue(inStr,"str1", 0.0), 2.0, 0);
+    }
+    
+    @Test
+    public void testgetFloatValue() {
+        final Map<String, Float> in = new HashMap<String, Float>();
+        in.put("key", 2.0f);
+
+        assertEquals(MapUtils.getFloatValue(in,"key", 0.0f), 2.0, 0);
+        assertEquals(MapUtils.getFloatValue(in,"key"), 2.0, 0);
+        assertEquals(MapUtils.getFloatValue(in,"noKey", 1.0f), 1.0, 0);
+        assertEquals(MapUtils.getFloatValue(in,"noKey"), 0, 0);
+        assertEquals(MapUtils.getFloat(in,"key", 0.0f), 2.0, 0);
+        assertEquals(MapUtils.getFloat(in,"noKey", 1.0f), 1.0, 0);
+        
+        final Map<String, String> inStr = new HashMap<String, String>();
+        inStr.put("str1", "2.0");
+        
+        assertEquals( MapUtils.getFloatValue(inStr,"str1", 0.0f), 2.0, 0);
+    }
+    
+    @Test
+    public void testgetLongValue() {
+        final Map<String, Long> in = new HashMap<String, Long>();
+        in.put("key", 2L);
+        
+        assertEquals(MapUtils.getLongValue(in,"key", 0L), 2.0, 0);
+        assertEquals(MapUtils.getLongValue(in,"key"), 2.0, 0);
+        assertEquals(MapUtils.getLongValue(in,"noKey", 1L), 1, 0);
+        assertEquals(MapUtils.getLongValue(in,"noKey"), 0, 0);
+        assertEquals(MapUtils.getLong(in,"key", 0L), 2.0, 0);
+        assertEquals(MapUtils.getLong(in,"noKey", 1L), 1, 0);
+        
+        final Map<String, String> inStr = new HashMap<String, String>();
+        inStr.put("str1", "2");
+  
+        assertEquals(MapUtils.getLongValue(inStr,"str1", 0L), 2, 0);
+        assertEquals(MapUtils.getLong(inStr, "str1", 1L), 2, 0);
+
+    }
+    
+    @Test
+    public void testgetIntValue() {
+        final Map<String, Integer> in = new HashMap<String, Integer>();
+        in.put("key", 2);
+
+        assertEquals(MapUtils.getIntValue(in,"key", 0), 2, 0);
+        assertEquals(MapUtils.getIntValue(in,"key"), 2, 0);
+        assertEquals(MapUtils.getIntValue(in,"noKey", 0), 0, 0);
+        assertEquals(MapUtils.getIntValue(in,"noKey"), 0, 0);
+        assertEquals(MapUtils.getInteger(in,"key", 0), 2, 0);
+        assertEquals(MapUtils.getInteger(in,"noKey", 0), 0, 0);
+        
+        final Map<String, String> inStr = new HashMap<String, String>();
+        inStr.put("str1", "2");
+        
+        assertEquals(MapUtils.getIntValue(inStr,"str1", 0), 2, 0);
+    }
+    
+    @Test
+    public void testgetShortValue() {
+        final Map<String, Short> in = new HashMap<String, Short>();
+        final short val = 10;
+        in.put("key", val);
+
+        assertEquals(MapUtils.getShortValue(in,"key", val), val, 0);
+        assertEquals(MapUtils.getShortValue(in,"key"), val, 0);
+        assertEquals(MapUtils.getShortValue(in,"noKey", val), val, 0);
+        assertEquals(MapUtils.getShortValue(in,"noKey"), 0, 0);
+        assertEquals(MapUtils.getShort(in,"key", val), val, 0);
+        assertEquals(MapUtils.getShort(in,"noKey", val), val, 0);
+
+        final Map<String, String> inStr = new HashMap<String, String>();
+        inStr.put("str1", "10");
+
+        assertEquals(MapUtils.getShortValue(inStr,"str1", val), val, 0);
+    }
+    
+    @Test
+    public void testgetByteValue() {
+        final Map<String, Byte> in = new HashMap<String, Byte>();
+        final byte val = 100;
+        in.put("key", val);
+        
+        assertEquals(MapUtils.getByteValue(in,"key", val), val, 0);
+        assertEquals(MapUtils.getByteValue(in,"key"), val, 0);
+        assertEquals(MapUtils.getByteValue(in,"noKey", val), val, 0);
+        assertEquals(MapUtils.getByteValue(in,"noKey"), 0, 0);
+        assertEquals(MapUtils.getByte(in,"key", val), val, 0);
+        assertEquals(MapUtils.getByte(in,"noKey", val), val, 0);
+
+        
+        final Map<String, String> inStr = new HashMap<String, String>();
+        inStr.put("str1", "100");
+       
+        assertEquals(MapUtils.getByteValue(inStr,"str1", val), val, 0);
+    }
+    
+    @Test
+    public void testgetNumber() {
+        final Map<String, Number> in = new HashMap<String, Number>();
+        final Number val = 1000;
+        in.put("key", val);
+        
+        assertEquals(MapUtils.getNumber(in,"key", val).intValue(), val.intValue(), 0);
+        assertEquals(MapUtils.getNumber(in,"noKey", val).intValue(), val.intValue(), 0);
+        
+    }
+    
+    @Test
+    public void testgetString() {
+        final Map<String, String> in = new HashMap<String, String>();
+        in.put("key", "str");
+        
+        assertEquals(MapUtils.getString(in,"key", "defualt"), "str");
+        assertEquals(MapUtils.getString(in,"key"), "str");
+        assertEquals(MapUtils.getString(null,"key"), null);
+        assertEquals(MapUtils.getString(in,"noKey", "default"), "default");
+        assertEquals(MapUtils.getString(null,"noKey", "default"), "default");
+ 
+    }
+    
+    @Test
+    public void testgetObject() {
+        final Map<String, Object> in = new HashMap<String, Object>();
+        in.put("key", "str");
+        
+        assertEquals(MapUtils.getObject(in,"key", "defualt"), "str");
+        assertEquals(MapUtils.getObject(in,"key"), "str");
+        assertEquals(MapUtils.getObject(null,"key"), null);
+        assertEquals(MapUtils.getObject(in,"noKey", "default"), "default");
+        assertEquals(MapUtils.getObject(null,"noKey", "default"), "default");
+   
+    }
+    
+    @Test
+    public void testgetBooleanValue() {
+        final Map<String, Boolean> in = new HashMap<String, Boolean>();
+        in.put("key", true);
+        
+        assertTrue(MapUtils.getBooleanValue(in,"key", true));
+        assertTrue(MapUtils.getBooleanValue(in,"key"));
+        assertTrue(MapUtils.getBooleanValue(in,"noKey", true));
+        assertTrue(!MapUtils.getBooleanValue(in,"noKey"));
+        assertTrue(MapUtils.getBoolean(in,"key", true));
+        assertTrue(MapUtils.getBoolean(in,"noKey", true));
+        assertEquals(MapUtils.getBoolean(null,"noKey"),null);
+
+
+        
+        final Map<String, String> inStr = new HashMap<String, String>();
+        inStr.put("str1", "true");
+        
+        assertTrue(MapUtils.getBooleanValue(inStr,"str1", true));
+        assertTrue(MapUtils.getBoolean(inStr,"str1", true));
+
+
+    }
+    
+    @Test
+    public void testgetMap() {
+        final Map<String, Map<String,String>> in = new HashMap<String, Map<String,String>>();
+        final Map<String, String> valMap = new HashMap<String, String>();
+        valMap.put("key1", "value1");
+        in.put("key1", valMap);
+        final Map<?, ?> outValue =  MapUtils.getMap(in,"key1", null);
+        
+        assertEquals( outValue.get("key1"), "value1");
+        assertEquals( outValue.get("key2"), null);
+        assertEquals( MapUtils.getMap(in,"key2", null), null);
+        assertEquals( MapUtils.getMap(null,"key2", null), null);
+    }
+    
+    @Test
+    public void testSafeAddToMap() {
+        
+        final Map<String, Object> inMap = new HashMap<String, Object>();
+        
+        MapUtils.safeAddToMap(inMap,"key1", "value1");
+        MapUtils.safeAddToMap(inMap,"key2", null);
+        assertEquals( inMap.get("key1"), "value1");
+        assertEquals( inMap.get("key2"), ""); 
+    }
+    
+    @Test
+    public void testOrderedMap() {
+    	final Map<String, String> inMap = new HashMap<String, String>();
+    	inMap.put("key1", "value1");
+    	inMap.put("key2", "value2");
+        Map<String, String> map = MapUtils.orderedMap(inMap);
+        assertTrue("returned object should be a OrderedMap", map instanceof OrderedMap);
+    }
+    
 }
