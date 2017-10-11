@@ -130,7 +130,7 @@ public class SequencesComparatorTest {
         final ExecutionVisitor<String> ev = new ExecutionVisitor<>();
 
         for (int i = 0; i < shadokSentences.size(); ++i) {
-            for (final List<String> shadokSentence : shadokSentences) {
+            for (List<String> shadokSentence : shadokSentences) {
                 ev.setList(shadokSentences.get(i));
                 new SequencesComparator<>(shadokSentences.get(i),
                         shadokSentence).getScript().visit(ev);

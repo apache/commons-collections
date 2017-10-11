@@ -220,7 +220,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         }
 
         final MutableInteger mut = map.get(object);
-        final int oldCount = mut != null ? mut.value : 0;
+        int oldCount = mut != null ? mut.value : 0;
 
         if (occurrences > 0) {
             modCount++;
@@ -255,7 +255,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
         if (mut == null) {
             return 0;
         }
-        final int oldCount = mut.value;
+        int oldCount = mut.value;
         if (occurrences > 0) {
             modCount++;
             if (occurrences < mut.value) {

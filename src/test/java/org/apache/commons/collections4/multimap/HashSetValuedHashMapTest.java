@@ -57,7 +57,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
         final SetValuedMap<K, V> setMap = makeObject();
         assertTrue(setMap.get((K) "whatever") instanceof Set);
 
-        final Set<V> set = setMap.get((K) "A");
+        Set<V> set = setMap.get((K) "A");
         assertTrue(set.add((V) "a1"));
         assertTrue(set.add((V) "a2"));
         assertFalse(set.add((V) "a1"));
@@ -70,7 +70,7 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
         final SetValuedMap<K, V> setMap = makeObject();
         assertTrue(setMap.get((K) "whatever") instanceof Set);
 
-        final Set<V> set = setMap.get((K) "A");
+        Set<V> set = setMap.get((K) "A");
         assertTrue(set.add((V) "a1"));
         assertTrue(set.add((V) "a2"));
         assertFalse(set.add((V) "a1"));
@@ -90,12 +90,12 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
         final SetValuedMap<K, V> setMap = makeObject();
         assertTrue(setMap.get((K) "whatever") instanceof Set);
 
-        final Set<V> set = setMap.get((K) "A");
+        Set<V> set = setMap.get((K) "A");
         set.add((V) "a1");
         set.add((V) "a2");
         set.add((V) "a1");
 
-        final Iterator<V> it = set.iterator();
+        Iterator<V> it = set.iterator();
         while (it.hasNext()) {
             it.next();
             it.remove();
@@ -106,8 +106,8 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public void testSetValuedMapEqualsHashCodeContract() {
-        final SetValuedMap map1 = makeObject();
-        final SetValuedMap map2 = makeObject();
+        SetValuedMap map1 = makeObject();
+        SetValuedMap map2 = makeObject();
 
         map1.put("a", "a1");
         map1.put("a", "a2");

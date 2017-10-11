@@ -387,7 +387,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * @param sets  the Sets to be appended to the composite
      */
     public void addComposited(final Set<E>... sets) {
-        for (final Set<E> set : sets) {
+        for (Set<E> set : sets) {
             addComposited(set);
         }
     }

@@ -32,7 +32,7 @@ public class TrieUtilsTest {
 
     @Test
     public void testUnmodifiableTrie() {
-        final Trie<String, Object> trie = TrieUtils.unmodifiableTrie(new PatriciaTrie<>());
+        Trie<String, Object> trie = TrieUtils.unmodifiableTrie(new PatriciaTrie<>());
         assertTrue("Returned object should be an UnmodifiableTrie.",
             trie instanceof UnmodifiableTrie);
         try {

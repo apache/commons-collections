@@ -70,14 +70,14 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
     
     @Test
     public void testEmpty() {
-        final Iterator<E> it = makeEmptyIterator();
+        Iterator<E> it = makeEmptyIterator();
         assertFalse(it.hasNext());
     }
 
     @Test
     @SuppressWarnings("unchecked")
     public void testSinglePeek() {
-        final PeekingIterator<E> it = makeObject();
+        PeekingIterator<E> it = makeObject();
         assertEquals("a", it.peek());
         assertEquals("a", it.element());
         validate(it, (E[]) testArray);
@@ -85,7 +85,7 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
 
     @Test
     public void testMultiplePeek() {
-        final PeekingIterator<E> it = makeObject();
+        PeekingIterator<E> it = makeObject();
         assertEquals("a", it.peek());
         assertEquals("a", it.peek());
         assertEquals("a", it.next());
@@ -102,7 +102,7 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
     
     @Test
     public void testIteratorExhausted() {
-        final PeekingIterator<E> it = makeObject();
+        PeekingIterator<E> it = makeObject();
         it.next();
         it.next();
         it.next();
@@ -112,14 +112,14 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         try {
             it.element();
             fail();
-        } catch (final NoSuchElementException e) {
+        } catch (NoSuchElementException e) {
             // expected
         }
     }
 
     @Test
     public void testIllegalRemove() {
-        final PeekingIterator<E> it = makeObject();
+        PeekingIterator<E> it = makeObject();
         it.next();
         it.remove(); // supported
         
@@ -129,13 +129,13 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         try {
             it.remove();
             fail();
-        } catch (final IllegalStateException e) {
+        } catch (IllegalStateException e) {
             // expected
         }
     }
 
     private void validate(final Iterator<E> iter, final E... items) {
-        for (final E x : items) {
+        for (E x : items) {
             assertTrue(iter.hasNext());
             assertEquals(x, iter.next());
         }

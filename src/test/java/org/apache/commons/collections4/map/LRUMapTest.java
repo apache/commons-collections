@@ -74,42 +74,42 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         try {
             new LRUMap<K, V>(0);
             fail("maxSize must be positive");
-        } catch(final IllegalArgumentException ex) {
+        } catch(IllegalArgumentException ex) {
             // expected
         }
 
         try {
             new LRUMap<K, V>(-1, 12, 0.75f, false);
             fail("maxSize must be positive");
-        } catch(final IllegalArgumentException ex) {
+        } catch(IllegalArgumentException ex) {
             // expected
         }
 
         try {
             new LRUMap<K, V>(10, -1);
             fail("initialSize must not be negative");
-        } catch(final IllegalArgumentException ex) {
+        } catch(IllegalArgumentException ex) {
             // expected
         }
 
         try {
             new LRUMap<K, V>(10, 12);
             fail("initialSize must not be larger than maxSize");
-        } catch(final IllegalArgumentException ex) {
+        } catch(IllegalArgumentException ex) {
             // expected
         }
 
         try {
             new LRUMap<K, V>(10, -1, 0.75f, false);
             fail("initialSize must not be negative");
-        } catch(final IllegalArgumentException ex) {
+        } catch(IllegalArgumentException ex) {
             // expected
         }
 
         try {
             new LRUMap<K, V>(10, 12, 0.75f, false);
             fail("initialSize must not be larger than maxSize");
-        } catch(final IllegalArgumentException ex) {
+        } catch(IllegalArgumentException ex) {
             // expected
         }
     }
@@ -280,7 +280,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         Iterator<V> vit = null;
 
         resetEmpty();
-        final LRUMap<K, V> lruMap = (LRUMap<K, V>) map;
+        LRUMap<K, V> lruMap = (LRUMap<K, V>) map;
         
         lruMap.put(keys[0], values[0]);
         lruMap.put(keys[1], values[1]);

@@ -241,7 +241,7 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         
         try {
             Thread.sleep(2 * timeout);
-        } catch (final InterruptedException e) {
+        } catch (InterruptedException e) {
             fail();
         }
 

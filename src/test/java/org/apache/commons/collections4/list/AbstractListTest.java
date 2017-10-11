@@ -472,7 +472,7 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
         final List<E> list1 = getCollection();
         final List<E> list2 = getConfirmed();
 
-        for (final E element : list2) {
+        for (E element : list2) {
             assertEquals("indexOf should return correct result",
                     list1.indexOf(element), list2.indexOf(element));
             verify();

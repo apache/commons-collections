@@ -58,7 +58,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     @Override
     public int size() {
         int totalSize = 0;
-        for (final Entry<E> entry : entrySet()) {
+        for (Entry<E> entry : entrySet()) {
             totalSize += entry.getCount();
         }
         return totalSize;
@@ -73,7 +73,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
      */
     @Override
     public int getCount(final Object object) {
-        for (final Entry<E> entry : entrySet()) {
+        for (Entry<E> entry : entrySet()) {
             final E element = entry.getElement();
             if (element == object ||
                 element != null && element.equals(object)) {
@@ -89,7 +89,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
             throw new IllegalArgumentException("Count must not be negative.");
         }
 
-        final int oldCount = getCount(object);
+        int oldCount = getCount(object);
         if (oldCount < count) {
             add(object, count - oldCount);
         } else {
@@ -196,7 +196,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
      */
     @Override
     public void clear() {
-        final Iterator<Entry<E>> it = entrySet().iterator();
+        Iterator<Entry<E>> it = entrySet().iterator();
         while (it.hasNext()) {
             it.next();
             it.remove();

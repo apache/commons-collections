@@ -152,11 +152,10 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     public void testIterator() {
         final MultiValueMap<K, V> map = createTestMap();
         @SuppressWarnings("unchecked")
-        final
         Collection<V> values = new ArrayList<>((Collection<V>) map.values());
-        final Iterator<Map.Entry<K, V>> iterator = map.iterator();
+        Iterator<Map.Entry<K, V>> iterator = map.iterator();
         while (iterator.hasNext()) {
-            final Map.Entry<K, V> entry = iterator.next();
+            Map.Entry<K, V> entry = iterator.next();
             assertTrue(map.containsValue(entry.getKey(), entry.getValue()));
             assertTrue(values.contains(entry.getValue()));
             assertTrue(values.remove(entry.getValue()));
@@ -393,24 +392,24 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     }
 
     public void testUnsafeDeSerialization() throws Exception {
-        final MultiValueMap map1 = MultiValueMap.multiValueMap(new HashMap(), ArrayList.class);
+        MultiValueMap map1 = MultiValueMap.multiValueMap(new HashMap(), ArrayList.class);
         byte[] bytes = serialize(map1);
         Object result = deserialize(bytes);
         assertEquals(map1, result);
         
-        final MultiValueMap map2 = MultiValueMap.multiValueMap(new HashMap(), (Class) String.class);
+        MultiValueMap map2 = MultiValueMap.multiValueMap(new HashMap(), (Class) String.class);
         bytes = serialize(map2);
         try {
             result = deserialize(bytes);
             fail("unsafe clazz accepted when de-serializing MultiValueMap");
-        } catch (final UnsupportedOperationException ex) {
+        } catch (UnsupportedOperationException ex) {
             // expected
         }
     }
 
     private byte[] serialize(final Object object) throws IOException {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final ObjectOutputStream oos = new ObjectOutputStream(baos);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = new ObjectOutputStream(baos);
 
         oos.writeObject(object);
         oos.close();
@@ -419,8 +418,8 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
     }
     
     private Object deserialize(final byte[] data) throws IOException, ClassNotFoundException {
-        final ByteArrayInputStream bais = new ByteArrayInputStream(data);
-        final ObjectInputStream iis = new ObjectInputStream(bais);
+        ByteArrayInputStream bais = new ByteArrayInputStream(data);
+        ObjectInputStream iis = new ObjectInputStream(bais);
         
         return iis.readObject();
     }

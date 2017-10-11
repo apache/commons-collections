@@ -548,7 +548,6 @@ public class IterableUtils {
             @Override
             public Iterator<E> iterator() {
                 @SuppressWarnings("unchecked") // safe
-                final
                 Iterator<? extends E>[] iterators = new Iterator[others.length + 1];
                 iterators[0] = first.iterator();
                 for (int i = 0; i < others.length; i++) {
@@ -921,7 +920,7 @@ public class IterableUtils {
             throw new NullPointerException("Predicates must not be null.");
         }
 
-        for (final Predicate<?> p : predicates) {
+        for (Predicate<?> p : predicates) {
             if (p == null) {
                 throw new NullPointerException("Predicate must not be null.");
             }

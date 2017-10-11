@@ -39,7 +39,7 @@ public class PredicatedCollectionBuilderTest {
      */
     @Test
     public void addPass() {
-        final PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
+        PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
         builder.add("test");
         Assert.assertEquals(builder.createPredicatedList().size(), 1);
     }
@@ -49,7 +49,7 @@ public class PredicatedCollectionBuilderTest {
      */
     @Test
     public void addFail() {
-        final PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
+        PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
         builder.add((String) null);
         Assert.assertTrue(builder.createPredicatedList().isEmpty());
         
@@ -61,27 +61,27 @@ public class PredicatedCollectionBuilderTest {
      */
     @Test
     public void addAllPass() {
-        final PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
+        PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
         builder.addAll(Arrays.asList("test1", null, "test2"));
         Assert.assertEquals(builder.createPredicatedList().size(), 2);
     }
 
     @Test
     public void createPredicatedCollectionWithNotNullPredicate() {
-        final PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
+        PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
         builder.add("test1");
         builder.add((String) null);
 
-        final List<String> predicatedList = builder.createPredicatedList();
+        List<String> predicatedList = builder.createPredicatedList();
         checkPredicatedCollection1(predicatedList);
         
-        final Set<String> predicatedSet = builder.createPredicatedSet();
+        Set<String> predicatedSet = builder.createPredicatedSet();
         checkPredicatedCollection1(predicatedSet);
 
-        final Bag<String> predicatedBag = builder.createPredicatedBag();
+        Bag<String> predicatedBag = builder.createPredicatedBag();
         checkPredicatedCollection1(predicatedBag);
 
-        final Queue<String> predicatedQueue = builder.createPredicatedQueue();
+        Queue<String> predicatedQueue = builder.createPredicatedQueue();
         checkPredicatedCollection1(predicatedQueue);
     }
     
@@ -94,30 +94,30 @@ public class PredicatedCollectionBuilderTest {
         try {
             collection.add(null);
             Assert.fail("Expecting IllegalArgumentException for failing predicate!");
-        } catch (final IllegalArgumentException iae) {
+        } catch (IllegalArgumentException iae) {
             // expected
         }
     }
 
     @Test
     public void createPredicatedCollectionWithPredicate() {
-        final OddPredicate p = new OddPredicate();
-        final PredicatedCollection.Builder<Integer> builder = PredicatedCollection.builder(p);
+        OddPredicate p = new OddPredicate();
+        PredicatedCollection.Builder<Integer> builder = PredicatedCollection.builder(p);
 
         builder.add(1);
         builder.add(2);
         builder.add(3);
 
-        final List<Integer> predicatedList = builder.createPredicatedList();
+        List<Integer> predicatedList = builder.createPredicatedList();
         checkPredicatedCollection2(predicatedList);
         
-        final Set<Integer> predicatedSet = builder.createPredicatedSet();
+        Set<Integer> predicatedSet = builder.createPredicatedSet();
         checkPredicatedCollection2(predicatedSet);
 
-        final Bag<Integer> predicatedBag = builder.createPredicatedBag();
+        Bag<Integer> predicatedBag = builder.createPredicatedBag();
         checkPredicatedCollection2(predicatedBag);
 
-        final Queue<Integer> predicatedQueue = builder.createPredicatedQueue();
+        Queue<Integer> predicatedQueue = builder.createPredicatedQueue();
         checkPredicatedCollection2(predicatedQueue);
     }
 
@@ -127,7 +127,7 @@ public class PredicatedCollectionBuilderTest {
         try {
             collection.add(4);
             Assert.fail("Expecting IllegalArgumentException for failing predicate!");
-        } catch (final IllegalArgumentException iae) {
+        } catch (IllegalArgumentException iae) {
         }
         Assert.assertEquals(2, collection.size());
 

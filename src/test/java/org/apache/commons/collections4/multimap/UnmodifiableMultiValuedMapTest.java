@@ -85,179 +85,179 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
         try {
             UnmodifiableMultiValuedMap.unmodifiableMultiValuedMap(null);
             fail("map must not be null");
-        } catch (final NullPointerException e) {
+        } catch (NullPointerException e) {
             // expected
         }
     }
 
     @SuppressWarnings("unchecked")
     public void testAddException() {
-        final MultiValuedMap<K, V> map = makeObject();
+        MultiValuedMap<K, V> map = makeObject();
         try {
             map.put((K) "one", (V) "uno");
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
     }
 
     @SuppressWarnings("unchecked")
     public void testUnmodifiableEntries() {
         resetFull();
-        final Collection<Entry<K, V>> entries = getMap().entries();
+        Collection<Entry<K, V>> entries = getMap().entries();
         try {
             entries.clear();
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
 
-        final Iterator<Entry<K, V>> it = entries.iterator();
-        final Entry<K, V> entry = it.next();
+        Iterator<Entry<K, V>> it = entries.iterator();
+        Entry<K, V> entry = it.next();
         try {
             it.remove();
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
 
         try {
             entry.setValue((V) "three");
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
     }
 
     @SuppressWarnings("unchecked")
     public void testUnmodifiableMapIterator() {
         resetFull();
-        final MapIterator<K, V> mapIt = getMap().mapIterator();
+        MapIterator<K, V> mapIt = getMap().mapIterator();
         try {
             mapIt.remove();
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
 
         try {
             mapIt.setValue((V) "three");
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
     }
 
     @SuppressWarnings("unchecked")
     public void testUnmodifiableKeySet() {
         resetFull();
-        final Set<K> keySet = getMap().keySet();
+        Set<K> keySet = getMap().keySet();
         try {
             keySet.add((K) "four");
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
 
         try {
             keySet.remove("four");
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
 
         try {
             keySet.clear();
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
 
-        final Iterator<K> it = keySet.iterator();
+        Iterator<K> it = keySet.iterator();
         try {
             it.remove();
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
     }
 
     @SuppressWarnings("unchecked")
     public void testUnmodifiableValues() {
         resetFull();
-        final Collection<V> values = getMap().values();
+        Collection<V> values = getMap().values();
         try {
             values.add((V) "four");
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
 
         try {
             values.remove("four");
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
 
         try {
             values.clear();
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
 
-        final Iterator<V> it = values.iterator();
+        Iterator<V> it = values.iterator();
         try {
             it.remove();
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
     }
 
     @SuppressWarnings("unchecked")
     public void testUnmodifiableAsMap() {
         resetFull();
-        final Map<K, Collection<V>> mapCol = getMap().asMap();
+        Map<K, Collection<V>> mapCol = getMap().asMap();
         try {
             mapCol.put((K) "four", (Collection<V>) Arrays.asList("four"));
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
 
         try {
             mapCol.remove("four");
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
 
         try {
             mapCol.clear();
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
 
         try {
             mapCol.clear();
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
     }
 
     @SuppressWarnings("unchecked")
     public void testUnmodifiableKeys() {
         resetFull();
-        final MultiSet<K> keys = getMap().keys();
+        MultiSet<K> keys = getMap().keys();
         try {
             keys.add((K) "four");
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
 
         try {
             keys.remove("four");
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
 
         try {
             keys.clear();
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
 
-        final Iterator<K> it = keys.iterator();
+        Iterator<K> it = keys.iterator();
         try {
             it.remove();
             fail();
-        } catch (final UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException e) {
         }
     }
 

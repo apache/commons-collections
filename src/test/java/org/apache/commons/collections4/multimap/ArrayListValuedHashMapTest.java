@@ -51,7 +51,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
     public void testListValuedMapAdd() {
         final ListValuedMap<K, V> listMap = makeObject();
         assertTrue(listMap.get((K) "whatever") instanceof List);
-        final List<V> list = listMap.get((K) "A");
+        List<V> list = listMap.get((K) "A");
         list.add((V) "a1");
         assertEquals(1, listMap.size());
         assertTrue(listMap.containsKey("A"));
@@ -60,7 +60,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
     @SuppressWarnings("unchecked")
     public void testListValuedMapAddViaListIterator() {
         final ListValuedMap<K, V> listMap = makeObject();
-        final ListIterator<V> listIt = listMap.get((K) "B").listIterator();
+        ListIterator<V> listIt = listMap.get((K) "B").listIterator();
         assertFalse(listIt.hasNext());
         listIt.add((V) "b1");
         listIt.add((V) "b2");
@@ -74,7 +74,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
     @SuppressWarnings("unchecked")
     public void testListValuedMapRemove() {
         final ListValuedMap<K, V> listMap = makeObject();
-        final List<V> list = listMap.get((K) "A");
+        List<V> list = listMap.get((K) "A");
         list.add((V) "a1");
         list.add((V) "a2");
         list.add((V) "a3");
@@ -110,8 +110,8 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public void testEqualsHashCodeContract() {
-        final MultiValuedMap map1 = makeObject();
-        final MultiValuedMap map2 = makeObject();
+        MultiValuedMap map1 = makeObject();
+        MultiValuedMap map2 = makeObject();
 
         map1.put("a", "a1");
         map1.put("a", "a2");
@@ -127,8 +127,8 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public void testListValuedMapEqualsHashCodeContract() {
-        final ListValuedMap map1 = makeObject();
-        final ListValuedMap map2 = makeObject();
+        ListValuedMap map1 = makeObject();
+        ListValuedMap map2 = makeObject();
 
         map1.put("a", "a1");
         map1.put("a", "a2");

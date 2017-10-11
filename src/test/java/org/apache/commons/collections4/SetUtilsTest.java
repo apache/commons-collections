@@ -68,7 +68,7 @@ public class SetUtilsTest {
                 return o instanceof String;
             }
         };
-        final Set<Object> set = SetUtils.predicatedSet(new HashSet<>(), predicate);
+        Set<Object> set = SetUtils.predicatedSet(new HashSet<>(), predicate);
         assertTrue("returned object should be a PredicatedSet", set instanceof PredicatedSet);
         try {
             SetUtils.predicatedSet(new HashSet<>(), null);
@@ -126,8 +126,8 @@ public class SetUtilsTest {
 
     @Test
     public void testNewIdentityHashSet() {
-        final Set<String> set = SetUtils.newIdentityHashSet();
-        final String a = new String("a");
+        Set<String> set = SetUtils.newIdentityHashSet();
+        String a = new String("a");
         set.add(a);
         set.add(new String("b"));
         set.add(a);
@@ -154,14 +154,14 @@ public class SetUtilsTest {
         try {
             SetUtils.union(setA, null);
             fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
+        } catch (NullPointerException npe) {
             // expected
         }
 
         try {
             SetUtils.union(null, setA);
             fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
+        } catch (NullPointerException npe) {
             // expected
         }
     }
@@ -172,7 +172,7 @@ public class SetUtilsTest {
         assertEquals(2, set.size());
         assertTrue(set.contains(1));
         assertTrue(set.contains(2));
-        for (final Integer i : setB) {
+        for (Integer i : setB) {
             assertFalse(set.contains(i));
         }
 
@@ -182,14 +182,14 @@ public class SetUtilsTest {
         try {
             SetUtils.difference(setA, null);
             fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
+        } catch (NullPointerException npe) {
             // expected
         }
 
         try {
             SetUtils.difference(null, setA);
             fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
+        } catch (NullPointerException npe) {
             // expected
         }
     }
@@ -212,14 +212,14 @@ public class SetUtilsTest {
         try {
             SetUtils.intersection(setA, null);
             fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
+        } catch (NullPointerException npe) {
             // expected
         }
 
         try {
             SetUtils.intersection(null, setA);
             fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
+        } catch (NullPointerException npe) {
             // expected
         }
     }
@@ -242,14 +242,14 @@ public class SetUtilsTest {
         try {
             SetUtils.disjunction(setA, null);
             fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
+        } catch (NullPointerException npe) {
             // expected
         }
 
         try {
             SetUtils.disjunction(null, setA);
             fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
+        } catch (NullPointerException npe) {
             // expected
         }
     }

@@ -40,7 +40,7 @@ public class QueueUtilsTest {
 
     @Test
     public void testUnmodifiableQueue() {
-        final Queue<Object> queue = QueueUtils.unmodifiableQueue(new LinkedList<>());
+        Queue<Object> queue = QueueUtils.unmodifiableQueue(new LinkedList<>());
         assertTrue("Returned object should be an UnmodifiableQueue.", queue instanceof UnmodifiableQueue);
         try {
             QueueUtils.unmodifiableQueue(null);
@@ -54,7 +54,7 @@ public class QueueUtilsTest {
 
     @Test
     public void testPredicatedQueue() {
-        final Queue<Object> queue = QueueUtils.predicatedQueue(new LinkedList<>(), truePredicate);
+        Queue<Object> queue = QueueUtils.predicatedQueue(new LinkedList<>(), truePredicate);
         assertTrue("Returned object should be a PredicatedQueue.", queue instanceof PredicatedQueue);
         try {
             QueueUtils.predicatedQueue(null, truePredicate);
@@ -72,7 +72,7 @@ public class QueueUtilsTest {
 
     @Test
     public void testTransformedQueue() {
-        final Queue<Object> queue = QueueUtils.transformingQueue(new LinkedList<>(), nopTransformer);
+        Queue<Object> queue = QueueUtils.transformingQueue(new LinkedList<>(), nopTransformer);
         assertTrue("Returned object should be an TransformedQueue.", queue instanceof TransformedQueue);
         try {
             QueueUtils.transformingQueue(null, nopTransformer);
@@ -90,7 +90,7 @@ public class QueueUtilsTest {
 
     @Test
     public void testEmptyQueue() {
-        final Queue<Object> queue = QueueUtils.emptyQueue();
+        Queue<Object> queue = QueueUtils.emptyQueue();
         assertTrue("Returned object should be an UnmodifiableQueue.", queue instanceof UnmodifiableQueue);
         assertTrue("Returned queue is not empty.", queue.isEmpty());
 

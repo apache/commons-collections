@@ -90,7 +90,7 @@ public abstract class AbstractSortedMapTest<K, V> extends AbstractMapTest<K, V> 
     public void testLastKey() {
         final SortedMap<K, V> sm = makeFullMap();
         K obj = null;
-        for (final K k : sm.keySet()) {
+        for (K k : sm.keySet()) {
             obj = k;
         }
         assertSame(obj, sm.lastKey());

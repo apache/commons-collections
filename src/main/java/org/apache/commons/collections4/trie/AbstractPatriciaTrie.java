@@ -2260,8 +2260,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
         @Override
         public void clear() {
-            final Iterator<Map.Entry<K, V>> it = AbstractPatriciaTrie.this.entrySet().iterator();
-            final Set<K> currentKeys = keySet();
+            Iterator<Map.Entry<K, V>> it = AbstractPatriciaTrie.this.entrySet().iterator();
+            Set<K> currentKeys = keySet();
             while (it.hasNext()) {
                 if (currentKeys.contains(it.next().getKey())) {
                     it.remove();
@@ -2427,10 +2427,10 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
     private void readObject(final ObjectInputStream stream) throws IOException, ClassNotFoundException{
         stream.defaultReadObject();
         root = new TrieEntry<>(null, null, -1);
-        final int size = stream.readInt();
+        int size = stream.readInt();
         for(int i = 0; i < size; i++){
-            final K k = (K) stream.readObject();
-            final V v = (V) stream.readObject();
+            K k = (K) stream.readObject();
+            V v = (V) stream.readObject();
             put(k, v);
         }
     }

@@ -273,20 +273,20 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         // when initializing the TreeList with another collection
 
         for (int size = 1; size < 1000; size++) {
-            final List<Integer> other = new ArrayList<>(size);
+            List<Integer> other = new ArrayList<>(size);
             for (int i = 0; i < size; i++) {
                 other.add(i);
             }
-            final TreeList<Integer> l = new TreeList<>(other);
-            final ListIterator<Integer> it = l.listIterator();
+            TreeList<Integer> l = new TreeList<>(other);
+            ListIterator<Integer> it = l.listIterator();
             int i = 0;
             while (it.hasNext()) {
-                final Integer val = it.next();
+                Integer val = it.next();
                 assertEquals(i++, val.intValue());
             }
 
             while (it.hasPrevious()) {
-                final Integer val = it.previous();
+                Integer val = it.previous();
                 assertEquals(--i, val.intValue());
             }
         }
@@ -301,28 +301,28 @@ public class TreeListTest<E> extends AbstractListTest<E> {
         // to simulate different cases in addAll, do different runs where
         // the number of elements already in the list and being added by addAll differ
 
-        final int size = 1000;
+        int size = 1000;
         for (int i = 0; i < 100; i++) {
-            final List<Integer> other = new ArrayList<>(size);
+            List<Integer> other = new ArrayList<>(size);
             for (int j = i; j < size; j++) {
                 other.add(j);
             }
-            final TreeList<Integer> l = new TreeList<>();
+            TreeList<Integer> l = new TreeList<>();
             for (int j = 0; j < i; j++) {
                 l.add(j);
             }
 
             l.addAll(other);
 
-            final ListIterator<Integer> it = l.listIterator();
+            ListIterator<Integer> it = l.listIterator();
             int cnt = 0;
             while (it.hasNext()) {
-                final Integer val = it.next();
+                Integer val = it.next();
                 assertEquals(cnt++, val.intValue());
             }
 
             while (it.hasPrevious()) {
-                final Integer val = it.previous();
+                Integer val = it.previous();
                 assertEquals(--cnt, val.intValue());
             }
         }

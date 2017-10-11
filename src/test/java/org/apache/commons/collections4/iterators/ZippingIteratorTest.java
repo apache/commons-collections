@@ -100,7 +100,7 @@ public class ZippingIteratorTest extends AbstractIteratorTest<Integer> {
         final ZippingIterator<Integer> iter = new ZippingIterator<>(odds.iterator(), evens.iterator());
         for (int i = 0, j = 0; i < 20; i++) {
             assertTrue(iter.hasNext());
-            final int val = iter.next();
+            int val = iter.next();
             if (i % 2 == 0) {
                 assertEquals(odds.get(j).intValue(), val);
             } else {
