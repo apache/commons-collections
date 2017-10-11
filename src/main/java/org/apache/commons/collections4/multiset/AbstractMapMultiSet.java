@@ -81,7 +81,7 @@ public abstract class AbstractMapMultiSet<E> extends AbstractMultiSet<E> {
      *
      * @param map the map to wrap
      */
-    protected void setMap(Map<E, MutableInteger> map) {
+    protected void setMap(final Map<E, MutableInteger> map) {
         this.map = map;
     }
 

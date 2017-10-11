@@ -1798,7 +1798,7 @@ public class MapUtils {
      * @param map a Map or null
      * @return the given map size or 0 if the map is null
      */
-    public static int size(Map<?, ?> map) {
+    public static int size(final Map<?, ?> map) {
         return map == null ? 0 : map.size();
     }
 

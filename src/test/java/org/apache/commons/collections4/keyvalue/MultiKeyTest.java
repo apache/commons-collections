@@ -258,7 +258,7 @@ public class MultiKeyTest extends TestCase {
 
         private static final long serialVersionUID = 1928896152249821416L;
 
-        public DerivedMultiKey(T key1, T key2) {
+        public DerivedMultiKey(final T key1, final T key2) {
             super(key1, key2);
         }
 

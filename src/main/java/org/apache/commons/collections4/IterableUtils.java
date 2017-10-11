@@ -172,7 +172,7 @@ public class IterableUtils {
             public Iterator<E> iterator() {
                 return new LazyIteratorChain<E>() {
                     @Override
-                    protected Iterator<? extends E> nextIterator(int count) {
+                    protected Iterator<? extends E> nextIterator(final int count) {
                         if (count > iterables.length) {
                             return null;
                         } else {
@@ -325,7 +325,7 @@ public class IterableUtils {
             public Iterator<E> iterator() {
                 return new LazyIteratorChain<E>() {
                     @Override
-                    protected Iterator<? extends E> nextIterator(int count) {
+                    protected Iterator<? extends E> nextIterator(final int count) {
                         if (IterableUtils.isEmpty(iterable)) {
                             return null;
                         } else {

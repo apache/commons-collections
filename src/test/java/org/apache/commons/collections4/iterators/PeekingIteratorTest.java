@@ -134,7 +134,7 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         }
     }
 
-    private void validate(Iterator<E> iter, E... items) {
+    private void validate(final Iterator<E> iter, final E... items) {
         for (E x : items) {
             assertTrue(iter.hasNext());
             assertEquals(x, iter.next());

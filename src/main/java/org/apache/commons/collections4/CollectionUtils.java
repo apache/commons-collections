@@ -923,7 +923,7 @@ public class CollectionUtils {
      * @since 4.1
      */
     public static <O, R extends Collection<? super O>> R select(final Iterable<? extends O> inputCollection,
-            final Predicate<? super O> predicate, R outputCollection, R rejectedCollection) {
+            final Predicate<? super O> predicate, final R outputCollection, final R rejectedCollection) {
 
         if (inputCollection != null && predicate != null) {
             for (final O element : inputCollection) {
@@ -1506,8 +1506,8 @@ public class CollectionUtils {
      * @throws NullPointerException if either collection is null
      * @since 4.0
      */
-    public static <O extends Comparable<? super O>> List<O> collate(Iterable<? extends O> a,
-                                                                    Iterable<? extends O> b) {
+    public static <O extends Comparable<? super O>> List<O> collate(final Iterable<? extends O> a,
+                                                                    final Iterable<? extends O> b) {
         return collate(a, b, ComparatorUtils.<O>naturalComparator(), true);
     }
 
@@ -1688,7 +1688,7 @@ public class CollectionUtils {
 
         final Transformer<E, EquatorWrapper<E>> transformer = new Transformer<E, EquatorWrapper<E>>() {
             @Override
-            public EquatorWrapper<E> transform(E input) {
+            public EquatorWrapper<E> transform(final E input) {
                 return new EquatorWrapper<>(equator, input);
             }
         };
@@ -1764,7 +1764,7 @@ public class CollectionUtils {
 
         final Transformer<E, EquatorWrapper<E>> transformer = new Transformer<E, EquatorWrapper<E>>() {
             @Override
-            public EquatorWrapper<E> transform(E input) {
+            public EquatorWrapper<E> transform(final E input) {
                 return new EquatorWrapper<>(equator, input);
             }
         };

@@ -60,7 +60,7 @@ public final class UnmodifiableMultiValuedMap<K, V>
      */
     @SuppressWarnings("unchecked")
     public static <K, V> UnmodifiableMultiValuedMap<K, V> unmodifiableMultiValuedMap(
-            MultiValuedMap<? extends K, ? extends V> map) {
+            final MultiValuedMap<? extends K, ? extends V> map) {
         if (map instanceof Unmodifiable) {
             return (UnmodifiableMultiValuedMap<K, V>) map;
         }

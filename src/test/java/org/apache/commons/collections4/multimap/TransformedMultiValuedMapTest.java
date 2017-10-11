@@ -33,7 +33,7 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  */
 public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
-    public TransformedMultiValuedMapTest(String testName) {
+    public TransformedMultiValuedMapTest(final String testName) {
         super(testName);
     }
 

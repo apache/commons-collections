@@ -118,7 +118,7 @@ public class PredicatedMultiSet<E> extends PredicatedCollection<E> implements Mu
     }
 
     @Override
-    public int setCount(E object, int count) {
+    public int setCount(final E object, final int count) {
         validate(object);
         return decorated().setCount(object, count);
     }

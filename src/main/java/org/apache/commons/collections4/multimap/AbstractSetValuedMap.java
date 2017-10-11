@@ -48,7 +48,7 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
      * @param map  the map to wrap, must not be null
      * @throws NullPointerException if the map is null
      */
-    protected AbstractSetValuedMap(Map<K, ? extends Set<V>> map) {
+    protected AbstractSetValuedMap(final Map<K, ? extends Set<V>> map) {
         super(map);
     }
 
@@ -95,7 +95,7 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
      *   unmodifiable set for no mapping found.
      */
     @Override
-    public Set<V> remove(Object key) {
+    public Set<V> remove(final Object key) {
         return SetUtils.emptyIfNull(getMap().remove(key));
     }
 
@@ -111,7 +111,7 @@ public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<
         }
 
         @Override
-        public boolean equals(Object other) {
+        public boolean equals(final Object other) {
             final Set<V> set = (Set<V>) getMapping();
             if (set == null) {
                 return Collections.emptySet().equals(other);

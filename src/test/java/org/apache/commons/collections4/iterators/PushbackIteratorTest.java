@@ -109,7 +109,7 @@ public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
         validate(iter, "c");
     }
 
-    private void validate(Iterator<E> iter, Object... items) {
+    private void validate(final Iterator<E> iter, final Object... items) {
         for (final Object x : items) {
             assertTrue(iter.hasNext());
             assertEquals(x, iter.next());
