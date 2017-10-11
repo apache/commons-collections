@@ -1119,7 +1119,7 @@ public class IteratorUtilsTest {
     @Test
     public void testGetIterator() {
     	final Object[] objArray = {"a", "b", "c"};
-        final Map<String, String> inMap = new HashMap<String, String>();
+        final Map<String, String> inMap = new HashMap<>();
         final Node[] nodes = createNodes();
         final NodeList nodeList = createNodeList(nodes); 
         		
