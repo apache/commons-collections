@@ -950,12 +950,12 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         final Map<String, Double> in = new HashMap<>();
         in.put("key", 2.0);
         
-        assertEquals(MapUtils.getDoubleValue(in,"key", 0.0), 2.0, 0);
-        assertEquals(MapUtils.getDoubleValue(in,"key"), 2.0, 0);
-        assertEquals(MapUtils.getDoubleValue(in,"noKey", 1.0), 1.0, 0);
-        assertEquals(MapUtils.getDoubleValue(in,"noKey"), 0, 0);
-        assertEquals(MapUtils.getDouble(in,"key", 0.0), 2.0, 0);
-        assertEquals(MapUtils.getDouble(in,"noKey", 1.0), 1.0, 0);
+        assertEquals(2.0, MapUtils.getDoubleValue(in,"key", 0.0), 0);
+        assertEquals(2.0, MapUtils.getDoubleValue(in,"key"), 0);
+        assertEquals(1.0, MapUtils.getDoubleValue(in,"noKey", 1.0), 0);
+        assertEquals(0, MapUtils.getDoubleValue(in,"noKey"), 0);
+        assertEquals(2.0, MapUtils.getDouble(in,"key", 0.0), 0);
+        assertEquals(1.0, MapUtils.getDouble(in,"noKey", 1.0), 0);
 
         
         final Map<String, String> inStr = new HashMap<>();
@@ -970,12 +970,12 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         final Map<String, Float> in = new HashMap<>();
         in.put("key", 2.0f);
 
-        assertEquals(MapUtils.getFloatValue(in,"key", 0.0f), 2.0, 0);
-        assertEquals(MapUtils.getFloatValue(in,"key"), 2.0, 0);
-        assertEquals(MapUtils.getFloatValue(in,"noKey", 1.0f), 1.0, 0);
-        assertEquals(MapUtils.getFloatValue(in,"noKey"), 0, 0);
-        assertEquals(MapUtils.getFloat(in,"key", 0.0f), 2.0, 0);
-        assertEquals(MapUtils.getFloat(in,"noKey", 1.0f), 1.0, 0);
+        assertEquals(2.0, MapUtils.getFloatValue(in,"key", 0.0f), 0);
+        assertEquals(2.0, MapUtils.getFloatValue(in,"key"), 0);
+        assertEquals(1.0, MapUtils.getFloatValue(in,"noKey", 1.0f), 0);
+        assertEquals(0, MapUtils.getFloatValue(in,"noKey"), 0);
+        assertEquals(2.0, MapUtils.getFloat(in,"key", 0.0f), 0);
+        assertEquals(1.0, MapUtils.getFloat(in,"noKey", 1.0f), 0);
         
         final Map<String, String> inStr = new HashMap<>();
         char decimalSeparator = getDecimalSeparator();
@@ -989,12 +989,12 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         final Map<String, Long> in = new HashMap<>();
         in.put("key", 2L);
         
-        assertEquals(MapUtils.getLongValue(in,"key", 0L), 2.0, 0);
-        assertEquals(MapUtils.getLongValue(in,"key"), 2.0, 0);
-        assertEquals(MapUtils.getLongValue(in,"noKey", 1L), 1, 0);
-        assertEquals(MapUtils.getLongValue(in,"noKey"), 0, 0);
-        assertEquals(MapUtils.getLong(in,"key", 0L), 2.0, 0);
-        assertEquals(MapUtils.getLong(in,"noKey", 1L), 1, 0);
+        assertEquals(2.0, MapUtils.getLongValue(in,"key", 0L), 0);
+        assertEquals(2.0, MapUtils.getLongValue(in,"key"), 0);
+        assertEquals(1, MapUtils.getLongValue(in,"noKey", 1L), 0);
+        assertEquals(0, MapUtils.getLongValue(in,"noKey"), 0);
+        assertEquals(2.0, MapUtils.getLong(in,"key", 0L), 0);
+        assertEquals(1, MapUtils.getLong(in,"noKey", 1L), 0);
         
         final Map<String, String> inStr = new HashMap<>();
         inStr.put("str1", "2");
@@ -1009,12 +1009,12 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         final Map<String, Integer> in = new HashMap<>();
         in.put("key", 2);
 
-        assertEquals(MapUtils.getIntValue(in,"key", 0), 2, 0);
-        assertEquals(MapUtils.getIntValue(in,"key"), 2, 0);
-        assertEquals(MapUtils.getIntValue(in,"noKey", 0), 0, 0);
-        assertEquals(MapUtils.getIntValue(in,"noKey"), 0, 0);
-        assertEquals(MapUtils.getInteger(in,"key", 0), 2, 0);
-        assertEquals(MapUtils.getInteger(in,"noKey", 0), 0, 0);
+        assertEquals(2, MapUtils.getIntValue(in,"key", 0), 0);
+        assertEquals(2, MapUtils.getIntValue(in,"key"), 0);
+        assertEquals(0, MapUtils.getIntValue(in,"noKey", 0), 0);
+        assertEquals(0, MapUtils.getIntValue(in,"noKey"), 0);
+        assertEquals(2, MapUtils.getInteger(in,"key", 0), 0);
+        assertEquals(0, MapUtils.getInteger(in,"noKey", 0), 0);
         
         final Map<String, String> inStr = new HashMap<>();
         inStr.put("str1", "2");
@@ -1028,12 +1028,12 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         final short val = 10;
         in.put("key", val);
 
-        assertEquals(MapUtils.getShortValue(in,"key", val), val, 0);
-        assertEquals(MapUtils.getShortValue(in,"key"), val, 0);
-        assertEquals(MapUtils.getShortValue(in,"noKey", val), val, 0);
-        assertEquals(MapUtils.getShortValue(in,"noKey"), 0, 0);
-        assertEquals(MapUtils.getShort(in,"key", val), val, 0);
-        assertEquals(MapUtils.getShort(in,"noKey", val), val, 0);
+        assertEquals(val, MapUtils.getShortValue(in,"key", val), 0);
+        assertEquals(val, MapUtils.getShortValue(in,"key"), 0);
+        assertEquals(val, MapUtils.getShortValue(in,"noKey", val), 0);
+        assertEquals(0, MapUtils.getShortValue(in,"noKey"), 0);
+        assertEquals(val, MapUtils.getShort(in,"key", val), 0);
+        assertEquals(val,MapUtils.getShort(in,"noKey", val), 0);
 
         final Map<String, String> inStr = new HashMap<>();
         inStr.put("str1", "10");
@@ -1047,12 +1047,12 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         final byte val = 100;
         in.put("key", val);
         
-        assertEquals(MapUtils.getByteValue(in,"key", val), val, 0);
-        assertEquals(MapUtils.getByteValue(in,"key"), val, 0);
-        assertEquals(MapUtils.getByteValue(in,"noKey", val), val, 0);
-        assertEquals(MapUtils.getByteValue(in,"noKey"), 0, 0);
-        assertEquals(MapUtils.getByte(in,"key", val), val, 0);
-        assertEquals(MapUtils.getByte(in,"noKey", val), val, 0);
+        assertEquals(val, MapUtils.getByteValue(in,"key", val), 0);
+        assertEquals(val, MapUtils.getByteValue(in,"key"), 0);
+        assertEquals(val, MapUtils.getByteValue(in,"noKey", val), 0);
+        assertEquals(0, MapUtils.getByteValue(in,"noKey"), 0);
+        assertEquals(val, MapUtils.getByte(in,"key", val), 0);
+        assertEquals(val, MapUtils.getByte(in,"noKey", val), 0);
 
         
         final Map<String, String> inStr = new HashMap<>();
@@ -1067,8 +1067,8 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         final Number val = 1000;
         in.put("key", val);
         
-        assertEquals(MapUtils.getNumber(in,"key", val).intValue(), val.intValue(), 0);
-        assertEquals(MapUtils.getNumber(in,"noKey", val).intValue(), val.intValue(), 0);
+        assertEquals(val.intValue(), MapUtils.getNumber(in,"key", val).intValue(), 0);
+        assertEquals(val.intValue(), MapUtils.getNumber(in,"noKey", val).intValue(), 0);
         
     }
     
@@ -1077,11 +1077,11 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         final Map<String, String> in = new HashMap<>();
         in.put("key", "str");
         
-        assertEquals(MapUtils.getString(in,"key", "defualt"), "str");
-        assertEquals(MapUtils.getString(in,"key"), "str");
-        assertEquals(MapUtils.getString(null,"key"), null);
-        assertEquals(MapUtils.getString(in,"noKey", "default"), "default");
-        assertEquals(MapUtils.getString(null,"noKey", "default"), "default");
+        assertEquals("str", MapUtils.getString(in,"key", "defualt"));
+        assertEquals("str", MapUtils.getString(in,"key"));
+        assertEquals(null, MapUtils.getString(null,"key"));
+        assertEquals("default", MapUtils.getString(in,"noKey", "default"));
+        assertEquals("default", MapUtils.getString(null,"noKey", "default"));
  
     }
     
@@ -1090,11 +1090,11 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         final Map<String, Object> in = new HashMap<>();
         in.put("key", "str");
         
-        assertEquals(MapUtils.getObject(in,"key", "defualt"), "str");
-        assertEquals(MapUtils.getObject(in,"key"), "str");
-        assertEquals(MapUtils.getObject(null,"key"), null);
-        assertEquals(MapUtils.getObject(in,"noKey", "default"), "default");
-        assertEquals(MapUtils.getObject(null,"noKey", "default"), "default");
+        assertEquals("str", MapUtils.getObject(in,"key", "defualt"));
+        assertEquals("str", MapUtils.getObject(in,"key"));
+        assertEquals(null, MapUtils.getObject(null,"key"));
+        assertEquals("default", MapUtils.getObject(in,"noKey", "default"));
+        assertEquals("default", MapUtils.getObject(null,"noKey", "default"));
    
     }
     
@@ -1109,7 +1109,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertTrue(!MapUtils.getBooleanValue(in,"noKey"));
         assertTrue(MapUtils.getBoolean(in,"key", true));
         assertTrue(MapUtils.getBoolean(in,"noKey", true));
-        assertEquals(MapUtils.getBoolean(null,"noKey"),null);
+        assertEquals(null, MapUtils.getBoolean(null,"noKey"));
 
 
         
@@ -1130,10 +1130,10 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         in.put("key1", valMap);
         final Map<?, ?> outValue =  MapUtils.getMap(in,"key1", null);
         
-        assertEquals( outValue.get("key1"), "value1");
-        assertEquals( outValue.get("key2"), null);
-        assertEquals( MapUtils.getMap(in,"key2", null), null);
-        assertEquals( MapUtils.getMap(null,"key2", null), null);
+        assertEquals("value1", outValue.get("key1"));
+        assertEquals(null, outValue.get("key2"));
+        assertEquals(null, MapUtils.getMap(in,"key2", null));
+        assertEquals(null, MapUtils.getMap(null,"key2", null));
     }
     
     @Test
@@ -1143,8 +1143,8 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         
         MapUtils.safeAddToMap(inMap,"key1", "value1");
         MapUtils.safeAddToMap(inMap,"key2", null);
-        assertEquals( inMap.get("key1"), "value1");
-        assertEquals( inMap.get("key2"), ""); 
+        assertEquals("value1", inMap.get("key1"));
+        assertEquals("", inMap.get("key2")); 
     }
     
     @Test
