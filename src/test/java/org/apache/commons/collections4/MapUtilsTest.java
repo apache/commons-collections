@@ -24,6 +24,8 @@ import static org.junit.Assert.fail;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -31,6 +33,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListResourceBundle;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -38,6 +41,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import org.apache.commons.collections4.collection.TransformedCollectionTest;
+import org.apache.commons.collections4.junit.AbstractAvailableLocalesTest;
 import org.apache.commons.collections4.keyvalue.DefaultKeyValue;
 import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
 import org.apache.commons.collections4.map.HashedMap;
@@ -51,7 +55,11 @@ import org.junit.Test;
  *
  */
 @SuppressWarnings("boxing")
-public class MapUtilsTest {
+public class MapUtilsTest extends AbstractAvailableLocalesTest {
+
+    public MapUtilsTest(Locale locale) {
+        super(locale);
+    }
 
     public Predicate<Object> getPredicate() {
         return new Predicate<Object>() {
@@ -951,7 +959,8 @@ public class MapUtilsTest {
 
         
         final Map<String, String> inStr = new HashMap<>();
-        inStr.put("str1", "2.0");
+        char decimalSeparator = getDecimalSeparator();
+        inStr.put("str1", "2" + decimalSeparator + "0");
         
         assertEquals(MapUtils.getDoubleValue(inStr,"str1", 0.0), 2.0, 0);
     }
@@ -969,9 +978,10 @@ public class MapUtilsTest {
         assertEquals(MapUtils.getFloat(in,"noKey", 1.0f), 1.0, 0);
         
         final Map<String, String> inStr = new HashMap<>();
-        inStr.put("str1", "2.0");
+        char decimalSeparator = getDecimalSeparator();
+        inStr.put("str1", "2" + decimalSeparator + "0");
         
-        assertEquals( MapUtils.getFloatValue(inStr,"str1", 0.0f), 2.0, 0);
+        assertEquals(MapUtils.getFloatValue(inStr,"str1", 0.0f), 2.0, 0);
     }
     
     @Test
@@ -1145,5 +1155,14 @@ public class MapUtilsTest {
         Map<String, String> map = MapUtils.orderedMap(inMap);
         assertTrue("returned object should be a OrderedMap", map instanceof OrderedMap);
     }
-    
+
+    private char getDecimalSeparator() {
+        NumberFormat numberFormat = NumberFormat.getInstance();
+        if (numberFormat instanceof DecimalFormat) {
+            return ((DecimalFormat) numberFormat).getDecimalFormatSymbols().getDecimalSeparator();
+        }
+        return '.';
+    }
+
+
 }
