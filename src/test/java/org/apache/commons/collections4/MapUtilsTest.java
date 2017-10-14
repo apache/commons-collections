@@ -1120,7 +1120,7 @@ public class MapUtilsTest {
         in.put("key1", valMap);
         final Map<?, ?> outValue =  MapUtils.getMap(in,"key1", null);
         
-        assertEquals("value1", outValue.get("key1") );
+        assertEquals("value1", outValue.get("key1"));
         assertEquals(null, outValue.get("key2"));
         assertEquals(null, MapUtils.getMap(in,"key2", null));
         assertEquals(null, MapUtils.getMap(null,"key2", null));
