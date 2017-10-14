@@ -29,7 +29,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
  * Test class for {@link CollectionBag}.
  * <p>
  * Note: This test is mainly for serialization support, the CollectionBag decorator
- * is extensively used and tested in AbstractBagTest. 
+ * is extensively used and tested in AbstractBagTest.
  *
  * @since 4.0
  */
@@ -45,7 +45,7 @@ public class CollectionBagTest<T> extends AbstractCollectionTest<T> {
     }
 
     //-----------------------------------------------------------------------
-    
+
     @Override
     public Bag<T> makeObject() {
         return CollectionBag.collectionBag(new HashBag<T>());

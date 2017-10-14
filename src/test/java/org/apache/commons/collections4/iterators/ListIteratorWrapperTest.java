@@ -136,7 +136,7 @@ public class ListIteratorWrapperTest<E> extends AbstractIteratorTest<E> {
         //like we never started iterating:
         assertEquals(-1, iter.previousIndex());
         assertEquals(0, iter.nextIndex());
- 
+
         try {
             iter.remove();
             fail("ListIteratorWrapper#remove() should fail; must be repositioned first");

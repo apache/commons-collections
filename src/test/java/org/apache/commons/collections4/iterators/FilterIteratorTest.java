@@ -74,7 +74,7 @@ public class FilterIteratorTest<E> extends AbstractIteratorTest<E> {
     /**
      * Returns an array with elements wrapped in a pass-through
      * FilterIterator
-     * 
+     *
      * @return a filtered iterator
      */
     @Override

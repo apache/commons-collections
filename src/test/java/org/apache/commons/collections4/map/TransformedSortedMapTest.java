@@ -57,7 +57,7 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
                     preTailMap + "bulkTestMapEntrySet.testCollectionIteratorRemove",
                     preTailMap + "bulkTestMapEntrySet.testCollectionRemoveAll",
                     preTailMap + "bulkTestMapKeySet.testCollectionIteratorRemove",
-                    preTailMap + "bulkTestMapKeySet.testCollectionRemoveAll",                    
+                    preTailMap + "bulkTestMapKeySet.testCollectionRemoveAll",
                     preTailMap + "bulkTestMapValues.testCollectionClear",
                     preTailMap + "bulkTestMapValues.testCollectionRemoveAll",
                     preTailMap + "bulkTestMapValues.testCollectionRetainAll"

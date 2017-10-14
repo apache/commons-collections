@@ -28,7 +28,7 @@ import org.apache.commons.collections4.IteratorUtils;
 /**
  * Extension of {@link AbstractSetTest} for exercising the
  * {@link ListOrderedSet} implementation.
- * 
+ *
  * @since 3.0
  */
 public class ListOrderedSetTest<E>

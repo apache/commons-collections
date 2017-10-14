@@ -166,7 +166,7 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
                     preTail + "bulkTestMapEntrySet.testCollectionIteratorRemove",
                     preTail + "bulkTestMapEntrySet.testCollectionRemoveAll",
                     preTail + "bulkTestMapKeySet.testCollectionIteratorRemove",
-                    preTail + "bulkTestMapKeySet.testCollectionRemoveAll",                    
+                    preTail + "bulkTestMapKeySet.testCollectionRemoveAll",
                     preTail + "bulkTestMapValues.testCollectionClear",
                     preTail + "bulkTestMapValues.testCollectionRemoveAll",
                     preTail + "bulkTestMapValues.testCollectionRetainAll"

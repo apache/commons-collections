@@ -253,7 +253,7 @@ public class MultiKeyTest extends TestCase {
         final MultiKey<?> mk2 = new MultiKey<Object>(ONE, sysKey);
         assertEquals(TWO, map2.get(mk2));
     }
-    
+
     static class DerivedMultiKey<T> extends MultiKey<T> {
 
         private static final long serialVersionUID = 1928896152249821416L;
@@ -290,5 +290,5 @@ public class MultiKeyTest extends TestCase {
 
         assertEquals(mk.hashCode(), mk2.hashCode());
     }
-    
+
 }

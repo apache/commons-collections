@@ -381,7 +381,7 @@ public class FluentIterableTest {
         } catch (NullPointerException npe) {
             // expected
         }
-        
+
         result = FluentIterable
                     .of(Arrays.asList(1, 4, 7))
                     .zip(Arrays.asList(2, 5, 8), Arrays.asList(3, 6, 9))

@@ -27,7 +27,7 @@ import org.apache.commons.collections4.Transformer;
 import org.junit.Test;
 
 /**
- * Extension of {@link AbstractMapTest} for exercising the 
+ * Extension of {@link AbstractMapTest} for exercising the
  * {@link LazyMap} implementation.
  *
  * @since 3.0

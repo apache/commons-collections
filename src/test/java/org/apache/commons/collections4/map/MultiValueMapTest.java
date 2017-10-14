@@ -396,7 +396,7 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
         byte[] bytes = serialize(map1);
         Object result = deserialize(bytes);
         assertEquals(map1, result);
-        
+
         MultiValueMap map2 = MultiValueMap.multiValueMap(new HashMap(), (Class) String.class);
         bytes = serialize(map2);
         try {
@@ -416,16 +416,16 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
         return baos.toByteArray();
     }
-    
+
     private Object deserialize(byte[] data) throws IOException, ClassNotFoundException {
         ByteArrayInputStream bais = new ByteArrayInputStream(data);
         ObjectInputStream iis = new ObjectInputStream(bais);
-        
+
         return iis.readObject();
     }
 
     //-----------------------------------------------------------------------
-    // Manual serialization testing as this class cannot easily 
+    // Manual serialization testing as this class cannot easily
     // extend the AbstractTestMap
     //-----------------------------------------------------------------------
 

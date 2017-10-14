@@ -308,7 +308,7 @@ public class MultiKeyMapTest<K, V> extends AbstractIterableMapTest<MultiKey<? ex
         map.put("a", null, "value5");
         map.put(null, "a", "value6");
         map.put(null, null, "value7");
-        
+
         assertEquals(6, map.size());
         assertEquals("value5", map.get("a", null));
         assertEquals("value4", map.get("a", "z"));

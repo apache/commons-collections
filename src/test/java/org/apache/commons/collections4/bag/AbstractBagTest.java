@@ -54,7 +54,7 @@ import org.apache.commons.collections4.set.AbstractSetTest;
  * <p>
  * In addition to the generic collection tests (prefix testCollection) inherited
  * from AbstractCollectionTest, there are test methods that test the "normal" Bag
- * interface (prefix testBag). For Bag specific tests use the {@link #makeObject()} and 
+ * interface (prefix testBag). For Bag specific tests use the {@link #makeObject()} and
  * {@link #makeFullCollection()} methods instead of {@link #resetEmpty()} and resetFull(),
  * otherwise the collection will be wrapped by a {@link CollectionBag} decorator.
  *
@@ -156,11 +156,11 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
     public void testBagEqualsSelf() {
         final Bag<T> bag = makeObject();
         assertTrue(bag.equals(bag));
-        
+
         if (!isAddSupported()) {
             return;
         }
-        
+
         bag.add((T) "elt");
         assertTrue(bag.equals(bag));
         bag.add((T) "elt"); // again
@@ -198,7 +198,7 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         if (!isRemoveSupported()) {
             return;
         }
-        
+
         final Bag<T> bag = makeObject();
         bag.add((T) "A", 2);
         assertEquals("Should have count of 2", 2, bag.getCount("A"));
@@ -220,7 +220,7 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         if (!isAddSupported()) {
             return;
         }
-        
+
         final Bag<T> bag = makeObject();
 
         assertEquals("Bag does not have at least 1 'A'", false, bag.contains("A"));
@@ -244,7 +244,7 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         if (!isAddSupported()) {
             return;
         }
-        
+
         final Bag<T> bag = makeObject();
         final List<String> known = new ArrayList<>();
         final List<String> known1A = new ArrayList<>();
@@ -298,7 +298,7 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         if (!isAddSupported()) {
             return;
         }
-        
+
         final Bag<T> bag = makeObject();
         assertEquals("Should have 0 total items", 0, bag.size());
         bag.add((T) "A");
@@ -323,7 +323,7 @@ public abstract class AbstractBagTest<T> extends AbstractCollectionTest<T> {
         if (!isAddSupported()) {
             return;
         }
-        
+
         final Bag<T> bag = makeObject();
         bag.add((T) "A");
         bag.add((T) "A");

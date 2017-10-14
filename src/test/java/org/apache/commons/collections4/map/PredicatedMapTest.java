@@ -25,7 +25,7 @@ import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
 
 /**
- * Extension of {@link AbstractMapTest} for exercising the 
+ * Extension of {@link AbstractMapTest} for exercising the
  * {@link PredicatedMap} implementation.
  *
  * @since 3.0

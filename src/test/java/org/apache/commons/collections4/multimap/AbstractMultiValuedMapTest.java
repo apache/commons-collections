@@ -1135,7 +1135,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         public boolean isRemoveSupported() {
             return AbstractMultiValuedMapTest.this.isRemoveSupported();
         }
-        
+
         @Override
         public boolean areEqualElementsDistinguishable() {
             // work-around for a problem with the EntrySet: the entries contain

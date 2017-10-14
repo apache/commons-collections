@@ -36,7 +36,7 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
     private final String[] testArray = { "a", "b", "c" };
 
     private List<E> testList;
-    
+
     public PeekingIteratorTest(final String testName) {
         super(testName);
     }
@@ -67,7 +67,7 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     //-----------------------------------------------------------------------
-    
+
     @Test
     public void testEmpty() {
         Iterator<E> it = makeEmptyIterator();
@@ -99,7 +99,7 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         assertEquals("c", it.next());
         assertFalse(it.hasNext());
     }
-    
+
     @Test
     public void testIteratorExhausted() {
         PeekingIterator<E> it = makeObject();
@@ -108,7 +108,7 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         it.next();
         assertFalse(it.hasNext());
         assertNull(it.peek());
-        
+
         try {
             it.element();
             fail();
@@ -122,10 +122,10 @@ public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
         PeekingIterator<E> it = makeObject();
         it.next();
         it.remove(); // supported
-        
+
         assertTrue(it.hasNext());
         assertEquals("b", it.peek());
-        
+
         try {
             it.remove();
             fail();

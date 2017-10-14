@@ -26,7 +26,7 @@ import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.functors.ConstantFactory;
 
 /**
- * Extension of {@link AbstractMapTest} for exercising the 
+ * Extension of {@link AbstractMapTest} for exercising the
  * {@link DefaultedMap} implementation.
  *
  * @since 3.2

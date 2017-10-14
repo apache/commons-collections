@@ -412,15 +412,15 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final Flat3Map<Integer, Integer> m = new Flat3Map<>();
         m.put( Integer.valueOf(1), Integer.valueOf(1) );
         m.put( Integer.valueOf(0), Integer.valueOf(0) );
-        assertEquals( Integer.valueOf(1), m.remove( Integer.valueOf(1) ) ); 
-        assertEquals( Integer.valueOf(0), m.remove( Integer.valueOf(0) ) ); 
+        assertEquals( Integer.valueOf(1), m.remove( Integer.valueOf(1) ) );
+        assertEquals( Integer.valueOf(0), m.remove( Integer.valueOf(0) ) );
 
         m.put( Integer.valueOf(2), Integer.valueOf(2) );
         m.put( Integer.valueOf(1), Integer.valueOf(1) );
         m.put( Integer.valueOf(0), Integer.valueOf(0) );
-        assertEquals( Integer.valueOf(2), m.remove( Integer.valueOf(2) ) ); 
-        assertEquals( Integer.valueOf(1), m.remove( Integer.valueOf(1) ) ); 
-        assertEquals( Integer.valueOf(0), m.remove( Integer.valueOf(0) ) ); 
+        assertEquals( Integer.valueOf(2), m.remove( Integer.valueOf(2) ) );
+        assertEquals( Integer.valueOf(1), m.remove( Integer.valueOf(1) ) );
+        assertEquals( Integer.valueOf(0), m.remove( Integer.valueOf(0) ) );
     }
 
     public void testToString() {

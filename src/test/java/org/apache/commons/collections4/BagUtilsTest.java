@@ -66,7 +66,7 @@ public class BagUtilsTest {
         } catch (final NullPointerException ex) {
             // expected
         }
-        
+
         assertSame("UnmodifiableBag shall not be decorated", bag, BagUtils.unmodifiableBag(bag));
     }
 
@@ -132,7 +132,7 @@ public class BagUtilsTest {
         } catch (final NullPointerException ex) {
             // expected
         }
-        
+
         assertSame("UnmodifiableSortedBag shall not be decorated", bag, BagUtils.unmodifiableSortedBag(bag));
     }
 

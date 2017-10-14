@@ -256,7 +256,7 @@ public class TransformerUtilsTest {
         // if/else tests
         assertEquals("A", TransformerUtils.<Integer, String>ifTransformer(lessThanFivePredicate, a, b).transform(1));
         assertEquals("B", TransformerUtils.<Integer, String>ifTransformer(lessThanFivePredicate, a, b).transform(5));
-        
+
         // if tests
         Predicate<String> equalsAPredicate = EqualPredicate.equalPredicate("A");
         assertEquals("C", TransformerUtils.<String>ifTransformer(equalsAPredicate, c).transform("A"));
@@ -279,7 +279,7 @@ public class TransformerUtilsTest {
             fail();
         } catch (final NullPointerException ex) {}
     }
-    
+
     // switchTransformer
     //------------------------------------------------------------------
 

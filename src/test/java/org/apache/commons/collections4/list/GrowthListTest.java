@@ -149,7 +149,7 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
             fail("List.set should throw IndexOutOfBoundsException [-1]");
         } catch(final IndexOutOfBoundsException e) {
             // expected
-        } 
+        }
     }
 
     //-----------------------------------------------------------------------

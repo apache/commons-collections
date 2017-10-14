@@ -29,7 +29,7 @@ import org.junit.Test;
 
 /**
  * Tests the PredicatedCollection.Builder class.
- * 
+ *
  * @since 4.1
  */
 public class PredicatedCollectionBuilderTest {
@@ -52,7 +52,7 @@ public class PredicatedCollectionBuilderTest {
         PredicatedCollection.Builder<String> builder = PredicatedCollection.notNullBuilder();
         builder.add((String) null);
         Assert.assertTrue(builder.createPredicatedList().isEmpty());
-        
+
         Assert.assertEquals(1, builder.rejectedElements().size());
     }
 
@@ -74,7 +74,7 @@ public class PredicatedCollectionBuilderTest {
 
         List<String> predicatedList = builder.createPredicatedList();
         checkPredicatedCollection1(predicatedList);
-        
+
         Set<String> predicatedSet = builder.createPredicatedSet();
         checkPredicatedCollection1(predicatedSet);
 
@@ -84,7 +84,7 @@ public class PredicatedCollectionBuilderTest {
         Queue<String> predicatedQueue = builder.createPredicatedQueue();
         checkPredicatedCollection1(predicatedQueue);
     }
-    
+
     private void checkPredicatedCollection1(final Collection<String> collection) {
         Assert.assertEquals(1, collection.size());
 
@@ -110,7 +110,7 @@ public class PredicatedCollectionBuilderTest {
 
         List<Integer> predicatedList = builder.createPredicatedList();
         checkPredicatedCollection2(predicatedList);
-        
+
         Set<Integer> predicatedSet = builder.createPredicatedSet();
         checkPredicatedCollection2(predicatedSet);
 

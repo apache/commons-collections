@@ -25,16 +25,16 @@ import junit.framework.TestCase;
 
 /**
  * Tests the IteratorEnumeration.
- * 
+ *
  */
 public class IteratorEnumerationTest extends TestCase {
-    
+
     public void testEnumeration() {
         Iterator<String> iterator = Arrays.asList("a", "b", "c").iterator();
         IteratorEnumeration<String> enumeration = new IteratorEnumeration<>(iterator);
-        
+
         assertEquals(iterator, enumeration.getIterator());
-        
+
         assertTrue(enumeration.hasMoreElements());
         assertEquals("a", enumeration.nextElement());
         assertEquals("b", enumeration.nextElement());

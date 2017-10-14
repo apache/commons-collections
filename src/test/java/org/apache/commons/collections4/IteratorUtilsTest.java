@@ -184,7 +184,7 @@ public class IteratorUtilsTest {
         list.add(null);
         final Object[] result = IteratorUtils.toArray(list.iterator());
         assertEquals(list, Arrays.asList(result));
-        
+
         try {
         	IteratorUtils.toArray(null);
             fail("Expecting NullPointerException");
@@ -201,14 +201,14 @@ public class IteratorUtilsTest {
         list.add(null);
         final String[] result = IteratorUtils.toArray(list.iterator(), String.class);
         assertEquals(list, Arrays.asList(result));
-        
+
         try {
         	IteratorUtils.toArray(list.iterator(), null);
             fail("Expecting NullPointerException");
         } catch (final NullPointerException ex) {
             // success
         }
-        
+
         try {
         	IteratorUtils.toArray(null, String.class);
             fail("Expecting NullPointerException");
@@ -972,7 +972,7 @@ public class IteratorUtilsTest {
         }
 
         // natural ordering
-        Iterator<Integer> it = 
+        Iterator<Integer> it =
                 IteratorUtils.collatedIterator(null, collectionOdd.iterator(), collectionEven.iterator());
 
         List<Integer> result = IteratorUtils.toList(it);
@@ -1115,14 +1115,14 @@ public class IteratorUtilsTest {
         }
         assertTrue(!iterator.hasNext());
     }
-    
+
     @Test
     public void testGetIterator() {
     	final Object[] objArray = {"a", "b", "c"};
         final Map<String, String> inMap = new HashMap<>();
         final Node[] nodes = createNodes();
-        final NodeList nodeList = createNodeList(nodes); 
-        		
+        final NodeList nodeList = createNodeList(nodes);
+
         assertTrue("returns empty iterator when null passed", IteratorUtils.getIterator(null) instanceof EmptyIterator);
         assertTrue("returns Iterator when Iterator directly ", IteratorUtils.getIterator(iterableA.iterator()) instanceof Iterator);
         assertTrue("returns Iterator when iterable passed", IteratorUtils.getIterator(iterableA) instanceof Iterator);
@@ -1130,9 +1130,9 @@ public class IteratorUtilsTest {
         assertTrue("returns Iterator when Map passed", IteratorUtils.getIterator(inMap) instanceof Iterator);
         assertTrue("returns NodeListIterator when nodeList passed", IteratorUtils.getIterator(nodeList) instanceof NodeListIterator);
         assertTrue("returns EnumerationIterator when Enumeration passed", IteratorUtils.getIterator(new Vector().elements()) instanceof EnumerationIterator);
- 
+
     }
-    
+
     @Test
     public void testToListIterator() {
         final List<Integer> list = new ArrayList<>();

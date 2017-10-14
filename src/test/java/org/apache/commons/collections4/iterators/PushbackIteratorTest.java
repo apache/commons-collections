@@ -27,7 +27,7 @@ import org.junit.Test;
 
 /**
  * Tests the PushbackIterator.
- * 
+ *
  */
 public class PushbackIteratorTest<E> extends AbstractIteratorTest<E> {
 

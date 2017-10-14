@@ -129,7 +129,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertEquals(false, PredicateUtils.notPredicate(TruePredicate.truePredicate()).evaluate(cInteger));
     }
 
-    @Test(expected=NullPointerException.class) 
+    @Test(expected=NullPointerException.class)
     public void testNotPredicateEx() {
         PredicateUtils.notPredicate(null);
     }
@@ -145,7 +145,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertEquals(false, PredicateUtils.andPredicate(FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate()).evaluate(null));
     }
 
-    @Test(expected=NullPointerException.class) 
+    @Test(expected=NullPointerException.class)
     public void testAndPredicateEx() {
         PredicateUtils.andPredicate(null, null);
     }
@@ -195,24 +195,24 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertTrue(AllPredicate.allPredicate(coll), null);
     }
 
-    @Test(expected=NullPointerException.class) 
+    @Test(expected=NullPointerException.class)
     public void testAllPredicateEx1() {
         AllPredicate.allPredicate((Predicate<Object>[]) null);
     }
 
     @SuppressWarnings("unchecked")
-    @Test(expected=NullPointerException.class) 
+    @Test(expected=NullPointerException.class)
     public void testAllPredicateEx2() {
         AllPredicate.<Object>allPredicate(new Predicate[] { null });
     }
 
     @SuppressWarnings("unchecked")
-    @Test(expected=NullPointerException.class) 
+    @Test(expected=NullPointerException.class)
     public void testAllPredicateEx3() {
         AllPredicate.allPredicate(new Predicate[] { null, null });
     }
 
-    @Test(expected=NullPointerException.class) 
+    @Test(expected=NullPointerException.class)
     public void testAllPredicateEx4() {
         AllPredicate.allPredicate((Collection<Predicate<Object>>) null);
     }
@@ -222,7 +222,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         AllPredicate.allPredicate(Collections.<Predicate<Object>>emptyList());
     }
 
-    @Test(expected=NullPointerException.class) 
+    @Test(expected=NullPointerException.class)
     public void testAllPredicateEx6() {
         final Collection<Predicate<Object>> coll = new ArrayList<>();
         coll.add(null);
@@ -241,7 +241,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertEquals(false, PredicateUtils.orPredicate(FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate()).evaluate(null));
     }
 
-    @Test(expected=NullPointerException.class) 
+    @Test(expected=NullPointerException.class)
     public void testOrPredicateEx() {
         PredicateUtils.orPredicate(null, null);
     }
@@ -292,24 +292,24 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertFalse(PredicateUtils.anyPredicate(coll), null);
     }
 
-    @Test(expected=NullPointerException.class) 
+    @Test(expected=NullPointerException.class)
     public void testAnyPredicateEx1() {
         PredicateUtils.anyPredicate((Predicate<Object>[]) null);
     }
 
     @SuppressWarnings("unchecked")
-    @Test(expected=NullPointerException.class) 
+    @Test(expected=NullPointerException.class)
     public void testAnyPredicateEx2() {
         PredicateUtils.anyPredicate(new Predicate[] {null});
     }
 
     @SuppressWarnings("unchecked")
-    @Test(expected=NullPointerException.class) 
+    @Test(expected=NullPointerException.class)
     public void testAnyPredicateEx3() {
         PredicateUtils.anyPredicate(new Predicate[] {null, null});
     }
 
-    @Test(expected=NullPointerException.class) 
+    @Test(expected=NullPointerException.class)
     public void testAnyPredicateEx4() {
         PredicateUtils.anyPredicate((Collection<Predicate<Object>>) null);
     }
@@ -319,7 +319,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         PredicateUtils.anyPredicate(Collections.<Predicate<Object>>emptyList());
     }
 
-    @Test(expected=NullPointerException.class) 
+    @Test(expected=NullPointerException.class)
     public void testAnyPredicateEx6() {
         final Collection<Predicate<Object>> coll = new ArrayList<>();
         coll.add(null);
@@ -338,7 +338,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertEquals(false, PredicateUtils.eitherPredicate(FalsePredicate.falsePredicate(), FalsePredicate.falsePredicate()).evaluate(null));
     }
 
-    @Test(expected=NullPointerException.class) 
+    @Test(expected=NullPointerException.class)
     public void testEitherPredicateEx() {
         PredicateUtils.eitherPredicate(null, null);
     }
@@ -392,7 +392,7 @@ public class PredicateUtilsTest extends AbstractPredicateTest {
         assertFalse(PredicateUtils.onePredicate(coll), null);
     }
 
-    @Test(expected=NullPointerException.class) 
+    @Test(expected=NullPointerException.class)
     public void testOnePredicateEx1() {
         PredicateUtils.onePredicate((Predicate<Object>[]) null);
     }

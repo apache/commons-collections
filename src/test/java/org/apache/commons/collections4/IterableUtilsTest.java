@@ -331,7 +331,7 @@ public class IterableUtilsTest {
     @Test
     public void matchesAny() {
         final List<Integer> list = new ArrayList<>();
-        
+
         try {
             assertFalse(IterableUtils.matchesAny(null, null));
             fail("predicate must not be null");
@@ -414,17 +414,17 @@ public class IterableUtilsTest {
         input.add(4);
         List<List<Integer>> partitions = IterableUtils.partition(input, EQUALS_TWO);
         assertEquals(2, partitions.size());
-        
+
         // first partition contains 2
         Collection<Integer> partition = partitions.get(0);
         assertEquals(1, partition.size());
         assertEquals(2, CollectionUtils.extractSingleton(partition).intValue());
-        
+
         // second partition contains 1, 3, and 4
         Integer[] expected = {1, 3, 4};
         partition = partitions.get(1);
         Assert.assertArrayEquals(expected, partition.toArray());
-        
+
         partitions = IterableUtils.partition((List<Integer>) null, EQUALS_TWO);
         assertEquals(2, partitions.size());
         assertTrue(partitions.get(0).isEmpty());
@@ -456,12 +456,12 @@ public class IterableUtilsTest {
         Collection<Integer> partition = partitions.get(0);
         assertEquals(1, partition.size());
         assertEquals(2, partition.iterator().next().intValue());
-        
+
         // second partition contains 4
         partition = partitions.get(1);
         assertEquals(1, partition.size());
         assertEquals(4, partition.iterator().next().intValue());
-        
+
         // third partition contains 1 and 3
         Integer[] expected = {1, 3};
         partition = partitions.get(2);
@@ -478,7 +478,7 @@ public class IterableUtilsTest {
     public void testToString() {
         String result = IterableUtils.toString(iterableA);
         assertEquals("[1, 2, 2, 3, 3, 3, 4, 4, 4, 4]", result);
-        
+
         result = IterableUtils.toString(new ArrayList<Integer>());
         assertEquals("[]", result);
 
@@ -514,38 +514,38 @@ public class IterableUtilsTest {
 
     @Test
     public void testToStringDelimiter() {
-        
+
         Transformer<Integer, String> transformer = new Transformer<Integer, String>() {
             @Override
             public String transform(Integer input) {
                 return new Integer(input * 2).toString();
             }
         };
-        
+
         String result = IterableUtils.toString(iterableA, transformer, "", "", "");
         assertEquals("2446668888", result);
-        
+
         result = IterableUtils.toString(iterableA, transformer, ",", "", "");
         assertEquals("2,4,4,6,6,6,8,8,8,8", result);
-        
+
         result = IterableUtils.toString(iterableA, transformer, "", "[", "]");
         assertEquals("[2446668888]", result);
-        
+
         result = IterableUtils.toString(iterableA, transformer, ",", "[", "]");
         assertEquals("[2,4,4,6,6,6,8,8,8,8]", result);
-        
+
         result = IterableUtils.toString(iterableA, transformer, ",", "[[", "]]");
         assertEquals("[[2,4,4,6,6,6,8,8,8,8]]", result);
-        
+
         result = IterableUtils.toString(iterableA, transformer, ",,", "[", "]");
         assertEquals("[2,,4,,4,,6,,6,,6,,8,,8,,8,,8]", result);
-        
+
         result = IterableUtils.toString(iterableA, transformer, ",,", "((", "))");
         assertEquals("((2,,4,,4,,6,,6,,6,,8,,8,,8,,8))", result);
 
         result = IterableUtils.toString(new ArrayList<Integer>(), transformer, "", "(", ")");
         assertEquals("()", result);
-        
+
         result = IterableUtils.toString(new ArrayList<Integer>(), transformer, "", "", "");
         assertEquals("", result);
     }

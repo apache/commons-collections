@@ -162,13 +162,13 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
             assertTrue("Queue should contain added element", getCollection().contains(element));
         }
     }
-    
+
     /**
      *  Tests {@link Queue#element()}.
      */
     public void testQueueElement() {
         resetEmpty();
-        
+
         try {
             getCollection().element();
             fail("Queue.element should throw NoSuchElementException");
@@ -193,13 +193,13 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
             }
 
             assertTrue(getConfirmed().contains(element));
-            
+
             getCollection().remove(element);
             getConfirmed().remove(element);
 
             verify();
         }
-        
+
         try {
             getCollection().element();
             fail("Queue.element should throw NoSuchElementException");
@@ -217,7 +217,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         }
 
         resetEmpty();
-        
+
         E element = getCollection().peek();
         assertNull(element);
 
@@ -232,13 +232,13 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
             }
 
             assertTrue(getConfirmed().contains(element));
-            
+
             getCollection().remove(element);
             getConfirmed().remove(element);
 
             verify();
         }
-        
+
         element = getCollection().peek();
         assertNull(element);
     }
@@ -252,7 +252,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         }
 
         resetEmpty();
-        
+
         try {
             getCollection().remove();
             fail("Queue.remove should throw NoSuchElementException");
@@ -269,7 +269,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
             assertTrue("remove should return correct element", success);
             verify();
         }
-        
+
         try {
             getCollection().element();
             fail("Queue.remove should throw NoSuchElementException");
@@ -287,7 +287,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
         }
 
         resetEmpty();
-        
+
         E element = getCollection().poll();
         assertNull(element);
 
@@ -300,7 +300,7 @@ public abstract class AbstractQueueTest<E> extends AbstractCollectionTest<E> {
             assertTrue("poll should return correct element", success);
             verify();
         }
-        
+
         element = getCollection().poll();
         assertNull(element);
     }

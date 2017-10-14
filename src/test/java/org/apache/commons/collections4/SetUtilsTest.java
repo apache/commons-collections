@@ -131,12 +131,12 @@ public class SetUtilsTest {
         set.add(a);
         set.add(new String("b"));
         set.add(a);
-        
+
         assertEquals(2, set.size());
-        
+
         set.add(new String("a"));
         assertEquals(3, set.size());
-        
+
         set.remove(a);
         assertEquals(2, set.size());
     }

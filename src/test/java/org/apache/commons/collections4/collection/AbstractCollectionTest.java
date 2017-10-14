@@ -90,7 +90,7 @@ import org.apache.commons.collections4.AbstractObjectTest;
  * {@link #confirmed}, the {@link #verify()} method is invoked to compare
  * the results.  You may want to override {@link #verify()} to perform
  * additional verifications.  For instance, when testing the collection
- * views of a map, {@link org.apache.commons.collections4.map.AbstractMapTest AbstractTestMap} 
+ * views of a map, {@link org.apache.commons.collections4.map.AbstractMapTest AbstractTestMap}
  * would override {@link #verify()} to make
  * sure the map is changed after the collection view is changed.
  * <p>
@@ -106,7 +106,7 @@ import org.apache.commons.collections4.AbstractObjectTest;
  * <p>
  * If you're extending {@link org.apache.commons.collections4.list.AbstractListTest AbstractListTest},
  * {@link org.apache.commons.collections4.set.AbstractSetTest AbstractTestSet},
- * or {@link org.apache.commons.collections4.bag.AbstractBagTest AbstractBagTest}, 
+ * or {@link org.apache.commons.collections4.bag.AbstractBagTest AbstractBagTest},
  * you probably don't have to worry about the
  * above methods, because those three classes already override the methods
  * to provide standard JDK confirmed collections.<P>

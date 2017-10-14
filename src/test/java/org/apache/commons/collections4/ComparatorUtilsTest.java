@@ -60,7 +60,7 @@ public class ComparatorUtilsTest {
 
         assertEquals(Integer.valueOf(10), ComparatorUtils.max(1, 10, null));
         assertEquals(Integer.valueOf(10), ComparatorUtils.max(10, -10, null));
-        
+
         assertEquals(Integer.valueOf(1), ComparatorUtils.max(1, 10, reversed));
         assertEquals(Integer.valueOf(-10), ComparatorUtils.max(10, -10, reversed));
 
@@ -86,7 +86,7 @@ public class ComparatorUtilsTest {
 
         assertEquals(Integer.valueOf(1), ComparatorUtils.min(1, 10, null));
         assertEquals(Integer.valueOf(-10), ComparatorUtils.min(10, -10, null));
-        
+
         assertEquals(Integer.valueOf(10), ComparatorUtils.min(1, 10, reversed));
         assertEquals(Integer.valueOf(10), ComparatorUtils.min(10, -10, reversed));
 

@@ -1183,7 +1183,7 @@ public class CollectionUtilsTest extends MockTestCase {
         input.add(2);
         input.add(3);
         input.add(4);
-        
+
         List<Integer> output = new ArrayList<>();
         List<Integer> rejected = new ArrayList<>();
 
@@ -1192,11 +1192,11 @@ public class CollectionUtilsTest extends MockTestCase {
         // output contains 2
         assertEquals(1, output.size());
         assertEquals(2, CollectionUtils.extractSingleton(output).intValue());
-        
+
         // rejected contains 1, 3, and 4
         Integer[] expected = {1, 3, 4};
         Assert.assertArrayEquals(expected, rejected.toArray());
-        
+
         output.clear();
         rejected.clear();
         CollectionUtils.select((List<Integer>) null, EQUALS_TWO, output, rejected);

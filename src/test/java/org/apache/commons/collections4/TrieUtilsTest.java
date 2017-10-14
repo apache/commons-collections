@@ -41,7 +41,7 @@ public class TrieUtilsTest {
         } catch (final NullPointerException ex) {
             // expected
         }
-        
+
         assertSame("UnmodifiableTrie shall not be decorated", trie, TrieUtils.unmodifiableTrie(trie));
     }
 

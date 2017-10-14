@@ -281,7 +281,7 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
 
         resetEmpty();
         LRUMap<K, V> lruMap = (LRUMap<K, V>) map;
-        
+
         lruMap.put(keys[0], values[0]);
         lruMap.put(keys[1], values[1]);
         kit = lruMap.keySet().iterator();

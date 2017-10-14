@@ -29,7 +29,7 @@ import org.junit.Test;
 
 /**
  * Tests for QueueUtils factory methods.
- * 
+ *
  */
 public class QueueUtilsTest {
 
@@ -48,7 +48,7 @@ public class QueueUtilsTest {
         } catch (final NullPointerException ex) {
             // expected
         }
-        
+
         assertSame("UnmodifiableQueue shall not be decorated", queue, QueueUtils.unmodifiableQueue(queue));
     }
 

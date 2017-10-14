@@ -23,7 +23,7 @@ import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
 
 /**
- * Extension of {@link AbstractListTest} for exercising the 
+ * Extension of {@link AbstractListTest} for exercising the
  * {@link PredicatedList} implementation.
  *
  * @since 3.0

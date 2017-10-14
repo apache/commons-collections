@@ -50,7 +50,7 @@ import org.apache.commons.collections4.set.AbstractSetTest;
  * <p>
  * In addition to the generic collection tests (prefix testCollection) inherited
  * from AbstractCollectionTest, there are test methods that test the "normal" MultiSet
- * interface (prefix testMultiSet). For MultiSet specific tests use the {@link #makeObject()} and 
+ * interface (prefix testMultiSet). For MultiSet specific tests use the {@link #makeObject()} and
  * {@link #makeFullCollection()} methods instead of {@link #resetEmpty()} and resetFull().
  *
  * @since 4.1
@@ -152,11 +152,11 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
     public void testMultiSetEqualsSelf() {
         final MultiSet<T> multiset = makeObject();
         assertTrue(multiset.equals(multiset));
-        
+
         if (!isAddSupported()) {
             return;
         }
-        
+
         multiset.add((T) "elt");
         assertTrue(multiset.equals(multiset));
         multiset.add((T) "elt"); // again
@@ -194,7 +194,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         if (!isRemoveSupported()) {
             return;
         }
-        
+
         final MultiSet<T> multiset = makeObject();
         multiset.add((T) "A", 2);
         assertEquals("Should have count of 2", 2, multiset.getCount("A"));
@@ -216,7 +216,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         if (!isAddSupported()) {
             return;
         }
-        
+
         final MultiSet<T> multiset = makeObject();
 
         assertEquals("MultiSet does not have at least 1 'A'", false, multiset.contains("A"));
@@ -240,7 +240,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         if (!isAddSupported()) {
             return;
         }
-        
+
         final MultiSet<T> multiset = makeObject();
         final List<String> known = new ArrayList<>();
         final List<String> known1A = new ArrayList<>();
@@ -294,7 +294,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         if (!isAddSupported()) {
             return;
         }
-        
+
         final MultiSet<T> multiset = makeObject();
         assertEquals("Should have 0 total items", 0, multiset.size());
         multiset.add((T) "A");
@@ -319,7 +319,7 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
         if (!isAddSupported()) {
             return;
         }
-        
+
         final MultiSet<T> multiset = makeObject();
         multiset.add((T) "A");
         multiset.add((T) "A");

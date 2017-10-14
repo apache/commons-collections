@@ -95,7 +95,7 @@ public class UnmodifiableOrderedBidiMapTest<K extends Comparable<K>, V extends C
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullMap() instanceof Unmodifiable);
     }
-    
+
     public void testDecorateFactory() {
         final OrderedBidiMap<K, V> map = makeFullMap();
         assertSame(map, UnmodifiableOrderedBidiMap.unmodifiableOrderedBidiMap(map));

@@ -443,5 +443,5 @@ public class PatriciaTrieTest<V> extends AbstractSortedMapTest<String, V> {
 //        writeExternalFormToDisk(
 //            (java.io.Serializable) map,
 //            "src/test/resources/data/test/PatriciaTrie.fullCollection.version4.obj");
-//    }    
+//    }
 }

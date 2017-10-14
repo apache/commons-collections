@@ -71,12 +71,12 @@ public class UnmodifiableCollectionTest<E> extends AbstractCollectionTest<E> {
     }
 
     //-----------------------------------------------------------------------
-    
+
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
-    
+
     public void testDecorateFactory() {
         final Collection<E> coll = makeFullCollection();
         assertSame(coll, UnmodifiableCollection.unmodifiableCollection(coll));

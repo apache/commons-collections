@@ -27,7 +27,7 @@ import org.apache.commons.collections4.list.FixedSizeList;
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link UnmodifiableBoundedCollection} implementation.
- * 
+ *
  */
 public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest<E> {
 
@@ -80,14 +80,14 @@ public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest
     public String getCompatibilityVersion() {
         return "4";
     }
-    
+
     //-----------------------------------------------------------------------
 
     public void testUnmodifiable() {
         assertTrue(makeObject() instanceof Unmodifiable);
         assertTrue(makeFullCollection() instanceof Unmodifiable);
     }
-    
+
     public void testDecorateFactory() {
         final BoundedCollection<E> coll = makeFullCollection();
         assertSame(coll, UnmodifiableBoundedCollection.unmodifiableBoundedCollection(coll));
@@ -97,5 +97,5 @@ public class UnmodifiableBoundedCollectionTest<E> extends AbstractCollectionTest
             fail();
         } catch (final NullPointerException ex) {}
     }
-    
+
 }

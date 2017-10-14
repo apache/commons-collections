@@ -33,7 +33,7 @@ import org.apache.commons.collections4.Unmodifiable;
 
 /**
  * Tests for UnmodifiableMultiValuedMap
- * 
+ *
  * @since 4.1
  */
 public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
@@ -45,7 +45,7 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
     public static Test suite() {
         return BulkTest.makeSuite(UnmodifiableMultiValuedMapTest.class);
     }
-    
+
     // -----------------------------------------------------------------------
     @Override
     public boolean isAddSupported() {

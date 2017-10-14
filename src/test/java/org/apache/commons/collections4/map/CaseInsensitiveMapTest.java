@@ -120,7 +120,7 @@ public class CaseInsensitiveMapTest<K, V> extends AbstractIterableMapTest<K, V> 
 
         final Locale[] locales = { Locale.ENGLISH, new Locale("tr", "", ""), Locale.getDefault() };
 
-        final String[][] data = { 
+        final String[][] data = {
             { "i", "I" },
             { "\u03C2", "\u03C3" },
             { "\u03A3", "\u03C2" },

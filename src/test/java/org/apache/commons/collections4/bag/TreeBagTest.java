@@ -74,7 +74,7 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
         } catch(final NullPointerException npe) {
             // expected;
         }
-        
+
         final Bag<String> bag2 = new TreeBag<>(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
