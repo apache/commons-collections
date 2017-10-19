@@ -21,6 +21,9 @@
   </properties>
   <body>
   <release version="4.2" date="YYYY-MM-DD" description="New features">
+    <action issue="COLLECTIONS-662" dev="chtompki" type="fix" due-to="Vamsi Kavuri">
+        Unit tests MapUtilsTest and ListIteratorWrapperTest no longer fail in java 9
+    </action>
     <action issue="COLLECTIONS-661" dev="kinow" type="fix">
       Intermittent test failures in Windows for HashSetValuedHashMap
     </action>
@@ -49,16 +52,16 @@
       Update platform from Java 6 to Java 7.
     </action>
     <action issue="COLLECTIONS-594" dev="ggregory" type="fix" due-to="Javen O'Neal">
-      Web site spelling error: MultiValuedMapeList. 
+      Web site spelling error: MultiValuedMapeList.
     </action>
     <action issue="COLLECTIONS-597" dev="ggregory" type="fix" due-to="Enrique">
        Correction of javadoc for org.apache.commons.collections4.functors.CatchAndRethrowClosure.
     </action>
     <action issue="COLLECTIONS-589" dev="ggregory" type="add" due-to="Gary Gregory">
-      Add null-safe MapUtils.size(Map&lt;?, ?>) method. 
+      Add null-safe MapUtils.size(Map&lt;?, ?>) method.
     </action>
     <action issue="COLLECTIONS-586" dev="ggregory" type="add" due-to="Shailender Bathula, Gary Gregory">
-      PatriciaTrie prefixMap clear throws NullPointerException. 
+      PatriciaTrie prefixMap clear throws NullPointerException.
     </action>
     <action issue="COLLECTIONS-654" dev="ggregory" type="add">
        Add class SortedProperties to sort keys.
@@ -174,7 +177,7 @@
     </action>
     <action issue="COLLECTIONS-542" dev="tn" type="fix">
       "AbstractHashedMap" still inherits from "AbstractMap", contrary to what
-      the class javadoc stated. The inheritance will now be removed in v5.0. 
+      the class javadoc stated. The inheritance will now be removed in v5.0.
     </action>
     <action issue="COLLECTIONS-539" dev="tn" type="add" due-to="Guram Savinov">
       Changed scope of "CircularFifoQueue#isAtFullCapacity()" to public.
@@ -275,7 +278,7 @@ features, this release includes numerous bug fixes.
       Resolved generic parameter inconsistency for various static fields, e.g. BagUtils.EMPTY_BAG,
       TruePredicate.INSTANCE and many others. All accessible static fields use raw types so that
       they can be used directly without explicit casting. To avoid compiler warnings about unchecked
-      conversion and/or rawtypes use the corresponding factory methods, e.g. BagUtils.emptyBag(). 
+      conversion and/or rawtypes use the corresponding factory methods, e.g. BagUtils.emptyBag().
     </action>
     <action issue="COLLECTIONS-501" dev="tn" type="update">
       Renamed methods "V MultiKeyMap#remove(Object, Object, ...)" to
@@ -289,7 +292,7 @@ features, this release includes numerous bug fixes.
     <action issue="COLLECTIONS-499" dev="tn" type="update">
       Refactored the test framework for Bag implementations to extend from
       "AbstractCollectionTest" by decorating the concrete Bag instance with
-      a CollectionBag or CollectionSortedBag. 
+      a CollectionBag or CollectionSortedBag.
     </action>
     <action issue="COLLECTIONS-498" dev="tn" type="fix">
       "CollectionBag" will now also respect the contract of the decorated bag in case
@@ -349,19 +352,19 @@ features, this release includes numerous bug fixes.
     <action issue="COLLECTIONS-468" dev="tn" type="add">
       Added bag decorator "CollectionBag" which decorates a bag to make it comply with the
       Collection contract.
-    </action>  
+    </action>
     <action issue="COLLECTIONS-466" dev="tn" type="update">
       Replaced "Collection" with "Iterable" for method arguments where applicable.
-    </action>  
+    </action>
     <action issue="COLLECTIONS-463" dev="tn" type="add" due-to="Andy Seaborne, Claude Warren">
       Added "PushbackIterator" decorator to support pushback of elements during iteration.
-    </action>  
+    </action>
     <action issue="COLLECTIONS-462" dev="tn" type="add" due-to="Andy Seaborne, Claude Warren">
       Added "PeekingIterator" decorator to support one-element lookahead during iteration.
     </action>
     <action issue="COLLECTIONS-461" dev="tn" type="fix" due-to="Matt Benson, sebb">
       Added additional clarification to javadoc of interface "Put" wrt return type of
-      "put(Object, Object)" method. 
+      "put(Object, Object)" method.
     </action>
     <action issue="COLLECTIONS-460" dev="tn" type="update">
       Changed "IteratorChain" to use internally a "Queue" instead of a "List". Iterators are
@@ -390,7 +393,7 @@ features, this release includes numerous bug fixes.
     <action issue="COLLECTIONS-453" dev="tn" type="update">
       Several closure and transformer implementations in the functors package
       will now copy an array as input to their constructor (e.g. ChainedClosure).
-    </action>    
+    </action>
     <action issue="COLLECTIONS-452" dev="tn" type="update">
       Change base package to org.apache.commons.collections4.
     </action>
@@ -488,7 +491,7 @@ features, this release includes numerous bug fixes.
       Improved performance of "SetUniqueList#removeAll".
     </action>
     <action issue="COLLECTIONS-407" dev="tn" type="fix" due-to="Adrian Nistor">
-      Improved performance of "ListOrderedSet#remove(Object)" in case the object is 
+      Improved performance of "ListOrderedSet#remove(Object)" in case the object is
       not contained in the Set.
     </action>
     <action issue="COLLECTIONS-406" dev="tn" type="fix" due-to="Adrian Nistor">
