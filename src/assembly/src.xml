@@ -24,12 +24,14 @@
     <fileSets>
         <fileSet>
             <includes>
+                <include>.travis.yml</include>
+                <include>CONTRIBUTING.md</include>
                 <include>DEVELOPERS-GUIDE.html</include>
                 <include>LICENSE.txt</include>
                 <include>NOTICE.txt</include>
                 <include>pom.xml</include>
                 <include>PROPOSAL.html</include>
-                <include>README.txt</include>
+                <include>README.md</include>
                 <include>RELEASE-NOTES.txt</include>
             </includes>
         </fileSet>
