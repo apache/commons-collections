@@ -14,14 +14,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * This package contains classes to extend or customize the behavior of
- * {@link java.util.Properties Properties}.
- * <p>
- * The following classes are provided in the package:
- * <ul>
- *   <li>SortedProperties- A drop-in replacement for Properties for sorting keys.</li>
- *   <li>FileProperties- A class that extend load functionality for getting Properties.<li/>
- * </ul>
- */
+
 package org.apache.commons.collections4.properties;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import java.io.IOException;
+import java.util.Properties;
+
+public class FilePropertiesTest {
+
+    @Test
+    public void testLoad() {
+        final FileProperties fileProperties = new FileProperties();
+        try {
+            Properties properties = fileProperties.load("test.properties");
+            Assert.assertEquals(properties.get("test.key"), "age");
+            Assert.assertEquals(properties.get("test.group"), "human");
+            Assert.assertEquals(properties.get("test.value"), "28");
+        } catch (IOException iox) {
+            iox.printStackTrace();
+        }
+    }
+}
