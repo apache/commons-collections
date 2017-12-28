@@ -34,6 +34,8 @@ import org.apache.commons.collections4.Transformer;
  * <p>
  * <strong>Note that TransformedMultiValuedMap is not synchronized and is not thread-safe.</strong>
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
  * @since 4.1
  */
 public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecorator<K, V> {

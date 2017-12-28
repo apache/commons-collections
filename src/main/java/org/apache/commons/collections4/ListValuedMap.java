@@ -27,6 +27,8 @@ import java.util.List;
  *   <li>Getting a value will return a {@link List}, holding all the values put to that key.</li>
  * </ul>
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
  * @since 4.1
  */
 public interface ListValuedMap<K, V> extends MultiValuedMap<K, V> {

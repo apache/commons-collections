@@ -32,6 +32,8 @@ import org.apache.commons.collections4.ListValuedMap;
  * Subclasses specify a Map implementation to use as the internal storage and
  * the List implementation to use as values.
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
  * @since 4.1
  */
 public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap<K, V>

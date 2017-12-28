@@ -30,6 +30,8 @@ import org.apache.commons.collections4.SetValuedMap;
  * Subclasses specify a Map implementation to use as the internal storage and
  * the Set implementation to use as values.
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
  * @since 4.1
  */
 public abstract class AbstractSetValuedMap<K, V> extends AbstractMultiValuedMap<K, V>

@@ -36,6 +36,8 @@ import org.apache.commons.collections4.MultiValuedMap;
  * concurrently, you must use appropriate synchronization. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
  * @since 4.1
  */
 public class HashSetValuedHashMap<K, V> extends AbstractSetValuedMap<K, V>
