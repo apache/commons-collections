@@ -27,6 +27,7 @@ import org.apache.commons.collections4.SortedBag;
 /**
  * Decorates another {@link SortedBag} to comply with the Collection contract.
  *
+ * @param <E> the type of elements in this bag
  * @since 4.0
  */
 public final class CollectionSortedBag<E> extends AbstractSortedBagDecorator<E> {

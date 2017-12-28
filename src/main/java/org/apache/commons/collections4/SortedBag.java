@@ -22,7 +22,7 @@ import java.util.Comparator;
  * Defines a type of <code>Bag</code> that maintains a sorted order among
  * its unique representative members.
  *
- * @param <E> the type to iterate over
+ * @param <E> the type of elements in this bag
  * @since 2.0
  */
 public interface SortedBag<E> extends Bag<E> {

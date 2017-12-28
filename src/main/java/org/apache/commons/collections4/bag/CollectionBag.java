@@ -34,7 +34,7 @@ import org.apache.commons.collections4.Bag;
  * The method javadoc highlights the differences compared to the original Bag interface.
  *
  * @see Bag
- * @param <E> the type held in the bag
+ * @param <E> the type of elements in this bag
  * @since 4.0
  */
 public final class CollectionBag<E> extends AbstractBagDecorator<E> {

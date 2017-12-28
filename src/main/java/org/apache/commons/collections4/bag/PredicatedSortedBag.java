@@ -36,6 +36,7 @@ import org.apache.commons.collections4.SortedBag;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
+ * @param <E> the type of elements in this bag
  * @since 3.0
  */
 public class PredicatedSortedBag<E> extends PredicatedBag<E> implements SortedBag<E> {

@@ -31,6 +31,7 @@ import org.apache.commons.collections4.Transformer;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
+ * @param <E> the type of elements in this bag
  * @since 3.0
  */
 public class TransformedSortedBag<E> extends TransformedBag<E> implements SortedBag<E> {

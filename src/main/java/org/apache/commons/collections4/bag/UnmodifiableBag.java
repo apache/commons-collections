@@ -35,6 +35,7 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * <p>
  * Attempts to modify it will result in an UnsupportedOperationException.
  *
+ * @param <E> the type of elements in this bag
  * @since 3.0
  */
 public final class UnmodifiableBag<E>

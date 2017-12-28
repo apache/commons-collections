@@ -38,6 +38,7 @@ import org.apache.commons.collections4.SortedBag;
  * copies of an object to be added or removed at once. It is important to read the interface
  * javadoc carefully as several methods violate the {@link Collection} interface specification.
  *
+ * @param <E> the type of elements in this bag
  * @since 3.0 (previously in main package v2.0)
  */
 public class TreeBag<E> extends AbstractMapBag<E> implements SortedBag<E>, Serializable {

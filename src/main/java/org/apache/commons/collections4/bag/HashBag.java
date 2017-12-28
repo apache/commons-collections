@@ -33,6 +33,7 @@ import java.util.HashMap;
  * interface javadoc carefully as several methods violate the
  * {@link Collection} interface specification.
  *
+ * @param <E> the type of elements in this bag
  * @since 3.0 (previously in main package v2.0)
  */
 public class HashBag<E> extends AbstractMapBag<E> implements Serializable {
