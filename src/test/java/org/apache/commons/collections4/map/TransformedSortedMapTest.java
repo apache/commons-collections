@@ -62,9 +62,8 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
                     preTailMap + "bulkTestMapValues.testCollectionRemoveAll",
                     preTailMap + "bulkTestMapValues.testCollectionRetainAll"
             };
-        } else {
-            return null;
         }
+        return null;
     }
 
     //-----------------------------------------------------------------------

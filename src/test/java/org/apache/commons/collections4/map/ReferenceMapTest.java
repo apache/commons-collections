@@ -241,12 +241,11 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
             if (keyReference.get() == null && valueReference.get() == null) {
                 break;
 
-            } else {
-                // create garbage:
-                @SuppressWarnings("unused")
-                final byte[] b = new byte[bytz];
-                bytz = bytz * 2;
             }
+            // create garbage:
+            @SuppressWarnings("unused")
+            final byte[] b = new byte[bytz];
+            bytz = bytz * 2;
         }
     }
 

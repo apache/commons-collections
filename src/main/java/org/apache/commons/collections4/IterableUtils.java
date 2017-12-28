@@ -175,9 +175,8 @@ public class IterableUtils {
                     protected Iterator<? extends E> nextIterator(int count) {
                         if (count > iterables.length) {
                             return null;
-                        } else {
-                            return iterables[count - 1].iterator();
                         }
+                        return iterables[count - 1].iterator();
                     }
                 };
             }
@@ -328,9 +327,8 @@ public class IterableUtils {
                     protected Iterator<? extends E> nextIterator(int count) {
                         if (IterableUtils.isEmpty(iterable)) {
                             return null;
-                        } else {
-                            return iterable.iterator();
                         }
+                        return iterable.iterator();
                     }
                 };
             }
@@ -690,9 +688,8 @@ public class IterableUtils {
     public static boolean isEmpty(final Iterable<?> iterable) {
         if (iterable instanceof Collection<?>) {
             return ((Collection<?>) iterable).isEmpty();
-        } else {
-            return IteratorUtils.isEmpty(emptyIteratorIfNull(iterable));
         }
+        return IteratorUtils.isEmpty(emptyIteratorIfNull(iterable));
     }
 
     /**
@@ -708,9 +705,8 @@ public class IterableUtils {
     public static <E> boolean contains(final Iterable<E> iterable, final Object object) {
         if (iterable instanceof Collection<?>) {
             return ((Collection<E>) iterable).contains(object);
-        } else {
-            return IteratorUtils.contains(emptyIteratorIfNull(iterable), object);
         }
+        return IteratorUtils.contains(emptyIteratorIfNull(iterable), object);
     }
 
     /**
@@ -788,9 +784,8 @@ public class IterableUtils {
     public static int size(final Iterable<?> iterable) {
         if (iterable instanceof Collection<?>) {
             return ((Collection<?>) iterable).size();
-        } else {
-            return IteratorUtils.size(emptyIteratorIfNull(iterable));
         }
+        return IteratorUtils.size(emptyIteratorIfNull(iterable));
     }
 
     /**

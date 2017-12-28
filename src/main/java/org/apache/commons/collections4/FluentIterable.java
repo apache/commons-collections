@@ -124,9 +124,8 @@ public class FluentIterable<E> implements Iterable<E> {
         IterableUtils.checkNotNull(iterable);
         if (iterable instanceof FluentIterable<?>) {
             return (FluentIterable<T>) iterable;
-        } else {
-            return new FluentIterable<>(iterable);
         }
+        return new FluentIterable<>(iterable);
     }
 
     // Constructor

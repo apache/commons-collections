@@ -1337,9 +1337,8 @@ public abstract class AbstractListTest<E> extends AbstractCollectionTest<E> {
            if (t instanceof ConcurrentModificationException) {
                // expected
                return;
-           } else {
-               fail(m.getName() + " raised unexpected " + e);
            }
+        fail(m.getName() + " raised unexpected " + e);
        }
    }
 

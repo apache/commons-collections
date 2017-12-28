@@ -177,10 +177,9 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
                 result = result || changed;
             }
             return result;
-        } else {
-            // let the decorated bag handle the case of null argument
-            return decorated().removeAll(null);
         }
+        // let the decorated bag handle the case of null argument
+        return decorated().removeAll(null);
     }
 
     /**
@@ -212,10 +211,9 @@ public final class CollectionBag<E> extends AbstractBagDecorator<E> {
                 }
             }
             return modified;
-        } else {
-            // let the decorated bag handle the case of null argument
-            return decorated().retainAll(null);
         }
+        // let the decorated bag handle the case of null argument
+        return decorated().retainAll(null);
     }
 
     //-----------------------------------------------------------------------

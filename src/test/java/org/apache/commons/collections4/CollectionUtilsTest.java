@@ -568,9 +568,8 @@ public class CollectionUtilsTest extends MockTestCase {
             public boolean equate(final Integer o1, final Integer o2) {
                 if (o1.intValue() % 2 == 0 ^ o2.intValue() % 2 == 0) {
                     return false;
-                } else {
-                    return true;
                 }
+                return true;
             }
 
             @Override

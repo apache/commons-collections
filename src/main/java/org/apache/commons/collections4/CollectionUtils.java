@@ -368,30 +368,29 @@ public class CollectionUtils {
     public static boolean containsAll(final Collection<?> coll1, final Collection<?> coll2) {
         if (coll2.isEmpty()) {
             return true;
-        } else {
-            final Iterator<?> it = coll1.iterator();
-            final Set<Object> elementsAlreadySeen = new HashSet<>();
-            for (final Object nextElement : coll2) {
-                if (elementsAlreadySeen.contains(nextElement)) {
-                    continue;
-                }
+        }
+        final Iterator<?> it = coll1.iterator();
+        final Set<Object> elementsAlreadySeen = new HashSet<>();
+        for (final Object nextElement : coll2) {
+            if (elementsAlreadySeen.contains(nextElement)) {
+                continue;
+            }
 
-                boolean foundCurrentElement = false;
-                while (it.hasNext()) {
-                    final Object p = it.next();
-                    elementsAlreadySeen.add(p);
-                    if (nextElement == null ? p == null : nextElement.equals(p)) {
-                        foundCurrentElement = true;
-                        break;
-                    }
-                }
-
-                if (!foundCurrentElement) {
-                    return false;
+            boolean foundCurrentElement = false;
+            while (it.hasNext()) {
+                final Object p = it.next();
+                elementsAlreadySeen.add(p);
+                if (nextElement == null ? p == null : nextElement.equals(p)) {
+                    foundCurrentElement = true;
+                    break;
                 }
             }
-            return true;
+
+            if (!foundCurrentElement) {
+                return false;
+            }
         }
+        return true;
     }
 
     /**
@@ -1584,21 +1583,20 @@ public class CollectionUtils {
         final Iterator<O> iterator = new CollatingIterator<>(c, a.iterator(), b.iterator());
         if (includeDuplicates) {
             return IteratorUtils.toList(iterator, totalSize);
-        } else {
-            final ArrayList<O> mergedList = new ArrayList<>(totalSize);
-
-            O lastItem = null;
-            while (iterator.hasNext()) {
-                final O item = iterator.next();
-                if (lastItem == null || !lastItem.equals(item)) {
-                    mergedList.add(item);
-                }
-                lastItem = item;
-            }
-
-            mergedList.trimToSize();
-            return mergedList;
         }
+        final ArrayList<O> mergedList = new ArrayList<>(totalSize);
+
+        O lastItem = null;
+        while (iterator.hasNext()) {
+            final O item = iterator.next();
+            if (lastItem == null || !lastItem.equals(item)) {
+                mergedList.add(item);
+            }
+            lastItem = item;
+        }
+
+        mergedList.trimToSize();
+        return mergedList;
     }
 
     //-----------------------------------------------------------------------

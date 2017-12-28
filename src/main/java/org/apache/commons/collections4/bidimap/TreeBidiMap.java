@@ -590,9 +590,8 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
             if (cmp == 0) {
                 rval = node;
                 break;
-            } else {
-                node = cmp < 0 ? node.getLeft(dataElement) : node.getRight(dataElement);
             }
+            node = cmp < 0 ? node.getLeft(dataElement) : node.getRight(dataElement);
         }
 
         return rval;

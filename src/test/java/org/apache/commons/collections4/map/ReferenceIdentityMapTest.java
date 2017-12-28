@@ -310,12 +310,11 @@ public class ReferenceIdentityMapTest<K, V> extends AbstractIterableMapTest<K, V
                 valueReference.get() == null) {
                 break;
 
-            } else {
-                // create garbage:
-                @SuppressWarnings("unused")
-                final byte[] b =  new byte[bytz];
-                bytz = bytz * 2;
             }
+            // create garbage:
+            @SuppressWarnings("unused")
+            final byte[] b =  new byte[bytz];
+            bytz = bytz * 2;
         }
     }
 

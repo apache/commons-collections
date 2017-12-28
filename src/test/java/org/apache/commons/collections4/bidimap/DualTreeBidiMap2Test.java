@@ -171,9 +171,8 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
                     preTail + "bulkTestMapValues.testCollectionRemoveAll",
                     preTail + "bulkTestMapValues.testCollectionRetainAll"
             };
-        } else {
-            return new String[] { recursiveTest };
         }
+        return new String[] { recursiveTest };
     }
 
 

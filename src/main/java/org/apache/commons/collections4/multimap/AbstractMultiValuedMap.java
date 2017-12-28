@@ -259,12 +259,10 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
             if (coll.add(value)) {
                 map.put(key, coll);
                 return true;
-            } else {
-                return false;
             }
-        } else {
-            return coll.add(value);
+            return false;
         }
+        return coll.add(value);
     }
 
     /**
@@ -355,10 +353,9 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         if (values instanceof Collection<?>) {
             Collection<? extends V> valueCollection = (Collection<? extends V>) values;
             return !valueCollection.isEmpty() && get(key).addAll(valueCollection);
-        } else {
-            Iterator<? extends V> it = values.iterator();
-            return it.hasNext() && CollectionUtils.addAll(get(key), it);
         }
+        Iterator<? extends V> it = values.iterator();
+        return it.hasNext() && CollectionUtils.addAll(get(key), it);
     }
 
     @Override

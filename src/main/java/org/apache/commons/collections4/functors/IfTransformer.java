@@ -120,9 +120,8 @@ public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
     public O transform(final I input) {
         if(iPredicate.evaluate(input)){
             return iTrueTransformer.transform(input);
-        } else {
-            return iFalseTransformer.transform(input);
         }
+        return iFalseTransformer.transform(input);
     }
 
     /**

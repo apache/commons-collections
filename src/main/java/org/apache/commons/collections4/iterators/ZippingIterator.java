@@ -116,10 +116,9 @@ public class ZippingIterator<E> implements Iterator<E> {
             if (childIterator.hasNext()) {
                 nextIterator = childIterator;
                 return true;
-            } else {
-                // iterator is exhausted, remove it
-                iterators.remove();
             }
+            // iterator is exhausted, remove it
+            iterators.remove();
         }
         return false;
     }

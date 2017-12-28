@@ -57,9 +57,8 @@ public class EnumerationUtils {
             i--;
             if (i == -1) {
                 return e.nextElement();
-            } else {
-                e.nextElement();
             }
+            e.nextElement();
         }
         throw new IndexOutOfBoundsException("Entry does not exist: " + i);
     }

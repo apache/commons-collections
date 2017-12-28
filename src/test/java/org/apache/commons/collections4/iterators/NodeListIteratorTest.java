@@ -80,13 +80,12 @@ public class NodeListIteratorTest extends AbstractIteratorTest<Node> {
 
         if (createIteratorWithStandardConstr) {
             return new NodeListIterator(emptyNodeList);
-        } else {
-            final Node parentNode = createMock(Node.class);
-            expect(parentNode.getChildNodes()).andStubReturn(emptyNodeList);
-            replay(parentNode);
-
-            return new NodeListIterator(parentNode);
         }
+        final Node parentNode = createMock(Node.class);
+        expect(parentNode.getChildNodes()).andStubReturn(emptyNodeList);
+        replay(parentNode);
+
+        return new NodeListIterator(parentNode);
     }
 
     @Override

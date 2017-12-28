@@ -447,9 +447,8 @@ public class LRUMapTest<K, V> extends AbstractOrderedMapTest<K, V> {
         protected boolean removeLRU(final LinkEntry<K, V> entry) {
             if ("a".equals(entry.getValue())) {
                 return false;
-            } else {
-                return true;
             }
+            return true;
         }
     }
 

@@ -104,9 +104,8 @@ public final class EqualPredicate<T> implements Predicate<T>, Serializable {
     public boolean evaluate(final T object) {
         if (equator != null) {
             return equator.equate(iValue, object);
-        } else {
-            return iValue.equals(object);
         }
+        return iValue.equals(object);
     }
 
     /**
