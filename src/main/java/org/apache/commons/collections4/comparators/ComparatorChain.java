@@ -44,6 +44,7 @@ import java.util.List;
  * thread-safe at construction time, but it <i>is</i> thread-safe to perform
  * multiple comparisons after all the setup operations are complete.
  *
+ * @param <E> the type of objects compared by this comparator
  * @since 2.0
  */
 public class ComparatorChain<E> implements Comparator<E>, Serializable {

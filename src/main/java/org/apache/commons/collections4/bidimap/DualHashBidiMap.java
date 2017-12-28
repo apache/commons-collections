@@ -36,6 +36,9 @@ import org.apache.commons.collections4.BidiMap;
  * NOTE: From Commons Collections 3.1, all subclasses will use {@link HashMap}
  * and the flawed <code>createMap</code> method is ignored.
  *
+ * @param <K> the type of the keys in the map
+ * @param <V> the type of the values in the map
+ * 
  * @since 3.0
  */
 public class DualHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> implements Serializable {

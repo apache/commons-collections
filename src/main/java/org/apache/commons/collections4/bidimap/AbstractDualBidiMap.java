@@ -34,6 +34,9 @@ import org.apache.commons.collections4.keyvalue.AbstractMapEntryDecorator;
  * An implementation can be written simply by implementing the
  * {@link #createBidiMap(Map, Map, BidiMap)} method.
  *
+ * @param <K> the type of the keys in the map
+ * @param <V> the type of the values in the map
+ * 
  * @see DualHashBidiMap
  * @see DualTreeBidiMap
  * @since 3.0

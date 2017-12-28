@@ -33,6 +33,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * <p>
  * Attempts to modify it will result in an UnsupportedOperationException.
  *
+ * @param <E> the type of the elements in this set
  * @since 3.0
  */
 public final class UnmodifiableSortedSet<E>

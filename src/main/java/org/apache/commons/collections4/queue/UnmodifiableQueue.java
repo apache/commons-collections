@@ -31,6 +31,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * <p>
  * Attempts to modify it will result in an UnsupportedOperationException.
  *
+ * @param <E> the type of elements held in this queue
  * @since 4.0
  */
 public final class UnmodifiableQueue<E>

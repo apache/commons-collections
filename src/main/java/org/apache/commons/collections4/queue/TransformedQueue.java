@@ -29,6 +29,7 @@ import org.apache.commons.collections4.collection.TransformedCollection;
  * For example, if the transformation converts Strings to Integers, you must
  * use the Integer form to remove objects.
  *
+ * @param <E> the type of elements held in this queue
  * @since 4.0
  */
 public class TransformedQueue<E> extends TransformedCollection<E> implements Queue<E> {

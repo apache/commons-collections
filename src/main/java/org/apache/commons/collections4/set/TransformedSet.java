@@ -31,6 +31,7 @@ import org.apache.commons.collections4.collection.TransformedCollection;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
+ * @param <E> the type of the elements in this set
  * @since 3.0
  */
 public class TransformedSet<E> extends TransformedCollection<E> implements Set<E> {

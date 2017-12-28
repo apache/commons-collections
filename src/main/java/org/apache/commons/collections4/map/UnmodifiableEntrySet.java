@@ -32,6 +32,9 @@ import org.apache.commons.collections4.set.AbstractSetDecorator;
  * <p>
  * Attempts to modify it will result in an UnsupportedOperationException.
  *
+ * @param <K> the type of the keys in the map
+ * @param <V> the type of the values in the map
+ * 
  * @since 3.0
  */
 public final class UnmodifiableEntrySet<K, V>

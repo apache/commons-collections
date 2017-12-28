@@ -36,6 +36,7 @@ import org.apache.commons.collections4.Predicate;
  *                                              NotNullPredicate.notNullPredicate());
  * </pre>
  *
+ * @param <E> the type of the elements in this set
  * @since 4.1
  */
 public class PredicatedNavigableSet<E> extends PredicatedSortedSet<E> implements NavigableSet<E> {

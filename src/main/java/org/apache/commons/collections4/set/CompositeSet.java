@@ -43,6 +43,7 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * See <a href="https://issues.apache.org/jira/browse/COLLECTIONS-424">COLLECTIONS-424</a>
  * for more details.
  *
+ * @param <E> the type of the elements in this set
  * @since 3.0
  */
 public class CompositeSet<E> implements Set<E>, Serializable {

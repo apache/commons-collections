@@ -25,8 +25,9 @@ import org.apache.commons.collections4.ComparatorUtils;
  * Reverses the order of another comparator by reversing the arguments
  * to its {@link #compare(Object, Object) compare} method.
  *
+ * @param <E> the type of objects compared by this comparator
+ * 
  * @since 2.0
- *
  * @see java.util.Collections#reverseOrder()
  */
 public class ReverseComparator<E> implements Comparator<E>, Serializable {

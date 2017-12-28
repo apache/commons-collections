@@ -31,6 +31,7 @@ import java.util.HashMap;
  * count of occurrences. Extra methods on the interface allow multiple copies
  * of an object to be added or removed at once.
  *
+ * @param <E> the type held in the multiset
  * @since 4.1
  */
 public class HashMultiSet<E> extends AbstractMapMultiSet<E> implements Serializable {

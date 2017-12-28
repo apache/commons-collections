@@ -28,6 +28,7 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
  * Methods are synchronized, then forwarded to the decorated multiset.
  * Iterators must be separately synchronized around the loop.
  *
+ * @param <E> the type held in the multiset
  * @since 4.1
  */
 public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implements MultiSet<E> {

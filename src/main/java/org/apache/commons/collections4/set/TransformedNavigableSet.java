@@ -29,6 +29,7 @@ import org.apache.commons.collections4.Transformer;
  * For example, if the transformation converts Strings to Integers, you must
  * use the Integer form to remove objects.
  *
+ * @param <E> the type of the elements in this set
  * @since 4.1
  */
 public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implements NavigableSet<E> {

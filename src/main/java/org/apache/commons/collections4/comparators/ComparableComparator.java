@@ -35,8 +35,9 @@ import java.util.Comparator;
  * This is no longer the case. See {@link #compare(Object, Object) compare} for
  * details.
  *
+ * @param <E> the type of objects compared by this comparator
+ * 
  * @since 2.0
- *
  * @see java.util.Collections#reverseOrder()
  */
 public class ComparableComparator<E extends Comparable<? super E>> implements Comparator<E>, Serializable {

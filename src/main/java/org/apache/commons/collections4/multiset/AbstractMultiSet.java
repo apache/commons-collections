@@ -33,6 +33,7 @@ import org.apache.commons.collections4.Transformer;
  * Abstract implementation of the {@link MultiSet} interface to simplify the
  * creation of subclass implementations.
  *
+ * @param <E> the type held in the multiset
  * @since 4.1
  */
 public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implements MultiSet<E> {

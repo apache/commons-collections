@@ -65,8 +65,10 @@ import java.io.Serializable;
  * (previously it extended AbstractMap). As a result, the implementation is now
  * extensible and provides a <code>MapIterator</code>.
  *
+ * @param <K> the type of the keys in the map
+ * @param <V> the type of the values in the map
+ * 
  * @see java.lang.ref.Reference
- *
  * @since 3.0 (previously in main package v2.1)
  */
 public class ReferenceMap<K, V> extends AbstractReferenceMap<K, V> implements Serializable {

@@ -38,6 +38,7 @@ import org.apache.commons.collections4.collection.PredicatedCollection;
  *                                            NotNullPredicate.notNullPredicate());
  * </pre>
  *
+ * @param <E> the type held in the multiset
  * @since 4.1
  */
 public class PredicatedMultiSet<E> extends PredicatedCollection<E> implements MultiSet<E> {

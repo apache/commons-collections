@@ -34,6 +34,7 @@ import org.apache.commons.collections4.collection.PredicatedCollection;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
+ * @param <E> the type of the elements in this set
  * @since 3.0
  */
 public class PredicatedSet<E> extends PredicatedCollection<E> implements Set<E> {
