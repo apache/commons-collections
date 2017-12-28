@@ -33,6 +33,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
+ * @param <E> the type of elements in this collection
  * @since 3.0
  */
 public class FixedSizeList<E>

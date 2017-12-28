@@ -49,6 +49,8 @@ import org.apache.commons.collections4.map.AbstractSortedMapDecorator;
  * NOTE: From Commons Collections 3.1, all subclasses will use {@link TreeMap}
  * and the flawed <code>createMap</code> method is ignored.
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
  * @since 3.0
  */
 public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>

@@ -57,6 +57,8 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
  * @since 3.0
  */
 public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializable, Cloneable {

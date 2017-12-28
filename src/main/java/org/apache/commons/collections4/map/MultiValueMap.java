@@ -59,6 +59,8 @@ import org.apache.commons.collections4.iterators.TransformIterator;
  * appropriate synchronization. This class may throw exceptions when accessed
  * by concurrent threads without synchronization.
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
  * @since 3.2
  * @deprecated since 4.1, use {@link org.apache.commons.collections4.MultiValuedMap MultiValuedMap} instead
  */

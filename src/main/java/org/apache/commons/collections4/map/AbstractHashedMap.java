@@ -52,6 +52,8 @@ import org.apache.commons.collections4.iterators.EmptyMapIterator;
  * This is to provide backwards compatibility for ReferenceMap between v3.0 and v3.1.
  * This extends clause will be removed in v5.0.
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
  * @since 3.0
  */
 public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements IterableMap<K, V> {

@@ -75,6 +75,9 @@ import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
  * You can use {@link java.util.Collections#synchronizedMap} to
  * provide synchronized access to a <code>ReferenceMap</code>.
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
+ * 
  * @see java.lang.ref.Reference
  * @since 3.1 (extracted from ReferenceMap in 3.0)
  */

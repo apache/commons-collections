@@ -90,6 +90,8 @@ import org.apache.commons.collections4.KeyValue;
  * iterations, or if you can make your own guarantees about how bulk
  * operations will affect the map.<p>
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
  * @since 3.0 (previously in main package v2.1)
  */
 public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {

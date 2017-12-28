@@ -39,6 +39,8 @@ import org.apache.commons.collections4.collection.CompositeCollection;
  * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
  * @since 3.0
  */
 public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Serializable {

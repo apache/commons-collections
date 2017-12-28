@@ -55,8 +55,8 @@ import java.util.concurrent.TimeUnit;
  * synchronization.
  * </p>
  *
- * @param <K> the type of the keys in the map
- * @param <V> the type of the values in the map
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
  * @since 4.0
  */
 public class PassiveExpiringMap<K, V>

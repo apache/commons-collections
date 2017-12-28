@@ -37,6 +37,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * <p>
  * Attempts to modify it will result in an UnsupportedOperationException.
  *
+ * @param <E> the type of elements in this collection
  * @since 3.0
  */
 public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDecorator<E>

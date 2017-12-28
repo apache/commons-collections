@@ -22,6 +22,8 @@ import org.apache.commons.collections4.MapIterator;
 /**
  * Provide a basic {@link IterableMap} implementation.
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
  * @since 4.0
  */
 public abstract class AbstractIterableMap<K, V> implements IterableMap<K, V> {

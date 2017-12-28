@@ -40,6 +40,8 @@ import java.util.Map;
  * From 4.0, this class is replaced by java.util.IdentityHashMap but kept as a
  * test-class because it is still used by the ReferenceIdentityMapTest.
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
  * @since 3.0
  */
 public class IdentityMap<K, V>

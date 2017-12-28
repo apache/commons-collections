@@ -71,6 +71,8 @@ import org.apache.commons.collections4.keyvalue.MultiKey;
  * appropriate synchronization. This class may throw exceptions when accessed
  * by concurrent threads without synchronization.
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
  * @since 3.1
  */
 public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K>, V>

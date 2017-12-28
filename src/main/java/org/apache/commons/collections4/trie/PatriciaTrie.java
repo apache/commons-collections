@@ -51,6 +51,8 @@ import org.apache.commons.collections4.trie.analyzer.StringKeyAnalyzer;
  * length &amp; fixed length keys. Some methods, such as {@link #prefixMap(Object)}
  * are suited only to variable length keys.
  *
+ * @param <E> the type of the values in this map
+ * 
  * @see <a href="http://en.wikipedia.org/wiki/Radix_tree">Radix Tree</a>
  * @see <a href="http://www.csse.monash.edu.au/~lloyd/tildeAlgDS/Tree/PATRICIA">PATRICIA</a>
  * @see <a href="http://www.imperialviolet.org/binary/critbit.pdf">Crit-Bit Tree</a>

@@ -53,6 +53,8 @@ import org.apache.commons.collections4.keyvalue.TiedMapEntry;
  * <li>the <code>KeyValue</code> interface (just cast - no object creation)
  * </ul>
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
  * @since 3.1
  */
 public class SingletonMap<K, V>

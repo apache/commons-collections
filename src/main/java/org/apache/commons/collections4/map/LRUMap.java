@@ -54,6 +54,8 @@ import org.apache.commons.collections4.BoundedMap;
  * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * <code>NullPointerException</code>'s when accessed by concurrent threads.
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
  * @since 3.0 (previously in main package v1.0)
  */
 public class LRUMap<K, V>

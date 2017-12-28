@@ -70,8 +70,10 @@ import java.lang.ref.Reference;
  * exceptions when accessed by concurrent threads without synchronization.
  * </p>
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
+ * 
  * @see java.lang.ref.Reference
- *
  * @since 3.0 (previously in main package v2.1)
  */
 public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> implements Serializable {

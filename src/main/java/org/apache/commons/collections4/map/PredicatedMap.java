@@ -44,6 +44,8 @@ import org.apache.commons.collections4.Predicate;
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
  * @since 3.0
  */
 public class PredicatedMap<K, V>

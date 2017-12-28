@@ -32,6 +32,8 @@ import org.apache.commons.collections4.iterators.UnmodifiableOrderedMapIterator;
 /**
  * An unmodifiable {@link Trie}.
  *
+ * @param <K> the type of the keys in this map
+ * @param <V> the type of the values in this map
  * @since 4.0
  */
 public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodifiable {
