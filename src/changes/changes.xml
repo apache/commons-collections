@@ -55,7 +55,7 @@
       Web site spelling error: MultiValuedMapeList.
     </action>
     <action issue="COLLECTIONS-597" dev="ggregory" type="fix" due-to="Enrique">
-       Correction of javadoc for org.apache.commons.collections4.functors.CatchAndRethrowClosure.
+       Correction of Javadoc for org.apache.commons.collections4.functors.CatchAndRethrowClosure.
     </action>
     <action issue="COLLECTIONS-589" dev="ggregory" type="add" due-to="Gary Gregory">
       Add null-safe MapUtils.size(Map&lt;?, ?>) method.
