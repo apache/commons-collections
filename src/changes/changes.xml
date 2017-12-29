@@ -20,7 +20,7 @@
     <title>Commons Collections Changes</title>
   </properties>
   <body>
-  <release version="4.2" date="YYYY-MM-DD" description="New features">
+  <release version="4.2" date="YYYY-MM-DD" description="Update from Java 6 to Java 7 and small changes.">
     <action issue="COLLECTIONS-662" dev="chtompki" type="fix" due-to="Vamsi Kavuri">
       Unit tests MapUtilsTest and ListIteratorWrapperTest no longer fail on Java 9.
     </action>
