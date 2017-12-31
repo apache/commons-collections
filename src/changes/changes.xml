@@ -66,6 +66,9 @@
     <action issue="COLLECTIONS-654" dev="ggregory" type="add">
       Add class SortedProperties to sort keys.
     </action>
+    <action issue="COLLECTIONS-666" dev="ggregory" type="update" due-to="BELUGA BEHR">
+      org.apache.commons.collections4.ListUtils.union(List, List) should pre-allocate result list.
+    </action>
   </release>
   <release version="4.1" date="2015-11-28" description="This is a security and minor release.">
     <action issue="COLLECTIONS-508" dev="tn" type="add">
