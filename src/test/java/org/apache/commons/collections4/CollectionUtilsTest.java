@@ -319,7 +319,7 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
-    public void containsAny() {
+    public void containsAnyInCollection() {
         final Collection<String> empty = new ArrayList<>(0);
         final Collection<String> one = new ArrayList<>(1);
         one.add("1");
@@ -345,6 +345,40 @@ public class CollectionUtilsTest extends MockTestCase {
         assertTrue("containsAny({1,3},{}) should return false.", !CollectionUtils.containsAny(odds, empty));
         assertTrue("containsAny({},{1,3}) should return false.", !CollectionUtils.containsAny(empty, odds));
         assertTrue("containsAny({},{}) should return false.", !CollectionUtils.containsAny(empty, empty));
+    }
+
+    @Test
+    public void containsAnyInArray() {
+        final Collection<String> empty = new ArrayList<>(0);
+        final String[] emptyArr = {};
+        final Collection<String> one = new ArrayList<>(1);
+        one.add("1");
+        final String[] oneArr = {"1"};
+        final Collection<String> two = new ArrayList<>(1);
+        two.add("2");
+        final String[] twoArr = {"2"};
+        final Collection<String> three = new ArrayList<>(1);
+        three.add("3");
+        final String[] threeArr = {"3"};
+        final Collection<String> odds = new ArrayList<>(2);
+        odds.add("1");
+        odds.add("3");
+        final String[] oddsArr = {"1", "3"};
+
+        assertTrue("containsAny({1},{1,3}) should return true.", CollectionUtils.containsAny(one, oddsArr));
+        assertTrue("containsAny({1,3},{1}) should return true.", CollectionUtils.containsAny(odds, oneArr));
+        assertTrue("containsAny({3},{1,3}) should return true.", CollectionUtils.containsAny(three, oddsArr));
+        assertTrue("containsAny({1,3},{3}) should return true.", CollectionUtils.containsAny(odds, threeArr));
+        assertTrue("containsAny({2},{2}) should return true.", CollectionUtils.containsAny(two, twoArr));
+        assertTrue("containsAny({1,3},{1,3}) should return true.", CollectionUtils.containsAny(odds, oddsArr));
+
+        assertTrue("containsAny({2},{1,3}) should return false.", !CollectionUtils.containsAny(two, oddsArr));
+        assertTrue("containsAny({1,3},{2}) should return false.", !CollectionUtils.containsAny(odds, twoArr));
+        assertTrue("containsAny({1},{3}) should return false.", !CollectionUtils.containsAny(one, threeArr));
+        assertTrue("containsAny({3},{1}) should return false.", !CollectionUtils.containsAny(three, oneArr));
+        assertTrue("containsAny({1,3},{}) should return false.", !CollectionUtils.containsAny(odds, emptyArr));
+        assertTrue("containsAny({},{1,3}) should return false.", !CollectionUtils.containsAny(empty, oddsArr));
+        assertTrue("containsAny({},{}) should return false.", !CollectionUtils.containsAny(empty, emptyArr));
     }
 
     @Test

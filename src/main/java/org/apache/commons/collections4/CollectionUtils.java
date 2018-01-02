@@ -402,6 +402,35 @@ public class CollectionUtils {
      * @param coll1  the first collection, must not be null
      * @param coll2  the second collection, must not be null
      * @return <code>true</code> iff the intersection of the collections is non-empty
+     * @since 4.2
+     * @see #intersection
+     */
+    public static <T> boolean containsAny(final Collection<?> coll1, @SuppressWarnings("unchecked") final T... coll2) {
+        if (coll1.size() < coll2.length) {
+            for (final Object aColl1 : coll1) {
+                if (ArrayUtils.contains(coll2, aColl1)) {
+                    return true;
+                }
+            }
+        } else {
+            for (final Object aColl2 : coll2) {
+                if (coll1.contains(aColl2)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns <code>true</code> iff at least one element is in both collections.
+     * <p>
+     * In other words, this method returns <code>true</code> iff the
+     * {@link #intersection} of <i>coll1</i> and <i>coll2</i> is not empty.
+     *
+     * @param coll1  the first collection, must not be null
+     * @param coll2  the second collection, must not be null
+     * @return <code>true</code> iff the intersection of the collections is non-empty
      * @since 2.1
      * @see #intersection
      */

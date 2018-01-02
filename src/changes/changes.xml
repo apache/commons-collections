@@ -69,8 +69,11 @@
     <action issue="COLLECTIONS-666" dev="ggregory" type="update" due-to="BELUGA BEHR">
       org.apache.commons.collections4.ListUtils.union(List, List) should pre-allocate result list.
     </action>
-    <action issue="COLLECTIONS-669" dev="ggregory" type="update" due-to="Gary Gregory">
-      Update org.apache.commons.collections4.CollectionUtils.addAll(Collection&lt;C>, C[]) to addAll(Collection&lt;C>, C...)
+    <action issue="COLLECTIONS-669" dev="ggregory" type="update" due-to="BELUGA BEHR, Gary Gregory">
+      Update org.apache.commons.collections4.CollectionUtils.addAll(Collection&lt;C>, C[]) to addAll(Collection&lt;C>, C...).
+    </action>
+    <action issue="COLLECTIONS-668" dev="ggregory" type="add" due-to="Gary Gregory">
+      Add CollectionUtils containsAny method for primitive array: org.apache.commons.collections4.CollectionUtils.containsAny(Collection&lt;?>, T...).
     </action>
   </release>
   <release version="4.1" date="2015-11-28" description="This is a security and minor release.">
