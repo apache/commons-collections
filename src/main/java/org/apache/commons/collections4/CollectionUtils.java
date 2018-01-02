@@ -1156,7 +1156,7 @@ public class CollectionUtils {
      * @return {@code true} if the collection was changed, {@code false} otherwise
      * @throws NullPointerException if the collection or array is null
      */
-    public static <C> boolean addAll(final Collection<C> collection, final C[] elements) {
+    public static <C> boolean addAll(final Collection<C> collection, final C... elements) {
         boolean changed = false;
         for (final C element : elements) {
             changed |= collection.add(element);
