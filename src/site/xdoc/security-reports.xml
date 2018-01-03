@@ -53,7 +53,7 @@
         the descriptions here are incomplete, please report them
         privately to the Apache Security Team. Thank you.</p>
 
-        <subsection name="Fixed in Apache Commons Collections 3.2.2/4.1">
+        <subsection name="Fixed in Apache Commons Collections 3.2.2 and 4.1">
           <p><b>High: Remote Code Execution during object de-serialization</b></p>
           
           <p>The Apache Commons Collections library contains various classes
