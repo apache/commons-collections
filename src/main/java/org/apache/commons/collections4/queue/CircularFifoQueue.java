@@ -283,7 +283,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
      * @throws NullPointerException  if the given element is null
      */
     @Override
-    public boolean offer(E element) {
+    public boolean offer(final E element) {
         return add(element);
     }
 

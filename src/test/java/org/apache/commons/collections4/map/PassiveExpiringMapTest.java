@@ -234,14 +234,14 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
                 new PassiveExpiringMap.ConstantTimeToLiveExpirationPolicy<String, String>(1, TimeUnit.SECONDS)), 1000);
     }
 
-    private void validateExpiration(final Map<String, String> map, long timeout) {
+    private void validateExpiration(final Map<String, String> map, final long timeout) {
         map.put("a", "b");
 
         assertNotNull(map.get("a"));
 
         try {
             Thread.sleep(2 * timeout);
-        } catch (InterruptedException e) {
+        } catch (final InterruptedException e) {
             fail();
         }
 

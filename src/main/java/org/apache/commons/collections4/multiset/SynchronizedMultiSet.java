@@ -121,7 +121,7 @@ public class SynchronizedMultiSet<E> extends SynchronizedCollection<E> implement
     }
 
     @Override
-    public int setCount(E object, int count) {
+    public int setCount(final E object, final int count) {
         synchronized (lock) {
             return decorated().setCount(object, count);
         }

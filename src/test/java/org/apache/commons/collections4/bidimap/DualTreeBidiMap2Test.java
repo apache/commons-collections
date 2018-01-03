@@ -153,7 +153,7 @@ public class DualTreeBidiMap2Test<K extends Comparable<K>, V extends Comparable<
      */
     @Override
     public String[] ignoredTests() {
-        String recursiveTest = "DualTreeBidiMap2Test.bulkTestInverseMap.bulkTestInverseMap";
+        final String recursiveTest = "DualTreeBidiMap2Test.bulkTestInverseMap.bulkTestInverseMap";
 
         if (IBMJDK16) {
             final String preSub = "DualTreeBidiMap2Test.bulkTestSubMap.";

@@ -137,19 +137,19 @@ public final class UnmodifiableNavigableSet<E>
     }
 
     @Override
-    public NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement, boolean toInclusive) {
+    public NavigableSet<E> subSet(final E fromElement, final boolean fromInclusive, final E toElement, final boolean toInclusive) {
         final NavigableSet<E> sub = decorated().subSet(fromElement, fromInclusive, toElement, toInclusive);
         return unmodifiableNavigableSet(sub);
     }
 
     @Override
-    public NavigableSet<E> headSet(E toElement, boolean inclusive) {
+    public NavigableSet<E> headSet(final E toElement, final boolean inclusive) {
         final NavigableSet<E> head = decorated().headSet(toElement, inclusive);
         return unmodifiableNavigableSet(head);
     }
 
     @Override
-    public NavigableSet<E> tailSet(E fromElement, boolean inclusive) {
+    public NavigableSet<E> tailSet(final E fromElement, final boolean inclusive) {
         final NavigableSet<E> tail = decorated().tailSet(fromElement, inclusive);
         return unmodifiableNavigableSet(tail);
     }

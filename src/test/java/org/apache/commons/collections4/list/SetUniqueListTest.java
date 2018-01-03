@@ -463,11 +463,11 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
     public void testSubListIsUnmodifiable() {
         resetFull();
-        List<E> subList = getCollection().subList(1, 3);
+        final List<E> subList = getCollection().subList(1, 3);
         try {
             subList.remove(0);
             fail("subList should be unmodifiable");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
             // expected
         }
     }

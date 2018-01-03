@@ -62,7 +62,7 @@ public class IterableUtilsTest {
 
     @Before
     public void setUp() {
-        Collection<Integer> collectionA = new ArrayList<>();
+        final Collection<Integer> collectionA = new ArrayList<>();
         collectionA.add(1);
         collectionA.add(2);
         collectionA.add(2);
@@ -75,7 +75,7 @@ public class IterableUtilsTest {
         collectionA.add(4);
         iterableA = collectionA;
 
-        Collection<Long> collectionB = new LinkedList<>();
+        final Collection<Long> collectionB = new LinkedList<>();
         collectionB.add(5L);
         collectionB.add(4L);
         collectionB.add(4L);
@@ -123,7 +123,7 @@ public class IterableUtilsTest {
         try {
             IterableUtils.forEach(col, null);
             fail("expecting NullPointerException");
-        } catch (NullPointerException npe) {
+        } catch (final NullPointerException npe) {
             // expected
         }
 
@@ -161,7 +161,7 @@ public class IterableUtilsTest {
         try {
             IterableUtils.forEachButLast(col, null);
             fail("expecting NullPointerException");
-        } catch (NullPointerException npe) {
+        } catch (final NullPointerException npe) {
             // expected
         }
 
@@ -184,12 +184,12 @@ public class IterableUtilsTest {
         final Equator<String> secondLetterEquator = new Equator<String>() {
 
             @Override
-            public boolean equate(String o1, String o2) {
+            public boolean equate(final String o1, final String o2) {
                 return o1.charAt(1) == o2.charAt(1);
             }
 
             @Override
-            public int hash(String o) {
+            public int hash(final String o) {
                 return o.charAt(1);
             }
 
@@ -228,8 +228,8 @@ public class IterableUtilsTest {
         // Ensure that generic bounds accept valid parameters, but return
         // expected results
         // e.g. no longs in the "int" Iterable<Number>, and vice versa.
-        Iterable<Number> iterableIntAsNumber = Arrays.<Number>asList(1, 2, 3, 4, 5);
-        Iterable<Number> iterableLongAsNumber = Arrays.<Number>asList(1L, 2L, 3L, 4L, 5L);
+        final Iterable<Number> iterableIntAsNumber = Arrays.<Number>asList(1, 2, 3, 4, 5);
+        final Iterable<Number> iterableLongAsNumber = Arrays.<Number>asList(1L, 2L, 3L, 4L, 5L);
         assertEquals(0, IterableUtils.frequency(iterableIntAsNumber, 2L));
         assertEquals(0, IterableUtils.frequency(iterableLongAsNumber, 2));
 
@@ -316,14 +316,14 @@ public class IterableUtilsTest {
         try {
             assertEquals(0, IterableUtils.countMatches(iterableA, null));
             fail("predicate must not be null");
-        } catch (NullPointerException ex) {
+        } catch (final NullPointerException ex) {
             // expected
         }
 
         try {
             assertEquals(0, IterableUtils.countMatches(null, null));
             fail("predicate must not be null");
-        } catch (NullPointerException ex) {
+        } catch (final NullPointerException ex) {
             // expected
         }
     }
@@ -335,14 +335,14 @@ public class IterableUtilsTest {
         try {
             assertFalse(IterableUtils.matchesAny(null, null));
             fail("predicate must not be null");
-        } catch (NullPointerException ex) {
+        } catch (final NullPointerException ex) {
             // expected
         }
 
         try {
             assertFalse(IterableUtils.matchesAny(list, null));
             fail("predicate must not be null");
-        } catch (NullPointerException ex) {
+        } catch (final NullPointerException ex) {
             // expected
         }
 
@@ -362,28 +362,28 @@ public class IterableUtilsTest {
         try {
             assertFalse(IterableUtils.matchesAll(null, null));
             fail("predicate must not be null");
-        } catch (NullPointerException ex) {
+        } catch (final NullPointerException ex) {
             // expected
         }
 
         try {
             assertFalse(IterableUtils.matchesAll(iterableA, null));
             fail("predicate must not be null");
-        } catch (NullPointerException ex) {
+        } catch (final NullPointerException ex) {
             // expected
         }
 
-        Predicate<Integer> lessThanFive = new Predicate<Integer>() {
+        final Predicate<Integer> lessThanFive = new Predicate<Integer>() {
             @Override
-            public boolean evaluate(Integer object) {
+            public boolean evaluate(final Integer object) {
                 return object < 5;
             }
         };
         assertTrue(IterableUtils.matchesAll(iterableA, lessThanFive));
 
-        Predicate<Integer> lessThanFour = new Predicate<Integer>() {
+        final Predicate<Integer> lessThanFour = new Predicate<Integer>() {
             @Override
-            public boolean evaluate(Integer object) {
+            public boolean evaluate(final Integer object) {
                 return object < 4;
             }
         };
@@ -407,7 +407,7 @@ public class IterableUtilsTest {
     @SuppressWarnings("unchecked")
     @Test
     public void partition() {
-        List<Integer> input = new ArrayList<>();
+        final List<Integer> input = new ArrayList<>();
         input.add(1);
         input.add(2);
         input.add(3);
@@ -421,7 +421,7 @@ public class IterableUtilsTest {
         assertEquals(2, CollectionUtils.extractSingleton(partition).intValue());
 
         // second partition contains 1, 3, and 4
-        Integer[] expected = {1, 3, 4};
+        final Integer[] expected = {1, 3, 4};
         partition = partitions.get(1);
         Assert.assertArrayEquals(expected, partition.toArray());
 
@@ -437,7 +437,7 @@ public class IterableUtilsTest {
         try {
             IterableUtils.partition(input, (Predicate<Integer>) null);
             fail("expecting NullPointerException");
-        } catch (NullPointerException npe) {
+        } catch (final NullPointerException npe) {
             // expected
         }
     }
@@ -445,12 +445,12 @@ public class IterableUtilsTest {
     @SuppressWarnings("unchecked")
     @Test
     public void partitionMultiplePredicates() {
-        List<Integer> input = new ArrayList<>();
+        final List<Integer> input = new ArrayList<>();
         input.add(1);
         input.add(2);
         input.add(3);
         input.add(4);
-        List<List<Integer>> partitions = IterableUtils.partition(input, EQUALS_TWO, EVEN);
+        final List<List<Integer>> partitions = IterableUtils.partition(input, EQUALS_TWO, EVEN);
 
         // first partition contains 2
         Collection<Integer> partition = partitions.get(0);
@@ -463,13 +463,13 @@ public class IterableUtilsTest {
         assertEquals(4, partition.iterator().next().intValue());
 
         // third partition contains 1 and 3
-        Integer[] expected = {1, 3};
+        final Integer[] expected = {1, 3};
         partition = partitions.get(2);
         Assert.assertArrayEquals(expected, partition.toArray());
 
         try {
             IterableUtils.partition(input, EQUALS_TWO, null);
-        } catch (NullPointerException npe) {
+        } catch (final NullPointerException npe) {
             // expected
         }
     }
@@ -487,7 +487,7 @@ public class IterableUtilsTest {
 
         result = IterableUtils.toString(iterableA, new Transformer<Integer, String>() {
             @Override
-            public String transform(Integer input) {
+            public String transform(final Integer input) {
                 return new Integer(input * 2).toString();
             }
         });
@@ -495,7 +495,7 @@ public class IterableUtilsTest {
 
         result = IterableUtils.toString(new ArrayList<Integer>(), new Transformer<Integer, String>() {
             @Override
-            public String transform(Integer input) {
+            public String transform(final Integer input) {
                 fail("not supposed to reach here");
                 return "";
             }
@@ -504,7 +504,7 @@ public class IterableUtilsTest {
 
         result = IterableUtils.toString(null, new Transformer<Integer, String>() {
             @Override
-            public String transform(Integer input) {
+            public String transform(final Integer input) {
                 fail("not supposed to reach here");
                 return "";
             }
@@ -515,9 +515,9 @@ public class IterableUtilsTest {
     @Test
     public void testToStringDelimiter() {
 
-        Transformer<Integer, String> transformer = new Transformer<Integer, String>() {
+        final Transformer<Integer, String> transformer = new Transformer<Integer, String>() {
             @Override
-            public String transform(Integer input) {
+            public String transform(final Integer input) {
                 return new Integer(input * 2).toString();
             }
         };
@@ -552,9 +552,9 @@ public class IterableUtilsTest {
 
     @Test
     public void testToStringWithNullArguments() {
-        String result = IterableUtils.toString(null, new Transformer<Integer, String>() {
+        final String result = IterableUtils.toString(null, new Transformer<Integer, String>() {
             @Override
-            public String transform(Integer input) {
+            public String transform(final Integer input) {
                 fail("not supposed to reach here");
                 return "";
             }
@@ -571,7 +571,7 @@ public class IterableUtilsTest {
         try {
             IterableUtils.toString(new ArrayList<Integer>(), new Transformer<Integer, String>() {
                 @Override
-                public String transform(Integer input) {
+                public String transform(final Integer input) {
                     fail("not supposed to reach here");
                     return "";
                 }
@@ -584,7 +584,7 @@ public class IterableUtilsTest {
         try {
             IterableUtils.toString(new ArrayList<Integer>(), new Transformer<Integer, String>() {
                 @Override
-                public String transform(Integer input) {
+                public String transform(final Integer input) {
                     fail("not supposed to reach here");
                     return "";
                 }
@@ -597,7 +597,7 @@ public class IterableUtilsTest {
         try {
             IterableUtils.toString(new ArrayList<Integer>(), new Transformer<Integer, String>() {
                 @Override
-                public String transform(Integer input) {
+                public String transform(final Integer input) {
                     fail("not supposed to reach here");
                     return "";
                 }

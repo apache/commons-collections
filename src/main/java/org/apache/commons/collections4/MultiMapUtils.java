@@ -127,7 +127,7 @@ public class MultiMapUtils {
      */
     public static <K, V> List<V> getValuesAsList(final MultiValuedMap<K, V> map, final K key) {
         if (map != null) {
-            Collection<V> col = map.get(key);
+            final Collection<V> col = map.get(key);
             if (col instanceof List) {
                 return (List<V>) col;
             }
@@ -147,7 +147,7 @@ public class MultiMapUtils {
      */
     public static <K, V> Set<V> getValuesAsSet(final MultiValuedMap<K, V> map, final K key) {
         if (map != null) {
-            Collection<V> col = map.get(key);
+            final Collection<V> col = map.get(key);
             if (col instanceof Set) {
                 return (Set<V>) col;
             }
@@ -167,7 +167,7 @@ public class MultiMapUtils {
      */
     public static <K, V> Bag<V> getValuesAsBag(final MultiValuedMap<K, V> map, final K key) {
         if (map != null) {
-            Collection<V> col = map.get(key);
+            final Collection<V> col = map.get(key);
             if (col instanceof Bag) {
                 return (Bag<V>) col;
             }

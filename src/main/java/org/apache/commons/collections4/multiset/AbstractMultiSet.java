@@ -59,7 +59,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     @Override
     public int size() {
         int totalSize = 0;
-        for (Entry<E> entry : entrySet()) {
+        for (final Entry<E> entry : entrySet()) {
             totalSize += entry.getCount();
         }
         return totalSize;
@@ -74,7 +74,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
      */
     @Override
     public int getCount(final Object object) {
-        for (Entry<E> entry : entrySet()) {
+        for (final Entry<E> entry : entrySet()) {
             final E element = entry.getElement();
             if (element == object ||
                 element != null && element.equals(object)) {
@@ -90,7 +90,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
             throw new IllegalArgumentException("Count must not be negative.");
         }
 
-        int oldCount = getCount(object);
+        final int oldCount = getCount(object);
         if (oldCount < count) {
             add(object, count - oldCount);
         } else {
@@ -197,7 +197,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
      */
     @Override
     public void clear() {
-        Iterator<Entry<E>> it = entrySet().iterator();
+        final Iterator<Entry<E>> it = entrySet().iterator();
         while (it.hasNext()) {
             it.next();
             it.remove();
@@ -258,7 +258,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     protected Iterator<E> createUniqueSetIterator() {
         final Transformer<Entry<E>, E> transformer = new Transformer<Entry<E>, E>() {
             @Override
-            public E transform(Entry<E> entry) {
+            public E transform(final Entry<E> entry) {
                 return entry.getElement();
             }
         };
@@ -412,7 +412,7 @@ public abstract class AbstractMultiSet<E> extends AbstractCollection<E> implemen
     protected static abstract class AbstractEntry<E> implements Entry<E> {
 
         @Override
-        public boolean equals(Object object) {
+        public boolean equals(final Object object) {
           if (object instanceof Entry) {
             final Entry<?> other = (Entry<?>) object;
             final E element = this.getElement();

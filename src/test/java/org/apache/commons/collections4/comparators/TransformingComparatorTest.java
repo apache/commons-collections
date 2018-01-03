@@ -61,9 +61,9 @@ public class TransformingComparatorTest extends AbstractComparatorTest<Integer> 
     }
 
     public void testEquals() {
-        Transformer<String, String> t1 = TransformerUtils.nopTransformer();
-        TransformingComparator<String, String> comp1 = new TransformingComparator<>(t1);
-        TransformingComparator<String, String> comp2 = new TransformingComparator<>(t1, comp1);
+        final Transformer<String, String> t1 = TransformerUtils.nopTransformer();
+        final TransformingComparator<String, String> comp1 = new TransformingComparator<>(t1);
+        final TransformingComparator<String, String> comp2 = new TransformingComparator<>(t1, comp1);
 
         // Checks the contract: equals-hashcode on comp1 and comp2
         assertTrue("Contract failed: equals-hashcode",

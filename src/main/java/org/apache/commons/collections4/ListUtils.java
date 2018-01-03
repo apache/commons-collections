@@ -570,7 +570,7 @@ public class ListUtils {
         }
         final List<Character> lcs = longestCommonSubsequence(new CharSequenceAsList( a ), new CharSequenceAsList( b ));
         final StringBuilder sb = new StringBuilder();
-        for ( Character ch : lcs ) {
+        for ( final Character ch : lcs ) {
           sb.append(ch);
         }
         return sb.toString();
@@ -614,7 +614,7 @@ public class ListUtils {
       }
 
       @Override
-      public Character get( int index ) {
+      public Character get( final int index ) {
         return Character.valueOf(sequence.charAt( index ));
       }
 

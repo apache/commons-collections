@@ -66,7 +66,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     public void testBounded() {
-        Iterator<E> iter = new BoundedIterator<>(testList.iterator(), 2, 4);
+        final Iterator<E> iter = new BoundedIterator<>(testList.iterator(), 2, 4);
 
         assertTrue(iter.hasNext());
         assertEquals("c", iter.next());
@@ -81,7 +81,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
         try {
             iter.next();
             fail("Expected NoSuchElementException.");
-        } catch (NoSuchElementException nsee) { /* Success case */
+        } catch (final NoSuchElementException nsee) { /* Success case */
         }
     }
 
@@ -92,7 +92,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     public void testSameAsDecorated() {
-        Iterator<E> iter = new BoundedIterator<>(testList.iterator(), 0,
+        final Iterator<E> iter = new BoundedIterator<>(testList.iterator(), 0,
                                                   testList.size());
 
         assertTrue(iter.hasNext());
@@ -114,7 +114,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
         try {
             iter.next();
             fail("Expected NoSuchElementException.");
-        } catch (NoSuchElementException nsee) { /* Success case */
+        } catch (final NoSuchElementException nsee) { /* Success case */
         }
     }
 
@@ -125,12 +125,12 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     public void testEmptyBounded() {
-        Iterator<E> iter = new BoundedIterator<>(testList.iterator(), 3, 0);
+        final Iterator<E> iter = new BoundedIterator<>(testList.iterator(), 3, 0);
         assertFalse(iter.hasNext());
         try {
             iter.next();
             fail("Expected NoSuchElementException.");
-        } catch (NoSuchElementException nsee) { /* Success case */
+        } catch (final NoSuchElementException nsee) { /* Success case */
         }
     }
 
@@ -143,7 +143,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
         try {
             new BoundedIterator<>(testList.iterator(), -1, 4);
             fail("Expected IllegalArgumentException.");
-        } catch (IllegalArgumentException iae) { /* Success case */
+        } catch (final IllegalArgumentException iae) { /* Success case */
         }
     }
 
@@ -156,7 +156,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
         try {
             new BoundedIterator<>(testList.iterator(), 3, -1);
             fail("Expected IllegalArgumentException.");
-        } catch (IllegalArgumentException iae) { /* Success case */
+        } catch (final IllegalArgumentException iae) { /* Success case */
         }
     }
 
@@ -167,12 +167,12 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     public void testOffsetGreaterThanSize() {
-        Iterator<E> iter = new BoundedIterator<>(testList.iterator(), 10, 4);
+        final Iterator<E> iter = new BoundedIterator<>(testList.iterator(), 10, 4);
         assertFalse(iter.hasNext());
         try {
             iter.next();
             fail("Expected NoSuchElementException.");
-        } catch (NoSuchElementException nsee) { /* Success case */
+        } catch (final NoSuchElementException nsee) { /* Success case */
         }
     }
 
@@ -184,7 +184,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     public void testMaxGreaterThanSize() {
-        Iterator<E> iter = new BoundedIterator<>(testList.iterator(), 1, 10);
+        final Iterator<E> iter = new BoundedIterator<>(testList.iterator(), 1, 10);
 
         assertTrue(iter.hasNext());
         assertEquals("b", iter.next());
@@ -203,7 +203,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
         try {
             iter.next();
             fail("Expected NoSuchElementException.");
-        } catch (NoSuchElementException nsee) { /* Success case */
+        } catch (final NoSuchElementException nsee) { /* Success case */
         }
     }
 
@@ -213,13 +213,13 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     public void testRemoveWithoutCallingNext() {
-        List<E> testListCopy = new ArrayList<>(testList);
-        Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
+        final List<E> testListCopy = new ArrayList<>(testList);
+        final Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
 
         try {
             iter.remove();
             fail("Expected IllegalStateException.");
-        } catch (IllegalStateException ise) { /* Success case */
+        } catch (final IllegalStateException ise) { /* Success case */
         }
     }
 
@@ -229,8 +229,8 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     public void testRemoveCalledTwice() {
-        List<E> testListCopy = new ArrayList<>(testList);
-        Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
+        final List<E> testListCopy = new ArrayList<>(testList);
+        final Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
 
         assertTrue(iter.hasNext());
         assertEquals("b", iter.next());
@@ -239,7 +239,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
         try {
             iter.remove();
             fail("Expected IllegalStateException.");
-        } catch (IllegalStateException ise) { /* Success case */
+        } catch (final IllegalStateException ise) { /* Success case */
         }
     }
 
@@ -249,8 +249,8 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     public void testRemoveFirst() {
-        List<E> testListCopy = new ArrayList<>(testList);
-        Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
+        final List<E> testListCopy = new ArrayList<>(testList);
+        final Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
 
         assertTrue(iter.hasNext());
         assertEquals("b", iter.next());
@@ -271,7 +271,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
         try {
             iter.next();
             fail("Expected NoSuchElementException.");
-        } catch (NoSuchElementException nsee) { /* Success case */
+        } catch (final NoSuchElementException nsee) { /* Success case */
         }
     }
 
@@ -281,8 +281,8 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     public void testRemoveMiddle() {
-        List<E> testListCopy = new ArrayList<>(testList);
-        Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
+        final List<E> testListCopy = new ArrayList<>(testList);
+        final Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
 
         assertTrue(iter.hasNext());
         assertEquals("b", iter.next());
@@ -303,7 +303,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
         try {
             iter.next();
             fail("Expected NoSuchElementException.");
-        } catch (NoSuchElementException nsee) { /* Success case */
+        } catch (final NoSuchElementException nsee) { /* Success case */
         }
     }
 
@@ -313,8 +313,8 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     public void testRemoveLast() {
-        List<E> testListCopy = new ArrayList<>(testList);
-        Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
+        final List<E> testListCopy = new ArrayList<>(testList);
+        final Iterator<E> iter = new BoundedIterator<>(testListCopy.iterator(), 1, 5);
 
         assertTrue(iter.hasNext());
         assertEquals("b", iter.next());
@@ -331,7 +331,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
         try {
             iter.next();
             fail("Expected NoSuchElementException.");
-        } catch (NoSuchElementException nsee) { /* Success case */
+        } catch (final NoSuchElementException nsee) { /* Success case */
         }
 
         iter.remove();
@@ -341,7 +341,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
         try {
             iter.next();
             fail("Expected NoSuchElementException.");
-        } catch (NoSuchElementException nsee) { /* Success case */
+        } catch (final NoSuchElementException nsee) { /* Success case */
         }
     }
 
@@ -351,20 +351,20 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
      */
     @Test
     public void testRemoveUnsupported() {
-        Iterator<E> mockIterator = new AbstractIteratorDecorator<E>(testList.iterator()) {
+        final Iterator<E> mockIterator = new AbstractIteratorDecorator<E>(testList.iterator()) {
             @Override
             public void remove() {
                 throw new UnsupportedOperationException();
             }
         };
 
-        Iterator<E> iter = new BoundedIterator<>(mockIterator, 1, 5);
+        final Iterator<E> iter = new BoundedIterator<>(mockIterator, 1, 5);
         assertTrue(iter.hasNext());
         assertEquals("b", iter.next());
         try {
             iter.remove();
             fail("Expected UnsupportedOperationException.");
-        } catch (UnsupportedOperationException usoe) { /* Success case */
+        } catch (final UnsupportedOperationException usoe) { /* Success case */
         }
     }
 }

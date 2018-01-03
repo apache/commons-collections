@@ -30,8 +30,8 @@ import junit.framework.TestCase;
 public class IteratorEnumerationTest extends TestCase {
 
     public void testEnumeration() {
-        Iterator<String> iterator = Arrays.asList("a", "b", "c").iterator();
-        IteratorEnumeration<String> enumeration = new IteratorEnumeration<>(iterator);
+        final Iterator<String> iterator = Arrays.asList("a", "b", "c").iterator();
+        final IteratorEnumeration<String> enumeration = new IteratorEnumeration<>(iterator);
 
         assertEquals(iterator, enumeration.getIterator());
 
@@ -44,7 +44,7 @@ public class IteratorEnumerationTest extends TestCase {
         try {
             enumeration.nextElement();
             fail("NoSuchElementException expected");
-        } catch (NoSuchElementException e) {
+        } catch (final NoSuchElementException e) {
             // expected
         }
     }

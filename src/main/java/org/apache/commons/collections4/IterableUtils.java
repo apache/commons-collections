@@ -172,7 +172,7 @@ public class IterableUtils {
             public Iterator<E> iterator() {
                 return new LazyIteratorChain<E>() {
                     @Override
-                    protected Iterator<? extends E> nextIterator(int count) {
+                    protected Iterator<? extends E> nextIterator(final int count) {
                         if (count > iterables.length) {
                             return null;
                         }
@@ -324,7 +324,7 @@ public class IterableUtils {
             public Iterator<E> iterator() {
                 return new LazyIteratorChain<E>() {
                     @Override
-                    protected Iterator<? extends E> nextIterator(int count) {
+                    protected Iterator<? extends E> nextIterator(final int count) {
                         if (IterableUtils.isEmpty(iterable)) {
                             return null;
                         }
@@ -546,6 +546,7 @@ public class IterableUtils {
             @Override
             public Iterator<E> iterator() {
                 @SuppressWarnings("unchecked") // safe
+                final
                 Iterator<? extends E>[] iterators = new Iterator[others.length + 1];
                 iterators[0] = first.iterator();
                 for (int i = 0; i < others.length; i++) {
@@ -915,7 +916,7 @@ public class IterableUtils {
             throw new NullPointerException("Predicates must not be null.");
         }
 
-        for (Predicate<?> p : predicates) {
+        for (final Predicate<?> p : predicates) {
             if (p == null) {
                 throw new NullPointerException("Predicate must not be null.");
             }

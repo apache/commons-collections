@@ -256,7 +256,7 @@ public class PredicatedCollection<E> extends AbstractCollectionDecorator<E> {
          */
         public Builder<E> addAll(final Collection<? extends E> items) {
             if (items != null) {
-                for (E item : items) {
+                for (final E item : items) {
                     add(item);
                 }
             }

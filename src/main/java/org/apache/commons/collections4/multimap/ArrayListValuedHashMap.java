@@ -76,7 +76,7 @@ public class ArrayListValuedHashMap<K, V> extends AbstractListValuedMap<K, V>
      *
      * @param initialListCapacity  the initial capacity used for value collections
      */
-    public ArrayListValuedHashMap(int initialListCapacity) {
+    public ArrayListValuedHashMap(final int initialListCapacity) {
         this(DEFAULT_INITIAL_MAP_CAPACITY, initialListCapacity);
     }
 
@@ -87,7 +87,7 @@ public class ArrayListValuedHashMap<K, V> extends AbstractListValuedMap<K, V>
      * @param initialMapCapacity  the initial hashmap capacity
      * @param initialListCapacity  the initial capacity used for value collections
      */
-    public ArrayListValuedHashMap(int initialMapCapacity, int initialListCapacity) {
+    public ArrayListValuedHashMap(final int initialMapCapacity, final int initialListCapacity) {
         super(new HashMap<K, ArrayList<V>>(initialMapCapacity));
         this.initialListCapacity = initialListCapacity;
     }
@@ -123,19 +123,19 @@ public class ArrayListValuedHashMap<K, V> extends AbstractListValuedMap<K, V>
      * Trims the capacity of all value collections to their current size.
      */
     public void trimToSize() {
-        for (Collection<V> coll : getMap().values()) {
+        for (final Collection<V> coll : getMap().values()) {
             final ArrayList<V> list = (ArrayList<V>) coll;
             list.trimToSize();
         }
     }
 
     // -----------------------------------------------------------------------
-    private void writeObject(ObjectOutputStream oos) throws IOException {
+    private void writeObject(final ObjectOutputStream oos) throws IOException {
         oos.defaultWriteObject();
         doWriteObject(oos);
     }
 
-    private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+    private void readObject(final ObjectInputStream ois) throws IOException, ClassNotFoundException {
         ois.defaultReadObject();
         setMap(new HashMap<K, ArrayList<V>>());
         doReadObject(ois);

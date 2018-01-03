@@ -33,7 +33,7 @@ import org.apache.commons.collections4.collection.TransformedCollectionTest;
  */
 public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapTest<K, V> {
 
-    public TransformedMultiValuedMapTest(String testName) {
+    public TransformedMultiValuedMapTest(final String testName) {
         super(testName);
     }
 
@@ -53,7 +53,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
     public void testKeyTransformedMap() {
         final Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
 
-        MultiValuedMap<K, V> map = TransformedMultiValuedMap.transformingMap(
+        final MultiValuedMap<K, V> map = TransformedMultiValuedMap.transformingMap(
                 new ArrayListValuedHashMap<K, V>(),
                 (Transformer<? super K, ? extends K>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER,
                 null);
@@ -67,7 +67,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
             assertEquals(true, map.get((K) Integer.valueOf((String) els[i])).contains(els[i]));
         }
 
-        Collection<V> coll = map.remove(els[0]);
+        final Collection<V> coll = map.remove(els[0]);
         assertNotNull(coll);
         assertEquals(0, coll.size());
         assertEquals(true, map.remove(Integer.valueOf((String) els[0])).contains(els[0]));
@@ -77,7 +77,7 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
     public void testValueTransformedMap() {
         final Object[] els = new Object[] { "1", "3", "5", "7", "2", "4", "6" };
 
-        MultiValuedMap<K, V> map = TransformedMultiValuedMap.transformingMap(
+        final MultiValuedMap<K, V> map = TransformedMultiValuedMap.transformingMap(
                 new ArrayListValuedHashMap<K, V>(), null,
                 (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(0, map.size());

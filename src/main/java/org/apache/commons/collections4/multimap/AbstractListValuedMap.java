@@ -98,7 +98,7 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
      *   unmodifiable list for no mapping found.
      */
     @Override
-    public List<V> remove(Object key) {
+    public List<V> remove(final Object key) {
         return ListUtils.emptyIfNull(getMap().remove(key));
     }
 
@@ -118,7 +118,7 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
         }
 
         @Override
-        public void add(int index, V value) {
+        public void add(final int index, final V value) {
             List<V> list = getMapping();
             if (list == null) {
                 list = createCollection();
@@ -128,11 +128,11 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends V> c) {
+        public boolean addAll(final int index, final Collection<? extends V> c) {
             List<V> list = getMapping();
             if (list == null) {
                 list = createCollection();
-                boolean changed = list.addAll(index, c);
+                final boolean changed = list.addAll(index, c);
                 if (changed) {
                     getMap().put(key, list);
                 }
@@ -142,19 +142,19 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
         }
 
         @Override
-        public V get(int index) {
+        public V get(final int index) {
             final List<V> list = ListUtils.emptyIfNull(getMapping());
             return list.get(index);
         }
 
         @Override
-        public int indexOf(Object o) {
+        public int indexOf(final Object o) {
             final List<V> list = ListUtils.emptyIfNull(getMapping());
             return list.indexOf(o);
         }
 
         @Override
-        public int lastIndexOf(Object o) {
+        public int lastIndexOf(final Object o) {
             final List<V> list = ListUtils.emptyIfNull(getMapping());
             return list.lastIndexOf(o);
         }
@@ -165,14 +165,14 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
         }
 
         @Override
-        public ListIterator<V> listIterator(int index) {
+        public ListIterator<V> listIterator(final int index) {
             return new ValuesListIterator(key, index);
         }
 
         @Override
-        public V remove(int index) {
+        public V remove(final int index) {
             final List<V> list = ListUtils.emptyIfNull(getMapping());
-            V value = list.remove(index);
+            final V value = list.remove(index);
             if (list.isEmpty()) {
                 AbstractListValuedMap.this.remove(key);
             }
@@ -180,19 +180,19 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
         }
 
         @Override
-        public V set(int index, V value) {
+        public V set(final int index, final V value) {
             final List<V> list = ListUtils.emptyIfNull(getMapping());
             return list.set(index, value);
         }
 
         @Override
-        public List<V> subList(int fromIndex, int toIndex) {
+        public List<V> subList(final int fromIndex, final int toIndex) {
             final List<V> list = ListUtils.emptyIfNull(getMapping());
             return list.subList(fromIndex, toIndex);
         }
 
         @Override
-        public boolean equals(Object other) {
+        public boolean equals(final Object other) {
             final List<V> list = getMapping();
             if (list == null) {
                 return Collections.emptyList().equals(other);
@@ -200,7 +200,7 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
             if (!(other instanceof List)) {
                 return false;
             }
-            List<?> otherList = (List<?>) other;
+            final List<?> otherList = (List<?>) other;
             return ListUtils.isEqualList(list, otherList);
         }
 
@@ -225,16 +225,16 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
             this.iterator = values.listIterator();
         }
 
-        public ValuesListIterator(final K key, int index) {
+        public ValuesListIterator(final K key, final int index) {
             this.key = key;
             this.values = ListUtils.emptyIfNull(getMap().get(key));
             this.iterator = values.listIterator(index);
         }
 
         @Override
-        public void add(V value) {
+        public void add(final V value) {
             if (getMap().get(key) == null) {
-                List<V> list = createCollection();
+                final List<V> list = createCollection();
                 getMap().put(key, list);
                 this.values = list;
                 this.iterator = list.listIterator();
@@ -281,7 +281,7 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
         }
 
         @Override
-        public void set(V value) {
+        public void set(final V value) {
             iterator.set(value);
         }
 

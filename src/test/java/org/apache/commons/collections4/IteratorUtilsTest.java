@@ -960,14 +960,14 @@ public class IteratorUtilsTest {
         try {
             IteratorUtils.collatedIterator(null, collectionOdd.iterator(), null);
             fail("expecting NullPointerException");
-        } catch (NullPointerException npe) {
+        } catch (final NullPointerException npe) {
             // expected
         }
 
         try {
             IteratorUtils.collatedIterator(null, null, collectionEven.iterator());
             fail("expecting NullPointerException");
-        } catch (NullPointerException npe) {
+        } catch (final NullPointerException npe) {
             // expected
         }
 
@@ -978,7 +978,7 @@ public class IteratorUtilsTest {
         List<Integer> result = IteratorUtils.toList(it);
         assertEquals(12, result.size());
 
-        List<Integer> combinedList = new ArrayList<>();
+        final List<Integer> combinedList = new ArrayList<>();
         combinedList.addAll(collectionOdd);
         combinedList.addAll(collectionEven);
         Collections.sort(combinedList);
@@ -1021,7 +1021,7 @@ public class IteratorUtilsTest {
         try {
             IteratorUtils.forEach(col.iterator(), null);
             fail("expecting NullPointerException");
-        } catch (NullPointerException npe) {
+        } catch (final NullPointerException npe) {
             // expected
         }
 
@@ -1051,7 +1051,7 @@ public class IteratorUtilsTest {
         try {
             IteratorUtils.forEachButLast(col.iterator(), null);
             fail("expecting NullPointerException");
-        } catch (NullPointerException npe) {
+        } catch (final NullPointerException npe) {
             // expected
         }
 

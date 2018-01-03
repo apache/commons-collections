@@ -429,7 +429,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
 
         return new LazyIteratorChain<Entry<K, V>>() {
             @Override
-            protected Iterator<? extends Entry<K, V>> nextIterator(int count) {
+            protected Iterator<? extends Entry<K, V>> nextIterator(final int count) {
                 if ( ! keyIterator.hasNext() ) {
                     return null;
                 }
@@ -447,7 +447,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
                                 return input;
                             }
                             @Override
-                            public V setValue(V value) {
+                            public V setValue(final V value) {
                                 throw new UnsupportedOperationException();
                             }
                         };
@@ -566,7 +566,7 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
             }
         }
 
-        private void readObject(ObjectInputStream is) throws IOException, ClassNotFoundException {
+        private void readObject(final ObjectInputStream is) throws IOException, ClassNotFoundException {
             is.defaultReadObject();
             // ensure that the de-serialized class is a Collection, COLLECTIONS-580
             if (clazz != null && !Collection.class.isAssignableFrom(clazz)) {

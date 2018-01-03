@@ -57,7 +57,7 @@ import org.junit.Test;
 @SuppressWarnings("boxing")
 public class MapUtilsTest extends AbstractAvailableLocalesTest {
 
-    public MapUtilsTest(Locale locale) {
+    public MapUtilsTest(final Locale locale) {
         super(locale);
     }
 
@@ -73,7 +73,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
     @Test
     public void testPredicatedMap() {
         final Predicate<Object> p = getPredicate();
-        Map<Object, Object> map = MapUtils.predicatedMap(new HashMap<>(), p, p);
+        final Map<Object, Object> map = MapUtils.predicatedMap(new HashMap<>(), p, p);
         assertTrue("returned object should be a PredicatedMap", map instanceof PredicatedMap);
         try {
             MapUtils.predicatedMap(null, p, p);
@@ -832,13 +832,13 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         int key;
         String name;
 
-        public X(int key, String name) {
+        public X(final int key, final String name) {
             this.key = key;
             this.name = name;
         }
 
         @Override
-        public int compareTo(X o) {
+        public int compareTo(final X o) {
             return key - o.key | name.compareTo(o.name);
         }
 
@@ -858,7 +858,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         final MultiValueMap<Integer, X> map = MultiValueMap.multiValueMap(new TreeMap<Integer, Collection<X>>());
         MapUtils.populateMap(map, list, new Transformer<X, Integer>() {
             @Override
-            public Integer transform(X input) {
+            public Integer transform(final X input) {
                 return input.key;
             }
         }, TransformerUtils.<X> nopTransformer());
@@ -959,7 +959,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
 
 
         final Map<String, String> inStr = new HashMap<>();
-        char decimalSeparator = getDecimalSeparator();
+        final char decimalSeparator = getDecimalSeparator();
         inStr.put("str1", "2" + decimalSeparator + "0");
 
         assertEquals(MapUtils.getDoubleValue(inStr,"str1", 0.0), 2.0, 0);
@@ -978,7 +978,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertEquals(1.0, MapUtils.getFloat(in,"noKey", 1.0f), 0);
 
         final Map<String, String> inStr = new HashMap<>();
-        char decimalSeparator = getDecimalSeparator();
+        final char decimalSeparator = getDecimalSeparator();
         inStr.put("str1", "2" + decimalSeparator + "0");
 
         assertEquals(MapUtils.getFloatValue(inStr,"str1", 0.0f), 2.0, 0);
@@ -1152,12 +1152,12 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
     	final Map<String, String> inMap = new HashMap<>();
     	inMap.put("key1", "value1");
     	inMap.put("key2", "value2");
-        Map<String, String> map = MapUtils.orderedMap(inMap);
+        final Map<String, String> map = MapUtils.orderedMap(inMap);
         assertTrue("returned object should be a OrderedMap", map instanceof OrderedMap);
     }
 
     private char getDecimalSeparator() {
-        NumberFormat numberFormat = NumberFormat.getInstance();
+        final NumberFormat numberFormat = NumberFormat.getInstance();
         if (numberFormat instanceof DecimalFormat) {
             return ((DecimalFormat) numberFormat).getDecimalFormatSymbols().getDecimalSeparator();
         }

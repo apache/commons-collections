@@ -113,22 +113,22 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
     //-----------------------------------------------------------------------
 
     @Override
-    public E lower(E e) {
+    public E lower(final E e) {
         return decorated().lower(e);
     }
 
     @Override
-    public E floor(E e) {
+    public E floor(final E e) {
         return decorated().floor(e);
     }
 
     @Override
-    public E ceiling(E e) {
+    public E ceiling(final E e) {
         return decorated().ceiling(e);
     }
 
     @Override
-    public E higher(E e) {
+    public E higher(final E e) {
         return decorated().higher(e);
     }
 
@@ -153,19 +153,19 @@ public class TransformedNavigableSet<E> extends TransformedSortedSet<E> implemen
     }
 
     @Override
-    public NavigableSet<E> subSet(E fromElement, boolean fromInclusive, E toElement, boolean toInclusive) {
+    public NavigableSet<E> subSet(final E fromElement, final boolean fromInclusive, final E toElement, final boolean toInclusive) {
         final NavigableSet<E> sub = decorated().subSet(fromElement, fromInclusive, toElement, toInclusive);
         return transformingNavigableSet(sub, transformer);
     }
 
     @Override
-    public NavigableSet<E> headSet(E toElement, boolean inclusive) {
+    public NavigableSet<E> headSet(final E toElement, final boolean inclusive) {
         final NavigableSet<E> head = decorated().headSet(toElement, inclusive);
         return transformingNavigableSet(head, transformer);
     }
 
     @Override
-    public NavigableSet<E> tailSet(E fromElement, boolean inclusive) {
+    public NavigableSet<E> tailSet(final E fromElement, final boolean inclusive) {
         final NavigableSet<E> tail = decorated().tailSet(fromElement, inclusive);
         return transformingNavigableSet(tail, transformer);
     }

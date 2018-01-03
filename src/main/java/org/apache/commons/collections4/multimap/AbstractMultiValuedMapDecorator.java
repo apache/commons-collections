@@ -117,7 +117,7 @@ public abstract class AbstractMultiValuedMapDecorator<K, V>
     }
 
     @Override
-    public boolean put(K key, V value) {
+    public boolean put(final K key, final V value) {
         return decorated().put(key, value);
     }
 
@@ -147,17 +147,17 @@ public abstract class AbstractMultiValuedMapDecorator<K, V>
     }
 
     @Override
-    public boolean putAll(K key, Iterable<? extends V> values) {
+    public boolean putAll(final K key, final Iterable<? extends V> values) {
         return decorated().putAll(key, values);
     }
 
     @Override
-    public boolean putAll(Map<? extends K, ? extends V> map) {
+    public boolean putAll(final Map<? extends K, ? extends V> map) {
         return decorated().putAll(map);
     }
 
     @Override
-    public boolean putAll(MultiValuedMap<? extends K, ? extends V> map) {
+    public boolean putAll(final MultiValuedMap<? extends K, ? extends V> map) {
         return decorated().putAll(map);
     }
 
