@@ -31,7 +31,7 @@ import org.apache.commons.collections4.Transformer;
  *
  * @param <I> the input type to the transformer
  * @param <O> the output type from the transformer
- * 
+ *
  * @since 2.1
  *
  * @see org.apache.commons.collections4.Transformer

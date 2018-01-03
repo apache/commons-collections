@@ -77,7 +77,7 @@ import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map
- * 
+ *
  * @see java.lang.ref.Reference
  * @since 3.1 (extracted from ReferenceMap in 3.0)
  */

@@ -67,7 +67,7 @@ import java.io.Serializable;
  *
  * @param <K> the type of the keys in the map
  * @param <V> the type of the values in the map
- * 
+ *
  * @see java.lang.ref.Reference
  * @since 3.0 (previously in main package v2.1)
  */

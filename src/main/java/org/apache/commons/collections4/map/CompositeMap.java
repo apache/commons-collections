@@ -500,7 +500,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * This interface allows definition for all of the indeterminate
      * mutators in a CompositeMap, as well as providing a hook for
      * callbacks on key collisions.
-     * 
+     *
      * @param <K> the type of the keys in the map
      * @param <V> the type of the values in the map
      */

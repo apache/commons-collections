@@ -51,8 +51,8 @@ public class QueueUtilsTest {
         } catch (final NullPointerException ex) {
             // expected
         }
-    }    
-    
+    }
+
     @Test
     public void testUnmodifiableQueue() {
         Queue<Object> queue = QueueUtils.unmodifiableQueue(new LinkedList<>());

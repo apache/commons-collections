@@ -72,7 +72,7 @@ import java.lang.ref.Reference;
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map
- * 
+ *
  * @see java.lang.ref.Reference
  * @since 3.0 (previously in main package v2.1)
  */
