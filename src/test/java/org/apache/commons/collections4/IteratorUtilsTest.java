@@ -1005,7 +1005,7 @@ public class IteratorUtilsTest {
 
     // -----------------------------------------------------------------------
     @Test
-    public void forEach() {
+    public void testForEach() {
         final List<Integer> listA = new ArrayList<>();
         listA.add(1);
 
@@ -1033,7 +1033,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void forEachButLast() {
+    public void testForEachButLast() {
         final List<Integer> listA = new ArrayList<>();
         listA.add(1);
 
@@ -1065,7 +1065,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void find() {
+    public void testFind() {
         Predicate<Number> testPredicate = equalPredicate((Number) 4);
         Integer test = IteratorUtils.find(iterableA.iterator(), testPredicate);
         assertTrue(test.equals(4));
@@ -1082,7 +1082,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void indexOf() {
+    public void testIndexOf() {
         Predicate<Number> testPredicate = equalPredicate((Number) 4);
         int index = IteratorUtils.indexOf(iterableA.iterator(), testPredicate);
         assertEquals(6, index);
@@ -1099,7 +1099,7 @@ public class IteratorUtilsTest {
     }
 
     @Test
-    public void getFromIterator() throws Exception {
+    public void testGetAtIndexFromIterator() throws Exception {
         // Iterator, entry exists
         Iterator<Integer> iterator = iterableA.iterator();
         assertEquals(1, (int) IteratorUtils.get(iterator, 0));
@@ -1114,6 +1114,13 @@ public class IteratorUtilsTest {
             // expected
         }
         assertTrue(!iterator.hasNext());
+    }
+
+    @Test
+    public void testFirstFromIterator() throws Exception {
+        // Iterator, entry exists
+        Iterator<Integer> iterator = iterableA.iterator();
+        assertEquals(1, (int) IteratorUtils.first(iterator));
     }
 
     @Test

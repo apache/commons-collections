@@ -1413,6 +1413,23 @@ public class IteratorUtils {
     }
 
     /**
+     * Returns the <code>first</code> value in {@link Iterator}, throwing
+     * <code>IndexOutOfBoundsException</code> if there is no such element.
+     * <p>
+     * The Iterator is advanced to <code>index</code> (or to the end, if
+     * <code>index</code> exceeds the number of entries) as a side effect of this method.
+     *
+     * @param <E> the type of object in the {@link Iterator}
+     * @param iterator  the iterator to get a value from
+     * @return the first object
+     * @throws IndexOutOfBoundsException if the request is invalid
+     * @since 4.2
+     */
+    public static <E> E first(final Iterator<E> iterator) {
+        return get(iterator, 0);
+    }
+
+    /**
      * Returns the number of elements contained in the given iterator.
      * <p>
      * A <code>null</code> or empty iterator returns {@code 0}.

@@ -78,6 +78,9 @@
     <action issue="COLLECTIONS-575" dev="ggregory" type="add" due-to="Guram Savinov, Grzegorz Rożniecki, Bruno P. Kinoshita, Gary Gregory">
       Synchronized queue wrapper in QueueUtils.
     </action>
+    <action issue="COLLECTIONS-670" dev="ggregory" type="add" due-to="Gary Gregory">
+      Add org.apache.commons.collections4.IteratorUtils.first(Iterator).
+    </action>
   </release>
   <release version="4.1" date="2015-11-28" description="This is a security and minor release.">
     <action issue="COLLECTIONS-508" dev="tn" type="add">
