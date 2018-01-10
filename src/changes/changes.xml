@@ -81,6 +81,9 @@
     <action issue="COLLECTIONS-670" dev="ggregory" type="add" due-to="Gary Gregory">
       Add org.apache.commons.collections4.IteratorUtils.first(Iterator).
     </action>
+    <action issue="COLLECTIONS-671" dev="ggregory" type="add" due-to="Gary Gregory">
+      Add org.apache.commons.collections4.IterableUtils.first(Iterable).
+    </action>
   </release>
   <release version="4.1" date="2015-11-28" description="This is a security and minor release.">
     <action issue="COLLECTIONS-508" dev="tn" type="add">

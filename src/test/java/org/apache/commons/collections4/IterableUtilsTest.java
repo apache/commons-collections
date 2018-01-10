@@ -393,15 +393,35 @@ public class IterableUtilsTest {
         assertTrue(IterableUtils.matchesAll(emptyIterable, lessThanFour));
     }
 
-    @Test(expected = IndexOutOfBoundsException.class)
     public void getFromIterable() throws Exception {
         // Collection, entry exists
         final Bag<String> bag = new HashBag<>();
         bag.add("element", 1);
         assertEquals("element", IterableUtils.get(bag, 0));
+    }
 
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void getFromIterableIndexOutOfBoundsException() throws Exception {
+        // Collection, entry exists
+        final Bag<String> bag = new HashBag<>();
+        bag.add("element", 1);
         // Collection, non-existent entry
         IterableUtils.get(bag, 1);
+    }
+
+    public void firstFromIterable() throws Exception {
+        // Collection, entry exists
+        final Bag<String> bag = new HashBag<>();
+        bag.add("element", 1);
+        assertEquals("element", IterableUtils.first(bag));
+    }
+
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void firstFromIterableIndexOutOfBoundsException() throws Exception {
+        // Collection, entry exists
+        final Bag<String> bag = new HashBag<>();
+        // Collection, non-existent entry
+        IterableUtils.first(bag);
     }
 
     @SuppressWarnings("unchecked")

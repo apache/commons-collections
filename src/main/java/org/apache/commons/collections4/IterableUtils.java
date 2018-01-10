@@ -775,6 +775,22 @@ public class IterableUtils {
     }
 
     /**
+     * Returns the <code>first</code> value in the <code>iterable</code>'s {@link Iterator}, throwing
+     * <code>IndexOutOfBoundsException</code> if there is no such element.
+     * <p>
+     * If the {@link Iterable} is a {@link List}, then it will use {@link List#get(int)}.
+     *
+     * @param <T> the type of object in the {@link Iterable}.
+     * @param iterable  the {@link Iterable} to get a value from, may be null
+     * @return the first object
+     * @throws IndexOutOfBoundsException if the request  is invalid
+     * @since 4.2
+     */
+    public static <T> T first(final Iterable<T> iterable) {
+        return get(iterable, 0);
+    }
+
+    /**
      * Returns the number of elements contained in the given iterator.
      * <p>
      * A <code>null</code> or empty iterator returns {@code 0}.
