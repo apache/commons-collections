@@ -1413,14 +1413,17 @@ public class IteratorUtils {
     }
 
     /**
+     * Shortcut for {@code get(iterator, 0)}.
+     * <p>
      * Returns the <code>first</code> value in {@link Iterator}, throwing
      * <code>IndexOutOfBoundsException</code> if there is no such element.
+     * </p>
      * <p>
-     * The Iterator is advanced to <code>index</code> (or to the end, if
-     * <code>index</code> exceeds the number of entries) as a side effect of this method.
-     *
+     * The Iterator is advanced to <code>0</code> (or to the end, if
+     * <code>0</code> exceeds the number of entries) as a side effect of this method.
+     * </p>
      * @param <E> the type of object in the {@link Iterator}
-     * @param iterator  the iterator to get a value from
+     * @param iterator the iterator to get a value from
      * @return the first object
      * @throws IndexOutOfBoundsException if the request is invalid
      * @since 4.2

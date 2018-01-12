@@ -775,10 +775,14 @@ public class IterableUtils {
     }
 
     /**
+     * Shortcut for {@code get(iterator, 0)}.
+     * <p>
      * Returns the <code>first</code> value in the <code>iterable</code>'s {@link Iterator}, throwing
      * <code>IndexOutOfBoundsException</code> if there is no such element.
+     * </p>
      * <p>
      * If the {@link Iterable} is a {@link List}, then it will use {@link List#get(int)}.
+     * </p>
      *
      * @param <T> the type of object in the {@link Iterable}.
      * @param iterable  the {@link Iterable} to get a value from, may be null
