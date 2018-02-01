@@ -966,6 +966,15 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
         int capacity = in.readInt();
         init();
         data = new HashEntry[capacity];
+
+        // COLLECTIONS-599: Calculate threshold before populating, otherwise it will be 0 
+        // when it hits AbstractHashedMap.checkCapacity() and so will unnecessarily 
+        // double up the size of the "data" array during population.
+        //
+        // NB: AbstractHashedMap.doReadObject() DOES calculate the threshold before populating.
+        //
+        threshold = calculateThreshold(data.length, loadFactor);
+
         while (true) {
             Object key = in.readObject();
             if (key == null) {
@@ -974,7 +983,6 @@ public abstract class AbstractReferenceMap extends AbstractHashedMap {
             Object value = in.readObject();
             put(key, value);
         }
-        threshold = calculateThreshold(data.length, loadFactor);
         // do not call super.doReadObject() as code there doesn't work for reference map
     }
 
