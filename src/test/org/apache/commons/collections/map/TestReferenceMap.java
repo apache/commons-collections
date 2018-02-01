@@ -16,6 +16,11 @@
  */
 package org.apache.commons.collections.map;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.lang.ref.WeakReference;
 import java.util.Map;
 
@@ -241,6 +246,30 @@ public class TestReferenceMap extends AbstractTestIterableMap {
                 bytz = bytz * 2;
             }
         }
+    }
+    
+    /**
+     * Test whether after serialization the "data" HashEntry array is the same size as the original.<p>
+     * 
+     * See <a href="https://issues.apache.org/jira/browse/COLLECTIONS-599">COLLECTIONS-599: HashEntry array object naming data initialized with double the size during deserialization</a>
+     */
+    public void testDataSizeAfterSerialization() throws IOException, ClassNotFoundException {
+        
+        ReferenceMap serialiseMap = new ReferenceMap(ReferenceMap.HARD, ReferenceMap.HARD, true);
+        serialiseMap.put("KEY", "VALUE");
+        
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream out = new ObjectOutputStream(baos);
+        out.writeObject(serialiseMap);
+        out.close();
+        
+        ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+        ObjectInputStream in = new ObjectInputStream(bais);
+        ReferenceMap deserialisedMap = (ReferenceMap) in.readObject();
+        in.close();
+        
+        assertEquals(1, deserialisedMap.size());
+        assertEquals(serialiseMap.data.length, deserialisedMap.data.length);
     }
 
     private static void gc() {
