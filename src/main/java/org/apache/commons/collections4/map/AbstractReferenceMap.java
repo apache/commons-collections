@@ -1046,14 +1046,14 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
         init();
         data = new HashEntry[capacity];
 
-        // COLLECTIONS-599: Calculate threshold before populating, otherwise it will be 0 
-        // when it hits AbstractHashedMap.checkCapacity() and so will unnecessarily 
+        // COLLECTIONS-599: Calculate threshold before populating, otherwise it will be 0
+        // when it hits AbstractHashedMap.checkCapacity() and so will unnecessarily
         // double up the size of the "data" array during population.
         //
         // NB: AbstractHashedMap.doReadObject() DOES calculate the threshold before populating.
         //
         threshold = calculateThreshold(data.length, loadFactor);
-        
+
         while (true) {
             final K key = (K) in.readObject();
             if (key == null) {
