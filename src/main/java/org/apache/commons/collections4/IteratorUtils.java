@@ -873,8 +873,9 @@ public class IteratorUtils {
      * @return a pushback iterator
      * @throws NullPointerException if the iterator is null
      * @since 4.0
+     * @since 4.2 returns a {@link PushbackIterator} instead of a {@link Iterator}.
      */
-    public static <E> Iterator<E> pushbackIterator(final Iterator<? extends E> iterator) {
+    public static <E> PushbackIterator<E> pushbackIterator(final Iterator<? extends E> iterator) {
         return PushbackIterator.pushbackIterator(iterator);
     }
 
