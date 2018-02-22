@@ -55,7 +55,6 @@ import org.w3c.dom.NodeList;
 
 /**
  * Tests for IteratorUtils.
- *
  */
 public class IteratorUtilsTest {
 
