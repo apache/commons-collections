@@ -29,7 +29,6 @@ import org.junit.Test;
 
 /**
  * Tests the PeekingIterator.
- *
  */
 public class PeekingIteratorTest<E> extends AbstractIteratorTest<E> {
 
