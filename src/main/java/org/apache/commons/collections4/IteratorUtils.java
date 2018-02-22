@@ -856,8 +856,9 @@ public class IteratorUtils {
      * @return a peeking iterator
      * @throws NullPointerException if the iterator is null
      * @since 4.0
+     * @since 4.2 returns a {@link PeekingIterator} instead of a {@link Iterator}.
      */
-    public static <E> Iterator<E> peekingIterator(final Iterator<? extends E> iterator) {
+    public static <E> PeekingIterator<E> peekingIterator(final Iterator<? extends E> iterator) {
         return PeekingIterator.peekingIterator(iterator);
     }
 
