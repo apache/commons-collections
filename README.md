@@ -42,22 +42,24 @@
 --->
 Apache Commons Collections
 ===================
-[![Build Status](https://travis-ci.org/apache/commons-collections.svg?branch=trunk)](https://travis-ci.org/apache/commons-collections)
-[![Coverage Status](https://coveralls.io/repos/apache/commons-collections/badge.svg?branch=trunk)](https://coveralls.io/r/apache/commons-collections)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/)
 
-The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.
+[![Build Status](https://travis-ci.org/apache/commons-collections4.svg)](https://travis-ci.org/apache/commons-collections4)
+[![Coverage Status](https://coveralls.io/repos/apache/commons-collections4/badge.svg)](https://coveralls.io/r/apache/commons-collections4)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/)
+[![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-collections4/4.2.svg)](https://javadoc.io/doc/org.apache.commons/commons-collections4/4.2)
+
+${project.description}
 
 Documentation
 -------------
 
-More information can be found on the [Apache Commons Collections homepage](https://commons.apache.org/proper/commons-collections).
-The [JavaDoc](https://commons.apache.org/proper/commons-collections/javadocs/api-release) can be browsed.
+More information can be found on the [Apache Commons Collections homepage](https://commons.apache.org/proper/commons-collections4).
+The [JavaDoc](https://commons.apache.org/proper/commons-collections4/javadocs/api-release) can be browsed.
 Questions related to the usage of Apache Commons Collections should be posted to the [user mailing list][ml].
 
 Where can I get the latest release?
 -----------------------------------
-You can download source and binaries from our [download page](https://commons.apache.org/proper/commons-collections/download_collections.cgi).
+You can download source and binaries from our [download page](https://commons.apache.org/proper/commons-collections4/download_collections4.cgi).
 
 Alternatively you can pull it from the central Maven repositories:
 
@@ -65,7 +67,7 @@ Alternatively you can pull it from the central Maven repositories:
 <dependency>
   <groupId>org.apache.commons</groupId>
   <artifactId>commons-collections4</artifactId>
-  <version>4.1</version>
+  <version>4.2</version>
 </dependency>
 ```
 
@@ -96,7 +98,7 @@ Additional Resources
 --------------------
 
 + [Apache Commons Homepage](https://commons.apache.org/)
-+ [Apache Bugtracker (JIRA)](https://issues.apache.org/jira/browse/COLLECTIONS)
++ [Apache Issue Tracker (JIRA)](https://issues.apache.org/jira/browse/COLLECTIONS)
 + [Apache Commons Twitter Account](https://twitter.com/ApacheCommons)
 + `#apache-commons` IRC channel on `irc.freenode.org`
 
