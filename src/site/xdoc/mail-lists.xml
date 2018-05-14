@@ -54,7 +54,7 @@ limitations under the License.
         the convention in Commons is to prefix the subject line of messages with the component's name,
         for example:
         <ul>
-          <li>[collections4] Problem with the ...</li>
+          <li>[collections] Problem with the ...</li>
         </ul>
       </p>
       <p>
@@ -79,7 +79,7 @@ limitations under the License.
     <section name="Apache Commons Collections Mailing Lists">
       <p>
         <strong>Please prefix the subject line of any messages for <a href="index.html">Apache Commons Collections</a>
-        with <i>[collections4]</i></strong> - <i>thanks!</i>
+        with <i>[collections]</i></strong> - <i>thanks!</i>
         <br />
         <br />
       </p>
@@ -104,7 +104,7 @@ limitations under the License.
           </td>
           <td><a href="mailto:user-subscribe@commons.apache.org">Subscribe</a></td>
           <td><a href="mailto:user-unsubscribe@commons.apache.org">Unsubscribe</a></td>
-          <td><a href="mailto:user@commons.apache.org?subject=[collections4]">Post</a></td>
+          <td><a href="mailto:user@commons.apache.org?subject=[collections]">Post</a></td>
           <td><a href="http://mail-archives.apache.org/mod_mbox/commons-user/">mail-archives.apache.org</a></td>
           <td><a href="http://markmail.org/list/org.apache.commons.users/">markmail.org</a><br />
               <a href="http://www.mail-archive.com/user@commons.apache.org/">www.mail-archive.com</a><br />
@@ -122,7 +122,7 @@ limitations under the License.
           </td>
           <td><a href="mailto:dev-subscribe@commons.apache.org">Subscribe</a></td>
           <td><a href="mailto:dev-unsubscribe@commons.apache.org">Unsubscribe</a></td>
-          <td><a href="mailto:dev@commons.apache.org?subject=[collections4]">Post</a></td>
+          <td><a href="mailto:dev@commons.apache.org?subject=[collections]">Post</a></td>
           <td><a href="http://mail-archives.apache.org/mod_mbox/commons-dev/">mail-archives.apache.org</a></td>
           <td><a href="http://markmail.org/list/org.apache.commons.dev/">markmail.org</a><br />
               <a href="http://www.mail-archive.com/dev@commons.apache.org/">www.mail-archive.com</a><br />

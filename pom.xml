@@ -476,7 +476,7 @@
     <maven.compiler.target>1.7</maven.compiler.target>
 
     <!--
-       This is also  used to generate download_xxx file name.
+       This is also used to generate download_xxx file name.
        To override this when generating the download page:
 
        mvn commons:download-page -Dcommons.componentid=collections
@@ -484,7 +484,7 @@
        The above seems to change the download page name but not any other
        properties that depend on the componentid.
     -->
-    <commons.componentid>collections4</commons.componentid>
+    <commons.componentid>collections</commons.componentid>
     <commons.module.name>org.apache.commons.collections4</commons.module.name>
 
     <!-- Current 4.x release series -->
@@ -518,6 +518,13 @@
     
     <!-- Override jacoco for java 9 compatibility -->
     <commons.jacoco.version>0.7.9</commons.jacoco.version>
+    
+    <!--Used to generate the VOTE file, and can optionally be used with Clirr and JAmpiCmp -->
+    <commons.bc.version>4.1</commons.bc.version>
+    
+    <commons.releaseManagerName>Gary Gregory</commons.releaseManagerName>    
+    <commons.releaseManagerKey>86FDC7E2A11262CB</commons.releaseManagerKey>    
+    
   </properties>
 
 

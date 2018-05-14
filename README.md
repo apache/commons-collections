@@ -43,8 +43,8 @@
 Apache Commons Collections
 ===================
 
-[![Build Status](https://travis-ci.org/apache/commons-collections4.svg)](https://travis-ci.org/apache/commons-collections4)
-[![Coverage Status](https://coveralls.io/repos/apache/commons-collections4/badge.svg)](https://coveralls.io/r/apache/commons-collections4)
+[![Build Status](https://travis-ci.org/apache/commons-collections.svg)](https://travis-ci.org/apache/commons-collections)
+[![Coverage Status](https://coveralls.io/repos/apache/commons-collections/badge.svg)](https://coveralls.io/r/apache/commons-collections)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/)
 [![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-collections4/4.2.svg)](https://javadoc.io/doc/org.apache.commons/commons-collections4/4.2)
 
@@ -53,13 +53,13 @@ ${project.description}
 Documentation
 -------------
 
-More information can be found on the [Apache Commons Collections homepage](https://commons.apache.org/proper/commons-collections4).
-The [JavaDoc](https://commons.apache.org/proper/commons-collections4/javadocs/api-release) can be browsed.
+More information can be found on the [Apache Commons Collections homepage](https://commons.apache.org/proper/commons-collections).
+The [JavaDoc](https://commons.apache.org/proper/commons-collections/javadocs/api-release) can be browsed.
 Questions related to the usage of Apache Commons Collections should be posted to the [user mailing list][ml].
 
 Where can I get the latest release?
 -----------------------------------
-You can download source and binaries from our [download page](https://commons.apache.org/proper/commons-collections4/download_collections4.cgi).
+You can download source and binaries from our [download page](https://commons.apache.org/proper/commons-collections/download_collections.cgi).
 
 Alternatively you can pull it from the central Maven repositories:
 
