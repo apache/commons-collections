@@ -54,7 +54,7 @@ Documentation
 -------------
 
 More information can be found on the [Apache Commons Collections homepage](https://commons.apache.org/proper/commons-collections).
-The [JavaDoc](https://commons.apache.org/proper/commons-collections/javadocs/api-release) can be browsed.
+The [Javadoc](https://commons.apache.org/proper/commons-collections/javadocs/api-release) can be browsed.
 Questions related to the usage of Apache Commons Collections should be posted to the [user mailing list][ml].
 
 Where can I get the latest release?
