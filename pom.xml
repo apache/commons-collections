@@ -521,7 +521,8 @@
     
     <!--Used to generate the VOTE file, and can optionally be used with Clirr and JAmpiCmp -->
     <commons.bc.version>4.1</commons.bc.version>
-    
+    <commons.release.isDistModule>true</commons.release.isDistModule>
+    <commons.distSvnStagingUrl>scm:svn:https://dist.apache.org/repos/dist/dev/commons/collections</commons.distSvnStagingUrl>
     <commons.releaseManagerName>Gary Gregory</commons.releaseManagerName>    
     <commons.releaseManagerKey>86FDC7E2A11262CB</commons.releaseManagerKey>    
     
