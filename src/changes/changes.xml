@@ -21,6 +21,9 @@
   </properties>
   <body>
   <release version="4.2" date="2018-MM-DD" description="Update from Java 6 to Java 7, bug fixes, and small changes.">
+    <action issue="COLLECTIONS-681" dev="kinow" type="add" due-to="Stephan Fuhrmann">
+      Add test for MultiSetUtils
+    </action>
     <action issue="COLLECTIONS-599" dev="ggregory" type="fix" due-to="Tejas Patel, Saleem Akbar, Gary Gregory">
       HashEntry array object naming data initialized with double the size during deserialization.
     </action>
