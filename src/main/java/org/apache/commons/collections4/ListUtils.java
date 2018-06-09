@@ -688,7 +688,7 @@ public class ListUtils {
 
         @Override
         public int size() {
-            return (list.size() + size - 1) / size;
+            return (int)Math.ceil((double)list.size() / (double)size);
         }
 
         @Override
