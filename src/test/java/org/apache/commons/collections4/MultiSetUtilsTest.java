@@ -16,9 +16,11 @@
  */
 package org.apache.commons.collections4;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.Arrays;
+
 import org.apache.commons.collections4.multiset.HashMultiSet;
 import org.junit.Before;
 import org.junit.Test;
