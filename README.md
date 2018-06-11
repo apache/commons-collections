@@ -48,7 +48,7 @@ Apache Commons Collections
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/)
 [![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-collections4/4.2.svg)](https://javadoc.io/doc/org.apache.commons/commons-collections4/4.2)
 
-${project.description}
+The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.
 
 Documentation
 -------------
