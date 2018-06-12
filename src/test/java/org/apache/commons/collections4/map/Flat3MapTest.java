@@ -20,6 +20,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -442,5 +443,366 @@ public class Flat3MapTest<K, V> extends AbstractIterableMapTest<K, V> {
         assertNotSame(string0, string3);
         assertNotSame(string1, string3);
         assertNotSame(string2, string3);
+    }
+
+    public void testRemove1() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+
+        // object is not existing
+        Object obj = m.remove(44);
+        assertNull(obj);
+        
+        m.put(ONE, ONE);
+        obj = m.remove(ONE);
+        assertSame(ONE, obj);
+        assertEquals(0, m.size());
+
+        // after removal, be no longer there
+        obj = m.get(ONE);
+        assertNull(obj);
+        
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+        m.put(THREE, THREE);
+        
+        obj = m.remove(ONE);        
+        assertSame(ONE, obj);
+        
+        obj = m.get(ONE);
+        assertNull(obj);
+        obj = m.get(TWO);
+        assertSame(TWO, obj);
+    }
+    
+    public void testRemove2() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        Object obj;
+        
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+        m.put(THREE, THREE);
+        
+        obj = m.remove(ONE);
+        assertSame(ONE, obj);
+        
+        obj = m.get(ONE);
+        assertNull(obj);
+        obj = m.get(TWO);
+        assertSame(TWO, obj);
+        obj = m.get(THREE);
+        assertSame(THREE, obj);
+    }
+    
+    public void testRemove3() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        Object obj;
+        
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+        m.put(THREE, THREE);
+        
+        obj = m.remove(TWO);
+        assertSame(TWO, obj);
+        
+        obj = m.get(ONE);
+        assertSame(ONE, obj);
+        obj = m.get(TWO);
+        assertNull(obj);
+        obj = m.get(THREE);
+        assertSame(THREE, obj);
+    }
+    
+    public void testRemove4() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        Object obj;
+        
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+        m.put(THREE, THREE);
+        
+        obj = m.remove(THREE);
+        assertSame(THREE, obj);
+        
+        obj = m.get(ONE);
+        assertSame(ONE, obj);
+        obj = m.get(TWO);
+        assertSame(TWO, obj);
+        obj = m.get(THREE);
+        assertNull(obj);
+    }
+    
+    public void testRemove5() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        Object obj;
+        
+        m.put(null, ONE);
+        
+        obj = m.remove(null);
+        assertSame(ONE, obj);
+        
+        obj = m.get(null);
+        assertNull(obj);
+    }
+    
+    public void testRemove6() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        Object obj;
+        
+        m.put(ONE, ONE);
+        m.put(null, TWO);
+        
+        obj = m.remove(null);
+        assertSame(TWO, obj);
+        
+        obj = m.get(ONE);
+        assertSame(ONE, obj);
+        obj = m.get(null);
+        assertNull(obj);
+    }
+    
+    public void testRemove7() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        Object obj;
+        
+        m.put(null, ONE);
+        m.put(TWO, TWO);
+        
+        obj = m.remove(null);
+        assertSame(ONE, obj);
+        
+        obj = m.get(null);
+        assertNull(obj);
+        obj = m.get(TWO);
+        assertSame(TWO, obj);
+    }
+    
+    public void testRemove8() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        Object obj;
+        
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+        m.put(null, THREE);
+        
+        obj = m.remove(null);
+        assertSame(THREE, obj);
+        
+        obj = m.get(ONE);
+        assertSame(ONE, obj);
+        obj = m.get(TWO);
+        assertSame(TWO, obj);
+        obj = m.get(null);
+        assertNull(obj);
+    }
+
+    public void testRemove9() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        Object obj;
+        
+        m.put(ONE, ONE);
+        
+        obj = m.remove(null);
+        assertNull(obj);
+    }
+    
+    public void testRemove10() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        Object obj;
+        
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+        
+        obj = m.remove(null);
+        assertNull(obj);
+    }
+
+    public void testRemove11() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        Object obj;
+        
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+        m.put(THREE, THREE);
+        
+        obj = m.remove(null);
+        assertNull(obj);
+    }
+    
+    public void testRemove12() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        Object obj;
+        
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+        m.put(THREE, THREE);
+        
+        obj = m.remove(42);
+        assertNull(obj);
+    }
+    
+    public void testRemove13() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        Object obj;
+        
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+        
+        obj = m.remove(42);
+        assertNull(obj);
+    }
+    
+    public void testNewInstance1() {
+        final Map<Integer, Integer> orig = new HashMap<>();
+        orig.put(ONE, ONE);
+        orig.put(TWO, TWO);
+        
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>(orig);
+        
+        assertEquals(orig, m);
+        assertEquals(2, m.size());
+    }
+    
+    public void testGet1() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        Object obj;
+        
+        m.put(null, ONE);
+        obj = m.get(null);
+        assertSame(ONE, obj);
+    }
+    
+    public void testGet2() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        Object obj;
+        
+        m.put(ONE, ONE);
+        m.put(null, TWO);
+        obj = m.get(null);
+        assertSame(TWO, obj);
+    }
+    
+    public void testGet3() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        Object obj;
+        
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+        m.put(null, THREE);
+        obj = m.get(null);
+        assertSame(THREE, obj);
+    }
+    
+    public void testContainsKey1() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+        m.put(null, THREE);
+        boolean contains = m.containsKey(null);
+        assertEquals(true, contains);
+    }
+
+    public void testContainsKey2() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        
+        m.put(ONE, ONE);
+        m.put(null, TWO);
+        boolean contains = m.containsKey(null);
+        assertEquals(true, contains);
+    }
+    
+    public void testContainsKey3() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        
+        m.put(null, ONE);
+        boolean contains = m.containsKey(null);
+        assertEquals(true, contains);
+    }
+    
+    public void testContainsValue1() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+        m.put(THREE, null);
+        boolean contains = m.containsValue(null);
+        assertEquals(true, contains);
+    }
+
+    public void testContainsValue2() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        
+        m.put(ONE, ONE);
+        m.put(TWO, null);
+        boolean contains = m.containsValue(null);
+        assertEquals(true, contains);
+    }
+    
+    public void testContainsValue3() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        
+        m.put(ONE, null);
+        boolean contains = m.containsValue(null);
+        assertEquals(true, contains);
+    }
+    
+    public void testPut1() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+        m.put(null, THREE);
+        Object old = m.put(null, ONE);
+        assertEquals(THREE, old);
+        assertEquals(ONE, m.get(null));
+    }
+    
+    public void testPut2() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        
+        m.put(ONE, ONE);
+        m.put(null, THREE);
+        Object old = m.put(null, ONE);
+        assertEquals(THREE, old);
+        assertEquals(ONE, m.get(null));
+    }
+    
+    public void testPut3() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        
+        m.put(null, THREE);
+        Object old = m.put(null, ONE);
+        assertEquals(THREE, old);
+        assertEquals(null, m.get(ONE));
+    }
+    
+    public void testPut4() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        
+        m.put(ONE, ONE);
+        m.put(TWO, TWO);
+        m.put(THREE, THREE);
+        Object old = m.put(THREE, ONE);
+        assertEquals(THREE, old);
+        assertEquals(ONE, m.get(THREE));
+    }
+    
+    public void testPut5() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        
+        m.put(ONE, ONE);
+        m.put(TWO, THREE);
+        Object old = m.put(TWO, ONE);
+        assertEquals(THREE, old);
+        assertEquals(ONE, m.get(TWO));
+    }
+    
+    public void testPut6() {
+        final Flat3Map<Integer, Integer> m = new Flat3Map<>();
+        
+        m.put(ONE, THREE);
+        Object old = m.put(ONE, ONE);
+        assertEquals(THREE, old);
+        assertEquals(ONE, m.get(ONE));
     }
 }
