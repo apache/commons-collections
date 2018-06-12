@@ -93,6 +93,9 @@
     <action issue="COLLECTIONS-678" dev="ggregory" type="fix" due-to="Oscar Luis Vera Pérez">
       The verification of unsupported iterator methods is not complete.
     </action>
+    <action issue="COLLECTIONS-673" dev="ggregory" type="fix" due-to="John Mark, Stephan Fuhrmann">
+      ListUtils.partition potential integer overflow.
+    </action>
   </release>
   <release version="4.1" date="2015-11-28" description="This is a security and minor release.">
     <action issue="COLLECTIONS-508" dev="tn" type="add">
