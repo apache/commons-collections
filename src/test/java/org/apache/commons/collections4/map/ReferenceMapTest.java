@@ -262,17 +262,18 @@ public class ReferenceMapTest<K, V> extends AbstractIterableMapTest<K, V> {
      */
     public void testDataSizeAfterSerialization() throws IOException, ClassNotFoundException {
 
-        ReferenceMap<String,String> serialiseMap = new ReferenceMap<>(ReferenceStrength.WEAK, ReferenceStrength.WEAK, true);
+        final ReferenceMap<String,String> serialiseMap = new ReferenceMap<>(ReferenceStrength.WEAK, ReferenceStrength.WEAK, true);
         serialiseMap.put("KEY", "VALUE");
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (ObjectOutputStream out = new ObjectOutputStream(baos)) {
             out.writeObject(serialiseMap);
         }
 
-        ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+        final ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
         try (ObjectInputStream in = new ObjectInputStream(bais)) {
             @SuppressWarnings("unchecked")
+            final
             ReferenceMap<String,String> deserialisedMap = (ReferenceMap<String,String>) in.readObject();
             assertEquals(1, deserialisedMap.size());
             assertEquals(serialiseMap.data.length, deserialisedMap.data.length);

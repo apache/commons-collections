@@ -761,7 +761,7 @@ public class IteratorUtilsTest {
     @Test
     public void testFirstFromIterator() throws Exception {
         // Iterator, entry exists
-        Iterator<Integer> iterator = iterableA.iterator();
+        final Iterator<Integer> iterator = iterableA.iterator();
         assertEquals(1, (int) IteratorUtils.first(iterator));
     }
 

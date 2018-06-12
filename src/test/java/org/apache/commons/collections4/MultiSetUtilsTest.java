@@ -47,12 +47,12 @@ public class MultiSetUtilsTest {
      */
     @Test
     public void testEmptyMultiSet() {
-        MultiSet<Integer> empty = MultiSetUtils.emptyMultiSet();
+        final MultiSet<Integer> empty = MultiSetUtils.emptyMultiSet();
         assertEquals(0, empty.size());
         try {
             empty.add(55);
             fail("Empty multi set must be read-only");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
         }
     }
 
@@ -61,19 +61,19 @@ public class MultiSetUtilsTest {
      */
     @Test
     public void testUnmodifiableMultiSet() {
-        MultiSet<String> unmodifiable = MultiSetUtils.unmodifiableMultiSet(multiSet);
+        final MultiSet<String> unmodifiable = MultiSetUtils.unmodifiableMultiSet(multiSet);
         assertEquals(multiSet, unmodifiable);
 
         try {
             unmodifiable.add("a");
             fail("Empty multi set must be read-only");
-        } catch (UnsupportedOperationException e) {
+        } catch (final UnsupportedOperationException e) {
         }
 
         try {
             MultiSetUtils.unmodifiableMultiSet(null);
             fail("Expecting NPE");
-        } catch (NullPointerException e) {
+        } catch (final NullPointerException e) {
         }
     }
 
@@ -82,7 +82,7 @@ public class MultiSetUtilsTest {
      */
     @Test
     public void testSynchronizedMultiSet() {
-        MultiSet<String> synced = MultiSetUtils.synchronizedMultiSet(multiSet);
+        final MultiSet<String> synced = MultiSetUtils.synchronizedMultiSet(multiSet);
         assertEquals(multiSet, synced);
         synced.add("a"); // ensure adding works
     }
@@ -92,38 +92,38 @@ public class MultiSetUtilsTest {
      */
     @Test
     public void testPredicatedMultiSet() {
-        Predicate<String> predicate = new Predicate<String>() {
+        final Predicate<String> predicate = new Predicate<String>() {
             @Override
-            public boolean evaluate(String object) {
+            public boolean evaluate(final String object) {
                 return object.length() == 1;
             };
         };
-        MultiSet<String> predicated = MultiSetUtils.predicatedMultiSet(multiSet, predicate);
+        final MultiSet<String> predicated = MultiSetUtils.predicatedMultiSet(multiSet, predicate);
         assertEquals(multiSet.size(), predicated.size());
         assertEquals(multiSet.getCount("a"), predicated.getCount("a"));
 
         try {
             MultiSetUtils.predicatedMultiSet(null, predicate);
             fail("Expecting NPE");
-        } catch (NullPointerException e) {
+        } catch (final NullPointerException e) {
         }
 
         try {
             MultiSetUtils.predicatedMultiSet(multiSet, null);
             fail("Expecting NPE");
-        } catch (NullPointerException e) {
+        } catch (final NullPointerException e) {
         }
 
         try {
             MultiSetUtils.predicatedMultiSet(multiSet, new Predicate<String>() {
                 @Override
-                public boolean evaluate(String object) {
+                public boolean evaluate(final String object) {
                     return object.equals("a");
                 };
             });
             fail("Predicate is violated for all elements not being 'a'");
         }
-        catch (IllegalArgumentException iae) {
+        catch (final IllegalArgumentException iae) {
         }
     }
 }
