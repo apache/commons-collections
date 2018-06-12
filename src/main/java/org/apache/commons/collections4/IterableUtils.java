@@ -49,6 +49,11 @@ import org.apache.commons.collections4.iterators.UniqueFilterIterator;
 public class IterableUtils {
 
     /**
+     * IterableUtils is not normally instantiated.
+     */
+    private IterableUtils() {}
+
+    /**
      * An empty iterable.
      */
     @SuppressWarnings("rawtypes")
