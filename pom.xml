@@ -573,6 +573,7 @@
         <configuration>
           <configLocation>${basedir}/src/conf/checkstyle.xml</configLocation>
           <enableRulesSummary>false</enableRulesSummary>
+          <suppressionsLocation>${basedir}/src/conf/checkstyle-suppressions.xml</suppressionsLocation>
         </configuration>
       </plugin>
       <plugin>
