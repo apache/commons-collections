@@ -55,7 +55,7 @@ public class MultiSetUtilsTest {
         } catch (UnsupportedOperationException e) {
         }
     }
-    
+
     /**
      * Tests {@link MultiSetUtils#unmodifiableMultiSet(org.apache.commons.collections4.MultiSet) ()}.
      */
@@ -63,30 +63,30 @@ public class MultiSetUtilsTest {
     public void testUnmodifiableMultiSet() {
         MultiSet<String> unmodifiable = MultiSetUtils.unmodifiableMultiSet(multiSet);
         assertEquals(multiSet, unmodifiable);
-        
+
         try {
             unmodifiable.add("a");
             fail("Empty multi set must be read-only");
         } catch (UnsupportedOperationException e) {
         }
-        
+
         try {
             MultiSetUtils.unmodifiableMultiSet(null);
             fail("Expecting NPE");
         } catch (NullPointerException e) {
         }
     }
-    
+
     /**
      * Tests {@link MultiSetUtils#unmodifiableMultiSet(org.apache.commons.collections4.MultiSet) ()}.
      */
     @Test
     public void testSynchronizedMultiSet() {
         MultiSet<String> synced = MultiSetUtils.synchronizedMultiSet(multiSet);
-        assertEquals(multiSet, synced);        
+        assertEquals(multiSet, synced);
         synced.add("a"); // ensure adding works
     }
-    
+
     /**
      * Tests {@link MultiSetUtils#predicatedMultiSet(org.apache.commons.collections4.MultiSet, org.apache.commons.collections4.Predicate)}.
      */
@@ -101,13 +101,13 @@ public class MultiSetUtilsTest {
         MultiSet<String> predicated = MultiSetUtils.predicatedMultiSet(multiSet, predicate);
         assertEquals(multiSet.size(), predicated.size());
         assertEquals(multiSet.getCount("a"), predicated.getCount("a"));
-        
+
         try {
             MultiSetUtils.predicatedMultiSet(null, predicate);
             fail("Expecting NPE");
         } catch (NullPointerException e) {
         }
-        
+
         try {
             MultiSetUtils.predicatedMultiSet(multiSet, null);
             fail("Expecting NPE");
