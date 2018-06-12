@@ -425,6 +425,10 @@ public class ListUtilsTest {
             fail("failed to check for size argument");
         } catch (final IllegalArgumentException e) {}
 
+        List<List<Integer>> partitionMax = ListUtils.partition(strings, Integer.MAX_VALUE);
+        assertEquals(1, partitionMax.size());
+        assertEquals(strings.size(), partitionMax.get(0).size());
+        assertEquals(strings, partitionMax.get(0));
     }
 
     private static Predicate<Number> EQUALS_TWO = new Predicate<Number>() {
