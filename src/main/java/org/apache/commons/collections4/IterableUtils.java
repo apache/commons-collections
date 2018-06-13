@@ -1074,7 +1074,7 @@ public class IterableUtils {
     /**
      * Fail-fast check for null arguments.
      *
-     * @param iterable  the iterable to check
+     * @param iterables  the iterables to check
      * @throws NullPointerException if the argument or any of its contents is null
      */
     static void checkNotNull(final Iterable<?>... iterables) {
