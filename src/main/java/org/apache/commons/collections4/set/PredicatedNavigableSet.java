@@ -132,7 +132,8 @@ public class PredicatedNavigableSet<E> extends PredicatedSortedSet<E> implements
     }
 
     @Override
-    public NavigableSet<E> subSet(final E fromElement, final boolean fromInclusive, final E toElement, final boolean toInclusive) {
+    public NavigableSet<E> subSet(final E fromElement, final boolean fromInclusive,
+            final E toElement, final boolean toInclusive) {
         final NavigableSet<E> sub = decorated().subSet(fromElement, fromInclusive, toElement, toInclusive);
         return predicatedNavigableSet(sub, predicate);
     }

@@ -401,6 +401,8 @@ public class CollectionUtils {
      *
      * @param coll1  the first collection, must not be null
      * @param coll2  the second collection, must not be null
+     * @param <T> the generic type that is able to represent the types contained
+     *        in the second input collection.
      * @return <code>true</code> iff the intersection of the collections is non-empty
      * @since 4.2
      * @see #intersection
