@@ -240,7 +240,7 @@ public interface MultiSet<E> extends Collection<E> {
          * and the two entries represent the same element with the same
          * number of occurrences.
          * <p>
-         * More formally, two entries <tt>e1</tt> and <tt>e2</tt> represent
+         * More formally, two entries <code>e1</tt> and <tt>e2</code> represent
          * the same mapping if
          * <pre>
          *     (e1.getElement()==null ? e2.getElement()==null
@@ -257,7 +257,7 @@ public interface MultiSet<E> extends Collection<E> {
         /**
          * Returns the hash code value for this multiset entry.
          * <p>
-         * The hash code of a multiset entry <tt>e</tt> is defined to be:
+         * The hash code of a multiset entry <code>e</code> is defined to be:
          * <pre>
          *      (e==null ? 0 : e.hashCode()) ^ noOccurances)
          * </pre>
