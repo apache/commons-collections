@@ -63,7 +63,7 @@ public interface Get<K, V> {
     /**
      * @param key key whose mapping is to be removed from the map
      * @return the previous value associated with <code>key</code>, or
-     *         <code>null</tt> if there was no mapping for <tt>key</code>.
+     *         <code>null</code> if there was no mapping for <code>key</code>.
      * @see java.util.Map#remove(Object)
      */
     V remove(Object key);

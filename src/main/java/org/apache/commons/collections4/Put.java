@@ -47,9 +47,9 @@ public interface Put<K, V> {
      * @param key key with which the specified value is to be associated
      * @param value value to be associated with the specified key
      * @return the previous value associated with <code>key</code>, or
-     *         <code>null</tt> if there was no mapping for <tt>key</code>.
+     *         <code>null</code> if there was no mapping for <code>key</code>.
      *         (A <code>null</code> return can also indicate that the map
-     *         previously associated <code>null</tt> with <tt>key</code>,
+     *         previously associated <code>null</code> with <code>key</code>,
      *         if the implementation supports <code>null</code> values.)
      * @see Map#put(Object, Object)
      */

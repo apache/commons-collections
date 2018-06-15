@@ -240,7 +240,7 @@ public interface MultiSet<E> extends Collection<E> {
          * and the two entries represent the same element with the same
          * number of occurrences.
          * <p>
-         * More formally, two entries <code>e1</tt> and <tt>e2</code> represent
+         * More formally, two entries <code>e1</code> and <code>e2</code> represent
          * the same mapping if
          * <pre>
          *     (e1.getElement()==null ? e2.getElement()==null

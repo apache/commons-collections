@@ -264,8 +264,8 @@ public class CollectionUtils {
      * <p>
      * The cardinality of each element <i>e</i> in the returned
      * {@link Collection} will be equal to
-     * <tt>max(cardinality(<i>e</i>,<i>a</i>),cardinality(<i>e</i>,<i>b</i>)) - min(cardinality(<i>e</i>,<i>a</i>),
-     * cardinality(<i>e</i>,<i>b</i>))</tt>.
+     * <code>max(cardinality(<i>e</i>,<i>a</i>),cardinality(<i>e</i>,<i>b</i>)) - min(cardinality(<i>e</i>,<i>a</i>),
+     * cardinality(<i>e</i>,<i>b</i>))</code>.
      * <p>
      * This is equivalent to
      * {@code {@link #subtract subtract}({@link #union union(a,b)},{@link #intersection intersection(a,b)})}

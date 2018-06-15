@@ -268,8 +268,8 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * operation may be used to distinguish these two cases.
      *
      * <p>More formally, if this map contains a mapping from a key
-     * {@code k} to a value {@code v} such that <tt>(key==null ? k==null :
-     * key.equals(k))</tt>, then this method returns {@code v}; otherwise
+     * {@code k} to a value {@code v} such that <code>(key==null ? k==null :
+     * key.equals(k))</code>, then this method returns {@code v}; otherwise
      * it returns {@code null}.  (There can be at most one such mapping.)
      *
      * @param key key whose associated value is to be returned.
