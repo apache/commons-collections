@@ -638,7 +638,7 @@ public class CollectionUtils {
      * @param obj the object to find the cardinality of
      * @param coll the {@link Iterable} to search
      * @param <O> the type of object that the {@link Iterable} may contain.
-     * @return the the number of occurrences of obj in coll
+     * @return the number of occurrences of obj in coll
      * @throws NullPointerException if coll is null
      * @deprecated since 4.1, use {@link IterableUtils#frequency(Iterable, Object)} instead.
      *   Be aware that the order of parameters has changed.

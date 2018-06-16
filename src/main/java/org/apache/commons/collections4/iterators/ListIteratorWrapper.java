@@ -170,7 +170,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
     }
 
     /**
-     * Returns the the previous element.
+     * Returns the previous element.
      *
      * @return the previous element
      * @throws NoSuchElementException  if there are no previous elements

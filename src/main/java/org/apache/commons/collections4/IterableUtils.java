@@ -742,7 +742,7 @@ public class IterableUtils {
      * @param <T> the element type of the object to find
      * @param iterable  the {@link Iterable} to search
      * @param obj  the object to find the cardinality of
-     * @return the the number of occurrences of obj in iterable
+     * @return the number of occurrences of obj in iterable
      */
     public static <E, T extends E> int frequency(final Iterable<E> iterable, final T obj) {
         if (iterable instanceof Set<?>) {
