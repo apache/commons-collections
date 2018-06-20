@@ -19,6 +19,9 @@ package org.apache.commons.collections4.keyvalue;
 import java.util.Map;
 
 import org.apache.commons.collections4.KeyValue;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * Test the DefaultMapEntry class.
@@ -55,6 +58,7 @@ public class DefaultMapEntryTest<K, V> extends AbstractMapEntryTest<K, V> {
      */
     @Override
     @SuppressWarnings("unchecked")
+    @Test
     public void testConstructors() {
         // 1. test key-value constructor
         final Map.Entry<K, V> entry = new DefaultMapEntry<>((K) key, (V) value);

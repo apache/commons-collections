@@ -21,17 +21,20 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  * Tests the LoopingIterator class.
  *
  */
-public class LoopingIteratorTest extends TestCase {
+public class LoopingIteratorTest {
 
     /**
      * Tests constructor exception.
      */
+    @Test
     public void testConstructorEx() throws Exception {
         try {
             new LoopingIterator<>(null);
@@ -44,6 +47,7 @@ public class LoopingIteratorTest extends TestCase {
      * Tests whether an empty looping iterator works as designed.
      * @throws Exception  If something unexpected occurs.
      */
+    @Test
     public void testLooping0() throws Exception {
         final List<Object> list = new ArrayList<>();
         final LoopingIterator<Object> loop = new LoopingIterator<>(list);
@@ -60,6 +64,7 @@ public class LoopingIteratorTest extends TestCase {
      * Tests whether a populated looping iterator works as designed.
      * @throws Exception  If something unexpected occurs.
      */
+    @Test
     public void testLooping1() throws Exception {
         final List<String> list = Arrays.asList("a");
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
@@ -79,6 +84,7 @@ public class LoopingIteratorTest extends TestCase {
      * Tests whether a populated looping iterator works as designed.
      * @throws Exception  If something unexpected occurs.
      */
+    @Test
     public void testLooping2() throws Exception {
         final List<String> list = Arrays.asList("a", "b");
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
@@ -98,6 +104,7 @@ public class LoopingIteratorTest extends TestCase {
      * Tests whether a populated looping iterator works as designed.
      * @throws Exception  If something unexpected occurs.
      */
+    @Test
     public void testLooping3() throws Exception {
         final List<String> list = Arrays.asList("a", "b", "c");
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
@@ -120,6 +127,7 @@ public class LoopingIteratorTest extends TestCase {
      * Tests the remove() method on a LoopingIterator wrapped ArrayList.
      * @throws Exception  If something unexpected occurs.
      */
+    @Test
     public void testRemoving1() throws Exception {
         final List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
@@ -152,6 +160,7 @@ public class LoopingIteratorTest extends TestCase {
      * Tests the reset() method on a LoopingIterator wrapped ArrayList.
      * @throws Exception  If something unexpected occurs.
      */
+    @Test
     public void testReset() throws Exception {
         final List<String> list = Arrays.asList("a", "b", "c");
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
@@ -174,6 +183,7 @@ public class LoopingIteratorTest extends TestCase {
      * Tests the size() method on a LoopingIterator wrapped ArrayList.
      * @throws Exception  If something unexpected occurs.
      */
+    @Test
     public void testSize() throws Exception {
         final List<String> list = new ArrayList<>(Arrays.asList("a", "b", "c"));
         final LoopingIterator<String> loop = new LoopingIterator<>(list);
