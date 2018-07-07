@@ -504,7 +504,7 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      * @param <K> the type of the keys in the map
      * @param <V> the type of the values in the map
      */
-    public static interface MapMutator<K, V> extends Serializable {
+    public interface MapMutator<K, V> extends Serializable {
         /**
          * Called when adding a new Composited Map results in a
          * key collision.

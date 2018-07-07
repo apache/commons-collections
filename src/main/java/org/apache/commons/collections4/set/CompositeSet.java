@@ -459,7 +459,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
     /**
      * Define callbacks for mutation operations.
      */
-    public static interface SetMutator<E> extends Serializable {
+    public interface SetMutator<E> extends Serializable {
 
         /**
          * Called when an object is to be added to the composite.
