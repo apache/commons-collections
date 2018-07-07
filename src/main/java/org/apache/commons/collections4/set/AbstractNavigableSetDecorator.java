@@ -104,7 +104,8 @@ public abstract class AbstractNavigableSetDecorator<E>
     }
 
     @Override
-    public NavigableSet<E> subSet(final E fromElement, final boolean fromInclusive, final E toElement, final boolean toInclusive) {
+    public NavigableSet<E> subSet(final E fromElement, final boolean fromInclusive, final E toElement,
+            final boolean toInclusive) {
         return decorated().subSet(fromElement, fromInclusive, toElement, toInclusive);
     }
 
