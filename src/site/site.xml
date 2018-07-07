@@ -46,8 +46,8 @@
             <item name="Mailing Lists"        href="/mail-lists.html"/>
             <item name="Issue Tracking"       href="/issue-tracking.html"/>
             <item name="Proposal"             href="/proposal.html"/>
-            <item name="Source Repository"    href="/source-repository.html"/>
-            <item name="Javadoc (GIT latest)" href="apidocs/index.html"/>
+            <item name="Source Repository"    href="/scm.html"/>
+            <item name="Javadoc (latest)"     href="/apidocs/index.html"/>
         </menu>
 
     </body>
