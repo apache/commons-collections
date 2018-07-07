@@ -398,7 +398,7 @@ public class CollectionUtils {
      * <p>
      * In other words, this method returns <code>true</code> iff the
      * {@link #intersection} of <i>coll1</i> and <i>coll2</i> is not empty.
-     * 
+     *
      * @param <T> the type of object to lookup in <code>coll1</code>.
      * @param coll1  the first collection, must not be null
      * @param coll2  the second collection, must not be null
