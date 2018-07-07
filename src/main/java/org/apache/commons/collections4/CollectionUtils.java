@@ -111,7 +111,7 @@ public class CollectionUtils {
             return getFreq(obj, cardinalityB);
         }
 
-        private final int getFreq(final Object obj, final Map<?, Integer> freqMap) {
+        private int getFreq(final Object obj, final Map<?, Integer> freqMap) {
             final Integer count = freqMap.get(obj);
             if (count != null) {
                 return count.intValue();
