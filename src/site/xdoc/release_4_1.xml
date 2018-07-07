@@ -17,19 +17,19 @@
 -->
 <document>
  <properties>
-  <title>Release notes for v4.1</title>
+  <title>Release notes for version 4.1</title>
   <author email="dev@commons.apache.org">Commons Documentation Team</author>
  </properties>
 <body>
 
-<section name="Release notes for v4.1">
+<section name="Release notes for version 4.1">
 <hr />
 <p>
 Apache Commons Collections is a project to develop and maintain collection
 classes based on and inspired by the JDK collection framework.
 </p>
 <p>
-This v4.1 release is a minor and security release, fixing several bugs present in
+This 4.1 release is a minor and security release, fixing several bugs present in
 previous releases of the 4.X branch. Additionally, this release provides a mitigation
 for a known remote code exploitation via the standard java object serialization
 mechanism. Serialization support for unsafe classes in the functor package has been

@@ -83,13 +83,13 @@ Of course, backwards compatibility has been retained during all transitions usin
 </p>
 
 <p>
-<b>Collections 2.1.1</b> was a patch release to v2.1.
-Unfortunately, v3.0 created a <a href="compatibility.html">binary incompatibility</a> in the IteratorUtils class.
-This patch was created as a work around, enabling v2.1.1 to be compatible with v3.1.
+<b>Collections 2.1.1</b> was a patch release to version 2.1.
+Unfortunately, version 3.0 created a <a href="compatibility.html">binary incompatibility</a> in the IteratorUtils class.
+This patch was created as a work around, enabling 2.1.1 to be compatible with 3.1.
 </p>
 
 <p>
-<b>Collections 3.1</b> fixed some bugs in v3.0 and adds a few new enhancements.
+<b>Collections 3.1</b> fixed some bugs in 3.0 and adds a few new enhancements.
 The most notable change is a new list implementation, TreeList, that is well balanced for insertions and removals at any index.
 Other changes included more classes implementing Serializable and a ReferenceIdentityMap.
 </p>
@@ -100,7 +100,7 @@ Notably MultiValueMap is a new more flexible implementation of MultiHashMap.
 </p>
 
 <p>
-<b>Collections 3.2.1</b> Re-packaged v3.2 release which is OSGi enabled.
+<b>Collections 3.2.1</b> Re-packaged 3.2 release which is OSGi enabled.
 </p>
 
 <p>
@@ -113,7 +113,7 @@ PrototypeCloneFactory, PrototypeSerializationFactory, WhileClosure. Fixes COLLEC
 
 <p>
 <b>Collections 4.0</b> represented a major revamp of collections by supporting
-new language features introduced with Java 1.5, mainly support for generics.
+new language features introduced with Java 5, mainly support for generics.
 </p>
 <p>
 New interfaces Put, Get and Trie were added, whereas the Buffer interface has
@@ -122,7 +122,7 @@ an implementation of a Patricia Trie.
 </p>
 
 <p>
-<b>Collections 4.1</b> fixed some bugs in v4.0 and adds a few new enhancements.
+<b>Collections 4.1</b> fixes some bugs in 4.0 and adds a few new enhancements.
 The most notable changes are new interfaces MultiSet (a replacement for the Bag
 interface which is fully compliant to the general Collection contract) and
 MultiValuedMapList (a replacement for the MultiMap interface) as well as fluent
@@ -131,6 +131,13 @@ API for Iterable instances (FluentIterable).
 <p>
 Additionally, serialization support for unsafe classes in the functor package
 has been completely removed (see entry for Collections 3.2.2 for more details). 
+</p>
+
+<p>
+<b>Collections 4.2</b> fixes some bugs in 4.1 and adds a few new enhancements: 
+Updates the platform requirement from Java 6 to 7,
+adds Automatic-Module-Name MANIFEST entry for Java 9 compatibility, and
+adds a few new APIs.
 </p>
 
 </section>
