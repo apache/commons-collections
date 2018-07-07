@@ -647,7 +647,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         final Object[] values = getSampleValues();
 
         resetEmpty();
-        for (Object value : values) {
+        for (final Object value : values) {
             assertTrue("Empty map must not contain value",
                        !getMap().containsValue(value));
         }
@@ -1203,7 +1203,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         resetFull();
         final V[] sampleValues = getSampleValues();
         final Collection<V> values = getMap().values();
-        for (V sampleValue : sampleValues) {
+        for (final V sampleValue : sampleValues) {
             if (map.containsValue(sampleValue)) {
                 int j = 0;  // loop counter prevents infinite loops when remove is broken
                 while (values.contains(sampleValue) && j < 10000) {
@@ -1315,7 +1315,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         resetFull();
         final K[] sampleKeys = getSampleKeys();
         final Set<K> keys = getMap().keySet();
-        for (K sampleKey : sampleKeys) {
+        for (final K sampleKey : sampleKeys) {
             try {
                 keys.remove(sampleKey);
             } catch (final UnsupportedOperationException e) {
