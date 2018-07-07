@@ -80,7 +80,7 @@ import org.apache.commons.collections4.keyvalue.UnmodifiableMapEntry;
 public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     implements OrderedBidiMap<K, V>, Serializable {
 
-    static enum DataElement {
+    enum DataElement {
         KEY("key"), VALUE("value");
 
         private final String description;
