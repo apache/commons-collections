@@ -43,7 +43,7 @@ public class QueueUtilsTest {
 
     @Test
     public void testSynchronizedQueue() {
-        final Queue<Object> queue = QueueUtils.synchronizedQueue(new LinkedList<Object>());
+        final Queue<Object> queue = QueueUtils.synchronizedQueue(new LinkedList<>());
         assertTrue("Returned object should be a SynchronizedQueue.", queue instanceof SynchronizedQueue);
         try {
             QueueUtils.synchronizedQueue(null);
