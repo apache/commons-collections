@@ -43,6 +43,8 @@ patches, or suggestions for improvement, see the Apache Apache Commons Collectio
 
 http://commons.apache.org/proper/commons-collections/
 
+Download page: http://commons.apache.org/proper/commons-collections/download_pool.cgi
+
 ===============================================================================
 
               Apache Commons Collections
