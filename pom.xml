@@ -519,8 +519,8 @@
     <!--Commons Release Plugin -->
     <commons.bc.version>4.1</commons.bc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
-    <commons.releaseManagerName>Gary Gregory</commons.releaseManagerName>    
-    <commons.releaseManagerKey>86FDC7E2A11262CB</commons.releaseManagerKey>    
+    <commons.releaseManagerName>Gary Gregory</commons.releaseManagerName>
+    <commons.releaseManagerKey>86FDC7E2A11262CB</commons.releaseManagerKey>
     
   </properties>
 
