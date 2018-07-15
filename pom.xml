@@ -488,20 +488,26 @@
     <commons.module.name>org.apache.commons.collections4</commons.module.name>
 
     <!-- Current 4.x release series -->
-    <commons.release.version>4.2</commons.release.version>
-    <commons.release.desc>(Requires Java 7 or later)</commons.release.desc>
+    <commons.release.version>4.3</commons.release.version>
+    <commons.release.desc>(Requires Java 8 or later)</commons.release.desc>
 
     <!-- Previous 3.x release series -->
-    <commons.release.2.version>4.1</commons.release.2.version>
-    <commons.release.2.desc>(Requires Java 6 or later)</commons.release.2.desc>
+    <commons.release.2.version>4.2</commons.release.2.version>
+    <commons.release.2.desc>(Requires Java 7 or later)</commons.release.2.desc>
     <!-- Override generated name -->
-    <commons.release.2.name>commons-collections-${commons.release.2.version}</commons.release.2.name>
+    <commons.release.2.name>commons-collections4-${commons.release.2.version}</commons.release.2.name>
 
     <!-- Previous 3.x release series -->
-    <commons.release.3.version>3.2.2</commons.release.3.version>
-    <commons.release.3.desc>(Requires Java 1.3 or later)</commons.release.3.desc>
+    <commons.release.3.version>4.1</commons.release.3.version>
+    <commons.release.3.desc>(Requires Java 6 or later)</commons.release.3.desc>
     <!-- Override generated name -->
-    <commons.release.3.name>commons-collections-${commons.release.3.version}</commons.release.3.name>
+    <commons.release.3.name>commons-collections4-${commons.release.3.version}</commons.release.3.name>
+
+    <!-- Previous 3.x release series -->
+    <commons.release.4.version>3.2.2</commons.release.4.version>
+    <commons.release.4.desc>(Requires Java 1.3 or later)</commons.release.4.desc>
+    <!-- Override generated name -->
+    <commons.release.4.name>commons-collections-${commons.release.3.version}</commons.release.4.name>
 
     <commons.jira.id>COLLECTIONS</commons.jira.id>
     <commons.jira.pid>12310465</commons.jira.pid>

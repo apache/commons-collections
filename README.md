@@ -46,7 +46,7 @@ Apache Commons Collections
 [![Build Status](https://travis-ci.org/apache/commons-collections.svg)](https://travis-ci.org/apache/commons-collections)
 [![Coverage Status](https://coveralls.io/repos/apache/commons-collections/badge.svg)](https://coveralls.io/r/apache/commons-collections)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/)
-[![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-collections4/4.2.svg)](https://javadoc.io/doc/org.apache.commons/commons-collections4/4.2)
+[![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-collections4/4.3.svg)](https://javadoc.io/doc/org.apache.commons/commons-collections4/4.3)
 
 The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.
 
@@ -67,7 +67,7 @@ Alternatively you can pull it from the central Maven repositories:
 <dependency>
   <groupId>org.apache.commons</groupId>
   <artifactId>commons-collections4</artifactId>
-  <version>4.2</version>
+  <version>4.3</version>
 </dependency>
 ```
 
