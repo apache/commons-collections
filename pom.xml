@@ -23,7 +23,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>commons-collections4</artifactId>
-  <version>4.2.1-SNAPSHOT</version>
+  <version>4.3-SNAPSHOT</version>
   <name>Apache Commons Collections</name>
 
   <inceptionYear>2001</inceptionYear>
@@ -472,8 +472,8 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
 
     <!--
        This is also used to generate download_xxx file name.
