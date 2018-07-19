@@ -219,8 +219,8 @@ public class ListUtils {
      * {@code true} if and only if both
      * lists have the same size, and all corresponding pairs of elements in
      * the two lists are <i>equal</i>.  (Two elements {@code e1} and
-     * {@code e2} are <i>equal</i> if <tt>(e1==null ? e2==null :
-     * e1.equals(e2))</tt>.)  In other words, two lists are defined to be
+     * {@code e2} are <i>equal</i> if <code>(e1==null ? e2==null :
+     * e1.equals(e2))</code>.)  In other words, two lists are defined to be
      * equal if they contain the same elements in the same order.  This
      * definition ensures that the equals method works properly across
      * different implementations of the {@code List} interface.

@@ -1,3 +1,51 @@
+              Apache Apache Commons Collections 4.2 RELEASE NOTES
+
+The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.
+
+Update from Java 6 to Java 7, bug fixes, and small changes.
+
+Changes in this version include:
+
+New features:
+o COLLECTIONS-681:  Add test for MultiSetUtils Thanks to Stephan Fuhrmann. 
+o COLLECTIONS-658:  Add Automatic-Module-Name MANIFEST entry for Java 9 compatibility. 
+o COLLECTIONS-589:  Add null-safe MapUtils.size(Map<?, ?>) method. Thanks to Gary Gregory. 
+o COLLECTIONS-586:  PatriciaTrie prefixMap clear throws NullPointerException. Thanks to Shailender Bathula, Gary Gregory. 
+o COLLECTIONS-654:  Add class SortedProperties to sort keys. 
+o COLLECTIONS-668:  Add CollectionUtils containsAny method for primitive array: org.apache.commons.collections4.CollectionUtils.containsAny(Collection<?>, T...). Thanks to Gary Gregory. 
+o COLLECTIONS-575:  Synchronized queue wrapper in QueueUtils. Thanks to Guram Savinov, Grzegorz Rożniecki, Bruno P. Kinoshita, Gary Gregory. 
+o COLLECTIONS-670:  Add org.apache.commons.collections4.IteratorUtils.first(Iterator). Thanks to Gary Gregory. 
+o COLLECTIONS-671:  Add org.apache.commons.collections4.IterableUtils.first(Iterable). Thanks to Gary Gregory. 
+
+Fixed Bugs:
+o COLLECTIONS-599:  HashEntry array object naming data initialized with double the size during deserialization. Thanks to Tejas Patel, Saleem Akbar, Gary Gregory. 
+o COLLECTIONS-662:  Unit tests MapUtilsTest and ListIteratorWrapperTest no longer fail on Java 9. Thanks to Vamsi Kavuri. 
+o COLLECTIONS-661:  Intermittent test failures in Windows for HashSetValuedHashMap. 
+o COLLECTIONS-660:  Uncomment test in AbstractMapTest regarding LRUMap equals. 
+o COLLECTIONS-656:  Fix site build on Java 8. 
+o COLLECTIONS-653:  Update Javadoc to Build on Java 1.8. 
+o COLLECTIONS-606:  Build status, Coverage status and Maven central weren't in README.md Thanks to Vamsi Kavuri. 
+o COLLECTIONS-594:  Web site spelling error: MultiValuedMapeList. Thanks to Javen O'Neal. 
+o COLLECTIONS-597:  Correction of Javadoc for org.apache.commons.collections4.functors.CatchAndRethrowClosure. Thanks to Enrique. 
+o COLLECTIONS-678:  The verification of unsupported iterator methods is not complete. Thanks to Oscar Luis Vera Pérez. 
+o COLLECTIONS-673:  ListUtils.partition potential integer overflow. Thanks to John Mark, Stephan Fuhrmann. 
+
+Changes:
+o COLLECTIONS-602:  Improve efficiency of DefaultedMap.get. Thanks to John Mark. 
+o COLLECTIONS-603:  Small improvements for generics, conditional statements, and warnings suppressions. Thanks to Artem Konovalov. 
+o COLLECTIONS-655:  Update platform from Java 6 to Java 7. 
+o COLLECTIONS-666:  org.apache.commons.collections4.ListUtils.union(List, List) should pre-allocate result list. Thanks to BELUGA BEHR. 
+o COLLECTIONS-669:  Update org.apache.commons.collections4.CollectionUtils.addAll(Collection<C>, C[]) to addAll(Collection<C>, C...). Thanks to BELUGA BEHR, Gary Gregory. 
+
+ 
+For complete information on Apache Commons Collections, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Apache Commons Collections website:
+
+http://commons.apache.org/proper/commons-collections/
+
+Download page: http://commons.apache.org/proper/commons-collections/download_pool.cgi
+
+===============================================================================
 
               Apache Commons Collections
                      Version 4.1
@@ -161,3 +209,77 @@ For complete information on Apache Commons Collections, including instructions o
 patches, or suggestions for improvement, see the Apache Apache Commons Collections website:
 
 http://commons.apache.org/proper/commons-collections/
+
+===============================================================================
+
+              Apache Commons Collections
+                    Version 3.2.2
+                    RELEASE NOTES
+
+
+INTRODUCTION:
+
+Commons collections is a project to develop and maintain collection classes
+based on and inspired by the JDK collection framework.
+This release is JDK1.3 compatible, and does not use JDK1.5 generics.
+
+This v3.2.2 release is a bugfix release, fixing several bugs present in the previous
+releases of the 3.2 branch. Additionally, this release provides a mitigation for a
+known remote code exploitation via the standard java object serialization mechanism.
+By default, serialization support for unsafe classes in the functor package is
+disabled and will result in an exception when either trying to serialize or de-serialize
+an instance of these classes. For more details, please refer to COLLECTIONS-580.
+
+All users are strongly encouraged to updated to this release.
+
+
+Changes in this version include:
+
+CHANGES
+=======
+
+o COLLECTIONS-580:  Serialization support for unsafe classes in the functor package is
+                    disabled by default as this can be exploited for remote code execution
+                    attacks. To re-enable the feature the system property
+                    "org.apache.commons.collections.enableUnsafeSerialization" needs to be
+                    set to "true".
+                    Classes considered to be unsafe are: CloneTransformer, ForClosure,
+                    InstantiateFactory, InstantiateTransformer, InvokerTransformer,
+                    PrototypeCloneFactory, PrototypeSerializationFactory, WhileClosure.
+
+BUGFIXES
+========
+
+o COLLECTIONS-538:  "ExtendedProperties" will now use a privileged action to access the
+                    "file.separator" system property. In case the class does not have
+                    permission to read system properties, the "File#separator" field will
+                    be used instead. Thanks to Trejkaz. 
+o COLLECTIONS-447:  Tree traversal with a TreeListIterator will not be affected anymore by
+                    the removal of an element directly after a call to previous(). Thanks to Jeffrey Barnes. 
+o COLLECTIONS-444:  SetUniqueList.set(int, Object) now works correctly if the object to be inserted
+                    is already placed at the given position. Thanks to Thomas Vahrst, John Vasileff. 
+o COLLECTIONS-350:  Removed debug output in "MapUtils#getNumber(Map)". Thanks to Michael Akerman. 
+o COLLECTIONS-335:  Fixed cache assignment for "TreeBidiMap#entrySet". Thanks to sebb. 
+o COLLECTIONS-334:  Synchronized access to lock in "StaticBucketMap#size()". Thanks to sebb. 
+o COLLECTIONS-307:  "SetUniqueList#subList()#contains(Object)" will now correctly check the subList
+                    rather than the parent list. Thanks to Christian Semrau. 
+o COLLECTIONS-304:  "SetUniqueList#set(int, Object)" will now correctly enforce the uniqueness constraint.
+                    Thanks to Rafa? Figas,Bjorn Townsend. 
+o COLLECTIONS-294:  "CaseInsensitiveMap" will now convert input strings to lower-case in a
+                    locale-independent manner. Thanks to Benjamin Bentmann. 
+o COLLECTIONS-266:  "MultiKey" will now be correctly serialized/de-serialized. Thanks to Joerg Schaible. 
+o COLLECTIONS-261:  "Flat3Map#remove(Object)" will now return the correct value mapped to the removed key
+                    if the size of the map is less or equal 3. Thanks to ori. 
+o COLLECTIONS-249:  "SetUniqueList.addAll(int, Collection)" now correctly add the collection at the
+                    provided index. Thanks to Joe Kelly. 
+o COLLECTIONS-228:  "MultiValueMap#put(Object, Object)" and "MultiValueMap#putAll(Object, Collection)"
+                    now correctly return if the map has changed by this operation. 
+o COLLECTIONS-219:  "CollectionUtils#removeAll" wrongly called "ListUtils#retainAll". Thanks to Tom Leccese. 
+o COLLECTIONS-217:  Calling "setValue(Object)" on any Entry returned by a "Flat3Map" will now
+                    correctly set the value for the current entry. Thanks to Matt Bishop. 
+
+ 
+For complete information on Apache Commons Collections, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Commons Collections website:
+
+http://commons.apache.org/collections/

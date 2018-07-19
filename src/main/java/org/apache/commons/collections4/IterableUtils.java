@@ -742,7 +742,7 @@ public class IterableUtils {
      * @param <T> the element type of the object to find
      * @param iterable  the {@link Iterable} to search
      * @param obj  the object to find the cardinality of
-     * @return the the number of occurrences of obj in iterable
+     * @return the number of occurrences of obj in iterable
      */
     public static <E, T extends E> int frequency(final Iterable<E> iterable, final T obj) {
         if (iterable instanceof Set<?>) {
@@ -1074,7 +1074,7 @@ public class IterableUtils {
     /**
      * Fail-fast check for null arguments.
      *
-     * @param iterable  the iterable to check
+     * @param iterables  the iterables to check
      * @throws NullPointerException if the argument or any of its contents is null
      */
     static void checkNotNull(final Iterable<?>... iterables) {

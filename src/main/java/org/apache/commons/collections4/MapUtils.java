@@ -375,7 +375,7 @@ public class MapUtils {
 
     /**
      * Looks up the given key in the given map, converting the result into
-     * a string, using the default value if the the conversion fails.
+     * a string, using the default value if the conversion fails.
      *
      * @param <K>  the key type
      * @param map  the map whose value to look up
@@ -395,7 +395,7 @@ public class MapUtils {
 
     /**
      * Looks up the given key in the given map, converting the result into
-     * a boolean, using the default value if the the conversion fails.
+     * a boolean, using the default value if the conversion fails.
      *
      * @param <K>  the key type
      * @param map  the map whose value to look up
@@ -415,7 +415,7 @@ public class MapUtils {
 
     /**
      * Looks up the given key in the given map, converting the result into
-     * a number, using the default value if the the conversion fails.
+     * a number, using the default value if the conversion fails.
      *
      * @param <K>  the key type
      * @param map  the map whose value to look up
@@ -435,7 +435,7 @@ public class MapUtils {
 
     /**
      * Looks up the given key in the given map, converting the result into
-     * a byte, using the default value if the the conversion fails.
+     * a byte, using the default value if the conversion fails.
      *
      * @param <K>  the key type
      * @param map  the map whose value to look up
@@ -455,7 +455,7 @@ public class MapUtils {
 
     /**
      * Looks up the given key in the given map, converting the result into
-     * a short, using the default value if the the conversion fails.
+     * a short, using the default value if the conversion fails.
      *
      * @param <K>  the key type
      * @param map  the map whose value to look up
@@ -475,7 +475,7 @@ public class MapUtils {
 
     /**
      * Looks up the given key in the given map, converting the result into
-     * an integer, using the default value if the the conversion fails.
+     * an integer, using the default value if the conversion fails.
      *
      * @param <K>  the key type
      * @param map  the map whose value to look up
@@ -495,7 +495,7 @@ public class MapUtils {
 
     /**
      * Looks up the given key in the given map, converting the result into
-     * a long, using the default value if the the conversion fails.
+     * a long, using the default value if the conversion fails.
      *
      * @param <K>  the key type
      * @param map  the map whose value to look up
@@ -515,7 +515,7 @@ public class MapUtils {
 
     /**
      * Looks up the given key in the given map, converting the result into
-     * a float, using the default value if the the conversion fails.
+     * a float, using the default value if the conversion fails.
      *
      * @param <K>  the key type
      * @param map  the map whose value to look up
@@ -535,7 +535,7 @@ public class MapUtils {
 
     /**
      * Looks up the given key in the given map, converting the result into
-     * a double, using the default value if the the conversion fails.
+     * a double, using the default value if the conversion fails.
      *
      * @param <K>  the key type
      * @param map  the map whose value to look up
@@ -555,7 +555,7 @@ public class MapUtils {
 
     /**
      * Looks up the given key in the given map, converting the result into
-     * a map, using the default value if the the conversion fails.
+     * a map, using the default value if the conversion fails.
      *
      * @param <K>  the key type
      * @param map  the map whose value to look up
@@ -706,7 +706,7 @@ public class MapUtils {
     //-------------------------------------------------------------------------
     /**
      * Gets a boolean from a Map in a null-safe manner,
-     * using the default value if the the conversion fails.
+     * using the default value if the conversion fails.
      * <p>
      * If the value is a <code>Boolean</code> its value is returned.
      * If the value is a <code>String</code> and it equals 'true' ignoring case
@@ -731,7 +731,7 @@ public class MapUtils {
 
     /**
      * Gets a byte from a Map in a null-safe manner,
-     * using the default value if the the conversion fails.
+     * using the default value if the conversion fails.
      * <p>
      * The byte is obtained from the results of {@link #getNumber(Map,Object)}.
      *
@@ -751,7 +751,7 @@ public class MapUtils {
 
     /**
      * Gets a short from a Map in a null-safe manner,
-     * using the default value if the the conversion fails.
+     * using the default value if the conversion fails.
      * <p>
      * The short is obtained from the results of {@link #getNumber(Map,Object)}.
      *
@@ -771,7 +771,7 @@ public class MapUtils {
 
     /**
      * Gets an int from a Map in a null-safe manner,
-     * using the default value if the the conversion fails.
+     * using the default value if the conversion fails.
      * <p>
      * The int is obtained from the results of {@link #getNumber(Map,Object)}.
      *
@@ -791,7 +791,7 @@ public class MapUtils {
 
     /**
      * Gets a long from a Map in a null-safe manner,
-     * using the default value if the the conversion fails.
+     * using the default value if the conversion fails.
      * <p>
      * The long is obtained from the results of {@link #getNumber(Map,Object)}.
      *
@@ -811,7 +811,7 @@ public class MapUtils {
 
     /**
      * Gets a float from a Map in a null-safe manner,
-     * using the default value if the the conversion fails.
+     * using the default value if the conversion fails.
      * <p>
      * The float is obtained from the results of {@link #getNumber(Map,Object)}.
      *
@@ -831,7 +831,7 @@ public class MapUtils {
 
     /**
      * Gets a double from a Map in a null-safe manner,
-     * using the default value if the the conversion fails.
+     * using the default value if the conversion fails.
      * <p>
      * The double is obtained from the results of {@link #getNumber(Map,Object)}.
      *
@@ -952,7 +952,7 @@ public class MapUtils {
      * If the debug flag is true, it additionally prints the type of the object
      * value.  If the contents of a map include the map itself, then the text
      * <em>(this Map)</em> is printed out.  If the contents include a
-     * parent container of the map, the the text <em>(ancestor[i] Map)</em> is
+     * parent container of the map, the text <em>(ancestor[i] Map)</em> is
      * printed, where i actually indicates the number of levels which must be
      * traversed in the sequential list of ancestors (e.g. father, grandfather,
      * great-grandfather, etc).

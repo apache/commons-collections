@@ -55,7 +55,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      * Unknown object behavior enum.
      * @since 4.0
      */
-    public static enum UnknownObjectBehavior {
+    public enum UnknownObjectBehavior {
         BEFORE, AFTER, EXCEPTION;
     }
 

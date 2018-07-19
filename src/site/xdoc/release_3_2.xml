@@ -17,20 +17,20 @@
 -->
 <document>
  <properties>
-  <title>Release notes for v3.2</title>
+  <title>Release notes for version 3.2</title>
   <author email="dev@commons.apache.org">Commons Documentation Team</author>
  </properties>
 <body>
 
-<section name="Release notes for v3.2">
+<section name="Release notes for version 3.2">
 <p>
-These are the release notes for Commons Collections v3.2:
+These are the release notes for Commons Collections 3.2:
 </p>
 <hr />
 <p>
 Commons collections is a project to develop and maintain collection classes
 based on and inspired by the JDK collection framework.
-This project is JDK1.2 compatible, and does not use JDK1.5 generics.
+This project is Java 1.2 compatible, and does not use Java 5 generics.
 </p>
 <p>
 This release adds various new classes and fixes a number of bugs.
@@ -40,19 +40,19 @@ All feedback should be directed to commons-user at jakarta.apache.org.
 
 <center><h3>COMPATIBILITY</h3></center>
 <p>
-This release is fully source and binary compatible with v3.1.
+This release is fully source and binary compatible with 3.1.
 (Checks performed using JDiff and Clirr, thanks).
-Please check the bug fixes to ensure you weren't relying on the behaviour of a bug.
+Please check the bug fixes to ensure you weren't relying on the behavior of a bug.
 </p>
 <p>
 There are two new <i>deprecations</i>:<br />
-BeanMap is now deprecated and will be removed in v4.0.
+BeanMap is now deprecated and will be removed in 4.0.
 The class is now available in commons-beanutils (full jar version).
 This change was made to ensure that all bean related collections were in one place (ie. beanutils).
 If this causes major headaches to anyone please contact commons-dev at jakarta.apache.org.
 </p>
 <p>
-MultiHashMap is now deprecated and will be removed in v4.0.
+MultiHashMap is now deprecated and will be removed in 4.0.
 The class is now available as MultiValueMap in the map subpackage.
 This new version of the class is a decorator and can wrap maps other than HashMap
 making it much more flexible.

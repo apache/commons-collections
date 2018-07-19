@@ -647,9 +647,9 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         final Object[] values = getSampleValues();
 
         resetEmpty();
-        for(int i = 0; i < values.length; i++) {
+        for (final Object value : values) {
             assertTrue("Empty map must not contain value",
-                       !getMap().containsValue(values[i]));
+                       !getMap().containsValue(value));
         }
         verify();
 
@@ -1203,12 +1203,12 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         resetFull();
         final V[] sampleValues = getSampleValues();
         final Collection<V> values = getMap().values();
-        for (int i = 0; i < sampleValues.length; i++) {
-            if (map.containsValue(sampleValues[i])) {
+        for (final V sampleValue : sampleValues) {
+            if (map.containsValue(sampleValue)) {
                 int j = 0;  // loop counter prevents infinite loops when remove is broken
-                while (values.contains(sampleValues[i]) && j < 10000) {
+                while (values.contains(sampleValue) && j < 10000) {
                     try {
-                        values.remove(sampleValues[i]);
+                        values.remove(sampleValue);
                     } catch (final UnsupportedOperationException e) {
                         // if values.remove is unsupported, just skip this test
                         return;
@@ -1218,7 +1218,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
                 assertTrue("values().remove(obj) is broken", j < 10000);
                 assertTrue(
                     "Value should have been removed from the underlying map.",
-                    !getMap().containsValue(sampleValues[i]));
+                    !getMap().containsValue(sampleValue));
             }
         }
     }
@@ -1315,16 +1315,16 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
         resetFull();
         final K[] sampleKeys = getSampleKeys();
         final Set<K> keys = getMap().keySet();
-        for (int i = 0; i < sampleKeys.length; i++) {
+        for (final K sampleKey : sampleKeys) {
             try {
-                keys.remove(sampleKeys[i]);
+                keys.remove(sampleKey);
             } catch (final UnsupportedOperationException e) {
                 // if key.remove is unsupported, just skip this test
                 return;
             }
             assertTrue(
                 "Key should have been removed from the underlying map.",
-                !getMap().containsKey(sampleKeys[i]));
+                !getMap().containsKey(sampleKey));
         }
     }
 

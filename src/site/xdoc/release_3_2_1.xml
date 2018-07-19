@@ -17,31 +17,31 @@
 -->
 <document>
  <properties>
-  <title>Release notes for v3.2.1</title>
+  <title>Release notes for version 3.2.1</title>
   <author email="dev@commons.apache.org">Commons Documentation Team</author>
  </properties>
 <body>
 
-<section name="Release notes for v3.2.1">
+<section name="Release notes for version 3.2.1">
 <p>
-These are the release notes for Commons Collections v3.2.1:
+These are the release notes for Commons Collections 3.2.1:
 </p>
-<hr />
+<hr/>
 <p>
 Commons collections is a project to develop and maintain collection classes
 based on and inspired by the JDK collection framework.
-This project is JDK1.2 compatible, and does not use JDK1.5 generics.
+This project is Java 1.2 compatible, and does not use Java 5 generics.
 </p>
 <p>
-This v3.2.1 release is simply a re-packaging of the v3.2 release, with appropriate
+This 3.2.1 release is simply a re-packaging of the 3.2 release, with appropriate
 OSGi meta data added to the jar's manifest file.
 </p>
 <hr />
 
 <center><h3>COMPATIBILITY</h3></center>
 <p>
-This release is fully source and binary compatible with v3.2. For changes since the
-v3.1 see the <a href="release_3_2.html">v3.2 Release Notes</a>.
+Release 3.2.1 is fully source and binary compatible with 3.2. For changes since version
+3.1 see the <a href="release_3_2.html">3.2 Release Notes</a>.
 </p>
 </section>
 

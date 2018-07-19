@@ -20,7 +20,15 @@
     <title>Commons Collections Changes</title>
   </properties>
   <body>
-  <release version="4.2" date="2018-MM-DD" description="Update from Java 6 to Java 7, bug fixes, and small changes.">
+  <release version="4.3" date="2018-MM-DD" description="Bug fixes, and small changes.">
+    <action issue="COLLECTIONS-688" dev="ggregory" type="update">
+      Update platform requirement from Java 7 to 8.
+    </action>
+    <action issue="COLLECTIONS-689" dev="ggregory" type="update" due-to="Richard Walker">
+      Link to Javadoc API broken.
+    </action>
+  </release>
+  <release version="4.2" date="2018-07-11" description="Update from Java 6 to Java 7, bug fixes, and small changes.">
     <action issue="COLLECTIONS-681" dev="kinow" type="add" due-to="Stephan Fuhrmann">
       Add test for MultiSetUtils
     </action>

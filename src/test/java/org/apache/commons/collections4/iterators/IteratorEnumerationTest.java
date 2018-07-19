@@ -21,14 +21,16 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import junit.framework.TestCase;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
 /**
  * Tests the IteratorEnumeration.
  *
  */
-public class IteratorEnumerationTest extends TestCase {
+public class IteratorEnumerationTest {
 
+    @Test
     public void testEnumeration() {
         final Iterator<String> iterator = Arrays.asList("a", "b", "c").iterator();
         final IteratorEnumeration<String> enumeration = new IteratorEnumeration<>(iterator);

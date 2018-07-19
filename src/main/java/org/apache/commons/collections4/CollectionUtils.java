@@ -111,7 +111,7 @@ public class CollectionUtils {
             return getFreq(obj, cardinalityB);
         }
 
-        private final int getFreq(final Object obj, final Map<?, Integer> freqMap) {
+        private int getFreq(final Object obj, final Map<?, Integer> freqMap) {
             final Integer count = freqMap.get(obj);
             if (count != null) {
                 return count.intValue();
@@ -264,8 +264,8 @@ public class CollectionUtils {
      * <p>
      * The cardinality of each element <i>e</i> in the returned
      * {@link Collection} will be equal to
-     * <tt>max(cardinality(<i>e</i>,<i>a</i>),cardinality(<i>e</i>,<i>b</i>)) - min(cardinality(<i>e</i>,<i>a</i>),
-     * cardinality(<i>e</i>,<i>b</i>))</tt>.
+     * <code>max(cardinality(<i>e</i>,<i>a</i>),cardinality(<i>e</i>,<i>b</i>)) - min(cardinality(<i>e</i>,<i>a</i>),
+     * cardinality(<i>e</i>,<i>b</i>))</code>.
      * <p>
      * This is equivalent to
      * {@code {@link #subtract subtract}({@link #union union(a,b)},{@link #intersection intersection(a,b)})}
@@ -399,6 +399,7 @@ public class CollectionUtils {
      * In other words, this method returns <code>true</code> iff the
      * {@link #intersection} of <i>coll1</i> and <i>coll2</i> is not empty.
      *
+     * @param <T> the type of object to lookup in <code>coll1</code>.
      * @param coll1  the first collection, must not be null
      * @param coll2  the second collection, must not be null
      * @param <T> the generic type that is able to represent the types contained
@@ -640,7 +641,7 @@ public class CollectionUtils {
      * @param obj the object to find the cardinality of
      * @param coll the {@link Iterable} to search
      * @param <O> the type of object that the {@link Iterable} may contain.
-     * @return the the number of occurrences of obj in coll
+     * @return the number of occurrences of obj in coll
      * @throws NullPointerException if coll is null
      * @deprecated since 4.1, use {@link IterableUtils#frequency(Iterable, Object)} instead.
      *   Be aware that the order of parameters has changed.

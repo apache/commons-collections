@@ -32,7 +32,7 @@ public interface Get<K, V> {
 
     /**
      * @param key key whose presence in this map is to be tested
-     * @return <tt>true</tt> if this map contains a mapping for the specified
+     * @return <code>true</code> if this map contains a mapping for the specified
      *         key
      * @see java.util.Map#containsKey(Object)
      */
@@ -40,7 +40,7 @@ public interface Get<K, V> {
 
     /**
      * @param value value whose presence in this map is to be tested
-     * @return <tt>true</tt> if this map maps one or more keys to the
+     * @return <code>true</code> if this map maps one or more keys to the
      *         specified value
      * @see java.util.Map#containsValue(Object)
      */
@@ -62,14 +62,14 @@ public interface Get<K, V> {
 
     /**
      * @param key key whose mapping is to be removed from the map
-     * @return the previous value associated with <tt>key</tt>, or
-     *         <tt>null</tt> if there was no mapping for <tt>key</tt>.
+     * @return the previous value associated with <code>key</code>, or
+     *         <code>null</code> if there was no mapping for <code>key</code>.
      * @see java.util.Map#remove(Object)
      */
     V remove(Object key);
 
     /**
-     * @return <tt>true</tt> if this map contains no key-value mappings
+     * @return <code>true</code> if this map contains no key-value mappings
      * @see java.util.Map#isEmpty()
      */
     boolean isEmpty();

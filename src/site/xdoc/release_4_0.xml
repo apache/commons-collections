@@ -17,12 +17,12 @@
 -->
 <document>
  <properties>
-  <title>Release notes for v4.0</title>
+  <title>Release notes for version 4.0</title>
   <author email="dev@commons.apache.org">Commons Documentation Team</author>
  </properties>
 <body>
 
-<section name="Release notes for v4.0">
+<section name="Release notes for version 4.0">
 <hr />
 <p>
 Commons collections is a project to develop and maintain collection classes based on and inspired
@@ -278,7 +278,7 @@ have changed.
 </ul>
 
 <p>
-For complete information on all changes for this release, please refer to the <a href="changes-report.html">Changelog</a>.
+For a full list of changes in this release, refer to the <a href="changes-report.html#a4.0">Change report</a>.
 </p>
 
 </section>

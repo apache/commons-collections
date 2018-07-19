@@ -46,7 +46,7 @@ public class SynchronizedQueue<E> extends SynchronizedCollection<E> implements Q
      *             if queue is null
      */
     public static <E> SynchronizedQueue<E> synchronizedQueue(final Queue<E> queue) {
-        return new SynchronizedQueue<E>(queue);
+        return new SynchronizedQueue<>(queue);
     }
 
     // -----------------------------------------------------------------------

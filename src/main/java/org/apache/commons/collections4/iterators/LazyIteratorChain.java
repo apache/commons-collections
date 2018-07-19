@@ -47,7 +47,7 @@ import java.util.Iterator;
  */
 public abstract class LazyIteratorChain<E> implements Iterator<E> {
 
-    /** The number of times {@link #nextIterator()} was already called. */
+    /** The number of times {@link #next()} was already called. */
     private int callCounter = 0;
 
     /** Indicates that the Iterator chain has been exhausted. */
