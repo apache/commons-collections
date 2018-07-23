@@ -153,7 +153,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
             decorated().addAll(Collections.<E>nCopies(index - size, null));
             result = true;
         }
-        return decorated().addAll(index, coll) | result;
+        return decorated().addAll(index, coll) || result;
     }
 
     //-----------------------------------------------------------------------
