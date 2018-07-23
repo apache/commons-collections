@@ -26,7 +26,7 @@ import java.util.Map;
  * A <code>Map</code> implementation that matches keys and values based
  * on <code>==</code> not <code>equals()</code>.
  * <p>
- * <strong>This map will violate the detail of various Map and map view contracts.</note>
+ * <strong>This map will violate the detail of various Map and map view contracts.</strong>
  * As a general rule, don't compare this map to other maps. In particular, you can't
  * use decorators like {@link ListOrderedMap} on it, which silently assume that these
  * contracts are fulfilled.
