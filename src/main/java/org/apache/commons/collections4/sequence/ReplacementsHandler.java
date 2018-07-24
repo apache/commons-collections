@@ -24,6 +24,7 @@ import java.util.List;
  * @see ReplacementsFinder
  * @since 4.0
  */
+@FunctionalInterface
 public interface ReplacementsHandler<T> {
 
     /**

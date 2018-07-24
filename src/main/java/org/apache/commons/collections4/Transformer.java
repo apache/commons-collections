@@ -34,6 +34,7 @@ package org.apache.commons.collections4;
  *
  * @since 1.0
  */
+@FunctionalInterface
 public interface Transformer<I, O> {
 
     /**
