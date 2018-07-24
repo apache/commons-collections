@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.list;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -334,10 +336,11 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
             subSet = new HashSet<>(list.size());
         } else {
             try {
-                subSet = set.getClass().newInstance();
-            } catch (final InstantiationException ie) {
-                subSet = new HashSet<>();
-            } catch (final IllegalAccessException iae) {
+                subSet = (Set<E>) set.getClass().getDeclaredConstructor(set.getClass()).newInstance(set);
+            } catch (final InstantiationException
+                    | IllegalAccessException
+                    | InvocationTargetException
+                    | NoSuchMethodException ie) {
                 subSet = new HashSet<>();
             }
         }
