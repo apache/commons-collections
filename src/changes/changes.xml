@@ -21,6 +21,9 @@
   </properties>
   <body>
   <release version="4.3" date="2018-MM-DD" description="Bug fixes, and small changes.">
+    <action issue="COLLECTIONS-691" dev="kinow" type="fix" due-to="Eitan Adler">
+      Use boolean operator for boolean result
+    </action>
     <action issue="COLLECTIONS-688" dev="ggregory" type="update">
       Update platform requirement from Java 7 to 8.
     </action>
