@@ -17,18 +17,20 @@
 package org.apache.commons.collections4.list;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Factory;
+import org.apache.commons.collections4.Transformer;
 
 /**
  * Decorates another <code>List</code> to create objects in the list on demand.
  * <p>
  * When the {@link #get(int)} method is called with an index greater than
  * the size of the list, the list will automatically grow in size and return
- * a new object from the specified factory. The gaps will be filled by null.
- * If a get method call encounters a null, it will be replaced with a new
- * object from the factory. Thus this list is unsuitable for storing null
- * objects.
+ * a new object from the specified factory or transformer. The gaps will be
+ * filled by null. If a get method call encounters a null, it will be replaced
+ * with a new object from the factory. Thus this list is unsuitable for
+ * storing null objects.
  * </p>
  * <p>
  * For instance:
@@ -65,10 +67,13 @@ import org.apache.commons.collections4.Factory;
 public class LazyList<E> extends AbstractSerializableListDecorator<E> {
 
     /** Serialization version */
-    private static final long serialVersionUID = -1708388017160694542L;
+    private static final long serialVersionUID = -3677737457567429713L;
 
     /** The factory to use to lazily instantiate the objects */
     private final Factory<? extends E> factory;
+
+    /** The transformer to use to lazily instantiate the objects */
+    private final Transformer<Integer, ? extends E> transformer;
 
     /**
      * Factory method to create a lazily instantiating list.
@@ -84,6 +89,20 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
         return new LazyList<>(list, factory);
     }
 
+    /**
+     * Transformer method to create a lazily instantiating list.
+     *
+     * @param <E> the type of the elements in the list
+     * @param list  the list to decorate, must not be null
+     * @param transformer  the transformer to use for creation, must not be null
+     * @return a new lazy list
+     * @throws NullPointerException if list or transformer is null
+     * @since 4.4
+     */
+    public static <E> LazyList<E> lazyList(final List<E> list, final Transformer<Integer, ? extends E> transformer) {
+        return new LazyList<>(list, transformer);
+    }
+
     //-----------------------------------------------------------------------
     /**
      * Constructor that wraps (not copies).
@@ -94,10 +113,21 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
      */
     protected LazyList(final List<E> list, final Factory<? extends E> factory) {
         super(list);
-        if (factory == null) {
-            throw new IllegalArgumentException("Factory must not be null");
-        }
-        this.factory = factory;
+        this.factory = Objects.requireNonNull(factory);
+        this.transformer = null;
+    }
+
+    /**
+     * Constructor that wraps (not copies).
+     *
+     * @param list  the list to decorate, must not be null
+     * @param transformer  the transformer to use for creation, must not be null
+     * @throws NullPointerException if list or transformer is null
+     */
+    protected LazyList(final List<E> list, final Transformer<Integer, ? extends E> transformer) {
+        super(list);
+        this.factory = null;
+        this.transformer = Objects.requireNonNull(transformer);
     }
 
     //-----------------------------------------------------------------------
@@ -105,9 +135,10 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
      * Decorate the get method to perform the lazy behaviour.
      * <p>
      * If the requested index is greater than the current size, the list will
-     * grow to the new size and a new object will be returned from the factory.
-     * Indexes in-between the old size and the requested size are left with a
-     * placeholder that is replaced with a factory object when requested.
+     * grow to the new size and a new object will be returned from the factory
+     * or transformer. Indexes in-between the old size and the requested size
+     * are left with a placeholder that is replaced with a factory or
+     * transformer object when requested.
      *
      * @param index  the index to retrieve
      * @return the element at the given index
@@ -120,7 +151,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
             E object = decorated().get(index);
             if (object == null) {
                 // item is a place holder, create new one, set and return
-                object = factory.create();
+                object = element(index);
                 decorated().set(index, object);
                 return object;
             }
@@ -132,7 +163,7 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
             decorated().add(null);
         }
         // create our last object, set and return
-        final E object = factory.create();
+        final E object = element(index);
         decorated().add(object);
         return object;
     }
@@ -140,7 +171,23 @@ public class LazyList<E> extends AbstractSerializableListDecorator<E> {
     @Override
     public List<E> subList(final int fromIndex, final int toIndex) {
         final List<E> sub = decorated().subList(fromIndex, toIndex);
-        return new LazyList<>(sub, factory);
+        if (factory != null) {
+            return new LazyList<>(sub, factory);
+        } else if (transformer != null) {
+            return new LazyList<>(sub, transformer);
+        } else {
+            throw new IllegalStateException("Factory and Transformer are both null!");
+        }
+    }
+
+    private E element(final int index) {
+        if (factory != null) {
+            return factory.create();
+        } else if (transformer != null) {
+            return transformer.transform(index);
+        } else {
+            throw new IllegalStateException("Factory and Transformer are both null!");
+        }
     }
 
 }
