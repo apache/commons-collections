@@ -52,6 +52,22 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         }
     }
 
+    /**
+     * alternate policy that will cause multiples of 3 to expire after 250 milliseconds, all others never expire.
+     */
+    private static class AlternateExpirationPolicy implements ExpirationPolicy<Integer, String> {
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public long expirationTime(Integer key, String value) {
+            if (key.intValue() % 3 != 0) {
+                return -1;
+            }
+
+            return 250;
+        }
+    }
+
     public static Test suite() {
         return BulkTest.makeSuite(PassiveExpiringMapTest.class);
     }
@@ -101,6 +117,18 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         return m;
     }
 
+    private PassiveExpiringMap<Integer, String> makePassiveExpiringMap() {
+        final PassiveExpiringMap<Integer, String> m =
+                new PassiveExpiringMap<>(new AlternateExpirationPolicy());
+        m.put(Integer.valueOf(1), "one");
+        m.put(Integer.valueOf(2), "two");
+        m.put(Integer.valueOf(3), "three");
+        m.put(Integer.valueOf(4), "four");
+        m.put(Integer.valueOf(5), "five");
+        m.put(Integer.valueOf(6), "six");
+        return m;
+    }
+
     public void testConstructors() {
         try {
             final Map<String, String> map = null;
@@ -128,13 +156,20 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
     }
 
     public void testContainsKey() {
-        final Map<Integer, String> m = makeTestMap();
-        assertFalse(m.containsKey(Integer.valueOf(1)));
-        assertFalse(m.containsKey(Integer.valueOf(3)));
-        assertFalse(m.containsKey(Integer.valueOf(5)));
-        assertTrue(m.containsKey(Integer.valueOf(2)));
-        assertTrue(m.containsKey(Integer.valueOf(4)));
-        assertTrue(m.containsKey(Integer.valueOf(6)));
+        final PassiveExpiringMap<Integer, String> m = makePassiveExpiringMap();
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException ignored) {
+        }
+        assertEquals(6, m.decorated().size());
+        assertTrue(m.containsKey(1));
+        assertEquals(4, m.decorated().size());
+        assertTrue(m.containsKey(2));
+        assertTrue(m.containsKey(4));
+        assertTrue(m.containsKey(5));
+        assertFalse(m.containsKey(3));
+        assertFalse(m.containsKey(6));
+        assertEquals(4, m.decorated().size());
     }
 
     public void testContainsValue() {
