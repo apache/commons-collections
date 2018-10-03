@@ -68,7 +68,6 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
 //        writeExternalFormToDisk((java.io.Serializable) getCollection(), "src/test/resources/data/test/FixedSizeList.fullCollection.version4.obj");
 //    }
 
-
     public void testListAllowsMutationOfUnderlyingCollection() {
 
         List<String> decoratedList = new ArrayList<>();
