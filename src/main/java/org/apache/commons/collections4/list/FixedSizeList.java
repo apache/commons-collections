@@ -75,27 +75,27 @@ public class FixedSizeList<E>
     //-----------------------------------------------------------------------
     @Override
     public boolean add(final E object) {
-        throw new UnsupportedOperationException("List is fixed size");
+        throw unsupportedOperationException();
     }
 
     @Override
     public void add(final int index, final E object) {
-        throw new UnsupportedOperationException("List is fixed size");
+        throw unsupportedOperationException();
     }
 
     @Override
     public boolean addAll(final Collection<? extends E> coll) {
-        throw new UnsupportedOperationException("List is fixed size");
+        throw unsupportedOperationException();
     }
 
     @Override
     public boolean addAll(final int index, final Collection<? extends E> coll) {
-        throw new UnsupportedOperationException("List is fixed size");
+        throw unsupportedOperationException();
     }
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException("List is fixed size");
+        throw unsupportedOperationException();
     }
 
     @Override
@@ -130,22 +130,22 @@ public class FixedSizeList<E>
 
     @Override
     public E remove(final int index) {
-        throw new UnsupportedOperationException("List is fixed size");
+        throw unsupportedOperationException();
     }
 
     @Override
     public boolean remove(final Object object) {
-        throw new UnsupportedOperationException("List is fixed size");
+        throw unsupportedOperationException();
     }
 
     @Override
     public boolean removeAll(final Collection<?> coll) {
-        throw new UnsupportedOperationException("List is fixed size");
+        throw unsupportedOperationException();
     }
 
     @Override
     public boolean retainAll(final Collection<?> coll) {
-        throw new UnsupportedOperationException("List is fixed size");
+        throw unsupportedOperationException();
     }
 
     @Override
@@ -168,11 +168,11 @@ public class FixedSizeList<E>
         }
         @Override
         public void remove() {
-            throw new UnsupportedOperationException("List is fixed size");
+            throw unsupportedOperationException();
         }
         @Override
         public void add(final Object object) {
-            throw new UnsupportedOperationException("List is fixed size");
+            throw unsupportedOperationException();
         }
     }
 
@@ -184,6 +184,10 @@ public class FixedSizeList<E>
     @Override
     public int maxSize() {
         return size();
+    }
+
+    private static UnsupportedOperationException unsupportedOperationException() {
+        return new UnsupportedOperationException("List is fixed size");
     }
 
 }
