@@ -191,6 +191,16 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         assertEquals("six", m.get(Integer.valueOf(6)));
     }
 
+    public void testPut() {
+        final Map<Integer, String> m = makeTestMap();
+        assertNull(m.put(Integer.valueOf(1), "ONE"));
+        assertEquals("two", m.put(Integer.valueOf(2), "TWO"));
+        assertNull(m.put(Integer.valueOf(3), "THREE"));
+        assertEquals("four", m.put(Integer.valueOf(4), "FOUR"));
+        assertNull(m.put(Integer.valueOf(5), "FIVE"));
+        assertEquals("six", m.put(Integer.valueOf(6), "SIX"));
+    }
+
     public void testIsEmpty() {
         Map<Integer, String> m = makeTestMap();
         assertFalse(m.isEmpty());
