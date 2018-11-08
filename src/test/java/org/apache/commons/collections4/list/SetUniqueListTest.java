@@ -576,6 +576,36 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
 
         assertTrue(lset.contains(obj1));
         assertTrue(lset.contains(obj2));
+
+    }
+
+    public void testCollections701() {
+        SetUniqueList<Object> uniqueList = new SetUniqueList<>(new ArrayList<Object>(), new HashSet<Object>());
+        final Integer obj1 = Integer.valueOf(1);
+        final Integer obj2 = Integer.valueOf(2);
+
+        uniqueList.add(obj1);
+        uniqueList.add(obj2);
+        assertEquals(2, uniqueList.size());
+        uniqueList.add((Object) uniqueList);
+        assertEquals(2, uniqueList.size());
+
+        final List<Object> list = new LinkedList<>();
+        final SetUniqueList<Object> decoratedList = SetUniqueList.setUniqueList(list);
+        final String s1 = "Apple";
+        final String s2 = "Lemon";
+        final String s3 = "Orange";
+        final String s4 = "Strawberry";
+
+        decoratedList.add(s1);
+        decoratedList.add(s2);
+        decoratedList.add(s3);
+        assertEquals(3, decoratedList.size());
+
+        decoratedList.set(1, s4);
+        assertEquals(3, decoratedList.size());
+        decoratedList.add(decoratedList);
+        assertEquals(3, decoratedList.size());
     }
 
     class SetUniqueList307 extends SetUniqueList<E> {
