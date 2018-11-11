@@ -588,7 +588,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         uniqueList.add(obj2);
         assertEquals(2, uniqueList.size());
         uniqueList.add((Object) uniqueList);
-        assertEquals(2, uniqueList.size());
+        assertEquals(3, uniqueList.size());
 
         final List<Object> list = new LinkedList<>();
         final SetUniqueList<Object> decoratedList = SetUniqueList.setUniqueList(list);
@@ -605,7 +605,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         decoratedList.set(1, s4);
         assertEquals(3, decoratedList.size());
         decoratedList.add(decoratedList);
-        assertEquals(3, decoratedList.size());
+        assertEquals(4, decoratedList.size());
     }
 
     class SetUniqueList307 extends SetUniqueList<E> {
