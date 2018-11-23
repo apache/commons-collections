@@ -181,6 +181,15 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         assertEquals(3, m.entrySet().size());
     }
 
+    public void testExpiration() {
+        validateExpiration(new PassiveExpiringMap<String, String>(500), 500);
+        validateExpiration(new PassiveExpiringMap<String, String>(1000), 1000);
+        validateExpiration(new PassiveExpiringMap<>(
+                new PassiveExpiringMap.ConstantTimeToLiveExpirationPolicy<String, String>(500)), 500);
+        validateExpiration(new PassiveExpiringMap<>(
+                new PassiveExpiringMap.ConstantTimeToLiveExpirationPolicy<String, String>(1, TimeUnit.SECONDS)), 1000);
+    }
+
     public void testGet() {
         final Map<Integer, String> m = makeTestMap();
         assertNull(m.get(Integer.valueOf(1)));
@@ -208,6 +217,16 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         assertEquals(3, m.keySet().size());
     }
 
+    public void testPut() {
+        final Map<Integer, String> m = makeTestMap();
+        assertNull(m.put(Integer.valueOf(1), "ONE"));
+        assertEquals("two", m.put(Integer.valueOf(2), "TWO"));
+        assertNull(m.put(Integer.valueOf(3), "THREE"));
+        assertEquals("four", m.put(Integer.valueOf(4), "FOUR"));
+        assertNull(m.put(Integer.valueOf(5), "FIVE"));
+        assertEquals("six", m.put(Integer.valueOf(6), "SIX"));
+    }
+
     public void testSize() {
         final Map<Integer, String> m = makeTestMap();
         assertEquals(3, m.size());
@@ -225,15 +244,6 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
         assertNull(m.get("a"));
     }
 
-    public void testExpiration() {
-        validateExpiration(new PassiveExpiringMap<String, String>(500), 500);
-        validateExpiration(new PassiveExpiringMap<String, String>(1000), 1000);
-        validateExpiration(new PassiveExpiringMap<>(
-                new PassiveExpiringMap.ConstantTimeToLiveExpirationPolicy<String, String>(500)), 500);
-        validateExpiration(new PassiveExpiringMap<>(
-                new PassiveExpiringMap.ConstantTimeToLiveExpirationPolicy<String, String>(1, TimeUnit.SECONDS)), 1000);
-    }
-
     private void validateExpiration(final Map<String, String> map, final long timeout) {
         map.put("a", "b");
 
@@ -247,5 +257,5 @@ public class PassiveExpiringMapTest<K, V> extends AbstractMapTest<K, V> {
 
         assertNull(map.get("a"));
     }
-
+     
 }

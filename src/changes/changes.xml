@@ -39,6 +39,9 @@
     <action issue="COLLECTIONS-701" dev="ggregory" type="fix" due-to="Shin Hong, Don Jeba">
       StackOverflowError in SetUniqueList.add() when it receives itself.
     </action>
+    <action issue="COLLECTIONS-703" dev="ggregory" type="fix" due-to="Tomas Tulka">
+      The PassiveExpiringMap#put() method should return the previous record only if not expired.
+    </action>
   </release>
   <release version="4.2" date="2018-07-11" description="Update from Java 6 to Java 7, bug fixes, and small changes.">
     <action issue="COLLECTIONS-681" dev="kinow" type="add" due-to="Stephan Fuhrmann">
