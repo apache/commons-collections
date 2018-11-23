@@ -149,8 +149,8 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     public void add(final int index, final E object) {
         // adds element if it is not contained already
         if (set.contains(object) == false) {
-            super.add(index, object);
             set.add(object);
+            super.add(index, object);
         }
     }
 

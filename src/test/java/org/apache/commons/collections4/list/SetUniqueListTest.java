@@ -139,6 +139,7 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         assertEquals("Size should increase after addAll",
                 size + elements.length, getCollection().size());
     }
+
     @Override
     public void testCollectionIteratorRemove() {
         try {
@@ -148,7 +149,6 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
             extraVerify = true;
         }
     }
-
     public void testCollections304() {
         final List<String> list = new LinkedList<>();
         final SetUniqueList<String> decoratedList = SetUniqueList.setUniqueList(list);
@@ -211,6 +211,31 @@ public class SetUniqueListTest<E> extends AbstractListTest<E> {
         worldList.add((E) world);
         assertFalse(subList.contains("World")); // passes
         assertFalse(subUniqueList.contains("World")); // fails
+    }
+
+    public void testCollections701() {
+        final SetUniqueList<Object> uniqueList = new SetUniqueList<>(new ArrayList<>(), new HashSet<>());
+        final Integer obj1 = Integer.valueOf(1);
+        final Integer obj2 = Integer.valueOf(2);
+        uniqueList.add(obj1);
+        uniqueList.add(obj2);
+        assertEquals(2, uniqueList.size());
+        uniqueList.add(uniqueList);
+        assertEquals(3, uniqueList.size());
+        final List<Object> list = new LinkedList<>();
+        final SetUniqueList<Object> decoratedList = SetUniqueList.setUniqueList(list);
+        final String s1 = "Apple";
+        final String s2 = "Lemon";
+        final String s3 = "Orange";
+        final String s4 = "Strawberry";
+        decoratedList.add(s1);
+        decoratedList.add(s2);
+        decoratedList.add(s3);
+        assertEquals(3, decoratedList.size());
+        decoratedList.set(1, s4);
+        assertEquals(3, decoratedList.size());
+        decoratedList.add(decoratedList);
+        assertEquals(4, decoratedList.size());
     }
 
     //-----------------------------------------------------------------------

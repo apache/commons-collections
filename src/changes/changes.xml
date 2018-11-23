@@ -36,6 +36,9 @@
     <action issue="COLLECTIONS-696" dev="ggregory" type="add" due-to="Maxim Solodovnik">
       AbstractReferenceMap made easier for subclassing; PR #51.
     </action>
+    <action issue="COLLECTIONS-701" dev="ggregory" type="fix" due-to="Don Jeba">
+      StackOverflowError in SetUniqueList.add() when it receives itself.
+    </action>
   </release>
   <release version="4.2" date="2018-07-11" description="Update from Java 6 to Java 7, bug fixes, and small changes.">
     <action issue="COLLECTIONS-681" dev="kinow" type="add" due-to="Stephan Fuhrmann">
