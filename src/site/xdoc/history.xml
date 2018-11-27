@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<document>
+
+ <properties>
+  <title>History</title>
+  <author email="dev@commons.apache.org">Commons Documentation Team</author>
+ </properties>
+
+ <body>
+
+<section name="History of Commons Collections">
+
+<p>
+Commons-Collections is a classic example of an open-source project evolving over time.
+This page documents some of the key stages.
+</p>
+
+<p>
+<b>Collections 1.0</b> was a gathering of different Collection, Comparator, Iterator and
+Utility classes written elsewhere in Jakarta.
+At this stage, the component focussed mainly on getting re-use of code by making
+everything available together.
+</p>
+<p>
+All classes were placed in one package except the comparators, which had their own subpackage.
+</p>
+
+<p>
+<b>Collections 2.0</b> started the process of growth. The Bag interface was added with
+various implementations. Also added were additional collections implementations.
+</p>
+<p>
+All classes were placed in one package except the comparators, which had their own subpackage.
+</p>
+
+<p>
+<b>Collections 2.1</b> increased the growth again. The Buffer interface was added, unifying
+various previous implementations. Numerous decorators were added as inner classes that
+behave like the unmodifiable or synchronized JDK decorators.
+</p>
+<p>
+As the size of the component increased, the iterators were broken out into their own subpackage.
+Thus there were now three packages, main, comparator and iterator.
+</p>
+
+<p>
+<b>Collections 3.0</b> represented a re-birth of collections after an 18 month absence.
+Many, many classes were added to CVS but not released including primitive and
+event-generating classes. In order to control the size of the collections distribution,
+these became two new projects - primitives and events.
+</p>
+<p>
+New interfaces BidiMap, MapIterator, ResettableIterator and KeyValue were added.
+Also added were many new implementations of existing collections, especially Maps.
+</p>
+<p>
+As more decorators were added the decision was taken to create a new subpackage for
+the decorators (no more inner classes). However, it became clear that whether a class was
+a decorator or not was not the most important division in finding a collection.
+As a result of this, and the general ongoing growth in the component, a full subpackage
+layout was chosen - one subpackage for each principal collections interface.
+</p>
+<p>
+Essentially the 3.0 release represented the result of changing from a 'dumping ground'
+of re-used collections to a component <b>designed</b> for the purpose.
+Of course, backwards compatibility has been retained during all transitions using deprecation.
+</p>
+
+<p>
+<b>Collections 2.1.1</b> was a patch release to version 2.1.
+Unfortunately, version 3.0 created a <a href="compatibility.html">binary incompatibility</a> in the IteratorUtils class.
+This patch was created as a work around, enabling 2.1.1 to be compatible with 3.1.
+</p>
+
+<p>
+<b>Collections 3.1</b> fixed some bugs in 3.0 and adds a few new enhancements.
+The most notable change is a new list implementation, TreeList, that is well balanced for insertions and removals at any index.
+Other changes included more classes implementing Serializable and a ReferenceIdentityMap.
+</p>
+
+<p>
+<b>Collections 3.2</b> combined bug fixes and some new features.
+Notably MultiValueMap is a new more flexible implementation of MultiHashMap.
+</p>
+
+<p>
+<b>Collections 3.2.1</b> Re-packaged 3.2 release which is OSGi enabled.
+</p>
+
+<p>
+<b>Collections 3.2.2</b> Serialization support for unsafe classes in the functor package is disabled by default as 
+this can be exploited for remote code execution attacks. To re-enable the feature the system property 
+"org.apache.commons.collections.enableUnsafeSerialization" needs to be set to "true". Classes considered to be 
+unsafe are: CloneTransformer, ForClosure, InstantiateFactory, InstantiateTransformer, InvokerTransformer, 
+PrototypeCloneFactory, PrototypeSerializationFactory, WhileClosure. Fixes COLLECTIONS-580. Other bug fixes as well.
+</p>
+
+<p>
+<b>Collections 4.0</b> represented a major revamp of collections by supporting
+new language features introduced with Java 5, mainly support for generics.
+</p>
+<p>
+New interfaces Put, Get and Trie were added, whereas the Buffer interface has
+been replaced by java.util.Queue. Also added were several new Iterators as well as
+an implementation of a Patricia Trie.
+</p>
+
+<p>
+<b>Collections 4.1</b> fixes some bugs in 4.0 and adds a few new enhancements.
+The most notable changes are new interfaces MultiSet (a replacement for the Bag
+interface which is fully compliant to the general Collection contract) and
+MultiValuedMapList (a replacement for the MultiMap interface) as well as fluent
+API for Iterable instances (FluentIterable).
+</p>
+<p>
+Additionally, serialization support for unsafe classes in the functor package
+has been completely removed (see entry for Collections 3.2.2 for more details). 
+</p>
+
+<p>
+<b>Collections 4.2</b> fixes some bugs in 4.1 and adds a few new enhancements: 
+Updates the platform requirement from Java 6 to 7,
+adds Automatic-Module-Name MANIFEST entry for Java 9 compatibility, and
+adds a few new APIs.
+</p>
+
+</section>
+
+</body>
+</document>

@@ -1,0 +1,134 @@
+ <!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+  -->
+<html>
+<head>
+<title>Developers guide for Apache Commons "Collections" Package</title>
+</head>
+<body bgcolor="white">
+
+
+<div align="center">
+<h1>The Apache Commons <em>Collections</em> Package</h1>
+<h2>Developers Guide</h2>
+$Id$<br />
+<a href="#Introduction">[Introduction]</a>
+<a href="#CollectionInterfaces">[Collection Interfaces]</a>
+<a href="#CollectionImplementations">[Collection Implementations]</a>
+<a href="#UtilityClasses">[Utility Classes]</a>
+<a href="#CodingStandards">[Coding Standards]</a>
+<br />
+<br />
+</div>
+
+
+<a name="Introduction"></a>
+<h3>1.  INTRODUCTION</h3>
+
+<p>The <em>Collections</em> package contains a set of Java classes that extend
+or augment the Java Collections Framework. This developers guide seeks to set
+out rules for the naming of classes and methods within the package. The purpose
+of this, as with all naming standards, is to improve the coherency and
+consistency of the whole API.</p>
+
+<p>The philosophy of the naming standards is to follow those of
+java.util.Collections.</p>
+
+
+<a name="CollectionInterfaces"></a>
+<h3>2.  COLLECTION INTERFACES</h3>
+
+<p>Collection interfaces are new types of collections not included in Java.
+Examples include <code>Bag</code> and <code>SortedBag</code>. These interfaces
+shall:</p>
+<ul>
+<li>be top level interfaces</li>
+<li>have a name that describes their purpose</li>
+</ul>
+
+
+<a name="CollectionImplementations"></a>
+<h3>3.  COLLECTION IMPLEMENTATIONS</h3>
+
+<p>Collection implementation are new implementations of collection interfaces.
+Examples include <code>DoubleOrderedMap</code> and <code>DefaultMapBag</code>.
+These interfaces shall:</p>
+<ul>
+<li>be top level classes</li>
+<li>have a name that ends with the collection type being implemented</li>
+<li>have a name that describes their implementation</li>
+<li>contain no public inner classes</li>
+<li>only contain the collection implementation, and any methods specific to
+that implementation</li>
+</ul>
+
+
+<a name="UtilityClasses"></a>
+<h3>4.  UTILITY CLASSES</h3>
+
+<p>Utility classes provide additional functionality around an interface and
+its basic implementations. Examples include CollectionUtils and ListUtils.</p>
+
+<p>Each class shall follow the naming pattern XxxUtils where Xxx relates to the
+object being returned by the class, for example <code>ListUtils</code> and
+<code>BagUtils</code>. Variations on a theme (<code>SortedBag</code> as opposed
+to <code>Bag</code>) will be dealt with in one Utils class. Each Utils class
+shall:</p>
+
+<ul>
+<li>be a single, static method based, class</li>
+<li>have a name consisting of the interface name plus 'Utils'</li>
+<li>deal with one collection interface and its variations</li>
+<li>provide methods that decorate the interface with additional
+functionality</li>
+<li>provide methods that perform useful utility functions on that
+interface</li>
+</ul>
+
+<p>Where the method in a Utils class is a decorator, the name shall consist of
+an adjective followed by the collection type.  Typically such adjective is
+formed by appending an -ed suffix (meaning "having"/"characterized by") to the
+word describing the type of decorator.  For example,
+<code>synchronizedMap(Map)</code> or <code>predicatedSet(Set)</code>.
+Occasionally, such construct is awkward and a more suitable adjective can be
+used instead.  For example, <code>lazyList</code>,
+<code>unmodifiableList</code>.</p>
+
+<p>These decorators should be implemented either as non-public, static,
+inner classes, or as public classes in a subpackage. If a subpackage is used,
+the constructors should be protected and a public static decorate() method
+provided on each class for construction.</p>
+
+<a name="CodingStandards"></a>
+<h3>5. CODING STANDARDS</h3>
+
+<p>Commons Collections follows similar style rules to many other Java open source
+projects, and the Sun conventions. Some specific conventions are:</p>
+
+<ul>
+<li>No tabs, 4 space indentations</li>
+<li>Curly brackets open at line end</li>
+<li>Else, catch and finally statements after the closing bracket</li>
+<li>Single space after keyword such as if</li>
+<li>Two spaces between parameter name and description in @param</li>
+<li>Generally copy the style of the surrounding code</li>
+</ul>
+
+<p>And remember, the commons-dev mailing list is there for any discussions
+or queries about patches or new additions to collections.</p>
+
+</body>
+</html>

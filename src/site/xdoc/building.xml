@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<document>
+ <properties>
+  <title>Building</title>
+  <author email="dev@commons.apache.org">Commons Documentation Team</author>
+ </properties>
+<body>
+<!-- ================================================== -->
+<section name="Building Commons Collections">
+<p>
+  Commons Collections uses <a href="http://maven.apache.org">Maven 3</a> as its
+  primary build system.
+</p>
+</section>
+<!-- ================================================== -->
+<section name="Maven 3 Goals">
+  <p>
+    The following <strong><i>Maven 3</i></strong> commands can be used to build collections:
+  </p>
+  <ul>
+    <li><code>mvn clean</code> - clean up</li>
+    <li><code>mvn test</code> - compile and run the unit tests</li>
+    <li><code>mvn site</code> - create site documentation</li>
+    <li><code>mvn package</code> - build the jar</li>
+    <li><code>mvn install</code> - build the jar and install in local maven repository</li>
+    <li><code>mvn site assembly:assembly</code> - Create the source and binary distributions</li>
+  </ul>
+</section>
+<!-- ================================================== -->
+</body>
+</document>

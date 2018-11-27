@@ -1,0 +1,922 @@
+<?xml version="1.0"?>
+<!--
+     Licensed to the Apache Software Foundation (ASF) under one or more
+     contributor license agreements.  See the NOTICE file distributed with
+     this work for additional information regarding copyright ownership.
+     The ASF licenses this file to You under the Apache License, Version 2.0
+     (the "License"); you may not use this file except in compliance with
+     the License.  You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+  -->
+<document>
+  <properties>
+    <title>Commons Collections Changes</title>
+  </properties>
+  <body>
+  <release version="4.2" date="2018-MM-DD" description="Update from Java 6 to Java 7, bug fixes, and small changes.">
+    <action issue="COLLECTIONS-681" dev="kinow" type="add" due-to="Stephan Fuhrmann">
+      Add test for MultiSetUtils
+    </action>
+    <action issue="COLLECTIONS-599" dev="ggregory" type="fix" due-to="Tejas Patel, Saleem Akbar, Gary Gregory">
+      HashEntry array object naming data initialized with double the size during deserialization.
+    </action>
+    <action issue="COLLECTIONS-662" dev="chtompki" type="fix" due-to="Vamsi Kavuri">
+      Unit tests MapUtilsTest and ListIteratorWrapperTest no longer fail on Java 9.
+    </action>
+    <action issue="COLLECTIONS-661" dev="kinow" type="fix">
+      Intermittent test failures in Windows for HashSetValuedHashMap.
+    </action>
+    <action issue="COLLECTIONS-660" dev="kinow" type="fix">
+      Uncomment test in AbstractMapTest regarding LRUMap equals.
+    </action>
+    <action issue="COLLECTIONS-658" dev="britter" type="add">
+      Add Automatic-Module-Name MANIFEST entry for Java 9 compatibility.
+    </action>
+    <action issue="COLLECTIONS-656" dev="ggregory" type="fix">
+      Fix site build on Java 8.
+    </action>
+    <action issue="COLLECTIONS-653" dev="kinow" type="fix">
+      Update Javadoc to Build on Java 1.8.
+    </action>
+    <action issue="COLLECTIONS-606" dev="chtompki" type="fix" due-to="Vamsi Kavuri">
+      Build status, Coverage status and Maven central weren't in README.md
+    </action>
+    <action issue="COLLECTIONS-602" dev="kinow" type="update" due-to="John Mark">
+      Improve efficiency of DefaultedMap.get.
+    </action>
+    <action issue="COLLECTIONS-603" dev="kinow" type="update" due-to="Artem Konovalov">
+      Small improvements for generics, conditional statements, and warnings suppressions.
+    </action>
+    <action issue="COLLECTIONS-655" dev="ggregory" type="update">
+      Update platform from Java 6 to Java 7.
+    </action>
+    <action issue="COLLECTIONS-594" dev="ggregory" type="fix" due-to="Javen O'Neal">
+      Web site spelling error: MultiValuedMapeList.
+    </action>
+    <action issue="COLLECTIONS-597" dev="ggregory" type="fix" due-to="Enrique">
+       Correction of Javadoc for org.apache.commons.collections4.functors.CatchAndRethrowClosure.
+    </action>
+    <action issue="COLLECTIONS-589" dev="ggregory" type="add" due-to="Gary Gregory">
+      Add null-safe MapUtils.size(Map&lt;?, ?>) method.
+    </action>
+    <action issue="COLLECTIONS-586" dev="ggregory" type="add" due-to="Shailender Bathula, Gary Gregory">
+      PatriciaTrie prefixMap clear throws NullPointerException.
+    </action>
+    <action issue="COLLECTIONS-654" dev="ggregory" type="add">
+      Add class SortedProperties to sort keys.
+    </action>
+    <action issue="COLLECTIONS-666" dev="ggregory" type="update" due-to="BELUGA BEHR">
+      org.apache.commons.collections4.ListUtils.union(List, List) should pre-allocate result list.
+    </action>
+    <action issue="COLLECTIONS-669" dev="ggregory" type="update" due-to="BELUGA BEHR, Gary Gregory">
+      Update org.apache.commons.collections4.CollectionUtils.addAll(Collection&lt;C>, C[]) to addAll(Collection&lt;C>, C...).
+    </action>
+    <action issue="COLLECTIONS-668" dev="ggregory" type="add" due-to="Gary Gregory">
+      Add CollectionUtils containsAny method for primitive array: org.apache.commons.collections4.CollectionUtils.containsAny(Collection&lt;?>, T...).
+    </action>
+    <action issue="COLLECTIONS-575" dev="ggregory" type="add" due-to="Guram Savinov, Grzegorz Rożniecki, Bruno P. Kinoshita, Gary Gregory">
+      Synchronized queue wrapper in QueueUtils.
+    </action>
+    <action issue="COLLECTIONS-670" dev="ggregory" type="add" due-to="Gary Gregory">
+      Add org.apache.commons.collections4.IteratorUtils.first(Iterator).
+    </action>
+    <action issue="COLLECTIONS-671" dev="ggregory" type="add" due-to="Gary Gregory">
+      Add org.apache.commons.collections4.IterableUtils.first(Iterable).
+    </action>
+    <action issue="COLLECTIONS-678" dev="ggregory" type="fix" due-to="Oscar Luis Vera Pérez">
+      The verification of unsupported iterator methods is not complete.
+    </action>
+    <action issue="COLLECTIONS-673" dev="ggregory" type="fix" due-to="John Mark, Stephan Fuhrmann">
+      ListUtils.partition potential integer overflow.
+    </action>
+  </release>
+  <release version="4.1" date="2015-11-28" description="This is a security and minor release.">
+    <action issue="COLLECTIONS-508" dev="tn" type="add">
+      Added new interfaces "MultiValuedMap", "ListValuedMap" and "SetValuedMap"
+      as a replacement for "MultiMap". Decorators and implementations reside in
+      the "multimap" package and a "MultiMapUtils" class has been added.
+      The existing interface "MultiMap" as well as the concrete implementation
+      "MultiValueMap" has been deprecated.
+    </action>
+    <action issue="COLLECTIONS-551" dev="tn" type="update">
+      Deprecated various method in "CollectionUtils" in favor of similar
+      methods in the newly introduced "IterableUtils".
+    </action>
+    <action issue="COLLECTIONS-580" dev="tn" type="update">
+      Serialization support for unsafe classes in the functor package
+      has been removed as this can be exploited for remote code execution
+      attacks. Classes considered to be unsafe are: CloneTransformer,
+      ForClosure, InstantiateFactory, InstantiateTransformer, InvokerTransformer,
+      PrototypeCloneFactory, PrototypeSerializationFactory, WhileClosure.
+    </action>
+    <action issue="COLLECTIONS-580" dev="tn" type="fix">
+      Added validation when de-serializing a "MultiValueMap#ReflectionFactory":
+      only Collection classes are allowed, otherwise an UnsupportedOperationException
+      will be thrown during de-serialization.
+    </action>
+    <action issue="COLLECTIONS-567" dev="tn" type="add">
+      Added new MultiSet interface which is intended to be a replacement for
+      the Bag interface. The main difference is that a MultiSet is fully compatible
+      to the Collection contract.
+    </action>
+    <action issue="COLLECTIONS-576" dev="tn" type="fix" due-to="Stephan Roch">
+      Subclasses of MultiKey did not re-calculate their hashcode after de-serialization.
+    </action>
+    <action issue="COLLECTIONS-572" dev="tn" type="add">
+      Added set operations to "SetUtils": union, difference, intersection and disjunction.
+      The operations return a view of the result that is backed by the input sets.
+    </action>
+    <action issue="COLLECTIONS-570" dev="tn" type="update">
+      All constructors and static factory methods will now throw a "NullPointerException" if
+      a required input argument is null. Previously sometimes a "IllegalArgumentException" was used.
+    </action>
+    <action issue="COLLECTIONS-571" dev="tn" type="update">
+      Deprecated methods "synchronizedCollection(Collection)" and "unmodifiableCollection(Collection)"
+      in class "CollectionUtils", the corresponding methods in "java.util.Collections" should be used instead.
+    </action>
+    <action issue="COLLECTIONS-566" dev="tn" type="fix">
+      "IteratorUtils#collate(...)" methods did not use natural ordering when a
+      null comparator was provided.
+    </action>
+    <action issue="COLLECTIONS-557" dev="tn" type="add" due-to="Philippe Mouawad">
+      Added support to specify the initial size of a "LRUMap".
+    </action>
+    <action issue="COLLECTIONS-565" dev="tn" type="add">
+      Added decorators for "NavigableSet" interface.
+    </action>
+    <action issue="COLLECTIONS-464,COLLECTIONS-442" dev="tn" type="add">
+      Added new class "FluentIterable" to support a fluent API for manipulating
+      Iterable instances. Additionally various supporting methods have been
+      added to "IterableUtils" and "IteratorUtils".
+    </action>
+    <action issue="COLLECTIONS-464" dev="tn" type="add">
+      Added new "ZippingIterator" and factory methods "IteratorUtils#zippingIterator(...)".
+    </action>
+    <action issue="COLLECTIONS-464" dev="tn" type="add">
+      Added new decorator "SkippingIterator" and factory methods "IteratorUtils#skippingIterator(...)".
+    </action>
+    <action issue="COLLECTIONS-556" dev="tn" type="add">
+      Added method "SetUtils#newIdentityHashSet()" which returns a new identity HashSet
+      using reference-equality instead of object-equality.
+    </action>
+    <action issue="COLLECTIONS-562" dev="tn" type="update">
+      Upgraded minimum java requirement to Java 6 (up from Java 5).
+    </action>
+    <action issue="COLLECTIONS-395" dev="tn" type="add" due-to="David Hawthorne">
+      Added method "LRUMap#get(Object, boolean)" that allows to query the map
+      without affecting the least recently used order.
+    </action>
+    <action issue="COLLECTIONS-558" dev="tn" type="fix" due-to="Felix Rabe">
+      Changed return type of "ListOrderedSet#remove(int)" from Object to the generic type parameter.
+    </action>
+    <action issue="COLLECTIONS-555" dev="tn" type="fix" due-to="M Kim">
+      Added clarification to javadoc of "TreeBag#add(Object)" wrt null arguments.
+    </action>
+    <action issue="COLLECTIONS-427" dev="tn" type="add" due-to="Gonçalo Marques">
+      Added "toString(...)" methods to newly created "IterableUtils" and existing "IteratorUtils"
+      to get a string representation of an Iterable/Iterator instance similar to "Arrays#toString(...)".
+    </action>
+    <action issue="COLLECTIONS-427" dev="tn" type="fix">
+      Reverted performance improvement for "SetUniqueList#retainAll(Collection)"
+      introduced in 4.0. Added clarifying javadoc wrt runtime complexity instead.
+    </action>
+    <action issue="COLLECTIONS-426" dev="tn" type="fix">
+      Reverted performance improvement for "ListOrderedSet#retainAll(Collection)"
+      introduced in 4.0. Added clarifying javadoc wrt runtime complexity instead.
+    </action>
+    <action issue="COLLECTIONS-530" dev="tn" type="fix" due-to="Erik">
+      Added a Builder for "PredicatedCollection". Elements added to the builder
+      that fail the predicate will not throw an IllegalArgumentException. The builder
+      supports creating predicated lists, bags, sets and queues.
+    </action>
+    <action issue="COLLECTIONS-545" dev="tn" type="fix" due-to="Oswaldo Olivo">
+      Documented runtime complexity of "CollectionUtils#removeAll(Collection, Collection).
+    </action>
+    <action issue="COLLECTIONS-543" dev="tn" type="fix">
+      "AbstractCollectionDecorator" doesn't forward equals and hashCode anymore.
+    </action>
+    <action issue="COLLECTIONS-544" dev="tn" type="fix" due-to="Oswaldo Olivo">
+      Documented runtime complexity of "CollectionUtils#retainAll(Collection, Collection).
+    </action>
+    <action issue="COLLECTIONS-542" dev="tn" type="fix">
+      "AbstractHashedMap" still inherits from "AbstractMap", contrary to what
+      the class javadoc stated. The inheritance will now be removed in v5.0.
+    </action>
+    <action issue="COLLECTIONS-539" dev="tn" type="add" due-to="Guram Savinov">
+      Changed scope of "CircularFifoQueue#isAtFullCapacity()" to public.
+    </action>
+    <action issue="COLLECTIONS-525" dev="tn" type="fix" due-to="Zigler Zhang">
+      The map returned by "PatriciaTrie#prefixMap()" did not contain all keys
+      that are prefixed by the given search key in some rare cases.
+    </action>
+    <action issue="COLLECTIONS-511" dev="tn" type="add" due-to="Nathan Blomquist, Brent Worden">
+      Added new methods "IterableUtils#partition(...)" to partition an input collection
+      into separate output collections based on evaluation of one or more predicates.
+    </action>
+    <action issue="COLLECTIONS-537" dev="tn" type="fix" due-to="Frank Jakop">
+      Harmonized signature of factory methods for functor-related classes which take
+      a collection as input with their array counterparts.
+    </action>
+    <action issue="COLLECTIONS-540" dev="tn" type="fix" due-to="Daniel Stewart, Issam El Atif">
+      Added overloaded method "CollectionUtils#get(Enumeration, int)" and simplified
+      code for "CollectionUtils#get(Object, int)".
+    </action>
+    <action issue="COLLECTIONS-536" dev="tn" type="fix" due-to="Tagir Valeev">
+      Improved check for null input in "MapUtils#putAll(Map, Object[])".
+    </action>
+    <action issue="COLLECTIONS-534" dev="tn" type="fix" due-to="Oswaldo Olivo">
+      Added clarifying javadoc wrt runtime complexity of "CollectionBag#retainAll".
+    </action>
+    <action issue="COLLECTIONS-529" dev="tn" type="add" due-to="Alexander Muthmann, Dipanjan Laha">
+      Added methods "removeAll(...)" and "retainAll(...)" to "CollectionUtils" that perform
+      equality checks using the provided "Equator" object instead of "Object#equals()".
+    </action>
+    <action issue="COLLECTIONS-531" dev="tn" type="fix" due-to="Dipanjan Laha">
+      Use correct type bounds in
+      "CollectionUtils#isEqualCollection(Collection, Collection, Equator)" to
+      prevent a "ClassCastException" at runtime for invalid inputs.
+    </action>
+    <action issue="COLLECTIONS-523" dev="tn" type="fix" due-to="Thiago Andrade">
+      Removed unneeded private method in "PassiveExpiringMap".
+    </action>
+    <action issue="COLLECTIONS-516" dev="tn" type="fix" due-to="Cyrille Artho">
+      Added clarification to the javadoc of "MapUtils#toProperties(Map)" in case
+      of null keys/values.
+    </action>
+    <action issue="COLLECTIONS-524" dev="tn" type="fix" due-to="J Goodfellow">
+      "ListOrderedSet#listOrderedSet(List)" did not remove duplicates from the
+      input list as advertised in the javadoc.
+    </action>
+    <action issue="COLLECTIONS-521" dev="tn" type="fix" due-to="Maxime Nay">
+      "MultiKeyMap" was throwing a "NullPointerException" for various operations
+      if two key arguments have been used and the second was "null".
+    </action>
+    <action issue="COLLECTIONS-522" dev="tn" type="fix" due-to="Erik">
+      Updated code example for "PredicatedList".
+    </action>
+    <action issue="COLLECTIONS-512" dev="tn" type="fix" due-to="Cyrille Artho">
+      "TransformingComparator" and "FixedOrderComparator" did not comply with
+      the contract of "Object#equals".
+    </action>
+    <action issue="COLLECTIONS-510" dev="tn" type="fix" due-to="Hollis Waite">
+      Fix compilation errors when using source level 1.8 and a recent java 8 compiler.
+    </action>
+    <action issue="COLLECTIONS-509" dev="tn" type="fix">
+      Clarified javadoc of "CollectionBag" wrt changes from the original Bag interface.
+    </action>
+    <action issue="COLLECTIONS-507" dev="tn" type="fix" due-to="Gerson">
+      Removed wrong type bounds for "ComparatorUtils#chainedComparator(...)".
+    </action>
+    <action issue="COLLECTIONS-506" dev="tn" type="fix" due-to="Anthony Communier">
+      Added javadoc clarification to class "CollectionUtils" that input objects which
+      override "Object#equals(Object)" must also maintain the general contract of
+      "Object#hashCode()" as various utility methods take advantage of sets/maps/bags.
+    </action>
+    <action issue="COLLECTIONS-503" dev="tn" type="add" due-to="Josh Cain">
+      Added new transformer "IfTransformer" and factory methods "TransformerUtils#ifTransformer(...)"
+      which replace "TransformerUtils#switchTransformer(Predicate, Transformer, Transformer)".
+    </action>
+    <action issue="COLLECTIONS-471" dev="tn" type="add" due-to="Radford Tam">
+      Added new decorator "BoundedIterator" and factory methods "IteratorUtils#boundedIterator(...)".
+    </action>
+  </release>
+  <release version="4.0" date="2013-11-27" description="
+This is a major release: It combines bug fixes, new features and
+changes to existing features.
+
+Most notable changes are: use of generics and other language features introduced in Java 5 (varargs, Iterable),
+removed deprecated classes / methods and features which are now supported by the JDK,
+replaced Buffer interface with java.util.Queue,
+added concept of split maps with respective interfaces Put / Get (see also package splitmap),
+added new Trie interface together with an implementation of a Patricia Trie.
+
+Because of the base package name change, this release can be used together
+with earlier versions of Commons Collections.
+The minimal version of the Java platform required to compile and use
+Commons Collections is Java 5.
+Users are encouraged to upgrade to this version as, in addition to new
+features, this release includes numerous bug fixes.
+  ">
+    <action issue="COLLECTIONS-502" dev="tn" type="update">
+      Resolved generic parameter inconsistency for various static fields, e.g. BagUtils.EMPTY_BAG,
+      TruePredicate.INSTANCE and many others. All accessible static fields use raw types so that
+      they can be used directly without explicit casting. To avoid compiler warnings about unchecked
+      conversion and/or rawtypes use the corresponding factory methods, e.g. BagUtils.emptyBag().
+    </action>
+    <action issue="COLLECTIONS-501" dev="tn" type="update">
+      Renamed methods "V MultiKeyMap#remove(Object, Object, ...)" to
+      "V MultiKeyMap#removeMultiKey(Object, Object, ...)" to avoid future conflicts
+      with a default method of the Map interface in Java 8.
+    </action>
+    <action issue="COLLECTIONS-500" dev="tn" type="update">
+      Renamed "V MultiMap#remove(K, V)" to "boolean MultiMap#removeMapping(K, V)"
+      to avoid future conflicts with a default method of the Map interface in Java 8.
+    </action>
+    <action issue="COLLECTIONS-499" dev="tn" type="update">
+      Refactored the test framework for Bag implementations to extend from
+      "AbstractCollectionTest" by decorating the concrete Bag instance with
+      a CollectionBag or CollectionSortedBag.
+    </action>
+    <action issue="COLLECTIONS-498" dev="tn" type="fix">
+      "CollectionBag" will now also respect the contract of the decorated bag in case
+      a null argument is provided to either removeAll or retainAll.
+    </action>
+    <action issue="COLLECTIONS-497" dev="tn" type="add">
+      Added bag decorator "CollectionSortedBag" which decorates a SortedBag to make it
+      comply with the Collection contract.
+    </action>
+    <action issue="COLLECTIONS-496" dev="tn" type="update">
+      "UnmodifiableBoundedCollection" does now also implement the marker interface "Unmodifiable"
+      similar as all other unmodifiable decorators.
+    </action>
+    <action issue="COLLECTIONS-495" dev="tn" type="fix">
+      "UnmodifiableTrie#unmodifiableTrie(Trie)" will not decorate again an already
+      unmodifiable Trie. Also the return type has been changed to "Trie" to be consistent
+      with other Unmodifiable decorators.
+    </action>
+    <action issue="COLLECTIONS-494" dev="tn" type="update" due-to="Emmanuel Bourg">
+      Moved "Equator" interface to base package for consistency.
+    </action>
+    <action issue="COLLECTIONS-488" dev="tn" type="add" due-to="Josh Cain">
+      Added "CollectionsUtils#matchesAll(Iterable, Predicate)" to test if all elements
+      of a collection match a given predicate.
+    </action>
+    <action issue="COLLECTIONS-485" dev="tn" type="fix" due-to="Hollis Waite">
+      Accept wildcard input where possible, e.g. in copy-constructors, Unmodifiable* decorators
+      and iterators.
+    </action>
+    <action issue="COLLECTIONS-481" dev="tn" type="fix" due-to="Hollis Waite">
+      No collision detection/resolution was performed when calling "CompositeSet#addComposited(...)"
+      with more than one Set as argument. Additionally use varargs parameters instead of arrays
+      in CompositeSet and CompositeCollection constructor and addComposited method.
+    </action>
+    <action issue="COLLECTIONS-480" dev="tn" type="update" due-to="Hollis Waite">
+      Narrow return type of "BidiMap#values()" to Set as the values are required to be unique.
+    </action>
+    <action issue="COLLECTIONS-475" dev="tn" type="fix">
+      Fixed conversion of timeout parameters in "PassiveExpiringMap".
+    </action>
+    <action issue="COLLECTIONS-474" dev="sebb" type="fix" due-to="Ning Chen">
+      Exception in "ListOrderedMap#putAll" if map contains null values.
+    </action>
+    <action issue="COLLECTIONS-473" dev="tn" type="update" due-to="sebb">
+      Made field "collection" in class "AbstractCollectionDecorator" private and added
+      setter "setCollection(Collection)" with scope protected to set the decorated collection
+      during de-serialization.
+    </action>
+    <action issue="COLLECTIONS-472" dev="tn" type="fix" due-to="Adrian Nistor">
+      Improved performance of "AbstractMapBag#containsAll(Collection)" by returning immediately
+      after a difference has been found.
+    </action>
+    <action issue="COLLECTIONS-470" dev="tn" type="update" due-to="sebb">
+      Renamed class "TransformedMap" in package "splitmap" to "TransformedSplitMap" to avoid
+      name clash with similar class in package "map".
+    </action>
+    <action issue="COLLECTIONS-468" dev="tn" type="add">
+      Added bag decorator "CollectionBag" which decorates a bag to make it comply with the
+      Collection contract.
+    </action>
+    <action issue="COLLECTIONS-466" dev="tn" type="update">
+      Replaced "Collection" with "Iterable" for method arguments where applicable.
+    </action>
+    <action issue="COLLECTIONS-463" dev="tn" type="add" due-to="Andy Seaborne, Claude Warren">
+      Added "PushbackIterator" decorator to support pushback of elements during iteration.
+    </action>
+    <action issue="COLLECTIONS-462" dev="tn" type="add" due-to="Andy Seaborne, Claude Warren">
+      Added "PeekingIterator" decorator to support one-element lookahead during iteration.
+    </action>
+    <action issue="COLLECTIONS-461" dev="tn" type="fix" due-to="Matt Benson, sebb">
+      Added additional clarification to javadoc of interface "Put" wrt return type of
+      "put(Object, Object)" method.
+    </action>
+    <action issue="COLLECTIONS-460" dev="tn" type="update">
+      Changed "IteratorChain" to use internally a "Queue" instead of a "List". Iterators are
+      removed from the queue once used and can be garbage collected after being exhausted.
+      Additionally removed the methods "setIterator(Iterator)" and "getIterators()".
+    </action>
+    <action issue="COLLECTIONS-459" dev="tn" type="update" due-to="sebb">
+      Removed method "setArray(Object)" in class ArrayIterator and method "setArray(Object[])"
+      in class ObjectArrayIterator and made fields array, startIndex and endIndex final.
+    </action>
+    <action issue="COLLECTIONS-458" dev="sebb" type="remove">
+      Removed unused class "AbstractUntypedCollectionDecorator&lt;E, D&gt;".
+    </action>
+    <action issue="COLLECTIONS-456" dev="tn" type="add">
+      Added methods "ListUtils#longestCommonSubsequence(...)" to get the longest common subsequence
+      of arbitrary lists or CharSequences.
+    </action>
+    <action issue="COLLECTIONS-455" dev="sebb" type="update">
+      Changed scope of fields to private where appropriate.
+    </action>
+    <action issue="COLLECTIONS-454" dev="tn" type="update">
+      An iterator over a "Flat3Map#entrySet()" will now return
+      independent Map.Entry objects that will not change anymore when
+      the iterator progresses.
+    </action>
+    <action issue="COLLECTIONS-453" dev="tn" type="update">
+      Several closure and transformer implementations in the functors package
+      will now copy an array as input to their constructor (e.g. ChainedClosure).
+    </action>
+    <action issue="COLLECTIONS-452" dev="tn" type="update">
+      Change base package to org.apache.commons.collections4.
+    </action>
+    <action issue="COLLECTIONS-451" dev="tn" type="update">
+      The constructors for all Utils classes are now private to prevent instantiation.
+    </action>
+    <action issue="COLLECTIONS-450" dev="tn" type="add" due-to="J. Moldawski">
+      Added methods "forAllButLastDo(Collection, Closure)" and "forAllButLastDo(Iterator, Closure)"
+      to class "CollectionUtils".
+    </action>
+    <action issue="COLLECTIONS-447" dev="tn" type="fix" due-to="Jeffrey Barnes">
+      Tree traversal with a TreeListIterator will not be affected anymore by
+      the removal of an element directly after a call to previous().
+    </action>
+    <action issue="COLLECTIONS-446" dev="tn" type="add" due-to="Matt Lachman">
+      Added method "CollectionUtils#isEqualCollection(Collection, Collection, Equator)".
+    </action>
+    <action issue="COLLECTIONS-445" dev="tn" type="fix">
+      Adapt and/or ignore several unit tests when run on a IBM J9 VM (specification version 1.6.0)
+      due to a faulty "java.util.TreeMap" implementation.
+    </action>
+    <action issue="COLLECTIONS-444" dev="tn" type="fix" due-to="Thomas Vahrst, John Vasileff">
+      SetUniqueList.set(int, E) now works correctly if the object to be inserted
+      is already placed at the given position.
+    </action>
+    <action issue="COLLECTIONS-441" dev="tn" type="fix" due-to="Thomas Vahrst">
+      MultiKeyMap.clone() now correctly calls super.clone().
+    </action>
+    <action issue="COLLECTIONS-436" dev="tn" type="add" due-to="Arman Sharif">
+      Added "emptyIfNull" methods to classes "CollectionUtils", "ListUtils", "SetUtils"
+      and "MapUtils".
+    </action>
+    <action issue="COLLECTIONS-433" dev="tn" type="fix" due-to="Jeffrey Barnes">
+      Improve performance of "TreeList#addAll" and "TreeList(Collection)" by converting
+      the input collection into an AVL tree and efficiently merge it into the existing tree.
+    </action>
+    <action issue="COLLECTIONS-432" dev="tn" type="update">
+      Replaced "Buffer" interface with "java.util.Queue". Kept "CircularFifoQueue"
+      as well as "Predicated", "Transformed" and "Unmodifiable" decorators.
+    </action>
+    <action issue="COLLECTIONS-429,COLLECTIONS-434" dev="tn" type="add" due-to="Adrian Nistor, Mert Guldur">
+      Added method "CollectionUtils#containsAll(Collection, Collection)" with guaranteed
+      runtime complexity of O(n + m) and space complexity of O(n). This method may yield much
+      better performance than "Collection#containsAll(Collection)" depending on the use-case and
+      type of collection used.
+    </action>
+    <action issue="COLLECTIONS-427" dev="brentworden" type="fix" due-to="Mert Guldur">
+      Fixed performance issue in "SetUniqueList#retainAll" method for large collections.
+    </action>
+    <action issue="COLLECTIONS-426" dev="brentworden" type="fix" due-to="Adrian Nistor">
+      Fixed performance issue in "ListOrderedSet#retainAll" method for large collections.
+    </action>
+    <action issue="COLLECTIONS-425" dev="tn" type="fix" due-to="Adrian Nistor">
+      Improved performance of "ListOrderedMap#remove(Object)" method.
+    </action>
+    <action issue="COLLECTIONS-424" dev="tn" type="update" due-to="Michael Pradel">
+      "CompositeSet" does not inherit from "CompositeCollection" anymore. The inner class
+      "SetMutator" has been updated accordingly.
+    </action>
+    <action issue="COLLECTIONS-422" dev="tn" type="add" due-to="Benoit Corne">
+      Added method "CollectionUtils#permutations(Collection)" and class "PermutationIterator"
+      to generate unordered permutations of a collection.
+    </action>
+    <action issue="COLLECTIONS-421" dev="tn" type="fix" due-to="Benedikt Ritter">
+      Update javadoc for "ListUtils#lazyList()" and "ListUtils#fixedSizeList()".
+    </action>
+    <action issue="COLLECTIONS-419" dev="tn" type="fix" due-to="Adrian Nistor">
+      Added clarifying javadoc wrt runtime complexity of "AbstractDualBidiMap#retainAll".
+    </action>
+    <action issue="COLLECTIONS-417" dev="tn" type="fix" due-to="Adrian Nistor">
+      Added clarifying javadoc wrt runtime complexity of "AbstractLinkedList#retainAll".
+    </action>
+    <action issue="COLLECTIONS-415" dev="tn" type="fix" due-to="Adrian Nistor">
+      Added clarifying javadoc wrt runtime complexity of "AbstractLinkedList#removeAll".
+    </action>
+    <action issue="COLLECTIONS-414" dev="tn" type="fix">
+      Fixed several compilation issues with older Java 1.6 compilers.
+    </action>
+    <action issue="COLLECTIONS-413" dev="tn" type="fix" due-to="Adrian Nistor">
+      Improved performance of "removeAll()" method for sets returned by "DualHashBidiMap#entrySet()".
+    </action>
+    <action issue="COLLECTIONS-412" dev="tn" type="fix" due-to="Adrian Nistor">
+      Improved performance of "CollectionUtils#subtract" methods.
+    </action>
+    <action issue="COLLECTIONS-411" dev="tn" type="fix" due-to="Adrian Nistor">
+      Fixed possible "IndexOutOfBoundsException" in "ListOrderedMap#putAll".
+    </action>
+    <action issue="COLLECTIONS-410" dev="tn" type="fix" due-to="Adrian Nistor">
+      Improved performance of "SetUniqueList#addAll" method.
+    </action>
+    <action issue="COLLECTIONS-409" dev="tn" type="fix" due-to="Adrian Nistor">
+      Improved performance of "ListOrderedSet#addAll" method.
+    </action>
+    <action issue="COLLECTIONS-408" dev="tn" type="fix" due-to="Adrian Nistor">
+      Improved performance of "SetUniqueList#removeAll".
+    </action>
+    <action issue="COLLECTIONS-407" dev="tn" type="fix" due-to="Adrian Nistor">
+      Improved performance of "ListOrderedSet#remove(Object)" in case the object is
+      not contained in the Set.
+    </action>
+    <action issue="COLLECTIONS-406" dev="tn" type="fix" due-to="Adrian Nistor">
+      Improved performance of "ListUtils#subtract" method.
+    </action>
+    <action issue="COLLECTIONS-405" dev="brentworden" type="add" due-to="Adam Dyga">
+      Added "ListUtils#select" and "ListUtils#selectRejected" methods.
+    </action>
+    <action issue="COLLECTIONS-404" dev="luc" type="add" due-to="Jordane Sarda">
+      Added an implementation of Eugene Myers difference algorithm in package
+      o.a.c.c.sequence.
+    </action>
+    <action issue="COLLECTIONS-400" dev="tn" type="fix" due-to="Shin Hwei Tan">
+      Added missing null check in "CollectionUtils#addIgnoreNull(Collection, Object)".
+    </action>
+    <action issue="COLLECTIONS-399" dev="tn" type="add" due-to="Sebb">
+      Added new method "get(int)" to "CircularFifoQueue".
+    </action>
+    <action issue="COLLECTIONS-396" dev="tn" type="add" due-to="Jeff Rodriguez">
+      Added "LazyIteratorChain" iterator.
+    </action>
+    <action issue="COLLECTIONS-393" dev="tn" type="add" due-to="Chris Shayan">
+      Added "ListUtils#partition" method to split a List into consecutive sublists.
+    </action>
+    <action issue="COLLECTIONS-391" dev="tn" type="fix" due-to="Shin Hwei Tan">
+      Fixed javadoc for "MapUtils#toProperties(Map)".
+    </action>
+    <action issue="COLLECTIONS-389" dev="tn" type="fix" due-to="Shin Hwei Tan">
+      Clarified javadoc for "TransformerUtils#mapTransformer" for null input.
+    </action>
+    <action issue="COLLECTIONS-388" dev="tn" type="fix" due-to="Shin Hwei Tan">
+      Clarified javadoc for "FactoryUtils#prototypeFactory" for null input.
+    </action>
+    <action issue="COLLECTIONS-384" dev="ggregory" type="fix" due-to="Shin Hwei Tan">
+      Fixed inconsistent javadoc for "MapUtils#synchronizedMap(Map)".
+    </action>
+    <action issue="COLLECTIONS-383" dev="tn" type="add" due-to="Adrian Cumiskey">
+      Added "CollectionUtils#forAllDo" implementation which takes an "Iterator" as input.
+    </action>
+    <action issue="COLLECTIONS-382" dev="tn" type="update" due-to="Olivier Lamy">
+      Change maven coordinates to "org.apache.commons.commons-collections4".
+    </action>
+    <action issue="COLLECTIONS-381" dev="sebb" type="update" due-to="Olivier Lamy">
+      Move the project structure to a standard maven layout.
+    </action>
+    <action issue="COLLECTIONS-380" dev="tn" type="fix" due-to="Dave Brosius">
+      Fixed infinite loop when calling "UnmodifiableBoundedCollection#unmodifiableBoundedCollection()".
+    </action>
+    <action issue="COLLECTIONS-379" dev="tn" type="fix" due-to="Shin Hwei Tan">
+      Fixed javadoc for several methods wrt expected NullPointerExceptions.
+    </action>
+    <action issue="COLLECTIONS-375" dev="tn" type="add" due-to="Ivan Hristov">
+      Added method "ListUtils#defaultIfNull(List, List)".
+    </action>
+    <action issue="COLLECTIONS-372" dev="tn" type="update">
+      TransformingComparator now supports different types for its input/output values.
+    </action>
+    <action issue="COLLECTIONS-364" dev="sebb" type="fix">
+      "DualTreeBidiMap" now uses the correct comparator for the reverse map during de-serialization.
+    </action>
+    <action issue="COLLECTIONS-363" dev="sebb" type="fix">
+      "TransformedMap" in the package "splitmap" can now be serialized.
+    </action>
+    <action issue="COLLECTIONS-362" dev="brentworden" type="update" due-to="Jean-Noel Rouvignac">
+      "CollectionUtils#filter(Iterable, Predicate)" will now return whether the collection
+      has been modified.
+    </action>
+    <action issue="COLLECTIONS-361" dev="tn" type="add" due-to="Jean-Noel Rouvignac">
+      Add method "CollectionUtils#filterInverse(Iterable, Predicate)".
+    </action>
+    <action issue="COLLECTIONS-360" dev="jochen" type="fix" due-to="Sai Zhang">
+      "FilterListIterator#hasNext" does not throw a NullPointerException anymore
+      to comply to the Java iterator specification.
+    </action>
+    <action issue="COLLECTIONS-359" dev="bayard" type="fix" due-to="Mark Shead">
+      "ListUtils#intersection(List, List)" will now also work correctly if there
+      are duplicate elements in the provided lists.
+    </action>
+    <action issue="COLLECTIONS-352" dev="bayard" type="fix" due-to="Adam Gent">
+      "AbstractCollectionDecorator" will now use internally "decorated()" to access
+      the decorated collection.
+    </action>
+    <action issue="COLLECTIONS-351" dev="bayard" type="remove" due-to="Henri Yandell">
+      Removed features which are now supported by the JDK.
+    </action>
+    <action issue="COLLECTIONS-350" dev="bayard" type="fix" due-to="Michael Akerman">
+      Removed debug output in "MapUtils#getNumber(Map)".
+    </action>
+    <action issue="COLLECTIONS-348" dev="brentworden" type="fix" due-to="Paul Benedict">
+      Fixed javadoc for all "transformedXXX(XXX)" methods in the respective Utils classes
+      to clarify that existing objects in the list are not transformed.
+    </action>
+    <action issue="COLLECTIONS-343" dev="mbenson" type="fix" due-to="Goran Hacek">
+      Singleton classes in package "functors" are now correctly de-serialized.
+    </action>
+    <action issue="COLLECTIONS-341" dev="mbenson" type="update" due-to="Goran Hacek">
+      "NOPClosure" is now a final class.
+    </action>
+    <action issue="COLLECTIONS-340" dev="mbenson" type="fix" due-to="Goran Hacek">
+      Removed broken methods "equals(Object)" and "hashCode()" in class "NOPClosure".
+    </action>
+    <action issue="COLLECTIONS-336" dev="bayard" type="fix" due-to="sebb">
+      Simplified exceptions as the cause is available from the parent.
+    </action>
+    <action issue="COLLECTIONS-335" dev="jochen" type="fix" due-to="sebb">
+      Fixed cache assignment for "TreeBidiMap#entrySet".
+    </action>
+    <action issue="COLLECTIONS-334" dev="jochen" type="fix" due-to="sebb">
+      Synchronized access to lock in "StaticBucketMap#size()".
+    </action>
+    <action issue="COLLECTIONS-332" dev="jochen" type="fix" due-to="Tom Parker">
+      Added clarification to javadoc of "ListOrderedMap" that "IdentityMap" and
+      "CaseInsensitiveMap" are not supported.
+    </action>
+    <action issue="COLLECTIONS-331" dev="jochen" type="fix" due-to="Michael Krkoska">
+      Improve javadoc of "CollatingIterator" wrt the used "Comparator" and throw a
+      NullPointerException in "CollatingIterator#least" if no comparator is set.
+    </action>
+    <action issue="COLLECTIONS-330" dev="mbenson" type="fix" due-to="Joerg Schaible">
+      "LRUMap#keySet()#remove(Object)" will not throw a "ConcurrentModificationException" anymore.
+    </action>
+    <action issue="COLLECTIONS-328" dev="bayard" type="fix" due-to="Thomas Rogan, Jilles van Gurp">
+      Improved performance of "ListUtils#intersection(List, List)".
+    </action>
+    <action issue="COLLECTIONS-327" dev="brentworden" type="add" due-to="sebb">
+      Added serialVersionUID fields for "CompositeCollection", "CompositeSet",
+      "EmptyMapMutator", "EmptySetMutator".
+    </action>
+    <action issue="COLLECTIONS-324" dev="tn" type="update" due-to="sebb">
+      Fields transformer and decorated in class "TransformingComparator" are now final.
+    </action>
+    <action issue="COLLECTIONS-323" dev="jochen" type="fix" due-to="Maarten Brak">
+      Changed behavior of "CaseInsensitiveMap" constructor to be compliant with "HashMap"
+      in case the initial capacity is set to zero.
+    </action>
+    <action issue="COLLECTIONS-322" dev="tn" type="add" due-to="Thomas Vahrst">
+      Added NodeListIterator and convenience methods in IteratorUtils to iterate over
+      a org.w3c.dom.NodeList.
+    </action>
+    <action issue="COLLECTIONS-320" dev="bayard" type="fix" due-to="sebb">
+      Improved performance of "StaticBucketMap#putAll(Map)" by iterating over the entry set.
+    </action>
+    <action issue="COLLECTIONS-319" dev="bayard" type="fix" due-to="sebb">
+      Avoid redundant null check in "IteratorUtils#getIterator(Object)".
+    </action>
+    <action issue="COLLECTIONS-317" dev="bayard" type="fix" due-to="sebb">
+      Use a private method to populate the object in "AbstractHashedMap(Map)".
+    </action>
+    <action issue="COLLECTIONS-316" dev="bayard" type="fix" due-to="ori">
+      Fixed javadoc of "LRUMap" wrt to the maxSize parameter of the constructor.
+    </action>
+    <action issue="COLLECTIONS-313" dev="brentworden" type="add" due-to="David J. M. Karlsen">
+      Added new abstract class "CatchAndRethrowClosure" that re-throws any checked exception
+      as unchecked "FunctorException".
+    </action>
+    <action issue="COLLECTIONS-312" dev="tn" type="fix" due-to="Peter Lawrey, Gary Gregory">
+      Use of final keyword where applicable, minor performance improvements by properly
+      initializing the capacity of newly created collections when known in advance.
+    </action>
+    <action issue="COLLECTIONS-307" dev="tn" type="update" due-to="Christian Semrau, Thomas Vahrst">
+      "SetUniqueList#subList()" will now return an unmodifiable list as changes to it
+      may invalidate the parent list.
+    </action>
+    <action issue="COLLECTIONS-307" dev="bayard" type="fix" due-to="Christian Semrau">
+      "SetUniqueList#subList()#contains(Object)" will now correctly check the subList
+      rather than the parent list.
+    </action>
+    <action issue="COLLECTIONS-306" dev="brentworden" type="add" due-to="Chris Shayan">
+      Added method "CollectionUtils#subtract(Iterable, Iterable, Predicate)".
+    </action>
+    <action issue="COLLECTIONS-304" dev="bayard" type="fix" due-to="Rafał Figas,Bjorn Townsend">
+      "SetUniqueList#set(int, Object)" will now correctly enforce the uniqueness constraint.
+    </action>
+    <action issue="COLLECTIONS-303" dev="bayard" type="fix" due-to="Emmanuel Bourg">
+      Improved javadoc for "Unmodifiable*" classes wrt behavior when the users tries
+      to modify the collection.
+    </action>
+    <action issue="COLLECTIONS-298" dev="bayard" type="update" due-to="Benjamin Bentmann">
+      Calling "CollectionUtils#sizeIsEmpty(null)" will now return true.
+    </action>
+    <action issue="COLLECTIONS-296" dev="tn" type="add" due-to="Julius Davies">
+      Added methods "CollectionUtils#collate(...)" to merge two sorted Collections
+      into a sorted List using the standard O(n) merge algorithm.
+    </action>
+    <action issue="COLLECTIONS-294" dev="bayard" type="fix" due-to="Benjamin Bentmann">
+      "CaseInsensitiveMap" will now convert input strings to lower-case in a
+      locale-independant manner.
+    </action>
+    <action issue="COLLECTIONS-293" dev="tn" type="add" due-to="Stephen Kestle">
+      Added support for using custom "Equator" objects in "EqualPredicate".
+    </action>
+    <action issue="COLLECTIONS-289" dev="bayard" type="add" due-to="Fredrik Kjellberg">
+      Added method "CollatingIterator#getIteratorIndex()".
+    </action>
+    <action issue="COLLECTIONS-256,COLLECTIONS-288" dev="bayard" type="fix" due-to="Paul Benedict">
+      Fixed javadoc for "ListUtils#transformedList(List)" to clarify that existing objects
+      in the list are not transformed.
+    </action>
+    <action issue="COLLECTIONS-286" dev="mbenson" type="add" due-to="Geoffrey De Smet">
+      Added method "CollectionUtils#extractSingleton(Collection)".
+    </action>
+    <action issue="COLLECTIONS-285" dev="tn" type="add" due-to="Christian Gruenberg">
+      Added serialization support for "TreeBidiMap".
+    </action>
+    <action issue="COLLECTIONS-280" dev="bayard" type="update" due-to="Chris Lewis">
+      The predicate that rejected an object to be added to a "PredicatedCollection"
+      is now contained in the respective exception message.
+    </action>
+    <action issue="COLLECTIONS-275" dev="tn" type="add" due-to="Stephen Kestle">
+      Added "IndexedCollection" collection decorator which provides a map-like
+      view on an existing collection.
+    </action>
+    <action issue="COLLECTIONS-272" dev="tn" type="add" due-to="Chaitanya Mutyala">
+      Added serialization support for "FixedOrderComparator" and "TransformingComparator".
+    </action>
+    <action issue="COLLECTIONS-266" dev="bayard" type="fix" due-to="Joerg Schaible">
+      "MultiKey" will now be correctly serialized/de-serialized.
+    </action>
+    <action issue="COLLECTIONS-265" dev="bayard" type="update" due-to="David Saff">
+      "TreeBag" will now only accept "Comparable" objects as input when used with natural ordering.
+    </action>
+    <action issue="COLLECTIONS-263" dev="tn" type="add" due-to="John Hunsley">
+      Added methods "MapUtils#populateMap(MultiMap, ...)" to support also "MultiMap" instances
+      as input.
+    </action>
+    <action issue="COLLECTIONS-262" dev="bayard" type="fix" due-to="Lisen Mu">
+      Fixed javadoc for methods "firstKey()" and "lastKey()" in class "AbstractLinkedMap".
+    </action>
+    <action issue="COLLECTIONS-261" dev="bayard" type="fix" due-to="ori">
+      "Flat3Map#remove(Object)" will now return the correct value mapped to the removed key
+      if the size of the map is less or equal 3.
+    </action>
+    <action issue="COLLECTIONS-260" dev="mbenson" type="add" due-to="Stephen Kestle">
+      Added constructor "TransformingComparator(Transformer)".
+    </action>
+    <action issue="COLLECTIONS-258" dev="tn" type="add" due-to="Nathan Blomquist">
+      Added "DualLinkedHashBidiMap" bidi map implementation.
+    </action>
+    <action issue="COLLECTIONS-255" dev="mbenson" type="fix" due-to="Henri Yandell">
+      Removed unused variables in "TreeBidiMap".
+    </action>
+    <action issue="COLLECTIONS-251,COLLECTIONS-321" dev="mbenson" type="update" due-to="Stephen Kestle">
+      The static factory methods have been renamed from "getInstance()" to a camel-case
+      version of the class name, e.g. "truePredicate()" for class "TruePredicate".
+    </action>
+    <action issue="COLLECTIONS-249" dev="bayard" type="fix" due-to="Joe Kelly">
+      "SetUniqueList.addAll(int, Collection)" now correctly add the collection at the
+      provided index.
+    </action>
+    <action issue="COLLECTIONS-242" dev="skestle" type="add">
+      Added "Equator" interface.
+    </action>
+    <action issue="COLLECTIONS-241" dev="brentworden" type="add" due-to="Elifarley Callado Coelho">
+      Added "PassiveExpiringMap" map decorator.
+    </action>
+    <action issue="COLLECTIONS-240" dev="bayard" type="update" due-to="Wouter de Vaal">
+      "MultiValueMap" is now serializable.
+    </action>
+    <action issue="COLLECTIONS-237" dev="tn" type="add" due-to="Nils Kaiser, Alan Mehlo">
+      Added method "MultiValueMap#iterator()" to return a flattened version of
+      "entrySet().iterator()". Clarified javadoc for "entrySet()" that the returned Entry
+      objects are unflattened, i.e. the Entry object for a given key contains all values
+      mapped to this key.
+    </action>
+    <action issue="COLLECTIONS-235" dev="bayard" type="add" due-to="Nathan Egge">
+      Added method "ListUtils#indexOf(List, Predicate)".
+    </action>
+    <action issue="COLLECTIONS-232" dev="bayard" type="fix" due-to="Mark Hindess">
+      Fixed several unit tests which were using parameters to "assertEquals(...)" in wrong order.
+    </action>
+    <action issue="COLLECTIONS-231" dev="tn" type="update" due-to="Torsten Curdt">
+      Return concrete class in static factory methods instead of base class interface
+      (except for Unmodifiable decorators).
+    </action>
+    <action issue="COLLECTIONS-230,COLLECTIONS-297,COLLECTIONS-318" dev="bayard" type="update" due-to="Stepan Koltsov,sebb">
+      "CollectionUtils#size(Collection)" now returns 0 when called with null as input.
+    </action>
+    <action issue="COLLECTIONS-229" dev="scolebourne" type="remove">
+      Removed deprecated classes and methods.
+    </action>
+    <action issue="COLLECTIONS-228" dev="scolebourne" type="fix">
+      "MultiValueMap#put(Object, Object)" and "MultiValueMap#putAll(Object, Collection)"
+      now correctly return if the map has changed by this operation.
+    </action>
+    <action issue="COLLECTIONS-226" dev="bayard" type="add" due-to="Vasily Ivanov">
+      Added method "ListOrderedMap#putAll(int, Map)".
+    </action>
+    <action issue="COLLECTIONS-225" dev="tn" type="add" due-to="Sam Berlin, Roger Kapsi">
+      Added new "Trie" interface with a first concrete implementation "PatriciaTrie"
+      together with decorators "Unmodifiable" and "Synchronized".
+    </action>
+    <action issue="COLLECTIONS-223" dev="bayard" type="update" due-to="Vasily Ivanov">
+      "CollectionUtils#addAll(...)" methods now return if the collection has been changed
+      by this operation.
+    </action>
+    <action issue="COLLECTIONS-221" dev="bayard" type="update" due-to="Pal Denes">
+      "CompositeCollection", "CompositeMap" and "CompositeSet" are now serializable.
+    </action>
+    <action issue="COLLECTIONS-219" dev="scolebourne" type="fix" due-to="Tom Leccese">
+      "CollectionUtils#removeAll" wrongly called "ListUtils#retainAll".
+    </action>
+    <action issue="COLLECTIONS-218" dev="skestle" type="update">
+      The "CollectionUtils#select(Collection, Predicate, Collection)" method will now
+      return the output collection.
+    </action>
+    <action issue="COLLECTIONS-217" dev="scolebourne" type="fix" due-to="Matt Bishop">
+      Calling "setValue(Object)" on any Entry returned by a "Flat3Map" will now
+      correctly set the value for the current entry.
+    </action>
+    <action issue="COLLECTIONS-216" dev="scolebourne" type="fix" due-to="Hendrik Maryns">
+      "MultiKey#toString()" will now use "Arrays#toString(List)".
+    </action>
+    <action issue="COLLECTIONS-213" dev="brentworden" type="add" due-to="Dusan Chromy">
+      Added support for resettable iterators in "IteratorIterable".
+    </action>
+    <action issue="COLLECTIONS-194" dev="bayard" type="add" due-to="Dave Meikle">
+      Added methods "MapUtils#populateMap(Map, Iterable, Transformer, ...)".
+    </action>
+    <action issue="COLLECTIONS-182" dev="mbenson" type="update" due-to="Jim Cakalic">
+      "CollectionUtils#forAllDo(Collection, Closure)" now returns the provided closure.
+    </action>
+    <action issue="COLLECTIONS-110,COLLECTIONS-243,COLLECTIONS-245,COLLECTIONS-247,
+                   COLLECTIONS-253,COLLECTIONS-273,COLLECTIONS-282" dev="multiple" type="update">
+      Make generic versions of all classes in collections.
+    </action>
+    <action issue="COLLECTIONS-8" dev="brentworden" type="add" due-to="Rune Peter Bjørnstad">
+      Added class "ComparatorPredicate".
+    </action>
+  </release>
+  <release version="3.2.2" date="2015-11-15" description="This is a security and bugfix release.">
+    <action issue="COLLECTIONS-580" dev="tn" type="update">
+      Serialization support for unsafe classes in the functor package is disabled
+      by default as this can be exploited for remote code execution attacks.
+      To re-enable the feature the system property "org.apache.commons.collections.enableUnsafeSerialization"
+      needs to be set to "true".
+      Classes considered to be unsafe are: CloneTransformer, ForClosure, InstantiateFactory,
+      InstantiateTransformer, InvokerTransformer, PrototypeCloneFactory,
+      PrototypeSerializationFactory, WhileClosure.
+    </action>
+    <action issue="COLLECTIONS-538" dev="tn" type="fix" due-to="Trejkaz">
+      "ExtendedProperties" will now use a privileged action to access the
+      "file.separator" system property. In case the class does not have
+      permission to read system properties, the "File#separator" field will
+      be used instead.
+    </action>
+    <action issue="COLLECTIONS-447" dev="tn" type="fix" due-to="Jeffrey Barnes">
+      Tree traversal with a TreeListIterator will not be affected anymore by
+      the removal of an element directly after a call to previous().
+    </action>
+    <action issue="COLLECTIONS-444" dev="tn" type="fix" due-to="Thomas Vahrst, John Vasileff">
+      SetUniqueList.set(int, Object) now works correctly if the object to be inserted
+      is already placed at the given position.
+    </action>
+    <action issue="COLLECTIONS-350" dev="bayard" type="fix" due-to="Michael Akerman">
+      Removed debug output in "MapUtils#getNumber(Map)".
+    </action>
+    <action issue="COLLECTIONS-335" dev="jochen" type="fix" due-to="sebb">
+      Fixed cache assignment for "TreeBidiMap#entrySet".
+    </action>
+    <action issue="COLLECTIONS-334" dev="jochen" type="fix" due-to="sebb">
+      Synchronized access to lock in "StaticBucketMap#size()".
+    </action>
+    <action issue="COLLECTIONS-307" dev="bayard" type="fix" due-to="Christian Semrau">
+      "SetUniqueList#subList()#contains(Object)" will now correctly check the subList
+      rather than the parent list.
+    </action>
+    <action issue="COLLECTIONS-304" dev="bayard" type="fix" due-to="Rafał Figas,Bjorn Townsend">
+      "SetUniqueList#set(int, Object)" will now correctly enforce the uniqueness constraint.
+    </action>
+    <action issue="COLLECTIONS-294" dev="bayard" type="fix" due-to="Benjamin Bentmann">
+      "CaseInsensitiveMap" will now convert input strings to lower-case in a
+      locale-independent manner.
+    </action>
+    <action issue="COLLECTIONS-266" dev="bayard" type="fix" due-to="Joerg Schaible">
+      "MultiKey" will now be correctly serialized/de-serialized.
+    </action>
+    <action issue="COLLECTIONS-261" dev="bayard" type="fix" due-to="ori">
+      "Flat3Map#remove(Object)" will now return the correct value mapped to the removed key
+      if the size of the map is less or equal 3.
+    </action>
+    <action issue="COLLECTIONS-249" dev="bayard" type="fix" due-to="Joe Kelly">
+      "SetUniqueList.addAll(int, Collection)" now correctly add the collection at the
+      provided index.
+    </action>
+    <action issue="COLLECTIONS-228" dev="scolebourne" type="fix">
+      "MultiValueMap#put(Object, Object)" and "MultiValueMap#putAll(Object, Collection)"
+      now correctly return if the map has changed by this operation.
+    </action>
+    <action issue="COLLECTIONS-219" dev="scolebourne" type="fix" due-to="Tom Leccese">
+      "CollectionUtils#removeAll" wrongly called "ListUtils#retainAll".
+    </action>
+    <action issue="COLLECTIONS-217" dev="scolebourne" type="fix" due-to="Matt Bishop">
+      Calling "setValue(Object)" on any Entry returned by a "Flat3Map" will now
+      correctly set the value for the current entry.
+    </action>
+  </release>
+  </body>
+</document>

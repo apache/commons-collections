@@ -1,0 +1,98 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<document>
+ <properties>
+  <title>Home</title>
+  <author email="dev@commons.apache.org">Commons Documentation Team</author>
+ </properties>
+<body>
+<!-- ================================================== -->
+<section name="Commons Collections">
+<p>
+The <a href="http://docs.oracle.com/javase/tutorial/collections/">Java Collections Framework</a>
+was a major addition in JDK 1.2.
+It added many powerful data structures that accelerate development of most significant Java applications.
+Since that time it has become the recognised standard for collection handling in Java.
+</p>
+<p>
+Commons-Collections seek to build upon the JDK classes by providing new interfaces, implementations and utilities.
+There are many features, including:
+<ul>
+<li>Bag interface for collections that have a number of copies of each object</li>
+<li>BidiMap interface for maps that can be looked up from value to key as well and key to value</li>
+<li>MapIterator interface to provide simple and quick iteration over maps</li>
+<li>Transforming decorators that alter each object as it is added to the collection</li>
+<li>Composite collections that make multiple collections look like one</li>
+<li>Ordered maps and sets that retain the order elements are added in, including an LRU based map</li>
+<li>Reference map that allows keys and/or values to be garbage collected under close control</li>
+<li>Many comparator implementations</li>
+<li>Many iterator implementations</li>
+<li>Adapter classes from array and enumerations to collections</li>
+<li>Utilities to test or create typical set-theory properties of collections such as union, intersection, and closure</li>
+</ul>
+</p>
+</section>
+<!-- ================================================== -->
+<section name="Documentation">
+<p>
+A getting started <a href="userguide.html">User's Guide</a> is available
+as are various <a href="project-reports.html">project reports</a>.
+</p>
+<p>
+The Javadoc API documents are available online:
+</p>
+<ul>
+<li>The <a href="javadocs/api-release/index.html">current release 4.2</a></li>
+<li>The latest 3.x release - <a href="javadocs/api-3.2.2/index.html">version 3.2.2</a></li>
+<li>The latest 2.x release - <a href="javadocs/api-2.1.1/index.html">version 2.1.1</a></li>
+<li>The <a href="apidocs/index.html">latest SVN</a></li>
+</ul>
+<p>
+The <a href="source-repository.html">git repository</a> can be
+<a href="https://git-wip-us.apache.org/repos/asf?p=commons-collections.git">browsed</a>, and we have a mirror
+ on <a href="https://github.com/apache/commons-collections">GitHub</a>.
+</p>
+</section>
+<!-- ================================================== -->
+<section name="Releases">
+<p>
+The latest version is 4.2 - 
+<a href="http://commons.apache.org/collections/download_collections.cgi">Download now!</a><br />
+It is built for Java 7 and later, and the <a href="release_4_2.html">release notes</a> are also available.
+</p>
+<p>
+For previous releases, see the <a href="http://archive.apache.org/dist/commons/collections/">Apache Archive</a>
+</p>
+</section>
+<!-- ================================================== -->
+<section name="Support">
+<p>
+The <a href="mail-lists.html">commons mailing lists</a> act as the main support forum.
+The user list is suitable for most library usage queries.
+The dev list is intended for the development discussion.
+Please remember that the lists are shared between all commons components,
+so prefix your email by [collections].
+</p>
+<p>
+Issues may be reported via <a href="issue-tracking.html">ASF JIRA</a>.
+Please read the instructions carefully to submit a useful bug report or enhancement request.
+</p>
+</section>
+<!-- ================================================== -->
+</body>
+</document>

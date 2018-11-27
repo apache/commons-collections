@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<document>
+
+ <properties>
+  <title>Compatibility</title>
+  <author email="dev@commons.apache.org">Commons Documentation Team</author>
+ </properties>
+
+ <body>
+
+<section name="Version compatibility of Commons Collections">
+
+<p>
+This page details the compatibility of different collections releases.
+</p>
+
+<p>
+There are two types of compatibility discussed here, source and binary.
+</p>
+<ul>
+<li>
+ Two versions are source compatible when application code can be compiled
+ against either version successfully. The compilation may result in deprecation warnings
+ but that is perfectly acceptable.
+ When code is source incompatible, it fails to compile, thus this type of incompatibility is easy to find.
+</li>
+<li>
+ Two versions are binary compatible when application code compiled against
+ one version will run using the other version without recompilation.
+ This is much more difficult to test for, and follows quite complicated rules from the
+ <a href="http://java.sun.com/docs/books/jls/second_edition/html/binaryComp.doc.html">Java language</a>.
+</li>
+</ul>
+<p>
+Releases of commons collections aim to be source and binary compatible within minor versions,
+and to avoid breakages as much as possible between major versions.
+</p>
+
+<p>
+Commons collections 3.0 is source compatible with version 2.1 and 2.0 with the exception
+of classes previously deprecated in 2.0/2.1 (which were removed in 3.0).
+</p>
+
+<p>
+Commons collections 3.0 is binary compatible with version 2.1 and 2.0
+<b>except for certain methods on one class</b>.
+As the release was a major version, this is permitted, however it was unintentional and an error.
+The problem is in the <b><code>IteratorUtils</code></b> class (see methods below).
+(Strictly speaking, there are some minor incompatibilities on other classes, but these
+changes were deliberate and have not caused any known issues.)
+</p>
+
+<p>
+It is not possible to make v2.1 and v3.0 compatible without further binary incompatibility.
+The chosen solution is to provide a work around by releasing v2.1.1 and v3.1.
+The following deprecations must be resolved in v2.1.1 to allow compatibility with v3.1.
+</p>
+<ul>
+<li>Deprecated <code>IteratorUtils.arrayIterator(...)</code> -
+     use <code>new ArrayIterator(...)</code> instead</li>
+<li>Deprecated <code>IteratorUtils.singletonIterator(...)</code> -
+     use <code>new SingletonIterator(...)</code> instead</li>
+<li>Deprecated <code>IteratorUtils.emptyIterator()</code> -
+     use <code>EmptyIterator.INSTANCE</code> instead</li>
+<li>Deprecated <code>IteratorUtils.emptyListIterator()</code> -
+     use <code>EmptyListIterator.INSTANCE</code> instead</li>
+<li>Deprecated <code>IteratorUtils.EMPTY_ITERATOR</code> -
+     use <code>EmptyIterator.INSTANCE</code> instead</li>
+<li>Deprecated <code>IteratorUtils.EMPTY_LIST_ITERATOR</code> -
+     use <code>EmptyIterator.INSTANCE</code> instead</li>
+</ul>
+
+<p>
+For the future, a new tool <a href="http://clirr.sourceforge.net">clirr</a> is being developed
+to help spot binary incompatibility before release.
+</p>
+
+</section>
+
+</body>
+</document>
