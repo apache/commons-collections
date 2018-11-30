@@ -24,6 +24,11 @@ import java.util.Map;
 
 public class ASCIIPrefixMapTest extends AbstractPrefixMapTests {
 
+    @Override
+    PrefixMap<String> createPrefixMap(boolean caseSensitive) {
+        return new ASCIIPrefixMap<>(caseSensitive);
+    }
+
     @Test
     public void testNonASCIIKey() {
         expectedEx.expect(IllegalArgumentException.class);

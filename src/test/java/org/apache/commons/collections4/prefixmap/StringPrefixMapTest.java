@@ -24,6 +24,11 @@ import java.util.Map;
 
 public class StringPrefixMapTest extends AbstractPrefixMapTests {
 
+    @Override
+    PrefixMap<String> createPrefixMap(boolean caseSensitive) {
+        return new StringPrefixMap<>(caseSensitive);
+    }
+
     @Test
     public void testCaseINSensitiveLookup(){
         Map<String, String> prefixMap = new HashMap<>();

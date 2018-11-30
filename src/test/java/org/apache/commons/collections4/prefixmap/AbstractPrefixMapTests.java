@@ -27,6 +27,8 @@ import static org.junit.Assert.assertEquals;
 
 public abstract class AbstractPrefixMapTests {
 
+    abstract PrefixMap<String> createPrefixMap(boolean caseSensitive);
+
     @Rule
     public final transient ExpectedException expectedEx = ExpectedException.none();
 
@@ -46,7 +48,7 @@ public abstract class AbstractPrefixMapTests {
     public void testNullPrefix() {
         expectedEx.expect(NullPointerException.class);
         expectedEx.expectMessage("The prefix may not be null");
-        PrefixMap<String> prefixLookup = new ASCIIPrefixMap<>(true);
+        PrefixMap<String> prefixLookup = createPrefixMap(true);
         prefixLookup.put(null, "Something");
     }
 
@@ -54,13 +56,14 @@ public abstract class AbstractPrefixMapTests {
     public void testNullValue() {
         expectedEx.expect(NullPointerException.class);
         expectedEx.expectMessage("The value may not be null");
-        PrefixMap<String> prefixLookup = new ASCIIPrefixMap<>(true);
+        PrefixMap<String> prefixLookup = createPrefixMap(true);
         prefixLookup.put("Something", null);
     }
 
     @Test
     public void testSize() {
-        PrefixMap<String> prefixLookup = new ASCIIPrefixMap<>(true);
+        PrefixMap<String> prefixLookup = createPrefixMap(true);
+
         assertEquals(0,         prefixLookup.size());
         assertEquals(null,      prefixLookup.put("One",     "One"));
         assertEquals(1,         prefixLookup.size());
@@ -90,7 +93,6 @@ public abstract class AbstractPrefixMapTests {
         assertEquals(3,         prefixLookup.size());
         assertEquals("Three",   prefixLookup.put("Three",   "333"));
         assertEquals(3,         prefixLookup.size());
-
     }
 
 }
