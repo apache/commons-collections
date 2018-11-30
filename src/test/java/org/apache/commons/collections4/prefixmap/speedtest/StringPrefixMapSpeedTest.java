@@ -19,11 +19,8 @@ package org.apache.commons.collections4.prefixmap.speedtest;
 
 import org.apache.commons.collections4.PrefixMap;
 import org.apache.commons.collections4.prefixmap.StringPrefixMap;
-import org.junit.Ignore;
 
 import java.util.Map;
-
-import static org.junit.Assert.assertEquals;
 
 public class StringPrefixMapSpeedTest extends AbstractPrefixMapSpeedTests {
 

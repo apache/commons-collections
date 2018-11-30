@@ -22,21 +22,7 @@ import org.junit.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
-
-public class StringPrefixMapTest {
-    
-    private void checkShortest(PrefixMap<String> prefixLookup, String prefix, String expected) {
-        assertEquals("Wrong 'ShortestMatch' result for '" + prefix + "'", expected, prefixLookup.getShortestMatch(prefix));
-    }
-
-    private void checkLongest(PrefixMap<String> prefixLookup, String prefix, String expected) {
-        assertEquals("Wrong 'LongestMatch' result for '" + prefix + "'", expected, prefixLookup.getLongestMatch(prefix));
-    }
-
-    private void checkContains(PrefixMap<String> prefixLookup, String prefix, boolean expected) {
-        assertEquals("Wrong 'Contains' result for '" + prefix + "'", expected, prefixLookup.containsPrefix(prefix));
-    }
+public class StringPrefixMapTest extends AbstractPrefixMapTests {
 
     @Test
     public void testCaseINSensitiveLookup(){
@@ -45,6 +31,7 @@ public class StringPrefixMapTest {
         prefixMap.put("ABCD",    "Result ABCD");
         // The ABCDE is missing !!!
         prefixMap.put("ABCDEF",  "Result ABCDEF");
+        prefixMap.put("你", "Hello in Chinese");
 
         PrefixMap<String> prefixLookup = new StringPrefixMap<>(false);
         prefixLookup.putAll(prefixMap);
@@ -53,6 +40,8 @@ public class StringPrefixMapTest {
         // Shortest Match
         checkShortest(prefixLookup, "MisMatch", null);
 
+        checkShortest(prefixLookup, "你好",     "Hello in Chinese");
+
         // Same case
         checkShortest(prefixLookup, "A",       null);
         checkShortest(prefixLookup, "AB",      null);
@@ -60,7 +49,7 @@ public class StringPrefixMapTest {
         checkShortest(prefixLookup, "ABCD",    "Result ABC");
         checkShortest(prefixLookup, "ABCDE",   "Result ABC");
         checkShortest(prefixLookup, "ABCDEF",  "Result ABC");
-        
+
         checkShortest(prefixLookup, "A-",      null);
         checkShortest(prefixLookup, "AB-",     null);
         checkShortest(prefixLookup, "ABC-",    "Result ABC");
@@ -70,6 +59,7 @@ public class StringPrefixMapTest {
         
         checkShortest(prefixLookup, "ABC\\t",  "Result ABC");
         checkShortest(prefixLookup, "ABC€",    "Result ABC");
+        checkShortest(prefixLookup, "ABCD€",   "Result ABC");
 
         // Different case
         checkShortest(prefixLookup, "a",       null);
@@ -88,10 +78,13 @@ public class StringPrefixMapTest {
 
         checkShortest(prefixLookup, "abc\\t",  "Result ABC");
         checkShortest(prefixLookup, "abc€",    "Result ABC");
+        checkShortest(prefixLookup, "abcd€",   "Result ABC");
 
         // ----------------------------------------------------
         // Longest Match
         checkLongest(prefixLookup, "MisMatch", null);
+
+        checkLongest(prefixLookup, "你好",     "Hello in Chinese");
 
         // Same case
         checkLongest(prefixLookup, "A",       null);
@@ -110,6 +103,7 @@ public class StringPrefixMapTest {
 
         checkLongest(prefixLookup, "ABC\\t",  "Result ABC");
         checkLongest(prefixLookup, "ABC€",    "Result ABC");
+        checkLongest(prefixLookup, "ABCD€",   "Result ABCD");
 
         // Different case
         checkLongest(prefixLookup, "a",       null);
@@ -128,9 +122,14 @@ public class StringPrefixMapTest {
 
         checkLongest(prefixLookup, "abc\\t",  "Result ABC");
         checkLongest(prefixLookup, "abc€",    "Result ABC");
+        checkLongest(prefixLookup, "abcd€",   "Result ABCD");
+
         // ----------------------------------------------------
         // Contains
         checkContains(prefixLookup, "MisMatch", false);
+
+        checkContains(prefixLookup, "你",      true);
+        checkContains(prefixLookup, "你好",    false);
 
         // Same case
         checkContains(prefixLookup, "A",       false);
@@ -149,6 +148,7 @@ public class StringPrefixMapTest {
 
         checkContains(prefixLookup, "ABC\\t",  false);
         checkContains(prefixLookup, "ABC€",    false);
+        checkContains(prefixLookup, "ABCD€",   false);
 
         // Different case
         checkContains(prefixLookup, "a",       false);
@@ -167,6 +167,7 @@ public class StringPrefixMapTest {
 
         checkContains(prefixLookup, "abc\\t",  false);
         checkContains(prefixLookup, "abc€",    false);
+        checkContains(prefixLookup, "abcd€",   false);
     }
 
     @Test
@@ -176,6 +177,7 @@ public class StringPrefixMapTest {
         prefixMap.put("ABCD",    "Result ABCD");
         // The ABCDE is missing !!!
         prefixMap.put("ABCDEF",  "Result ABCDEF");
+        prefixMap.put("你", "Hello in Chinese");
 
         PrefixMap<String> prefixLookup = new StringPrefixMap<>(true);
         prefixLookup.putAll(prefixMap);
@@ -183,6 +185,8 @@ public class StringPrefixMapTest {
         // ----------------------------------------------------
         // Shortest Match
         checkShortest(prefixLookup, "MisMatch", null);
+
+        checkLongest(prefixLookup, "你好",     "Hello in Chinese");
 
         // Same case
         checkShortest(prefixLookup, "A",       null);
@@ -224,6 +228,8 @@ public class StringPrefixMapTest {
         // Longest Match
         checkLongest(prefixLookup, "MisMatch", null);
 
+        checkLongest(prefixLookup, "你好",     "Hello in Chinese");
+
         // Same case
         checkLongest(prefixLookup, "A",       null);
         checkLongest(prefixLookup, "AB",      null);
@@ -263,6 +269,9 @@ public class StringPrefixMapTest {
         // ----------------------------------------------------
         // Contains
         checkContains(prefixLookup, "MisMatch", false);
+
+        checkContains(prefixLookup, "你",      true);
+        checkContains(prefixLookup, "你好",    false);
 
         // Same case
         checkContains(prefixLookup, "A",       false);

@@ -183,6 +183,7 @@ public class ASCIIPrefixMap<V extends Serializable> implements PrefixMap<V>, Ser
     @Override
     public void clear() {
         prefixPrefixTrie.clear();
+        size = 0;
     }
 
     @Override

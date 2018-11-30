@@ -166,6 +166,7 @@ public class StringPrefixMap<V extends Serializable> implements PrefixMap<V>, Se
     @Override
     public void clear() {
         prefixPrefixTrie.clear();
+        size = 0;
     }
 
     @Override
