@@ -48,7 +48,8 @@ import org.apache.commons.collections4.set.UnmodifiableSortedSet;
 public class SetUtils {
 
     /**
-     * Create an unmodifiable set from the given items.
+     * Create an unmodifiable set from the given items. If the passed var-args argument is {@code
+     * null}, then the method returns {@code null}.
      * @param <E> the element type
      * @return a set
      */
