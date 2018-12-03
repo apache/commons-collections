@@ -17,6 +17,7 @@
 package org.apache.commons.collections4;
 
 import java.util.AbstractSet;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -46,6 +47,20 @@ import org.apache.commons.collections4.set.UnmodifiableSortedSet;
  */
 public class SetUtils {
 
+    /**
+     * Create an unmodifiable set from the given items.
+     * @param <E> the element type
+     * @return a set
+     */
+    public static <E> Set<E> asSet(final E... items) {
+        if (items == null) {
+            return null;
+        }
+        else {
+            return Collections.unmodifiableSet(new HashSet<>(Arrays.asList(items)));
+        }
+    }
+    
     /**
      * Get a typed empty unmodifiable Set.
      * @param <E> the element type
