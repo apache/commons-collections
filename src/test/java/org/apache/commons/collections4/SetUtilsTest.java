@@ -24,6 +24,7 @@ import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -284,7 +285,7 @@ public class SetUtilsTest {
     {
         Set<Integer> set1 = SetUtils.unmodifiableSet(1, 2, 2, 3);
         Set<Integer> set2 = SetUtils.unmodifiableSet(set1);
-        assertEquals(set1, set2);
+        assertSame(set1, set2);
     }
 
     @Test
