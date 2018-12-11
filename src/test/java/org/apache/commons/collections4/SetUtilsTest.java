@@ -41,6 +41,94 @@ public class SetUtilsTest {
     private Set<Integer> setA;
     private Set<Integer> setB;
 
+    @Test
+    public void difference() {
+        final SetView<Integer> set = SetUtils.difference(setA, setB);
+        assertEquals(2, set.size());
+        assertTrue(set.contains(1));
+        assertTrue(set.contains(2));
+        for (final Integer i : setB) {
+            assertFalse(set.contains(i));
+        }
+
+        final Set<Integer> set2 = SetUtils.difference(setA, SetUtils.<Integer>emptySet());
+        assertEquals(setA, set2);
+
+        try {
+            SetUtils.difference(setA, null);
+            fail("Expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+            // expected
+        }
+
+        try {
+            SetUtils.difference(null, setA);
+            fail("Expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+            // expected
+        }
+    }
+
+    @Test
+    public void disjunction() {
+        final SetView<Integer> set = SetUtils.disjunction(setA, setB);
+        assertEquals(4, set.size());
+        assertTrue(set.contains(1));
+        assertTrue(set.contains(2));
+        assertTrue(set.contains(6));
+        assertTrue(set.contains(7));
+        assertFalse(set.contains(3));
+        assertFalse(set.contains(4));
+        assertFalse(set.contains(5));
+
+        final Set<Integer> set2 = SetUtils.disjunction(setA, SetUtils.<Integer>emptySet());
+        assertEquals(setA, set2);
+
+        try {
+            SetUtils.disjunction(setA, null);
+            fail("Expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+            // expected
+        }
+
+        try {
+            SetUtils.disjunction(null, setA);
+            fail("Expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+            // expected
+        }
+    }
+    
+    @Test
+    public void intersection() {
+        final SetView<Integer> set = SetUtils.intersection(setA, setB);
+        assertEquals(3, set.size());
+        assertTrue(set.contains(3));
+        assertTrue(set.contains(4));
+        assertTrue(set.contains(5));
+        assertFalse(set.contains(1));
+        assertFalse(set.contains(2));
+        assertFalse(set.contains(6));
+        assertFalse(set.contains(7));
+
+        final Set<Integer> set2 = SetUtils.intersection(setA, SetUtils.<Integer>emptySet());
+        assertEquals(SetUtils.<Integer>emptySet(), set2);
+
+        try {
+            SetUtils.intersection(setA, null);
+            fail("Expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+            // expected
+        }
+
+        try {
+            SetUtils.intersection(null, setA);
+            fail("Expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+            // expected
+        }
+    }
+    
     @Before
     public void setUp() {
         setA = new HashSet<>();
@@ -57,83 +145,7 @@ public class SetUtilsTest {
         setB.add(6);
         setB.add(7);
     }
-
-    @Test
-    public void testUnmodifiableSet()
-    {
-        Set<?> set1 = SetUtils.unmodifiableSet();
-        assertTrue("set is empty", set1.isEmpty());
-        
-        Set<Integer> set2 = SetUtils.unmodifiableSet(1, 2, 2, 3);
-        assertEquals("set has 3 elements", 3, set2.size());
-        assertTrue("set contains 1", set2.contains(1));
-        assertTrue("set contains 2", set2.contains(2));
-        assertTrue("set contains 3", set2.contains(3));
-        
-        Set<String> set3 = SetUtils.unmodifiableSet("1", "2", "2", "3");
-        assertEquals("set has 3 elements", 3, set3.size());
-        assertTrue("set contains 1", set3.contains("1"));
-        assertTrue("set contains 2", set3.contains("2"));
-        assertTrue("set contains 3", set3.contains("3"));
-        
-        Set<?> set4 = SetUtils.unmodifiableSet(null, null);
-        assertEquals("set has 1 element", 1, set4.size());
-        assertTrue("set contains null", set4.contains(null));
-        
-        Set<?> set5 = SetUtils.unmodifiableSet((Object[]) null);
-        assertEquals("set is null", null, set5);
-    }
     
-    @Test
-    public void testHashSet()
-    {
-        Set<?> set1 = SetUtils.unmodifiableSet();
-        assertTrue("set is empty", set1.isEmpty());
-        
-        Set<Integer> set2 = SetUtils.hashSet(1, 2, 2, 3);
-        assertEquals("set has 3 elements", 3, set2.size());
-        assertTrue("set contains 1", set2.contains(1));
-        assertTrue("set contains 2", set2.contains(2));
-        assertTrue("set contains 3", set2.contains(3));
-        
-        Set<String> set3 = SetUtils.hashSet("1", "2", "2", "3");
-        assertEquals("set has 3 elements", 3, set3.size());
-        assertTrue("set contains 1", set3.contains("1"));
-        assertTrue("set contains 2", set3.contains("2"));
-        assertTrue("set contains 3", set3.contains("3"));
-        
-        Set<?> set4 = SetUtils.hashSet(null, null);
-        assertEquals("set has 1 element", 1, set4.size());
-        assertTrue("set contains null", set4.contains(null));
-        
-        Set<?> set5 = SetUtils.hashSet((Object[]) null);
-        assertEquals("set is null", null, set5);
-    }
-    
-    @Test
-    public void testpredicatedSet() {
-        final Predicate<Object> predicate = new Predicate<Object>() {
-            @Override
-            public boolean evaluate(final Object o) {
-                return o instanceof String;
-            }
-        };
-        final Set<Object> set = SetUtils.predicatedSet(new HashSet<>(), predicate);
-        assertTrue("returned object should be a PredicatedSet", set instanceof PredicatedSet);
-        try {
-            SetUtils.predicatedSet(new HashSet<>(), null);
-            fail("Expecting NullPointerException for null predicate.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
-        try {
-            SetUtils.predicatedSet(null, predicate);
-            fail("Expecting NullPointerException for null set.");
-        } catch (final NullPointerException ex) {
-            // expected
-        }
-    }
-
     @Test
     public void testEmptyIfNull() {
         assertTrue(SetUtils.emptyIfNull(null).isEmpty());
@@ -175,6 +187,32 @@ public class SetUtilsTest {
     }
 
     @Test
+    public void testHashSet()
+    {
+        Set<?> set1 = SetUtils.unmodifiableSet();
+        assertTrue("set is empty", set1.isEmpty());
+        
+        Set<Integer> set2 = SetUtils.hashSet(1, 2, 2, 3);
+        assertEquals("set has 3 elements", 3, set2.size());
+        assertTrue("set contains 1", set2.contains(1));
+        assertTrue("set contains 2", set2.contains(2));
+        assertTrue("set contains 3", set2.contains(3));
+        
+        Set<String> set3 = SetUtils.hashSet("1", "2", "2", "3");
+        assertEquals("set has 3 elements", 3, set3.size());
+        assertTrue("set contains 1", set3.contains("1"));
+        assertTrue("set contains 2", set3.contains("2"));
+        assertTrue("set contains 3", set3.contains("3"));
+        
+        Set<?> set4 = SetUtils.hashSet(null, null);
+        assertEquals("set has 1 element", 1, set4.size());
+        assertTrue("set contains null", set4.contains(null));
+        
+        Set<?> set5 = SetUtils.hashSet((Object[]) null);
+        assertEquals("set is null", null, set5);
+    }
+
+    @Test
     public void testNewIdentityHashSet() {
         final Set<String> set = SetUtils.newIdentityHashSet();
         final String a = new String("a");
@@ -189,6 +227,64 @@ public class SetUtilsTest {
 
         set.remove(a);
         assertEquals(2, set.size());
+    }
+
+    @Test
+    public void testpredicatedSet() {
+        final Predicate<Object> predicate = new Predicate<Object>() {
+            @Override
+            public boolean evaluate(final Object o) {
+                return o instanceof String;
+            }
+        };
+        final Set<Object> set = SetUtils.predicatedSet(new HashSet<>(), predicate);
+        assertTrue("returned object should be a PredicatedSet", set instanceof PredicatedSet);
+        try {
+            SetUtils.predicatedSet(new HashSet<>(), null);
+            fail("Expecting NullPointerException for null predicate.");
+        } catch (final NullPointerException ex) {
+            // expected
+        }
+        try {
+            SetUtils.predicatedSet(null, predicate);
+            fail("Expecting NullPointerException for null set.");
+        } catch (final NullPointerException ex) {
+            // expected
+        }
+    }
+
+    @Test
+    public void testUnmodifiableSet()
+    {
+        Set<?> set1 = SetUtils.unmodifiableSet();
+        assertTrue("set is empty", set1.isEmpty());
+        
+        Set<Integer> set2 = SetUtils.unmodifiableSet(1, 2, 2, 3);
+        assertEquals("set has 3 elements", 3, set2.size());
+        assertTrue("set contains 1", set2.contains(1));
+        assertTrue("set contains 2", set2.contains(2));
+        assertTrue("set contains 3", set2.contains(3));
+        
+        Set<String> set3 = SetUtils.unmodifiableSet("1", "2", "2", "3");
+        assertEquals("set has 3 elements", 3, set3.size());
+        assertTrue("set contains 1", set3.contains("1"));
+        assertTrue("set contains 2", set3.contains("2"));
+        assertTrue("set contains 3", set3.contains("3"));
+        
+        Set<?> set4 = SetUtils.unmodifiableSet(null, null);
+        assertEquals("set has 1 element", 1, set4.size());
+        assertTrue("set contains null", set4.contains(null));
+        
+        Set<?> set5 = SetUtils.unmodifiableSet((Object[]) null);
+        assertEquals("set is null", null, set5);
+    }
+
+    @Test
+    public void testUnmodifiableSetWrap()
+    {
+        Set<Integer> set1 = SetUtils.unmodifiableSet(1, 2, 2, 3);
+        Set<Integer> set2 = SetUtils.unmodifiableSet(set1);
+        assertEquals(set1, set2);
     }
 
     @Test
@@ -210,94 +306,6 @@ public class SetUtilsTest {
 
         try {
             SetUtils.union(null, setA);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
-    }
-
-    @Test
-    public void difference() {
-        final SetView<Integer> set = SetUtils.difference(setA, setB);
-        assertEquals(2, set.size());
-        assertTrue(set.contains(1));
-        assertTrue(set.contains(2));
-        for (final Integer i : setB) {
-            assertFalse(set.contains(i));
-        }
-
-        final Set<Integer> set2 = SetUtils.difference(setA, SetUtils.<Integer>emptySet());
-        assertEquals(setA, set2);
-
-        try {
-            SetUtils.difference(setA, null);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
-
-        try {
-            SetUtils.difference(null, setA);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
-    }
-
-    @Test
-    public void intersection() {
-        final SetView<Integer> set = SetUtils.intersection(setA, setB);
-        assertEquals(3, set.size());
-        assertTrue(set.contains(3));
-        assertTrue(set.contains(4));
-        assertTrue(set.contains(5));
-        assertFalse(set.contains(1));
-        assertFalse(set.contains(2));
-        assertFalse(set.contains(6));
-        assertFalse(set.contains(7));
-
-        final Set<Integer> set2 = SetUtils.intersection(setA, SetUtils.<Integer>emptySet());
-        assertEquals(SetUtils.<Integer>emptySet(), set2);
-
-        try {
-            SetUtils.intersection(setA, null);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
-
-        try {
-            SetUtils.intersection(null, setA);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
-    }
-
-    @Test
-    public void disjunction() {
-        final SetView<Integer> set = SetUtils.disjunction(setA, setB);
-        assertEquals(4, set.size());
-        assertTrue(set.contains(1));
-        assertTrue(set.contains(2));
-        assertTrue(set.contains(6));
-        assertTrue(set.contains(7));
-        assertFalse(set.contains(3));
-        assertFalse(set.contains(4));
-        assertFalse(set.contains(5));
-
-        final Set<Integer> set2 = SetUtils.disjunction(setA, SetUtils.<Integer>emptySet());
-        assertEquals(setA, set2);
-
-        try {
-            SetUtils.disjunction(setA, null);
-            fail("Expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
-
-        try {
-            SetUtils.disjunction(null, setA);
             fail("Expecting NullPointerException");
         } catch (final NullPointerException npe) {
             // expected
