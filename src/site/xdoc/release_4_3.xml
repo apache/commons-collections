@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<document>
+ <properties>
+  <title>Release notes for v4.3</title>
+  <author email="dev@commons.apache.org">Commons Documentation Team</author>
+ </properties>
+<body>
+
+<section name="Release notes for version 4.3">
+<hr />
+<p>
+Apache Commons Collections is a project to develop and maintain collection
+classes based on and inspired by the JDK collection framework.
+</p>
+<p>
+This 4.3 release is a minor and updates the platform requirement from Java 7 to 8.
+This release fixes several bugs present in previous releases of the 4.X branch.
+</p>
+<p>
+All users are strongly encouraged to updated to this release.
+</p>
+
+<h3>Compatibility</h3>
+<ul>
+ <li>Java 8 or later is now required (version 4.2 required Java 7)</li>
+ <li>This release is source and binary compatible with the 4.0 release
+     of Commons Collections with the exception that some classes in the functor
+     package do not implement the Serializable interface anymore (see COLLECTIONS-580)</li>
+</ul>
+
+<center><h3>Major changes since 4.2</h3></center>
+<ul>
+<li>Updates the platform requirement from Java 7 to 8</li>
+<li>Add Automatic-Module-Name MANIFEST entry for Java 9 compatibility</li>
+<li>Added a few new APIs.</li>
+</ul>
+
+<h3>Security Changes</h3>
+<p>
+None.
+</p>
+
+<p>
+For a full list of changes in this release, refer to the <a href="changes-report.html#a4.3">Change report</a>.
+</p>
+</section>
+
+</body>
+</document>
+
