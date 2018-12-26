@@ -512,7 +512,7 @@
     <commons.jira.id>COLLECTIONS</commons.jira.id>
     <commons.jira.pid>12310465</commons.jira.pid>
     <!-- The RC version used in the staging repository URL. -->
-    <commons.rc.version>RC1</commons.rc.version>
+    <commons.rc.version>RC2</commons.rc.version>
     <checkstyle.version>3.0.0</checkstyle.version>
 
     <commons.site.path>collections</commons.site.path>
@@ -523,10 +523,10 @@
     <commons.clirr.version>2.8</commons.clirr.version>
     
     <!--Commons Release Plugin -->
-    <commons.bc.version>4.1</commons.bc.version>
+    <commons.bc.version>4.2</commons.bc.version>
     <commons.release.isDistModule>true</commons.release.isDistModule>
-    <commons.releaseManagerName>Gary Gregory</commons.releaseManagerName>
-    <commons.releaseManagerKey>86FDC7E2A11262CB</commons.releaseManagerKey>
+    <commons.releaseManagerName>Maxim Solodovnik</commons.releaseManagerName>
+    <commons.releaseManagerKey>C467526E</commons.releaseManagerKey>
     
   </properties>
 
