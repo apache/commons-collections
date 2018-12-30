@@ -16,7 +16,6 @@
  */
 package org.apache.commons.collections4.list;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
