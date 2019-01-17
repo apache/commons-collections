@@ -463,6 +463,22 @@ public abstract class AbstractMultiSetTest<T> extends AbstractCollectionTest<T> 
     }
 
     @SuppressWarnings("unchecked")
+    public void testMultiSetEntrySetUpdatedToZero() {
+        if (!isAddSupported()) {
+            return;
+        }
+        final MultiSet<T> multiset = makeObject();
+        multiset.add((T) "A");
+        multiset.add((T) "A");
+        final MultiSet.Entry<T> entry = multiset.entrySet().iterator().next();
+        assertEquals(2, entry.getCount());
+        multiset.remove((T) "A");
+        assertEquals(1, entry.getCount());
+        multiset.remove((T) "A");
+        assertEquals(0, entry.getCount());
+    }
+
+    @SuppressWarnings("unchecked")
     public void testMultiSetToArray() {
         if (!isAddSupported()) {
             return;
