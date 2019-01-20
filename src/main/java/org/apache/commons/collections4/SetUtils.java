@@ -97,7 +97,7 @@ public class SetUtils {
             return set;
         }
     }
-    
+
     /**
      * An empty unmodifiable sorted set.
      * This is not provided in the JDK.
