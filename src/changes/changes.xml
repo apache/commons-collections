@@ -45,6 +45,9 @@
     <action issue="COLLECTIONS-706" dev="ggregory" type="fix" due-to="Richard Eckart de Castilho, Gary Gregory">
       Add SetUtils.unmodifiableSet(T... items) method.
     </action>
+    <action issue="COLLECTIONS-709" dev="ggregory" type="fix" due-to="Robert Wertman">
+      MultiSet.Entry::getCount() isn't 0 after removing the last element.
+    </action>
   </release>
   <release version="4.2" date="2018-07-11" description="Update from Java 6 to Java 7, bug fixes, and small changes.">
     <action issue="COLLECTIONS-681" dev="kinow" type="add" due-to="Stephan Fuhrmann">
