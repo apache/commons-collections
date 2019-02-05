@@ -1,3 +1,35 @@
+              Apache Apache Commons Collections 4.3 RELEASE NOTES
+
+The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.
+
+Update from Java 7 to Java 8, bug fixes, and small changes.
+
+Changes in this version include:
+
+New features:
+o COLLECTIONS-696:  AbstractReferenceMap made easier for subclassing; PR #51. Thanks to Maxim Solodovnik.
+
+Fixed Bugs:
+o COLLECTIONS-691:  Use boolean operator for boolean result. Thanks to Eitan Adler.
+o COLLECTIONS-701:  StackOverflowError in SetUniqueList.add() when it receives itself. Thanks to Shin Hong, Don Jeba.
+o COLLECTIONS-703:  The PassiveExpiringMap#put() method should return the previous record only if not expired. Thanks to Tomas Tulka.
+o COLLECTIONS-706:  Add SetUtils.unmodifiableSet(T... items) method. Thanks to Richard Eckart de Castilho, Gary Gregory.
+
+Changes:
+o COLLECTIONS-688:  Update platform requirement from Java 7 to 8.
+o COLLECTIONS-689:  Link to Javadoc API broken. Thanks to Richard Walker.
+o COLLECTIONS-692:  Replace use of deprecated Class#newInstance() PR #49. Thanks to Gary Gregory, Eitan Adler.
+
+
+For complete information on Apache Commons Collections, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Apache Commons Collections website:
+
+http://commons.apache.org/proper/commons-collections/
+
+Download page: http://commons.apache.org/proper/commons-collections/download_pool.cgi
+
+===============================================================================
+
               Apache Apache Commons Collections 4.2 RELEASE NOTES
 
 The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.
