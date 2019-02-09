@@ -252,6 +252,9 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      */
     @Override
     public boolean containsAll(final Collection<?> coll) {
+        if (coll == null) {
+            return false;
+        }
         for (final Object item : coll) {
             if (contains(item) == false) {
                 return false;
@@ -291,7 +294,7 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      */
     @Override
     public boolean removeAll(final Collection<?> coll) {
-        if (coll.size() == 0) {
+        if (CollectionUtils.isEmpty(coll)) {
             return false;
         }
         boolean changed = false;
@@ -354,21 +357,23 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * @see SetMutator
      */
     public synchronized void addComposited(final Set<E> set) {
-        for (final Set<E> existingSet : getSets()) {
-            final Collection<E> intersects = CollectionUtils.intersection(existingSet, set);
-            if (intersects.size() > 0) {
-                if (this.mutator == null) {
-                    throw new UnsupportedOperationException(
-                        "Collision adding composited set with no SetMutator set");
-                }
-                getMutator().resolveCollision(this, existingSet, set, intersects);
-                if (CollectionUtils.intersection(existingSet, set).size() > 0) {
-                    throw new IllegalArgumentException(
-                        "Attempt to add illegal entry unresolved by SetMutator.resolveCollision()");
+        if (set != null) {
+            for (final Set<E> existingSet : getSets()) {
+                final Collection<E> intersects = CollectionUtils.intersection(existingSet, set);
+                if (intersects.size() > 0) {
+                    if (this.mutator == null) {
+                        throw new UnsupportedOperationException(
+                                "Collision adding composited set with no SetMutator set");
+                    }
+                    getMutator().resolveCollision(this, existingSet, set, intersects);
+                    if (CollectionUtils.intersection(existingSet, set).size() > 0) {
+                        throw new IllegalArgumentException(
+                                "Attempt to add illegal entry unresolved by SetMutator.resolveCollision()");
+                    }
                 }
             }
+            all.add(set);
         }
-        all.add(set);
     }
 
     /**
@@ -388,8 +393,10 @@ public class CompositeSet<E> implements Set<E>, Serializable {
      * @param sets  the Sets to be appended to the composite
      */
     public void addComposited(final Set<E>... sets) {
-        for (final Set<E> set : sets) {
-            addComposited(set);
+        if (sets != null) {
+            for (final Set<E> set : sets) {
+                addComposited(set);
+            }
         }
     }
 

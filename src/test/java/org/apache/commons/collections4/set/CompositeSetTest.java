@@ -65,6 +65,18 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
     }
 
     @SuppressWarnings("unchecked")
+    public void testContainsAll() {
+        final CompositeSet<E> set = new CompositeSet<>(new Set[]{ buildOne(), buildTwo() });
+        assertFalse(set.containsAll(null));
+    }
+
+    @SuppressWarnings("unchecked")
+    public void testRemoveAll() {
+        final CompositeSet<E> set = new CompositeSet<>(new Set[]{ buildOne(), buildTwo() });
+        assertFalse(set.removeAll(null));
+    }
+
+    @SuppressWarnings("unchecked")
     public void testRemoveUnderlying() {
         final Set<E> one = buildOne();
         final Set<E> two = buildTwo();
@@ -132,6 +144,10 @@ public class CompositeSetTest<E> extends AbstractSetTest<E> {
         final Set<E> two = buildTwo();
         final CompositeSet<E> set = new CompositeSet<>();
         set.addComposited(one, two);
+        set.addComposited((Set<E>) null);
+        set.addComposited((Set<E>[]) null);
+        set.addComposited(null, null);
+        set.addComposited(null, null, null);
         final CompositeSet<E> set2 = new CompositeSet<>(buildOne());
         set2.addComposited(buildTwo());
         assertTrue(set.equals(set2));
