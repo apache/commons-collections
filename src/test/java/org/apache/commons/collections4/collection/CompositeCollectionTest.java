@@ -23,6 +23,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
+import org.junit.Assert;
+
 /**
  * Extension of {@link AbstractCollectionTest} for exercising the
  * {@link CompositeCollection} implementation.
@@ -246,8 +248,30 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         two.add((E) "1");
         c.addComposited(one);
         assertTrue(c.containsAll(two));
+        assertFalse(c.containsAll(null));
     }
 
+    public void testAddNullList() {
+        ArrayList<String> nullList = null;
+        CompositeCollection<String> cc = new CompositeCollection<>();
+        cc.addComposited(nullList);
+        Assert.assertEquals(0, cc.size());
+    }
+    
+    public void testAddNullLists2Args() {
+        ArrayList<String> nullList = null;
+        CompositeCollection<String> cc = new CompositeCollection<>();
+        cc.addComposited(nullList, nullList);
+        Assert.assertEquals(0, cc.size());
+    }
+    
+    public void testAddNullListsVarArgs() {
+        ArrayList<String> nullList = null;
+        CompositeCollection<String> cc = new CompositeCollection<>();
+        cc.addComposited(nullList, nullList, nullList);
+        Assert.assertEquals(0, cc.size());
+    }
+    
     @SuppressWarnings("unchecked")
     public void testIsEmpty() {
         setUpTest();
@@ -315,6 +339,10 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         assertTrue(!c.contains("1"));
         assertTrue(!one.contains("1"));
         assertTrue(!two.contains("1"));
+        c.removeAll(null);
+        assertTrue(!c.contains("1"));
+        assertTrue(!one.contains("1"));
+        assertTrue(!two.contains("1"));
     }
 
     @SuppressWarnings("unchecked")
@@ -337,6 +365,11 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         two.add((E) "1");
         c.addComposited(one);
         c.retainAll(two);
+        assertTrue(!c.contains("2"));
+        assertTrue(!one.contains("2"));
+        assertTrue(c.contains("1"));
+        assertTrue(one.contains("1"));
+        c.retainAll(null);
         assertTrue(!c.contains("2"));
         assertTrue(!one.contains("2"));
         assertTrue(c.contains("1"));
