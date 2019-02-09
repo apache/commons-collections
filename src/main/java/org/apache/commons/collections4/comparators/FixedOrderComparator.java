@@ -257,7 +257,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
     @Override
     public int hashCode() {
         int total = 17;
-        total = total*37 + (map == null ? 0 : map.hashCode());
+        total = total*37 + map.hashCode();
         total = total*37 + (unknownObjectBehavior == null ? 0 : unknownObjectBehavior.hashCode());
         total = total*37 + counter;
         total = total*37 + (isLocked ? 0 : 1);
