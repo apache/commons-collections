@@ -378,7 +378,6 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
             final V oldValue = parent.put(last.getKey(), value);
             // Map.Entry specifies that the behavior is undefined when the backing map
             // has been modified (as we did with the put), so we also set the value
-            // (especially needed for IBM JDK)
             last.setValue(value);
             return oldValue;
         }

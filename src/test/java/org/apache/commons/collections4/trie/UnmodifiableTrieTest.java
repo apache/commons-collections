@@ -92,14 +92,6 @@ public class UnmodifiableTrieTest<V> extends AbstractSortedMapTest<String, V> {
      */
     @Override
     public String[] ignoredTests() {
-        if (IBMJDK16) {
-            final String prefix = "UnmodifiableTrieTest.";
-            return new String[] {
-                    prefix + "bulkTestHeadMap.bulkTestMapEntrySet.testCollectionToArray2",
-                    prefix + "bulkTestTailMap.bulkTestMapEntrySet.testCollectionToArray2",
-                    prefix + "bulkTestSubMap.bulkTestMapEntrySet.testCollectionToArray2"
-            };
-        }
         return null;
     }
 
