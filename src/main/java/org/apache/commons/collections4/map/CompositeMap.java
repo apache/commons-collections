@@ -132,19 +132,21 @@ public class CompositeMap<K, V> extends AbstractIterableMap<K, V> implements Ser
      */
     @SuppressWarnings("unchecked")
     public synchronized void addComposited(final Map<K, V> map) throws IllegalArgumentException {
-        for (int i = composite.length - 1; i >= 0; --i) {
-            final Collection<K> intersect = CollectionUtils.intersection(this.composite[i].keySet(), map.keySet());
-            if (intersect.size() != 0) {
-                if (this.mutator == null) {
-                    throw new IllegalArgumentException("Key collision adding Map to CompositeMap");
+        if (map != null) {
+            for (int i = composite.length - 1; i >= 0; --i) {
+                final Collection<K> intersect = CollectionUtils.intersection(this.composite[i].keySet(), map.keySet());
+                if (intersect.size() != 0) {
+                    if (this.mutator == null) {
+                        throw new IllegalArgumentException("Key collision adding Map to CompositeMap");
+                    }
+                    this.mutator.resolveCollision(this, this.composite[i], map, intersect);
                 }
-                this.mutator.resolveCollision(this, this.composite[i], map, intersect);
             }
+            final Map<K, V>[] temp = new Map[this.composite.length + 1];
+            System.arraycopy(this.composite, 0, temp, 0, this.composite.length);
+            temp[temp.length - 1] = map;
+            this.composite = temp;
         }
-        final Map<K, V>[] temp = new Map[this.composite.length + 1];
-        System.arraycopy(this.composite, 0, temp, 0, this.composite.length);
-        temp[temp.length - 1] = map;
-        this.composite = temp;
     }
 
     /**

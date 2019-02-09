@@ -75,6 +75,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
         final HashMap<K, V> three = new HashMap<>();
         three.put((K) "5", (V) "five");
+        map.addComposited(null);
         map.addComposited(three);
         assertTrue(map.containsKey("5"));
         try {
@@ -90,6 +91,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
         final HashMap<K, V> three = new HashMap<>();
         three.put((K) "5", (V) "five");
+        map.addComposited(null);
         map.addComposited(three);
         assertTrue(map.containsKey("5"));
 
@@ -106,6 +108,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
         final HashMap<K, V> three = new HashMap<>();
         three.put((K) "5", (V) "five");
+        map.addComposited(null);
         map.addComposited(three);
         assertTrue(map.containsKey("5"));
 
@@ -119,6 +122,7 @@ public class CompositeMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final CompositeMap<K, V> map = new CompositeMap<>(buildOne(), buildTwo());
         final HashMap<K, V> three = new HashMap<>();
         three.put((K) "5", (V) "five");
+        map.addComposited(null);
         map.addComposited(three);
         assertTrue(map.containsKey("5"));
 
