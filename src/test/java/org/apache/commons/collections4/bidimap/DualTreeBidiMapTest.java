@@ -48,24 +48,6 @@ public class DualTreeBidiMapTest<K extends Comparable<K>, V extends Comparable<V
     @Override
     public String[] ignoredTests() {
         final String recursiveTest = "DualTreeBidiMapTest.bulkTestInverseMap.bulkTestInverseMap";
-
-        if (IBMJDK16) {
-            final String preSub = "DualTreeBidiMapTest.bulkTestSubMap.";
-            final String preTail = "DualTreeBidiMapTest.bulkTestTailMap.";
-            return new String[] {
-                    recursiveTest,
-                    preSub + "bulkTestMapEntrySet.testCollectionIteratorRemove",
-                    preSub + "bulkTestMapValues.testCollectionIteratorRemove",
-                    preTail + "testMapRemove",
-                    preTail + "bulkTestMapEntrySet.testCollectionIteratorRemove",
-                    preTail + "bulkTestMapEntrySet.testCollectionRemoveAll",
-                    preTail + "bulkTestMapKeySet.testCollectionIteratorRemove",
-                    preTail + "bulkTestMapKeySet.testCollectionRemoveAll",
-                    preTail + "bulkTestMapValues.testCollectionClear",
-                    preTail + "bulkTestMapValues.testCollectionRemoveAll",
-                    preTail + "bulkTestMapValues.testCollectionRetainAll"
-            };
-        }
         return new String[] { recursiveTest };
     }
 

@@ -46,23 +46,6 @@ public class TransformedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> 
 
     @Override
     public String[] ignoredTests() {
-        if (IBMJDK16) {
-            final String preSubMap = "TransformedSortedMapTest.bulkTestSubMap.";
-            final String preTailMap = "TransformedSortedMapTest.bulkTestTailMap.";
-            return new String[] {
-                    preSubMap + "bulkTestMapEntrySet.testCollectionIteratorRemove",
-                    preSubMap + "bulkTestMapKeySet.testCollectionRemove",
-                    preSubMap + "bulkTestMapValues.testCollectionIteratorRemove",
-                    preTailMap + "testMapRemove",
-                    preTailMap + "bulkTestMapEntrySet.testCollectionIteratorRemove",
-                    preTailMap + "bulkTestMapEntrySet.testCollectionRemoveAll",
-                    preTailMap + "bulkTestMapKeySet.testCollectionIteratorRemove",
-                    preTailMap + "bulkTestMapKeySet.testCollectionRemoveAll",
-                    preTailMap + "bulkTestMapValues.testCollectionClear",
-                    preTailMap + "bulkTestMapValues.testCollectionRemoveAll",
-                    preTailMap + "bulkTestMapValues.testCollectionRetainAll"
-            };
-        }
         return null;
     }
 
