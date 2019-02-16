@@ -52,7 +52,7 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> {
      * @throws NullPointerException if any predicate in the array is null
      */
     public static <T> Predicate<T> allPredicate(final Predicate<? super T>... predicates) {
-        FunctorUtils.validate(predicates);
+        validate(predicates);
         if (predicates.length == 0) {
             return truePredicate();
         }
