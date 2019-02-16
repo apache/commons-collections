@@ -67,7 +67,7 @@ public class NodeListIterator implements Iterator<Node> {
 
     @Override
     public boolean hasNext() {
-        return nodeList == null ? false : index < nodeList.getLength();
+        return nodeList != null && index < nodeList.getLength();
     }
 
     @Override
