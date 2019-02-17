@@ -435,7 +435,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @return true if equal
      */
     protected boolean isEqualValue(final Object value1, final Object value2) {
-        return value1 == value2 || (value1 == null ? false : value1.equals(value2));
+        return value1 == value2 || (value1 != null && value1.equals(value2));
     }
 
     /**

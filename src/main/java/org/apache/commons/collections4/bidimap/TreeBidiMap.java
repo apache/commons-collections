@@ -90,7 +90,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
          *
          * @param description  the description for the element
          */
-        private DataElement(final String description) {
+        DataElement(final String description) {
             this.description = description;
         }
 

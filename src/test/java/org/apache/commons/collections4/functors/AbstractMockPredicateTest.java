@@ -88,7 +88,7 @@ public abstract class AbstractMockPredicateTest<T> {
      *
      * @return a single mock predicate.
      */
-    @SuppressWarnings({"unchecked", "boxing"})
+    @SuppressWarnings({"boxing"})
     protected final Predicate<T> createMockPredicate(final Boolean returnValue) {
         final Predicate<T> mockPredicate = EasyMock.createMock(Predicate.class);
         if (returnValue != null) {
