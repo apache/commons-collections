@@ -124,8 +124,8 @@ public class MultiValueMapTest<K, V> extends AbstractObjectTest {
 
     public void testKeyedIterator() {
         final MultiValueMap<K, V> map = createTestMap();
-        final ArrayList<Object> actual = new ArrayList<Object>(IteratorUtils.toList(map.iterator("one")));
-        final ArrayList<Object> expected = new ArrayList<Object>(Arrays.asList("uno", "un"));
+        final ArrayList<Object> actual = new ArrayList<>(IteratorUtils.toList(map.iterator("one")));
+        final ArrayList<Object> expected = new ArrayList<>(Arrays.asList("uno", "un"));
         assertEquals(expected, actual);
     }
 

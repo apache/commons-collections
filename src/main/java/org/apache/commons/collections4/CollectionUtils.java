@@ -892,7 +892,7 @@ public class CollectionUtils {
     public static <O> Collection<O> select(final Iterable<? extends O> inputCollection,
                                            final Predicate<? super O> predicate) {
         final Collection<O> answer = inputCollection instanceof Collection<?> ?
-                new ArrayList<O>(((Collection<?>) inputCollection).size()) : new ArrayList<O>();
+                new ArrayList<>(((Collection<?>) inputCollection).size()) : new ArrayList<>();
         return select(inputCollection, predicate, answer);
     }
 
@@ -982,7 +982,7 @@ public class CollectionUtils {
     public static <O> Collection<O> selectRejected(final Iterable<? extends O> inputCollection,
                                                    final Predicate<? super O> predicate) {
         final Collection<O> answer = inputCollection instanceof Collection<?> ?
-                new ArrayList<O>(((Collection<?>) inputCollection).size()) : new ArrayList<O>();
+                new ArrayList<>(((Collection<?>) inputCollection).size()) : new ArrayList<>();
         return selectRejected(inputCollection, predicate, answer);
     }
 
@@ -1030,7 +1030,7 @@ public class CollectionUtils {
     public static <I, O> Collection<O> collect(final Iterable<I> inputCollection,
                                                final Transformer<? super I, ? extends O> transformer) {
         final Collection<O> answer = inputCollection instanceof Collection<?> ?
-                new ArrayList<O>(((Collection<?>) inputCollection).size()) : new ArrayList<O>();
+                new ArrayList<>(((Collection<?>) inputCollection).size()) : new ArrayList<>();
         return collect(inputCollection, transformer, answer);
     }
 

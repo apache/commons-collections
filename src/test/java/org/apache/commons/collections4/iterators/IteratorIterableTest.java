@@ -47,7 +47,7 @@ public class IteratorIterableTest extends BulkTest {
     @SuppressWarnings("unused")
     public void testIterator() {
         final Iterator<Integer> iter = createIterator();
-        final Iterable<Number> iterable = new IteratorIterable<Number>(iter);
+        final Iterable<Number> iterable = new IteratorIterable<>(iter);
 
         // first use
         verifyIteration(iterable);
@@ -61,7 +61,7 @@ public class IteratorIterableTest extends BulkTest {
     public void testMultipleUserIterator() {
         final Iterator<Integer> iter = createIterator();
 
-        final Iterable<Number> iterable = new IteratorIterable<Number>(iter, true);
+        final Iterable<Number> iterable = new IteratorIterable<>(iter, true);
 
         // first use
         verifyIteration(iterable);

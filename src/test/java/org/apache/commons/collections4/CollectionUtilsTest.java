@@ -148,9 +148,9 @@ public class CollectionUtilsTest extends MockTestCase {
         iterableA = collectionA;
         iterableB = collectionB;
         iterableC = collectionC;
-        collectionA2 = new ArrayList<Number>(collectionA);
-        collectionB2 = new LinkedList<Number>(collectionB);
-        collectionC2 = new LinkedList<Number>(collectionC);
+        collectionA2 = new ArrayList<>(collectionA);
+        collectionB2 = new LinkedList<>(collectionB);
+        collectionC2 = new LinkedList<>(collectionC);
         iterableA2 = collectionA2;
         iterableB2 = collectionB2;
 

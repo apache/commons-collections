@@ -46,6 +46,6 @@ public class SortedProperties extends Properties {
             keys.add(key.toString());
         }
         Collections.sort(keys);
-        return new IteratorEnumeration<Object>(keys.iterator());
+        return new IteratorEnumeration<>(keys.iterator());
     }
 }

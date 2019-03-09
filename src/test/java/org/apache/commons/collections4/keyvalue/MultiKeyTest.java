@@ -176,7 +176,7 @@ public class MultiKeyTest {
     public void testHashCode() {
         final MultiKey<Integer> mk1 = new MultiKey<>(ONE, TWO);
         final MultiKey<Integer> mk2 = new MultiKey<>(ONE, TWO);
-        final MultiKey<Object> mk3 = new MultiKey<Object>(ONE, "TWO");
+        final MultiKey<Object> mk3 = new MultiKey<>(ONE, "TWO");
 
         assertTrue(mk1.hashCode() == mk1.hashCode());
         assertTrue(mk1.hashCode() == mk2.hashCode());
@@ -190,7 +190,7 @@ public class MultiKeyTest {
     public void testEquals() {
         final MultiKey<Integer> mk1 = new MultiKey<>(ONE, TWO);
         final MultiKey<Integer> mk2 = new MultiKey<>(ONE, TWO);
-        final MultiKey<Object> mk3 = new MultiKey<Object>(ONE, "TWO");
+        final MultiKey<Object> mk3 = new MultiKey<>(ONE, "TWO");
 
         assertEquals(mk1, mk1);
         assertEquals(mk1, mk2);
