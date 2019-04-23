@@ -184,6 +184,13 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     }
 
     @Override
+    public boolean removeIf(final Predicate<? super E> filter) {
+        synchronized (lock) {
+            return decorated().removeIf(object);
+        }
+    }
+
+    @Override
     public boolean removeAll(final Collection<?> coll) {
         synchronized (lock) {
             return decorated().removeAll(coll);
