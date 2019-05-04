@@ -33,6 +33,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.function.Predicate;
 
 import org.apache.commons.collections4.AbstractObjectTest;
 
@@ -945,6 +946,52 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     }
 
     /**
+     *  Tests {@link Collection#removeIf(Predicate)}.
+     */
+    public void testCollectionRemoveIf() {
+        if (!isRemoveSupported()) {
+            return;
+        }
+
+        resetEmpty();
+        assertTrue("Empty collection removeIf should return false for a predicate that returns only false",
+                !getCollection().removeIf(e -> false));
+        verify();
+
+        assertTrue("Empty collection removeIf should return false for a predicate that returns only true",
+                !getCollection().removeIf(e -> true));
+        verify();
+
+        resetFull();
+        assertTrue("Full collection removeIf should return false for a predicate that returns only false",
+                !getCollection().removeIf(e -> false));
+        verify();
+
+        assertTrue("Full collection removeIf should return true for a predicate that returns only true",
+                getCollection().removeIf(e -> true));
+        getConfirmed().removeIf(e -> true);
+        verify();
+
+        resetFull();
+        final List<E> elements = Arrays.asList(getFullElements());
+
+        final int mid = getFullElements().length / 2;
+        final E target = elements.get(mid);
+
+        final int size = getCollection().size();
+        final int targetCount = Collections.frequency(elements, target);
+
+        final Predicate<E> filter = e -> target.equals((E) e);
+
+        assertTrue("Full collection removeIf should work", getCollection().removeIf(filter));
+        getConfirmed().removeIf(filter);
+        verify();
+
+        assertTrue("Collection should shrink after removeIf", getCollection().size() == size - targetCount);
+        assertTrue("Collection shouldn't contain removed element", !getCollection().contains(target));
+    }
+
+    /**
      *  Tests {@link Collection#retainAll(Collection)}.
      */
     public void testCollectionRetainAll() {
@@ -1159,6 +1206,14 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
         verify();
 
         try {
+            getCollection().removeIf(e -> true);
+            fail("removeIf should raise UnsupportedOperationException");
+        } catch (final UnsupportedOperationException e) {
+            // expected
+        }
+        verify();
+
+        try {
             getCollection().removeAll(null);
             fail("removeAll should raise UnsupportedOperationException");
         } catch (final UnsupportedOperationException e) {
@@ -1244,6 +1299,16 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
             getCollection().remove(getFullElements()[0]);
             iter.next();
             fail("next after remove should raise ConcurrentModification");
+        } catch (final ConcurrentModificationException e) {
+            // expected
+        }
+
+        resetFull();
+        try {
+            final Iterator<E> iter = getCollection().iterator();
+            getCollection().removeIf(e -> false);
+            iter.next();
+            fail("next after removeIf should raise ConcurrentModification");
         } catch (final ConcurrentModificationException e) {
             // expected
         }

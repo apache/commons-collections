@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 
 /**
  * Decorates a <code>Map</code> to obtain <code>Set</code> behaviour.
@@ -140,6 +141,11 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
         final int size = map.size();
         map.remove(obj);
         return map.size() != size;
+    }
+
+    @Override
+    public boolean removeIf(Predicate<? super E> filter) {
+        return map.keySet().removeIf(filter);
     }
 
     @Override

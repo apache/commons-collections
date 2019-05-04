@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.function.Predicate;
 
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.iterators.UnmodifiableIterator;
@@ -94,6 +95,11 @@ public final class UnmodifiableList<E>
 
     @Override
     public boolean remove(final Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean removeIf(Predicate<? super E> filter) {
         throw new UnsupportedOperationException();
     }
 

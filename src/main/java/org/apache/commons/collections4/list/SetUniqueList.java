@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.collections4.iterators.AbstractIteratorDecorator;
@@ -239,6 +240,13 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     public E remove(final int index) {
         final E result = super.remove(index);
         set.remove(result);
+        return result;
+    }
+
+    @Override
+    public boolean removeIf(Predicate<? super E> filter) {
+        boolean result = super.removeIf(filter);
+        set.removeIf(filter);
         return result;
     }
 

@@ -22,6 +22,7 @@ import java.io.ObjectOutputStream;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.apache.commons.collections4.SortedBag;
 import org.apache.commons.collections4.Unmodifiable;
@@ -122,6 +123,11 @@ public final class UnmodifiableSortedBag<E>
 
     @Override
     public boolean remove(final Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean removeIf(Predicate<? super E> filter) {
         throw new UnsupportedOperationException();
     }
 

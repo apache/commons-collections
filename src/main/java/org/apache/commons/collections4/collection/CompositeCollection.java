@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -325,7 +326,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      */
     @Override
     public boolean removeIf(final Predicate<? super E> filter) {
-        if (filter == null) {
+        if (Objects.isNull(filter)) {
             return false;
         }
         boolean changed = false;

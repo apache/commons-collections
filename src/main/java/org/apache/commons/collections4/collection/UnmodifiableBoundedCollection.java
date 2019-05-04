@@ -140,12 +140,12 @@ public final class UnmodifiableBoundedCollection<E> extends org.apache.commons.c
     }
 
     @Override
-    public boolean removeAll(final Collection<?> coll) {
+    public boolean removeIf(final Predicate<? super E> filter) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public boolean removeIf(final Predicate<? super E> filter) {
+    public boolean removeAll(final Collection<?> coll) {
         throw new UnsupportedOperationException();
     }
 

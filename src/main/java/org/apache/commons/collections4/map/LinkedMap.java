@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.function.Predicate;
 
 import org.apache.commons.collections4.iterators.UnmodifiableIterator;
 import org.apache.commons.collections4.iterators.UnmodifiableListIterator;
@@ -259,6 +260,11 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
 
         @Override
         public boolean remove(final Object obj) {
+            throw new UnsupportedOperationException();
+        }
+
+        @Override
+        public boolean removeIf(final Predicate<? super K> filter) {
             throw new UnsupportedOperationException();
         }
 

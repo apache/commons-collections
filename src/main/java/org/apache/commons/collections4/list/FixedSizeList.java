@@ -20,6 +20,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.function.Predicate;
 
 import org.apache.commons.collections4.BoundedCollection;
 import org.apache.commons.collections4.iterators.AbstractListIteratorDecorator;
@@ -135,6 +136,11 @@ public class FixedSizeList<E>
 
     @Override
     public boolean remove(final Object object) {
+        throw unsupportedOperationException();
+    }
+
+    @Override
+    public boolean removeIf(Predicate<? super E> filter) {
         throw unsupportedOperationException();
     }
 

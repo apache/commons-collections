@@ -18,12 +18,8 @@ package org.apache.commons.collections4.set;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Predicate;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.iterators.EmptyIterator;
@@ -281,6 +277,18 @@ public class CompositeSet<E> implements Set<E>, Serializable {
                 "addAll() is not supported on CompositeSet without a SetMutator strategy");
         }
         return mutator.addAll(this, all, coll);
+    }
+
+    @Override
+    public boolean removeIf(Predicate<? super E> filter) {
+        if (Objects.isNull(filter)) {
+            return false;
+        }
+        boolean changed = false;
+        for (final Collection<E> item : all) {
+            changed |= item.removeIf(filter);
+        }
+        return changed;
     }
 
     /**
