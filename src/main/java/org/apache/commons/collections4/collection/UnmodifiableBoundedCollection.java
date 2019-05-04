@@ -18,6 +18,7 @@ package org.apache.commons.collections4.collection;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 import org.apache.commons.collections4.BoundedCollection;
 import org.apache.commons.collections4.Unmodifiable;
@@ -40,7 +41,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * @param <E> the type of elements in this collection
  * @since 3.0
  */
-public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDecorator<E>
+public final class UnmodifiableBoundedCollection<E> extends org.apache.commons.collections4.collection.AbstractCollectionDecorator<E>
         implements BoundedCollection<E>, Unmodifiable {
 
     /** Serialization version */
@@ -88,10 +89,10 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
             if (coll instanceof BoundedCollection) {
                 break;  // normal loop exit
             }
-            if (coll instanceof AbstractCollectionDecorator) {
-                coll = ((AbstractCollectionDecorator<E>) coll).decorated();
-            } else if (coll instanceof SynchronizedCollection) {
-                coll = ((SynchronizedCollection<E>) coll).decorated();
+            if (coll instanceof org.apache.commons.collections4.collection.AbstractCollectionDecorator) {
+                coll = ((org.apache.commons.collections4.collection.AbstractCollectionDecorator<E>) coll).decorated();
+            } else if (coll instanceof org.apache.commons.collections4.collection.SynchronizedCollection) {
+                coll = ((org.apache.commons.collections4.collection.SynchronizedCollection<E>) coll).decorated();
             }
         }
 
@@ -140,6 +141,11 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
 
     @Override
     public boolean removeAll(final Collection<?> coll) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean removeIf(final Predicate<? super E> filter) {
         throw new UnsupportedOperationException();
     }
 

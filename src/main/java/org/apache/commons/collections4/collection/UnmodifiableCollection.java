@@ -18,6 +18,7 @@ package org.apache.commons.collections4.collection;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.iterators.UnmodifiableIterator;
@@ -33,7 +34,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * @since 3.0
  */
 public final class UnmodifiableCollection<E>
-        extends AbstractCollectionDecorator<E>
+        extends org.apache.commons.collections4.collection.AbstractCollectionDecorator<E>
         implements Unmodifiable {
 
     /** Serialization version */
@@ -94,6 +95,11 @@ public final class UnmodifiableCollection<E>
 
     @Override
     public boolean remove(final Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean removeIf(final Predicate<? super E> filter) {
         throw new UnsupportedOperationException();
     }
 

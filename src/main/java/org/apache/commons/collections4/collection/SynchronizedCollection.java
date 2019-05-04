@@ -19,6 +19,7 @@ package org.apache.commons.collections4.collection;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 /**
  * Decorates another {@link Collection} to synchronize its behaviour
@@ -186,7 +187,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
     @Override
     public boolean removeIf(final Predicate<? super E> filter) {
         synchronized (lock) {
-            return decorated().removeIf(object);
+            return decorated().removeIf(filter);
         }
     }
 

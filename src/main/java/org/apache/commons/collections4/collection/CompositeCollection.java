@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Predicate;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.iterators.EmptyIterator;
@@ -309,6 +310,27 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
         boolean changed = false;
         for (final Collection<E> item : all) {
             changed |= item.removeAll(coll);
+        }
+        return changed;
+    }
+
+    /**
+     * Removes all of the elements of this collection that satisfy the given predicate from this composite collection.
+     * <p>
+     * This implementation calls <code>removeIf</code> on each collection.
+     *
+     * @param filter  a predicate which returns true for elements to be removed
+     * @return true if the collection was modified
+     * @throws UnsupportedOperationException if removeIf is unsupported
+     */
+    @Override
+    public boolean removeIf(final Predicate<? super E> filter) {
+        if (filter == null) {
+            return false;
+        }
+        boolean changed = false;
+        for (final Collection<E> item : all) {
+            changed |= item.removeIf(filter);
         }
         return changed;
     }
