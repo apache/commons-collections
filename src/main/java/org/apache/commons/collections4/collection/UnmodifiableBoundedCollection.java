@@ -41,7 +41,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * @param <E> the type of elements in this collection
  * @since 3.0
  */
-public final class UnmodifiableBoundedCollection<E> extends org.apache.commons.collections4.collection.AbstractCollectionDecorator<E>
+public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDecorator<E>
         implements BoundedCollection<E>, Unmodifiable {
 
     /** Serialization version */
@@ -89,10 +89,10 @@ public final class UnmodifiableBoundedCollection<E> extends org.apache.commons.c
             if (coll instanceof BoundedCollection) {
                 break;  // normal loop exit
             }
-            if (coll instanceof org.apache.commons.collections4.collection.AbstractCollectionDecorator) {
-                coll = ((org.apache.commons.collections4.collection.AbstractCollectionDecorator<E>) coll).decorated();
-            } else if (coll instanceof org.apache.commons.collections4.collection.SynchronizedCollection) {
-                coll = ((org.apache.commons.collections4.collection.SynchronizedCollection<E>) coll).decorated();
+            if (coll instanceof AbstractCollectionDecorator) {
+                coll = ((AbstractCollectionDecorator<E>) coll).decorated();
+            } else if (coll instanceof SynchronizedCollection) {
+                coll = ((SynchronizedCollection<E>) coll).decorated();
             }
         }
 

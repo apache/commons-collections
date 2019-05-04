@@ -34,7 +34,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * @since 3.0
  */
 public final class UnmodifiableCollection<E>
-        extends org.apache.commons.collections4.collection.AbstractCollectionDecorator<E>
+        extends AbstractCollectionDecorator<E>
         implements Unmodifiable {
 
     /** Serialization version */

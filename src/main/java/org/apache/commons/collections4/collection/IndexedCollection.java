@@ -222,8 +222,8 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
         }
         boolean changed = false;
         final Iterator<C> it = iterator();
-        while( it.hasNext()) {
-            if( filter.test(it.next())) {
+        while (it.hasNext()) {
+            if (filter.test(it.next())) {
                 it.remove();
                 changed = true;
             }

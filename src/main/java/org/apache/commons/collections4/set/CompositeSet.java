@@ -18,7 +18,13 @@ package org.apache.commons.collections4.set;
 
 import java.io.Serializable;
 import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 import org.apache.commons.collections4.CollectionUtils;
