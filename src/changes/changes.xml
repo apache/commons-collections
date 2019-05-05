@@ -20,9 +20,12 @@
     <title>Commons Collections Changes</title>
   </properties>
   <body>
-  <release version="4.3.1" date="2019-MM-DD" description="Maintenance release.">
+  <release version="4.4" date="2019-MM-DD" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
       NullPointerExceptions in CompositeCollection, CompositeSet, and CompositeMap.
+    </action>
+    <action issue="COLLECTIONS-715" dev="ggregory" type="add" due-to="morningmemo, Gary Gregory">
+      Implement Collection's removeIf().
     </action>
   </release>
   <release version="4.3" date="2018-12-21" description="Update from Java 7 to Java 8, bug fixes, and small changes.">
