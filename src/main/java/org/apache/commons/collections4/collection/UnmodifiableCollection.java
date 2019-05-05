@@ -98,6 +98,9 @@ public final class UnmodifiableCollection<E>
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * @since 4.4
+     */
     @Override
     public boolean removeIf(final Predicate<? super E> filter) {
         throw new UnsupportedOperationException();

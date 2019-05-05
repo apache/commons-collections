@@ -139,6 +139,9 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * @since 4.4
+     */
     @Override
     public boolean removeIf(final Predicate<? super E> filter) {
         throw new UnsupportedOperationException();

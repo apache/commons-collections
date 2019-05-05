@@ -346,6 +346,9 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         assertTrue(!two.contains("1"));
     }
 
+    /**
+     * @since 4.4
+     */
     @SuppressWarnings("unchecked")
     public void testRemoveIf() {
         setUpMutatorTest();

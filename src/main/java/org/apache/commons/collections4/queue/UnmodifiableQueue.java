@@ -124,6 +124,9 @@ public final class UnmodifiableQueue<E>
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * @since 4.4
+     */
     @Override
     public boolean removeIf(Predicate<? super E> filter) {
         throw new UnsupportedOperationException();

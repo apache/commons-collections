@@ -215,6 +215,9 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
         return removed;
     }
 
+    /**
+     * @since 4.4
+     */
     @Override
     public boolean removeIf(final Predicate<? super C> filter) {
         if (Objects.isNull(filter)) {

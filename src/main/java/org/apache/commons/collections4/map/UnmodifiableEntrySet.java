@@ -93,6 +93,9 @@ public final class UnmodifiableEntrySet<K, V>
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * @since 4.4
+     */
     @Override
     public boolean removeIf(Predicate<? super Map.Entry<K, V>> filter) {
         throw new UnsupportedOperationException();

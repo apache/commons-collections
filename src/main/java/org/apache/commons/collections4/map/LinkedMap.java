@@ -263,6 +263,9 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
             throw new UnsupportedOperationException();
         }
 
+        /**
+         * @since 4.4
+         */
         @Override
         public boolean removeIf(final Predicate<? super K> filter) {
             throw new UnsupportedOperationException();

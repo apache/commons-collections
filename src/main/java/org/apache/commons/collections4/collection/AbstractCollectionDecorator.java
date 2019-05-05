@@ -160,6 +160,9 @@ public abstract class AbstractCollectionDecorator<E>
         return decorated().containsAll(coll);
     }
 
+    /**
+     * @since 4.4
+     */
     @Override
     public boolean removeIf(final Predicate<? super E> filter) {
         return decorated().removeIf(filter);

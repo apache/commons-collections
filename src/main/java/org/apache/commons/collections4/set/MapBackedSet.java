@@ -143,6 +143,9 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
         return map.size() != size;
     }
 
+    /**
+     * @since 4.4
+     */
     @Override
     public boolean removeIf(Predicate<? super E> filter) {
         return map.keySet().removeIf(filter);

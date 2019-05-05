@@ -285,6 +285,9 @@ public class CompositeSet<E> implements Set<E>, Serializable {
         return mutator.addAll(this, all, coll);
     }
 
+    /**
+     * @since 4.4
+     */
     @Override
     public boolean removeIf(Predicate<? super E> filter) {
         if (Objects.isNull(filter)) {

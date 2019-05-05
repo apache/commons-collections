@@ -947,6 +947,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
 
     /**
      *  Tests {@link Collection#removeIf(Predicate)}.
+     * @since 4.4
      */
     public void testCollectionRemoveIf() {
         if (!isRemoveSupported()) {

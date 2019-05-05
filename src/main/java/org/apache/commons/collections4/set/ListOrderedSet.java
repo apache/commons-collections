@@ -218,6 +218,9 @@ public class ListOrderedSet<E>
         return result;
     }
 
+    /**
+     * @since 4.4
+     */
     @Override
     public boolean removeIf(final Predicate<? super E> filter) {
         if (Objects.isNull(filter)) {

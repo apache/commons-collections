@@ -372,6 +372,9 @@ public abstract class AbstractDualBidiMap<K, V> implements BidiMap<K, V> {
             return decorated().hashCode();
         }
 
+        /**
+         * @since 4.4
+         */
         @Override
         public boolean removeIf(Predicate<? super E> filter) {
             if (parent.isEmpty() || Objects.isNull(filter)) {

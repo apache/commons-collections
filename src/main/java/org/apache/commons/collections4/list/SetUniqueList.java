@@ -243,6 +243,9 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
         return result;
     }
 
+    /**
+     * @since 4.4
+     */
     @Override
     public boolean removeIf(Predicate<? super E> filter) {
         boolean result = super.removeIf(filter);

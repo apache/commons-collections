@@ -323,6 +323,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * @param filter  a predicate which returns true for elements to be removed
      * @return true if the collection was modified
      * @throws UnsupportedOperationException if removeIf is unsupported
+     * @since 4.4
      */
     @Override
     public boolean removeIf(final Predicate<? super E> filter) {

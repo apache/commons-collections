@@ -184,6 +184,9 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
         }
     }
 
+    /**
+     * @since 4.4
+     */
     @Override
     public boolean removeIf(final Predicate<? super E> filter) {
         synchronized (lock) {
