@@ -22,6 +22,7 @@ import java.io.ObjectOutputStream;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.SortedSet;
+import java.util.function.Predicate;
 
 import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.iterators.UnmodifiableIterator;
@@ -93,6 +94,14 @@ public final class UnmodifiableSortedSet<E>
 
     @Override
     public boolean remove(final Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * @since 4.4
+     */
+    @Override
+    public boolean removeIf(Predicate<? super E> filter) {
         throw new UnsupportedOperationException();
     }
 

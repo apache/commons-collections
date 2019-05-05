@@ -23,6 +23,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
+import java.util.Objects;
+import java.util.function.Predicate;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.OrderedIterator;
@@ -212,6 +214,21 @@ public class ListOrderedSet<E>
         final boolean result = decorated().remove(object);
         if (result) {
             setOrder.remove(object);
+        }
+        return result;
+    }
+
+    /**
+     * @since 4.4
+     */
+    @Override
+    public boolean removeIf(final Predicate<? super E> filter) {
+        if (Objects.isNull(filter)) {
+            return false;
+        }
+        final boolean result = decorated().removeIf(filter);
+        if (result) {
+            setOrder.removeIf(filter);
         }
         return result;
     }

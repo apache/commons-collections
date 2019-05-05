@@ -18,6 +18,9 @@ package org.apache.commons.collections4.collection;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.function.Predicate;
 
 import org.apache.commons.collections4.MultiMap;
 import org.apache.commons.collections4.Transformer;
@@ -210,6 +213,28 @@ public class IndexedCollection<K, C> extends AbstractCollectionDecorator<C> {
             removeFromIndex((C) object);
         }
         return removed;
+    }
+
+    /**
+     * @since 4.4
+     */
+    @Override
+    public boolean removeIf(final Predicate<? super C> filter) {
+        if (Objects.isNull(filter)) {
+            return false;
+        }
+        boolean changed = false;
+        final Iterator<C> it = iterator();
+        while (it.hasNext()) {
+            if (filter.test(it.next())) {
+                it.remove();
+                changed = true;
+            }
+        }
+        if (changed) {
+            reindex();
+        }
+        return changed;
     }
 
     @Override

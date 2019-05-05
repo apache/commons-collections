@@ -22,6 +22,7 @@ import java.io.ObjectOutputStream;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.function.Predicate;
 
 import org.apache.commons.collections4.Bag;
 import org.apache.commons.collections4.Unmodifiable;
@@ -125,6 +126,14 @@ public final class UnmodifiableBag<E>
 
     @Override
     public boolean remove(final Object object) {
+        throw new UnsupportedOperationException();
+    }
+
+    /**
+     * @since 4.4
+     */
+    @Override
+    public boolean removeIf(Predicate<? super E> filter) {
         throw new UnsupportedOperationException();
     }
 

@@ -19,6 +19,7 @@ package org.apache.commons.collections4.collection;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.function.Predicate;
 
 /**
  * Decorates another <code>Collection</code> to provide additional behaviour.
@@ -157,6 +158,14 @@ public abstract class AbstractCollectionDecorator<E>
     @Override
     public boolean containsAll(final Collection<?> coll) {
         return decorated().containsAll(coll);
+    }
+
+    /**
+     * @since 4.4
+     */
+    @Override
+    public boolean removeIf(final Predicate<? super E> filter) {
+        return decorated().removeIf(filter);
     }
 
     @Override
