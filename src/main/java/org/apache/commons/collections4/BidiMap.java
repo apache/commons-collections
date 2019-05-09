@@ -26,14 +26,17 @@ import java.util.Set;
  * This interface extends <code>Map</code> and so may be used anywhere a map
  * is required. The interface provides an inverse map view, enabling
  * full access to both directions of the <code>BidiMap</code>.
+ * </p>
  * <p>
  * Implementations should allow a value to be looked up from a key and
  * a key to be looked up from a value with equal performance.
+ * </p>
  * <p>
  * This map enforces the restriction that there is a 1:1 relation between
  * keys and values, meaning that multiple keys cannot map to the same value.
  * This is required so that "inverting" the map results in a map without
  * duplicate keys. See the {@link #put} method description for more information.
+ * </p>
  *
  * @param <K> the type of the keys in the map
  * @param <V> the type of the values in the map
@@ -48,6 +51,7 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      * When adding a key-value pair, the value may already exist in the map
      * against a different key. That mapping is removed, to ensure that the
      * value only occurs once in the inverse map.
+     * </p>
      * <pre>
      *  BidiMap map1 = new DualHashBidiMap();
      *  map.put("A","B");  // contains A mapped to B, as per Map
@@ -76,10 +80,12 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
     /**
      * Gets the key that is currently mapped to the specified value.
      * <p>
+     * </p>
      * If the value is not contained in the map, <code>null</code> is returned.
      * <p>
      * Implementations should seek to make this method perform equally as well
      * as <code>get(Object)</code>.
+     * </p>
      *
      * @param value  the value to find the key for
      * @return the mapped key, or <code>null</code> if not found
@@ -96,9 +102,11 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      * value (optional operation).
      * <p>
      * If the value is not contained in the map, <code>null</code> is returned.
+     * </p>
      * <p>
      * Implementations should seek to make this method perform equally as well
      * as <code>remove(Object)</code>.
+     * </p>
      *
      * @param value  the value to find the key-value pair for
      * @return the key that was removed, <code>null</code> if nothing removed
@@ -117,10 +125,12 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      * <p>
      * Changes to one map will be visible in the other and vice versa.
      * This enables both directions of the map to be accessed as a <code>Map</code>.
+     * </p>
      * <p>
      * Implementations should seek to avoid creating a new object every time this
      * method is called. See <code>AbstractMap.values()</code> etc. Calling this
      * method on the inverse map should return the original.
+     * </p>
      *
      * @return an inverted bidirectional map
      */

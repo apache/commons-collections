@@ -27,12 +27,14 @@ import java.util.Set;
  * Suppose you have a Bag that contains <code>{a, a, b, c}</code>.
  * Calling {@link #getCount(Object)} on <code>a</code> would return 2, while
  * calling {@link #uniqueSet()} would return <code>{a, b, c}</code>.
+ * </p>
  * <p>
  * <i>NOTE: This interface violates the {@link Collection} contract.</i>
  * The behavior specified in many of these methods is <i>not</i> the same
  * as the behavior specified by <code>Collection</code>.
  * The noncompliant methods are clearly marked with "(Violation)".
  * Exercise caution when using a bag as a <code>Collection</code>.
+ * </p>
  * <p>
  * This violation resulted from the original specification of this interface.
  * In an ideal world, the interface would be changed to fix the problems, however
@@ -60,11 +62,13 @@ public interface Bag<E> extends Collection<E> {
      * If the object is already in the {@link #uniqueSet()} then increment its
      * count as reported by {@link #getCount(Object)}. Otherwise add it to the
      * {@link #uniqueSet()} and report its count as 1.
+     * </p>
      * <p>
      * Since this method always increases the size of the bag,
      * according to the {@link Collection#add(Object)} contract, it
      * should always return <code>true</code>.  Since it sometimes returns
      * <code>false</code>, this method violates the contract.
+     * </p>
      *
      * @param object  the object to add
      * @return <code>true</code> if the object was not already in the <code>uniqueSet</code>
@@ -78,6 +82,7 @@ public interface Bag<E> extends Collection<E> {
      * If the object is already in the {@link #uniqueSet()} then increment its
      * count as reported by {@link #getCount(Object)}. Otherwise add it to the
      * {@link #uniqueSet()} and report its count as <code>nCopies</code>.
+     * </p>
      *
      * @param object  the object to add
      * @param nCopies  the number of copies to add
@@ -90,10 +95,12 @@ public interface Bag<E> extends Collection<E> {
      * Removes all occurrences of the given object from the bag.
      * <p>
      * This will also remove the object from the {@link #uniqueSet()}.
+     * </p>
      * <p>
      * According to the {@link Collection#remove(Object)} method,
      * this method should only remove the <i>first</i> occurrence of the
      * given object, not <i>all</i> occurrences.
+     * </p>
      *
      * @param object  the object to remove
      * @return <code>true</code> if this call changed the collection
@@ -106,6 +113,7 @@ public interface Bag<E> extends Collection<E> {
      * <p>
      * If the number of copies to remove is greater than the actual number of
      * copies in the Bag, no error is thrown.
+     * </p>
      *
      * @param object  the object to remove
      * @param nCopies  the number of copies to remove
@@ -117,6 +125,7 @@ public interface Bag<E> extends Collection<E> {
      * Returns a {@link Set} of unique elements in the Bag.
      * <p>
      * Uniqueness constraints are the same as those in {@link java.util.Set}.
+     * </p>
      *
      * @return the Set of unique Bag elements
      */
@@ -137,11 +146,13 @@ public interface Bag<E> extends Collection<E> {
      * given collection <code>coll</code> contains <code>n</code> copies
      * of a given object, calling {@link #getCount(Object)} on that object must
      * be <code>&gt;= n</code> for all <code>n</code> in <code>coll</code>.
+     * 
      * <p>
      * The {@link Collection#containsAll(Collection)} method specifies
      * that cardinality should <i>not</i> be respected; this method should
      * return true if the bag contains at least one of every object contained
      * in the given collection.
+     * </p>
      *
      * @param coll  the collection to check against
      * @return <code>true</code> if the Bag contains all the collection
@@ -157,10 +168,12 @@ public interface Bag<E> extends Collection<E> {
      * the bag will have <code>n</code> fewer copies, assuming the bag
      * had at least <code>n</code> copies to begin with.
      *
-     * <p>The {@link Collection#removeAll(Collection)} method specifies
+     * <p>
+     * The {@link Collection#removeAll(Collection)} method specifies
      * that cardinality should <i>not</i> be respected; this method should
      * remove <i>all</i> occurrences of every object contained in the
      * given collection.
+     * </p>
      *
      * @param coll  the collection to remove
      * @return <code>true</code> if this call changed the collection
@@ -179,10 +192,12 @@ public interface Bag<E> extends Collection<E> {
      * <code>!coll.contains(e)</code>, then remove <code>e</code> and any
      * of its copies.
      *
-     * <p>The {@link Collection#retainAll(Collection)} method specifies
+     * <p>
+     * The {@link Collection#retainAll(Collection)} method specifies
      * that cardinality should <i>not</i> be respected; this method should
      * keep <i>all</i> occurrences of every object contained in the
      * given collection.
+     * </p>
      *
      * @param coll  the collection to retain
      * @return <code>true</code> if this call changed the collection

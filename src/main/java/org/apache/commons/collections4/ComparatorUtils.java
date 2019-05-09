@@ -34,6 +34,7 @@ import org.apache.commons.collections4.comparators.TransformingComparator;
  * <code>comparators</code> package. This class merely provides a
  * convenient central place if you have use for more than one class
  * in the <code>comparators</code> subpackage.
+ * </p>
  *
  * @since 2.1
  */
@@ -119,8 +120,10 @@ public class ComparatorUtils {
      * Gets a Comparator that can sort Boolean objects.
      * <p>
      * The parameter specifies whether true or false is sorted first.
+     * </p>
      * <p>
      * The comparator throws NullPointerException if a null value is compared.
+     * </p>
      *
      * @param trueFirst  when <code>true</code>, sort
      *        <code>true</code> {@link Boolean}s before
@@ -137,6 +140,7 @@ public class ComparatorUtils {
      * The returned comparator will consider a null value to be less than
      * any nonnull value, and equal to any other null value.  Two nonnull
      * values will be evaluated with the given comparator.
+     * </p>
      *
      * @param <E>  the object type to compare
      * @param comparator the comparator that wants to allow nulls
@@ -157,6 +161,7 @@ public class ComparatorUtils {
      * The returned comparator will consider a null value to be greater than
      * any nonnull value, and equal to any other null value.  Two nonnull
      * values will be evaluated with the given comparator.
+     * </p>
      *
      * @param <E>  the object type to compare
      * @param comparator the comparator that wants to allow nulls
@@ -177,6 +182,7 @@ public class ComparatorUtils {
      * Objects passed to the returned comparator will first be transformed
      * by the given transformer before they are compared by the given
      * comparator.
+     * </p>
      *
      * @param <I>  the input object type of the transformed comparator
      * @param <O>  the object type of the decorated comparator
