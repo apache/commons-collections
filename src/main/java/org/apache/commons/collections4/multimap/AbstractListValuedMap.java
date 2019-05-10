@@ -31,6 +31,7 @@ import org.apache.commons.collections4.ListValuedMap;
  * <p>
  * Subclasses specify a Map implementation to use as the internal storage and
  * the List implementation to use as values.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

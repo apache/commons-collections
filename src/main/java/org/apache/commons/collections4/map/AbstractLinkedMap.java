@@ -37,24 +37,30 @@ import org.apache.commons.collections4.iterators.EmptyOrderedMapIterator;
  * <code>LinkEntry</code> class which can be overridden and replaced.
  * The iterators can similarly be replaced, without the need to replace the KeySet,
  * EntrySet and Values view classes.
+ * </p>
  * <p>
  * Overridable methods are provided to change the default hashing behaviour, and
  * to change how entries are added to and removed from the map. Hopefully, all you
  * need for unusual subclasses is here.
+ * </p>
  * <p>
  * This implementation maintains order by original insertion, but subclasses
  * may work differently. The <code>OrderedMap</code> interface is implemented
  * to provide access to bidirectional iteration and extra convenience methods.
+ * </p>
  * <p>
  * The <code>orderedMapIterator()</code> method provides direct access to a
  * bidirectional iterator. The iterators from the other views can also be cast
  * to <code>OrderedIterator</code> if required.
+ * </p>
  * <p>
  * All the available iterators can be reset back to the start by casting to
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
+ * </p>
  * <p>
  * The implementation is also designed to be subclassed, with lots of useful
  * methods exposed.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

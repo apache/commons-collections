@@ -39,6 +39,7 @@ import java.util.Set;
  * This violation resulted from the original specification of this interface.
  * In an ideal world, the interface would be changed to fix the problems, however
  * it has been decided to maintain backwards compatibility instead.
+ * </p>
  *
  * @param <E> the type of elements in this bag
  * @since 2.0
@@ -146,7 +147,7 @@ public interface Bag<E> extends Collection<E> {
      * given collection <code>coll</code> contains <code>n</code> copies
      * of a given object, calling {@link #getCount(Object)} on that object must
      * be <code>&gt;= n</code> for all <code>n</code> in <code>coll</code>.
-     * 
+     *
      * <p>
      * The {@link Collection#containsAll(Collection)} method specifies
      * that cardinality should <i>not</i> be respected; this method should

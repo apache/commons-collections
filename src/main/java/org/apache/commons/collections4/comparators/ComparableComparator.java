@@ -26,6 +26,7 @@ import java.util.Comparator;
  * This Comparator is useful, for example, for enforcing the natural order in
  * custom implementations of {@link java.util.SortedSet SortedSet} and
  * {@link java.util.SortedMap SortedMap}.
+ * </p>
  * <p>
  * Note: In the 2.0 and 2.1 releases of Commons Collections, this class would
  * throw a {@link ClassCastException} if either of the arguments to
@@ -34,6 +35,7 @@ import java.util.Comparator;
  * {@link Comparable#compareTo(Object) compareTo} gave inconsistent results.
  * This is no longer the case. See {@link #compare(Object, Object) compare} for
  * details.
+ * </p>
  *
  * @param <E> the type of objects compared by this comparator
  *

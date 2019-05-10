@@ -32,6 +32,7 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * Decorates another {@link SortedBidiMap} to ensure it can't be altered.
  * <p>
  * Attempts to modify it will result in an {@link UnsupportedOperationException}.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

@@ -35,6 +35,7 @@ import org.apache.commons.collections4.MultiValuedMap;
  * thread-safe.</strong> If you wish to use this map from multiple threads
  * concurrently, you must use appropriate synchronization. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

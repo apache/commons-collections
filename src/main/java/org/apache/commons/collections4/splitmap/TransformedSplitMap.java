@@ -33,6 +33,7 @@ import org.apache.commons.collections4.map.LinkedMap;
  * Thus objects must be removed or searched for using their transformed form.
  * For example, if the transformation converts Strings to Integers, you must use
  * the Integer form to remove objects.
+ * </p>
  * <p>
  * <strong>Note that TransformedMap is not synchronized and is not
  * thread-safe.</strong> If you wish to use this map from multiple threads
@@ -40,6 +41,7 @@ import org.apache.commons.collections4.map.LinkedMap;
  * is to wrap this map using {@link java.util.Collections#synchronizedMap(Map)}.
  * This class may throw exceptions when accessed by concurrent threads without
  * synchronization.
+ * </p>
  * <p>
  * The "put" and "get" type constraints of this class are mutually independent;
  * contrast with {@link org.apache.commons.collections4.map.TransformedMap} which,
@@ -47,10 +49,12 @@ import org.apache.commons.collections4.map.LinkedMap;
  * a way that its read and write parameters are generalized to a common (super-)type.
  * In practice this would often mean <code>&gt;Object, Object&gt;</code>, defeating
  * much of the usefulness of having parameterized types.
+ * </p>
  * <p>
  * On the downside, this class is not drop-in compatible with {@link java.util.Map}
  * but is intended to be worked with either directly or by {@link Put} and
  * {@link org.apache.commons.collections4.Get Get} generalizations.
+ * </p>
  *
  * @param <J> the type of the keys to put in this map
  * @param <K> the type of the keys to get in this map

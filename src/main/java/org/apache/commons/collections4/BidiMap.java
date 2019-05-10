@@ -80,8 +80,8 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
     /**
      * Gets the key that is currently mapped to the specified value.
      * <p>
-     * </p>
      * If the value is not contained in the map, <code>null</code> is returned.
+     * </p>
      * <p>
      * Implementations should seek to make this method perform equally as well
      * as <code>get(Object)</code>.

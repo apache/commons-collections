@@ -30,6 +30,7 @@ import org.apache.commons.collections4.FluentIterable;
  * Given two {@link Iterator} instances {@code A} and {@code B}, the
  * {@link #next} method on this iterator will switch between {@code A.next()}
  * and {@code B.next()} until both iterators are exhausted.
+ * </p>
  *
  * @since 4.1
  */

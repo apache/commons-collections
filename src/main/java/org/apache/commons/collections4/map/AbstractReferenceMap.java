@@ -44,10 +44,12 @@ import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
  * <code>ReferenceEntry</code> class which can be overridden and replaced.
  * The iterators can similarly be replaced, without the need to replace the KeySet,
  * EntrySet and Values view classes.
+ * </p>
  * <p>
  * Overridable methods are provided to change the default hashing behaviour, and
  * to change how entries are added to and removed from the map. Hopefully, all you
  * need for unusual subclasses is here.
+ * </p>
  * <p>
  * When you construct an <code>AbstractReferenceMap</code>, you can specify what
  * kind of references are used to store the map's keys and values.
@@ -55,6 +57,7 @@ import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
  * mappings if a key or value becomes unreachable, or if the JVM's memory is
  * running low. For information on how the different reference types behave,
  * see {@link Reference}.
+ * </p>
  * <p>
  * Different types of references can be specified for keys and values.
  * The keys can be configured to be weak but the values hard,
@@ -63,17 +66,21 @@ import org.apache.commons.collections4.keyvalue.DefaultMapEntry;
  * <code>WeakHashMap</code></a>. However, you can also specify hard keys and
  * weak values, or any other combination. The default constructor uses
  * hard keys and soft values, providing a memory-sensitive cache.
+ * </p>
  * <p>
  * This {@link Map} implementation does <i>not</i> allow null elements.
  * Attempting to add a null key or value to the map will raise a
  * <code>NullPointerException</code>.
+ * </p>
  * <p>
  * All the available iterators can be reset back to the start by casting to
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
+ * </p>
  * <p>
  * This implementation is not synchronized.
  * You can use {@link java.util.Collections#synchronizedMap} to
  * provide synchronized access to a <code>ReferenceMap</code>.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

@@ -30,8 +30,10 @@ import org.apache.commons.collections4.collection.PredicatedCollection;
  * It is normally created to decorate an empty multiset.
  * If an object cannot be added to the multiset, an {@link IllegalArgumentException}
  * is thrown.
+ * </p>
  * <p>
  * One usage would be to ensure that no null entries are added to the multiset.
+ * </p>
  * <pre>
  * MultiSet&lt;E&gt; set =
  *      PredicatedMultiSet.predicatedMultiSet(new HashMultiSet&lt;E&gt;(),

@@ -20,6 +20,7 @@ package org.apache.commons.collections4;
  * Defines an iterator that operates over an ordered <code>Map</code>.
  * <p>
  * This iterator allows both forward and reverse iteration through the map.
+ * </p>
  *
  * @param <K> the type of the keys in the map
  * @param <V> the type of the values in the map

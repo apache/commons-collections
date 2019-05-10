@@ -28,8 +28,10 @@ import org.apache.commons.collections4.Predicate;
  * This set exists to provide validation for the decorated set.
  * It is normally created to decorate an empty set.
  * If an object cannot be added to the set, an IllegalArgumentException is thrown.
+ * </p>
  * <p>
  * One usage would be to ensure that no null entries are added to the set.
+ * </p>
  * <pre>
  * NavigableSet set =
  *   PredicatedSortedSet.predicatedNavigableSet(new TreeSet(),

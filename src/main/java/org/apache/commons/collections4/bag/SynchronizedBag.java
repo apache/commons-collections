@@ -27,8 +27,10 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
  * <p>
  * Methods are synchronized, then forwarded to the decorated bag.
  * Iterators must be separately synchronized around the loop.
+ * </p>
  * <p>
  * This class is Serializable from Commons Collections 3.1.
+ * </p>
  *
  * @param <E> the type of elements in this bag
  * @since 3.0

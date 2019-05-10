@@ -45,10 +45,12 @@ import org.apache.commons.collections4.keyvalue.UnmodifiableMapEntry;
  * This class guarantees that the map will be in both ascending key order
  * and ascending value order, sorted according to the natural order for
  * the key's and value's classes.
+ * </p>
  * <p>
  * This Map is intended for applications that need to be able to look
  * up a key-value pairing by either key or value, and need to do so
  * with equal efficiency.
+ * </p>
  * <p>
  * While that goal could be accomplished by taking a pair of TreeMaps
  * and redirecting requests to the appropriate TreeMap (e.g.,
@@ -58,6 +60,7 @@ import org.apache.commons.collections4.keyvalue.UnmodifiableMapEntry;
  * If the data contained in the TreeMaps is large, the cost of redundant
  * storage becomes significant. The {@link DualTreeBidiMap} and
  * {@link DualHashBidiMap} implementations use this approach.
+ * </p>
  * <p>
  * This solution keeps minimizes the data storage by holding data only once.
  * The red-black algorithm is based on {@link java.util.TreeMap}, but has been modified
@@ -67,10 +70,12 @@ import org.apache.commons.collections4.keyvalue.UnmodifiableMapEntry;
  * node to be removed only has to be performed once). And since only one node
  * contains the key and value, storage is significantly less than that
  * required by two TreeMaps.
+ * </p>
  * <p>
  * The Map.Entry instances returned by the appropriate methods will
  * not allow setValue() and will throw an
  * UnsupportedOperationException on attempts to call that method.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

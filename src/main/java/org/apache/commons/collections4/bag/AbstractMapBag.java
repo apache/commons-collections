@@ -37,6 +37,7 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * Subclasses specify a Map implementation to use as the internal storage. The
  * map will be used to map bag elements to a number; the number represents the
  * number of occurrences of that element in the bag.
+ * </p>
  *
  * @param <E> the type of elements in this bag
  * @since 3.0 (previously DefaultMapBag v2.0)

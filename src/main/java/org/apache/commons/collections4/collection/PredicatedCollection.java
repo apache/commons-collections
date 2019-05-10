@@ -44,13 +44,16 @@ import org.apache.commons.collections4.set.PredicatedSet;
  * This collection exists to provide validation for the decorated collection.
  * It is normally created to decorate an empty collection.
  * If an object cannot be added to the collection, an IllegalArgumentException is thrown.
+ * </p>
  * <p>
  * One usage would be to ensure that no null entries are added to the collection:
+ * </p>
  * <pre>
  * Collection coll = PredicatedCollection.predicatedCollection(new ArrayList(), NotNullPredicate.INSTANCE);
  * </pre>
  * <p>
  * This class is Serializable from Commons Collections 3.1.
+ * </p>
  *
  * @param <E> the type of the elements in the collection
  * @since 3.0

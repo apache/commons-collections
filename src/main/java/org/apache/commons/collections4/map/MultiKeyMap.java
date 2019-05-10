@@ -32,27 +32,34 @@ import org.apache.commons.collections4.keyvalue.MultiKey;
  * The best way to use this class is via the additional map-style methods.
  * These provide <code>get</code>, <code>containsKey</code>, <code>put</code> and
  * <code>remove</code> for individual keys which operate without extra object creation.
+ * </p>
  * <p>
  * The additional methods are the main interface of this map.
  * As such, you will not normally hold this map in a variable of type <code>Map</code>.
+ * </p>
  * <p>
  * The normal map methods take in and return a {@link MultiKey}.
  * If you try to use <code>put()</code> with any other object type a
  * <code>ClassCastException</code> is thrown. If you try to use <code>null</code> as
  * the key in <code>put()</code> a <code>NullPointerException</code> is thrown.
+ * </p>
  * <p>
  * This map is implemented as a decorator of a <code>AbstractHashedMap</code> which
  * enables extra behaviour to be added easily.
+ * </p>
  * <ul>
  * <li><code>MultiKeyMap.decorate(new LinkedMap())</code> creates an ordered map.
  * <li><code>MultiKeyMap.decorate(new LRUMap())</code> creates an least recently used map.
  * <li><code>MultiKeyMap.decorate(new ReferenceMap())</code> creates a garbage collector sensitive map.
  * </ul>
+ * <p>
  * Note that <code>IdentityMap</code> and <code>ReferenceIdentityMap</code> are unsuitable
  * for use as the key comparison would work on the whole MultiKey, not the elements within.
+ * </p>
  * <p>
  * As an example, consider a least recently used cache that uses a String airline code
  * and a Locale to lookup the airline's name:
+ * </p>
  * <pre>
  * private MultiKeyMap cache = MultiKeyMap.multiKeyMap(new LRUMap(50));
  *
@@ -70,6 +77,7 @@ import org.apache.commons.collections4.keyvalue.MultiKey;
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. This class may throw exceptions when accessed
  * by concurrent threads without synchronization.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

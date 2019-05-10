@@ -24,6 +24,7 @@ package org.apache.commons.collections4.sequence;
  * transforming the first sequence into the second sequence uses an instance of
  * this class to represent the keeping of this object. The objects embedded in
  * these type of commands always come from the first sequence.
+ * </p>
  *
  * @see SequencesComparator
  * @see EditScript

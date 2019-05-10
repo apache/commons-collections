@@ -29,9 +29,11 @@ import java.util.function.Predicate;
  * This class is used to create a <code>Set</code> with the same properties as
  * the key set of any map. Thus, a ReferenceSet can be created by wrapping a
  * <code>ReferenceMap</code> in an instance of this class.
+ * </p>
  * <p>
  * Most map implementation can be used to create a set by passing in dummy values.
  * Exceptions include <code>BidiMap</code> implementations, as they require unique values.
+ * </p>
  *
  * @param <E> the type of the elements in this set
  * @param <V> the dummy value type in this map

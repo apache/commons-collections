@@ -45,19 +45,23 @@ import org.apache.commons.collections4.iterators.TransformIterator;
  * A <code>MultiMap</code> is a Map with slightly different semantics.
  * Putting a value into the map will add the value to a Collection at that key.
  * Getting a value will return a Collection, holding all the values put to that key.
+ * </p>
  * <p>
  * This implementation is a decorator, allowing any Map implementation
  * to be used as the base.
+ * </p>
  * <p>
  * In addition, this implementation allows the type of collection used
  * for the values to be controlled. By default, an <code>ArrayList</code>
  * is used, however a <code>Class</code> to instantiate may be specified,
  * or a factory that returns a <code>Collection</code> instance.
+ * </p>
  * <p>
  * <strong>Note that MultiValueMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. This class may throw exceptions when accessed
  * by concurrent threads without synchronization.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

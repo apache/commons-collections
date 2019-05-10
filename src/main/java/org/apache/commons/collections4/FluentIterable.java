@@ -31,6 +31,7 @@ import org.apache.commons.collections4.iterators.SingletonIterator;
  * <p>
  * A FluentIterable can be created either from an Iterable or from a set
  * of elements. The following types of methods are provided:
+ * </p>
  * <ul>
  *   <li>fluent methods which return a new {@code FluentIterable} instance,
  *       providing a view of the original iterable (e.g. filter(Predicate));
@@ -43,6 +44,7 @@ import org.apache.commons.collections4.iterators.SingletonIterator;
  * <p>
  * The following example outputs the first 3 even numbers in the range [1, 10]
  * into a list:
+ * </p>
  * <pre>
  * List&lt;String&gt; result =
  *   FluentIterable

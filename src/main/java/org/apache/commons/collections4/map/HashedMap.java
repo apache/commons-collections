@@ -29,12 +29,14 @@ import java.util.Map;
  * This implementation improves on the JDK1.4 HashMap by adding the
  * {@link org.apache.commons.collections4.MapIterator MapIterator}
  * functionality and many methods for subclassing.
+ * </p>
  * <p>
  * <strong>Note that HashedMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
  * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

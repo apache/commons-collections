@@ -34,6 +34,7 @@ import org.apache.commons.collections4.iterators.AbstractIteratorDecorator;
  * Subclasses specify a Map implementation to use as the internal storage. The
  * map will be used to map multiset elements to a number; the number represents the
  * number of occurrences of that element in the multiset.
+ * </p>
  *
  * @param <E> the type held in the multiset
  * @since 4.1

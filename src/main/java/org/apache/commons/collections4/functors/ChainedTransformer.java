@@ -26,6 +26,7 @@ import org.apache.commons.collections4.Transformer;
  * <p>
  * The input object is passed to the first transformer. The transformed result
  * is passed to the second transformer and so on.
+ * </p>
  *
  * @since 3.0
  */

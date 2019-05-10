@@ -23,6 +23,7 @@ import java.util.Map;
  * <p>
  * A map iterator is an efficient way of iterating over maps.
  * There is no need to access the entry set or use Map Entry objects.
+ * </p>
  * <pre>
  * IterableMap&lt;String,Integer&gt; map = new HashedMap&lt;String,Integer&gt;();
  * MapIterator&lt;String,Integer&gt; it = map.mapIterator();

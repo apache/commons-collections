@@ -21,9 +21,11 @@ package org.apache.commons.collections4;
  * <p>
  * A <code>Closure</code> represents a block of code which is executed from
  * inside some block, function or iteration. It operates an input object.
+ * </p>
  * <p>
  * Standard implementations of common closures are provided by
  * {@link ClosureUtils}. These include method invocation and for/while loops.
+ * </p>
  *
  * @param <T> the type that the closure acts on
  * @since 1.0

@@ -31,8 +31,10 @@ import org.apache.commons.collections4.iterators.AbstractListIteratorDecorator;
  * This list exists to provide validation for the decorated list.
  * It is normally created to decorate an empty list.
  * If an object cannot be added to the list, an IllegalArgumentException is thrown.
+ * </p>
  * <p>
  * One usage would be to ensure that no null entries are added to the list.
+ * </p>
  * <pre>
  * {@code
  * List<String> list =
@@ -41,6 +43,7 @@ import org.apache.commons.collections4.iterators.AbstractListIteratorDecorator;
  * </pre>
  * <p>
  * This class is Serializable from Commons Collections 3.1.
+ * </p>
  *
  * @since 3.0
  */

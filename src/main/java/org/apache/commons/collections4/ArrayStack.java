@@ -30,11 +30,13 @@ import java.util.EmptyStackException;
  * order: The most recently added element is removed first.  The iteration
  * order is <i>not</i> the same as the removal order.  The iterator returns
  * elements from the bottom up.
+ * </p>
  * <p>
  * Unlike <code>Stack</code>, <code>ArrayStack</code> accepts null entries.
  * <p>
  * <b>Note:</b> From version 4.0 onwards, this class does not implement the
  * removed {@code Buffer} interface anymore.
+ * </p>
  *
  * @param <E> the type of elements in this list
  * @see java.util.Stack

@@ -22,6 +22,7 @@ import org.apache.commons.collections4.Predicate;
  * Defines a predicate that decorates one or more other predicates.
  * <p>
  * This interface enables tools to access the decorated predicates.
+ * </p>
  *
  * @since 3.1
  */

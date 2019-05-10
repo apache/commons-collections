@@ -31,6 +31,7 @@ import java.io.Serializable;
  * mappings if a key or value becomes unreachable, or if the JVM's memory is
  * running low. For information on how the different reference types behave,
  * see {@link java.lang.ref.Reference Reference}.
+ * </p>
  * <p>
  * Different types of references can be specified for keys and values.
  * The keys can be configured to be weak but the values hard,
@@ -39,31 +40,38 @@ import java.io.Serializable;
  * <code>WeakHashMap</code></a>. However, you can also specify hard keys and
  * weak values, or any other combination. The default constructor uses
  * hard keys and soft values, providing a memory-sensitive cache.
+ * </p>
  * <p>
  * This map is similar to
  * {@link org.apache.commons.collections4.map.ReferenceIdentityMap ReferenceIdentityMap}.
  * It differs in that keys and values in this class are compared using <code>equals()</code>.
+ * </p>
  * <p>
  * This {@link java.util.Map Map} implementation does <i>not</i> allow null elements.
  * Attempting to add a null key or value to the map will raise a <code>NullPointerException</code>.
+ * </p>
  * <p>
  * This implementation is not synchronized.
  * You can use {@link java.util.Collections#synchronizedMap} to
  * provide synchronized access to a <code>ReferenceMap</code>.
  * Remember that synchronization will not stop the garbage collector removing entries.
+ * </p>
  * <p>
  * All the available iterators can be reset back to the start by casting to
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
+ * </p>
  * <p>
  * <strong>Note that ReferenceMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
  * using {@link java.util.Collections#synchronizedMap}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
+ * </p>
  * <p>
  * NOTE: As from Commons Collections 3.1 this map extends <code>AbstractReferenceMap</code>
  * (previously it extended AbstractMap). As a result, the implementation is now
  * extensible and provides a <code>MapIterator</code>.
+ * </p>
  *
  * @param <K> the type of the keys in the map
  * @param <V> the type of the values in the map

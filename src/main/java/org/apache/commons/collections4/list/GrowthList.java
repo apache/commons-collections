@@ -29,24 +29,30 @@ import java.util.List;
  * This class avoids errors by growing when a set or add method would
  * normally throw an IndexOutOfBoundsException.
  * Note that IndexOutOfBoundsException IS returned for invalid negative indices.
+ * </p>
  * <p>
  * Trying to set or add to an index larger than the size will cause the list
  * to grow (using <code>null</code> elements). Clearly, care must be taken
  * not to use excessively large indices, as the internal list will grow to
  * match.
+ * </p>
  * <p>
  * Trying to use any method other than add or set with an invalid index will
  * call the underlying list and probably result in an IndexOutOfBoundsException.
+ * </p>
  * <p>
  * Take care when using this list with <code>null</code> values, as
  * <code>null</code> is the value added when growing the list.
+ * </p>
  * <p>
  * All sub-lists will access the underlying list directly, and will throw
  * IndexOutOfBoundsExceptions.
+ * </p>
  * <p>
  * This class differs from {@link LazyList} because here growth occurs on
  * set and add, where <code>LazyList</code> grows on get. However, they
  * can be used together by decorating twice.
+ * </p>
  *
  * @see LazyList
  * @since 3.2

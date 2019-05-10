@@ -28,6 +28,7 @@ import org.apache.commons.collections4.Transformer;
  * {@link Comparator#compare(Object,Object) compare} method.
  * <p>
  * This class is Serializable from Commons Collections 4.0.
+ * </p>
  *
  * @param <I> the input type to the transformer
  * @param <O> the output type from the transformer

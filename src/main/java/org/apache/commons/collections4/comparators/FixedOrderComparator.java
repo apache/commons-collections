@@ -36,12 +36,15 @@ import java.util.Map;
  * <p>
  * Once <code>compare</code> has been called, the FixedOrderComparator is locked
  * and attempts to modify it yield an UnsupportedOperationException.
+ * </p>
  * <p>
  * Instances of FixedOrderComparator are not synchronized.  The class is not
  * thread-safe at construction time, but it is thread-safe to perform
  * multiple comparisons  after all the setup operations are complete.
+ * </p>
  * <p>
  * This class is Serializable from Commons Collections 4.0.
+ * </p>
  *
  * @param <T> the type of objects compared by this comparator
  * @since 3.0

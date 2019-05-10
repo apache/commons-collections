@@ -28,8 +28,10 @@ import org.apache.commons.collections4.Transformer;
  * When the {@link #get(Object)} method is called with a key that does not
  * exist in the map, the factory is used to create the object. The created
  * object will be added to the map using the requested key.
+ * </p>
  * <p>
  * For instance:
+ * </p>
  * <pre>
  * Factory&lt;Date&gt; factory = new Factory&lt;Date&gt;() {
  *     public Date create() {
@@ -41,17 +43,21 @@ import org.apache.commons.collections4.Transformer;
  * Date date = lazy.get("NOW");
  * </pre>
  *
+ * <p>
  * After the above code is executed, <code>date</code> will refer to
  * a new <code>Date</code> instance. Furthermore, that <code>Date</code>
  * instance is mapped to the "NOW" key in the map.
+ * </p>
  * <p>
  * <strong>Note that LazySortedMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
  * using {@link java.util.Collections#synchronizedSortedMap}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
+ * </p>
  * <p>
  * This class is Serializable from Commons Collections 3.1.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

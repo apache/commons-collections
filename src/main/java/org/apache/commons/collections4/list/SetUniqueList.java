@@ -40,12 +40,15 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * rejecting duplicates. Each violation is explained in the method, but it
  * should not affect you. Bear in mind that Sets require immutable objects to
  * function correctly.
+ * </p>
  * <p>
  * The {@link org.apache.commons.collections4.set.ListOrderedSet ListOrderedSet}
  * class provides an alternative approach, by wrapping an existing Set and
  * retaining insertion order in the iterator.
+ * </p>
  * <p>
  * This class is Serializable from Commons Collections 3.1.
+ * </p>
  *
  * @since 3.0
  */

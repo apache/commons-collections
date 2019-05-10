@@ -33,6 +33,7 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * Decorates another {@link MultiSet} to ensure it can't be altered.
  * <p>
  * Attempts to modify it will result in an UnsupportedOperationException.
+ * </p>
  *
  * @param <E> the type held in the multiset
  * @since 4.1

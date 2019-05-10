@@ -28,12 +28,16 @@ import java.util.Map;
  * Before keys are added to the map or compared to other existing keys, they are converted
  * to all lowercase in a locale-independent fashion by using information from the Unicode
  * data file.
+ * </p>
  * <p>
  * Null keys are supported.
+ * </p>
  * <p>
  * The <code>keySet()</code> method returns all lowercase keys, or nulls.
+ * </p>
  * <p>
  * Example:
+ * </p>
  * <pre><code>
  *  Map&lt;String, String&gt; map = new CaseInsensitiveMap&lt;String, String&gt;();
  *  map.put("One", "One");
@@ -41,10 +45,12 @@ import java.util.Map;
  *  map.put(null, "Three");
  *  map.put("one", "Four");
  * </code></pre>
+ * <p>
  * creates a <code>CaseInsensitiveMap</code> with three entries.<br>
  * <code>map.get(null)</code> returns <code>"Three"</code> and <code>map.get("ONE")</code>
  * returns <code>"Four".</code>  The <code>Set</code> returned by <code>keySet()</code>
  * equals <code>{"one", "two", null}.</code>
+ * </p>
  * <p>
  * <strong>This map will violate the detail of various Map and map view contracts.</strong>
  * As a general rule, don't compare this map to other maps. In particular, you can't

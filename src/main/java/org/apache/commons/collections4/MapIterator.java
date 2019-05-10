@@ -24,13 +24,16 @@ import java.util.Iterator;
  * This iterator is a special version designed for maps. It can be more
  * efficient to use this rather than an entry set iterator where the option
  * is available, and it is certainly more convenient.
+ * </p>
  * <p>
  * A map that provides this interface may not hold the data internally using
  * Map Entry objects, thus this interface can avoid lots of object creation.
+ * </p>
  * <p>
  * In use, this iterator iterates through the keys in the map. After each call
  * to <code>next()</code>, the <code>getValue()</code> method provides direct
  * access to the value. The value can also be set using <code>setValue()</code>.
+ * </p>
  * <pre>{@code
  * MapIterator<String,Integer> it = map.mapIterator();
  * while (it.hasNext()) {

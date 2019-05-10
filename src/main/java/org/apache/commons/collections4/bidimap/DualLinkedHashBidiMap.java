@@ -30,6 +30,7 @@ import org.apache.commons.collections4.BidiMap;
  * <p>
  * Two <code>LinkedHashMap</code> instances are used in this class.
  * This provides fast lookups at the expense of storing two sets of map entries and two linked lists.
+ * </p>
  *
  * @param <K> the type of the keys in the map
  * @param <V> the type of the values in the map

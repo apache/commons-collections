@@ -35,6 +35,7 @@ import java.util.ListIterator;
  * This implementation supports all of the optional {@link List} operations.
  * It extends <code>AbstractLinkedList</code> and thus provides the
  * stack/queue/dequeue operations available in {@link java.util.LinkedList}.
+ * </p>
  * <p>
  * The main feature of this class is the ability to modify the list and the
  * iterator at the same time. Both the {@link #listIterator()} and {@link #cursor()}
@@ -42,14 +43,17 @@ import java.util.ListIterator;
  * <code>ListIterator</code>. The cursor allows changes to the list concurrent
  * with changes to the iterator. Note that the {@link #iterator()} method and
  * sublists do <b>not</b> provide this cursor behaviour.
+ * </p>
  * <p>
  * The <code>Cursor</code> class is provided partly for backwards compatibility
  * and partly because it allows the cursor to be directly closed. Closing the
  * cursor is optional because references are held via a <code>WeakReference</code>.
  * For most purposes, simply modify the iterator and list at will, and then let
  * the garbage collector to the rest.
+ * </p>
  * <p>
  * <b>Note that this implementation is not synchronized.</b>
+ * </p>
  *
  * @see java.util.LinkedList
  * @since 1.0

@@ -25,12 +25,14 @@ import java.util.Set;
  * Defines a map that holds a collection of values against each key.
  * <p>
  * A {@code MultiValuedMap} is a Map with slightly different semantics:
+ * </p>
  * <ul>
  *   <li>Putting a value into the map will add the value to a {@link Collection} at that key.</li>
  *   <li>Getting a value will return a {@link Collection}, holding all the values put to that key.</li>
  * </ul>
  * <p>
  * For example:
+ * </p>
  * <pre>
  * MultiValuedMap&lt;K, String&gt; map = new MultiValuedHashMap&lt;K, String&gt;();
  * map.put(key, &quot;A&quot;);
@@ -40,7 +42,7 @@ import java.util.Set;
  * </pre>
  * <p>
  * <code>coll</code> will be a collection containing "A", "B", "C".
- * <p>
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

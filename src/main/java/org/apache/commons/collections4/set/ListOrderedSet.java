@@ -39,17 +39,21 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * If an object is added to the set for a second time, it will remain in the
  * original position in the iteration. The order can be observed from the set
  * via the iterator or toArray methods.
+ * </p>
  * <p>
  * The ListOrderedSet also has various useful direct methods. These include many
  * from <code>List</code>, such as <code>get(int)</code>,
  * <code>remove(int)</code> and <code>indexOf(int)</code>. An unmodifiable
  * <code>List</code> view of the set can be obtained via <code>asList()</code>.
+ * </p>
  * <p>
  * This class cannot implement the <code>List</code> interface directly as
  * various interface methods (notably equals/hashCode) are incompatible with a
  * set.
+ * </p>
  * <p>
  * This class is Serializable from Commons Collections 3.1.
+ * </p>
  *
  * @param <E> the type of the elements in this set
  * @since 3.0

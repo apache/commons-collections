@@ -31,13 +31,16 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * <p>
  * The add, remove, clear and retain operations are unsupported.
  * The set method is allowed (as it doesn't change the list size).
+ * </p>
  * <p>
  * NOTE:
  * Modifying the decorated list directly would results in influencing the outcome
  * of method calls on this object. For example, the bounds of this list would reflect
  * a newly added object to the underlying list.
+ * </p>
  * <p>
  * This class is Serializable from Commons Collections 3.1.
+ * </p>
  *
  * @param <E> the type of elements in this collection
  * @since 3.0

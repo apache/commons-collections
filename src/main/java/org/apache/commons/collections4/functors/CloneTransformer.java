@@ -22,11 +22,13 @@ import org.apache.commons.collections4.Transformer;
  * Transformer implementation that returns a clone of the input object.
  * <p>
  * Clone is performed using <code>PrototypeFactory.prototypeFactory(input).create()</code>.
+ * </p>
  * <p>
  * <b>WARNING:</b> from v4.1 onwards this class will <b>not</b> be serializable anymore
  * in order to prevent potential remote code execution exploits. Please refer to
  * <a href="https://issues.apache.org/jira/browse/COLLECTIONS-580">COLLECTIONS-580</a>
  * for more details.
+ * </p>
  *
  * @since 3.0
  */

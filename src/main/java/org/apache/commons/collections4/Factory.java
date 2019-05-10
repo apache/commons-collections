@@ -21,10 +21,12 @@ package org.apache.commons.collections4;
  * <p>
  * A <code>Factory</code> creates an object without using an input parameter.
  * If an input parameter is required, then {@link Transformer} is more appropriate.
+ * </p>
  * <p>
  * Standard implementations of common factories are provided by
  * {@link FactoryUtils}. These include factories that return a constant,
  * a copy of a prototype or a new instance.
+ * </p>
  *
  * @param <T> the type that the factory creates
  *

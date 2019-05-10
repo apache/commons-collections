@@ -15,6 +15,7 @@ package org.apache.commons.collections4;
  * <p>
  * It is the functional sibling of {@link java.util.Comparator}; {@link Equator} is to
  * {@link Object} as {@link java.util.Comparator} is to {@link java.lang.Comparable}.
+ * </p>
  *
  * @param <T> the types of object this {@link Equator} can evaluate.
  * @since 4.0

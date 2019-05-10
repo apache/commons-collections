@@ -46,8 +46,10 @@ import org.apache.commons.collections4.iterators.PermutationIterator;
  * Various utility methods might put the input objects into a Set/Map/Bag. In case
  * the input objects override {@link Object#equals(Object)}, it is mandatory that
  * the general contract of the {@link Object#hashCode()} method is maintained.
+ * </p>
  * <p>
  * NOTE: From 4.0, method parameters will take {@link Iterable} objects when possible.
+ * </p>
  *
  * @since 1.0
  */

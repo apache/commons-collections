@@ -32,9 +32,11 @@ import org.apache.commons.collections4.BidiMap;
  * This provides fast lookups at the expense of storing two sets of map entries.
  * Commons Collections would welcome the addition of a direct hash-based
  * implementation of the {@link BidiMap} interface.
+ * </p>
  * <p>
  * NOTE: From Commons Collections 3.1, all subclasses will use {@link HashMap}
  * and the flawed <code>createMap</code> method is ignored.
+ * </p>
  *
  * @param <K> the type of the keys in the map
  * @param <V> the type of the values in the map

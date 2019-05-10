@@ -32,6 +32,7 @@ import org.apache.commons.collections4.set.AbstractSetDecorator;
  * Decorates a map entry <code>Set</code> to ensure it can't be altered.
  * <p>
  * Attempts to modify it will result in an UnsupportedOperationException.
+ * </p>
  *
  * @param <K> the type of the keys in the map
  * @param <V> the type of the values in the map

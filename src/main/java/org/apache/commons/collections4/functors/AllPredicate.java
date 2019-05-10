@@ -31,6 +31,7 @@ import org.apache.commons.collections4.Predicate;
  * <p>
  * NOTE: In versions prior to 3.2 an array size of zero or one
  * threw an exception.
+ * </p>
  *
  * @since 3.0
  */

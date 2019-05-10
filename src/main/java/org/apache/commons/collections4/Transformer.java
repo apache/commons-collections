@@ -24,10 +24,12 @@ package org.apache.commons.collections4;
  * The input object should be left unchanged.
  * Transformers are typically used for type conversions, or extracting data
  * from an object.
+ * </p>
  * <p>
  * Standard implementations of common transformers are provided by
  * {@link TransformerUtils}. These include method invocation, returning a constant,
  * cloning and returning the string value.
+ * </p>
  *
  * @param <I> the input type to the transformer
  * @param <O> the output type from the transformer

@@ -22,6 +22,7 @@ package org.apache.commons.collections4;
  * A Map Entry has considerable additional semantics over and above a simple
  * key-value pair. This interface defines the minimum key value, with just the
  * two get methods.
+ * </p>
  *
  * @param <K> the type of the key
  * @param <V> the type of the value

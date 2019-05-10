@@ -30,6 +30,7 @@ import java.util.HashMap;
  * A {@code MultiSet} stores each object in the collection together with a
  * count of occurrences. Extra methods on the interface allow multiple copies
  * of an object to be added or removed at once.
+ * </p>
  *
  * @param <E> the type held in the multiset
  * @since 4.1

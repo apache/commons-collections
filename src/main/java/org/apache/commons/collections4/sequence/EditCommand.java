@@ -24,6 +24,7 @@ package org.apache.commons.collections4.sequence;
  * {@link SequencesComparator#getScript SequencesComparator.getScript} method,
  * the result is provided has a {@link EditScript script} containing the commands
  * that progressively transform the first sequence into the second one.
+ * </p>
  * <p>
  * There are only three types of commands, all of which are subclasses of this
  * abstract class. Each command is associated with one object belonging to at
@@ -38,6 +39,7 @@ package org.apache.commons.collections4.sequence;
  * the object passed as an argument comes from the second sequence) ; this can
  * be important if subclassing is used for some elements in the first sequence
  * and the <code>equals</code> method is specialized.
+ * </p>
  *
  * @see SequencesComparator
  * @see EditScript

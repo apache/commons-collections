@@ -32,12 +32,14 @@ import org.apache.commons.collections4.collection.CompositeCollection;
  * Changes made to this map will actually be made on the decorated map.
  * Add and remove operations require the use of a pluggable strategy. If no
  * strategy is provided then add and remove are unsupported.
+ * </p>
  * <p>
  * <strong>Note that CompositeMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
  * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

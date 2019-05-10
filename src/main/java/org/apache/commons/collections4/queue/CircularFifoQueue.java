@@ -36,12 +36,15 @@ import org.apache.commons.collections4.BoundedCollection;
  * The removal order of a {@link CircularFifoQueue} is based on the
  * insertion order; elements are removed in the same order in which they
  * were added.  The iteration order is the same as the removal order.
+ * </p>
  * <p>
  * The {@link #add(Object)}, {@link #remove()}, {@link #peek()}, {@link #poll},
  * {@link #offer(Object)} operations all perform in constant time.
  * All other operations perform in linear time or worse.
+ * </p>
  * <p>
  * This queue prevents null objects from being added.
+ * </p>
  *
  * @param <E> the type of elements in this collection
  * @since 4.0

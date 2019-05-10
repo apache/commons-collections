@@ -37,24 +37,30 @@ import org.apache.commons.collections4.functors.FactoryTransformer;
  * the constructor/factory. Only the get method is altered, so the
  * {@link Map#containsKey(Object)} can be used to determine if a key really
  * is in the map or not.
+ * </p>
  * <p>
  * The defaulted value is not added to the map.
  * Compare this behaviour with {@link LazyMap}, which does add the value
  * to the map (via a Transformer).
+ * </p>
  * <p>
  * For instance:
+ * </p>
  * <pre>
  * Map map = new DefaultedMap("NULL");
  * Object obj = map.get("Surname");
  * // obj == "NULL"
  * </pre>
+ * <p>
  * After the above code is executed the map is still empty.
+ * </p>
  * <p>
  * <strong>Note that DefaultedMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
  * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

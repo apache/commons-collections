@@ -98,7 +98,7 @@ public class SetUtilsTest {
             // expected
         }
     }
-    
+
     @Test
     public void intersection() {
         final SetView<Integer> set = SetUtils.intersection(setA, setB);
@@ -128,7 +128,7 @@ public class SetUtilsTest {
             // expected
         }
     }
-    
+
     @Before
     public void setUp() {
         setA = new HashSet<>();
@@ -145,7 +145,7 @@ public class SetUtilsTest {
         setB.add(6);
         setB.add(7);
     }
-    
+
     @Test
     public void testEmptyIfNull() {
         assertTrue(SetUtils.emptyIfNull(null).isEmpty());
@@ -191,23 +191,23 @@ public class SetUtilsTest {
     {
         Set<?> set1 = SetUtils.unmodifiableSet();
         assertTrue("set is empty", set1.isEmpty());
-        
+
         Set<Integer> set2 = SetUtils.hashSet(1, 2, 2, 3);
         assertEquals("set has 3 elements", 3, set2.size());
         assertTrue("set contains 1", set2.contains(1));
         assertTrue("set contains 2", set2.contains(2));
         assertTrue("set contains 3", set2.contains(3));
-        
+
         Set<String> set3 = SetUtils.hashSet("1", "2", "2", "3");
         assertEquals("set has 3 elements", 3, set3.size());
         assertTrue("set contains 1", set3.contains("1"));
         assertTrue("set contains 2", set3.contains("2"));
         assertTrue("set contains 3", set3.contains("3"));
-        
+
         Set<?> set4 = SetUtils.hashSet(null, null);
         assertEquals("set has 1 element", 1, set4.size());
         assertTrue("set contains null", set4.contains(null));
-        
+
         Set<?> set5 = SetUtils.hashSet((Object[]) null);
         assertEquals("set is null", null, set5);
     }
@@ -258,23 +258,23 @@ public class SetUtilsTest {
     {
         Set<?> set1 = SetUtils.unmodifiableSet();
         assertTrue("set is empty", set1.isEmpty());
-        
+
         Set<Integer> set2 = SetUtils.unmodifiableSet(1, 2, 2, 3);
         assertEquals("set has 3 elements", 3, set2.size());
         assertTrue("set contains 1", set2.contains(1));
         assertTrue("set contains 2", set2.contains(2));
         assertTrue("set contains 3", set2.contains(3));
-        
+
         Set<String> set3 = SetUtils.unmodifiableSet("1", "2", "2", "3");
         assertEquals("set has 3 elements", 3, set3.size());
         assertTrue("set contains 1", set3.contains("1"));
         assertTrue("set contains 2", set3.contains("2"));
         assertTrue("set contains 3", set3.contains("3"));
-        
+
         Set<?> set4 = SetUtils.unmodifiableSet(null, null);
         assertEquals("set has 1 element", 1, set4.size());
         assertTrue("set contains null", set4.contains(null));
-        
+
         Set<?> set5 = SetUtils.unmodifiableSet((Object[]) null);
         assertEquals("set is null", null, set5);
     }

@@ -27,6 +27,7 @@ import java.util.Set;
  * Suppose you have a MultiSet that contains <code>{a, a, b, c}</code>.
  * Calling {@link #getCount(Object)} on <code>a</code> would return 2, while
  * calling {@link #uniqueSet()} would return <code>{a, b, c}</code>.
+ * </p>
  *
  * @param <E> the type held in the multiset
  * @since 4.1

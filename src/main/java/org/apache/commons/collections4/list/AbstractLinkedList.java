@@ -37,6 +37,7 @@ import org.apache.commons.collections4.OrderedIterator;
  * Overridable methods are provided to change the storage node and to change how
  * nodes are added to and removed. Hopefully, all you need for unusual subclasses
  * is here.
+ * </p>
  *
  * @since 3.0
  */

@@ -26,12 +26,14 @@ import org.apache.commons.collections4.SortedBidiMap;
  * to a SortedBidiMap via decoration.
  * <p>
  * Methods are forwarded directly to the decorated map.
+ * </p>
  * <p>
  * This implementation does not perform any special processing with the map views.
  * Instead it simply returns the inverse from the wrapped map. This may be
  * undesirable, for example if you are trying to write a validating implementation
  * it would provide a loophole around the validation.
  * But, you might want that loophole, so this class is kept simple.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

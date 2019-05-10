@@ -24,12 +24,14 @@ import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
  * Decorates another {@link Queue} to provide additional behaviour.
  * <p>
  * Methods are forwarded directly to the decorated queue.
+ * </p>
  * <p>
  * This implementation does not forward the hashCode and equals methods through
  * to the backing object, but relies on Object's implementation. This is
  * necessary as some Queue implementations, e.g. LinkedList, have custom a
  * equals implementation for which symmetry can not be preserved.
  * See class javadoc of AbstractCollectionDecorator for more information.
+ * </p>
  *
  * @param <E> the type of the elements in the queue
  * @since 4.0

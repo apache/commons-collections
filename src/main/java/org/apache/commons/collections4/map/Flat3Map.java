@@ -40,6 +40,7 @@ import org.apache.commons.collections4.iterators.EmptyMapIterator;
  * <p>
  * This map is designed for performance and can outstrip HashMap.
  * It also has good garbage collection characteristics.
+ * </p>
  * <ul>
  * <li>Optimised for operation at size 3 or less.
  * <li>Still works well once size 3 exceeded.
@@ -47,25 +48,31 @@ import org.apache.commons.collections4.iterators.EmptyMapIterator;
  * <li>Puts at size 3 or less are over 4 times faster than HashMap.
  * <li>Performance 5% slower than HashMap once size 3 exceeded once.
  * </ul>
+ * <p>
  * The design uses two distinct modes of operation - flat and delegate.
  * While the map is size 3 or less, operations map straight onto fields using
  * switch statements. Once size 4 is reached, the map switches to delegate mode
  * and only switches back when cleared. In delegate mode, all operations are
  * forwarded straight to a HashMap resulting in the 5% performance loss.
+ * </p>
  * <p>
  * The performance gains on puts are due to not needing to create a Map Entry
  * object. This is a large saving not only in performance but in garbage collection.
+ * </p>
  * <p>
  * Whilst in flat mode this map is also easy for the garbage collector to dispatch.
  * This is because it contains no complex objects or arrays which slow the progress.
+ * </p>
  * <p>
  * Do not use <code>Flat3Map</code> if the size is likely to grow beyond 3.
+ * </p>
  * <p>
  * <strong>Note that Flat3Map is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
  * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

@@ -28,12 +28,15 @@ package org.apache.commons.collections4.sequence;
  * it will perform the loop over all commands in the script and the
  * proper methods of the user class will be called as the commands are
  * encountered.
+ * </p>
  * <p>
  * The implementation of the user visitor class will depend on the
  * need. Here are two examples.
+ * </p>
  * <p>
  * The first example is a visitor that build the longest common
  * subsequence:
+ * </p>
  * <pre>
  * import org.apache.commons.collections4.comparators.sequence.CommandVisitor;
  *
@@ -66,6 +69,7 @@ package org.apache.commons.collections4.sequence;
  * <p>
  * The second example is a visitor that shows the commands and the way
  * they transform the first sequence into the second one:
+ * </p>
  * <pre>
  * import org.apache.commons.collections4.comparators.sequence.CommandVisitor;
  *

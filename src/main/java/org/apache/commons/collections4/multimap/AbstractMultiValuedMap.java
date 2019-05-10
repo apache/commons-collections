@@ -50,6 +50,7 @@ import org.apache.commons.collections4.multiset.UnmodifiableMultiSet;
  * the creation of subclass implementations.
  * <p>
  * Subclasses specify a Map implementation to use as the internal storage.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

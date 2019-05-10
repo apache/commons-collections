@@ -41,13 +41,16 @@ import org.apache.commons.collections4.map.AbstractSortedMapDecorator;
  * <p>
  * The setValue() method on iterators will succeed only if the new value being set is
  * not already in the bidimap.
+ * </p>
  * <p>
  * When considering whether to use this class, the {@link TreeBidiMap} class should
  * also be considered. It implements the interface using a dedicated design, and does
  * not store each object twice, which can save on memory use.
+ * </p>
  * <p>
  * NOTE: From Commons Collections 3.1, all subclasses will use {@link TreeMap}
  * and the flawed <code>createMap</code> method is ignored.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

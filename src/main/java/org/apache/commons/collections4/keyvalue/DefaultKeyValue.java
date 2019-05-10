@@ -26,6 +26,7 @@ import org.apache.commons.collections4.KeyValue;
  * <p>
  * Note that a <code>DefaultKeyValue</code> instance may not contain
  * itself as a key or value.
+ * </p>
  *
  * @since 3.0
  */

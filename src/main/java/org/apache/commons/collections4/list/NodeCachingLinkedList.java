@@ -29,12 +29,15 @@ import java.util.Collection;
  * A linked list creates one Node for each item of data added. This can result in
  * a lot of object creation and garbage collection. This implementation seeks to
  * avoid that by maintaining a store of cached nodes.
+ * </p>
  * <p>
  * This implementation is suitable for long-lived lists where both add and remove
  * are used. Short-lived lists, or lists which only grow will have worse performance
  * using this class.
+ * </p>
  * <p>
  * <b>Note that this implementation is not synchronized.</b>
+ * </p>
  *
  * @since 3.0
  */

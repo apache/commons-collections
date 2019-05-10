@@ -31,6 +31,7 @@ import org.apache.commons.collections4.functors.DefaultEquator;
  * the second sequence. This can be important if subclassing is used for some
  * elements in the first sequence and the <code>equals</code> method is
  * specialized.
+ * </p>
  * <p>
  * Comparison can be seen from two points of view: either as giving the smallest
  * modification allowing to transform the first sequence into the second one, or
@@ -38,6 +39,7 @@ import org.apache.commons.collections4.functors.DefaultEquator;
  * sequences. The <code>equals</code> method is used to compare objects, so any
  * object can be put into sequences. Modifications include deleting, inserting
  * or keeping one object, starting from the beginning of the first sequence.
+ * </p>
  * <p>
  * This class implements the comparison algorithm, which is the very efficient
  * algorithm from Eugene W. Myers
@@ -48,6 +50,7 @@ import org.apache.commons.collections4.functors.DefaultEquator;
  * containing all the
  * {@link EditCommand commands}
  * needed to transform the first sequence into the second one.
+ * </p>
  *
  * @see EditScript
  * @see EditCommand

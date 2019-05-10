@@ -36,20 +36,24 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * Any action that would change the size of the map is disallowed.
  * The put method is allowed to change the value associated with an existing
  * key however.
+ * </p>
  * <p>
  * If trying to remove or clear the map, an UnsupportedOperationException is
  * thrown. If trying to put a new mapping into the map, an
  * IllegalArgumentException is thrown. This is because the put method can
  * succeed if the mapping's key already exists in the map, so the put method
  * is not always unsupported.
+ * </p>
  * <p>
  * <strong>Note that FixedSizeSortedMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
  * using {@link java.util.Collections#synchronizedSortedMap}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
+ * </p>
  * <p>
  * This class is Serializable from Commons Collections 3.1.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

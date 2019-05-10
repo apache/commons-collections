@@ -22,6 +22,7 @@ import java.util.List;
  * Defines a map that holds a list of values against each key.
  * <p>
  * A {@code ListValuedMap} is a Map with slightly different semantics:
+ * </p>
  * <ul>
  *   <li>Putting a value into the map will add the value to a {@link List} at that key.</li>
  *   <li>Getting a value will return a {@link List}, holding all the values put to that key.</li>

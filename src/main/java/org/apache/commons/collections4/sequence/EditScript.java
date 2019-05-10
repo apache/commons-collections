@@ -27,6 +27,7 @@ import java.util.List;
  * sequences. It is built as the result of the comparison between two sequences
  * by the {@link SequencesComparator SequencesComparator} class. The user can
  * walk through it using the <em>visitor</em> design pattern.
+ * </p>
  * <p>
  * It is guaranteed that the objects embedded in the {@link InsertCommand insert
  * commands} come from the second sequence and that the objects embedded in
@@ -34,6 +35,7 @@ import java.util.List;
  * commands} come from the first sequence. This can be important if subclassing
  * is used for some elements in the first sequence and the <code>equals</code>
  * method is specialized.
+ * </p>
  *
  * @see SequencesComparator
  * @see EditCommand

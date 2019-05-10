@@ -32,6 +32,7 @@ import org.apache.commons.collections4.BoundedMap;
  * Iteration of any kind, including setting the value by iteration, does not
  * change the order. Queries such as containsKey and containsValue or access
  * via views also do not change the order.
+ * </p>
  * <p>
  * A somewhat subtle ramification of the least recently used
  * algorithm is that calls to {@link #get(Object)} stand a very good chance
@@ -39,20 +40,24 @@ import org.apache.commons.collections4.BoundedMap;
  * iterators currently in use.  It is therefore suggested that iterations
  * over an {@link LRUMap} instance access entry values only through a
  * {@link org.apache.commons.collections4.MapIterator MapIterator} or {@link #entrySet()} iterator.
+ * </p>
  * <p>
  * The map implements <code>OrderedMap</code> and entries may be queried using
  * the bidirectional <code>OrderedMapIterator</code>. The order returned is
  * least recently used to most recently used. Iterators from map views can
  * also be cast to <code>OrderedIterator</code> if required.
+ * </p>
  * <p>
  * All the available iterators can be reset back to the start by casting to
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
+ * </p>
  * <p>
  * <strong>Note that LRUMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
  * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * <code>NullPointerException</code>'s when accessed by concurrent threads.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

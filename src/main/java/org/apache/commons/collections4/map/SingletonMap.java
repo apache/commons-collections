@@ -40,13 +40,16 @@ import org.apache.commons.collections4.keyvalue.TiedMapEntry;
  * The map is fixed size so any action that would change the size is disallowed.
  * However, the <code>put</code> or <code>setValue</code> methods can <i>change</i>
  * the value associated with the key.
+ * </p>
  * <p>
  * If trying to remove or clear the map, an UnsupportedOperationException is thrown.
  * If trying to put a new mapping into the map, an  IllegalArgumentException is thrown.
  * The put method will only succeed if the key specified is the same as the
  * singleton key.
+ * </p>
  * <p>
  * The key and value can be obtained by:
+ * </p>
  * <ul>
  * <li>normal Map methods and views
  * <li>the <code>MapIterator</code>, see {@link #mapIterator()}

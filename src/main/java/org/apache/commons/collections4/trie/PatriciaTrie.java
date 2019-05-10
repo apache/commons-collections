@@ -34,11 +34,13 @@ import org.apache.commons.collections4.trie.analyzer.StringKeyAnalyzer;
  * is the number of bits in the largest item in the tree. In practice,
  * operations actually take O(A(K)) time, where A(K) is the average number of
  * bits of all items in the tree.
+ * </p>
  * <p>
  * Most importantly, PATRICIA requires very few comparisons to keys while
  * doing any operation. While performing a lookup, each comparison (at most
  * K of them, described above) will perform a single bit comparison against
  * the given key, instead of comparing the entire key to another key.
+ * </p>
  * <p>
  * The {@link org.apache.commons.collections4.Trie} can return operations in
  * lexicographical order using the 'prefixMap', 'submap', or 'iterator' methods.
@@ -46,10 +48,12 @@ import org.apache.commons.collections4.trie.analyzer.StringKeyAnalyzer;
  * scan for items that are 'bitwise' (using an XOR metric) by the 'select' method.
  * Bitwise closeness is determined by the {@link KeyAnalyzer} returning true or
  * false for a bit being set or not in a given key.
+ * </p>
  * <p>
  * This PATRICIA {@link org.apache.commons.collections4.Trie} supports both variable
  * length &amp; fixed length keys. Some methods, such as {@link #prefixMap(Object)}
  * are suited only to variable length keys.
+ * </p>
  *
  * @param <E> the type of the values in this map
  *

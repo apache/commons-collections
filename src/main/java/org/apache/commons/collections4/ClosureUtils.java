@@ -48,6 +48,7 @@ import org.apache.commons.collections4.functors.WhileClosure;
  * <p>
  * Since v4.1 only closures which are considered to be safe are
  * Serializable. Closures considered to be unsafe for serialization are:
+ * </p>
  * <ul>
  * <li>Invoker
  * <li>For

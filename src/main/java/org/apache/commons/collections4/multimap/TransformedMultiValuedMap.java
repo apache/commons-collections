@@ -31,8 +31,10 @@ import org.apache.commons.collections4.Transformer;
  * removed or searched for using their transformed form. For example, if the
  * transformation converts Strings to Integers, you must use the Integer form to
  * remove objects.
+ * </p>
  * <p>
  * <strong>Note that TransformedMultiValuedMap is not synchronized and is not thread-safe.</strong>
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

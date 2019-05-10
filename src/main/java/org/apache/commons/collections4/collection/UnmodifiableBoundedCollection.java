@@ -33,10 +33,13 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
  * longer accessible.
  * The factory on this class will attempt to retrieve the bounded nature by
  * examining the package scope variables.
+ * </p>
  * <p>
  * This class is Serializable from Commons Collections 3.1.
+ * </p>
  * <p>
  * Attempts to modify it will result in an UnsupportedOperationException.
+ * </p>
  *
  * @param <E> the type of elements in this collection
  * @since 3.0

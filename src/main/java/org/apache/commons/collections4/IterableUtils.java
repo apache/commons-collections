@@ -33,6 +33,7 @@ import org.apache.commons.collections4.iterators.UniqueFilterIterator;
  * Provides utility methods and decorators for {@link Iterable} instances.
  * <p>
  * <b>Note</b>: this util class has been designed for fail-fast argument checking.
+ * </p>
  * <ul>
  * <li>
  * all decorator methods are <b>NOT</b> null-safe wrt the provided Iterable argument, i.e.

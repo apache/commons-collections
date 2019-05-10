@@ -22,7 +22,7 @@ import java.util.Comparator;
 /**
  * A {@link Comparator} for {@link Boolean} objects that can sort either
  * true or false first.
- * <p>
+ *
  * @see #getTrueFirstComparator()
  * @see #getFalseFirstComparator()
  * @see #booleanComparator(boolean)

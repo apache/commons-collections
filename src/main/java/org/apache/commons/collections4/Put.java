@@ -26,6 +26,7 @@ import java.util.Map;
  * makes no assumptions in this regard (there is no association with, nor even knowledge
  * of, a "reading" interface) and thus defines {@link #put(Object, Object)} as returning
  * {@link Object}.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

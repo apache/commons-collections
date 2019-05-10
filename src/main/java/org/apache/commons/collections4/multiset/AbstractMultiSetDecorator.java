@@ -25,6 +25,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
  * Decorates another <code>MultSet</code> to provide additional behaviour.
  * <p>
  * Methods are forwarded directly to the decorated multiset.
+ * </p>
  *
  * @param <E> the type held in the multiset
  * @since 4.1

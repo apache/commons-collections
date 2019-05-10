@@ -22,6 +22,7 @@ import java.util.Set;
  * Defines a map that holds a set of values against each key.
  * <p>
  * A {@code SetValuedMap} is a Map with slightly different semantics:
+ * </p>
  * <ul>
  *   <li>Putting a value into the map will add the value to a {@link Set} at that key.</li>
  *   <li>Getting a value will return a {@link Set}, holding all the values put to that key.</li>

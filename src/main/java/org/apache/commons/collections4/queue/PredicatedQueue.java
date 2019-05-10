@@ -28,8 +28,10 @@ import org.apache.commons.collections4.collection.PredicatedCollection;
  * This queue exists to provide validation for the decorated queue.
  * It is normally created to decorate an empty queue.
  * If an object cannot be added to the queue, an IllegalArgumentException is thrown.
+ * </p>
  * <p>
  * One usage would be to ensure that no null entries are added to the queue.
+ * </p>
  * <pre>Queue queue = PredicatedQueue.predicatedQueue(new UnboundedFifoQueue(), NotNullPredicate.INSTANCE);</pre>
  *
  * @param <E> the type of elements held in this queue

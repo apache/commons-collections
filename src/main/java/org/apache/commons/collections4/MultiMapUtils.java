@@ -33,6 +33,7 @@ import org.apache.commons.collections4.multimap.UnmodifiableMultiValuedMap;
  * <p>
  * It contains various type safe and null safe methods. Additionally, it provides
  * the following decorators:
+ * </p>
  * <ul>
  *   <li>{@link #unmodifiableMultiValuedMap(MultiValuedMap)}</li>
  *   <li>{@link #transformedMultiValuedMap(MultiValuedMap, Transformer, Transformer)}</li>

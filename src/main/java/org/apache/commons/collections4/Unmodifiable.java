@@ -20,6 +20,7 @@ package org.apache.commons.collections4;
  * Marker interface for collections, maps and iterators that are unmodifiable.
  * <p>
  * This interface enables testing such as:
+ * </p>
  * <pre>
  * if (coll instanceof Unmodifiable) {
  *   coll = new ArrayList(coll);

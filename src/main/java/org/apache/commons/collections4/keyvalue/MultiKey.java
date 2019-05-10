@@ -26,8 +26,10 @@ import java.util.Arrays;
  * maps of maps. An example might be the need to look up a file name by
  * key and locale. The typical solution might be nested maps. This class
  * can be used instead by creating an instance passing in the key and locale.
+ * </p>
  * <p>
  * Example usage:
+ * </p>
  * <pre>
  * // populate map with data mapping key+locale to localizedText
  * Map map = new HashMap();

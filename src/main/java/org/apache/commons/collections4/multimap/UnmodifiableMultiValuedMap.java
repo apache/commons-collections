@@ -35,6 +35,7 @@ import org.apache.commons.collections4.set.UnmodifiableSet;
  * Decorates another {@link MultiValuedMap} to ensure it can't be altered.
  * <p>
  * Attempts to modify it will result in an UnsupportedOperationException.
+ * </p>
  *
  * @param <K> the type of key elements
  * @param <V> the type of value elements

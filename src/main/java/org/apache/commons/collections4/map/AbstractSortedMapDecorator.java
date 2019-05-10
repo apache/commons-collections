@@ -32,12 +32,14 @@ import org.apache.commons.collections4.iterators.ListIteratorWrapper;
  * to a Map via decoration.
  * <p>
  * Methods are forwarded directly to the decorated map.
+ * </p>
  * <p>
  * This implementation does not perform any special processing with the map views.
  * Instead it simply returns the set/collection from the wrapped map. This may be
  * undesirable, for example if you are trying to write a validating implementation
  * it would provide a loophole around the validation.
  * But, you might want that loophole, so this class is kept simple.
+ * </p>
  *
  * @param <K> the type of the keys in the map
  * @param <V> the type of the values in the map

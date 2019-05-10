@@ -24,6 +24,7 @@ import org.apache.commons.collections4.collection.AbstractCollectionDecorator;
  * Decorates another <code>Set</code> to provide additional behaviour.
  * <p>
  * Methods are forwarded directly to the decorated set.
+ * </p>
  *
  * @param <E> the type of the elements in this set
  * @since 3.0

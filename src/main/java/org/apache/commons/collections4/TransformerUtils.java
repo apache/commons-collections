@@ -59,6 +59,7 @@ import org.apache.commons.collections4.functors.SwitchTransformer;
  * <p>
  * Since v4.1 only transformers which are considered to be safe are
  * Serializable. Transformers considered to be unsafe for serialization are:
+ * </p>
  * <ul>
  * <li>Invoker
  * <li>Clone

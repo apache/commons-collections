@@ -28,6 +28,7 @@ import java.util.Comparator;
  * key and returns the bit index where one key is different from another
  * key (if the key and found key are equal than the return value is
  * {@link #EQUAL_BIT_KEY}).
+ * </p>
  *
  * @param <K> the type of objects that may be compared by this analyzer
  * @since 4.0

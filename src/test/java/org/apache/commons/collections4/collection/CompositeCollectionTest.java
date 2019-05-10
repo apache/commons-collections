@@ -258,21 +258,21 @@ public class CompositeCollectionTest<E> extends AbstractCollectionTest<E> {
         cc.addComposited(nullList);
         Assert.assertEquals(0, cc.size());
     }
-    
+
     public void testAddNullLists2Args() {
         ArrayList<String> nullList = null;
         CompositeCollection<String> cc = new CompositeCollection<>();
         cc.addComposited(nullList, nullList);
         Assert.assertEquals(0, cc.size());
     }
-    
+
     public void testAddNullListsVarArgs() {
         ArrayList<String> nullList = null;
         CompositeCollection<String> cc = new CompositeCollection<>();
         cc.addComposited(nullList, nullList, nullList);
         Assert.assertEquals(0, cc.size());
     }
-    
+
     @SuppressWarnings("unchecked")
     public void testIsEmpty() {
         setUpTest();

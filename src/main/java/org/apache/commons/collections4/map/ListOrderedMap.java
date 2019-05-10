@@ -48,15 +48,18 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * The <code>orderedMapIterator()</code> method accesses an iterator that can
  * iterate both forwards and backwards through the map.
  * In addition, non-interface methods are provided to access the map by index.
+ * </p>
  * <p>
  * If an object is added to the Map for a second time, it will remain in the
  * original position in the iteration.
+ * </p>
  * <p>
  * <strong>Note that ListOrderedMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
  * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
+ * </p>
  * <p>
  * <strong>Note that ListOrderedMap doesn't work with
  * {@link java.util.IdentityHashMap IdentityHashMap}, {@link CaseInsensitiveMap},
@@ -69,8 +72,10 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * {@link CaseInsensitiveMap} don't: The former uses <code>==</code>, and
  * the latter uses {@link Object#equals(Object) equals()} on a lower-cased
  * key.
+ * </p>
  * <p>
  * This class is {@link Serializable} starting with Commons Collections 3.1.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

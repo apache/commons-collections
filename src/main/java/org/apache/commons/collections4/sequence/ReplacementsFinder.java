@@ -34,12 +34,14 @@ import java.util.List;
  * {@link DeleteCommand delete}, {@link KeepCommand keep} and
  * {@link InsertCommand insert} commands by fewer replacements acting on
  * complete sub-sequences.
+ * </p>
  * <p>
  * This class is devoted to perform this interpretation. It visits an
  * {@link EditScript edit script} (because it implements the
  * {@link CommandVisitor CommandVisitor} interface) and calls a user-supplied
  * handler implementing the {@link ReplacementsHandler ReplacementsHandler}
  * interface to process the sub-sequences.
+ * </p>
  *
  * @see ReplacementsHandler
  * @see EditScript

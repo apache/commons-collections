@@ -41,22 +41,27 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * functionality, additional convenience methods and allowing
  * bidirectional iteration. It also implements <code>OrderedMap</code>.
  * In addition, non-interface methods are provided to access the map by index.
+ * </p>
  * <p>
  * The <code>orderedMapIterator()</code> method provides direct access to a
  * bidirectional iterator. The iterators from the other views can also be cast
  * to <code>OrderedIterator</code> if required.
+ * </p>
  * <p>
  * All the available iterators can be reset back to the start by casting to
  * <code>ResettableIterator</code> and calling <code>reset()</code>.
+ * </p>
  * <p>
  * The implementation is also designed to be subclassed, with lots of useful
  * methods exposed.
+ * </p>
  * <p>
  * <strong>Note that LinkedMap is not synchronized and is not thread-safe.</strong>
  * If you wish to use this map from multiple threads concurrently, you must use
  * appropriate synchronization. The simplest approach is to wrap this map
  * using {@link java.util.Collections#synchronizedMap(Map)}. This class may throw
  * exceptions when accessed by concurrent threads without synchronization.
+ * </p>
  *
  * @param <K> the type of the keys in this map
  * @param <V> the type of the values in this map

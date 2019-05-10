@@ -29,8 +29,10 @@ import org.apache.commons.collections4.Factory;
  * If a get method call encounters a null, it will be replaced with a new
  * object from the factory. Thus this list is unsuitable for storing null
  * objects.
+ * </p>
  * <p>
  * For instance:
+ * </p>
  *
  * <pre>
  * Factory&lt;Date&gt; factory = new Factory&lt;Date&gt;() {
@@ -42,16 +44,20 @@ import org.apache.commons.collections4.Factory;
  * Date date = lazy.get(3);
  * </pre>
  *
+ * <p>
  * After the above code is executed, <code>date</code> will contain
  * a new <code>Date</code> instance.  Furthermore, that <code>Date</code>
  * instance is the fourth element in the list.  The first, second,
  * and third element are all set to <code>null</code>.
+ * </p>
  * <p>
  * This class differs from {@link GrowthList} because here growth occurs on
  * get, where <code>GrowthList</code> grows on set and add. However, they
  * could easily be used together by decorating twice.
+ * </p>
  * <p>
  * This class is Serializable from Commons Collections 3.1.
+ * </p>
  *
  * @see GrowthList
  * @since 3.0

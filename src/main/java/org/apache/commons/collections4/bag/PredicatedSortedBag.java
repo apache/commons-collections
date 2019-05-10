@@ -28,6 +28,7 @@ import org.apache.commons.collections4.SortedBag;
  * This bag exists to provide validation for the decorated bag.
  * It is normally created to decorate an empty bag.
  * If an object cannot be added to the bag, an {@link IllegalArgumentException} is thrown.
+ * </p>
  * <p>
  * One usage would be to ensure that no null entries are added to the bag.
  * <pre>
@@ -35,6 +36,7 @@ import org.apache.commons.collections4.SortedBag;
  * </pre>
  * <p>
  * This class is Serializable from Commons Collections 3.1.
+ * </p>
  *
  * @param <E> the type of elements in this bag
  * @since 3.0

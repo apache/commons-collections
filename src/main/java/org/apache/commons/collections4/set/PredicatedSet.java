@@ -28,11 +28,14 @@ import org.apache.commons.collections4.collection.PredicatedCollection;
  * This set exists to provide validation for the decorated set.
  * It is normally created to decorate an empty set.
  * If an object cannot be added to the set, an IllegalArgumentException is thrown.
+ * </p>
  * <p>
  * One usage would be to ensure that no null entries are added to the set.
+ * </p>
  * <pre>Set set = PredicatedSet.decorate(new HashSet(), NotNullPredicate.INSTANCE);</pre>
  * <p>
  * This class is Serializable from Commons Collections 3.1.
+ * </p>
  *
  * @param <E> the type of the elements in this set
  * @since 3.0

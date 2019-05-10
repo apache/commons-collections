@@ -32,6 +32,7 @@ import java.util.HashMap;
  * of an object to be added or removed at once. It is important to read the
  * interface javadoc carefully as several methods violate the
  * {@link Collection} interface specification.
+ * </p>
  *
  * @param <E> the type of elements in this bag
  * @since 3.0 (previously in main package v2.0)

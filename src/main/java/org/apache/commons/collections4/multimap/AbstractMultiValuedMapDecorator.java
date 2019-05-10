@@ -32,6 +32,7 @@ import org.apache.commons.collections4.MultiValuedMap;
  * Each method call made on this <code>MultiValuedMap</code> is forwarded to the
  * decorated <code>MultiValuedMap</code>. This class is used as a framework to build
  * to extensions such as synchronized and unmodifiable behaviour.
+ * </p>
  *
  * @param <K> the type of key elements
  * @param <V> the type of value elements

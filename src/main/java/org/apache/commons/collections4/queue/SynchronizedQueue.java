@@ -25,6 +25,7 @@ import org.apache.commons.collections4.collection.SynchronizedCollection;
  * <p>
  * Methods are synchronized, then forwarded to the decorated queue. Iterators must be separately synchronized around the
  * loop.
+ * </p>
  *
  * @param <E> the type of the elements in the collection
  * @since 4.2
