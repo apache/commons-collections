@@ -47,60 +47,60 @@ import org.apache.commons.lang3.tuple.Pair;
  */
 public class PairingIterator<L, R> implements Iterator<Pair<L, R>> {
 
-	private final Iterator<L> firstIterator;
-	private final Iterator<R> secondIterator;
+    private final Iterator<L> firstIterator;
+    private final Iterator<R> secondIterator;
 
-	/**
-	 * Constructs a new <code>PairingIterator</code> that will provide a
-	 * {@link} Pair of the child iterator elements.
-	 * 
-	 * @param firstIterator
-	 *            the first iterator
-	 * @param secondIterator
-	 *            the second iterator
-	 */
-	public PairingIterator(Iterator<L> firstIterator, Iterator<R> secondIterator) {
-		this.firstIterator = firstIterator;
-		this.secondIterator = secondIterator;
-	}
+    /**
+     * Constructs a new <code>PairingIterator</code> that will provide a
+     * {@link} Pair of the child iterator elements.
+     * 
+     * @param firstIterator
+     *            the first iterator
+     * @param secondIterator
+     *            the second iterator
+     */
+    public PairingIterator(Iterator<L> firstIterator, Iterator<R> secondIterator) {
+        this.firstIterator = firstIterator;
+        this.secondIterator = secondIterator;
+    }
 
-	/**
-	 * Returns {@code true} if one of the child iterators has remaining elements.
-	 */
-	@Override
-	public boolean hasNext() {
-		return (null != firstIterator && firstIterator.hasNext())
-				|| (null != secondIterator && secondIterator.hasNext());
-	}
+    /**
+     * Returns {@code true} if one of the child iterators has remaining elements.
+     */
+    @Override
+    public boolean hasNext() {
+        return (null != firstIterator && firstIterator.hasNext())
+                || (null != secondIterator && secondIterator.hasNext());
+    }
 
-	/**
-	 * Returns the next {@link Pair} with the next values of the child iterators.
-	 * 
-	 * @return a {@link Pair} with the next values of child iterators
-	 * @throws NoSuchElementException
-	 *             if no child iterator has any more elements
-	 */
-	@Override
-	public Pair<L, R> next() throws NoSuchElementException {
-		if (!hasNext()) {
-			throw new NoSuchElementException();
-		}
-		final L leftValue = null != firstIterator && firstIterator.hasNext() ? firstIterator.next() : null;
-		final R rightValue = null != secondIterator && secondIterator.hasNext() ? secondIterator.next() : null;
-		return Pair.of(leftValue, rightValue);
-	}
+    /**
+     * Returns the next {@link Pair} with the next values of the child iterators.
+     * 
+     * @return a {@link Pair} with the next values of child iterators
+     * @throws NoSuchElementException
+     *             if no child iterator has any more elements
+     */
+    @Override
+    public Pair<L, R> next() throws NoSuchElementException {
+        if (!hasNext()) {
+            throw new NoSuchElementException();
+        }
+        final L leftValue = null != firstIterator && firstIterator.hasNext() ? firstIterator.next() : null;
+        final R rightValue = null != secondIterator && secondIterator.hasNext() ? secondIterator.next() : null;
+        return Pair.of(leftValue, rightValue);
+    }
 
-	/**
-	 * Removes the last returned values of the child iterators.
-	 */
-	@Override
-	public void remove() {
-		if (firstIterator != null) {
-			firstIterator.remove();
-		}
-		if (secondIterator != null) {
-			secondIterator.remove();
-		}
-	}
+    /**
+     * Removes the last returned values of the child iterators.
+     */
+    @Override
+    public void remove() {
+        if (firstIterator != null) {
+            firstIterator.remove();
+        }
+        if (secondIterator != null) {
+            secondIterator.remove();
+        }
+    }
 
 }
