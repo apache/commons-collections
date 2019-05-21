@@ -332,7 +332,7 @@ public class LRUMap<K, V>
                 }
                 if (reuse == null) {
                     throw new IllegalStateException(
-                        "Entry.after=null, header.after" + header.after + " header.before" + header.before +
+                        "Entry.after=null, header.after=" + header.after + " header.before=" + header.before +
                         " key=" + key + " value=" + value + " size=" + size + " maxSize=" + maxSize +
                         " Please check that your keys are immutable, and that you have used synchronization properly." +
                         " If so, then please report this to dev@commons.apache.org as a bug.");
@@ -344,7 +344,7 @@ public class LRUMap<K, V>
             if (removeLRUEntry) {
                 if (reuse == null) {
                     throw new IllegalStateException(
-                        "reuse=null, header.after=" + header.after + " header.before" + header.before +
+                        "reuse=null, header.after=" + header.after + " header.before=" + header.before +
                         " key=" + key + " value=" + value + " size=" + size + " maxSize=" + maxSize +
                         " Please check that your keys are immutable, and that you have used synchronization properly." +
                         " If so, then please report this to dev@commons.apache.org as a bug.");
