@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.apache.commons.collections4.IteratorUtils;
-import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.collections4.iterators.PairingIterator.Entry;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -32,181 +32,210 @@ import org.junit.Test;
  * Unit test suite for {@link PairingIterator}.
  *
  */
-public class PairingIteratorTest extends AbstractIteratorTest<Pair<String, String>> {
+public class PairingIteratorTest extends AbstractIteratorTest<Entry<String, String>> {
 
-    public PairingIteratorTest(String testName) {
-        super(testName);
-    }
+	public PairingIteratorTest(String testName) {
+		super(testName);
+	}
 
-    @Test
-    public void testNullValuesBoth() {
-        final PairingIterator<String, String> pairingIterator = new PairingIterator<>(null, null);
+	@Test
+	public void testNullValuesBoth() {
+		final PairingIterator<String, String> pairingIterator = new PairingIterator<>(null, null);
 
-        Assert.assertFalse(pairingIterator.hasNext());
-        try {
-            pairingIterator.next();
-            fail();
+		Assert.assertFalse(pairingIterator.hasNext());
+		try {
+			pairingIterator.next();
+			fail();
 
-        } catch (NoSuchElementException e) {
-            Assert.assertNotNull(e);
-        }
-    }
+		} catch (NoSuchElementException e) {
+			Assert.assertNotNull(e);
+		}
+	}
 
-    @Test
-    public void testNullValueFirst() {
-        final List<String> rightList = Arrays.asList(new String[] { "A" });
-        final PairingIterator<String, String> pairingIterator = new PairingIterator<>(null, rightList.iterator());
+	@Test
+	public void testNullValueFirst() {
+		final List<String> firstList = Arrays.asList(new String[] { "A" });
+		final PairingIterator<String, String> pairingIterator = new PairingIterator<>(null, firstList.iterator());
 
-        Assert.assertTrue(pairingIterator.hasNext());
+		Assert.assertTrue(pairingIterator.hasNext());
 
-        Pair<String, String> next = pairingIterator.next();
-        Assert.assertEquals(null, next.getLeft());
-        Assert.assertEquals("A", next.getRight());
-    }
+		Entry<String, String> next = pairingIterator.next();
+		Assert.assertEquals(null, next.getFirstValue());
+		Assert.assertEquals("A", next.getSecondValue());
+	}
 
-    @Test
-    public void testNullValueSecond() {
-        final List<String> leftList = Arrays.asList(new String[] { "A" });
-        final PairingIterator<String, String> pairingIterator = new PairingIterator<>(leftList.iterator(), null);
+	@Test
+	public void testNullValueSecond() {
+		final List<String> firstList = Arrays.asList(new String[] { "A" });
+		final PairingIterator<String, String> pairingIterator = new PairingIterator<>(firstList.iterator(), null);
 
-        Assert.assertTrue(pairingIterator.hasNext());
+		Assert.assertTrue(pairingIterator.hasNext());
 
-        Pair<String, String> next = pairingIterator.next();
-        Assert.assertEquals("A", next.getLeft());
-        Assert.assertEquals(null, next.getRight());
-    }
+		Entry<String, String> next = pairingIterator.next();
+		Assert.assertEquals("A", next.getFirstValue());
+		Assert.assertEquals(null, next.getSecondValue());
+	}
 
-    @Test
-    public void testTwoIteratorsWithBothTwoElements() {
-        final List<String> leftList = Arrays.asList(new String[] { "A1", "A2" });
-        final List<String> rightList = Arrays.asList(new String[] { "B1", "B2" });
-        final PairingIterator<String, String> pairingIterator = new PairingIterator<>(leftList.iterator(),
-                rightList.iterator());
+	@Test
+	public void testTwoIteratorsWithBothTwoElements() {
+		final List<String> firstList = Arrays.asList(new String[] { "A1", "A2" });
+		final List<String> secondList = Arrays.asList(new String[] { "B1", "B2" });
+		final PairingIterator<String, String> pairingIterator = new PairingIterator<>(firstList.iterator(),
+				secondList.iterator());
 
-        Assert.assertTrue(pairingIterator.hasNext());
+		Assert.assertTrue(pairingIterator.hasNext());
 
-        Pair<String, String> next = pairingIterator.next();
-        Assert.assertEquals("A1", next.getLeft());
-        Assert.assertEquals("B1", next.getRight());
+		Entry<String, String> next = pairingIterator.next();
+		Assert.assertEquals("A1", next.getFirstValue());
+		Assert.assertEquals("B1", next.getSecondValue());
 
-        Assert.assertTrue(pairingIterator.hasNext());
-        next = pairingIterator.next();
-        Assert.assertEquals("A2", next.getLeft());
-        Assert.assertEquals("B2", next.getRight());
+		Assert.assertTrue(pairingIterator.hasNext());
+		next = pairingIterator.next();
+		Assert.assertEquals("A2", next.getFirstValue());
+		Assert.assertEquals("B2", next.getSecondValue());
 
-        Assert.assertFalse(pairingIterator.hasNext());
-    }
+		Assert.assertFalse(pairingIterator.hasNext());
+	}
 
-    @Test
-    public void testTwoIteratorsWithDifferentSize() {
-        final List<String> leftList = Arrays.asList(new String[] { "A1", "A2", "A3" });
-        final List<String> rightList = Arrays.asList(new String[] { "B1", "B2" });
-        final PairingIterator<String, String> pairingIterator = new PairingIterator<>(leftList.iterator(),
-                rightList.iterator());
+	@Test
+	public void testTwoIteratorsWithDifferentSize() {
+		final List<String> firstList = Arrays.asList(new String[] { "A1", "A2", "A3" });
+		final List<String> secondList = Arrays.asList(new String[] { "B1", "B2" });
+		final PairingIterator<String, String> pairingIterator = new PairingIterator<>(firstList.iterator(),
+				secondList.iterator());
 
-        Assert.assertTrue(pairingIterator.hasNext());
+		Assert.assertTrue(pairingIterator.hasNext());
 
-        Pair<String, String> next = pairingIterator.next();
-        Assert.assertEquals("A1", next.getLeft());
-        Assert.assertEquals("B1", next.getRight());
+		Entry<String, String> next = pairingIterator.next();
+		Assert.assertEquals("A1", next.getFirstValue());
+		Assert.assertEquals("B1", next.getSecondValue());
 
-        Assert.assertTrue(pairingIterator.hasNext());
+		Assert.assertTrue(pairingIterator.hasNext());
 
-        next = pairingIterator.next();
-        Assert.assertEquals("A2", next.getLeft());
-        Assert.assertEquals("B2", next.getRight());
+		next = pairingIterator.next();
+		Assert.assertEquals("A2", next.getFirstValue());
+		Assert.assertEquals("B2", next.getSecondValue());
 
-        Assert.assertTrue(pairingIterator.hasNext());
-        next = pairingIterator.next();
-        Assert.assertEquals("A3", next.getLeft());
-        Assert.assertEquals(null, next.getRight());
+		Assert.assertTrue(pairingIterator.hasNext());
+		next = pairingIterator.next();
+		Assert.assertEquals("A3", next.getFirstValue());
+		Assert.assertEquals(null, next.getSecondValue());
 
-        Assert.assertFalse(pairingIterator.hasNext());
-    }
+		Assert.assertFalse(pairingIterator.hasNext());
+	}
 
-    @Test
-    public void testTwoIteratorsWithDifferentSize2() {
-        final List<String> leftList = Arrays.asList(new String[] { "A1", });
-        final List<String> rightList = Arrays.asList(new String[] { "B1", "B2" });
-        final PairingIterator<String, String> pairingIterator = new PairingIterator<>(leftList.iterator(),
-                rightList.iterator());
+	@Test
+	public void testTwoIteratorsWithDifferentSize2() {
+		final List<String> firstList = Arrays.asList(new String[] { "A1", });
+		final List<String> secondList = Arrays.asList(new String[] { "B1", "B2" });
+		final PairingIterator<String, String> pairingIterator = new PairingIterator<>(firstList.iterator(),
+				secondList.iterator());
 
-        Assert.assertTrue(pairingIterator.hasNext());
+		Assert.assertTrue(pairingIterator.hasNext());
 
-        Pair<String, String> next = pairingIterator.next();
-        Assert.assertEquals("A1", next.getLeft());
-        Assert.assertEquals("B1", next.getRight());
+		Entry<String, String> next = pairingIterator.next();
+		Assert.assertEquals("A1", next.getFirstValue());
+		Assert.assertEquals("B1", next.getSecondValue());
 
-        Assert.assertTrue(pairingIterator.hasNext());
+		Assert.assertTrue(pairingIterator.hasNext());
 
-        next = pairingIterator.next();
-        Assert.assertEquals(null, next.getLeft());
-        Assert.assertEquals("B2", next.getRight());
+		next = pairingIterator.next();
+		Assert.assertEquals(null, next.getFirstValue());
+		Assert.assertEquals("B2", next.getSecondValue());
 
-        Assert.assertFalse(pairingIterator.hasNext());
-    }
+		Assert.assertFalse(pairingIterator.hasNext());
+	}
 
-    @Test
-    public void testTwoIteratorsWithNullValues() {
-        final List<String> leftList = Arrays.asList(new String[] { null, "A2" });
-        final List<String> rightList = Arrays.asList(new String[] { "B1", null });
-        final PairingIterator<String, String> pairingIterator = new PairingIterator<>(leftList.iterator(),
-                rightList.iterator());
+	@Test
+	public void testTwoIteratorsWithNullValues() {
+		final List<String> firstList = Arrays.asList(new String[] { null, "A2" });
+		final List<String> secondList = Arrays.asList(new String[] { "B1", null });
+		final PairingIterator<String, String> pairingIterator = new PairingIterator<>(firstList.iterator(),
+				secondList.iterator());
 
-        Assert.assertTrue(pairingIterator.hasNext());
+		Assert.assertTrue(pairingIterator.hasNext());
 
-        Pair<String, String> next = pairingIterator.next();
-        Assert.assertEquals(null, next.getLeft());
-        Assert.assertEquals("B1", next.getRight());
+		Entry<String, String> next = pairingIterator.next();
+		Assert.assertEquals(null, next.getFirstValue());
+		Assert.assertEquals("B1", next.getSecondValue());
 
-        Assert.assertTrue(pairingIterator.hasNext());
-        next = pairingIterator.next();
-        Assert.assertEquals("A2", next.getLeft());
-        Assert.assertEquals(null, next.getRight());
+		Assert.assertTrue(pairingIterator.hasNext());
+		next = pairingIterator.next();
+		Assert.assertEquals("A2", next.getFirstValue());
+		Assert.assertEquals(null, next.getSecondValue());
 
-        Assert.assertFalse(pairingIterator.hasNext());
-    }
+		Assert.assertFalse(pairingIterator.hasNext());
+	}
 
-    @Test
-    public void testRemoveWithOneNullIterator() {
-        final List<String> leftList = new ArrayList<>();
-        leftList.add("A1");
-        final Iterator<String> leftIterator = leftList.iterator();
-        final PairingIterator<String, String> pairingIterator = new PairingIterator<>(leftIterator, null);
+	@Test
+	public void testRemoveWithOneNullIterator() {
+		final List<String> firstList = new ArrayList<>();
+		firstList.add("A1");
+		final Iterator<String> leftIterator = firstList.iterator();
+		final PairingIterator<String, String> pairingIterator = new PairingIterator<>(leftIterator, null);
 
-        pairingIterator.next();
-        pairingIterator.remove();
-        Assert.assertTrue(leftList.isEmpty());
-    }
+		pairingIterator.next();
+		pairingIterator.remove();
+		Assert.assertTrue(firstList.isEmpty());
+	}
 
-    @Test
-    public void testRemoveWithOneNullIterator2() {
-        final List<String> rightList = new ArrayList<>();
-        rightList.add("A1");
-        final Iterator<String> rightIterator = rightList.iterator();
-        final PairingIterator<String, String> pairingIterator = new PairingIterator<>(null, rightIterator);
+	@Test
+	public void testRemoveWithOneNullIterator2() {
+		final List<String> secondList = new ArrayList<>();
+		secondList.add("A1");
+		final Iterator<String> rightIterator = secondList.iterator();
+		final PairingIterator<String, String> pairingIterator = new PairingIterator<>(null, rightIterator);
 
-        pairingIterator.next();
-        pairingIterator.remove();
-        Assert.assertTrue(rightList.isEmpty());
-    }
+		pairingIterator.next();
+		pairingIterator.remove();
+		Assert.assertTrue(secondList.isEmpty());
+	}
 
-    @Override
-    public Iterator<Pair<String, String>> makeEmptyIterator() {
-        return new PairingIterator<String, String>(IteratorUtils.<String>emptyIterator(),
-                IteratorUtils.<String>emptyIterator());
-    }
+	@Test
+	public void testEntryEquals_notEquals() {
+		final String firstValue = "A";
+		final String secondValue = "B";
+		final Entry<String, String> entry1 = new Entry<>(firstValue, secondValue);
+		final Entry<String, String> entry2 = new Entry<>(secondValue, firstValue);
 
-    @Override
-    public Iterator<Pair<String, String>> makeObject() {
-        final List<String> leftList = new ArrayList<>();
-        leftList.add("A1");
-        leftList.add("A2");
-        leftList.add("A3");
-        final List<String> rightList = new ArrayList<>();
-        rightList.add("B1");
-        rightList.add("B2");
-        return new PairingIterator<>(leftList.iterator(), rightList.iterator());
-    }
+		Assert.assertNotEquals(entry1, entry2);
+	}
+
+	@Test
+	public void testEntryEquals_equals() {
+		final String firstValue = "A";
+		final String secondValue = "A";
+		final Entry<String, String> entry1 = new Entry<>(firstValue, secondValue);
+		final Entry<String, String> entry2 = new Entry<>(secondValue, firstValue);
+
+		Assert.assertEquals(entry1, entry2);
+	}
+
+	@Test
+	public void testEntryEquals_equalsSameInstance() {
+		final String firstValue = "A";
+		final String secondValue = "A";
+		final Entry<String, String> entry1 = new Entry<>(firstValue, secondValue);
+
+		Assert.assertEquals(entry1, entry1);
+	}
+
+	@Override
+	public Iterator<Entry<String, String>> makeEmptyIterator() {
+		return new PairingIterator<String, String>(IteratorUtils.<String>emptyIterator(),
+				IteratorUtils.<String>emptyIterator());
+	}
+
+	@Override
+	public Iterator<Entry<String, String>> makeObject() {
+		final List<String> firstList = new ArrayList<>();
+		firstList.add("A1");
+		firstList.add("A2");
+		firstList.add("A3");
+		final List<String> secondList = new ArrayList<>();
+		secondList.add("B1");
+		secondList.add("B2");
+		return new PairingIterator<>(firstList.iterator(), secondList.iterator());
+	}
 
 }
