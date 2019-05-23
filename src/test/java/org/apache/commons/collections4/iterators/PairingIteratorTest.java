@@ -219,6 +219,36 @@ public class PairingIteratorTest extends AbstractIteratorTest<Entry<String, Stri
 
         Assert.assertEquals(entry1, entry1);
     }
+    
+    @Test
+    public void testEntryEquals_null() {
+        final String firstValue = "A";
+        final String secondValue = "A";
+        final Entry<String, String> entry1 = new Entry<>(firstValue, secondValue);
+
+        Assert.assertNotEquals(entry1, null);
+    }
+    
+    @Test
+    public void testEntryEquals_differentClasses() {
+        final String firstValue = "A";
+        final String secondValue = "A";
+        final Entry<String, String> entry1 = new Entry<>(firstValue, secondValue);
+        
+        Assert.assertNotEquals(entry1, "");
+    }
+    
+    @Test
+    public void testEntryToString() {
+        final String firstValue = "A";
+        final String secondValue = "A";
+        final Entry<String, String> entry = new Entry<>(firstValue, secondValue);
+        
+        String string = entry.toString();
+        Assert.assertTrue(string.contains(firstValue));
+        Assert.assertTrue(string.contains(secondValue));
+        
+    }
 
     @Override
     public Iterator<Entry<String, String>> makeEmptyIterator() {
