@@ -46,7 +46,9 @@ import java.util.Map;
  *  map.put("one", "Four");
  * </code></pre>
  * <p>
- * creates a <code>CaseInsensitiveMap</code> with three entries.<br>
+ * The example above creates a <code>CaseInsensitiveMap</code> with three entries.
+ * </p>
+ * <p>
  * <code>map.get(null)</code> returns <code>"Three"</code> and <code>map.get("ONE")</code>
  * returns <code>"Four".</code>  The <code>Set</code> returned by <code>keySet()</code>
  * equals <code>{"one", "two", null}.</code>
