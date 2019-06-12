@@ -30,6 +30,9 @@
     <action issue="COLLECTIONS-718" dev="ggregory" type="update" due-to="Eitan Adler">
       Fix LRUMap exception message.
     </action>
+    <action issue="COLLECTIONS-719" dev="ggregory" type="add" due-to="Gary Gregory">
+      Create a PropertiesFactory and SortedPropertiesFactory.
+    </action>
   </release>
   <release version="4.3" date="2018-12-21" description="Update from Java 7 to Java 8, bug fixes, and small changes.">
     <action issue="COLLECTIONS-691" dev="kinow" type="fix" due-to="Eitan Adler">
