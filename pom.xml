@@ -29,7 +29,7 @@
   <inceptionYear>2001</inceptionYear>
   <description>The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.</description>
 
-  <url>http://commons.apache.org/proper/commons-collections/</url>
+  <url>https://commons.apache.org/proper/commons-collections/</url>
 
   <issueManagement>
     <system>jira</system>

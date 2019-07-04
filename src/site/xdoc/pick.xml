@@ -89,19 +89,19 @@ For example you could convert a country code to text <i>but not</i> text to coun
 <h3>BidiMap interface</h3>
 
 <p>
-The <a href="http://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/BidiMap.html">BidiMap</a> interface and implementations in Commons Collections allow you to lookup data in both directions. There are three implementations:
+The <a href="https://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/BidiMap.html">BidiMap</a> interface and implementations in Commons Collections allow you to lookup data in both directions. There are three implementations:
 <table>
 <tr>
-<td><a href="http://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/bidimap/DualHashBidiMap.html">DualHashBidiMap</a></td>
+<td><a href="https://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/bidimap/DualHashBidiMap.html">DualHashBidiMap</a></td>
 <td>Uses two <a href="http://java.sun.com/j2se/1.4/docs/api/java/util/HashMap.html">HashMap</a> objects internally. This implementation is a useful general purpose BidiMap that can store any object. The objects are stored in any order, and the order may change over time.</td>
 </tr>
 <tr>
-<td><a href="http://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/bidimap/DualTreeBidiMap.html">DualTreeBidiMap</a></td>
-<td>Uses two <a href="http://java.sun.com/j2se/1.4/docs/api/java/util/TreeMap.html">TreeMap</a> objects internally which means that keys and values must implement <a href="http://java.sun.com/j2se/1.4/docs/api/java/lang/Comparable.html">Comparable</a>, unless a comparator is supplied. If considering this class, the TreeBidiMap is usually a better choice. However, this is the only implementation of the <a href="http://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/SortedBidiMap.html">SortedBidiMap</a> interface.</td>
+<td><a href="https://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/bidimap/DualTreeBidiMap.html">DualTreeBidiMap</a></td>
+<td>Uses two <a href="http://java.sun.com/j2se/1.4/docs/api/java/util/TreeMap.html">TreeMap</a> objects internally which means that keys and values must implement <a href="http://java.sun.com/j2se/1.4/docs/api/java/lang/Comparable.html">Comparable</a>, unless a comparator is supplied. If considering this class, the TreeBidiMap is usually a better choice. However, this is the only implementation of the <a href="https://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/SortedBidiMap.html">SortedBidiMap</a> interface.</td>
 </tr>
 <tr>
-<td><a href="http://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/bidimap/TreeBidiMap.html">TreeBidiMap</a></td>
-<td>Dedicated implementation that requires keys and values to implement <a href="http://java.sun.com/j2se/1.4/docs/api/java/lang/Comparable.html">Comparable</a>, unless a comparator is supplied. This is an efficient implementation using a data structure that avoids duplicating data. The keys and values are held and viewed in sorted order, and the class implements the <a href="http://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/OrderedBidiMap.html">OrderedBidiMap</a> interface.</td>
+<td><a href="https://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/bidimap/TreeBidiMap.html">TreeBidiMap</a></td>
+<td>Dedicated implementation that requires keys and values to implement <a href="http://java.sun.com/j2se/1.4/docs/api/java/lang/Comparable.html">Comparable</a>, unless a comparator is supplied. This is an efficient implementation using a data structure that avoids duplicating data. The keys and values are held and viewed in sorted order, and the class implements the <a href="https://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/OrderedBidiMap.html">OrderedBidiMap</a> interface.</td>
 </tr>
 </table>
 </p>
@@ -119,11 +119,11 @@ The <a href="http://java.sun.com/j2se/1.4/docs/api/java/util/Map.html">Map</a> i
 <td>This map is the most commonly used and fastest implementation. It is suitable for most situations and can store any object. Objects are stored in any order, and the order may change over time.</td>
 </tr>
 <tr>
-<td><a href="http://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/HashedMap.html">HashedMap</a></td>
-<td>The Commons Collections hash map implementation which is very similar in design to HashMap, but also supports easy iteration via a <a href="http://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/MapIterator.html">MapIterator</a>. This implementation is also designed to be subclassed. Use this map if you want to use the extra iterator, or to subclass. Otherwise, there is no advantage (or disadvantage) compared to the JDK HashMap.</td>
+<td><a href="https://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/HashedMap.html">HashedMap</a></td>
+<td>The Commons Collections hash map implementation which is very similar in design to HashMap, but also supports easy iteration via a <a href="https://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/MapIterator.html">MapIterator</a>. This implementation is also designed to be subclassed. Use this map if you want to use the extra iterator, or to subclass. Otherwise, there is no advantage (or disadvantage) compared to the JDK HashMap.</td>
 </tr>
 <tr>
-<td><a href="http://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/IdentityMap.html">IdentityMap</a></td>
+<td><a href="https://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/IdentityMap.html">IdentityMap</a></td>
 <td>This map operates exactly as per HashedMap but compares keys and values using == not .equals().</td>
 </tr>
 <tr>
@@ -135,7 +135,7 @@ The <a href="http://java.sun.com/j2se/1.4/docs/api/java/util/Map.html">Map</a> i
 <td>This map ensures that the keys are always sorted, and iteration order is consistent. All keys must implement <a href="http://java.sun.com/j2se/1.4/docs/api/java/lang/Comparable.html">Comparable</a>, unless a comparator is supplied. This map should be used if you need the map to be sorted.</td>
 </tr>
 <tr>
-<td><a href="http://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/LinkedMap.html">LinkedMap</a></td>
+<td><a href="https://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/LinkedMap.html">LinkedMap</a></td>
 <td>This map maintains the order that each object is added to the map. When the map is viewed via an iterator, the insertion order will be seen. This map should be used if you need to retain the insertion order.</td>
 </tr>
 <tr>
@@ -143,15 +143,15 @@ The <a href="http://java.sun.com/j2se/1.4/docs/api/java/util/Map.html">Map</a> i
 <td>This map, available from JDK 1.4, maintains the order that each object is added to the map. When the map is viewed via an iterator, the insertion order will be seen. Commons collections' LinkedMap provides the same functionality for JDK1.2 onwards and provides a MapIterator.</td>
 </tr>
 <tr>
-<td><a href="http://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/ListOrderedMap.html">ListOrderedMap</a></td>
+<td><a href="https://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/ListOrderedMap.html">ListOrderedMap</a></td>
 <td>This map decorates another map to maintains the order that each object is added to the map. The order is maintained using a list. This map should be used if you need to retain the insertion order but you also need the special features of another map.</td>
 </tr>
 <tr>
-<td><a href="http://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/LRUMap.html">LRUMap</a></td>
+<td><a href="https://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/LRUMap.html">LRUMap</a></td>
 <td>This map places a maximum size limit on the map and removes the least recently used (LRU) key-value when it is full. This map should be used for caches where you want to limit the maximum memory size used, and are happy with the least recently used algorithm for removals.</td>
 </tr>
 <tr>
-<td><a href="http://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/ReferenceMap.html">ReferenceMap</a></td>
+<td><a href="https://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/ReferenceMap.html">ReferenceMap</a></td>
 <td>This map enables keys and values to be garbage collected whilst still held in the map. This can be useful for building memory sensitive caches. This map should be used for caches where you want to allow garbage collection from the map.</td>
 </tr>
 <tr>
@@ -159,19 +159,19 @@ The <a href="http://java.sun.com/j2se/1.4/docs/api/java/util/Map.html">Map</a> i
 <td>This map stores each key-value pair with a key that can be garbage collected. This can be useful for building memory sensitive caches. ReferenceMap provides the same functionality but with much more flexibility.</td>
 </tr>
 <tr>
-<td><a href="http://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/ReferenceIdentityMap.html">ReferenceIdentityMap</a></td>
+<td><a href="https://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/ReferenceIdentityMap.html">ReferenceIdentityMap</a></td>
 <td>This map operates exactly as per ReferenceMap but compares keys and values using == not .equals().</td>
 </tr>
 <tr>
-<td><a href="http://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/SingletonMap.html">SingletonMap</a></td>
+<td><a href="https://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/SingletonMap.html">SingletonMap</a></td>
 <td>This map is restricted to storing one key-value pair. It may contain no more than and no less than one pair. It provides a MapIterator. This map should be used if you want to return one key-value pair and must use the Map interface.</td>
 </tr>
 <tr>
-<td><a href="http://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/Flat3Map.html">Flat3Map</a></td>
+<td><a href="https://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/Flat3Map.html">Flat3Map</a></td>
 <td>This map is optimised to store one, two or three key-value pairs and outperforms HashMap at these sizes. For size four and above performance is about 5% slower than HashMap. This map also has good garbage collection characteristics when below size four. It provides a MapIterator. This map should be used if are 99% sure that the map will be size three or less.</td>
 </tr>
 <tr>
-<td><a href="http://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/StaticBucketMap.html">StaticBucketMap</a></td>
+<td><a href="https://commons.apache.org/collections/apidocs-COLLECTIONS_3_1/org/apache/commons/collections/map/StaticBucketMap.html">StaticBucketMap</a></td>
 <td>This map is optimised to work well in a heavily loaded multi-threaded environment. It provides synchronization internally, locking on a per 'bucket' basis, where the buckets are fixed at construction time. You should use this class if you can predict the size of the map and you are working in a very intensive multi-threaded environment.</td>
 </tr>
 </table>
