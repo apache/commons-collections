@@ -38,7 +38,10 @@
     </action>
     <action issue="COLLECTIONS-723" dev="ggregory" type="add" due-to="Eitan Adler, SOC, Bruno P. Kinoshita">
       Make use of FunctionalInterface #48.
-    </action>    
+    </action>
+    <action issue="COLLECTIONS-716" dev="ggregory" type="update" due-to="Sebb">
+      Don't include email address in Exception messages.
+    </action>
   </release>
   <release version="4.3" date="2018-12-21" description="Update from Java 7 to Java 8, bug fixes, and small changes.">
     <action issue="COLLECTIONS-691" dev="kinow" type="fix" due-to="Eitan Adler">
