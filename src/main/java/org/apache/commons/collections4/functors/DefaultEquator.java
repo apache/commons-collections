@@ -46,7 +46,6 @@ public class DefaultEquator<T> implements Equator<T>, Serializable {
      * @param <T>  the object type
      * @return the singleton instance
      */
-    @SuppressWarnings("unchecked") // the static instance works for all types
     public static <T> DefaultEquator<T> defaultEquator() {
         return DefaultEquator.INSTANCE;
     }

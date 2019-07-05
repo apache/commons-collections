@@ -41,7 +41,6 @@ public final class FalsePredicate<T> implements Predicate<T>, Serializable {
      * @return the singleton instance
      * @since 4.0
      */
-    @SuppressWarnings("unchecked") // the static instance works for all types
     public static <T> Predicate<T> falsePredicate() {
         return INSTANCE;
     }

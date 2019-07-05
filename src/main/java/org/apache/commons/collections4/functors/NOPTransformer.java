@@ -41,7 +41,6 @@ public class NOPTransformer<T> implements Transformer<T, T>, Serializable {
      * @return the singleton instance
      * @since 3.1
      */
-    @SuppressWarnings("unchecked")
     public static <T> Transformer<T, T> nopTransformer() {
         return INSTANCE;
     }

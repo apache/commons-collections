@@ -66,7 +66,6 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
      * @throws NullPointerException if the transformers collection is null
      * @throws NullPointerException if any transformer in the collection is null
      */
-    @SuppressWarnings("unchecked")
     public static <T> Transformer<T, T> chainedTransformer(
             final Collection<? extends Transformer<? super T, ? extends T>> transformers) {
         if (transformers == null) {

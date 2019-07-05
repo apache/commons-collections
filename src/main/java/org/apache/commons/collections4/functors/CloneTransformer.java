@@ -45,7 +45,6 @@ public class CloneTransformer<T> implements Transformer<T, T> {
      * @return the singleton instance
      * @since 3.1
      */
-    @SuppressWarnings("unchecked") // the singleton instance works for all types
     public static <T> Transformer<T, T> cloneTransformer() {
         return INSTANCE;
     }

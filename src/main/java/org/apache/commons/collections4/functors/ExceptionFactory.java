@@ -42,7 +42,6 @@ public final class ExceptionFactory<T> implements Factory<T>, Serializable {
      * @return the singleton instance
      * @since 3.1
      */
-    @SuppressWarnings("unchecked") // the static instance works for all types
     public static <T> Factory<T> exceptionFactory() {
         return INSTANCE;
     }
