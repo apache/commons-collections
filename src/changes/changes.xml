@@ -20,7 +20,7 @@
     <title>Apache Commons Collections Release Notes</title>
   </properties>
   <body>
-  <release version="4.4" date="2019-MM-DD" description="Maintenance release.">
+  <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
       NullPointerExceptions in CompositeCollection, CompositeSet, and CompositeMap.
     </action>
