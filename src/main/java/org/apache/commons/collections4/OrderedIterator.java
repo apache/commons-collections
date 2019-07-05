@@ -24,7 +24,7 @@ import java.util.Iterator;
  * This iterator allows both forward and reverse iteration through the container.
  * </p>
  *
- * @param <E> the type to iterate over
+ * @param <E> the type of elements returned by this iterator
  * @since 3.0
  */
 public interface OrderedIterator<E> extends Iterator<E> {
