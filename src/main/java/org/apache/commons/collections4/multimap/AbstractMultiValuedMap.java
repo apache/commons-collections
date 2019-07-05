@@ -444,7 +444,6 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
         }
 
         @Override
-        @SuppressWarnings("unchecked")
         public Iterator<V> iterator() {
             final Collection<V> coll = getMapping();
             if (coll == null) {
