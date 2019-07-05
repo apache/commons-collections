@@ -457,7 +457,7 @@ public class ListUtils {
      * </pre>
      *
      * After the above code is executed, <code>date</code> will refer to
-     * a new <code>Date</code> instance.  Furthermore, that <code>Date</code>
+     * a new <code>Date</code> instance. Furthermore, that <code>Date</code>
      * instance is the fourth element in the list.  The first, second,
      * and third element are all set to <code>null</code>.
      *
@@ -469,6 +469,37 @@ public class ListUtils {
      */
     public static <E> List<E> lazyList(final List<E> list, final Factory<? extends E> factory) {
         return LazyList.lazyList(list, factory);
+    }
+
+    /**
+     * Returns a "lazy" list whose elements will be created on demand.
+     * <p>
+     * When the index passed to the returned list's {@link List#get(int) get}
+     * method is greater than the list's size, then the transformer will be used
+     * to create a new object and that object will be inserted at that index.
+     * <p>
+     * For instance:
+     *
+     * <pre>
+     * List&lt;Integer&gt; hours = Arrays.asList(7, 5, 8, 2);
+     * Transformer&lt;Integer,Date&gt; transformer = input -&gt; LocalDateTime.now().withHour(hours.get(input));
+     * List&lt;LocalDateTime&gt; lazy = ListUtils.lazyList(new ArrayList&lt;LocalDateTime&gt;(), transformer);
+     * Date date = lazy.get(3);
+     * </pre>
+     *
+     * After the above code is executed, <code>date</code> will refer to
+     * a new <code>Date</code> instance. Furthermore, that <code>Date</code>
+     * instance is the fourth element in the list.  The first, second,
+     * and third element are all set to <code>null</code>.
+     *
+     * @param <E> the element type
+     * @param list  the list to make lazy, must not be null
+     * @param transformer  the transformer for creating new objects, must not be null
+     * @return a lazy list backed by the given list
+     * @throws NullPointerException if the List or Transformer is null
+     */
+    public static <E> List<E> lazyList(final List<E> list, final Transformer<Integer, ? extends E> transformer) {
+        return LazyList.lazyList(list, transformer);
     }
 
     /**

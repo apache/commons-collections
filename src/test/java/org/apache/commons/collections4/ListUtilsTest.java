@@ -145,7 +145,7 @@ public class ListUtilsTest {
     }
 
     @Test
-    public void testLazyList() {
+    public void testLazyFactoryList() {
         final List<Integer> list = ListUtils.lazyList(new ArrayList<Integer>(), new Factory<Integer>() {
 
             private int index;
@@ -155,6 +155,27 @@ public class ListUtilsTest {
                 index++;
                 return Integer.valueOf(index);
             }
+        });
+
+        assertNotNull(list.get(5));
+        assertEquals(6, list.size());
+
+        assertNotNull(list.get(5));
+        assertEquals(6, list.size());
+    }
+
+    @Test
+    public void testLazyTransformerList() {
+        final List<Integer> offsets = Arrays.asList(3, 5, 1, 5, 3, 6);
+        final List<Integer> list = ListUtils.lazyList(new ArrayList<>(), new Transformer<Integer, Integer>() {
+
+            private int index;
+
+            @Override
+            public Integer transform(Integer input) {
+                return offsets.get(input) + index++;
+            }
+
         });
 
         assertNotNull(list.get(5));
