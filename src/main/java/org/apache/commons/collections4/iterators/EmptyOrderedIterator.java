@@ -21,7 +21,7 @@ import org.apache.commons.collections4.ResettableIterator;
 
 /**
  * Provides an implementation of an empty ordered iterator.
- * 
+ *
  * @param <E> the type to iterate.
  * @since 3.1
  */
