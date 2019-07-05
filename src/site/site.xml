@@ -29,6 +29,7 @@
             <item name="Security Reports"     href="/security-reports.html"/>
             <item name="Users guide"          href="/userguide.html"/>
             <item name="History"              href="/history.html"/>
+            <item name="Release Notes 4.4"    href="/release_4_4.html"/>
             <item name="Release Notes 4.3"    href="/release_4_3.html"/>
             <item name="Release Notes 4.2"    href="/release_4_2.html"/>
             <item name="Release Notes 4.1"    href="/release_4_1.html"/>
@@ -36,6 +37,7 @@
             <item name="Release Notes 3.2.2"  href="/release_3_2_2.html"/>
             <item name="Release Notes 3.2.1"  href="/release_3_2_1.html"/>
             <item name="Release Notes 3.2"    href="/release_3_2.html"/>
+            <item name="Javadoc 4.4"          href="/javadocs/api-4.4/index.html"/>
             <item name="Javadoc 4.3"          href="/javadocs/api-4.3/index.html"/>
             <item name="Javadoc 4.2"          href="/javadocs/api-4.2/index.html"/>
             <item name="Javadoc 4.1"          href="/javadocs/api-4.1/index.html"/>
