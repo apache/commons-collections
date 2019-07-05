@@ -253,7 +253,7 @@ public class SetUtils {
     }
 
     /**
-     * Create a set from the given items. If the passed var-args argument is {@code
+     * Creates a set from the given items. If the passed var-args argument is {@code
      * null}, then the method returns {@code null}.
      * @param <E> the element type
      * @param items the elements that make up the new set
@@ -626,7 +626,7 @@ public class SetUtils {
     }
 
     /**
-     * Create an unmodifiable set from the given items. If the passed var-args argument is {@code
+     * Creates an unmodifiable set from the given items. If the passed var-args argument is {@code
      * null}, then the method returns {@code null}.
      * @param <E> the element type
      * @param items the elements that make up the new set
