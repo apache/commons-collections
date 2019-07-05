@@ -521,6 +521,7 @@
 
     <!-- Override clirr version to enable clirr on Java 8 -->
     <commons.clirr.version>2.8</commons.clirr.version>
+    <commons.jacoco.version>0.8.4</commons.jacoco.version>
     
     <!--Commons Release Plugin -->
     <commons.bc.version>4.2</commons.bc.version>
