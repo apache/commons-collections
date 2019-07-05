@@ -51,7 +51,6 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      *  non-<code>null</code> objects, the {@link ComparableComparator} is
      *  used.
      **/
-    @SuppressWarnings("unchecked")
     public NullComparator() {
         this(ComparatorUtils.NATURAL_COMPARATOR, true);
     }
@@ -85,7 +84,6 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      *  that <code>null</code> should be compared as lower than a
      *  non-<code>null</code> object.
      **/
-    @SuppressWarnings("unchecked")
     public NullComparator(final boolean nullsAreHigh) {
         this(ComparatorUtils.NATURAL_COMPARATOR, nullsAreHigh);
     }

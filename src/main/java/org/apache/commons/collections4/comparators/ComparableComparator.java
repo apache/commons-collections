@@ -63,7 +63,6 @@ public class ComparableComparator<E extends Comparable<? super E>> implements Co
      * @return the singleton ComparableComparator
      * @since 4.0
      */
-    @SuppressWarnings("unchecked")
     public static <E extends Comparable<? super E>> ComparableComparator<E> comparableComparator() {
         return INSTANCE;
     }
