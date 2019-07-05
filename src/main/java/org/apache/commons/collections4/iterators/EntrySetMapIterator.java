@@ -34,6 +34,8 @@ import org.apache.commons.collections4.ResettableIterator;
  * }
  * </pre>
  *
+ * @param <K> the type of keys
+ * @param <V> the type of mapped values
  * @since 3.0
  */
 public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableIterator<K> {

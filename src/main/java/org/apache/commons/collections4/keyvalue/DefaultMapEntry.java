@@ -24,6 +24,8 @@ import org.apache.commons.collections4.KeyValue;
  * A restricted implementation of {@link java.util.Map.Entry Map.Entry} that prevents
  * the {@link java.util.Map.Entry Map.Entry} contract from being broken.
  *
+ * @param <K> the type of keys
+ * @param <V> the type of mapped values
  * @since 3.0
  */
 public final class DefaultMapEntry<K, V> extends AbstractMapEntry<K, V> {

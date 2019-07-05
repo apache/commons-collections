@@ -22,6 +22,8 @@ import java.util.Map;
  * Abstract Pair class to assist with creating correct
  * {@link java.util.Map.Entry Map.Entry} implementations.
  *
+ * @param <K> the type of keys
+ * @param <V> the type of mapped values
  * @since 3.0
  */
 public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> implements Map.Entry<K, V> {

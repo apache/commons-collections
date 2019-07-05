@@ -24,6 +24,8 @@ import org.apache.commons.collections4.KeyValue;
  * Provides a base decorator that allows additional functionality to be
  * added to a {@link java.util.Map.Entry Map.Entry}.
  *
+ * @param <K> the type of keys
+ * @param <V> the type of mapped values
  * @since 3.0
  */
 public abstract class AbstractMapEntryDecorator<K, V> implements Map.Entry<K, V>, KeyValue<K, V> {

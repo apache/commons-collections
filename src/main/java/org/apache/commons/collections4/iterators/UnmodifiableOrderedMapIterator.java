@@ -25,6 +25,8 @@ import org.apache.commons.collections4.Unmodifiable;
  * Attempts to modify it will result in an UnsupportedOperationException.
  * </p>
  *
+ * @param <K> the type of keys
+ * @param <V> the type of mapped values
  * @since 3.0
  */
 public final class UnmodifiableOrderedMapIterator<K, V> implements OrderedMapIterator<K, V>,

@@ -41,6 +41,7 @@ import java.util.Arrays;
  * String localizedText = (String) map.get(multiKey);
  * </pre>
  *
+ * @param <K> the type of keys
  * @since 3.0
  */
 public class MultiKey<K> implements Serializable {
