@@ -25,7 +25,7 @@
  | commons-build-plugin/trunk/src/main/resources/commons-xdoc-templates |
  +======================================================================+
  |                                                                      |
- | 1) Re-generate using: mvn commons:readme-md                          |
+ | 1) Re-generate using: mvn commons-build:readme-md                    |
  |                                                                      |
  | 2) Set the following properties in the component's pom:              |
  |    - commons.componentid (required, alphabetic, lower case)          |
@@ -46,7 +46,7 @@ Apache Commons Collections
 [![Build Status](https://travis-ci.org/apache/commons-collections.svg)](https://travis-ci.org/apache/commons-collections)
 [![Coverage Status](https://coveralls.io/repos/apache/commons-collections/badge.svg)](https://coveralls.io/r/apache/commons-collections)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.apache.commons/commons-collections4/)
-[![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-collections4/4.3.svg)](https://javadoc.io/doc/org.apache.commons/commons-collections4/4.3)
+[![Javadocs](https://javadoc.io/badge/org.apache.commons/commons-collections4/4.4.svg)](https://javadoc.io/doc/org.apache.commons/commons-collections4/4.4)
 
 The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.
 
@@ -54,7 +54,7 @@ Documentation
 -------------
 
 More information can be found on the [Apache Commons Collections homepage](https://commons.apache.org/proper/commons-collections).
-The [Javadoc](https://commons.apache.org/proper/commons-collections/javadocs/api-release) can be browsed.
+The [Javadoc](https://commons.apache.org/proper/commons-collections/apidocs) can be browsed.
 Questions related to the usage of Apache Commons Collections should be posted to the [user mailing list][ml].
 
 Where can I get the latest release?
@@ -67,7 +67,7 @@ Alternatively you can pull it from the central Maven repositories:
 <dependency>
   <groupId>org.apache.commons</groupId>
   <artifactId>commons-collections4</artifactId>
-  <version>4.3</version>
+  <version>4.4</version>
 </dependency>
 ```
 

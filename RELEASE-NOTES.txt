@@ -1,3 +1,34 @@
+              Apache Apache Commons Collections 4.4 RELEASE NOTES
+
+The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.
+
+Maintenance release.
+
+Changes in this version include:
+
+New features:
+o COLLECTIONS-715:  Implement Collection's removeIf(). Thanks to morningmemo, Gary Gregory. 
+o COLLECTIONS-719:  Create a PropertiesFactory and SortedPropertiesFactory. Thanks to Gary Gregory. 
+o COLLECTIONS-719:  Support Transformer for LazyList #52. Thanks to Stephan Windmüller, Bruno P. Kinoshita. 
+o COLLECTIONS-723:  Make use of FunctionalInterface #48. Thanks to Eitan Adler, SOC, Bruno P. Kinoshita. 
+
+Fixed Bugs:
+o COLLECTIONS-710:  NullPointerExceptions in CompositeCollection, CompositeSet, and CompositeMap. Thanks to Yu Shi, Gary Gregory. 
+
+Changes:
+o COLLECTIONS-718:  Fix LRUMap exception message. Thanks to Eitan Adler. 
+o COLLECTIONS-716:  Don't include email address in Exception messages. Thanks to Sebb. 
+
+ 
+For complete information on Apache Commons Collections, including instructions on how to submit bug reports,
+patches, or suggestions for improvement, see the Apache Apache Commons Collections website:
+
+https://commons.apache.org/proper/commons-collections/
+
+Download page: https://commons.apache.org/proper/commons-collections/download_pool.cgi
+
+===============================================================================
+
               Apache Apache Commons Collections 4.3 RELEASE NOTES
 
 The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.
