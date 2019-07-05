@@ -22,10 +22,11 @@ jdk:
   - openjdk8
   - openjdk11
   - openjdk12
+  - openjdk13
   - openjdk-ea
 
 script:
   - mvn
 
 after_success:
-  - mvn clean test jacoco:report coveralls:report -Ptravis-jacoco
+  - mvn clean test japicmp:cmp -P japicmp jacoco:report coveralls:report -Ptravis-jacoco
