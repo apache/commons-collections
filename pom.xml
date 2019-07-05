@@ -23,7 +23,7 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <artifactId>commons-collections4</artifactId>
-  <version>4.4-SNAPSHOT</version>
+  <version>4.4</version>
   <name>Apache Commons Collections</name>
 
   <inceptionYear>2001</inceptionYear>
