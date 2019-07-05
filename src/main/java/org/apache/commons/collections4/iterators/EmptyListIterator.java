@@ -51,7 +51,6 @@ public class EmptyListIterator<E> extends AbstractEmptyIterator<E> implements
      * @param <E> the element type
      * @return {@link ResettableListIterator}&lt;E&gt;
      */
-    @SuppressWarnings("unchecked")
     public static <E> ResettableListIterator<E> resettableEmptyListIterator() {
         return RESETTABLE_INSTANCE;
     }
@@ -61,7 +60,6 @@ public class EmptyListIterator<E> extends AbstractEmptyIterator<E> implements
      * @param <E> the element type
      * @return {@link ListIterator}&lt;E&gt;
      */
-    @SuppressWarnings("unchecked")
     public static <E> ListIterator<E> emptyListIterator() {
         return INSTANCE;
     }

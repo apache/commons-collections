@@ -42,7 +42,6 @@ public class EmptyOrderedMapIterator<K, V> extends AbstractEmptyMapIterator<K, V
      * @param <V> the value type
      * @return {@link OrderedMapIterator}&lt;K, V&gt;
      */
-    @SuppressWarnings("unchecked")
     public static <K, V> OrderedMapIterator<K, V> emptyOrderedMapIterator() {
         return INSTANCE;
     }
