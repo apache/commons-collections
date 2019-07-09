@@ -1,4 +1,4 @@
-              Apache Apache Commons Collections 4.4 RELEASE NOTES
+              Apache Commons Collections 4.4 RELEASE NOTES
 
 The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.
 
@@ -21,7 +21,7 @@ o COLLECTIONS-716:  Don't include email address in Exception messages. Thanks to
 
  
 For complete information on Apache Commons Collections, including instructions on how to submit bug reports,
-patches, or suggestions for improvement, see the Apache Apache Commons Collections website:
+patches, or suggestions for improvement, see the Apache Commons Collections website:
 
 https://commons.apache.org/proper/commons-collections/
 
@@ -29,7 +29,7 @@ Download page: https://commons.apache.org/proper/commons-collections/download_po
 
 ===============================================================================
 
-              Apache Apache Commons Collections 4.3 RELEASE NOTES
+              Apache Commons Collections 4.3 RELEASE NOTES
 
 The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.
 
@@ -55,7 +55,7 @@ Please NOTE: Clirr errors reported for this release are false positive, this is 
 And manual testing.
 
 For complete information on Apache Commons Collections, including instructions on how to submit bug reports,
-patches, or suggestions for improvement, see the Apache Apache Commons Collections website:
+patches, or suggestions for improvement, see the Apache Commons Collections website:
 
 https://commons.apache.org/proper/commons-collections/
 
@@ -63,7 +63,7 @@ Download page: https://commons.apache.org/proper/commons-collections/download_co
 
 ===============================================================================
 
-              Apache Apache Commons Collections 4.2 RELEASE NOTES
+              Apache Commons Collections 4.2 RELEASE NOTES
 
 The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.
 
@@ -104,7 +104,7 @@ o COLLECTIONS-669:  Update org.apache.commons.collections4.CollectionUtils.addAl
 
  
 For complete information on Apache Commons Collections, including instructions on how to submit bug reports,
-patches, or suggestions for improvement, see the Apache Apache Commons Collections website:
+patches, or suggestions for improvement, see the Apache Commons Collections website:
 
 https://commons.apache.org/proper/commons-collections/
 
@@ -271,7 +271,7 @@ o [COLLECTIONS-506]: Added javadoc clarification to class "CollectionUtils" that
 
  
 For complete information on Apache Commons Collections, including instructions on how to submit bug reports,
-patches, or suggestions for improvement, see the Apache Apache Commons Collections website:
+patches, or suggestions for improvement, see the Apache Commons Collections website:
 
 https://commons.apache.org/proper/commons-collections/
 
