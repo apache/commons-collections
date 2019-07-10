@@ -274,12 +274,7 @@ public class CursorableLinkedList<E> extends AbstractLinkedList<E> implements Se
     protected void registerCursor(final Cursor<E> cursor) {
         // We take this opportunity to clean the cursors list
         // of WeakReference objects to garbage-collected cursors.
-        for (final Iterator<WeakReference<Cursor<E>>> it = cursors.iterator(); it.hasNext();) {
-            final WeakReference<Cursor<E>> ref = it.next();
-            if (ref.get() == null) {
-                it.remove();
-            }
-        }
+        cursors.removeIf(ref -> ref.get() == null);
         cursors.add(new WeakReference<>(cursor));
     }
 
