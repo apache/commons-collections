@@ -261,14 +261,10 @@ public class ListOrderedSet<E>
         if (result == false) {
             return false;
         }
-        if (decorated().size() == 0) {
+        if (decorated().isEmpty()) {
             setOrder.clear();
         } else {
-            for (final Iterator<E> it = setOrder.iterator(); it.hasNext();) {
-                if (!decorated().contains(it.next())) {
-                    it.remove();
-                }
-            }
+            setOrder.removeIf(e -> !decorated().contains(e));
         }
         return result;
     }
