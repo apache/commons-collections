@@ -63,7 +63,7 @@ The Javadoc API documents are available online:
 <li>The <a href="apidocs/index.html">latest from repository sources</a></li>
 </ul>
 <p>
-The <a href="source-repository.html">git repository</a> can be
+The <a href="scm.html">source repository</a> can be
 <a href="https://git-wip-us.apache.org/repos/asf?p=commons-collections.git">browsed</a>, and we have a mirror
  on <a href="https://github.com/apache/commons-collections">GitHub</a>.
 </p>
