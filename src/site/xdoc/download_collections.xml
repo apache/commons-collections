@@ -207,28 +207,28 @@ limitations under the License.
       <subsection name="Binaries">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/collections/binaries/commons-collections-4.1${commons.release.4.binary.suffix}.tar.gz">commons-collections-4.1${commons.release.4.binary.suffix}.tar.gz</a></td>
-              <td><a href="https://www.apache.org/dist/commons/collections/binaries/commons-collections-4.1${commons.release.4.binary.suffix}.tar.gz.sha512">sha512</a></td>
-              <td><a href="https://www.apache.org/dist/commons/collections/binaries/commons-collections-4.1${commons.release.4.binary.suffix}.tar.gz.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/collections/binaries/commons-collections-3.2.2-bin.tar.gz">commons-collections-3.2.2-bin.tar.gz</a></td>
+              <td><a href="https://www.apache.org/dist/commons/collections/binaries/commons-collections-3.2.2-bin.tar.gz.sha256">sha256</a></td>
+              <td><a href="https://www.apache.org/dist/commons/collections/binaries/commons-collections-3.2.2-bin.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/collections/binaries/commons-collections-4.1${commons.release.4.binary.suffix}.zip">commons-collections-4.1${commons.release.4.binary.suffix}.zip</a></td>
-              <td><a href="https://www.apache.org/dist/commons/collections/binaries/commons-collections-4.1${commons.release.4.binary.suffix}.zip.sha512">sha512</a></td>
-              <td><a href="https://www.apache.org/dist/commons/collections/binaries/commons-collections-4.1${commons.release.4.binary.suffix}.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/collections/binaries/commons-collections-3.2.2-bin.zip">commons-collections-3.2.2-bin.zip</a></td>
+              <td><a href="https://www.apache.org/dist/commons/collections/binaries/commons-collections-3.2.2-bin.zip.sha256">sha256</a></td>
+              <td><a href="https://www.apache.org/dist/commons/collections/binaries/commons-collections-3.2.2-bin.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>
       <subsection name="Source">
         <table>
           <tr>
-              <td><a href="[preferred]/commons/collections/source/commons-collections-4.1-src.tar.gz">commons-collections-4.1-src.tar.gz</a></td>
-              <td><a href="https://www.apache.org/dist/commons/collections/source/commons-collections-4.1-src.tar.gz.sha512">sha512</a></td>
+              <td><a href="[preferred]/commons/collections/source/commons-collections-3.2.2-src.tar.gz">commons-collections-3.2.2-src.tar.gz</a></td>
+              <td><a href="https://www.apache.org/dist/commons/collections/source/commons-collections-4.1-src.tar.gz.sha256">sha256</a></td>
               <td><a href="https://www.apache.org/dist/commons/collections/source/commons-collections-4.1-src.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
-              <td><a href="[preferred]/commons/collections/source/commons-collections-4.1-src.zip">commons-collections-4.1-src.zip</a></td>
-              <td><a href="https://www.apache.org/dist/commons/collections/source/commons-collections-4.1-src.zip.sha512">sha512</a></td>
-              <td><a href="https://www.apache.org/dist/commons/collections/source/commons-collections-4.1-src.zip.asc">pgp</a></td>
+              <td><a href="[preferred]/commons/collections/source/commons-collections-3.2.2-src.zip">commons-collections-3.2.2-src.zip</a></td>
+              <td><a href="https://www.apache.org/dist/commons/collections/source/commons-collections-3.2.2-src.zip.sha256">sha256</a></td>
+              <td><a href="https://www.apache.org/dist/commons/collections/source/commons-collections-3.2.2src.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>
