@@ -222,13 +222,13 @@ limitations under the License.
         <table>
           <tr>
               <td><a href="[preferred]/commons/collections/source/commons-collections-3.2.2-src.tar.gz">commons-collections-3.2.2-src.tar.gz</a></td>
-              <td><a href="https://www.apache.org/dist/commons/collections/source/commons-collections-4.1-src.tar.gz.sha256">sha256</a></td>
-              <td><a href="https://www.apache.org/dist/commons/collections/source/commons-collections-4.1-src.tar.gz.asc">pgp</a></td>
+              <td><a href="https://www.apache.org/dist/commons/collections/source/commons-collections-3.2.2-src.tar.gz.sha256">sha256</a></td>
+              <td><a href="https://www.apache.org/dist/commons/collections/source/commons-collections-3.2.2-src.tar.gz.asc">pgp</a></td>
           </tr>
           <tr>
               <td><a href="[preferred]/commons/collections/source/commons-collections-3.2.2-src.zip">commons-collections-3.2.2-src.zip</a></td>
               <td><a href="https://www.apache.org/dist/commons/collections/source/commons-collections-3.2.2-src.zip.sha256">sha256</a></td>
-              <td><a href="https://www.apache.org/dist/commons/collections/source/commons-collections-3.2.2src.zip.asc">pgp</a></td>
+              <td><a href="https://www.apache.org/dist/commons/collections/source/commons-collections-3.2.2-src.zip.asc">pgp</a></td>
           </tr>
         </table>
       </subsection>
