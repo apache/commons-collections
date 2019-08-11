@@ -32,6 +32,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.function.Function;
 
 import org.apache.commons.collections4.map.AbstractMapDecorator;
 import org.apache.commons.collections4.map.AbstractSortedMapDecorator;
@@ -375,6 +376,16 @@ public class MapUtils {
         return defaultValue;
     }
 
+    /*public static <K, V> V getObject(final Map<K, V> map, final K key, final Function<K,V> defaultProvider) {
+        if (map != null) {
+            final V answer = map.get(key);
+            if (answer != null) {
+                return answer;
+            }
+        }
+        return defaultProvider != null ? defaultProvider.apply(key) : null;
+    }*/
+
     /**
      * Looks up the given key in the given map, converting the result into
      * a string, using the default value if the conversion fails.
@@ -391,6 +402,13 @@ public class MapUtils {
         String answer = getString(map, key);
         if (answer == null) {
             answer = defaultValue;
+        }
+        return answer;
+    }
+    public static <K> String getString(final Map<? super K, ?> map, final K key, final Function<K,String> defaultProvider) {
+        String answer = getString(map, key);
+        if (answer == null) {
+            answer = defaultProvider != null ? defaultProvider.apply(key) : null;
         }
         return answer;
     }
@@ -415,6 +433,14 @@ public class MapUtils {
         return answer;
     }
 
+    public static <K> Boolean getBoolean(final Map<? super K, ?> map, final K key, final Function<K,Boolean> defaultProvider) {
+        Boolean answer = getBoolean(map, key);
+        if (answer == null) {
+            answer = defaultProvider != null ? defaultProvider.apply(key) : null;
+        }
+        return answer;
+    }
+
     /**
      * Looks up the given key in the given map, converting the result into
      * a number, using the default value if the conversion fails.
@@ -431,6 +457,14 @@ public class MapUtils {
         Number answer = getNumber(map, key);
         if (answer == null) {
             answer = defaultValue;
+        }
+        return answer;
+    }
+
+    public static <K> Number getNumber(final Map<? super K, ?> map, final K key, final Function<K,Number> defaultProvider) {
+        Number answer = getNumber(map, key);
+        if (answer == null) {
+            answer = defaultProvider != null ? defaultProvider.apply(key) : null;
         }
         return answer;
     }
@@ -454,6 +488,13 @@ public class MapUtils {
         }
         return answer;
     }
+    public static <K> Byte getByte(final Map<? super K, ?> map, final K key, final Function<K,Byte> defaultProvider) {
+        Byte answer = getByte(map, key);
+        if (answer == null) {
+            answer = defaultProvider != null ? defaultProvider.apply(key) : null;
+        }
+        return answer;
+    }
 
     /**
      * Looks up the given key in the given map, converting the result into
@@ -471,6 +512,13 @@ public class MapUtils {
         Short answer = getShort(map, key);
         if (answer == null) {
             answer = defaultValue;
+        }
+        return answer;
+    }
+    public static <K> Short getShort(final Map<? super K, ?> map, final K key, final Function<K,Short> defaultProvider) {
+        Short answer = getShort(map, key);
+        if (answer == null) {
+            answer = defaultProvider != null ? defaultProvider.apply(key) : null;
         }
         return answer;
     }
@@ -495,6 +543,14 @@ public class MapUtils {
         return answer;
     }
 
+    public static <K> Integer getInteger(final Map<? super K, ?> map, final K key, final Function<K, Integer> defaultProvider) {
+        Integer answer = getInteger(map, key);
+        if (answer == null) {
+            answer = defaultProvider != null ? defaultProvider.apply(key) : null;
+        }
+        return answer;
+    }
+
     /**
      * Looks up the given key in the given map, converting the result into
      * a long, using the default value if the conversion fails.
@@ -511,6 +567,13 @@ public class MapUtils {
         Long answer = getLong(map, key);
         if (answer == null) {
             answer = defaultValue;
+        }
+        return answer;
+    }
+    public static <K> Long getLong(final Map<? super K, ?> map, final K key, final Function<K,Long> defaultProvider) {
+        Long answer = getLong(map, key);
+        if (answer == null) {
+            answer = defaultProvider != null ? defaultProvider.apply(key) : null;
         }
         return answer;
     }
@@ -531,6 +594,13 @@ public class MapUtils {
         Float answer = getFloat(map, key);
         if (answer == null) {
             answer = defaultValue;
+        }
+        return answer;
+    }
+    public static <K> Float getFloat(final Map<? super K, ?> map, final K key, final Function<K,Float> defaultProvider) {
+        Float answer = getFloat(map, key);
+        if (answer == null) {
+            answer = defaultProvider != null ? defaultProvider.apply(key) : null;
         }
         return answer;
     }
@@ -555,6 +625,14 @@ public class MapUtils {
         return answer;
     }
 
+    public static <K> Double getDouble(final Map<? super K, ?> map, final K key, final Function<K,Double> defaultProvider) {
+        Double answer = getDouble(map, key);
+        if (answer == null) {
+            answer = defaultProvider != null ? defaultProvider.apply(key) : null;
+        }
+        return answer;
+    }
+
     /**
      * Looks up the given key in the given map, converting the result into
      * a map, using the default value if the conversion fails.
@@ -571,6 +649,14 @@ public class MapUtils {
         Map<?, ?> answer = getMap(map, key);
         if (answer == null) {
             answer = defaultValue;
+        }
+        return answer;
+    }
+
+    public static <K> Map<?, ?> getMap(final Map<? super K, ?> map, final K key, final Function<K,Map<?, ?>> defaultProvider) {
+        Map<?, ?> answer = getMap(map, key);
+        if (answer == null) {
+            answer = defaultProvider != null ? defaultProvider.apply(key) : null;
         }
         return answer;
     }
@@ -731,6 +817,14 @@ public class MapUtils {
         return booleanObject.booleanValue();
     }
 
+    public static <K> boolean getBooleanValue(final Map<? super K, ?> map, final K key, final Function<K,Boolean> defaultProvider) {
+        final Boolean booleanObject = getBoolean(map, key);
+        if (booleanObject == null) {
+            return defaultProvider != null ? defaultProvider.apply(key).booleanValue() : false;
+        }
+        return booleanObject.booleanValue();
+    }
+
     /**
      * Gets a byte from a Map in a null-safe manner,
      * using the default value if the conversion fails.
@@ -747,6 +841,14 @@ public class MapUtils {
         final Byte byteObject = getByte(map, key);
         if (byteObject == null) {
             return defaultValue;
+        }
+        return byteObject.byteValue();
+    }
+
+    public static <K> byte getByteValue(final Map<? super K, ?> map, final K key, final Function<K,Byte> defaultProvider) {
+        final Byte byteObject = getByte(map, key);
+        if (byteObject == null) {
+            return defaultProvider.apply(key).byteValue();
         }
         return byteObject.byteValue();
     }
@@ -771,6 +873,14 @@ public class MapUtils {
         return shortObject.shortValue();
     }
 
+    public static <K> short getShortValue(final Map<? super K, ?> map, final K key, final Function<K,Short> defaultProvider) {
+        final Short shortObject = getShort(map, key);
+        if (shortObject == null) {
+            return defaultProvider.apply(key).shortValue();
+        }
+        return shortObject.shortValue();
+    }
+
     /**
      * Gets an int from a Map in a null-safe manner,
      * using the default value if the conversion fails.
@@ -787,6 +897,14 @@ public class MapUtils {
         final Integer integerObject = getInteger(map, key);
         if (integerObject == null) {
             return defaultValue;
+        }
+        return integerObject.intValue();
+    }
+
+    public static <K> int getIntValue(final Map<? super K, ?> map, final K key, final Function<K,Integer> defaultProvider) {
+        final Integer integerObject = getInteger(map, key);
+        if (integerObject == null) {
+            return defaultProvider.apply(key).intValue();
         }
         return integerObject.intValue();
     }
@@ -811,6 +929,14 @@ public class MapUtils {
         return longObject.longValue();
     }
 
+    public static <K> long getLongValue(final Map<? super K, ?> map, final K key, final Function<K,Long> defaultProvider) {
+        final Long longObject = getLong(map, key);
+        if (longObject == null) {
+            return defaultProvider.apply(key).longValue();
+        }
+        return longObject.longValue();
+    }
+
     /**
      * Gets a float from a Map in a null-safe manner,
      * using the default value if the conversion fails.
@@ -831,6 +957,14 @@ public class MapUtils {
         return floatObject.floatValue();
     }
 
+    public static <K> float getFloatValue(final Map<? super K, ?> map, final K key, final Function<K,Float> defaultProvider) {
+        final Float floatObject = getFloat(map, key);
+        if (floatObject == null) {
+            return defaultProvider.apply(key).floatValue();
+        }
+        return floatObject.floatValue();
+    }
+
     /**
      * Gets a double from a Map in a null-safe manner,
      * using the default value if the conversion fails.
@@ -847,6 +981,14 @@ public class MapUtils {
         final Double doubleObject = getDouble(map, key);
         if (doubleObject == null) {
             return defaultValue;
+        }
+        return doubleObject.doubleValue();
+    }
+
+    public static <K> double getDoubleValue(final Map<? super K, ?> map, final K key, final Function<K,Double> doubleProvider) {
+        final Double doubleObject = getDouble(map, key);
+        if (doubleObject == null) {
+            return doubleProvider.apply(key).doubleValue();
         }
         return doubleObject.doubleValue();
     }
@@ -998,11 +1140,11 @@ public class MapUtils {
             final Object childValue = entry.getValue();
             if (childValue instanceof Map && !lineage.contains(childValue)) {
                 verbosePrintInternal(
-                    out,
-                    childKey == null ? "null" : childKey,
-                    (Map<?, ?>) childValue,
-                    lineage,
-                    debug);
+                        out,
+                        childKey == null ? "null" : childKey,
+                        (Map<?, ?>) childValue,
+                        lineage,
+                        debug);
             } else {
                 printIndent(out, lineage.size());
                 out.print(childKey);
@@ -1010,16 +1152,16 @@ public class MapUtils {
 
                 final int lineageIndex =
                         IterableUtils.indexOf(lineage,
-                                              PredicateUtils.equalPredicate(childValue));
+                                PredicateUtils.equalPredicate(childValue));
                 if (lineageIndex == -1) {
                     out.print(childValue);
                 } else if (lineage.size() - 1 == lineageIndex) {
                     out.print("(this Map)");
                 } else {
                     out.print(
-                        "(ancestor["
-                            + (lineage.size() - 1 - lineageIndex - 1)
-                            + "] Map)");
+                            "(ancestor["
+                                    + (lineage.size() - 1 - lineageIndex - 1)
+                                    + "] Map)");
                 }
 
                 if (debug && childValue != null) {
@@ -1319,8 +1461,8 @@ public class MapUtils {
      * @throws NullPointerException  if the Map is null
      */
     public static <K, V> IterableMap<K, V> transformedMap(final Map<K, V> map,
-            final Transformer<? super K, ? extends K> keyTransformer,
-            final Transformer<? super V, ? extends V> valueTransformer) {
+                                                          final Transformer<? super K, ? extends K> keyTransformer,
+                                                          final Transformer<? super V, ? extends V> valueTransformer) {
         return TransformedMap.transformingMap(map, keyTransformer, valueTransformer);
     }
 
@@ -1412,7 +1554,7 @@ public class MapUtils {
      * @throws NullPointerException  if the Map or Transformer is null
      */
     public static <K, V> IterableMap<K, V> lazyMap(final Map<K, V> map,
-            final Transformer<? super K, ? extends V> transformerFactory) {
+                                                   final Transformer<? super K, ? extends V> transformerFactory) {
         return LazyMap.lazyMap(map, transformerFactory);
     }
 
@@ -1467,7 +1609,7 @@ public class MapUtils {
      */
     @Deprecated
     public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(final Map<K, C> map,
-            final Class<C> collectionClass) {
+                                                                                    final Class<C> collectionClass) {
         return MultiValueMap.multiValueMap(map, collectionClass);
     }
 
@@ -1488,7 +1630,7 @@ public class MapUtils {
      */
     @Deprecated
     public static <K, V, C extends Collection<V>> MultiValueMap<K, V> multiValueMap(final Map<K, C> map,
-            final Factory<C> collectionFactory) {
+                                                                                    final Factory<C> collectionFactory) {
         return MultiValueMap.multiValueMap(map, collectionFactory);
     }
 
@@ -1556,7 +1698,7 @@ public class MapUtils {
      * @throws NullPointerException  if the SortedMap is null
      */
     public static <K, V> SortedMap<K, V> predicatedSortedMap(final SortedMap<K, V> map,
-            final Predicate<? super K> keyPred, final Predicate<? super V> valuePred) {
+                                                             final Predicate<? super K> keyPred, final Predicate<? super V> valuePred) {
         return PredicatedSortedMap.predicatedSortedMap(map, keyPred, valuePred);
     }
 
@@ -1584,8 +1726,8 @@ public class MapUtils {
      * @throws NullPointerException  if the SortedMap is null
      */
     public static <K, V> SortedMap<K, V> transformedSortedMap(final SortedMap<K, V> map,
-            final Transformer<? super K, ? extends K> keyTransformer,
-            final Transformer<? super V, ? extends V> valueTransformer) {
+                                                              final Transformer<? super K, ? extends K> keyTransformer,
+                                                              final Transformer<? super V, ? extends V> valueTransformer) {
         return TransformedSortedMap.transformingSortedMap(map, keyTransformer, valueTransformer);
     }
 
@@ -1678,7 +1820,7 @@ public class MapUtils {
      * @throws NullPointerException  if the Map or Transformer is null
      */
     public static <K, V> SortedMap<K, V> lazySortedMap(final SortedMap<K, V> map,
-            final Transformer<? super K, ? extends V> transformerFactory) {
+                                                       final Transformer<? super K, ? extends V> transformerFactory) {
         return LazySortedMap.lazySortedMap(map, transformerFactory);
     }
 
@@ -1792,7 +1934,7 @@ public class MapUtils {
             throw new NullPointerException("Map must not be null");
         }
         return sortedMap instanceof IterableSortedMap ? (IterableSortedMap<K, V>) sortedMap :
-                                                        new AbstractSortedMapDecorator<K, V>(sortedMap) {};
+                new AbstractSortedMapDecorator<K, V>(sortedMap) {};
     }
 
     /**
