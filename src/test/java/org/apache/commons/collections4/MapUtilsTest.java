@@ -1128,7 +1128,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertEquals(null, MapUtils.getString(null,"key"));
         assertEquals("default", MapUtils.getString(in,"noKey", "default"));
         assertEquals("default", MapUtils.getString(in,"noKey", (key)->{
-            if ("nokey".equals(key)) {
+            if ("noKey".equals(key)) {
                 return "default";
             } else {
                 return "";
