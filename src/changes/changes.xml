@@ -24,6 +24,9 @@
     <action issue="COLLECTIONS-724" dev="ggregory" type="updated." due-to="Eitan Adler">
       Simplify two remove-if loops #77.
     </action>
+    <action issue="COLLECTIONS-726" dev="ggregory" type="updated." due-to=" liuhaozzu, Gary Gregory">
+      Add lambdas function to provide default values in MapUtils #81.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
