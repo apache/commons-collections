@@ -20,6 +20,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 import java.io.ByteArrayOutputStream;
@@ -1152,8 +1154,11 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
 
     @Test
     public void testgetBooleanValue() {
-        final Map<String, Boolean> in = new HashMap<>();
+        final Map<String, Object> in = new HashMap<>();
         in.put("key", true);
+        in.put("keyNumberTrue", 1);
+        in.put("keyNumberFalse", 0);
+        in.put("keyUnmapped", new Object());
 
         assertTrue(MapUtils.getBooleanValue(in,"key", true));
         assertTrue(MapUtils.getBooleanValue(in,"key"));
@@ -1167,21 +1172,20 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertTrue(MapUtils.getBoolean(in,"noKey", (key)->{
             if (System.currentTimeMillis() > 0) {
                 return true;
-            } else {
-                return false;
             }
+            return false;
         }));
         assertEquals(null, MapUtils.getBoolean(null,"noKey"));
-
-
+        // Values are Numbers
+        assertFalse(MapUtils.getBoolean(in,"keyNumberFalse"));
+        assertTrue(MapUtils.getBoolean(in,"keyNumberTrue"));
+        assertNull(MapUtils.getBoolean(in,"keyString"));
 
         final Map<String, String> inStr = new HashMap<>();
         inStr.put("str1", "true");
 
         assertTrue(MapUtils.getBooleanValue(inStr,"str1", true));
         assertTrue(MapUtils.getBoolean(inStr,"str1", true));
-
-
     }
 
     @Test
