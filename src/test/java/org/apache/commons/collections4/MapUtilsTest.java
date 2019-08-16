@@ -1160,6 +1160,9 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         in.put("keyNumberFalse", 0);
         in.put("keyUnmapped", new Object());
 
+        assertFalse(MapUtils.getBooleanValue(null, "keyString", null));
+        assertFalse(MapUtils.getBooleanValue(in, null, null));
+        assertFalse(MapUtils.getBooleanValue(null, null, null));
         assertTrue(MapUtils.getBooleanValue(in,"key", true));
         assertTrue(MapUtils.getBooleanValue(in,"key"));
         assertTrue(MapUtils.getBooleanValue(in,"noKey", true));
@@ -1177,9 +1180,12 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         }));
         assertEquals(null, MapUtils.getBoolean(null,"noKey"));
         // Values are Numbers
-        assertFalse(MapUtils.getBoolean(in,"keyNumberFalse"));
-        assertTrue(MapUtils.getBoolean(in,"keyNumberTrue"));
-        assertNull(MapUtils.getBoolean(in,"keyString"));
+        assertFalse(MapUtils.getBoolean(in, "keyNumberFalse"));
+        assertTrue(MapUtils.getBoolean(in, "keyNumberTrue"));
+        assertNull(MapUtils.getBoolean(in, "keyString"));
+        assertNull(MapUtils.getBoolean(null, "keyString"));
+        assertNull(MapUtils.getBoolean(in, null));
+        assertNull(MapUtils.getBoolean(null, null));
 
         final Map<String, String> inStr = new HashMap<>();
         inStr.put("str1", "true");
