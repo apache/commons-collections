@@ -1178,6 +1178,12 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
             }
             return false;
         }));
+        assertNull(MapUtils.getBoolean(in, "noKey", (key) -> {
+            return null;
+        }));
+        assertFalse(MapUtils.getBooleanValue(in, "noKey", (key) -> {
+            return null;
+        }));
         assertEquals(null, MapUtils.getBoolean(null,"noKey"));
         // Values are Numbers
         assertFalse(MapUtils.getBoolean(in, "keyNumberFalse"));
