@@ -174,7 +174,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      *
      * @param index index of the Iterator to replace
      * @param iterator Iterator to place at the given index
-     * @throws IndexOutOfBoundsException if index &lt; 0 or index &gt; size()
+     * @throws IndexOutOfBoundsException if index &lt; 0 or index &gt;= size()
      * @throws IllegalStateException if iteration has started
      * @throws NullPointerException if the iterator is null
      */
