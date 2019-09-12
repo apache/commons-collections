@@ -19,8 +19,8 @@ package org.apache.commons.collections4.bloomfilters;
 
 import java.io.Serializable;
 import java.util.BitSet;
+import java.util.Objects;
 
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * A Bloom Filter hash calculation.  This class only stores the result of an
@@ -77,7 +77,7 @@ public class Hash implements Comparable<Hash>, Serializable {
 	@Override
 	public int hashCode() {
 		if (hashCode == null) {
-			hashCode = new HashCodeBuilder().append(h1).append(h2).build();
+			hashCode = Objects.hash(h1,h2);
 		}
 		return hashCode.intValue();
 

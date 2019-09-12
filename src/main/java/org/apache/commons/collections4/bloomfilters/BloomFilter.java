@@ -37,12 +37,15 @@ public class BloomFilter {
 	private transient Double logValue;
 
 	/**
-	 * Constructor
+	 * Constructor.
+	 * 
+	 * A copy of the bitSet parameter is made so that the bloomfilter
+	 * is isolated from any further changes in the bitSet.
 	 * 
 	 * @param bitSet The bit set that was built by the config.
 	 */
 	public BloomFilter(BitSet bitSet) {
-		this.bitSet = bitSet;
+		this.bitSet = (BitSet)bitSet.clone();
 		this.hamming = null;
 		this.logValue = null;
 	}
@@ -200,12 +203,9 @@ public class BloomFilter {
 	 * @return a new filter.
 	 */
 	public BloomFilter merge(BloomFilter other) {
-		if (other.bitSet.size() == this.bitSet.size()) {
-			BitSet next = (BitSet) this.bitSet.clone();
-			next.or(other.bitSet);
-			return new BloomFilter(next);
-		}
-		throw new IllegalArgumentException("Filter are different sizes");
+		BitSet next = (BitSet) this.bitSet.clone();
+		next.or(other.bitSet);
+		return new BloomFilter(next);		
 	}
 
 	/**

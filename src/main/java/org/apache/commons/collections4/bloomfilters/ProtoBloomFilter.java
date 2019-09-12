@@ -21,9 +21,9 @@ import java.io.Serializable;
 import java.util.BitSet;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * A prototypical bloom filter definition.
@@ -81,11 +81,7 @@ public class ProtoBloomFilter implements Comparable<ProtoBloomFilter>, Serializa
 	@Override
 	public int hashCode() {
 		if (hashCode == null) {
-			HashCodeBuilder hb = new HashCodeBuilder();
-			for (Hash hash : hashes) {
-				hb.append(hash);
-			}
-			hashCode = hb.build();
+			hashCode = Objects.hash( hashes );			
 		}
 		return hashCode.intValue();
 	}
