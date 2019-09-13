@@ -641,7 +641,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
      *       Otherwise, use it.
      *
      * 6) If the right child of the parent is the parent itself, we've
-     *    already found & returned the end of the Trie, so exit.
+     *    already found &amp; returned the end of the Trie, so exit.
      *
      * 7) Do Step 1 on the parent's right child.
      */
@@ -1184,8 +1184,8 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
      *        node != node.parent.left.
      *          - If node.parent.left is uplink from node.parent:
      *              - If node.parent.left is not root, return it.
-     *              - If it is root & root isEmpty, return null.
-     *              - If it is root & root !isEmpty, return root.
+     *              - If it is root &amp; root isEmpty, return null.
+     *              - If it is root &amp; root !isEmpty, return root.
      *          - If node.parent.left is not uplink from node.parent:
      *              - Follow right path for first right child from node.parent.left
      *
@@ -2364,7 +2364,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
             private TrieEntry<K, V> subtree; // the subtree to search within
 
             /**
-             * Starts iteration at the given entry & search only
+             * Starts iteration at the given entry &amp; search only
              * within the given subtree.
              */
             EntryIterator(final TrieEntry<K, V> startScan, final K prefix,
