@@ -604,12 +604,7 @@ public class CollectionUtils {
         }
 
         @SuppressWarnings({ "unchecked", "rawtypes" })
-        final Transformer<E, ?> transformer = new Transformer() {
-            @Override
-            public EquatorWrapper<?> transform(final Object input) {
-                return new EquatorWrapper(equator, input);
-            }
-        };
+        final Transformer<E, ?> transformer = input -> new EquatorWrapper(equator, input);
 
         return isEqualCollection(collect(a, transformer), collect(b, transformer));
     }
@@ -1782,12 +1777,7 @@ public class CollectionUtils {
                                               final Iterable<? extends E> retain,
                                               final Equator<? super E> equator) {
 
-        final Transformer<E, EquatorWrapper<E>> transformer = new Transformer<E, EquatorWrapper<E>>() {
-            @Override
-            public EquatorWrapper<E> transform(final E input) {
-                return new EquatorWrapper<>(equator, input);
-            }
-        };
+        final Transformer<E, EquatorWrapper<E>> transformer = input -> new EquatorWrapper<>(equator, input);
 
         final Set<EquatorWrapper<E>> retainSet =
                 collect(retain, transformer, new HashSet<EquatorWrapper<E>>());
@@ -1860,12 +1850,7 @@ public class CollectionUtils {
                                               final Iterable<? extends E> remove,
                                               final Equator<? super E> equator) {
 
-        final Transformer<E, EquatorWrapper<E>> transformer = new Transformer<E, EquatorWrapper<E>>() {
-            @Override
-            public EquatorWrapper<E> transform(final E input) {
-                return new EquatorWrapper<>(equator, input);
-            }
-        };
+        final Transformer<E, EquatorWrapper<E>> transformer = input -> new EquatorWrapper<>(equator, input);
 
         final Set<EquatorWrapper<E>> removeSet =
                 collect(remove, transformer, new HashSet<EquatorWrapper<E>>());

@@ -626,14 +626,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
                         return null;
                     }
                     final K key = keyIterator.next();
-                    final Transformer<V, Entry<K, V>> entryTransformer = new Transformer<V, Entry<K, V>>() {
-
-                        @Override
-                        public Entry<K, V> transform(final V input) {
-                            return new MultiValuedMapEntry(key, input);
-                        }
-
-                    };
+                    final Transformer<V, Entry<K, V>> entryTransformer = input -> new MultiValuedMapEntry(key, input);
                     return new TransformIterator<>(new ValuesIterator(key), entryTransformer);
                 }
             };

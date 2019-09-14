@@ -104,14 +104,11 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
     @SuppressWarnings("unchecked")
     public void testMapGet4() {
         final HashMap<K, V> base = new HashMap<>();
-        final Map<K, V> map = DefaultedMap.defaultedMap(base, new Transformer<K, V>() {
-            @Override
-            public V transform(final K input) {
-                if (input instanceof String) {
-                    return (V) "NULL";
-                }
-                return (V) "NULL_OBJECT";
+        final Map<K, V> map = DefaultedMap.defaultedMap(base, (Transformer<K, V>) input -> {
+            if (input instanceof String) {
+                return (V) "NULL";
             }
+            return (V) "NULL_OBJECT";
         });
 
         assertEquals(0, map.size());

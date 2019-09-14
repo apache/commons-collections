@@ -231,12 +231,7 @@ public class SetUtilsTest {
 
     @Test
     public void testpredicatedSet() {
-        final Predicate<Object> predicate = new Predicate<Object>() {
-            @Override
-            public boolean evaluate(final Object o) {
-                return o instanceof String;
-            }
-        };
+        final Predicate<Object> predicate = o -> o instanceof String;
         final Set<Object> set = SetUtils.predicatedSet(new HashSet<>(), predicate);
         assertTrue("returned object should be a PredicatedSet", set instanceof PredicatedSet);
         try {

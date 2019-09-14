@@ -91,12 +91,7 @@ public class IteratorChainTest extends AbstractIteratorTest<String> {
 
     public void testRemoveFromFilteredIterator() {
 
-        final Predicate<Integer> myPredicate = new Predicate<Integer>() {
-            @Override
-            public boolean evaluate(final Integer i) {
-                return i.compareTo(Integer.valueOf(4)) < 0;
-            }
-        };
+        final Predicate<Integer> myPredicate = i -> i.compareTo(Integer.valueOf(4)) < 0;
 
         final List<Integer> list1 = new ArrayList<>();
         final List<Integer> list2 = new ArrayList<>();

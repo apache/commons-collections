@@ -44,12 +44,7 @@ public class PredicatedMultiSetTest<T> extends AbstractMultiSetTest<T> {
     //--------------------------------------------------------------------------
 
     protected Predicate<T> stringPredicate() {
-        return new Predicate<T>() {
-            @Override
-            public boolean evaluate(final T o) {
-                return o instanceof String;
-            }
-        };
+        return o -> o instanceof String;
     }
 
     protected Predicate<T> truePredicate = TruePredicate.<T>truePredicate();

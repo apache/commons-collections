@@ -438,23 +438,18 @@ public class MultiValueMap<K, V> extends AbstractMapDecorator<K, Object> impleme
                     return null;
                 }
                 final K key = keyIterator.next();
-                final Transformer<V, Entry<K, V>> transformer = new Transformer<V, Entry<K, V>>() {
+                final Transformer<V, Entry<K, V>> transformer = input -> new Entry<K, V>() {
                     @Override
-                    public Entry<K, V> transform(final V input) {
-                        return new Entry<K, V>() {
-                            @Override
-                            public K getKey() {
-                                return key;
-                            }
-                            @Override
-                            public V getValue() {
-                                return input;
-                            }
-                            @Override
-                            public V setValue(final V value) {
-                                throw new UnsupportedOperationException();
-                            }
-                        };
+                    public K getKey() {
+                        return key;
+                    }
+                    @Override
+                    public V getValue() {
+                        return input;
+                    }
+                    @Override
+                    public V setValue(final V value) {
+                        throw new UnsupportedOperationException();
                     }
                 };
                 return new TransformIterator<>(new ValuesIterator(key), transformer);

@@ -16,8 +16,6 @@
  */
 package org.apache.commons.collections4.bag;
 
-import java.util.Comparator;
-
 import junit.framework.Test;
 
 import org.apache.commons.collections4.Bag;
@@ -75,12 +73,7 @@ public class TreeBagTest<T> extends AbstractSortedBagTest<T> {
             // expected;
         }
 
-        final Bag<String> bag2 = new TreeBag<>(new Comparator<String>() {
-            @Override
-            public int compare(final String o1, final String o2) {
-                return o1.compareTo(o2);
-            }
-        });
+        final Bag<String> bag2 = new TreeBag<>((o1, o2) -> o1.compareTo(o2));
         try {
             // jdk bug: adding null to an empty TreeMap works
             // thus ensure that the bag is not empty before adding null

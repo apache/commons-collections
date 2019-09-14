@@ -65,12 +65,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
     }
 
     public Predicate<Object> getPredicate() {
-        return new Predicate<Object>() {
-            @Override
-            public boolean evaluate(final Object o) {
-                return o instanceof String;
-            }
-        };
+        return o -> o instanceof String;
     }
 
     @Test
@@ -122,14 +117,11 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
 
     @Test
     public void testLazyMapTransformer() {
-        final Map<Object, Object> map = MapUtils.lazyMap(new HashMap<>(), new Transformer<Object, Object>() {
-            @Override
-            public Object transform(final Object mapKey) {
-                if (mapKey instanceof String) {
-                    return Integer.valueOf((String) mapKey);
-                }
-                return null;
+        final Map<Object, Object> map = MapUtils.lazyMap(new HashMap<>(), (Transformer<Object, Object>) mapKey -> {
+            if (mapKey instanceof String) {
+                return Integer.valueOf((String) mapKey);
             }
+            return null;
         });
 
         assertEquals(0, map.size());
@@ -859,12 +851,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
 
         // Now test key transform population
         final MultiValueMap<Integer, X> map = MultiValueMap.multiValueMap(new TreeMap<Integer, Collection<X>>());
-        MapUtils.populateMap(map, list, new Transformer<X, Integer>() {
-            @Override
-            public Integer transform(final X input) {
-                return input.key;
-            }
-        }, TransformerUtils.<X> nopTransformer());
+        MapUtils.populateMap(map, list, (Transformer<X, Integer>) input -> input.key, TransformerUtils.<X> nopTransformer());
         assertEquals(list.size(), map.totalSize());
 
         for (int i = 0; i < list.size(); i++) {
