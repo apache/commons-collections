@@ -39,7 +39,7 @@ public class BloomFilter {
 	/**
 	 * Constructor.
 	 * 
-	 * A copy of the bitSet parameter is made so that the bloomfilter
+	 * A copy of the bitSet parameter is made so that the bloom filter
 	 * is isolated from any further changes in the bitSet.
 	 * 
 	 * @param bitSet The bit set that was built by the config.
@@ -51,16 +51,11 @@ public class BloomFilter {
 	}
 
 	/**
-	 * Constructor.
-	 * 
-	 * @param config The FilterConfig to define this BloomFilter.
-	 */
-	public BloomFilter(FilterConfig config) {
-		this(new BitSet(config.getNumberOfBits()));
-	}
-
-	/**
 	 * Return true if other & this == other
+	 * 
+	 * This is the inverse of the match method.
+	 * 
+	 * X.match(Y) is the same as Y.inverseMatch(X)
 	 * 
 	 * @param other the other bloom filter to match.
 	 * @return true if they match.
@@ -70,7 +65,9 @@ public class BloomFilter {
 	}
 
 	/**
-	 * Return true if this & other == this
+	 * Return true if this & other == this.
+	 * 
+	 * This is the standard bloom filter match.
 	 * 
 	 * @param other the other bloom filter to match.
 	 * @return true if they match.
@@ -111,7 +108,7 @@ public class BloomFilter {
 
 	/**
 	 * The the log(2) of this bloom filter. This is the base 2 logarithm of this
-	 * bloom filter if thie bits in this filter were considers the bits in an
+	 * bloom filter if the bits in this filter were considers the bits in an
 	 * unsigned integer.
 	 * 
 	 * @return the base 2 logarithm
@@ -146,7 +143,7 @@ public class BloomFilter {
 			return 0;
 		}
 		double result = exp[0];
-		// now we move backwards from the highest bit until the requested
+		// now we move backwards from the highest bit until the requested depth
 		// is achieved.
 		double exp2;
 		for (int i = 1; i < exp.length; i++) {
@@ -173,9 +170,12 @@ public class BloomFilter {
 		if (exp[0] < 0) {
 			return exp;
 		}
-
+		
 		for (int i = 1; i < depth; i++) {
 			exp[i] = bitSet.previousSetBit(exp[i - 1] - 1);
+			/* 25 bits from the start make no difference in the double calculation
+			 * so we can short circuit the method here. 
+			 */
 			if (exp[i] - exp[0] < -25) {
 				exp[i] = -1;
 			}
@@ -209,11 +209,11 @@ public class BloomFilter {
 	}
 
 	/**
-	 * Return the filter as a bitset.
+	 * Return the a copy of the bitset in in the filter.
 	 * 
 	 * @return the bit set representation.
 	 */
-	public BitSet asBitSet() {
-		return bitSet;
+	public BitSet getBitSet() {
+		return (BitSet)bitSet.clone();
 	}
 }

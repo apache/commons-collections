@@ -24,8 +24,11 @@ import java.io.Serializable;
 
 /**
  * Filter configuration class.
- *
+ * <p>
  * This class contains the values for the filter configuration.
+ * </p><p>
+ * 
+ * </p> 
  *
  * @see <a href="http://hur.st/bloomfilter?n=3&p=1.0E-5">Bloom Filter
  *      calculator</a>

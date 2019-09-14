@@ -28,7 +28,21 @@ import java.util.Set;
  * 
  * Concrete implementations of BloomFilter can be built from the
  * ProtoBloomFilter.
- *
+ * 
+ * A bloom filter may contain one or more items hashed together to make the filter.
+ * 
+ * There are two ways to hash the properties of objects.  
+ * <ol>
+ * <li>One is to create a buffer containing all the properties and hash that.  This means that 
+ * the search for the object must construct the same filter and search for it.  It is not 
+ * possible to locate an object by a partial property match.  In this case each object is counted
+ * as a single item as specified in the FilterConfig. 
+ * </li>
+ * <li>The other is to hash each item separately.  In this case each of the properties can be 
+ * searched for individually.  However, in this case the number of items that should be specified
+ * in the FilterConfig is the sum of the cardinality of the properties being hashed.
+ * </li>
+ * </ol>
  */
 public class ProtoBloomFilterBuilder {
 	private Set<Hash> hashes;
@@ -42,22 +56,22 @@ public class ProtoBloomFilterBuilder {
 	}
 
 	/**
-	 * Add the proto bloom filter the the proto bloom filter.
+	 * Add the proto bloom filter to this proto bloom filter. The items included in
+	 * the parameter bloom filter are added to the filter being built without modification.
 	 * 
-	 * @param pbf The proto bloom filter to add.
+	 * @param protoBloomFilter The proto bloom filter to add.
 	 * @return this for chaining
 	 */
-	public ProtoBloomFilterBuilder update(ProtoBloomFilter pbf) {
-		hashes.addAll(pbf.getHashes());
+	public ProtoBloomFilterBuilder update(ProtoBloomFilter protoBloomFilter) {
+		hashes.addAll(protoBloomFilter.getHashes());
 		return this;
 	}
 
 	/**
-	 * Add the byte buffer to the proto bloom filter.
+	 * Add the byte buffer to the proto bloom filter as a new hashed value.
 	 * 
-	 * @param buffer The buffer to add.
-	 * @return The ProtoBloomFilterBuilder for chaining
-	 * 
+	 * @param buffer The buffer to hash.
+	 * @return The ProtoBloomFilterBuilder for chaining.
 	 */
 	public ProtoBloomFilterBuilder update(ByteBuffer buffer) {
 		hashes.add(hash3_x64_128(buffer, 0, buffer.limit(), 0L));
@@ -65,7 +79,7 @@ public class ProtoBloomFilterBuilder {
 	}
 
 	/**
-	 * Add the byte to the proto bloom filter filter.
+	 * Add the byte to the proto bloom filter filter as a new hashed value.
 	 * 
 	 * @param b The byte to add.
 	 * @return this for chaining
@@ -75,7 +89,7 @@ public class ProtoBloomFilterBuilder {
 	}
 
 	/**
-	 * Add the bytes from the string to the proto bloom filter.
+	 * Add the bytes from the string to the proto bloom filter as a new hashed value.
 	 * 
 	 * The bytes are interpreted as UTF-8 chars.
 	 * 
@@ -87,7 +101,7 @@ public class ProtoBloomFilterBuilder {
 	}
 
 	/**
-	 * Add the byte buffer to the proto bloom filter filter.
+	 * Add a byte array to the proto bloom filter filter as a new hashed value.
 	 * 
 	 * @param buffer The buffer to add.
 	 * @return this for chaining
@@ -110,18 +124,22 @@ public class ProtoBloomFilterBuilder {
 	}
 
 	/**
-	 * Add the proto bloom filter to the filter and build it.
+	 * Add the proto bloom filter to the filter as a new hash and build it.
 	 * 
-	 * @param pbf The proto bloom filter to add.
+	 * This is a convenience method for update(protoBloomFilter).build()
+	 * 
+	 * @param protoBloomFilter The proto bloom filter to add.
 	 * @return the defined ProtoBloomFilter.
 	 */
-	public ProtoBloomFilterBuilder build(ProtoBloomFilter pbf) {
-		hashes.addAll(pbf.getHashes());
+	public ProtoBloomFilterBuilder build(ProtoBloomFilter protoBloomFilter) {
+		hashes.addAll(protoBloomFilter.getHashes());
 		return this;
 	}
 
 	/**
-	 * Add the byte buffer to the proto bloom filter and build it.
+	 * Add the byte buffer to the proto bloom filter as a new hash and build it.
+	 * 
+	 * This is a convenience method for update(buffer).build()
 	 * 
 	 * @param buffer The buffer to add.
 	 * @return the defined ProtoBloomFilter.
@@ -131,7 +149,9 @@ public class ProtoBloomFilterBuilder {
 	}
 
 	/**
-	 * Add the byte to the proto bloom filter filter and build it.
+	 * Add the byte to the proto bloom filter as a new hash and build it.
+	 * 
+	 * This is a convenience method for update(b).build()
 	 * 
 	 * @param b The byte to add.
 	 * @return the defined ProtoBloomFilter.
@@ -141,9 +161,11 @@ public class ProtoBloomFilterBuilder {
 	}
 
 	/**
-	 * Add the bytes from the string to the proto bloom filter and build it.
+	 * Add the bytes from the string to the proto bloom filter as a new hash and build it.
 	 * 
 	 * The bytes are interpreted as UTF-8 chars.
+	 * 
+	 * This is a convenience method for update(string).build()
 	 * 
 	 * @param string The string to add.
 	 * @return the defined ProtoBloomFilter.
@@ -153,7 +175,9 @@ public class ProtoBloomFilterBuilder {
 	}
 
 	/**
-	 * Add the proto bloom filter the the proto bloom filter and build it.
+	 * Add the byte array to the proto bloom filter as a new hash and build it.
+	 * 
+	 * This is a convenience method for update(bufer).build()
 	 * 
 	 * @param pbf The proto bloom filter to add.
 	 * @return the defined ProtoBloomFilter.

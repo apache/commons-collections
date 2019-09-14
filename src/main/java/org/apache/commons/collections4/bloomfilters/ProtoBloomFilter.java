@@ -32,7 +32,10 @@ import java.util.TreeSet;
  * filter configuration.
  *
  * The construction of the ProtoBloomFilter is far more compute expensive than
- * making the concrete bloom filter from the proto.  
+ * making the concrete bloom filter from the proto filter.
+ * 
+ * The proto bloom filter contains one hash for each item that was hashed to the
+ * proto filter.  
  *
  */
 public class ProtoBloomFilter implements Comparable<ProtoBloomFilter>, Serializable {
@@ -76,6 +79,15 @@ public class ProtoBloomFilter implements Comparable<ProtoBloomFilter>, Serializa
 	 */
 	public Set<Hash> getHashes() {
 		return Collections.unmodifiableSet(hashes);
+	}
+	
+	/**
+	 * Get the number of hashed items included in this proto bloom filter.
+	 * 
+	 * @return The number of items in this proto filter.
+	 */
+	public int getItemCount() {
+		return hashes.size();
 	}
 
 	@Override

@@ -17,7 +17,7 @@
  */
 /**
  * Bloom Filter Overview
- * 
+ * <p>
  * First it is important to remember that Bloom filters tell you where things
  * are NOT. Second it is important to understand that Bloom filters can give
  * false positives but never false negatives. Seems kind of pointless I know but
@@ -37,7 +37,7 @@
  * against the bloom filter. If it is not there the request goes through as
  * normal. If it is there then the browser makes the expensive lookup call to a
  * server to determine if the URL really is in the database of bad URLs.
- * 
+ * </p><p>
  * So a bloom filter is generally used to front a collection to determine if the
  * collection should be searched. And as has been pointed out it doesn't make
  * much sense to use it in front of an in-memory hash table. However,
@@ -58,7 +58,7 @@
  * where performance degradation begins), you can pull a bucket out of
  * consideration for inserts but still search it without significant stress or
  * change to the system.
- * 
+ * </p><p>
  * Internally Bloom filters are bit vectors. The length of the vector being
  * determined by the number of items that are to be placed in the bucket and the
  * acceptable hash collision rate. There is a function that will calculate the
@@ -70,13 +70,13 @@
  * executed. Importantly, there are comments in the Cassandra code that
  * describe a much faster way of doing this using 128-bit hashes and
  * splitting them into a pair of longs. This method is implemented in this code.
- * 
+ * </p><p>
  * To check membership in a bloom filter
- * you buid the bloom-filter for the target (T - the thing we are looking for)
+ * you build the bloom-filter for the target (T - the thing we are looking for)
  * and get the filter for the candidate (C - the bucket) and evaluate T&C = T if
  * it evaluates as true there is a match if it not then T is guaranteed not to
  * be in the bucket.
- * 
+ * </p>
  * @see <a href="http://hur.st/bloomfilter?n=3&p=1.0E-5">Bloom Filter
  *      calculator</a> 
  * 
