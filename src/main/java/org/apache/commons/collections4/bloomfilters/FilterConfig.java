@@ -26,15 +26,13 @@ import java.io.Serializable;
  * Filter configuration class.
  * <p>
  * This class contains the values for the filter configuration.
- * </p><p>
- * 
  * </p> 
  *
  * @see <a href="http://hur.st/bloomfilter?n=3&p=1.0E-5">Bloom Filter
  *      calculator</a>
  *
  */
-public class FilterConfig implements Serializable {
+public final class FilterConfig implements Serializable {
 	public static final int STORED_SIZE = 2 * Integer.BYTES;
 	private static final long serialVersionUID = 8857015449149940190L;
 	private static final double LOG_OF_2 = Math.log(2.0);

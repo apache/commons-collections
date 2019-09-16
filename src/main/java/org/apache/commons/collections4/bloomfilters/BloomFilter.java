@@ -25,7 +25,7 @@ import java.util.BitSet;
  * This is an immutable instance.
  *
  */
-public class BloomFilter {
+public final class BloomFilter {
 
 	// the bitset we are using
 	private final BitSet bitSet;

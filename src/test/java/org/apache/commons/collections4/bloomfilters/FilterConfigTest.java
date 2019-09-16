@@ -22,7 +22,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -32,13 +31,13 @@ import org.junit.Test;
 public class FilterConfigTest {
 
 	/*
-	 * values from https://hur.st/bloomfilter/?n=5&p=.1&m=&k= 
+	 * values from https://hur.st/bloomfilter/?n=5&p=.1&m=&k=
 	 * 
 	 * n = 5
 	 * 
-	 * p = 0.100375138 (1 in 10) 
+	 * p = 0.100375138 (1 in 10)
 	 * 
-	 * m = 24 (3B) 
+	 * m = 24 (3B)
 	 * 
 	 * k = 3
 	 */
@@ -57,22 +56,21 @@ public class FilterConfigTest {
 	@Test
 	public void serializerTest() throws IOException, ClassNotFoundException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		try (ObjectOutputStream oos = new ObjectOutputStream( baos ))
-		{
+		try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
 			oos.writeObject(filterConfig);
 		}
-		
+
 		try (ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray())) {
-			ObjectInputStream ois = new ObjectInputStream( bais );
+			ObjectInputStream ois = new ObjectInputStream(bais);
 			Object o = ois.readObject();
 			ois.close();
-			assertTrue( o instanceof FilterConfig);
+			assertTrue(o instanceof FilterConfig);
 			FilterConfig fc = (FilterConfig) o;
-			assertEquals( filterConfig.getNumberOfBits(), fc.getNumberOfBits() );
-			assertEquals( filterConfig.getNumberOfBytes(), fc.getNumberOfBytes() );
-			assertEquals( filterConfig.getNumberOfHashFunctions(), fc.getNumberOfHashFunctions());
-			assertEquals( filterConfig.getNumberOfItems(), fc.getNumberOfItems());
-			assertEquals( filterConfig.getProbability(), fc.getProbability() );
+			assertEquals(filterConfig.getNumberOfBits(), fc.getNumberOfBits());
+			assertEquals(filterConfig.getNumberOfBytes(), fc.getNumberOfBytes());
+			assertEquals(filterConfig.getNumberOfHashFunctions(), fc.getNumberOfHashFunctions());
+			assertEquals(filterConfig.getNumberOfItems(), fc.getNumberOfItems());
+			assertEquals(filterConfig.getProbability(), fc.getProbability());
 
 		}
 
