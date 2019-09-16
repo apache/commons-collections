@@ -29,6 +29,13 @@ import org.junit.Test;
 public class BloomFilterTest {
 
 	@Test
+	public void getLogTest_NoValues() {
+		BitSet bs = new BitSet();
+		BloomFilter bf = new BloomFilter(bs);
+		assertEquals(0.0, bf.getLog(), 0.0000001);
+	}
+	
+	@Test
 	public void getLogTest() {
 		BitSet bs = new BitSet();
 		bs.set(2);
@@ -38,16 +45,41 @@ public class BloomFilterTest {
 		bs.set(20);
 		bf = new BloomFilter(bs);
 		assertEquals(20.000003814697266, bf.getLog(), 0.000000000000001);
-
+	}
+	
+	@Test
+	public void getLogTest_largeBitSpacing() {
+		BitSet bs = new BitSet();
+		bs.set(2);
 		bs.set(40);
-		bs.clear(20);
 		// show it is approximate bit 40 and bit 2 yeilds same as 40 alone
-		bf = new BloomFilter(bs);
+		BloomFilter bf = new BloomFilter(bs);
 
 		assertEquals(40.0, bf.getLog(), 0.000000000000001);
-
 	}
 
+	@Test
+	public void getLogTest_FullBuffer() {
+		BitSet bs = new BitSet();
+		for (int i =0;i<28;i++)
+		{
+			bs.set(i);
+		}
+		
+		BloomFilter bf = new BloomFilter(bs);
+
+		assertEquals(27.9999999, bf.getLog(), 0.0000001);
+	}
+	
+	@Test
+	public void getLog2xTest() {
+		BitSet bs = new BitSet();
+		bs.set(2);
+		BloomFilter bf = new BloomFilter(bs);
+		assertEquals(2.0, bf.getLog(), 0.0000001);
+		assertEquals(2.0, bf.getLog(), 0.0000001);
+	}
+	
 	@Test
 	public void getHammingWeight() {
 		BitSet bs = new BitSet();

@@ -22,10 +22,17 @@ import java.util.BitSet;
 /**
  * A bloom filter.
  * 
- * This is an immutable instance.
+ * Instances are immutable.
+ * 
+ * @since 4.5
  *
  */
 public final class BloomFilter {
+	
+	/* The maximum log depth is the depth at which
+	 * the log calculation makes no difference to the double result. 
+	 */
+	private final static int MAX_LOG_DEPTH = 25;
 
 	// the bitset we are using
 	private final BitSet bitSet;
@@ -39,23 +46,23 @@ public final class BloomFilter {
 	/**
 	 * Constructor.
 	 * 
-	 * A copy of the bitSet parameter is made so that the bloom filter
-	 * is isolated from any further changes in the bitSet.
+	 * A copy of the bitSet parameter is made so that the bloom filter is isolated
+	 * from any further changes in the bitSet.
 	 * 
 	 * @param bitSet The bit set that was built by the config.
 	 */
 	public BloomFilter(BitSet bitSet) {
-		this.bitSet = (BitSet)bitSet.clone();
+		this.bitSet = (BitSet) bitSet.clone();
 		this.hamming = null;
 		this.logValue = null;
 	}
 
 	/**
-	 * Return true if other & this == other
+	 * Return true if other &amp; this == other
 	 * 
 	 * This is the inverse of the match method.
 	 * 
-	 * X.match(Y) is the same as Y.inverseMatch(X)
+	 * <code>X.match(Y)</code> is the same as <code>Y.inverseMatch(X)</code>
 	 * 
 	 * @param other the other bloom filter to match.
 	 * @return true if they match.
@@ -65,7 +72,7 @@ public final class BloomFilter {
 	}
 
 	/**
-	 * Return true if this & other == this.
+	 * Return true if <code>this &amp; other == this</code>.
 	 * 
 	 * This is the standard bloom filter match.
 	 * 
@@ -115,7 +122,7 @@ public final class BloomFilter {
 	 */
 	public final double getLog() {
 		if (logValue == null) {
-			logValue = getApproximateLog(bitSet.size());
+			logValue = getApproximateLog( Integer.min(bitSet.length(), MAX_LOG_DEPTH));
 		}
 		return logValue;
 	}
@@ -132,6 +139,10 @@ public final class BloomFilter {
 	 * @return the approximate log.
 	 */
 	private final double getApproximateLog(int depth) {
+		if (depth == 0)
+		{
+			return 0;
+		}
 		int[] exp = getApproximateLogExponents(depth);
 		/*
 		 * this approximation is calculated using a derivation of
@@ -143,8 +154,8 @@ public final class BloomFilter {
 			return 0;
 		}
 		double result = exp[0];
-		// now we move backwards from the highest bit until the requested depth
-		// is achieved.
+		/* now we move backwards from the highest bit until the requested depth
+		 * is achieved. */
 		double exp2;
 		for (int i = 1; i < exp.length; i++) {
 			if (exp[i] == -1) {
@@ -164,17 +175,22 @@ public final class BloomFilter {
 	 * @return An array of depth integers that are the exponents.
 	 */
 	private final int[] getApproximateLogExponents(int depth) {
-		int[] exp = new int[depth + 1];
+		if (depth <1)
+		{
+			return new int[] { -1 };
+		}
+		int[] exp = new int[depth];
 
 		exp[0] = bitSet.length() - 1;
 		if (exp[0] < 0) {
 			return exp;
 		}
-		
+
 		for (int i = 1; i < depth; i++) {
 			exp[i] = bitSet.previousSetBit(exp[i - 1] - 1);
-			/* 25 bits from the start make no difference in the double calculation
-			 * so we can short circuit the method here. 
+			/*
+			 * 25 bits from the start make no difference in the double calculation so we can
+			 * short circuit the method here.
 			 */
 			if (exp[i] - exp[0] < -25) {
 				exp[i] = -1;
@@ -205,7 +221,7 @@ public final class BloomFilter {
 	public BloomFilter merge(BloomFilter other) {
 		BitSet next = (BitSet) this.bitSet.clone();
 		next.or(other.bitSet);
-		return new BloomFilter(next);		
+		return new BloomFilter(next);
 	}
 
 	/**
@@ -214,6 +230,6 @@ public final class BloomFilter {
 	 * @return the bit set representation.
 	 */
 	public BitSet getBitSet() {
-		return (BitSet)bitSet.clone();
+		return (BitSet) bitSet.clone();
 	}
 }

@@ -17,25 +17,26 @@
  */
 package org.apache.commons.collections4.bloomfilters;
 
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
 import java.io.Serializable;
 
 /**
  * Filter configuration class.
  * <p>
- * This class contains the values for the filter configuration.
- * </p> 
+ * This class contains the values for the filter configuration and is used
+ * to convert a ProtoBloomFilter into a BloomFilter.
+ * </p>
  *
  * @see <a href="http://hur.st/bloomfilter?n=3&p=1.0E-5">Bloom Filter
  *      calculator</a>
  *
+ * @since 4.5
  */
 public final class FilterConfig implements Serializable {
 	public static final int STORED_SIZE = 2 * Integer.BYTES;
 	private static final long serialVersionUID = 8857015449149940190L;
 	private static final double LOG_OF_2 = Math.log(2.0);
+	
+	// ~ −0.090619058
 	private static final double DENOMINATOR = Math.log(1.0 / (Math.pow(2.0, LOG_OF_2)));
 	// number of items in the filter
 	private final int numberOfItems;
@@ -46,46 +47,21 @@ public final class FilterConfig implements Serializable {
 	// number of hash functions
 	private final int numberOfHashFunctions;
 
-	public static void write(FilterConfig config, DataOutput out) throws IOException {
-		out.writeInt(config.getNumberOfItems());
-		out.writeInt(config.getProbability());
-	}
-
-	public static FilterConfig read(DataInput ois) throws IOException {
-		int nItems = ois.readInt();
-		int nProb = ois.readInt();
-		return new FilterConfig(nItems, nProb);
-	}
 
 	/**
-	 * A main method to generate and output the results of different constructor
-	 * arguments.
-	 * 
-	 * Arguments:
-	 * <ol>
-	 * <li>The number of items to put in the bloom filter</li>
-	 * <li>The probability of a collision expressed as X in 1/X</li>
-	 * </ol>
-	 * 
-	 * Outputs the statistics of the filter configuration.
-	 * 
-	 * @param args the arguments
-	 */
-	public static void main(String[] args) {
-		FilterConfig fc = new FilterConfig(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
-		System.out.println(String.format("items: %s bits: %s bytes: %s functions: %s p: 1/%s (%s)",
-				fc.getNumberOfItems(), fc.getNumberOfBits(), fc.getNumberOfBytes(), fc.getNumberOfHashFunctions(),
-				fc.getProbability(), (1.0 / fc.getProbability())));
-	}
-
-	/**
-	 * Create a filter configuration with the specified number of bits and
+	 * Create a filter configuration with the specified number of items and
 	 * probability.
 	 * 
 	 * @param numberOfItems Number of items to be placed in the filter.
 	 * @param probability   The probability of duplicates expressed as 1 in x.
 	 */
 	public FilterConfig(final int numberOfItems, final int probability) {
+		if (numberOfItems < 1) {
+			throw new IllegalArgumentException("Number of Items must be greater than 0");
+		}
+		if (probability < 1) {
+			throw new IllegalArgumentException("Probability must be greater than 0");
+		}
 		this.numberOfItems = numberOfItems;
 		this.probability = probability;
 		final double dp = 1.0 / probability;
@@ -95,15 +71,17 @@ public final class FilterConfig implements Serializable {
 		}
 		this.numberOfBits = dm.intValue();
 		final Long lk = Math.round((LOG_OF_2 * numberOfBits) / numberOfItems);
-		if (lk > Integer.MAX_VALUE) {
-			throw new IllegalArgumentException(
-					"Resulting filter has more than " + Integer.MAX_VALUE + " hash functions");
-		}
+		/*
+		 * normally we would check that lk is <- Integer.MAX_VALUE but since
+		 * numberOfBits is at most Integer.MAX_VALUE the numerator of lk is
+		 * log(2) * Integer.MAX_VALUE = 646456992.9449 the value of lk can not be 
+		 * above Integer.MAX_VALUE.
+		 */
 		numberOfHashFunctions = lk.intValue();
 	}
 
 	/**
-	 * Get the number of items that are expected in the filter. AKA: n
+	 * Get the number of items that are expected in the filter. AKA: <code>n</code>
 	 * 
 	 * @return the number of items.
 	 */
@@ -112,7 +90,7 @@ public final class FilterConfig implements Serializable {
 	}
 
 	/**
-	 * The probability of a false positive (collision) expressed as 1/x. AKA: 1/p
+	 * The probability of a false positive (collision) expressed as <code>1/x</code>. AKA: <code>1/p</code>
 	 * 
 	 * @return the x in 1/x.
 	 */
@@ -121,7 +99,7 @@ public final class FilterConfig implements Serializable {
 	}
 
 	/**
-	 * The number of bits in the bloom filter. AKA: m
+	 * The number of bits in the bloom filter. AKA: <code>m</code>
 	 * 
 	 * @return the number of bits in the bloom filter.
 	 */
@@ -130,7 +108,7 @@ public final class FilterConfig implements Serializable {
 	}
 
 	/**
-	 * The number of hash functions used to construct the filter. AKA: k
+	 * The number of hash functions used to construct the filter. AKA: <code>k</code>
 	 * 
 	 * @return the number of hash functions used to construct the filter.
 	 */
@@ -145,6 +123,29 @@ public final class FilterConfig implements Serializable {
 	 */
 	public int getNumberOfBytes() {
 		return Double.valueOf(Math.ceil(numberOfBits / 8.0)).intValue();
+	}
+	
+	private Object writeReplace() {
+		return new ConfigSerProxy(this);
+	}
+	/**
+	 * A Serialization proxy for a FilterConfig.
+	 *
+	 */
+	private static class ConfigSerProxy implements Serializable {
+
+		private static final long serialVersionUID = -7616329495238942105L;
+		private final int numberOfItems;
+		private final int probability;
+
+		ConfigSerProxy(FilterConfig filterConfig) {
+			numberOfItems = filterConfig.numberOfItems;
+			probability = filterConfig.probability;
+		}
+
+		private Object readResolve() {
+			return new FilterConfig(numberOfItems, probability);
+		}
 	}
 
 }

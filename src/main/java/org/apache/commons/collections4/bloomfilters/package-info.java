@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 /**
- * Bloom Filter Overview
+ * <h1>Bloom Filter Overview</h1>
  * <p>
  * First it is important to remember that Bloom filters tell you where things
  * are NOT. Second it is important to understand that Bloom filters can give
@@ -37,69 +37,72 @@
  * against the bloom filter. If it is not there the request goes through as
  * normal. If it is there then the browser makes the expensive lookup call to a
  * server to determine if the URL really is in the database of bad URLs.
- * </p><p>
+ * </p>
+ * <p>
  * So a bloom filter is generally used to front a collection to determine if the
  * collection should be searched. And as has been pointed out it doesn't make
  * much sense to use it in front of an in-memory hash table. However,
  * applications like Cassandra and Hadoop use bloom filters for various reasons.
- * Other uses for bloom
- * filters include sharding data. There is a measure of difference between
- * filters called a hamming distance. This is the number of bits that have to be
- * "flipped" to turn one filter into another, and is very similar to Hamming
- * measures found in string and other similar comparisons. By using the hamming
- * value it is possible to distribute data among a set of buckets by simply
- * putting the value in the bucket that it is "closest" to in terms of Hamming
- * distance. Searching takes place as noted above. However this has some
- * interesting properties. For example you can add new buckets at any time
- * simply by adding an empty bucket and bloom filter to the collection of
+ * Other uses for bloom filters include sharding data. There is a measure of
+ * difference between filters called a hamming distance. This is the number of
+ * bits that have to be "flipped" to turn one filter into another, and is very
+ * similar to Hamming measures found in string and other similar comparisons. By
+ * using the hamming value it is possible to distribute data among a set of
+ * buckets by simply putting the value in the bucket that it is "closest" to in
+ * terms of Hamming distance. Searching takes place as noted above. However this
+ * has some interesting properties. For example you can add new buckets at any
+ * time simply by adding an empty bucket and bloom filter to the collection of
  * buckets and the system will start filling the bucket as appropriate. In
  * addition if a bucket/shard becomes "full", where "full" is an implementation
  * dependent decision (e.g. the index on a DB table reaches the inflection point
  * where performance degradation begins), you can pull a bucket out of
  * consideration for inserts but still search it without significant stress or
  * change to the system.
- * </p><p>
+ * </p>
+ * <p>
  * Internally Bloom filters are bit vectors. The length of the vector being
  * determined by the number of items that are to be placed in the bucket and the
  * acceptable hash collision rate. There is a function that will calculate the
- * length of the vector and the number of functions to use to turn on the
- * bits (see Bloom Filter calculator below). In general you build a bloom filter by creating a hash and using the
- * modulus of that to determine which bit in the vector to turn on. You then
- * generate a second hash, usually the same hash function with a different seed to
- * determine the next bit and so on until the number of functions has been
- * executed. Importantly, there are comments in the Cassandra code that
- * describe a much faster way of doing this using 128-bit hashes and
- * splitting them into a pair of longs. This method is implemented in this code.
- * </p><p>
- * To check membership in a bloom filter
- * you build the bloom-filter for the target (T - the thing we are looking for)
- * and get the filter for the candidate (C - the bucket) and evaluate T&C = T if
- * it evaluates as true there is a match if it not then T is guaranteed not to
- * be in the bucket.
+ * length of the vector and the number of functions to use to turn on the bits
+ * (see Bloom Filter calculator below). In general you build a bloom filter by
+ * creating a hash and using the modulus of that to determine which bit in the
+ * vector to turn on. You then generate a second hash, usually the same hash
+ * function with a different seed to determine the next bit and so on until the
+ * number of functions has been executed. Importantly, there are comments in the
+ * Cassandra code that describe a much faster way of doing this using 128-bit
+ * hashes and splitting them into a pair of longs. This method is implemented in
+ * this code.
  * </p>
- * @see <a href="http://hur.st/bloomfilter?n=3&p=1.0E-5">Bloom Filter
- *      calculator</a> 
+ * <p>
+ * To check membership in a bloom filter you build the bloom-filter for the
+ * target (T - the thing we are looking for) and get the filter for the
+ * candidate (C - the bucket) and evaluate T &amp; C = T if it evaluates as true
+ * there is a match if it not then T is guaranteed not to be in the bucket.
+ * </p>
+
  * 
- * A collection of bloom filter classes.
- * 
- * <b>Usage Pattern</b>
+ * <h1>Usage Pattern</h1>
+ * <p>
  * <ul>
  * <li>Use a BloomFilterBuilder to digest items and create a
  * ProtoBloomFilter.</li>
- * <li>Create a FilterConfig defining the number of items that will be added to
- * the filter and the probability of collisions.</li>
- * <li>Use the ProtoBloomFilter to create a BloomFilter with the shape defined
- * by the FilterConfig.</li>
+ * <li>Create a FilterConfig defining the number of items that will be
+ * added to the filter and the probability of collisions.</li>
+ * <li>Use the ProtoBloomFilter to create a BloomFilter with the shape
+ * defined by the FilterConfig.</li>
  * </ul>
- * 
- * <b>Notes</b>
- * 
+ * </p>
+ * <h2>Notes</h2>
+ * <p>
  * <ul>
- * <li>The ProtoBloomFilter can be used to generate multiple BloomFilters using
- * multiple FilterConfigs.</li>
- * <li>Creation of the ProtoBloomFilter is far more intensive than the creation
- * of the subsequent BloomFilter.</li>
+ * <li>The ProtoBloomFilter can be used to generate multiple BloomFilters
+ * using multiple FilterConfigs.</li>
+ * <li>Creation of the ProtoBloomFilter is far more intensive than the
+ * creation of the subsequent BloomFilter.</li>
  * </ul>
+ * </p>
+ * 
+ * @see <a href="http://hur.st/bloomfilter?n=3&p=1.0E-5">Bloom Filter calculator</a>
  * 
  */
 package org.apache.commons.collections4.bloomfilters;

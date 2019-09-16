@@ -17,14 +17,12 @@
  */
 package org.apache.commons.collections4.bloomfilters;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Objects;
@@ -41,15 +39,18 @@ import java.util.TreeSet;
  * making the concrete bloom filter from the proto filter.
  * 
  * The proto bloom filter contains one hash for each item that was hashed to the
- * proto filter.  
+ * proto filter.
  * 
  * Concrete implementations of BloomFilter can be built from the
  * ProtoBloomFilter.
+ * 
+ * @since 4.5
  *
  */
 public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 
-	private final Set<Hash> hashes;
+	/* package private for testing */
+	final Set<Hash> hashes;
 	private transient Integer hashCode;
 
 	/* package private for testing */
@@ -60,7 +61,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 	 */
 	ProtoBloomFilter(Collection<Hash> hashes) {
 		this.hashes = new TreeSet<Hash>();
-		this.hashes.addAll( hashes );
+		this.hashes.addAll(hashes);
 	}
 
 	/**
@@ -68,7 +69,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 	 * configuration.
 	 * 
 	 * @param cfg The filter configuration to use.
-	 * @return the Concreate Bloom Filter.
+	 * @return the concrete Bloom Filter.
 	 */
 	public final BloomFilter create(FilterConfig cfg) {
 		BitSet set = new BitSet(cfg.getNumberOfBits());
@@ -77,11 +78,11 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 		}
 		return new BloomFilter(set);
 	}
-	
+
 	private Object writeReplace() {
 		return new ProtoSerProxy(this);
 	}
-	
+
 	/**
 	 * Get the number of unique hashed items included in this proto bloom filter.
 	 * 
@@ -94,7 +95,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 	@Override
 	public int hashCode() {
 		if (hashCode == null) {
-			hashCode = Objects.hash( hashes );			
+			hashCode = Objects.hash(hashes);
 		}
 		return hashCode.intValue();
 	}
@@ -131,20 +132,23 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 	 *
 	 */
 	private static class ProtoSerProxy implements Serializable {
+		
+		private static final long serialVersionUID = -816173373461613366L;
+		
 		private Hash[] hashes;
-		
+
 		ProtoSerProxy(ProtoBloomFilter protoFilter) {
-			this.hashes = protoFilter.hashes.toArray( new Hash[protoFilter.hashes.size()] );
+			this.hashes = protoFilter.hashes.toArray(new Hash[protoFilter.hashes.size()]);
 		}
-		
+
 		private Object readResolve() {
-			return new ProtoBloomFilter( Arrays.asList( hashes ) );
+			return new ProtoBloomFilter(Arrays.asList(hashes));
 		}
 	}
-	
+
 	/**
-	 * A Bloom Filter hash calculation.  This class only stores the result of an
-	 * external hash calculation.  It does not perform the calculation itself.
+	 * A Bloom Filter hash calculation. This class only stores the result of an
+	 * external hash calculation. It does not perform the calculation itself.
 	 * 
 	 * The hash is calculated as a 128-bit value. We store this as two 64-bit
 	 * values. We can then rapidly calculate the bloom filter for any given
@@ -152,11 +156,11 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 	 *
 	 */
 	/* package private for testing */
-	 final static class Hash implements Comparable<Hash> {
+	final static class Hash implements Comparable<Hash> {
 
 		private final long h1;
 		private final long h2;
-		
+
 		private transient Integer hashCode;
 
 		Hash(long h1, long h2) {
@@ -164,11 +168,8 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 			this.h2 = h2;
 		}
 
-		BitSet populate(BitSet set, FilterConfig config) {
-			if (set.size() < config.getNumberOfBits()) {
-				throw new IllegalArgumentException(
-						String.format("Bitset had %s bits, %s required", set.size(), config.getNumberOfBits()));
-			}
+		/* package private for testing */
+		BitSet populate(BitSet set, FilterConfig config) {			
 			for (int i = 0; i < config.getNumberOfHashFunctions(); i++) {
 				int j = Math.abs((int) ((h1 + (i * h2)) % config.getNumberOfBits()));
 				set.set(j, true);
@@ -188,7 +189,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 		@Override
 		public int hashCode() {
 			if (hashCode == null) {
-				hashCode = Objects.hash(h1,h2);
+				hashCode = Objects.hash(h1, h2);
 			}
 			return hashCode.intValue();
 
@@ -209,29 +210,33 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 		}
 
 	}
-	
+
 	/**
 	 * A ProtoBloomFilter builder.
 	 * 
-
 	 * 
-	 * A bloom filter may contain one or more items hashed together to make the filter.
 	 * 
-	 * There are two ways to hash the properties of objects.  
+	 * A bloom filter may contain one or more items hashed together to make the
+	 * filter.
+	 * 
+	 * There are two ways to hash the properties of objects.
 	 * <ol>
-	 * <li>One is to create a buffer containing all the properties and hash that.  This means that 
-	 * the search for the object must construct the same filter and search for it.  It is not 
-	 * possible to locate an object by a partial property match.  In this case each object is counted
-	 * as a single item as specified in the FilterConfig. 
-	 * </li>
-	 * <li>The other is to hash each item separately.  In this case each of the properties can be 
-	 * searched for individually.  However, in this case the number of items that should be specified
-	 * in the FilterConfig is the sum of the cardinality of the properties being hashed.
-	 * </li>
+	 * <li>One is to create a buffer containing all the properties and hash that.
+	 * This means that the search for the object must construct the same filter and
+	 * search for it. It is not possible to locate an object by a partial property
+	 * match. In this case each object is counted as a single item as specified in
+	 * the FilterConfig.</li>
+	 * <li>The other is to hash each item separately. In this case each of the
+	 * properties can be searched for individually. However, in this case the number
+	 * of items that should be specified in the FilterConfig is the sum of the
+	 * cardinality of the properties being hashed.</li>
 	 * </ol>
+	 * 
+	 * @since 4.5
 	 */
 	public static final class Builder {
-		private Set<Hash> hashes;
+		/* package private for testing */
+		Set<Hash> hashes;
 
 		/**
 		 * Constructor.
@@ -243,7 +248,8 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 
 		/**
 		 * Add the proto bloom filter to this proto bloom filter. The items included in
-		 * the parameter bloom filter are added to the filter being built without modification.
+		 * the parameter bloom filter are added to the filter being built without
+		 * modification.
 		 * 
 		 * @param protoBloomFilter The proto bloom filter to add.
 		 * @return this for chaining
@@ -275,7 +281,8 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 		}
 
 		/**
-		 * Add the bytes from the string to the proto bloom filter as a new hashed value.
+		 * Add the bytes from the string to the proto bloom filter as a new hashed
+		 * value.
 		 * 
 		 * The bytes are interpreted as UTF-8 chars.
 		 * 
@@ -347,7 +354,8 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 		}
 
 		/**
-		 * Add the bytes from the string to the proto bloom filter as a new hash and build it.
+		 * Add the bytes from the string to the proto bloom filter as a new hash and
+		 * build it.
 		 * 
 		 * The bytes are interpreted as UTF-8 chars.
 		 * 
@@ -365,10 +373,10 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 		 * 
 		 * This is a convenience method for update(bufer).build()
 		 * 
-		 * @param pbf The proto bloom filter to add.
+		 * @param buffer The byte buffer to add.
 		 * @return the defined ProtoBloomFilter.
 		 */
-		public ProtoBloomFilter build(byte[] buffer) throws IOException {
+		public ProtoBloomFilter build(byte[] buffer) {
 			return update(buffer).build();
 		}
 
@@ -379,9 +387,12 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 			int i_8 = index << 3;
 			int blockOffset = offset + i_8;
 			return ((long) key.get(blockOffset + 0) & 0xff) + (((long) key.get(blockOffset + 1) & 0xff) << 8)
-					+ (((long) key.get(blockOffset + 2) & 0xff) << 16) + (((long) key.get(blockOffset + 3) & 0xff) << 24)
-					+ (((long) key.get(blockOffset + 4) & 0xff) << 32) + (((long) key.get(blockOffset + 5) & 0xff) << 40)
-					+ (((long) key.get(blockOffset + 6) & 0xff) << 48) + (((long) key.get(blockOffset + 7) & 0xff) << 56);
+					+ (((long) key.get(blockOffset + 2) & 0xff) << 16)
+					+ (((long) key.get(blockOffset + 3) & 0xff) << 24)
+					+ (((long) key.get(blockOffset + 4) & 0xff) << 32)
+					+ (((long) key.get(blockOffset + 5) & 0xff) << 40)
+					+ (((long) key.get(blockOffset + 6) & 0xff) << 48)
+					+ (((long) key.get(blockOffset + 7) & 0xff) << 56);
 		}
 
 		private long rotl64(long v, int n) {

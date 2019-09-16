@@ -19,6 +19,7 @@ package org.apache.commons.collections4.bloomfilters;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -51,6 +52,37 @@ public class FilterConfigTest {
 		assertEquals(3, filterConfig.getNumberOfHashFunctions());
 		assertEquals(5, filterConfig.getNumberOfItems());
 		assertEquals(10, filterConfig.getProbability());
+
+	}
+
+	@Test
+	public void constructorOverflowTest() {
+		try {
+			new FilterConfig(Integer.MAX_VALUE, 10);
+			fail("Should have thrown IllegalArgumentException");
+		} catch (IllegalArgumentException expected) {
+			// do nothing.
+		}
+	}
+
+	@Test
+	public void constructorBadNumberOfItemsTest() {
+		try {
+			new FilterConfig(0, 10);
+			fail("Should have thrown IllegalArgumentException");
+		} catch (IllegalArgumentException expected) {
+			// do nothing.
+		}
+	}
+
+	@Test
+	public void constructorBadProbabilityTest() {
+		try {
+			new FilterConfig(10, 0);
+			fail("Should have thrown IllegalArgumentException");
+		} catch (IllegalArgumentException expected) {
+			// do nothing.
+		}
 	}
 
 	@Test
