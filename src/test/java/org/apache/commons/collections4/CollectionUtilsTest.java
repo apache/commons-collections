@@ -620,6 +620,52 @@ public class CollectionUtilsTest extends MockTestCase {
     public void testIsEqualCollectionNullEquator() {
         CollectionUtils.isEqualCollection(collectionA, collectionA, null);
     }
+    
+    @Test
+    public void testHashCode() {
+        final Equator<Integer> e = new Equator<Integer>() {
+            @Override
+            public boolean equate(final Integer o1, final Integer o2) {
+                if (o1 % 2 == 0 ^ o2 %2 == 0) {
+                    return false;
+                }
+                return true;
+            }
+
+            @Override
+            public int hash(final Integer o) {
+                return o == null ? 0 : o.hashCode();
+            }
+        };
+
+        assertEquals(collectionA.hashCode(), CollectionUtils.hashCode(collectionA, e));
+    }
+
+    @Test
+    public void testHashCodeNullCollection() {
+        final Equator<Integer> e = new Equator<Integer>() {
+            @Override
+            public boolean equate(final Integer o1, final Integer o2) {
+                if (o1 % 2 == 0 ^ o2 % 2 == 0 ) {
+                    return false;
+                }
+                return true;
+            }
+
+            @Override
+            public int hash(final Integer o) {
+                return o == null ? 0 : o.hashCode();
+            }
+        };
+
+        final Collection<Integer> collection = null;
+        assertEquals(1, CollectionUtils.hashCode(collection, e));
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testHashCodeNullEquator() {
+        CollectionUtils.hashCode(collectionB, null);
+    }
 
     @Test
     public void testIsProperSubCollection() {
