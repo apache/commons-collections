@@ -22,12 +22,33 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Arrays;
 import java.util.BitSet;
 
+import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter.Hash;
 import org.junit.Test;
 
 public class BloomFilterTest {
 
+	@Test
+	public void constructorTest() {
+		Hash hash = new Hash(1, 2);
+		// n = 1
+		// p = 0.091848839 (1 in 11)
+		// m = 5 (1B)
+		// k = 3
+		FilterConfig fc = new FilterConfig(1, 11);
+		ProtoBloomFilter pbf = new ProtoBloomFilter(Arrays.asList(hash));
+		BloomFilter bf = new BloomFilter( pbf, fc);
+
+		assertEquals(3, bf.getHammingWeight());
+		BitSet bs = bf.getBitSet();
+		assertTrue(bs.get(0));
+		assertTrue(bs.get(1));
+		assertTrue(bs.get(3));
+	}
+
+	
 	@Test
 	public void getLogTest_NoValues() {
 		BitSet bs = new BitSet();

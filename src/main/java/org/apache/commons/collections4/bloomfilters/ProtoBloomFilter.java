@@ -64,21 +64,6 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 		this.hashes.addAll(hashes);
 	}
 
-	/**
-	 * Create a concrete bloom filter from this proto type given the filter
-	 * configuration.
-	 * 
-	 * @param cfg The filter configuration to use.
-	 * @return the concrete Bloom Filter.
-	 */
-	public final BloomFilter create(FilterConfig cfg) {
-		BitSet set = new BitSet(cfg.getNumberOfBits());
-		for (Hash hash : hashes) {
-			hash.populate(set, cfg);
-		}
-		return new BloomFilter(set);
-	}
-
 	private Object writeReplace() {
 		return new ProtoSerProxy(this);
 	}
@@ -168,6 +153,12 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 			this.h2 = h2;
 		}
 
+		/**
+		 * Turn on the appropriate bits in the bitset
+		 * @param set the bit set to modify
+		 * @param config the filter configuration.
+		 * @return the set parameter for chaining.
+		 */
 		/* package private for testing */
 		BitSet populate(BitSet set, FilterConfig config) {			
 			for (int i = 0; i < config.getNumberOfHashFunctions(); i++) {
@@ -175,6 +166,25 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 				set.set(j, true);
 			}
 			return set;
+		}
+		
+		/**
+		 * Create a list of bits indexes that are turned on.
+		 * 
+		 * The result of this method may contain duplicates.
+		 * 
+		 * @param config the filter configuration to use
+		 * @return an array of ints emumerating the bits to be turned on.
+		 */
+		/* package private for testing */
+		int[] getBits(FilterConfig config) {
+			int[] result = new int[ config.getNumberOfHashFunctions() ];
+			
+			for (int i = 0; i < config.getNumberOfHashFunctions(); i++) {
+				
+				result[i] =  Math.abs((int) ((h1 + (i * h2)) % config.getNumberOfBits()));
+			}
+			return result;
 		}
 
 		@Override

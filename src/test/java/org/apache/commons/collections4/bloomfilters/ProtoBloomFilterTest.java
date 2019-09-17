@@ -108,24 +108,7 @@ public class ProtoBloomFilterTest {
 
 	}
 
-	@Test
-	public void createTest() {
-		Hash hash = new Hash(1, 2);
-		// n = 1
-		// p = 0.091848839 (1 in 11)
-		// m = 5 (1B)
-		// k = 3
-		FilterConfig fc = new FilterConfig(1, 11);
-		ProtoBloomFilter pbf = new ProtoBloomFilter(Arrays.asList(hash));
-		BloomFilter bf = pbf.create(fc);
-
-		assertEquals(3, bf.getHammingWeight());
-		BitSet bs = bf.getBitSet();
-		assertTrue(bs.get(0));
-		assertTrue(bs.get(1));
-		assertTrue(bs.get(3));
-	}
-
+	
 	@Test
 	public void itemCountTest() {
 		Hash h1 = new Hash(1, 2);

@@ -19,6 +19,8 @@ package org.apache.commons.collections4.bloomfilters;
 
 import java.util.BitSet;
 
+import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter.Hash;
+
 /**
  * A bloom filter.
  * 
@@ -27,7 +29,7 @@ import java.util.BitSet;
  * @since 4.5
  *
  */
-public final class BloomFilter {
+public class BloomFilter {
 	
 	/* The maximum log depth is the depth at which
 	 * the log calculation makes no difference to the double result. 
@@ -35,7 +37,7 @@ public final class BloomFilter {
 	private final static int MAX_LOG_DEPTH = 25;
 
 	// the bitset we are using
-	private final BitSet bitSet;
+	protected final BitSet bitSet;
 
 	// the hamming value once we have calculated it.
 	private transient Integer hamming;
@@ -46,13 +48,29 @@ public final class BloomFilter {
 	/**
 	 * Constructor.
 	 * 
+	 * @param protoFilter the protoFilter to build this bloom filter from.
+	 * @param config the Filter configuration to use to build the bloom filter.
+	 */
+	public BloomFilter(ProtoBloomFilter protoFilter, FilterConfig config) {
+		this.bitSet = new BitSet(config.getNumberOfBits());
+		for (Hash hash : protoFilter.hashes) {
+			hash.populate(bitSet, config);
+		}		
+		this.hamming = null;
+		this.logValue = null;
+	}
+	
+	/**
+	 * Constructor.
+	 * 
 	 * A copy of the bitSet parameter is made so that the bloom filter is isolated
 	 * from any further changes in the bitSet.
 	 * 
 	 * @param bitSet The bit set that was built by the config.
 	 */
-	public BloomFilter(BitSet bitSet) {
-		this.bitSet = (BitSet) bitSet.clone();
+	protected BloomFilter(BitSet bitSet)
+	{
+		this.bitSet = (BitSet)bitSet.clone();
 		this.hamming = null;
 		this.logValue = null;
 	}
@@ -208,6 +226,11 @@ public final class BloomFilter {
 	}
 
 	@Override
+	public int hashCode() {
+		return bitSet.hashCode();		
+	}
+	
+	@Override
 	public boolean equals(Object other) {
 		return (other instanceof BloomFilter) ? this.bitSet.equals(((BloomFilter) other).bitSet) : false;
 	}
@@ -229,7 +252,7 @@ public final class BloomFilter {
 	 * 
 	 * @return the bit set representation.
 	 */
-	public BitSet getBitSet() {
+	public final BitSet getBitSet() {
 		return (BitSet) bitSet.clone();
 	}
 }
