@@ -620,16 +620,16 @@ public class CollectionUtils {
      * @param equator  the Equator used for generate hashCode
      * @return the hashCode of Collection through the hash method of Equator
      */
-    public static <E> int hashCode( final Collection<? extends E> collection,
-                                    final Equator<? super E> equator ) {
-        if ( null == equator ) {
+    public static <E> int hashCode(final Collection<? extends E> collection,
+                                   final Equator<? super E> equator) {
+        if (null == equator) {
             throw new NullPointerException( "Equator must not be null." );
         }
-        if ( null == collection ){
+        if (null == collection) {
             return 1;
         }
         int hashCode = 1;
-        for ( final E e : collection ) {
+        for (final E e : collection) {
 
             hashCode = 31 * hashCode + equator.hash(e);
         }
