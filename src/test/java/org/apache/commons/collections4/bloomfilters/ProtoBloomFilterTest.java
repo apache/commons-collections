@@ -30,100 +30,103 @@ import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter.Hash;
 
 public class ProtoBloomFilterTest {
 
-	/// Tests for enclosed Hash class
-	/**
-	 * Verify that the hash properly populates a BitSet given a FilterConfig.
-	 */
-	@Test
-	public void hashPopulateTest() {
-		Hash hash = new Hash(1, 2);
-		// n = 1
-		// p = 0.091848839 (1 in 11)
-		// m = 5 (1B)
-		// k = 3
-		FilterConfig fc = new FilterConfig(1, 11);
-		BitSet bs = new BitSet();
+    /// Tests for enclosed Hash class
+    /**
+     * Verify that the hash properly populates a BitSet given a FilterConfig.
+     */
+    @Test
+    public void hashPopulateTest() {
+        Hash hash = new Hash(1, 2);
+        // n = 1
+        // p = 0.091848839 (1 in 11)
+        // m = 5 (1B)
+        // k = 3
+        FilterConfig fc = new FilterConfig(1, 11);
+        BitSet bs = new BitSet();
 
-		hash.populate(bs, fc);
-		// there are 3 iterations so
-		// 1 mod 5 = 1
-		// 3 mod 5 = 3
-		// 5 mod 5 = 0
-		// so bits 1,3, and 0 should be on
-		assertEquals(3, bs.cardinality());
-		assertTrue(bs.get(0));
-		assertTrue(bs.get(1));
-		assertTrue(bs.get(3));
-	}
-	
-	@Test
-	public void hashHashCodeTest() {
-		Hash hash = new Hash(1, 2);
-		assertEquals( Objects.hash( 1L, 2L ), hash.hashCode());
-		assertNotEquals( Objects.hash( 2L, 1L ), hash.hashCode());
-	}
-	
-	@Test
-	public void hashequalsTest() {
-		Hash h1 = new Hash(1, 2);
-		Hash h2 = new Hash(1, 3);
-		Hash h3 = new Hash(2, 2);
-		
-		assertTrue( h1.equals( h1 ));
-		assertFalse( h1.equals( h2 ));
-		assertFalse( h1.equals(h3));
-	}
+        hash.populate(bs, fc);
+        // there are 3 iterations so
+        // 1 mod 5 = 1
+        // 3 mod 5 = 3
+        // 5 mod 5 = 0
+        // so bits 1,3, and 0 should be on
+        assertEquals(3, bs.cardinality());
+        assertTrue(bs.get(0));
+        assertTrue(bs.get(1));
+        assertTrue(bs.get(3));
+    }
 
-	/// ProtoBloomFilter tests
-	
-	@Test
-	public void compareTo_SingleValueTest() {
-		Hash h1 = new Hash(1, 2);
-		Hash h2 = new Hash(1, 3);
-		ProtoBloomFilter pbf1 = new ProtoBloomFilter(Arrays.asList(h1));
-		ProtoBloomFilter pbf2 = new ProtoBloomFilter(Arrays.asList(h2));
+    @Test
+    public void hashHashCodeTest() {
+        Hash hash = new Hash(1, 2);
+        assertEquals(Objects.hash(1L, 2L), hash.hashCode());
+        assertNotEquals(Objects.hash(2L, 1L), hash.hashCode());
+    }
 
-		assertEquals(0, pbf1.compareTo(pbf1));
-		assertEquals(-1, pbf1.compareTo(pbf2));
-		assertEquals(1, pbf2.compareTo(pbf1));
-	}
+    @Test
+    public void hashequalsTest() {
+        Hash h1 = new Hash(1, 2);
+        Hash h2 = new Hash(1, 3);
+        Hash h3 = new Hash(2, 2);
 
-	@Test
-	public void compareTo_MultiValueTest() {
-		Hash h1 = new Hash(1, 2);
-		Hash h2 = new Hash(1, 3);
-		Hash h3 = new Hash(2, 3);
+        assertTrue(h1.equals(h1));
+        assertFalse(h1.equals(h2));
+        assertFalse(h1.equals(h3));
+    }
 
-		ProtoBloomFilter pbf1 = new ProtoBloomFilter(Arrays.asList(h1, h2));
-		ProtoBloomFilter pbf2 = new ProtoBloomFilter(Arrays.asList(h2, h1));
+    /// ProtoBloomFilter tests
 
-		assertEquals(0, pbf1.compareTo(pbf1));
-		// order of arguments is not important
-		assertEquals(0, pbf1.compareTo(pbf2));
-		assertEquals(0, pbf2.compareTo(pbf1));
+    @Test
+    public void compareTo_SingleValueTest() {
+        Hash h1 = new Hash(1, 2);
+        Hash h2 = new Hash(1, 3);
+        ProtoBloomFilter pbf1 = new ProtoBloomFilter(Arrays.asList(h1));
+        ProtoBloomFilter pbf2 = new ProtoBloomFilter(Arrays.asList(h2));
 
-		ProtoBloomFilter pbf3 = new ProtoBloomFilter(Arrays.asList(h1, h3));
-		assertEquals(-1, pbf1.compareTo(pbf3));
-		assertEquals(1, pbf3.compareTo(pbf1));
+        assertEquals(0, pbf1.compareTo(pbf1));
+        assertEquals(-1, pbf1.compareTo(pbf2));
+        assertEquals(1, pbf2.compareTo(pbf1));
+    }
 
-	}
+    @Test
+    public void compareTo_MultiValueTest() {
+        Hash h1 = new Hash(1, 2);
+        Hash h2 = new Hash(1, 3);
+        Hash h3 = new Hash(2, 3);
 
-	
-	@Test
-	public void itemCountTest() {
-		Hash h1 = new Hash(1, 2);
-		Hash h2 = new Hash(1, 3);
-		Hash h3 = new Hash(2, 3);
+        ProtoBloomFilter pbf1 = new ProtoBloomFilter(Arrays.asList(h1, h2));
+        ProtoBloomFilter pbf2 = new ProtoBloomFilter(Arrays.asList(h2, h1));
 
-		ProtoBloomFilter pbf1 = new ProtoBloomFilter(Arrays.asList(h1));
-		assertEquals(1, pbf1.getItemCount());
+        assertEquals(0, pbf1.compareTo(pbf1));
+        // order of arguments is not important
+        assertEquals(0, pbf1.compareTo(pbf2));
+        assertEquals(0, pbf2.compareTo(pbf1));
 
-		pbf1 = new ProtoBloomFilter(Arrays.asList(h1, h2, h3));
-		assertEquals(3, pbf1.getItemCount());
+        ProtoBloomFilter pbf3 = new ProtoBloomFilter(Arrays.asList(h1, h3));
+        assertEquals(-1, pbf1.compareTo(pbf3));
+        assertEquals(1, pbf3.compareTo(pbf1));
 
-		// verify duplicate is not counted
-		pbf1 = new ProtoBloomFilter(Arrays.asList(h1, h2, h3, h2));
-		assertEquals(3, pbf1.getItemCount());
+    }
 
-	}
+    @Test
+    public void itemCountTest() {
+        Hash h1 = new Hash(1, 2);
+        Hash h2 = new Hash(1, 3);
+        Hash h3 = new Hash(2, 3);
+
+        ProtoBloomFilter pbf1 = new ProtoBloomFilter(Arrays.asList(h1));
+        assertEquals(1, pbf1.getItemCount());
+
+        pbf1 = new ProtoBloomFilter(Arrays.asList(h1, h2, h3));
+        assertEquals(3, pbf1.getItemCount());
+
+        // verify duplicate is counted
+        pbf1 = new ProtoBloomFilter(Arrays.asList(h1, h2, h3, h2));
+        assertEquals(4, pbf1.getItemCount());
+
+        // verify duplicate is not counted
+        pbf1 = new ProtoBloomFilter(Arrays.asList(h1, h2, h3, h2));
+        assertEquals(3, pbf1.getUniqueItemCount());
+
+    }
 }

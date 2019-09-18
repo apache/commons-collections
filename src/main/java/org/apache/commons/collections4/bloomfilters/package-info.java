@@ -79,30 +79,59 @@
  * candidate (C - the bucket) and evaluate T &amp; C = T if it evaluates as true
  * there is a match if it not then T is guaranteed not to be in the bucket.
  * </p>
-
- * 
+ * <h1>Object hashing strategies</h1>
+ * <p>
+ * A bloom filter is simply a set of bits that represents the presence of an
+ * object. The strategy used to build the hash will determine a number of values
+ * used in the system.
+ * </p>
+ * <p>
+ * One strategy is to build a single hashable item for each object, for instance
+ * a string representation, and hash it. This will yield one hash for each
+ * object. In this case the number of items defined in the FilterConfig is the
+ * number of unique objects. This is the common strategy to hash objects by a
+ * unique identifier.
+ * </p>
+ * <p>
+ * Another strategy is to hash components of the object separately, this allows
+ * for searching by each component. For example the color, type, and general
+ * size of a car might be hashed separately and used to create the
+ * ProtoBloomFilter. the number of items for the FilterConfig is the product of
+ * the cardinality of each property. So if cars come in white, red, black, blue
+ * and brown colors, coupe, sedan, hatchback, saloon, and van body types and
+ * compact, medium and large sizes then the total number of items for
+ * FilterConfig purposes is (<code>5 x 5 x 3 = 75</code>).
+ * </p>
+ * <p>
+ * The advantage of the second component indexing strategy is that it is
+ * possible to search for objects with partial matches. For example building a
+ * bloom filter for "red" and "saloon" and then searching the collection will
+ * yeild all vehicles that have both "red" and "saloon" property regardless of
+ * the size.
+ * </p>
  * <h1>Usage Pattern</h1>
  * <p>
  * <ul>
- * <li>Use a BloomFilterBuilder to digest items and create a
+ * <li>Use a ProtoBloomFilter.Builder to digest items and create a
  * ProtoBloomFilter.</li>
- * <li>Create a FilterConfig defining the number of items that will be
- * added to the filter and the probability of collisions.</li>
- * <li>Use the ProtoBloomFilter to create a BloomFilter with the shape
- * defined by the FilterConfig.</li>
+ * <li>Create a FilterConfig defining the number of items that will be added to
+ * the filter and the probability of collisions.</li>
+ * <li>Use the ProtoBloomFilter to create a BloomFilter or CountingBloomFilter
+ * with the shape defined by the FilterConfig.</li>
  * </ul>
  * </p>
  * <h2>Notes</h2>
  * <p>
  * <ul>
- * <li>The ProtoBloomFilter can be used to generate multiple BloomFilters
- * using multiple FilterConfigs.</li>
- * <li>Creation of the ProtoBloomFilter is far more intensive than the
- * creation of the subsequent BloomFilter.</li>
+ * <li>The ProtoBloomFilter can be used to generate multiple BloomFilters using
+ * multiple FilterConfigs.</li>
+ * <li>Creation of the ProtoBloomFilter is far more intensive than the creation
+ * of the subsequent BloomFilter.</li>
  * </ul>
  * </p>
- * 
- * @see <a href="http://hur.st/bloomfilter?n=3&p=1.0E-5">Bloom Filter calculator</a>
- * 
+ *
+ * @see <a href="http://hur.st/bloomfilter?n=3&p=1.0E-5">Bloom Filter
+ *      calculator</a>
+ *
  */
 package org.apache.commons.collections4.bloomfilters;

@@ -31,80 +31,80 @@ import org.junit.Test;
 
 public class FilterConfigTest {
 
-	/*
-	 * values from https://hur.st/bloomfilter/?n=5&p=.1&m=&k=
-	 * 
-	 * n = 5
-	 * 
-	 * p = 0.100375138 (1 in 10)
-	 * 
-	 * m = 24 (3B)
-	 * 
-	 * k = 3
-	 */
-	FilterConfig filterConfig = new FilterConfig(5, 10);
+    /*
+     * values from https://hur.st/bloomfilter/?n=5&p=.1&m=&k=
+     *
+     * n = 5
+     *
+     * p = 0.100375138 (1 in 10)
+     *
+     * m = 24 (3B)
+     *
+     * k = 3
+     */
+    FilterConfig filterConfig = new FilterConfig(5, 10);
 
-	@Test
-	public void constructorTest() {
+    @Test
+    public void constructorTest() {
 
-		assertEquals(24, filterConfig.getNumberOfBits());
-		assertEquals(3, filterConfig.getNumberOfBytes());
-		assertEquals(3, filterConfig.getNumberOfHashFunctions());
-		assertEquals(5, filterConfig.getNumberOfItems());
-		assertEquals(10, filterConfig.getProbability());
+        assertEquals(24, filterConfig.getNumberOfBits());
+        assertEquals(3, filterConfig.getNumberOfBytes());
+        assertEquals(3, filterConfig.getNumberOfHashFunctions());
+        assertEquals(5, filterConfig.getNumberOfItems());
+        assertEquals(10, filterConfig.getProbability());
 
-	}
+    }
 
-	@Test
-	public void constructorOverflowTest() {
-		try {
-			new FilterConfig(Integer.MAX_VALUE, 10);
-			fail("Should have thrown IllegalArgumentException");
-		} catch (IllegalArgumentException expected) {
-			// do nothing.
-		}
-	}
+    @Test
+    public void constructorOverflowTest() {
+        try {
+            new FilterConfig(Integer.MAX_VALUE, 10);
+            fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected) {
+            // do nothing.
+        }
+    }
 
-	@Test
-	public void constructorBadNumberOfItemsTest() {
-		try {
-			new FilterConfig(0, 10);
-			fail("Should have thrown IllegalArgumentException");
-		} catch (IllegalArgumentException expected) {
-			// do nothing.
-		}
-	}
+    @Test
+    public void constructorBadNumberOfItemsTest() {
+        try {
+            new FilterConfig(0, 10);
+            fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected) {
+            // do nothing.
+        }
+    }
 
-	@Test
-	public void constructorBadProbabilityTest() {
-		try {
-			new FilterConfig(10, 0);
-			fail("Should have thrown IllegalArgumentException");
-		} catch (IllegalArgumentException expected) {
-			// do nothing.
-		}
-	}
+    @Test
+    public void constructorBadProbabilityTest() {
+        try {
+            new FilterConfig(10, 0);
+            fail("Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected) {
+            // do nothing.
+        }
+    }
 
-	@Test
-	public void serializerTest() throws IOException, ClassNotFoundException {
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
-			oos.writeObject(filterConfig);
-		}
+    @Test
+    public void serializerTest() throws IOException, ClassNotFoundException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+            oos.writeObject(filterConfig);
+        }
 
-		try (ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray())) {
-			ObjectInputStream ois = new ObjectInputStream(bais);
-			Object o = ois.readObject();
-			ois.close();
-			assertTrue(o instanceof FilterConfig);
-			FilterConfig fc = (FilterConfig) o;
-			assertEquals(filterConfig.getNumberOfBits(), fc.getNumberOfBits());
-			assertEquals(filterConfig.getNumberOfBytes(), fc.getNumberOfBytes());
-			assertEquals(filterConfig.getNumberOfHashFunctions(), fc.getNumberOfHashFunctions());
-			assertEquals(filterConfig.getNumberOfItems(), fc.getNumberOfItems());
-			assertEquals(filterConfig.getProbability(), fc.getProbability());
+        try (ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray())) {
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            Object o = ois.readObject();
+            ois.close();
+            assertTrue(o instanceof FilterConfig);
+            FilterConfig fc = (FilterConfig) o;
+            assertEquals(filterConfig.getNumberOfBits(), fc.getNumberOfBits());
+            assertEquals(filterConfig.getNumberOfBytes(), fc.getNumberOfBytes());
+            assertEquals(filterConfig.getNumberOfHashFunctions(), fc.getNumberOfHashFunctions());
+            assertEquals(filterConfig.getNumberOfItems(), fc.getNumberOfItems());
+            assertEquals(filterConfig.getProbability(), fc.getProbability());
 
-		}
+        }
 
-	}
+    }
 }

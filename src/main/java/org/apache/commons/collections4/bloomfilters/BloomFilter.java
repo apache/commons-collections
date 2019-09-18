@@ -19,240 +19,236 @@ package org.apache.commons.collections4.bloomfilters;
 
 import java.util.BitSet;
 
-import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter.Hash;
-
 /**
  * A bloom filter.
- * 
+ *
  * Instances are immutable.
- * 
+ *
  * @since 4.5
  *
  */
 public class BloomFilter {
-	
-	/* The maximum log depth is the depth at which
-	 * the log calculation makes no difference to the double result. 
-	 */
-	private final static int MAX_LOG_DEPTH = 25;
 
-	// the bitset we are using
-	protected final BitSet bitSet;
+    /*
+     * The maximum log depth is the depth at which the log calculation makes no
+     * difference to the double result.
+     */
+    private final static int MAX_LOG_DEPTH = 25;
 
-	// the hamming value once we have calculated it.
-	private transient Integer hamming;
+    // the bitset we are using
+    protected final BitSet bitSet;
 
-	// the base 2 log of the bloom filter considered as an integer.
-	private transient Double logValue;
+    // the hamming value once we have calculated it.
+    private transient Integer hamming;
 
-	/**
-	 * Constructor.
-	 * 
-	 * @param protoFilter the protoFilter to build this bloom filter from.
-	 * @param config the Filter configuration to use to build the bloom filter.
-	 */
-	public BloomFilter(ProtoBloomFilter protoFilter, FilterConfig config) {
-		this.bitSet = new BitSet(config.getNumberOfBits());
-		for (Hash hash : protoFilter.hashes) {
-			hash.populate(bitSet, config);
-		}		
-		this.hamming = null;
-		this.logValue = null;
-	}
-	
-	/**
-	 * Constructor.
-	 * 
-	 * A copy of the bitSet parameter is made so that the bloom filter is isolated
-	 * from any further changes in the bitSet.
-	 * 
-	 * @param bitSet The bit set that was built by the config.
-	 */
-	protected BloomFilter(BitSet bitSet)
-	{
-		this.bitSet = (BitSet)bitSet.clone();
-		this.hamming = null;
-		this.logValue = null;
-	}
+    // the base 2 log of the bloom filter considered as an integer.
+    private transient Double logValue;
 
-	/**
-	 * Return true if other &amp; this == other
-	 * 
-	 * This is the inverse of the match method.
-	 * 
-	 * <code>X.match(Y)</code> is the same as <code>Y.inverseMatch(X)</code>
-	 * 
-	 * @param other the other bloom filter to match.
-	 * @return true if they match.
-	 */
-	public boolean inverseMatch(final BloomFilter other) {
-		return other.match(this);
-	}
+    /**
+     * Constructor.
+     *
+     * @param protoFilter the protoFilter to build this bloom filter from.
+     * @param config      the Filter configuration to use to build the bloom filter.
+     */
+    public BloomFilter(ProtoBloomFilter protoFilter, FilterConfig config) {
+        this.bitSet = new BitSet(config.getNumberOfBits());
+        protoFilter.getUniqueHashes().forEach(hash -> hash.populate(bitSet, config));
+        this.hamming = null;
+        this.logValue = null;
+    }
 
-	/**
-	 * Return true if <code>this &amp; other == this</code>.
-	 * 
-	 * This is the standard bloom filter match.
-	 * 
-	 * @param other the other bloom filter to match.
-	 * @return true if they match.
-	 */
-	public final boolean match(final BloomFilter other) {
-		BitSet temp = BitSet.valueOf(this.bitSet.toByteArray());
-		temp.and(other.bitSet);
-		return temp.equals(this.bitSet);
-	}
+    /**
+     * Constructor.
+     *
+     * A copy of the bitSet parameter is made so that the bloom filter is isolated
+     * from any further changes in the bitSet.
+     *
+     * @param bitSet The bit set that was built by the config.
+     */
+    protected BloomFilter(BitSet bitSet) {
+        this.bitSet = (BitSet) bitSet.clone();
+        this.hamming = null;
+        this.logValue = null;
+    }
 
-	/**
-	 * Calculate the hamming distance from this bloom filter to the other. The
-	 * hamming distance is defined as this xor other and is the number of bits that
-	 * have to be flipped to convert one filter to the other.
-	 * 
-	 * @param other The other bloom filter to calculate the distance to.
-	 * @return the distance.
-	 */
-	public final int distance(final BloomFilter other) {
-		BitSet temp = BitSet.valueOf(this.bitSet.toByteArray());
-		temp.xor(other.bitSet);
-		return temp.cardinality();
-	}
+    /**
+     * Return true if other &amp; this == other
+     *
+     * This is the inverse of the match method.
+     *
+     * {@code X.match(Y)} is the same as {@code Y.inverseMatch(X) }
+     *
+     * @param other the other bloom filter to match.
+     * @return true if they match.
+     */
+    public boolean inverseMatch(final BloomFilter other) {
+        return other.match(this);
+    }
 
-	/**
-	 * Get the hamming weight for this filter.
-	 * 
-	 * This is the number of bits that are on in the filter.
-	 * 
-	 * @return The hamming weight.
-	 */
-	public final int getHammingWeight() {
-		if (hamming == null) {
-			hamming = bitSet.cardinality();
-		}
-		return hamming;
-	}
+    /**
+     * Return true if {@code this & other == this }.
+     *
+     * This is the standard bloom filter match.
+     *
+     * @param other the other bloom filter to match.
+     * @return true if they match.
+     */
+    public final boolean match(final BloomFilter other) {
+        BitSet temp = BitSet.valueOf(this.bitSet.toByteArray());
+        temp.and(other.bitSet);
+        return temp.equals(this.bitSet);
+    }
 
-	/**
-	 * The the log(2) of this bloom filter. This is the base 2 logarithm of this
-	 * bloom filter if the bits in this filter were considers the bits in an
-	 * unsigned integer.
-	 * 
-	 * @return the base 2 logarithm
-	 */
-	public final double getLog() {
-		if (logValue == null) {
-			logValue = getApproximateLog( Integer.min(bitSet.length(), MAX_LOG_DEPTH));
-		}
-		return logValue;
-	}
+    /**
+     * Calculate the hamming distance from this bloom filter to the other. The
+     * hamming distance is defined as this xor other and is the number of bits that
+     * have to be flipped to convert one filter to the other.
+     *
+     * @param other The other bloom filter to calculate the distance to.
+     * @return the distance.
+     */
+    public final int distance(final BloomFilter other) {
+        BitSet temp = BitSet.valueOf(this.bitSet.toByteArray());
+        temp.xor(other.bitSet);
+        return temp.cardinality();
+    }
 
-	/**
-	 * Get the approximate log for this filter. If the bloom filter is considered as
-	 * an unsigned number what is the approximate base 2 log of that value. The
-	 * depth argument indicates how many extra bits are to be considered in the log
-	 * calculation. At least one bit must be considered. If there are no bits on
-	 * then the log value is 0.
-	 * 
-	 * @see AbstractBloomFilter.getApproximateLog()
-	 * @param depth the number of bits to consider.
-	 * @return the approximate log.
-	 */
-	private final double getApproximateLog(int depth) {
-		if (depth == 0)
-		{
-			return 0;
-		}
-		int[] exp = getApproximateLogExponents(depth);
-		/*
-		 * this approximation is calculated using a derivation of
-		 * http://en.wikipedia.org/wiki/Binary_logarithm#Algorithm
-		 */
-		// the mantissa is the highest bit that is turned on.
-		if (exp[0] < 0) {
-			// there are no bits so return 0
-			return 0;
-		}
-		double result = exp[0];
-		/* now we move backwards from the highest bit until the requested depth
-		 * is achieved. */
-		double exp2;
-		for (int i = 1; i < exp.length; i++) {
-			if (exp[i] == -1) {
-				return result;
-			}
-			exp2 = exp[i] - exp[0]; // should be negative
-			result += Math.pow(2.0, exp2);
-		}
-		return result;
-	}
+    /**
+     * Get the hamming weight for this filter.
+     *
+     * This is the number of bits that are on in the filter.
+     *
+     * @return The hamming weight.
+     */
+    public final int getHammingWeight() {
+        if (hamming == null) {
+            hamming = bitSet.cardinality();
+        }
+        return hamming;
+    }
 
-	/**
-	 * The mantissa of the log in in position position 0. The remainder are
-	 * characteristic powers.
-	 * 
-	 * @param depth
-	 * @return An array of depth integers that are the exponents.
-	 */
-	private final int[] getApproximateLogExponents(int depth) {
-		if (depth <1)
-		{
-			return new int[] { -1 };
-		}
-		int[] exp = new int[depth];
+    /**
+     * The the log(2) of this bloom filter. This is the base 2 logarithm of this
+     * bloom filter if the bits in this filter were considers the bits in an
+     * unsigned integer.
+     *
+     * @return the base 2 logarithm
+     */
+    public final double getLog() {
+        if (logValue == null) {
+            logValue = getApproximateLog(Integer.min(bitSet.length(), MAX_LOG_DEPTH));
+        }
+        return logValue;
+    }
 
-		exp[0] = bitSet.length() - 1;
-		if (exp[0] < 0) {
-			return exp;
-		}
+    /**
+     * Get the approximate log for this filter. If the bloom filter is considered as
+     * an unsigned number what is the approximate base 2 log of that value. The
+     * depth argument indicates how many extra bits are to be considered in the log
+     * calculation. At least one bit must be considered. If there are no bits on
+     * then the log value is 0.
+     *
+     * @see AbstractBloomFilter.getApproximateLog()
+     * @param depth the number of bits to consider.
+     * @return the approximate log.
+     */
+    private double getApproximateLog(int depth) {
+        if (depth == 0) {
+            return 0;
+        }
+        int[] exp = getApproximateLogExponents(depth);
+        /*
+         * this approximation is calculated using a derivation of
+         * http://en.wikipedia.org/wiki/Binary_logarithm#Algorithm
+         */
+        // the mantissa is the highest bit that is turned on.
+        if (exp[0] < 0) {
+            // there are no bits so return 0
+            return 0;
+        }
+        double result = exp[0];
+        /*
+         * now we move backwards from the highest bit until the requested depth is
+         * achieved.
+         */
+        double exp2;
+        for (int i = 1; i < exp.length; i++) {
+            if (exp[i] == -1) {
+                return result;
+            }
+            exp2 = exp[i] - exp[0]; // should be negative
+            result += Math.pow(2.0, exp2);
+        }
+        return result;
+    }
 
-		for (int i = 1; i < depth; i++) {
-			exp[i] = bitSet.previousSetBit(exp[i - 1] - 1);
-			/*
-			 * 25 bits from the start make no difference in the double calculation so we can
-			 * short circuit the method here.
-			 */
-			if (exp[i] - exp[0] < -25) {
-				exp[i] = -1;
-			}
-			if (exp[i] == -1) {
-				return exp;
-			}
-		}
-		return exp;
-	}
+    /**
+     * The mantissa of the log in in position position 0. The remainder are
+     * characteristic powers.
+     *
+     * @param depth
+     * @return An array of depth integers that are the exponents.
+     */
+    private int[] getApproximateLogExponents(int depth) {
+        if (depth < 1) {
+            return new int[] { -1 };
+        }
+        int[] exp = new int[depth];
 
-	@Override
-	public String toString() {
-		return bitSet.toString();
-	}
+        exp[0] = bitSet.length() - 1;
+        if (exp[0] < 0) {
+            return exp;
+        }
 
-	@Override
-	public int hashCode() {
-		return bitSet.hashCode();		
-	}
-	
-	@Override
-	public boolean equals(Object other) {
-		return (other instanceof BloomFilter) ? this.bitSet.equals(((BloomFilter) other).bitSet) : false;
-	}
+        for (int i = 1; i < depth; i++) {
+            exp[i] = bitSet.previousSetBit(exp[i - 1] - 1);
+            /*
+             * 25 bits from the start make no difference in the double calculation so we can
+             * short circuit the method here.
+             */
+            if (exp[i] - exp[0] < -25) {
+                exp[i] = -1;
+            }
+            if (exp[i] == -1) {
+                return exp;
+            }
+        }
+        return exp;
+    }
 
-	/**
-	 * Merge this bloom filter with the other creating a new filter.
-	 * 
-	 * @param other the other filter.
-	 * @return a new filter.
-	 */
-	public BloomFilter merge(BloomFilter other) {
-		BitSet next = (BitSet) this.bitSet.clone();
-		next.or(other.bitSet);
-		return new BloomFilter(next);
-	}
+    @Override
+    public String toString() {
+        return bitSet.toString();
+    }
 
-	/**
-	 * Return the a copy of the bitset in in the filter.
-	 * 
-	 * @return the bit set representation.
-	 */
-	public final BitSet getBitSet() {
-		return (BitSet) bitSet.clone();
-	}
+    @Override
+    public int hashCode() {
+        return bitSet.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof BloomFilter && this.bitSet.equals(((BloomFilter) other).bitSet);
+    }
+
+    /**
+     * Merge this bloom filter with the other creating a new filter.
+     *
+     * @param other the other filter.
+     * @return a new filter.
+     */
+    public BloomFilter merge(BloomFilter other) {
+        BitSet next = (BitSet) this.bitSet.clone();
+        next.or(other.bitSet);
+        return new BloomFilter(next);
+    }
+
+    /**
+     * Return the a copy of the bitset in in the filter.
+     *
+     * @return the bit set representation.
+     */
+    public final BitSet getBitSet() {
+        return (BitSet) bitSet.clone();
+    }
 }
