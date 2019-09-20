@@ -610,7 +610,7 @@ public class CollectionUtils {
     }
     
     /**
-     * Getting the hashCode of Collection through the hash method of Equator.
+     * Returns the hash code of Collection through the hash method of Equator.
      * <p>
      * If the input collection is null return 1.
      * </p>
@@ -619,6 +619,7 @@ public class CollectionUtils {
      * @param collection  the input collection
      * @param equator  the Equator used for generate hashCode
      * @return the hashCode of Collection through the hash method of Equator
+     * @since 4.5
      */
     public static <E> int hashCode(final Collection<? extends E> collection,
                                    final Equator<? super E> equator) {
@@ -630,7 +631,6 @@ public class CollectionUtils {
         }
         int hashCode = 1;
         for (final E e : collection) {
-
             hashCode = 31 * hashCode + equator.hash(e);
         }
         return hashCode;
