@@ -35,7 +35,9 @@ public class BloomFilter {
      */
     private final static int MAX_LOG_DEPTH = 25;
 
-    // the bitset we are using
+    /**
+     * The BitSet that represents the bloom filter.
+     */
     protected final BitSet bitSet;
 
     // the hamming value once we have calculated it.
@@ -43,6 +45,11 @@ public class BloomFilter {
 
     // the base 2 log of the bloom filter considered as an integer.
     private transient Double logValue;
+    
+    /**
+     * An empty BloomFilter
+     */
+    public static final BloomFilter EMPTY = new BloomFilter( new BitSet(0));
 
     /**
      * Constructor.
@@ -147,8 +154,7 @@ public class BloomFilter {
      * depth argument indicates how many extra bits are to be considered in the log
      * calculation. At least one bit must be considered. If there are no bits on
      * then the log value is 0.
-     *
-     * @see AbstractBloomFilter.getApproximateLog()
+
      * @param depth the number of bits to consider.
      * @return the approximate log.
      */

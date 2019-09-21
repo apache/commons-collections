@@ -29,36 +29,36 @@ public class BuilderTest {
 
     @Test
     public void updateTest_byte() {
-        Builder builder = new Builder().update((byte) 0x1);
+        Builder builder = new Builder().with((byte) 0x1);
         assertEquals(1, builder.hashes.size());
         assertEquals(new Hash(8849112093580131862L, 8613248517421295493L), builder.hashes.iterator().next());
     }
 
     @Test
     public void updateTest_byteArray() {
-        Builder builder = new Builder().update("Hello".getBytes());
+        Builder builder = new Builder().with("Hello".getBytes());
         assertEquals(1, builder.hashes.size());
         assertEquals(HELLO_HASH, builder.hashes.iterator().next());
     }
 
     @Test
     public void updateTest_ByteBuffer() {
-        Builder builder = new Builder().update(ByteBuffer.wrap("Hello".getBytes()));
+        Builder builder = new Builder().with(ByteBuffer.wrap("Hello".getBytes()));
         assertEquals(1, builder.hashes.size());
         assertEquals(HELLO_HASH, builder.hashes.iterator().next());
     }
 
     @Test
     public void updateTest_ProtoBloomFilter() {
-        ProtoBloomFilter pbf = new Builder().update("Hello").build();
-        Builder builder = new Builder().update(pbf);
+        ProtoBloomFilter pbf = new Builder().with("Hello").build();
+        Builder builder = new Builder().with(pbf);
         assertEquals(1, builder.hashes.size());
         assertEquals(HELLO_HASH, builder.hashes.iterator().next());
     }
 
     @Test
     public void updateTest_String() {
-        Builder builder = new Builder().update("Hello");
+        Builder builder = new Builder().with("Hello");
         assertEquals(1, builder.hashes.size());
         assertEquals(HELLO_HASH, builder.hashes.iterator().next());
     }
@@ -102,7 +102,7 @@ public class BuilderTest {
 
     @Test
     public void buildTest_ProtoBloomFilter() {
-        ProtoBloomFilter pbf1 = new Builder().update("Hello").build();
+        ProtoBloomFilter pbf1 = new Builder().with("Hello").build();
         ProtoBloomFilter pbf = new Builder().build(pbf1);
         assertEquals(1, pbf.getItemCount());
         assertEquals(HELLO_HASH, pbf.getHashes().iterator().next());
@@ -117,7 +117,7 @@ public class BuilderTest {
 
     @Test
     public void updateTest_LongString() {
-        Builder builder = new Builder().update("Now is the time for all good men to come to the aid of their country");
+        Builder builder = new Builder().with("Now is the time for all good men to come to the aid of their country");
         assertEquals(1, builder.hashes.size());
         assertEquals(new Hash(-1735186738861022201L, -4338573967658373034L), builder.hashes.iterator().next());
     }

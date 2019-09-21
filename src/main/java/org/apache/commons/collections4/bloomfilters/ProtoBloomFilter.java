@@ -50,6 +50,11 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 
     private final List<Hash> hashes;
     private transient Integer hashCode;
+    
+    /**
+     * An empty ProtoBloomFilter.  Used to create empty BloomFilters.
+     */
+    public static final ProtoBloomFilter EMPTY = new ProtoBloomFilter( Collections.emptyList() );
 
     /* package private for testing */
     /**
@@ -89,7 +94,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
     /**
      * Get the count of unique hashed items included in this proto bloom filter.
      * 
-     * @return
+     * @return the number of unique items hashed into the proto bloom filter.
      */
     public int getUniqueItemCount() {
         return (int) getUniqueHashes().count();
@@ -292,7 +297,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
          * @param protoBloomFilter The proto bloom filter to add.
          * @return this for chaining
          */
-        public Builder update(ProtoBloomFilter protoBloomFilter) {
+        public Builder with(ProtoBloomFilter protoBloomFilter) {
             hashes.addAll(protoBloomFilter.hashes);
             return this;
         }
@@ -303,7 +308,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
          * @param buffer The buffer to hash.
          * @return The ProtoBloomFilterBuilder for chaining.
          */
-        public Builder update(ByteBuffer buffer) {
+        public Builder with(ByteBuffer buffer) {
             hashes.add(hash3_x64_128(buffer, 0, buffer.limit(), 0L));
             return this;
         }
@@ -314,8 +319,8 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
          * @param b The byte to add.
          * @return this for chaining
          */
-        public Builder update(byte b) {
-            return update(ByteBuffer.wrap(new byte[] { b }));
+        public Builder with(byte b) {
+            return with(ByteBuffer.wrap(new byte[] { b }));
         }
 
         /**
@@ -327,8 +332,8 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
          * @param string The string to add.
          * @return this for chaining
          */
-        public Builder update(String string) {
-            return update(string.getBytes(StandardCharsets.UTF_8));
+        public Builder with(String string) {
+            return with(string.getBytes(StandardCharsets.UTF_8));
         }
 
         /**
@@ -337,27 +342,32 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
          * @param buffer The buffer to add.
          * @return this for chaining
          */
-        public Builder update(byte[] buffer) {
-            return update(ByteBuffer.wrap(buffer));
+        public Builder with(byte[] buffer) {
+            return with(ByteBuffer.wrap(buffer));
         }
 
+        /**
+         * Reset the builder to its initial state.
+         * 
+         * @return this for chaining
+         */
+        public Builder reset() {
+            hashes.clear();
+            return this;
+        }
         /**
          * Build the ProtoBloomFilter.
          *
          * @return the defined ProtoBloomFilter.
          */
         public ProtoBloomFilter build() {
-            try {
-                return new ProtoBloomFilter(hashes);
-            } finally {
-                hashes.clear();
-            }
+            return new ProtoBloomFilter(hashes);            
         }
 
         /**
          * Add the proto bloom filter to the filter as a new hash and build it.
          *
-         * This is a convenience method for update(protoBloomFilter).build()
+         * This is a convenience method for with(protoBloomFilter).build()
          *
          * @param protoBloomFilter The proto bloom filter to add.
          * @return the defined ProtoBloomFilter.
@@ -370,25 +380,25 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
         /**
          * Add the byte buffer to the proto bloom filter as a new hash and build it.
          *
-         * This is a convenience method for update(buffer).build()
+         * This is a convenience method for with(buffer).build()
          *
          * @param buffer The buffer to add.
          * @return the defined ProtoBloomFilter.
          */
         public ProtoBloomFilter build(ByteBuffer buffer) {
-            return update(buffer).build();
+            return with(buffer).build();
         }
 
         /**
          * Add the byte to the proto bloom filter as a new hash and build it.
          *
-         * This is a convenience method for update(b).build()
+         * This is a convenience method for with(b).build()
          *
          * @param b The byte to add.
          * @return the defined ProtoBloomFilter.
          */
         public ProtoBloomFilter build(byte b) {
-            return update(b).build();
+            return with(b).build();
         }
 
         /**
@@ -397,25 +407,25 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
          *
          * The bytes are interpreted as UTF-8 chars.
          *
-         * This is a convenience method for update(string).build()
+         * This is a convenience method for with(string).build()
          *
          * @param string The string to add.
          * @return the defined ProtoBloomFilter.
          */
         public ProtoBloomFilter build(String string) {
-            return update(string).build();
+            return with(string).build();
         }
 
         /**
          * Add the byte array to the proto bloom filter as a new hash and build it.
          *
-         * This is a convenience method for update(bufer).build()
+         * This is a convenience method for with(bufer).build()
          *
          * @param buffer The byte buffer to add.
          * @return the defined ProtoBloomFilter.
          */
         public ProtoBloomFilter build(byte[] buffer) {
-            return update(buffer).build();
+            return with(buffer).build();
         }
 
         /**************************************

@@ -19,6 +19,7 @@ package org.apache.commons.collections4.bloomfilters;
 
 import java.util.Arrays;
 import java.util.BitSet;
+import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -41,6 +42,12 @@ public class CountingBloomFilter extends BloomFilter {
     // the count of entries
     /* package private for testing */
     final TreeMap<Integer, Integer> counts;
+    
+    /**
+     * An empty Counting Bloom Filter.
+     */
+    public static final BloomFilter EMPTY = new CountingBloomFilter( new BitSet(0), Collections.emptyMap());
+
 
     /**
      * Constructor.
@@ -118,7 +125,6 @@ public class CountingBloomFilter extends BloomFilter {
         BitSet next = (BitSet) this.bitSet.clone();
         next.or(other.bitSet);
         TreeMap<Integer, Integer> newSet = new TreeMap<Integer, Integer>(counts);
-        Integer one = Integer.valueOf(1);
         other.bitSet.stream().forEach(key -> {
             int otherCount = (other instanceof CountingBloomFilter) ? ((CountingBloomFilter) other).counts.get(key) : 1;
 

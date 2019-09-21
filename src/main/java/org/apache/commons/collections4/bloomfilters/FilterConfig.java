@@ -31,8 +31,7 @@ import java.io.Serializable;
  *
  * @since 4.5
  */
-public final class FilterConfig implements Serializable {
-    public static final int STORED_SIZE = 2 * Integer.BYTES;
+public final class FilterConfig implements Serializable {  
     private static final long serialVersionUID = 8857015449149940190L;
     private static final double LOG_OF_2 = Math.log(2.0);
 
