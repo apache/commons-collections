@@ -79,7 +79,7 @@ public final class CollectionStats {
 
     /**
      * Verify the values of the collection stats are the same.
-     * 
+     *
      * @param other the other collection stats to compare to.
      * @return true if the values are the same.
      */
@@ -96,7 +96,7 @@ public final class CollectionStats {
 
     /**
      * Get the ActionMapper for this collection.
-     * 
+     *
      * @return the ActionMapper instance for this collection.
      */
     public synchronized ActionMapper getActionMapper() {

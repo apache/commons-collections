@@ -41,7 +41,7 @@ public interface BloomFilterGated<T> {
 
     /**
      * Get the filter configuration for the gate.
-     * 
+     *
      * @return the gate filter configuration.
      */
     FilterConfig getGateConfig();

@@ -159,7 +159,7 @@ public class StandardBloomFilter implements BloomFilter {
      * depth argument indicates how many extra bits are to be considered in the log
      * calculation. At least one bit must be considered. If there are no bits on
      * then the log value is 0.
-     * 
+     *
      * @param depth the number of bits to consider.
      * @return the approximate log.
      */

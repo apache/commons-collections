@@ -58,10 +58,10 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 
     /**
      * Get a builder .
-     * 
+     *
      * @return a new builder.
      */
-    public static final Builder builder() {
+    public static Builder builder() {
         return new Builder();
     }
 

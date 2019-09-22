@@ -35,15 +35,16 @@ import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter;
  * the objects are in the collection before performing the actual manipulation
  * of the underlying collection.
  * <p>
- * The statistics produced by this class are sensitive to the cardinality of the 
- * underlying collection.  If the underlying collection permits duplicates the 
- * statistics will count each insert as a bloom filter being added.  Thus adding 
+ * The statistics produced by this class are sensitive to the cardinality of the
+ * underlying collection. If the underlying collection permits duplicates the
+ * statistics will count each insert as a bloom filter being added. Thus adding
  * "cat" twice will result in the statistics showing 2 bloom filters added when
  * in actuality there is only 1.
- * </p> <p>
+ * </p>
+ * <p>
  * This class can serve an an example of how to implement BloomFilterGated.
  * </p>
- * 
+ *
  * @param <T> the type of object in the collection.
  */
 public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
