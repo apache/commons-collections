@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import org.apache.commons.collections4.ListValuedMap;
+import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.bloomfilters.StandardBloomFilter;
 import org.apache.commons.collections4.bloomfilters.BloomFilter;
 import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter;
@@ -380,13 +381,13 @@ public abstract class AbstractBloomFilterGatedNoDuplicatesTest {
 
 
     @Test
-    public final void retainAll() {
+    public final void retainAll_MultiValuedMap() {
         
         addAll( Arrays.asList("Hello", "Hello", "World", "Cat", "Dog" ) );
 
         assertEquals( 4, gated.count() );
 
-        ListValuedMap<ProtoBloomFilter, String> map = new ArrayListValuedHashMap<ProtoBloomFilter, String>();
+        MultiValuedMap<ProtoBloomFilter, String> map = new ArrayListValuedHashMap<ProtoBloomFilter, String>();
         Arrays.asList( "Hello", "World" ).stream().forEach(t -> map.put(FUNC.apply(t), t));
 
         gated.retainAll( map );

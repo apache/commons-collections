@@ -25,6 +25,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import org.apache.commons.collections4.bloomfilters.StandardBloomFilter;
@@ -133,6 +134,8 @@ public abstract class AbstractBloomCollectionWithDuplicatesTest extends Abstract
         List<String> all = Arrays.asList("Hello", "Hello", "World" );
         assertTrue( collection.addAll( all ) );
 
+        assertTrue( collection.containsAll( Collections.emptyList() ));
+        
         assertTrue( collection.containsAll( all ));
 
         all = Arrays.asList("Hello" );
@@ -143,8 +146,15 @@ public abstract class AbstractBloomCollectionWithDuplicatesTest extends Abstract
 
         all = Arrays.asList("Goodbye", "Cruel", "World");
         assertFalse( collection.containsAll( all ));
-
-
+    }
+    
+    @Test
+    public final void retainAll_Collection() {
+        List<String> all = Arrays.asList("Hello", "Hello", "World", "Dog", "Cat" );
+        assertTrue( collection.addAll( all ) );
+        assertEquals( 5, collection.size() );
+        assertTrue( collection.retainAll( Arrays.asList( "Hello", "World" ) ));
+        assertEquals( 3, collection.size() );
     }
 
     @Test
@@ -160,7 +170,6 @@ public abstract class AbstractBloomCollectionWithDuplicatesTest extends Abstract
         }
         assertEquals( 3, count );
     }
-
 
     @Test
     public final void remove_Object() {
@@ -184,7 +193,6 @@ public abstract class AbstractBloomCollectionWithDuplicatesTest extends Abstract
 
     }
 
-
     @Test
     public final void removeAll() {
         List<String> all = Arrays.asList("Hello", "Hello", "World", "Cat", "Dog" );
@@ -199,8 +207,6 @@ public abstract class AbstractBloomCollectionWithDuplicatesTest extends Abstract
         assertEquals(3, gated.getStats().getFilterCount());
 
     }
-
-
 
     @Test
     public final void size() {

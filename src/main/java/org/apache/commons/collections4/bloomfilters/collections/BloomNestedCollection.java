@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections4.ListValuedMap;
+import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.bloomfilters.StandardBloomFilter;
 import org.apache.commons.collections4.bloomfilters.BloomFilter;
 import org.apache.commons.collections4.bloomfilters.FilterConfig;
@@ -325,7 +326,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
     }
 
     @Override
-    public boolean retainAll(ListValuedMap<ProtoBloomFilter, T> map) {
+    public boolean retainAll(MultiValuedMap<ProtoBloomFilter, T> map) {
         boolean result = false;
         for (BloomFilterGated<T> candidate : buckets) {
             result |= candidate.retainAll(map);

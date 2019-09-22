@@ -25,6 +25,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import org.apache.commons.collections4.bloomfilters.StandardBloomFilter;
@@ -131,11 +132,13 @@ public abstract class AbstractBloomCollectionNoDuplicatesTest extends AbstractBl
     }
 
 
-
     @Test
-    public final void containsAll() {
+    public final void containsAll() {        
         List<String> all = Arrays.asList("Hello", "Hello", "World" );
         assertTrue( collection.addAll( all ) );
+
+        assertTrue( collection.containsAll( Collections.emptyList()));
+        
 
         assertTrue( collection.containsAll( all ));
 
@@ -147,8 +150,16 @@ public abstract class AbstractBloomCollectionNoDuplicatesTest extends AbstractBl
 
         all = Arrays.asList("Goodbye", "Cruel", "World");
         assertFalse( collection.containsAll( all ));
+    }
+    
 
-
+    @Test
+    public final void retainAll_Collection() {
+        List<String> all = Arrays.asList("Hello", "Hello", "World", "Dog", "Cat" );
+        assertTrue( collection.addAll( all ) );
+        assertEquals( 4, collection.size() );
+        assertTrue( collection.retainAll( Arrays.asList( "Hello", "World" ) ));
+        assertEquals( 2, collection.size() );
     }
 
     @Test

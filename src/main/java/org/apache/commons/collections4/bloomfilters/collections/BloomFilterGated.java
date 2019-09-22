@@ -20,6 +20,7 @@ package org.apache.commons.collections4.bloomfilters.collections;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections4.ListValuedMap;
+import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.bloomfilters.BloomFilter;
 import org.apache.commons.collections4.bloomfilters.FilterConfig;
 import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter;
@@ -192,7 +193,7 @@ public interface BloomFilterGated<T> {
      * @param map A proto bloom filter to object map.
      * @return true if the collection changed as a result of the call.
      */
-    boolean retainAll(ListValuedMap<ProtoBloomFilter, T> map);
+    boolean retainAll(MultiValuedMap<ProtoBloomFilter, T> map);
 
     /**
      * Return true if the collection is empty

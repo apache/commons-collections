@@ -25,6 +25,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections4.ListValuedMap;
+import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.bloomfilters.StandardBloomFilter;
 import org.apache.commons.collections4.bloomfilters.BloomFilter;
 import org.apache.commons.collections4.bloomfilters.FilterConfig;
@@ -266,7 +267,7 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
     }
 
     @Override
-    public boolean retainAll(ListValuedMap<ProtoBloomFilter, T> map) {
+    public boolean retainAll(MultiValuedMap<ProtoBloomFilter, T> map) {
         List<T> keep = new ArrayList<T>();
         for (ProtoBloomFilter proto : map.keySet()) {
             if (inverseMatch(new StandardBloomFilter(proto, getGateConfig()))) {
