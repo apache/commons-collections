@@ -21,13 +21,13 @@ import org.apache.commons.collections4.bloomfilters.FilterConfig;
 import org.apache.commons.collections4.bloomfilters.collections.BloomNestedCollection.BloomArrayListFactory;
 import org.junit.Before;
 
-public class BloomNestedCollectionWithDuplicatesDiffConfig extends AbstractBloomCollectionWithDuplicatesTest {
+public class BloomNestedCollectionWithDuplicatesDiffConfigTest extends AbstractBloomCollectionWithDuplicatesTest {
 
 
     FilterConfig gateConfig = new FilterConfig( 25, 5 );
     FilterConfig bucketConfig = new FilterConfig( 5, 5 );
     
-    public BloomNestedCollectionWithDuplicatesDiffConfig() {
+    public BloomNestedCollectionWithDuplicatesDiffConfigTest() {
         super( 2L, 3L );
     }
     @Before

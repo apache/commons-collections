@@ -28,6 +28,7 @@ public class BloomCollectionWithDuplicatesTest extends AbstractBloomCollectionWi
     {
         super( 3L, 3L );
     }
+    
     @Before
     public void setup() {
         FilterConfig filterConfig = new FilterConfig(5,5);

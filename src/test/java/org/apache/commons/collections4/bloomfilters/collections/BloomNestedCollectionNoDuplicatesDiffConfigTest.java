@@ -18,21 +18,32 @@
 package org.apache.commons.collections4.bloomfilters.collections;
 
 import org.apache.commons.collections4.bloomfilters.FilterConfig;
-import org.apache.commons.collections4.bloomfilters.collections.BloomNestedCollection.BloomArrayListFactory;
+import org.apache.commons.collections4.bloomfilters.collections.BloomNestedCollection.BloomHashSetFactory;
 import org.junit.Before;
 
-public class BloomNestedCollectionWithDuplicatesSameConfig extends AbstractBloomCollectionWithDuplicatesTest {
+/**
+ * Tests BloomNestedCollection that does not accept duplicates and that uses different filter configurations
+ * for the gate and the buckets.
+ */
+public class BloomNestedCollectionNoDuplicatesDiffConfigTest extends AbstractBloomCollectionNoDuplicatesTest {
 
 
     FilterConfig gateConfig = new FilterConfig( 25, 5 );
-    FilterConfig bucketConfig = new FilterConfig( 25, 5 );
-    
-    public BloomNestedCollectionWithDuplicatesSameConfig() {
-        super( 2L, 2L );
+    FilterConfig bucketConfig = new FilterConfig( 5, 5 );
+
+    /**
+     * Constructor.
+     */
+    public BloomNestedCollectionNoDuplicatesDiffConfigTest() {
+        super( 1L, 2L );
     }
+
+    /**
+     * setup
+     */
     @Before
-    public void setup() {        
-        super.setup( new BloomNestedCollection<String>(FUNC, 3, gateConfig, new BloomArrayListFactory<String>(FUNC, bucketConfig) ), gateConfig );
+    public void setup() {
+        super.setup( new BloomNestedCollection<String>(FUNC, 3, gateConfig, new BloomHashSetFactory<String>(FUNC, bucketConfig) ), gateConfig );
     }
 
 }
