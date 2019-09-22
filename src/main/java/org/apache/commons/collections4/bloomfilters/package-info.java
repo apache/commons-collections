@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 /**
- * <h1>Bloom Filter Overview</h1>
+ * <h2>Bloom Filter Overview</h2>
  * <p>
  * First it is important to remember that Bloom filters tell you where things
  * are NOT. Second it is important to understand that Bloom filters can give
