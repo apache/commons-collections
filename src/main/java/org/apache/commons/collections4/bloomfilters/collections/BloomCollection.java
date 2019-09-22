@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import org.apache.commons.collections4.ListValuedMap;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.bloomfilters.StandardBloomFilter;
 import org.apache.commons.collections4.bloomfilters.BloomFilter;
@@ -33,8 +32,8 @@ import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter;
 
 /**
  * A collection fronted by a bloom filter. The bloom filter only determines if
- * the objects are in the collection before performing the actual manipulation of
- * the underlying collection..
+ * the objects are in the collection before performing the actual manipulation
+ * of the underlying collection..
  *
  * @param <T> the type of object in the collection.
  */
@@ -271,7 +270,7 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
         List<T> keep = new ArrayList<T>();
         for (ProtoBloomFilter proto : map.keySet()) {
             if (inverseMatch(new StandardBloomFilter(proto, getGateConfig()))) {
-                keep.addAll( map.get(proto));
+                keep.addAll(map.get(proto));
             }
         }
         return retainAll(keep);
@@ -307,14 +306,12 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
 
     @Override
     public Stream<T> getCandidates(BloomFilter filter) {
-        return filter.match(config.getGate()) ?
-                getData() : Stream.empty();
+        return filter.match(config.getGate()) ? getData() : Stream.empty();
     }
 
     @Override
     public Stream<T> getCandidates(ProtoBloomFilter proto) {
-        return (fromProto(proto).match(config.getGate()))?
-                getData() :  Stream.empty();
+        return (fromProto(proto).match(config.getGate())) ? getData() : Stream.empty();
     }
 
 }

@@ -33,7 +33,7 @@ import java.util.TreeMap;
  * <p>
  * Instances are immutable.
  * </p>
- * 
+ *
  * @since 4.5
  *
  */
@@ -46,8 +46,7 @@ public class CountingBloomFilter extends StandardBloomFilter {
     /**
      * An empty Counting Bloom Filter.
      */
-    public static final BloomFilter EMPTY = new CountingBloomFilter( new BitSet(0), Collections.emptyMap());
-
+    public static final BloomFilter EMPTY = new CountingBloomFilter(new BitSet(0), Collections.emptyMap());
 
     /**
      * Constructor.
@@ -133,7 +132,7 @@ public class CountingBloomFilter extends StandardBloomFilter {
             if (count == null) {
                 newSet.put(key, otherCount);
             } else {
-                if (otherCount > Integer.MAX_VALUE-count ) {
+                if (otherCount > Integer.MAX_VALUE - count) {
                     throw new IllegalStateException("More than " + Integer.MAX_VALUE + " filters added");
                 }
 

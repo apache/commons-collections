@@ -20,8 +20,8 @@ package org.apache.commons.collections4.bloomfilters;
 import java.util.BitSet;
 
 /**
- * The interface for all BloomFilter implementations.
- * Instances of BloomFilters should be immutable.
+ * The interface for all BloomFilter implementations. Instances of BloomFilters
+ * should be immutable.
  */
 public interface BloomFilter {
 

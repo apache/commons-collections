@@ -49,7 +49,7 @@ public class StandardBloomFilter implements BloomFilter {
     /**
      * An empty BloomFilter
      */
-    public static final StandardBloomFilter EMPTY = new StandardBloomFilter( new BitSet(0));
+    public static final StandardBloomFilter EMPTY = new StandardBloomFilter(new BitSet(0));
 
     /**
      * Constructor.
@@ -102,7 +102,7 @@ public class StandardBloomFilter implements BloomFilter {
      * @return true if they match.
      */
     @Override
-    public final boolean match(final BloomFilter other) {        
+    public final boolean match(final BloomFilter other) {
         BitSet temp = other.getBitSet();
         temp.and(bitSet);
         return temp.equals(bitSet);
@@ -159,7 +159,7 @@ public class StandardBloomFilter implements BloomFilter {
      * depth argument indicates how many extra bits are to be considered in the log
      * calculation. At least one bit must be considered. If there are no bits on
      * then the log value is 0.
-
+     * 
      * @param depth the number of bits to consider.
      * @return the approximate log.
      */

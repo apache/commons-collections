@@ -79,13 +79,12 @@ public final class CollectionStats {
 
     /**
      * Verify the values of the collection stats are the same.
+     * 
      * @param other the other collection stats to compare to.
      * @return true if the values are the same.
      */
-    public boolean sameValues( CollectionStats other )
-    {
-        return this.filterInserts == other.filterInserts &&
-                this.filterDeletes == other.filterDeletes;
+    public boolean sameValues(CollectionStats other) {
+        return this.filterInserts == other.filterInserts && this.filterDeletes == other.filterDeletes;
     }
 
     // notify there is a change.
@@ -97,6 +96,7 @@ public final class CollectionStats {
 
     /**
      * Get the ActionMapper for this collection.
+     * 
      * @return the ActionMapper instance for this collection.
      */
     public synchronized ActionMapper getActionMapper() {

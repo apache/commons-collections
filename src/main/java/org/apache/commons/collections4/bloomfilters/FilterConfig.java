@@ -32,7 +32,7 @@ import java.util.Objects;
  *
  * @since 4.5
  */
-public final class FilterConfig implements Serializable {  
+public final class FilterConfig implements Serializable {
     private static final long serialVersionUID = 8857015449149940190L;
     private static final double LOG_OF_2 = Math.log(2.0);
 
@@ -46,7 +46,7 @@ public final class FilterConfig implements Serializable {
     private final int numberOfBits;
     // number of hash functions
     private final int numberOfHashFunctions;
-    
+
     private transient Integer hashCode;
 
     /**
@@ -128,28 +128,24 @@ public final class FilterConfig implements Serializable {
     }
 
     @Override
-    public boolean equals( Object o )
-    {
-        if (o instanceof FilterConfig)
-        {
+    public boolean equals(Object o) {
+        if (o instanceof FilterConfig) {
             FilterConfig other = (FilterConfig) o;
             return other.getNumberOfBits() == getNumberOfBits()
                     && other.getNumberOfHashFunctions() == getNumberOfHashFunctions()
-                    && other.getNumberOfItems() == getNumberOfItems()
-                    && other.getProbability() == getProbability();
+                    && other.getNumberOfItems() == getNumberOfItems() && other.getProbability() == getProbability();
         }
         return false;
     }
-    
+
     @Override
     public int hashCode() {
-        if (hashCode == null)
-        {
-            hashCode = Objects.hash( numberOfBits, numberOfHashFunctions, numberOfItems, probability );
+        if (hashCode == null) {
+            hashCode = Objects.hash(numberOfBits, numberOfHashFunctions, numberOfItems, probability);
         }
         return hashCode.intValue();
     }
-    
+
     private Object writeReplace() {
         return new ConfigSerProxy(this);
     }

@@ -24,7 +24,6 @@ import org.apache.commons.collections4.bloomfilters.BloomFilter;
 import org.apache.commons.collections4.bloomfilters.FilterConfig;
 import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter;
 
-
 /**
  * A collection of objects gated by a bloom filter.
  *
@@ -42,10 +41,10 @@ public interface BloomFilterGated<T> {
 
     /**
      * Get the filter configuration for the gate.
+     * 
      * @return the gate filter configuration.
      */
     FilterConfig getGateConfig();
-
 
     /**
      * Return true if this bloom filter is full. A full bloom filter is one that has

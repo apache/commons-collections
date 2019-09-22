@@ -41,7 +41,7 @@ import java.util.stream.Stream;
  * filter from the proto filter. Concrete implementations of BloomFilter are
  * built from the ProtoBloomFilter.
  * </p>
- * 
+ *
  * @since 4.5
  * @see FilterConfig
  *
@@ -50,20 +50,21 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 
     private final List<Hash> hashes;
     private transient Integer hashCode;
-    
+
     /**
-     * An empty ProtoBloomFilter.  Used to create empty BloomFilters.
+     * An empty ProtoBloomFilter. Used to create empty BloomFilters.
      */
-    public static final ProtoBloomFilter EMPTY = new ProtoBloomFilter( Collections.emptyList() );
+    public static final ProtoBloomFilter EMPTY = new ProtoBloomFilter(Collections.emptyList());
 
     /**
      * Get a builder .
+     * 
      * @return a new builder.
      */
     public static final Builder builder() {
         return new Builder();
     }
-    
+
     /* package private for testing */
     /**
      * Constructor
@@ -92,7 +93,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 
     /**
      * Get the stream of hashes included in this proto bloom filter.
-     * 
+     *
      * @return the stream of hashes.
      */
     public Stream<Hash> getHashes() {
@@ -101,7 +102,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 
     /**
      * Get the count of unique hashed items included in this proto bloom filter.
-     * 
+     *
      * @return the number of unique items hashed into the proto bloom filter.
      */
     public int getUniqueItemCount() {
@@ -110,7 +111,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 
     /**
      * Get the stream of uniques hashes included in this proto bloom filter.
-     * 
+     *
      * @return the stream of unique hashes.
      */
     public Stream<Hash> getUniqueHashes() {
@@ -282,7 +283,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
      * cardinality of the properties being hashed.</li>
      * </ol>
      * </p>
-     * 
+     *
      * @since 4.5
      */
     public static final class Builder {
@@ -356,20 +357,21 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 
         /**
          * Reset the builder to its initial state.
-         * 
+         *
          * @return this for chaining
          */
         public Builder reset() {
             hashes.clear();
             return this;
         }
+
         /**
          * Build the ProtoBloomFilter.
          *
          * @return the defined ProtoBloomFilter.
          */
         public ProtoBloomFilter build() {
-            return new ProtoBloomFilter(hashes);            
+            return new ProtoBloomFilter(hashes);
         }
 
         /**
