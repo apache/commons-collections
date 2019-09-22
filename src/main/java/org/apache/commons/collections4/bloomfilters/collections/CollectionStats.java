@@ -31,7 +31,7 @@ import java.util.function.Consumer;
  * Statistics are usually retrieved CollectionConfig object
  * <p>
  * In addition the {@code CollectionStats} will notify @{code
- * Consumer&lt;Action>} when any change to the collection occurs.
+ * Consumer&lt;Action&gt;} when any change to the collection occurs.
  * </p>
  */
 public final class CollectionStats {

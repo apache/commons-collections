@@ -270,7 +270,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
      * filter.
      * </p>
      * <p>
-     * There are two ways to hash the properties of objects.
+     * There are two ways to hash the properties of objects.</p>
      * <ol>
      * <li>One is to create a buffer containing all the properties and hash that.
      * This means that the search for the object must construct the same filter and
@@ -282,7 +282,6 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
      * of items that should be specified in the FilterConfig is the sum of the
      * cardinality of the properties being hashed.</li>
      * </ol>
-     * </p>
      *
      * @since 4.5
      */

@@ -79,7 +79,7 @@
  * candidate (C - the bucket) and evaluate T &amp; C = T if it evaluates as true
  * there is a match if it not then T is guaranteed not to be in the bucket.
  * </p>
- * <h1>Object hashing strategies</h1>
+ * <h2>Object hashing strategies</h2>
  * <p>
  * A bloom filter is simply a set of bits that represents the presence of an
  * object. The strategy used to build the hash will determine a number of values
@@ -109,8 +109,8 @@
  * yeild all vehicles that have both "red" and "saloon" property regardless of
  * the size.
  * </p>
- * <h1>Usage Pattern</h1>
- * <p>
+ * <h2>Usage Pattern</h2>
+ * 
  * <ul>
  * <li>Use a ProtoBloomFilter.Builder to digest items and create a
  * ProtoBloomFilter.</li>
@@ -119,16 +119,16 @@
  * <li>Use the ProtoBloomFilter to create a BloomFilter or CountingBloomFilter
  * with the shape defined by the FilterConfig.</li>
  * </ul>
- * </p>
+ *
  * <h2>Notes</h2>
- * <p>
+ *
  * <ul>
  * <li>The ProtoBloomFilter can be used to generate multiple BloomFilters using
  * multiple FilterConfigs.</li>
  * <li>Creation of the ProtoBloomFilter is far more intensive than the creation
  * of the subsequent BloomFilter.</li>
  * </ul>
- * </p>
+ * 
  *
  * @see <a href="http://hur.st/bloomfilter?n=3&p=1.0E-5">Bloom Filter
  *      calculator</a>
