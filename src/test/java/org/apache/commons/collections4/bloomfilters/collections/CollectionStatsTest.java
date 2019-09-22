@@ -3,8 +3,6 @@ package org.apache.commons.collections4.bloomfilters.collections;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 import java.util.function.Consumer;
 
 import org.apache.commons.collections4.bloomfilters.collections.CollectionStats.Action;
@@ -16,15 +14,15 @@ import org.junit.Test;
 public class CollectionStatsTest {
 
     private CollectionStats stats;
-    
+
     @Before
     public void setup() {
         stats = new CollectionStats();
     }
-    
+
     @Test
     public void addConsumer() {
-        CountingAction countingAction = new CountingAction();    
+        CountingAction countingAction = new CountingAction();
         stats.addConsumer( countingAction );
         stats.insert();
         assertEquals( 1, countingAction.insertCount );
@@ -34,41 +32,41 @@ public class CollectionStatsTest {
         assertEquals( 4, countingAction.deleteCount );
         stats.clear();
         assertEquals( 1, countingAction.clearCount );
-        
+
     }
-    
-    
+
+
     @Test
     public void clear() {
         stats.insert();
         stats.delete();
-        
+
         assertEquals( 1, stats.getInsertCount());
         assertEquals( 1, stats.getDeleteCount());
-        
-        CountingAction countingAction = new CountingAction();  
+
+        CountingAction countingAction = new CountingAction();
         stats.addConsumer(countingAction);
         stats.clear();
-        
+
         assertEquals( 0, stats.getInsertCount());
         assertEquals( 0, stats.getDeleteCount());
         assertEquals( 1, countingAction.clearCount );
     }
-    
+
     @Test
     public void delete() {
-       assertEquals( 0, stats.getDeleteCount() );
-       stats.delete();
-       assertEquals( 1, stats.getDeleteCount() );
+        assertEquals( 0, stats.getDeleteCount() );
+        stats.delete();
+        assertEquals( 1, stats.getDeleteCount() );
     }
-    
+
     @Test
     public void delete_long() {
         assertEquals( 0, stats.getDeleteCount() );
         stats.delete( 4 );
         assertEquals( 4, stats.getDeleteCount() );
     }
-    
+
     @Test
     public void getActionMapper() {
         ActionMapper mapper = stats.getActionMapper();
@@ -85,14 +83,14 @@ public class CollectionStatsTest {
         assertEquals( 1, stats.getInsertCount() );
         assertEquals( 1, stats.getDeleteCount() );
     }
-    
+
     @Test
     public void getDeleteCount() {
         assertEquals( 0, stats.getDeleteCount() );
         stats.delete();
         assertEquals( 1, stats.getDeleteCount() );
     }
-    
+
     @Test
     public void getFilterCount() {
         assertEquals( 0, stats.getFilterCount() );
@@ -107,7 +105,7 @@ public class CollectionStatsTest {
         stats.clear();
         assertEquals( 0, stats.getFilterCount() );
     }
-    
+
     @Test
     public void getTxtCount() {
         assertEquals( 0, stats.getTxnCount() );
@@ -120,14 +118,14 @@ public class CollectionStatsTest {
         stats.clear();
         assertEquals( 0, stats.getTxnCount() );
     }
-    
+
     @Test
     public void insert() {
         assertEquals( 0, stats.getInsertCount() );
         stats.insert();
         assertEquals( 1, stats.getInsertCount() );
     }
-    
+
     @Test
     public void sameValues() {
         CollectionStats stats2 = new CollectionStats();
@@ -141,13 +139,13 @@ public class CollectionStatsTest {
         stats2.delete();
         assertTrue( stats.sameValues(stats2));
     }
-    
+
     private class CountingAction implements Consumer<Action> {
 
         int clearCount;
         int insertCount;
         int deleteCount;
-        
+
         @Override
         public void accept(Action action) {
             switch( action.getChange() ) {
@@ -164,6 +162,6 @@ public class CollectionStatsTest {
                 throw new IllegalStateException( "Invalid action "+action.getChange());
             }
         }
-        
+
     }
 }

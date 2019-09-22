@@ -17,8 +17,10 @@
  */
 package org.apache.commons.collections4.bloomfilters.collections;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -263,13 +265,13 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
 
     @Override
     public boolean retainAll(ListValuedMap<ProtoBloomFilter, T> map) {
-        boolean result = false;
+        List<T> keep = new ArrayList<T>();
         for (ProtoBloomFilter proto : map.keySet()) {
-            if (matches(new BloomFilter(proto, getGateConfig()))) {
-                result |= retainAll(map.get(proto));
+            if (inverseMatch(new BloomFilter(proto, getGateConfig()))) {
+                keep.addAll( map.get(proto));         
             }
         }
-        return result;
+        return retainAll(keep);
     }
 
     @Override
@@ -302,18 +304,14 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
 
     @Override
     public Stream<T> getCandidates(BloomFilter filter) {
-        if (filter.match(config.getGate())) {
-            return getData();
-        }
-        return Stream.empty();
+        return filter.match(config.getGate()) ? 
+            getData() : Stream.empty();
     }
 
     @Override
     public Stream<T> getCandidates(ProtoBloomFilter proto) {
-        if (fromProto(proto).match(config.getGate())) {
-            return getData();
-        }
-        return Stream.empty();
+        return (fromProto(proto).match(config.getGate()))?
+             getData() :  Stream.empty();
     }
 
 }

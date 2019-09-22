@@ -18,6 +18,7 @@
 package org.apache.commons.collections4.bloomfilters;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * Filter configuration class.
@@ -45,6 +46,8 @@ public final class FilterConfig implements Serializable {
     private final int numberOfBits;
     // number of hash functions
     private final int numberOfHashFunctions;
+    
+    private transient Integer hashCode;
 
     /**
      * Create a filter configuration with the specified number of items and
@@ -124,6 +127,29 @@ public final class FilterConfig implements Serializable {
         return Double.valueOf(Math.ceil(numberOfBits / 8.0)).intValue();
     }
 
+    @Override
+    public boolean equals( Object o )
+    {
+        if (o instanceof FilterConfig)
+        {
+            FilterConfig other = (FilterConfig) o;
+            return other.getNumberOfBits() == getNumberOfBits()
+                    && other.getNumberOfHashFunctions() == getNumberOfHashFunctions()
+                    && other.getNumberOfItems() == getNumberOfItems()
+                    && other.getProbability() == getProbability();
+        }
+        return false;
+    }
+    
+    @Override
+    public int hashCode() {
+        if (hashCode == null)
+        {
+            hashCode = Objects.hash( numberOfBits, numberOfHashFunctions, numberOfItems, probability );
+        }
+        return hashCode.intValue();
+    }
+    
     private Object writeReplace() {
         return new ConfigSerProxy(this);
     }

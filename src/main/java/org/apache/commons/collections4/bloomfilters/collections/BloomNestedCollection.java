@@ -19,6 +19,7 @@ package org.apache.commons.collections4.bloomfilters.collections;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
@@ -40,6 +41,13 @@ import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
  * created at creation. If any bucket fills up a new bucket is created so that
  * there are always the minimum number of free buckets to accept data.
  * </p>
+ * <p>
+ * This structure is sensitive  to the filter sizing.  When the same filter configurations
+ * are used for the gate and buckets then methods that use the a BloomFilter parameter and
+ * will return the same results as the same method that uses a ProtoBloomFilter.  When the 
+ * filter configurations differ the ProtoBloomFilter methods will return fewer false positives.
+ * </p>
+ * 
  *
  * @param <T> the type of object in the collection.
  */
@@ -50,23 +58,6 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
     private final Function<T, ProtoBloomFilter> func;
     private final CollectionConfig collectionConfig;
     private final BucketFactory<T> bucketFactory;
-
-    /**
-     * Constructor.
-     * 
-     * Creates a BloomNestedCollection one layer deep that accepts duplicates.
-     *
-     * @param func         the function that converts object of type {@code T} to
-     *                     ProtoBloomFilters.
-     * @param minFree      the minimum number of free buckets.
-     * @param gateConfig   the filter configuration for the gating filter.
-     * @param bucketConfig the filter configuration for the gating filters for
-     *                     buckets.
-     */
-    public BloomNestedCollection(Function<T, ProtoBloomFilter> func, int minFree, FilterConfig gateConfig,
-            FilterConfig bucketConfig) {
-        this(func, minFree, gateConfig, new BloomCollectionFactory<T>(func, bucketConfig));
-    }
 
     /**
      * Constructor.
@@ -187,8 +178,10 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
             // should not happen
             bucket = newBucket();
         }
-        collectionConfig.merge(proto);
         boolean result = bucket.add(proto, t);
+        if (result) {
+            collectionConfig.merge(proto);
+        }
         if (bucket.isFull()) {
             newBucket();
         }
@@ -229,7 +222,9 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
         if (objs.isEmpty()) {
             return true;
         }
+        // builder for complete filter
         ProtoBloomFilter.Builder builder = ProtoBloomFilter.builder();
+        // list of protos that built the complete
         List<ProtoBloomFilter> protos = new ArrayList<ProtoBloomFilter>();
         for (Object o : objs) {
             @SuppressWarnings("unchecked")
@@ -238,7 +233,11 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
             protos.add(proto);
         }
 
+        /* if the complete filter matches the collection then all items
+         *  may be in the collection.
+        */
         if (fromProto(builder.build()).match(collectionConfig.getGate())) {
+            // check candidates for matches
             Iterator<ProtoBloomFilter> iter = protos.iterator();
             for (Object o : objs) {
                 boolean result = false;
@@ -247,13 +246,21 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
                 ProtoBloomFilter proto = iter.next();
                 for (BloomFilterGated<T> candidate : buckets) {
                     result |= candidate.contains(proto, t);
+                    if (result)
+                    {
+                        break;
+                    }
                 }
                 if (!result) {
+                    // object was not found in buckets.
                     return false;
                 }
             }
+            // all objects were found in buckets.
+            return true;
         }
-        return true;
+        // gate filter not matched so not here.
+        return false;
     }
 
     @Override
@@ -348,8 +355,19 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
     @Override
     public Stream<T> getCandidates(BloomFilter filter) {
         Stream<T> result = Stream.empty();
-        for (BloomFilterGated<T> bucket : buckets) {
-            result = Stream.concat(result, bucket.getCandidates(filter));
+        if (filter.match(collectionConfig.getGate()))
+        {
+            if (collectionConfig.getConfig().equals( bucketFactory.getConfig()))
+            {
+            
+            for (BloomFilterGated<T> bucket : buckets) {
+                result = Stream.concat(result, bucket.getCandidates(filter));
+            }
+            
+            }
+            else {
+                result=getData();
+            }
         }
         return result;
     }
@@ -357,8 +375,11 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
     @Override
     public Stream<T> getCandidates(ProtoBloomFilter proto) {
         Stream<T> result = Stream.empty();
-        for (BloomFilterGated<T> bucket : buckets) {
-            result = Stream.concat(result, bucket.getCandidates(proto));
+        if (collectionConfig.getGate().inverseMatch( new BloomFilter( proto, collectionConfig.getConfig())))
+        {
+            for (BloomFilterGated<T> bucket : buckets) {
+                result = Stream.concat(result, bucket.getCandidates(proto));
+            }
         }
         return result;
     }
@@ -394,13 +415,12 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
     }
 
     /**
-     * A default implementaiton of BucketFactory. This implementation creates
-     * BloomCollection instances.
+     * An implementation of BucketFactory that produces ArrayList base BloomCollections. 
      *
      *
      * @param <T> the type of object in the collection.
      */
-    public static class BloomCollectionFactory<T> implements BucketFactory<T> {
+    public static class BloomArrayListFactory<T> implements BucketFactory<T> {
 
         private final FilterConfig filterConfig;
         private final Function<T, ProtoBloomFilter> func;
@@ -411,7 +431,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
          * @param func         the function to convert from T to ProtoBloomFilter.
          * @param filterConfig the FilterConfiguration for the gating filter.
          */
-        public BloomCollectionFactory(Function<T, ProtoBloomFilter> func, FilterConfig filterConfig) {
+        public BloomArrayListFactory(Function<T, ProtoBloomFilter> func, FilterConfig filterConfig) {
             this.func = func;
             this.filterConfig = filterConfig;
         }
@@ -428,6 +448,39 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
 
     }
 
+    
+    /**
+     * An implementation of BucketFactory that produces HashSet base BloomCollections. 
+     *
+     * @param <T> the type of object in the collection.
+     */
+    public static class BloomHashSetFactory<T> implements BucketFactory<T> {
+
+        private final FilterConfig filterConfig;
+        private final Function<T, ProtoBloomFilter> func;
+
+        /**
+         * Constructor.
+         *
+         * @param func         the function to convert from T to ProtoBloomFilter.
+         * @param filterConfig the FilterConfiguration for the gating filter.
+         */
+        public BloomHashSetFactory(Function<T, ProtoBloomFilter> func, FilterConfig filterConfig) {
+            this.func = func;
+            this.filterConfig = filterConfig;
+        }
+
+        @Override
+        public FilterConfig getConfig() {
+            return filterConfig;
+        }
+
+        @Override
+        public BloomCollection<T> newBucket() {
+            return new BloomCollection<T>(new HashSet<T>(), filterConfig, func);
+        }
+
+    }
     
 
 }

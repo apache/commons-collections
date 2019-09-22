@@ -17,10 +17,10 @@ import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.junit.Test;
 
 /**
- * Tests for BloomFilterGated implementations that accept duplicates.
+ * Tests for a BloomFilterGated implementations that does not accept duplicates.
  *
  */
-public abstract class AbstractBloomFilterGatedWithDuplicatesTest {
+public abstract class AbstractBloomFilterGatedNoDuplicatesTest {
 
     public static Function<String, ProtoBloomFilter> FUNC = new Function<String, ProtoBloomFilter>() {
         @Override
@@ -30,7 +30,7 @@ public abstract class AbstractBloomFilterGatedWithDuplicatesTest {
     };
 
     protected BloomFilterGated<String> gated;
-    
+
     private final long helloCount;
     private final long candidateCount;
     
@@ -42,14 +42,12 @@ public abstract class AbstractBloomFilterGatedWithDuplicatesTest {
      * "Hello", "World" } has been added to the collection.
      * @param candidateCount the number of items that should be returned from a getCandidates( BloomFilter )
      * call when bloom filter is build from "Hello" and the set { "Hello", 
-     * "Hello", "World" } has been added to the collection.
-     */
-    protected AbstractBloomFilterGatedWithDuplicatesTest(long helloCount, long candidateCount)
+     * "Hello", "World" } has been added to the collection.     */
+    protected AbstractBloomFilterGatedNoDuplicatesTest(long helloCount, long candidateCount)
     {
         this.helloCount = helloCount;
         this.candidateCount = candidateCount;
     }
-
 
     protected void setup(BloomFilterGated<String> bloomC) {
         this.gated = bloomC;
@@ -100,7 +98,7 @@ public abstract class AbstractBloomFilterGatedWithDuplicatesTest {
 
     @Test
     public final void clear() {
-        addAll( Arrays.asList("Hello", "Hello", "World" ) ) ;
+        addAll( Arrays.asList("Hello", "Hello", "World" ) );
         gated.clear();
         assertTrue( gated.isEmpty());
         assertEquals( BloomFilter.EMPTY, gated.getGate() );
@@ -111,9 +109,10 @@ public abstract class AbstractBloomFilterGatedWithDuplicatesTest {
         assertEquals(0L, gated.count());
     }
 
+
     @Test
     public final void contains_Proto_Obj() {
-        addAll( Arrays.asList("Hello", "Hello", "World" ) ) ;
+        addAll( Arrays.asList("Hello", "Hello", "World" ) );
 
         ProtoBloomFilter proto = FUNC.apply("Hello");
         assertTrue( gated.contains( proto, "Hello") );
@@ -124,12 +123,14 @@ public abstract class AbstractBloomFilterGatedWithDuplicatesTest {
         assertFalse( gated.contains( proto, "Goodbye") );
 
     }
-
     @Test
     public final void count() {
         assertEquals( 0, gated.count() );
-        addAll( Arrays.asList("Hello", "Hello", "World" ) ) ;
-        assertEquals( 3, gated.count());
+
+        addAll( Arrays.asList("Hello", "Hello", "World" ) );
+
+        assertEquals( 2, gated.count());
+
     }
 
     @Test
@@ -189,10 +190,8 @@ public abstract class AbstractBloomFilterGatedWithDuplicatesTest {
 
     @Test
     public final void getData() {
-        addAll( Arrays.asList("Hello", "Hello", "World" ) );
-
-
-        assertEquals( 3, gated.getData().count() );
+        addAll( Arrays.asList("Hello", "Hello", "World" ));
+        assertEquals( 2, gated.getData().count() );
     }
 
     @Test
@@ -208,10 +207,9 @@ public abstract class AbstractBloomFilterGatedWithDuplicatesTest {
 
         proto = ProtoBloomFilter.builder().with( proto ).with( "World" ).build();
         filter = new BloomFilter( proto, gated.getGateConfig() );
-        gated.add( proto, "World" );
+        gated.add( FUNC.apply("World"), "World" );
         assertEquals( filter, gated.getGate() );
     }
-
 
 
     @Test
@@ -221,13 +219,14 @@ public abstract class AbstractBloomFilterGatedWithDuplicatesTest {
         assertEquals(0, gated.getStats().getDeleteCount());
         assertEquals(0, gated.getStats().getFilterCount());
 
-        gated.add( FUNC.apply("World"),"World");
+        ProtoBloomFilter proto = FUNC.apply("World");
+        gated.add( proto,"World");
         assertEquals(1, gated.getStats().getInsertCount());
         assertEquals(1, gated.getStats().getTxnCount());
         assertEquals(0, gated.getStats().getDeleteCount());
         assertEquals(1, gated.getStats().getFilterCount());
 
-        gated.remove(FUNC.apply("World"), "World");
+        gated.remove(proto,"World");
         assertEquals(1, gated.getStats().getInsertCount());
         assertEquals(2, gated.getStats().getTxnCount());
         assertEquals(1, gated.getStats().getDeleteCount());
@@ -239,7 +238,7 @@ public abstract class AbstractBloomFilterGatedWithDuplicatesTest {
         assertTrue( gated.inverseMatch(BloomFilter.EMPTY));
 
 
-        addAll(Arrays.asList("Hello", "Hello", "World" ));
+        addAll( Arrays.asList("Hello", "Hello", "World" ) );
 
         BloomFilter filter = new BloomFilter(
                 ProtoBloomFilter.builder().with( "Hello").build("World"),
@@ -278,7 +277,7 @@ public abstract class AbstractBloomFilterGatedWithDuplicatesTest {
     @Test
     public final void isEmpty() {
         assertTrue( gated.isEmpty());
-        addAll( Arrays.asList("Hello", "Hello", "World" ) );
+        addAll( Arrays.asList("Hello", "Hello", "World" ));
         assertFalse( gated.isEmpty() );
     }
 
@@ -292,6 +291,7 @@ public abstract class AbstractBloomFilterGatedWithDuplicatesTest {
         assertTrue( gated.isFull() );
     }
 
+    
 
     @Test
     public final void matches_Filter() {
@@ -335,44 +335,49 @@ public abstract class AbstractBloomFilterGatedWithDuplicatesTest {
     @Test
     public final void remove_Proto_T() {
         addAll( Arrays.asList("Hello", "Hello", "World", "Cat", "Dog" ) );
-        assertEquals( 5, gated.count() );
+        assertEquals( 4, gated.count() );
 
-        ProtoBloomFilter proto = ProtoBloomFilter.builder().build( "hello");
-
+        // wrong filter correct value
+        ProtoBloomFilter proto = FUNC.apply( "hello");
         assertFalse( gated.remove(  proto, "Hello" ) );
-        assertEquals( 5, gated.count() );
-
-        proto = ProtoBloomFilter.builder().build( "Hello");
+        assertEquals( 4, gated.count() );
+        
+        // correct filter wrong value
+        proto = FUNC.apply( "Hello");
         assertFalse( gated.remove( proto, "bird" ));
-        assertEquals( 5, gated.count() );
+        assertEquals( 4, gated.count() );
+        
+        // correct filter correct value
+        assertTrue( gated.remove( proto, "Hello" ) );
+        assertEquals( 3, gated.count() );
 
         // will delete if the proto matches and the object is in the collection.
         assertTrue( gated.remove( proto, "Dog"));
-        assertEquals( 4, gated.count() );
-        assertEquals(5, gated.getStats().getInsertCount());
+        assertEquals( 2, gated.count() );
+        assertEquals(4, gated.getStats().getInsertCount());
         assertEquals(6, gated.getStats().getTxnCount());
-        assertEquals(1, gated.getStats().getDeleteCount());
-        assertEquals(4, gated.getStats().getFilterCount());
+        assertEquals(2, gated.getStats().getDeleteCount());
+        assertEquals(2, gated.getStats().getFilterCount());
     }
 
 
     @Test
     public final void retainAll() {
+        
         addAll( Arrays.asList("Hello", "Hello", "World", "Cat", "Dog" ) );
 
-        assertEquals( 5, gated.count() );
+        assertEquals( 4, gated.count() );
 
         ListValuedMap<ProtoBloomFilter, String> map = new ArrayListValuedHashMap<ProtoBloomFilter, String>();
         Arrays.asList( "Hello", "World" ).stream().forEach(t -> map.put(FUNC.apply(t), t));
 
         gated.retainAll( map );
-        assertEquals( 3, gated.count() );
+        assertEquals( 2, gated.count() );
 
-        assertEquals(5, gated.getStats().getInsertCount());
-        assertEquals(7, gated.getStats().getTxnCount());
+        assertEquals(4, gated.getStats().getInsertCount());
+        assertEquals(6, gated.getStats().getTxnCount());
         assertEquals(2, gated.getStats().getDeleteCount());
-        assertEquals(3, gated.getStats().getFilterCount());
+        assertEquals(2, gated.getStats().getFilterCount());
     }
-
 
 }
