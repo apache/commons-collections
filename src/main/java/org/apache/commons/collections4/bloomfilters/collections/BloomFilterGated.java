@@ -20,7 +20,6 @@ package org.apache.commons.collections4.bloomfilters.collections;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections4.ListValuedMap;
-import org.apache.commons.collections4.bloomfilters.StandardBloomFilter;
 import org.apache.commons.collections4.bloomfilters.BloomFilter;
 import org.apache.commons.collections4.bloomfilters.FilterConfig;
 import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter;
@@ -40,13 +39,13 @@ public interface BloomFilterGated<T> {
      * @return the gating bloom filter.
      */
     BloomFilter getGate();
-    
+
     /**
      * Get the filter configuration for the gate.
      * @return the gate filter configuration.
      */
     FilterConfig getGateConfig();
-    
+
 
     /**
      * Return true if this bloom filter is full. A full bloom filter is one that has

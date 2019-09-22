@@ -32,7 +32,7 @@ import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter;
 
 /**
  * A collection fronted by a bloom filter. The bloom filter only determines if
- * the objects are in the collection before performing the actual manipulation of 
+ * the objects are in the collection before performing the actual manipulation of
  * the underlying collection..
  *
  * @param <T> the type of object in the collection.
@@ -88,6 +88,7 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
      *
      * @return the filter configuration.
      */
+    @Override
     public FilterConfig getGateConfig() {
         return config.getConfig();
     }
@@ -269,7 +270,7 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
         List<T> keep = new ArrayList<T>();
         for (ProtoBloomFilter proto : map.keySet()) {
             if (inverseMatch(new StandardBloomFilter(proto, getGateConfig()))) {
-                keep.addAll( map.get(proto));         
+                keep.addAll( map.get(proto));
             }
         }
         return retainAll(keep);
@@ -305,14 +306,14 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
 
     @Override
     public Stream<T> getCandidates(BloomFilter filter) {
-        return filter.match(config.getGate()) ? 
-            getData() : Stream.empty();
+        return filter.match(config.getGate()) ?
+                getData() : Stream.empty();
     }
 
     @Override
     public Stream<T> getCandidates(ProtoBloomFilter proto) {
         return (fromProto(proto).match(config.getGate()))?
-             getData() :  Stream.empty();
+                getData() :  Stream.empty();
     }
 
 }

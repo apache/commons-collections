@@ -76,7 +76,7 @@ public final class CollectionStats {
             changeNotification.andThen(consumer);
         }
     }
-    
+
     /**
      * Verify the values of the collection stats are the same.
      * @param other the other collection stats to compare to.

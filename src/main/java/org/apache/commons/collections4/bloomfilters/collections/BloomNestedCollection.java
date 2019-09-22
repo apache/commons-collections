@@ -45,10 +45,10 @@ import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
  * <p>
  * This structure is sensitive  to the filter sizing.  When the same filter configurations
  * are used for the gate and buckets then methods that use the a BloomFilter parameter and
- * will return the same results as the same method that uses a ProtoBloomFilter.  When the 
+ * will return the same results as the same method that uses a ProtoBloomFilter.  When the
  * filter configurations differ the ProtoBloomFilter methods will return fewer false positives.
  * </p>
- * 
+ *
  *
  * @param <T> the type of object in the collection.
  */
@@ -80,7 +80,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
             newBucket();
         }
     }
-    
+
     @Override
     public FilterConfig getGateConfig() {
         return collectionConfig.getConfig();
@@ -236,7 +236,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
 
         /* if the complete filter matches the collection then all items
          *  may be in the collection.
-        */
+         */
         if (fromProto(builder.build()).match(collectionConfig.getGate())) {
             // check candidates for matches
             Iterator<ProtoBloomFilter> iter = protos.iterator();
@@ -360,11 +360,11 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
         {
             if (collectionConfig.getConfig().equals( bucketFactory.getConfig()))
             {
-            
-            for (BloomFilterGated<T> bucket : buckets) {
-                result = Stream.concat(result, bucket.getCandidates(filter));
-            }
-            
+
+                for (BloomFilterGated<T> bucket : buckets) {
+                    result = Stream.concat(result, bucket.getCandidates(filter));
+                }
+
             }
             else {
                 result=getData();
@@ -416,7 +416,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
     }
 
     /**
-     * An implementation of BucketFactory that produces ArrayList base BloomCollections. 
+     * An implementation of BucketFactory that produces ArrayList base BloomCollections.
      *
      *
      * @param <T> the type of object in the collection.
@@ -449,9 +449,9 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
 
     }
 
-    
+
     /**
-     * An implementation of BucketFactory that produces HashSet base BloomCollections. 
+     * An implementation of BucketFactory that produces HashSet base BloomCollections.
      *
      * @param <T> the type of object in the collection.
      */
@@ -482,6 +482,6 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
         }
 
     }
-    
+
 
 }
