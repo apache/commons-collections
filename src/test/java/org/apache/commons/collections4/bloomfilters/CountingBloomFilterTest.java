@@ -21,6 +21,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 import java.util.Arrays;
 import java.util.BitSet;
 
@@ -37,8 +39,8 @@ public class CountingBloomFilterTest {
         // m = 5 (1B)
         // k = 3
         FilterConfig fc = new FilterConfig(1, 11);
-        ProtoBloomFilter pbf = new ProtoBloomFilter(Arrays.asList(hash));
-        CountingBloomFilter bf = new CountingBloomFilter(pbf, fc);
+        ProtoBloomFilter proto = new ProtoBloomFilter(Arrays.asList(hash));
+        CountingBloomFilter bf = new CountingBloomFilter(proto, fc);
 
         assertEquals(3, bf.getHammingWeight());
         BitSet bs = bf.getBitSet();
@@ -60,9 +62,9 @@ public class CountingBloomFilterTest {
         // m = 5 (1B)
         // k = 3
         FilterConfig fc = new FilterConfig(1, 11);
-        ProtoBloomFilter pbf = new ProtoBloomFilter(Arrays.asList(hash));
-        CountingBloomFilter bf1 = new CountingBloomFilter(pbf, fc);
-        CountingBloomFilter bf2 = new CountingBloomFilter(pbf, fc);
+        ProtoBloomFilter proto = new ProtoBloomFilter(Arrays.asList(hash));
+        CountingBloomFilter bf1 = new CountingBloomFilter(proto, fc);
+        CountingBloomFilter bf2 = new CountingBloomFilter(proto, fc);
         CountingBloomFilter bf = bf1.merge(bf2);
 
         assertEquals(3, bf.getHammingWeight());
@@ -80,17 +82,17 @@ public class CountingBloomFilterTest {
     public void mergeTest_Different() {
         // produces 0,1,3
         Hash hash1 = new Hash(1, 2);
-        ProtoBloomFilter pbf1 = new ProtoBloomFilter(Arrays.asList(hash1));
+        ProtoBloomFilter proto1 = new ProtoBloomFilter(Arrays.asList(hash1));
         // produces 1,2,4
         Hash hash2 = new Hash(1, 3);
-        ProtoBloomFilter pbf2 = new ProtoBloomFilter(Arrays.asList(hash2));
+        ProtoBloomFilter proto2 = new ProtoBloomFilter(Arrays.asList(hash2));
         // n = 1
         // p = 0.091848839 (1 in 11)
         // m = 5 (1B)
         // k = 3
         FilterConfig fc = new FilterConfig(1, 11);
-        CountingBloomFilter bf1 = new CountingBloomFilter(pbf1, fc);
-        CountingBloomFilter bf2 = new CountingBloomFilter(pbf2, fc);
+        CountingBloomFilter bf1 = new CountingBloomFilter(proto1, fc);
+        CountingBloomFilter bf2 = new CountingBloomFilter(proto2, fc);
         CountingBloomFilter bf = bf1.merge(bf2);
 
         assertEquals(5, bf.getHammingWeight());
@@ -109,6 +111,46 @@ public class CountingBloomFilterTest {
     }
 
     @Test
+    public void mergeTest_Overflow() {
+        // produces 0,1,3
+        Hash hash1 = new Hash(1, 2);
+        ProtoBloomFilter proto1 = new ProtoBloomFilter(Arrays.asList(hash1));       
+        ProtoBloomFilter proto2 = new ProtoBloomFilter(Arrays.asList(hash1));
+        // n = 1
+        // p = 0.091848839 (1 in 11)
+        // m = 5 (1B)
+        // k = 3
+        FilterConfig fc = new FilterConfig(1, 11);
+        CountingBloomFilter bf1 = new CountingBloomFilter(proto1, fc);
+        
+        CountingBloomFilter bf2 = new CountingBloomFilter(proto2, fc);
+        bf2.counts.put( 0, Integer.MAX_VALUE );
+        
+        try {
+            CountingBloomFilter bf = bf1.merge(bf2);
+            fail( "Should have thrown IllegalStateException");
+        }
+        catch (IllegalStateException expected)
+        {
+            // do nothing
+        }
+        
+        
+        bf1 = new CountingBloomFilter(proto1, fc);
+        bf1.counts.put( 0, Integer.MAX_VALUE );
+        
+        bf2 = new CountingBloomFilter(proto2, fc);
+        
+        try {
+            CountingBloomFilter bf = bf1.merge(bf2);
+            fail( "Should have thrown IllegalStateException");
+        }
+        catch (IllegalStateException expected)
+        {
+            // do nothing
+        }    }
+
+    @Test
     public void mergeTest_Standard() {
         // merge a standard bloom filter.
         // produces 0,1,3
@@ -118,9 +160,9 @@ public class CountingBloomFilterTest {
         // m = 5 (1B)
         // k = 3
         FilterConfig fc = new FilterConfig(1, 11);
-        ProtoBloomFilter pbf = new ProtoBloomFilter(Arrays.asList(hash));
-        StandardBloomFilter bf1 = new StandardBloomFilter(pbf, fc);
-        CountingBloomFilter bf2 = new CountingBloomFilter(pbf, fc);
+        ProtoBloomFilter proto = new ProtoBloomFilter(Arrays.asList(hash));
+        StandardBloomFilter bf1 = new StandardBloomFilter(proto, fc);
+        CountingBloomFilter bf2 = new CountingBloomFilter(proto, fc);
         CountingBloomFilter bf = bf2.merge(bf1);
 
         assertEquals(3, bf.getHammingWeight());
@@ -142,15 +184,15 @@ public class CountingBloomFilterTest {
         // produces 1,2,4
         Hash hash2 = new Hash(1, 3);
 
-        ProtoBloomFilter pbf1 = new ProtoBloomFilter(Arrays.asList(hash1, hash2));
-        ProtoBloomFilter pbf2 = new ProtoBloomFilter(Arrays.asList(hash2));
+        ProtoBloomFilter proto1 = new ProtoBloomFilter(Arrays.asList(hash1, hash2));
+        ProtoBloomFilter proto2 = new ProtoBloomFilter(Arrays.asList(hash2));
         // n = 1
         // p = 0.091848839 (1 in 11)
         // m = 5 (1B)
         // k = 3
         FilterConfig fc = new FilterConfig(1, 11);
-        CountingBloomFilter bf1 = new CountingBloomFilter(pbf1, fc);
-        CountingBloomFilter bf2 = new CountingBloomFilter(pbf2, fc);
+        CountingBloomFilter bf1 = new CountingBloomFilter(proto1, fc);
+        CountingBloomFilter bf2 = new CountingBloomFilter(proto2, fc);
         CountingBloomFilter bf = bf1.remove(bf2);
 
         assertEquals(3, bf.getHammingWeight());
@@ -175,15 +217,15 @@ public class CountingBloomFilterTest {
         // produces 1,2,4
         Hash hash2 = new Hash(1, 3);
 
-        ProtoBloomFilter pbf1 = new ProtoBloomFilter(Arrays.asList(hash1, hash2));
-        ProtoBloomFilter pbf2 = new ProtoBloomFilter(Arrays.asList(hash2));
+        ProtoBloomFilter proto1 = new ProtoBloomFilter(Arrays.asList(hash1, hash2));
+        ProtoBloomFilter proto2 = new ProtoBloomFilter(Arrays.asList(hash2));
         // n = 1
         // p = 0.091848839 (1 in 11)
         // m = 5 (1B)
         // k = 3
         FilterConfig fc = new FilterConfig(1, 11);
-        CountingBloomFilter bf1 = new CountingBloomFilter(pbf1, fc);
-        StandardBloomFilter bf2 = new StandardBloomFilter(pbf2, fc);
+        CountingBloomFilter bf1 = new CountingBloomFilter(proto1, fc);
+        StandardBloomFilter bf2 = new StandardBloomFilter(proto2, fc);
         CountingBloomFilter bf = bf1.remove(bf2);
 
         assertEquals(3, bf.getHammingWeight());
@@ -208,13 +250,48 @@ public class CountingBloomFilterTest {
         // m = 5 (1B)
         // k = 3
         FilterConfig fc = new FilterConfig(1, 11);
-        ProtoBloomFilter pbf = new ProtoBloomFilter(Arrays.asList(hash));
-        CountingBloomFilter bf = new CountingBloomFilter(pbf, fc);               
+        ProtoBloomFilter proto = new ProtoBloomFilter(Arrays.asList(hash));
+        CountingBloomFilter bf = new CountingBloomFilter(proto, fc);               
         BitSet bs = bf.getBitSet();
         BitSet bs2 = bf.getBitSet();
         assertEquals( bs, bs2 );        
         bs2.set(20);
         assertNotEquals( bs, bs2 );
 
+    }
+    
+    @Test
+    public void testEquals() {
+        Hash hash = new Hash(1, 2);
+        // n = 1
+        // p = 0.091848839 (1 in 11)
+        // m = 5 (1B)
+        // k = 3
+        FilterConfig fc = new FilterConfig(1, 11);
+        ProtoBloomFilter proto = new ProtoBloomFilter(Arrays.asList(hash));
+        CountingBloomFilter bf = new CountingBloomFilter(proto, fc);
+        CountingBloomFilter bf2 = new CountingBloomFilter(proto, fc);
+        
+        assertEquals( bf, bf2 );
+        
+        FilterConfig fc2 = new FilterConfig(1, 12);
+        bf2 = new CountingBloomFilter(proto, fc2);
+        assertNotEquals( bf, bf2 );
+        
+        Hash hash2 = new Hash(1, 3);
+        ProtoBloomFilter proto2 = new ProtoBloomFilter(Arrays.asList(hash2));
+        bf2 = new CountingBloomFilter(proto2, fc);
+        assertNotEquals( bf, bf2 );
+        
+        BitSet bitSet = bf.getBitSet();
+        StandardBloomFilter sbf = new StandardBloomFilter( bitSet );
+        assertEquals( bf, sbf );
+        assertEquals( sbf, bf );
+        
+        bitSet.flip(2);
+        sbf = new StandardBloomFilter( bitSet );
+        assertNotEquals( bf, sbf );
+        assertNotEquals( sbf, bf );
+        
     }
 }

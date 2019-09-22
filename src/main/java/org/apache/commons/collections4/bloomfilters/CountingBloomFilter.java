@@ -133,7 +133,7 @@ public class CountingBloomFilter extends StandardBloomFilter {
             if (count == null) {
                 newSet.put(key, otherCount);
             } else {
-                if (count == Integer.MAX_VALUE) {
+                if (otherCount > Integer.MAX_VALUE-count ) {
                     throw new IllegalStateException("More than " + Integer.MAX_VALUE + " filters added");
                 }
 

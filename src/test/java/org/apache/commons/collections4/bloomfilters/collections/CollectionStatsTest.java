@@ -41,17 +41,28 @@ public class CollectionStatsTest {
     public void addConsumer() {
         CountingAction countingAction = new CountingAction();
         stats.addConsumer( countingAction );
+        CountingAction countingAction2 = new CountingAction();
+        stats.addConsumer( countingAction2 );
         stats.insert();
         assertEquals( 1, countingAction.insertCount );
+        assertEquals( 1, countingAction2.insertCount );
         stats.delete();
         assertEquals( 1, countingAction.deleteCount );
+        assertEquals( 1, countingAction2.deleteCount );
         stats.delete(3);
         assertEquals( 4, countingAction.deleteCount );
+        assertEquals( 4, countingAction2.deleteCount );
         stats.clear();
         assertEquals( 1, countingAction.clearCount );
+        assertEquals( 1, countingAction2.clearCount );
 
     }
 
+    @Test
+    public void asInt() {
+        assertEquals( Integer.MAX_VALUE, CollectionStats.asInt( Long.MAX_VALUE ));
+        assertEquals( Integer.MIN_VALUE, CollectionStats.asInt( Long.MIN_VALUE ));
+    }
 
     @Test
     public void clear() {
@@ -81,7 +92,9 @@ public class CollectionStatsTest {
     public void delete_long() {
         assertEquals( 0, stats.getDeleteCount() );
         stats.delete( 4 );
-        assertEquals( 4, stats.getDeleteCount() );
+        assertEquals( 4, stats.getDeleteCount() );     
+        stats.delete( Long.MAX_VALUE - 3 );
+        assertEquals( Long.MAX_VALUE, stats.getDeleteCount() );
     }
 
     @Test
@@ -132,6 +145,8 @@ public class CollectionStatsTest {
         assertEquals( 2, stats.getTxnCount() );
         stats.delete(2);
         assertEquals( 4, stats.getTxnCount() );
+        stats.delete( Long.MAX_VALUE-3 );
+        assertEquals( Long.MAX_VALUE, stats.getTxnCount() );
         stats.clear();
         assertEquals( 0, stats.getTxnCount() );
     }

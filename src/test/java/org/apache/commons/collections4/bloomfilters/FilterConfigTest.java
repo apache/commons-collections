@@ -18,6 +18,8 @@
 package org.apache.commons.collections4.bloomfilters;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
@@ -26,6 +28,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.Objects;
 
 import org.junit.Test;
 
@@ -106,5 +109,25 @@ public class FilterConfigTest {
 
         }
 
+    }
+    
+    @Test
+    public void equalsTest() {
+        
+        assertEquals( new FilterConfig(5, 10), filterConfig );
+        assertNotEquals( new FilterConfig(5, 11), filterConfig );
+        assertNotEquals( new FilterConfig(4, 10), filterConfig );
+        assertFalse( filterConfig.equals( filterConfig.toString() ));
+        
+    }
+    
+    @Test
+    public void hashCodeTest() {
+        int hashCode = Objects.hash(24, 3, 5, 10 );
+        
+        assertEquals( hashCode, filterConfig.hashCode());
+        // forces path throgh previously calcualted hashCode
+        assertNotEquals( hashCode+1, filterConfig.hashCode());
+           
     }
 }

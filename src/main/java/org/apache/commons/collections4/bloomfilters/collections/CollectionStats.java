@@ -73,7 +73,7 @@ public final class CollectionStats {
         if (changeNotification == null) {
             changeNotification = consumer;
         } else {
-            changeNotification.andThen(consumer);
+            changeNotification = changeNotification.andThen(consumer);
         }
     }
 
