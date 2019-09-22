@@ -180,7 +180,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
             if (!bucketFactory.allowDuplicates())
             {
                 // verify that the object does not already exist
-                if (bucket.contains(proto, t)) {
+                if (candidate.contains(proto, t)) {
                     return false;
                 }
             }
