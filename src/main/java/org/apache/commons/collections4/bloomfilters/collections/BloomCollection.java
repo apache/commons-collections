@@ -33,8 +33,17 @@ import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter;
 /**
  * A collection fronted by a bloom filter. The bloom filter only determines if
  * the objects are in the collection before performing the actual manipulation
- * of the underlying collection..
- *
+ * of the underlying collection.
+ * <p>
+ * The statistics produced by this class are sensitive to the cardinality of the 
+ * underlying collection.  If the underlying collection permits duplicates the 
+ * statistics will count each insert as a bloom filter being added.  Thus adding 
+ * "cat" twice will result in the statistics showing 2 bloom filters added when
+ * in actuality there is only 1.
+ * </p> <p>
+ * This class can serve an an example of how to implement BloomFilterGated.
+ * </p>
+ * 
  * @param <T> the type of object in the collection.
  */
 public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
@@ -93,11 +102,6 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
         return config.getConfig();
     }
 
-    /**
-     * Get the collections statistics.
-     *
-     * @return the collection stats for this collection.
-     */
     @Override
     public CollectionStats getStats() {
         return config.getStats();
@@ -148,14 +152,6 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
         return config.getGate().inverseMatch(filter);
     }
 
-    /**
-     * Add an object of type @{code T} using a previously calculated proto bloom
-     * filter.
-     *
-     * @param proto the proto bloom filter.
-     * @param obj   the object to add.
-     * @return true if the object was added to the wrapped collection.
-     */
     @Override
     public boolean add(ProtoBloomFilter proto, T obj) {
         boolean retval = wrapped.add(obj);
@@ -185,13 +181,6 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
         wrapped.clear();
     }
 
-    /**
-     * Check if the collection contains an object with a known proto bloom filter.
-     *
-     * @param proto the proto bloom filter to use for checking.
-     * @param obj   the object to look for.
-     * @return true if the collection contains the object.
-     */
     @Override
     public boolean contains(ProtoBloomFilter proto, T obj) {
         if (fromProto(proto).match(config.getGate())) {
@@ -231,13 +220,6 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
         return wrapped.iterator();
     }
 
-    /**
-     * Remove an object from the collection if it is in it.
-     *
-     * @param proto the proto bloom filter to use for checking.
-     * @param obj   the object to remove.
-     * @return true if the object was removed.
-     */
     @Override
     public boolean remove(ProtoBloomFilter proto, T obj) {
         if (fromProto(proto).match(config.getGate())) {

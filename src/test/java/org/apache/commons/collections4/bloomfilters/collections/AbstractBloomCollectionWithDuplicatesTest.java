@@ -198,7 +198,7 @@ public abstract class AbstractBloomCollectionWithDuplicatesTest extends Abstract
         List<String> all = Arrays.asList("Hello", "Hello", "World", "Cat", "Dog" );
         assertTrue( collection.addAll( all ) );
         assertEquals( 5, collection.size() );
-        assertTrue( collection.removeAll( Arrays.asList( "Hello", "World" )));
+        assertTrue( collection.removeAll( Arrays.asList( "Hello", "World", "Bird" )));
         assertEquals( 3, collection.size() );
 
         assertEquals(5, gated.getStats().getInsertCount());

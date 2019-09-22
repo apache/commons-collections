@@ -82,7 +82,7 @@ public class CollectionConfig {
     }
 
     /**
-     * Merte a bloom filter into the gating filter.
+     * Merge a bloom filter into the gating filter.
      *
      * @param filter the bloom filter to merge.
      */

@@ -294,4 +294,18 @@ public class CountingBloomFilterTest {
         assertNotEquals( sbf, bf );
         
     }
+    
+    @Test
+    public void hashCodeTest() {
+        Hash hash = new Hash(1, 2);
+        // n = 1
+        // p = 0.091848839 (1 in 11)
+        // m = 5 (1B)
+        // k = 3
+        FilterConfig fc = new FilterConfig(1, 11);
+        ProtoBloomFilter proto = new ProtoBloomFilter(Arrays.asList(hash));
+        CountingBloomFilter bf = new CountingBloomFilter(proto, fc);
+        BitSet bs = bf.getBitSet();
+        assertEquals( bs.hashCode(), bf.hashCode());
+    }
 }

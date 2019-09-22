@@ -172,8 +172,18 @@ public class StandardBloomFilterTest {
         bs.clear(2);
         bf2 = new StandardBloomFilter(bs);
         assertNotEquals(bf1, bf2);
+        
+        assertFalse(  bf1.equals(bf1.toString()) );
     }
 
+    @Test
+    public void hashCodeTest() {
+        BitSet bs = new BitSet();
+        bs.set(2);
+        BloomFilter bf = new StandardBloomFilter(bs);
+        assertEquals( bs.hashCode(), bf.hashCode());
+    }
+    
     @Test
     public void matchTest() {
         BitSet bs = new BitSet();

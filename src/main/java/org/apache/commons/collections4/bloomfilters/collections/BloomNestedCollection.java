@@ -49,6 +49,14 @@ import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
  * BloomFilter parameter and will return the same results as the same method
  * that uses a ProtoBloomFilter. When the filter configurations differ the
  * ProtoBloomFilter methods will return fewer false positives.
+ * </p><p>
+ * The statistics produced by this class are sensitive to the cardinality of the 
+ * underlying collections.  If the underlying collections permit duplicates the 
+ * statistics will count each insert as a bloom filter being added.  Thus adding 
+ * "cat" twice will result in the statistics showing 2 bloom filters added when
+ * in actuality there is only 1.
+ * </p><p>
+ * This class can serve an an example of how to implement BloomFilterGated.
  * </p>
  *
  *
@@ -168,6 +176,14 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
         int dist = Integer.MAX_VALUE;
         BloomFilterGated<T> bucket = null;
         for (BloomFilterGated<T> candidate : buckets) {
+            // if we do not allow duplicates
+            if (!bucketFactory.allowDuplicates())
+            {
+                // verify that the object does not already exist
+                if (bucket.contains(proto, t)) {
+                    return false;
+                }
+            }
             if (!candidate.isFull()) {
                 int candidateDist = candidate.distance(bf);
                 if (candidateDist < dist) {
@@ -399,6 +415,11 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
      */
     public interface BucketFactory<T> {
         /**
+         * Return true if this bucket factory allows duplicates, false otherwise.
+         * @return true if this bucket factory allows duplicates.
+         */
+        boolean allowDuplicates();
+        /**
          * Get the filter configuration for the buckets produced by the factory.
          *
          * @return the filter configuration used by the factory.
@@ -435,6 +456,9 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
             this.func = func;
             this.filterConfig = filterConfig;
         }
+        
+        @Override
+        public boolean allowDuplicates() { return true; }
 
         @Override
         public FilterConfig getConfig() {
@@ -470,6 +494,9 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
             this.filterConfig = filterConfig;
         }
 
+        @Override
+        public boolean allowDuplicates() { return false; }
+        
         @Override
         public FilterConfig getConfig() {
             return filterConfig;

@@ -204,7 +204,7 @@ public abstract class AbstractBloomCollectionNoDuplicatesTest extends AbstractBl
         List<String> all = Arrays.asList("Hello", "Hello", "World", "Cat", "Dog" );
         assertTrue( collection.addAll( all ) );
         assertEquals( 4, collection.size() );
-        collection.removeAll( Arrays.asList( "Hello", "World" ));
+        collection.removeAll( Arrays.asList( "Hello", "World", "Bird" ));
         assertEquals( 2, collection.size() );
 
         assertEquals(4, gated.getStats().getInsertCount());
