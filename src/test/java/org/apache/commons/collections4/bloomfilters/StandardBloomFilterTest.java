@@ -28,7 +28,7 @@ import java.util.BitSet;
 import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter.Hash;
 import org.junit.Test;
 
-public class BloomFilterTest {
+public class StandardBloomFilterTest {
 
     @Test
     public void constructorTest() {
@@ -39,7 +39,7 @@ public class BloomFilterTest {
         // k = 3
         FilterConfig fc = new FilterConfig(1, 11);
         ProtoBloomFilter pbf = new ProtoBloomFilter(Arrays.asList(hash));
-        BloomFilter bf = new BloomFilter(pbf, fc);
+        BloomFilter bf = new StandardBloomFilter(pbf, fc);
 
         assertEquals(3, bf.getHammingWeight());
         BitSet bs = bf.getBitSet();
@@ -51,7 +51,7 @@ public class BloomFilterTest {
     @Test
     public void getLogTest_NoValues() {
         BitSet bs = new BitSet();
-        BloomFilter bf = new BloomFilter(bs);
+        BloomFilter bf = new StandardBloomFilter(bs);
         assertEquals(0.0, bf.getLog(), 0.0000001);
     }
 
@@ -59,11 +59,11 @@ public class BloomFilterTest {
     public void getLogTest() {
         BitSet bs = new BitSet();
         bs.set(2);
-        BloomFilter bf = new BloomFilter(bs);
+        BloomFilter bf = new StandardBloomFilter(bs);
         assertEquals(2.0, bf.getLog(), 0.0000001);
 
         bs.set(20);
-        bf = new BloomFilter(bs);
+        bf = new StandardBloomFilter(bs);
         assertEquals(20.000003814697266, bf.getLog(), 0.000000000000001);
     }
 
@@ -73,7 +73,7 @@ public class BloomFilterTest {
         bs.set(2);
         bs.set(40);
         // show it is approximate bit 40 and bit 2 yeilds same as 40 alone
-        BloomFilter bf = new BloomFilter(bs);
+        BloomFilter bf = new StandardBloomFilter(bs);
 
         assertEquals(40.0, bf.getLog(), 0.000000000000001);
     }
@@ -85,7 +85,7 @@ public class BloomFilterTest {
             bs.set(i);
         }
 
-        BloomFilter bf = new BloomFilter(bs);
+        BloomFilter bf = new StandardBloomFilter(bs);
 
         assertEquals(27.9999999, bf.getLog(), 0.0000001);
     }
@@ -94,7 +94,7 @@ public class BloomFilterTest {
     public void getLog2xTest() {
         BitSet bs = new BitSet();
         bs.set(2);
-        BloomFilter bf = new BloomFilter(bs);
+        BloomFilter bf = new StandardBloomFilter(bs);
         assertEquals(2.0, bf.getLog(), 0.0000001);
         assertEquals(2.0, bf.getLog(), 0.0000001);
     }
@@ -103,15 +103,15 @@ public class BloomFilterTest {
     public void getHammingWeight() {
         BitSet bs = new BitSet();
         bs.set(2);
-        BloomFilter bf = new BloomFilter(bs);
+        BloomFilter bf = new StandardBloomFilter(bs);
         assertEquals(1, bf.getHammingWeight());
 
         bs.set(20);
-        bf = new BloomFilter(bs);
+        bf = new StandardBloomFilter(bs);
         assertEquals(2, bf.getHammingWeight());
 
         bs.set(40);
-        bf = new BloomFilter(bs);
+        bf = new StandardBloomFilter(bs);
         assertEquals(3, bf.getHammingWeight());
 
     }
@@ -120,7 +120,7 @@ public class BloomFilterTest {
     public void showBitSetChangeNotAffectFilter() {
         BitSet bs = new BitSet();
         bs.set(2);
-        BloomFilter bf = new BloomFilter(bs);
+        BloomFilter bf = new StandardBloomFilter(bs);
         assertEquals(1, bf.getHammingWeight());
         // changing the bit set after constructor does not impact filter.
         bs.set(20);
@@ -131,9 +131,9 @@ public class BloomFilterTest {
     public void distanceTest_Not0() {
         BitSet bs = new BitSet();
         bs.set(2);
-        BloomFilter bf1 = new BloomFilter(bs);
+        StandardBloomFilter bf1 = new StandardBloomFilter(bs);
         bs.set(4);
-        BloomFilter bf2 = new BloomFilter(bs);
+        StandardBloomFilter bf2 = new StandardBloomFilter(bs);
 
         assertEquals(1, bf1.distance(bf2));
         assertEquals(1, bf2.distance(bf1));
@@ -141,7 +141,7 @@ public class BloomFilterTest {
         // show now shared bits
         bs = new BitSet();
         bs.set(4);
-        bf2 = new BloomFilter(bs);
+        bf2 = new StandardBloomFilter(bs);
         assertEquals(2, bf1.distance(bf2));
         assertEquals(2, bf2.distance(bf1));
 
@@ -150,9 +150,9 @@ public class BloomFilterTest {
     @Test
     public void distanceTest_0() {
         BitSet bs = new BitSet();
-        bs.nextSetBit(2);
-        BloomFilter bf1 = new BloomFilter(bs);
-        BloomFilter bf2 = new BloomFilter(bs);
+        bs.set(2);
+        StandardBloomFilter bf1 = new StandardBloomFilter(bs);
+        StandardBloomFilter bf2 = new StandardBloomFilter(bs);
 
         assertEquals(0, bf1.distance(bf2));
         assertEquals(0, bf2.distance(bf1));
@@ -161,27 +161,27 @@ public class BloomFilterTest {
     @Test
     public void equalityTest() {
         BitSet bs = new BitSet();
-        bs.nextSetBit(2);
-        BloomFilter bf1 = new BloomFilter(bs);
-        BloomFilter bf2 = new BloomFilter(bs);
+        bs.set(2);
+        BloomFilter bf1 = new StandardBloomFilter(bs);
+        StandardBloomFilter bf2 = new StandardBloomFilter(bs);
 
         assertEquals(bf1, bf2);
         assertEquals(0, bf1.distance(bf2));
 
         bs.set(40);
         bs.clear(2);
-        bf2 = new BloomFilter(bs);
+        bf2 = new StandardBloomFilter(bs);
         assertNotEquals(bf1, bf2);
     }
 
     @Test
     public void matchTest() {
         BitSet bs = new BitSet();
-        bs.nextSetBit(2);
-        BloomFilter bf1 = new BloomFilter(bs);
+        bs.set(2);
+        StandardBloomFilter bf1 = new StandardBloomFilter(bs);
 
         bs.set(40);
-        BloomFilter bf2 = new BloomFilter(bs);
+        StandardBloomFilter bf2 = new StandardBloomFilter(bs);
         assertFalse(bf2.match(bf1));
         assertTrue(bf1.match(bf2));
     }
@@ -189,11 +189,11 @@ public class BloomFilterTest {
     @Test
     public void inverseMatchTest() {
         BitSet bs = new BitSet();
-        bs.nextSetBit(2);
-        BloomFilter bf1 = new BloomFilter(bs);
+        bs.set(2);
+        BloomFilter bf1 = new StandardBloomFilter(bs);
 
         bs.set(40);
-        BloomFilter bf2 = new BloomFilter(bs);
+        BloomFilter bf2 = new StandardBloomFilter(bs);
         assertTrue(bf2.inverseMatch(bf1));
         assertFalse(bf1.inverseMatch(bf2));
     }
@@ -201,16 +201,28 @@ public class BloomFilterTest {
     @Test
     public void mergeTest() {
         BitSet bs = new BitSet();
-        bs.nextSetBit(2);
-        BloomFilter bf1 = new BloomFilter(bs);
+        bs.set(2);
+        StandardBloomFilter bf1 = new StandardBloomFilter(bs);
 
         bs.set(40);
-        BloomFilter bf2 = new BloomFilter(bs);
+        StandardBloomFilter bf2 = new StandardBloomFilter(bs);
 
-        BloomFilter bf3 = bf1.merge(bf2);
+        StandardBloomFilter bf3 = bf1.merge(bf2);
 
         assertTrue(bf1.match(bf3));
         assertTrue(bf2.match(bf3));
+
+    }
+    
+    @Test
+    public void testBitSetCopy() {
+        BitSet bs = new BitSet();
+        bs.set(2);
+        StandardBloomFilter bf1 = new StandardBloomFilter(bs);
+        BitSet bs2 = bf1.getBitSet();
+        assertEquals( bs, bs2 );
+        bs2.set(20);
+        assertNotEquals( bs, bs2 );
 
     }
 }

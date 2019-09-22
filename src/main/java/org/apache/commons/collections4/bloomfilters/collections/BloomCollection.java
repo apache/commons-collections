@@ -25,6 +25,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections4.ListValuedMap;
+import org.apache.commons.collections4.bloomfilters.StandardBloomFilter;
 import org.apache.commons.collections4.bloomfilters.BloomFilter;
 import org.apache.commons.collections4.bloomfilters.FilterConfig;
 import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter;
@@ -73,7 +74,7 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
 
     // make a bloom filter for this collection from the proto type.
     private BloomFilter fromProto(ProtoBloomFilter pf) {
-        return new BloomFilter(pf, config.getConfig());
+        return new StandardBloomFilter(pf, config.getConfig());
     }
 
     // make a bloom filter for this collection from the object of type T.
@@ -132,18 +133,18 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
     }
 
     @Override
-    public boolean matches(ProtoBloomFilter pbf) {
-        return matches(fromProto(pbf));
+    public boolean matches(ProtoBloomFilter proto) {
+        return matches(fromProto(proto));
     }
 
     @Override
-    public boolean inverseMatch(ProtoBloomFilter pbf) {
-        return inverseMatch(fromProto(pbf));
+    public boolean inverseMatch(ProtoBloomFilter proto) {
+        return inverseMatch(fromProto(proto));
     }
 
     @Override
-    public boolean inverseMatch(BloomFilter other) {
-        return config.getGate().inverseMatch(other);
+    public boolean inverseMatch(BloomFilter filter) {
+        return config.getGate().inverseMatch(filter);
     }
 
     /**
@@ -209,7 +210,7 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
         if (objs.isEmpty()) {
             return true;
         }
-        BloomFilter total = BloomFilter.EMPTY;
+        BloomFilter total = StandardBloomFilter.EMPTY;
         for (Object o : objs) {
             total = total.merge(fromT(o));
         }
@@ -267,7 +268,7 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
     public boolean retainAll(ListValuedMap<ProtoBloomFilter, T> map) {
         List<T> keep = new ArrayList<T>();
         for (ProtoBloomFilter proto : map.keySet()) {
-            if (inverseMatch(new BloomFilter(proto, getGateConfig()))) {
+            if (inverseMatch(new StandardBloomFilter(proto, getGateConfig()))) {
                 keep.addAll( map.get(proto));         
             }
         }

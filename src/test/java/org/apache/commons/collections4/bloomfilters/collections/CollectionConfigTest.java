@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+import org.apache.commons.collections4.bloomfilters.StandardBloomFilter;
 import org.apache.commons.collections4.bloomfilters.BloomFilter;
 import org.apache.commons.collections4.bloomfilters.FilterConfig;
 import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter;
@@ -22,18 +23,18 @@ public class CollectionConfigTest {
 
     @Test
     public void clear() {
-        assertEquals( BloomFilter.EMPTY, config.getGate() );
+        assertEquals( StandardBloomFilter.EMPTY, config.getGate() );
         assertTrue( new CollectionStats().sameValues(config.getStats() ));
 
         config.merge( ProtoBloomFilter.builder().build( "Hello"));
         config.getStats().delete();
         config.getStats().insert();
 
-        assertNotEquals( BloomFilter.EMPTY, config.getGate() );
+        assertNotEquals( StandardBloomFilter.EMPTY, config.getGate() );
         assertFalse( new CollectionStats().sameValues(config.getStats() ));
 
         config.clear();
-        assertEquals( BloomFilter.EMPTY, config.getGate() );
+        assertEquals( StandardBloomFilter.EMPTY, config.getGate() );
         assertTrue( new CollectionStats().sameValues(config.getStats() ));
 
     }
@@ -45,7 +46,7 @@ public class CollectionConfigTest {
 
     @Test
     public void getGate() {
-        assertEquals( BloomFilter.EMPTY, config.getGate() );
+        assertEquals( StandardBloomFilter.EMPTY, config.getGate() );
     }
 
     @Test
@@ -55,18 +56,18 @@ public class CollectionConfigTest {
 
     @Test
     public void merge_Filter() {
-        assertEquals( BloomFilter.EMPTY, config.getGate() );
+        assertEquals( StandardBloomFilter.EMPTY, config.getGate() );
         ProtoBloomFilter proto = ProtoBloomFilter.builder().build( "Hello");
-        BloomFilter filter = new BloomFilter( proto, filterConfig );
+        StandardBloomFilter filter = new StandardBloomFilter( proto, filterConfig );
         config.merge( filter );
         assertEquals( filter, config.getGate() );
     }
 
     @Test
     public void merge_Proto() {
-        assertEquals( BloomFilter.EMPTY, config.getGate() );
+        assertEquals( StandardBloomFilter.EMPTY, config.getGate() );
         ProtoBloomFilter proto = ProtoBloomFilter.builder().build( "Hello");
-        BloomFilter filter = new BloomFilter( proto, filterConfig );
+        BloomFilter filter = new StandardBloomFilter( proto, filterConfig );
         config.merge( proto );
         assertEquals( filter, config.getGate() );
     }

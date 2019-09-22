@@ -14,7 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 
-import org.apache.commons.collections4.bloomfilters.BloomFilter;
+import org.apache.commons.collections4.bloomfilters.StandardBloomFilter;
 import org.apache.commons.collections4.bloomfilters.FilterConfig;
 import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter;
 import org.junit.Before;

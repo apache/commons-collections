@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.function.Function;
 
 import org.apache.commons.collections4.ListValuedMap;
+import org.apache.commons.collections4.bloomfilters.StandardBloomFilter;
 import org.apache.commons.collections4.bloomfilters.BloomFilter;
 import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
@@ -70,7 +71,7 @@ public abstract class AbstractBloomFilterGatedNoDuplicatesTest {
 
         ProtoBloomFilter proto = FUNC.apply("hello");
         assertTrue(gated.add(proto, "Hello"));
-        assertEquals(new BloomFilter(proto, gated.getGateConfig()), gated.getGate());
+        assertEquals(new StandardBloomFilter(proto, gated.getGateConfig()), gated.getGate());
         assertEquals(1, gated.getStats().getInsertCount());
         assertEquals(1, gated.getStats().getTxnCount());
         assertEquals(0, gated.getStats().getDeleteCount());
@@ -78,7 +79,7 @@ public abstract class AbstractBloomFilterGatedNoDuplicatesTest {
         assertEquals(1L, gated.count());
 
         assertTrue(gated.add(proto, "hola"));
-        assertEquals(new BloomFilter(proto, gated.getGateConfig()), gated.getGate());
+        assertEquals(new StandardBloomFilter(proto, gated.getGateConfig()), gated.getGate());
         assertEquals(2, gated.getStats().getInsertCount());
         assertEquals(2, gated.getStats().getTxnCount());
         assertEquals(0, gated.getStats().getDeleteCount());
@@ -87,8 +88,8 @@ public abstract class AbstractBloomFilterGatedNoDuplicatesTest {
 
         proto = FUNC.apply("wello");
         assertTrue(gated.add(proto, "World"));
-        assertNotEquals(new BloomFilter(proto, gated.getGateConfig()), gated.getGate());
-        assertTrue(gated.inverseMatch(new BloomFilter(proto, gated.getGateConfig())));
+        assertNotEquals(new StandardBloomFilter(proto, gated.getGateConfig()), gated.getGate());
+        assertTrue(gated.inverseMatch(new StandardBloomFilter(proto, gated.getGateConfig())));
         assertEquals(3, gated.getStats().getInsertCount());
         assertEquals(3, gated.getStats().getTxnCount());
         assertEquals(0, gated.getStats().getDeleteCount());
@@ -101,7 +102,7 @@ public abstract class AbstractBloomFilterGatedNoDuplicatesTest {
         addAll( Arrays.asList("Hello", "Hello", "World" ) );
         gated.clear();
         assertTrue( gated.isEmpty());
-        assertEquals( BloomFilter.EMPTY, gated.getGate() );
+        assertEquals( StandardBloomFilter.EMPTY, gated.getGate() );
         assertEquals(0, gated.getStats().getInsertCount());
         assertEquals(0, gated.getStats().getTxnCount());
         assertEquals(0, gated.getStats().getDeleteCount());
@@ -135,9 +136,9 @@ public abstract class AbstractBloomFilterGatedNoDuplicatesTest {
 
     @Test
     public final void distance_Filter() {
-        assertEquals( 0, gated.distance( BloomFilter.EMPTY ) );
+        assertEquals( 0, gated.distance( StandardBloomFilter.EMPTY ) );
         ProtoBloomFilter proto = FUNC.apply("Hello");
-        BloomFilter filter = new BloomFilter( proto, gated.getGateConfig() );
+        StandardBloomFilter filter = new StandardBloomFilter( proto, gated.getGateConfig() );
 
         assertEquals( filter.getHammingWeight(), gated.distance( filter ));
 
@@ -149,9 +150,9 @@ public abstract class AbstractBloomFilterGatedNoDuplicatesTest {
 
     @Test
     public final void distance_Proto() {
-        assertEquals( 0, gated.distance( BloomFilter.EMPTY ) );
+        assertEquals( 0, gated.distance( StandardBloomFilter.EMPTY ) );
         ProtoBloomFilter proto = FUNC.apply("Hello");
-        BloomFilter filter = new BloomFilter( proto, gated.getGateConfig() );
+        BloomFilter filter = new StandardBloomFilter( proto, gated.getGateConfig() );
 
         assertEquals( filter.getHammingWeight(), gated.distance( proto ));
 
@@ -165,12 +166,12 @@ public abstract class AbstractBloomFilterGatedNoDuplicatesTest {
         addAll( Arrays.asList("Hello", "Hello", "World" ) );
 
         ProtoBloomFilter proto = FUNC.apply("Hello");
-        BloomFilter filter = new BloomFilter( proto, gated.getGateConfig() );
+        BloomFilter filter = new StandardBloomFilter( proto, gated.getGateConfig() );
 
         assertEquals( candidateCount, gated.getCandidates( filter ).count() );
 
         proto = FUNC.apply("Goodbye");
-        filter = new BloomFilter( proto, gated.getGateConfig() );
+        filter = new StandardBloomFilter( proto, gated.getGateConfig() );
 
         assertEquals( 0, gated.getCandidates( filter ).count() );
     }
@@ -196,17 +197,17 @@ public abstract class AbstractBloomFilterGatedNoDuplicatesTest {
 
     @Test
     public final void getGate() {
-        assertEquals(  BloomFilter.EMPTY, gated.getGate() );
+        assertEquals(  StandardBloomFilter.EMPTY, gated.getGate() );
 
 
         ProtoBloomFilter proto = FUNC.apply("Hello");
-        BloomFilter filter = new BloomFilter( proto, gated.getGateConfig() );
+        BloomFilter filter = new StandardBloomFilter( proto, gated.getGateConfig() );
 
         gated.add( proto, "Hello");
         assertEquals( filter, gated.getGate() );
 
         proto = ProtoBloomFilter.builder().with( proto ).with( "World" ).build();
-        filter = new BloomFilter( proto, gated.getGateConfig() );
+        filter = new StandardBloomFilter( proto, gated.getGateConfig() );
         gated.add( FUNC.apply("World"), "World" );
         assertEquals( filter, gated.getGate() );
     }
@@ -235,22 +236,22 @@ public abstract class AbstractBloomFilterGatedNoDuplicatesTest {
 
     @Test
     public final void inverseMatch_Filter() {
-        assertTrue( gated.inverseMatch(BloomFilter.EMPTY));
+        assertTrue( gated.inverseMatch(StandardBloomFilter.EMPTY));
 
 
         addAll( Arrays.asList("Hello", "Hello", "World" ) );
 
-        BloomFilter filter = new BloomFilter(
+        BloomFilter filter = new StandardBloomFilter(
                 ProtoBloomFilter.builder().with( "Hello").build("World"),
                 gated.getGateConfig() );
         assertTrue( gated.inverseMatch( filter ));
 
-        filter = new BloomFilter(
+        filter = new StandardBloomFilter(
                 ProtoBloomFilter.builder().build("World"),
                 gated.getGateConfig() );
         assertTrue( gated.inverseMatch( filter ));
 
-        filter = new BloomFilter(
+        filter = new StandardBloomFilter(
                 ProtoBloomFilter.builder().with( "Hello").with("World").build("Dog"),
                 gated.getGateConfig() );
         assertFalse( gated.inverseMatch( filter ));
@@ -295,22 +296,22 @@ public abstract class AbstractBloomFilterGatedNoDuplicatesTest {
 
     @Test
     public final void matches_Filter() {
-        assertTrue( gated.matches(BloomFilter.EMPTY));
+        assertTrue( gated.matches(StandardBloomFilter.EMPTY));
 
 
         addAll(Arrays.asList("Hello", "Hello", "World" ));
 
-        BloomFilter filter = new BloomFilter(
+        StandardBloomFilter filter = new StandardBloomFilter(
                 ProtoBloomFilter.builder().with( "Hello").build("World"),
                 gated.getGateConfig() );
         assertTrue( gated.matches( filter ));
 
-        filter = new BloomFilter(
+        filter = new StandardBloomFilter(
                 ProtoBloomFilter.builder().build("World"),
                 gated.getGateConfig() );
         assertFalse( gated.matches( filter ));
 
-        filter = new BloomFilter(
+        filter = new StandardBloomFilter(
                 ProtoBloomFilter.builder().with( "Hello").with("World").build("Dog"),
                 gated.getGateConfig() );
         assertTrue( gated.matches( filter ));

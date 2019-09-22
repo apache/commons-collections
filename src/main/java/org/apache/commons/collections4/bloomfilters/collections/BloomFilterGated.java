@@ -20,6 +20,7 @@ package org.apache.commons.collections4.bloomfilters.collections;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections4.ListValuedMap;
+import org.apache.commons.collections4.bloomfilters.StandardBloomFilter;
 import org.apache.commons.collections4.bloomfilters.BloomFilter;
 import org.apache.commons.collections4.bloomfilters.FilterConfig;
 import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter;

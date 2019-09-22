@@ -18,6 +18,7 @@
 package org.apache.commons.collections4.bloomfilters;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import java.util.Arrays;
@@ -118,7 +119,7 @@ public class CountingBloomFilterTest {
         // k = 3
         FilterConfig fc = new FilterConfig(1, 11);
         ProtoBloomFilter pbf = new ProtoBloomFilter(Arrays.asList(hash));
-        BloomFilter bf1 = new BloomFilter(pbf, fc);
+        StandardBloomFilter bf1 = new StandardBloomFilter(pbf, fc);
         CountingBloomFilter bf2 = new CountingBloomFilter(pbf, fc);
         CountingBloomFilter bf = bf2.merge(bf1);
 
@@ -182,7 +183,7 @@ public class CountingBloomFilterTest {
         // k = 3
         FilterConfig fc = new FilterConfig(1, 11);
         CountingBloomFilter bf1 = new CountingBloomFilter(pbf1, fc);
-        BloomFilter bf2 = new BloomFilter(pbf2, fc);
+        StandardBloomFilter bf2 = new StandardBloomFilter(pbf2, fc);
         CountingBloomFilter bf = bf1.remove(bf2);
 
         assertEquals(3, bf.getHammingWeight());
@@ -196,6 +197,24 @@ public class CountingBloomFilterTest {
         assertNull(bf.counts.get(2));
         assertEquals(count, bf.counts.get(3));
         assertNull(bf.counts.get(4));
+
+    }
+    
+    @Test
+    public void testBitSetCopy() {
+        Hash hash = new Hash(1, 2);
+        // n = 1
+        // p = 0.091848839 (1 in 11)
+        // m = 5 (1B)
+        // k = 3
+        FilterConfig fc = new FilterConfig(1, 11);
+        ProtoBloomFilter pbf = new ProtoBloomFilter(Arrays.asList(hash));
+        CountingBloomFilter bf = new CountingBloomFilter(pbf, fc);               
+        BitSet bs = bf.getBitSet();
+        BitSet bs2 = bf.getBitSet();
+        assertEquals( bs, bs2 );        
+        bs2.set(20);
+        assertNotEquals( bs, bs2 );
 
     }
 }

@@ -17,6 +17,7 @@
  */
 package org.apache.commons.collections4.bloomfilters.collections;
 
+import org.apache.commons.collections4.bloomfilters.StandardBloomFilter;
 import org.apache.commons.collections4.bloomfilters.BloomFilter;
 import org.apache.commons.collections4.bloomfilters.FilterConfig;
 import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter;
@@ -29,7 +30,7 @@ public class CollectionConfig {
     // the configuration for the gate filter.
     private final FilterConfig gateConfig;
     // the gate filter.
-    private BloomFilter gate;
+    private StandardBloomFilter gate;
     // the collection stats.
     private CollectionStats collectionStats;
 
@@ -40,7 +41,7 @@ public class CollectionConfig {
      */
     public CollectionConfig(FilterConfig gateConfig) {
         this.gateConfig = gateConfig;
-        this.gate = BloomFilter.EMPTY;
+        this.gate = StandardBloomFilter.EMPTY;
         this.collectionStats = new CollectionStats();
     }
 
@@ -49,7 +50,7 @@ public class CollectionConfig {
      *
      * @return the gating bloom filter.
      */
-    public BloomFilter getGate() {
+    public StandardBloomFilter getGate() {
         return gate;
     }
 
@@ -77,7 +78,7 @@ public class CollectionConfig {
      * @param proto the protofilter to merge.
      */
     public synchronized void merge(ProtoBloomFilter proto) {
-        merge(new BloomFilter(proto, gateConfig));
+        merge(new StandardBloomFilter(proto, gateConfig));
     }
 
     /**
@@ -96,7 +97,7 @@ public class CollectionConfig {
      * Clear the bloom filter and the statistics.
      */
     public synchronized void clear() {
-        gate = BloomFilter.EMPTY;
+        gate = StandardBloomFilter.EMPTY;
         collectionStats.clear();
     }
 }

@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
-import org.apache.commons.collections4.bloomfilters.BloomFilter;
+import org.apache.commons.collections4.bloomfilters.StandardBloomFilter;
 import org.apache.commons.collections4.bloomfilters.FilterConfig;
 import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter;
 import org.junit.Test;
@@ -51,7 +51,7 @@ public abstract class AbstractBloomCollectionWithDuplicatesTest extends Abstract
     @Test
     public final void add_T() {
         assertTrue(collection.add("Hello"));
-        assertEquals(new BloomFilter(FUNC.apply("Hello"), filterConfig), gated.getGate());
+        assertEquals(new StandardBloomFilter(FUNC.apply("Hello"), filterConfig), gated.getGate());
         assertEquals(1, gated.getStats().getInsertCount());
         assertEquals(1, gated.getStats().getTxnCount());
         assertEquals(0, gated.getStats().getDeleteCount());
@@ -62,7 +62,7 @@ public abstract class AbstractBloomCollectionWithDuplicatesTest extends Abstract
 
         assertTrue(collection.add("Hello"));
         assertTrue(collection.contains("Hello"));
-        assertEquals(new BloomFilter(FUNC.apply("Hello"), filterConfig), gated.getGate());
+        assertEquals(new StandardBloomFilter(FUNC.apply("Hello"), filterConfig), gated.getGate());
         assertEquals(2, gated.getStats().getInsertCount());
         assertEquals(2, gated.getStats().getTxnCount());
         assertEquals(0, gated.getStats().getDeleteCount());
@@ -72,8 +72,8 @@ public abstract class AbstractBloomCollectionWithDuplicatesTest extends Abstract
 
         assertTrue(collection.add("World"));
         assertTrue(collection.contains("World"));
-        assertNotEquals(new BloomFilter(FUNC.apply("World"), filterConfig), gated.getGate());
-        assertTrue(gated.inverseMatch(new BloomFilter(FUNC.apply("World"), filterConfig)));
+        assertNotEquals(new StandardBloomFilter(FUNC.apply("World"), filterConfig), gated.getGate());
+        assertTrue(gated.inverseMatch(new StandardBloomFilter(FUNC.apply("World"), filterConfig)));
         assertEquals(3, gated.getStats().getInsertCount());
         assertEquals(3, gated.getStats().getTxnCount());
         assertEquals(0, gated.getStats().getDeleteCount());
@@ -90,9 +90,9 @@ public abstract class AbstractBloomCollectionWithDuplicatesTest extends Abstract
         assertTrue(collection.contains("Hello"));
         assertTrue(collection.contains("World"));
         ProtoBloomFilter proto = FUNC.apply("Hello");
-        assertTrue( gated.inverseMatch(new BloomFilter(proto, filterConfig)));
+        assertTrue( gated.inverseMatch(new StandardBloomFilter(proto, filterConfig)));
         proto = FUNC.apply("World");
-        assertTrue( gated.inverseMatch(new BloomFilter(proto, filterConfig)));
+        assertTrue( gated.inverseMatch(new StandardBloomFilter(proto, filterConfig)));
         assertEquals(3, gated.getStats().getInsertCount());
         assertEquals(3, gated.getStats().getTxnCount());
         assertEquals(0, gated.getStats().getDeleteCount());

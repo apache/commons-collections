@@ -27,6 +27,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections4.ListValuedMap;
+import org.apache.commons.collections4.bloomfilters.StandardBloomFilter;
 import org.apache.commons.collections4.bloomfilters.BloomFilter;
 import org.apache.commons.collections4.bloomfilters.FilterConfig;
 import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter;
@@ -102,7 +103,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
     }
 
     private BloomFilter fromProto(ProtoBloomFilter proto) {
-        return new BloomFilter(proto, collectionConfig.getConfig());
+        return new StandardBloomFilter(proto, collectionConfig.getConfig());
     }
 
     @Override
@@ -375,7 +376,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
     @Override
     public Stream<T> getCandidates(ProtoBloomFilter proto) {
         Stream<T> result = Stream.empty();
-        if (collectionConfig.getGate().inverseMatch( new BloomFilter( proto, collectionConfig.getConfig())))
+        if (collectionConfig.getGate().inverseMatch( new StandardBloomFilter( proto, collectionConfig.getConfig())))
         {
             for (BloomFilterGated<T> bucket : buckets) {
                 result = Stream.concat(result, bucket.getCandidates(proto));

@@ -37,7 +37,7 @@ import java.util.TreeMap;
  * @since 4.5
  *
  */
-public class CountingBloomFilter extends BloomFilter {
+public class CountingBloomFilter extends StandardBloomFilter {
 
     // the count of entries
     /* package private for testing */
@@ -122,10 +122,11 @@ public class CountingBloomFilter extends BloomFilter {
      */
     @Override
     public CountingBloomFilter merge(BloomFilter other) {
-        BitSet next = (BitSet) this.bitSet.clone();
-        next.or(other.bitSet);
+        BitSet next = other.getBitSet();
+        next.or(bitSet);
         TreeMap<Integer, Integer> newSet = new TreeMap<Integer, Integer>(counts);
-        other.bitSet.stream().forEach(key -> {
+        // calculate the counts.
+        other.getBitSet().stream().forEach(key -> {
             int otherCount = (other instanceof CountingBloomFilter) ? ((CountingBloomFilter) other).counts.get(key) : 1;
 
             Integer count = newSet.get(key);
@@ -155,7 +156,7 @@ public class CountingBloomFilter extends BloomFilter {
      * @param other the other filter.
      * @return a new filter.
      */
-    public CountingBloomFilter remove(BloomFilter other) {
+    public CountingBloomFilter remove(StandardBloomFilter other) {
         BitSet next = (BitSet) this.bitSet.clone();
         TreeMap<Integer, Integer> newSet = new TreeMap<Integer, Integer>(counts);
 
