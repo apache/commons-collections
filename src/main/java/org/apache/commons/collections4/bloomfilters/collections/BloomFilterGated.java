@@ -21,7 +21,9 @@ import java.util.stream.Stream;
 
 import org.apache.commons.collections4.ListValuedMap;
 import org.apache.commons.collections4.bloomfilters.BloomFilter;
+import org.apache.commons.collections4.bloomfilters.FilterConfig;
 import org.apache.commons.collections4.bloomfilters.ProtoBloomFilter;
+
 
 /**
  * A collection of objects gated by a bloom filter.
@@ -36,7 +38,14 @@ public interface BloomFilterGated<T> {
      *
      * @return the gating bloom filter.
      */
-    public BloomFilter getGate();
+    BloomFilter getGate();
+    
+    /**
+     * Get the filter configuration for the gate.
+     * @return the gate filter configuration.
+     */
+    FilterConfig getGateConfig();
+    
 
     /**
      * Return true if this bloom filter is full. A full bloom filter is one that has
@@ -47,7 +56,7 @@ public interface BloomFilterGated<T> {
      *
      * @return true if the list is full.
      */
-    public boolean isFull();
+    boolean isFull();
 
     /**
      * Calculates the hamming distance from the gate filter to a filter.
@@ -55,7 +64,7 @@ public interface BloomFilterGated<T> {
      * @param filter The filter to calculate distance to.
      * @return the distance
      */
-    public int distance(BloomFilter filter);
+    int distance(BloomFilter filter);
 
     /**
      * Calculates the hamming distance to a proto filter.
@@ -63,39 +72,39 @@ public interface BloomFilterGated<T> {
      * @param proto The proto filter to calculate distance to.
      * @return the distance
      */
-    public int distance(ProtoBloomFilter proto);
+    int distance(ProtoBloomFilter proto);
 
     /**
-     * Returns true if the filter is found in this list.
+     * Returns true {@code gate & filter == gate }.
      *
      * @param filter The filter to look for.
-     * @return true if this list contains the filter.
+     * @return true if {@code gate & filter == gate }
      */
-    public boolean matches(BloomFilter filter);
+    boolean matches(BloomFilter filter);
 
     /**
-     * Returns true if pbf is found in this list.
+     * Return true if {@code gate & proto == this }.
      *
      * @param proto the proto bloom filter to check.
-     * @return true if this list contains the filter.
+     * @return true if {@code gate & proto == this }.
      */
-    public boolean matches(ProtoBloomFilter proto);
+    boolean matches(ProtoBloomFilter proto);
 
     /**
-     * returns true if this gate is found in the pbf.
+     * returns true if {@code proto & this == proto }.
      *
      * @param proto the proto bloom filter to check.
      * @return true if the proto bloom filter contains the gate for this list.
      */
-    public boolean inverseMatch(ProtoBloomFilter proto);
+    boolean inverseMatch(ProtoBloomFilter proto);
 
     /**
-     * returns true if this gate is found in the bf.
+     * returns true if {@code filter & this == filter }.
      *
      * @param filter the bloom filter to check.
-     * @return true if the bloom filter contains the gate for this list.
+     * @return true if {@code filter & this == filter }.
      */
-    public boolean inverseMatch(BloomFilter filter);
+    boolean inverseMatch(BloomFilter filter);
 
     /**
      * Get a stream of candidates that match the filter.
@@ -110,7 +119,7 @@ public interface BloomFilterGated<T> {
      * @param filter the BloomFilter to match.
      * @return the stream of values that match the filter.
      */
-    public Stream<T> getCandidates(BloomFilter filter);
+    Stream<T> getCandidates(BloomFilter filter);
 
     /**
      * Get a stream of candidates that match the filter.
@@ -125,14 +134,14 @@ public interface BloomFilterGated<T> {
      * @param proto the ProtoBloomFilter to match.
      * @return the stream of values that match the filter.
      */
-    public Stream<T> getCandidates(ProtoBloomFilter proto);
+    Stream<T> getCandidates(ProtoBloomFilter proto);
 
     /**
      * Get all the data from this container.
      *
      * @return a stream of all the data in this container.
      */
-    public Stream<T> getData();
+    Stream<T> getData();
 
     /**
      * Return true if the collection contains the object specified by the bloom
@@ -143,20 +152,20 @@ public interface BloomFilterGated<T> {
      * @param obj   the object to locate.
      * @return true if the object is found.
      */
-    public boolean contains(ProtoBloomFilter proto, T obj);
+    boolean contains(ProtoBloomFilter proto, T obj);
 
     /**
      * Get the collection statistics for this gated filter.
      *
      * @return the collection statistics.
      */
-    public CollectionStats getStats();
+    CollectionStats getStats();
 
     /**
      * Clear this collection. Must remove all stored data as well as clear the
      * filter and reset the collection statistics.
      */
-    public void clear();
+    void clear();
 
     /**
      * Add an object to the collection.
@@ -165,7 +174,7 @@ public interface BloomFilterGated<T> {
      * @param t     the object to add.
      * @return true if the collection changed as a result of the call.
      */
-    public boolean add(ProtoBloomFilter proto, T t);
+    boolean add(ProtoBloomFilter proto, T t);
 
     /**
      * Remove an object from, the collection.
@@ -174,7 +183,7 @@ public interface BloomFilterGated<T> {
      * @param t     the object to remove.
      * @return true if the collection changed as a result of the call.
      */
-    public boolean remove(ProtoBloomFilter proto, T t);
+    boolean remove(ProtoBloomFilter proto, T t);
 
     /**
      * Retain only the in the map in the collection. The map is keyed by proto bloom
@@ -183,20 +192,20 @@ public interface BloomFilterGated<T> {
      * @param map A proto bloom filter to object map.
      * @return true if the collection changed as a result of the call.
      */
-    public boolean retainAll(ListValuedMap<ProtoBloomFilter, T> map);
+    boolean retainAll(ListValuedMap<ProtoBloomFilter, T> map);
 
     /**
      * Return true if the collection is empty
      *
      * @return true if the collection is empty.
      */
-    public boolean isEmpty();
+    boolean isEmpty();
 
     /**
      * Return a count of the objects in the collection.
      *
      * @return the number of objects in the collection.
      */
-    public long count();
+    long count();
 
 }

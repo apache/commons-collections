@@ -154,11 +154,11 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
      */
     @Override
     public boolean add(ProtoBloomFilter proto, T obj) {
-        if (wrapped.contains(obj)) {
-            return wrapped.add(obj);
+        boolean retval = wrapped.add(obj);
+        if (retval) {
+            config.merge(proto);
         }
-        config.merge(proto);
-        return wrapped.add(obj);
+        return retval;
     }
 
     @Override

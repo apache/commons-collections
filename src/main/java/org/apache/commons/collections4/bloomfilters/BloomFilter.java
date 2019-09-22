@@ -45,7 +45,7 @@ public class BloomFilter {
 
     // the base 2 log of the bloom filter considered as an integer.
     private transient Double logValue;
-    
+
     /**
      * An empty BloomFilter
      */

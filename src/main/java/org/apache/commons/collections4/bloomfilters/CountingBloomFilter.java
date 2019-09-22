@@ -42,7 +42,7 @@ public class CountingBloomFilter extends BloomFilter {
     // the count of entries
     /* package private for testing */
     final TreeMap<Integer, Integer> counts;
-    
+
     /**
      * An empty Counting Bloom Filter.
      */
@@ -95,7 +95,7 @@ public class CountingBloomFilter extends BloomFilter {
 
     @Override
     public int hashCode() {
-        // here to keep codecheck happy
+        // here to keep PMD happy
         return super.hashCode();
     }
 

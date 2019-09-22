@@ -45,13 +45,16 @@ import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
  */
 public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection<T> {
 
-    private final List<BloomFilterGated<T>> buckets;
+    /* package private for testing */
+    final List<BloomFilterGated<T>> buckets;
     private final Function<T, ProtoBloomFilter> func;
     private final CollectionConfig collectionConfig;
     private final BucketFactory<T> bucketFactory;
 
     /**
      * Constructor.
+     * 
+     * Creates a BloomNestedCollection one layer deep that accepts duplicates.
      *
      * @param func         the function that converts object of type {@code T} to
      *                     ProtoBloomFilters.
@@ -84,6 +87,11 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
         for (int i = 0; i < minFree; i++) {
             newBucket();
         }
+    }
+    
+    @Override
+    public FilterConfig getGateConfig() {
+        return collectionConfig.getConfig();
     }
 
     @Override
@@ -221,7 +229,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
         if (objs.isEmpty()) {
             return true;
         }
-        ProtoBloomFilter.Builder builder = new ProtoBloomFilter.Builder();
+        ProtoBloomFilter.Builder builder = ProtoBloomFilter.builder();
         List<ProtoBloomFilter> protos = new ArrayList<ProtoBloomFilter>();
         for (Object o : objs) {
             @SuppressWarnings("unchecked")
@@ -419,5 +427,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
         }
 
     }
+
+    
 
 }

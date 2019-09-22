@@ -95,7 +95,7 @@ public class CollectionConfig {
     /**
      * Clear the bloom filter and the statistics.
      */
-    public void clear() {
+    public synchronized void clear() {
         gate = BloomFilter.EMPTY;
         collectionStats.clear();
     }

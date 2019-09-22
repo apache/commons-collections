@@ -34,7 +34,7 @@ import java.util.function.Consumer;
  * Consumer&lt;Action>} when any change to the collection occurs.
  * </p>
  */
-public class CollectionStats {
+public final class CollectionStats {
     enum Change {
         insert, delete, clear
     };
@@ -76,10 +76,20 @@ public class CollectionStats {
             changeNotification.andThen(consumer);
         }
     }
+    
+    /**
+     * Verify the values of the collection stats are the same.
+     * @param other the other collection stats to compare to.
+     * @return true if the values are the same.
+     */
+    public boolean sameValues( CollectionStats other )
+    {
+        return this.filterInserts == other.filterInserts &&
+                this.filterDeletes == other.filterDeletes;
+    }
 
     // notify there is a change.
-    private void notifyChange(Change change, long count) {
-
+    private synchronized void notifyChange(Change change, long count) {
         if (changeNotification != null) {
             changeNotification.accept(new Action(change, count));
         }
@@ -123,20 +133,6 @@ public class CollectionStats {
      */
     public long getFilterCount() {
         return filterInserts - filterDeletes;
-    }
-
-    /**
-     * Get the bad hit factor. This is the ratio of deletes to inserts. Will return
-     * 0.0 if either inserts or deletes are zero.
-     *
-     * @return the bad hit factor.
-     */
-    public double badHitFactor() {
-        if (filterInserts == 0 || filterDeletes == 0) {
-            return 0.0;
-        }
-        double ratio = filterDeletes / (filterInserts * 1.0);
-        return ratio;
     }
 
     /**
@@ -263,14 +259,12 @@ public class CollectionStats {
         @Override
         public void accept(Action action) {
             switch (action.getChange()) {
-            case clear:
-                // ignore -- clear only occurs at top level.
-                break;
-            case insert:
-                insert();
-                break;
             case delete:
                 delete(action.getCount());
+                break;
+            case insert: // ignore -- insert handled by local merge
+            case clear: // ignore -- clear only occurs at top level.
+            default:
                 break;
             }
         }

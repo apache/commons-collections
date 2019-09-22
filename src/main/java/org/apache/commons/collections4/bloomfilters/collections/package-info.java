@@ -17,6 +17,7 @@
  */
 /**
  * Collection implementations where the collections are gated by a bloom filter.
- * 
+ * This collection contains two concrete implementations and an interface that
+ * defines the contract for BloomFilterGated collections.
  */
 package org.apache.commons.collections4.bloomfilters.collections;

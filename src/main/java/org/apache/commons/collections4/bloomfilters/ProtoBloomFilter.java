@@ -56,6 +56,14 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
      */
     public static final ProtoBloomFilter EMPTY = new ProtoBloomFilter( Collections.emptyList() );
 
+    /**
+     * Get a builder .
+     * @return a new builder.
+     */
+    public static final Builder builder() {
+        return new Builder();
+    }
+    
     /* package private for testing */
     /**
      * Constructor
@@ -285,7 +293,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
          * Constructor.
          *
          */
-        public Builder() {
+        private Builder() {
             hashes = new HashSet<Hash>();
         }
 
