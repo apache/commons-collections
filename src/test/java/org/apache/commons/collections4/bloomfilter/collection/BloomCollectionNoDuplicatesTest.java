@@ -31,8 +31,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 
-import org.apache.commons.collections4.bloomfilter.FilterConfiguration;
-import org.apache.commons.collections4.bloomfilter.FilterConfiguration;
+import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
+import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.apache.commons.collections4.bloomfilter.ProtoBloomFilter;
 import org.apache.commons.collections4.bloomfilter.StandardBloomFilter;
 import org.apache.commons.collections4.bloomfilter.collection.BloomCollection;
@@ -51,7 +51,7 @@ public class BloomCollectionNoDuplicatesTest extends AbstractBloomCollectionNoDu
     
     @Before
     public void setup() {
-        FilterConfiguration filterConfig = new FilterConfiguration(5,1.0/5);
+        BloomFilterConfiguration filterConfig = new BloomFilterConfiguration(5,1.0/5);
         super.setup( new BloomCollection<String>( new HashSet<String>(), filterConfig, FUNC ), filterConfig );
     }
     

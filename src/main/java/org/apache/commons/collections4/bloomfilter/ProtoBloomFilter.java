@@ -43,8 +43,7 @@ import java.util.stream.Stream;
  * </p>
  *
  * @since 4.5
- * @see FilterConfiguration
- *
+ * @see BloomFilterConfiguration
  */
 public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 
@@ -83,16 +82,16 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
     }
 
     /**
-     * Get the count of hashed items included in this proto Bloom filter.
+     * Gets the count of hashed items included in this ProtoBloomFilter.
      *
-     * @return The number of unique items in this proto filter.
+     * @return The number of unique items in this ProtoBloomFilter.
      */
     public int getItemCount() {
         return hashes.size();
     }
 
     /**
-     * Get the stream of hashes included in this proto Bloom filter.
+     * Gets the stream of hashes included in this ProtoBloomFilter.
      *
      * @return the stream of hashes.
      */
@@ -101,16 +100,16 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
     }
 
     /**
-     * Get the count of unique hashed items included in this proto Bloom filter.
+     * Gets the count of unique hashed items included in this ProtoBloomFilter.
      *
-     * @return the number of unique items hashed into the proto Bloom filter.
+     * @return the number of unique items hashed into the ProtoBloomFilter.
      */
     public int getUniqueItemCount() {
         return (int) getUniqueHashes().count();
     }
 
     /**
-     * Get the stream of uniques hashes included in this proto Bloom filter.
+     * Gets the stream of unique hashes included in this ProtoBloomFilter.
      *
      * @return the stream of unique hashes.
      */
@@ -205,7 +204,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
          * @param config the filter configuration.
          * @return the set parameter for chaining.
          */
-        public BitSet populate(BitSet set, FilterConfiguration config) {
+        public BitSet populate(BitSet set, BloomFilterConfiguration config) {
             for (int i = 0; i < config.getNumberOfHashFunctions(); i++) {
                 int j = Math.abs((int) ((h1 + (i * h2)) % config.getNumberOfBits()));
                 set.set(j, true);
@@ -214,14 +213,14 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
         }
 
         /**
-         * Create a list of the indexes for bits that are turned on.
+         * Gets a list of the indexes for bits that are turned on.
          *
          * The result of this method may contain duplicates.
          *
          * @param config the filter configuration to use
          * @return an array of ints enumerating the bits to be turned on.
          */
-        public int[] getBits(FilterConfiguration config) {
+        public int[] getBits(BloomFilterConfiguration config) {
             int[] result = new int[config.getNumberOfHashFunctions()];
 
             for (int i = 0; i < config.getNumberOfHashFunctions(); i++) {
@@ -302,7 +301,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
         }
         
         /**
-         * Get the collection of hashes from the builder.
+         * Gets the collection of hashes from the builder.
          * @return the collection of hashes.
          */
         public Set<Hash> getHashes() {

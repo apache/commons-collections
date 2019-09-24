@@ -22,6 +22,7 @@ import java.util.BitSet;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 /**
@@ -36,14 +37,13 @@ import java.util.TreeMap;
  * </p>
  *
  * @since 4.5
- *
  */
 public class CountingBloomFilter extends StandardBloomFilter {
 
     /**
      * An empty Counting Bloom Filter.
      */
-    public static final BloomFilter EMPTY = new CountingBloomFilter(new BitSet(0), Collections.emptyMap());
+    public static final BloomFilter EMPTY = new CountingBloomFilter(Collections.emptyMap());
 
     /**
      *  the count of entries.  Each enabled bit is a key with the 
@@ -57,7 +57,7 @@ public class CountingBloomFilter extends StandardBloomFilter {
      * @param protoFilter the protoFilter to build this Bloom filter from.
      * @param config      the Filter configuration to use to build the Bloom filter.
      */
-    public CountingBloomFilter(ProtoBloomFilter protoFilter, FilterConfiguration config) {
+    public CountingBloomFilter(ProtoBloomFilter protoFilter, BloomFilterConfiguration config) {
         super(protoFilter, config);
         int[] intArry = new int[config.getNumberOfBits()];
 
@@ -73,21 +73,35 @@ public class CountingBloomFilter extends StandardBloomFilter {
     }
 
     /**
+     * Create a bitset from a set of Integers enumerating the bits
+     * that are enabled.
+     * @param enabledBits the bits that are enabled.
+     * @return The BitSet.
+     */
+    private static final BitSet bitsetFromMap(Set<Integer> enabledBits)
+    {
+        BitSet result = new BitSet();
+        for (Integer value : enabledBits)
+        {
+            result.set(value);
+        }
+        return result;
+    }
+    /**
      * Constructor.
      *
-     * A copy of the bitSet parameter is made so that the Bloom filter is isolated
-     * from any further changes in the bitSet.
-     *
-     * @param bitSet The bit set that was built by the config.
+     * Construct a CountingBloomFilter from a map of enabledBits and the
+     * count of the number of times the bit was enabled.
+     * 
      * @param counts the Map of set bits to counts for that bit.
      */
-    CountingBloomFilter(BitSet bits, Map<Integer, Integer> counts) {
-        super(bits);
+    public CountingBloomFilter(Map<Integer, Integer> counts) {
+        super(bitsetFromMap(counts.keySet()));
         this.counts = new TreeMap<Integer, Integer>(counts);
     }
 
     /**
-     * Get the count for each enabled  bit.
+     * Gets the count for each enabled bit.
      * @return an immutable map of enabled bits (key) to counts for that bit (value).
      */
     public Map<Integer,Integer> getCounts() {
@@ -132,25 +146,24 @@ public class CountingBloomFilter extends StandardBloomFilter {
      */
     @Override
     public CountingBloomFilter merge(BloomFilter other) {
-        BitSet next = other.getBitSet();
-        next.or(getBitSet());
-        Map<Integer, Integer> newSet = new HashMap<Integer, Integer>(counts);
+
+        Map<Integer, Integer> newCounts = new HashMap<Integer, Integer>(counts);
         // calculate the counts.
         other.getBitSet().stream().forEach(key -> {
             int otherCount = (other instanceof CountingBloomFilter) ? ((CountingBloomFilter) other).counts.get(key) : 1;
 
-            Integer count = newSet.get(key);
+            Integer count = newCounts.get(key);
             if (count == null) {
-                newSet.put(key, otherCount);
+                newCounts.put(key, otherCount);
             } else {
                 if (otherCount > Integer.MAX_VALUE - count) {
                     throw new IllegalStateException("More than " + Integer.MAX_VALUE + " filters added");
                 }
 
-                newSet.put(key, count + otherCount);
+                newCounts.put(key, count + otherCount);
             }
         });
-        return new CountingBloomFilter(next, newSet);
+        return new CountingBloomFilter(newCounts);
     }
 
     /**
@@ -167,22 +180,20 @@ public class CountingBloomFilter extends StandardBloomFilter {
      * @return a new filter.
      */
     public CountingBloomFilter remove(BloomFilter other) {
-        BitSet next = (BitSet) this.getBitSet();
-        TreeMap<Integer, Integer> newSet = new TreeMap<Integer, Integer>(counts);
+        TreeMap<Integer, Integer> newCounts = new TreeMap<Integer, Integer>(counts);
 
         other.getBitSet().stream().forEach(key -> {
             int otherCount = (other instanceof CountingBloomFilter) ? ((CountingBloomFilter) other).counts.get(key) : 1;
-            Integer count = newSet.get(key);
+            Integer count = newCounts.get(key);
             if (count != null) {
                 int c = count - otherCount;
                 if (c == 0) {
-                    next.clear(key);
-                    newSet.remove(key);
+                    newCounts.remove(key);
                 } else {
-                    newSet.put(key, c);
+                    newCounts.put(key, c);
                 }
             }
         });
-        return new CountingBloomFilter(next, newSet);
+        return new CountingBloomFilter(newCounts);
     }
 }

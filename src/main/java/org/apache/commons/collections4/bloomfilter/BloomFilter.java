@@ -60,7 +60,7 @@ public interface BloomFilter {
     int distance(BloomFilter other);
 
     /**
-     * Get the hamming weight for this filter.
+     * Gets the hamming weight for this filter.
      *
      * This is the number of bits that are on in the filter.
      *
@@ -69,7 +69,7 @@ public interface BloomFilter {
     int getHammingWeight();
 
     /**
-     * The the log(2) of this Bloom filter. This is the base 2 logarithm of this
+     * Gets the log2 (log base 2) of this Bloom filter. This is the base 2 logarithm of this
      * Bloom filter if the bits in this filter were considers the bits in an
      * unsigned integer.
      *
@@ -78,7 +78,7 @@ public interface BloomFilter {
     double getLog();
 
     /**
-     * Merge this Bloom filter with the other creating a new filter.
+     * Merges this Bloom filter with the other creating a new filter.
      *
      * @param other the other filter.
      * @return a new filter.
@@ -87,7 +87,7 @@ public interface BloomFilter {
     BloomFilter merge(BloomFilter other);
 
     /**
-     * Return the a copy of the bitset in in the filter.
+     * Gets a copy of the bitset representation of the filter.
      *
      * @return the bit set representation.
      */

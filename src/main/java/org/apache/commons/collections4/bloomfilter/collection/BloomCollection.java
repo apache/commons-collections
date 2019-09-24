@@ -26,7 +26,7 @@ import java.util.stream.Stream;
 
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.bloomfilter.BloomFilter;
-import org.apache.commons.collections4.bloomfilter.FilterConfiguration;
+import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.apache.commons.collections4.bloomfilter.ProtoBloomFilter;
 import org.apache.commons.collections4.bloomfilter.StandardBloomFilter;
 
@@ -44,9 +44,10 @@ import org.apache.commons.collections4.bloomfilter.StandardBloomFilter;
  * <p>
  * This class can serve an an example of how to implement BloomFilterGated.
  * </p>
-  *
- * @since 4.5
+ * 
  * @param <T> the type of object in the collection.
+ *
+ * @since 4.5
  */
 public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
 
@@ -78,7 +79,7 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
      * @param func         a function to convert from T to ProtoBloomFilter.
      * @see ProtoBloomFilter.Builder
      */
-    public BloomCollection(Collection<T> wrapped, FilterConfiguration filterConfig, Function<T, ProtoBloomFilter> func) {
+    public BloomCollection(Collection<T> wrapped, BloomFilterConfiguration filterConfig, Function<T, ProtoBloomFilter> func) {
         this.wrapped = wrapped;
         this.config = new CollectionConfiguration(filterConfig);
         this.func = func;
@@ -93,7 +94,7 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
      * @return the BloomFilter for the gate definition.
      */
     private BloomFilter fromProto(ProtoBloomFilter proto) {
-        return new StandardBloomFilter(proto, config.getConfig());
+        return new StandardBloomFilter(proto, config.getGateConfig());
     }
 
     /**
@@ -107,8 +108,8 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
     }
 
     @Override
-    public FilterConfiguration getGateConfig() {
-        return config.getConfig();
+    public BloomFilterConfiguration getGateConfig() {
+        return config.getGateConfig();
     }
 
     @Override
@@ -128,7 +129,7 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
 
     @Override
     public boolean isFull() {
-        return config.getConfig().getNumberOfItems() <= size();
+        return config.getGateConfig().getNumberOfItems() <= size();
     }
 
     @Override

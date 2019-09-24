@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.bloomfilter.BloomFilter;
-import org.apache.commons.collections4.bloomfilter.FilterConfiguration;
+import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.apache.commons.collections4.bloomfilter.ProtoBloomFilter;
 
 /**
@@ -46,7 +46,7 @@ public interface BloomFilterGated<T> {
      *
      * @return the gate filter configuration.
      */
-    FilterConfiguration getGateConfig();
+    BloomFilterConfiguration getGateConfig();
 
     /**
      * Return true if this Bloom filter is full. A full Bloom filter is one that has

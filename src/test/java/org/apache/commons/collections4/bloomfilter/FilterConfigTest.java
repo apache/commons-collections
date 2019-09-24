@@ -30,8 +30,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Objects;
 
-import org.apache.commons.collections4.bloomfilter.FilterConfiguration;
-import org.apache.commons.collections4.bloomfilter.FilterConfiguration;
+import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
+import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.junit.Test;
 
 public class FilterConfigTest {
@@ -47,7 +47,7 @@ public class FilterConfigTest {
      *
      * k = 3
      */
-    FilterConfiguration filterConfig = new FilterConfiguration(5, 1.0/10);
+    BloomFilterConfiguration filterConfig = new BloomFilterConfiguration(5, 1.0/10);
 
     @Test
     public void constructorTest() {
@@ -63,7 +63,7 @@ public class FilterConfigTest {
     @Test
     public void constructorOverflowTest() {
         try {
-            new FilterConfiguration(Integer.MAX_VALUE, 1.0/10);
+            new BloomFilterConfiguration(Integer.MAX_VALUE, 1.0/10);
             fail("Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected) {
             // do nothing.
@@ -73,7 +73,7 @@ public class FilterConfigTest {
     @Test
     public void constructorBadNumberOfItemsTest() {
         try {
-            new FilterConfiguration(0, 1.0/10);
+            new BloomFilterConfiguration(0, 1.0/10);
             fail("Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected) {
             // do nothing.
@@ -83,14 +83,14 @@ public class FilterConfigTest {
     @Test
     public void constructorBadProbabilityTest() {
         try {
-            new FilterConfiguration(10, 0.0);
+            new BloomFilterConfiguration(10, 0.0);
             fail("Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected) {
             // do nothing.
         }
         
         try {
-            new FilterConfiguration(10, 1.0);
+            new BloomFilterConfiguration(10, 1.0);
             fail("Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected) {
             // do nothing.
@@ -100,9 +100,9 @@ public class FilterConfigTest {
     @Test
     public void equalsTest() {
         
-        assertEquals( new FilterConfiguration(5, 1.0/10), filterConfig );
-        assertNotEquals( new FilterConfiguration(5, 1.0/11), filterConfig );
-        assertNotEquals( new FilterConfiguration(4, 1.0/10), filterConfig );
+        assertEquals( new BloomFilterConfiguration(5, 1.0/10), filterConfig );
+        assertNotEquals( new BloomFilterConfiguration(5, 1.0/11), filterConfig );
+        assertNotEquals( new BloomFilterConfiguration(4, 1.0/10), filterConfig );
         assertFalse( filterConfig.equals( filterConfig.toString() ));
         
     }

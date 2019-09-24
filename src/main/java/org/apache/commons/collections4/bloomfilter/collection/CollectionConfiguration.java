@@ -18,19 +18,19 @@
 package org.apache.commons.collections4.bloomfilter.collection;
 
 import org.apache.commons.collections4.bloomfilter.BloomFilter;
-import org.apache.commons.collections4.bloomfilter.FilterConfiguration;
+import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.apache.commons.collections4.bloomfilter.ProtoBloomFilter;
 import org.apache.commons.collections4.bloomfilter.StandardBloomFilter;
 
 /**
  * The configuration of a gated Bloom collection.
- * @Since 4.6
+ * @since 4.5
  */
 public class CollectionConfiguration {
     /**
      * The configuration for the gating BloomFilter.
      */
-    private final FilterConfiguration gateConfig;
+    private final BloomFilterConfiguration gateConfig;
     /**
      * The gating BloomFilter.
      */
@@ -45,7 +45,7 @@ public class CollectionConfiguration {
      *
      * @param gateConfig the configuration for the gating filter.
      */
-    public CollectionConfiguration(FilterConfiguration gateConfig) {
+    public CollectionConfiguration(BloomFilterConfiguration gateConfig) {
         this.gateConfig = gateConfig;
         this.gate = StandardBloomFilter.EMPTY;
         this.collectionStats = new CollectionStatistics();
@@ -65,7 +65,7 @@ public class CollectionConfiguration {
      *
      * @return the gating filter configuration.
      */
-    public FilterConfiguration getConfig() {
+    public BloomFilterConfiguration getGateConfig() {
         return gateConfig;
     }
 

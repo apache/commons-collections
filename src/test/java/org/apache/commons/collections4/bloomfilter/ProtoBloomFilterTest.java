@@ -25,8 +25,8 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Objects;
 
-import org.apache.commons.collections4.bloomfilter.FilterConfiguration;
-import org.apache.commons.collections4.bloomfilter.FilterConfiguration;
+import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
+import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.apache.commons.collections4.bloomfilter.ProtoBloomFilter;
 import org.apache.commons.collections4.bloomfilter.ProtoBloomFilter.Hash;
 import org.junit.Test;
@@ -44,7 +44,7 @@ public class ProtoBloomFilterTest {
         // p = 0.091848839 (1 in 11)
         // m = 5 (1B)
         // k = 3
-        FilterConfiguration fc = new FilterConfiguration(1, 1.0/11);
+        BloomFilterConfiguration fc = new BloomFilterConfiguration(1, 1.0/11);
         BitSet bs = new BitSet();
 
         hash.populate(bs, fc);

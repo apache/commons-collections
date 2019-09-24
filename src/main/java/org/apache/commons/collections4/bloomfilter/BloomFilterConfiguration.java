@@ -37,10 +37,9 @@ import java.util.Objects;
  * @see <a href="http://hur.st/bloomfilter?n=3&p=1.0E-5">Bloom Filter
  *      calculator</a>
  *
- * @since 4.5
- * 
+ * @since 4.5 
  */
-public final class FilterConfiguration {
+public final class BloomFilterConfiguration {
 
     /**
      * The natural logarithm of 2.
@@ -80,7 +79,7 @@ public final class FilterConfiguration {
      * @param numberOfItems Number of items to be placed in the filter.
      * @param probability   The probability of duplicates. Must be in the range (0.0,1.0).
      */
-    public FilterConfiguration(final int numberOfItems, final double probability) {
+    public BloomFilterConfiguration(final int numberOfItems, final double probability) {
         if (numberOfItems < 1) {
             throw new IllegalArgumentException("Number of Items must be greater than 0");
         }
@@ -109,7 +108,7 @@ public final class FilterConfiguration {
     }
 
     /**
-     * Get the number of items that are expected in the filter. AKA: {@code n }
+     * Gets the number of items that are expected in the filter. AKA: {@code n }
      *
      * @return the number of items.
      */
@@ -119,7 +118,7 @@ public final class FilterConfiguration {
     }
     
     /**
-     * The probability of a false positive (collision). AKA: {@code p}
+     * Gets the probability of a false positive (collision). AKA: {@code p}
      *
      * @return the probability of a false positive.
      */
@@ -128,7 +127,7 @@ public final class FilterConfiguration {
     }
 
     /**
-     * The number of bits in the Bloom filter. AKA: {@code m }
+     * Gets the number of bits in the Bloom filter. AKA: {@code m }
      *
      * @return the number of bits in the Bloom filter.
      */
@@ -137,7 +136,7 @@ public final class FilterConfiguration {
     }
 
     /**
-     * The number of hash functions used to construct the filter. AKA: {@code k }
+     * Gets the number of hash functions used to construct the filter. AKA: {@code k }
      *
      * @return the number of hash functions used to construct the filter.
      */
@@ -146,7 +145,7 @@ public final class FilterConfiguration {
     }
 
     /**
-     * The number of bytes in the Bloom filter.
+     * Gets the number of bytes in the Bloom filter.
      *
      * @return the number of bytes in the Bloom filter.
      */
@@ -156,8 +155,8 @@ public final class FilterConfiguration {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof FilterConfiguration) {
-            FilterConfiguration other = (FilterConfiguration) o;
+        if (o instanceof BloomFilterConfiguration) {
+            BloomFilterConfiguration other = (BloomFilterConfiguration) o;
             return other.getNumberOfBits() == getNumberOfBits()
                     && other.getNumberOfHashFunctions() == getNumberOfHashFunctions()
                     && other.getNumberOfItems() == getNumberOfItems() && other.getProbability() == getProbability();

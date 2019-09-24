@@ -29,7 +29,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.collections4.bloomfilter.FilterConfiguration;
+import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.apache.commons.collections4.bloomfilter.ProtoBloomFilter;
 import org.apache.commons.collections4.bloomfilter.StandardBloomFilter;
 import org.apache.commons.collections4.bloomfilter.collection.BloomFilterGated;
@@ -42,7 +42,7 @@ import org.junit.Test;
 public abstract class AbstractBloomCollectionNoDuplicatesTest extends AbstractBloomFilterGatedNoDuplicatesTest {
 
     Collection<String> collection;
-    FilterConfiguration filterConfig;
+    BloomFilterConfiguration filterConfig;
 
     /**
      * Constructor.
@@ -58,7 +58,7 @@ public abstract class AbstractBloomCollectionNoDuplicatesTest extends AbstractBl
         super( helloCount, candidateCount );
     }
 
-    protected void setup(Collection<String> collection, FilterConfiguration filterConfig) {
+    protected void setup(Collection<String> collection, BloomFilterConfiguration filterConfig) {
         if (collection instanceof BloomFilterGated)
         {
             this.collection = collection;

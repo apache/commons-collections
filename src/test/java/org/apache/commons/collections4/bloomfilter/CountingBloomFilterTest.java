@@ -29,8 +29,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.collections4.bloomfilter.CountingBloomFilter;
-import org.apache.commons.collections4.bloomfilter.FilterConfiguration;
-import org.apache.commons.collections4.bloomfilter.FilterConfiguration;
+import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
+import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.apache.commons.collections4.bloomfilter.ProtoBloomFilter;
 import org.apache.commons.collections4.bloomfilter.StandardBloomFilter;
 import org.apache.commons.collections4.bloomfilter.ProtoBloomFilter.Hash;
@@ -45,7 +45,7 @@ public class CountingBloomFilterTest {
         // p = 0.091848839 (1 in 11)
         // m = 5 (1B)
         // k = 3
-        FilterConfiguration fc = new FilterConfiguration(1, 1.0/11);
+        BloomFilterConfiguration fc = new BloomFilterConfiguration(1, 1.0/11);
         ProtoBloomFilter proto = new ProtoBloomFilter(Arrays.asList(hash));
         CountingBloomFilter bf = new CountingBloomFilter(proto, fc);
 
@@ -68,7 +68,7 @@ public class CountingBloomFilterTest {
         // p = 0.091848839 (1 in 11)
         // m = 5 (1B)
         // k = 3
-        FilterConfiguration fc = new FilterConfiguration(1, 1.0/11);
+        BloomFilterConfiguration fc = new BloomFilterConfiguration(1, 1.0/11);
         ProtoBloomFilter proto = new ProtoBloomFilter(Arrays.asList(hash));
         CountingBloomFilter bf1 = new CountingBloomFilter(proto, fc);
         CountingBloomFilter bf2 = new CountingBloomFilter(proto, fc);
@@ -97,7 +97,7 @@ public class CountingBloomFilterTest {
         // p = 0.091848839 (1 in 11)
         // m = 5 (1B)
         // k = 3
-        FilterConfiguration fc = new FilterConfiguration(1, 1.0/11);
+        BloomFilterConfiguration fc = new BloomFilterConfiguration(1, 1.0/11);
         CountingBloomFilter bf1 = new CountingBloomFilter(proto1, fc);
         CountingBloomFilter bf2 = new CountingBloomFilter(proto2, fc);
         CountingBloomFilter bf = bf1.merge(bf2);
@@ -127,12 +127,12 @@ public class CountingBloomFilterTest {
         // p = 0.091848839 (1 in 11)
         // m = 5 (1B)
         // k = 3
-        FilterConfiguration fc = new FilterConfiguration(1, 1.0/11);
+        BloomFilterConfiguration fc = new BloomFilterConfiguration(1, 1.0/11);
         CountingBloomFilter bf1 = new CountingBloomFilter(proto1, fc);
         
         Map<Integer,Integer> map = new HashMap<Integer,Integer>(bf1.getCounts());
         map.put(0, Integer.MAX_VALUE );
-        CountingBloomFilter bf2 = new CountingBloomFilter(bf1.getBitSet(), map);
+        CountingBloomFilter bf2 = new CountingBloomFilter(map);
         
         try {
             CountingBloomFilter bf = bf1.merge(bf2);
@@ -147,7 +147,7 @@ public class CountingBloomFilterTest {
         bf1 = new CountingBloomFilter(proto1, fc);
         map = new HashMap<Integer,Integer>(bf1.getCounts());
         map.put(0, Integer.MAX_VALUE );
-        bf1 = new CountingBloomFilter(bf1.getBitSet(), map);
+        bf1 = new CountingBloomFilter(map);
         
         bf2 = new CountingBloomFilter(proto2, fc);
         
@@ -169,7 +169,7 @@ public class CountingBloomFilterTest {
         // p = 0.091848839 (1 in 11)
         // m = 5 (1B)
         // k = 3
-        FilterConfiguration fc = new FilterConfiguration(1, 1.0/11);
+        BloomFilterConfiguration fc = new BloomFilterConfiguration(1, 1.0/11);
         ProtoBloomFilter proto = new ProtoBloomFilter(Arrays.asList(hash));
         StandardBloomFilter bf1 = new StandardBloomFilter(proto, fc);
         CountingBloomFilter bf2 = new CountingBloomFilter(proto, fc);
@@ -200,7 +200,7 @@ public class CountingBloomFilterTest {
         // p = 0.091848839 (1 in 11)
         // m = 5 (1B)
         // k = 3
-        FilterConfiguration fc = new FilterConfiguration(1, 1.0/11);
+        BloomFilterConfiguration fc = new BloomFilterConfiguration(1, 1.0/11);
         CountingBloomFilter bf1 = new CountingBloomFilter(proto1, fc);
         CountingBloomFilter bf2 = new CountingBloomFilter(proto2, fc);
         CountingBloomFilter bf = bf1.remove(bf2);
@@ -233,7 +233,7 @@ public class CountingBloomFilterTest {
         // p = 0.091848839 (1 in 11)
         // m = 5 (1B)
         // k = 3
-        FilterConfiguration fc = new FilterConfiguration(1, 1.0/11);
+        BloomFilterConfiguration fc = new BloomFilterConfiguration(1, 1.0/11);
         CountingBloomFilter bf1 = new CountingBloomFilter(proto1, fc);
         StandardBloomFilter bf2 = new StandardBloomFilter(proto2, fc);
         CountingBloomFilter bf = bf1.remove(bf2);
@@ -259,7 +259,7 @@ public class CountingBloomFilterTest {
         // p = 0.091848839 (1 in 11)
         // m = 5 (1B)
         // k = 3
-        FilterConfiguration fc = new FilterConfiguration(1, 1.0/11);
+        BloomFilterConfiguration fc = new BloomFilterConfiguration(1, 1.0/11);
         ProtoBloomFilter proto = new ProtoBloomFilter(Arrays.asList(hash));
         CountingBloomFilter bf = new CountingBloomFilter(proto, fc);               
         BitSet bs = bf.getBitSet();
@@ -277,14 +277,14 @@ public class CountingBloomFilterTest {
         // p = 0.091848839 (1 in 11)
         // m = 5 (1B)
         // k = 3
-        FilterConfiguration fc = new FilterConfiguration(1, 1.0/11);
+        BloomFilterConfiguration fc = new BloomFilterConfiguration(1, 1.0/11);
         ProtoBloomFilter proto = new ProtoBloomFilter(Arrays.asList(hash));
         CountingBloomFilter bf = new CountingBloomFilter(proto, fc);
         CountingBloomFilter bf2 = new CountingBloomFilter(proto, fc);
         
         assertEquals( bf, bf2 );
         
-        FilterConfiguration fc2 = new FilterConfiguration(1, 1.0/12);
+        BloomFilterConfiguration fc2 = new BloomFilterConfiguration(1, 1.0/12);
         bf2 = new CountingBloomFilter(proto, fc2);
         assertNotEquals( bf, bf2 );
         
@@ -312,7 +312,7 @@ public class CountingBloomFilterTest {
         // p = 0.091848839 (1 in 11)
         // m = 5 (1B)
         // k = 3
-        FilterConfiguration fc = new FilterConfiguration(1, 1.0/11);
+        BloomFilterConfiguration fc = new BloomFilterConfiguration(1, 1.0/11);
         ProtoBloomFilter proto = new ProtoBloomFilter(Arrays.asList(hash));
         CountingBloomFilter bf = new CountingBloomFilter(proto, fc);
         BitSet bs = bf.getBitSet();

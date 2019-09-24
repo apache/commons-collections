@@ -19,8 +19,8 @@ package org.apache.commons.collections4.bloomfilter.collection;
 
 import java.util.ArrayList;
 
-import org.apache.commons.collections4.bloomfilter.FilterConfiguration;
-import org.apache.commons.collections4.bloomfilter.FilterConfiguration;
+import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
+import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.apache.commons.collections4.bloomfilter.collection.BloomCollection;
 import org.junit.Before;
 
@@ -34,7 +34,7 @@ public class BloomCollectionWithDuplicatesTest extends AbstractBloomCollectionWi
     
     @Before
     public void setup() {
-        FilterConfiguration filterConfig = new FilterConfiguration(5,1.0/5);
+        BloomFilterConfiguration filterConfig = new BloomFilterConfiguration(5,1.0/5);
         super.setup( new BloomCollection<String>( new ArrayList<String>(), filterConfig, FUNC ), filterConfig );
     }
 

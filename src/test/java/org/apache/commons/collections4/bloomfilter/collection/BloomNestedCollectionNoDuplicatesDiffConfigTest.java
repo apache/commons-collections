@@ -17,8 +17,8 @@
  */
 package org.apache.commons.collections4.bloomfilter.collection;
 
-import org.apache.commons.collections4.bloomfilter.FilterConfiguration;
-import org.apache.commons.collections4.bloomfilter.FilterConfiguration;
+import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
+import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.apache.commons.collections4.bloomfilter.collection.BloomNestedCollection;
 import org.apache.commons.collections4.bloomfilter.collection.BloomNestedCollection.BloomHashSetFactory;
 import org.junit.Before;
@@ -30,8 +30,8 @@ import org.junit.Before;
 public class BloomNestedCollectionNoDuplicatesDiffConfigTest extends AbstractBloomCollectionNoDuplicatesTest {
 
 
-    FilterConfiguration gateConfig = new FilterConfiguration( 25, 1.0/5 );
-    FilterConfiguration bucketConfig = new FilterConfiguration( 5, 1.0/5 );
+    BloomFilterConfiguration gateConfig = new BloomFilterConfiguration( 25, 1.0/5 );
+    BloomFilterConfiguration bucketConfig = new BloomFilterConfiguration( 5, 1.0/5 );
 
     /**
      * Constructor.

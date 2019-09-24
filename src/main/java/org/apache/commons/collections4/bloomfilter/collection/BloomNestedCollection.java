@@ -29,7 +29,7 @@ import java.util.stream.Stream;
 import org.apache.commons.collections4.ListValuedMap;
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.bloomfilter.BloomFilter;
-import org.apache.commons.collections4.bloomfilter.FilterConfiguration;
+import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.apache.commons.collections4.bloomfilter.ProtoBloomFilter;
 import org.apache.commons.collections4.bloomfilter.StandardBloomFilter;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
@@ -98,7 +98,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
      * @param gateConfig    the filter configuration for the gating filter.
      * @param bucketFactory the bucketFactory for the buckets.
      */
-    public BloomNestedCollection(Function<T, ProtoBloomFilter> func, int minFree, FilterConfiguration gateConfig,
+    public BloomNestedCollection(Function<T, ProtoBloomFilter> func, int minFree, BloomFilterConfiguration gateConfig,
             BucketFactory<T> bucketFactory) {
         this.func = func;
         this.buckets = new ArrayList<BloomFilterGated<T>>();
@@ -111,8 +111,8 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
     }
 
     @Override
-    public FilterConfiguration getGateConfig() {
-        return collectionConfig.getConfig();
+    public BloomFilterConfiguration getGateConfig() {
+        return collectionConfig.getGateConfig();
     }
 
     @Override
@@ -137,7 +137,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
      * @return the new BloomFilter.
      */
     private BloomFilter fromProto(ProtoBloomFilter proto) {
-        return new StandardBloomFilter(proto, collectionConfig.getConfig());
+        return new StandardBloomFilter(proto, collectionConfig.getGateConfig());
     }
 
     @Override
@@ -147,7 +147,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
 
     @Override
     public boolean isFull() {
-        return collectionConfig.getConfig().getNumberOfItems() <= size();
+        return collectionConfig.getGateConfig().getNumberOfItems() <= size();
     }
 
     @Override
@@ -397,7 +397,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
     public Stream<T> getCandidates(BloomFilter filter) {
         Stream<T> result = Stream.empty();
         if (filter.match(collectionConfig.getGate())) {
-            if (collectionConfig.getConfig().equals(bucketFactory.getConfig())) {
+            if (collectionConfig.getGateConfig().equals(bucketFactory.getConfig())) {
 
                 for (BloomFilterGated<T> bucket : buckets) {
                     result = Stream.concat(result, bucket.getCandidates(filter));
@@ -413,7 +413,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
     @Override
     public Stream<T> getCandidates(ProtoBloomFilter proto) {
         Stream<T> result = Stream.empty();
-        if (collectionConfig.getGate().inverseMatch(new StandardBloomFilter(proto, collectionConfig.getConfig()))) {
+        if (collectionConfig.getGate().inverseMatch(new StandardBloomFilter(proto, collectionConfig.getGateConfig()))) {
             for (BloomFilterGated<T> bucket : buckets) {
                 result = Stream.concat(result, bucket.getCandidates(proto));
             }
@@ -448,7 +448,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
          *
          * @return the filter configuration used by the factory.
          */
-        FilterConfiguration getConfig();
+        BloomFilterConfiguration getConfig();
 
         /**
          * Create a new BloomFilterGated object.
@@ -470,7 +470,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
         /**
          * The Bloom filter configuration for the gate.
          */
-        private final FilterConfiguration filterConfig;
+        private final BloomFilterConfiguration filterConfig;
         
         /**
          * Function to convert T to ProtoBloomFilter filter.
@@ -483,7 +483,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
          * @param func         the function to convert from T to ProtoBloomFilter.
          * @param filterConfig the FilterConfiguration for the gating filter.
          */
-        public BloomArrayListFactory(Function<T, ProtoBloomFilter> func, FilterConfiguration filterConfig) {
+        public BloomArrayListFactory(Function<T, ProtoBloomFilter> func, BloomFilterConfiguration filterConfig) {
             this.func = func;
             this.filterConfig = filterConfig;
         }
@@ -494,7 +494,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
         }
 
         @Override
-        public FilterConfiguration getConfig() {
+        public BloomFilterConfiguration getConfig() {
             return filterConfig;
         }
 
@@ -516,7 +516,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
         /**
          * The Bloom filter configuration for the gate.
          */
-        private final FilterConfiguration filterConfig;
+        private final BloomFilterConfiguration filterConfig;
         
         /**
          * Function to convert T to ProtoBloomFilter filter.
@@ -529,7 +529,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
          * @param func         the function to convert from T to ProtoBloomFilter.
          * @param filterConfig the FilterConfiguration for the gating filter.
          */
-        public BloomHashSetFactory(Function<T, ProtoBloomFilter> func, FilterConfiguration filterConfig) {
+        public BloomHashSetFactory(Function<T, ProtoBloomFilter> func, BloomFilterConfiguration filterConfig) {
             this.func = func;
             this.filterConfig = filterConfig;
         }
@@ -540,7 +540,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
         }
 
         @Override
-        public FilterConfiguration getConfig() {
+        public BloomFilterConfiguration getConfig() {
             return filterConfig;
         }
 

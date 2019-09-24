@@ -25,7 +25,6 @@ import java.util.BitSet;
  * Instances are immutable.
  *
  * @since 4.5
- *
  */
 public class StandardBloomFilter implements BloomFilter {
     /**
@@ -55,7 +54,7 @@ public class StandardBloomFilter implements BloomFilter {
      * @param protoFilter the protoFilter to build this Bloom filter from.
      * @param config      the Filter configuration to use to build the Bloom filter.
      */
-    public StandardBloomFilter(ProtoBloomFilter protoFilter, FilterConfiguration config) {
+    public StandardBloomFilter(ProtoBloomFilter protoFilter, BloomFilterConfiguration config) {
         this.bitSet = new BitSet(config.getNumberOfBits());
         protoFilter.getUniqueHashes().forEach(hash -> hash.populate(bitSet, config));
         this.logValue = getApproximateLog(Integer.min(bitSet.length(), MAX_LOG_DEPTH));;
@@ -104,7 +103,7 @@ public class StandardBloomFilter implements BloomFilter {
     }
 
     /**
-     * Get the approximate log for this filter. If the Bloom filter is considered as
+     * Gets the approximate log for this filter. If the Bloom filter is considered as
      * an unsigned number what is the approximate base 2 log of that value. The
      * depth argument indicates how many extra bits are to be considered in the log
      * calculation. At least one bit must be considered. If there are no bits on
@@ -144,10 +143,15 @@ public class StandardBloomFilter implements BloomFilter {
     }
 
     /**
-     * The mantissa of the log in in position position 0. The remainder are
+     * Gets the mantissa and characteristic powers of the log.
+     * The mantissa is in position position 0. The remainder are
      * characteristic powers.
+     * 
+     * The depth is the depth to probe for characteristics.  The 
+     * effective limit is 25 as beyond that the value of the calculated
+     * double does not change.
      *
-     * @param depth
+     * @param depth the depth to probe. 
      * @return An array of depth integers that are the exponents.
      */
     private int[] getApproximateLogExponents(int depth) {

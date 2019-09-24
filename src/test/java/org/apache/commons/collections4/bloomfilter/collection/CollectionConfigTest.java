@@ -23,8 +23,8 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.apache.commons.collections4.bloomfilter.BloomFilter;
-import org.apache.commons.collections4.bloomfilter.FilterConfiguration;
-import org.apache.commons.collections4.bloomfilter.FilterConfiguration;
+import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
+import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.apache.commons.collections4.bloomfilter.ProtoBloomFilter;
 import org.apache.commons.collections4.bloomfilter.StandardBloomFilter;
 import org.apache.commons.collections4.bloomfilter.collection.CollectionConfiguration;
@@ -34,7 +34,7 @@ import org.junit.Test;
 
 public class CollectionConfigTest {
 
-    FilterConfiguration filterConfig = new FilterConfiguration(5, 1.0/5);
+    BloomFilterConfiguration filterConfig = new BloomFilterConfiguration(5, 1.0/5);
     CollectionConfiguration config;
 
     @Before
@@ -62,7 +62,7 @@ public class CollectionConfigTest {
 
     @Test
     public void getConfig() {
-        assertEquals( filterConfig, config.getConfig() );
+        assertEquals( filterConfig, config.getGateConfig() );
     }
 
     @Test
