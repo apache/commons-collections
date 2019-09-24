@@ -31,8 +31,4 @@
   
   <!-- Ignore missing javadoc param for unsupported method -->
   <suppress checks="JavadocMethod" files="FilterListIterator.java" lines="116,166" />
-  
-    <!-- Suppress switch fallthrough / default case for class ProtoBloomFilter -->
-  <suppress checks="FallThrough" files="ProtoBloomFilter.java" />
-  
 </suppressions>

@@ -87,11 +87,4 @@
     <Bug pattern="URF_UNREAD_FIELD" />
   </Match>
 
-  <!--  All possible values are accounted for -->
-<!--   <Match> -->
-<!--     <Class name="org.apache.commons.collections4.bloomfilters.ProtoBloomFilter$Builder"/> -->
-<!--     <Method name="hash3_x64_128" /> -->
-<!--     <Bug pattern="SF_SWITCH_NO_DEFAULT" /> -->
-    
-<!--   </Match> -->
 </FindBugsFilter>
