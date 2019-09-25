@@ -27,36 +27,36 @@ import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.apache.commons.collections4.bloomfilter.ProtoBloomFilter;
 import org.apache.commons.collections4.bloomfilter.StandardBloomFilter;
-import org.apache.commons.collections4.bloomfilter.collection.CollectionConfiguration;
-import org.apache.commons.collections4.bloomfilter.collection.CollectionStatistics;
+import org.apache.commons.collections4.bloomfilter.collection.BloomCollectionConfiguration;
+import org.apache.commons.collections4.bloomfilter.collection.BloomCollectionStatistics;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CollectionConfigurationTest {
+public class BloomCollectionConfigurationTest {
 
     BloomFilterConfiguration filterConfig = new BloomFilterConfiguration(5, 1.0/5);
-    CollectionConfiguration config;
+    BloomCollectionConfiguration config;
 
     @Before
     public void setup() {
-        config = new CollectionConfiguration( filterConfig );
+        config = new BloomCollectionConfiguration( filterConfig );
     }
 
     @Test
     public void clear() {
         assertEquals( StandardBloomFilter.EMPTY, config.getGate() );
-        assertTrue( new CollectionStatistics().sameValues(config.getStats() ));
+        assertTrue( new BloomCollectionStatistics().sameValues(config.getStats() ));
 
         config.merge( ProtoBloomFilter.builder().build( "Hello"));
         config.getStats().delete();
         config.getStats().insert();
 
         assertNotEquals( StandardBloomFilter.EMPTY, config.getGate() );
-        assertFalse( new CollectionStatistics().sameValues(config.getStats() ));
+        assertFalse( new BloomCollectionStatistics().sameValues(config.getStats() ));
 
         config.clear();
         assertEquals( StandardBloomFilter.EMPTY, config.getGate() );
-        assertTrue( new CollectionStatistics().sameValues(config.getStats() ));
+        assertTrue( new BloomCollectionStatistics().sameValues(config.getStats() ));
 
     }
 
@@ -72,7 +72,7 @@ public class CollectionConfigurationTest {
 
     @Test
     public void getStats() {
-        assertTrue( new CollectionStatistics().sameValues(config.getStats() ));
+        assertTrue( new BloomCollectionStatistics().sameValues(config.getStats() ));
     }
 
     @Test

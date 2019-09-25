@@ -26,7 +26,7 @@ import org.apache.commons.collections4.bloomfilter.StandardBloomFilter;
  * The configuration of a gated Bloom collection.
  * @since 4.5
  */
-public class CollectionConfiguration {
+public class BloomCollectionConfiguration {
     /**
      * The configuration for the gating BloomFilter.
      */
@@ -38,21 +38,21 @@ public class CollectionConfiguration {
     /**
      * The collection statistics.
      */
-    private CollectionStatistics collectionStats;
+    private BloomCollectionStatistics collectionStats;
 
     /**
      * Construct a collection configuration with the specified gate configuration.
      *
      * @param gateConfig the configuration for the gating filter.
      */
-    public CollectionConfiguration(BloomFilterConfiguration gateConfig) {
+    public BloomCollectionConfiguration(BloomFilterConfiguration gateConfig) {
         this.gateConfig = gateConfig;
         this.gate = StandardBloomFilter.EMPTY;
-        this.collectionStats = new CollectionStatistics();
+        this.collectionStats = new BloomCollectionStatistics();
     }
 
     /**
-     * Get the gate Bloom filter.
+     * Gets the gate Bloom filter.
      *
      * @return the gating Bloom filter.
      */
@@ -61,7 +61,7 @@ public class CollectionConfiguration {
     }
 
     /**
-     * Get the filter configuration for the gating filter.
+     * Gets the filter configuration for the gating filter.
      *
      * @return the gating filter configuration.
      */
@@ -70,11 +70,11 @@ public class CollectionConfiguration {
     }
 
     /**
-     * Get the collection stats for this collection.
+     * Gets the collection stats for this collection.
      *
      * @return the collections stats.
      */
-    public CollectionStatistics getStats() {
+    public BloomCollectionStatistics getStats() {
         return collectionStats;
     }
 
@@ -88,7 +88,7 @@ public class CollectionConfiguration {
     }
 
     /**
-     * Merge a Bloom filter into the gating filter.
+     * Merges a Bloom filter into the gating filter.
      *
      * @param filter the Bloom filter to merge.
      */

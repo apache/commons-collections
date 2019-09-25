@@ -94,7 +94,7 @@ public abstract class AbstractBloomFilterGatedWithDuplicatesTest {
         assertTrue(gated.add(proto, "Hello"));
         assertEquals(new StandardBloomFilter(proto, gated.getGateConfig()), gated.getGate());
         assertEquals(1, gated.getStats().getInsertCount());
-        assertEquals(1, gated.getStats().getTxnCount());
+        assertEquals(1, gated.getStats().getTransactionCount());
         assertEquals(0, gated.getStats().getDeleteCount());
         assertEquals(1, gated.getStats().getFilterCount());
         assertEquals(1L, gated.count());
@@ -102,7 +102,7 @@ public abstract class AbstractBloomFilterGatedWithDuplicatesTest {
         assertTrue(gated.add(proto, "hola"));
         assertEquals(new StandardBloomFilter(proto, gated.getGateConfig()), gated.getGate());
         assertEquals(2, gated.getStats().getInsertCount());
-        assertEquals(2, gated.getStats().getTxnCount());
+        assertEquals(2, gated.getStats().getTransactionCount());
         assertEquals(0, gated.getStats().getDeleteCount());
         assertEquals(2, gated.getStats().getFilterCount());
         assertEquals(2L, gated.count());
@@ -112,7 +112,7 @@ public abstract class AbstractBloomFilterGatedWithDuplicatesTest {
         assertNotEquals(new StandardBloomFilter(proto, gated.getGateConfig()), gated.getGate());
         assertTrue(gated.inverseMatch(new StandardBloomFilter(proto, gated.getGateConfig())));
         assertEquals(3, gated.getStats().getInsertCount());
-        assertEquals(3, gated.getStats().getTxnCount());
+        assertEquals(3, gated.getStats().getTransactionCount());
         assertEquals(0, gated.getStats().getDeleteCount());
         assertEquals(3, gated.getStats().getFilterCount());
         assertEquals(3L, gated.count());
@@ -125,7 +125,7 @@ public abstract class AbstractBloomFilterGatedWithDuplicatesTest {
         assertTrue( gated.isEmpty());
         assertEquals( StandardBloomFilter.EMPTY, gated.getGate() );
         assertEquals(0, gated.getStats().getInsertCount());
-        assertEquals(0, gated.getStats().getTxnCount());
+        assertEquals(0, gated.getStats().getTransactionCount());
         assertEquals(0, gated.getStats().getDeleteCount());
         assertEquals(0, gated.getStats().getFilterCount());
         assertEquals(0L, gated.count());
@@ -237,19 +237,19 @@ public abstract class AbstractBloomFilterGatedWithDuplicatesTest {
     @Test
     public final void getStats() {
         assertEquals(0, gated.getStats().getInsertCount());
-        assertEquals(0, gated.getStats().getTxnCount());
+        assertEquals(0, gated.getStats().getTransactionCount());
         assertEquals(0, gated.getStats().getDeleteCount());
         assertEquals(0, gated.getStats().getFilterCount());
 
         gated.add( FUNC.apply("World"),"World");
         assertEquals(1, gated.getStats().getInsertCount());
-        assertEquals(1, gated.getStats().getTxnCount());
+        assertEquals(1, gated.getStats().getTransactionCount());
         assertEquals(0, gated.getStats().getDeleteCount());
         assertEquals(1, gated.getStats().getFilterCount());
 
         gated.remove(FUNC.apply("World"), "World");
         assertEquals(1, gated.getStats().getInsertCount());
-        assertEquals(2, gated.getStats().getTxnCount());
+        assertEquals(2, gated.getStats().getTransactionCount());
         assertEquals(1, gated.getStats().getDeleteCount());
         assertEquals(0, gated.getStats().getFilterCount());
     }
@@ -370,7 +370,7 @@ public abstract class AbstractBloomFilterGatedWithDuplicatesTest {
         assertTrue( gated.remove( proto, "Dog"));
         assertEquals( 4, gated.count() );
         assertEquals(5, gated.getStats().getInsertCount());
-        assertEquals(6, gated.getStats().getTxnCount());
+        assertEquals(6, gated.getStats().getTransactionCount());
         assertEquals(1, gated.getStats().getDeleteCount());
         assertEquals(4, gated.getStats().getFilterCount());
     }
@@ -389,7 +389,7 @@ public abstract class AbstractBloomFilterGatedWithDuplicatesTest {
         assertEquals( 3, gated.count() );
 
         assertEquals(5, gated.getStats().getInsertCount());
-        assertEquals(7, gated.getStats().getTxnCount());
+        assertEquals(7, gated.getStats().getTransactionCount());
         assertEquals(2, gated.getStats().getDeleteCount());
         assertEquals(3, gated.getStats().getFilterCount());
     }

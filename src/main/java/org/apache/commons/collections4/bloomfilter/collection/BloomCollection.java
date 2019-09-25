@@ -31,7 +31,7 @@ import org.apache.commons.collections4.bloomfilter.ProtoBloomFilter;
 import org.apache.commons.collections4.bloomfilter.StandardBloomFilter;
 
 /**
- * A collection fronted by a Bloom filter. The Bloom filter only determines if
+ * A collection gated by a Bloom filter. The Bloom filter only determines if
  * the objects are in the collection before performing the actual manipulation
  * of the underlying collection.
  * <p>
@@ -49,7 +49,7 @@ import org.apache.commons.collections4.bloomfilter.StandardBloomFilter;
  *
  * @since 4.5
  */
-public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
+public final class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
 
     /**
      * The collection this implementation wraps.
@@ -57,17 +57,18 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
     private final Collection<T> wrapped;
 
     /**
-     * Function to convert T to ProtoBloomFilter filter.
+     * The function to convert T to ProtoBloomFilter filter.
      */
     private final Function<T, ProtoBloomFilter> func;
 
     /**
      * Collection configuration
      */
-    private final CollectionConfiguration config;
+    private final BloomCollectionConfiguration config;
 
     /**
-     * Constructor.
+     * Construct a BloomCollection from a collection, a filter configuration and
+     * a mapping function.
      * <p>
      * The function {@code func} should use a {@code ProtoBloomFilter.Builder} to
      * hash various values from a {@code T} instance.
@@ -82,15 +83,15 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
     public BloomCollection(Collection<T> wrapped, BloomFilterConfiguration filterConfig,
         Function<T, ProtoBloomFilter> func) {
         this.wrapped = wrapped;
-        this.config = new CollectionConfiguration(filterConfig);
+        this.config = new BloomCollectionConfiguration(filterConfig);
         this.func = func;
-        for (Object o : wrapped) {
+        for (T o : wrapped) {
             config.merge(fromT(o));
         }
     }
 
     /**
-     * Make a Bloom filter for this collection from the ProtoBloomFilter.
+     * Constructs a Bloom filter for this collection from the ProtoBloomFilter.
      *
      * @param proto the ProtoBloomFilter to create the BloomFilter from.
      * @return the BloomFilter for the gate definition.
@@ -100,14 +101,13 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
     }
 
     /**
-     * Make a Bloom filter for this collection from the object of type T.
+     * Constructs a Bloom filter for this collection from the object of type T.
      *
      * @param t An object of type T.
      * @return the BloomFilter for the gate definition.
      */
-    @SuppressWarnings("unchecked")
-    private BloomFilter fromT(Object t) {
-        return fromProto(func.apply((T) t));
+    private BloomFilter fromT(T t) {
+        return fromProto(func.apply(t));
     }
 
     @Override
@@ -116,7 +116,7 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
     }
 
     @Override
-    public CollectionStatistics getStats() {
+    public BloomCollectionStatistics getStats() {
         return config.getStats();
     }
 
@@ -208,6 +208,7 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
         return contains(func.apply((T) obj), (T) obj);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public boolean containsAll(Collection<?> objs) {
         if (objs.isEmpty()) {
@@ -215,7 +216,7 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
         }
         BloomFilter total = StandardBloomFilter.EMPTY;
         for (Object o : objs) {
-            total = total.merge(fromT(o));
+            total = total.merge(fromT((T)o));
         }
         if (total.match(config.getGate())) {
             return wrapped.containsAll(objs);

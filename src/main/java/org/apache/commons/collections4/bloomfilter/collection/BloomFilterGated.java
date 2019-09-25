@@ -34,7 +34,7 @@ import org.apache.commons.collections4.bloomfilter.ProtoBloomFilter;
 public interface BloomFilterGated<T> {
 
     /**
-     * Get the gating Bloom filter. All objects in the collection are represented in
+     * Gets the gating Bloom filter. All objects in the collection are represented in
      * this Bloom filter.
      *
      * @return the gating Bloom filter.
@@ -42,7 +42,7 @@ public interface BloomFilterGated<T> {
     BloomFilter getGate();
 
     /**
-     * Get the filter configuration for the gate.
+     * Gets the filter configuration for the gate.
      *
      * @return the gate filter configuration.
      */
@@ -60,7 +60,7 @@ public interface BloomFilterGated<T> {
     boolean isFull();
 
     /**
-     * Calculates the hamming distance from the gate filter to a filter.
+     * Calculates the hamming distance from the gate filter to a BloomFilter.
      *
      * @param filter The filter to calculate distance to.
      * @return the distance
@@ -68,7 +68,7 @@ public interface BloomFilterGated<T> {
     int distance(BloomFilter filter);
 
     /**
-     * Calculates the hamming distance to a proto filter.
+     * Calculates the hamming distance to a ProtoBloomFilter.
      *
      * @param proto The proto filter to calculate distance to.
      * @return the distance
@@ -160,7 +160,7 @@ public interface BloomFilterGated<T> {
      *
      * @return the collection statistics.
      */
-    CollectionStatistics getStats();
+    BloomCollectionStatistics getStats();
 
     /**
      * Clears this collection. Must remove all stored data as well as clear the

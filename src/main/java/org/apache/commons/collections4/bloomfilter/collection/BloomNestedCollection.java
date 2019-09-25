@@ -64,7 +64,7 @@ import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
  * @param <T> the type of object in the collection.
  * @since 4.5
  */
-public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection<T> {
+public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection<T> {
 
     /**
      * The list of buckets
@@ -79,7 +79,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
     /**
      * The collection configuration.
      */
-    private final CollectionConfiguration collectionConfig;
+    private final BloomCollectionConfiguration collectionConfig;
 
     /**
      * The bucket factory.
@@ -103,7 +103,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
             BucketFactory<T> bucketFactory) {
         this.func = func;
         this.buckets = new ArrayList<BloomFilterGated<T>>();
-        this.collectionConfig = new CollectionConfiguration(gateConfig);
+        this.collectionConfig = new BloomCollectionConfiguration(gateConfig);
         this.bucketFactory = bucketFactory;
 
         for (int i = 0; i < minFree; i++) {
@@ -117,7 +117,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
     }
 
     @Override
-    public CollectionStatistics getStats() {
+    public BloomCollectionStatistics getStats() {
         return collectionConfig.getStats();
     }
 
@@ -377,7 +377,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
 
     @Override
     public int size() {
-        return CollectionStatistics.asInt(count());
+        return BloomCollectionStatistics.asInt(count());
     }
 
     @Override
@@ -439,14 +439,14 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
      */
     public interface BucketFactory<T> {
         /**
-         * Return true if this bucket factory allows duplicates, false otherwise.
+         * Returns true if this bucket factory allows duplicates, false otherwise.
          *
          * @return true if this bucket factory allows duplicates.
          */
         boolean allowDuplicates();
 
         /**
-         * Get the filter configuration for the buckets produced by the factory.
+         * Gets the filter configuration for the buckets produced by the factory.
          *
          * @return the filter configuration used by the factory.
          */

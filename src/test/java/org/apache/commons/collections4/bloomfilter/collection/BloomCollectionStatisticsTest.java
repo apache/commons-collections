@@ -22,20 +22,20 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import java.util.function.Consumer;
 
-import org.apache.commons.collections4.bloomfilter.collection.CollectionStatistics;
-import org.apache.commons.collections4.bloomfilter.collection.CollectionStatistics.Action;
-import org.apache.commons.collections4.bloomfilter.collection.CollectionStatistics.ActionMapper;
-import org.apache.commons.collections4.bloomfilter.collection.CollectionStatistics.Change;
+import org.apache.commons.collections4.bloomfilter.collection.BloomCollectionStatistics;
+import org.apache.commons.collections4.bloomfilter.collection.BloomCollectionStatistics.Action;
+import org.apache.commons.collections4.bloomfilter.collection.BloomCollectionStatistics.ActionMapper;
+import org.apache.commons.collections4.bloomfilter.collection.BloomCollectionStatistics.CHANGE;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CollectionStatisticsTest {
+public class BloomCollectionStatisticsTest {
 
-    private CollectionStatistics stats;
+    private BloomCollectionStatistics stats;
 
     @Before
     public void setup() {
-        stats = new CollectionStatistics();
+        stats = new BloomCollectionStatistics();
     }
 
     @Test
@@ -61,8 +61,8 @@ public class CollectionStatisticsTest {
 
     @Test
     public void asInt() {
-        assertEquals( Integer.MAX_VALUE, CollectionStatistics.asInt( Long.MAX_VALUE ));
-        assertEquals( Integer.MIN_VALUE, CollectionStatistics.asInt( Long.MIN_VALUE ));
+        assertEquals( Integer.MAX_VALUE, BloomCollectionStatistics.asInt( Long.MAX_VALUE ));
+        assertEquals( Integer.MIN_VALUE, BloomCollectionStatistics.asInt( Long.MIN_VALUE ));
     }
 
     @Test
@@ -103,14 +103,14 @@ public class CollectionStatisticsTest {
         ActionMapper mapper = stats.getActionMapper();
         assertEquals( 0, stats.getInsertCount() );
         assertEquals( 0, stats.getDeleteCount() );
-        mapper.accept( new Action( Change.delete, 1 ));
+        mapper.accept( new Action( CHANGE.delete, 1 ));
         assertEquals( 0, stats.getInsertCount() );
         assertEquals( 1, stats.getDeleteCount() );
-        mapper.accept( new Action( Change.insert, 1 ));
+        mapper.accept( new Action( CHANGE.insert, 1 ));
         assertEquals( 0, stats.getInsertCount() );
         assertEquals( 1, stats.getDeleteCount() );
         stats.insert();
-        mapper.accept( new Action( Change.clear, 1 ));
+        mapper.accept( new Action( CHANGE.clear, 1 ));
         assertEquals( 1, stats.getInsertCount() );
         assertEquals( 1, stats.getDeleteCount() );
     }
@@ -139,17 +139,17 @@ public class CollectionStatisticsTest {
 
     @Test
     public void getTxtCount() {
-        assertEquals( 0, stats.getTxnCount() );
+        assertEquals( 0, stats.getTransactionCount() );
         stats.delete();
-        assertEquals( 1, stats.getTxnCount() );
+        assertEquals( 1, stats.getTransactionCount() );
         stats.insert();
-        assertEquals( 2, stats.getTxnCount() );
+        assertEquals( 2, stats.getTransactionCount() );
         stats.delete(2);
-        assertEquals( 4, stats.getTxnCount() );
+        assertEquals( 4, stats.getTransactionCount() );
         stats.delete( Long.MAX_VALUE-3 );
-        assertEquals( Long.MAX_VALUE, stats.getTxnCount() );
+        assertEquals( Long.MAX_VALUE, stats.getTransactionCount() );
         stats.clear();
-        assertEquals( 0, stats.getTxnCount() );
+        assertEquals( 0, stats.getTransactionCount() );
     }
 
     @Test
@@ -161,7 +161,7 @@ public class CollectionStatisticsTest {
 
     @Test
     public void sameValues() {
-        CollectionStatistics stats2 = new CollectionStatistics();
+        BloomCollectionStatistics stats2 = new BloomCollectionStatistics();
         assertTrue( stats.sameValues(stats2));
         stats.insert();
         assertFalse( stats.sameValues(stats2));

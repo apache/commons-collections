@@ -75,7 +75,7 @@ public abstract class AbstractBloomCollectionNoDuplicatesTest extends AbstractBl
         assertTrue(collection.contains("Hello"));
         assertEquals(new StandardBloomFilter(FUNC.apply("Hello"), filterConfig), gated.getGate());
         assertEquals(1, gated.getStats().getInsertCount());
-        assertEquals(1, gated.getStats().getTxnCount());
+        assertEquals(1, gated.getStats().getTransactionCount());
         assertEquals(0, gated.getStats().getDeleteCount());
         assertEquals(1, gated.getStats().getFilterCount());
         assertEquals(1, collection.size());
@@ -86,7 +86,7 @@ public abstract class AbstractBloomCollectionNoDuplicatesTest extends AbstractBl
         assertTrue(collection.contains("Hello"));
         assertEquals(new StandardBloomFilter(FUNC.apply("Hello"), filterConfig), gated.getGate());
         assertEquals(1, gated.getStats().getInsertCount());
-        assertEquals(1, gated.getStats().getTxnCount());
+        assertEquals(1, gated.getStats().getTransactionCount());
         assertEquals(0, gated.getStats().getDeleteCount());
         assertEquals(1, gated.getStats().getFilterCount());
         assertEquals(1, collection.size());
@@ -97,7 +97,7 @@ public abstract class AbstractBloomCollectionNoDuplicatesTest extends AbstractBl
         assertNotEquals(new StandardBloomFilter(FUNC.apply("World"), filterConfig), gated.getGate());
         assertTrue(gated.inverseMatch(new StandardBloomFilter(FUNC.apply("World"), filterConfig)));
         assertEquals(2, gated.getStats().getInsertCount());
-        assertEquals(2, gated.getStats().getTxnCount());
+        assertEquals(2, gated.getStats().getTransactionCount());
         assertEquals(0, gated.getStats().getDeleteCount());
         assertEquals(2, gated.getStats().getFilterCount());
         assertEquals(2, collection.size());
@@ -115,7 +115,7 @@ public abstract class AbstractBloomCollectionNoDuplicatesTest extends AbstractBl
         proto = FUNC.apply("World");
         assertTrue( gated.inverseMatch(new StandardBloomFilter(proto, filterConfig)));
         assertEquals(2, gated.getStats().getInsertCount());
-        assertEquals(2, gated.getStats().getTxnCount());
+        assertEquals(2, gated.getStats().getTransactionCount());
         assertEquals(0, gated.getStats().getDeleteCount());
         assertEquals(2, gated.getStats().getFilterCount());
         assertEquals(2, collection.size());
@@ -188,14 +188,14 @@ public abstract class AbstractBloomCollectionNoDuplicatesTest extends AbstractBl
         assertFalse( collection.remove( "bird" ) );
         assertEquals( 4, collection.size() );
         assertEquals(4, gated.getStats().getInsertCount());
-        assertEquals(4, gated.getStats().getTxnCount());
+        assertEquals(4, gated.getStats().getTransactionCount());
         assertEquals(0, gated.getStats().getDeleteCount());
         assertEquals(4, gated.getStats().getFilterCount());
 
         assertTrue( collection.remove( "Hello" ) );
         assertEquals( 3, collection.size() );
         assertEquals(4, gated.getStats().getInsertCount());
-        assertEquals(5, gated.getStats().getTxnCount());
+        assertEquals(5, gated.getStats().getTransactionCount());
         assertEquals(1, gated.getStats().getDeleteCount());
         assertEquals(3, gated.getStats().getFilterCount());
 
@@ -210,7 +210,7 @@ public abstract class AbstractBloomCollectionNoDuplicatesTest extends AbstractBl
         assertEquals( 2, collection.size() );
 
         assertEquals(4, gated.getStats().getInsertCount());
-        assertEquals(6, gated.getStats().getTxnCount());
+        assertEquals(6, gated.getStats().getTransactionCount());
         assertEquals(2, gated.getStats().getDeleteCount());
         assertEquals(2, gated.getStats().getFilterCount());
 

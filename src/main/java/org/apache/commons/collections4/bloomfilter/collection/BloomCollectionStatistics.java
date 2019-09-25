@@ -28,19 +28,19 @@ import java.util.function.Consumer;
  * has any deletes.
  * </p>
  * <p>
- * Statistics are usually retrieved CollectionConfig object
+ * Statistics are usually retrieved {@link BloomCollectionConfiguration} object
  * <p>
- * In addition the {@code CollectionStats} will notify @{code
+ * In addition the {@code BloomCollectionStatistics} will notify @{code
  * Consumer&lt;Action&gt;} when any change to the collection occurs.
  * </p>
  *
  * @since 4.5
  */
-public final class CollectionStatistics {
+public final class BloomCollectionStatistics {
     /**
      * The type of change being recorded.  Used in an Action.
      */
-    enum Change {
+    enum CHANGE {
         insert, delete, clear
     };
 
@@ -70,7 +70,7 @@ public final class CollectionStatistics {
     /**
      * Construct a CollectionStatistics without a registered change notification consumer.
      */
-    public CollectionStatistics() {
+    public BloomCollectionStatistics() {
         this(null);
     }
 
@@ -80,7 +80,7 @@ public final class CollectionStatistics {
      * @param changeNotification a {@code Consumer} to be notified when the
      *                           collection changes.
      */
-    public CollectionStatistics(Consumer<Action> changeNotification) {
+    public BloomCollectionStatistics(Consumer<Action> changeNotification) {
         filterInserts = 0;
         filterDeletes = 0;
         this.changeNotification = changeNotification;
@@ -106,7 +106,7 @@ public final class CollectionStatistics {
      * @param other the other collection stats to compare to.
      * @return true if the values are the same.
      */
-    public boolean sameValues(CollectionStatistics other) {
+    public boolean sameValues(BloomCollectionStatistics other) {
         return this.filterInserts == other.filterInserts && this.filterDeletes == other.filterDeletes;
     }
 
@@ -116,14 +116,14 @@ public final class CollectionStatistics {
      * @param change The {@code Change} to notify about.
      * @param count The number of {@code Change}s that are being reported.
      */
-    private synchronized void notifyChange(Change change, long count) {
+    private synchronized void notifyChange(CHANGE change, long count) {
         if (changeNotification != null) {
             changeNotification.accept(new Action(change, count));
         }
     }
 
     /**
-     * Get the ActionMapper for this collection.
+     * Gets the ActionMapper for this collection.
      *
      * @return the ActionMapper instance for this collection.
      */
@@ -132,13 +132,13 @@ public final class CollectionStatistics {
     }
 
     /**
-     * Clear all the data. Does not reset the change notification list. Does notify
+     * Clears all the data. Does not reset the change notification list. Does notify
      * the notification list that the data has been reset.
      */
     public void clear() {
         filterInserts = 0;
         filterDeletes = 0;
-        notifyChange(Change.clear, 1);
+        notifyChange(CHANGE.clear, 1);
     }
 
     /**
@@ -172,7 +172,7 @@ public final class CollectionStatistics {
         if (filterInserts < Long.MAX_VALUE) {
             filterInserts++;
         }
-        notifyChange(Change.insert, 1);
+        notifyChange(CHANGE.insert, 1);
     }
 
     /**
@@ -197,7 +197,7 @@ public final class CollectionStatistics {
         } else {
             filterDeletes = Long.MAX_VALUE;
         }
-        notifyChange(Change.delete, count);
+        notifyChange(CHANGE.delete, count);
     }
 
     /**
@@ -225,7 +225,7 @@ public final class CollectionStatistics {
      *
      * @return the transaction count.
      */
-    public long getTxnCount() {
+    public long getTransactionCount() {
         if (filterInserts < (Long.MAX_VALUE - filterDeletes)) {
             return filterInserts + filterDeletes;
         }
@@ -239,7 +239,7 @@ public final class CollectionStatistics {
         /**
          * The change type that is being reported.
          */
-        private Change change;
+        private CHANGE change;
 
         /**
          * The number of changes being reported.
@@ -252,7 +252,7 @@ public final class CollectionStatistics {
          * @param change the type of Change that triggered the action.
          * @param count  the number of changes.
          */
-        public Action(Change change, long count) {
+        public Action(CHANGE change, long count) {
             this.change = change;
             this.count = count;
         }
@@ -262,12 +262,12 @@ public final class CollectionStatistics {
          *
          * @return the change type.
          */
-        public Change getChange() {
+        public CHANGE getChange() {
             return change;
         }
 
         /**
-         * Gets the number of changes of the specifed type.
+         * Gets the number of changes of the specified type.
          *
          * @return the number of changes.
          */

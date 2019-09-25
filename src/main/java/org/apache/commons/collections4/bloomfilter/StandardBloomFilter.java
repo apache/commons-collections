@@ -74,7 +74,7 @@ public class StandardBloomFilter implements BloomFilter {
     }
 
     @Override
-    public boolean inverseMatch(final BloomFilter other) {
+    public final boolean inverseMatch(final BloomFilter other) {
         return other.match(this);
     }
 

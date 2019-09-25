@@ -31,10 +31,13 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 /**
- * A proto Bloom filter definition. <p> The ProtoBloomFilter contains the information
+ * An object that contains the hashes necessary to construct any of a number of
+ * BloomFilter implementations.
+ *
+ * <p> The ProtoBloomFilter contains the information
  * necessary to create a concrete Bloom filter with a given filter configuration. The
  * construction of the ProtoBloomFilter is far more compute expensive than making the
- * concrete bloom filter from the proto filter. Concrete implementations of BloomFilter
+ * concrete bloom filter from the ProtoBloomFilter. Concrete implementations of BloomFilter
  * are built from the ProtoBloomFilter. </p>
  *
  * @see BloomFilterConfiguration
@@ -43,7 +46,7 @@ import java.util.stream.Stream;
 public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 
     private final List<Hash> hashes;
-    private transient Integer hashCode;
+    private final int hashCode;
 
     /**
      * An empty ProtoBloomFilter. Used to create empty BloomFilters.
@@ -51,7 +54,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
     public static final ProtoBloomFilter EMPTY = new ProtoBloomFilter(Collections.emptyList());
 
     /**
-     * Get a builder .
+     * Gets a builder .
      *
      * @return a new builder.
      */
@@ -70,6 +73,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
         this.hashes.addAll(hashes);
         // sort so compareTo and equals work properly
         Collections.sort(this.hashes);
+        hashCode = Objects.hash(hashes);
     }
 
     /**
@@ -110,10 +114,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 
     @Override
     public int hashCode() {
-        if (hashCode == null) {
-            hashCode = Objects.hash(hashes);
-        }
-        return hashCode.intValue();
+        return hashCode;
     }
 
     @Override
