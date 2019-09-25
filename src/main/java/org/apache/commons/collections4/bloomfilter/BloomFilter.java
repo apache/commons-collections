@@ -28,7 +28,7 @@ import java.util.BitSet;
 public interface BloomFilter {
     
     /**
-     * Return true if other &amp; this == other
+     * Returns true if {@code other & this == other}.
      *
      * This is the inverse of the match method.
      *
@@ -40,7 +40,7 @@ public interface BloomFilter {
     boolean inverseMatch(BloomFilter other);
 
     /**
-     * Return true if {@code this & other == this }.
+     * Returns true if {@code this & other == this}.
      *
      * This is the standard Bloom filter match.
      *
@@ -50,8 +50,8 @@ public interface BloomFilter {
     boolean match(BloomFilter other);
 
     /**
-     * Calculate the hamming distance from this Bloom filter to the other. The
-     * hamming distance is defined as this xor other and is the number of bits that
+     * Calculates the hamming distance from this Bloom filter to the other. The
+     * hamming distance is defined as {@code this xor other} and is the number of bits that
      * have to be flipped to convert one filter to the other.
      *
      * @param other The other Bloom filter to calculate the distance to.

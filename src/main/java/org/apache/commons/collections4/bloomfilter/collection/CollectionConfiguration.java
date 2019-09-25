@@ -41,7 +41,7 @@ public class CollectionConfiguration {
     private CollectionStatistics collectionStats;
 
     /**
-     * Constructor.
+     * Construct a collection configuration with the specified gate configuration.
      *
      * @param gateConfig the configuration for the gating filter.
      */

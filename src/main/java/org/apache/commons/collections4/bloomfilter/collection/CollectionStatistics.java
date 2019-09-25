@@ -33,6 +33,7 @@ import java.util.function.Consumer;
  * In addition the {@code CollectionStats} will notify @{code
  * Consumer&lt;Action&gt;} when any change to the collection occurs.
  * </p>
+ * 
  * @since 4.5
  */
 public final class CollectionStatistics {
@@ -67,14 +68,14 @@ public final class CollectionStatistics {
     private ActionMapper actionMapper;
 
     /**
-     * Constructor.
+     * Construct a CollectionStatistics without a registered change notification consumer.
      */
     public CollectionStatistics() {
         this(null);
     }
 
     /**
-     * Constructor with change notification.
+     * Construct a CollectionStatistics with a registered change notification consumer.
      *
      * @param changeNotification a {@code Consumer} to be notified when the
      *                           collection changes.
@@ -100,7 +101,7 @@ public final class CollectionStatistics {
     }
 
     /**
-     * Verify the values of the collection stats are the same.
+     * Verifies the values of the collection stats are the same.
      *
      * @param other the other collection stats to compare to.
      * @return true if the values are the same.
@@ -110,7 +111,8 @@ public final class CollectionStatistics {
     }
 
     /**
-     * Notify of a change.
+     * Notifies of a change.
+     * 
      * @param change The {@code Change} to notify about.
      * @param count The number of {@code Change}s that are being reported.
      */
@@ -140,7 +142,7 @@ public final class CollectionStatistics {
     }
 
     /**
-     * Present a long as an int value. If the long is greater than Integer.MAX_VALUE
+     * Converts a long into an int value. If the long is greater than Integer.MAX_VALUE
      * then return Integer.MAX_VALUE. If it is less than Integer.MIN_VALUE return
      * Integer.MIN_VALUE.
      *
@@ -152,7 +154,7 @@ public final class CollectionStatistics {
     }
 
     /**
-     * Get the number filters. This is the number of inserts less the number of
+     * Gets the number filters. This is the number of inserts less the number of
      * deletes.
      *
      * @return the filter count.
@@ -162,7 +164,7 @@ public final class CollectionStatistics {
     }
 
     /**
-     * Increment the number of inserts. Will only count inserts to Long.MAX_VALUE,
+     * Increments the number of inserts. Will only count inserts to Long.MAX_VALUE,
      * after that value no further incrementing is performed. A change notification
      * is always generated.
      */
@@ -174,7 +176,7 @@ public final class CollectionStatistics {
     }
 
     /**
-     * Increment the number of deletes. Will only count deletes to Long.MAX_VALUE,
+     * Increments the number of deletes. Will only count deletes to Long.MAX_VALUE,
      * after that value no further incrementing is performed. A change notification
      * is always generated.
      */
@@ -183,7 +185,7 @@ public final class CollectionStatistics {
     }
 
     /**
-     * Increment the number of deletes. Will only count deletes to Long.MAX_VALUE,
+     * Increments the number of deletes. Will only count deletes to Long.MAX_VALUE,
      * after that value no further incrementing is performed. A change notification
      * is always generated.
      *
@@ -199,7 +201,7 @@ public final class CollectionStatistics {
     }
 
     /**
-     * Get the insert count.
+     * Gets the insert count.
      *
      * @return the insert count
      */
@@ -208,7 +210,7 @@ public final class CollectionStatistics {
     }
 
     /**
-     * Get the delete count.
+     * Gets the delete count.
      *
      * @return the delete count.
      */
@@ -217,7 +219,7 @@ public final class CollectionStatistics {
     }
 
     /**
-     * Get the transaction count. This is the sum of the number of deletes and the
+     * Gets the transaction count. This is the sum of the number of deletes and the
      * number of inserts. Will return Long.MAX_VALUE if the transaction count
      * exceeds Long.MAX_VALUE;
      *
@@ -256,7 +258,7 @@ public final class CollectionStatistics {
         }
 
         /**
-         * Get the change type for the action.
+         * Gets the change type for the action.
          *
          * @return the change type.
          */
@@ -265,7 +267,7 @@ public final class CollectionStatistics {
         }
 
         /**
-         * Get the number of changes of the specifed type.
+         * Gets the number of changes of the specifed type.
          *
          * @return the number of changes.
          */

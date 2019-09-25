@@ -42,8 +42,8 @@ import java.util.stream.Stream;
  * built from the ProtoBloomFilter.
  * </p>
  *
- * @since 4.5
  * @see BloomFilterConfiguration
+ * @since 4.5
  */
 public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 
@@ -75,10 +75,6 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
         this.hashes.addAll(hashes);
         // sort so compareTo and equals work properly
         Collections.sort(this.hashes);
-    }
-
-    private Object writeReplace() {
-        return new ProtoSerProxy(this);
     }
 
     /**
@@ -153,25 +149,6 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
     }
 
     /**
-     * A Serialization proxy for a ProtoBloomFilter.
-     *
-     */
-    private static class ProtoSerProxy implements Serializable {
-
-        private static final long serialVersionUID = -816173373461613366L;
-
-        private Hash[] hashes;
-
-        ProtoSerProxy(ProtoBloomFilter protoFilter) {
-            this.hashes = protoFilter.hashes.toArray(new Hash[protoFilter.hashes.size()]);
-        }
-
-        private Object readResolve() {
-            return new ProtoBloomFilter(Arrays.asList(hashes));
-        }
-    }
-
-    /**
      * A Bloom Filter hash calculation. This class only stores the result of an
      * external hash calculation. It does not perform the calculation itself.
      * <p>
@@ -182,10 +159,19 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
      */
     public final static class Hash implements Comparable<Hash> {
 
+        /**
+         * The first 64 bits of the hash
+         */
         private final long h1;
+        /**
+         * The second 64 bits of the hash
+         */
         private final long h2;
 
-        private transient Integer hashCode;
+        /**
+         * The hash code for this Hash itself.
+         */
+        private int hashCode;
 
         /**
          * Constructor.
@@ -195,6 +181,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
         public Hash(long h1, long h2) {
             this.h1 = h1;
             this.h2 = h2;
+            this.hashCode = Objects.hash(h1, h2);
         }
 
         /**
@@ -240,10 +227,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 
         @Override
         public int hashCode() {
-            if (hashCode == null) {
-                hashCode = Objects.hash(h1, h2);
-            }
-            return hashCode.intValue();
+           return hashCode;
 
         }
 
@@ -385,11 +369,11 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
         }
 
         /**
-         * Add the proto Bloom filter to the filter as a new hash and build it.
+         * Add the ProtoBloomFilter to the filter as a new hash and build it.
          *
          * This is a convenience method for with(protoBloomFilter).build()
          *
-         * @param protoBloomFilter The proto Bloom filter to add.
+         * @param protoBloomFilter The ProtoBloomFilter to add.
          * @return the defined ProtoBloomFilter.
          */
         public ProtoBloomFilter build(ProtoBloomFilter protoBloomFilter) {
@@ -398,7 +382,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
         }
 
         /**
-         * Add the byte buffer to the proto Bloom filter as a new hash and build it.
+         * Add the byte buffer to the ProtoBloomFilter as a new hash and build it.
          *
          * This is a convenience method for with(buffer).build()
          *
@@ -410,7 +394,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
         }
 
         /**
-         * Add the byte to the proto Bloom filter as a new hash and build it.
+         * Add the byte to the ProtoBloomFilter as a new hash and build it.
          *
          * This is a convenience method for with(b).build()
          *
@@ -422,7 +406,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
         }
 
         /**
-         * Add the bytes from the string to the proto Bloom filter as a new hash and
+         * Add the bytes from the string to the ProtoBloomFilter as a new hash and
          * build it.
          *
          * The bytes are interpreted as UTF-8 chars.
@@ -437,9 +421,9 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
         }
 
         /**
-         * Add the byte array to the proto Bloom filter as a new hash and build it.
+         * Add the byte array to the ProtoBloomFilter as a new hash and build it.
          *
-         * This is a convenience method for with(bufer).build()
+         * This is a convenience method for with(buffer).build()
          *
          * @param buffer The byte buffer to add.
          * @return the defined ProtoBloomFilter.

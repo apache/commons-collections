@@ -92,7 +92,7 @@ public interface BloomFilterGated<T> {
     boolean matches(ProtoBloomFilter proto);
 
     /**
-     * returns true if {@code proto & this == proto }.
+     * Returns true if {@code proto & this == proto }.
      *
      * @param proto the proto Bloom filter to check.
      * @return true if the proto Bloom filter contains the gate for this list.
@@ -100,7 +100,7 @@ public interface BloomFilterGated<T> {
     boolean inverseMatch(ProtoBloomFilter proto);
 
     /**
-     * returns true if {@code filter & this == filter }.
+     * Returns true if {@code filter & this == filter }.
      *
      * @param filter the Bloom filter to check.
      * @return true if {@code filter & this == filter }.
@@ -108,7 +108,7 @@ public interface BloomFilterGated<T> {
     boolean inverseMatch(BloomFilter filter);
 
     /**
-     * Get a stream of candidates that match the filter.
+     * Gets a stream of candidates that match the filter.
      * <p>
      * Some gated containers have a single gating Bloom filter. In this case
      * {@code getCandidates()} returns the same stream as {@code getData{}}.
@@ -123,7 +123,7 @@ public interface BloomFilterGated<T> {
     Stream<T> getCandidates(BloomFilter filter);
 
     /**
-     * Get a stream of candidates that match the filter.
+     * Gets a stream of candidates that match the filter.
      * <p>
      * Some gated containers have a single gating Bloom filter. In this case
      * {@code getCandidates()} returns the same stream as {@code getData{}}.
@@ -138,14 +138,14 @@ public interface BloomFilterGated<T> {
     Stream<T> getCandidates(ProtoBloomFilter proto);
 
     /**
-     * Get all the data from this container.
+     * Gets all the data from this container.
      *
      * @return a stream of all the data in this container.
      */
     Stream<T> getData();
 
     /**
-     * Return true if the collection contains the object specified by the bloom
+     * Returns true if the collection contains the object specified by the bloom
      * filter. The Bloom filter is used to locate candidates which are then checked
      * for equality with obj.
      *
@@ -156,20 +156,20 @@ public interface BloomFilterGated<T> {
     boolean contains(ProtoBloomFilter proto, T obj);
 
     /**
-     * Get the collection statistics for this gated filter.
+     * Gets the collection statistics for this gated filter.
      *
      * @return the collection statistics.
      */
     CollectionStatistics getStats();
 
     /**
-     * Clear this collection. Must remove all stored data as well as clear the
+     * Clears this collection. Must remove all stored data as well as clear the
      * filter and reset the collection statistics.
      */
     void clear();
 
     /**
-     * Add an object to the collection.
+     * Adds an object to the collection.
      *
      * @param proto the proto Bloom filter for the object.
      * @param t     the object to add.
@@ -178,7 +178,7 @@ public interface BloomFilterGated<T> {
     boolean add(ProtoBloomFilter proto, T t);
 
     /**
-     * Remove an object from, the collection.
+     * Removes an object from, the collection.
      *
      * @param proto the proto Bloom filter for the object.
      * @param t     the object to remove.
@@ -187,7 +187,7 @@ public interface BloomFilterGated<T> {
     boolean remove(ProtoBloomFilter proto, T t);
 
     /**
-     * Retain only the in the map in the collection. The map is keyed by proto bloom
+     * Retains only the in the map in the collection. The map is keyed by proto bloom
      * filter by has multiple T objects.
      *
      * @param map A proto Bloom filter to object map.
@@ -196,14 +196,14 @@ public interface BloomFilterGated<T> {
     boolean retainAll(MultiValuedMap<ProtoBloomFilter, T> map);
 
     /**
-     * Return true if the collection is empty
+     * Returns true if the collection is empty
      *
      * @return true if the collection is empty.
      */
     boolean isEmpty();
 
     /**
-     * Return a count of the objects in the collection.
+     * Returns a count of the objects in the collection.
      *
      * @return the number of objects in the collection.
      */

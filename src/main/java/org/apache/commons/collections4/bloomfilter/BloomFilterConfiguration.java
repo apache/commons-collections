@@ -47,7 +47,7 @@ public final class BloomFilterConfiguration {
     private static final double LOG_OF_2 = Math.log(2.0);
 
     /**
-     * 1 / 2^log(2) =  ~ −0.090619058
+     * 1 / 2^log(2) approx −0.090619058
      */ 
     private static final double DENOMINATOR = Math.log(1.0 / (Math.pow(2.0, LOG_OF_2)));
     /**

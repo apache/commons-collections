@@ -90,6 +90,7 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
 
     /**
      * Make a Bloom filter for this collection from the ProtoBloomFilter.
+     * 
      * @param proto the ProtoBloomFilter to create the BloomFilter from.
      * @return the BloomFilter for the gate definition.
      */
@@ -99,6 +100,7 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
 
     /**
      * Make a Bloom filter for this collection from the object of type T.
+     * 
      * @param t An object of type T.
      * @return the BloomFilter for the gate definition.
      */

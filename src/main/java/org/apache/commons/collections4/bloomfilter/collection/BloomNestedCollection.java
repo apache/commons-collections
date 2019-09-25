@@ -92,6 +92,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
      * The function {@code func} should use a {@code ProtoBloomFilter.Builder} to
      * hash various values from a {@code T} instance.
      * </p>
+     * 
      * @param func          the function that converts object of type {@code T} to
      *                      ProtoBloomFilters.
      * @param minFree       the minimum number of free buckets.
@@ -133,6 +134,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
 
     /**
      * Create a BloomFilter with the Gate definition. 
+     * 
      * @param proto the ProtoBloomFilter to create the BloomFilter from.
      * @return the new BloomFilter.
      */
@@ -478,7 +480,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
         private final Function<T, ProtoBloomFilter> func;
 
         /**
-         * Constructor.
+         * Construct a BucketFactory with the specified function and configuration.
          *
          * @param func         the function to convert from T to ProtoBloomFilter.
          * @param filterConfig the FilterConfiguration for the gating filter.
@@ -524,7 +526,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
         private final Function<T, ProtoBloomFilter> func;
 
         /**
-         * Constructor.
+         * Construct a BucketFactory with the specified function and configuration.
          *
          * @param func         the function to convert from T to ProtoBloomFilter.
          * @param filterConfig the FilterConfiguration for the gating filter.
