@@ -33,13 +33,13 @@ import java.util.Set;
  * <p>
  * For example:
  * </p>
- * <pre>
- * MultiValuedMap&lt;K, String&gt; map = new MultiValuedHashMap&lt;K, String&gt;();
- * map.put(key, &quot;A&quot;);
- * map.put(key, &quot;B&quot;);
- * map.put(key, &quot;C&quot;);
- * Collection&lt;String&gt; coll = map.get(key);
- * </pre>
+ * <pre>{@code
+ * MultiValuedMap<Integer, String> map = new ArrayListValuedHashMap<>();
+ * map.put(1, "A");
+ * map.put(1, "B");
+ * map.put(1, "C");
+ * Collection<String> coll = map.get(1);
+ * }</pre>
  * <p>
  * <code>coll</code> will be a collection containing "A", "B", "C".
  * </p>
