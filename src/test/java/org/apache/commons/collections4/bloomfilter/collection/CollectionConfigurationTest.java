@@ -32,7 +32,7 @@ import org.apache.commons.collections4.bloomfilter.collection.CollectionStatisti
 import org.junit.Before;
 import org.junit.Test;
 
-public class CollectionConfigTest {
+public class CollectionConfigurationTest {
 
     BloomFilterConfiguration filterConfig = new BloomFilterConfiguration(5, 1.0/5);
     CollectionConfiguration config;

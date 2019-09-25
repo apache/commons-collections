@@ -35,7 +35,7 @@ import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.junit.Test;
 
-public class FilterConfigTest {
+public class BloomFilterConfigurationTest {
 
     /*
      * values from https://hur.st/bloomfilter/?n=5&p=.1&m=&k=

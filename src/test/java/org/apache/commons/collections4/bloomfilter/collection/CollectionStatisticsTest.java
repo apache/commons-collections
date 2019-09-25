@@ -29,7 +29,7 @@ import org.apache.commons.collections4.bloomfilter.collection.CollectionStatisti
 import org.junit.Before;
 import org.junit.Test;
 
-public class CollectionStatsTest {
+public class CollectionStatisticsTest {
 
     private CollectionStatistics stats;
 
