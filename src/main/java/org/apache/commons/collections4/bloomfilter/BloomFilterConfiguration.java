@@ -17,53 +17,50 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
+import java.util.BitSet;
 import java.util.Objects;
 
 /**
- * The definition of a filter configuration.  
- * A simple Bloom filter configuration implementation that derives the values
- * from the number of items and the probability of collision.
- * 
- * <p>
- * This interface defines the values for the filter configuration and is used to
- * convert a ProtoBloomFilter into a BloomFilter.
- * </p>
- * 
- * <p>
- * This class contains the values for the filter configuration and is used to
- * convert a ProtoBloomFilter into a BloomFilter.
- * </p>
+ * The definition of a filter configuration. A simple Bloom filter configuration
+ * implementation that derives the values from the number of items and the probability of
+ * collision.
  *
- * @see <a href="http://hur.st/bloomfilter?n=3&p=1.0E-5">Bloom Filter
- *      calculator</a>
+ * <p> This interface defines the values for the filter configuration and is used to
+ * convert a ProtoBloomFilter into a BloomFilter. </p>
  *
- * @since 4.5 
+ * <p> This class contains the values for the filter configuration and is used to convert
+ * a ProtoBloomFilter into a BloomFilter. </p>
+ *
+ * @see <a href="http://hur.st/bloomfilter?n=3&p=1.0E-5">Bloom Filter calculator</a>
+ * @see <a href="https://en.wikipedia.org/wiki/Bloom_filter">Bloom filter [Wikipedia]</a>
+ *
+ * @since 4.5
  */
 public final class BloomFilterConfiguration {
 
     /**
-     * The natural logarithm of 2.
+     * The natural logarithm of 2. Used in several calculations.
      */
     private static final double LOG_OF_2 = Math.log(2.0);
 
     /**
-     * 1 / 2^log(2) approx −0.090619058
-     */ 
+     * 1 / 2^log(2) approx −0.090619058. Used in calculating the number of bits.
+     */
     private static final double DENOMINATOR = Math.log(1.0 / (Math.pow(2.0, LOG_OF_2)));
     /**
-     *  number of items in the filter
+     * number of items in the filter
      */
     private final int numberOfItems;
-    /** 
+    /**
      * probability of false positives.
      */
     private final double probability;
     /**
-     *  number of bits in the filter;
+     * number of bits in the filter;
      */
     private final int numberOfBits;
     /**
-     *  number of hash functions
+     * number of hash functions
      */
     private final int numberOfHashFunctions;
 
@@ -73,11 +70,10 @@ public final class BloomFilterConfiguration {
     private final int hashCode;
 
     /**
-     * Create a filter configuration with the specified number of items and
-     * probability.
+     * Create a filter configuration with the specified number of items and probability.
      *
      * @param numberOfItems Number of items to be placed in the filter.
-     * @param probability   The probability of duplicates. Must be in the range (0.0,1.0).
+     * @param probability The probability of duplicates. Must be in the range (0.0,1.0).
      */
     public BloomFilterConfiguration(final int numberOfItems, final double probability) {
         if (numberOfItems < 1) {
@@ -98,10 +94,9 @@ public final class BloomFilterConfiguration {
         this.numberOfBits = dm.intValue();
         final Long lk = Math.round((LOG_OF_2 * numberOfBits) / numberOfItems);
         /*
-         * normally we would check that lk is <- Integer.MAX_VALUE but since
-         * numberOfBits is at most Integer.MAX_VALUE the numerator of lk is log(2) *
-         * Integer.MAX_VALUE = 646456992.9449 the value of lk can not be above
-         * Integer.MAX_VALUE.
+         * normally we would check that lk is <- Integer.MAX_VALUE but since numberOfBits
+         * is at most Integer.MAX_VALUE the numerator of lk is log(2) * Integer.MAX_VALUE
+         * = 646456992.9449 the value of lk can not be above Integer.MAX_VALUE.
          */
         numberOfHashFunctions = lk.intValue();
         hashCode = Objects.hash(numberOfBits, numberOfHashFunctions, numberOfItems, probability);
@@ -112,11 +107,11 @@ public final class BloomFilterConfiguration {
      *
      * @return the number of items.
      */
-   
+
     public int getNumberOfItems() {
         return numberOfItems;
     }
-    
+
     /**
      * Gets the probability of a false positive (collision). AKA: {@code p}
      *
@@ -157,9 +152,9 @@ public final class BloomFilterConfiguration {
     public boolean equals(Object o) {
         if (o instanceof BloomFilterConfiguration) {
             BloomFilterConfiguration other = (BloomFilterConfiguration) o;
-            return other.getNumberOfBits() == getNumberOfBits()
-                    && other.getNumberOfHashFunctions() == getNumberOfHashFunctions()
-                    && other.getNumberOfItems() == getNumberOfItems() && other.getProbability() == getProbability();
+            return other.getNumberOfBits() == getNumberOfBits() &&
+                other.getNumberOfHashFunctions() == getNumberOfHashFunctions() &&
+                other.getNumberOfItems() == getNumberOfItems() && other.getProbability() == getProbability();
         }
         return false;
     }
@@ -169,5 +164,46 @@ public final class BloomFilterConfiguration {
         return hashCode;
     }
 
-    
+    /**
+     * Estimates the number of items in a Bloom filter based on this configuration and the
+     * number of bits that are enabled.
+     *
+     * @param filter the filter to check.
+     * @return and estimate of the number of items that were placed in the Bloom filter.
+     */
+    public long estimateSize(BloomFilter filter) {
+        double estimate = -(getNumberOfBits() * 1.0 / getNumberOfHashFunctions()) *
+            Math.log(1.0 - (filter.getHammingWeight() * 1.0 / getNumberOfBits()));
+        return Math.round( estimate );
+    }
+
+    /**
+     * Estimates the number of items in the union of the sets fronted by two Bloom
+     * filters.
+     *
+     * @param filter1 the first Bloom filter.
+     * @param filter2 the second Bloom filter.
+     * @return an estimate of the size of the union between the two filters.
+     */
+    public long estimateUnionSize(BloomFilter filter1, BloomFilter filter2) {
+        BitSet union = filter1.getBitSet();
+        union.or(filter2.getBitSet());
+
+        double estimate = -(getNumberOfBits() * 1.0 / getNumberOfHashFunctions()) *
+            Math.log(1 - union.cardinality() * 1.0 / getNumberOfBits());
+        return Math.round( estimate );
+    }
+
+    /**
+     * Estimates the number of items in the intersection of the sets fronted by two Bloom
+     * filters.
+     *
+     * @param filter1 the first Bloom filter.
+     * @param filter2 the second Bloom filter.
+     * @return an estimate of the size of the intersection between the two filters.
+     */
+    public long estimateIntersectionSize(BloomFilter filter1, BloomFilter filter2) {
+        // do subtraction early to avoid Long overflow.
+        return estimateSize(filter1) - estimateUnionSize(filter1, filter2) + estimateSize(filter2);
+    }
 }

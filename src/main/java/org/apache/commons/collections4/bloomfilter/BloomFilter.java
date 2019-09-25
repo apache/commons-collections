@@ -15,24 +15,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.BitSet;
 
 /**
- * The interface for all BloomFilter implementations. Instances of BloomFilters
- * should be immutable.
- *  
+ * The interface for all BloomFilter implementations. Instances of BloomFilters should be
+ * immutable.
+ *
  * @since 4.5
  */
 public interface BloomFilter {
-    
+
     /**
-     * Returns true if {@code other & this == other}.
-     *
-     * This is the inverse of the match method.
-     *
-     * {@code X.match(Y)} is the same as {@code Y.inverseMatch(X) }
+     * Returns true if {@code other & this == other}. <p> This is the inverse of the match
+     * method. </p> {@code X.match(Y)} is the same as {@code Y.inverseMatch(X) }
      *
      * @param other the other Bloom filter to match.
      * @return true if they match.
@@ -50,9 +48,9 @@ public interface BloomFilter {
     boolean match(BloomFilter other);
 
     /**
-     * Calculates the hamming distance from this Bloom filter to the other. The
-     * hamming distance is defined as {@code this xor other} and is the number of bits that
-     * have to be flipped to convert one filter to the other.
+     * Calculates the hamming distance from this Bloom filter to the other. The hamming
+     * distance is defined as {@code this xor other} and is the number of bits that have
+     * to be flipped to convert one filter to the other.
      *
      * @param other The other Bloom filter to calculate the distance to.
      * @return the distance.
@@ -69,9 +67,9 @@ public interface BloomFilter {
     int getHammingWeight();
 
     /**
-     * Gets the log2 (log base 2) of this Bloom filter. This is the base 2 logarithm of this
-     * Bloom filter if the bits in this filter were considers the bits in an
-     * unsigned integer.
+     * Gets the log2 (log base 2) of this Bloom filter. This is the base 2 logarithm of
+     * this Bloom filter if the bits in this filter were considers the bits in an unsigned
+     * integer.
      *
      * @return the base 2 logarithm
      */

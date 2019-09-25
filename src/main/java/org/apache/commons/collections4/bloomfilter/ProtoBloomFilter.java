@@ -17,11 +17,9 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.Collections;
@@ -33,14 +31,11 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 /**
- * A proto Bloom filter definition.
- * <p>
- * The ProtoBloomFilter contains the information necessary to create a concrete
- * Bloom filter with a given filter configuration. The construction of the
- * ProtoBloomFilter is far more compute expensive than making the concrete bloom
- * filter from the proto filter. Concrete implementations of BloomFilter are
- * built from the ProtoBloomFilter.
- * </p>
+ * A proto Bloom filter definition. <p> The ProtoBloomFilter contains the information
+ * necessary to create a concrete Bloom filter with a given filter configuration. The
+ * construction of the ProtoBloomFilter is far more compute expensive than making the
+ * concrete bloom filter from the proto filter. Concrete implementations of BloomFilter
+ * are built from the ProtoBloomFilter. </p>
  *
  * @see BloomFilterConfiguration
  * @since 4.5
@@ -149,13 +144,10 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
     }
 
     /**
-     * A Bloom Filter hash calculation. This class only stores the result of an
-     * external hash calculation. It does not perform the calculation itself.
-     * <p>
-     * The hash is calculated as a 128-bit value. We store this as two 64-bit
-     * values. We can then rapidly calculate the Bloom filter for any given
-     * configuration.
-     * </p>
+     * A Bloom Filter hash calculation. This class only stores the result of an external
+     * hash calculation. It does not perform the calculation itself. <p> The hash is
+     * calculated as a 128-bit value. We store this as two 64-bit values. We can then
+     * rapidly calculate the Bloom filter for any given configuration. </p>
      */
     public final static class Hash implements Comparable<Hash> {
 
@@ -175,6 +167,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 
         /**
          * Constructor.
+         *
          * @param h1 the first half of the 128-bit hash value
          * @param h2 the second half of the 128-bit hash value.
          */
@@ -187,7 +180,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
         /**
          * Turn on the appropriate bits in the bitset
          *
-         * @param set    the bit set to modify
+         * @param set the bit set to modify
          * @param config the filter configuration.
          * @return the set parameter for chaining.
          */
@@ -227,7 +220,7 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
 
         @Override
         public int hashCode() {
-           return hashCode;
+            return hashCode;
 
         }
 
@@ -248,29 +241,21 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
     }
 
     /**
-     * A ProtoBloomFilter Builder.
-     * <p>
-     * A Bloom filter may contain one or more items hashed together to make the
-     * filter.
-     * </p>
-     * <p>
-     * There are two ways to hash the properties of objects.</p>
-     * <ol>
-     * <li>One is to create a buffer containing all the properties and hash that.
-     * This means that the search for the object must construct the same filter and
-     * search for it. It is not possible to locate an object by a partial property
-     * match. In this case each object is counted as a single item as specified in
-     * the FilterConfig.</li>
-     * <li>The other is to hash each item separately. In this case each of the
-     * properties can be searched for individually. However, in this case the number
-     * of items that should be specified in the FilterConfig is the sum of the
-     * cardinality of the properties being hashed.</li>
-     * </ol>
+     * A ProtoBloomFilter Builder. <p> A Bloom filter may contain one or more items hashed
+     * together to make the filter. </p> <p> There are two ways to hash the properties of
+     * objects.</p> <ol> <li>One is to create a buffer containing all the properties and
+     * hash that. This means that the search for the object must construct the same filter
+     * and search for it. It is not possible to locate an object by a partial property
+     * match. In this case each object is counted as a single item as specified in the
+     * FilterConfig.</li> <li>The other is to hash each item separately. In this case each
+     * of the properties can be searched for individually. However, in this case the
+     * number of items that should be specified in the FilterConfig is the sum of the
+     * cardinality of the properties being hashed.</li> </ol>
      *
      * @since 4.5
      */
     public static final class Builder {
-        
+
         /**
          * The set of hashes used to build the ProtoBloomFilter.
          */
@@ -283,9 +268,10 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
         private Builder() {
             hashes = new HashSet<Hash>();
         }
-        
+
         /**
          * Gets the collection of hashes from the builder.
+         *
          * @return the collection of hashes.
          */
         public Set<Hash> getHashes() {
@@ -323,12 +309,11 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
          * @return this for chaining
          */
         public Builder with(byte b) {
-            return with(ByteBuffer.wrap(new byte[] { b }));
+            return with(ByteBuffer.wrap(new byte[] {b}));
         }
 
         /**
-         * Add the bytes from the string to the proto Bloom filter as a new hashed
-         * value.
+         * Add the bytes from the string to the proto Bloom filter as a new hashed value.
          *
          * The bytes are interpreted as UTF-8 chars.
          *
@@ -406,8 +391,8 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
         }
 
         /**
-         * Add the bytes from the string to the ProtoBloomFilter as a new hash and
-         * build it.
+         * Add the bytes from the string to the ProtoBloomFilter as a new hash and build
+         * it.
          *
          * The bytes are interpreted as UTF-8 chars.
          *
@@ -438,13 +423,10 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
         private long getblock(ByteBuffer key, int offset, int index) {
             int i_8 = index << 3;
             int blockOffset = offset + i_8;
-            return ((long) key.get(blockOffset + 0) & 0xff) + (((long) key.get(blockOffset + 1) & 0xff) << 8)
-                    + (((long) key.get(blockOffset + 2) & 0xff) << 16)
-                    + (((long) key.get(blockOffset + 3) & 0xff) << 24)
-                    + (((long) key.get(blockOffset + 4) & 0xff) << 32)
-                    + (((long) key.get(blockOffset + 5) & 0xff) << 40)
-                    + (((long) key.get(blockOffset + 6) & 0xff) << 48)
-                    + (((long) key.get(blockOffset + 7) & 0xff) << 56);
+            return ((long) key.get(blockOffset + 0) & 0xff) + (((long) key.get(blockOffset + 1) & 0xff) << 8) +
+                (((long) key.get(blockOffset + 2) & 0xff) << 16) + (((long) key.get(blockOffset + 3) & 0xff) << 24) +
+                (((long) key.get(blockOffset + 4) & 0xff) << 32) + (((long) key.get(blockOffset + 5) & 0xff) << 40) +
+                (((long) key.get(blockOffset + 6) & 0xff) << 48) + (((long) key.get(blockOffset + 7) & 0xff) << 56);
         }
 
         private long rotl64(long v, int n) {
@@ -495,36 +477,50 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
             switch (length & 15) {
             case 15:
                 k2 ^= ((long) key.get(offset + 14)) << 48;
+                // fallthrough
             case 14:
                 k2 ^= ((long) key.get(offset + 13)) << 40;
+                // fallthrough
             case 13:
                 k2 ^= ((long) key.get(offset + 12)) << 32;
+                // fallthrough
             case 12:
                 k2 ^= ((long) key.get(offset + 11)) << 24;
+                // fallthrough
             case 11:
                 k2 ^= ((long) key.get(offset + 10)) << 16;
+                // fallthrough
             case 10:
                 k2 ^= ((long) key.get(offset + 9)) << 8;
+                // fallthrough
             case 9:
                 k2 ^= ((long) key.get(offset + 8)) << 0;
                 k2 *= c2;
                 k2 = rotl64(k2, 33);
                 k2 *= c1;
                 h2 ^= k2;
+                // fallthrough
             case 8:
                 k1 ^= ((long) key.get(offset + 7)) << 56;
+                // fallthrough
             case 7:
                 k1 ^= ((long) key.get(offset + 6)) << 48;
+                // fallthrough
             case 6:
                 k1 ^= ((long) key.get(offset + 5)) << 40;
+                // fallthrough
             case 5:
                 k1 ^= ((long) key.get(offset + 4)) << 32;
+                // fallthrough
             case 4:
                 k1 ^= ((long) key.get(offset + 3)) << 24;
+                // fallthrough
             case 3:
                 k1 ^= ((long) key.get(offset + 2)) << 16;
+                // fallthrough
             case 2:
                 k1 ^= ((long) key.get(offset + 1)) << 8;
+                // fallthrough
             case 1:
                 k1 ^= (key.get(offset));
                 k1 *= c1;

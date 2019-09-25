@@ -44,7 +44,7 @@ import org.apache.commons.collections4.bloomfilter.StandardBloomFilter;
  * <p>
  * This class can serve an an example of how to implement BloomFilterGated.
  * </p>
- * 
+ *
  * @param <T> the type of object in the collection.
  *
  * @since 4.5
@@ -55,7 +55,7 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
      * The collection this implementation wraps.
      */
     private final Collection<T> wrapped;
-    
+
     /**
      * Function to convert T to ProtoBloomFilter filter.
      */
@@ -79,7 +79,8 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
      * @param func         a function to convert from T to ProtoBloomFilter.
      * @see ProtoBloomFilter.Builder
      */
-    public BloomCollection(Collection<T> wrapped, BloomFilterConfiguration filterConfig, Function<T, ProtoBloomFilter> func) {
+    public BloomCollection(Collection<T> wrapped, BloomFilterConfiguration filterConfig,
+        Function<T, ProtoBloomFilter> func) {
         this.wrapped = wrapped;
         this.config = new CollectionConfiguration(filterConfig);
         this.func = func;
@@ -90,7 +91,7 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
 
     /**
      * Make a Bloom filter for this collection from the ProtoBloomFilter.
-     * 
+     *
      * @param proto the ProtoBloomFilter to create the BloomFilter from.
      * @return the BloomFilter for the gate definition.
      */
@@ -100,7 +101,7 @@ public class BloomCollection<T> implements BloomFilterGated<T>, Collection<T> {
 
     /**
      * Make a Bloom filter for this collection from the object of type T.
-     * 
+     *
      * @param t An object of type T.
      * @return the BloomFilter for the gate definition.
      */

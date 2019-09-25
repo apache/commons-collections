@@ -33,7 +33,7 @@ import java.util.function.Consumer;
  * In addition the {@code CollectionStats} will notify @{code
  * Consumer&lt;Action&gt;} when any change to the collection occurs.
  * </p>
- * 
+ *
  * @since 4.5
  */
 public final class CollectionStatistics {
@@ -48,17 +48,17 @@ public final class CollectionStatistics {
      * The number of inserts that have been made into the bloom filter.
      */
     private long filterInserts;
-    
+
     /**
      * The number of deletes that have been made into the bloom filter.
      */
     private long filterDeletes;
-    
+
     /**
      * A consumer of {@code Action} that respond to {@code Change}s.
      */
     private Consumer<Action> changeNotification;
-    
+
     /**
      * An implementation of ActionMapper that uses the {@code Action}s to
      * modify the values of this CollectionStatistics instance.  This is
@@ -112,7 +112,7 @@ public final class CollectionStatistics {
 
     /**
      * Notifies of a change.
-     * 
+     *
      * @param change The {@code Change} to notify about.
      * @param count The number of {@code Change}s that are being reported.
      */
@@ -240,7 +240,7 @@ public final class CollectionStatistics {
          * The change type that is being reported.
          */
         private Change change;
-        
+
         /**
          * The number of changes being reported.
          */

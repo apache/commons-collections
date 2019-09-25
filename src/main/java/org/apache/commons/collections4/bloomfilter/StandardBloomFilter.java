@@ -31,7 +31,7 @@ public class StandardBloomFilter implements BloomFilter {
      * An empty BloomFilter
      */
     public static final StandardBloomFilter EMPTY = new StandardBloomFilter(new BitSet(0));
-    
+
     /**
      * The maximum log depth at which the log calculation makes no
      * difference to the result.
@@ -146,12 +146,12 @@ public class StandardBloomFilter implements BloomFilter {
      * Gets the mantissa and characteristic powers of the log.
      * The mantissa is in position position 0. The remainder are
      * characteristic powers.
-     * 
-     * The depth is the depth to probe for characteristics.  The 
+     *
+     * The depth is the depth to probe for characteristics.  The
      * effective limit is 25 as beyond that the value of the calculated
      * double does not change.
      *
-     * @param depth the depth to probe. 
+     * @param depth the depth to probe.
      * @return An array of depth integers that are the exponents.
      */
     private int[] getApproximateLogExponents(int depth) {

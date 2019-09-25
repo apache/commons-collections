@@ -70,17 +70,17 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
      * The list of buckets
      */
     final Collection<BloomFilterGated<T>> buckets;
-    
+
     /**
      * Function to convert T to ProtoBloomFilter filter.
      */
     private final Function<T, ProtoBloomFilter> func;
-    
+
     /**
      * The collection configuration.
      */
     private final CollectionConfiguration collectionConfig;
-    
+
     /**
      * The bucket factory.
      */
@@ -92,7 +92,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
      * The function {@code func} should use a {@code ProtoBloomFilter.Builder} to
      * hash various values from a {@code T} instance.
      * </p>
-     * 
+     *
      * @param func          the function that converts object of type {@code T} to
      *                      ProtoBloomFilters.
      * @param minFree       the minimum number of free buckets.
@@ -133,8 +133,8 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
     }
 
     /**
-     * Create a BloomFilter with the Gate definition. 
-     * 
+     * Create a BloomFilter with the Gate definition.
+     *
      * @param proto the ProtoBloomFilter to create the BloomFilter from.
      * @return the new BloomFilter.
      */
@@ -473,7 +473,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
          * The Bloom filter configuration for the gate.
          */
         private final BloomFilterConfiguration filterConfig;
-        
+
         /**
          * Function to convert T to ProtoBloomFilter filter.
          */
@@ -519,7 +519,7 @@ public class BloomNestedCollection<T> implements BloomFilterGated<T>, Collection
          * The Bloom filter configuration for the gate.
          */
         private final BloomFilterConfiguration filterConfig;
-        
+
         /**
          * Function to convert T to ProtoBloomFilter filter.
          */

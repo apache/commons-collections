@@ -28,6 +28,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.BitSet;
 import java.util.Objects;
 
 import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
@@ -47,7 +48,7 @@ public class FilterConfigTest {
      *
      * k = 3
      */
-    BloomFilterConfiguration filterConfig = new BloomFilterConfiguration(5, 1.0/10);
+    BloomFilterConfiguration filterConfig = new BloomFilterConfiguration(5, 1.0 / 10);
 
     @Test
     public void constructorTest() {
@@ -56,14 +57,14 @@ public class FilterConfigTest {
         assertEquals(3, filterConfig.getNumberOfBytes());
         assertEquals(3, filterConfig.getNumberOfHashFunctions());
         assertEquals(5, filterConfig.getNumberOfItems());
-        assertEquals(1.0/10, filterConfig.getProbability(), 0.000001);
+        assertEquals(1.0 / 10, filterConfig.getProbability(), 0.000001);
 
     }
 
     @Test
     public void constructorOverflowTest() {
         try {
-            new BloomFilterConfiguration(Integer.MAX_VALUE, 1.0/10);
+            new BloomFilterConfiguration(Integer.MAX_VALUE, 1.0 / 10);
             fail("Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected) {
             // do nothing.
@@ -73,7 +74,7 @@ public class FilterConfigTest {
     @Test
     public void constructorBadNumberOfItemsTest() {
         try {
-            new BloomFilterConfiguration(0, 1.0/10);
+            new BloomFilterConfiguration(0, 1.0 / 10);
             fail("Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected) {
             // do nothing.
@@ -88,7 +89,7 @@ public class FilterConfigTest {
         } catch (IllegalArgumentException expected) {
             // do nothing.
         }
-        
+
         try {
             new BloomFilterConfiguration(10, 1.0);
             fail("Should have thrown IllegalArgumentException");
@@ -96,24 +97,70 @@ public class FilterConfigTest {
             // do nothing.
         }
     }
-    
+
     @Test
     public void equalsTest() {
-        
-        assertEquals( new BloomFilterConfiguration(5, 1.0/10), filterConfig );
-        assertNotEquals( new BloomFilterConfiguration(5, 1.0/11), filterConfig );
-        assertNotEquals( new BloomFilterConfiguration(4, 1.0/10), filterConfig );
-        assertFalse( filterConfig.equals( filterConfig.toString() ));
-        
+
+        assertEquals(new BloomFilterConfiguration(5, 1.0 / 10), filterConfig);
+        assertNotEquals(new BloomFilterConfiguration(5, 1.0 / 11), filterConfig);
+        assertNotEquals(new BloomFilterConfiguration(4, 1.0 / 10), filterConfig);
+        assertFalse(filterConfig.equals(filterConfig.toString()));
+
     }
-    
+
     @Test
     public void hashCodeTest() {
-        int hashCode = Objects.hash(24, 3, 5, 1.0/10 );
-        
-        assertEquals( hashCode, filterConfig.hashCode());
+        int hashCode = Objects.hash(24, 3, 5, 1.0 / 10);
+
+        assertEquals(hashCode, filterConfig.hashCode());
         // forces path throgh previously calcualted hashCode
-        assertNotEquals( hashCode+1, filterConfig.hashCode());
-           
+        assertNotEquals(hashCode + 1, filterConfig.hashCode());
+
+    }
+
+    @Test
+    public void estimateSizeTest() {
+        // build a filter
+        ProtoBloomFilter proto1 = ProtoBloomFilter.builder().with("Hello").build("World");
+        BloomFilter filter1 = new StandardBloomFilter(proto1, filterConfig);
+        long estimate = filterConfig.estimateSize(filter1);
+        // the data provided above do not generate an estimate that is equivalent to the
+        // actual.
+        assertEquals(1, estimate);
+
+        ProtoBloomFilter proto2 = ProtoBloomFilter.builder().with("Goodbyte").with("Cruel").build("World");
+        BloomFilter filter2 = new StandardBloomFilter(proto2, filterConfig);
+        estimate = filterConfig.estimateSize(filter2);
+        assertEquals(3, estimate);
+
+        BloomFilter filter3 = filter1.merge(filter2);
+        estimate = filterConfig.estimateSize(filter3);
+        assertEquals(3, estimate);
+    }
+
+    @Test
+    public void estimateUnionSizeTest() {
+        // build a filter
+        ProtoBloomFilter proto1 = ProtoBloomFilter.builder().with("Hello").build("World");
+        BloomFilter filter1 = new StandardBloomFilter(proto1, filterConfig);
+
+        ProtoBloomFilter proto2 = ProtoBloomFilter.builder().with("Goodbyte").with("Cruel").build("World");
+        BloomFilter filter2 = new StandardBloomFilter(proto2, filterConfig);
+        long estimate = filterConfig.estimateUnionSize(filter1, filter2);
+        assertEquals(3, estimate);
+
+    }
+
+    @Test
+    public void estimateIntersectionSizeTest() {
+        // build a filter
+        ProtoBloomFilter proto1 = ProtoBloomFilter.builder().with("Hello").build("World");
+        BloomFilter filter1 = new StandardBloomFilter(proto1, filterConfig);
+
+        ProtoBloomFilter proto2 = ProtoBloomFilter.builder().with("Goodbyte").with("Cruel").build("World");
+        BloomFilter filter2 = new StandardBloomFilter(proto2, filterConfig);
+        long estimate = filterConfig.estimateIntersectionSize(filter1, filter2);
+        assertEquals(1, estimate);
+
     }
 }
