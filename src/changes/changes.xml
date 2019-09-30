@@ -33,7 +33,7 @@
     <action issue="COLLECTIONS-679" dev="ggregory" type="fix" due-to="David Mollitor, Mikko Maunu">
       Using existing class in example given in Javadocs. #85.
     </action>
-    <action dev="ggregory" type="fix" due-to="dota17">
+    <action issue="COLLECTIONS-729" dev="ggregory" type="fix" due-to="dota17">
       Add test cases to IteratorUtilsTest #86.
     </action>
   </release>
