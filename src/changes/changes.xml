@@ -30,6 +30,12 @@
     <action issue="COLLECTIONS-727" dev="ggregory" type="fix" due-to="XiangzheXu, XZ-X">
       A potential misleading comment #82.
     </action>
+    <action issue="COLLECTIONS-679" dev="ggregory" type="fix" due-to="David Mollitor, Mikko Maunu">
+      Using existing class in example given in Javadocs. #85.
+    </action>
+    <action issue="COLLECTIONS-729" dev="ggregory" type="fix" due-to="dota17">
+      Add test cases to IteratorUtilsTest #86.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">

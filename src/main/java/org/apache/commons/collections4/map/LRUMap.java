@@ -333,7 +333,7 @@ public class LRUMap<K, V>
                     throw new IllegalStateException(
                         "Entry.after=null, header.after=" + header.after + " header.before=" + header.before +
                         " key=" + key + " value=" + value + " size=" + size + " maxSize=" + maxSize +
-                        " This should not occur if your keys are immutable, and you have used synchronization properly.");
+                        " This should not occur if your keys are immutable and you used synchronization properly.");
                 }
             } else {
                 removeLRUEntry = removeLRU(reuse);
@@ -344,7 +344,7 @@ public class LRUMap<K, V>
                     throw new IllegalStateException(
                         "reuse=null, header.after=" + header.after + " header.before=" + header.before +
                         " key=" + key + " value=" + value + " size=" + size + " maxSize=" + maxSize +
-                        " This should not occur if your keys are immutable, and you have used synchronization properly.");
+                        " This should not occur if your keys are immutable and you used synchronization properly.");
             }
                 reuseMapping(reuse, hashIndex, hashCode, key, value);
             } else {

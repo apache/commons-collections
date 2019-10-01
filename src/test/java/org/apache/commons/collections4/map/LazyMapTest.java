@@ -72,12 +72,7 @@ public class LazyMapTest<K, V> extends AbstractIterableMapTest<K, V> {
 
     @Test
     public void mapGetWithTransformer() {
-        final Transformer<Number, Integer> intConverter = new Transformer<Number, Integer>(){
-            @Override
-            public Integer transform(final Number input) {
-                return input.intValue();
-            }
-        };
+        final Transformer<Number, Integer> intConverter = input -> input.intValue();
         final Map<Long, Number> map = lazyMap(new HashMap<Long,Number>(), intConverter );
         assertEquals(0, map.size());
         final Number i1 = map.get(123L);

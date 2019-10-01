@@ -41,12 +41,7 @@ public class SplitMapUtilsTest {
     private Map<String, Integer> backingMap;
     private TransformedSplitMap<String, String, String, Integer> transformedMap;
 
-    private final Transformer<String, Integer> stringToInt = new Transformer<String, Integer>() {
-        @Override
-        public Integer transform(final String input) {
-            return Integer.valueOf(input);
-        }
-    };
+    private final Transformer<String, Integer> stringToInt = input -> Integer.valueOf(input);
 
     @Before
     public void setUp() throws Exception {
@@ -84,32 +79,17 @@ public class SplitMapUtilsTest {
         // check individual operations
         int sz = map.size();
 
-        attemptPutOperation(new Runnable() {
-            @Override
-            public void run() {
-                map.clear();
-            }
-        });
+        attemptPutOperation(() -> map.clear());
 
         assertEquals(sz, map.size());
 
-        attemptPutOperation(new Runnable() {
-            @Override
-            public void run() {
-                map.put("foo", 100);
-            }
-        });
+        attemptPutOperation(() -> map.put("foo", 100));
 
         final HashMap<String, Integer> m = new HashMap<>();
         m.put("foo", 100);
         m.put("bar", 200);
         m.put("baz", 300);
-        attemptPutOperation(new Runnable() {
-            @Override
-            public void run() {
-                map.putAll(m);
-            }
-        });
+        attemptPutOperation(() -> map.putAll(m));
 
         // equals, hashcode
         final IterableMap<String, Integer> other = SplitMapUtils.readableMap(transformedMap);
@@ -135,60 +115,15 @@ public class SplitMapUtilsTest {
     @SuppressWarnings("unchecked")
     public void testWritableMap() {
         final Map<String, String> map = SplitMapUtils.writableMap(transformedMap);
-        attemptGetOperation(new Runnable() {
-            @Override
-            public void run() {
-                map.get(null);
-            }
-        });
-        attemptGetOperation(new Runnable() {
-            @Override
-            public void run() {
-                map.entrySet();
-            }
-        });
-        attemptGetOperation(new Runnable() {
-            @Override
-            public void run() {
-                map.keySet();
-            }
-        });
-        attemptGetOperation(new Runnable() {
-            @Override
-            public void run() {
-                map.values();
-            }
-        });
-        attemptGetOperation(new Runnable() {
-            @Override
-            public void run() {
-                map.size();
-            }
-        });
-        attemptGetOperation(new Runnable() {
-            @Override
-            public void run() {
-                map.isEmpty();
-            }
-        });
-        attemptGetOperation(new Runnable() {
-            @Override
-            public void run() {
-                map.containsKey(null);
-            }
-        });
-        attemptGetOperation(new Runnable() {
-            @Override
-            public void run() {
-                map.containsValue(null);
-            }
-        });
-        attemptGetOperation(new Runnable() {
-            @Override
-            public void run() {
-                map.remove(null);
-            }
-        });
+        attemptGetOperation(() -> map.get(null));
+        attemptGetOperation(() -> map.entrySet());
+        attemptGetOperation(() -> map.keySet());
+        attemptGetOperation(() -> map.values());
+        attemptGetOperation(() -> map.size());
+        attemptGetOperation(() -> map.isEmpty());
+        attemptGetOperation(() -> map.containsKey(null));
+        attemptGetOperation(() -> map.containsValue(null));
+        attemptGetOperation(() -> map.remove(null));
 
         // equals, hashcode
         final Map<String, String> other = SplitMapUtils.writableMap(transformedMap);

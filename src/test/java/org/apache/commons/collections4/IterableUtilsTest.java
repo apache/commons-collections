@@ -91,19 +91,9 @@ public class IterableUtilsTest {
         emptyIterable = Collections.emptyList();
     }
 
-    private static Predicate<Number> EQUALS_TWO = new Predicate<Number>() {
-        @Override
-        public boolean evaluate(final Number input) {
-            return input.intValue() == 2;
-        }
-    };
+    private static Predicate<Number> EQUALS_TWO = input -> input.intValue() == 2;
 
-    private static Predicate<Number> EVEN = new Predicate<Number>() {
-        @Override
-        public boolean evaluate(final Number input) {
-            return input.intValue() % 2 == 0;
-        }
-    };
+    private static Predicate<Number> EVEN = input -> input.intValue() % 2 == 0;
 
     // -----------------------------------------------------------------------
     @Test
@@ -373,20 +363,10 @@ public class IterableUtilsTest {
             // expected
         }
 
-        final Predicate<Integer> lessThanFive = new Predicate<Integer>() {
-            @Override
-            public boolean evaluate(final Integer object) {
-                return object < 5;
-            }
-        };
+        final Predicate<Integer> lessThanFive = object -> object < 5;
         assertTrue(IterableUtils.matchesAll(iterableA, lessThanFive));
 
-        final Predicate<Integer> lessThanFour = new Predicate<Integer>() {
-            @Override
-            public boolean evaluate(final Integer object) {
-                return object < 4;
-            }
-        };
+        final Predicate<Integer> lessThanFour = object -> object < 4;
         assertFalse(IterableUtils.matchesAll(iterableA, lessThanFour));
 
         assertTrue(IterableUtils.matchesAll(null, lessThanFour));
@@ -505,29 +485,18 @@ public class IterableUtilsTest {
         result = IterableUtils.toString(null);
         assertEquals("[]", result);
 
-        result = IterableUtils.toString(iterableA, new Transformer<Integer, String>() {
-            @Override
-            public String transform(final Integer input) {
-                return new Integer(input * 2).toString();
-            }
-        });
+        result = IterableUtils.toString(iterableA, input -> new Integer(input * 2).toString());
         assertEquals("[2, 4, 4, 6, 6, 6, 8, 8, 8, 8]", result);
 
-        result = IterableUtils.toString(new ArrayList<Integer>(), new Transformer<Integer, String>() {
-            @Override
-            public String transform(final Integer input) {
-                fail("not supposed to reach here");
-                return "";
-            }
+        result = IterableUtils.toString(new ArrayList<Integer>(), input -> {
+            fail("not supposed to reach here");
+            return "";
         });
         assertEquals("[]", result);
 
-        result = IterableUtils.toString(null, new Transformer<Integer, String>() {
-            @Override
-            public String transform(final Integer input) {
-                fail("not supposed to reach here");
-                return "";
-            }
+        result = IterableUtils.toString(null, input -> {
+            fail("not supposed to reach here");
+            return "";
         });
         assertEquals("[]", result);
     }
@@ -535,12 +504,7 @@ public class IterableUtilsTest {
     @Test
     public void testToStringDelimiter() {
 
-        final Transformer<Integer, String> transformer = new Transformer<Integer, String>() {
-            @Override
-            public String transform(final Integer input) {
-                return new Integer(input * 2).toString();
-            }
-        };
+        final Transformer<Integer, String> transformer = input -> new Integer(input * 2).toString();
 
         String result = IterableUtils.toString(iterableA, transformer, "", "", "");
         assertEquals("2446668888", result);
@@ -572,12 +536,9 @@ public class IterableUtilsTest {
 
     @Test
     public void testToStringWithNullArguments() {
-        final String result = IterableUtils.toString(null, new Transformer<Integer, String>() {
-            @Override
-            public String transform(final Integer input) {
-                fail("not supposed to reach here");
-                return "";
-            }
+        final String result = IterableUtils.toString(null, input -> {
+            fail("not supposed to reach here");
+            return "";
         }, "", "(", ")");
         assertEquals("()", result);
 
@@ -589,12 +550,9 @@ public class IterableUtilsTest {
         }
 
         try {
-            IterableUtils.toString(new ArrayList<Integer>(), new Transformer<Integer, String>() {
-                @Override
-                public String transform(final Integer input) {
-                    fail("not supposed to reach here");
-                    return "";
-                }
+            IterableUtils.toString(new ArrayList<Integer>(), input -> {
+                fail("not supposed to reach here");
+                return "";
             }, null, "(", ")");
             fail("expecting NullPointerException");
         } catch (final NullPointerException ex) {
@@ -602,12 +560,9 @@ public class IterableUtilsTest {
         }
 
         try {
-            IterableUtils.toString(new ArrayList<Integer>(), new Transformer<Integer, String>() {
-                @Override
-                public String transform(final Integer input) {
-                    fail("not supposed to reach here");
-                    return "";
-                }
+            IterableUtils.toString(new ArrayList<Integer>(), input -> {
+                fail("not supposed to reach here");
+                return "";
             }, "", null, ")");
             fail("expecting NullPointerException");
         } catch (final NullPointerException ex) {
@@ -615,12 +570,9 @@ public class IterableUtilsTest {
         }
 
         try {
-            IterableUtils.toString(new ArrayList<Integer>(), new Transformer<Integer, String>() {
-                @Override
-                public String transform(final Integer input) {
-                    fail("not supposed to reach here");
-                    return "";
-                }
+            IterableUtils.toString(new ArrayList<Integer>(), input -> {
+                fail("not supposed to reach here");
+                return "";
             }, "", "(", null);
             fail("expecting NullPointerException");
         } catch (final NullPointerException ex) {

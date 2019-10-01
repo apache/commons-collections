@@ -125,12 +125,7 @@ public class SetUtils {
             throw new NullPointerException("Sets must not be null.");
         }
 
-        final Predicate<E> notContainedInB = new Predicate<E>() {
-            @Override
-            public boolean evaluate(final E object) {
-                return !b.contains(object);
-            }
-        };
+        final Predicate<E> notContainedInB = object -> !b.contains(object);
 
         return new SetView<E>() {
             @Override
@@ -285,12 +280,7 @@ public class SetUtils {
             throw new NullPointerException("Sets must not be null.");
         }
 
-        final Predicate<E> containedInB = new Predicate<E>() {
-            @Override
-            public boolean evaluate(final E object) {
-                return b.contains(object);
-            }
-        };
+        final Predicate<E> containedInB = object -> b.contains(object);
 
         return new SetView<E>() {
             @Override

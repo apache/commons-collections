@@ -103,12 +103,7 @@ public class FluentIterableTest {
         emptyIterable = Collections.emptyList();
     }
 
-    private static Predicate<Number> EVEN = new Predicate<Number>() {
-        @Override
-        public boolean evaluate(final Number input) {
-            return input.intValue() % 2 == 0;
-        }
-    };
+    private static Predicate<Number> EVEN = input -> input.intValue() % 2 == 0;
 
     // -----------------------------------------------------------------------
     @Test
@@ -198,12 +193,7 @@ public class FluentIterableTest {
 
     @Test
     public void filter() {
-        final Predicate<Integer> smallerThan3 = new Predicate<Integer>() {
-            @Override
-            public boolean evaluate(final Integer object) {
-                return object.intValue() < 3;
-            }
-        };
+        final Predicate<Integer> smallerThan3 = object -> object.intValue() < 3;
         List<Integer> result = FluentIterable.of(iterableA).filter(smallerThan3).toList();
         assertEquals(3, result.size());
         assertEquals(Arrays.asList(1, 2, 2), result);
@@ -223,12 +213,7 @@ public class FluentIterableTest {
     @Test
     public void forEach() {
         final AtomicInteger sum = new AtomicInteger(0);
-        final Closure<Integer> closure = new Closure<Integer>() {
-            @Override
-            public void execute(final Integer input) {
-                sum.addAndGet(input);
-            }
-        };
+        final Closure<Integer> closure = input -> sum.addAndGet(input);
 
         FluentIterable.of(iterableA).forEach(closure);
         int expectedSum = 0;
@@ -315,12 +300,7 @@ public class FluentIterableTest {
 
     @Test
     public void transform() {
-        final Transformer<Integer, Integer> squared = new Transformer<Integer, Integer>() {
-            @Override
-            public Integer transform(final Integer object) {
-                return object * object;
-            }
-        };
+        final Transformer<Integer, Integer> squared = object -> object * object;
         List<Integer> result = FluentIterable.of(iterableA).transform(squared).toList();
         assertEquals(10, result.size());
         assertEquals(Arrays.asList(1, 4, 4, 9, 9, 9, 16, 16, 16, 16), result);

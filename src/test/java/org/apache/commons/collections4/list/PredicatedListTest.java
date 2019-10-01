@@ -56,12 +56,7 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
 //--------------------------------------------------------------------
 
     protected Predicate<E> testPredicate =
-        new Predicate<E>() {
-            @Override
-            public boolean evaluate(final E o) {
-                return o instanceof String;
-            }
-        };
+        o -> o instanceof String;
 
     public List<E> makeTestList() {
         return decorateList(new ArrayList<E>(), testPredicate);

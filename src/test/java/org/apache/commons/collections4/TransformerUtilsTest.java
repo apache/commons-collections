@@ -247,12 +247,7 @@ public class TransformerUtilsTest {
         assertEquals("A", TransformerUtils.ifTransformer(TruePredicate.truePredicate(), a, b).transform(null));
         assertEquals("B", TransformerUtils.ifTransformer(FalsePredicate.falsePredicate(), a, b).transform(null));
 
-        final Predicate<Integer> lessThanFivePredicate = new Predicate<Integer>() {
-            @Override
-            public boolean evaluate(final Integer value) {
-                return value < 5;
-            }
-        };
+        final Predicate<Integer> lessThanFivePredicate = value -> value < 5;
         // if/else tests
         assertEquals("A", TransformerUtils.<Integer, String>ifTransformer(lessThanFivePredicate, a, b).transform(1));
         assertEquals("B", TransformerUtils.<Integer, String>ifTransformer(lessThanFivePredicate, a, b).transform(5));

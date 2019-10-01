@@ -122,12 +122,7 @@ public class ListUtilsTest {
 
     @Test
     public void testPredicatedList() {
-        final Predicate<Object> predicate = new Predicate<Object>() {
-            @Override
-            public boolean evaluate(final Object o) {
-                return o instanceof String;
-            }
-        };
+        final Predicate<Object> predicate = o -> o instanceof String;
         final List<Object> list = ListUtils.predicatedList(new ArrayList<>(), predicate);
         assertTrue("returned object should be a PredicatedList", list instanceof PredicatedList);
         try {
@@ -452,12 +447,7 @@ public class ListUtilsTest {
         assertEquals(strings, partitionMax.get(0));
     }
 
-    private static Predicate<Number> EQUALS_TWO = new Predicate<Number>() {
-        @Override
-        public boolean evaluate(final Number input) {
-            return input.intValue() == 2;
-        }
-    };
+    private static Predicate<Number> EQUALS_TWO = input -> input.intValue() == 2;
 
     @Test
     @SuppressWarnings("boxing") // OK in test code

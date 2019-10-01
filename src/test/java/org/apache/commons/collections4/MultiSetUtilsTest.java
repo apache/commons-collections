@@ -92,12 +92,7 @@ public class MultiSetUtilsTest {
      */
     @Test
     public void testPredicatedMultiSet() {
-        final Predicate<String> predicate = new Predicate<String>() {
-            @Override
-            public boolean evaluate(final String object) {
-                return object.length() == 1;
-            };
-        };
+        final Predicate<String> predicate = object -> object.length() == 1;
         final MultiSet<String> predicated = MultiSetUtils.predicatedMultiSet(multiSet, predicate);
         assertEquals(multiSet.size(), predicated.size());
         assertEquals(multiSet.getCount("a"), predicated.getCount("a"));
@@ -115,12 +110,7 @@ public class MultiSetUtilsTest {
         }
 
         try {
-            MultiSetUtils.predicatedMultiSet(multiSet, new Predicate<String>() {
-                @Override
-                public boolean evaluate(final String object) {
-                    return object.equals("a");
-                };
-            });
+            MultiSetUtils.predicatedMultiSet(multiSet, object -> object.equals("a"));
             fail("Predicate is violated for all elements not being 'a'");
         }
         catch (final IllegalArgumentException iae) {

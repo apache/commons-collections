@@ -20,6 +20,8 @@ matrix:
   include:
     - os: linux-ppc64le
       jdk: openjdk8
+  allow_failures:
+    - jdk: openjdk-ea
 jdk:
   - oraclejdk11
   - openjdk8
