@@ -377,7 +377,7 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
 
     @Override
     public int size() {
-        return BloomCollectionStatistics.asInt(count());
+        return BloomCollectionStatistics.clampToInteger(count());
     }
 
     @Override
@@ -436,6 +436,8 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
      * An interface defining the bucket factory for the nested collection.
      *
      * @param <T> the type of object in the collection.
+     *
+     * @since 4.5
      */
     public interface BucketFactory<T> {
         /**
@@ -464,8 +466,9 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
      * An implementation of BucketFactory that produces ArrayList based
      * BloomCollections.
      *
-     *
      * @param <T> the type of object in the collection.
+     *
+     * @since 4.5
      */
     public static class BloomArrayListFactory<T> implements BucketFactory<T> {
 
@@ -512,6 +515,8 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
      * BloomCollections.
      *
      * @param <T> the type of object in the collection.
+     *
+     * @since 4.5
      */
     public static class BloomHashSetFactory<T> implements BucketFactory<T> {
 

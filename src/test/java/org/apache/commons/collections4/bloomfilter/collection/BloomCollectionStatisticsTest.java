@@ -25,7 +25,7 @@ import java.util.function.Consumer;
 import org.apache.commons.collections4.bloomfilter.collection.BloomCollectionStatistics;
 import org.apache.commons.collections4.bloomfilter.collection.BloomCollectionStatistics.Action;
 import org.apache.commons.collections4.bloomfilter.collection.BloomCollectionStatistics.ActionMapper;
-import org.apache.commons.collections4.bloomfilter.collection.BloomCollectionStatistics.CHANGE;
+import org.apache.commons.collections4.bloomfilter.collection.BloomCollectionStatistics.Change;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -60,9 +60,9 @@ public class BloomCollectionStatisticsTest {
     }
 
     @Test
-    public void asInt() {
-        assertEquals( Integer.MAX_VALUE, BloomCollectionStatistics.asInt( Long.MAX_VALUE ));
-        assertEquals( Integer.MIN_VALUE, BloomCollectionStatistics.asInt( Long.MIN_VALUE ));
+    public void clampToInteger() {
+        assertEquals( Integer.MAX_VALUE, BloomCollectionStatistics.clampToInteger( Long.MAX_VALUE ));
+        assertEquals( Integer.MIN_VALUE, BloomCollectionStatistics.clampToInteger( Long.MIN_VALUE ));
     }
 
     @Test
@@ -93,7 +93,7 @@ public class BloomCollectionStatisticsTest {
     public void delete_long() {
         assertEquals( 0, stats.getDeleteCount() );
         stats.delete( 4 );
-        assertEquals( 4, stats.getDeleteCount() );     
+        assertEquals( 4, stats.getDeleteCount() );
         stats.delete( Long.MAX_VALUE - 3 );
         assertEquals( Long.MAX_VALUE, stats.getDeleteCount() );
     }
@@ -103,14 +103,14 @@ public class BloomCollectionStatisticsTest {
         ActionMapper mapper = stats.getActionMapper();
         assertEquals( 0, stats.getInsertCount() );
         assertEquals( 0, stats.getDeleteCount() );
-        mapper.accept( new Action( CHANGE.delete, 1 ));
+        mapper.accept( new Action( Change.DELETE, 1 ));
         assertEquals( 0, stats.getInsertCount() );
         assertEquals( 1, stats.getDeleteCount() );
-        mapper.accept( new Action( CHANGE.insert, 1 ));
+        mapper.accept( new Action( Change.INSERT, 1 ));
         assertEquals( 0, stats.getInsertCount() );
         assertEquals( 1, stats.getDeleteCount() );
         stats.insert();
-        mapper.accept( new Action( CHANGE.clear, 1 ));
+        mapper.accept( new Action( Change.CLEAR, 1 ));
         assertEquals( 1, stats.getInsertCount() );
         assertEquals( 1, stats.getDeleteCount() );
     }
@@ -182,13 +182,13 @@ public class BloomCollectionStatisticsTest {
         @Override
         public void accept(Action action) {
             switch( action.getChange() ) {
-            case clear:
+            case CLEAR:
                 clearCount += action.getCount();
                 break;
-            case insert:
+            case INSERT:
                 insertCount += action.getCount();
                 break;
-            case delete:
+            case DELETE:
                 deleteCount += action.getCount();
                 break;
             default:

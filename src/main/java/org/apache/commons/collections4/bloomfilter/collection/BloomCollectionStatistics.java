@@ -28,7 +28,7 @@ import java.util.function.Consumer;
  * has any deletes.
  * </p>
  * <p>
- * Statistics are usually retrieved {@link BloomCollectionConfiguration} object
+ * Statistics are usually retrieved from a {@link BloomCollectionConfiguration} object
  * <p>
  * In addition the {@code BloomCollectionStatistics} will notify @{code
  * Consumer&lt;Action&gt;} when any change to the collection occurs.
@@ -39,9 +39,11 @@ import java.util.function.Consumer;
 public final class BloomCollectionStatistics {
     /**
      * The type of change being recorded.  Used in an Action.
+     *
+     * @since 4.5
      */
-    enum CHANGE {
-        insert, delete, clear
+    enum Change {
+        INSERT, DELETE, CLEAR
     };
 
     /**
@@ -55,30 +57,31 @@ public final class BloomCollectionStatistics {
     private long filterDeletes;
 
     /**
-     * A consumer of {@code Action} that respond to {@code Change}s.
+     * A consumer of {@code Action} that respond to {@code Change}.
      */
     private Consumer<Action> changeNotification;
 
     /**
-     * An implementation of ActionMapper that uses the {@code Action}s to
-     * modify the values of this CollectionStatistics instance.  This is
-     * primarily used for nested collection implementations to record changes that occur
-     * in the nested collections.
+     * An implementation of {@code ActionMapper} that uses the {@code Action} to modify
+     * the values of this {@code BloomCollectionStatistics} instance. This is primarily
+     * used for nested collection implementations to record changes that occur in the
+     * nested collections.
      */
     private ActionMapper actionMapper;
 
     /**
-     * Construct a CollectionStatistics without a registered change notification consumer.
+     * Construct a {@code BloomCollectionStatistics} without a registered change notification consumer.
      */
     public BloomCollectionStatistics() {
         this(null);
     }
 
     /**
-     * Construct a CollectionStatistics with a registered change notification consumer.
+     * Construct a {@code BloomCollectionStatistics} with a registered change notification
+     * consumer.
      *
-     * @param changeNotification a {@code Consumer} to be notified when the
-     *                           collection changes.
+     * @param changeNotification a {@code Consumer} to be notified when the collection
+     * changes.
      */
     public BloomCollectionStatistics(Consumer<Action> changeNotification) {
         filterInserts = 0;
@@ -101,9 +104,9 @@ public final class BloomCollectionStatistics {
     }
 
     /**
-     * Verifies the values of the collection stats are the same.
+     * Verifies the values of the {@code BloomCollectionStatistics} are the same.
      *
-     * @param other the other collection stats to compare to.
+     * @param other the other {@code BloomCollectionStatistics} to compare to.
      * @return true if the values are the same.
      */
     public boolean sameValues(BloomCollectionStatistics other) {
@@ -114,18 +117,18 @@ public final class BloomCollectionStatistics {
      * Notifies of a change.
      *
      * @param change The {@code Change} to notify about.
-     * @param count The number of {@code Change}s that are being reported.
+     * @param count The number of {@code Change} events that are being reported.
      */
-    private synchronized void notifyChange(CHANGE change, long count) {
+    private synchronized void notifyChange(Change change, long count) {
         if (changeNotification != null) {
             changeNotification.accept(new Action(change, count));
         }
     }
 
     /**
-     * Gets the ActionMapper for this collection.
+     * Gets the @{code ActionMapper} for this collection.
      *
-     * @return the ActionMapper instance for this collection.
+     * @return the @{code ActionMapper} instance for this collection.
      */
     public synchronized ActionMapper getActionMapper() {
         return actionMapper;
@@ -138,19 +141,25 @@ public final class BloomCollectionStatistics {
     public void clear() {
         filterInserts = 0;
         filterDeletes = 0;
-        notifyChange(CHANGE.clear, 1);
+        notifyChange(Change.CLEAR, 1);
     }
 
     /**
-     * Converts a long into an int value. If the long is greater than Integer.MAX_VALUE
-     * then return Integer.MAX_VALUE. If it is less than Integer.MIN_VALUE return
-     * Integer.MIN_VALUE.
+     * Converts a long value into an int value. If the long is greater than
+     * Integer.MAX_VALUE then return Integer.MAX_VALUE. If it is less than
+     * Integer.MIN_VALUE return Integer.MIN_VALUE.
      *
-     * @param l the long to convert.
+     * @param lValue the long value to convert.
      * @return the integer version.
      */
-    public static int asInt(long l) {
-        return (l > Integer.MAX_VALUE) ? Integer.MAX_VALUE : (l < Integer.MIN_VALUE) ? Integer.MIN_VALUE : (int) l;
+    public static int clampToInteger(long lValue) {
+        if (lValue > Integer.MAX_VALUE) {
+            return Integer.MAX_VALUE;
+        }
+        if (lValue < Integer.MIN_VALUE) {
+            return Integer.MIN_VALUE;
+        }
+        return (int) lValue;
     }
 
     /**
@@ -164,15 +173,15 @@ public final class BloomCollectionStatistics {
     }
 
     /**
-     * Increments the number of inserts. Will only count inserts to Long.MAX_VALUE,
-     * after that value no further incrementing is performed. A change notification
-     * is always generated.
+     * Increments the number of inserts. Will only count inserts to Long.MAX_VALUE, after
+     * that value no further incrementing is performed. A change notification is always
+     * generated.
      */
     public void insert() {
         if (filterInserts < Long.MAX_VALUE) {
             filterInserts++;
         }
-        notifyChange(CHANGE.insert, 1);
+        notifyChange(Change.INSERT, 1);
     }
 
     /**
@@ -185,9 +194,9 @@ public final class BloomCollectionStatistics {
     }
 
     /**
-     * Increments the number of deletes. Will only count deletes to Long.MAX_VALUE,
-     * after that value no further incrementing is performed. A change notification
-     * is always generated.
+     * Increments the number of deletes. Will only count deletes to Long.MAX_VALUE, after
+     * that value no further incrementing is performed. A change notification is always
+     * generated.
      *
      * @param count the number of deletes to increment by.
      */
@@ -197,7 +206,7 @@ public final class BloomCollectionStatistics {
         } else {
             filterDeletes = Long.MAX_VALUE;
         }
-        notifyChange(CHANGE.delete, count);
+        notifyChange(Change.DELETE, count);
     }
 
     /**
@@ -219,9 +228,9 @@ public final class BloomCollectionStatistics {
     }
 
     /**
-     * Gets the transaction count. This is the sum of the number of deletes and the
-     * number of inserts. Will return Long.MAX_VALUE if the transaction count
-     * exceeds Long.MAX_VALUE;
+     * Gets the transaction count. This is the sum of the number of deletes and the number
+     * of inserts. Will return Long.MAX_VALUE if the transaction count exceeds
+     * Long.MAX_VALUE;
      *
      * @return the transaction count.
      */
@@ -234,12 +243,14 @@ public final class BloomCollectionStatistics {
 
     /**
      * Definition of an action taken on the collection.
+     *
+     * @since 4.5
      */
     public static class Action {
         /**
          * The change type that is being reported.
          */
-        private CHANGE change;
+        private Change change;
 
         /**
          * The number of changes being reported.
@@ -249,20 +260,20 @@ public final class BloomCollectionStatistics {
         /**
          * Constructor.
          *
-         * @param change the type of Change that triggered the action.
+         * @param change the type of {@code Change} that triggered the action.
          * @param count  the number of changes.
          */
-        public Action(CHANGE change, long count) {
+        public Action(Change change, long count) {
             this.change = change;
             this.count = count;
         }
 
         /**
-         * Gets the change type for the action.
+         * Gets the {@code Change} type for the action.
          *
          * @return the change type.
          */
-        public CHANGE getChange() {
+        public Change getChange() {
             return change;
         }
 
@@ -277,11 +288,12 @@ public final class BloomCollectionStatistics {
     }
 
     /**
-     * Maps an Action into this statistics. This class is used when there is a
-     * collection of BloomFilterGated collections. An instance of this class is
-     * added as a consumer of action to the sub collections so that notifications
-     * flow to the containing status.
+     * Maps an {@code Action} into this statistics. This class is used when there is a
+     * collection of {@code BloomFilterGated} collections. An instance of this class is
+     * added as a consumer of action to the sub collections so that notifications flow to
+     * the containing status.
      *
+     * @since 4.5
      */
     public class ActionMapper implements Consumer<Action> {
 
@@ -294,11 +306,11 @@ public final class BloomCollectionStatistics {
         @Override
         public void accept(Action action) {
             switch (action.getChange()) {
-            case delete:
+            case DELETE:
                 delete(action.getCount());
                 break;
-            case insert: // ignore -- insert handled by local merge
-            case clear: // ignore -- clear only occurs at top level.
+            case INSERT: // ignore -- insert handled by local merge
+            case CLEAR: // ignore -- clear only occurs at top level.
             default:
                 break;
             }
