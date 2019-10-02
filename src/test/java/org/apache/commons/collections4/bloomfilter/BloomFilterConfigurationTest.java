@@ -48,21 +48,21 @@ public class BloomFilterConfigurationTest {
      *
      * k = 3
      */
-    BloomFilterConfiguration filterConfig = new BloomFilterConfiguration(5, 1.0 / 10);
+    BloomFilterConfiguration filterConfig = new BloomFilterConfiguration(5, 0.1);
 
     @Test
-    public void constructorTest() {
+    public void constructor_items_probability_Test() {
 
         assertEquals(24, filterConfig.getNumberOfBits());
         assertEquals(3, filterConfig.getNumberOfBytes());
         assertEquals(3, filterConfig.getNumberOfHashFunctions());
         assertEquals(5, filterConfig.getNumberOfItems());
-        assertEquals(1.0 / 10, filterConfig.getProbability(), 0.000001);
+        assertEquals(0.100375138, filterConfig.getProbability(), 0.000001);
 
     }
 
     @Test
-    public void constructorOverflowTest() {
+    public void constructor_items_probability_NumberOfBitsOverflowTest() {
         try {
             new BloomFilterConfiguration(Integer.MAX_VALUE, 1.0 / 10);
             fail("Should have thrown IllegalArgumentException");
@@ -72,7 +72,7 @@ public class BloomFilterConfigurationTest {
     }
 
     @Test
-    public void constructorBadNumberOfItemsTest() {
+    public void constructor_items_probability_BadNumberOfItemsTest() {
         try {
             new BloomFilterConfiguration(0, 1.0 / 10);
             fail("Should have thrown IllegalArgumentException");
@@ -82,7 +82,7 @@ public class BloomFilterConfigurationTest {
     }
 
     @Test
-    public void constructorBadProbabilityTest() {
+    public void constructor_items_probability_BadProbabilityTest() {
         try {
             new BloomFilterConfiguration(10, 0.0);
             fail("Should have thrown IllegalArgumentException");
@@ -95,6 +95,184 @@ public class BloomFilterConfigurationTest {
             fail("Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected) {
             // do nothing.
+        }
+    }
+
+    @Test
+    public void constructor_items_bitsTest() {
+        /*
+         * values from https://hur.st/bloomfilter/?n=5&m=24
+         */
+        BloomFilterConfiguration filterConfig = new BloomFilterConfiguration(5, 24);
+
+        assertEquals(24, filterConfig.getNumberOfBits());
+        assertEquals(3, filterConfig.getNumberOfBytes());
+        assertEquals(3, filterConfig.getNumberOfHashFunctions());
+        assertEquals(5, filterConfig.getNumberOfItems());
+        assertEquals(0.100375138, filterConfig.getProbability(), 0.000001);
+
+    }
+
+    @Test
+    public void constructor_items_bits_BadNumberOfItemsTest() {
+        try {
+            new BloomFilterConfiguration(0, 24);
+            fail( "Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected)
+        {
+            //expected
+        }
+    }
+
+    @Test
+    public void constructor_items_bits_BadNumberOfBitsTest() {
+        try {
+            new BloomFilterConfiguration(5, 6);
+            fail( "Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected)
+        {
+            //expected
+        }
+    }
+
+    @Test
+    public void constructor_items_bits_BadNumberOfHashFunctionsTest() {
+        try {
+            new BloomFilterConfiguration(16,8);
+            fail( "Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected)
+        {
+            //expected
+        }
+    }
+
+    @Test
+    public void constructor_items_bits_hashTest() {
+        /*
+         * values from https://hur.st/bloomfilter/?n=5&m=24&k=4
+         */
+        BloomFilterConfiguration filterConfig = new BloomFilterConfiguration(5, 24, 4);
+
+        assertEquals(24, filterConfig.getNumberOfBits());
+        assertEquals(3, filterConfig.getNumberOfBytes());
+        assertEquals(4, filterConfig.getNumberOfHashFunctions());
+        assertEquals(5, filterConfig.getNumberOfItems());
+        assertEquals(0.102194782, filterConfig.getProbability(), 0.000001);
+
+    }
+
+    @Test
+    public void constructor_items_bits_hash_BadNumberOfItemsTest() {
+        try {
+            new BloomFilterConfiguration(0, 24, 1);
+            fail( "Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected)
+        {
+            //expected
+        }
+    }
+
+    @Test
+    public void constructor_items_bits_hash_BadNumberOfBitsTest() {
+        try {
+            new BloomFilterConfiguration(5, 6, 1);
+            fail( "Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected)
+        {
+            //expected
+        }
+    }
+
+    @Test
+    public void constructor_items_bits_hash_BadNumberOfHashFunctionsTest() {
+        try {
+            new BloomFilterConfiguration(5, 24, 0);
+            fail( "Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected)
+        {
+            //expected
+        }
+    }
+
+
+    @Test
+    public void constructor_items_bits_hash_BadProbabilityTest() {
+        try {
+            new BloomFilterConfiguration(4000,8,1);
+            fail( "Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected)
+        {
+            //expected
+        }
+    }
+
+    @Test
+    public void constructor_probability_bits_hashTest() {
+        /*
+         * values from https://hur.st/bloomfilter/?n=5&p=.1&m=&k=
+         */
+        BloomFilterConfiguration filterConfig = new BloomFilterConfiguration(0.1, 24, 3);
+
+        assertEquals(24, filterConfig.getNumberOfBits());
+        assertEquals(3, filterConfig.getNumberOfBytes());
+        assertEquals(3, filterConfig.getNumberOfHashFunctions());
+        assertEquals(5, filterConfig.getNumberOfItems());
+        assertEquals(0.100375138, filterConfig.getProbability(), 0.000001);
+    }
+
+    @Test
+    public void constructor__probability_bits_hash_BadProbabilityTest() {
+        try {
+            new BloomFilterConfiguration(0.0, 24, 1);
+            fail( "Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected)
+        {
+            //expected
+        }
+
+        try {
+            new BloomFilterConfiguration(-1.0, 24, 1);
+            fail( "Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected)
+        {
+            //expected
+        }
+        try {
+            new BloomFilterConfiguration(1.0, 24, 1);
+            fail( "Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected)
+        {
+            //expected
+        }
+
+        try {
+            new BloomFilterConfiguration(2.0, 24, 1);
+            fail( "Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected)
+        {
+            //expected
+        }
+    }
+
+    @Test
+    public void constructor__probability_bits_hash__BadNumberOfBitsTest() {
+        try {
+            new BloomFilterConfiguration(0.5, 6, 1);
+            fail( "Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected)
+        {
+            //expected
+        }
+    }
+
+    @Test
+    public void constructor_probability_bits_hash_BadNumberOfHashFunctionsTest() {
+        try {
+            new BloomFilterConfiguration(0.5, 24, 0);
+            fail( "Should have thrown IllegalArgumentException");
+        } catch (IllegalArgumentException expected)
+        {
+            //expected
         }
     }
 
