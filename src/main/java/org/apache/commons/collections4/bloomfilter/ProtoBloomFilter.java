@@ -149,6 +149,8 @@ public final class ProtoBloomFilter implements Comparable<ProtoBloomFilter> {
      * hash calculation. It does not perform the calculation itself. <p> The hash is
      * calculated as a 128-bit value. We store this as two 64-bit values. We can then
      * rapidly calculate the Bloom filter for any given configuration. </p>
+     *
+     * @since 4.5
      */
     public final static class Hash implements Comparable<Hash> {
 
