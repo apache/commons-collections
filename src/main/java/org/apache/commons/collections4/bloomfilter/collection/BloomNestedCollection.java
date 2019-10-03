@@ -164,7 +164,7 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
 
     @Override
     public boolean matches(BloomFilter filter) {
-        return collectionConfig.getGate().match(filter);
+        return collectionConfig.getGate().matches(filter);
     }
 
     @Override
@@ -179,7 +179,7 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
 
     @Override
     public boolean inverseMatch(BloomFilter filter) {
-        return collectionConfig.getGate().inverseMatch(filter);
+        return collectionConfig.getGate().inverseMatches(filter);
 
     }
 
@@ -242,7 +242,7 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
 
     @Override
     public boolean contains(ProtoBloomFilter proto, T t) {
-        if (fromProto(proto).match(collectionConfig.getGate())) {
+        if (fromProto(proto).matches(collectionConfig.getGate())) {
             for (BloomFilterGated<T> candidate : buckets) {
                 if (candidate.contains(proto, t)) {
                     return true;
@@ -280,7 +280,7 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
          * if the complete filter matches the collection then all items may be in the
          * collection.
          */
-        if (fromProto(builder.build()).match(collectionConfig.getGate())) {
+        if (fromProto(builder.build()).matches(collectionConfig.getGate())) {
             // check candidates for matches
             Iterator<ProtoBloomFilter> iter = protos.iterator();
             for (Object o : objs) {
@@ -332,7 +332,7 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
     public boolean remove(ProtoBloomFilter proto, T t) {
 
         boolean result = false;
-        if (fromProto(proto).match(collectionConfig.getGate())) {
+        if (fromProto(proto).matches(collectionConfig.getGate())) {
             for (BloomFilterGated<T> candidate : buckets) {
                 result |= candidate.remove(proto, t);
             }
@@ -348,7 +348,7 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
             @SuppressWarnings("unchecked")
             T t = (T) o;
             ProtoBloomFilter proto = func.apply(t);
-            if (fromProto(proto).match(collectionConfig.getGate())) {
+            if (fromProto(proto).matches(collectionConfig.getGate())) {
                 for (BloomFilterGated<T> candidate : buckets) {
                     removed |= candidate.remove(proto, t);
                 }
@@ -398,7 +398,7 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
     @Override
     public Stream<T> getCandidates(BloomFilter filter) {
         Stream<T> result = Stream.empty();
-        if (filter.match(collectionConfig.getGate())) {
+        if (filter.matches(collectionConfig.getGate())) {
             if (collectionConfig.getGateConfig().equals(bucketFactory.getConfig())) {
 
                 for (BloomFilterGated<T> bucket : buckets) {
@@ -415,7 +415,8 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
     @Override
     public Stream<T> getCandidates(ProtoBloomFilter proto) {
         Stream<T> result = Stream.empty();
-        if (collectionConfig.getGate().inverseMatch(new StandardBloomFilter(proto, collectionConfig.getGateConfig()))) {
+        if (collectionConfig.getGate()
+            .inverseMatches(new StandardBloomFilter(proto, collectionConfig.getGateConfig()))) {
             for (BloomFilterGated<T> bucket : buckets) {
                 result = Stream.concat(result, bucket.getCandidates(proto));
             }

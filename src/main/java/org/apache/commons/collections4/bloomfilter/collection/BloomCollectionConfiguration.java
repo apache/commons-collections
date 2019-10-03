@@ -93,7 +93,7 @@ public class BloomCollectionConfiguration {
      * @param filter the Bloom filter to merge.
      */
     public synchronized void merge(BloomFilter filter) {
-        if (!gate.inverseMatch(filter)) {
+        if (!gate.inverseMatches(filter)) {
             gate = gate.merge(filter);
         }
         collectionStats.insert();

@@ -74,12 +74,12 @@ public class StandardBloomFilter implements BloomFilter {
     }
 
     @Override
-    public final boolean inverseMatch(final BloomFilter other) {
-        return other.match(this);
+    public final boolean inverseMatches(final BloomFilter other) {
+        return other.matches(this);
     }
 
     @Override
-    public final boolean match(final BloomFilter other) {
+    public final boolean matches(final BloomFilter other) {
         BitSet temp = other.getBitSet();
         temp.and(bitSet);
         return temp.equals(bitSet);

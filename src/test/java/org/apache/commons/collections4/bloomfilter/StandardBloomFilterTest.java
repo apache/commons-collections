@@ -197,8 +197,8 @@ public class StandardBloomFilterTest {
 
         bs.set(40);
         StandardBloomFilter bf2 = new StandardBloomFilter(bs);
-        assertFalse(bf2.match(bf1));
-        assertTrue(bf1.match(bf2));
+        assertFalse(bf2.matches(bf1));
+        assertTrue(bf1.matches(bf2));
     }
 
     @Test
@@ -209,8 +209,8 @@ public class StandardBloomFilterTest {
 
         bs.set(40);
         BloomFilter bf2 = new StandardBloomFilter(bs);
-        assertTrue(bf2.inverseMatch(bf1));
-        assertFalse(bf1.inverseMatch(bf2));
+        assertTrue(bf2.inverseMatches(bf1));
+        assertFalse(bf1.inverseMatches(bf2));
     }
 
     @Test
@@ -224,8 +224,8 @@ public class StandardBloomFilterTest {
 
         StandardBloomFilter bf3 = bf1.merge(bf2);
 
-        assertTrue(bf1.match(bf3));
-        assertTrue(bf2.match(bf3));
+        assertTrue(bf1.matches(bf3));
+        assertTrue(bf2.matches(bf3));
 
     }
     

@@ -35,7 +35,7 @@ public interface BloomFilter {
      * @param other the other Bloom filter to match.
      * @return true if they match.
      */
-    boolean inverseMatch(BloomFilter other);
+    boolean inverseMatches(BloomFilter other);
 
     /**
      * Returns true if {@code this & other == this}.
@@ -45,7 +45,7 @@ public interface BloomFilter {
      * @param other the other Bloom filter to match.
      * @return true if they match.
      */
-    boolean match(BloomFilter other);
+    boolean matches(BloomFilter other);
 
     /**
      * Calculates the hamming distance from this Bloom filter to the other. The hamming

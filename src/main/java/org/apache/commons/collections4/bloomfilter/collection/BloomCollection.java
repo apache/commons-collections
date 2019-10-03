@@ -147,7 +147,7 @@ public final class BloomCollection<T> implements BloomFilterGated<T>, Collection
 
     @Override
     public boolean matches(BloomFilter other) {
-        return config.getGate().match(other);
+        return config.getGate().matches(other);
     }
 
     @Override
@@ -162,7 +162,7 @@ public final class BloomCollection<T> implements BloomFilterGated<T>, Collection
 
     @Override
     public boolean inverseMatch(BloomFilter filter) {
-        return config.getGate().inverseMatch(filter);
+        return config.getGate().inverseMatches(filter);
     }
 
     @Override
@@ -196,7 +196,7 @@ public final class BloomCollection<T> implements BloomFilterGated<T>, Collection
 
     @Override
     public boolean contains(ProtoBloomFilter proto, T obj) {
-        if (fromProto(proto).match(config.getGate())) {
+        if (fromProto(proto).matches(config.getGate())) {
             return wrapped.contains(obj);
         }
         return false;
@@ -218,7 +218,7 @@ public final class BloomCollection<T> implements BloomFilterGated<T>, Collection
         for (Object o : objs) {
             total = total.merge(fromT((T)o));
         }
-        if (total.match(config.getGate())) {
+        if (total.matches(config.getGate())) {
             return wrapped.containsAll(objs);
         }
         return false;
@@ -236,7 +236,7 @@ public final class BloomCollection<T> implements BloomFilterGated<T>, Collection
 
     @Override
     public boolean remove(ProtoBloomFilter proto, T obj) {
-        if (fromProto(proto).match(config.getGate())) {
+        if (fromProto(proto).matches(config.getGate())) {
             boolean result = wrapped.remove(obj);
             if (result) {
                 config.getStats().delete();
@@ -302,12 +302,12 @@ public final class BloomCollection<T> implements BloomFilterGated<T>, Collection
 
     @Override
     public Stream<T> getCandidates(BloomFilter filter) {
-        return filter.match(config.getGate()) ? getData() : Stream.empty();
+        return filter.matches(config.getGate()) ? getData() : Stream.empty();
     }
 
     @Override
     public Stream<T> getCandidates(ProtoBloomFilter proto) {
-        return (fromProto(proto).match(config.getGate())) ? getData() : Stream.empty();
+        return (fromProto(proto).matches(config.getGate())) ? getData() : Stream.empty();
     }
 
 }
