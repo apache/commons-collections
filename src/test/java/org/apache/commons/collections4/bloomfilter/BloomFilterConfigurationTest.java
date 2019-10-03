@@ -341,4 +341,18 @@ public class BloomFilterConfigurationTest {
         assertEquals(1, estimate);
 
     }
+
+    @Test
+    public void isFullTest() {
+        assertFalse( filterConfig.isFull( StandardBloomFilter.EMPTY ));
+        BitSet bitSet = new BitSet(filterConfig.getNumberOfBits());
+        bitSet.set(0, filterConfig.getNumberOfBits(), true);
+        BloomFilter bf = new StandardBloomFilter(bitSet);
+        assertTrue( filterConfig.isFull( bf ));
+        int mid = filterConfig.getNumberOfBits()/2;
+        bitSet.clear(mid);
+        bf = new StandardBloomFilter(bitSet);
+        assertFalse( filterConfig.isFull( bf ));
+
+    }
 }

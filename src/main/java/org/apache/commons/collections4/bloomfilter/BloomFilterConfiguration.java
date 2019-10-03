@@ -364,4 +364,14 @@ public final class BloomFilterConfiguration {
         // do subtraction early to avoid Long overflow.
         return estimateSize(filter1) - estimateUnionSize(filter1, filter2) + estimateSize(filter2);
     }
+
+    /**
+     * Determines if the bloom filter is "full".
+     * Full is definded as haveing no unset bits.
+     * @param filter the filter to check.
+     * @return true if the filter is full.
+     */
+    public boolean isFull(BloomFilter filter) {
+        return filter.getHammingWeight() == numberOfBits;
+    }
 }
