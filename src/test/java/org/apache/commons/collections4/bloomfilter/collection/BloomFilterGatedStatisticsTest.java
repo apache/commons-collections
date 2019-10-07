@@ -22,20 +22,20 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import java.util.function.Consumer;
 
-import org.apache.commons.collections4.bloomfilter.collection.BloomCollectionStatistics;
-import org.apache.commons.collections4.bloomfilter.collection.BloomCollectionStatistics.Action;
-import org.apache.commons.collections4.bloomfilter.collection.BloomCollectionStatistics.ActionMapper;
-import org.apache.commons.collections4.bloomfilter.collection.BloomCollectionStatistics.Change;
+import org.apache.commons.collections4.bloomfilter.collection.BloomFilterGatedStatistics;
+import org.apache.commons.collections4.bloomfilter.collection.BloomFilterGatedStatistics.Action;
+import org.apache.commons.collections4.bloomfilter.collection.BloomFilterGatedStatistics.ActionMapper;
+import org.apache.commons.collections4.bloomfilter.collection.BloomFilterGatedStatistics.Change;
 import org.junit.Before;
 import org.junit.Test;
 
-public class BloomCollectionStatisticsTest {
+public class BloomFilterGatedStatisticsTest {
 
-    private BloomCollectionStatistics stats;
+    private BloomFilterGatedStatistics stats;
 
     @Before
     public void setup() {
-        stats = new BloomCollectionStatistics();
+        stats = new BloomFilterGatedStatistics();
     }
 
     @Test
@@ -61,8 +61,8 @@ public class BloomCollectionStatisticsTest {
 
     @Test
     public void clampToInteger() {
-        assertEquals( Integer.MAX_VALUE, BloomCollectionStatistics.clampToInteger( Long.MAX_VALUE ));
-        assertEquals( Integer.MIN_VALUE, BloomCollectionStatistics.clampToInteger( Long.MIN_VALUE ));
+        assertEquals( Integer.MAX_VALUE, BloomFilterGatedStatistics.clampToInteger( Long.MAX_VALUE ));
+        assertEquals( Integer.MIN_VALUE, BloomFilterGatedStatistics.clampToInteger( Long.MIN_VALUE ));
     }
 
     @Test
@@ -161,7 +161,7 @@ public class BloomCollectionStatisticsTest {
 
     @Test
     public void sameValues() {
-        BloomCollectionStatistics stats2 = new BloomCollectionStatistics();
+        BloomFilterGatedStatistics stats2 = new BloomFilterGatedStatistics();
         assertTrue( stats.sameValues(stats2));
         stats.insert();
         assertFalse( stats.sameValues(stats2));

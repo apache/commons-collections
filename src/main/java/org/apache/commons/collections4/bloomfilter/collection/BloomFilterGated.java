@@ -160,7 +160,7 @@ public interface BloomFilterGated<T> {
      *
      * @return the collection statistics.
      */
-    BloomCollectionStatistics getStats();
+    BloomFilterGatedStatistics getStats();
 
     /**
      * Clears this collection. Must remove all stored data as well as clear the

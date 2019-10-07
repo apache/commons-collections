@@ -64,7 +64,7 @@ public final class BloomCollection<T> implements BloomFilterGated<T>, Collection
     /**
      * Collection configuration
      */
-    private final BloomCollectionConfiguration config;
+    private final BloomFilterGatedConfiguration config;
 
     /**
      * Construct a BloomCollection from a collection, a filter configuration and
@@ -83,7 +83,7 @@ public final class BloomCollection<T> implements BloomFilterGated<T>, Collection
     public BloomCollection(Collection<T> wrapped, BloomFilterConfiguration filterConfig,
         Function<T, ProtoBloomFilter> func) {
         this.wrapped = wrapped;
-        this.config = new BloomCollectionConfiguration(filterConfig);
+        this.config = new BloomFilterGatedConfiguration(filterConfig);
         this.func = func;
         for (T o : wrapped) {
             config.merge(fromT(o));
@@ -116,7 +116,7 @@ public final class BloomCollection<T> implements BloomFilterGated<T>, Collection
     }
 
     @Override
-    public BloomCollectionStatistics getStats() {
+    public BloomFilterGatedStatistics getStats() {
         return config.getStats();
     }
 

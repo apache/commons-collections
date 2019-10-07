@@ -28,7 +28,7 @@ import java.util.function.Consumer;
  * has any deletes.
  * </p>
  * <p>
- * Statistics are usually retrieved from a {@link BloomCollectionConfiguration} object
+ * Statistics are usually retrieved from a {@link BloomFilterGatedConfiguration} object
  * <p>
  * In addition the {@code BloomCollectionStatistics} will notify @{code
  * Consumer&lt;Action&gt;} when any change to the collection occurs.
@@ -36,7 +36,7 @@ import java.util.function.Consumer;
  *
  * @since 4.5
  */
-public final class BloomCollectionStatistics {
+public final class BloomFilterGatedStatistics {
     /**
      * The type of change being recorded.  Used in an Action.
      *
@@ -72,7 +72,7 @@ public final class BloomCollectionStatistics {
     /**
      * Construct a {@code BloomCollectionStatistics} without a registered change notification consumer.
      */
-    public BloomCollectionStatistics() {
+    public BloomFilterGatedStatistics() {
         this(null);
     }
 
@@ -83,7 +83,7 @@ public final class BloomCollectionStatistics {
      * @param changeNotification a {@code Consumer} to be notified when the collection
      * changes.
      */
-    public BloomCollectionStatistics(Consumer<Action> changeNotification) {
+    public BloomFilterGatedStatistics(Consumer<Action> changeNotification) {
         filterInserts = 0;
         filterDeletes = 0;
         this.changeNotification = changeNotification;
@@ -109,7 +109,7 @@ public final class BloomCollectionStatistics {
      * @param other the other {@code BloomCollectionStatistics} to compare to.
      * @return true if the values are the same.
      */
-    public boolean sameValues(BloomCollectionStatistics other) {
+    public boolean sameValues(BloomFilterGatedStatistics other) {
         return this.filterInserts == other.filterInserts && this.filterDeletes == other.filterDeletes;
     }
 

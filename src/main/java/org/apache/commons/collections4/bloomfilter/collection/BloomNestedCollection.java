@@ -79,7 +79,7 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
     /**
      * The collection configuration.
      */
-    private final BloomCollectionConfiguration collectionConfig;
+    private final BloomFilterGatedConfiguration collectionConfig;
 
     /**
      * The bucket factory.
@@ -103,7 +103,7 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
             BucketFactory<T> bucketFactory) {
         this.func = func;
         this.buckets = new ArrayList<BloomFilterGated<T>>();
-        this.collectionConfig = new BloomCollectionConfiguration(gateConfig);
+        this.collectionConfig = new BloomFilterGatedConfiguration(gateConfig);
         this.bucketFactory = bucketFactory;
 
         for (int i = 0; i < minFree; i++) {
@@ -117,7 +117,7 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
     }
 
     @Override
-    public BloomCollectionStatistics getStats() {
+    public BloomFilterGatedStatistics getStats() {
         return collectionConfig.getStats();
     }
 
@@ -377,7 +377,7 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
 
     @Override
     public int size() {
-        return BloomCollectionStatistics.clampToInteger(count());
+        return BloomFilterGatedStatistics.clampToInteger(count());
     }
 
     @Override

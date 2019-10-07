@@ -26,7 +26,7 @@ import org.apache.commons.collections4.bloomfilter.StandardBloomFilter;
  * The configuration of a gated Bloom collection.
  * @since 4.5
  */
-public class BloomCollectionConfiguration {
+public class BloomFilterGatedConfiguration {
     /**
      * The configuration for the gating BloomFilter.
      */
@@ -38,17 +38,17 @@ public class BloomCollectionConfiguration {
     /**
      * The collection statistics.
      */
-    private BloomCollectionStatistics collectionStats;
+    private BloomFilterGatedStatistics collectionStats;
 
     /**
      * Construct a collection configuration with the specified gate configuration.
      *
      * @param gateConfig the configuration for the gating filter.
      */
-    public BloomCollectionConfiguration(BloomFilterConfiguration gateConfig) {
+    public BloomFilterGatedConfiguration(BloomFilterConfiguration gateConfig) {
         this.gateConfig = gateConfig;
         this.gate = StandardBloomFilter.EMPTY;
-        this.collectionStats = new BloomCollectionStatistics();
+        this.collectionStats = new BloomFilterGatedStatistics();
     }
 
     /**
@@ -74,7 +74,7 @@ public class BloomCollectionConfiguration {
      *
      * @return the collections stats.
      */
-    public BloomCollectionStatistics getStats() {
+    public BloomFilterGatedStatistics getStats() {
         return collectionStats;
     }
 
