@@ -34,7 +34,7 @@ public class BloomCollectionConfiguration {
     /**
      * The gating BloomFilter.
      */
-    private StandardBloomFilter gate;
+    private BloomFilter gate;
     /**
      * The collection statistics.
      */
@@ -56,7 +56,7 @@ public class BloomCollectionConfiguration {
      *
      * @return the gating Bloom filter.
      */
-    public StandardBloomFilter getGate() {
+    public BloomFilter getGate() {
         return gate;
     }
 
