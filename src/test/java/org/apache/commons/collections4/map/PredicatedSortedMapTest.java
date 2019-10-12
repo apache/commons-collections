@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.functors.TruePredicate;
@@ -34,9 +35,18 @@ import org.apache.commons.collections4.functors.TruePredicate;
  */
 public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
+	private class ReverseStringComparator implements Comparator<K> {
+		@Override
+		public int compare(K arg0, K arg1) {
+			return ((String) arg1).compareTo((String)arg0);
+		}
+	}
+	
     protected static final Predicate<Object> truePredicate = TruePredicate.truePredicate();
 
     protected static final Predicate<Object> testPredicate = o -> o instanceof String;
+    
+    protected final Comparator<K> reverseStringComparator = new ReverseStringComparator();
 
     public PredicatedSortedMapTest(final String testName) {
         super(testName);
@@ -55,6 +65,10 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 
     public SortedMap<K, V> makeTestMap() {
         return decorateMap(new TreeMap<K, V>(), testPredicate, testPredicate);
+    }
+    
+    public SortedMap<K, V> makeTestMapWithComparator() {
+        return decorateMap(new ConcurrentSkipListMap<K, V>(reverseStringComparator), testPredicate, testPredicate);
     }
 
     @Override
@@ -163,6 +177,38 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         final Comparator<? super K> c = map.comparator();
         assertTrue("natural order, so comparator should be null",
             c == null);
+    }
+    
+    @SuppressWarnings("unchecked")
+    public void testReverseSortOrder() {
+        final SortedMap<K, V> map = makeTestMapWithComparator();
+        map.put((K) "A",  (V) "a");
+        map.put((K) "B", (V) "b");
+        try {
+            map.put(null, (V) "c");
+            fail("Null key should raise IllegalArgument");
+        } catch (final IllegalArgumentException e) {
+            // expected
+        }
+        map.put((K) "C", (V) "c");
+        try {
+            map.put((K) "D", null);
+            fail("Null value should raise IllegalArgument");
+        } catch (final IllegalArgumentException e) {
+            // expected
+        }
+        assertEquals("Last key should be A", "A", map.lastKey());
+        assertEquals("First key should be C", "C", map.firstKey());
+        assertEquals("First key in tail map should be B",
+            "B", map.tailMap((K) "B").firstKey());
+        assertEquals("Last key in head map should be B",
+            "B", map.headMap((K) "A").lastKey());
+        assertEquals("Last key in submap should be B",
+           "B", map.subMap((K) "C",(K) "A").lastKey());
+
+        final Comparator<? super K> c = map.comparator();
+        assertTrue("reverse order, so comparator should be reverseStringComparator",
+            c == reverseStringComparator);
     }
 
     @Override
