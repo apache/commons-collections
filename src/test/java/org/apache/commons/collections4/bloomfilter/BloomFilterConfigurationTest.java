@@ -299,14 +299,14 @@ public class BloomFilterConfigurationTest {
     @Test
     public void estimateSizeTest() {
         // build a filter
-        ProtoBloomFilter proto1 = ProtoBloomFilter.builder().with("Hello").build("World");
+        ProtoBloomFilter proto1 = ProtoBloomFilter.builder().with("Hello").with("World").build();
         BloomFilter filter1 = new StandardBloomFilter(proto1, filterConfig);
         long estimate = filterConfig.estimateSize(filter1);
         // the data provided above do not generate an estimate that is equivalent to the
         // actual.
         assertEquals(1, estimate);
 
-        ProtoBloomFilter proto2 = ProtoBloomFilter.builder().with("Goodbyte").with("Cruel").build("World");
+        ProtoBloomFilter proto2 = ProtoBloomFilter.builder().with("Goodbyte").with("Cruel").with("World").build();
         BloomFilter filter2 = new StandardBloomFilter(proto2, filterConfig);
         estimate = filterConfig.estimateSize(filter2);
         assertEquals(3, estimate);
@@ -319,10 +319,10 @@ public class BloomFilterConfigurationTest {
     @Test
     public void estimateUnionSizeTest() {
         // build a filter
-        ProtoBloomFilter proto1 = ProtoBloomFilter.builder().with("Hello").build("World");
+        ProtoBloomFilter proto1 = ProtoBloomFilter.builder().with("Hello").with("World").build();
         BloomFilter filter1 = new StandardBloomFilter(proto1, filterConfig);
 
-        ProtoBloomFilter proto2 = ProtoBloomFilter.builder().with("Goodbyte").with("Cruel").build("World");
+        ProtoBloomFilter proto2 = ProtoBloomFilter.builder().with("Goodbyte").with("Cruel").with("World").build();
         BloomFilter filter2 = new StandardBloomFilter(proto2, filterConfig);
         long estimate = filterConfig.estimateUnionSize(filter1, filter2);
         assertEquals(3, estimate);
@@ -332,10 +332,10 @@ public class BloomFilterConfigurationTest {
     @Test
     public void estimateIntersectionSizeTest() {
         // build a filter
-        ProtoBloomFilter proto1 = ProtoBloomFilter.builder().with("Hello").build("World");
+        ProtoBloomFilter proto1 = ProtoBloomFilter.builder().with("Hello").with("World").build();
         BloomFilter filter1 = new StandardBloomFilter(proto1, filterConfig);
 
-        ProtoBloomFilter proto2 = ProtoBloomFilter.builder().with("Goodbyte").with("Cruel").build("World");
+        ProtoBloomFilter proto2 = ProtoBloomFilter.builder().with("Goodbyte").with("Cruel").with("World").build();
         BloomFilter filter2 = new StandardBloomFilter(proto2, filterConfig);
         long estimate = filterConfig.estimateIntersectionSize(filter1, filter2);
         assertEquals(1, estimate);

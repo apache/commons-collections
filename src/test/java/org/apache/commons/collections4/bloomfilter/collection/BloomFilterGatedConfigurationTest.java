@@ -47,7 +47,7 @@ public class BloomFilterGatedConfigurationTest {
         assertEquals( StandardBloomFilter.EMPTY, config.getGate() );
         assertTrue( new BloomFilterGatedStatistics().sameValues(config.getStats() ));
 
-        config.merge( ProtoBloomFilter.builder().build( "Hello"));
+        config.merge( ProtoBloomFilter.builder().with( "Hello").build());
         config.getStats().delete();
         config.getStats().insert();
 
@@ -78,7 +78,7 @@ public class BloomFilterGatedConfigurationTest {
     @Test
     public void merge_Filter() {
         assertEquals( StandardBloomFilter.EMPTY, config.getGate() );
-        ProtoBloomFilter proto = ProtoBloomFilter.builder().build( "Hello");
+        ProtoBloomFilter proto = ProtoBloomFilter.builder().with( "Hello").build();
         StandardBloomFilter filter = new StandardBloomFilter( proto, filterConfig );
         config.merge( filter );
         assertEquals( filter, config.getGate() );
@@ -87,7 +87,7 @@ public class BloomFilterGatedConfigurationTest {
     @Test
     public void merge_Proto() {
         assertEquals( StandardBloomFilter.EMPTY, config.getGate() );
-        ProtoBloomFilter proto = ProtoBloomFilter.builder().build( "Hello");
+        ProtoBloomFilter proto = ProtoBloomFilter.builder().with( "Hello").build();
         BloomFilter filter = new StandardBloomFilter( proto, filterConfig );
         config.merge( proto );
         assertEquals( filter, config.getGate() );

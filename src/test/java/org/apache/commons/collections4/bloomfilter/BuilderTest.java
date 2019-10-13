@@ -67,21 +67,21 @@ public class BuilderTest {
 
     @Test
     public void buildTest_byte() {
-        ProtoBloomFilter proto = ProtoBloomFilter.builder().build((byte) 0x1);
+        ProtoBloomFilter proto = ProtoBloomFilter.builder().with((byte) 0x1).build();
         assertEquals(1, proto.getItemCount());
         assertEquals(new Hash(8849112093580131862L, 8613248517421295493L), proto.getHashes().iterator().next());
     }
 
     @Test
     public void buildTest_byteArray() {
-        ProtoBloomFilter proto = ProtoBloomFilter.builder().build("Hello".getBytes());
+        ProtoBloomFilter proto = ProtoBloomFilter.builder().with("Hello".getBytes()).build();
         assertEquals(1, proto.getItemCount());
         assertEquals(HELLO_HASH, proto.getHashes().iterator().next());
     }
 
     @Test
     public void buildTest_ByteBuffer() {
-        ProtoBloomFilter proto = ProtoBloomFilter.builder().build(ByteBuffer.wrap("Hello".getBytes()));
+        ProtoBloomFilter proto = ProtoBloomFilter.builder().with(ByteBuffer.wrap("Hello".getBytes())).build();
         assertEquals(1, proto.getItemCount());
         assertEquals(HELLO_HASH, proto.getHashes().iterator().next());
     }
@@ -89,14 +89,14 @@ public class BuilderTest {
     @Test
     public void buildTest_ProtoBloomFilter() {
         ProtoBloomFilter proto1 = ProtoBloomFilter.builder().with("Hello").build();
-        ProtoBloomFilter proto = ProtoBloomFilter.builder().build(proto1);
+        ProtoBloomFilter proto = ProtoBloomFilter.builder().with(proto1).build();
         assertEquals(1, proto.getItemCount());
         assertEquals(HELLO_HASH, proto.getHashes().iterator().next());
     }
 
     @Test
     public void buildTest_String() {
-        ProtoBloomFilter proto = ProtoBloomFilter.builder().build("Hello");
+        ProtoBloomFilter proto = ProtoBloomFilter.builder().with("Hello").build();
         assertEquals(1, proto.getItemCount());
         assertEquals(HELLO_HASH, proto.getHashes().iterator().next());
     }
