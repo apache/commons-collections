@@ -68,7 +68,7 @@ public class StandardBloomFilter implements BloomFilter {
      *
      * @param bitSet The bit set that was built by the config.
      */
-    protected StandardBloomFilter(BitSet bitSet) {
+    public StandardBloomFilter(BitSet bitSet) {
         this.bitSet = (BitSet) bitSet.clone();
         this.logValue = getApproximateLog(Integer.min(bitSet.length(), MAX_LOG_DEPTH));;
     }
