@@ -125,14 +125,14 @@ public class TransformedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
         final Map<K, V> trans = TransformedMap
                 .transformedMap(
                         base,
-                        null,
+                        (Transformer<? super K, ? extends K>) TransformedCollectionTest.TO_LOWER_CASE_TRANSFORMER,
                         (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
         assertEquals(3, trans.size());
-        assertEquals(Integer.valueOf(1), trans.get("A"));
-        assertEquals(Integer.valueOf(2), trans.get("B"));
-        assertEquals(Integer.valueOf(3), trans.get("C"));
+        assertEquals(Integer.valueOf(1), trans.get("a"));
+        assertEquals(Integer.valueOf(2), trans.get("b"));
+        assertEquals(Integer.valueOf(3), trans.get("c"));
         trans.put((K) "D", (V) "4");
-        assertEquals(Integer.valueOf(4), trans.get("D"));
+        assertEquals(Integer.valueOf(4), trans.get("d"));
     }
 
     //-----------------------------------------------------------------------
