@@ -21,12 +21,18 @@ package org.apache.commons.collections4.bloomfilter;
 import java.util.BitSet;
 
 /**
- * The interface for all BloomFilter implementations. Instances of BloomFilters should be
- * immutable.
+ * The interface for all BloomFilter implementations.
  *
  * @since 4.5
  */
-public interface BloomFilter {
+public abstract class BloomFilter {
+
+    /**
+     * The maximum log depth at which the log calculation makes no
+     * difference to the result.
+     */
+    private final static int MAX_LOG_DEPTH = 25;
+
 
     /**
      * Returns true if {@code other & this == other}. <p> This is the inverse of the match
@@ -35,7 +41,9 @@ public interface BloomFilter {
      * @param other the other Bloom filter to match.
      * @return true if they match.
      */
-    boolean inverseMatches(BloomFilter other);
+    public final boolean inverseMatches(BloomFilter other) {
+        return other.matches( this );
+    }
 
     /**
      * Returns true if {@code this & other == this}.
@@ -45,7 +53,11 @@ public interface BloomFilter {
      * @param other the other Bloom filter to match.
      * @return true if they match.
      */
-    boolean matches(BloomFilter other);
+    public boolean matches(BloomFilter other) {
+        BitSetI mine = getBitSet().clone();
+        mine.and(other.getBitSet());
+        return mine.bitEquals( getBitSet() );
+    }
 
     /**
      * Calculates the hamming distance from this Bloom filter to the other. The hamming
@@ -55,7 +67,11 @@ public interface BloomFilter {
      * @param other The other Bloom filter to calculate the distance to.
      * @return the distance.
      */
-    int distance(BloomFilter other);
+    public int distance(BloomFilter other) {
+        BitSetI mine = this.getBitSet().clone();
+        mine.xor( other.getBitSet() );
+        return mine.cardinality();
+    }
 
     /**
      * Gets the hamming weight for this filter.
@@ -64,7 +80,9 @@ public interface BloomFilter {
      *
      * @return The hamming weight.
      */
-    int getHammingWeight();
+    int getHammingWeight() {
+        return getBitSet().cardinality();
+    }
 
     /**
      * Gets the log2 (log base 2) of this Bloom filter. This is the base 2 logarithm of
@@ -73,22 +91,104 @@ public interface BloomFilter {
      *
      * @return the base 2 logarithm
      */
-    double getLog();
+    public double getLog() {
+        return getApproximateLog( MAX_LOG_DEPTH );
+    }
+
+    /**
+     * Gets the approximate log for this filter. If the Bloom filter is considered as
+     * an unsigned number what is the approximate base 2 log of that value. The
+     * depth argument indicates how many extra bits are to be considered in the log
+     * calculation. At least one bit must be considered. If there are no bits on
+     * then the log value is 0.
+     *
+     * @param depth the number of bits to consider.
+     * @return the approximate log.
+     */
+    private double getApproximateLog(int depth) {
+        if (depth == 0) {
+            return 0;
+        }
+        int[] exp = getApproximateLogExponents(depth);
+        /*
+         * this approximation is calculated using a derivation of
+         * http://en.wikipedia.org/wiki/Binary_logarithm#Algorithm
+         */
+        // the mantissa is the highest bit that is turned on.
+        if (exp[0] < 0) {
+            // there are no bits so return 0
+            return 0;
+        }
+        double result = exp[0];
+        /*
+         * now we move backwards from the highest bit until the requested depth is
+         * achieved.
+         */
+        double exp2;
+        for (int i = 1; i < exp.length; i++) {
+            if (exp[i] == -1) {
+                return result;
+            }
+            exp2 = exp[i] - exp[0]; // should be negative
+            result += Math.pow(2.0, exp2);
+        }
+        return result;
+    }
+
+    /**
+     * Gets the mantissa and characteristic powers of the log.
+     * The mantissa is in position position 0. The remainder are
+     * characteristic powers.
+     *
+     * The depth is the depth to probe for characteristics.  The
+     * effective limit is 25 as beyond that the value of the calculated
+     * double does not change.
+     *
+     * @param depth the depth to probe.
+     * @return An array of depth integers that are the exponents.
+     */
+    private int[] getApproximateLogExponents(int depth) {
+        if (depth < 1) {
+            return new int[] { -1 };
+        }
+        int[] exp = new int[depth];
+
+        exp[0] = getBitSet().previousSetBit( Integer.MAX_VALUE );
+        if (exp[0] < 0) {
+            return exp;
+        }
+
+        for (int i = 1; i < depth; i++) {
+            exp[i] = getBitSet().previousSetBit(exp[i - 1] - 1);
+            /*
+             * 25 bits from the start make no difference in the double calculation so we can
+             * short circuit the method here.
+             */
+            if (exp[i] - exp[0] < -25) {
+                exp[i] = -1;
+            }
+            if (exp[i] == -1) {
+                return exp;
+            }
+        }
+        return exp;
+    }
 
     /**
      * Merges this Bloom filter with the other creating a new filter.
      *
      * @param other the other filter.
-     * @return a new filter.
      * @throws IllegalArgumentException if other can not be merged.
      */
-    BloomFilter merge(BloomFilter other);
+    void merge(BloomFilter other) {
+        getBitSet().and( other.getBitSet() );
+    }
 
     /**
      * Gets a copy of the bitset representation of the filter.
      *
      * @return the bit set representation.
      */
-    BitSet getBitSet();
+    abstract protected BitSetI getBitSet();
 
 }
