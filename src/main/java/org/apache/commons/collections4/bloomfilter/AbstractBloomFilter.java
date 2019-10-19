@@ -15,22 +15,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.BitSet;
 
 /**
- * A Bloom filter.
- *
- * Instances are immutable.
+ * The interface for all BloomFilter implementations.
  *
  * @since 4.5
  */
-public class StandardBloomFilter implements AbstractBloomFilter {
-    /**
-     * An empty BloomFilter
-     */
-    public static final StandardBloomFilter EMPTY = new StandardBloomFilter(new BitSet(0));
+public abstract class AbstractBloomFilter {
 
     /**
      * The maximum log depth at which the log calculation makes no
@@ -38,68 +33,66 @@ public class StandardBloomFilter implements AbstractBloomFilter {
      */
     private final static int MAX_LOG_DEPTH = 25;
 
-    /**
-     * The BitSet that represents the Bloom filter.
-     */
-    private final BitSet bitSet;
 
     /**
-     * the base 2 log of the Bloom filter considered as an integer.
-     */
-    private final double logValue;
-
-    /**
-     * Constructor.
+     * Returns true if {@code other & this == other}. <p> This is the inverse of the match
+     * method. </p> {@code X.match(Y)} is the same as {@code Y.inverseMatch(X) }
      *
-     * @param protoFilter the protoFilter to build this Bloom filter from.
-     * @param config      the Filter configuration to use to build the Bloom filter.
+     * @param other the other Bloom filter to match.
+     * @return true if they match.
      */
-    public StandardBloomFilter(ProtoBloomFilter protoFilter, BloomFilterConfiguration config) {
-        this.bitSet = new BitSet(config.getNumberOfBits());
-        protoFilter.getUniqueHashes().forEach(hash -> hash.populate(bitSet, config));
-        this.logValue = getApproximateLog(Integer.min(bitSet.length(), MAX_LOG_DEPTH));;
+    public final boolean inverseMatches(AbstractBloomFilter other) {
+        return other.matches( this );
     }
 
     /**
-     * Constructor.
+     * Returns true if {@code this & other == this}.
      *
-     * A copy of the bitSet parameter is made so that the Bloom filter is isolated
-     * from any further changes in the bitSet.
+     * This is the standard Bloom filter match.
      *
-     * @param bitSet The bit set that was built by the config.
+     * @param other the other Bloom filter to match.
+     * @return true if they match.
      */
-    public StandardBloomFilter(BitSet bitSet) {
-        this.bitSet = (BitSet) bitSet.clone();
-        this.logValue = getApproximateLog(Integer.min(bitSet.length(), MAX_LOG_DEPTH));;
+    public boolean matches(AbstractBloomFilter other) {
+        BloomFilter mine = getBitSet().clone();
+        mine.and(other.getBitSet());
+        return mine.bitEquals( getBitSet() );
     }
 
-    @Override
-    public final boolean inverseMatches(final AbstractBloomFilter other) {
-        return other.matches(this);
+    /**
+     * Calculates the hamming distance from this Bloom filter to the other. The hamming
+     * distance is defined as {@code this xor other} and is the number of bits that have
+     * to be flipped to convert one filter to the other.
+     *
+     * @param other The other Bloom filter to calculate the distance to.
+     * @return the distance.
+     */
+    public int distance(AbstractBloomFilter other) {
+        BloomFilter mine = this.getBitSet().clone();
+        mine.xor( other.getBitSet() );
+        return mine.cardinality();
     }
 
-    @Override
-    public final boolean matches(final AbstractBloomFilter other) {
-        BitSet temp = other.getBitSet();
-        temp.and(bitSet);
-        return temp.equals(bitSet);
+    /**
+     * Gets the hamming weight for this filter.
+     *
+     * This is the number of bits that are on in the filter.
+     *
+     * @return The hamming weight.
+     */
+    int getHammingWeight() {
+        return getBitSet().cardinality();
     }
 
-    @Override
-    public final int distance(final AbstractBloomFilter other) {
-        BitSet temp = other.getBitSet();
-        temp.xor(bitSet);
-        return temp.cardinality();
-    }
-
-    @Override
-    public final int getHammingWeight() {
-        return bitSet.cardinality();
-    }
-
-    @Override
-    public final double getLog() {
-        return logValue;
+    /**
+     * Gets the log2 (log base 2) of this Bloom filter. This is the base 2 logarithm of
+     * this Bloom filter if the bits in this filter were considers the bits in an unsigned
+     * integer.
+     *
+     * @return the base 2 logarithm
+     */
+    public double getLog() {
+        return getApproximateLog( MAX_LOG_DEPTH );
     }
 
     /**
@@ -160,13 +153,13 @@ public class StandardBloomFilter implements AbstractBloomFilter {
         }
         int[] exp = new int[depth];
 
-        exp[0] = bitSet.length() - 1;
+        exp[0] = getBitSet().previousSetBit( Integer.MAX_VALUE );
         if (exp[0] < 0) {
             return exp;
         }
 
         for (int i = 1; i < depth; i++) {
-            exp[i] = bitSet.previousSetBit(exp[i - 1] - 1);
+            exp[i] = getBitSet().previousSetBit(exp[i - 1] - 1);
             /*
              * 25 bits from the start make no difference in the double calculation so we can
              * short circuit the method here.
@@ -181,30 +174,21 @@ public class StandardBloomFilter implements AbstractBloomFilter {
         return exp;
     }
 
-    @Override
-    public String toString() {
-        return bitSet.toString();
+    /**
+     * Merges this Bloom filter with the other creating a new filter.
+     *
+     * @param other the other filter.
+     * @throws IllegalArgumentException if other can not be merged.
+     */
+    void merge(AbstractBloomFilter other) {
+        getBitSet().and( other.getBitSet() );
     }
 
-    @Override
-    public int hashCode() {
-        return bitSet.hashCode();
-    }
+    /**
+     * Gets a copy of the bitset representation of the filter.
+     *
+     * @return the bit set representation.
+     */
+    abstract protected BloomFilter getBitSet();
 
-    @Override
-    public boolean equals(Object other) {
-        return other instanceof StandardBloomFilter && this.bitSet.equals(((StandardBloomFilter) other).bitSet);
-    }
-
-    @Override
-    public StandardBloomFilter merge(AbstractBloomFilter other) {
-        BitSet next = other.getBitSet();
-        next.or(bitSet);
-        return new StandardBloomFilter(next);
-    }
-
-    @Override
-    public final BitSet getBitSet() {
-        return (BitSet) bitSet.clone();
-    }
 }

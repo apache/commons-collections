@@ -329,7 +329,7 @@ public final class BloomFilterConfiguration {
      * @param filter the filter to check.
      * @return and estimate of the number of items that were placed in the Bloom filter.
      */
-    public long estimateSize(BloomFilter filter) {
+    public long estimateSize(AbstractBloomFilter filter) {
         double estimate = -(getNumberOfBits() * 1.0 / getNumberOfHashFunctions()) *
             Math.log(1.0 - (filter.getHammingWeight() * 1.0 / getNumberOfBits()));
         return Math.round( estimate );
@@ -343,7 +343,7 @@ public final class BloomFilterConfiguration {
      * @param filter2 the second Bloom filter.
      * @return an estimate of the size of the union between the two filters.
      */
-    public long estimateUnionSize(BloomFilter filter1, BloomFilter filter2) {
+    public long estimateUnionSize(AbstractBloomFilter filter1, AbstractBloomFilter filter2) {
         BitSet union = filter1.getBitSet();
         union.or(filter2.getBitSet());
 
@@ -360,7 +360,7 @@ public final class BloomFilterConfiguration {
      * @param filter2 the second Bloom filter.
      * @return an estimate of the size of the intersection between the two filters.
      */
-    public long estimateIntersectionSize(BloomFilter filter1, BloomFilter filter2) {
+    public long estimateIntersectionSize(AbstractBloomFilter filter1, AbstractBloomFilter filter2) {
         // do subtraction early to avoid Long overflow.
         return estimateSize(filter1) - estimateUnionSize(filter1, filter2) + estimateSize(filter2);
     }
@@ -371,7 +371,7 @@ public final class BloomFilterConfiguration {
      * @param filter the filter to check.
      * @return true if the filter is full.
      */
-    public boolean isFull(BloomFilter filter) {
+    public boolean isFull(AbstractBloomFilter filter) {
         return filter.getHammingWeight() == numberOfBits;
     }
 }

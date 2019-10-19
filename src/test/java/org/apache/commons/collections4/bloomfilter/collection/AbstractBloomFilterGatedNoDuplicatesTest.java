@@ -29,7 +29,7 @@ import java.util.function.Function;
 
 import org.apache.commons.collections4.ListValuedMap;
 import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.bloomfilter.BloomFilter;
+import org.apache.commons.collections4.bloomfilter.AbstractBloomFilter;
 import org.apache.commons.collections4.bloomfilter.ProtoBloomFilter;
 import org.apache.commons.collections4.bloomfilter.StandardBloomFilter;
 import org.apache.commons.collections4.bloomfilter.collection.BloomFilterGated;
@@ -171,7 +171,7 @@ public abstract class AbstractBloomFilterGatedNoDuplicatesTest {
     public final void distance_Proto() {
         assertEquals( 0, gated.distance( StandardBloomFilter.EMPTY ) );
         ProtoBloomFilter proto = FUNC.apply("Hello");
-        BloomFilter filter = new StandardBloomFilter( proto, gated.getGateConfig() );
+        AbstractBloomFilter filter = new StandardBloomFilter( proto, gated.getGateConfig() );
 
         assertEquals( filter.getHammingWeight(), gated.distance( proto ));
 
@@ -185,7 +185,7 @@ public abstract class AbstractBloomFilterGatedNoDuplicatesTest {
         addAll( Arrays.asList("Hello", "Hello", "World" ) );
 
         ProtoBloomFilter proto = FUNC.apply("Hello");
-        BloomFilter filter = new StandardBloomFilter( proto, gated.getGateConfig() );
+        AbstractBloomFilter filter = new StandardBloomFilter( proto, gated.getGateConfig() );
 
         assertEquals( candidateCount, gated.getCandidates( filter ).count() );
 
@@ -220,7 +220,7 @@ public abstract class AbstractBloomFilterGatedNoDuplicatesTest {
 
 
         ProtoBloomFilter proto = FUNC.apply("Hello");
-        BloomFilter filter = new StandardBloomFilter( proto, gated.getGateConfig() );
+        AbstractBloomFilter filter = new StandardBloomFilter( proto, gated.getGateConfig() );
 
         gated.add( proto, "Hello");
         assertEquals( filter, gated.getGate() );
@@ -260,7 +260,7 @@ public abstract class AbstractBloomFilterGatedNoDuplicatesTest {
 
         addAll( Arrays.asList("Hello", "Hello", "World" ) );
 
-        BloomFilter filter = new StandardBloomFilter(
+        AbstractBloomFilter filter = new StandardBloomFilter(
                 ProtoBloomFilter.builder().with( "Hello").with("World").build(),
                 gated.getGateConfig() );
         assertTrue( gated.inverseMatch( filter ));

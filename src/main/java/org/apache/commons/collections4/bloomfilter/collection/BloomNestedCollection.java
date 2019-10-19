@@ -28,7 +28,7 @@ import java.util.stream.Stream;
 
 import org.apache.commons.collections4.ListValuedMap;
 import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.bloomfilter.BloomFilter;
+import org.apache.commons.collections4.bloomfilter.AbstractBloomFilter;
 import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.apache.commons.collections4.bloomfilter.ProtoBloomFilter;
 import org.apache.commons.collections4.bloomfilter.StandardBloomFilter;
@@ -138,12 +138,12 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
      * @param proto the ProtoBloomFilter to create the BloomFilter from.
      * @return the new BloomFilter.
      */
-    private BloomFilter fromProto(ProtoBloomFilter proto) {
+    private AbstractBloomFilter fromProto(ProtoBloomFilter proto) {
         return new StandardBloomFilter(proto, collectionConfig.getGateConfig());
     }
 
     @Override
-    public BloomFilter getGate() {
+    public AbstractBloomFilter getGate() {
         return collectionConfig.getGate();
     }
 
@@ -153,7 +153,7 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
     }
 
     @Override
-    public int distance(BloomFilter filter) {
+    public int distance(AbstractBloomFilter filter) {
         return collectionConfig.getGate().distance(filter);
     }
 
@@ -163,7 +163,7 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
     }
 
     @Override
-    public boolean matches(BloomFilter filter) {
+    public boolean matches(AbstractBloomFilter filter) {
         return collectionConfig.getGate().matches(filter);
     }
 
@@ -178,7 +178,7 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
     }
 
     @Override
-    public boolean inverseMatch(BloomFilter filter) {
+    public boolean inverseMatch(AbstractBloomFilter filter) {
         return collectionConfig.getGate().inverseMatches(filter);
 
     }
@@ -198,7 +198,7 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
 
     @Override
     public boolean add(ProtoBloomFilter proto, T t) {
-        BloomFilter bf = fromProto(proto);
+        AbstractBloomFilter bf = fromProto(proto);
         int dist = Integer.MAX_VALUE;
         BloomFilterGated<T> bucket = null;
         for (BloomFilterGated<T> candidate : buckets) {
@@ -396,7 +396,7 @@ public final class BloomNestedCollection<T> implements BloomFilterGated<T>, Coll
     }
 
     @Override
-    public Stream<T> getCandidates(BloomFilter filter) {
+    public Stream<T> getCandidates(AbstractBloomFilter filter) {
         Stream<T> result = Stream.empty();
         if (filter.matches(collectionConfig.getGate())) {
             if (collectionConfig.getGateConfig().equals(bucketFactory.getConfig())) {

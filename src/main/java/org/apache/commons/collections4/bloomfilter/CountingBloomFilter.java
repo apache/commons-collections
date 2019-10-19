@@ -39,7 +39,7 @@ public class CountingBloomFilter extends StandardBloomFilter {
     /**
      * An empty Counting Bloom Filter.
      */
-    public static final BloomFilter EMPTY = new CountingBloomFilter(Collections.emptyMap());
+    public static final AbstractBloomFilter EMPTY = new CountingBloomFilter(Collections.emptyMap());
 
     /**
      * the count of entries. Each enabled bit is a key with the count for that bit being
@@ -138,7 +138,7 @@ public class CountingBloomFilter extends StandardBloomFilter {
      * @return a new filter.
      */
     @Override
-    public CountingBloomFilter merge(BloomFilter other) {
+    public CountingBloomFilter merge(AbstractBloomFilter other) {
 
         Map<Integer, Integer> newCounts = new HashMap<Integer, Integer>(counts);
         // calculate the counts.
@@ -170,7 +170,7 @@ public class CountingBloomFilter extends StandardBloomFilter {
      * @param other the other filter.
      * @return a new filter.
      */
-    public CountingBloomFilter remove(BloomFilter other) {
+    public CountingBloomFilter remove(AbstractBloomFilter other) {
         TreeMap<Integer, Integer> newCounts = new TreeMap<Integer, Integer>(counts);
 
         other.getBitSet().stream().forEach(key -> {

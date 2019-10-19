@@ -20,7 +20,7 @@ package org.apache.commons.collections4.bloomfilter.collection;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.bloomfilter.BloomFilter;
+import org.apache.commons.collections4.bloomfilter.AbstractBloomFilter;
 import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.apache.commons.collections4.bloomfilter.ProtoBloomFilter;
 
@@ -39,7 +39,7 @@ public interface BloomFilterGated<T> {
      *
      * @return the gating Bloom filter.
      */
-    BloomFilter getGate();
+    AbstractBloomFilter getGate();
 
     /**
      * Gets the filter configuration for the gate.
@@ -65,7 +65,7 @@ public interface BloomFilterGated<T> {
      * @param filter The filter to calculate distance to.
      * @return the distance
      */
-    int distance(BloomFilter filter);
+    int distance(AbstractBloomFilter filter);
 
     /**
      * Calculates the hamming distance to a ProtoBloomFilter.
@@ -81,7 +81,7 @@ public interface BloomFilterGated<T> {
      * @param filter The filter to look for.
      * @return true if {@code gate & filter == gate }
      */
-    boolean matches(BloomFilter filter);
+    boolean matches(AbstractBloomFilter filter);
 
     /**
      * Return true if {@code gate & proto == this }.
@@ -105,7 +105,7 @@ public interface BloomFilterGated<T> {
      * @param filter the Bloom filter to check.
      * @return true if {@code filter & this == filter }.
      */
-    boolean inverseMatch(BloomFilter filter);
+    boolean inverseMatch(AbstractBloomFilter filter);
 
     /**
      * Gets a stream of candidates that match the filter.
@@ -120,7 +120,7 @@ public interface BloomFilterGated<T> {
      * @param filter the BloomFilter to match.
      * @return the stream of values that match the filter.
      */
-    Stream<T> getCandidates(BloomFilter filter);
+    Stream<T> getCandidates(AbstractBloomFilter filter);
 
     /**
      * Gets a stream of candidates that match the filter.

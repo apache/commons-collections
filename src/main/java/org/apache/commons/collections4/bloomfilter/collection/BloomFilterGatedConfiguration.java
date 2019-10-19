@@ -17,7 +17,7 @@
  */
 package org.apache.commons.collections4.bloomfilter.collection;
 
-import org.apache.commons.collections4.bloomfilter.BloomFilter;
+import org.apache.commons.collections4.bloomfilter.AbstractBloomFilter;
 import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.apache.commons.collections4.bloomfilter.ProtoBloomFilter;
 import org.apache.commons.collections4.bloomfilter.StandardBloomFilter;
@@ -34,7 +34,7 @@ public class BloomFilterGatedConfiguration {
     /**
      * The gating BloomFilter.
      */
-    private BloomFilter gate;
+    private AbstractBloomFilter gate;
     /**
      * The collection statistics.
      */
@@ -56,7 +56,7 @@ public class BloomFilterGatedConfiguration {
      *
      * @return the gating Bloom filter.
      */
-    public BloomFilter getGate() {
+    public AbstractBloomFilter getGate() {
         return gate;
     }
 
@@ -92,7 +92,7 @@ public class BloomFilterGatedConfiguration {
      *
      * @param filter the Bloom filter to merge.
      */
-    public synchronized void merge(BloomFilter filter) {
+    public synchronized void merge(AbstractBloomFilter filter) {
         if (!gate.inverseMatches(filter)) {
             gate = gate.merge(filter);
         }

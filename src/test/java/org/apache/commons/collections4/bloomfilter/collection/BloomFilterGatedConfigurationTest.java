@@ -22,7 +22,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-import org.apache.commons.collections4.bloomfilter.BloomFilter;
+import org.apache.commons.collections4.bloomfilter.AbstractBloomFilter;
 import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.apache.commons.collections4.bloomfilter.ProtoBloomFilter;
@@ -88,7 +88,7 @@ public class BloomFilterGatedConfigurationTest {
     public void merge_Proto() {
         assertEquals( StandardBloomFilter.EMPTY, config.getGate() );
         ProtoBloomFilter proto = ProtoBloomFilter.builder().with( "Hello").build();
-        BloomFilter filter = new StandardBloomFilter( proto, filterConfig );
+        AbstractBloomFilter filter = new StandardBloomFilter( proto, filterConfig );
         config.merge( proto );
         assertEquals( filter, config.getGate() );
     }

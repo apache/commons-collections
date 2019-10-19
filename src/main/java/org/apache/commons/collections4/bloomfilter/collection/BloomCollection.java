@@ -25,7 +25,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.bloomfilter.BloomFilter;
+import org.apache.commons.collections4.bloomfilter.AbstractBloomFilter;
 import org.apache.commons.collections4.bloomfilter.BloomFilterConfiguration;
 import org.apache.commons.collections4.bloomfilter.ProtoBloomFilter;
 import org.apache.commons.collections4.bloomfilter.StandardBloomFilter;
@@ -96,7 +96,7 @@ public final class BloomCollection<T> implements BloomFilterGated<T>, Collection
      * @param proto the ProtoBloomFilter to create the BloomFilter from.
      * @return the BloomFilter for the gate definition.
      */
-    private BloomFilter fromProto(ProtoBloomFilter proto) {
+    private AbstractBloomFilter fromProto(ProtoBloomFilter proto) {
         return new StandardBloomFilter(proto, config.getGateConfig());
     }
 
@@ -106,7 +106,7 @@ public final class BloomCollection<T> implements BloomFilterGated<T>, Collection
      * @param t An object of type T.
      * @return the BloomFilter for the gate definition.
      */
-    private BloomFilter fromT(T t) {
+    private AbstractBloomFilter fromT(T t) {
         return fromProto(func.apply(t));
     }
 
@@ -126,7 +126,7 @@ public final class BloomCollection<T> implements BloomFilterGated<T>, Collection
     }
 
     @Override
-    public BloomFilter getGate() {
+    public AbstractBloomFilter getGate() {
         return config.getGate();
     }
 
@@ -136,7 +136,7 @@ public final class BloomCollection<T> implements BloomFilterGated<T>, Collection
     }
 
     @Override
-    public int distance(BloomFilter other) {
+    public int distance(AbstractBloomFilter other) {
         return config.getGate().distance(other);
     }
 
@@ -146,7 +146,7 @@ public final class BloomCollection<T> implements BloomFilterGated<T>, Collection
     }
 
     @Override
-    public boolean matches(BloomFilter other) {
+    public boolean matches(AbstractBloomFilter other) {
         return config.getGate().matches(other);
     }
 
@@ -161,7 +161,7 @@ public final class BloomCollection<T> implements BloomFilterGated<T>, Collection
     }
 
     @Override
-    public boolean inverseMatch(BloomFilter filter) {
+    public boolean inverseMatch(AbstractBloomFilter filter) {
         return config.getGate().inverseMatches(filter);
     }
 
@@ -214,7 +214,7 @@ public final class BloomCollection<T> implements BloomFilterGated<T>, Collection
         if (objs.isEmpty()) {
             return true;
         }
-        BloomFilter total = StandardBloomFilter.EMPTY;
+        AbstractBloomFilter total = StandardBloomFilter.EMPTY;
         for (Object o : objs) {
             total = total.merge(fromT((T)o));
         }
@@ -301,7 +301,7 @@ public final class BloomCollection<T> implements BloomFilterGated<T>, Collection
     }
 
     @Override
-    public Stream<T> getCandidates(BloomFilter filter) {
+    public Stream<T> getCandidates(AbstractBloomFilter filter) {
         return filter.matches(config.getGate()) ? getData() : Stream.empty();
     }
 
