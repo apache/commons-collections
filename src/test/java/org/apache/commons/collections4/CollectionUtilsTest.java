@@ -37,6 +37,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 import java.util.SortedMap;
@@ -619,6 +620,52 @@ public class CollectionUtilsTest extends MockTestCase {
     @Test(expected=NullPointerException.class)
     public void testIsEqualCollectionNullEquator() {
         CollectionUtils.isEqualCollection(collectionA, collectionA, null);
+    }
+    
+    @Test
+    public void testHashCode() {
+        final Equator<Integer> e = new Equator<Integer>() {
+            @Override
+            public boolean equate(final Integer o1, final Integer o2) {
+                if (o1 % 2 == 0 ^ o2 %2 == 0) {
+                    return false;
+                }
+                return true;
+            }
+
+            @Override
+            public int hash(final Integer o) {
+                return o == null ? 0 : Objects.hashCode(o);
+            }
+        };
+
+        assertEquals(collectionA.hashCode(), CollectionUtils.hashCode(collectionA, e));
+    }
+
+    @Test
+    public void testHashCodeNullCollection() {
+        final Equator<Integer> e = new Equator<Integer>() {
+            @Override
+            public boolean equate(final Integer o1, final Integer o2) {
+                if (o1 % 2 == 0 ^ o2 % 2 == 0 ) {
+                    return false;
+                }
+                return true;
+            }
+
+            @Override
+            public int hash(final Integer o) {
+                return o == null ? 0 : Objects.hashCode(o);
+            }
+        };
+
+        final Collection<Integer> collection = null;
+        assertEquals(0, CollectionUtils.hashCode(collection, e));
+    }
+
+    @Test(expected=NullPointerException.class)
+    public void testHashCodeNullEquator() {
+        CollectionUtils.hashCode(collectionB, null);
     }
 
     @Test
