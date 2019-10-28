@@ -84,8 +84,8 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
     public void testHeadMap() {
         final SortedMap<K, V> map = makeFullMap();
         final SortedMap<K, V> m = new TreeMap<>();
-        //again is the first key of the map
-        assertSame(m.isEmpty(), map.headMap((K)"again").isEmpty());
+        // "again" is the first key of the map
+        assertSame(m.isEmpty(), map.headMap((K) "again").isEmpty());
     }
 
     //-----------------------------------------------------------------------
