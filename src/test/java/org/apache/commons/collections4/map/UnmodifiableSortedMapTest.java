@@ -86,6 +86,41 @@ public class UnmodifiableSortedMapTest<K, V> extends AbstractSortedMapTest<K, V>
         final SortedMap<K, V> m = new TreeMap<>();
         // "again" is the first key of the map
         assertSame(m.isEmpty(), map.headMap((K) "again").isEmpty());
+        assertSame(18, map.size());
+        // "you" is the last key of the map
+        assertSame(17, map.headMap((K) "you").size());
+        // "we'll" is the before key of "you"
+        assertSame(16, map.headMap((K) "we'll").size());
+    }
+
+    //-----------------------------------------------------------------------
+
+    public void testTailMap() {
+        final SortedMap<K, V> map = makeFullMap();
+
+        assertSame(18, map.size());
+        // "you" is the last key of the map
+        assertSame(1, map.tailMap((K) "you").size());
+        // "we'll" is the before key of "you"
+        assertSame(2, map.tailMap((K) "we'll").size());
+        // "again" is the first key of the map
+        assertSame(18, map.tailMap((K) "again").size());
+    }
+
+    //-----------------------------------------------------------------------
+
+    public void testSubMap() {
+        final SortedMap<K, V> map = makeFullMap();
+
+        assertSame(18, map.size());
+        // get the sub map from again to you(exclusive)
+        assertSame(17, map.subMap((K) "again", (K) "you").size());
+        // get the sub map from again to we'll(exclusive)
+        assertSame(16, map.subMap((K) "again", (K) "we'll").size());
+        // "again" is the first key of the map
+        assertSame(0, map.subMap((K) "again", (K) "again").size());
+
+        assertSame(map.headMap((K)"you").size(), map.subMap((K) "again", (K) "you").size());
     }
 
     //-----------------------------------------------------------------------
