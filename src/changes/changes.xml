@@ -42,6 +42,9 @@
     <action issue="COLLECTIONS-704" dev="ggregory" type="update" due-to="dota17">
       Update size to capacity for GrowthList #90.
     </action>
+    <action dev="ggregory" type="update" due-to="dota17">
+      Test subMap and tailMap #94.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
