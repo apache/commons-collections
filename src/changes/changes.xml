@@ -36,6 +36,12 @@
     <action issue="COLLECTIONS-729" dev="ggregory" type="fix" due-to="dota17">
       Add test cases to IteratorUtilsTest #86.
     </action>
+    <action dev="ggregory" type="fix" due-to="dota17">
+      Fix typos in release notes and Javadoc for AbstractHashedMap and AbstractHashedMapTest #88.
+    </action>
+    <action issue="COLLECTIONS-704" dev="ggregory" type="update" due-to="dota17">
+      Update size to capacity for GrowthList #90.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
