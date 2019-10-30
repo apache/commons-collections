@@ -82,6 +82,9 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
                 k = 0;
             } else {
                 k = key.charAt(index1);
+                if (k == 0) {
+                    throw new IllegalArgumentException("Don't support '\\u0000' in the key.");
+                }
             }
 
             if (other == null || index2 >= endIndex2) {
