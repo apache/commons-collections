@@ -48,6 +48,9 @@
     <action dev="ggregory" type="add" due-to="dota17">
       Add junit for add, remove, setCount and entrySet in the UnmodifiableMultiSetTest #95.
     </action>
+    <action dev="ggregory" type="add" due-to="dota17">
+      Add two test cases in UnmodifiableQueueTest #96.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
