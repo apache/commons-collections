@@ -639,6 +639,20 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         //assertEquals(new MultiValuedHashMap<K, V>(), map);
     }
 
+    public void testToString(){
+        if (!isAddSupported()) {
+            return;
+        }
+        final MultiValuedMap<K, V> map = makeObject();
+        map.put((K) "A", (V) "X");
+        map.put((K) "A", (V) "Y");
+        map.put((K) "A", (V) "Z");
+        map.put((K) "B", (V) "U");
+        map.put((K) "B", (V) "V");
+        map.put((K) "B", (V) "W");
+        assertEquals("{A=[X, Y, Z], B=[U, V, W]}", map.toString());
+    }
+
     public void testKeysMultiSet() {
         final MultiValuedMap<K, V> map = makeFullMap();
         final MultiSet<K> keyMultiSet = map.keys();
