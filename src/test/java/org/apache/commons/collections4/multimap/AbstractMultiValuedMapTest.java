@@ -546,6 +546,14 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         test.put((K) "key", (V) "object0");
         test.putAll(original);
 
+        try {
+            final MultiValuedMap<K, V> originalNull = null;
+            test.putAll(originalNull);
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+            // expected
+        }
+
         assertEquals(2, test.keySet().size());
         assertEquals(4, test.size());
         assertEquals(1, test.get((K) "keyA").size());
@@ -569,6 +577,14 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         test.put((K) "keyA", (V) "objectA");
         test.put((K) "keyX", (V) "object0");
         test.putAll(original);
+
+        try {
+            final Map<K, V> originalNull = null;
+            test.putAll(originalNull);
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+            // expected
+        }
 
         assertEquals(3, test.keySet().size());
         assertEquals(4, test.size());
