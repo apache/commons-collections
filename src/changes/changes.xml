@@ -42,8 +42,11 @@
     <action issue="COLLECTIONS-704" dev="ggregory" type="update" due-to="dota17">
       Update size to capacity for GrowthList #90.
     </action>
-    <action dev="ggregory" type="update" due-to="dota17">
+    <action dev="ggregory" type="add" due-to="dota17">
       Test subMap and tailMap #94.
+    </action>
+    <action dev="ggregory" type="add" due-to="dota17">
+      Add junit for add, remove, setCount and entrySet in the UnmodifiableMultiSetTest #95.
     </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
