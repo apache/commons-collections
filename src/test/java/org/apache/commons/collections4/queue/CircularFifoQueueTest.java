@@ -421,6 +421,54 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
             assertEquals(confirmed.get(i + 2), queue.get(i));
         }
     }
+	
+	public void testAddNull() {
+        final CircularFifoQueue<E> b = new CircularFifoQueue<>(2);
+        try {
+            b.add(null);
+            fail();
+        } catch (final NullPointerException ex) {
+            assertEquals("Attempted to add null object to queue",ex.getMessage());
+            return;
+        }
+        fail();
+    }
+
+    public void testDefaultSizeAndGetError1() {
+        final CircularFifoQueue<E> fifo = new CircularFifoQueue<>();
+        assertEquals(32,fifo.maxSize());
+        fifo.add((E) "1");
+        fifo.add((E) "2");
+        fifo.add((E) "3");
+        fifo.add((E) "4");
+        fifo.add((E) "5");
+        assertEquals(5,fifo.size());
+        try {
+            fifo.get(5);
+        } catch (final NoSuchElementException ex) {
+            assertEquals("The specified index (5) is outside the available range [0, 5)",ex.getMessage());
+            return;
+        }
+        fail();
+    }
+
+    public void testDefaultSizeAndGetError2() {
+        final CircularFifoQueue<E> fifo = new CircularFifoQueue<>();
+        assertEquals(32,fifo.maxSize());
+        fifo.add((E) "1");
+        fifo.add((E) "2");
+        fifo.add((E) "3");
+        fifo.add((E) "4");
+        fifo.add((E) "5");
+        assertEquals(5,fifo.size());
+        try {
+            fifo.get(-2);
+        } catch (final NoSuchElementException ex) {
+            assertEquals("The specified index (-2) is outside the available range [0, 5)",ex.getMessage());
+            return;
+        }
+        fail();
+    }
 
     @Override
     public String getCompatibilityVersion() {
