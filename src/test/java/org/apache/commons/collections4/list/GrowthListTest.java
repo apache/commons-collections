@@ -45,6 +45,21 @@ public class GrowthListTest<E> extends AbstractListTest<E> {
     }
 
     //-----------------------------------------------------------------------
+    public void testGrowthList() {
+        final Integer zero = Integer.valueOf(0);
+        final Integer one = Integer.valueOf(1);
+        final Integer two = Integer.valueOf(2);
+        final GrowthList<Integer> grower = new GrowthList(1);
+        assertEquals(0, grower.size());
+        grower.add(0, zero);
+        assertEquals(1, grower.size());
+        grower.add(1, one);
+        assertEquals(2, grower.size());
+        grower.add(2, two);
+        assertEquals(3, grower.size());
+    }
+
+    //-----------------------------------------------------------------------
     public void testGrowthAdd() {
         final Integer one = Integer.valueOf(1);
         final GrowthList<Integer> grower = new GrowthList<>();
