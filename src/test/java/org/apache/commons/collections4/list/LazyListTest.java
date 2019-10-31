@@ -98,6 +98,56 @@ public class LazyListTest extends AbstractObjectTest {
         assertNotNull(fourthElement);
     }
 
+    //-----------------------------------------------------------------------
 
+    public void testGetWithNull() {
+        final List<Integer> hours = Arrays.asList(7, 5, 8, 2);
+        final Transformer<Integer, LocalDateTime> transformer = input -> LocalDateTime.now().withHour(hours.get(input));
+        List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), transformer);
+        LocalDateTime fourthElement = list.get(3);
+        assertFalse(list.isEmpty());
+        assertNotNull(fourthElement);
+        list.remove(3);
+        list.add(3,null);
+        fourthElement = list.get(3);
+        assertNotNull(fourthElement);
+    }
+
+    public void testSubListWitheFactory() {
+        final Factory<LocalDateTime> dateFactory = LocalDateTime::now;
+        List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), dateFactory);
+        LocalDateTime fourthElement = list.get(3);
+        assertFalse(list.isEmpty());
+        assertNotNull(fourthElement);
+        testSubList(list);
+    }
+
+    public void testSubListWithTransformer() {
+        final List<Integer> hours = Arrays.asList(7, 5, 8, 2);
+        final Transformer<Integer, LocalDateTime> transformer = input -> LocalDateTime.now().withHour(hours.get(input));
+        List<LocalDateTime> list = new LazyList<>(new ArrayList<>(), transformer);
+        LocalDateTime fourthElement = list.get(3);
+        assertFalse(list.isEmpty());
+        assertNotNull(fourthElement);
+        testSubList(list);
+    }
+
+    private void testSubList(List<LocalDateTime> list) {
+        List<LocalDateTime> subList = list.subList(1, 3);
+        assertFalse(subList.isEmpty());
+        assertNotNull(subList);
+        assertEquals(2, subList.size());
+
+        subList = list.subList(0, 1);
+        assertFalse(subList.isEmpty());
+        assertEquals(1, subList.size());
+
+        subList = list.subList(1, 1);
+        assertTrue(subList.isEmpty());
+
+        subList = list.subList(0, list.size());
+        assertFalse(subList.isEmpty());
+        assertEquals(list.size(), subList.size());
+    }
 
 }
