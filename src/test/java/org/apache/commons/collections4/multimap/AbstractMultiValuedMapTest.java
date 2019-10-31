@@ -651,6 +651,19 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         map.put((K) "B", (V) "V");
         map.put((K) "B", (V) "W");
         assertEquals("{A=[X, Y, Z], B=[U, V, W]}", map.toString());
+
+        try {
+            final MultiValuedMap<K, V> originalNull = null;
+            map.putAll(originalNull);
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+            // expected
+        }
+        assertEquals("{A=[X, Y, Z], B=[U, V, W]}", map.toString());
+
+        map.remove((K) "A");
+        map.remove((K) "B");
+        assertEquals("{}", map.toString());
     }
 
     public void testKeysMultiSet() {
