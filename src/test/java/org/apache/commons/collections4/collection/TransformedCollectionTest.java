@@ -39,9 +39,17 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
             return Integer.valueOf((String) input);
         }
     }
+    
+    private static class ToLowerCase implements Transformer<Object, Object> {
+        @Override
+        public Object transform(final Object input) {
+            return ((String) input).toLowerCase();
+        }
+    }
 
     public static final Transformer<Object, Object> NOOP_TRANSFORMER = TransformerUtils.nopTransformer();
     public static final Transformer<Object, Object> STRING_TO_INTEGER_TRANSFORMER = new StringToInteger();
+    public static final Transformer<Object, Object> TO_LOWER_CASE_TRANSFORMER = new ToLowerCase();
 
     public TransformedCollectionTest(final String testName) {
         super(testName);

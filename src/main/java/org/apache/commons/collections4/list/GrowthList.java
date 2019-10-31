@@ -86,11 +86,11 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
     /**
      * Constructor that uses an ArrayList internally.
      *
-     * @param initialSize  the initial size of the ArrayList
-     * @throws IllegalArgumentException if initial size is invalid
+     * @param initialCapacity  the initial capacity of the ArrayList
+     * @throws IllegalArgumentException if initial capacity is invalid
      */
-    public GrowthList(final int initialSize) {
-        super(new ArrayList<E>(initialSize));
+    public GrowthList(final int initialCapacity) {
+        super(new ArrayList<E>(initialCapacity));
     }
 
     /**

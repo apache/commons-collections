@@ -51,7 +51,7 @@ o COLLECTIONS-688:  Update platform requirement from Java 7 to 8.
 o COLLECTIONS-689:  Link to Javadoc API broken. Thanks to Richard Walker.
 o COLLECTIONS-692:  Replace use of deprecated Class#newInstance() PR #49. Thanks to Gary Gregory, Eitan Adler.
 
-Please NOTE: Clirr errors reported for this release are false positive, this is prooved by Japicmp report
+Please NOTE: Clirr errors reported for this release are false positive, this is proved by Japicmp report
 And manual testing.
 
 For complete information on Apache Commons Collections, including instructions on how to submit bug reports,
