@@ -69,6 +69,9 @@
     <action issue="COLLECTIONS-674" dev="ggregory" type="add" due-to="dota17">
       Add CollectionUtils removeRange, removeCount #91.
     </action>
+    <action dev="ggregory" type="add" due-to="dota17">
+      Add a test case AbstractMultiValuedMapTest#testMultiValuedMapIterator() #108.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
