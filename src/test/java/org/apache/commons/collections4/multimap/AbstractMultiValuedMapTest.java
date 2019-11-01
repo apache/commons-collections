@@ -688,6 +688,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         assertEquals(2, keyMultiSet.getCount("one"));
         assertEquals(2, keyMultiSet.getCount("two"));
         assertEquals(2, keyMultiSet.getCount("three"));
+        assertEquals(0, keyMultiSet.getCount("conut"));
         assertEquals(6, keyMultiSet.size());
     }
 

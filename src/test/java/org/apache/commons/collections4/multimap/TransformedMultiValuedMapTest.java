@@ -131,6 +131,17 @@ public class TransformedMultiValuedMapTest<K, V> extends AbstractMultiValuedMapT
         assertEquals(true, trans.get((K) "C").contains(Integer.valueOf(3)));
         trans.put((K) "D", (V) "4");
         assertEquals(true, trans.get((K) "D").contains(Integer.valueOf(4)));
+
+        final MultiValuedMap<K, V> baseMap = new ArrayListValuedHashMap<>();
+        final MultiValuedMap<K, V> transMap = TransformedMultiValuedMap
+                .transformedMap(
+                        baseMap,
+                        null,
+                        (Transformer<? super V, ? extends V>) TransformedCollectionTest.STRING_TO_INTEGER_TRANSFORMER);
+        assertEquals(0, transMap.size());
+        transMap.put((K) "D", (V) "4");
+        assertEquals(1, transMap.size());
+        assertEquals(true, transMap.get((K) "D").contains(Integer.valueOf(4)));
     }
 
 //    public void testCreate() throws Exception {
