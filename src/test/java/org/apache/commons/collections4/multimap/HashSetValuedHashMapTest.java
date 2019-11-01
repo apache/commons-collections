@@ -51,6 +51,11 @@ public class HashSetValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest<K
         return new HashSetValuedHashMap<>();
     }
 
+    @Override
+    public boolean isHashSetValue() {
+        return true;
+    }
+
     // -----------------------------------------------------------------------
     @SuppressWarnings("unchecked")
     public void testSetValuedMapAdd() {
