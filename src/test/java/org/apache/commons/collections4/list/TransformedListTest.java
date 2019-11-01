@@ -126,6 +126,32 @@ public class TransformedListTest<E> extends AbstractListTest<E> {
         assertEquals(false, list.remove(els[0]));
         assertEquals(true, list.remove(Integer.valueOf((String) els[0])));
     }
+    //-----------------------------------------------------------------------
+
+    public void testSubList() {
+        final List<E> list = makeObject();
+        List<E> subList = list.subList(0, 0);
+        assertNotNull(subList);
+        list.add((E) "zero");
+        //subList without any element of list
+        subList = list.subList(0, 0);
+        assertNotNull(subList);
+        assertEquals(0, subList.size());
+
+        //subList with one element oif list
+        subList = list.subList(0, 1);
+        assertEquals(1, subList.size());
+
+        final List<E> elements = new ArrayList<>();
+        elements.add((E) "one");
+        elements.add((E) "two");
+        elements.add((E) "three");
+        list.addAll(1, elements);
+        //subList with all elements of list
+        subList = list.subList(0, list.size());
+        assertEquals(list.size(), subList.size());
+    }
+    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {
