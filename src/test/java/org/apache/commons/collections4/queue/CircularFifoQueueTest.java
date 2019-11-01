@@ -422,7 +422,52 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         }
     }
 
-    @Override
+    public void testAddNull() {
+        final CircularFifoQueue<E> b = new CircularFifoQueue<>(2);
+        try {
+            b.add(null);
+            fail();
+        } catch (final NullPointerException ex) {
+            return;
+        }
+        fail();
+    }
+
+    public void testDefaultSizeAndGetError1() {
+        final CircularFifoQueue<E> fifo = new CircularFifoQueue<>();
+        assertEquals(32,fifo.maxSize());
+        fifo.add((E) "1");
+        fifo.add((E) "2");
+        fifo.add((E) "3");
+        fifo.add((E) "4");
+        fifo.add((E) "5");
+        assertEquals(5,fifo.size());
+        try {
+            fifo.get(5);
+        } catch (final NoSuchElementException ex) {
+            return;
+        }
+        fail();
+    }
+
+    public void testDefaultSizeAndGetError2() {
+        final CircularFifoQueue<E> fifo = new CircularFifoQueue<>();
+        assertEquals(32,fifo.maxSize());
+        fifo.add((E) "1");
+        fifo.add((E) "2");
+        fifo.add((E) "3");
+        fifo.add((E) "4");
+        fifo.add((E) "5");
+        assertEquals(5,fifo.size());
+        try {
+            fifo.get(-2);
+        } catch (final NoSuchElementException ex) {
+            return;
+        }
+        fail();
+    }
+	
+	@Override
     public String getCompatibilityVersion() {
         return "4";
     }
