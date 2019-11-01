@@ -1473,6 +1473,115 @@ public class CollectionUtilsTest extends MockTestCase {
     }
 
     @Test
+    public void testRemoveRange() {
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        Collection<Integer> result = CollectionUtils.removeRange(list, 0, 0);
+        assertEquals(1, list.size());
+        assertEquals(0, result.size());
+
+        list.add(2);
+        list.add(3);
+        result = CollectionUtils.removeRange(list, 1, 3);
+        assertEquals(1, list.size());
+        assertEquals(1, (int) list.get(0));
+        assertEquals(2, result.size());
+        assertTrue(result.contains(2));
+        assertTrue(result.contains(3));
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testRemoveRangeNull() {
+        Collection<Integer> list = null;
+        Collection result = CollectionUtils.removeRange(list, 0, 0);
+    }
+
+    @Test(expected=IndexOutOfBoundsException.class)
+    public void testRemoveRangeStartIndexNegative() {
+        Collection<Integer> list = new ArrayList<>();
+        list.add(1);
+        Collection result = CollectionUtils.removeRange(list, -1, 1);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testRemoveRangeEndIndexNegative() {
+        Collection<Integer> list = new ArrayList<>();
+        list.add(1);
+        Collection result = CollectionUtils.removeRange(list, 0, -1);
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testRemoveRangeEndLowStart() {
+        Collection<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        Collection result = CollectionUtils.removeRange(list, 1, 0);
+    }
+
+    @Test(expected=IndexOutOfBoundsException.class)
+    public void testRemoveRangeWrongEndIndex() {
+        Collection<Integer> list = new ArrayList<>();
+        list.add(1);
+        Collection result = CollectionUtils.removeRange(list, 0, 2);
+    }
+
+    @Test
+    public void testRemoveCount() {
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+
+        Collection<Integer> result = CollectionUtils.removeCount(list, 0, 0);
+        assertEquals(4, list.size());
+        assertEquals(0, result.size());
+
+        result = CollectionUtils.removeCount(list, 0, 1);
+        assertEquals(3, list.size());
+        assertEquals(2, (int) list.get(0));
+        assertEquals(1, result.size());
+        assertTrue(result.contains(1));
+
+        list.add(5);
+        list.add(6);
+        result = CollectionUtils.removeCount(list, 1, 3);
+
+        assertEquals(2, list.size());
+        assertEquals(2, (int) list.get(0));
+        assertEquals(6, (int) list.get(1));
+        assertEquals(3, result.size());
+        assertTrue(result.contains(3));
+        assertTrue(result.contains(4));
+        assertTrue(result.contains(5));
+    }
+
+    @Test(expected=IllegalArgumentException.class)
+    public void testRemoveCountWithNull() {
+        Collection<Integer> list = null;
+        Collection result = CollectionUtils.removeCount(list, 0, 1);
+    }
+
+    @Test(expected=IndexOutOfBoundsException.class)
+    public void testRemoveCountStartNegative() {
+        Collection<Integer> list = new ArrayList<>();
+        Collection result = CollectionUtils.removeCount(list, -1, 1);
+    }
+
+    @Test(expected=IndexOutOfBoundsException.class)
+    public void testRemoveCountNegative() {
+        Collection<Integer> list = new ArrayList<>();
+        Collection result = CollectionUtils.removeCount(list, 0, -1);
+    }
+
+    @Test(expected=IndexOutOfBoundsException.class)
+    public void testRemoveCountWrongCount() {
+        Collection<Integer> list = new ArrayList<>();
+        list.add(1);
+        Collection result = CollectionUtils.removeCount(list, 0, 2);
+    }
+
+    @Test
     public void testRemoveAll() {
         final List<String> base = new ArrayList<>();
         base.add("A");
