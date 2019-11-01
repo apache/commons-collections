@@ -16,8 +16,7 @@
  */
 package org.apache.commons.collections4.multimap;
 
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 import junit.framework.Test;
 
@@ -143,6 +142,99 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         map2.put("b", "b1");
         assertNotSame(map1, map2);
         assertNotSame(map1.hashCode(), map2.hashCode());
+    }
+
+    public void testArrayListValuedHashMap() {
+        ListValuedMap<K, V> listMap = null;
+        ListValuedMap<K, V> listMap1 = null;
+        Map<K, V> map = new HashMap<>();
+        Map<K, V> map1 = new HashMap<>();
+        map.put((K) "A", (V) "W");
+        map.put((K) "B", (V) "X");
+        map.put((K) "C", (V) "F");
+
+        listMap = new ArrayListValuedHashMap<>(map);
+        assertEquals(1, listMap.get((K) "A").size());
+        assertEquals(1, listMap.get((K) "B").size());
+        assertEquals(1, listMap.get((K) "C").size());
+
+        listMap1 = new ArrayListValuedHashMap<>(map1);
+        assertEquals("{}", listMap1.toString());
+    }
+
+    public void testTrimToSize(){
+        final ArrayListValuedHashMap<K, V> listMap = new ArrayListValuedHashMap<>(4);
+
+        assertEquals("{}", listMap.toString());
+        listMap.put((K) "A", (V) "W");
+        listMap.put((K) "A", (V) "X");
+        listMap.put((K) "B", (V) "F");
+        assertEquals(2, listMap.get((K) "A").size());
+        assertEquals(1, listMap.get((K) "B").size());
+
+        listMap.trimToSize();
+        assertEquals(2, listMap.get((K) "A").size());
+        assertEquals(1, listMap.get((K) "B").size());
+    }
+
+    public void testWrappedListAdd() {
+        final ListValuedMap<K, V> listMap = makeObject();
+        List<V> listA = listMap.get((K) "A");
+        listA.add(0, (V) "W");
+        listA.add(1, (V) "X");
+        listA.add(2, (V) "F");
+        assertEquals("{A=[W, X, F]}", listMap.toString());
+        listMap.get((K) "A").set(1, (V) "Q");
+        assertEquals("{A=[W, Q, F]}", listMap.toString());
+    }
+
+    public void testWrappedListAddAll() {
+        final ListValuedMap<K, V> listMap = makeObject();
+        List<V> listA = listMap.get((K) "A");
+        List<V> list = Arrays.asList((V) "W", (V) "X", (V) "F");
+        listA.addAll(0, list);
+        assertEquals("{A=[W, X, F]}", listMap.toString());
+
+        List<V> list1 = Arrays.asList((V) "Q", (V) "Q", (V) "L");
+        listA.addAll(3, list1);
+        assertEquals("{A=[W, X, F, Q, Q, L]}", listMap.toString());
+        assertEquals("W", listMap.get((K) "A").get(0));
+        assertEquals("X", listMap.get((K) "A").get(1));
+        assertEquals("F", listMap.get((K) "A").get(2));
+        assertEquals("Q", listMap.get((K) "A").get(3));
+        assertEquals("Q", listMap.get((K) "A").get(4));
+        assertEquals("L", listMap.get((K) "A").get(5));
+        assertEquals(0, listMap.get((K) "A").indexOf("W"));
+        assertEquals(2, listMap.get((K) "A").indexOf("F"));
+        assertEquals(-1, listMap.get((K) "A").indexOf("C"));
+        assertEquals(3, listMap.get((K) "A").indexOf("Q"));
+        assertEquals(4, listMap.get((K) "A").lastIndexOf("Q"));
+        assertEquals(-1, listMap.get((K) "A").lastIndexOf("A"));
+        
+        List<V> list2 = new ArrayList<>();
+        listMap.get((K) "B").addAll(0, list2);
+        assertEquals("{A=[W, X, F, Q, Q, L]}", listMap.toString());
+        List<V> list3 = listMap.get((K) "A").subList(1, 4);
+        assertEquals(3, list3.size());
+        assertEquals("Q", list3.get(2));
+    }
+
+    public void testValuesListIteratorMethods(){
+        final ListValuedMap<K, V> listMap = makeObject();
+        List<V> listA = listMap.get((K) "A");
+        List<V> list = Arrays.asList((V) "W", (V) "X", (V) "F", (V) "Q", (V) "Q", (V)"F");
+        listA.addAll(0, list);
+        ListIterator<V> it = listMap.get((K) "A").listIterator(1);
+        assertTrue(it.hasNext());
+        assertEquals("X", it.next());
+        assertEquals("F", it.next());
+        assertTrue(it.hasPrevious());
+        assertEquals("F", it.previous());
+        assertEquals(2, it.nextIndex());
+        assertEquals(1, it.previousIndex());
+        it.set((V) "Z");
+        assertEquals("Z", it.next());
+        assertEquals("Q", it.next());
     }
 
 //    public void testCreate() throws Exception {
