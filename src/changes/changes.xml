@@ -54,8 +54,11 @@
     <action dev="ggregory" type="add" due-to="dota17">
       Update two test cases in AbstractMultiValuedMapTest testPutAll_map1 testPutAll_map2 #97.
     </action>
-    <action dev="ggregory" type="add" due-to="dota17">
+    <action dev="ggregory" type="update" due-to="dota17">
       TransformedSortedBagTest should work with TransformedSortedBag, not TransformedBag #98.
+    </action>
+    <action dev="ggregory" type="add" due-to="dota17">
+      Add a test case for AbstractMultiValuedMapTest testToString() #100.
     </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
