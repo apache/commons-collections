@@ -1235,7 +1235,7 @@ public class AbstractHashedMap<K, V> extends AbstractMap<K, V> implements Iterab
      * what must be serialized here, if anything.
      *
      * @param out  the output stream
-     * @throws IOException if an error occurs while writing tothe stream
+     * @throws IOException if an error occurs while writing to the stream
      */
     protected void doWriteObject(final ObjectOutputStream out) throws IOException {
         out.writeFloat(loadFactor);

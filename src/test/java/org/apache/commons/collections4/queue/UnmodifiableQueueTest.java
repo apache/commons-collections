@@ -105,6 +105,23 @@ public class UnmodifiableQueueTest<E> extends AbstractQueueTest<E> {
             fail();
         } catch (final NullPointerException ex) {}
     }
+	
+	public void testOffer() {
+        Queue<E> queue = makeFullCollection();
+        E e = null;
+        try {
+            queue.offer(e);
+            fail();
+        } catch (final UnsupportedOperationException ex) {}
+    }
+
+    public void testPoll() {
+        Queue<E> queue = makeFullCollection();
+        try {
+            queue.poll();
+            fail();
+        } catch (final UnsupportedOperationException ex) {}
+    }
 
     //-----------------------------------------------------------------------
 

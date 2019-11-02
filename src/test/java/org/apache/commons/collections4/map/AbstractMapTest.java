@@ -463,7 +463,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     }
 
     /**
-     * Gets the compatability version, needed for package access.
+     * Gets the compatibility version, needed for package access.
      */
     @Override
     public String getCompatibilityVersion() {

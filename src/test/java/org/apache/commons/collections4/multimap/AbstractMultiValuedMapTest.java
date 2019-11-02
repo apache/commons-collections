@@ -104,6 +104,17 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         return true;
     }
 
+    /**
+     * Returns true if the maps produced by {@link #makeObject()} and
+     * {@link #makeFullMap()} supports set value.
+     * <p>
+     * Default implementation returns false. Override if your collection class
+     * supports set value.
+     */
+    public boolean isHashSetValue() {
+        return false;
+    }
+
     @Override
     public boolean isTestSerialization() {
         return true;
@@ -546,6 +557,14 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         test.put((K) "key", (V) "object0");
         test.putAll(original);
 
+        try {
+            final MultiValuedMap<K, V> originalNull = null;
+            test.putAll(originalNull);
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+            // expected
+        }
+
         assertEquals(2, test.keySet().size());
         assertEquals(4, test.size());
         assertEquals(1, test.get((K) "keyA").size());
@@ -569,6 +588,14 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         test.put((K) "keyA", (V) "objectA");
         test.put((K) "keyX", (V) "object0");
         test.putAll(original);
+
+        try {
+            final Map<K, V> originalNull = null;
+            test.putAll(originalNull);
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+            // expected
+        }
 
         assertEquals(3, test.keySet().size());
         assertEquals(4, test.size());
@@ -639,12 +666,40 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         //assertEquals(new MultiValuedHashMap<K, V>(), map);
     }
 
+    public void testToString(){
+        if (!isAddSupported()) {
+            return;
+        }
+        final MultiValuedMap<K, V> map = makeObject();
+        map.put((K) "A", (V) "X");
+        map.put((K) "A", (V) "Y");
+        map.put((K) "A", (V) "Z");
+        map.put((K) "B", (V) "U");
+        map.put((K) "B", (V) "V");
+        map.put((K) "B", (V) "W");
+        assertEquals("{A=[X, Y, Z], B=[U, V, W]}", map.toString());
+
+        try {
+            final MultiValuedMap<K, V> originalNull = null;
+            map.putAll(originalNull);
+            fail("expecting NullPointerException");
+        } catch (final NullPointerException npe) {
+            // expected
+        }
+        assertEquals("{A=[X, Y, Z], B=[U, V, W]}", map.toString());
+
+        map.remove((K) "A");
+        map.remove((K) "B");
+        assertEquals("{}", map.toString());
+    }
+
     public void testKeysMultiSet() {
         final MultiValuedMap<K, V> map = makeFullMap();
         final MultiSet<K> keyMultiSet = map.keys();
         assertEquals(2, keyMultiSet.getCount("one"));
         assertEquals(2, keyMultiSet.getCount("two"));
         assertEquals(2, keyMultiSet.getCount("three"));
+        assertEquals(0, keyMultiSet.getCount("conut"));
         assertEquals(6, keyMultiSet.size());
     }
 
@@ -731,6 +786,56 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
             mapIt.setValue((V) "some value");
             fail();
         } catch (final UnsupportedOperationException e) {
+        }
+    }
+
+    public void testMultiValuedMapIterator() {
+        final MultiValuedMap<K, V> map = makeFullMap();
+        final MapIterator<K, V> it = map.mapIterator();
+
+        try {
+            it.getKey();
+            fail();
+        } catch (final IllegalStateException ise) {
+        }
+        try {
+            it.getValue();
+            fail();
+        } catch (final IllegalStateException ise) {
+        }
+        if (isAddSupported()) {
+            try {
+                it.setValue((V) "V");
+                fail();
+            } catch (final IllegalStateException ise) {
+            }
+        }
+
+        if (!isHashSetValue() && isAddSupported()) {
+            assertTrue(it.hasNext() );
+            assertEquals("one", it.next());
+            assertEquals("one", it.getKey());
+            assertEquals("uno", it.getValue());
+            assertEquals("one", it.next());
+            assertEquals("one", it.getKey());
+            assertEquals("un", it.getValue());
+            assertEquals("two", it.next());
+            assertEquals("two", it.getKey());
+            assertEquals("dos", it.getValue());
+            assertEquals("two", it.next());
+            assertEquals("two", it.getKey());
+            assertEquals("deux", it.getValue());
+            assertEquals("three", it.next());
+            assertEquals("three", it.getKey());
+            assertEquals("tres", it.getValue());
+            assertEquals("three", it.next());
+            assertEquals("three", it.getKey());
+            assertEquals("trois", it.getValue());
+            try {
+                it.setValue((V) "threetrois");
+                fail();
+            } catch (final UnsupportedOperationException e) {
+            }
         }
     }
 

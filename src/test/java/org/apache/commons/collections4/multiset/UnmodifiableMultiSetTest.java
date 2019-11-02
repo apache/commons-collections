@@ -92,6 +92,40 @@ public class UnmodifiableMultiSetTest<E> extends AbstractMultiSetTest<E> {
 
     //-----------------------------------------------------------------------
 
+    public void testAdd() {
+        final MultiSet<E> multiset = makeFullCollection();
+        final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
+        try {
+            unmodifiableMultiSet.add( (E)"One",1);
+            fail();
+        } catch (final UnsupportedOperationException ex) {}
+    }
+
+    public void testRemove() {
+        final MultiSet<E> multiset = makeFullCollection();
+        final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
+        try {
+            unmodifiableMultiSet.remove( (E)"One",1);
+            fail();
+        } catch (final UnsupportedOperationException ex) {}
+    }
+
+    public void testSetCount() {
+        final MultiSet<E> multiset = makeFullCollection();
+        final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
+        try {
+            unmodifiableMultiSet.setCount( (E)"One",2);
+            fail();
+        } catch (final UnsupportedOperationException ex) {}
+    }
+
+    public void testEntrySet() {
+        final MultiSet<E> multiset = makeFullCollection();
+        final MultiSet<E> unmodifiableMultiSet =  UnmodifiableMultiSet.unmodifiableMultiSet(multiset);
+        assertSame( unmodifiableMultiSet.entrySet().size(),multiset.entrySet().size());
+    }
+    //-----------------------------------------------------------------------
+
     @Override
     public String getCompatibilityVersion() {
         return "4.1";
