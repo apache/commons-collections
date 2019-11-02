@@ -98,8 +98,6 @@ public class LazyListTest extends AbstractObjectTest {
         assertNotNull(fourthElement);
     }
 
-    //-----------------------------------------------------------------------
-
     public void testGetWithNull() {
         final List<Integer> hours = Arrays.asList(7, 5, 8, 2);
         final Transformer<Integer, LocalDateTime> transformer = input -> LocalDateTime.now().withHour(hours.get(input));

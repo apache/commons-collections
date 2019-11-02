@@ -84,8 +84,6 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
                 sizeBefore + 1, fixedSizeList.size());
     }
 
-    //-----------------------------------------------------------------------
-
     private FixedSizeList<String> initFixedSizeList() {
         List<String> decoratedList = new ArrayList<>();
         decoratedList.add("item 1");

@@ -130,8 +130,6 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
          list.contains("three"));
     }
 
-    //-----------------------------------------------------------------------
-
     public void testSubList() {
         final List<E> list = makeTestList();
         list.add((E) "zero");
@@ -153,7 +151,6 @@ public class PredicatedListTest<E> extends AbstractListTest<E> {
         subList = list.subList(0, list.size());
         assertEquals(list.size(), subList.size());
     }
-    //-----------------------------------------------------------------------
 
     @Override
     public String getCompatibilityVersion() {
