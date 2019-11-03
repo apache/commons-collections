@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 /**
- * Implementations of @{code ToLongBiFunction<ByteBuffer, Integer>}
+ * Implementations of @{code ToLongBiFunction&lt;byte[], Integer>}
  * and @{code Hasher} interface.
  */
 package org.apache.commons.collections4.bloomfilter.hasher;

@@ -27,7 +27,7 @@ import java.util.function.ToLongBiFunction;
 /**
  * An implementation of ToLongBiFunction<ByteBuffer, Integer> that
  * performs MD5 hashing using a signed cyclic method.
- *
+ * @since 4.5
  */
 public class MD5 implements ToLongBiFunction<byte[], Integer> {
 

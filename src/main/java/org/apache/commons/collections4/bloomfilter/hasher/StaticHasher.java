@@ -29,7 +29,7 @@ import org.apache.commons.collections4.bloomfilter.Hasher;
 /**
  * A Hasher implementation that contains the index for all enabled bits for a specific
  * Shape.
- *
+ * @since 4.5
  */
 public final class StaticHasher implements Hasher {
 

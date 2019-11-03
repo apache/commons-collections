@@ -30,6 +30,7 @@ import org.apache.commons.collections4.iterators.IteratorChain;
 /**
  * A Bloom filter built on a single hasher. This filter type should only be used for small
  * filters (few on bits)
+ * @since 4.5
  */
 public class HasherBloomFilter extends BloomFilter {
 

@@ -28,6 +28,7 @@ import java.util.function.ToLongBiFunction;
  * used as a seed for the next hash.  Hashes are seeded by calling
  * {@code Objects.hash( seed, buffer )}.
  * </p>
+ * @since 4.5
  */
 public class ObjectsHash implements ToLongBiFunction<byte[], Integer> {
 

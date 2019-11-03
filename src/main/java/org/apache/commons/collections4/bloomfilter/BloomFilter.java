@@ -27,7 +27,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
  * An abstract Bloom filter providing default implementations for most Bloom filter
  * functions. Specific implementations are encouraged to override the methods that can be
  * more efficiently implemented.
- *
+ * @since 4.5
  */
 public abstract class BloomFilter {
 
@@ -411,6 +411,7 @@ public abstract class BloomFilter {
      * @see <a href="http://hur.st/bloomfilter?n=3&p=1.0E-5">Bloom Filter calculator</a>
      * @see <a href="https://en.wikipedia.org/wiki/Bloom_filter">Bloom filter
      * [Wikipedia]</a>
+     * @since 4.5
      */
     public static class Shape {
 

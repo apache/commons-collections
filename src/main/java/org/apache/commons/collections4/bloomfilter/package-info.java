@@ -17,6 +17,6 @@
  */
 /**
  * A collection of bloom filter classes.
- *
+ * @since 4.5
  */
 package org.apache.commons.collections4.bloomfilter;

@@ -24,7 +24,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.MurmurHash3.LongPair;
 /**
  * An implementation of ToLongBiFunction<ByteBuffer, Integer> that
  * performs Murmur128 hashing using a signed cyclic method.
- *
+ * @since 4.5
  */
 public class Murmur128 implements ToLongBiFunction<byte[], Integer> {
     /**

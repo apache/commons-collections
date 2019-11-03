@@ -37,6 +37,7 @@ import org.apache.commons.collections4.bloomfilter.Hasher;
  * The class that performs hashing on demand. Items can be added to the hasher using the
  * {@code with()} methods. once {@code getBits()} method is called it is an error to call
  * {@code with()} again.
+ * @since 4.5
  */
 public class DynamicHasher implements Hasher {
 
@@ -133,7 +134,7 @@ public class DynamicHasher implements Hasher {
 
     /**
      * A factory that produces DynamicHasher Builders.
-     *
+     * @since 4.5
      */
     public static class Factory implements Hasher.Factory {
 
@@ -217,7 +218,7 @@ public class DynamicHasher implements Hasher {
 
     /**
      * The builder for DyanamicHashers.
-     *
+     * @since 4.5
      */
     public static class Builder implements Hasher.Builder {
         /**

@@ -22,7 +22,7 @@ import java.util.function.ToLongBiFunction;
 /**
  * An implementation of ToLongBiFunction<ByteBuffer, Integer> that
  * performs Murmur32 hashing using a signed iterative method.
- *
+ * @since 4.5
  */
 public class Murmur32 implements ToLongBiFunction<byte[], Integer> {
 

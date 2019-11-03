@@ -39,6 +39,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
  * This implementation uses a map to track enabled bit counts
  * </p>
  *
+ * @since 4.5
  */
 public class CountingBloomFilter extends BloomFilter {
 

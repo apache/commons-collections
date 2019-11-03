@@ -32,6 +32,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.DynamicHasher;
  * Implementations of {@code getBits()} may return duplicate values and may return
  * values in a random order.  See implementation javadoc notes as to the guarantees
  * provided by the specific implementation.
+ * @since 4.5
  */
 public interface Hasher {
 
@@ -59,6 +60,7 @@ public interface Hasher {
      * <p>
      * The factory can create Builders for various well known hash algorithms.
      * </p>
+     * @since 4.5
      */
     interface Factory {
 
@@ -88,7 +90,7 @@ public interface Hasher {
 
     /**
      * A builder to build a hasher.
-     *
+     * @since 4.5
      */
     interface Builder {
         /**
