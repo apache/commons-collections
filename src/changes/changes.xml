@@ -75,6 +75,9 @@
     <action dev="ggregory" type="update" due-to="dota17">
       Remove the parentheses in the error message in CircularFifoQueue #107.
     </action>
+    <action dev="ggregory" type="add" due-to="dota17">
+      Add junit for getWithNull and subList in LazyListTest; #103.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
