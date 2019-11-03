@@ -36,6 +36,45 @@
     <action issue="COLLECTIONS-729" dev="ggregory" type="fix" due-to="dota17">
       Add test cases to IteratorUtilsTest #86.
     </action>
+    <action dev="ggregory" type="fix" due-to="dota17">
+      Fix typos in release notes and Javadoc for AbstractHashedMap and AbstractHashedMapTest #88.
+    </action>
+    <action issue="COLLECTIONS-704" dev="ggregory" type="update" due-to="dota17">
+      Update size to capacity for GrowthList #90.
+    </action>
+    <action dev="ggregory" type="add" due-to="dota17">
+      Test subMap and tailMap #94.
+    </action>
+    <action dev="ggregory" type="add" due-to="dota17">
+      Add junit for add, remove, setCount and entrySet in the UnmodifiableMultiSetTest #95.
+    </action>
+    <action dev="ggregory" type="add" due-to="dota17">
+      Add two test cases in UnmodifiableQueueTest #96.
+    </action>
+    <action dev="ggregory" type="add" due-to="dota17">
+      Update two test cases in AbstractMultiValuedMapTest testPutAll_map1 testPutAll_map2 #97.
+    </action>
+    <action dev="ggregory" type="update" due-to="dota17">
+      TransformedSortedBagTest should work with TransformedSortedBag, not TransformedBag #98.
+    </action>
+    <action dev="ggregory" type="add" due-to="dota17">
+      Add a test case for AbstractMultiValuedMapTest testToString() #100.
+    </action>
+    <action dev="ggregory" type="update" due-to="dota17">
+      Update some map test cases #104.
+    </action>
+    <action dev="ggregory" type="update" due-to="dota17">
+      Add three test cases in UnmodifiableQueueTest #105.
+    </action>
+    <action issue="COLLECTIONS-674" dev="ggregory" type="add" due-to="dota17">
+      Add CollectionUtils removeRange, removeCount #91.
+    </action>
+    <action dev="ggregory" type="add" due-to="dota17">
+      Add a test case AbstractMultiValuedMapTest#testMultiValuedMapIterator() #108.
+    </action>
+    <action dev="ggregory" type="update" due-to="dota17">
+      Remove the parentheses in the error message in CircularFifoQueue #107.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
