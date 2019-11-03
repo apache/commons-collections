@@ -142,23 +142,10 @@ public abstract class BloomFilter {
         verifyShape(other);
         long[] mine = getBits();
         long[] theirs = other.getBits();
-        long[] remainder = null;
-        long[] result = null;
-        if (mine.length > theirs.length) {
-            result = new long[mine.length];
-            remainder = mine;
-        } else {
-            result = new long[theirs.length];
-            remainder = theirs;
-
-        }
         int limit = Integer.min(mine.length, theirs.length);
+        long[] result = new long[limit];
         for (int i = 0; i < limit; i++) {
             result[i] = mine[i] & theirs[i];
-        }
-        if (limit<result.length)
-        {
-            System.arraycopy(remainder, limit, result, limit, result.length);
         }
         return BitSet.valueOf(result).cardinality();
     }
@@ -190,7 +177,7 @@ public abstract class BloomFilter {
         }
         if (limit<result.length)
         {
-            System.arraycopy(remainder, limit, result, limit, result.length);
+            System.arraycopy(remainder, limit, result, limit, result.length-limit);
         }
         return BitSet.valueOf(result).cardinality();
     }
@@ -222,7 +209,7 @@ public abstract class BloomFilter {
         }
         if (limit<result.length)
         {
-            System.arraycopy(remainder, limit, result, limit, result.length);
+            System.arraycopy(remainder, limit, result, limit, result.length-limit);
         }
         return BitSet.valueOf(result).cardinality();
     }
@@ -257,7 +244,7 @@ public abstract class BloomFilter {
             int idx = iter.nextInt();
             int buffIdx = idx / Long.SIZE;
             int pwr = Math.floorMod(idx, Long.SIZE);
-            long buffOffset = (long) Math.pow(2, pwr);
+            long buffOffset = 1L << pwr;
             if ((buff[buffIdx] & buffOffset) == 0) {
                 return false;
             }

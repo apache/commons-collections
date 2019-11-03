@@ -24,6 +24,10 @@ import java.nio.LongBuffer;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.PrimitiveIterator.OfInt;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.function.ToLongBiFunction;
 
 import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
@@ -49,7 +53,6 @@ public class HasherBloomFilterTest extends BloomFilterTest {
 
     @Test
     public void constructorTest_NonStatic() throws NoSuchAlgorithmException {
-
         Shape shape = new Shape( MD5.NAME, 3, 72, 17 );
         DynamicHasher hasher = new DynamicHasher.Factory().useFunction(MD5.NAME).with( "Hello").build();
         HasherBloomFilter filter = createFilter( hasher, shape );
@@ -58,4 +61,6 @@ public class HasherBloomFilterTest extends BloomFilterTest {
         assertEquals( 0x6203101001888c44L, lb[0]);
         assertEquals( 0x60L, lb[1]);
     }
+
+
 }

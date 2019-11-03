@@ -127,6 +127,22 @@ public abstract class BloomFilterTest {
     }
 
     @Test
+    public final void orCardinalityTest_ExtraLongs() {
+        List<Integer> lst = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17 );
+        Hasher hasher = new StaticHasher( lst.iterator(), shape );
+
+        BloomFilter bf = createFilter(hasher, shape);
+
+        List<Integer> lst2 = Arrays.asList( 11, 12, 13, 14, 15, 16, 17, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69 );
+        Hasher hasher2 = new StaticHasher( lst2.iterator(), shape );
+
+        BloomFilter bf2 = createFilter(hasher2, shape);
+
+        assertEquals(27, bf.orCardinality(bf2));
+        assertEquals(27, bf2.orCardinality(bf));
+    }
+
+    @Test
     public final void andCardinalityTest() {
         List<Integer> lst = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17 );
         Hasher hasher = new StaticHasher( lst.iterator(), shape );
@@ -143,6 +159,23 @@ public abstract class BloomFilterTest {
     }
 
     @Test
+    public final void andCardinalityTest_ExtraLongs() {
+        List<Integer> lst = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 );
+        Hasher hasher = new StaticHasher( lst.iterator(), shape );
+
+        BloomFilter bf = createFilter(hasher, shape);
+
+        List<Integer> lst2 = Arrays.asList( 11, 12, 13, 14, 15, 16, 17, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69 );
+        Hasher hasher2 = new StaticHasher( lst2.iterator(), shape );
+
+        BloomFilter bf2 = createFilter(hasher2, shape);
+
+
+        assertEquals(7, bf.andCardinality(bf2));
+        assertEquals(7, bf2.andCardinality(bf));
+    }
+
+    @Test
     public final void xorCardinalityTest() {
         List<Integer> lst = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17 );
         Hasher hasher = new StaticHasher( lst.iterator(), shape );
@@ -156,6 +189,20 @@ public abstract class BloomFilterTest {
         assertEquals(20, bf.xorCardinality(bf2));
     }
 
+    @Test
+    public final void xorCardinalityTest_ExtraLongs() {
+        List<Integer> lst = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17 );
+        Hasher hasher = new StaticHasher( lst.iterator(), shape );
+
+        BloomFilter bf = createFilter(hasher, shape);
+
+        List<Integer> lst2 = Arrays.asList( 11, 12, 13, 14, 15, 16, 17, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69 );
+        Hasher hasher2 = new StaticHasher( lst2.iterator(), shape );
+        BloomFilter bf2 = createFilter(hasher2, shape);
+
+        assertEquals(20, bf.xorCardinality(bf2));
+        assertEquals(20, bf2.xorCardinality(bf));
+    }
     @Test
     public final void mergeTest_BloomFilter() {
         List<Integer> lst = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17 );
@@ -549,4 +596,16 @@ public abstract class BloomFilterTest {
         assertEquals( shape, hasher2.getShape() );
         assertSameBits( hasher, hasher2 );
     }
+
+    @Test
+    public final void getBitsTest_SpanLong() {
+        List<Integer> lst = Arrays.asList( 63, 64 );
+        StaticHasher hasher = new StaticHasher( lst.iterator(), shape );
+        BloomFilter bf = createFilter(hasher, shape);
+        long[] lb = bf.getBits();
+        assertEquals( 2, lb.length );
+        assertEquals( 0x8000000000000000L, lb[0]);
+        assertEquals( 0x1, lb[1]);
+    }
+
 }

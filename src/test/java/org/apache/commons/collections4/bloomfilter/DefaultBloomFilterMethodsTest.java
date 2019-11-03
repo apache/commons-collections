@@ -23,6 +23,10 @@ import java.util.function.IntConsumer;
 import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 
+/**
+ * A test that test all the default implementations on the BloomFilter.
+ *
+ */
 public class DefaultBloomFilterMethodsTest extends BloomFilterTest {
 
     @Override

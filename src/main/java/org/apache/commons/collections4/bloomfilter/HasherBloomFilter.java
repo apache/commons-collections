@@ -74,15 +74,14 @@ public class HasherBloomFilter extends BloomFilter {
         int n = (int) Math.ceil(hasher.getShape().getNumberOfBits() * 1.0 / Long.SIZE);
         long[] result = new long[n];
         OfInt iter = hasher.getBits(hasher.getShape());
-        while (iter.hasNext()) {
-            iter.forEachRemaining((IntConsumer) idx -> {
-                long buff = result[idx / Long.SIZE];
-                int pwr = Math.floorMod(idx, Long.SIZE);
-                long buffOffset = (long) Math.pow(2, pwr);
-                buff |= buffOffset;
-                result[idx / Long.SIZE] = buff;
-            });
-        }
+        iter.forEachRemaining((IntConsumer) idx -> {
+            long buff = result[idx / Long.SIZE];
+            long pwr = Math.floorMod(idx, Long.SIZE);
+            long buffOffset = 1L << pwr;
+            buff |= buffOffset;
+            result[idx / Long.SIZE] = buff;
+        });
+
         int limit = result.length;
         while (limit > 0 && result[limit - 1] == 0) {
             limit--;
