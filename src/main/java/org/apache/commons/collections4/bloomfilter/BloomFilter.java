@@ -121,7 +121,7 @@ public abstract class BloomFilter {
      * @throws IllegalArgumentException if the shape argument does not match the shape of
      * this filter, or if the hasher is not the specified one
      */
-    abstract public void merge(Shape shape, Hasher hasher);
+    abstract public void merge(Hasher hasher);
 
     /**
      * Gets the cardinality of this Bloom filter.
@@ -250,12 +250,8 @@ public abstract class BloomFilter {
      * @throws IllegalArgumentException if the shape argument does not match the shape of
      * this filter, or if the hasher is not the specified one
      */
-    public boolean contains(Shape shape, Hasher hasher) {
-        verifyShape(shape);
-        if (!shape.getHashFunctionName().equals(hasher.getName())) {
-            throw new IllegalArgumentException(
-                String.format("Hasher (%s) is not the hasher for shape (%s)", hasher.getName(), shape.toString()));
-        }
+    public boolean contains(Hasher hasher) {
+        verifyHasher( hasher );
         long[] buff = getBits();
 
         OfInt iter = hasher.getBits(shape);

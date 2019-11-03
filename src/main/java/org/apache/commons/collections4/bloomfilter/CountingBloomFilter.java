@@ -137,14 +137,9 @@ public class CountingBloomFilter extends BloomFilter {
     }
 
     @Override
-    public void merge( Shape shape, Hasher hasher ) {
-        verifyShape( shape );
-        if ( ! shape.getHashFunctionName().equals( hasher.getName() ))
-        {
-            throw new IllegalArgumentException(String.format("Hasher (%s) is not the same as for shape (%s)",
-                hasher.getName(), shape.toString()));
-        }
-        merge( hasher.getBits(shape) );
+    public void merge(Hasher hasher) {
+        verifyHasher( hasher );
+        merge( hasher.getBits(getShape()) );
     }
 
     /**
@@ -237,13 +232,9 @@ public class CountingBloomFilter extends BloomFilter {
     }
 
     @Override
-    public boolean contains(Shape shape, Hasher hasher) {
-        verifyShape(shape);
-        if (!shape.getHashFunctionName().equals(hasher.getName())) {
-            throw new IllegalArgumentException(String.format("Hasher (%s) is not the sames as for shape (%s)",
-                hasher.getName(), shape.getHashFunctionName()));
-        }
-        OfInt iter = hasher.getBits(shape);
+    public boolean contains(Hasher hasher) {
+        verifyHasher(hasher);
+        OfInt iter = hasher.getBits(getShape());
         while (iter.hasNext()) {
             if (counts.get(iter.nextInt()) == null) {
                 return false;
