@@ -20,7 +20,7 @@ package org.apache.commons.collections4.bloomfilter.hasher;
 import java.util.function.ToLongBiFunction;
 
 /**
- * An implementation of ToLongBiFunction<ByteBuffer, Integer> that
+ * An implementation of {@code ToLongBiFunction<byte[], Integer>} that
  * performs Murmur32 hashing using a signed iterative method.
  * @since 4.5
  */

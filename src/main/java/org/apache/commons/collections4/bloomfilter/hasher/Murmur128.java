@@ -22,7 +22,7 @@ import java.util.function.ToLongBiFunction;
 import org.apache.commons.collections4.bloomfilter.hasher.MurmurHash3.LongPair;
 
 /**
- * An implementation of ToLongBiFunction<ByteBuffer, Integer> that
+ * An implementation of {@code ToLongBiFunction<byte[], Integer>} that
  * performs Murmur128 hashing using a signed cyclic method.
  * @since 4.5
  */

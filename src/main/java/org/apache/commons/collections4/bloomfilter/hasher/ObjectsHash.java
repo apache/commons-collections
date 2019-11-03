@@ -21,7 +21,7 @@ import java.util.Objects;
 import java.util.function.ToLongBiFunction;
 
 /**
- * An implementation of ToLongBiFunction<ByteBuffer, Integer> that
+ * An implementation of {@code ToLongBiFunction<byte[], Integer>} that
  * performs {@code Objects.hash} hashing using a signed iterative method.
  * <p>
  * Except in the case of seed 0, the value of the previous hash is

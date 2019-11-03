@@ -25,7 +25,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.function.ToLongBiFunction;
 
 /**
- * An implementation of ToLongBiFunction<ByteBuffer, Integer> that
+ * An implementation of {@code ToLongBiFunction<byte[], Integer>} that
  * performs MD5 hashing using a signed cyclic method.
  * @since 4.5
  */

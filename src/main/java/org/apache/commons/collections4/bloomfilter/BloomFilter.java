@@ -116,7 +116,6 @@ public abstract class BloomFilter {
      * filter. The Shape must match the shape of this filter. The hasher provides bit
      * indexes to enable.
      *
-     * @param shape the decomposed Bloom filter.
      * @param hasher the hasher to provide the indexes.
      * @throws IllegalArgumentException if the shape argument does not match the shape of
      * this filter, or if the hasher is not the specified one
@@ -244,7 +243,6 @@ public abstract class BloomFilter {
      * the shape of this filter. The hasher provides bit indexes to check for. Effectively
      * decomposed AND this == decomposed.
      *
-     * @param shape the Shape of the decomposed Bloom filter.
      * @param hasher The hasher containing the bits to check.
      * @return true if this filter contains the other.
      * @throws IllegalArgumentException if the shape argument does not match the shape of
