@@ -67,7 +67,7 @@ public interface Hasher {
         /**
          * the default implementation of the HasherFactory
          */
-        static Factory DEFAULT = new DynamicHasher.Factory();
+        Factory DEFAULT = new DynamicHasher.Factory();
 
         /**
          * Lists all registered Hash function names.
