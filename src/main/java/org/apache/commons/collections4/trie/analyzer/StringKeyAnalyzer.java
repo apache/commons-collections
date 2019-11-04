@@ -83,7 +83,7 @@ public class StringKeyAnalyzer extends KeyAnalyzer<String> {
             } else {
                 k = key.charAt(index1);
                 if (k == 0) {
-                    throw new IllegalArgumentException("Don't support '\\u0000' in the key.");
+                    throw new IllegalArgumentException("Character '\\u0000' is not supported in the key.");
                 }
             }
 
