@@ -16,12 +16,13 @@
  */
 package org.apache.commons.collections4.multimap;
 
+import java.util.Set;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.HashMap;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import junit.framework.Test;
 
@@ -98,6 +99,78 @@ public class UnmodifiableMultiValuedMapTest<K, V> extends AbstractMultiValuedMap
             fail();
         } catch (final UnsupportedOperationException e) {
         }
+    }
+
+    public void testRemoveException() {
+        final MultiValuedMap<K, V> map = makeFullMap();
+        try {
+            map.remove((K) "one");
+            fail();
+        } catch (final UnsupportedOperationException e) {
+            // expected, not support remove() method
+            // UnmodifiableMultiValuedMap does not support change
+        }
+        assertEquals("{one=[uno, un], two=[dos, deux], three=[tres, trois]}", map.toString());
+    }
+
+    public void testRemoveMappingException() {
+        final MultiValuedMap<K, V> map = makeFullMap();
+        try {
+            map.removeMapping((K) "one", (V) "uno");
+            fail();
+        } catch (final UnsupportedOperationException e) {
+            // expected, not support removeMapping() method
+            // UnmodifiableMultiValuedMap does not support change
+        }
+        assertEquals("{one=[uno, un], two=[dos, deux], three=[tres, trois]}", map.toString());
+    }
+
+    public void testClearException() {
+        final MultiValuedMap<K, V> map = makeFullMap();
+        try {
+            map.clear();
+            fail();
+        } catch (final UnsupportedOperationException e) {
+            // expected, not support clear() method
+            // UnmodifiableMultiValuedMap does not support change
+        }
+        assertEquals("{one=[uno, un], two=[dos, deux], three=[tres, trois]}", map.toString());
+    }
+
+    public void testPutAllException() {
+        final MultiValuedMap<K, V> map = makeObject();
+        final MultiValuedMap<K, V> original = new ArrayListValuedHashMap<>();
+        final Map<K, V> originalMap = new HashMap<>();
+        final Collection<V> coll = (Collection<V>) Arrays.asList("X", "Y", "Z");
+        original.put((K) "key", (V) "object1");
+        original.put((K) "key", (V) "object2");
+        originalMap.put((K) "keyX", (V) "object1");
+        originalMap.put((K) "keyY", (V) "object2");
+
+        try {
+            map.putAll(original);
+            fail();
+        } catch (final UnsupportedOperationException e) {
+            // expected, not support putAll() method
+            // UnmodifiableMultiValuedMap does not support change
+        }
+        assertEquals("{}", map.toString());
+
+        try {
+            map.putAll(originalMap);
+            fail();
+        } catch (final UnsupportedOperationException e) {
+            // expected
+        }
+        assertEquals("{}", map.toString());
+
+        try {
+            map.putAll((K) "A", coll);
+            fail();
+        } catch (final UnsupportedOperationException e) {
+            // expected
+        }
+        assertEquals("{}", map.toString());
     }
 
     @SuppressWarnings("unchecked")
