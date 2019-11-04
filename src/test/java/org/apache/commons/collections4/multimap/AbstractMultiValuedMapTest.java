@@ -104,6 +104,17 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         return true;
     }
 
+    /**
+     * Returns true if the maps produced by {@link #makeObject()} and
+     * {@link #makeFullMap()} supports set value.
+     * <p>
+     * Default implementation returns false. Override if your collection class
+     * supports set value.
+     */
+    public boolean isHashSetValue() {
+        return false;
+    }
+
     @Override
     public boolean isTestSerialization() {
         return true;
@@ -688,6 +699,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
         assertEquals(2, keyMultiSet.getCount("one"));
         assertEquals(2, keyMultiSet.getCount("two"));
         assertEquals(2, keyMultiSet.getCount("three"));
+        assertEquals(0, keyMultiSet.getCount("conut"));
         assertEquals(6, keyMultiSet.size());
     }
 
@@ -774,6 +786,56 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
             mapIt.setValue((V) "some value");
             fail();
         } catch (final UnsupportedOperationException e) {
+        }
+    }
+
+    public void testMultiValuedMapIterator() {
+        final MultiValuedMap<K, V> map = makeFullMap();
+        final MapIterator<K, V> it = map.mapIterator();
+
+        try {
+            it.getKey();
+            fail();
+        } catch (final IllegalStateException ise) {
+        }
+        try {
+            it.getValue();
+            fail();
+        } catch (final IllegalStateException ise) {
+        }
+        if (isAddSupported()) {
+            try {
+                it.setValue((V) "V");
+                fail();
+            } catch (final IllegalStateException ise) {
+            }
+        }
+
+        if (!isHashSetValue() && isAddSupported()) {
+            assertTrue(it.hasNext() );
+            assertEquals("one", it.next());
+            assertEquals("one", it.getKey());
+            assertEquals("uno", it.getValue());
+            assertEquals("one", it.next());
+            assertEquals("one", it.getKey());
+            assertEquals("un", it.getValue());
+            assertEquals("two", it.next());
+            assertEquals("two", it.getKey());
+            assertEquals("dos", it.getValue());
+            assertEquals("two", it.next());
+            assertEquals("two", it.getKey());
+            assertEquals("deux", it.getValue());
+            assertEquals("three", it.next());
+            assertEquals("three", it.getKey());
+            assertEquals("tres", it.getValue());
+            assertEquals("three", it.next());
+            assertEquals("three", it.getKey());
+            assertEquals("trois", it.getValue());
+            try {
+                it.setValue((V) "threetrois");
+                fail();
+            } catch (final UnsupportedOperationException e) {
+            }
         }
     }
 
