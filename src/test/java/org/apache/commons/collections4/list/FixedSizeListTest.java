@@ -83,4 +83,64 @@ public class FixedSizeListTest<E> extends AbstractListTest<E> {
         Assert.assertEquals("Modifying an the underlying list is allowed",
                 sizeBefore + 1, fixedSizeList.size());
     }
+
+    private FixedSizeList<String> initFixedSizeList() {
+        List<String> decoratedList = new ArrayList<>();
+        decoratedList.add("item 1");
+        decoratedList.add("item 2");
+        //
+        return FixedSizeList.fixedSizeList(decoratedList);
+    }
+
+    public void testAdd() {
+        FixedSizeList<String> fixedSizeList = initFixedSizeList();
+
+        try {
+            fixedSizeList.add(2,"New Value");
+            fail();
+        } catch (UnsupportedOperationException ex) {}
+    }
+
+
+    public void testAddAll() {
+        FixedSizeList<String> fixedSizeList = initFixedSizeList();
+
+        List<String> addList = new ArrayList<>();
+        addList.add("item 3");
+        addList.add("item 4");
+
+        try {
+            fixedSizeList.addAll(2, addList);
+            fail();
+        } catch (UnsupportedOperationException ex) {}
+    }
+
+    public void testRemove() {
+        FixedSizeList<String> fixedSizeList = initFixedSizeList();
+
+        try {
+            fixedSizeList.remove(1);
+            fail();
+        } catch (UnsupportedOperationException ex) {}
+    }
+
+    public void testSubList() {
+        FixedSizeList<String> fixedSizeList = initFixedSizeList();
+
+        List<String> subFixedSizeList = fixedSizeList.subList(1, 1);
+        Assert.assertNotNull(subFixedSizeList);
+        Assert.assertEquals(0, subFixedSizeList.size());
+    }
+
+    public void testIsFull() {
+        FixedSizeList<String> fixedSizeList = initFixedSizeList();
+
+        Assert.assertTrue(fixedSizeList.isFull());
+    }
+
+    public void testMaxSize() {
+        FixedSizeList<String> fixedSizeList = initFixedSizeList();
+
+        Assert.assertEquals(2, fixedSizeList.maxSize());
+    }
 }
