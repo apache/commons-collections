@@ -28,7 +28,7 @@ import java.util.ListIterator;
 public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
 
     /** The iterator being decorated */
-    private final ListIterator<E> iterator;
+    private ListIterator<E> iterator;
 
     //-----------------------------------------------------------------------
     /**
@@ -52,6 +52,15 @@ public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
      */
     protected ListIterator<E> getListIterator() {
         return iterator;
+    }
+
+    /**
+     * Sets the iterator being decorated.
+     *
+     * @param iterator the decorated iterator
+     */
+    protected void setListIterator(ListIterator<E> iterator) {
+        this.iterator = iterator;
     }
 
     //-----------------------------------------------------------------------
