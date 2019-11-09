@@ -680,7 +680,7 @@ public abstract class BloomFilter {
          * @return the number of bytes in the Bloom filter.
          */
         public int getNumberOfBytes() {
-            return Double.valueOf(Math.ceil(numberOfBits / 8.0)).intValue();
+            return Double.valueOf(Math.ceil(numberOfBits / (double)Byte.SIZE )).intValue();
         }
 
         @Override
