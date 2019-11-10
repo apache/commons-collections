@@ -67,7 +67,7 @@ public abstract class BloomFilter {
      * @param other the other filter to check.
      * @throws IllegalArgumentException if the shapes are not the same.
      */
-    protected final void verifyShape(BloomFilter other) {
+    protected void verifyShape(BloomFilter other) {
         verifyShape(other.getShape());
     }
 
@@ -77,7 +77,7 @@ public abstract class BloomFilter {
      * @param shape the other shape to check.
      * @throws IllegalArgumentException if the shapes are not the same.
      */
-    protected final void verifyShape(Shape shape) {
+    protected void verifyShape(Shape shape) {
         if (!this.shape.equals(shape)) {
             throw new IllegalArgumentException(String.format("Shape %s is not the same as %s", shape, this.shape));
         }
@@ -88,7 +88,7 @@ public abstract class BloomFilter {
      *
      * @param hasher the Hasher to check
      */
-    protected final void verifyHasher(Hasher hasher) {
+    protected void verifyHasher(Hasher hasher) {
         if (!shape.getHashFunctionName().equals(hasher.getName())) {
             throw new IllegalArgumentException(
                 String.format("Hasher (%s) is not the hasher for shape (%s)", hasher.getName(), shape.toString()));
