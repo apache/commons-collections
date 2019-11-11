@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.PrimitiveIterator.OfInt;
+import java.util.function.Consumer;
 import java.util.function.IntConsumer;
 import java.util.Set;
 import java.util.TreeMap;
@@ -183,6 +184,23 @@ public class CountingBloomFilter extends BloomFilter {
     public void remove(BloomFilter other) {
         verifyShape(other);
         remove(BitSet.valueOf(other.getBits()).stream().boxed());
+    }
+
+    /**
+     * Decrement the counts for the bits that are on in the hasher from this
+     * Bloom filter.
+     *
+     * <p>
+     * For each bit that is turned on in the other filter the count is decremented by 1.
+     * </p>
+     *
+     * @param hasher the hasher to generate bits.
+     */
+    public void remove(Hasher hasher) {
+        verifyHasher( hasher );
+        Set<Integer> lst = new HashSet<Integer>();
+        hasher.getBits(getShape()).forEachRemaining( (Consumer<Integer>)lst::add );
+        remove(lst.stream());
     }
 
     /**
