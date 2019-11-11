@@ -80,11 +80,11 @@ import junit.framework.TestSuite;
  *      }
  *
  *      public BulkTest bulkTestKeySet() {
- *          return new TestSet(makeFullMap().keySet());
+ *          return new SetTest(makeFullMap().keySet());
  *      }
  *
  *      public BulkTest bulkTestEntrySet() {
- *          return new TestSet(makeFullMap().entrySet());
+ *          return new SetTest(makeFullMap().entrySet());
  *      }
  *  }
  *  </Pre>
