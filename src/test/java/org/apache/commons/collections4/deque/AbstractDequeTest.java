@@ -335,7 +335,7 @@ public abstract class AbstractDequeTest<E> extends AbstractCollectionTest<E> {
         final int max = getFullElements().length;
         for (int i = 0; i < max; i++) {
             getCollection().pollLast();
-            LinkedList<E> list=(LinkedList<E>) getConfirmed();
+            LinkedList<E> list = (LinkedList<E>) getConfirmed();
             list.removeLast();
             verify();
         }
@@ -666,7 +666,7 @@ public abstract class AbstractDequeTest<E> extends AbstractCollectionTest<E> {
     /**
      *  Tests {@link Deque#removeFirstOccurrence(Object o)}.
      */
-    public void testDequeRemoveFirstOccurrence(){
+    public void testDequeRemoveFirstOccurrence() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -692,7 +692,7 @@ public abstract class AbstractDequeTest<E> extends AbstractCollectionTest<E> {
     /**
      *  Tests {@link Deque#removeLastOccurrence(Object o)}.
      */
-    public void testDequeRemoveLastOccurrence(){
+    public void testDequeRemoveLastOccurrence() {
         if (!isRemoveSupported()) {
             return;
         }
@@ -719,7 +719,7 @@ public abstract class AbstractDequeTest<E> extends AbstractCollectionTest<E> {
     /**
      *  Tests {@link Deque#descendingIterator()}.
      */
-    public void testDescendingIterator(){
+    public void testDescendingIterator() {
         if (!isAddSupported()) {
             return;
         }
