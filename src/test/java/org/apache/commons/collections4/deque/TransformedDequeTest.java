@@ -37,18 +37,6 @@ public class TransformedDequeTest<E> extends AbstractDequeTest<E>  {
     }
 
     @Override
-    public Deque<E> makeConfirmedCollection() {
-        return new LinkedList<>();
-    }
-
-    @Override
-    public Deque<E> makeConfirmedFullCollection() {
-        final Deque<E> list = new LinkedList<>();
-        list.addAll(Arrays.asList(getFullElements()));
-        return list;
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public Deque<E> makeObject() {
         return TransformedDeque.transformingDeque(new LinkedList<E>(),

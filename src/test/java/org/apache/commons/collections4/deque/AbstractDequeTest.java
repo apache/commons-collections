@@ -111,7 +111,6 @@ public abstract class AbstractDequeTest<E> extends AbstractCollectionTest<E> {
         return deque;
     }
 
-    //-----------------------------------------------------------------------
     /**
      * Returns the {@link #collection} field cast to a {@link Deque}.
      *
@@ -125,51 +124,41 @@ public abstract class AbstractDequeTest<E> extends AbstractCollectionTest<E> {
     /**
      *  Tests {@link Deque#addFirst(E e)}.
      */
-    public void testDequeAddFirst(E e) {
+    public void testDequeAddFirst() {
         if (!isAddSupported()) {
             return;
         }
 
         final E[] elements = getFullElements();
-        for (final E element : elements) {
-            resetEmpty();
-            getCollection().addFirst(element);
-            getConfirmed().add(element);
-            verify();
-            assertEquals("Deque size is 1 after first add", 1, getCollection().size());
-        }
-
         resetEmpty();
         int size = 0;
+
         for (final E element : elements) {
             getCollection().addFirst(element);
             getConfirmed().add(element);
-            verify();
             size++;
             assertEquals("Deque size should grow after add", size, getCollection().size());
             assertTrue("Deque should contain added element", getCollection().contains(element));
         }
+        final Deque<E> deque = makeObject();
+        for (int i = 0; i < size; i++) {
+            deque.push(getCollection().pop());
+        }
+        setCollection(deque);
+        verify();
     }
 
     /**
      *  Tests {@link Deque#addLast(E e)}.
      */
-    public void testDequeAddLast(E e) {
+    public void testDequeAddLast() {
         if (!isAddSupported()) {
             return;
         }
 
-        final E[] elements = getFullElements();
-        for (final E element : elements) {
-            resetEmpty();
-            getCollection().addLast(element);
-            getConfirmed().add(element);
-            verify();
-            assertEquals("Deque size is 1 after first add", 1, getCollection().size());
-        }
-
         resetEmpty();
         int size = 0;
+        final E[] elements = getFullElements();
         for (final E element : elements) {
             getCollection().addLast(element);
             getConfirmed().add(element);
@@ -183,52 +172,42 @@ public abstract class AbstractDequeTest<E> extends AbstractCollectionTest<E> {
     /**
      *  Tests {@link Deque#offerFirst(E e)}.
      */
-    public void testDequeOfferFirst(E e) {
+    public void testDequeOfferFirst() {
         if (!isAddSupported()) {
             return;
         }
 
-        final E[] elements = getFullElements();
-        for (final E element : elements) {
-            resetEmpty();
-            getCollection().offerFirst(element);
-            getConfirmed().add(element);
-            verify();
-            assertEquals("Deque size is 1 after first add", 1, getCollection().size());
-        }
-
         resetEmpty();
+        final E[] elements = getFullElements();
         int size = 0;
         for (final E element : elements) {
-            getCollection().addLast(element);
+            final boolean r = getCollection().offerFirst(element);
             getConfirmed().add(element);
-            verify();
-            size++;
+            if (r) {
+                size++;
+            }
             assertEquals("Deque size should grow after add", size, getCollection().size());
             assertTrue("Deque should contain added element", getCollection().contains(element));
         }
+        final Deque<E> deque = makeObject();
+        for (int i = 0; i < size; i++) {
+            deque.push(getCollection().pop());
+        }
+        setCollection(deque);
+        verify();
     }
 
     /**
      *  Tests {@link Deque#offerLast(E e)}.
      */
-    public void testDequeOfferLast(E e) {
+    public void testDequeOfferLast() {
         if (!isAddSupported()) {
             return;
         }
 
-        final E[] elements = getFullElements();
-        for (final E element : elements) {
-            resetEmpty();
-            final boolean r = getCollection().offerLast(element);
-            getConfirmed().add(element);
-            verify();
-            assertTrue("Empty deque changed after add", r);
-            assertEquals("Deque size is 1 after first add", 1, getCollection().size());
-        }
-
         resetEmpty();
         int size = 0;
+        final E[] elements = getFullElements();
         for (final E element : elements) {
             final boolean r = getCollection().offerLast(element);
             getConfirmed().add(element);
@@ -253,7 +232,7 @@ public abstract class AbstractDequeTest<E> extends AbstractCollectionTest<E> {
 
         try {
             getCollection().removeFirst();
-            fail("Deque.remove should throw NoSuchElementException");
+            fail("Deque.removeFirst should throw NoSuchElementException");
         } catch (final NoSuchElementException e) {
             // expected
         }
@@ -264,13 +243,13 @@ public abstract class AbstractDequeTest<E> extends AbstractCollectionTest<E> {
         for (int i = 0; i < max; i++) {
             final E element = getCollection().removeFirst();
             final boolean success = getConfirmed().remove(element);
-            assertTrue("remove should return correct element", success);
+            assertTrue("removeFirst should return correct element", success);
             verify();
         }
 
         try {
             getCollection().element();
-            fail("Deque.remove should throw NoSuchElementException");
+            fail("Deque.removeFirst should throw NoSuchElementException");
         } catch (final NoSuchElementException e) {
             // expected
         }
@@ -355,7 +334,7 @@ public abstract class AbstractDequeTest<E> extends AbstractCollectionTest<E> {
 
         final int max = getFullElements().length;
         for (int i = 0; i < max; i++) {
-            element = getCollection().pollLast();
+            getCollection().pollLast();
             LinkedList<E> list=(LinkedList<E>) getConfirmed();
             list.removeLast();
             verify();
@@ -436,12 +415,9 @@ public abstract class AbstractDequeTest<E> extends AbstractCollectionTest<E> {
             if (!isNullSupported()) {
                 assertNotNull(element);
             }
-
             assertTrue(getConfirmed().contains(element));
-
             getCollection().remove(element);
             getConfirmed().remove(element);
-
             verify();
         }
 
@@ -530,18 +506,9 @@ public abstract class AbstractDequeTest<E> extends AbstractCollectionTest<E> {
             return;
         }
 
-        final E[] elements = getFullElements();
-        for (final E element : elements) {
-            resetEmpty();
-            final boolean r = getCollection().offer(element);
-            getConfirmed().add(element);
-            verify();
-            assertTrue("Empty deque changed after add", r);
-            assertEquals("Deque size is 1 after first add", 1, getCollection().size());
-        }
-
         resetEmpty();
         int size = 0;
+        final E[] elements = getFullElements();
         for (final E element : elements) {
             final boolean r = getCollection().offer(element);
             getConfirmed().add(element);
@@ -696,6 +663,79 @@ public abstract class AbstractDequeTest<E> extends AbstractCollectionTest<E> {
         assertNull(element);
     }
 
+    /**
+     *  Tests {@link Deque#removeFirstOccurrence(Object o)}.
+     */
+    public void testDequeRemoveFirstOccurrence(){
+        if (!isRemoveSupported()) {
+            return;
+        }
+
+        resetFull();
+
+        final E[] elements = getFullElements();
+        for (final E element : elements) {
+            final boolean success = getCollection().removeFirstOccurrence(element);
+            assertTrue("element should be removed successfully", success);
+            getConfirmed().remove(element);
+            verify();
+        }
+
+        try {
+            getCollection().element();
+            fail("Deque.remove should throw NoSuchElementException");
+        } catch (final NoSuchElementException e) {
+            // expected
+        }
+    }
+
+    /**
+     *  Tests {@link Deque#removeLastOccurrence(Object o)}.
+     */
+    public void testDequeRemoveLastOccurrence(){
+        if (!isRemoveSupported()) {
+            return;
+        }
+
+        resetFull();
+
+        final E[] elements = getFullElements();
+        for (final E element : elements) {
+            final boolean success = getCollection().removeLastOccurrence(element);
+            assertTrue("element should be removed successfully", success);
+            final LinkedList<E> list=(LinkedList<E>) getConfirmed();
+            list.removeLastOccurrence(element);
+            verify();
+        }
+
+        try {
+            getCollection().element();
+            fail("Deque.remove should throw NoSuchElementException");
+        } catch (final NoSuchElementException e) {
+            // expected
+        }
+    }
+
+    /**
+     *  Tests {@link Deque#descendingIterator()}.
+     */
+    public void testDescendingIterator(){
+        if (!isAddSupported()) {
+            return;
+        }
+
+        resetEmpty();
+        final E[] elements = getFullElements();
+        getCollection().addAll(Arrays.asList(elements));
+        final Iterator<E> iter = getCollection().descendingIterator();
+        final int max = getFullElements().length;
+        for (int i = max-1; i >= 0; i--) {
+            assertTrue(iter.hasNext());
+            final Object o1 = iter.next();
+            assertEquals(elements[i],o1);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     public void testEmptyDequeSerialization() throws IOException, ClassNotFoundException {
         final Deque<E> deque = makeObject();
@@ -731,13 +771,6 @@ public abstract class AbstractDequeTest<E> extends AbstractCollectionTest<E> {
      */
     @SuppressWarnings("unchecked")
     public void testEmptyDequeCompatibility() throws IOException, ClassNotFoundException {
-        /**
-         * Create canonical objects with this code
-         Deque deque = makeEmptyDeque();
-         if (!(deque instanceof Serializable)) return;
-
-         writeExternalFormToDisk((Serializable) deque, getCanonicalEmptyCollectionName(deque));
-         */
 
         // test to make sure the canonical form has been preserved
         final Deque<E> deque = makeObject();
@@ -755,13 +788,6 @@ public abstract class AbstractDequeTest<E> extends AbstractCollectionTest<E> {
      */
     @SuppressWarnings("unchecked")
     public void testFullDequeCompatibility() throws IOException, ClassNotFoundException {
-        /**
-         * Create canonical objects with this code
-         Deque deque = makeFullDeque();
-         if (!(deque instanceof Serializable)) return;
-
-         writeExternalFormToDisk((Serializable) deque, getCanonicalFullCollectionName(deque));
-         */
 
         // test to make sure the canonical form has been preserved
         final Deque<E> deque = makeFullCollection();
