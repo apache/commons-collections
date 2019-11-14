@@ -20,7 +20,14 @@ import org.apache.commons.collections4.collection.AbstractCollectionTest;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.*;
+import java.util.Arrays;
+
+import java.util.Collection;
+import java.util.Iterator;
+
+import java.util.LinkedList;
+import java.util.Deque;
+import java.util.NoSuchElementException;
 
 /**
  * Abstract test class for {@link java.util.Deque} methods and contracts.
@@ -277,7 +284,7 @@ public abstract class AbstractDequeTest<E> extends AbstractCollectionTest<E> {
         final int max = getFullElements().length;
         for (int i = 0; i < max; i++) {
             final E element = getCollection().removeLast();
-            LinkedList<E> list=(LinkedList<E>) getConfirmed();
+            LinkedList<E> list = (LinkedList<E>) getConfirmed();
             list.removeLast();
             verify();
         }
@@ -703,7 +710,7 @@ public abstract class AbstractDequeTest<E> extends AbstractCollectionTest<E> {
         for (final E element : elements) {
             final boolean success = getCollection().removeLastOccurrence(element);
             assertTrue("element should be removed successfully", success);
-            final LinkedList<E> list=(LinkedList<E>) getConfirmed();
+            final LinkedList<E> list = (LinkedList<E>) getConfirmed();
             list.removeLastOccurrence(element);
             verify();
         }
