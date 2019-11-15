@@ -710,12 +710,12 @@ public class TreeList<E> extends AbstractList<E> {
         /**
          * Sets the relative position.
          */
-        private int setOffset(final AVLNode<E> node, final int newOffest) {
+        private int setOffset(final AVLNode<E> node, final int newOffset) {
             if (node == null) {
                 return 0;
             }
             final int oldOffset = getOffset(node);
-            node.relativePosition = newOffest;
+            node.relativePosition = newOffset;
             return oldOffset;
         }
 
