@@ -1037,7 +1037,6 @@ public class CollectionUtils {
      * @param inputCollection  the collection to get the input from, may not be null
      * @param predicate  the predicate to use, may be null
      * @return the elements <b>not</b> matching the predicate (new list)
-     * @throws NullPointerException if the input collection is null
      */
     public static <O> Collection<O> selectRejected(final Iterable<? extends O> inputCollection,
                                                    final Predicate<? super O> predicate) {
@@ -1391,7 +1390,7 @@ public class CollectionUtils {
      * throwing <code>IndexOutOfBoundsException</code> if there is no such element.
      *
      * @param <K>  the key type in the {@link Map}
-     * @param <V>  the key type in the {@link Map}
+     * @param <V>  the value type in the {@link Map}
      * @param map  the object to get a value from
      * @param index  the index to get
      * @return the object at the specified index
