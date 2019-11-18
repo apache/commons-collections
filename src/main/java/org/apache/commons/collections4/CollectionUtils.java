@@ -940,7 +940,6 @@ public class CollectionUtils {
      * @param inputCollection  the collection to get the input from, may not be null
      * @param predicate  the predicate to use, may be null
      * @return the elements matching the predicate (new list)
-     * @throws NullPointerException if the input collection is null
      */
     public static <O> Collection<O> select(final Iterable<? extends O> inputCollection,
                                            final Predicate<? super O> predicate) {
