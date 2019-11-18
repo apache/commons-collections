@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.bag.HashBag;
@@ -230,6 +231,8 @@ public class CollectionUtils {
      * @see Collection#addAll
      */
     public static <O> Collection<O> union(final Iterable<? extends O> a, final Iterable<? extends O> b) {
+        Objects.requireNonNull(a, "The first collection must not be null.");
+        Objects.requireNonNull(b, "The second collection must not be null.");
         final SetOperationCardinalityHelper<O> helper = new SetOperationCardinalityHelper<>(a, b);
         for (final O obj : helper) {
             helper.setCardinality(obj, helper.max(obj));
@@ -255,6 +258,8 @@ public class CollectionUtils {
      * @see #containsAny
      */
     public static <O> Collection<O> intersection(final Iterable<? extends O> a, final Iterable<? extends O> b) {
+        Objects.requireNonNull(a, "The first collection must not be null.");
+        Objects.requireNonNull(b, "The second collection must not be null.");
         final SetOperationCardinalityHelper<O> helper = new SetOperationCardinalityHelper<>(a, b);
         for (final O obj : helper) {
             helper.setCardinality(obj, helper.min(obj));
@@ -285,6 +290,8 @@ public class CollectionUtils {
      * @return the symmetric difference of the two collections
      */
     public static <O> Collection<O> disjunction(final Iterable<? extends O> a, final Iterable<? extends O> b) {
+        Objects.requireNonNull(a, "The first collection must not be null.");
+        Objects.requireNonNull(b, "The second collection must not be null.");
         final SetOperationCardinalityHelper<O> helper = new SetOperationCardinalityHelper<>(a, b);
         for (final O obj : helper) {
             helper.setCardinality(obj, helper.max(obj) - helper.min(obj));
@@ -338,6 +345,9 @@ public class CollectionUtils {
     public static <O> Collection<O> subtract(final Iterable<? extends O> a,
                                              final Iterable<? extends O> b,
                                              final Predicate<O> p) {
+        Objects.requireNonNull(a, "The first collection must not be null.");
+        Objects.requireNonNull(b, "The second collection must not be null.");
+        Objects.requireNonNull(p, "The predicate must not be null.");
         final ArrayList<O> list = new ArrayList<>();
         final HashBag<O> bag = new HashBag<>();
         for (final O element : b) {
@@ -378,6 +388,8 @@ public class CollectionUtils {
      * @since 4.0
      */
     public static boolean containsAll(final Collection<?> coll1, final Collection<?> coll2) {
+        Objects.requireNonNull(coll1, "The first collection must not be null.");
+        Objects.requireNonNull(coll2, "The second collection must not be null.");
         if (coll2.isEmpty()) {
             return true;
         }
@@ -420,6 +432,8 @@ public class CollectionUtils {
      * @see #intersection
      */
     public static <T> boolean containsAny(final Collection<?> coll1, @SuppressWarnings("unchecked") final T... coll2) {
+        Objects.requireNonNull(coll1, "The collection must not be null.");
+        Objects.requireNonNull(coll2, "The elements must not be null.");
         if (coll1.size() < coll2.length) {
             for (final Object aColl1 : coll1) {
                 if (ArrayUtils.contains(coll2, aColl1)) {
@@ -450,6 +464,8 @@ public class CollectionUtils {
      * @see #intersection
      */
     public static boolean containsAny(final Collection<?> coll1, final Collection<?> coll2) {
+        Objects.requireNonNull(coll1, "The first collection must not be null.");
+        Objects.requireNonNull(coll2, "The second collection must not be null.");
         if (coll1.size() < coll2.size()) {
             for (final Object aColl1 : coll1) {
                 if (coll2.contains(aColl1)) {
@@ -480,6 +496,7 @@ public class CollectionUtils {
      * @return the populated cardinality map
      */
     public static <O> Map<O, Integer> getCardinalityMap(final Iterable<? extends O> coll) {
+        Objects.requireNonNull(coll, "The collection must not be null.");
         final Map<O, Integer> count = new HashMap<>();
         for (final O obj : coll) {
             final Integer c = count.get(obj);
@@ -505,6 +522,8 @@ public class CollectionUtils {
      * @see Collection#containsAll
      */
     public static boolean isSubCollection(final Collection<?> a, final Collection<?> b) {
+        Objects.requireNonNull(a, "The first collection must not be null.");
+        Objects.requireNonNull(b, "The second collection must not be null.");
         final CardinalityHelper<Object> helper = new CardinalityHelper<>(a, b);
         for (final Object obj : a) {
             if (helper.freqA(obj) > helper.freqB(obj)) {
@@ -537,6 +556,8 @@ public class CollectionUtils {
      * @see Collection#containsAll
      */
     public static boolean isProperSubCollection(final Collection<?> a, final Collection<?> b) {
+        Objects.requireNonNull(a, "The first collection must not be null.");
+        Objects.requireNonNull(b, "The second collection must not be null.");
         return a.size() < b.size() && CollectionUtils.isSubCollection(a, b);
     }
 
@@ -554,6 +575,8 @@ public class CollectionUtils {
      * @return <code>true</code> iff the collections contain the same elements with the same cardinalities.
      */
     public static boolean isEqualCollection(final Collection<?> a, final Collection<?> b) {
+        Objects.requireNonNull(a, "The first collection must not be null.");
+        Objects.requireNonNull(b, "The second collection must not be null.");
         if(a.size() != b.size()) {
             return false;
         }
@@ -595,10 +618,9 @@ public class CollectionUtils {
     public static <E> boolean isEqualCollection(final Collection<? extends E> a,
                                                 final Collection<? extends E> b,
                                                 final Equator<? super E> equator) {
-        if (equator == null) {
-            throw new NullPointerException("Equator must not be null.");
-        }
-
+        Objects.requireNonNull(a, "The first collection must not be null.");
+        Objects.requireNonNull(b, "The second collection must not be null.");
+        Objects.requireNonNull(equator, "The equator must not be null.");
         if(a.size() != b.size()) {
             return false;
         }
@@ -661,9 +683,7 @@ public class CollectionUtils {
      */
     @Deprecated
     public static <O> int cardinality(final O obj, final Iterable<? super O> coll) {
-        if (coll == null) {
-            throw new NullPointerException("coll must not be null.");
-        }
+        Objects.requireNonNull(coll, "The collection must not be null.");
         return IterableUtils.frequency(coll, obj);
     }
 
@@ -924,8 +944,11 @@ public class CollectionUtils {
      */
     public static <O> Collection<O> select(final Iterable<? extends O> inputCollection,
                                            final Predicate<? super O> predicate) {
-        final Collection<O> answer = inputCollection instanceof Collection<?> ?
-                new ArrayList<>(((Collection<?>) inputCollection).size()) : new ArrayList<>();
+        int size = 0;
+        if (null != inputCollection) {
+            size = inputCollection instanceof Collection<?> ? ((Collection<?>) inputCollection).size() : 0;
+        }
+        final Collection<O> answer = size == 0 ? new ArrayList<>() : new ArrayList<>(size);
         return select(inputCollection, predicate, answer);
     }
 
@@ -1019,8 +1042,11 @@ public class CollectionUtils {
      */
     public static <O> Collection<O> selectRejected(final Iterable<? extends O> inputCollection,
                                                    final Predicate<? super O> predicate) {
-        final Collection<O> answer = inputCollection instanceof Collection<?> ?
-                new ArrayList<>(((Collection<?>) inputCollection).size()) : new ArrayList<>();
+        int size = 0;
+        if (null != inputCollection) {
+            size = inputCollection instanceof Collection<?> ? ((Collection<?>) inputCollection).size() : 0;
+        }
+        final Collection<O> answer = size == 0 ? new ArrayList<>() : new ArrayList<>(size);
         return selectRejected(inputCollection, predicate, answer);
     }
 
@@ -1069,8 +1095,11 @@ public class CollectionUtils {
      */
     public static <I, O> Collection<O> collect(final Iterable<I> inputCollection,
                                                final Transformer<? super I, ? extends O> transformer) {
-        final Collection<O> answer = inputCollection instanceof Collection<?> ?
-                new ArrayList<>(((Collection<?>) inputCollection).size()) : new ArrayList<>();
+        int size = 0;
+        if (null != inputCollection) {
+            size = inputCollection instanceof Collection<?> ? ((Collection<?>) inputCollection).size() : 0;
+        }
+        final Collection<O> answer = size == 0 ? new ArrayList<>() : new ArrayList<>(size);
         return collect(inputCollection, transformer, answer);
     }
 
@@ -1162,9 +1191,7 @@ public class CollectionUtils {
      * @since 3.2
      */
     public static <T> boolean addIgnoreNull(final Collection<T> collection, final T object) {
-        if (collection == null) {
-            throw new NullPointerException("The collection must not be null");
-        }
+        Objects.requireNonNull(collection, "The collection must not be null.");
         return object != null && collection.add(object);
     }
 
@@ -1180,6 +1207,8 @@ public class CollectionUtils {
      * @throws NullPointerException if the collection or iterator is null
      */
     public static <C> boolean addAll(final Collection<C> collection, final Iterable<? extends C> iterable) {
+        Objects.requireNonNull(collection, "The collection must not be null.");
+        Objects.requireNonNull(iterable, "The iterable of elements to add must not be null.");
         if (iterable instanceof Collection<?>) {
             return collection.addAll((Collection<? extends C>) iterable);
         }
@@ -1196,6 +1225,8 @@ public class CollectionUtils {
      * @throws NullPointerException if the collection or iterator is null
      */
     public static <C> boolean addAll(final Collection<C> collection, final Iterator<? extends C> iterator) {
+        Objects.requireNonNull(collection, "The collection must not be null.");
+        Objects.requireNonNull(iterator, "The iterator of elements to add must not be null.");
         boolean changed = false;
         while (iterator.hasNext()) {
             changed |= collection.add(iterator.next());
@@ -1213,6 +1244,8 @@ public class CollectionUtils {
      * @throws NullPointerException if the collection or enumeration is null
      */
     public static <C> boolean addAll(final Collection<C> collection, final Enumeration<? extends C> enumeration) {
+        Objects.requireNonNull(collection, "The collection must not be null.");
+        Objects.requireNonNull(enumeration, "The enumeration of elements to add must not be null.");
         boolean changed = false;
         while (enumeration.hasMoreElements()) {
             changed |= collection.add(enumeration.nextElement());
@@ -1230,6 +1263,8 @@ public class CollectionUtils {
      * @throws NullPointerException if the collection or array is null
      */
     public static <C> boolean addAll(final Collection<C> collection, final C... elements) {
+        Objects.requireNonNull(collection, "The collection must not be null.");
+        Objects.requireNonNull(elements, "The array of elements to add must not be null.");
         boolean changed = false;
         for (final C element : elements) {
             changed |= collection.add(element);
@@ -1255,6 +1290,7 @@ public class CollectionUtils {
      */
     @Deprecated
     public static <T> T get(final Iterator<T> iterator, final int index) {
+        Objects.requireNonNull(iterator, "The iterator must not be null.");
         return IteratorUtils.get(iterator, index);
     }
 
@@ -1285,6 +1321,7 @@ public class CollectionUtils {
      */
     @Deprecated
     public static <T> T get(final Iterable<T> iterable, final int index) {
+        Objects.requireNonNull(iterable, "The iterable must not be null.");
         return IterableUtils.get(iterable, index);
     }
 
@@ -1361,7 +1398,8 @@ public class CollectionUtils {
      * @return the object at the specified index
      * @throws IndexOutOfBoundsException if the index is invalid
      */
-    public static <K,V> Map.Entry<K, V> get(final Map<K,V> map, final int index) {
+    public static <K, V> Map.Entry<K, V> get(final Map<K, V> map, final int index) {
+        Objects.requireNonNull(map, "The map must not be null.");
         checkIndexBounds(index);
         return get(map.entrySet(), index);
     }
@@ -1497,6 +1535,7 @@ public class CollectionUtils {
      * @param array  the array to reverse
      */
     public static void reverseArray(final Object[] array) {
+        Objects.requireNonNull(array, "The array must not be null.");
         int i = 0;
         int j = array.length - 1;
         Object tmp;
@@ -1528,9 +1567,7 @@ public class CollectionUtils {
      * @throws NullPointerException if the collection is null
      */
     public static boolean isFull(final Collection<? extends Object> coll) {
-        if (coll == null) {
-            throw new NullPointerException("The collection must not be null");
-        }
+        Objects.requireNonNull(coll, "The collection must not be null");
         if (coll instanceof BoundedCollection) {
             return ((BoundedCollection<?>) coll).isFull();
         }
@@ -1561,9 +1598,7 @@ public class CollectionUtils {
      * @throws NullPointerException if the collection is null
      */
     public static int maxSize(final Collection<? extends Object> coll) {
-        if (coll == null) {
-            throw new NullPointerException("The collection must not be null");
-        }
+        Objects.requireNonNull(coll, "The collection must not be null");
         if (coll instanceof BoundedCollection) {
             return ((BoundedCollection<?>) coll).maxSize();
         }
@@ -1657,13 +1692,9 @@ public class CollectionUtils {
      */
     public static <O> List<O> collate(final Iterable<? extends O> a, final Iterable<? extends O> b,
                                       final Comparator<? super O> c, final boolean includeDuplicates) {
-
-        if (a == null || b == null) {
-            throw new NullPointerException("The collections must not be null");
-        }
-        if (c == null) {
-            throw new NullPointerException("The comparator must not be null");
-        }
+        Objects.requireNonNull(a, "The first collection must not be null.");
+        Objects.requireNonNull(b, "The second collection must not be null.");
+        Objects.requireNonNull(c, "The comparator must not be null.");
 
         // if both Iterables are a Collection, we can estimate the size
         final int totalSize = a instanceof Collection<?> && b instanceof Collection<?> ?
@@ -1711,6 +1742,7 @@ public class CollectionUtils {
      * @since 4.0
      */
     public static <E> Collection<List<E>> permutations(final Collection<E> collection) {
+        Objects.requireNonNull(collection, "The collection must not be null.");
         final PermutationIterator<E> it = new PermutationIterator<>(collection);
         final Collection<List<E>> result = new ArrayList<>();
         while (it.hasNext()) {
@@ -1744,6 +1776,8 @@ public class CollectionUtils {
      * @since 3.2
      */
     public static <C> Collection<C> retainAll(final Collection<C> collection, final Collection<?> retain) {
+        Objects.requireNonNull(collection, "The first collection must not be null.");
+        Objects.requireNonNull(retain, "The second collection must not be null.");
         return ListUtils.retainAll(collection, retain);
     }
 
@@ -1776,7 +1810,9 @@ public class CollectionUtils {
     public static <E> Collection<E> retainAll(final Iterable<E> collection,
                                               final Iterable<? extends E> retain,
                                               final Equator<? super E> equator) {
-
+        Objects.requireNonNull(collection, "The first collection must not be null.");
+        Objects.requireNonNull(retain, "The second collection must not be null.");
+        Objects.requireNonNull(equator, "The equator must not be null.");
         final Transformer<E, EquatorWrapper<E>> transformer = input -> new EquatorWrapper<>(equator, input);
 
         final Set<EquatorWrapper<E>> retainSet =
@@ -1797,16 +1833,14 @@ public class CollectionUtils {
      * This method modifies the input collections.
      *
      * @param <E>  the type of object the {@link Collection} contains
-     * @param input  the collection will be operated, can't be null
-     * @param startIndex  the start index (inclusive) to remove element, can't be less than 0
-     * @param endIndex  the end index (exclusive) to remove, can't be less than startIndex
+     * @param input  the collection will be operated, must not be null
+     * @param startIndex  the start index (inclusive) to remove element, must not be less than 0
+     * @param endIndex  the end index (exclusive) to remove, must not be less than startIndex
      * @return collection of elements that removed from the input collection
      * @since 4.5
      */
     public static <E> Collection<E> removeRange(final Collection<E> input, final int startIndex, final int endIndex) {
-        if (null == input) {
-            throw new IllegalArgumentException("The collection can't be null.");
-        }
+        Objects.requireNonNull(input, "The collection must not be null.");
         if (endIndex < startIndex) {
             throw new IllegalArgumentException("The end index can't be less than the start index.");
         }
@@ -1828,9 +1862,7 @@ public class CollectionUtils {
      * @since 4.5
      */
     public static <E> Collection<E> removeCount(final Collection<E> input, int startIndex, int count) {
-        if (null == input) {
-            throw new IllegalArgumentException("The collection can't be null.");
-        }
+        Objects.requireNonNull(input, "The collection must not be null.");
         if (startIndex < 0) {
             throw new IndexOutOfBoundsException("The start index can't be less than 0.");
         }
@@ -1915,7 +1947,9 @@ public class CollectionUtils {
     public static <E> Collection<E> removeAll(final Iterable<E> collection,
                                               final Iterable<? extends E> remove,
                                               final Equator<? super E> equator) {
-
+        Objects.requireNonNull(collection, "The collection must not be null.");
+        Objects.requireNonNull(remove, "The items to be removed must not be null.");
+        Objects.requireNonNull(equator, "The equator must not be null.");
         final Transformer<E, EquatorWrapper<E>> transformer = input -> new EquatorWrapper<>(equator, input);
 
         final Set<EquatorWrapper<E>> removeSet =
@@ -1958,6 +1992,7 @@ public class CollectionUtils {
      */
     @Deprecated
     public static <C> Collection<C> synchronizedCollection(final Collection<C> collection) {
+        Objects.requireNonNull(collection, "The collection must not be null.");
         return SynchronizedCollection.synchronizedCollection(collection);
     }
 
@@ -1975,6 +2010,7 @@ public class CollectionUtils {
      */
     @Deprecated
     public static <C> Collection<C> unmodifiableCollection(final Collection<? extends C> collection) {
+        Objects.requireNonNull(collection, "The collection must not be null.");
         return UnmodifiableCollection.unmodifiableCollection(collection);
     }
 
@@ -1995,6 +2031,8 @@ public class CollectionUtils {
      */
     public static <C> Collection<C> predicatedCollection(final Collection<C> collection,
                                                          final Predicate<? super C> predicate) {
+        Objects.requireNonNull(collection, "The collection must not be null.");
+        Objects.requireNonNull(predicate, "The predicate must not be null.");
         return PredicatedCollection.predicatedCollection(collection, predicate);
     }
 
@@ -2018,6 +2056,8 @@ public class CollectionUtils {
      */
     public static <E> Collection<E> transformingCollection(final Collection<E> collection,
             final Transformer<? super E, ? extends E> transformer) {
+        Objects.requireNonNull(collection, "The collection must not be null.");
+        Objects.requireNonNull(transformer, "The transformer must not be null.");
         return TransformedCollection.transformingCollection(collection, transformer);
     }
 
@@ -2032,9 +2072,7 @@ public class CollectionUtils {
      * @since 4.0
      */
     public static <E> E extractSingleton(final Collection<E> collection) {
-        if (collection == null) {
-            throw new NullPointerException("Collection must not be null.");
-        }
+        Objects.requireNonNull(collection, "The collection must not be null.");
         if (collection.size() != 1) {
             throw new IllegalArgumentException("Can extract singleton only when collection size == 1");
         }
