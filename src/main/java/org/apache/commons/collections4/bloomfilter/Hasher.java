@@ -97,7 +97,7 @@ public interface Hasher {
          * Build the hasher.
          * @return the fully constructed hasher.
          */
-        Hasher  build();
+        Hasher build();
 
         /**
          * Adds a byte to the hasher.

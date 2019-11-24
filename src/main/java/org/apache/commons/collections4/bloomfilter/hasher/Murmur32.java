@@ -18,6 +18,7 @@
 package org.apache.commons.collections4.bloomfilter.hasher;
 
 import java.util.function.ToLongBiFunction;
+import org.apache.commons.codec.digest.MurmurHash3;
 
 /**
  * An implementation of {@code ToLongBiFunction<byte[], Integer>} that
@@ -33,7 +34,6 @@ public class Murmur32 implements ToLongBiFunction<byte[], Integer> {
 
     @Override
     public long applyAsLong(byte[] buffer, Integer seed) {
-        return MurmurHash3.murmurhash3_x86_32(buffer, 0, buffer.length, seed);
-
+        return MurmurHash3.hash32x86(buffer, 0, buffer.length, seed);
     }
 }

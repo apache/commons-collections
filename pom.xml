@@ -462,6 +462,11 @@
       <version>3.9</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+    	<groupId>commons-codec</groupId>
+    	<artifactId>commons-codec</artifactId>
+    	<version>1.14-SNAPSHOT</version>
+    </dependency>
   </dependencies>
 
   <distributionManagement>
@@ -574,7 +579,6 @@
           <excludes>
             <exclude>site-content/**/*</exclude>
             <exclude>src/test/resources/data/test/*</exclude>
-            <exclude>src/main/java/org/apache/commons/collections4/bloomfilter/hasher/MurmurHash3.java</exclude>
           </excludes>
         </configuration>
       </plugin>

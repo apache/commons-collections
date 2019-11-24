@@ -18,8 +18,7 @@
 package org.apache.commons.collections4.bloomfilter.hasher;
 
 import java.util.function.ToLongBiFunction;
-
-import org.apache.commons.collections4.bloomfilter.hasher.MurmurHash3.LongPair;
+import org.apache.commons.codec.digest.MurmurHash3;
 
 /**
  * An implementation of {@code ToLongBiFunction<byte[], Integer>} that
@@ -30,7 +29,7 @@ public class Murmur128 implements ToLongBiFunction<byte[], Integer> {
     /**
      * The result of the hash 0 call.
      */
-    private LongPair parts = null;
+    private long[] parts = null;
 
     /**
      * The name of this hash method.
@@ -40,12 +39,11 @@ public class Murmur128 implements ToLongBiFunction<byte[], Integer> {
     @Override
     public long applyAsLong(byte[] buffer, Integer seed) {
         if (parts == null || seed == 0) {
-            parts = new LongPair();
-            MurmurHash3.murmurhash3_x64_128(buffer, 0, buffer.length, 0, parts);
+            parts = MurmurHash3.hash128x64(buffer, 0, buffer.length, 0);
         } else {
-            parts.val1 += parts.val2;
+            parts[0] += parts[1];
         }
-        return parts.val1;
+        return parts[0];
     }
 
 }
