@@ -24,6 +24,7 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import org.apache.commons.collections4.OrderedIterator;
 
@@ -438,7 +439,7 @@ public class TreeList<E> extends AbstractList<E> {
                     return result;
                 }
             }
-            if (value == null ? value == object : value.equals(object)) {
+            if (Objects.equals(value, object)) {
                 return index;
             }
             if (getRightSubTree() != null) {
