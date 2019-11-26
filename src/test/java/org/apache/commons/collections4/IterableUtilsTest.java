@@ -579,4 +579,9 @@ public class IterableUtilsTest {
             // expected
         }
     }
+
+    @Test
+    public void size() {
+        assertEquals(0, IterableUtils.size(null));
+    }
 }
