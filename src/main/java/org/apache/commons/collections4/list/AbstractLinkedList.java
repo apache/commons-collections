@@ -386,9 +386,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
         final ListIterator<?> it1 = listIterator();
         final ListIterator<?> it2 = other.listIterator();
         while (it1.hasNext() && it2.hasNext()) {
-            final Object o1 = it1.next();
-            final Object o2 = it2.next();
-            if (!(Objects.equals(o1, o2))) {
+            if (!(Objects.equals(it1.next(), it2.next()))) {
                 return false;
             }
         }
@@ -515,8 +513,8 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @throws NullPointerException if either node is null
      */
     protected void addNode(final Node<E> nodeToInsert, final Node<E> insertBeforeNode) {
-        Objects.requireNonNull(nodeToInsert,"The new node on insert must not be null.");
-        Objects.requireNonNull(insertBeforeNode,"The node to insert before must not be null.");
+        Objects.requireNonNull(nodeToInsert, "The new node on insert must not be null.");
+        Objects.requireNonNull(insertBeforeNode, "The node to insert before must not be null.");
         nodeToInsert.next = insertBeforeNode;
         nodeToInsert.previous = insertBeforeNode.previous;
         insertBeforeNode.previous.next = nodeToInsert;
@@ -532,7 +530,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @throws NullPointerException if <code>node</code> is null
      */
     protected void removeNode(final Node<E> node) {
-        Objects.requireNonNull(node,"The new node to remove must not be null.");
+        Objects.requireNonNull(node, "The new node to remove must not be null.");
         node.previous.next = node.next;
         node.next.previous = node.previous;
         size--;
