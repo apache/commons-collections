@@ -415,16 +415,6 @@ public class FluentIterableTest {
     }
 
     @Test
-    public void ofNull() {
-        try {
-            FluentIterable.of((Iterable<?>) null);
-            fail("expecting NullPointerException");
-        } catch (final NullPointerException npe) {
-            // expected
-        }
-    }
-
-    @Test
     public void size() {
         assertEquals(0, FluentIterable.of(emptyIterable).size());
         assertEquals(IterableUtils.toList(iterableOdd).size(), FluentIterable.of(iterableOdd).size());
