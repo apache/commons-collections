@@ -804,6 +804,9 @@ public class IterableUtils {
      * @return the number of elements contained in the iterable
      */
     public static int size(final Iterable<?> iterable) {
+        if (iterable == null) {
+            return 0;
+        }
         if (iterable instanceof Collection<?>) {
             return ((Collection<?>) iterable).size();
         }
