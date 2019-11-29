@@ -24,7 +24,12 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedList;
 
-
+/**
+ * Extension of {@link AbstractDequeTest} for exercising the
+ * {@link TransformedDeque} implementation.
+ *
+ * @since 4.5
+ */
 public class TransformedDequeTest<E> extends AbstractDequeTest<E>  {
 
     /**
