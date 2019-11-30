@@ -1262,7 +1262,7 @@ public class IteratorUtils {
      *
      * @param <E> the element type
      * @param iterator  the iterator to search, may be null
-     * @param predicate  the predicate to use, may not be null
+     * @param predicate  the predicate to use, must not be null
      * @return the first element of the iterator which matches the predicate or null if none could be found
      * @throws NullPointerException if predicate is null
      * @since 4.1

@@ -606,7 +606,7 @@ public class IterableUtils {
      *
      * @param <E> the element type
      * @param iterable  the iterable to search, may be null
-     * @param predicate  the predicate to use, may not be null
+     * @param predicate  the predicate to use, must not be null
      * @return the first element of the iterable which matches the predicate or null if none could be found
      * @throws NullPointerException if predicate is null
      */
