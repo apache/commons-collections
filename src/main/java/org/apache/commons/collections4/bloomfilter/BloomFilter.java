@@ -273,7 +273,7 @@ public abstract class BloomFilter {
     }
 
     /**
-     * Gets the Jaccard similarity wih the other Bloom filter.
+     * Gets the Jaccard similarity with the other Bloom filter.
      *
      * @param other the Other bloom filter.
      * @return the Jaccard similarity.
