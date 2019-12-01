@@ -466,6 +466,7 @@
     	<groupId>commons-codec</groupId>
     	<artifactId>commons-codec</artifactId>
     	<version>1.14-SNAPSHOT</version>
+    	<optional>true</optional>
     </dependency>
   </dependencies>
 
