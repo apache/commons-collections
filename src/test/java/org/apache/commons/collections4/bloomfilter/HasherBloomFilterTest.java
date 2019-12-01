@@ -32,7 +32,7 @@ import java.util.function.ToLongBiFunction;
 
 import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.DynamicHasher;
-import org.apache.commons.collections4.bloomfilter.hasher.MD5;
+import org.apache.commons.collections4.bloomfilter.hasher.function.MD5;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,7 +54,7 @@ public class HasherBloomFilterTest extends BloomFilterTest {
     @Test
     public void constructorTest_NonStatic() throws NoSuchAlgorithmException {
         Shape shape = new Shape( MD5.NAME, 3, 72, 17 );
-        DynamicHasher hasher = new DynamicHasher.Factory().useFunction(MD5.NAME).with( "Hello").build();
+        DynamicHasher hasher = new DynamicHasher.Builder( new MD5() ).with( "Hello").build();
         HasherBloomFilter filter = createFilter( hasher, shape );
         long[] lb = filter.getBits();
         assertEquals( 2, lb.length );

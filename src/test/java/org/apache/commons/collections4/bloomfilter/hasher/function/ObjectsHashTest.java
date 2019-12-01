@@ -15,29 +15,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.bloomfilter.hasher;
+package org.apache.commons.collections4.bloomfilter.hasher.function;
 
 import static org.junit.Assert.assertEquals;
 
 import java.nio.ByteBuffer;
+import java.util.Objects;
+
+import org.apache.commons.collections4.bloomfilter.hasher.function.ObjectsHash;
 import org.junit.Test;
 
-public class Murmur128Test {
+public class ObjectsHashTest {
 
     @Test
     public void test() throws Exception {
-        Murmur128 murmur = new Murmur128();
+        ObjectsHash obj = new ObjectsHash();
 
-        long l1 = 0xe7eb60dabb386407L;
-        long l2 = 0xc3ca49f691f73056L;
-        byte[] buffer ="Now is the time for all good men to come to the aid of their country".getBytes("UTF-8");
+        byte[] buffer = "Now is the time for all good men to come to the aid of their country".getBytes("UTF-8");
 
-        long l = murmur.applyAsLong(buffer, 0);
-        assertEquals(l1, l);
-        l = murmur.applyAsLong(buffer, 1);
-        assertEquals(l1 + l2, l);
-        l = murmur.applyAsLong(buffer, 2);
-        assertEquals(l1 + l2 + l2, l);
+
+        long l = obj.applyAsLong(buffer, 0);
+        long prev = 0;
+        assertEquals(Objects.hash(prev, buffer), l);
+        prev += l;
+        l = obj.applyAsLong(buffer, 1);
+        assertEquals(Objects.hash(prev, buffer), l);
+        prev += l;
+        l = obj.applyAsLong(buffer, 2);
+        assertEquals(Objects.hash(prev, buffer), l);
     }
 
 }

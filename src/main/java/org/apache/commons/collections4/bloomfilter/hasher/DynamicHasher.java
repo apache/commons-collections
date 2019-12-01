@@ -31,6 +31,10 @@ import java.util.Set;
 import java.util.function.ToLongBiFunction;
 
 import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
+import org.apache.commons.collections4.bloomfilter.hasher.function.MD5;
+import org.apache.commons.collections4.bloomfilter.hasher.function.Murmur128;
+import org.apache.commons.collections4.bloomfilter.hasher.function.Murmur32;
+import org.apache.commons.collections4.bloomfilter.hasher.function.ObjectsHash;
 import org.apache.commons.collections4.bloomfilter.Hasher;
 
 /**
@@ -49,29 +53,22 @@ public class DynamicHasher implements Hasher {
     /**
      * The function to hash the buffers.
      */
-    private final ToLongBiFunction<byte[], Integer> function;
-
-    /**
-     * The name of the hash function.
-     */
-    private final String name;
+    private final HashFunction function;
 
     /**
      * Constructs a DynamicHasher.
      *
-     * @param name the name for the function.
      * @param function the function to use.
      * @param buffers the byte buffers that will be hashed.
      */
-    public DynamicHasher(String name, ToLongBiFunction<byte[], Integer> function, List<byte[]> buffers) {
+    public DynamicHasher(HashFunction function, List<byte[]> buffers) {
         this.buffers = new ArrayList<byte[]>(buffers);
         this.function = function;
-        this.name = name;
     }
 
     @Override
     public String getName() {
-        return name;
+        return function.getName();
     }
 
     /**
@@ -133,90 +130,6 @@ public class DynamicHasher implements Hasher {
     }
 
     /**
-     * A factory that produces DynamicHasher Builders.
-     * @since 4.5
-     */
-    public static class Factory implements Hasher.Factory {
-
-        /**
-         * A map of functions names to functions.
-         */
-        private final Map<String, Constructor<? extends ToLongBiFunction<byte[], Integer>>> funcMap;
-
-        /**
-         * Constructs a factory with well known hash functions.
-         */
-        public Factory() {
-            funcMap = new HashMap<String, Constructor<? extends ToLongBiFunction<byte[], Integer>>>();
-            try {
-                register(MD5.NAME, MD5.class);
-            } catch (NoSuchMethodException | SecurityException e) {
-                throw new IllegalStateException("Can not get MD5 constructor");
-            }
-            try {
-                register(Murmur128.NAME, Murmur128.class);
-            } catch (NoSuchMethodException | SecurityException e) {
-                throw new IllegalStateException("Can not get Murmur128 constructor");
-            }
-            try {
-                register(Murmur32.NAME, Murmur128.class);
-            } catch (NoSuchMethodException | SecurityException e) {
-                throw new IllegalStateException("Can not get Murmur128 constructor");
-            }
-            try {
-                register(ObjectsHash.NAME, ObjectsHash.class);
-            } catch (NoSuchMethodException | SecurityException e) {
-                throw new IllegalStateException("Can not get ObjectsHash constructor");
-
-            }
-        }
-
-        /**
-         * Registers a Hash function implementation. After registration the name can be
-         * used to retrieve the Hasher. <p> The function calculates the long value that is
-         * used to turn on a bit in the Bloom filter. The first argument is a
-         * {@code byte[]} containing the bytes to be indexed, the second argument is a
-         * seed index. </p><p> On the first call to {@code applyAsLong} the seed index
-         * will be 0 and the function should start the hash sequence. </p> <p> On
-         * subsequent calls the hash function using the same buffer the seed index will be
-         * incremented. The function should return a different calculated value on each
-         * call. The function may use the seed as part of the calculation or simply use it
-         * to detect when the buffer has changed. </p>
-         *
-         * @see #useFunction(String)
-         * @param name The name of the hash function
-         * @param functionClass The function class for the hasher to use. Must have a zero
-         * argument constructor.
-         * @throws SecurityException if the no argument constructor can not be accessed.
-         * @throws NoSuchMethodException if functionClass does not have a no argument
-         * constructor.
-         */
-        protected void register(String name, Class<? extends ToLongBiFunction<byte[], Integer>> functionClass)
-            throws NoSuchMethodException, SecurityException {
-            Constructor<? extends ToLongBiFunction<byte[], Integer>> c = functionClass.getConstructor();
-            funcMap.put(name, c);
-        }
-
-        @Override
-        public Set<String> listFunctionNames() {
-            return Collections.unmodifiableSet(funcMap.keySet());
-        }
-
-        @Override
-        public DynamicHasher.Builder useFunction(String name) {
-            Constructor<? extends ToLongBiFunction<byte[], Integer>> c = funcMap.get(name);
-            if (c == null) {
-                throw new IllegalArgumentException("No function implementation named " + name);
-            }
-            try {
-                return new Builder(name, c.newInstance());
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-                throw new IllegalStateException("Unable to call constructor for " + name, e);
-            }
-        }
-    }
-
-    /**
      * The builder for DyanamicHashers.
      * @since 4.5
      */
@@ -224,26 +137,19 @@ public class DynamicHasher implements Hasher {
         /**
          * The list of byte[] that are to be hashed.
          */
-        private List<byte[]> buffers;
+        private final List<byte[]> buffers;
 
         /**
          * The function that the resulting DynamicHasher will use.
          */
-        private ToLongBiFunction<byte[], Integer> function;
-
-        /**
-         * The name for the function.
-         */
-        private String name;
+        private final HashFunction function;
 
         /**
          * Constructs a DynamicHasher builder.
          *
-         * @param name the name of the function.
          * @param function the function implementation.
          */
-        public Builder(String name, ToLongBiFunction<byte[], Integer> function) {
-            this.name = name;
+        public Builder(HashFunction function) {
             this.function = function;
             this.buffers = new ArrayList<byte[]>();
 
@@ -256,7 +162,7 @@ public class DynamicHasher implements Hasher {
          */
         @Override
         public DynamicHasher build() throws IllegalArgumentException {
-            return new DynamicHasher(name, function, buffers);
+            return new DynamicHasher(function, buffers);
         }
 
         @Override

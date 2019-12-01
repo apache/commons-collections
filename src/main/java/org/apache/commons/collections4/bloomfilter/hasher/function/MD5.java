@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.bloomfilter.hasher;
+package org.apache.commons.collections4.bloomfilter.hasher.function;
 
 import java.nio.ByteBuffer;
 
@@ -24,12 +24,14 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.function.ToLongBiFunction;
 
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
+
 /**
  * An implementation of {@code ToLongBiFunction<byte[], Integer>} that
  * performs MD5 hashing using a signed cyclic method.
  * @since 4.5
  */
-public class MD5 implements ToLongBiFunction<byte[], Integer> {
+public class MD5 implements HashFunction {
 
     /**
      * The MD5 digest implementation.
@@ -73,6 +75,11 @@ public class MD5 implements ToLongBiFunction<byte[], Integer> {
             result[0] += result[1];
         }
         return result[0];
+    }
+
+    @Override
+    public String getName() {
+        return NAME;
     }
 
 }

@@ -15,27 +15,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.bloomfilter.hasher;
+package org.apache.commons.collections4.bloomfilter.hasher.function;
 
 import static org.junit.Assert.assertEquals;
 
 import java.nio.ByteBuffer;
+
+import org.apache.commons.collections4.bloomfilter.hasher.function.Murmur128;
 import org.junit.Test;
 
-public class Murmur32Test {
+public class Murmur128Test {
 
     @Test
     public void test() throws Exception {
-        Murmur32 murmur = new Murmur32();
+        Murmur128 murmur = new Murmur128();
 
-        byte[] buffer = "Now is the time for all good men to come to the aid of their country".getBytes("UTF-8");
+        long l1 = 0xe7eb60dabb386407L;
+        long l2 = 0xc3ca49f691f73056L;
+        byte[] buffer ="Now is the time for all good men to come to the aid of their country".getBytes("UTF-8");
 
         long l = murmur.applyAsLong(buffer, 0);
-        assertEquals(82674681, l);
+        assertEquals(l1, l);
         l = murmur.applyAsLong(buffer, 1);
-        assertEquals(-1475490736, l);
+        assertEquals(l1 + l2, l);
         l = murmur.applyAsLong(buffer, 2);
-        assertEquals(-1561435247, l);
+        assertEquals(l1 + l2 + l2, l);
     }
 
 }

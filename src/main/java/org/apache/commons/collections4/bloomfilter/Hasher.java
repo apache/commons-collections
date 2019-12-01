@@ -56,39 +56,6 @@ public interface Hasher {
     PrimitiveIterator.OfInt getBits(Shape shape);
 
     /**
-     * A factory that creates Hasher.Builder instances for well known algorithms.
-     * <p>
-     * The factory can create Builders for various well known hash algorithms.
-     * </p>
-     * @since 4.5
-     */
-    interface Factory {
-
-        /**
-         * the default implementation of the HasherFactory
-         */
-        Factory DEFAULT = new DynamicHasher.Factory();
-
-        /**
-         * Lists all registered Hash function names.
-         *
-         * @return the list of all registered Hasher names.
-         */
-        Set<String> listFunctionNames();
-
-        /**
-         * Creates a Builder that that uses the specified hashing function.
-         *
-         * @param name the name of the hash function to use.
-         * @return A builder using the specified hash function.
-         * @throws IllegalArgumentException if the funcName is not known.
-         * @throws IllegalStateException    if the function can not be instantiated.
-         */
-        Builder useFunction(String name) throws IllegalArgumentException;
-
-    }
-
-    /**
      * A builder to build a hasher.
      * @since 4.5
      */

@@ -27,6 +27,7 @@ import java.util.Arrays;
 import java.util.PrimitiveIterator.OfInt;
 
 import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
+import org.apache.commons.collections4.bloomfilter.hasher.function.MD5;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,7 +39,7 @@ public class DynamicHasherBuilderTest {
     @Before
     public void setup() throws NoSuchAlgorithmException
     {
-        builder = new DynamicHasher.Builder(MD5.NAME, new MD5());
+        builder = new DynamicHasher.Builder( new MD5());
     }
 
     //private static final Hash HELLO_HASH = new Hash(3871253994707141660L, -6917270852172884668L);

@@ -22,21 +22,21 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.PrimitiveIterator.OfInt;
 import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
+import org.apache.commons.collections4.bloomfilter.hasher.function.MD5;
 import org.apache.commons.collections4.bloomfilter.Hasher;
 import org.junit.Before;
 import org.junit.Test;
 
 public class DynamicHasherTest {
-    private DynamicHasher.Factory factory;
     private DynamicHasher.Builder builder;
     private Shape shape;
 
     @Before
-    public void setup() {
-        factory = new DynamicHasher.Factory();
-        builder = factory.useFunction(MD5.NAME);
+    public void setup() throws NoSuchAlgorithmException {
+        builder = new DynamicHasher.Builder( new MD5() );
         shape = new Shape(MD5.NAME, 3, 72, 17);
     }
 
