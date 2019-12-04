@@ -105,7 +105,8 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @param map  the map to decorate, must not be null
      * @param factory  the factory to use to create entries, must not be null
      * @return a new defaulting map
-     * @throws NullPointerException if map or factory is null
+     * @throws NullPointerException if map is null
+     * @throws IllegalArgumentException if factory is null
      * @since 4.0
      */
     public static <K, V> DefaultedMap<K, V> defaultedMap(final Map<K, V> map, final Factory<? extends V> factory) {
@@ -127,7 +128,8 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @param map  the map to decorate, must not be null
      * @param transformer  the transformer to use as a factory to create entries, must not be null
      * @return a new defaulting map
-     * @throws NullPointerException if map or factory is null
+     * @throws NullPointerException if map is null
+     * @throws IllegalArgumentException if transformer is null
      * @since 4.0
      */
     public static <K, V> Map<K, V> defaultedMap(final Map<K, V> map,
