@@ -51,6 +51,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * @return the <code>chained</code> transformer
      * @throws NullPointerException if array is null
      * @throws NullPointerException if any element in the array is null
+     * @throws IllegalArgumentException if predicate and transformer arrays do not have the same size
      */
     @SuppressWarnings("unchecked")
     public static <I, O> Transformer<I, O> switchTransformer(final Predicate<? super I>[] predicates,
