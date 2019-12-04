@@ -159,6 +159,17 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
         assertEquals( "3", out.get("C"));
         assertEquals( "4", out.get("D"));
         assertEquals( "5", out.get("E"));
+
+        Map<String, String> emptyMap = new HashMap<>();
+        Map<String, String> resultMap = MapUtils.invertMap(emptyMap);
+        assertEquals(emptyMap, resultMap);
+
+        try {
+            MapUtils.invertMap(null);
+            fail("The map must not be null");
+        } catch (final NullPointerException ex) {
+            // expected
+        }
     }
 
     @Test
