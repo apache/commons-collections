@@ -946,8 +946,8 @@ public class Flat3Map<K, V> implements IterableMap<K, V>, Serializable, Cloneabl
             if (currentEntry == null) {
                 throw new IllegalStateException(AbstractHashedMap.REMOVE_INVALID);
             }
-            currentEntry.setRemoved(true);
             parent.remove(currentEntry.getKey());
+            currentEntry.setRemoved(true);
             nextIndex--;
             currentEntry = null;
         }
