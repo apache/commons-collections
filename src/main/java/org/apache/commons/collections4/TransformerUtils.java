@@ -289,7 +289,7 @@ public class TransformerUtils {
      * @param predicates  an array of predicates to check
      * @param transformers  an array of transformers to call
      * @return the transformer
-     * @throws NullPointerException if the either array is null
+     * @throws NullPointerException if either array is null
      * @throws NullPointerException if any element in the arrays is null
      * @throws IllegalArgumentException if the arrays have different sizes
      * @see SwitchTransformer
@@ -312,7 +312,7 @@ public class TransformerUtils {
      * @param transformers  an array of transformers to call
      * @param defaultTransformer  the default to call if no predicate matches, null means return null
      * @return the transformer
-     * @throws NullPointerException if the either array is null
+     * @throws NullPointerException if either array is null
      * @throws NullPointerException if any element in the arrays is null
      * @throws IllegalArgumentException if the arrays have different sizes
      * @see SwitchTransformer
