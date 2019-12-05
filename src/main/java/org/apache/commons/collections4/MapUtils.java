@@ -1193,7 +1193,7 @@ public class MapUtils {
      * @throws NullPointerException if the map is null
      */
     public static <K, V> Map<V, K> invertMap(final Map<K, V> map) {
-        Objects.requireNonNull(map, "The map must not be null");
+        Objects.requireNonNull(map, "The map to invert must not be null.");
         final Map<V, K> out = new HashMap<>(map.size());
         for (final Entry<K, V> entry : map.entrySet()) {
             out.put(entry.getValue(), entry.getKey());
@@ -1736,7 +1736,7 @@ public class MapUtils {
      */
     public static <K> void safeAddToMap(final Map<? super K, Object> map, final K key, final Object value)
             throws NullPointerException {
-        Objects.requireNonNull(map, "The map must not be null");
+        Objects.requireNonNull(map, "The map to add to must not be null.");
         map.put(key, value == null ? "" : value);
     }
 
@@ -1821,7 +1821,7 @@ public class MapUtils {
      * @throws NullPointerException if the bundle is null
      */
     public static Map<String, Object> toMap(final ResourceBundle resourceBundle) {
-        Objects.requireNonNull(resourceBundle, "The resource bundle must not be null");
+        Objects.requireNonNull(resourceBundle, "The resource bundle to convert must not be null.");
         final Enumeration<String> enumeration = resourceBundle.getKeys();
         final Map<String, Object> map = new HashMap<>();
 

@@ -166,7 +166,7 @@ public class MapUtilsTest extends AbstractAvailableLocalesTest {
 
         try {
             MapUtils.invertMap(null);
-            fail("The map must not be null");
+            fail("The map to invert must not be null.");
         } catch (final NullPointerException ex) {
             // expected
         }
