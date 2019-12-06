@@ -23,8 +23,16 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.*;
+import java.util.AbstractCollection;
+import java.util.Collection;
 
+import java.util.Deque;
+import java.util.NoSuchElementException;
+import java.util.List;
+
+import java.util.ConcurrentModificationException;
+import java.util.Objects;
+import java.util.Iterator;
 /**
  * CircularDeque is a deque with a fixed size that replaces its oldest
  * element if full.
@@ -99,7 +107,13 @@ public class CircularDeque<E> extends AbstractCollection<E>
      * @throws NullPointerException if the collection is null
      */
     public CircularDeque(final Collection<? extends E> coll) {
-        this(coll.size());
+        if (coll == null) {
+            throw new NullPointerException("Collection must not be null");
+        }
+
+        elements = (E[]) new Object[coll.size()];
+        maxElements = elements.length;
+
         addAll(coll);
     }
 
@@ -167,7 +181,7 @@ public class CircularDeque<E> extends AbstractCollection<E>
      * @param index  the index to increment
      * @return the updated index
      */
-    private int indexIncrease(int index) {
+    private int increaseIndex(int index) {
         index++;
         if (index >= maxElements) {
             index = 0;
@@ -336,58 +350,138 @@ public class CircularDeque<E> extends AbstractCollection<E>
 
     @Override
     public boolean removeFirstOccurrence(final Object o) {
-        int mask = elements.length - 1;
         int i = head;
-        Object x;
-        while ((x = elements[i]) != null) {
-            if (Objects.equals(o,x)) {
+        while (true) {
+            if (Objects.equals(o,elements[i])) {
                 delete(i);
-                ArrayDeque;
                 return true;
             }
-            i = (i + 1) & mask;
+            if (i == decreaseIndex(tail)) {
+                return false;
+            }
+            i = increaseIndex(i);
         }
-        return false;
     }
 
     @Override
     public boolean removeLastOccurrence(final Object o) {
-        return false;
+        int i = decreaseIndex(tail);
+        while (true) {
+            if (Objects.equals(o,elements[i])) {
+                delete(i);
+                return true;
+            }
+            if (i == head) {
+                return false;
+            }
+            i = decreaseIndex(i);
+        }
     }
+
+     @Override
+     public boolean add(final E e) {
+         if (isAtFullCapacity()) {
+             remove();
+         }
+
+         elements[tail++] = e;
+
+         if (tail >= maxElements) {
+             tail = 0;
+         }
+
+         if (tail == head) {
+             full = true;
+         }
+
+         return true;
+     }
 
     @Override
     public boolean offer(final E e) {
-        return false;
+        return offerLast(e);
     }
 
     @Override
     public E remove() {
-        return null;
+        return removeFirst();
     }
 
     @Override
     public E poll() {
-        return null;
+        return pollFirst();
     }
 
     @Override
     public E element() {
-        return null;
+        return getFirst();
     }
 
     @Override
     public E peek() {
-        return null;
+        return peekFirst();
     }
 
     @Override
     public void push(final E e) {
-
+        addFirst(e);
     }
 
     @Override
     public E pop() {
-        return null;
+        return removeFirst();
+    }
+
+
+    /**
+     * Removes the element at the specified position in the elements array,
+     * adjusting head and tail as necessary.  This can result in motion of
+     * elements backwards or forwards in the array.
+     *
+     * <p>This method is called delete rather than remove to emphasize
+     * that its semantics differ from those of {@link List#remove(int)}.
+     *
+     * @return true if elements moved backwards
+     */
+    private boolean delete(final int i) {
+        if (i == head) {
+            elements[i] = null;
+            head = increaseIndex(head);
+            full = false;
+            return true;
+        }
+
+        if (i == decreaseIndex(tail)) {
+            elements[i] = null;
+            tail = decreaseIndex(tail);
+            full = false;
+            return true;
+        }
+
+        final int front = i - head;
+        final int back  = tail - i - 1;
+
+        if (head < tail) {
+            if (front < back) {
+                System.arraycopy(elements, head, elements, head + 1, front);
+                head++;
+            } else {
+                System.arraycopy(elements, i + 1, elements, i, back);
+                tail--;
+            }
+        } else if (head >tail) {
+            if (i > head) {
+                System.arraycopy(elements, head, elements, head + 1, front);
+                head++;
+            } else if (i < tail) {
+                System.arraycopy(elements, i + 1, elements, i, back);
+                tail--;
+            } else {
+                throw new ConcurrentModificationException();
+            }
+        }
+        full = false;
+        return true;
     }
 
     /**
@@ -425,16 +519,115 @@ public class CircularDeque<E> extends AbstractCollection<E>
 
     @Override
     public int maxSize() {
-        return 0;
+        return maxElements;
     }
 
     @Override
     public Iterator<E> iterator() {
-        return null;
+        return new Iterator<E>() {
+
+            private int index = head;
+            private int lastReturnedIndex = -1;
+            private boolean isFirst = full;
+
+            @Override
+            public boolean hasNext() {
+                return isFirst || index != tail;
+            }
+
+            @Override
+            public E next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                isFirst = false;
+                lastReturnedIndex = index;
+                index = increaseIndex(index);
+                return elements[lastReturnedIndex];
+            }
+
+            @Override
+            public void remove() {
+                if (lastReturnedIndex == -1) {
+                    throw new IllegalStateException();
+                }
+
+                // First element can be removed quickly
+                if (lastReturnedIndex == head) {
+                    CircularDeque.this.remove();
+                    lastReturnedIndex = -1;
+                    return;
+                }
+
+                int pos = lastReturnedIndex + 1;
+                if (head < lastReturnedIndex && pos < tail) {
+                    // shift in one part
+                    System.arraycopy(elements, pos, elements, lastReturnedIndex, tail - pos);
+                } else {
+                    // Other elements require us to shift the subsequent elements
+                    while (pos != tail) {
+                        if (pos >= maxElements) {
+                            elements[pos - 1] = elements[0];
+                            pos = 0;
+                        } else {
+                            elements[decreaseIndex(pos)] = elements[pos];
+                            pos = increaseIndex(pos);
+                        }
+                    }
+                }
+
+                lastReturnedIndex = -1;
+                tail = decreaseIndex(tail);
+                elements[tail] = null;
+                full = false;
+                index = decreaseIndex(index);
+            }
+
+        };
     }
+
 
     @Override
     public Iterator<E> descendingIterator() {
-        return null;
+        return new DescendingIterator();
+    }
+
+    private class DescendingIterator implements Iterator<E> {
+        /*
+         * This class is nearly a mirror-image of DeqIterator, using
+         * tail instead of head for initial cursor, and head instead of
+         * tail for fence.
+         */
+        private int cursor = tail;
+        private int fence = head;
+        private int lastRet = -1;
+        private boolean isFull = full;
+
+        public boolean hasNext() {
+            return isFull || cursor != fence;
+        }
+
+        public E next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+            cursor = decreaseIndex(cursor);
+            @SuppressWarnings("unchecked")
+            E result = (E) elements[cursor];
+            if (head != fence )
+                throw new ConcurrentModificationException();
+            lastRet = cursor;
+            return result;
+        }
+
+        public void remove() {
+            if (lastRet < 0)
+                throw new IllegalStateException();
+            if (!delete(lastRet)) {
+                cursor = increaseIndex(cursor);
+                fence = head;
+            }
+            lastRet = -1;
+            isFull = false;
+        }
     }
 }
