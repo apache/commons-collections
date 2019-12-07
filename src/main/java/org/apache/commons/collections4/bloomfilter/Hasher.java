@@ -18,10 +18,7 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.PrimitiveIterator;
-import java.util.Set;
-
 import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
-import org.apache.commons.collections4.bloomfilter.hasher.DynamicHasher;
 
 
 /**
