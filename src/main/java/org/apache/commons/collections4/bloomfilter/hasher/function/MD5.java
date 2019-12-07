@@ -22,8 +22,6 @@ import java.nio.ByteBuffer;
 import java.nio.LongBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.function.ToLongBiFunction;
-
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
 
 /**

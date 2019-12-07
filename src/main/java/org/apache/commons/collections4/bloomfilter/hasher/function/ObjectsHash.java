@@ -18,8 +18,6 @@
 package org.apache.commons.collections4.bloomfilter.hasher.function;
 
 import java.util.Objects;
-import java.util.function.ToLongBiFunction;
-
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
 
 /**

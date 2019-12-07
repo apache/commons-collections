@@ -17,7 +17,6 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher.function;
 
-import java.util.function.ToLongBiFunction;
 import org.apache.commons.codec.digest.MurmurHash3;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
 
