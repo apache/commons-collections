@@ -36,12 +36,12 @@ public class MD5 implements HashFunction {
     /**
      * The MD5 digest implementation.
      */
-    private MessageDigest messageDigest;
+    private final MessageDigest messageDigest;
 
     /**
      * The result from the digest 0
      */
-    private long[] result = null;
+    private final long[] result = new long[2];
 
     /**
      * The name of this hash function.
@@ -50,17 +50,19 @@ public class MD5 implements HashFunction {
 
     /**
      * Constructs the MD5 hashing function.
-     * @throws NoSuchAlgorithmException on internal error.
      */
-    public MD5() throws NoSuchAlgorithmException {
-        messageDigest = MessageDigest.getInstance("MD5");
+    public MD5() {
+        try {
+            messageDigest = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalStateException( e.getMessage() );
+        }
     }
 
     @Override
     public long applyAsLong(byte[] buffer, Integer seed) {
 
-        if (result == null || seed == 0) {
-            result = new long[2];
+        if (seed == 0) {
             byte[] hash;
             synchronized (messageDigest) {
                 messageDigest.update(buffer);

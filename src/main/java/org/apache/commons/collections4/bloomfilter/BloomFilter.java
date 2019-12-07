@@ -34,7 +34,7 @@ public abstract class BloomFilter {
     /**
      * The shape used by this BloomFilter
      */
-    private Shape shape;
+    private final Shape shape;
 
     /**
      * Gets an array of little-endian long values representing the on bits of this filter.

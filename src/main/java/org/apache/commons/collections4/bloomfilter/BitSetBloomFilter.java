@@ -33,7 +33,7 @@ public class BitSetBloomFilter extends BloomFilter {
     /**
      * The bitset that defines this BloomFilter.
      */
-    private BitSet bitSet;
+    private final BitSet bitSet;
 
     /**
      * Constructs a BitSetBloomFilter from a hasher and a shape.
