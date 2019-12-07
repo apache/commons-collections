@@ -36,7 +36,7 @@ public class MD5 implements HashFunction {
     /**
      * The MD5 digest implementation.
      */
-    private MessageDigest md;
+    private MessageDigest messageDigest;
 
     /**
      * The result from the digest 0
@@ -53,7 +53,7 @@ public class MD5 implements HashFunction {
      * @throws NoSuchAlgorithmException on internal error.
      */
     public MD5() throws NoSuchAlgorithmException {
-        md = MessageDigest.getInstance("MD5");
+        messageDigest = MessageDigest.getInstance("MD5");
     }
 
     @Override
@@ -62,10 +62,10 @@ public class MD5 implements HashFunction {
         if (result == null || seed == 0) {
             result = new long[2];
             byte[] hash;
-            synchronized (md) {
-                md.update(buffer);
-                hash = md.digest();
-                md.reset();
+            synchronized (messageDigest) {
+                messageDigest.update(buffer);
+                hash = messageDigest.digest();
+                messageDigest.reset();
             }
 
             LongBuffer lb = ByteBuffer.wrap(hash).asLongBuffer();
