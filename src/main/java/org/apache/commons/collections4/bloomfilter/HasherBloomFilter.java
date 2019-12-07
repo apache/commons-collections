@@ -29,7 +29,9 @@ import org.apache.commons.collections4.iterators.IteratorChain;
 
 /**
  * A Bloom filter built on a single hasher. This filter type should only be used for small
- * filters (few on bits)
+ * filters (few on bits).  While this implementation correctly supports the merge() methods
+ * it is recommended that if merges are expected that one of the other Bloom filter
+ * implementations be used.
  * @since 4.5
  */
 public class HasherBloomFilter extends BloomFilter {
