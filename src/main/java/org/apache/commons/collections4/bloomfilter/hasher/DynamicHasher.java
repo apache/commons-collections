@@ -17,24 +17,12 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.PrimitiveIterator;
-import java.util.Set;
-import java.util.function.ToLongBiFunction;
-
 import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
-import org.apache.commons.collections4.bloomfilter.hasher.function.MD5;
-import org.apache.commons.collections4.bloomfilter.hasher.function.Murmur128;
-import org.apache.commons.collections4.bloomfilter.hasher.function.Murmur32;
-import org.apache.commons.collections4.bloomfilter.hasher.function.ObjectsHash;
 import org.apache.commons.collections4.bloomfilter.Hasher;
 
 /**
@@ -87,13 +75,13 @@ public class DynamicHasher implements Hasher {
             throw new IllegalArgumentException(
                 String.format("Shape hasher %s is not %s", shape.getHashFunctionName(), getName()));
         }
-        return new Iter(shape);
+        return new Iterator(shape);
     }
 
     /**
      * The iterator of integers.
      */
-    private class Iter implements PrimitiveIterator.OfInt {
+    private class Iterator implements PrimitiveIterator.OfInt {
         private int buffer = 0;
         private int funcCount = 0;
         private final Shape shape;
@@ -103,7 +91,7 @@ public class DynamicHasher implements Hasher {
          *
          * @param shape
          */
-        private Iter(Shape shape) {
+        private Iterator(Shape shape) {
             this.shape = shape;
         }
 
