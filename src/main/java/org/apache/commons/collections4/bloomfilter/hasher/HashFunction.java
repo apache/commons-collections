@@ -19,6 +19,10 @@ package org.apache.commons.collections4.bloomfilter.hasher;
 
 import java.util.function.ToLongBiFunction;
 
+/**
+ * Defines the a Hash Function used by Hashers.
+ *
+ */
 public interface HashFunction extends ToLongBiFunction<byte[], Integer> {
 
     /**

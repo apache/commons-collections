@@ -112,9 +112,8 @@ public abstract class BloomFilter {
     abstract public void merge(BloomFilter other);
 
     /**
-     * Merge the decomposed Bloom filter defined by the shape and hasher into this Bloom
-     * filter. The Shape must match the shape of this filter. The hasher provides bit
-     * indexes to enable.
+     * Merge the decomposed Bloom filter defined by the hasher into this Bloom
+     * filter. The hasher provides an iterator of bit indexes to enable.
      *
      * @param hasher the hasher to provide the indexes.
      * @throws IllegalArgumentException if the shape argument does not match the shape of
