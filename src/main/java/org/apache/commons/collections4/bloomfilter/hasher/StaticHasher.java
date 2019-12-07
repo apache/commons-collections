@@ -17,8 +17,8 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
+import java.util.Arrays;
 import java.util.Iterator;
-import java.util.PrimitiveIterator;
 import java.util.PrimitiveIterator.OfInt;
 import java.util.Set;
 import java.util.TreeSet;
@@ -40,7 +40,7 @@ public final class StaticHasher implements Hasher {
     /**
      * The ordered set of values that this hasher will return.
      */
-    private final Set<Integer> values;
+    private final int[] values;
 
     /**
      * Constructs the StaticHasher from a StaticHasher and a Shape.
@@ -79,7 +79,7 @@ public final class StaticHasher implements Hasher {
      */
     public StaticHasher(Iterator<Integer> iter, Shape shape) {
         this.shape = shape;
-        this.values = new TreeSet<Integer>();
+        Set<Integer> workingValues = new TreeSet<Integer>();
         iter.forEachRemaining( idx -> {
             if (idx >= this.shape.getNumberOfBits())
             {
@@ -88,8 +88,14 @@ public final class StaticHasher implements Hasher {
             if (idx < 0 ) {
                 throw new IllegalArgumentException( String.format( "Bit index (%s) may not be less than zero", idx ));
             }
-            values.add( idx );
+            workingValues.add( idx );
         });
+        this.values = new int[workingValues.size()];
+        int i=0;
+        for (Integer value : workingValues)
+        {
+            values[i++] = value.intValue();
+        }
     }
 
     /**
@@ -111,7 +117,7 @@ public final class StaticHasher implements Hasher {
      * @return the number of unique values.
      */
     public int size() {
-        return values.size();
+        return values.length;
     }
 
     /**
@@ -130,41 +136,6 @@ public final class StaticHasher implements Hasher {
             throw new IllegalArgumentException(
                 String.format("shape (%s) does not match internal shape (%s)", shape, this.shape));
         }
-        return new Iter(values.iterator());
-    }
-
-    /**
-     * The PrimitiveIterator.OfInt implementation for the StaticHasher.
-     */
-    private static class Iter implements PrimitiveIterator.OfInt, Iterator<Integer> {
-
-        /**
-         * The wrapped Integer iterator.
-         */
-        private Iterator<Integer> wrapped;
-
-        /**
-         * Constructs the Iterator.
-         * @param wrapped the Integer iterator to wrap.
-         */
-        private Iter(Iterator<Integer> wrapped)
-        {
-            this.wrapped = wrapped;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return wrapped.hasNext();
-        }
-
-        @Override
-        public int nextInt() {
-            return wrapped.next().intValue();
-        }
-
-        @Override
-        public Integer next() {
-            return wrapped.next();
-        }
+        return Arrays.stream( values ).iterator();
     }
 }
