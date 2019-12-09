@@ -126,7 +126,7 @@ public class MultiKey<K> implements Serializable {
      * This is equivalent to <code>new MultiKey(keys, true)</code>.
      *
      * @param keys  the array of keys, not null
-     * @throws IllegalArgumentException if the key array is null
+     * @throws NullPointerException if the key array is null
      */
     public MultiKey(final K[] keys) {
         this(keys, true);
@@ -153,13 +153,13 @@ public class MultiKey<K> implements Serializable {
      *
      * @param keys  the array of keys, not null
      * @param makeClone  true to clone the array, false to assign it
-     * @throws IllegalArgumentException if the key array is null
+     * @throws NullPointerException if the key array is null
      * @since 3.1
      */
     public MultiKey(final K[] keys, final boolean makeClone) {
         super();
         if (keys == null) {
-            throw new IllegalArgumentException("The array of keys must not be null");
+            throw new NullPointerException("The array of keys must not be null");
         }
         if (makeClone) {
             this.keys = keys.clone();
