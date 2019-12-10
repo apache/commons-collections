@@ -96,6 +96,9 @@
     <action issue="COLLECTIONS-740" dev="ggregory" type="fix" due-to="Pengyu Nie">
       Add missing @throws comment for SwitchTransformer.switchTransformer. #124.
     </action>
+    <action issue="COLLECTIONS-739" dev="ggregory" type="fix" due-to="Pengyu Nie">
+      Fix inconsistent @throws comments in DefaultedMap #123.
+    </action>
   </release>
   <release version="4.4" date="2019-07-05" description="Maintenance release.">
     <action issue="COLLECTIONS-710" dev="ggregory" type="fix" due-to="Yu Shi, Gary Gregory">
