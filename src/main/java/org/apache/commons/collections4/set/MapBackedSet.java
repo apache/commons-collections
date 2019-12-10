@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -89,10 +90,7 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
      */
     private MapBackedSet(final Map<E, ? super V> map, final V dummyValue) {
         super();
-        if (map == null) {
-            throw new NullPointerException("The map must not be null");
-        }
-        this.map = map;
+        this.map = Objects.requireNonNull(map, "map");
         this.dummyValue = dummyValue;
     }
 

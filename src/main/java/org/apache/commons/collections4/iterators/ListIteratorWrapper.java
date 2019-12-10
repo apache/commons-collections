@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import org.apache.commons.collections4.ResettableListIterator;
 
@@ -76,10 +77,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
      */
     public ListIteratorWrapper(final Iterator<? extends E> iterator) {
         super();
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
-        this.iterator = iterator;
+        this.iterator = Objects.requireNonNull(iterator, "iterator");
     }
 
     // ListIterator interface

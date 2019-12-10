@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.Transformer;
@@ -56,14 +57,9 @@ public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
     public static <I, O> Transformer<I, O> ifTransformer(final Predicate<? super I> predicate,
                                                          final Transformer<? super I, ? extends O> trueTransformer,
                                                          final Transformer<? super I, ? extends O> falseTransformer) {
-        if (predicate == null) {
-            throw new NullPointerException("Predicate must not be null");
-        }
-        if (trueTransformer == null || falseTransformer == null) {
-            throw new NullPointerException("Transformers must not be null");
-        }
-
-        return new IfTransformer<>(predicate, trueTransformer, falseTransformer);
+        return new IfTransformer<>(Objects.requireNonNull(predicate, "predicate"),
+                Objects.requireNonNull(trueTransformer, "trueTransformer"),
+                Objects.requireNonNull(falseTransformer, "falseTransformer"));
     }
 
     /**
@@ -81,15 +77,8 @@ public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
     public static <T> Transformer<T, T> ifTransformer(
             final Predicate<? super T> predicate,
             final Transformer<? super T, ? extends T> trueTransformer) {
-
-        if (predicate == null) {
-            throw new NullPointerException("Predicate must not be null");
-        }
-        if (trueTransformer == null) {
-            throw new NullPointerException("Transformer must not be null");
-        }
-
-        return new IfTransformer<>(predicate, trueTransformer, NOPTransformer.<T>nopTransformer());
+        return new IfTransformer<>(Objects.requireNonNull(predicate, "predicate"),
+                Objects.requireNonNull(trueTransformer, "trueTransformer"), NOPTransformer.<T>nopTransformer());
     }
 
     /**

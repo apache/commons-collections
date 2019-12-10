@@ -19,6 +19,7 @@ package org.apache.commons.collections4.iterators;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Queue;
 
 /**
@@ -157,10 +158,7 @@ public class IteratorChain<E> implements Iterator<E> {
      */
     public void addIterator(final Iterator<? extends E> iterator) {
         checkLocked();
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
-        iteratorChain.add(iterator);
+        iteratorChain.add(Objects.requireNonNull(iterator, "iterator"));
     }
 
     /**

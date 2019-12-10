@@ -21,6 +21,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * A Comparator which imposes a specific order on a specific set of Objects.
@@ -94,10 +95,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      */
     public FixedOrderComparator(final T... items) {
         super();
-        if (items == null) {
-            throw new NullPointerException("The list of items must not be null");
-        }
-        for (final T item : items) {
+        for (final T item : Objects.requireNonNull(items, "items")) {
             add(item);
         }
     }
@@ -113,10 +111,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      */
     public FixedOrderComparator(final List<T> items) {
         super();
-        if (items == null) {
-            throw new NullPointerException("The list of items must not be null");
-        }
-        for (final T t : items) {
+        for (final T t : Objects.requireNonNull(items, "items")) {
             add(t);
         }
     }
@@ -164,10 +159,7 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
      */
     public void setUnknownObjectBehavior(final UnknownObjectBehavior unknownObjectBehavior) {
         checkLocked();
-        if (unknownObjectBehavior == null) {
-            throw new NullPointerException("Unknown object behavior must not be null");
-        }
-        this.unknownObjectBehavior = unknownObjectBehavior;
+        this.unknownObjectBehavior = Objects.requireNonNull(unknownObjectBehavior, "unknownObjectBehavior");
     }
 
     // Methods for adding items

@@ -18,6 +18,7 @@ package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.Transformer;
@@ -92,9 +93,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
     public static <I, O> Transformer<I, O> switchTransformer(
             final Map<? extends Predicate<? super I>, ? extends Transformer<? super I, ? extends O>> map) {
 
-        if (map == null) {
-            throw new NullPointerException("The predicate and transformer map must not be null");
-        }
+        Objects.requireNonNull(map, "map");
         if (map.size() == 0) {
             return ConstantTransformer.<I, O>nullTransformer();
         }

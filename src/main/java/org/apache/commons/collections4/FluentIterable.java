@@ -22,6 +22,7 @@ import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.commons.collections4.iterators.SingletonIterator;
 
@@ -465,9 +466,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * @throws NullPointerException if collection is null
      */
     public void copyInto(final Collection<? super E> collection) {
-        if (collection == null) {
-            throw new NullPointerException("Collection must not be null");
-        }
+        Objects.requireNonNull(collection, "collection");
         CollectionUtils.addAll(collection, iterable);
     }
 

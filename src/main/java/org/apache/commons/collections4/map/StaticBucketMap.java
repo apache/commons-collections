@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.KeyValue;
@@ -715,13 +716,10 @@ public final class StaticBucketMap<K, V> extends AbstractIterableMap<K, V> {
      *  in your map, then the recursive method will be invoked twenty thousand
      *  times.  You have been warned.
      *
-     *  @param r  the code to execute atomically
+     *  @param runnable  the code to execute atomically
      */
-    public void atomic(final Runnable r) {
-        if (r == null) {
-            throw new NullPointerException();
-        }
-        atomic(r, 0);
+    public void atomic(final Runnable runnable) {
+        atomic(Objects.requireNonNull(runnable, "runnable"), 0);
     }
 
     private void atomic(final Runnable r, final int bucket) {

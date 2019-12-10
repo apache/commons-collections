@@ -19,6 +19,7 @@ package org.apache.commons.collections4.multimap;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -55,10 +56,7 @@ public abstract class AbstractMultiValuedMapDecorator<K, V>
      * @throws NullPointerException if the map is null
      */
     protected AbstractMultiValuedMapDecorator(final MultiValuedMap<K, V> map) {
-        if (map == null) {
-            throw new NullPointerException("MultiValuedMap must not be null.");
-        }
-        this.map = map;
+        this.map = Objects.requireNonNull(map, "map");
     }
 
     // -----------------------------------------------------------------------

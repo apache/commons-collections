@@ -24,6 +24,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -191,9 +192,7 @@ public class PassiveExpiringMap<K, V>
      */
     private static long validateAndConvertToMillis(final long timeToLive,
                                                    final TimeUnit timeUnit) {
-        if (timeUnit == null) {
-            throw new NullPointerException("Time unit must not be null");
-        }
+        Objects.requireNonNull(timeUnit, "timeUnit");
         return TimeUnit.MILLISECONDS.convert(timeToLive, timeUnit);
     }
 
@@ -237,10 +236,7 @@ public class PassiveExpiringMap<K, V>
     public PassiveExpiringMap(final ExpirationPolicy<K, V> expiringPolicy,
                               final Map<K, V> map) {
         super(map);
-        if (expiringPolicy == null) {
-            throw new NullPointerException("Policy must not be null.");
-        }
-        this.expiringPolicy = expiringPolicy;
+        this.expiringPolicy = Objects.requireNonNull(expiringPolicy, "expiringPolicy");
     }
 
     /**

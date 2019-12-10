@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Predicate;
 
@@ -42,10 +43,7 @@ public final class InstanceofPredicate implements Predicate<Object>, Serializabl
      * @throws NullPointerException if the class is null
      */
     public static Predicate<Object> instanceOfPredicate(final Class<?> type) {
-        if (type == null) {
-            throw new NullPointerException("The type to check instanceof must not be null");
-        }
-        return new InstanceofPredicate(type);
+        return new InstanceofPredicate(Objects.requireNonNull(type, "type"));
     }
 
     /**

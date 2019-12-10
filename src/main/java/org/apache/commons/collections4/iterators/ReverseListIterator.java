@@ -18,6 +18,7 @@ package org.apache.commons.collections4.iterators;
 
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 
 import org.apache.commons.collections4.ResettableListIterator;
 
@@ -52,10 +53,7 @@ public class ReverseListIterator<E> implements ResettableListIterator<E> {
      */
     public ReverseListIterator(final List<E> list) {
         super();
-        if (list == null) {
-            throw new NullPointerException("List must not be null.");
-        }
-        this.list = list;
+        this.list = Objects.requireNonNull(list, "list");
         iterator = list.listIterator(list.size());
     }
 

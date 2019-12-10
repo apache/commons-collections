@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Closure;
 import org.apache.commons.collections4.Predicate;
@@ -69,13 +70,9 @@ public class IfClosure<E> implements Closure<E>, Serializable {
     public static <E> Closure<E> ifClosure(final Predicate<? super E> predicate,
                                            final Closure<? super E> trueClosure,
                                            final Closure<? super E> falseClosure) {
-        if (predicate == null) {
-            throw new NullPointerException("Predicate must not be null");
-        }
-        if (trueClosure == null || falseClosure == null) {
-            throw new NullPointerException("Closures must not be null");
-        }
-        return new IfClosure<>(predicate, trueClosure, falseClosure);
+        return new IfClosure<>(Objects.requireNonNull(predicate, "predicate"),
+                Objects.requireNonNull(trueClosure, "trueClosure"),
+                Objects.requireNonNull(falseClosure, "falseClosure"));
     }
 
     /**

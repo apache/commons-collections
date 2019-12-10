@@ -22,6 +22,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.Transformer;
@@ -170,10 +171,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      */
     protected DefaultedMap(final Map<K, V> map, final Transformer<? super K, ? extends V> defaultValueTransformer) {
         super(map);
-        if (defaultValueTransformer == null) {
-            throw new NullPointerException("Transformer must not be null.");
-        }
-        this.value = defaultValueTransformer;
+        this.value = Objects.requireNonNull(defaultValueTransformer, "defaultValueTransformer");
     }
 
     //-----------------------------------------------------------------------

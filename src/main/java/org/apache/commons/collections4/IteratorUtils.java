@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.collections4.functors.EqualPredicate;
 import org.apache.commons.collections4.iterators.ArrayIterator;
@@ -698,20 +699,16 @@ public class IteratorUtils {
      * @param <I> the input type
      * @param <O> the output type
      * @param iterator  the iterator to use, not null
-     * @param transform  the transform to use, not null
+     * @param transformer  the transform to use, not null
      * @return a new transforming iterator
      * @throws NullPointerException if either parameter is null
      */
     public static <I, O> Iterator<O> transformedIterator(final Iterator<? extends I> iterator,
-            final Transformer<? super I, ? extends O> transform) {
+            final Transformer<? super I, ? extends O> transformer) {
 
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
-        if (transform == null) {
-            throw new NullPointerException("Transformer must not be null");
-        }
-        return new TransformIterator<>(iterator, transform);
+        Objects.requireNonNull(iterator, "iterator");
+        Objects.requireNonNull(transformer, "transformer");
+        return new TransformIterator<>(iterator, transformer);
     }
 
     // Filtered
@@ -730,12 +727,8 @@ public class IteratorUtils {
      */
     public static <E> Iterator<E> filteredIterator(final Iterator<? extends E> iterator,
                                                    final Predicate<? super E> predicate) {
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
-        if (predicate == null) {
-            throw new NullPointerException("Predicate must not be null");
-        }
+        Objects.requireNonNull(iterator, "iterator");
+        Objects.requireNonNull(predicate, "predicate");
         return new FilterIterator<>(iterator, predicate);
     }
 
@@ -754,12 +747,8 @@ public class IteratorUtils {
     public static <E> ListIterator<E> filteredListIterator(final ListIterator<? extends E> listIterator,
             final Predicate<? super E> predicate) {
 
-        if (listIterator == null) {
-            throw new NullPointerException("ListIterator must not be null");
-        }
-        if (predicate == null) {
-            throw new NullPointerException("Predicate must not be null");
-        }
+        Objects.requireNonNull(listIterator, "listIterator");
+        Objects.requireNonNull(predicate, "predicate");
         return new FilterListIterator<>(listIterator, predicate);
     }
 
@@ -773,15 +762,12 @@ public class IteratorUtils {
      * to start with.
      *
      * @param <E> the element type
-     * @param coll  the collection to iterate over, not null
+     * @param collection  the collection to iterate over, not null
      * @return a new looping iterator
      * @throws NullPointerException if the collection is null
      */
-    public static <E> ResettableIterator<E> loopingIterator(final Collection<? extends E> coll) {
-        if (coll == null) {
-            throw new NullPointerException("Collection must not be null");
-        }
-        return new LoopingIterator<>(coll);
+    public static <E> ResettableIterator<E> loopingIterator(final Collection<? extends E> collection) {
+        return new LoopingIterator<>(Objects.requireNonNull(collection, "collection"));
     }
 
     /**
@@ -797,10 +783,7 @@ public class IteratorUtils {
      * @since 3.2
      */
     public static <E> ResettableListIterator<E> loopingListIterator(final List<E> list) {
-        if (list == null) {
-            throw new NullPointerException("List must not be null");
-        }
-        return new LoopingListIterator<>(list);
+        return new LoopingListIterator<>(Objects.requireNonNull(list, "list"));
     }
 
     // org.w3c.dom.NodeList iterators
@@ -815,10 +798,7 @@ public class IteratorUtils {
      * @since 4.0
      */
     public static NodeListIterator nodeListIterator(final NodeList nodeList) {
-        if (nodeList == null) {
-            throw new NullPointerException("NodeList must not be null");
-        }
-        return new NodeListIterator(nodeList);
+        return new NodeListIterator(Objects.requireNonNull(nodeList, "nodeList"));
     }
 
     /**
@@ -839,10 +819,7 @@ public class IteratorUtils {
      * @since 4.0
      */
     public static NodeListIterator nodeListIterator(final Node node) {
-        if (node == null) {
-            throw new NullPointerException("Node must not be null");
-        }
-        return new NodeListIterator(node);
+        return new NodeListIterator(Objects.requireNonNull(node, "node"));
     }
 
     // Peeking
@@ -952,10 +929,7 @@ public class IteratorUtils {
      * @throws NullPointerException if enumeration is null
      */
     public static <E> Iterator<E> asIterator(final Enumeration<? extends E> enumeration) {
-        if (enumeration == null) {
-            throw new NullPointerException("Enumeration must not be null");
-        }
-        return new EnumerationIterator<>(enumeration);
+        return new EnumerationIterator<>(Objects.requireNonNull(enumeration, "enumeration"));
     }
 
     /**
@@ -970,13 +944,8 @@ public class IteratorUtils {
      */
     public static <E> Iterator<E> asIterator(final Enumeration<? extends E> enumeration,
                                              final Collection<? super E> removeCollection) {
-        if (enumeration == null) {
-            throw new NullPointerException("Enumeration must not be null");
-        }
-        if (removeCollection == null) {
-            throw new NullPointerException("Collection must not be null");
-        }
-        return new EnumerationIterator<>(enumeration, removeCollection);
+        return new EnumerationIterator<>(Objects.requireNonNull(enumeration, "enumeration"),
+                Objects.requireNonNull(removeCollection, "removeCollection"));
     }
 
     /**
@@ -988,10 +957,7 @@ public class IteratorUtils {
      * @throws NullPointerException if iterator is null
      */
     public static <E> Enumeration<E> asEnumeration(final Iterator<? extends E> iterator) {
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
-        return new IteratorEnumeration<>(iterator);
+        return new IteratorEnumeration<>(Objects.requireNonNull(iterator, "iterator"));
     }
 
     /**
@@ -1004,9 +970,7 @@ public class IteratorUtils {
      * @throws NullPointerException if iterator is null
      */
     public static <E> Iterable<E> asIterable(final Iterator<? extends E> iterator) {
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
+        Objects.requireNonNull(iterator, "iterator");
         return new IteratorIterable<>(iterator, false);
     }
 
@@ -1020,9 +984,7 @@ public class IteratorUtils {
      * @throws NullPointerException if iterator is null
      */
     public static <E> Iterable<E> asMultipleUseIterable(final Iterator<? extends E> iterator) {
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
+        Objects.requireNonNull(iterator, "iterator");
         return new IteratorIterable<>(iterator, true);
     }
 
@@ -1038,9 +1000,7 @@ public class IteratorUtils {
      * @throws NullPointerException if iterator parameter is null
      */
     public static <E> ListIterator<E> toListIterator(final Iterator<? extends E> iterator) {
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
+        Objects.requireNonNull(iterator, "iterator");
         return new ListIteratorWrapper<>(iterator);
     }
 
@@ -1055,9 +1015,7 @@ public class IteratorUtils {
      * @throws NullPointerException if iterator parameter is null
      */
     public static Object[] toArray(final Iterator<?> iterator) {
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
+        Objects.requireNonNull(iterator, "iterator");
         final List<?> list = toList(iterator, 100);
         return list.toArray();
     }
@@ -1076,12 +1034,8 @@ public class IteratorUtils {
      * @throws ArrayStoreException if the arrayClass is invalid
      */
     public static <E> E[] toArray(final Iterator<? extends E> iterator, final Class<E> arrayClass) {
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
-        if (arrayClass == null) {
-            throw new NullPointerException("Array class must not be null");
-        }
+        Objects.requireNonNull(iterator, "iterator");
+        Objects.requireNonNull(arrayClass, "arrayClass");
         final List<E> list = toList(iterator, 100);
         @SuppressWarnings("unchecked")
         final E[] array = (E[]) Array.newInstance(arrayClass, list.size());
@@ -1117,9 +1071,7 @@ public class IteratorUtils {
      * @throws IllegalArgumentException if the size is less than 1
      */
     public static <E> List<E> toList(final Iterator<? extends E> iterator, final int estimatedSize) {
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
+        Objects.requireNonNull(iterator, "iterator");
         if (estimatedSize < 1) {
             throw new IllegalArgumentException("Estimated size must be greater than 0");
         }
@@ -1214,9 +1166,7 @@ public class IteratorUtils {
      * @since 4.1
      */
     public static <E> void forEach(final Iterator<E> iterator, final Closure<? super E> closure) {
-        if (closure == null) {
-            throw new NullPointerException("Closure must not be null");
-        }
+        Objects.requireNonNull(closure, "closure");
 
         if (iterator != null) {
             while (iterator.hasNext()) {
@@ -1239,9 +1189,8 @@ public class IteratorUtils {
      * @since 4.1
      */
     public static <E> E forEachButLast(final Iterator<E> iterator, final Closure<? super E> closure) {
-        if (closure == null) {
-            throw new NullPointerException("Closure must not be null.");
-        }
+        Objects.requireNonNull(closure, "closure");
+        
         if (iterator != null) {
             while (iterator.hasNext()) {
                 final E element = iterator.next();
@@ -1268,9 +1217,7 @@ public class IteratorUtils {
      * @since 4.1
      */
     public static <E> E find(final Iterator<E> iterator, final Predicate<? super E> predicate) {
-        if (predicate == null) {
-            throw new NullPointerException("Predicate must not be null");
-        }
+        Objects.requireNonNull(predicate, "predicate");
 
         if (iterator != null) {
             while (iterator.hasNext()) {
@@ -1297,9 +1244,7 @@ public class IteratorUtils {
      * @since 4.1
      */
     public static <E> int indexOf(final Iterator<E> iterator, final Predicate<? super E> predicate) {
-        if (predicate == null) {
-            throw new NullPointerException("Predicate must not be null");
-        }
+        Objects.requireNonNull(predicate, "predicate");
 
         if (iterator != null) {
             for(int index = 0; iterator.hasNext(); index++) {
@@ -1342,9 +1287,7 @@ public class IteratorUtils {
      * @since 4.1
      */
     public static <E> boolean matchesAll(final Iterator<E> iterator, final Predicate<? super E> predicate) {
-        if (predicate == null) {
-            throw new NullPointerException("Predicate must not be null");
-        }
+        Objects.requireNonNull(predicate, "predicate");
 
         if (iterator != null) {
             while (iterator.hasNext()) {
@@ -1515,18 +1458,10 @@ public class IteratorUtils {
                                       final String delimiter,
                                       final String prefix,
                                       final String suffix) {
-        if (transformer == null) {
-            throw new NullPointerException("transformer may not be null");
-        }
-        if (delimiter == null) {
-            throw new NullPointerException("delimiter may not be null");
-        }
-        if (prefix == null) {
-            throw new NullPointerException("prefix may not be null");
-        }
-        if (suffix == null) {
-            throw new NullPointerException("suffix may not be null");
-        }
+        Objects.requireNonNull(transformer, "transformer");
+        Objects.requireNonNull(delimiter, "delimiter");
+        Objects.requireNonNull(prefix, "prefix");
+        Objects.requireNonNull(suffix, "suffix");
         final StringBuilder stringBuilder = new StringBuilder(prefix);
         if (iterator != null) {
             while (iterator.hasNext()) {

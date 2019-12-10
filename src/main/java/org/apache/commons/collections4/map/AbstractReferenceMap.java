@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.MapIterator;
@@ -269,13 +270,8 @@ public abstract class AbstractReferenceMap<K, V> extends AbstractHashedMap<K, V>
      */
     @Override
     public V put(final K key, final V value) {
-        if (key == null) {
-            throw new NullPointerException("null keys not allowed");
-        }
-        if (value == null) {
-            throw new NullPointerException("null values not allowed");
-        }
-
+        Objects.requireNonNull(key, "key");
+        Objects.requireNonNull(value, "value");
         purgeBeforeWrite();
         return super.put(key, value);
     }

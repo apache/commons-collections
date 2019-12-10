@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Predicate;
 
@@ -42,10 +43,7 @@ public final class NullIsFalsePredicate<T> implements PredicateDecorator<T>, Ser
      * @throws NullPointerException if the predicate is null
      */
     public static <T> Predicate<T> nullIsFalsePredicate(final Predicate<? super T> predicate) {
-        if (predicate == null) {
-            throw new NullPointerException("Predicate must not be null");
-        }
-        return new NullIsFalsePredicate<>(predicate);
+        return new NullIsFalsePredicate<>(Objects.requireNonNull(predicate, "predicate"));
     }
 
     /**

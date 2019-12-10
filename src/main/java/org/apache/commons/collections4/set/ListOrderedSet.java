@@ -80,12 +80,8 @@ public class ListOrderedSet<E>
      * @since 4.0
      */
     public static <E> ListOrderedSet<E> listOrderedSet(final Set<E> set, final List<E> list) {
-        if (set == null) {
-            throw new NullPointerException("Set must not be null");
-        }
-        if (list == null) {
-            throw new NullPointerException("List must not be null");
-        }
+        Objects.requireNonNull(set, "set");
+        Objects.requireNonNull(list, "list");
         if (set.size() > 0 || list.size() > 0) {
             throw new IllegalArgumentException("Set and List must be empty");
         }
@@ -122,9 +118,7 @@ public class ListOrderedSet<E>
      * @since 4.0
      */
     public static <E> ListOrderedSet<E> listOrderedSet(final List<E> list) {
-        if (list == null) {
-            throw new NullPointerException("List must not be null");
-        }
+        Objects.requireNonNull(list, "list");
         CollectionUtils.filter(list, UniquePredicate.uniquePredicate());
         final Set<E> set = new HashSet<>(list);
 
@@ -166,10 +160,7 @@ public class ListOrderedSet<E>
      */
     protected ListOrderedSet(final Set<E> set, final List<E> list) {
         super(set);
-        if (list == null) {
-            throw new NullPointerException("List must not be null");
-        }
-        setOrder = list;
+        setOrder = Objects.requireNonNull(list, "list");
     }
 
     // -----------------------------------------------------------------------

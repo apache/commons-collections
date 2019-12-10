@@ -28,6 +28,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.bag.HashBag;
@@ -595,9 +596,7 @@ public class CollectionUtils {
     public static <E> boolean isEqualCollection(final Collection<? extends E> a,
                                                 final Collection<? extends E> b,
                                                 final Equator<? super E> equator) {
-        if (equator == null) {
-            throw new NullPointerException("Equator must not be null.");
-        }
+        Objects.requireNonNull(equator, "equator");
 
         if(a.size() != b.size()) {
             return false;
@@ -652,7 +651,7 @@ public class CollectionUtils {
      * Returns the number of occurrences of <i>obj</i> in <i>coll</i>.
      *
      * @param obj the object to find the cardinality of
-     * @param coll the {@link Iterable} to search
+     * @param collection the {@link Iterable} to search
      * @param <O> the type of object that the {@link Iterable} may contain.
      * @return the number of occurrences of obj in coll
      * @throws NullPointerException if coll is null
@@ -660,11 +659,8 @@ public class CollectionUtils {
      *   Be aware that the order of parameters has changed.
      */
     @Deprecated
-    public static <O> int cardinality(final O obj, final Iterable<? super O> coll) {
-        if (coll == null) {
-            throw new NullPointerException("coll must not be null.");
-        }
-        return IterableUtils.frequency(coll, obj);
+    public static <O> int cardinality(final O obj, final Iterable<? super O> collection) {
+        return IterableUtils.frequency(Objects.requireNonNull(collection, "collection"), obj);
     }
 
     /**
@@ -1162,9 +1158,7 @@ public class CollectionUtils {
      * @since 3.2
      */
     public static <T> boolean addIgnoreNull(final Collection<T> collection, final T object) {
-        if (collection == null) {
-            throw new NullPointerException("The collection must not be null");
-        }
+        Objects.requireNonNull(collection, "collection");
         return object != null && collection.add(object);
     }
 
@@ -1523,20 +1517,18 @@ public class CollectionUtils {
      * then these will be removed to access the BoundedCollection.
      * </p>
      *
-     * @param coll  the collection to check
+     * @param collection  the collection to check
      * @return true if the BoundedCollection is full
      * @throws NullPointerException if the collection is null
      */
-    public static boolean isFull(final Collection<? extends Object> coll) {
-        if (coll == null) {
-            throw new NullPointerException("The collection must not be null");
-        }
-        if (coll instanceof BoundedCollection) {
-            return ((BoundedCollection<?>) coll).isFull();
+    public static boolean isFull(final Collection<? extends Object> collection) {
+        Objects.requireNonNull(collection, "collection");
+        if (collection instanceof BoundedCollection) {
+            return ((BoundedCollection<?>) collection).isFull();
         }
         try {
             final BoundedCollection<?> bcoll =
-                    UnmodifiableBoundedCollection.unmodifiableBoundedCollection(coll);
+                    UnmodifiableBoundedCollection.unmodifiableBoundedCollection(collection);
             return bcoll.isFull();
         } catch (final IllegalArgumentException ex) {
             return false;
@@ -1556,20 +1548,18 @@ public class CollectionUtils {
      * then these will be removed to access the BoundedCollection.
      * </p>
      *
-     * @param coll  the collection to check
+     * @param collection  the collection to check
      * @return the maximum size of the BoundedCollection, -1 if no maximum size
      * @throws NullPointerException if the collection is null
      */
-    public static int maxSize(final Collection<? extends Object> coll) {
-        if (coll == null) {
-            throw new NullPointerException("The collection must not be null");
-        }
-        if (coll instanceof BoundedCollection) {
-            return ((BoundedCollection<?>) coll).maxSize();
+    public static int maxSize(final Collection<? extends Object> collection) {
+        Objects.requireNonNull(collection, "collection");
+        if (collection instanceof BoundedCollection) {
+            return ((BoundedCollection<?>) collection).maxSize();
         }
         try {
             final BoundedCollection<?> bcoll =
-                    UnmodifiableBoundedCollection.unmodifiableBoundedCollection(coll);
+                    UnmodifiableBoundedCollection.unmodifiableBoundedCollection(collection);
             return bcoll.maxSize();
         } catch (final IllegalArgumentException ex) {
             return -1;
@@ -1646,30 +1636,27 @@ public class CollectionUtils {
      * </p>
      *
      * @param <O>  the element type
-     * @param a  the first collection, must not be null
-     * @param b  the second collection, must not be null
-     * @param c  the comparator to use for the merge.
+     * @param iterableA  the first collection, must not be null
+     * @param iterableB  the second collection, must not be null
+     * @param comparator  the comparator to use for the merge.
      * @param includeDuplicates  if {@code true} duplicate elements will be retained, otherwise
      *   they will be removed in the output collection
      * @return a new sorted List, containing the elements of Collection a and b
      * @throws NullPointerException if either collection or the comparator is null
      * @since 4.0
      */
-    public static <O> List<O> collate(final Iterable<? extends O> a, final Iterable<? extends O> b,
-                                      final Comparator<? super O> c, final boolean includeDuplicates) {
+    public static <O> List<O> collate(final Iterable<? extends O> iterableA, final Iterable<? extends O> iterableB,
+                                      final Comparator<? super O> comparator, final boolean includeDuplicates) {
 
-        if (a == null || b == null) {
-            throw new NullPointerException("The collections must not be null");
-        }
-        if (c == null) {
-            throw new NullPointerException("The comparator must not be null");
-        }
+        Objects.requireNonNull(iterableA, "iterableA");
+        Objects.requireNonNull(iterableB, "iterableB");
+        Objects.requireNonNull(comparator, "comparator");
 
         // if both Iterables are a Collection, we can estimate the size
-        final int totalSize = a instanceof Collection<?> && b instanceof Collection<?> ?
-                Math.max(1, ((Collection<?>) a).size() + ((Collection<?>) b).size()) : 10;
+        final int totalSize = iterableA instanceof Collection<?> && iterableB instanceof Collection<?> ?
+                Math.max(1, ((Collection<?>) iterableA).size() + ((Collection<?>) iterableB).size()) : 10;
 
-        final Iterator<O> iterator = new CollatingIterator<>(c, a.iterator(), b.iterator());
+        final Iterator<O> iterator = new CollatingIterator<>(comparator, iterableA.iterator(), iterableB.iterator());
         if (includeDuplicates) {
             return IteratorUtils.toList(iterator, totalSize);
         }
@@ -2032,9 +2019,7 @@ public class CollectionUtils {
      * @since 4.0
      */
     public static <E> E extractSingleton(final Collection<E> collection) {
-        if (collection == null) {
-            throw new NullPointerException("Collection must not be null.");
-        }
+        Objects.requireNonNull(collection, "collection");
         if (collection.size() != 1) {
             throw new IllegalArgumentException("Can extract singleton only when collection size == 1");
         }

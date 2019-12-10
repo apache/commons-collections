@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Predicate;
 
@@ -45,11 +46,9 @@ public final class AndPredicate<T> implements PredicateDecorator<T>, Serializabl
      * @throws NullPointerException if either predicate is null
      */
     public static <T> Predicate<T> andPredicate(final Predicate<? super T> predicate1,
-                                                final Predicate<? super T> predicate2) {
-        if (predicate1 == null || predicate2 == null) {
-            throw new NullPointerException("Predicate must not be null");
-        }
-        return new AndPredicate<>(predicate1, predicate2);
+            final Predicate<? super T> predicate2) {
+        return new AndPredicate<>(Objects.requireNonNull(predicate1, "predicate1"),
+                Objects.requireNonNull(predicate2, "predicate2"));
     }
 
     /**

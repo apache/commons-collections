@@ -25,6 +25,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Queue;
 
 import org.apache.commons.collections4.BoundedCollection;
@@ -235,9 +236,7 @@ public class CircularFifoQueue<E> extends AbstractCollection<E>
      */
     @Override
     public boolean add(final E element) {
-        if (null == element) {
-            throw new NullPointerException("Attempted to add null object to queue");
-        }
+        Objects.requireNonNull(element, "element");
 
         if (isAtFullCapacity()) {
             remove();

@@ -19,6 +19,7 @@ package org.apache.commons.collections4.collection;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 /**
@@ -71,10 +72,7 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
      * @throws NullPointerException if the collection is null
      */
     protected SynchronizedCollection(final Collection<E> collection) {
-        if (collection == null) {
-            throw new NullPointerException("Collection must not be null.");
-        }
-        this.collection = collection;
+        this.collection = Objects.requireNonNull(collection, "collection");
         this.lock = this;
     }
 
@@ -86,14 +84,8 @@ public class SynchronizedCollection<E> implements Collection<E>, Serializable {
      * @throws NullPointerException if the collection or lock is null
      */
     protected SynchronizedCollection(final Collection<E> collection, final Object lock) {
-        if (collection == null) {
-            throw new NullPointerException("Collection must not be null.");
-        }
-        if (lock == null) {
-            throw new NullPointerException("Lock must not be null.");
-        }
-        this.collection = collection;
-        this.lock = lock;
+        this.collection = Objects.requireNonNull(collection, "collection");
+        this.lock = Objects.requireNonNull(lock, "lock");
     }
 
     /**

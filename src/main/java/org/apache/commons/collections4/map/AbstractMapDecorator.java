@@ -18,6 +18,7 @@ package org.apache.commons.collections4.map;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -59,10 +60,7 @@ public abstract class AbstractMapDecorator<K, V> extends AbstractIterableMap<K, 
      * @throws NullPointerException if the map is null
      */
     protected AbstractMapDecorator(final Map<K, V> map) {
-        if (map == null) {
-            throw new NullPointerException("Map must not be null.");
-        }
-        this.map = map;
+        this.map = Objects.requireNonNull(map, "map");
     }
 
     /**

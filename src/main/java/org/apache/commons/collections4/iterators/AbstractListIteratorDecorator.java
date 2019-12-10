@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.iterators;
 
 import java.util.ListIterator;
+import java.util.Objects;
 
 /**
  * Provides basic behaviour for decorating a list iterator with extra functionality.
@@ -39,10 +40,7 @@ public class AbstractListIteratorDecorator<E> implements ListIterator<E> {
      */
     public AbstractListIteratorDecorator(final ListIterator<E> iterator) {
         super();
-        if (iterator == null) {
-            throw new NullPointerException("ListIterator must not be null");
-        }
-        this.iterator = iterator;
+        this.iterator = Objects.requireNonNull(iterator, "iterator");
     }
 
     /**

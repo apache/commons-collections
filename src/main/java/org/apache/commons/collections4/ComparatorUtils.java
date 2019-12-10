@@ -18,6 +18,7 @@ package org.apache.commons.collections4;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Objects;
 
 import org.apache.commons.collections4.comparators.BooleanComparator;
 import org.apache.commons.collections4.comparators.ComparableComparator;
@@ -77,10 +78,7 @@ public class ComparatorUtils {
     public static <E> Comparator<E> chainedComparator(final Comparator<E>... comparators) {
         final ComparatorChain<E> chain = new ComparatorChain<>();
         for (final Comparator<E> comparator : comparators) {
-            if (comparator == null) {
-                throw new NullPointerException("Comparator cannot be null");
-            }
-            chain.addComparator(comparator);
+            chain.addComparator(Objects.requireNonNull(comparator, "comparator"));
         }
         return chain;
     }

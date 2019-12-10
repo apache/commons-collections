@@ -18,6 +18,7 @@ package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Transformer;
 
@@ -68,9 +69,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
      */
     public static <T> Transformer<T, T> chainedTransformer(
             final Collection<? extends Transformer<? super T, ? extends T>> transformers) {
-        if (transformers == null) {
-            throw new NullPointerException("Transformer collection must not be null");
-        }
+        Objects.requireNonNull(transformers, "transformers");
         if (transformers.size() == 0) {
             return NOPTransformer.<T>nopTransformer();
         }

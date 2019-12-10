@@ -21,6 +21,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Put;
 import org.apache.commons.collections4.Transformer;
@@ -113,14 +114,8 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
     protected TransformedSplitMap(final Map<K, V> map, final Transformer<? super J, ? extends K> keyTransformer,
             final Transformer<? super U, ? extends V> valueTransformer) {
         super(map);
-        if (keyTransformer == null) {
-            throw new NullPointerException("KeyTransformer must not be null.");
-        }
-        this.keyTransformer = keyTransformer;
-        if (valueTransformer == null) {
-            throw new NullPointerException("ValueTransformer must not be null.");
-        }
-        this.valueTransformer = valueTransformer;
+        this.keyTransformer = Objects.requireNonNull(keyTransformer, "keyTransformer");
+        this.valueTransformer = Objects.requireNonNull(valueTransformer, "valueTransformer");
     }
 
     //-----------------------------------------------------------------------

@@ -18,6 +18,7 @@ package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Closure;
 
@@ -64,9 +65,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      */
     @SuppressWarnings("unchecked")
     public static <E> Closure<E> chainedClosure(final Collection<? extends Closure<? super E>> closures) {
-        if (closures == null) {
-            throw new NullPointerException("Closure collection must not be null");
-        }
+        Objects.requireNonNull(closures, "closures");
         if (closures.size() == 0) {
             return NOPClosure.<E>nopClosure();
         }

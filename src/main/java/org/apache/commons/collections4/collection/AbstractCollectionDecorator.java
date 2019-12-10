@@ -19,6 +19,7 @@ package org.apache.commons.collections4.collection;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.function.Predicate;
 
 /**
@@ -75,14 +76,11 @@ public abstract class AbstractCollectionDecorator<E>
     /**
      * Constructor that wraps (not copies).
      *
-     * @param coll  the collection to decorate, must not be null
+     * @param collection  the collection to decorate, must not be null
      * @throws NullPointerException if the collection is null
      */
-    protected AbstractCollectionDecorator(final Collection<E> coll) {
-        if (coll == null) {
-            throw new NullPointerException("Collection must not be null.");
-        }
-        this.collection = coll;
+    protected AbstractCollectionDecorator(final Collection<E> collection) {
+        this.collection = Objects.requireNonNull(collection, "collection");
     }
 
     /**

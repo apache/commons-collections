@@ -23,6 +23,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -73,9 +74,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * @since 4.0
      */
     public static <E> SetUniqueList<E> setUniqueList(final List<E> list) {
-        if (list == null) {
-            throw new NullPointerException("List must not be null");
-        }
+        Objects.requireNonNull(list, "list");
         if (list.isEmpty()) {
             return new SetUniqueList<>(list, new HashSet<E>());
         }
@@ -98,10 +97,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      */
     protected SetUniqueList(final List<E> list, final Set<E> set) {
         super(list);
-        if (set == null) {
-            throw new NullPointerException("Set must not be null");
-        }
-        this.set = set;
+        this.set = Objects.requireNonNull(set, "set");
     }
 
     // -----------------------------------------------------------------------

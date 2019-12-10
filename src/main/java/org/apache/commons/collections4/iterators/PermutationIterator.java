@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
  * This iterator creates permutations of an input collection, using the
@@ -69,25 +70,22 @@ public class PermutationIterator<E> implements Iterator<List<E>> {
 
     /**
      * Standard constructor for this class.
-     * @param coll  the collection to generate permutations for
+     * @param collection  the collection to generate permutations for
      * @throws NullPointerException if coll is null
      */
-    public PermutationIterator(final Collection<? extends E> coll) {
-        if (coll == null) {
-            throw new NullPointerException("The collection must not be null");
-        }
-
-        keys = new int[coll.size()];
-        direction = new boolean[coll.size()];
+    public PermutationIterator(final Collection<? extends E> collection) {
+        Objects.requireNonNull(collection, "collection");
+        keys = new int[collection.size()];
+        direction = new boolean[collection.size()];
         Arrays.fill(direction, false);
         int value = 1;
         objectMap = new HashMap<>();
-        for (final E e : coll) {
+        for (final E e : collection) {
             objectMap.put(Integer.valueOf(value), e);
             keys[value - 1] = value;
             value++;
         }
-        nextPermutation = new ArrayList<>(coll);
+        nextPermutation = new ArrayList<>(collection);
     }
 
     /**

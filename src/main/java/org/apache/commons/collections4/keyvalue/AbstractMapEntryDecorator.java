@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.keyvalue;
 
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.collections4.KeyValue;
 
@@ -40,10 +41,7 @@ public abstract class AbstractMapEntryDecorator<K, V> implements Map.Entry<K, V>
      * @throws NullPointerException if the collection is null
      */
     public AbstractMapEntryDecorator(final Map.Entry<K, V> entry) {
-        if (entry == null) {
-            throw new NullPointerException("Map Entry must not be null.");
-        }
-        this.entry = entry;
+        this.entry = Objects.requireNonNull(entry, "entry");
     }
 
     /**

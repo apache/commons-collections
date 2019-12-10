@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.functors;
 
+import java.util.Objects;
+
 import org.apache.commons.collections4.Closure;
 import org.apache.commons.collections4.Predicate;
 
@@ -52,13 +54,8 @@ public class WhileClosure<E> implements Closure<E> {
      */
     public static <E> Closure<E> whileClosure(final Predicate<? super E> predicate,
                                               final Closure<? super E> closure, final boolean doLoop) {
-        if (predicate == null) {
-            throw new NullPointerException("Predicate must not be null");
-        }
-        if (closure == null) {
-            throw new NullPointerException("Closure must not be null");
-        }
-        return new WhileClosure<>(predicate, closure, doLoop);
+        return new WhileClosure<>(Objects.requireNonNull(predicate, "predicate"),
+                Objects.requireNonNull(closure, "closure"), doLoop);
     }
 
     /**

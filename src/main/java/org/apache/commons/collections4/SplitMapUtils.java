@@ -18,6 +18,7 @@ package org.apache.commons.collections4;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
@@ -233,9 +234,7 @@ public class SplitMapUtils {
      */
     @SuppressWarnings("unchecked")
     public static <K, V> IterableMap<K, V> readableMap(final Get<K, V> get) {
-        if (get == null) {
-            throw new NullPointerException("Get must not be null");
-        }
+        Objects.requireNonNull(get, "get");
         if (get instanceof Map) {
             return get instanceof IterableMap ?
                     ((IterableMap<K, V>) get) :
@@ -259,9 +258,7 @@ public class SplitMapUtils {
      */
     @SuppressWarnings("unchecked")
     public static <K, V> Map<K, V> writableMap(final Put<K, V> put) {
-        if (put == null) {
-            throw new NullPointerException("Put must not be null");
-        }
+        Objects.requireNonNull(put, "put");
         if (put instanceof Map) {
             return (Map<K, V>) put;
         }

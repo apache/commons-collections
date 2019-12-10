@@ -18,6 +18,7 @@ package org.apache.commons.collections4;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.collections4.functors.ChainedTransformer;
 import org.apache.commons.collections4.functors.CloneTransformer;
@@ -370,9 +371,7 @@ public class TransformerUtils {
     public static <I, O> Transformer<I, O> switchMapTransformer(
             final Map<I, Transformer<I, O>> objectsAndTransformers) {
 
-        if (objectsAndTransformers == null) {
-            throw new NullPointerException("The object and transformer map must not be null");
-        }
+        Objects.requireNonNull(objectsAndTransformers, "objectsAndTransformers");
         final Transformer<? super I, ? extends O> def = objectsAndTransformers.remove(null);
         final int size = objectsAndTransformers.size();
         final Transformer<? super I, ? extends O>[] trs = new Transformer[size];

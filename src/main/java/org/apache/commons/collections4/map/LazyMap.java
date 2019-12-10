@@ -21,6 +21,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.Transformer;
@@ -114,10 +115,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
      */
     protected LazyMap(final Map<K,V> map, final Factory<? extends V> factory) {
         super(map);
-        if (factory == null) {
-            throw new NullPointerException("Factory must not be null");
-        }
-        this.factory = FactoryTransformer.factoryTransformer(factory);
+        this.factory = FactoryTransformer.factoryTransformer(Objects.requireNonNull(factory, "factory"));
     }
 
     /**
@@ -129,10 +127,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
      */
     protected LazyMap(final Map<K,V> map, final Transformer<? super K, ? extends V> factory) {
         super(map);
-        if (factory == null) {
-            throw new NullPointerException("Factory must not be null");
-        }
-        this.factory = factory;
+        this.factory = Objects.requireNonNull(factory, "factory");
     }
 
     //-----------------------------------------------------------------------

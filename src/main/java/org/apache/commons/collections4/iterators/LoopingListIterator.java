@@ -19,6 +19,7 @@ package org.apache.commons.collections4.iterators;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import org.apache.commons.collections4.ResettableListIterator;
 
@@ -54,10 +55,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * @throws NullPointerException if the list it null
      */
     public LoopingListIterator(final List<E> list) {
-        if (list == null) {
-            throw new NullPointerException("The list must not be null");
-        }
-        this.list = list;
+        this.list = Objects.requireNonNull(list, "collection");
         _reset();
     }
 

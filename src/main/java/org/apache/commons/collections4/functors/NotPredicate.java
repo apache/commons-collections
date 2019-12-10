@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Predicate;
 
@@ -42,10 +43,7 @@ public final class NotPredicate<T> implements PredicateDecorator<T>, Serializabl
      * @throws NullPointerException if the predicate is null
      */
     public static <T> Predicate<T> notPredicate(final Predicate<? super T> predicate) {
-        if (predicate == null) {
-            throw new NullPointerException("Predicate must not be null");
-        }
-        return new NotPredicate<>(predicate);
+        return new NotPredicate<>(Objects.requireNonNull(predicate, "predicate"));
     }
 
     /**

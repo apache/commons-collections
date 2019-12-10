@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import org.apache.commons.collections4.FluentIterable;
 
@@ -88,9 +89,7 @@ public class ZippingIterator<E> implements Iterator<E> {
         // create a mutable list to be able to remove exhausted iterators
         final List<Iterator<? extends E>> list = new ArrayList<>();
         for (final Iterator<? extends E> iterator : iterators) {
-            if (iterator == null) {
-                throw new NullPointerException("Iterator must not be null.");
-            }
+            Objects.requireNonNull(iterator, "iterator");
             list.add(iterator);
         }
         this.iterators = FluentIterable.of(list).loop().iterator();

@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.Transformer;
@@ -49,13 +50,8 @@ public final class TransformedPredicate<T> implements PredicateDecorator<T>, Ser
      */
     public static <T> Predicate<T> transformedPredicate(final Transformer<? super T, ? extends T> transformer,
                                                         final Predicate<? super T> predicate) {
-        if (transformer == null) {
-            throw new NullPointerException("The transformer to call must not be null");
-        }
-        if (predicate == null) {
-            throw new NullPointerException("The predicate to call must not be null");
-        }
-        return new TransformedPredicate<>(transformer, predicate);
+        return new TransformedPredicate<>(Objects.requireNonNull(transformer, "transformer"),
+                Objects.requireNonNull(predicate, "predicate"));
     }
 
     /**

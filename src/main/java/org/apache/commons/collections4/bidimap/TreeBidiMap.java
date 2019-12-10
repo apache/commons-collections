@@ -28,6 +28,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.KeyValue;
@@ -1232,18 +1233,16 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * check if an object is fit to be proper input ... has to be
      * Comparable and non-null
      *
-     * @param o the object being checked
+     * @param obj the object being checked
      * @param dataElement  either {@link DataElement#KEY} key}
      *                     or the {@link DataElement#VALUE value}.
      *
      * @throws NullPointerException if o is null
      * @throws ClassCastException if o is not Comparable
      */
-    private static void checkNonNullComparable(final Object o, final DataElement dataElement) {
-        if (o == null) {
-            throw new NullPointerException(dataElement + " cannot be null");
-        }
-        if (!(o instanceof Comparable)) {
+    private static void checkNonNullComparable(final Object obj, final DataElement dataElement) {
+        Objects.requireNonNull(obj, Objects.toString(dataElement));
+        if (!(obj instanceof Comparable)) {
             throw new ClassCastException(dataElement + " must be Comparable");
         }
     }

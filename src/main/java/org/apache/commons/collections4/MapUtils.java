@@ -27,6 +27,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.ResourceBundle;
@@ -1237,10 +1238,9 @@ public class MapUtils {
      * @since 4.0
      */
     public static <K, V> IterableMap<K, V> iterableMap(final Map<K, V> map) {
-        if (map == null) {
-            throw new NullPointerException("Map must not be null");
-        }
+        Objects.requireNonNull(map, "map");
         return map instanceof IterableMap ? (IterableMap<K, V>) map : new AbstractMapDecorator<K, V>(map) {
+            // empty
         };
     }
 
@@ -1255,11 +1255,10 @@ public class MapUtils {
      * @since 4.0
      */
     public static <K, V> IterableSortedMap<K, V> iterableSortedMap(final SortedMap<K, V> sortedMap) {
-        if (sortedMap == null) {
-            throw new NullPointerException("Map must not be null");
-        }
+        Objects.requireNonNull(sortedMap, "sortedMap");
         return sortedMap instanceof IterableSortedMap ? (IterableSortedMap<K, V>) sortedMap
                 : new AbstractSortedMapDecorator<K, V>(sortedMap) {
+                    // empty
                 };
     }
 
@@ -1674,9 +1673,7 @@ public class MapUtils {
      */
     @SuppressWarnings("unchecked") // As per Javadoc throws CCE for invalid array contents
     public static <K, V> Map<K, V> putAll(final Map<K, V> map, final Object[] array) {
-        if (map == null) {
-            throw new NullPointerException("The map must not be null");
-        }
+        Objects.requireNonNull(map, "map");
         if (array == null || array.length == 0) {
             return map;
         }

@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.functors.EqualPredicate;
@@ -258,9 +259,7 @@ public class IterableUtils {
     public static <E> Iterable<E> filteredIterable(final Iterable<E> iterable,
                                                    final Predicate<? super E> predicate) {
         checkNotNull(iterable);
-        if (predicate == null) {
-            throw new NullPointerException("Predicate must not be null.");
-        }
+        Objects.requireNonNull(predicate, "predicate");
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
@@ -418,9 +417,7 @@ public class IterableUtils {
     public static <I, O> Iterable<O> transformedIterable(final Iterable<I> iterable,
                                                          final Transformer<? super I, ? extends O> transformer) {
         checkNotNull(iterable);
-        if (transformer == null) {
-            throw new NullPointerException("Transformer must not be null.");
-        }
+        Objects.requireNonNull(transformer, "transformer");
         return new FluentIterable<O>() {
             @Override
             public Iterator<O> iterator() {
@@ -673,9 +670,7 @@ public class IterableUtils {
      * @throws NullPointerException if predicate is null
      */
     public static <E> long countMatches(final Iterable<E> input, final Predicate<? super E> predicate) {
-        if (predicate == null) {
-            throw new NullPointerException("Predicate must not be null.");
-        }
+        Objects.requireNonNull(predicate, "predicate");
         return size(filteredIterable(emptyIfNull(input), predicate));
     }
 
@@ -730,9 +725,7 @@ public class IterableUtils {
      */
     public static <E> boolean contains(final Iterable<? extends E> iterable, final E object,
                                        final Equator<? super E> equator) {
-        if (equator == null) {
-            throw new NullPointerException("Equator must not be null.");
-        }
+        Objects.requireNonNull(equator, "equator");
         return matchesAny(iterable, EqualPredicate.equalPredicate(object, equator));
     }
 
@@ -839,9 +832,7 @@ public class IterableUtils {
      */
     public static <O> List<List<O>> partition(final Iterable<? extends O> iterable,
                                               final Predicate<? super O> predicate) {
-        if (predicate == null) {
-            throw new NullPointerException("Predicate must not be null.");
-        }
+        Objects.requireNonNull(predicate, "predicate");
         @SuppressWarnings({ "unchecked", "rawtypes" }) // safe
         final Factory<List<O>> factory = FactoryUtils.instantiateFactory((Class) ArrayList.class);
         @SuppressWarnings("unchecked") // safe
@@ -933,14 +924,10 @@ public class IterableUtils {
             return partition(empty, partitionFactory, predicates);
         }
 
-        if (predicates == null) {
-            throw new NullPointerException("Predicates must not be null.");
-        }
+        Objects.requireNonNull(predicates, "predicates");
 
-        for (final Predicate<?> p : predicates) {
-            if (p == null) {
-                throw new NullPointerException("Predicate must not be null.");
-            }
+        for (final Predicate<?> predicate : predicates) {
+            Objects.requireNonNull(predicate, "predicate");
         }
 
         if (predicates.length < 1) {
@@ -1025,9 +1012,7 @@ public class IterableUtils {
      */
     public static <E> String toString(final Iterable<E> iterable,
                                       final Transformer<? super E, String> transformer) {
-        if (transformer == null) {
-            throw new NullPointerException("Transformer must not be null.");
-        }
+        Objects.requireNonNull(transformer, "transformer");
         return IteratorUtils.toString(emptyIteratorIfNull(iterable), transformer);
     }
 
@@ -1067,9 +1052,7 @@ public class IterableUtils {
      * @throws NullPointerException if iterable is null
      */
     static void checkNotNull(final Iterable<?> iterable) {
-        if (iterable == null) {
-            throw new NullPointerException("Iterable must not be null.");
-        }
+        Objects.requireNonNull(iterable, "iterable");
     }
 
     /**
@@ -1079,9 +1062,7 @@ public class IterableUtils {
      * @throws NullPointerException if the argument or any of its contents is null
      */
     static void checkNotNull(final Iterable<?>... iterables) {
-        if (iterables == null) {
-            throw new NullPointerException("Iterables must not be null.");
-        }
+        Objects.requireNonNull(iterables, "iterables");
         for (final Iterable<?> iterable : iterables) {
             checkNotNull(iterable);
         }

@@ -18,6 +18,7 @@ package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Closure;
 import org.apache.commons.collections4.Predicate;
@@ -87,9 +88,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      */
     @SuppressWarnings("unchecked")
     public static <E> Closure<E> switchClosure(final Map<Predicate<E>, Closure<E>> predicatesAndClosures) {
-        if (predicatesAndClosures == null) {
-            throw new NullPointerException("The predicate and closure map must not be null");
-        }
+        Objects.requireNonNull(predicatesAndClosures, "predicatesAndClosures");
         // convert to array like this to guarantee iterator() ordering
         final Closure<? super E> defaultClosure = predicatesAndClosures.remove(null);
         final int size = predicatesAndClosures.size();

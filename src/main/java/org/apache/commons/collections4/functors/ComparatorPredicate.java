@@ -18,6 +18,7 @@ package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Predicate;
 
@@ -119,13 +120,8 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
      */
     public static <T> Predicate<T> comparatorPredicate(final T object, final Comparator<T> comparator,
                                                        final Criterion criterion) {
-        if (comparator == null) {
-            throw new NullPointerException("Comparator must not be null.");
-        }
-        if (criterion == null) {
-            throw new NullPointerException("Criterion must not be null.");
-        }
-        return new ComparatorPredicate<>(object, comparator, criterion);
+        return new ComparatorPredicate<>(object, Objects.requireNonNull(comparator, "comparator"),
+                Objects.requireNonNull(criterion, "criterion"));
     }
 
     /**

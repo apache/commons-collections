@@ -21,6 +21,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.keyvalue.MultiKey;
@@ -103,9 +104,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @since 4.0
      */
     public static <K, V> MultiKeyMap<K, V> multiKeyMap(final AbstractHashedMap<MultiKey<? extends K>, V> map) {
-        if (map == null) {
-            throw new NullPointerException("Map must not be null");
-        }
+        Objects.requireNonNull(map, "map");
         if (map.size() > 0) {
             throw new IllegalArgumentException("Map must be empty");
         }
@@ -823,9 +822,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
      * @param key  the key to check
      */
     protected void checkKey(final MultiKey<?> key) {
-        if (key == null) {
-            throw new NullPointerException("Key must not be null");
-        }
+        Objects.requireNonNull(key, "key");
     }
 
     /**

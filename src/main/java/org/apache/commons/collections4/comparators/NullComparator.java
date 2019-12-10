@@ -18,6 +18,7 @@ package org.apache.commons.collections4.comparators;
 
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.Objects;
 
 import org.apache.commons.collections4.ComparatorUtils;
 
@@ -108,12 +109,8 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      *  <code>null</code>
      **/
     public NullComparator(final Comparator<? super E> nonNullComparator, final boolean nullsAreHigh) {
-        this.nonNullComparator = nonNullComparator;
+        this.nonNullComparator = Objects.requireNonNull(nonNullComparator, "nonNullComparator");
         this.nullsAreHigh = nullsAreHigh;
-
-        if (nonNullComparator == null) {
-            throw new NullPointerException("null nonNullComparator");
-        }
     }
 
     //-----------------------------------------------------------------------

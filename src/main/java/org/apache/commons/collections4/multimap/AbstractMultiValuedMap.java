@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -88,10 +89,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      */
     @SuppressWarnings("unchecked")
     protected AbstractMultiValuedMap(final Map<K, ? extends Collection<V>> map) {
-        if (map == null) {
-            throw new NullPointerException("Map must not be null.");
-        }
-        this.map = (Map<K, Collection<V>>) map;
+        this.map = (Map<K, Collection<V>>) Objects.requireNonNull(map, "map");
     }
 
     // -----------------------------------------------------------------------
@@ -282,9 +280,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      */
     @Override
     public boolean putAll(final Map<? extends K, ? extends V> map) {
-        if (map == null) {
-            throw new NullPointerException("Map must not be null.");
-        }
+        Objects.requireNonNull(map, "map");
         boolean changed = false;
         for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
             changed |= put(entry.getKey(), entry.getValue());
@@ -306,9 +302,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      */
     @Override
     public boolean putAll(final MultiValuedMap<? extends K, ? extends V> map) {
-        if (map == null) {
-            throw new NullPointerException("Map must not be null.");
-        }
+        Objects.requireNonNull(map, "map");
         boolean changed = false;
         for (final Map.Entry<? extends K, ? extends V> entry : map.entries()) {
             changed |= put(entry.getKey(), entry.getValue());
@@ -349,9 +343,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      */
     @Override
     public boolean putAll(final K key, final Iterable<? extends V> values) {
-        if (values == null) {
-            throw new NullPointerException("Values must not be null.");
-        }
+        Objects.requireNonNull(values, "values");
 
         if (values instanceof Collection<?>) {
             final Collection<? extends V> valueCollection = (Collection<? extends V>) values;

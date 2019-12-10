@@ -18,6 +18,7 @@ package org.apache.commons.collections4.keyvalue;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.Objects;
 
 /**
  * A <code>MultiKey</code> allows multiple map keys to be merged together.
@@ -158,9 +159,7 @@ public class MultiKey<K> implements Serializable {
      */
     public MultiKey(final K[] keys, final boolean makeClone) {
         super();
-        if (keys == null) {
-            throw new NullPointerException("The array of keys must not be null");
-        }
+        Objects.requireNonNull(keys, "keys");
         if (makeClone) {
             this.keys = keys.clone();
         } else {
