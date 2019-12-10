@@ -22,6 +22,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.Transformer;
@@ -109,10 +110,8 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @since 4.0
      */
     public static <K, V> DefaultedMap<K, V> defaultedMap(final Map<K, V> map, final Factory<? extends V> factory) {
-        if (factory == null) {
-            throw new NullPointerException("Factory must not be null");
-        }
-        return new DefaultedMap<>(map, FactoryTransformer.factoryTransformer(factory));
+        return new DefaultedMap<>(map, FactoryTransformer.factoryTransformer(
+                Objects.requireNonNull(factory, "Factory must not be null")));
     }
 
     /**
@@ -132,10 +131,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      */
     public static <K, V> Map<K, V> defaultedMap(final Map<K, V> map,
                                                 final Transformer<? super K, ? extends V> transformer) {
-        if (transformer == null) {
-           throw new NullPointerException("Transformer must not be null");
-       }
-       return new DefaultedMap<>(map, transformer);
+        return new DefaultedMap<>(map, Objects.requireNonNull(transformer, "Transformer must not be null"));
     }
 
     //-----------------------------------------------------------------------
