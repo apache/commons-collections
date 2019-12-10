@@ -110,10 +110,8 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @since 4.0
      */
     public static <K, V> DefaultedMap<K, V> defaultedMap(final Map<K, V> map, final Factory<? extends V> factory) {
-        if (factory == null) {
-            throw new IllegalArgumentException("Factory must not be null");
-        }
-        return new DefaultedMap<>(map, FactoryTransformer.factoryTransformer(factory));
+        return new DefaultedMap<>(map, FactoryTransformer.factoryTransformer(
+                Objects.requireNonNull(factory, "Factory must not be null")));
     }
 
     /**
@@ -128,15 +126,12 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @param map  the map to decorate, must not be null
      * @param transformer  the transformer to use as a factory to create entries, must not be null
      * @return a new defaulting map
-     * @throws NullPointerException if map or factory is null
+     * @throws NullPointerException if map or transformer is null
      * @since 4.0
      */
     public static <K, V> Map<K, V> defaultedMap(final Map<K, V> map,
                                                 final Transformer<? super K, ? extends V> transformer) {
-        if (transformer == null) {
-           throw new IllegalArgumentException("Transformer must not be null");
-       }
-       return new DefaultedMap<>(map, transformer);
+        return new DefaultedMap<>(map, Objects.requireNonNull(transformer, "Transformer must not be null"));
     }
 
     //-----------------------------------------------------------------------
