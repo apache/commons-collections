@@ -23,8 +23,8 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * A <code>Map</code> implementation that matches keys and values based
- * on <code>==</code> not <code>equals()</code>.
+ * A {@code Map} implementation that matches keys and values based
+ * on {@code ==} not {@code equals()}.
  * <p>
  * <strong>This map will violate the detail of various Map and map view contracts.</strong>
  * As a general rule, don't compare this map to other maps. In particular, you can't
@@ -105,7 +105,7 @@ public class IdentityMap<K, V>
 
     /**
      * Compares two keys for equals.
-     * This implementation uses <code>==</code>.
+     * This implementation uses {@code ==}.
      *
      * @param key1  the first key to compare
      * @param key2  the second key to compare
@@ -118,7 +118,7 @@ public class IdentityMap<K, V>
 
     /**
      * Compares two values for equals.
-     * This implementation uses <code>==</code>.
+     * This implementation uses {@code ==}.
      *
      * @param value1  the first value to compare
      * @param value2  the second value to compare

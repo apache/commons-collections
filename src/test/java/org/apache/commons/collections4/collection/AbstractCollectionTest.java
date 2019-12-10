@@ -49,7 +49,7 @@ import org.apache.commons.collections4.AbstractObjectTest;
  * <b>Element Population Methods</b>
  * <p>
  * Override these if your collection restricts what kind of elements are
- * allowed (for instance, if <code>null</code> is not permitted):
+ * allowed (for instance, if {@code null} is not permitted):
  * <ul>
  * <li>{@link #getFullElements()}
  * <li>{@link #getOtherElements()}
@@ -72,12 +72,12 @@ import org.apache.commons.collections4.AbstractObjectTest;
  * for the collection.  Basically, the operation is performed against your
  * collection implementation, and an identical operation is performed against a
  * <i>confirmed</i> collection implementation.  A confirmed collection
- * implementation is something like <code>java.util.ArrayList</code>, which is
+ * implementation is something like {@code java.util.ArrayList}, which is
  * known to conform exactly to its collection interface's contract.  After the
  * operation takes place on both your collection implementation and the
  * confirmed collection implementation, the two collections are compared to see
  * if their state is identical.  The comparison is usually much more involved
- * than a simple <code>equals</code> test.  This verification is used to ensure
+ * than a simple {@code equals} test.  This verification is used to ensure
  * proper modifications are made along with ensuring that the collection does
  * not change when read-only modifications are made.
  * <p>
@@ -188,7 +188,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Returns true if the collections produced by
      *  {@link #makeObject()} and {@link #makeFullCollection()}
-     *  support the <code>add</code> and <code>addAll</code>
+     *  support the {@code add} and {@code addAll}
      *  operations.<P>
      *  Default implementation returns true.  Override if your collection
      *  class does not support add or addAll.
@@ -200,9 +200,9 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     /**
      *  Returns true if the collections produced by
      *  {@link #makeObject()} and {@link #makeFullCollection()}
-     *  support the <code>remove</code>, <code>removeAll</code>,
-     *  <code>retainAll</code>, <code>clear</code> and
-     *  <code>iterator().remove()</code> methods.
+     *  support the {@code remove}, {@code removeAll},
+     *  {@code retainAll}, {@code clear} and
+     *  {@code iterator().remove()} methods.
      *  Default implementation returns true.  Override if your collection
      *  class does not support removal operations.
      */
@@ -358,7 +358,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
      *  Returns a full collection to be used for testing.  The collection
      *  returned by this method should contain every element returned by
      *  {@link #getFullElements()}.  The default implementation, in fact,
-     *  simply invokes <code>addAll</code> on an empty collection with
+     *  simply invokes {@code addAll} on an empty collection with
      *  the results of {@link #getFullElements()}.  Override this default
      *  if your collection doesn't support addAll.
      */
@@ -1170,7 +1170,7 @@ public abstract class AbstractCollectionTest<E> extends AbstractObjectTest {
     }
 
     /**
-     *  Tests <code>toString</code> on a collection.
+     *  Tests {@code toString} on a collection.
      */
     public void testCollectionToString() {
         resetEmpty();

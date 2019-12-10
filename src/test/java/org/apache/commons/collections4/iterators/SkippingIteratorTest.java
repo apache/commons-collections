@@ -88,7 +88,7 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
-     * Test a decorated iterator bounded such that the <code>offset</code> is
+     * Test a decorated iterator bounded such that the {@code offset} is
      * zero, in that the SkippingIterator should return all the same elements
      * as its decorated iterator.
      */
@@ -120,7 +120,7 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
-     * Test the case if the <code>offset</code> passed to the constructor is
+     * Test the case if the {@code offset} passed to the constructor is
      * greater than the decorated iterator's size. The SkippingIterator should
      * behave as if there are no more elements to return.
      */
@@ -136,7 +136,7 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
-     * Test the case if a negative <code>offset</code> is passed to the
+     * Test the case if a negative {@code offset} is passed to the
      * constructor. {@link IllegalArgumentException} is expected.
      */
     @Test
@@ -149,8 +149,8 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
-     * Test the <code>remove()</code> method being called without
-     * <code>next()</code> being called first.
+     * Test the {@code remove()} method being called without
+     * {@code next()} being called first.
      */
     @Test
     public void testRemoveWithoutCallingNext() {
@@ -165,8 +165,8 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
-     * Test the <code>remove()</code> method being called twice without calling
-     * <code>next()</code> in between.
+     * Test the {@code remove()} method being called twice without calling
+     * {@code next()} in between.
      */
     @Test
     public void testRemoveCalledTwice() {
@@ -276,7 +276,7 @@ public class SkippingIteratorTest<E> extends AbstractIteratorTest<E> {
 
     /**
      * Test the case if the decorated iterator does not support the
-     * <code>remove()</code> method and throws an {@link UnsupportedOperationException}.
+     * {@code remove()} method and throws an {@link UnsupportedOperationException}.
      */
     @Test
     public void testRemoveUnsupported() {

@@ -117,7 +117,7 @@ import org.apache.commons.collections4.set.AbstractSetTest;
  * this base set of cases.  Simply override the test case (method) your map
  * fails and/or the methods that define the assumptions used by the test
  * cases.  For example, if your map does not allow duplicate values, override
- * {@link #isAllowDuplicateValues()} and have it return <code>false</code>
+ * {@link #isAllowDuplicateValues()} and have it return {@code false}
  *
  */
 public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
@@ -167,7 +167,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     /**
      * Returns true if the maps produced by
      * {@link #makeObject()} and {@link #makeFullMap()}
-     * support the <code>put</code> and <code>putAll</code> operations
+     * support the {@code put} and {@code putAll} operations
      * adding new mappings.
      * <p>
      * Default implementation returns true.
@@ -180,7 +180,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     /**
      * Returns true if the maps produced by
      * {@link #makeObject()} and {@link #makeFullMap()}
-     * support the <code>put</code> and <code>putAll</code> operations
+     * support the {@code put} and {@code putAll} operations
      * changing existing mappings.
      * <p>
      * Default implementation returns true.
@@ -193,7 +193,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     /**
      * Returns true if the maps produced by
      * {@link #makeObject()} and {@link #makeFullMap()}
-     * support the <code>setValue</code> operation on entrySet entries.
+     * support the {@code setValue} operation on entrySet entries.
      * <p>
      * Default implementation returns isPutChangeSupported().
      * Override if your collection class does not support setValue but does
@@ -206,7 +206,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
     /**
      * Returns true if the maps produced by
      * {@link #makeObject()} and {@link #makeFullMap()}
-     * support the <code>remove</code> and <code>clear</code> operations.
+     * support the {@code remove} and {@code clear} operations.
      * <p>
      * Default implementation returns true.
      * Override if your collection class does not support removal operations.
@@ -295,7 +295,7 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      *  method must return an array with the same length as {@link
      *  #getSampleValues()} and all array elements must be different. The
      *  default implementation constructs a set of String keys, and includes a
-     *  single null key if {@link #isAllowNullKey()} returns <code>true</code>.
+     *  single null key if {@link #isAllowNullKey()} returns {@code true}.
      */
     @SuppressWarnings("unchecked")
     public K[] getSampleKeys() {
@@ -348,9 +348,9 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * method must return an array with the same length as
      * {@link #getSampleKeys()}.  The default implementation constructs a set of
      * String values and includes a single null value if
-     * {@link #isAllowNullValue()} returns <code>true</code>, and includes
+     * {@link #isAllowNullValue()} returns {@code true}, and includes
      * two values that are the same if {@link #isAllowDuplicateValues()} returns
-     * <code>true</code>.
+     * {@code true}.
      */
     @SuppressWarnings("unchecked")
     public V[] getSampleValues() {
@@ -371,9 +371,9 @@ public abstract class AbstractMapTest<K, V> extends AbstractObjectTest {
      * returned from this method should not be the same as those returned from
      * {@link #getSampleValues()}.  The default implementation constructs a
      * set of String values and includes a single null value if
-     * {@link #isAllowNullValue()} returns <code>true</code>, and includes two values
+     * {@link #isAllowNullValue()} returns {@code true}, and includes two values
      * that are the same if {@link #isAllowDuplicateValues()} returns
-     * <code>true</code>.
+     * {@code true}.
      */
     @SuppressWarnings("unchecked")
     public V[] getNewSampleValues() {

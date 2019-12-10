@@ -48,7 +48,7 @@ public class ObjectArrayListIteratorTest<E> extends ObjectArrayIteratorTest<E> {
 
     /**
      * Test the basic ListIterator functionality - going backwards using
-     * <code>previous()</code>.
+     * {@code previous()}.
      */
     public void testListIterator() {
         final ListIterator<E> iter = makeObject();

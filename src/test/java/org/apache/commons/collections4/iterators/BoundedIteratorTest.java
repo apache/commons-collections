@@ -86,8 +86,8 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
-     * Test a decorated iterator bounded such that the <code>offset</code> is
-     * zero and the <code>max</code> is its size, in that the BoundedIterator
+     * Test a decorated iterator bounded such that the {@code offset} is
+     * zero and the {@code max} is its size, in that the BoundedIterator
      * should return all the same elements as its decorated iterator.
      */
     @Test
@@ -119,7 +119,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
-     * Test a decorated iterator bounded to a <code>max</code> of 0. The
+     * Test a decorated iterator bounded to a {@code max} of 0. The
      * BoundedIterator should behave as if there are no more elements to return,
      * since it is technically an empty iterator.
      */
@@ -135,7 +135,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
-     * Test the case if a negative <code>offset</code> is passed to the
+     * Test the case if a negative {@code offset} is passed to the
      * constructor. {@link IllegalArgumentException} is expected.
      */
     @Test
@@ -148,7 +148,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
-     * Test the case if a negative <code>max</code> is passed to the
+     * Test the case if a negative {@code max} is passed to the
      * constructor. {@link IllegalArgumentException} is expected.
      */
     @Test
@@ -161,7 +161,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
-     * Test the case if the <code>offset</code> passed to the constructor is
+     * Test the case if the {@code offset} passed to the constructor is
      * greater than the decorated iterator's size. The BoundedIterator should
      * behave as if there are no more elements to return.
      */
@@ -177,7 +177,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
-     * Test the case if the <code>max</code> passed to the constructor is
+     * Test the case if the {@code max} passed to the constructor is
      * greater than the size of the decorated iterator. The last element
      * returned should be the same as the last element of the decorated
      * iterator.
@@ -208,8 +208,8 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
-     * Test the <code>remove()</code> method being called without
-     * <code>next()</code> being called first.
+     * Test the {@code remove()} method being called without
+     * {@code next()} being called first.
      */
     @Test
     public void testRemoveWithoutCallingNext() {
@@ -224,8 +224,8 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
     }
 
     /**
-     * Test the <code>remove()</code> method being called twice without calling
-     * <code>next()</code> in between.
+     * Test the {@code remove()} method being called twice without calling
+     * {@code next()} in between.
      */
     @Test
     public void testRemoveCalledTwice() {
@@ -347,7 +347,7 @@ public class BoundedIteratorTest<E> extends AbstractIteratorTest<E> {
 
     /**
      * Test the case if the decorated iterator does not support the
-     * <code>remove()</code> method and throws an {@link UnsupportedOperationException}.
+     * {@code remove()} method and throws an {@link UnsupportedOperationException}.
      */
     @Test
     public void testRemoveUnsupported() {
