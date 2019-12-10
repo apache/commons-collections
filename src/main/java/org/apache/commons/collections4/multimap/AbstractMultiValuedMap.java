@@ -157,10 +157,10 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     /**
      * Removes all values associated with the specified key.
      * <p>
-     * A subsequent <code>get(Object)</code> would return an empty collection.
+     * A subsequent {@code get(Object)} would return an empty collection.
      *
      * @param key  the key to remove values from
-     * @return the <code>Collection</code> of values removed, will return an
+     * @return the {@code Collection} of values removed, will return an
      *   empty, unmodifiable collection for no mapping found
      */
     @Override
@@ -245,7 +245,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     /**
      * Adds the value to the collection associated with the specified key.
      * <p>
-     * Unlike a normal <code>Map</code> the previous value is not replaced.
+     * Unlike a normal {@code Map} the previous value is not replaced.
      * Instead the new value is added to the collection stored against the key.
      *
      * @param key the key to store against

@@ -42,9 +42,9 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
         implements ResettableListIterator<E> {
 
     /**
-     * Holds the index of the last item returned by a call to <code>next()</code>
-     * or <code>previous()</code>. This is set to <code>-1</code> if neither method
-     * has yet been invoked. <code>lastItemIndex</code> is used to to implement
+     * Holds the index of the last item returned by a call to {@code next()}
+     * or {@code previous()}. This is set to {@code -1} if neither method
+     * has yet been invoked. {@code lastItemIndex} is used to to implement
      * the {@link #set} method.
      */
     private int lastItemIndex = -1;
@@ -56,8 +56,8 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      * specified array.
      *
      * @param array the array to iterate over
-     * @throws IllegalArgumentException if <code>array</code> is not an array.
-     * @throws NullPointerException if <code>array</code> is <code>null</code>
+     * @throws IllegalArgumentException if {@code array} is not an array.
+     * @throws NullPointerException if {@code array} is {@code null}
      */
     public ArrayListIterator(final Object array) {
         super(array);
@@ -69,8 +69,8 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      *
      * @param array  the array to iterate over
      * @param startIndex  the index to start iterating at
-     * @throws IllegalArgumentException if <code>array</code> is not an array.
-     * @throws NullPointerException if <code>array</code> is <code>null</code>
+     * @throws IllegalArgumentException if {@code array} is not an array.
+     * @throws NullPointerException if {@code array} is {@code null}
      * @throws IndexOutOfBoundsException if the start index is out of bounds
      */
     public ArrayListIterator(final Object array, final int startIndex) {
@@ -84,10 +84,10 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      * @param array  the array to iterate over
      * @param startIndex  the index to start iterating at
      * @param endIndex  the index (exclusive) to finish iterating at
-     * @throws IllegalArgumentException if <code>array</code> is not an array.
+     * @throws IllegalArgumentException if {@code array} is not an array.
      * @throws IndexOutOfBoundsException if the start or end index is out of bounds
      * @throws IllegalArgumentException if end index is before the start
-     * @throws NullPointerException if <code>array</code> is <code>null</code>
+     * @throws NullPointerException if {@code array} is {@code null}
      */
     public ArrayListIterator(final Object array, final int startIndex, final int endIndex) {
         super(array, startIndex, endIndex);
@@ -177,10 +177,10 @@ public class ArrayListIterator<E> extends ArrayIterator<E>
      * to {@link #next()} of {@link #previous()}.
      * <p>
      * <b>Note:</b> {@link java.util.ListIterator} implementations that support
-     * <code>add()</code> and <code>remove()</code> only allow <code>set()</code> to be called
-     * once per call to <code>next()</code> or <code>previous</code> (see the {@link java.util.ListIterator}
+     * {@code add()} and {@code remove()} only allow {@code set()} to be called
+     * once per call to {@code next()} or {@code previous} (see the {@link java.util.ListIterator}
      * javadoc for more details). Since this implementation does
-     * not support <code>add()</code> or <code>remove()</code>, <code>set()</code> may be
+     * not support {@code add()} or {@code remove()}, {@code set()} may be
      * called as often as desired.
      *
      * @param o  the element to set

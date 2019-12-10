@@ -37,7 +37,7 @@ import org.apache.commons.collections4.functors.StringValueTransformer;
 import org.apache.commons.collections4.functors.SwitchTransformer;
 
 /**
- * <code>TransformerUtils</code> provides reference implementations and
+ * {@code TransformerUtils} provides reference implementations and
  * utilities for the Transformer functor interface. The supplied transformers are:
  * <ul>
  * <li>Invoker - returns the result of a method call on the input object
@@ -55,7 +55,7 @@ import org.apache.commons.collections4.functors.SwitchTransformer;
  * <li>Null - always returns null
  * <li>NOP - returns the input object, which should be immutable
  * <li>Exception - always throws an exception
- * <li>StringValue - returns a <code>java.lang.String</code> representation of the input object
+ * <li>StringValue - returns a {@code java.lang.String} representation of the input object
  * </ul>
  * <p>
  * Since v4.1 only transformers which are considered to be safe are
@@ -433,8 +433,8 @@ public class TransformerUtils {
      * {@code null} is returned.
      *
      * <p>
-     * For example, <code>TransformerUtils.invokerTransformer("getName");</code>
-     * will call the <code>getName</code> method on the input object to
+     * For example, {@code TransformerUtils.invokerTransformer("getName");}
+     * will call the {@code getName} method on the input object to
      * determine the transformer result.
      * </p>
      *
@@ -470,9 +470,9 @@ public class TransformerUtils {
     }
 
     /**
-     * Gets a transformer that returns a <code>java.lang.String</code>
+     * Gets a transformer that returns a {@code java.lang.String}
      * representation of the input object. This is achieved via the
-     * <code>toString</code> method, <code>null</code> returns 'null'.
+     * {@code toString} method, {@code null} returns 'null'.
      *
      * @param <T>  the input type
      * @return the transformer

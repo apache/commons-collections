@@ -42,7 +42,7 @@ public final class AndPredicate<T> implements PredicateDecorator<T>, Serializabl
      * @param <T> the type that the predicate queries
      * @param predicate1  the first predicate to check, not null
      * @param predicate2  the second predicate to check, not null
-     * @return the <code>and</code> predicate
+     * @return the {@code and} predicate
      * @throws NullPointerException if either predicate is null
      */
     public static <T> Predicate<T> andPredicate(final Predicate<? super T> predicate1,
@@ -53,7 +53,7 @@ public final class AndPredicate<T> implements PredicateDecorator<T>, Serializabl
 
     /**
      * Constructor that performs no validation.
-     * Use <code>andPredicate</code> if you want that.
+     * Use {@code andPredicate} if you want that.
      *
      * @param predicate1  the first predicate to check, not null
      * @param predicate2  the second predicate to check, not null

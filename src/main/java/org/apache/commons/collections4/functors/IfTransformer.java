@@ -51,7 +51,7 @@ public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
      * @param predicate  predicate to switch on
      * @param trueTransformer  transformer used if true
      * @param falseTransformer  transformer used if false
-     * @return the <code>if</code> transformer
+     * @return the {@code if} transformer
      * @throws NullPointerException if either argument is null
      */
     public static <I, O> Transformer<I, O> ifTransformer(final Predicate<? super I> predicate,
@@ -71,7 +71,7 @@ public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
      * @param <T>  input and output type for the transformer
      * @param predicate  predicate to switch on
      * @param trueTransformer  transformer used if true
-     * @return the <code>if</code> transformer
+     * @return the {@code if} transformer
      * @throws NullPointerException if either argument is null
      */
     public static <T> Transformer<T, T> ifTransformer(
@@ -83,7 +83,7 @@ public class IfTransformer<I, O> implements Transformer<I, O>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use the static factory method <code>ifTransformer</code> if you want that.
+     * Use the static factory method {@code ifTransformer} if you want that.
      *
      * @param predicate  predicate to switch on, not null
      * @param trueTransformer  transformer used if true, not null

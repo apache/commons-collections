@@ -40,7 +40,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      *
      * @param <E> the type that the closure acts on
      * @param closures  the closures to chain, copied, no nulls
-     * @return the <code>chained</code> closure
+     * @return the {@code chained} closure
      * @throws NullPointerException if the closures array is null
      * @throws NullPointerException if any closure in the array is null
      */
@@ -59,7 +59,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      *
      * @param <E> the type that the closure acts on
      * @param closures  a collection of closures to chain
-     * @return the <code>chained</code> closure
+     * @return the {@code chained} closure
      * @throws NullPointerException if the closures collection is null
      * @throws NullPointerException if any closure in the collection is null
      */
@@ -92,7 +92,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>chainedClosure</code> if you want that.
+     * Use {@code chainedClosure} if you want that.
      *
      * @param closures  the closures to chain, copied, no nulls
      */

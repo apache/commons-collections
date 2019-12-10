@@ -48,7 +48,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      * @param predicates  array of predicates, cloned, no nulls
      * @param closures  matching array of closures, cloned, no nulls
      * @param defaultClosure  the closure to use if no match, null means nop
-     * @return the <code>chained</code> closure
+     * @return the {@code chained} closure
      * @throws NullPointerException if array is null
      * @throws NullPointerException if any element in the array is null
      * @throws IllegalArgumentException if the array lengths of predicates and closures do not match
@@ -81,7 +81,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
      *
      * @param <E> the type that the closure acts on
      * @param predicatesAndClosures  a map of predicates to closures
-     * @return the <code>switch</code> closure
+     * @return the {@code switch} closure
      * @throws NullPointerException if the map is null
      * @throws NullPointerException if any closure in the map is null
      * @throws ClassCastException  if the map elements are of the wrong type
@@ -125,7 +125,7 @@ public class SwitchClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>switchClosure</code> if you want that.
+     * Use {@code switchClosure} if you want that.
      *
      * @param predicates  array of predicates, cloned, no nulls
      * @param closures  matching array of closures, cloned, no nulls

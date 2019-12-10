@@ -92,10 +92,10 @@ public abstract class AbstractListValuedMap<K, V> extends AbstractMultiValuedMap
     /**
      * Removes all values associated with the specified key.
      * <p>
-     * A subsequent <code>get(Object)</code> would return an empty list.
+     * A subsequent {@code get(Object)} would return an empty list.
      *
      * @param key  the key to remove values from
-     * @return the <code>List</code> of values removed, will return an empty,
+     * @return the {@code List} of values removed, will return an empty,
      *   unmodifiable list for no mapping found.
      */
     @Override

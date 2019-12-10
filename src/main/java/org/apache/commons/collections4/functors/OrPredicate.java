@@ -42,7 +42,7 @@ public final class OrPredicate<T> implements PredicateDecorator<T>, Serializable
      * @param <T> the type that the predicate queries
      * @param predicate1  the first predicate to check, not null
      * @param predicate2  the second predicate to check, not null
-     * @return the <code>and</code> predicate
+     * @return the {@code and} predicate
      * @throws NullPointerException if either predicate is null
      */
     public static <T> Predicate<T> orPredicate(final Predicate<? super T> predicate1,
@@ -53,7 +53,7 @@ public final class OrPredicate<T> implements PredicateDecorator<T>, Serializable
 
     /**
      * Constructor that performs no validation.
-     * Use <code>orPredicate</code> if you want that.
+     * Use {@code orPredicate} if you want that.
      *
      * @param predicate1  the first predicate to check, not null
      * @param predicate2  the second predicate to check, not null

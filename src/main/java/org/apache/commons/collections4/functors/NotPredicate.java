@@ -48,7 +48,7 @@ public final class NotPredicate<T> implements PredicateDecorator<T>, Serializabl
 
     /**
      * Constructor that performs no validation.
-     * Use <code>notPredicate</code> if you want that.
+     * Use {@code notPredicate} if you want that.
      *
      * @param predicate  the predicate to call after the null check
      */

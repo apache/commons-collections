@@ -21,7 +21,7 @@ import java.util.Comparator;
 import org.apache.commons.collections4.SortedBag;
 
 /**
- * Decorates another <code>SortedBag</code> to provide additional behaviour.
+ * Decorates another {@code SortedBag} to provide additional behaviour.
  * <p>
  * Methods are forwarded directly to the decorated bag.
  * </p>

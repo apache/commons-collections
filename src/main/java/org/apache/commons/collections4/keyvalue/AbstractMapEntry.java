@@ -41,9 +41,9 @@ public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> impl
     // Map.Entry interface
     //-------------------------------------------------------------------------
     /**
-     * Sets the value stored in this <code>Map.Entry</code>.
+     * Sets the value stored in this {@code Map.Entry}.
      * <p>
-     * This <code>Map.Entry</code> is not connected to a Map, so only the
+     * This {@code Map.Entry} is not connected to a Map, so only the
      * local data is changed.
      *
      * @param value  the new value
@@ -55,7 +55,7 @@ public abstract class AbstractMapEntry<K, V> extends AbstractKeyValue<K, V> impl
     }
 
     /**
-     * Compares this <code>Map.Entry</code> with another <code>Map.Entry</code>.
+     * Compares this {@code Map.Entry} with another {@code Map.Entry}.
      * <p>
      * Implemented per API documentation of {@link java.util.Map.Entry#equals(Object)}
      *

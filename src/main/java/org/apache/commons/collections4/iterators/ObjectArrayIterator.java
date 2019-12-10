@@ -49,7 +49,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
      * specified array.
      *
      * @param array the array to iterate over
-     * @throws NullPointerException if <code>array</code> is <code>null</code>
+     * @throws NullPointerException if {@code array} is {@code null}
      */
     public ObjectArrayIterator(final E... array) {
         this(array, 0, array.length);
@@ -61,7 +61,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
      *
      * @param array  the array to iterate over
      * @param start  the index to start iterating at
-     * @throws NullPointerException if <code>array</code> is <code>null</code>
+     * @throws NullPointerException if {@code array} is {@code null}
      * @throws IndexOutOfBoundsException if the start index is out of bounds
      */
     public ObjectArrayIterator(final E array[], final int start) {
@@ -77,7 +77,7 @@ public class ObjectArrayIterator<E> implements ResettableIterator<E> {
      * @param end  the index (exclusive) to finish iterating at
      * @throws IndexOutOfBoundsException if the start or end index is out of bounds
      * @throws IllegalArgumentException if end index is before the start
-     * @throws NullPointerException if <code>array</code> is <code>null</code>
+     * @throws NullPointerException if {@code array} is {@code null}
      */
     public ObjectArrayIterator(final E array[], final int start, final int end) {
         super();

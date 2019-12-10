@@ -97,7 +97,7 @@ public class InvokerTransformer<I, O> implements Transformer<I, O> {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>invokerTransformer</code> if you want that.
+     * Use {@code invokerTransformer} if you want that.
      * <p>
      * Note: from 4.0, the input parameters will be cloned
      *

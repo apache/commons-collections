@@ -41,7 +41,7 @@ public final class DefaultMapEntry<K, V> extends AbstractMapEntry<K, V> {
     }
 
     /**
-     * Constructs a new entry from the specified <code>KeyValue</code>.
+     * Constructs a new entry from the specified {@code KeyValue}.
      *
      * @param pair  the pair to copy, must not be null
      * @throws NullPointerException if the entry is null
@@ -51,7 +51,7 @@ public final class DefaultMapEntry<K, V> extends AbstractMapEntry<K, V> {
     }
 
     /**
-     * Constructs a new entry from the specified <code>Map.Entry</code>.
+     * Constructs a new entry from the specified {@code Map.Entry}.
      *
      * @param entry  the entry to copy, must not be null
      * @throws NullPointerException if the entry is null

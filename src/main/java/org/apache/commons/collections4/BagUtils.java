@@ -246,7 +246,7 @@ public class BagUtils {
     }
 
     /**
-     * Get an empty <code>Bag</code>.
+     * Get an empty {@code Bag}.
      *
      * @param <E> the element type
      * @return an empty Bag
@@ -257,7 +257,7 @@ public class BagUtils {
     }
 
     /**
-     * Get an empty <code>SortedBag</code>.
+     * Get an empty {@code SortedBag}.
      *
      * @param <E> the element type
      * @return an empty sorted Bag

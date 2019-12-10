@@ -49,7 +49,7 @@ public final class NullIsExceptionPredicate<T> implements PredicateDecorator<T>,
 
     /**
      * Constructor that performs no validation.
-     * Use <code>nullIsExceptionPredicate</code> if you want that.
+     * Use {@code nullIsExceptionPredicate} if you want that.
      *
      * @param predicate  the predicate to call after the null check
      */

@@ -25,7 +25,7 @@ import org.apache.commons.collections4.collection.TransformedCollection;
 import org.apache.commons.collections4.iterators.AbstractListIteratorDecorator;
 
 /**
- * Decorates another <code>List</code> to transform objects that are added.
+ * Decorates another {@code List} to transform objects that are added.
  * <p>
  * The add and set methods are affected by this class.
  * Thus objects must be removed or searched for using their transformed form.

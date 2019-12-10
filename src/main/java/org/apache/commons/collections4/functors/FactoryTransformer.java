@@ -41,7 +41,7 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
      * @param <I>  the input type
      * @param <O>  the output type
      * @param factory  the factory to call, not null
-     * @return the <code>factory</code> transformer
+     * @return the {@code factory} transformer
      * @throws NullPointerException if the factory is null
      */
     public static <I, O> Transformer<I, O> factoryTransformer(final Factory<? extends O> factory) {
@@ -50,7 +50,7 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
 
     /**
      * Constructor that performs no validation.
-     * Use <code>factoryTransformer</code> if you want that.
+     * Use {@code factoryTransformer} if you want that.
      *
      * @param factory  the factory to call, not null
      */

@@ -48,7 +48,7 @@ public final class NullIsFalsePredicate<T> implements PredicateDecorator<T>, Ser
 
     /**
      * Constructor that performs no validation.
-     * Use <code>nullIsFalsePredicate</code> if you want that.
+     * Use {@code nullIsFalsePredicate} if you want that.
      *
      * @param predicate  the predicate to call after the null check
      */

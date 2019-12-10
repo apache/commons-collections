@@ -556,9 +556,9 @@ public class IteratorUtils {
      * Gets an iterator that provides an ordered iteration over the elements
      * contained in a collection of ordered {@link Iterator}s.
      * <p>
-     * Given two ordered {@link Iterator}s <code>A</code> and <code>B</code>,
+     * Given two ordered {@link Iterator}s {@code A} and {@code B},
      * the {@link Iterator#next()} method will return the lesser of
-     * <code>A.next()</code> and <code>B.next()</code>.
+     * {@code A.next()} and {@code B.next()}.
      * <p>
      * The comparator is optional. If null is specified then natural order is used.
      *
@@ -582,9 +582,9 @@ public class IteratorUtils {
      * Gets an iterator that provides an ordered iteration over the elements
      * contained in an array of {@link Iterator}s.
      * <p>
-     * Given two ordered {@link Iterator}s <code>A</code> and <code>B</code>,
+     * Given two ordered {@link Iterator}s {@code A} and {@code B},
      * the {@link Iterator#next()} method will return the lesser of
-     * <code>A.next()</code> and <code>B.next()</code> and so on.
+     * {@code A.next()} and {@code B.next()} and so on.
      * <p>
      * The comparator is optional. If null is specified then natural order is used.
      *
@@ -606,9 +606,9 @@ public class IteratorUtils {
      * Gets an iterator that provides an ordered iteration over the elements
      * contained in a collection of {@link Iterator}s.
      * <p>
-     * Given two ordered {@link Iterator}s <code>A</code> and <code>B</code>,
+     * Given two ordered {@link Iterator}s {@code A} and {@code B},
      * the {@link Iterator#next()} method will return the lesser of
-     * <code>A.next()</code> and <code>B.next()</code> and so on.
+     * {@code A.next()} and {@code B.next()} and so on.
      * <p>
      * The comparator is optional. If null is specified then natural order is used.
      *
@@ -634,8 +634,8 @@ public class IteratorUtils {
      * <p>
      * This iterator can extract multiple objects from a complex tree-like object graph.
      * The iteration starts from a single root object.
-     * It uses a <code>Transformer</code> to extract the iterators and elements.
-     * Its main benefit is that no intermediate <code>List</code> is created.
+     * It uses a {@code Transformer} to extract the iterators and elements.
+     * Its main benefit is that no intermediate {@code List} is created.
      * <p>
      * For example, consider an object graph:
      * <pre>
@@ -649,7 +649,7 @@ public class IteratorUtils {
      *         |- Tree |         /- Leaf
      *                 |- Branch -- Leaf
      *                 |- Branch -- Leaf</pre>
-     * The following <code>Transformer</code>, used in this class, will extract all
+     * The following {@code Transformer}, used in this class, will extract all
      * the Leaf objects without creating a combined intermediate list:
      * <pre>
      * public Object transform(Object input) {
@@ -1207,7 +1207,7 @@ public class IteratorUtils {
     /**
      * Finds the first element in the given iterator which matches the given predicate.
      * <p>
-     * A <code>null</code> or empty iterator returns null.
+     * A {@code null} or empty iterator returns null.
      *
      * @param <E> the element type
      * @param iterator  the iterator to search, may be null
@@ -1234,7 +1234,7 @@ public class IteratorUtils {
      * Returns the index of the first element in the specified iterator that
      * matches the given predicate.
      * <p>
-     * A <code>null</code> or empty iterator returns -1.
+     * A {@code null} or empty iterator returns -1.
      *
      * @param <E> the element type
      * @param iterator  the iterator to search, may be null
@@ -1260,7 +1260,7 @@ public class IteratorUtils {
     /**
      * Answers true if a predicate is true for any element of the iterator.
      * <p>
-     * A <code>null</code> or empty iterator returns false.
+     * A {@code null} or empty iterator returns false.
      *
      * @param <E> the type of object the {@link Iterator} contains
      * @param iterator  the {@link Iterator} to use, may be null
@@ -1276,7 +1276,7 @@ public class IteratorUtils {
     /**
      * Answers true if a predicate is true for every element of an iterator.
      * <p>
-     * A <code>null</code> or empty iterator returns true.
+     * A {@code null} or empty iterator returns true.
      *
      * @param <E> the type of object the {@link Iterator} contains
      * @param iterator  the {@link Iterator} to use, may be null
@@ -1303,7 +1303,7 @@ public class IteratorUtils {
     /**
      * Checks if the given iterator is empty.
      * <p>
-     * A <code>null</code> or empty iterator returns true.
+     * A {@code null} or empty iterator returns true.
      *
      * @param iterator  the {@link Iterator} to use, may be null
      * @return true if the iterator is exhausted or null, false otherwise
@@ -1316,7 +1316,7 @@ public class IteratorUtils {
     /**
      * Checks if the object is contained in the given iterator.
      * <p>
-     * A <code>null</code> or empty iterator returns false.
+     * A {@code null} or empty iterator returns false.
      *
      * @param <E> the type of object the {@link Iterator} contains
      * @param iterator  the iterator to check, may be null
@@ -1329,11 +1329,11 @@ public class IteratorUtils {
     }
 
     /**
-     * Returns the <code>index</code>-th value in {@link Iterator}, throwing
-     * <code>IndexOutOfBoundsException</code> if there is no such element.
+     * Returns the {@code index}-th value in {@link Iterator}, throwing
+     * {@code IndexOutOfBoundsException} if there is no such element.
      * <p>
-     * The Iterator is advanced to <code>index</code> (or to the end, if
-     * <code>index</code> exceeds the number of entries) as a side effect of this method.
+     * The Iterator is advanced to {@code index} (or to the end, if
+     * {@code index} exceeds the number of entries) as a side effect of this method.
      *
      * @param <E> the type of object in the {@link Iterator}
      * @param iterator  the iterator to get a value from
@@ -1358,12 +1358,12 @@ public class IteratorUtils {
     /**
      * Shortcut for {@code get(iterator, 0)}.
      * <p>
-     * Returns the <code>first</code> value in {@link Iterator}, throwing
-     * <code>IndexOutOfBoundsException</code> if there is no such element.
+     * Returns the {@code first} value in {@link Iterator}, throwing
+     * {@code IndexOutOfBoundsException} if there is no such element.
      * </p>
      * <p>
-     * The Iterator is advanced to <code>0</code> (or to the end, if
-     * <code>0</code> exceeds the number of entries) as a side effect of this method.
+     * The Iterator is advanced to {@code 0} (or to the end, if
+     * {@code 0} exceeds the number of entries) as a side effect of this method.
      * </p>
      * @param <E> the type of object in the {@link Iterator}
      * @param iterator the iterator to get a value from
@@ -1378,7 +1378,7 @@ public class IteratorUtils {
     /**
      * Returns the number of elements contained in the given iterator.
      * <p>
-     * A <code>null</code> or empty iterator returns {@code 0}.
+     * A {@code null} or empty iterator returns {@code 0}.
      *
      * @param iterator  the iterator to check, may be null
      * @return the number of elements contained in the iterator

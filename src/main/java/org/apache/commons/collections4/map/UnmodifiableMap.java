@@ -33,7 +33,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableMapIterator;
 import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
- * Decorates another <code>Map</code> to ensure it can't be altered.
+ * Decorates another {@code Map} to ensure it can't be altered.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  * </p>

@@ -37,7 +37,7 @@ public interface BoundedCollection<E> extends Collection<E> {
     /**
      * Returns true if this collection is full and no new elements can be added.
      *
-     * @return <code>true</code> if the collection is full.
+     * @return {@code true} if the collection is full.
      */
     boolean isFull();
 

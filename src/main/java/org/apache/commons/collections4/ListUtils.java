@@ -44,19 +44,19 @@ import org.apache.commons.collections4.sequence.SequencesComparator;
 public class ListUtils {
 
     /**
-     * <code>ListUtils</code> should not normally be instantiated.
+     * {@code ListUtils} should not normally be instantiated.
      */
     private ListUtils() {}
 
     //-----------------------------------------------------------------------
 
     /**
-     * Returns an immutable empty list if the argument is <code>null</code>,
+     * Returns an immutable empty list if the argument is {@code null},
      * or the argument itself otherwise.
      *
      * @param <T> the element type
-     * @param list the list, possibly <code>null</code>
-     * @return an empty list if the argument is <code>null</code>
+     * @param list the list, possibly {@code null}
+     * @return an empty list if the argument is {@code null}
      */
     public static <T> List<T> emptyIfNull(final List<T> list) {
         return list == null ? Collections.<T>emptyList() : list;
@@ -69,7 +69,7 @@ public class ListUtils {
      * @param <T> the element type
      * @param list  the list, possibly {@code null}
      * @param defaultList  the returned values if list is {@code null}
-     * @return an empty list if the argument is <code>null</code>
+     * @return an empty list if the argument is {@code null}
      * @since 4.0
      */
     public static <T> List<T> defaultIfNull(final List<T> list, final List<T> defaultList) {
@@ -170,7 +170,7 @@ public class ListUtils {
      * Selects all elements from input collection which match the given
      * predicate into an output list.
      * <p>
-     * A <code>null</code> predicate matches no elements.
+     * A {@code null} predicate matches no elements.
      *
      * @param <E> the element type
      * @param inputCollection  the collection to get the input from, may not be null
@@ -190,7 +190,7 @@ public class ListUtils {
      * Selects all elements from inputCollection which don't match the given
      * predicate into an output collection.
      * <p>
-     * If the input predicate is <code>null</code>, the result is an empty list.
+     * If the input predicate is {@code null}, the result is an empty list.
      *
      * @param <E> the element type
      * @param inputCollection the collection to get the input from, may not be null
@@ -210,7 +210,7 @@ public class ListUtils {
      * Tests two lists for value-equality as per the equality contract in
      * {@link java.util.List#equals(java.lang.Object)}.
      * <p>
-     * This method is useful for implementing <code>List</code> when you cannot
+     * This method is useful for implementing {@code List} when you cannot
      * extend AbstractList. The method takes Collection instances to enable other
      * collection types to use the List implementation algorithm.
      * <p>
@@ -264,7 +264,7 @@ public class ListUtils {
      * Generates a hash code using the algorithm specified in
      * {@link java.util.List#hashCode()}.
      * <p>
-     * This method is useful for implementing <code>List</code> when you cannot
+     * This method is useful for implementing {@code List} when you cannot
      * extend AbstractList. The method takes Collection instances to enable other
      * collection types to use the List implementation algorithm.
      *
@@ -288,24 +288,24 @@ public class ListUtils {
 
     //-----------------------------------------------------------------------
     /**
-     * Returns a List containing all the elements in <code>collection</code>
-     * that are also in <code>retain</code>. The cardinality of an element <code>e</code>
-     * in the returned list is the same as the cardinality of <code>e</code>
-     * in <code>collection</code> unless <code>retain</code> does not contain <code>e</code>, in which
+     * Returns a List containing all the elements in {@code collection}
+     * that are also in {@code retain}. The cardinality of an element {@code e}
+     * in the returned list is the same as the cardinality of {@code e}
+     * in {@code collection} unless {@code retain} does not contain {@code e}, in which
      * case the cardinality is zero. This method is useful if you do not wish to modify
-     * the collection <code>c</code> and thus cannot call <code>collection.retainAll(retain);</code>.
+     * the collection {@code c} and thus cannot call {@code collection.retainAll(retain);}.
      * <p>
-     * This implementation iterates over <code>collection</code>, checking each element in
-     * turn to see if it's contained in <code>retain</code>. If it's contained, it's added
+     * This implementation iterates over {@code collection}, checking each element in
+     * turn to see if it's contained in {@code retain}. If it's contained, it's added
      * to the returned list. As a consequence, it is advised to use a collection type for
-     * <code>retain</code> that provides a fast (e.g. O(1)) implementation of
+     * {@code retain} that provides a fast (e.g. O(1)) implementation of
      * {@link Collection#contains(Object)}.
      *
      * @param <E>  the element type
      * @param collection  the collection whose contents are the target of the #retailAll operation
      * @param retain  the collection containing the elements to be retained in the returned collection
-     * @return a <code>List</code> containing all the elements of <code>c</code>
-     * that occur at least once in <code>retain</code>.
+     * @return a {@code List} containing all the elements of {@code c}
+     * that occur at least once in {@code retain}.
      * @throws NullPointerException if either parameter is null
      * @since 3.2
      */
@@ -321,25 +321,25 @@ public class ListUtils {
     }
 
     /**
-     * Removes the elements in <code>remove</code> from <code>collection</code>. That is, this
-     * method returns a list containing all the elements in <code>collection</code>
-     * that are not in <code>remove</code>. The cardinality of an element <code>e</code>
-     * in the returned collection is the same as the cardinality of <code>e</code>
-     * in <code>collection</code> unless <code>remove</code> contains <code>e</code>, in which
+     * Removes the elements in {@code remove} from {@code collection}. That is, this
+     * method returns a list containing all the elements in {@code collection}
+     * that are not in {@code remove}. The cardinality of an element {@code e}
+     * in the returned collection is the same as the cardinality of {@code e}
+     * in {@code collection} unless {@code remove} contains {@code e}, in which
      * case the cardinality is zero. This method is useful if you do not wish to modify
-     * <code>collection</code> and thus cannot call <code>collection.removeAll(remove);</code>.
+     * {@code collection} and thus cannot call {@code collection.removeAll(remove);}.
      * <p>
-     * This implementation iterates over <code>collection</code>, checking each element in
-     * turn to see if it's contained in <code>remove</code>. If it's not contained, it's added
+     * This implementation iterates over {@code collection}, checking each element in
+     * turn to see if it's contained in {@code remove}. If it's not contained, it's added
      * to the returned list. As a consequence, it is advised to use a collection type for
-     * <code>remove</code> that provides a fast (e.g. O(1)) implementation of
+     * {@code remove} that provides a fast (e.g. O(1)) implementation of
      * {@link Collection#contains(Object)}.
      *
      * @param <E>  the element type
      * @param collection  the collection from which items are removed (in the returned collection)
-     * @param remove  the items to be removed from the returned <code>collection</code>
-     * @return a <code>List</code> containing all the elements of <code>c</code> except
-     * any elements that also occur in <code>remove</code>.
+     * @param remove  the items to be removed from the returned {@code collection}
+     * @return a {@code List} containing all the elements of {@code c} except
+     * any elements that also occur in {@code remove}.
      * @throws NullPointerException if either parameter is null
      * @since 3.2
      */
@@ -457,10 +457,10 @@ public class ListUtils {
      * Date date = lazy.get(3);
      * </pre>
      *
-     * After the above code is executed, <code>date</code> will refer to
-     * a new <code>Date</code> instance. Furthermore, that <code>Date</code>
+     * After the above code is executed, {@code date} will refer to
+     * a new {@code Date} instance. Furthermore, that {@code Date}
      * instance is the fourth element in the list.  The first, second,
-     * and third element are all set to <code>null</code>.
+     * and third element are all set to {@code null}.
      *
      * @param <E> the element type
      * @param list  the list to make lazy, must not be null
@@ -488,10 +488,10 @@ public class ListUtils {
      * Date date = lazy.get(3);
      * </pre>
      *
-     * After the above code is executed, <code>date</code> will refer to
-     * a new <code>Date</code> instance. Furthermore, that <code>Date</code>
+     * After the above code is executed, {@code date} will refer to
+     * a new {@code Date} instance. Furthermore, that {@code Date}
      * instance is the fourth element in the list.  The first, second,
-     * and third element are all set to <code>null</code>.
+     * and third element are all set to {@code null}.
      *
      * @param <E> the element type
      * @param list  the list to make lazy, must not be null

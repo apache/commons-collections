@@ -52,7 +52,7 @@ public class NodeListIterator implements Iterator<Node> {
 
     /**
      * Constructor, that creates a new NodeListIterator from the specified
-     * <code>org.w3c.NodeList</code>
+     * {@code org.w3c.NodeList}
      *
      * @param nodeList node list, which is wrapped by this class. Must not be null
      * @throws NullPointerException if nodeList is null

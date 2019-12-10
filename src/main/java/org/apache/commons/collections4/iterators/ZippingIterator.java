@@ -50,7 +50,7 @@ public class ZippingIterator<E> implements Iterator<E> {
     // ----------------------------------------------------------------------
 
     /**
-     * Constructs a new <code>ZippingIterator</code> that will provide
+     * Constructs a new {@code ZippingIterator} that will provide
      * interleaved iteration over the two given iterators.
      *
      * @param a  the first child iterator
@@ -63,7 +63,7 @@ public class ZippingIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Constructs a new <code>ZippingIterator</code> that will provide
+     * Constructs a new {@code ZippingIterator} that will provide
      * interleaved iteration over the three given iterators.
      *
      * @param a  the first child iterator
@@ -79,7 +79,7 @@ public class ZippingIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Constructs a new <code>ZippingIterator</code> that will provide
+     * Constructs a new {@code ZippingIterator} that will provide
      * interleaved iteration of the specified iterators.
      *
      * @param iterators  the array of iterators

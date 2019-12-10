@@ -19,7 +19,7 @@ package org.apache.commons.collections4;
 import java.util.Iterator;
 
 /**
- * Defines an iterator that operates over a <code>Map</code>.
+ * Defines an iterator that operates over a {@code Map}.
  * <p>
  * This iterator is a special version designed for maps. It can be more
  * efficient to use this rather than an entry set iterator where the option
@@ -31,8 +31,8 @@ import java.util.Iterator;
  * </p>
  * <p>
  * In use, this iterator iterates through the keys in the map. After each call
- * to <code>next()</code>, the <code>getValue()</code> method provides direct
- * access to the value. The value can also be set using <code>setValue()</code>.
+ * to {@code next()}, the {@code getValue()} method provides direct
+ * access to the value. The value can also be set using {@code setValue()}.
  * </p>
  * <pre>{@code
  * MapIterator<String,Integer> it = map.mapIterator();
@@ -52,13 +52,13 @@ public interface MapIterator<K, V> extends Iterator<K> {
     /**
      * Checks to see if there are more entries still to be iterated.
      *
-     * @return <code>true</code> if the iterator has more elements
+     * @return {@code true} if the iterator has more elements
      */
     @Override
     boolean hasNext();
 
     /**
-     * Gets the next <em>key</em> from the <code>Map</code>.
+     * Gets the next <em>key</em> from the {@code Map}.
      *
      * @return the next key in the iteration
      * @throws java.util.NoSuchElementException if the iteration is finished
@@ -69,32 +69,32 @@ public interface MapIterator<K, V> extends Iterator<K> {
     //-----------------------------------------------------------------------
     /**
      * Gets the current key, which is the key returned by the last call
-     * to <code>next()</code>.
+     * to {@code next()}.
      *
      * @return the current key
-     * @throws IllegalStateException if <code>next()</code> has not yet been called
+     * @throws IllegalStateException if {@code next()} has not yet been called
      */
     K getKey();
 
     /**
      * Gets the current value, which is the value associated with the last key
-     * returned by <code>next()</code>.
+     * returned by {@code next()}.
      *
      * @return the current value
-     * @throws IllegalStateException if <code>next()</code> has not yet been called
+     * @throws IllegalStateException if {@code next()} has not yet been called
      */
     V getValue();
 
     //-----------------------------------------------------------------------
     /**
-     * Removes the last returned key from the underlying <code>Map</code> (optional operation).
+     * Removes the last returned key from the underlying {@code Map} (optional operation).
      * <p>
-     * This method can be called once per call to <code>next()</code>.
+     * This method can be called once per call to {@code next()}.
      *
      * @throws UnsupportedOperationException if remove is not supported by the map
-     * @throws IllegalStateException if <code>next()</code> has not yet been called
-     * @throws IllegalStateException if <code>remove()</code> has already been called
-     *  since the last call to <code>next()</code>
+     * @throws IllegalStateException if {@code next()} has not yet been called
+     * @throws IllegalStateException if {@code remove()} has already been called
+     *  since the last call to {@code next()}
      */
     @Override
     void remove();
@@ -105,9 +105,9 @@ public interface MapIterator<K, V> extends Iterator<K> {
      * @param value  the new value
      * @return the previous value
      * @throws UnsupportedOperationException if setValue is not supported by the map
-     * @throws IllegalStateException if <code>next()</code> has not yet been called
-     * @throws IllegalStateException if <code>remove()</code> has been called since the
-     *  last call to <code>next()</code>
+     * @throws IllegalStateException if {@code next()} has not yet been called
+     * @throws IllegalStateException if {@code remove()} has been called since the
+     *  last call to {@code next()}
      */
     V setValue(V value);
 

@@ -49,7 +49,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * @param predicates  array of predicates, cloned, no nulls
      * @param transformers  matching array of transformers, cloned, no nulls
      * @param defaultTransformer  the transformer to use if no match, null means return null
-     * @return the <code>chained</code> transformer
+     * @return the {@code chained} transformer
      * @throws NullPointerException if either array is null
      * @throws NullPointerException if any element in the arrays is null
      * @throws IllegalArgumentException if the arrays have different sizes
@@ -84,7 +84,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * @param <I>  the input type
      * @param <O>  the output type
      * @param map  a map of predicates to transformers
-     * @return the <code>switch</code> transformer
+     * @return the {@code switch} transformer
      * @throws NullPointerException if the map is null
      * @throws NullPointerException if any transformer in the map is null
      * @throws ClassCastException  if the map elements are of the wrong type
@@ -137,7 +137,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
 
     /**
      * Constructor that performs no validation.
-     * Use <code>switchTransformer</code> if you want that.
+     * Use {@code switchTransformer} if you want that.
      *
      * @param predicates  array of predicates, cloned, no nulls
      * @param transformers  matching array of transformers, cloned, no nulls

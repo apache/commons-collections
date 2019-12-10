@@ -35,21 +35,21 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
     private static final long serialVersionUID = -5820772575483504339L;
 
     /**
-     *  The comparator to use when comparing two non-<code>null</code> objects.
+     *  The comparator to use when comparing two non-{@code null} objects.
      **/
     private final Comparator<? super E> nonNullComparator;
 
     /**
-     *  Specifies whether a <code>null</code> are compared as higher than
-     *  non-<code>null</code> objects.
+     *  Specifies whether a {@code null} are compared as higher than
+     *  non-{@code null} objects.
      **/
     private final boolean nullsAreHigh;
 
     //-----------------------------------------------------------------------
     /**
-     *  Construct an instance that sorts <code>null</code> higher than any
-     *  non-<code>null</code> object it is compared with. When comparing two
-     *  non-<code>null</code> objects, the {@link ComparableComparator} is
+     *  Construct an instance that sorts {@code null} higher than any
+     *  non-{@code null} object it is compared with. When comparing two
+     *  non-{@code null} objects, the {@link ComparableComparator} is
      *  used.
      **/
     public NullComparator() {
@@ -57,56 +57,56 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
     }
 
     /**
-     *  Construct an instance that sorts <code>null</code> higher than any
-     *  non-<code>null</code> object it is compared with.  When comparing two
-     *  non-<code>null</code> objects, the specified {@link Comparator} is
+     *  Construct an instance that sorts {@code null} higher than any
+     *  non-{@code null} object it is compared with.  When comparing two
+     *  non-{@code null} objects, the specified {@link Comparator} is
      *  used.
      *
      *  @param nonNullComparator the comparator to use when comparing two
-     *  non-<code>null</code> objects.  This argument cannot be
-     *  <code>null</code>
+     *  non-{@code null} objects.  This argument cannot be
+     *  {@code null}
      *
-     *  @throws NullPointerException if <code>nonNullComparator</code> is
-     *  <code>null</code>
+     *  @throws NullPointerException if {@code nonNullComparator} is
+     *  {@code null}
      **/
     public NullComparator(final Comparator<? super E> nonNullComparator) {
         this(nonNullComparator, true);
     }
 
     /**
-     *  Construct an instance that sorts <code>null</code> higher or lower than
-     *  any non-<code>null</code> object it is compared with.  When comparing
-     *  two non-<code>null</code> objects, the {@link ComparableComparator} is
+     *  Construct an instance that sorts {@code null} higher or lower than
+     *  any non-{@code null} object it is compared with.  When comparing
+     *  two non-{@code null} objects, the {@link ComparableComparator} is
      *  used.
      *
-     *  @param nullsAreHigh a <code>true</code> value indicates that
-     *  <code>null</code> should be compared as higher than a
-     *  non-<code>null</code> object.  A <code>false</code> value indicates
-     *  that <code>null</code> should be compared as lower than a
-     *  non-<code>null</code> object.
+     *  @param nullsAreHigh a {@code true} value indicates that
+     *  {@code null} should be compared as higher than a
+     *  non-{@code null} object.  A {@code false} value indicates
+     *  that {@code null} should be compared as lower than a
+     *  non-{@code null} object.
      **/
     public NullComparator(final boolean nullsAreHigh) {
         this(ComparatorUtils.NATURAL_COMPARATOR, nullsAreHigh);
     }
 
     /**
-     *  Construct an instance that sorts <code>null</code> higher or lower than
-     *  any non-<code>null</code> object it is compared with.  When comparing
-     *  two non-<code>null</code> objects, the specified {@link Comparator} is
+     *  Construct an instance that sorts {@code null} higher or lower than
+     *  any non-{@code null} object it is compared with.  When comparing
+     *  two non-{@code null} objects, the specified {@link Comparator} is
      *  used.
      *
      *  @param nonNullComparator the comparator to use when comparing two
-     *  non-<code>null</code> objects. This argument cannot be
-     *  <code>null</code>
+     *  non-{@code null} objects. This argument cannot be
+     *  {@code null}
      *
-     *  @param nullsAreHigh a <code>true</code> value indicates that
-     *  <code>null</code> should be compared as higher than a
-     *  non-<code>null</code> object.  A <code>false</code> value indicates
-     *  that <code>null</code> should be compared as lower than a
-     *  non-<code>null</code> object.
+     *  @param nullsAreHigh a {@code true} value indicates that
+     *  {@code null} should be compared as higher than a
+     *  non-{@code null} object.  A {@code false} value indicates
+     *  that {@code null} should be compared as lower than a
+     *  non-{@code null} object.
      *
-     *  @throws NullPointerException if <code>nonNullComparator</code> is
-     *  <code>null</code>
+     *  @throws NullPointerException if {@code nonNullComparator} is
+     *  {@code null}
      **/
     public NullComparator(final Comparator<? super E> nonNullComparator, final boolean nullsAreHigh) {
         this.nonNullComparator = Objects.requireNonNull(nonNullComparator, "nonNullComparator");
@@ -116,19 +116,19 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
     //-----------------------------------------------------------------------
     /**
      *  Perform a comparison between two objects.  If both objects are
-     *  <code>null</code>, a <code>0</code> value is returned.  If one object
-     *  is <code>null</code> and the other is not, the result is determined on
+     *  {@code null}, a {@code 0} value is returned.  If one object
+     *  is {@code null} and the other is not, the result is determined on
      *  whether the Comparator was constructed to have nulls as higher or lower
-     *  than other objects.  If neither object is <code>null</code>, an
+     *  than other objects.  If neither object is {@code null}, an
      *  underlying comparator specified in the constructor (or the default) is
-     *  used to compare the non-<code>null</code> objects.
+     *  used to compare the non-{@code null} objects.
      *
      *  @param o1  the first object to compare
      *  @param o2  the object to compare it to.
-     *  @return <code>-1</code> if <code>o1</code> is "lower" than (less than,
-     *  before, etc.) <code>o2</code>; <code>1</code> if <code>o1</code> is
-     *  "higher" than (greater than, after, etc.) <code>o2</code>; or
-     *  <code>0</code> if <code>o1</code> and <code>o2</code> are equal.
+     *  @return {@code -1} if {@code o1} is "lower" than (less than,
+     *  before, etc.) {@code o2}; {@code 1} if {@code o1} is
+     *  "higher" than (greater than, after, etc.) {@code o2}; or
+     *  {@code 0} if {@code o1} and {@code o2} are equal.
      **/
     @Override
     public int compare(final E o1, final E o2) {
@@ -156,10 +156,10 @@ public class NullComparator<E> implements Comparator<E>, Serializable {
      *
      *  @param obj  the object to compare this comparator with.
      *
-     *  @return <code>true</code> if the specified object is a NullComparator
-     *  with equivalent <code>null</code> comparison behavior
-     *  (i.e. <code>null</code> high or low) and with equivalent underlying
-     *  non-<code>null</code> object comparators.
+     *  @return {@code true} if the specified object is a NullComparator
+     *  with equivalent {@code null} comparison behavior
+     *  (i.e. {@code null} high or low) and with equivalent underlying
+     *  non-{@code null} object comparators.
      **/
     @Override
     public boolean equals(final Object obj) {

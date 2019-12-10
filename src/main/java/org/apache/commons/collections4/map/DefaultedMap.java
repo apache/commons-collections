@@ -30,7 +30,7 @@ import org.apache.commons.collections4.functors.ConstantTransformer;
 import org.apache.commons.collections4.functors.FactoryTransformer;
 
 /**
- * Decorates another <code>Map</code> returning a default value if the map
+ * Decorates another {@code Map} returning a default value if the map
  * does not contain the requested key.
  * <p>
  * When the {@link #get(Object)} method is called with a key that does not
@@ -141,8 +141,8 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
 
     //-----------------------------------------------------------------------
     /**
-     * Constructs a new empty <code>DefaultedMap</code> that decorates
-     * a <code>HashMap</code>.
+     * Constructs a new empty {@code DefaultedMap} that decorates
+     * a {@code HashMap}.
      * <p>
      * The object passed in will be returned by the map whenever an
      * unknown key is requested.
@@ -154,7 +154,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
     }
 
     /**
-     * Constructs a new empty <code>DefaultedMap</code> that decorates a <code>HashMap</code>.
+     * Constructs a new empty {@code DefaultedMap} that decorates a {@code HashMap}.
      *
      * @param defaultValueTransformer transformer to use to generate missing values.
      */

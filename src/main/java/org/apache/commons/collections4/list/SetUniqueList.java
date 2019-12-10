@@ -33,10 +33,10 @@ import org.apache.commons.collections4.iterators.AbstractListIteratorDecorator;
 import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
- * Decorates a <code>List</code> to ensure that no duplicates are present much
- * like a <code>Set</code>.
+ * Decorates a {@code List} to ensure that no duplicates are present much
+ * like a {@code Set}.
  * <p>
- * The <code>List</code> interface makes certain assumptions/requirements. This
+ * The {@code List} interface makes certain assumptions/requirements. This
  * implementation breaks these in certain ways, but this is merely the result of
  * rejecting duplicates. Each violation is explained in the method, but it
  * should not affect you. Bear in mind that Sets require immutable objects to
@@ -65,7 +65,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * Factory method to create a SetList using the supplied list to retain order.
      * <p>
      * If the list contains duplicates, these are removed (first indexed one
-     * kept). A <code>HashSet</code> is used for the set behaviour.
+     * kept). A {@code HashSet} is used for the set behaviour.
      *
      * @param <E>  the element type
      * @param list  the list to decorate, must not be null
@@ -114,9 +114,9 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
     /**
      * Adds an element to the list if it is not already present.
      * <p>
-     * <i>(Violation)</i> The <code>List</code> interface requires that this
-     * method returns <code>true</code> always. However this class may return
-     * <code>false</code> because of the <code>Set</code> behaviour.
+     * <i>(Violation)</i> The {@code List} interface requires that this
+     * method returns {@code true} always. However this class may return
+     * {@code false} because of the {@code Set} behaviour.
      *
      * @param object  the object to add
      * @return true if object was added
@@ -137,7 +137,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * Adds an element to a specific index in the list if it is not already
      * present.
      * <p>
-     * <i>(Violation)</i> The <code>List</code> interface makes the assumption
+     * <i>(Violation)</i> The {@code List} interface makes the assumption
      * that the element is always inserted. This may not happen with this
      * implementation.
      *
@@ -159,7 +159,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * Only elements that are not already in this list will be added, and
      * duplicates from the specified collection will be ignored.
      * <p>
-     * <i>(Violation)</i> The <code>List</code> interface makes the assumption
+     * <i>(Violation)</i> The {@code List} interface makes the assumption
      * that the elements are always inserted. This may not happen with this
      * implementation.
      *
@@ -178,7 +178,7 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * Only elements that are not already in this list will be added, and
      * duplicates from the specified collection will be ignored.
      * <p>
-     * <i>(Violation)</i> The <code>List</code> interface makes the assumption
+     * <i>(Violation)</i> The {@code List} interface makes the assumption
      * that the elements are always inserted. This may not happen with this
      * implementation.
      *
@@ -265,9 +265,9 @@ public class SetUniqueList<E> extends AbstractSerializableListDecorator<E> {
      * {@inheritDoc}
      * <p>
      * This implementation iterates over the elements of this list, checking
-     * each element in turn to see if it's contained in <code>coll</code>.
+     * each element in turn to see if it's contained in {@code coll}.
      * If it's not contained, it's removed from this list. As a consequence,
-     * it is advised to use a collection type for <code>coll</code> that provides
+     * it is advised to use a collection type for {@code coll} that provides
      * a fast (e.g. O(1)) implementation of {@link Collection#contains(Object)}.
      */
     @Override

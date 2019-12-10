@@ -65,7 +65,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * Returns false only if the list originally had zero elements, or
      * all elements have been {@link #remove removed}.
      *
-     * @return <code>true</code> if there are more elements
+     * @return {@code true} if there are more elements
      */
     @Override
     public boolean hasNext() {
@@ -121,7 +121,7 @@ public class LoopingListIterator<E> implements ResettableListIterator<E> {
      * Returns false only if the list originally had zero elements, or
      * all elements have been {@link #remove removed}.
      *
-     * @return <code>true</code> if there are more elements
+     * @return {@code true} if there are more elements
      */
     @Override
     public boolean hasPrevious() {

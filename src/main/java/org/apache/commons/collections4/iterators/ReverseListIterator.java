@@ -27,10 +27,10 @@ import org.apache.commons.collections4.ResettableListIterator;
  * and continuing to the first. This is useful for looping around
  * a list in reverse order without needing to actually reverse the list.
  * <p>
- * The first call to <code>next()</code> will return the last element
- * from the list, and so on. The <code>hasNext()</code> method works
- * in concert with the <code>next()</code> method as expected.
- * However, the <code>nextIndex()</code> method returns the correct
+ * The first call to {@code next()} will return the last element
+ * from the list, and so on. The {@code hasNext()} method works
+ * in concert with the {@code next()} method as expected.
+ * However, the {@code nextIndex()} method returns the correct
  * index in the list, thus it starts high and reduces as the iteration
  * continues. The previous methods work similarly.
  *

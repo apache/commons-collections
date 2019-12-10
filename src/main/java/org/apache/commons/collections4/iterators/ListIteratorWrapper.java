@@ -28,18 +28,18 @@ import org.apache.commons.collections4.ResettableListIterator;
 
 /**
  * Converts an {@link Iterator} into a {@link ResettableListIterator}.
- * For plain <code>Iterator</code>s this is accomplished by caching the returned
+ * For plain {@code Iterator}s this is accomplished by caching the returned
  * elements.  This class can also be used to simply add
  * {@link org.apache.commons.collections4.ResettableIterator ResettableIterator}
  * functionality to a given {@link ListIterator}.
  * <p>
- * The <code>ListIterator</code> interface has additional useful methods
- * for navigation - <code>previous()</code> and the index methods.
- * This class allows a regular <code>Iterator</code> to behave as a
- * <code>ListIterator</code>. It achieves this by building a list internally
+ * The {@code ListIterator} interface has additional useful methods
+ * for navigation - {@code previous()} and the index methods.
+ * This class allows a regular {@code Iterator} to behave as a
+ * {@code ListIterator}. It achieves this by building a list internally
  * of as the underlying iterator is traversed.
  * <p>
- * The optional operations of <code>ListIterator</code> are not supported for plain <code>Iterator</code>s.
+ * The optional operations of {@code ListIterator} are not supported for plain {@code Iterator}s.
  * <p>
  * This class implements ResettableListIterator from Commons Collections 3.2.
  *
@@ -69,7 +69,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
     // Constructor
     //-------------------------------------------------------------------------
     /**
-     * Constructs a new <code>ListIteratorWrapper</code> that will wrap
+     * Constructs a new {@code ListIteratorWrapper} that will wrap
      * the given iterator.
      *
      * @param iterator  the iterator to wrap
@@ -84,7 +84,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
     //-------------------------------------------------------------------------
     /**
      * Throws {@link UnsupportedOperationException}
-     * unless the underlying <code>Iterator</code> is a <code>ListIterator</code>.
+     * unless the underlying {@code Iterator} is a {@code ListIterator}.
      *
      * @param obj  the object to add
      * @throws UnsupportedOperationException if the underlying iterator is not of
@@ -229,7 +229,7 @@ public class ListIteratorWrapper<E> implements ResettableListIterator<E> {
 
     /**
      * Throws {@link UnsupportedOperationException}
-     * unless the underlying <code>Iterator</code> is a <code>ListIterator</code>.
+     * unless the underlying {@code Iterator} is a {@code ListIterator}.
      *
      * @param obj  the object to set
      * @throws UnsupportedOperationException if the underlying iterator is not of

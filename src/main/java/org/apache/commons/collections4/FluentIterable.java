@@ -380,7 +380,7 @@ public class FluentIterable<E> implements Iterable<E> {
      * Checks if all elements contained in this iterable are matching the
      * provided predicate.
      * <p>
-     * A <code>null</code> or empty iterable returns true.
+     * A {@code null} or empty iterable returns true.
      *
      * @param predicate  the predicate to use, may not be null
      * @return true if all elements contained in this iterable match the predicate,
@@ -394,7 +394,7 @@ public class FluentIterable<E> implements Iterable<E> {
     /**
      * Checks if this iterable contains any element matching the provided predicate.
      * <p>
-     * A <code>null</code> or empty iterable returns false.
+     * A {@code null} or empty iterable returns false.
      *
      * @param predicate  the predicate to use, may not be null
      * @return true if at least one element contained in this iterable matches the predicate,

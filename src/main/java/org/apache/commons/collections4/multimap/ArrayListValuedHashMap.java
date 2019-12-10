@@ -96,7 +96,7 @@ public class ArrayListValuedHashMap<K, V> extends AbstractListValuedMap<K, V>
     /**
      * Creates an ArrayListValuedHashMap copying all the mappings of the given map.
      *
-     * @param map a <code>MultiValuedMap</code> to copy into this map
+     * @param map a {@code MultiValuedMap} to copy into this map
      */
     public ArrayListValuedHashMap(final MultiValuedMap<? extends K, ? extends V> map) {
         this(map.size(), DEFAULT_INITIAL_LIST_CAPACITY);
@@ -106,7 +106,7 @@ public class ArrayListValuedHashMap<K, V> extends AbstractListValuedMap<K, V>
     /**
      * Creates an ArrayListValuedHashMap copying all the mappings of the given map.
      *
-     * @param map a <code>Map</code> to copy into this map
+     * @param map a {@code Map} to copy into this map
      */
     public ArrayListValuedHashMap(final Map<? extends K, ? extends V> map) {
         this(map.size(), DEFAULT_INITIAL_LIST_CAPACITY);

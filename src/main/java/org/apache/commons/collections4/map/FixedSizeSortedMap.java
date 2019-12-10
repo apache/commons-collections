@@ -31,7 +31,7 @@ import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
- * Decorates another <code>SortedMap</code> to fix the size blocking add/remove.
+ * Decorates another {@code SortedMap} to fix the size blocking add/remove.
  * <p>
  * Any action that would change the size of the map is disallowed.
  * The put method is allowed to change the value associated with an existing

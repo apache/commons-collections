@@ -24,7 +24,7 @@ import org.apache.commons.collections4.Transformer;
 
 /**
  * Predicate implementation that transforms the given object before invoking
- * another <code>Predicate</code>.
+ * another {@code Predicate}.
  *
  * @since 3.1
  */
@@ -56,7 +56,7 @@ public final class TransformedPredicate<T> implements PredicateDecorator<T>, Ser
 
     /**
      * Constructor that performs no validation.
-     * Use <code>transformedPredicate</code> if you want that.
+     * Use {@code transformedPredicate} if you want that.
      *
      * @param transformer  the transformer to use
      * @param predicate  the predicate to decorate

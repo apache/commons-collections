@@ -19,7 +19,7 @@ package org.apache.commons.collections4.sequence;
 /**
  * Command representing the keeping of one object present in both sequences.
  * <p>
- * When one object of the first sequence <code>equals</code> another objects in
+ * When one object of the first sequence {@code equals} another objects in
  * the second sequence at the right place, the {@link EditScript edit script}
  * transforming the first sequence into the second sequence uses an instance of
  * this class to represent the keeping of this object. The objects embedded in
@@ -45,7 +45,7 @@ public class KeepCommand<T> extends EditCommand<T> {
     }
 
     /**
-     * Accept a visitor. When a <code>KeepCommand</code> accepts a visitor, it
+     * Accept a visitor. When a {@code KeepCommand} accepts a visitor, it
      * calls its {@link CommandVisitor#visitKeepCommand visitKeepCommand} method.
      *
      * @param visitor  the visitor to be accepted

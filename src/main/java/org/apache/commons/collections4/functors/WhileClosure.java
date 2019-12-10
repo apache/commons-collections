@@ -49,7 +49,7 @@ public class WhileClosure<E> implements Closure<E> {
      * @param predicate  the predicate used to evaluate when the loop terminates, not null
      * @param closure  the closure the execute, not null
      * @param doLoop  true to act as a do-while loop, always executing the closure once
-     * @return the <code>while</code> closure
+     * @return the {@code while} closure
      * @throws NullPointerException if the predicate or closure is null
      */
     public static <E> Closure<E> whileClosure(final Predicate<? super E> predicate,
@@ -60,7 +60,7 @@ public class WhileClosure<E> implements Closure<E> {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>whileClosure</code> if you want that.
+     * Use {@code whileClosure} if you want that.
      *
      * @param predicate  the predicate used to evaluate when the loop terminates, not null
      * @param closure  the closure the execute, not null

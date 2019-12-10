@@ -29,7 +29,7 @@ import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.iterators.UnmodifiableIterator;
 
 /**
- * Decorates another <code>NavigableSet</code> to ensure it can't be altered.
+ * Decorates another {@code NavigableSet} to ensure it can't be altered.
  * <p>
  * Attempts to modify it will result in an UnsupportedOperationException.
  * </p>

@@ -35,7 +35,7 @@ import org.apache.commons.collections4.iterators.EmptyIterator;
 import org.apache.commons.collections4.iterators.EmptyMapIterator;
 
 /**
- * A <code>Map</code> implementation that stores data in simple fields until
+ * A {@code Map} implementation that stores data in simple fields until
  * the size is greater than 3.
  * <p>
  * This map is designed for performance and can outstrip HashMap.
@@ -64,7 +64,7 @@ import org.apache.commons.collections4.iterators.EmptyMapIterator;
  * This is because it contains no complex objects or arrays which slow the progress.
  * </p>
  * <p>
- * Do not use <code>Flat3Map</code> if the size is likely to grow beyond 3.
+ * Do not use {@code Flat3Map} if the size is likely to grow beyond 3.
  * </p>
  * <p>
  * <strong>Note that Flat3Map is not synchronized and is not thread-safe.</strong>

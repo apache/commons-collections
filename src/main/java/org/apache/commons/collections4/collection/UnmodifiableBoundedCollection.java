@@ -55,7 +55,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
      * Factory method to create an unmodifiable bounded collection.
      *
      * @param <E> the type of the elements in the collection
-     * @param coll  the <code>BoundedCollection</code> to decorate, must not be null
+     * @param coll  the {@code BoundedCollection} to decorate, must not be null
      * @return a new unmodifiable bounded collection
      * @throws NullPointerException if {@code coll} is {@code null}
      * @since 4.0
@@ -76,7 +76,7 @@ public final class UnmodifiableBoundedCollection<E> extends AbstractCollectionDe
      * to find a suitable BoundedCollection.
      *
      * @param <E> the type of the elements in the collection
-     * @param collection  the <code>BoundedCollection</code> to decorate, must not be null
+     * @param collection  the {@code BoundedCollection} to decorate, must not be null
      * @return a new unmodifiable bounded collection
      * @throws NullPointerException if coll is null
      * @throws IllegalArgumentException if coll is not a {@code BoundedCollection}

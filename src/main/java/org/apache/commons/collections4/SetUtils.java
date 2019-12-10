@@ -187,12 +187,12 @@ public class SetUtils {
     }
 
     /**
-     * Returns an immutable empty set if the argument is <code>null</code>,
+     * Returns an immutable empty set if the argument is {@code null},
      * or the argument itself otherwise.
      *
      * @param <T> the element type
-     * @param set the set, possibly <code>null</code>
-     * @return an empty set if the argument is <code>null</code>
+     * @param set the set, possibly {@code null}
+     * @return an empty set if the argument is {@code null}
      */
     public static <T> Set<T> emptyIfNull(final Set<T> set) {
         return set == null ? Collections.<T>emptySet() : set;
@@ -223,7 +223,7 @@ public class SetUtils {
      * Generates a hash code using the algorithm specified in
      * {@link java.util.Set#hashCode()}.
      * <p>
-     * This method is useful for implementing <code>Set</code> when you cannot
+     * This method is useful for implementing {@code Set} when you cannot
      * extend AbstractSet. The method takes Collection instances to enable other
      * collection types to use the Set implementation algorithm.
      *
@@ -294,10 +294,10 @@ public class SetUtils {
     }
 
     /**
-     * Tests two sets for equality as per the <code>equals()</code> contract
+     * Tests two sets for equality as per the {@code equals()} contract
      * in {@link java.util.Set#equals(java.lang.Object)}.
      * <p>
-     * This method is useful for implementing <code>Set</code> when you cannot
+     * This method is useful for implementing {@code Set} when you cannot
      * extend AbstractSet. The method takes Collection instances to enable other
      * collection types to use the Set implementation algorithm.
      * <p>
@@ -333,8 +333,8 @@ public class SetUtils {
     }
 
     /**
-     * Returns a new hash set that matches elements based on <code>==</code> not
-     * <code>equals()</code>.
+     * Returns a new hash set that matches elements based on {@code ==} not
+     * {@code equals()}.
      * <p>
      * <strong>This set will violate the detail of various Set contracts.</strong>
      * As a general rule, don't compare this set to other sets. In particular, you can't
@@ -656,7 +656,7 @@ public class SetUtils {
     }
 
     /**
-     * <code>SetUtils</code> should not normally be instantiated.
+     * {@code SetUtils} should not normally be instantiated.
      */
     private SetUtils() {}
 }

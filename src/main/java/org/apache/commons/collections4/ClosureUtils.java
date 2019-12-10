@@ -32,7 +32,7 @@ import org.apache.commons.collections4.functors.TransformerClosure;
 import org.apache.commons.collections4.functors.WhileClosure;
 
 /**
- * <code>ClosureUtils</code> provides reference implementations and utilities
+ * {@code ClosureUtils} provides reference implementations and utilities
  * for the Closure functor interface. The supplied closures are:
  * <ul>
  * <li>Invoker - invokes a method on the input object
@@ -107,16 +107,16 @@ public class ClosureUtils {
     }
 
     /**
-     * Creates a Closure that will call the closure <code>count</code> times.
+     * Creates a Closure that will call the closure {@code count} times.
      * <p>
-     * A null closure or zero count returns the <code>NOPClosure</code>.
+     * A null closure or zero count returns the {@code NOPClosure}.
      *
      * @see org.apache.commons.collections4.functors.ForClosure
      *
      * @param <E>  the type that the closure acts on
      * @param count  the number of times to loop
      * @param closure  the closure to call repeatedly
-     * @return the <code>for</code> closure
+     * @return the {@code for} closure
      */
     public static <E> Closure<E> forClosure(final int count, final Closure<? super E> closure) {
         return ForClosure.forClosure(count, closure);
@@ -131,7 +131,7 @@ public class ClosureUtils {
      * @param <E>  the type that the closure acts on
      * @param predicate  the predicate to use as an end of loop test, not null
      * @param closure  the closure to call repeatedly, not null
-     * @return the <code>while</code> closure
+     * @return the {@code while} closure
      * @throws NullPointerException if either argument is null
      */
     public static <E> Closure<E> whileClosure(final Predicate<? super E> predicate, final Closure<? super E> closure) {
@@ -147,7 +147,7 @@ public class ClosureUtils {
      * @param <E>  the type that the closure acts on
      * @param closure  the closure to call repeatedly, not null
      * @param predicate  the predicate to use as an end of loop test, not null
-     * @return the <code>do-while</code> closure
+     * @return the {@code do-while} closure
      * @throws NullPointerException if either argument is null
      */
     public static <E> Closure<E> doWhileClosure(final Closure<? super E> closure,
@@ -164,7 +164,7 @@ public class ClosureUtils {
      *
      * @param <E>  the type that the closure acts on
      * @param methodName  the name of the method
-     * @return the <code>invoker</code> closure
+     * @return the {@code invoker} closure
      * @throws NullPointerException if the method name is null
      */
     public static <E> Closure<E> invokerClosure(final String methodName) {
@@ -183,7 +183,7 @@ public class ClosureUtils {
      * @param methodName  the name of the method
      * @param paramTypes  the parameter types
      * @param args  the arguments
-     * @return the <code>invoker</code> closure
+     * @return the {@code invoker} closure
      * @throws NullPointerException if the method name is null
      * @throws IllegalArgumentException if the paramTypes and args don't match
      */
@@ -201,7 +201,7 @@ public class ClosureUtils {
      *
      * @param <E>  the type that the closure acts on
      * @param closures  an array of closures to chain
-     * @return the <code>chained</code> closure
+     * @return the {@code chained} closure
      * @throws NullPointerException if the closures array is null
      * @throws NullPointerException if any closure in the array is null
      */
@@ -218,7 +218,7 @@ public class ClosureUtils {
      *
      * @param <E>  the type that the closure acts on
      * @param closures  a collection of closures to chain
-     * @return the <code>chained</code> closure
+     * @return the {@code chained} closure
      * @throws NullPointerException if the closures collection is null
      * @throws NullPointerException if any closure in the collection is null
      * @throws IllegalArgumentException if the closures collection is empty
@@ -236,7 +236,7 @@ public class ClosureUtils {
      * @param <E>  the type that the closure acts on
      * @param predicate  the validating predicate
      * @param trueClosure  the closure called if the predicate is true
-     * @return the <code>if</code> closure
+     * @return the {@code if} closure
      * @throws NullPointerException if the predicate or closure is null
      * @since 3.2
      */
@@ -255,7 +255,7 @@ public class ClosureUtils {
      * @param predicate  the predicate to switch on
      * @param trueClosure  the closure called if the predicate is true
      * @param falseClosure  the closure called if the predicate is false
-     * @return the <code>switch</code> closure
+     * @return the {@code switch} closure
      * @throws NullPointerException if the predicate or either closure is null
      */
     public static <E> Closure<E> ifClosure(final Predicate<? super E> predicate,
@@ -277,7 +277,7 @@ public class ClosureUtils {
      * @param <E>  the type that the closure acts on
      * @param predicates  an array of predicates to check, not null
      * @param closures  an array of closures to call, not null
-     * @return the <code>switch</code> closure
+     * @return the {@code switch} closure
      * @throws NullPointerException if the either array is null
      * @throws NullPointerException if any element in the arrays is null
      * @throws IllegalArgumentException if the arrays have different sizes
@@ -302,7 +302,7 @@ public class ClosureUtils {
      * @param predicates  an array of predicates to check, not null
      * @param closures  an array of closures to call, not null
      * @param defaultClosure  the default to call if no predicate matches
-     * @return the <code>switch</code> closure
+     * @return the {@code switch} closure
      * @throws NullPointerException if the either array is null
      * @throws NullPointerException if any element in the arrays is null
      * @throws IllegalArgumentException if the arrays are different sizes
@@ -328,7 +328,7 @@ public class ClosureUtils {
      *
      * @param <E>  the type that the closure acts on
      * @param predicatesAndClosures  a map of predicates to closures
-     * @return the <code>switch</code> closure
+     * @return the {@code switch} closure
      * @throws NullPointerException if the map is null
      * @throws NullPointerException if any closure in the map is null
      * @throws IllegalArgumentException if the map is empty

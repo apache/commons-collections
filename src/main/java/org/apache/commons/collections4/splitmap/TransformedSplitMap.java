@@ -48,7 +48,7 @@ import org.apache.commons.collections4.map.LinkedMap;
  * contrast with {@link org.apache.commons.collections4.map.TransformedMap} which,
  * by virtue of its implementing {@link Map}&lt;K, V&gt;, must be constructed in such
  * a way that its read and write parameters are generalized to a common (super-)type.
- * In practice this would often mean <code>&gt;Object, Object&gt;</code>, defeating
+ * In practice this would often mean {@code &gt;Object, Object&gt;}, defeating
  * much of the usefulness of having parameterized types.
  * </p>
  * <p>
@@ -191,7 +191,7 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
     }
 
     /**
-     * Override to transform the value when using <code>setValue</code>.
+     * Override to transform the value when using {@code setValue}.
      *
      * @param value the value to transform
      * @return the transformed value

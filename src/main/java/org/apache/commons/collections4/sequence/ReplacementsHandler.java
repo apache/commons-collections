@@ -37,8 +37,8 @@ public interface ReplacementsHandler<T> {
      * equals (if they exist). This property also holds for the objects after
      * the two sub-sequences.
      * <p>
-     * The replacement is defined as replacing the <code>from</code>
-     * sub-sequence into the <code>to</code> sub-sequence.
+     * The replacement is defined as replacing the {@code from}
+     * sub-sequence into the {@code to} sub-sequence.
      *
      * @param skipped  number of tokens skipped since the last call (i.e. number of
      *   tokens that were in both sequences), this number should be strictly positive

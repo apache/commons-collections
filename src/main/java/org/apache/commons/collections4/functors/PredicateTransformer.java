@@ -40,7 +40,7 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
      *
      * @param <T>  the input type
      * @param predicate  the predicate to call, not null
-     * @return the <code>predicate</code> transformer
+     * @return the {@code predicate} transformer
      * @throws IllegalArgumentException if the predicate is null
      */
     public static <T> Transformer<T, Boolean> predicateTransformer(final Predicate<? super T> predicate) {
@@ -52,7 +52,7 @@ public class PredicateTransformer<T> implements Transformer<T, Boolean>, Seriali
 
     /**
      * Constructor that performs no validation.
-     * Use <code>predicateTransformer</code> if you want that.
+     * Use {@code predicateTransformer} if you want that.
      *
      * @param predicate  the predicate to call, not null
      */

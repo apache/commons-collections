@@ -26,9 +26,9 @@ import java.util.Map;
 import org.apache.commons.collections4.BidiMap;
 
 /**
- * Implementation of <code>BidiMap</code> that uses two <code>LinkedHashMap</code> instances.
+ * Implementation of {@code BidiMap} that uses two {@code LinkedHashMap} instances.
  * <p>
- * Two <code>LinkedHashMap</code> instances are used in this class.
+ * Two {@code LinkedHashMap} instances are used in this class.
  * This provides fast lookups at the expense of storing two sets of map entries and two linked lists.
  * </p>
  *
@@ -43,15 +43,15 @@ public class DualLinkedHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> imple
     private static final long serialVersionUID = 721969328361810L;
 
     /**
-     * Creates an empty <code>HashBidiMap</code>.
+     * Creates an empty {@code HashBidiMap}.
      */
     public DualLinkedHashBidiMap() {
         super(new LinkedHashMap<K, V>(), new LinkedHashMap<V, K>());
     }
 
     /**
-     * Constructs a <code>LinkedHashBidiMap</code> and copies the mappings from
-     * specified <code>Map</code>.
+     * Constructs a {@code LinkedHashBidiMap} and copies the mappings from
+     * specified {@code Map}.
      *
      * @param map the map whose mappings are to be placed in this map
      */
@@ -61,7 +61,7 @@ public class DualLinkedHashBidiMap<K, V> extends AbstractDualBidiMap<K, V> imple
     }
 
     /**
-     * Constructs a <code>LinkedHashBidiMap</code> that decorates the specified maps.
+     * Constructs a {@code LinkedHashBidiMap} that decorates the specified maps.
      *
      * @param normalMap      the normal direction map
      * @param reverseMap     the reverse direction map

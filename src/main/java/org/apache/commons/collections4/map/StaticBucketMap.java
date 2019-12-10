@@ -30,7 +30,7 @@ import org.apache.commons.collections4.KeyValue;
 
 /**
  * A StaticBucketMap is an efficient, thread-safe implementation of
- * <code>java.util.Map</code> that performs well in in a highly
+ * {@code java.util.Map} that performs well in in a highly
  * thread-contentious environment.  The map supports very efficient
  * {@link #get(Object) get}, {@link #put(Object,Object) put},
  * {@link #remove(Object) remove} and {@link #containsKey(Object) containsKey}
@@ -63,9 +63,9 @@ import org.apache.commons.collections4.KeyValue;
  * </pre>
  *
  * then the results are generally random.  Those two statement could cancel
- * each other out, leaving <code>staticBucketMapInstance</code> essentially
- * unchanged, or they could leave some random subset of <code>map</code> in
- * <code>staticBucketMapInstance</code>.<p>
+ * each other out, leaving {@code staticBucketMapInstance} essentially
+ * unchanged, or they could leave some random subset of {@code map} in
+ * {@code staticBucketMapInstance}.<p>
  *
  * Also, much like an encyclopedia, the results of {@link #size()} and
  * {@link #isEmpty()} are out-of-date as soon as they are produced.<p>

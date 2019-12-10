@@ -27,34 +27,34 @@ import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.keyvalue.MultiKey;
 
 /**
- * A <code>Map</code> implementation that uses multiple keys to map the value.
+ * A {@code Map} implementation that uses multiple keys to map the value.
  * <p>
  * This class is the most efficient way to uses multiple keys to map to a value.
  * The best way to use this class is via the additional map-style methods.
- * These provide <code>get</code>, <code>containsKey</code>, <code>put</code> and
- * <code>remove</code> for individual keys which operate without extra object creation.
+ * These provide {@code get}, {@code containsKey}, {@code put} and
+ * {@code remove} for individual keys which operate without extra object creation.
  * </p>
  * <p>
  * The additional methods are the main interface of this map.
- * As such, you will not normally hold this map in a variable of type <code>Map</code>.
+ * As such, you will not normally hold this map in a variable of type {@code Map}.
  * </p>
  * <p>
  * The normal map methods take in and return a {@link MultiKey}.
- * If you try to use <code>put()</code> with any other object type a
- * <code>ClassCastException</code> is thrown. If you try to use <code>null</code> as
- * the key in <code>put()</code> a <code>NullPointerException</code> is thrown.
+ * If you try to use {@code put()} with any other object type a
+ * {@code ClassCastException} is thrown. If you try to use {@code null} as
+ * the key in {@code put()} a {@code NullPointerException} is thrown.
  * </p>
  * <p>
- * This map is implemented as a decorator of a <code>AbstractHashedMap</code> which
+ * This map is implemented as a decorator of a {@code AbstractHashedMap} which
  * enables extra behaviour to be added easily.
  * </p>
  * <ul>
- * <li><code>MultiKeyMap.decorate(new LinkedMap())</code> creates an ordered map.
- * <li><code>MultiKeyMap.decorate(new LRUMap())</code> creates an least recently used map.
- * <li><code>MultiKeyMap.decorate(new ReferenceMap())</code> creates a garbage collector sensitive map.
+ * <li>{@code MultiKeyMap.decorate(new LinkedMap())} creates an ordered map.
+ * <li>{@code MultiKeyMap.decorate(new LRUMap())} creates an least recently used map.
+ * <li>{@code MultiKeyMap.decorate(new ReferenceMap())} creates a garbage collector sensitive map.
  * </ul>
  * <p>
- * Note that <code>IdentityMap</code> and <code>ReferenceIdentityMap</code> are unsuitable
+ * Note that {@code IdentityMap} and {@code ReferenceIdentityMap} are unsuitable
  * for use as the key comparison would work on the whole MultiKey, not the elements within.
  * </p>
  * <p>
@@ -113,7 +113,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
 
     //-----------------------------------------------------------------------
     /**
-     * Constructs a new MultiKeyMap that decorates a <code>HashedMap</code>.
+     * Constructs a new MultiKeyMap that decorates a {@code HashedMap}.
      */
     public MultiKeyMap() {
         this(new HashedMap<MultiKey<? extends K>, V>());
@@ -714,7 +714,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     /**
      * Removes all mappings where the first key is that specified.
      * <p>
-     * This method removes all the mappings where the <code>MultiKey</code>
+     * This method removes all the mappings where the {@code MultiKey}
      * has one or more keys, and the first matches that specified.
      *
      * @param key1  the first key
@@ -737,7 +737,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     /**
      * Removes all mappings where the first two keys are those specified.
      * <p>
-     * This method removes all the mappings where the <code>MultiKey</code>
+     * This method removes all the mappings where the {@code MultiKey}
      * has two or more keys, and the first two match those specified.
      *
      * @param key1  the first key
@@ -762,7 +762,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     /**
      * Removes all mappings where the first three keys are those specified.
      * <p>
-     * This method removes all the mappings where the <code>MultiKey</code>
+     * This method removes all the mappings where the {@code MultiKey}
      * has three or more keys, and the first three match those specified.
      *
      * @param key1  the first key
@@ -789,7 +789,7 @@ public class MultiKeyMap<K, V> extends AbstractMapDecorator<MultiKey<? extends K
     /**
      * Removes all mappings where the first four keys are those specified.
      * <p>
-     * This method removes all the mappings where the <code>MultiKey</code>
+     * This method removes all the mappings where the {@code MultiKey}
      * has four or more keys, and the first four match those specified.
      *
      * @param key1  the first key

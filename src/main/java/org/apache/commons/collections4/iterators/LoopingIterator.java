@@ -62,7 +62,7 @@ public class LoopingIterator<E> implements ResettableIterator<E> {
      * Returns false only if the collection originally had zero elements, or
      * all the elements have been {@link #remove removed}.
      *
-     * @return <code>true</code> if there are more elements
+     * @return {@code true} if there are more elements
      */
     @Override
     public boolean hasNext() {

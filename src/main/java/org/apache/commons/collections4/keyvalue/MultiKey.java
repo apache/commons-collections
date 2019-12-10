@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.Objects;
 
 /**
- * A <code>MultiKey</code> allows multiple map keys to be merged together.
+ * A {@code MultiKey} allows multiple map keys to be merged together.
  * <p>
  * The purpose of this class is to avoid the need to write code to handle
  * maps of maps. An example might be the need to look up a file name by
@@ -124,7 +124,7 @@ public class MultiKey<K> implements Serializable {
      * The keys should be immutable
      * If they are not then they must not be changed after adding to the MultiKey.
      * <p>
-     * This is equivalent to <code>new MultiKey(keys, true)</code>.
+     * This is equivalent to {@code new MultiKey(keys, true)}.
      *
      * @param keys  the array of keys, not null
      * @throws NullPointerException if the key array is null
@@ -211,7 +211,7 @@ public class MultiKey<K> implements Serializable {
     /**
      * Compares this object to another.
      * <p>
-     * To be equal, the other object must be a <code>MultiKey</code> with the
+     * To be equal, the other object must be a {@code MultiKey} with the
      * same number of keys which are also equal.
      *
      * @param other  the other object to compare to

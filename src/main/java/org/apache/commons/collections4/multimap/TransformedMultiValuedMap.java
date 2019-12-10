@@ -26,7 +26,7 @@ import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.Transformer;
 
 /**
- * Decorates another <code>MultiValuedMap</code> to transform objects that are added.
+ * Decorates another {@code MultiValuedMap} to transform objects that are added.
  * <p>
  * This class affects the MultiValuedMap put methods. Thus objects must be
  * removed or searched for using their transformed form. For example, if the

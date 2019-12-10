@@ -49,7 +49,7 @@ public final class UniquePredicate<T> implements Predicate<T>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>uniquePredicate</code> if you want that.
+     * Use {@code uniquePredicate} if you want that.
      */
     public UniquePredicate() {
         super();

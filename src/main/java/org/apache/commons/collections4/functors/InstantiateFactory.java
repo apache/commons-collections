@@ -74,7 +74,7 @@ public class InstantiateFactory<T> implements Factory<T> {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>instantiateFactory</code> if you want that.
+     * Use {@code instantiateFactory} if you want that.
      *
      * @param classToInstantiate  the class to instantiate
      */
@@ -88,7 +88,7 @@ public class InstantiateFactory<T> implements Factory<T> {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>instantiateFactory</code> if you want that.
+     * Use {@code instantiateFactory} if you want that.
      *
      * @param classToInstantiate  the class to instantiate
      * @param paramTypes  the constructor parameter types, cloned

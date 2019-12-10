@@ -41,16 +41,16 @@ import org.apache.commons.collections4.Predicate;
  * };
  * </pre>
  *
- * <p>Using the declared variables, the <code>ComparatorPredicate</code> can be used used in the
+ * <p>Using the declared variables, the {@code ComparatorPredicate} can be used used in the
  * following way:</p>
  *
  * <pre>
  * ComparatorPredicate.comparatorPredicate(ONE, comparator).evaluate(TWO);
  * </pre>
  *
- * <p>The input variable <code>TWO</code> in compared to the stored variable <code>ONE</code> using
- * the supplied <code>comparator</code>. This is the default usage of the predicate and will return
- * <code>true</code> if the underlying comparator returns <code>0</code>. In addition to the default
+ * <p>The input variable {@code TWO} in compared to the stored variable {@code ONE} using
+ * the supplied {@code comparator}. This is the default usage of the predicate and will return
+ * {@code true} if the underlying comparator returns {@code 0}. In addition to the default
  * usage of the predicate, it is possible to evaluate the comparator's result in several ways. The
  * following {@link Criterion} enumeration values are provided by the predicate:
  * </p>
@@ -70,9 +70,9 @@ import org.apache.commons.collections4.Predicate;
  * ComparatorPredicate.comparatorPredicate(ONE, comparator,<b>ComparatorPredicate.Criterion.GREATER</b>).evaluate(TWO);
  * </pre>
  *
- * <p>The input variable TWO is compared to the stored variable ONE using the supplied <code>comparator</code>
- * using the <code>GREATER</code> evaluation criterion constant. This instructs the predicate to
- * return <code>true</code> if the comparator returns a value greater than <code>0</code>.</p>
+ * <p>The input variable TWO is compared to the stored variable ONE using the supplied {@code comparator}
+ * using the {@code GREATER} evaluation criterion constant. This instructs the predicate to
+ * return {@code true} if the comparator returns a value greater than {@code 0}.</p>
  *
  * @since 4.0
  */
@@ -126,7 +126,7 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>comparatorPredicate</code> if you want that.
+     * Use {@code comparatorPredicate} if you want that.
      *
      * @param object  the object to compare to
      * @param comparator  the comparator to use for comparison
@@ -140,14 +140,14 @@ public class ComparatorPredicate<T> implements Predicate<T>, Serializable {
     }
 
     /**
-     * Evaluates the predicate. The predicate evaluates to <code>true</code> in the following cases:
+     * Evaluates the predicate. The predicate evaluates to {@code true} in the following cases:
      *
      * <ul>
-     * <li><code>comparator.compare(object, input) == 0 &amp;&amp; criterion == EQUAL</code></li>
-     * <li><code>comparator.compare(object, input) &lt; 0 &amp;&amp; criterion == LESS</code></li>
-     * <li><code>comparator.compare(object, input) &gt; 0 &amp;&amp; criterion == GREATER</code></li>
-     * <li><code>comparator.compare(object, input) &gt;= 0 &amp;&amp; criterion == GREATER_OR_EQUAL</code></li>
-     * <li><code>comparator.compare(object, input) &lt;= 0 &amp;&amp; criterion == LESS_OR_EQUAL</code></li>
+     * <li>{@code comparator.compare(object, input) == 0 &amp;&amp; criterion == EQUAL}</li>
+     * <li>{@code comparator.compare(object, input) &lt; 0 &amp;&amp; criterion == LESS}</li>
+     * <li>{@code comparator.compare(object, input) &gt; 0 &amp;&amp; criterion == GREATER}</li>
+     * <li>{@code comparator.compare(object, input) &gt;= 0 &amp;&amp; criterion == GREATER_OR_EQUAL}</li>
+     * <li>{@code comparator.compare(object, input) &lt;= 0 &amp;&amp; criterion == LESS_OR_EQUAL}</li>
      * </ul>
      *
      * @see org.apache.commons.collections4.Predicate#evaluate(java.lang.Object)

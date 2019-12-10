@@ -35,7 +35,7 @@ import java.util.Objects;
  * Arrays.sort(planets, distanceFromSun);    // Back to original order
  * </pre>
  * <p>
- * Once <code>compare</code> has been called, the FixedOrderComparator is locked
+ * Once {@code compare} has been called, the FixedOrderComparator is locked
  * and attempts to modify it yield an UnsupportedOperationException.
  * </p>
  * <p>
@@ -260,12 +260,12 @@ public class FixedOrderComparator<T> implements Comparator<T>, Serializable {
     }
 
     /**
-     * Returns <code>true</code> iff <i>that</i> Object is
+     * Returns {@code true} iff <i>that</i> Object is
      * is a {@link Comparator} whose ordering is known to be
      * equivalent to mine.
      * <p>
-     * This implementation returns <code>true</code>
-     * iff <code><i>that</i></code> is a {@link FixedOrderComparator}
+     * This implementation returns {@code true}
+     * iff {@code <i>that</i>} is a {@link FixedOrderComparator}
      * whose attributes are equal to mine.
      *
      * @param object  the object to compare to
