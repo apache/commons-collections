@@ -41,7 +41,7 @@ public interface HashFunctionIdentity {
                 result = identity1.getSignedness().compareTo(identity2.getSignedness());
             }
             if (result == 0) {
-                result = identity1.getProcess().compareTo(identity2.getProcess());
+                result = identity1.getProcessType().compareTo(identity2.getProcessType());
             }
             return result;
         }
@@ -70,7 +70,7 @@ public interface HashFunctionIdentity {
      * @return the String representing the identity.
      */
     static String asCommonString(HashFunctionIdentity identity) {
-        return String.format("%s-%s-%s", identity.getName(), identity.getSignedness(), identity.getProcess());
+        return String.format("%s-%s-%s", identity.getName(), identity.getSignedness(), identity.getProcessType());
     }
 
     /**
@@ -89,7 +89,7 @@ public interface HashFunctionIdentity {
 
        return String.format( "%s-%s-%s",
            identity.getName().toUpperCase( Locale.ROOT ), identity.getSignedness(),
-           identity.getProcess() ).getBytes( StandardCharsets.UTF_8 );
+           identity.getProcessType() ).getBytes( StandardCharsets.UTF_8 );
 
     }
 
@@ -145,7 +145,7 @@ public interface HashFunctionIdentity {
      *
      * @return process of this function.
      */
-    ProcessType getProcess();
+    ProcessType getProcessType();
 
     /**
      * Get the signature of this function. <p> The signature of this function is
