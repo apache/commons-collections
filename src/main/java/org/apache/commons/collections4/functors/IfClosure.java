@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Closure;
 import org.apache.commons.collections4.Predicate;
@@ -48,7 +49,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      * @param <E> the type that the closure acts on
      * @param predicate  predicate to switch on
      * @param trueClosure  closure used if true
-     * @return the <code>if</code> closure
+     * @return the {@code if} closure
      * @throws NullPointerException if either argument is null
      * @since 3.2
      */
@@ -63,24 +64,20 @@ public class IfClosure<E> implements Closure<E>, Serializable {
      * @param predicate  predicate to switch on
      * @param trueClosure  closure used if true
      * @param falseClosure  closure used if false
-     * @return the <code>if</code> closure
+     * @return the {@code if} closure
      * @throws NullPointerException if any argument is null
      */
     public static <E> Closure<E> ifClosure(final Predicate<? super E> predicate,
                                            final Closure<? super E> trueClosure,
                                            final Closure<? super E> falseClosure) {
-        if (predicate == null) {
-            throw new NullPointerException("Predicate must not be null");
-        }
-        if (trueClosure == null || falseClosure == null) {
-            throw new NullPointerException("Closures must not be null");
-        }
-        return new IfClosure<>(predicate, trueClosure, falseClosure);
+        return new IfClosure<>(Objects.requireNonNull(predicate, "predicate"),
+                Objects.requireNonNull(trueClosure, "trueClosure"),
+                Objects.requireNonNull(falseClosure, "falseClosure"));
     }
 
     /**
      * Constructor that performs no validation.
-     * Use <code>ifClosure</code> if you want that.
+     * Use {@code ifClosure} if you want that.
      * <p>
      * This constructor creates a closure that performs no action when
      * the predicate is false.
@@ -95,7 +92,7 @@ public class IfClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>ifClosure</code> if you want that.
+     * Use {@code ifClosure} if you want that.
      *
      * @param predicate  predicate to switch on, not null
      * @param trueClosure  closure used if true, not null

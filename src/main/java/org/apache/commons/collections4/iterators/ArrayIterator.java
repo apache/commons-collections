@@ -53,8 +53,8 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      * specified array.
      *
      * @param array the array to iterate over.
-     * @throws IllegalArgumentException if <code>array</code> is not an array.
-     * @throws NullPointerException if <code>array</code> is <code>null</code>
+     * @throws IllegalArgumentException if {@code array} is not an array.
+     * @throws NullPointerException if {@code array} is {@code null}
      */
     public ArrayIterator(final Object array) {
         this(array, 0);
@@ -66,8 +66,8 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      *
      * @param array  the array to iterate over.
      * @param startIndex  the index to start iterating at.
-     * @throws IllegalArgumentException if <code>array</code> is not an array.
-     * @throws NullPointerException if <code>array</code> is <code>null</code>
+     * @throws IllegalArgumentException if {@code array} is not an array.
+     * @throws NullPointerException if {@code array} is {@code null}
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     public ArrayIterator(final Object array, final int startIndex) {
@@ -81,8 +81,8 @@ public class ArrayIterator<E> implements ResettableIterator<E> {
      * @param array  the array to iterate over.
      * @param startIndex  the index to start iterating at.
      * @param endIndex  the index to finish iterating at.
-     * @throws IllegalArgumentException if <code>array</code> is not an array.
-     * @throws NullPointerException if <code>array</code> is <code>null</code>
+     * @throws IllegalArgumentException if {@code array} is not an array.
+     * @throws NullPointerException if {@code array} is {@code null}
      * @throws IndexOutOfBoundsException if either index is invalid
      */
     public ArrayIterator(final Object array, final int startIndex, final int endIndex) {

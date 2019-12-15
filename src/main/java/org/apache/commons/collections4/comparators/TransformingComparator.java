@@ -53,7 +53,7 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
      * Constructs an instance with the given Transformer and a
      * {@link ComparableComparator ComparableComparator}.
      *
-     * @param transformer what will transform the arguments to <code>compare</code>
+     * @param transformer what will transform the arguments to {@code compare}
      */
     public TransformingComparator(final Transformer<? super I, ? extends O> transformer) {
         this(transformer, ComparatorUtils.NATURAL_COMPARATOR);
@@ -62,7 +62,7 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
     /**
      * Constructs an instance with the given Transformer and Comparator.
      *
-     * @param transformer  what will transform the arguments to <code>compare</code>
+     * @param transformer  what will transform the arguments to {@code compare}
      * @param decorated  the decorated Comparator
      */
     public TransformingComparator(final Transformer<? super I, ? extends O> transformer,
@@ -102,12 +102,12 @@ public class TransformingComparator<I, O> implements Comparator<I>, Serializable
     }
 
     /**
-     * Returns <code>true</code> iff <i>that</i> Object is
+     * Returns {@code true} iff <i>that</i> Object is
      * is a {@link Comparator} whose ordering is known to be
      * equivalent to mine.
      * <p>
-     * This implementation returns <code>true</code>
-     * iff <code><i>that</i></code> is a {@link TransformingComparator}
+     * This implementation returns {@code true}
+     * iff {@code <i>that</i>} is a {@link TransformingComparator}
      * whose attributes are equal to mine.
      *
      * @param object  the object to compare to

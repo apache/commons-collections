@@ -71,8 +71,8 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 
     /**
      * Returns true if the maps produced by {@link #makeObject()} and
-     * {@link #makeFullMap()} support the <code>put</code> and
-     * <code>putAll</code> operations adding new mappings.
+     * {@link #makeFullMap()} support the {@code put} and
+     * {@code putAll} operations adding new mappings.
      * <p>
      * Default implementation returns true. Override if your collection class
      * does not support put adding.
@@ -83,8 +83,8 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
 
     /**
      * Returns true if the maps produced by {@link #makeObject()} and
-     * {@link #makeFullMap()} support the <code>remove</code> and
-     * <code>clear</code> operations.
+     * {@link #makeFullMap()} support the {@code remove} and
+     * {@code clear} operations.
      * <p>
      * Default implementation returns true. Override if your collection class
      * does not support removal operations.
@@ -125,7 +125,7 @@ public abstract class AbstractMultiValuedMapTest<K, V> extends AbstractObjectTes
      * must return an array with the same length as {@link #getSampleValues()}
      * and all array elements must be different. The default implementation
      * constructs a set of String keys, and includes a single null key if
-     * {@link #isAllowNullKey()} returns <code>true</code>.
+     * {@link #isAllowNullKey()} returns {@code true}.
      */
     @SuppressWarnings("unchecked")
     public K[] getSampleKeys() {

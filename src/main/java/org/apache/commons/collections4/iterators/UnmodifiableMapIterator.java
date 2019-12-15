@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import java.util.Objects;
+
 import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.Unmodifiable;
 
@@ -46,9 +48,7 @@ public final class UnmodifiableMapIterator<K, V> implements MapIterator<K, V>, U
      */
     public static <K, V> MapIterator<K, V> unmodifiableMapIterator(
             final MapIterator<? extends K, ? extends V> iterator) {
-        if (iterator == null) {
-            throw new NullPointerException("MapIterator must not be null");
-        }
+        Objects.requireNonNull(iterator, "iterator");
         if (iterator instanceof Unmodifiable) {
             @SuppressWarnings("unchecked") // safe to upcast
             final MapIterator<K, V> tmpIterator = (MapIterator<K, V>) iterator;

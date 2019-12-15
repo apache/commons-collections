@@ -23,7 +23,7 @@ import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.Transformer;
 
 /**
- * Decorates another <code>SortedMap</code> to create objects in the map on demand.
+ * Decorates another {@code SortedMap} to create objects in the map on demand.
  * <p>
  * When the {@link #get(Object)} method is called with a key that does not
  * exist in the map, the factory is used to create the object. The created
@@ -44,8 +44,8 @@ import org.apache.commons.collections4.Transformer;
  * </pre>
  *
  * <p>
- * After the above code is executed, <code>date</code> will refer to
- * a new <code>Date</code> instance. Furthermore, that <code>Date</code>
+ * After the above code is executed, {@code date} will refer to
+ * a new {@code Date} instance. Furthermore, that {@code Date}
  * instance is mapped to the "NOW" key in the map.
  * </p>
  * <p>

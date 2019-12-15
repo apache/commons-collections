@@ -21,7 +21,7 @@ import java.util.Collection;
 /**
  * Defines a map that holds a collection of values against each key.
  * <p>
- * A <code>MultiMap</code> is a Map with slightly different semantics.
+ * A {@code MultiMap} is a Map with slightly different semantics.
  * Putting a value into the map will add the value to a Collection at that key.
  * Getting a value will return a Collection, holding all the values put to that key.
  * </p>
@@ -35,12 +35,12 @@ import java.util.Collection;
  * mhm.put(key, "C");
  * Collection coll = (Collection) mhm.get(key);</pre>
  * <p>
- * <code>coll</code> will be a collection containing "A", "B", "C".
+ * {@code coll} will be a collection containing "A", "B", "C".
  * </p>
  * <p>
  * NOTE: Additional methods were added to this interface in Commons Collections 3.1.
  * These were added solely for documentation purposes and do not change the interface
- * as they were defined in the superinterface <code>Map</code> anyway.
+ * as they were defined in the superinterface {@code Map} anyway.
  * </p>
  *
  * @param <K> the type of the keys in this map
@@ -59,7 +59,7 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
      * Other values attached to that key are unaffected.
      * <p>
      * If the last value for a key is removed, implementations typically
-     * return <code>null</code> from a subsequent <code>get(Object)</code>, however
+     * return {@code null} from a subsequent {@code get(Object)}, however
      * they may choose to return an empty collection.
      *
      * @param key  the key to remove from
@@ -87,19 +87,19 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
     /**
      * Gets the collection of values associated with the specified key.
      * <p>
-     * The returned value will implement <code>Collection</code>. Implementations
-     * are free to declare that they return <code>Collection</code> subclasses
-     * such as <code>List</code> or <code>Set</code>.
+     * The returned value will implement {@code Collection}. Implementations
+     * are free to declare that they return {@code Collection} subclasses
+     * such as {@code List} or {@code Set}.
      * <p>
-     * Implementations typically return <code>null</code> if no values have
+     * Implementations typically return {@code null} if no values have
      * been mapped to the key, however the implementation may choose to
      * return an empty collection.
      * <p>
      * Implementations may choose to return a clone of the internal collection.
      *
      * @param key  the key to retrieve
-     * @return the <code>Collection</code> of values, implementations should
-     *  return <code>null</code> for no mapping, but may return an empty collection
+     * @return the {@code Collection} of values, implementations should
+     *  return {@code null} for no mapping, but may return an empty collection
      * @throws ClassCastException if the key is of an invalid type
      * @throws NullPointerException if the key is null and null keys are invalid
      */
@@ -123,9 +123,9 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
     /**
      * Adds the value to the collection associated with the specified key.
      * <p>
-     * Unlike a normal <code>Map</code> the previous value is not replaced.
+     * Unlike a normal {@code Map} the previous value is not replaced.
      * Instead the new value is added to the collection stored against the key.
-     * The collection may be a <code>List</code>, <code>Set</code> or other
+     * The collection may be a {@code List}, {@code Set} or other
      * collection dependent on implementation.
      *
      * @param key  the key to store against
@@ -142,12 +142,12 @@ public interface MultiMap<K, V> extends IterableMap<K, Object> {
     /**
      * Removes all values associated with the specified key.
      * <p>
-     * Implementations typically return <code>null</code> from a subsequent
-     * <code>get(Object)</code>, however they may choose to return an empty collection.
+     * Implementations typically return {@code null} from a subsequent
+     * {@code get(Object)}, however they may choose to return an empty collection.
      *
      * @param key  the key to remove values from
-     * @return the <code>Collection</code> of values removed, implementations should
-     *  return <code>null</code> for no mapping found, but may return an empty collection
+     * @return the {@code Collection} of values removed, implementations should
+     *  return {@code null} for no mapping found, but may return an empty collection
      * @throws UnsupportedOperationException if the map is unmodifiable
      * @throws ClassCastException if the key is of an invalid type
      * @throws NullPointerException if the key is null and null keys are invalid

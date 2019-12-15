@@ -18,6 +18,7 @@ package org.apache.commons.collections4.functors;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.FunctorException;
@@ -58,9 +59,7 @@ public class InstantiateFactory<T> implements Factory<T> {
     public static <T> Factory<T> instantiateFactory(final Class<T> classToInstantiate,
                                                     final Class<?>[] paramTypes,
                                                     final Object[] args) {
-        if (classToInstantiate == null) {
-            throw new NullPointerException("Class to instantiate must not be null");
-        }
+        Objects.requireNonNull(classToInstantiate, "classToInstantiate");
         if (paramTypes == null && args != null
             || paramTypes != null && args == null
             || paramTypes != null && args != null && paramTypes.length != args.length) {
@@ -75,7 +74,7 @@ public class InstantiateFactory<T> implements Factory<T> {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>instantiateFactory</code> if you want that.
+     * Use {@code instantiateFactory} if you want that.
      *
      * @param classToInstantiate  the class to instantiate
      */
@@ -89,7 +88,7 @@ public class InstantiateFactory<T> implements Factory<T> {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>instantiateFactory</code> if you want that.
+     * Use {@code instantiateFactory} if you want that.
      *
      * @param classToInstantiate  the class to instantiate
      * @param paramTypes  the constructor parameter types, cloned

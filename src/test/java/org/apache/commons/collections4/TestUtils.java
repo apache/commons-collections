@@ -38,7 +38,7 @@ public final class TestUtils {
      * This method is especially good for testing singleton pattern on classes
      * that support serialization.
      *
-     * @param msg the identifying message for the <code>AssertionError</code>.
+     * @param msg the identifying message for the {@code AssertionError}.
      * @param o object that will be tested.
      * @see #assertSameAfterSerialization(Object)
      */
@@ -72,7 +72,7 @@ public final class TestUtils {
      * one that was serialized.
      * <p>
      * Effect of method call is the same as:
-     * <code>assertSameAfterSerialization(null, o)</code>.
+     * {@code assertSameAfterSerialization(null, o)}.
      *
      * @param o object that will be tested.
      * @see #assertSameAfterSerialization(String, Object)

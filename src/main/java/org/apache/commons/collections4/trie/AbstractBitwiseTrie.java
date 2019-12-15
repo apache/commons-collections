@@ -19,6 +19,7 @@ package org.apache.commons.collections4.trie;
 import java.io.Serializable;
 import java.util.AbstractMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Map.Entry;
 
 import org.apache.commons.collections4.Trie;
@@ -47,11 +48,7 @@ public abstract class AbstractBitwiseTrie<K, V> extends AbstractMap<K, V>
      * @param keyAnalyzer  the {@link KeyAnalyzer} to use
      */
     protected AbstractBitwiseTrie(final KeyAnalyzer<? super K> keyAnalyzer) {
-        if (keyAnalyzer == null) {
-            throw new NullPointerException("keyAnalyzer");
-        }
-
-        this.keyAnalyzer = keyAnalyzer;
+        this.keyAnalyzer = Objects.requireNonNull(keyAnalyzer, "keyAnalyzer");
     }
 
     /**

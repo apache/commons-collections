@@ -33,23 +33,23 @@ import org.apache.commons.collections4.iterators.UnmodifiableListIterator;
 import org.apache.commons.collections4.list.UnmodifiableList;
 
 /**
- * A <code>Map</code> implementation that maintains the order of the entries.
+ * A {@code Map} implementation that maintains the order of the entries.
  * In this implementation order is maintained by original insertion.
  * <p>
  * This implementation improves on the JDK1.4 LinkedHashMap by adding the
  * {@link org.apache.commons.collections4.MapIterator MapIterator}
  * functionality, additional convenience methods and allowing
- * bidirectional iteration. It also implements <code>OrderedMap</code>.
+ * bidirectional iteration. It also implements {@code OrderedMap}.
  * In addition, non-interface methods are provided to access the map by index.
  * </p>
  * <p>
- * The <code>orderedMapIterator()</code> method provides direct access to a
+ * The {@code orderedMapIterator()} method provides direct access to a
  * bidirectional iterator. The iterators from the other views can also be cast
- * to <code>OrderedIterator</code> if required.
+ * to {@code OrderedIterator} if required.
  * </p>
  * <p>
  * All the available iterators can be reset back to the start by casting to
- * <code>ResettableIterator</code> and calling <code>reset()</code>.
+ * {@code ResettableIterator} and calling {@code reset()}.
  * </p>
  * <p>
  * The implementation is also designed to be subclassed, with lots of useful
@@ -190,8 +190,8 @@ public class LinkedMap<K, V> extends AbstractLinkedMap<K, V> implements Serializ
      * Removes the element at the specified index.
      *
      * @param index  the index of the object to remove
-     * @return the previous value corresponding the <code>key</code>,
-     *  or <code>null</code> if none existed
+     * @return the previous value corresponding the {@code key},
+     *  or {@code null} if none existed
      * @throws IndexOutOfBoundsException if the index is invalid
      */
     public V remove(final int index) {

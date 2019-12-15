@@ -24,6 +24,7 @@ import java.util.HashSet;
 import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.NavigableSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -115,27 +116,26 @@ public class SetUtils {
      *
      * @param <E> the generic type that is able to represent the types contained
      *   in both input sets.
-     * @param a  the set to subtract from, must not be null
-     * @param b  the set to subtract, must not be null
+     * @param setA  the set to subtract from, must not be null
+     * @param setB  the set to subtract, must not be null
      * @return a view of the relative complement of  of the two sets
      * @since 4.1
      */
-    public static <E> SetView<E> difference(final Set<? extends E> a, final Set<? extends E> b) {
-        if (a == null || b == null) {
-            throw new NullPointerException("Sets must not be null.");
-        }
+    public static <E> SetView<E> difference(final Set<? extends E> setA, final Set<? extends E> setB) {
+        Objects.requireNonNull(setA, "setA");
+        Objects.requireNonNull(setB, "setB");
 
-        final Predicate<E> notContainedInB = object -> !b.contains(object);
+        final Predicate<E> notContainedInB = object -> !setB.contains(object);
 
         return new SetView<E>() {
             @Override
             public boolean contains(final Object o) {
-                return a.contains(o) && !b.contains(o);
+                return setA.contains(o) && !setB.contains(o);
             }
 
             @Override
             public Iterator<E> createIterator() {
-                return IteratorUtils.filteredIterator(a.iterator(), notContainedInB);
+                return IteratorUtils.filteredIterator(setA.iterator(), notContainedInB);
             }
         };
     }
@@ -151,23 +151,22 @@ public class SetUtils {
      *
      * @param <E> the generic type that is able to represent the types contained
      *   in both input sets.
-     * @param a  the first set, must not be null
-     * @param b  the second set, must not be null
+     * @param setA  the first set, must not be null
+     * @param setB  the second set, must not be null
      * @return a view of the symmetric difference of the two sets
      * @since 4.1
      */
-    public static <E> SetView<E> disjunction(final Set<? extends E> a, final Set<? extends E> b) {
-        if (a == null || b == null) {
-            throw new NullPointerException("Sets must not be null.");
-        }
-
-        final SetView<E> aMinusB = difference(a, b);
-        final SetView<E> bMinusA = difference(b, a);
+    public static <E> SetView<E> disjunction(final Set<? extends E> setA, final Set<? extends E> setB) {
+        Objects.requireNonNull(setA, "setA");
+        Objects.requireNonNull(setB, "setB");
+        
+        final SetView<E> aMinusB = difference(setA, setB);
+        final SetView<E> bMinusA = difference(setB, setA);
 
         return new SetView<E>() {
             @Override
             public boolean contains(final Object o) {
-                return a.contains(o) ^ b.contains(o);
+                return setA.contains(o) ^ setB.contains(o);
             }
 
             @Override
@@ -188,12 +187,12 @@ public class SetUtils {
     }
 
     /**
-     * Returns an immutable empty set if the argument is <code>null</code>,
+     * Returns an immutable empty set if the argument is {@code null},
      * or the argument itself otherwise.
      *
      * @param <T> the element type
-     * @param set the set, possibly <code>null</code>
-     * @return an empty set if the argument is <code>null</code>
+     * @param set the set, possibly {@code null}
+     * @return an empty set if the argument is {@code null}
      */
     public static <T> Set<T> emptyIfNull(final Set<T> set) {
         return set == null ? Collections.<T>emptySet() : set;
@@ -224,7 +223,7 @@ public class SetUtils {
      * Generates a hash code using the algorithm specified in
      * {@link java.util.Set#hashCode()}.
      * <p>
-     * This method is useful for implementing <code>Set</code> when you cannot
+     * This method is useful for implementing {@code Set} when you cannot
      * extend AbstractSet. The method takes Collection instances to enable other
      * collection types to use the Set implementation algorithm.
      *
@@ -270,36 +269,35 @@ public class SetUtils {
      *
      * @param <E> the generic type that is able to represent the types contained
      *   in both input sets.
-     * @param a  the first set, must not be null
-     * @param b  the second set, must not be null
+     * @param setA  the first set, must not be null
+     * @param setB  the second set, must not be null
      * @return a view of the intersection of the two sets
      * @since 4.1
      */
-    public static <E> SetView<E> intersection(final Set<? extends E> a, final Set<? extends E> b) {
-        if (a == null || b == null) {
-            throw new NullPointerException("Sets must not be null.");
-        }
+    public static <E> SetView<E> intersection(final Set<? extends E> setA, final Set<? extends E> setB) {
+        Objects.requireNonNull(setA, "setA");
+        Objects.requireNonNull(setB, "setB");
 
-        final Predicate<E> containedInB = object -> b.contains(object);
+        final Predicate<E> containedInB = object -> setB.contains(object);
 
         return new SetView<E>() {
             @Override
             public boolean contains(final Object o) {
-                return a.contains(o) && b.contains(o);
+                return setA.contains(o) && setB.contains(o);
             }
 
             @Override
             public Iterator<E> createIterator() {
-                return IteratorUtils.filteredIterator(a.iterator(), containedInB);
+                return IteratorUtils.filteredIterator(setA.iterator(), containedInB);
             }
         };
     }
 
     /**
-     * Tests two sets for equality as per the <code>equals()</code> contract
+     * Tests two sets for equality as per the {@code equals()} contract
      * in {@link java.util.Set#equals(java.lang.Object)}.
      * <p>
-     * This method is useful for implementing <code>Set</code> when you cannot
+     * This method is useful for implementing {@code Set} when you cannot
      * extend AbstractSet. The method takes Collection instances to enable other
      * collection types to use the Set implementation algorithm.
      * <p>
@@ -335,8 +333,8 @@ public class SetUtils {
     }
 
     /**
-     * Returns a new hash set that matches elements based on <code>==</code> not
-     * <code>equals()</code>.
+     * Returns a new hash set that matches elements based on {@code ==} not
+     * {@code equals()}.
      * <p>
      * <strong>This set will violate the detail of various Set contracts.</strong>
      * As a general rule, don't compare this set to other sets. In particular, you can't
@@ -562,38 +560,37 @@ public class SetUtils {
      *
      * @param <E> the generic type that is able to represent the types contained
      *   in both input sets.
-     * @param a  the first set, must not be null
-     * @param b  the second set, must not be null
+     * @param setA  the first set, must not be null
+     * @param setB  the second set, must not be null
      * @return a view of the union of the two set
      * @throws NullPointerException if either input set is null
      * @since 4.1
      */
-    public static <E> SetView<E> union(final Set<? extends E> a, final Set<? extends E> b) {
-        if (a == null || b == null) {
-            throw new NullPointerException("Sets must not be null.");
-        }
+    public static <E> SetView<E> union(final Set<? extends E> setA, final Set<? extends E> setB) {
+        Objects.requireNonNull(setA, "setA");
+        Objects.requireNonNull(setB, "setB");
 
-        final SetView<E> bMinusA = difference(b, a);
+        final SetView<E> bMinusA = difference(setB, setA);
 
         return new SetView<E>() {
             @Override
             public boolean contains(final Object o) {
-                return a.contains(o) || b.contains(o);
+                return setA.contains(o) || setB.contains(o);
             }
 
             @Override
             public Iterator<E> createIterator() {
-                return IteratorUtils.chainedIterator(a.iterator(), bMinusA.iterator());
+                return IteratorUtils.chainedIterator(setA.iterator(), bMinusA.iterator());
             }
 
             @Override
             public boolean isEmpty() {
-                return a.isEmpty() && b.isEmpty();
+                return setA.isEmpty() && setB.isEmpty();
             }
 
             @Override
             public int size() {
-                return a.size() + bMinusA.size();
+                return setA.size() + bMinusA.size();
             }
         };
     }
@@ -659,7 +656,7 @@ public class SetUtils {
     }
 
     /**
-     * <code>SetUtils</code> should not normally be instantiated.
+     * {@code SetUtils} should not normally be instantiated.
      */
     private SetUtils() {}
 }

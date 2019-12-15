@@ -88,7 +88,7 @@ public class InstantiateTransformer<T> implements Transformer<Class<? extends T>
 
     /**
      * Constructor that performs no validation.
-     * Use <code>instantiateTransformer</code> if you want that.
+     * Use {@code instantiateTransformer} if you want that.
      * <p>
      * Note: from 4.0, the input parameters will be cloned
      *

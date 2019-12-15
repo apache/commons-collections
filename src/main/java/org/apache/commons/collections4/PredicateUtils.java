@@ -42,7 +42,7 @@ import org.apache.commons.collections4.functors.TruePredicate;
 import org.apache.commons.collections4.functors.UniquePredicate;
 
 /**
- * <code>PredicateUtils</code> provides reference implementations and utilities
+ * {@code PredicateUtils} provides reference implementations and utilities
  * for the Predicate functor interface. The supplied predicates are:
  * <ul>
  * <li>Invoker - returns the result of a method call on the input object
@@ -162,8 +162,8 @@ public class PredicateUtils {
 
     /**
      * Creates a Predicate that checks if the object passed in is of
-     * a particular type, using instanceof. A <code>null</code> input
-     * object will return <code>false</code>.
+     * a particular type, using instanceof. A {@code null} input
+     * object will return {@code false}.
      *
      * @param type  the type to check for, may not be null
      * @return the predicate
@@ -177,7 +177,7 @@ public class PredicateUtils {
     /**
      * Creates a Predicate that returns true the first time an object is
      * encountered, and false if the same object is received
-     * again. The comparison is by equals(). A <code>null</code> input object
+     * again. The comparison is by equals(). A {@code null} input object
      * is accepted and will return true the first time, and false subsequently
      * as well.
      *
@@ -196,8 +196,8 @@ public class PredicateUtils {
      * and have no parameters. If the input object is null, a
      * PredicateException is thrown.
      * <p>
-     * For example, <code>PredicateUtils.invokerPredicate("isEmpty");</code>
-     * will call the <code>isEmpty</code> method on the input object to
+     * For example, {@code PredicateUtils.invokerPredicate("isEmpty");}
+     * will call the {@code isEmpty} method on the input object to
      * determine the predicate result.
      *
      * @param <T>  the type that the predicate queries
@@ -218,8 +218,8 @@ public class PredicateUtils {
      * and have no parameters. If the input object is null, a
      * PredicateException is thrown.
      * <p>
-     * For example, <code>PredicateUtils.invokerPredicate("isEmpty");</code>
-     * will call the <code>isEmpty</code> method on the input object to
+     * For example, {@code PredicateUtils.invokerPredicate("isEmpty");}
+     * will call the {@code isEmpty} method on the input object to
      * determine the predicate result.
      *
      * @param <T>  the type that the predicate queries
@@ -248,7 +248,7 @@ public class PredicateUtils {
      * @param <T>  the type that the predicate queries
      * @param predicate1  the first predicate, may not be null
      * @param predicate2  the second predicate, may not be null
-     * @return the <code>and</code> predicate
+     * @return the {@code and} predicate
      * @throws NullPointerException if either predicate is null
      * @see AndPredicate
      */
@@ -264,7 +264,7 @@ public class PredicateUtils {
      *
      * @param <T>  the type that the predicate queries
      * @param predicates  an array of predicates to check, may not be null
-     * @return the <code>all</code> predicate
+     * @return the {@code all} predicate
      * @throws NullPointerException if the predicates array is null
      * @throws NullPointerException if any predicate in the array is null
      * @see AllPredicate
@@ -280,7 +280,7 @@ public class PredicateUtils {
      *
      * @param <T>  the type that the predicate queries
      * @param predicates  a collection of predicates to check, may not be null
-     * @return the <code>all</code> predicate
+     * @return the {@code all} predicate
      * @throws NullPointerException if the predicates collection is null
      * @throws NullPointerException if any predicate in the collection is null
      * @see AllPredicate
@@ -296,7 +296,7 @@ public class PredicateUtils {
      * @param <T>  the type that the predicate queries
      * @param predicate1  the first predicate, may not be null
      * @param predicate2  the second predicate, may not be null
-     * @return the <code>or</code> predicate
+     * @return the {@code or} predicate
      * @throws NullPointerException if either predicate is null
      * @see OrPredicate
      */
@@ -312,7 +312,7 @@ public class PredicateUtils {
      *
      * @param <T>  the type that the predicate queries
      * @param predicates  an array of predicates to check, may not be null
-     * @return the <code>any</code> predicate
+     * @return the {@code any} predicate
      * @throws NullPointerException if the predicates array is null
      * @throws NullPointerException if any predicate in the array is null
      * @see AnyPredicate
@@ -328,7 +328,7 @@ public class PredicateUtils {
      *
      * @param <T>  the type that the predicate queries
      * @param predicates  a collection of predicates to check, may not be null
-     * @return the <code>any</code> predicate
+     * @return the {@code any} predicate
      * @throws NullPointerException if the predicates collection is null
      * @throws NullPointerException if any predicate in the collection is null
      * @see AnyPredicate
@@ -344,7 +344,7 @@ public class PredicateUtils {
      * @param <T>  the type that the predicate queries
      * @param predicate1  the first predicate, may not be null
      * @param predicate2  the second predicate, may not be null
-     * @return the <code>either</code> predicate
+     * @return the {@code either} predicate
      * @throws NullPointerException if either predicate is null
      * @see OnePredicate
      */
@@ -362,7 +362,7 @@ public class PredicateUtils {
      *
      * @param <T>  the type that the predicate queries
      * @param predicates  an array of predicates to check, may not be null
-     * @return the <code>one</code> predicate
+     * @return the {@code one} predicate
      * @throws NullPointerException if the predicates array is null
      * @throws NullPointerException if any predicate in the array is null
      * @see OnePredicate
@@ -378,7 +378,7 @@ public class PredicateUtils {
      *
      * @param <T>  the type that the predicate queries
      * @param predicates  a collection of predicates to check, may not be null
-     * @return the <code>one</code> predicate
+     * @return the {@code one} predicate
      * @throws NullPointerException if the predicates collection is null
      * @throws NullPointerException if any predicate in the collection is null
      * @see OnePredicate
@@ -394,7 +394,7 @@ public class PredicateUtils {
      * @param <T>  the type that the predicate queries
      * @param predicate1  the first predicate, may not be null
      * @param predicate2  the second predicate, may not be null
-     * @return the <code>neither</code> predicate
+     * @return the {@code neither} predicate
      * @throws NullPointerException if either predicate is null
      * @see NonePredicate
      */
@@ -412,7 +412,7 @@ public class PredicateUtils {
      *
      * @param <T>  the type that the predicate queries
      * @param predicates  an array of predicates to check, may not be null
-     * @return the <code>none</code> predicate
+     * @return the {@code none} predicate
      * @throws NullPointerException if the predicates array is null
      * @throws NullPointerException if any predicate in the array is null
      * @see NonePredicate
@@ -428,7 +428,7 @@ public class PredicateUtils {
      *
      * @param <T>  the type that the predicate queries
      * @param predicates  a collection of predicates to check, may not be null
-     * @return the <code>none</code> predicate
+     * @return the {@code none} predicate
      * @throws NullPointerException if the predicates collection is null
      * @throws NullPointerException if any predicate in the collection is null
      * @see NonePredicate
@@ -443,7 +443,7 @@ public class PredicateUtils {
      *
      * @param <T>  the type that the predicate queries
      * @param predicate  the predicate to not
-     * @return the <code>not</code> predicate
+     * @return the {@code not} predicate
      * @throws NullPointerException if the predicate is null
      * @see NotPredicate
      */

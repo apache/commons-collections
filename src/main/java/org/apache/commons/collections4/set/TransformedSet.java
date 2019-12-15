@@ -22,7 +22,7 @@ import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.collection.TransformedCollection;
 
 /**
- * Decorates another <code>Set</code> to transform objects that are added.
+ * Decorates another {@code Set} to transform objects that are added.
  * <p>
  * The add methods are affected by this class.
  * Thus objects must be removed or searched for using their transformed form.

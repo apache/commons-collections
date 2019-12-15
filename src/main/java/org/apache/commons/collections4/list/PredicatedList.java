@@ -25,7 +25,7 @@ import org.apache.commons.collections4.collection.PredicatedCollection;
 import org.apache.commons.collections4.iterators.AbstractListIteratorDecorator;
 
 /**
- * Decorates another <code>List</code> to validate that all additions
+ * Decorates another {@code List} to validate that all additions
  * match a specified predicate.
  * <p>
  * This list exists to provide validation for the decorated list.

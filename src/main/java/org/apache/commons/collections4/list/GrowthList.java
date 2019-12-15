@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Decorates another <code>List</code> to make it seamlessly grow when
+ * Decorates another {@code List} to make it seamlessly grow when
  * indices larger than the list size are used on add and set,
  * avoiding most IndexOutOfBoundsExceptions.
  * <p>
@@ -32,7 +32,7 @@ import java.util.List;
  * </p>
  * <p>
  * Trying to set or add to an index larger than the size will cause the list
- * to grow (using <code>null</code> elements). Clearly, care must be taken
+ * to grow (using {@code null} elements). Clearly, care must be taken
  * not to use excessively large indices, as the internal list will grow to
  * match.
  * </p>
@@ -41,8 +41,8 @@ import java.util.List;
  * call the underlying list and probably result in an IndexOutOfBoundsException.
  * </p>
  * <p>
- * Take care when using this list with <code>null</code> values, as
- * <code>null</code> is the value added when growing the list.
+ * Take care when using this list with {@code null} values, as
+ * {@code null} is the value added when growing the list.
  * </p>
  * <p>
  * All sub-lists will access the underlying list directly, and will throw
@@ -50,7 +50,7 @@ import java.util.List;
  * </p>
  * <p>
  * This class differs from {@link LazyList} because here growth occurs on
- * set and add, where <code>LazyList</code> grows on get. However, they
+ * set and add, where {@code LazyList} grows on get. However, they
  * can be used together by decorating twice.
  * </p>
  *
@@ -109,7 +109,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
      * <p>
      * If the requested index is greater than the current size, the list will
      * grow to the new size. Indices between the old size and the requested
-     * size will be filled with <code>null</code>.
+     * size will be filled with {@code null}.
      * <p>
      * If the index is less than the current size, the value will be added to
      * the underlying list directly.
@@ -137,7 +137,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
      * <p>
      * If the requested index is greater than the current size, the list will
      * grow to the new size. Indices between the old size and the requested
-     * size will be filled with <code>null</code>.
+     * size will be filled with {@code null}.
      * <p>
      * If the index is less than the current size, the values will be added to
      * the underlying list directly.
@@ -168,7 +168,7 @@ public class GrowthList<E> extends AbstractSerializableListDecorator<E> {
      * <p>
      * If the requested index is greater than the current size, the list will
      * grow to the new size. Indices between the old size and the requested
-     * size will be filled with <code>null</code>.
+     * size will be filled with {@code null}.
      * <p>
      * If the index is less than the current size, the value will be set onto
      * the underlying list directly.

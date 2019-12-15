@@ -23,8 +23,8 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * A <code>Map</code> implementation that is a general purpose alternative
- * to <code>HashMap</code>.
+ * A {@code Map} implementation that is a general purpose alternative
+ * to {@code HashMap}.
  * <p>
  * This implementation improves on the JDK1.4 HashMap by adding the
  * {@link org.apache.commons.collections4.MapIterator MapIterator}

@@ -22,7 +22,7 @@ import org.apache.commons.collections4.Transformer;
 
 /**
  * Transformer implementation that returns the result of calling
- * <code>String.valueOf</code> on the input object.
+ * {@code String.valueOf} on the input object.
  *
  * @since 3.0
  */
@@ -54,7 +54,7 @@ public final class StringValueTransformer<T> implements Transformer<T, String>, 
     }
 
     /**
-     * Transforms the input to result by calling <code>String.valueOf</code>.
+     * Transforms the input to result by calling {@code String.valueOf}.
      *
      * @param input  the input object to transform
      * @return the transformed result

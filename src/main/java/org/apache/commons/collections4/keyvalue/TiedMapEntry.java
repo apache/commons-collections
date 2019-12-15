@@ -93,7 +93,7 @@ public class TiedMapEntry<K, V> implements Map.Entry<K, V>, KeyValue<K, V>, Seri
     }
 
     /**
-     * Compares this <code>Map.Entry</code> with another <code>Map.Entry</code>.
+     * Compares this {@code Map.Entry} with another {@code Map.Entry}.
      * <p>
      * Implemented per API documentation of {@link java.util.Map.Entry#equals(Object)}
      *

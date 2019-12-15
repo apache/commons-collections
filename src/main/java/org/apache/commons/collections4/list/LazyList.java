@@ -23,7 +23,7 @@ import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.Transformer;
 
 /**
- * Decorates another <code>List</code> to create objects in the list on demand.
+ * Decorates another {@code List} to create objects in the list on demand.
  * <p>
  * When the {@link #get(int)} method is called with an index greater than
  * the size of the list, the list will automatically grow in size and return
@@ -47,14 +47,14 @@ import org.apache.commons.collections4.Transformer;
  * </pre>
  *
  * <p>
- * After the above code is executed, <code>date</code> will contain
- * a new <code>Date</code> instance.  Furthermore, that <code>Date</code>
+ * After the above code is executed, {@code date} will contain
+ * a new {@code Date} instance.  Furthermore, that {@code Date}
  * instance is the fourth element in the list.  The first, second,
- * and third element are all set to <code>null</code>.
+ * and third element are all set to {@code null}.
  * </p>
  * <p>
  * This class differs from {@link GrowthList} because here growth occurs on
- * get, where <code>GrowthList</code> grows on set and add. However, they
+ * get, where {@code GrowthList} grows on set and add. However, they
  * could easily be used together by decorating twice.
  * </p>
  * <p>

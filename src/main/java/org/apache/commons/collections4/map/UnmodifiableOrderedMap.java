@@ -32,7 +32,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableOrderedMapIterator;
 import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
- * Decorates another <code>OrderedMap</code> to ensure it can't be altered.
+ * Decorates another {@code OrderedMap} to ensure it can't be altered.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  * </p>

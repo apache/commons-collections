@@ -44,7 +44,7 @@ public abstract class AbstractMockPredicateTest<T> {
     private final T testValue;
 
     /**
-     * Creates a new <code>PredicateTestBase</code>.
+     * Creates a new {@code PredicateTestBase}.
      *
      * @param testValue the value to pass to mock predicates.
      */

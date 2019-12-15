@@ -20,7 +20,7 @@ package org.apache.commons.collections4;
  * Defines a functor interface implemented by classes that transform one
  * object into another.
  * <p>
- * A <code>Transformer</code> converts the input object to the output object.
+ * A {@code Transformer} converts the input object to the output object.
  * The input object should be left unchanged.
  * Transformers are typically used for type conversions, or extracting data
  * from an object.

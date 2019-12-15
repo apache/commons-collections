@@ -24,11 +24,12 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Decorates a <code>Map</code> to evict expired entries once their expiration
+ * Decorates a {@code Map} to evict expired entries once their expiration
  * time has been reached.
  * <p>
  * When putting a key-value pair in the map this decorator uses a
@@ -39,7 +40,7 @@ import java.util.concurrent.TimeUnit;
  * When accessing the mapped value for a key, its expiration time is checked,
  * and if it is a negative value or if it is greater than the current time, the
  * mapped value is returned. Otherwise, the key is removed from the decorated
- * map, and <code>null</code> is returned.
+ * map, and {@code null} is returned.
  * </p>
  * <p>
  * When invoking methods that involve accessing the entire map contents (i.e
@@ -113,7 +114,7 @@ public class PassiveExpiringMap<K, V>
          *        before it expires. A negative value results in entries that
          *        NEVER expire. A zero value results in entries that ALWAYS
          *        expire.
-         * @param timeUnit the unit of time for the <code>timeToLive</code>
+         * @param timeUnit the unit of time for the {@code timeToLive}
          *        parameter, must not be null.
          * @throws NullPointerException if the time unit is null.
          */
@@ -185,15 +186,13 @@ public class PassiveExpiringMap<K, V>
      * @param timeToLive the constant amount of time an entry is available
      *        before it expires. A negative value results in entries that NEVER
      *        expire. A zero value results in entries that ALWAYS expire.
-     * @param timeUnit the unit of time for the <code>timeToLive</code>
+     * @param timeUnit the unit of time for the {@code timeToLive}
      *        parameter, must not be null.
      * @throws NullPointerException if the time unit is null.
      */
     private static long validateAndConvertToMillis(final long timeToLive,
                                                    final TimeUnit timeUnit) {
-        if (timeUnit == null) {
-            throw new NullPointerException("Time unit must not be null");
-        }
+        Objects.requireNonNull(timeUnit, "timeUnit");
         return TimeUnit.MILLISECONDS.convert(timeToLive, timeUnit);
     }
 
@@ -237,10 +236,7 @@ public class PassiveExpiringMap<K, V>
     public PassiveExpiringMap(final ExpirationPolicy<K, V> expiringPolicy,
                               final Map<K, V> map) {
         super(map);
-        if (expiringPolicy == null) {
-            throw new NullPointerException("Policy must not be null.");
-        }
-        this.expiringPolicy = expiringPolicy;
+        this.expiringPolicy = Objects.requireNonNull(expiringPolicy, "expiringPolicy");
     }
 
     /**
@@ -285,7 +281,7 @@ public class PassiveExpiringMap<K, V>
      * @param timeToLive the constant amount of time an entry is available
      *        before it expires. A negative value results in entries that NEVER
      *        expire. A zero value results in entries that ALWAYS expire.
-     * @param timeUnit the unit of time for the <code>timeToLive</code>
+     * @param timeUnit the unit of time for the {@code timeToLive}
      *        parameter, must not be null.
      * @throws NullPointerException if the time unit is null.
      */
@@ -304,7 +300,7 @@ public class PassiveExpiringMap<K, V>
      * @param timeToLive the constant amount of time an entry is available
      *        before it expires. A negative value results in entries that NEVER
      *        expire. A zero value results in entries that ALWAYS expire.
-     * @param timeUnit the unit of time for the <code>timeToLive</code>
+     * @param timeUnit the unit of time for the {@code timeToLive}
      *        parameter, must not be null.
      * @param map the map to decorate, must not be null.
      * @throws NullPointerException if the map or time unit is null.
@@ -388,15 +384,15 @@ public class PassiveExpiringMap<K, V>
     }
 
     /**
-     * Determines if the given expiration time is less than <code>now</code>.
+     * Determines if the given expiration time is less than {@code now}.
      *
      * @param now the time in milliseconds used to compare against the
      *        expiration time.
      * @param expirationTimeObject the expiration time value retrieved from
      *        {@link #expirationMap}, can be null.
-     * @return <code>true</code> if <code>expirationTimeObject</code> is &ge; 0
-     *         and <code>expirationTimeObject</code> &lt; <code>now</code>.
-     *         <code>false</code> otherwise.
+     * @return {@code true} if {@code expirationTimeObject} is &ge; 0
+     *         and {@code expirationTimeObject} &lt; {@code now}.
+     *         {@code false} otherwise.
      */
     private boolean isExpired(final long now, final Long expirationTimeObject) {
         if (expirationTimeObject != null) {
@@ -461,7 +457,7 @@ public class PassiveExpiringMap<K, V>
 
     /**
      * Removes all entries in the map whose expiration time is less than
-     * <code>now</code>. The exceptions are entries with negative expiration
+     * {@code now}. The exceptions are entries with negative expiration
      * times; those entries are never removed.
      *
      * @see #isExpired(long, Long)
@@ -481,7 +477,7 @@ public class PassiveExpiringMap<K, V>
 
     /**
      * Removes the entry with the given key if the entry's expiration time is
-     * less than <code>now</code>. If the entry has a negative expiration time,
+     * less than {@code now}. If the entry has a negative expiration time,
      * the entry is never removed.
      */
     private void removeIfExpired(final Object key, final long now) {

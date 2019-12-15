@@ -29,6 +29,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedMap;
 
@@ -126,9 +127,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
     @Override
     public V put(final K key, final V value) {
-        if (key == null) {
-            throw new NullPointerException("Key cannot be null");
-        }
+        Objects.requireNonNull(key, "key");
 
         final int lengthInBits = lengthInBits(key);
 
@@ -794,9 +793,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
     @Override
     public K nextKey(final K key) {
-        if (key == null) {
-            throw new NullPointerException();
-        }
+        Objects.requireNonNull(key, "key");
         final TrieEntry<K, V> entry = getEntry(key);
         if (entry != null) {
             final TrieEntry<K, V> nextEntry = nextEntry(entry);
@@ -807,9 +804,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
 
     @Override
     public K previousKey(final K key) {
-        if (key == null) {
-            throw new NullPointerException();
-        }
+        Objects.requireNonNull(key, "key");
         final TrieEntry<K, V> entry = getEntry(key);
         if (entry != null) {
             final TrieEntry<K, V> prevEntry = previousEntry(entry);
@@ -1971,11 +1966,7 @@ abstract class AbstractPatriciaTrie<K, V> extends AbstractBitwiseTrie<K, V> {
          * Creates a {@link RangeEntrySet}.
          */
         public RangeEntrySet(final RangeMap delegate) {
-            if (delegate == null) {
-                throw new NullPointerException("delegate");
-            }
-
-            this.delegate = delegate;
+            this.delegate = Objects.requireNonNull(delegate, "delegate");
         }
 
         @Override

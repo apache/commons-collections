@@ -316,7 +316,7 @@ public class ListUtilsTest {
     }
 
     /**
-     * Tests the <code>indexOf</code> method in <code>ListUtils</code> class..
+     * Tests the {@code indexOf} method in {@code ListUtils} class..
      */
     @Test
     public void testIndexOf() {

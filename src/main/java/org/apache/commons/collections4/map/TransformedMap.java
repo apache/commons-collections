@@ -25,7 +25,7 @@ import java.util.Map;
 import org.apache.commons.collections4.Transformer;
 
 /**
- * Decorates another <code>Map</code> to transform objects that are added.
+ * Decorates another {@code Map} to transform objects that are added.
  * <p>
  * The Map put methods and Map.Entry setValue method are affected by this class.
  * Thus objects must be removed or searched for using their transformed form.
@@ -211,7 +211,7 @@ public class TransformedMap<K, V>
     }
 
     /**
-     * Override to transform the value when using <code>setValue</code>.
+     * Override to transform the value when using {@code setValue}.
      *
      * @param value  the value to transform
      * @return the transformed value

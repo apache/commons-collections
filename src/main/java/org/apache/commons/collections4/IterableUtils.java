@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.functors.EqualPredicate;
@@ -258,9 +259,7 @@ public class IterableUtils {
     public static <E> Iterable<E> filteredIterable(final Iterable<E> iterable,
                                                    final Predicate<? super E> predicate) {
         checkNotNull(iterable);
-        if (predicate == null) {
-            throw new NullPointerException("Predicate must not be null.");
-        }
+        Objects.requireNonNull(predicate, "predicate");
         return new FluentIterable<E>() {
             @Override
             public Iterator<E> iterator() {
@@ -418,9 +417,7 @@ public class IterableUtils {
     public static <I, O> Iterable<O> transformedIterable(final Iterable<I> iterable,
                                                          final Transformer<? super I, ? extends O> transformer) {
         checkNotNull(iterable);
-        if (transformer == null) {
-            throw new NullPointerException("Transformer must not be null.");
-        }
+        Objects.requireNonNull(transformer, "transformer");
         return new FluentIterable<O>() {
             @Override
             public Iterator<O> iterator() {
@@ -602,7 +599,7 @@ public class IterableUtils {
     /**
      * Finds the first element in the given iterable which matches the given predicate.
      * <p>
-     * A <code>null</code> or empty iterator returns null.
+     * A {@code null} or empty iterator returns null.
      *
      * @param <E> the element type
      * @param iterable  the iterable to search, may be null
@@ -618,7 +615,7 @@ public class IterableUtils {
      * Returns the index of the first element in the specified iterable that
      * matches the given predicate.
      * <p>
-     * A <code>null</code> or empty iterable returns -1.
+     * A {@code null} or empty iterable returns -1.
      *
      * @param <E> the element type
      * @param iterable  the iterable to search, may be null
@@ -633,7 +630,7 @@ public class IterableUtils {
     /**
      * Answers true if a predicate is true for every element of an iterable.
      * <p>
-     * A <code>null</code> or empty iterable returns true.
+     * A {@code null} or empty iterable returns true.
      *
      * @param <E> the type of object the {@link Iterable} contains
      * @param iterable  the {@link Iterable} to use, may be null
@@ -649,7 +646,7 @@ public class IterableUtils {
     /**
      * Answers true if a predicate is true for any element of the iterable.
      * <p>
-     * A <code>null</code> or empty iterable returns false.
+     * A {@code null} or empty iterable returns false.
      *
      * @param <E> the type of object the {@link Iterable} contains
      * @param iterable  the {@link Iterable} to use, may be null
@@ -664,7 +661,7 @@ public class IterableUtils {
     /**
      * Counts the number of elements in the input iterable that match the predicate.
      * <p>
-     * A <code>null</code> iterable matches no elements.
+     * A {@code null} iterable matches no elements.
      *
      * @param <E> the type of object the {@link Iterable} contains
      * @param input  the {@link Iterable} to get the input from, may be null
@@ -673,16 +670,14 @@ public class IterableUtils {
      * @throws NullPointerException if predicate is null
      */
     public static <E> long countMatches(final Iterable<E> input, final Predicate<? super E> predicate) {
-        if (predicate == null) {
-            throw new NullPointerException("Predicate must not be null.");
-        }
+        Objects.requireNonNull(predicate, "predicate");
         return size(filteredIterable(emptyIfNull(input), predicate));
     }
 
     /**
      * Answers true if the provided iterable is empty.
      * <p>
-     * A <code>null</code> iterable returns true.
+     * A {@code null} iterable returns true.
      *
      * @param iterable  the {@link Iterable to use}, may be null
      * @return true if the iterable is null or empty, false otherwise
@@ -697,7 +692,7 @@ public class IterableUtils {
     /**
      * Checks if the object is contained in the given iterable.
      * <p>
-     * A <code>null</code> or empty iterable returns false.
+     * A {@code null} or empty iterable returns false.
      *
      * @param <E> the type of object the {@link Iterable} contains
      * @param iterable  the iterable to check, may be null
@@ -716,8 +711,8 @@ public class IterableUtils {
      * is tested with an {@code equator} unlike {@link #contains(Iterable, Object)}
      * which uses {@link Object#equals(Object)}.
      * <p>
-     * A <code>null</code> or empty iterable returns false.
-     * A <code>null</code> object will not be passed to the equator, instead a
+     * A {@code null} or empty iterable returns false.
+     * A {@code null} object will not be passed to the equator, instead a
      * {@link org.apache.commons.collections4.functors.NullPredicate NullPredicate}
      * will be used.
      *
@@ -730,9 +725,7 @@ public class IterableUtils {
      */
     public static <E> boolean contains(final Iterable<? extends E> iterable, final E object,
                                        final Equator<? super E> equator) {
-        if (equator == null) {
-            throw new NullPointerException("Equator must not be null.");
-        }
+        Objects.requireNonNull(equator, "equator");
         return matchesAny(iterable, EqualPredicate.equalPredicate(object, equator));
     }
 
@@ -756,8 +749,8 @@ public class IterableUtils {
     }
 
     /**
-     * Returns the <code>index</code>-th value in the <code>iterable</code>'s {@link Iterator}, throwing
-     * <code>IndexOutOfBoundsException</code> if there is no such element.
+     * Returns the {@code index}-th value in the {@code iterable}'s {@link Iterator}, throwing
+     * {@code IndexOutOfBoundsException} if there is no such element.
      * <p>
      * If the {@link Iterable} is a {@link List}, then it will use {@link List#get(int)}.
      *
@@ -778,8 +771,8 @@ public class IterableUtils {
     /**
      * Shortcut for {@code get(iterator, 0)}.
      * <p>
-     * Returns the <code>first</code> value in the <code>iterable</code>'s {@link Iterator}, throwing
-     * <code>IndexOutOfBoundsException</code> if there is no such element.
+     * Returns the {@code first} value in the {@code iterable}'s {@link Iterator}, throwing
+     * {@code IndexOutOfBoundsException} if there is no such element.
      * </p>
      * <p>
      * If the {@link Iterable} is a {@link List}, then it will use {@link List#get(int)}.
@@ -798,7 +791,7 @@ public class IterableUtils {
     /**
      * Returns the number of elements contained in the given iterator.
      * <p>
-     * A <code>null</code> or empty iterator returns {@code 0}.
+     * A {@code null} or empty iterator returns {@code 0}.
      *
      * @param iterable  the iterable to check, may be null
      * @return the number of elements contained in the iterable
@@ -825,7 +818,7 @@ public class IterableUtils {
      *  R = collection of elements rejected by all predicates
      * </pre>
      * <p>
-     * If the input iterable is <code>null</code>, the same is returned as for an
+     * If the input iterable is {@code null}, the same is returned as for an
      * empty iterable.
      * <p>
      * Example: for an input list [1, 2, 3, 4, 5] calling partition with a predicate [x &lt; 3]
@@ -839,9 +832,7 @@ public class IterableUtils {
      */
     public static <O> List<List<O>> partition(final Iterable<? extends O> iterable,
                                               final Predicate<? super O> predicate) {
-        if (predicate == null) {
-            throw new NullPointerException("Predicate must not be null.");
-        }
+        Objects.requireNonNull(predicate, "predicate");
         @SuppressWarnings({ "unchecked", "rawtypes" }) // safe
         final Factory<List<O>> factory = FactoryUtils.instantiateFactory((Class) ArrayList.class);
         @SuppressWarnings("unchecked") // safe
@@ -869,7 +860,7 @@ public class IterableUtils {
      * <b>Note</b>: elements are only added to the output collection of the first matching
      * predicate, determined by the order of arguments.
      * <p>
-     * If the input iterable is <code>null</code>, the same is returned as for an
+     * If the input iterable is {@code null}, the same is returned as for an
      * empty iterable.
      * <p>
      * Example: for an input list [1, 2, 3, 4, 5] calling partition with predicates [x &lt; 3]
@@ -909,7 +900,7 @@ public class IterableUtils {
      * <b>Note</b>: elements are only added to the output collection of the first matching
      * predicate, determined by the order of arguments.
      * <p>
-     * If the input iterable is <code>null</code>, the same is returned as for an
+     * If the input iterable is {@code null}, the same is returned as for an
      * empty iterable.
      * If no predicates have been provided, all elements of the input collection
      * will be added to the rejected collection.
@@ -933,14 +924,10 @@ public class IterableUtils {
             return partition(empty, partitionFactory, predicates);
         }
 
-        if (predicates == null) {
-            throw new NullPointerException("Predicates must not be null.");
-        }
+        Objects.requireNonNull(predicates, "predicates");
 
-        for (final Predicate<?> p : predicates) {
-            if (p == null) {
-                throw new NullPointerException("Predicate must not be null.");
-            }
+        for (final Predicate<?> predicate : predicates) {
+            Objects.requireNonNull(predicate, "predicate");
         }
 
         if (predicates.length < 1) {
@@ -1025,9 +1012,7 @@ public class IterableUtils {
      */
     public static <E> String toString(final Iterable<E> iterable,
                                       final Transformer<? super E, String> transformer) {
-        if (transformer == null) {
-            throw new NullPointerException("Transformer must not be null.");
-        }
+        Objects.requireNonNull(transformer, "transformer");
         return IteratorUtils.toString(emptyIteratorIfNull(iterable), transformer);
     }
 
@@ -1067,9 +1052,7 @@ public class IterableUtils {
      * @throws NullPointerException if iterable is null
      */
     static void checkNotNull(final Iterable<?> iterable) {
-        if (iterable == null) {
-            throw new NullPointerException("Iterable must not be null.");
-        }
+        Objects.requireNonNull(iterable, "iterable");
     }
 
     /**
@@ -1079,21 +1062,19 @@ public class IterableUtils {
      * @throws NullPointerException if the argument or any of its contents is null
      */
     static void checkNotNull(final Iterable<?>... iterables) {
-        if (iterables == null) {
-            throw new NullPointerException("Iterables must not be null.");
-        }
+        Objects.requireNonNull(iterables, "iterables");
         for (final Iterable<?> iterable : iterables) {
             checkNotNull(iterable);
         }
     }
 
     /**
-     * Returns an empty iterator if the argument is <code>null</code>,
+     * Returns an empty iterator if the argument is {@code null},
      * or {@code iterable.iterator()} otherwise.
      *
      * @param <E> the element type
-     * @param iterable  the iterable, possibly <code>null</code>
-     * @return an empty iterator if the argument is <code>null</code>
+     * @param iterable  the iterable, possibly {@code null}
+     * @return an empty iterator if the argument is {@code null}
      */
     private static <E> Iterator<E> emptyIteratorIfNull(final Iterable<E> iterable) {
         return iterable != null ? iterable.iterator() : IteratorUtils.<E>emptyIterator();

@@ -18,6 +18,7 @@ package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Transformer;
 
@@ -43,7 +44,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
      *
      * @param <T>  the object type
      * @param transformers  the transformers to chain, copied, no nulls
-     * @return the <code>chained</code> transformer
+     * @return the {@code chained} transformer
      * @throws NullPointerException if the transformers array is null
      * @throws NullPointerException if any transformer in the array is null
      */
@@ -62,15 +63,13 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
      *
      * @param <T>  the object type
      * @param transformers  a collection of transformers to chain
-     * @return the <code>chained</code> transformer
+     * @return the {@code chained} transformer
      * @throws NullPointerException if the transformers collection is null
      * @throws NullPointerException if any transformer in the collection is null
      */
     public static <T> Transformer<T, T> chainedTransformer(
             final Collection<? extends Transformer<? super T, ? extends T>> transformers) {
-        if (transformers == null) {
-            throw new NullPointerException("Transformer collection must not be null");
-        }
+        Objects.requireNonNull(transformers, "transformers");
         if (transformers.size() == 0) {
             return NOPTransformer.<T>nopTransformer();
         }
@@ -93,7 +92,7 @@ public class ChainedTransformer<T> implements Transformer<T, T>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>chainedTransformer</code> if you want that.
+     * Use {@code chainedTransformer} if you want that.
      *
      * @param transformers  the transformers to chain, copied, no nulls
      */

@@ -29,7 +29,7 @@ import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.apache.commons.collections4.set.UnmodifiableSet;
 
 /**
- * Decorates another <code>Map</code> to fix the size, preventing add/remove.
+ * Decorates another {@code Map} to fix the size, preventing add/remove.
  * <p>
  * Any action that would change the size of the map is disallowed.
  * The put method is allowed to change the value associated with an existing

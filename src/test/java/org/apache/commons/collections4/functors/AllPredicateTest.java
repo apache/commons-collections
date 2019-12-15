@@ -35,7 +35,7 @@ import java.util.Collections;
 public class AllPredicateTest extends AbstractAnyAllOnePredicateTest<Integer> {
 
     /**
-     * Creates a new <code>TestAllPredicate</code>.
+     * Creates a new {@code TestAllPredicate}.
      */
     public AllPredicateTest() {
         super(42);

@@ -19,7 +19,7 @@ package org.apache.commons.collections4;
 /**
  * Defines a functor interface implemented by classes that create objects.
  * <p>
- * A <code>Factory</code> creates an object without using an input parameter.
+ * A {@code Factory} creates an object without using an input parameter.
  * If an input parameter is required, then {@link Transformer} is more appropriate.
  * </p>
  * <p>

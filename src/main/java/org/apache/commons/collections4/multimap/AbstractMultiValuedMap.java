@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -88,10 +89,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      */
     @SuppressWarnings("unchecked")
     protected AbstractMultiValuedMap(final Map<K, ? extends Collection<V>> map) {
-        if (map == null) {
-            throw new NullPointerException("Map must not be null.");
-        }
-        this.map = (Map<K, Collection<V>>) map;
+        this.map = (Map<K, Collection<V>>) Objects.requireNonNull(map, "map");
     }
 
     // -----------------------------------------------------------------------
@@ -159,10 +157,10 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     /**
      * Removes all values associated with the specified key.
      * <p>
-     * A subsequent <code>get(Object)</code> would return an empty collection.
+     * A subsequent {@code get(Object)} would return an empty collection.
      *
      * @param key  the key to remove values from
-     * @return the <code>Collection</code> of values removed, will return an
+     * @return the {@code Collection} of values removed, will return an
      *   empty, unmodifiable collection for no mapping found
      */
     @Override
@@ -247,7 +245,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
     /**
      * Adds the value to the collection associated with the specified key.
      * <p>
-     * Unlike a normal <code>Map</code> the previous value is not replaced.
+     * Unlike a normal {@code Map} the previous value is not replaced.
      * Instead the new value is added to the collection stored against the key.
      *
      * @param key the key to store against
@@ -282,9 +280,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      */
     @Override
     public boolean putAll(final Map<? extends K, ? extends V> map) {
-        if (map == null) {
-            throw new NullPointerException("Map must not be null.");
-        }
+        Objects.requireNonNull(map, "map");
         boolean changed = false;
         for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
             changed |= put(entry.getKey(), entry.getValue());
@@ -306,9 +302,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      */
     @Override
     public boolean putAll(final MultiValuedMap<? extends K, ? extends V> map) {
-        if (map == null) {
-            throw new NullPointerException("Map must not be null.");
-        }
+        Objects.requireNonNull(map, "map");
         boolean changed = false;
         for (final Map.Entry<? extends K, ? extends V> entry : map.entries()) {
             changed |= put(entry.getKey(), entry.getValue());
@@ -349,9 +343,7 @@ public abstract class AbstractMultiValuedMap<K, V> implements MultiValuedMap<K, 
      */
     @Override
     public boolean putAll(final K key, final Iterable<? extends V> values) {
-        if (values == null) {
-            throw new NullPointerException("Values must not be null.");
-        }
+        Objects.requireNonNull(values, "values");
 
         if (values instanceof Collection<?>) {
             final Collection<? extends V> valueCollection = (Collection<? extends V>) values;

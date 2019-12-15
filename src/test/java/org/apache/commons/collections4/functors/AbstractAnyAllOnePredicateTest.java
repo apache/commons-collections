@@ -33,7 +33,7 @@ import java.util.Collections;
 public abstract class AbstractAnyAllOnePredicateTest<T> extends AbstractCompositePredicateTest<T> {
 
     /**
-     * Creates a new <code>TestCompositePredicate</code>.
+     * Creates a new {@code TestCompositePredicate}.
      *
      * @param testValue the value which the mock predicates should expect to see (may be null).
      */
@@ -42,7 +42,7 @@ public abstract class AbstractAnyAllOnePredicateTest<T> extends AbstractComposit
     }
 
     /**
-     * Tests whether <code>getInstance</code> with a one element array returns the first element in the array.
+     * Tests whether {@code getInstance} with a one element array returns the first element in the array.
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -54,7 +54,7 @@ public abstract class AbstractAnyAllOnePredicateTest<T> extends AbstractComposit
     }
 
     /**
-     * Tests that passing a singleton collection to <code>getInstance</code> returns the single element in the
+     * Tests that passing a singleton collection to {@code getInstance} returns the single element in the
      * collection.
      */
     @Override

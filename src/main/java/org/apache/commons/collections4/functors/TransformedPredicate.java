@@ -17,13 +17,14 @@
 package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.Transformer;
 
 /**
  * Predicate implementation that transforms the given object before invoking
- * another <code>Predicate</code>.
+ * another {@code Predicate}.
  *
  * @since 3.1
  */
@@ -49,18 +50,13 @@ public final class TransformedPredicate<T> implements PredicateDecorator<T>, Ser
      */
     public static <T> Predicate<T> transformedPredicate(final Transformer<? super T, ? extends T> transformer,
                                                         final Predicate<? super T> predicate) {
-        if (transformer == null) {
-            throw new NullPointerException("The transformer to call must not be null");
-        }
-        if (predicate == null) {
-            throw new NullPointerException("The predicate to call must not be null");
-        }
-        return new TransformedPredicate<>(transformer, predicate);
+        return new TransformedPredicate<>(Objects.requireNonNull(transformer, "transformer"),
+                Objects.requireNonNull(predicate, "predicate"));
     }
 
     /**
      * Constructor that performs no validation.
-     * Use <code>transformedPredicate</code> if you want that.
+     * Use {@code transformedPredicate} if you want that.
      *
      * @param transformer  the transformer to use
      * @param predicate  the predicate to decorate

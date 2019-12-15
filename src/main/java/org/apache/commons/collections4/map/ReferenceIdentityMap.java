@@ -23,11 +23,11 @@ import java.io.Serializable;
 import java.lang.ref.Reference;
 
 /**
- * A <code>Map</code> implementation that allows mappings to be
+ * A {@code Map} implementation that allows mappings to be
  * removed by the garbage collector and matches keys and values based
- * on <code>==</code> not <code>equals()</code>.
+ * on {@code ==} not {@code equals()}.
  * <p>
- * When you construct a <code>ReferenceIdentityMap</code>, you can specify what kind
+ * When you construct a {@code ReferenceIdentityMap}, you can specify what kind
  * of references are used to store the map's keys and values.
  * If non-hard references are used, then the garbage collector can remove
  * mappings if a key or value becomes unreachable, or if the JVM's memory is
@@ -42,7 +42,7 @@ import java.lang.ref.Reference;
  * <p>
  * This map is similar to
  * {@link org.apache.commons.collections4.map.ReferenceMap ReferenceMap}.
- * It differs in that keys and values in this class are compared using <code>==</code>.
+ * It differs in that keys and values in this class are compared using {@code ==}.
  * </p>
  * <p>
  * This map will violate the detail of various Map and map view contracts.
@@ -50,17 +50,17 @@ import java.lang.ref.Reference;
  * </p>
  * <p>
  * This {@link java.util.Map Map} implementation does <i>not</i> allow null elements.
- * Attempting to add a null key or value to the map will raise a <code>NullPointerException</code>.
+ * Attempting to add a null key or value to the map will raise a {@code NullPointerException}.
  * </p>
  * <p>
  * This implementation is not synchronized.
  * You can use {@link java.util.Collections#synchronizedMap} to
- * provide synchronized access to a <code>ReferenceIdentityMap</code>.
+ * provide synchronized access to a {@code ReferenceIdentityMap}.
  * Remember that synchronization will not stop the garbage collector removing entries.
  * </p>
  * <p>
  * All the available iterators can be reset back to the start by casting to
- * <code>ResettableIterator</code> and calling <code>reset()</code>.
+ * {@code ResettableIterator} and calling {@code reset()}.
  * </p>
  * <p>
  * <strong>Note that ReferenceIdentityMap is not synchronized and is not thread-safe.</strong>
@@ -82,7 +82,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
     private static final long serialVersionUID = -1266190134568365852L;
 
     /**
-     * Constructs a new <code>ReferenceIdentityMap</code> that will
+     * Constructs a new {@code ReferenceIdentityMap} that will
      * use hard references to keys and soft references to values.
      */
     public ReferenceIdentityMap() {
@@ -91,7 +91,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
     }
 
     /**
-     * Constructs a new <code>ReferenceIdentityMap</code> that will
+     * Constructs a new {@code ReferenceIdentityMap} that will
      * use the specified types of references.
      *
      * @param keyType  the type of reference to use for keys;
@@ -108,7 +108,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
     }
 
     /**
-     * Constructs a new <code>ReferenceIdentityMap</code> that will
+     * Constructs a new {@code ReferenceIdentityMap} that will
      * use the specified types of references.
      *
      * @param keyType  the type of reference to use for keys;
@@ -128,7 +128,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
     }
 
     /**
-     * Constructs a new <code>ReferenceIdentityMap</code> with the
+     * Constructs a new {@code ReferenceIdentityMap} with the
      * specified reference types, load factor and initial capacity.
      *
      * @param keyType  the type of reference to use for keys;
@@ -148,7 +148,7 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
     }
 
     /**
-     * Constructs a new <code>ReferenceIdentityMap</code> with the
+     * Constructs a new {@code ReferenceIdentityMap} with the
      * specified reference types, load factor and initial capacity.
      *
      * @param keyType  the type of reference to use for keys;
@@ -202,10 +202,10 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
      * Compares two keys for equals.
      * <p>
      * This implementation converts the key from the entry to a real reference
-     * before comparison and uses <code>==</code>.
+     * before comparison and uses {@code ==}.
      *
      * @param key1  the first key to compare passed in from outside
-     * @param key2  the second key extracted from the entry via <code>entry.key</code>
+     * @param key2  the second key extracted from the entry via {@code entry.key}
      * @return true if equal by identity
      */
     @Override
@@ -217,10 +217,10 @@ public class ReferenceIdentityMap<K, V> extends AbstractReferenceMap<K, V> imple
     /**
      * Compares two values for equals.
      * <p>
-     * This implementation uses <code>==</code>.
+     * This implementation uses {@code ==}.
      *
      * @param value1  the first value to compare passed in from outside
-     * @param value2  the second value extracted from the entry via <code>getValue()</code>
+     * @param value2  the second value extracted from the entry via {@code getValue()}
      * @return true if equal by identity
      */
     @Override

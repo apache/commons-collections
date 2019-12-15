@@ -18,6 +18,7 @@ package org.apache.commons.collections4.splitmap;
 
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.IterableGet;
@@ -43,10 +44,7 @@ public class AbstractIterableGetMapDecorator<K, V> implements IterableGet<K, V> 
      * @throws NullPointerException if map is null
      */
     public AbstractIterableGetMapDecorator(final Map<K, V> map) {
-        if (map == null) {
-            throw new NullPointerException("Map must not be null.");
-        }
-        this.map = map;
+        this.map = Objects.requireNonNull(map, "map");
     }
 
     /**

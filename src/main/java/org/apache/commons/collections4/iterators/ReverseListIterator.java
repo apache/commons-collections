@@ -18,6 +18,7 @@ package org.apache.commons.collections4.iterators;
 
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 
 import org.apache.commons.collections4.ResettableListIterator;
 
@@ -26,10 +27,10 @@ import org.apache.commons.collections4.ResettableListIterator;
  * and continuing to the first. This is useful for looping around
  * a list in reverse order without needing to actually reverse the list.
  * <p>
- * The first call to <code>next()</code> will return the last element
- * from the list, and so on. The <code>hasNext()</code> method works
- * in concert with the <code>next()</code> method as expected.
- * However, the <code>nextIndex()</code> method returns the correct
+ * The first call to {@code next()} will return the last element
+ * from the list, and so on. The {@code hasNext()} method works
+ * in concert with the {@code next()} method as expected.
+ * However, the {@code nextIndex()} method returns the correct
  * index in the list, thus it starts high and reduces as the iteration
  * continues. The previous methods work similarly.
  *
@@ -52,10 +53,7 @@ public class ReverseListIterator<E> implements ResettableListIterator<E> {
      */
     public ReverseListIterator(final List<E> list) {
         super();
-        if (list == null) {
-            throw new NullPointerException("List must not be null.");
-        }
-        this.list = list;
+        this.list = Objects.requireNonNull(list, "list");
         iterator = list.listIterator(list.size());
     }
 

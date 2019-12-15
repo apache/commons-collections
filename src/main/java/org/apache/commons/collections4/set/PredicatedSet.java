@@ -22,7 +22,7 @@ import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.collection.PredicatedCollection;
 
 /**
- * Decorates another <code>Set</code> to validate that all additions
+ * Decorates another {@code Set} to validate that all additions
  * match a specified predicate.
  * <p>
  * This set exists to provide validation for the decorated set.

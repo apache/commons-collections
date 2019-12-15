@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.iterators;
 
 import java.util.Iterator;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Unmodifiable;
 
@@ -45,9 +46,7 @@ public final class UnmodifiableIterator<E> implements Iterator<E>, Unmodifiable 
      * @throws NullPointerException if the iterator is null
      */
     public static <E> Iterator<E> unmodifiableIterator(final Iterator<? extends E> iterator) {
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
+        Objects.requireNonNull(iterator, "iterator");
         if (iterator instanceof Unmodifiable) {
             @SuppressWarnings("unchecked") // safe to upcast
             final Iterator<E> tmpIterator = (Iterator<E>) iterator;

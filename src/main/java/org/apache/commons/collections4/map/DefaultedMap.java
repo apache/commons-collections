@@ -22,6 +22,7 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.Transformer;
@@ -29,7 +30,7 @@ import org.apache.commons.collections4.functors.ConstantTransformer;
 import org.apache.commons.collections4.functors.FactoryTransformer;
 
 /**
- * Decorates another <code>Map</code> returning a default value if the map
+ * Decorates another {@code Map} returning a default value if the map
  * does not contain the requested key.
  * <p>
  * When the {@link #get(Object)} method is called with a key that does not
@@ -109,10 +110,8 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @since 4.0
      */
     public static <K, V> DefaultedMap<K, V> defaultedMap(final Map<K, V> map, final Factory<? extends V> factory) {
-        if (factory == null) {
-            throw new IllegalArgumentException("Factory must not be null");
-        }
-        return new DefaultedMap<>(map, FactoryTransformer.factoryTransformer(factory));
+        return new DefaultedMap<>(map, FactoryTransformer.factoryTransformer(
+                Objects.requireNonNull(factory, "Factory must not be null")));
     }
 
     /**
@@ -127,21 +126,18 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      * @param map  the map to decorate, must not be null
      * @param transformer  the transformer to use as a factory to create entries, must not be null
      * @return a new defaulting map
-     * @throws NullPointerException if map or factory is null
+     * @throws NullPointerException if map or transformer is null
      * @since 4.0
      */
     public static <K, V> Map<K, V> defaultedMap(final Map<K, V> map,
                                                 final Transformer<? super K, ? extends V> transformer) {
-        if (transformer == null) {
-           throw new IllegalArgumentException("Transformer must not be null");
-       }
-       return new DefaultedMap<>(map, transformer);
+        return new DefaultedMap<>(map, Objects.requireNonNull(transformer, "Transformer must not be null"));
     }
 
     //-----------------------------------------------------------------------
     /**
-     * Constructs a new empty <code>DefaultedMap</code> that decorates
-     * a <code>HashMap</code>.
+     * Constructs a new empty {@code DefaultedMap} that decorates
+     * a {@code HashMap}.
      * <p>
      * The object passed in will be returned by the map whenever an
      * unknown key is requested.
@@ -153,7 +149,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
     }
 
     /**
-     * Constructs a new empty <code>DefaultedMap</code> that decorates a <code>HashMap</code>.
+     * Constructs a new empty {@code DefaultedMap} that decorates a {@code HashMap}.
      *
      * @param defaultValueTransformer transformer to use to generate missing values.
      */
@@ -170,10 +166,7 @@ public class DefaultedMap<K, V> extends AbstractMapDecorator<K, V> implements Se
      */
     protected DefaultedMap(final Map<K, V> map, final Transformer<? super K, ? extends V> defaultValueTransformer) {
         super(map);
-        if (defaultValueTransformer == null) {
-            throw new NullPointerException("Transformer must not be null.");
-        }
-        this.value = defaultValueTransformer;
+        this.value = Objects.requireNonNull(defaultValueTransformer, "defaultValueTransformer");
     }
 
     //-----------------------------------------------------------------------

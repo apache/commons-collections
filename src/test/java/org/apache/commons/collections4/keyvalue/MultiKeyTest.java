@@ -96,15 +96,15 @@ public class MultiKeyTest {
         try {
             new MultiKey<>(keys);
             fail();
-        } catch (final IllegalArgumentException ex) {}
+        } catch (final NullPointerException ex) {}
         try {
             new MultiKey<>(keys, true);
             fail();
-        } catch (final IllegalArgumentException ex) {}
+        } catch (final NullPointerException ex) {}
         try {
             new MultiKey<>(keys, false);
             fail();
-        } catch (final IllegalArgumentException ex) {}
+        } catch (final NullPointerException ex) {}
     }
 
     @Test

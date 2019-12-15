@@ -18,27 +18,27 @@
  * This package provides classes to compare two sequences of objects.
  * <p>
  * The two sequences can hold any object type, as only the
- * <code>equals</code> method is used to compare the elements of the
+ * {@code equals} method is used to compare the elements of the
  * sequences. It is guaranteed that the comparisons will always be done
- * as <code>o1.equals(o2)</code> where <code>o1</code> belongs to the
- * first sequence and <code>o2</code> belongs to the second
+ * as {@code o1.equals(o2)} where {@code o1} belongs to the
+ * first sequence and {@code o2} belongs to the second
  * sequence. This can be important if subclassing is used for some
- * elements in the first sequence and the <code>equals</code> method is
+ * elements in the first sequence and the {@code equals} method is
  * specialized.
  * <p>
  * Comparison can be seen from two points of view: either as giving the
  * smallest modification allowing to transform the first sequence into
  * the second one, or as giving the longest sequence which is a
- * subsequence of both initial sequences. The <code>equals</code> method
+ * subsequence of both initial sequences. The {@code equals} method
  * is used to compare objects, so any object can be put into
  * sequences. Modifications include deleting, inserting or keeping one
  * object, starting from the beginning of the first sequence. Like most
  * algorithms of the same type, objects transpositions are not
- * supported. This means that if a sequence <code>(A, B)</code> is
- * compared to <code>(B, A)</code>, the result will be either the
- * sequence of three commands <code>delete A</code>, <code>keep B</code>,
- * <code>insert A</code> or the sequence  <code>insert B</code>,
- * <code>keep A</code>, <code>delete B</code>.
+ * supported. This means that if a sequence {@code (A, B)} is
+ * compared to {@code (B, A)}, the result will be either the
+ * sequence of three commands {@code delete A}, {@code keep B},
+ * {@code insert A} or the sequence  {@code insert B},
+ * {@code keep A}, {@code delete B}.
  * <p>
  * The package uses a very efficient comparison algorithm designed by
  * Eugene W. Myers and described in his paper: <a
@@ -62,7 +62,7 @@
  * <p>
  * Sometimes however, a more synthetic approach is needed. If the user
  * prefers to see the differences between the two sequences as global
- * <code>replacement</code> operations acting on complete subsequences of
+ * {@code replacement} operations acting on complete subsequences of
  * the original sequences, he will provide an object implementing the
  * simple {@link org.apache.commons.collections4.sequence.ReplacementsHandler} interface,
  * using an instance of the {@link org.apache.commons.collections4.sequence.ReplacementsFinder}

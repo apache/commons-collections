@@ -33,7 +33,7 @@ public interface BoundedMap<K, V> extends IterableMap<K, V> {
     /**
      * Returns true if this map is full and no new elements can be added.
      *
-     * @return <code>true</code> if the map is full
+     * @return {@code true} if the map is full
      */
     boolean isFull();
 

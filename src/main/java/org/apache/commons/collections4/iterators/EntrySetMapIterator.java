@@ -23,7 +23,7 @@ import org.apache.commons.collections4.MapIterator;
 import org.apache.commons.collections4.ResettableIterator;
 
 /**
- * Implements a <code>MapIterator</code> using a Map entrySet.
+ * Implements a {@code MapIterator} using a Map entrySet.
  * Reverse iteration is not supported.
  * <pre>
  * MapIterator it = map.mapIterator();
@@ -60,7 +60,7 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
     /**
      * Checks to see if there are more entries still to be iterated.
      *
-     * @return <code>true</code> if the iterator has more elements
+     * @return {@code true} if the iterator has more elements
      */
     @Override
     public boolean hasNext() {
@@ -68,7 +68,7 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
     }
 
     /**
-     * Gets the next <em>key</em> from the <code>Map</code>.
+     * Gets the next <em>key</em> from the {@code Map}.
      *
      * @return the next key in the iteration
      * @throws java.util.NoSuchElementException if the iteration is finished
@@ -82,14 +82,14 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
 
     //-----------------------------------------------------------------------
     /**
-     * Removes the last returned key from the underlying <code>Map</code>.
+     * Removes the last returned key from the underlying {@code Map}.
      * <p>
-     * This method can be called once per call to <code>next()</code>.
+     * This method can be called once per call to {@code next()}.
      *
      * @throws UnsupportedOperationException if remove is not supported by the map
-     * @throws IllegalStateException if <code>next()</code> has not yet been called
-     * @throws IllegalStateException if <code>remove()</code> has already been called
-     *  since the last call to <code>next()</code>
+     * @throws IllegalStateException if {@code next()} has not yet been called
+     * @throws IllegalStateException if {@code remove()} has already been called
+     *  since the last call to {@code next()}
      */
     @Override
     public void remove() {
@@ -104,10 +104,10 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
     //-----------------------------------------------------------------------
     /**
      * Gets the current key, which is the key returned by the last call
-     * to <code>next()</code>.
+     * to {@code next()}.
      *
      * @return the current key
-     * @throws IllegalStateException if <code>next()</code> has not yet been called
+     * @throws IllegalStateException if {@code next()} has not yet been called
      */
     @Override
     public K getKey() {
@@ -119,10 +119,10 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
 
     /**
      * Gets the current value, which is the value associated with the last key
-     * returned by <code>next()</code>.
+     * returned by {@code next()}.
      *
      * @return the current value
-     * @throws IllegalStateException if <code>next()</code> has not yet been called
+     * @throws IllegalStateException if {@code next()} has not yet been called
      */
     @Override
     public V getValue() {
@@ -138,9 +138,9 @@ public class EntrySetMapIterator<K, V> implements MapIterator<K, V>, ResettableI
      * @param value  the new value
      * @return the previous value
      * @throws UnsupportedOperationException if setValue is not supported by the map
-     * @throws IllegalStateException if <code>next()</code> has not yet been called
-     * @throws IllegalStateException if <code>remove()</code> has been called since the
-     *  last call to <code>next()</code>
+     * @throws IllegalStateException if {@code next()} has not yet been called
+     * @throws IllegalStateException if {@code remove()} has been called since the
+     *  last call to {@code next()}
      */
     @Override
     public V setValue(final V value) {

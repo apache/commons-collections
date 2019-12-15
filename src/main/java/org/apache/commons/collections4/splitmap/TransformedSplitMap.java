@@ -21,6 +21,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Put;
 import org.apache.commons.collections4.Transformer;
@@ -47,7 +48,7 @@ import org.apache.commons.collections4.map.LinkedMap;
  * contrast with {@link org.apache.commons.collections4.map.TransformedMap} which,
  * by virtue of its implementing {@link Map}&lt;K, V&gt;, must be constructed in such
  * a way that its read and write parameters are generalized to a common (super-)type.
- * In practice this would often mean <code>&gt;Object, Object&gt;</code>, defeating
+ * In practice this would often mean {@code &gt;Object, Object&gt;}, defeating
  * much of the usefulness of having parameterized types.
  * </p>
  * <p>
@@ -113,14 +114,8 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
     protected TransformedSplitMap(final Map<K, V> map, final Transformer<? super J, ? extends K> keyTransformer,
             final Transformer<? super U, ? extends V> valueTransformer) {
         super(map);
-        if (keyTransformer == null) {
-            throw new NullPointerException("KeyTransformer must not be null.");
-        }
-        this.keyTransformer = keyTransformer;
-        if (valueTransformer == null) {
-            throw new NullPointerException("ValueTransformer must not be null.");
-        }
-        this.valueTransformer = valueTransformer;
+        this.keyTransformer = Objects.requireNonNull(keyTransformer, "keyTransformer");
+        this.valueTransformer = Objects.requireNonNull(valueTransformer, "valueTransformer");
     }
 
     //-----------------------------------------------------------------------
@@ -196,7 +191,7 @@ public class TransformedSplitMap<J, K, U, V> extends AbstractIterableGetMapDecor
     }
 
     /**
-     * Override to transform the value when using <code>setValue</code>.
+     * Override to transform the value when using {@code setValue}.
      *
      * @param value the value to transform
      * @return the transformed value

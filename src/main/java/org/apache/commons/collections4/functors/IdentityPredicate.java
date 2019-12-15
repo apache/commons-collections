@@ -50,7 +50,7 @@ public final class IdentityPredicate<T> implements Predicate<T>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>identityPredicate</code> if you want that.
+     * Use {@code identityPredicate} if you want that.
      *
      * @param object  the object to compare to
      */

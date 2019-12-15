@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.functors;
 
 import java.util.Collection;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Closure;
 import org.apache.commons.collections4.Predicate;
@@ -75,13 +76,10 @@ class FunctorUtils {
      * @param predicates  the predicates to validate
      */
     static void validate(final Predicate<?>... predicates) {
-        if (predicates == null) {
-            throw new NullPointerException("The predicate array must not be null");
-        }
+        Objects.requireNonNull(predicates, "predicates");
         for (int i = 0; i < predicates.length; i++) {
             if (predicates[i] == null) {
-                throw new NullPointerException(
-                        "The predicate array must not contain a null predicate, index " + i + " was null");
+                throw new NullPointerException("predicates[" + i + "]");
             }
         }
     }
@@ -93,9 +91,7 @@ class FunctorUtils {
      * @return predicate array
      */
     static <T> Predicate<? super T>[] validate(final Collection<? extends Predicate<? super T>> predicates) {
-        if (predicates == null) {
-            throw new NullPointerException("The predicate collection must not be null");
-        }
+        Objects.requireNonNull(predicates, "predicates");
         // convert to array like this to guarantee iterator() ordering
         @SuppressWarnings("unchecked") // OK
         final Predicate<? super T>[] preds = new Predicate[predicates.size()];
@@ -103,8 +99,7 @@ class FunctorUtils {
         for (final Predicate<? super T> predicate : predicates) {
             preds[i] = predicate;
             if (preds[i] == null) {
-                throw new NullPointerException(
-                        "The predicate collection must not contain a null predicate, index " + i + " was null");
+                throw new NullPointerException("predicates[" + i + "]");
             }
             i++;
         }
@@ -131,13 +126,10 @@ class FunctorUtils {
      * @param closures  the closures to validate
      */
     static void validate(final Closure<?>... closures) {
-        if (closures == null) {
-            throw new NullPointerException("The closure array must not be null");
-        }
+        Objects.requireNonNull(closures, "closures");
         for (int i = 0; i < closures.length; i++) {
             if (closures[i] == null) {
-                throw new NullPointerException(
-                        "The closure array must not contain a null closure, index " + i + " was null");
+                throw new NullPointerException("closures[" + i + "]");
             }
         }
     }
@@ -145,7 +137,7 @@ class FunctorUtils {
     /**
      * A very simple method that coerces Closure<? super T> to Closure<T>.
      * <p>This method exists
-     * simply as centralised documentation and atomic unchecked warning
+     * simply as centralized documentation and atomic unchecked warning
      * suppression.
      *
      * @param <T> the type of object the returned closure should "accept"
@@ -177,13 +169,10 @@ class FunctorUtils {
      * @param transformers  the transformers to validate
      */
     static void validate(final Transformer<?, ?>... transformers) {
-        if (transformers == null) {
-            throw new NullPointerException("The transformer array must not be null");
-        }
+        Objects.requireNonNull(transformers, "transformers");
         for (int i = 0; i < transformers.length; i++) {
             if (transformers[i] == null) {
-                throw new NullPointerException(
-                    "The transformer array must not contain a null transformer, index " + i + " was null");
+                throw new NullPointerException("transformers[" + i + "]");
             }
         }
     }

@@ -28,7 +28,7 @@ import org.apache.commons.collections4.Unmodifiable;
 import org.apache.commons.collections4.iterators.UnmodifiableIterator;
 
 /**
- * Decorates another <code>SortedSet</code> to ensure it can't be altered.
+ * Decorates another {@code SortedSet} to ensure it can't be altered.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  * </p>

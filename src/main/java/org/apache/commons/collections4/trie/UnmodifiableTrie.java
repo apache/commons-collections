@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.SortedMap;
 
@@ -69,11 +70,8 @@ public class UnmodifiableTrie<K, V> implements Trie<K, V>, Serializable, Unmodif
      * @throws NullPointerException if trie is null
      */
     public UnmodifiableTrie(final Trie<K, ? extends V> trie) {
-        if (trie == null) {
-            throw new NullPointerException("Trie must not be null");
-        }
         @SuppressWarnings("unchecked") // safe to upcast
-        final Trie<K, V> tmpTrie = (Trie<K, V>) trie;
+        final Trie<K, V> tmpTrie = (Trie<K, V>) Objects.requireNonNull(trie, "trie");
         this.delegate = tmpTrie;
     }
 

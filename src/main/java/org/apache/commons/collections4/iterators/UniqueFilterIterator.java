@@ -32,7 +32,7 @@ public class UniqueFilterIterator<E> extends FilterIterator<E> {
     //-------------------------------------------------------------------------
 
     /**
-     *  Constructs a new <code>UniqueFilterIterator</code>.
+     *  Constructs a new {@code UniqueFilterIterator}.
      *
      *  @param iterator  the iterator to use
      */

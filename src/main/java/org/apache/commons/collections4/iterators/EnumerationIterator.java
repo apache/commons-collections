@@ -38,7 +38,7 @@ public class EnumerationIterator<E> implements Iterator<E> {
     // Constructors
     //-----------------------------------------------------------------------
     /**
-     * Constructs a new <code>EnumerationIterator</code> that will not
+     * Constructs a new {@code EnumerationIterator} that will not
      * function until {@link #setEnumeration(Enumeration)} is called.
      */
     public EnumerationIterator() {
@@ -46,7 +46,7 @@ public class EnumerationIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Constructs a new <code>EnumerationIterator</code> that provides
+     * Constructs a new {@code EnumerationIterator} that provides
      * an iterator view of the given enumeration.
      *
      * @param enumeration  the enumeration to use
@@ -56,7 +56,7 @@ public class EnumerationIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Constructs a new <code>EnumerationIterator</code> that will remove
+     * Constructs a new {@code EnumerationIterator} that will remove
      * elements from the specified collection.
      *
      * @param enumeration  the enumeration to use
@@ -97,11 +97,11 @@ public class EnumerationIterator<E> implements Iterator<E> {
     /**
      * Removes the last retrieved element if a collection is attached.
      * <p>
-     * Functions if an associated <code>Collection</code> is known.
+     * Functions if an associated {@code Collection} is known.
      * If so, the first occurrence of the last returned object from this
      * iterator will be removed from the collection.
      *
-     * @throws IllegalStateException <code>next()</code> not called.
+     * @throws IllegalStateException {@code next()} not called.
      * @throws UnsupportedOperationException if no associated collection
      */
     @Override
