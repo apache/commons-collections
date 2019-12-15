@@ -16,7 +16,8 @@
  * limitations under the License.
  */
 /**
- * Implementations of HashFunction.
+ * Implementations of {@link org.apache.commons.collections4.bloomfilter.hasher.HasherFunction HashFunction}
+ * interface.
  * @since 4.5
  */
 package org.apache.commons.collections4.bloomfilter.hasher.function;
