@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 /**
- * Implementations of {@link org.apache.commons.collections4.bloomfilter.Hasher Hasher}
+ * Implementations of org.apache.commons.collections4.bloomfilter.Hasher
  * interface.
  * @since 4.5
  */
