@@ -26,9 +26,7 @@ import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
 import org.apache.commons.collections4.bloomfilter.Hasher;
 
 /**
- * The class that performs hashing on demand. Items can be added to the hasher using the
- * {@code with()} methods. once {@code getBits()} method is called it is an error to call
- * {@code with()} again.
+ * The class that performs hashing on demand.
  * @since 4.5
  */
 public class DynamicHasher implements Hasher {
@@ -55,8 +53,8 @@ public class DynamicHasher implements Hasher {
     }
 
     @Override
-    public String getName() {
-        return function.getName();
+    public HashFunctionIdentity getHashFunctionIdentity() {
+        return function;
     }
 
     /**
@@ -71,9 +69,12 @@ public class DynamicHasher implements Hasher {
      */
     @Override
     public PrimitiveIterator.OfInt getBits(Shape shape) {
-        if (!getName().equals(shape.getHashFunctionName())) {
+        if (HashFunctionIdentity.COMMON_COMPARATOR.compare(getHashFunctionIdentity(),
+            shape.getHashFunctionIdentity()) != 0) {
             throw new IllegalArgumentException(
-                String.format("Shape hasher %s is not %s", shape.getHashFunctionName(), getName()));
+                String.format("Shape hasher %s is not %s",
+                    HashFunctionIdentity.asCommonString(shape.getHashFunctionIdentity()),
+                    HashFunctionIdentity.asCommonString(getHashFunctionIdentity())));
         }
         return new Iterator(shape);
     }
@@ -110,7 +111,7 @@ public class DynamicHasher implements Hasher {
                     funcCount = 0;
                     buffer++;
                 }
-                return (int) Math.floorMod(function.applyAsLong(buffers.get(buffer), funcCount++),
+                return (int) Math.floorMod(function.apply(buffers.get(buffer), funcCount++),
                     (long) shape.getNumberOfBits());
             }
             throw new NoSuchElementException();

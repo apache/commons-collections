@@ -19,6 +19,7 @@ package org.apache.commons.collections4.bloomfilter;
 
 import java.util.PrimitiveIterator;
 import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 
 
 /**
@@ -34,11 +35,11 @@ import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
 public interface Hasher {
 
     /**
-     * Gets the name of the function.
+     * Gets HashFunctionIdentity of the hash function this Hasher uses.
      *
-     * @return the name of the function being used.
+     * @return HashFunctionIdentity of the hash function this Hasher uses.
      */
-    String getName();
+    HashFunctionIdentity getHashFunctionIdentity();
 
     /**
      * Return an iterator of integers that are the bits to enable in the Bloom

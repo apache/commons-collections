@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 /**
- * A collection of bloom filter classes.
+ * A collection of extensible Bloom filter classes and interfaces.
  * @since 4.5
  */
 package org.apache.commons.collections4.bloomfilter;

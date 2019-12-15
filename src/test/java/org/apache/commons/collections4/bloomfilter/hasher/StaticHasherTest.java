@@ -28,13 +28,68 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.PrimitiveIterator.OfInt;
 import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.Signedness;
 import org.apache.commons.collections4.bloomfilter.Hasher;
 import org.junit.Test;
 
 public class StaticHasherTest {
 
-    private static final String FUNC_NAME = "TestFunc";
-    private Shape shape = new Shape(FUNC_NAME, 3, 72, 17);
+    private HashFunctionIdentity testFunction = new HashFunctionIdentity() {
+
+        @Override
+        public String getName() {
+            return "Test Function";
+        }
+
+        @Override
+        public String getProvider() {
+            return "Apache Commons Collection Tests";
+        }
+
+        @Override
+        public Signedness getSignedness() {
+            return Signedness.SIGNED;
+        }
+
+        @Override
+        public ProcessType getProcess() {
+            return ProcessType.CYCLIC;
+        }
+
+        @Override
+        public long getSignature() {
+            return 0;
+        }};
+
+    private HashFunctionIdentity testFunctionX = new HashFunctionIdentity() {
+
+            @Override
+            public String getName() {
+                return "Test FunctionX";
+            }
+
+            @Override
+            public String getProvider() {
+                return "Apache Commons Collection Tests";
+            }
+
+            @Override
+            public Signedness getSignedness() {
+                return Signedness.SIGNED;
+            }
+
+            @Override
+            public ProcessType getProcess() {
+                return ProcessType.CYCLIC;
+            }
+
+            @Override
+            public long getSignature() {
+                return 0;
+            }};
+
+    private Shape shape = new Shape(testFunction, 3, 72, 17);
 
     @Test
     public void testGetBits() throws Exception {
@@ -74,7 +129,7 @@ public class StaticHasherTest {
 
 
         try {
-            hasher.getBits(new Shape( "DifferentFunc", 3, 72, 17) );
+            hasher.getBits(new Shape( testFunctionX, 3, 72, 17) );
             fail( "Should have thown IllegalArgumentException");
           }
           catch (IllegalArgumentException expected) {
@@ -92,7 +147,7 @@ public class StaticHasherTest {
 
         assertEquals( 5, hasher.size() );
         assertEquals( shape, hasher.getShape());
-        assertEquals( FUNC_NAME, hasher.getName());
+        assertEquals( 0, HashFunction.DEEP_COMPARATOR.compare(testFunction, hasher.getHashFunctionIdentity()));
 
         iter = hasher.getBits(shape);
         int idx = 0;
@@ -166,7 +221,7 @@ public class StaticHasherTest {
     public void testConstructor_StaticHasher_WrongShape() throws Exception {
         int[] values = { 1, 3, 5, 7, 9, 3, 5, 1};
         Iterator<Integer> iter = Arrays.stream(values).iterator();
-        StaticHasher hasher = new StaticHasher(iter, new Shape( "DifferentFunc", 3, 72, 17) );
+        StaticHasher hasher = new StaticHasher(iter, new Shape( testFunctionX, 3, 72, 17) );
 
         try {
             new StaticHasher( hasher, shape );
@@ -184,8 +239,8 @@ public class StaticHasherTest {
         Hasher testHasher = new Hasher() {
 
             @Override
-            public String getName() {
-                return FUNC_NAME;
+            public HashFunctionIdentity getHashFunctionIdentity() {
+                return testFunction;
             }
 
             @Override
@@ -208,8 +263,8 @@ public class StaticHasherTest {
        Hasher testHasher = new Hasher() {
 
             @Override
-            public String getName() {
-                return FUNC_NAME+"X";
+            public HashFunctionIdentity getHashFunctionIdentity() {
+                return testFunctionX;
             }
 
             @Override

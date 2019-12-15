@@ -17,5 +17,6 @@
  */
 /**
  * Implementations of HashFunction.
+ * @since 4.5
  */
 package org.apache.commons.collections4.bloomfilter.hasher.function;

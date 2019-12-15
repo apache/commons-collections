@@ -27,19 +27,19 @@ import java.util.Arrays;
 import java.util.PrimitiveIterator.OfInt;
 
 import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
-import org.apache.commons.collections4.bloomfilter.hasher.function.MD5;
+import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
 import org.junit.Before;
 import org.junit.Test;
 
 public class DynamicHasherBuilderTest {
 
     DynamicHasher.Builder builder;
-    Shape shape = new Shape( MD5.NAME, 1, Integer.MAX_VALUE, 1 );
+    Shape shape = new Shape( new MD5Cyclic(), 1, Integer.MAX_VALUE, 1 );
 
     @Before
     public void setup() throws NoSuchAlgorithmException
     {
-        builder = new DynamicHasher.Builder( new MD5());
+        builder = new DynamicHasher.Builder( new MD5Cyclic());
     }
 
     //private static final Hash HELLO_HASH = new Hash(3871253994707141660L, -6917270852172884668L);

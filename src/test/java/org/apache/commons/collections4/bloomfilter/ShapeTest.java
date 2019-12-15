@@ -24,24 +24,54 @@ import static org.junit.Assert.fail;
 
 import java.util.Objects;
 import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.Signedness;
 import org.junit.Test;
 
 public class ShapeTest {
 
-    /*
-     * values from https://hur.st/bloomfilter/?n=5&p=.1&m=&k=
-     *
-     * n = 5
-     *
-     * p = 0.100375138 (1 in 10)
-     *
-     * m = 24 (3B)
-     *
-     * k = 3
-     */
+    HashFunctionIdentity testFunction = new HashFunctionIdentity() {
+
+        @Override
+        public String getName() {
+            return "Test Function";
+        }
+
+        @Override
+        public String getProvider() {
+            return "Apache Commons Collection Tests";
+        }
+
+        @Override
+        public Signedness getSignedness() {
+            return Signedness.SIGNED;
+        }
+
+        @Override
+        public ProcessType getProcess() {
+            return ProcessType.CYCLIC;
+        }
+
+        @Override
+        public long getSignature() {
+            return 0;
+        }};
+
+        /*
+         * values from https://hur.st/bloomfilter/?n=5&p=.1&m=&k=
+         *
+         * n = 5
+         *
+         * p = 0.100375138 (1 in 10)
+         *
+         * m = 24 (3B)
+         *
+         * k = 3
+         */
 
 
-    Shape shape = new Shape("hash func", 5, 0.1);
+    Shape shape = new Shape(testFunction, 5, 0.1);
 
 
     @Test
@@ -110,7 +140,7 @@ public class ShapeTest {
     @Test
     public void constructor_items_probability_NumberOfBitsOverflowTest() {
         try {
-            new Shape( "hash func", Integer.MAX_VALUE, 1.0 / 10);
+            new Shape( testFunction, Integer.MAX_VALUE, 1.0 / 10);
             fail("Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected) {
             // do nothing.
@@ -120,7 +150,7 @@ public class ShapeTest {
     @Test
     public void constructor_items_probability_BadNumberOfItemsTest() {
         try {
-            new Shape( "hash func", 0, 1.0 / 10);
+            new Shape( testFunction, 0, 1.0 / 10);
             fail("Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected) {
             // do nothing.
@@ -130,14 +160,14 @@ public class ShapeTest {
     @Test
     public void constructor_items_probability_BadProbabilityTest() {
         try {
-            new Shape("hash func", 10, 0.0);
+            new Shape(testFunction, 10, 0.0);
             fail("Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected) {
             // do nothing.
         }
 
         try {
-            new Shape("hash func", 10, 1.0);
+            new Shape(testFunction, 10, 1.0);
             fail("Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected) {
             // do nothing.
@@ -149,7 +179,7 @@ public class ShapeTest {
         /*
          * values from https://hur.st/bloomfilter/?n=5&m=24
          */
-        Shape filterConfig = new Shape("hash func", 5, 24);
+        Shape filterConfig = new Shape(testFunction, 5, 24);
 
         assertEquals(24, filterConfig.getNumberOfBits());
         assertEquals(3, filterConfig.getNumberOfBytes());
@@ -162,7 +192,7 @@ public class ShapeTest {
     @Test
     public void constructor_items_bits_BadNumberOfItemsTest() {
         try {
-            new Shape("hash func", 0, 24);
+            new Shape(testFunction, 0, 24);
             fail( "Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected)
         {
@@ -173,7 +203,7 @@ public class ShapeTest {
     @Test
     public void constructor_items_bits_BadNumberOfBitsTest() {
         try {
-            new Shape("hash func", 5, 6);
+            new Shape(testFunction, 5, 6);
             fail( "Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected)
         {
@@ -184,7 +214,7 @@ public class ShapeTest {
     @Test
     public void constructor_items_bits_BadNumberOfHashFunctionsTest() {
         try {
-            new Shape("hash func", 16,8);
+            new Shape(testFunction, 16,8);
             fail( "Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected)
         {
@@ -197,7 +227,7 @@ public class ShapeTest {
         /*
          * values from https://hur.st/bloomfilter/?n=5&m=24&k=4
          */
-        Shape filterConfig = new Shape("hash func", 5, 24, 4);
+        Shape filterConfig = new Shape(testFunction, 5, 24, 4);
 
         assertEquals(24, filterConfig.getNumberOfBits());
         assertEquals(3, filterConfig.getNumberOfBytes());
@@ -210,7 +240,7 @@ public class ShapeTest {
     @Test
     public void constructor_items_bits_hash_BadNumberOfItemsTest() {
         try {
-            new Shape("hash func", 0, 24, 1);
+            new Shape(testFunction, 0, 24, 1);
             fail( "Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected)
         {
@@ -221,7 +251,7 @@ public class ShapeTest {
     @Test
     public void constructor_items_bits_hash_BadNumberOfBitsTest() {
         try {
-            new Shape("hash func", 5, 6, 1);
+            new Shape(testFunction, 5, 6, 1);
             fail( "Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected)
         {
@@ -232,7 +262,7 @@ public class ShapeTest {
     @Test
     public void constructor_items_bits_hash_BadNumberOfHashFunctionsTest() {
         try {
-            new Shape("hash func", 5, 24, 0);
+            new Shape(testFunction, 5, 24, 0);
             fail( "Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected)
         {
@@ -244,7 +274,7 @@ public class ShapeTest {
     @Test
     public void constructor_items_bits_hash_BadProbabilityTest() {
         try {
-            new Shape("hash func", 4000,8,1);
+            new Shape(testFunction, 4000,8,1);
             fail( "Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected)
         {
@@ -257,7 +287,7 @@ public class ShapeTest {
         /*
          * values from https://hur.st/bloomfilter/?n=5&p=.1&m=&k=
          */
-        Shape filterConfig = new Shape("hash func", 0.1, 24, 3);
+        Shape filterConfig = new Shape(testFunction, 0.1, 24, 3);
 
         assertEquals(24, filterConfig.getNumberOfBits());
         assertEquals(3, filterConfig.getNumberOfBytes());
@@ -269,7 +299,7 @@ public class ShapeTest {
     @Test
     public void constructor__probability_bits_hash_BadProbabilityTest() {
         try {
-            new Shape("hash func", 0.0, 24, 1);
+            new Shape(testFunction, 0.0, 24, 1);
             fail( "Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected)
         {
@@ -277,14 +307,14 @@ public class ShapeTest {
         }
 
         try {
-            new Shape("hash func", -1.0, 24, 1);
+            new Shape(testFunction, -1.0, 24, 1);
             fail( "Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected)
         {
             //expected
         }
         try {
-            new Shape("hash func", 1.0, 24, 1);
+            new Shape(testFunction, 1.0, 24, 1);
             fail( "Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected)
         {
@@ -292,7 +322,7 @@ public class ShapeTest {
         }
 
         try {
-            new Shape("hash func", 2.0, 24, 1);
+            new Shape(testFunction, 2.0, 24, 1);
             fail( "Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected)
         {
@@ -303,7 +333,7 @@ public class ShapeTest {
     @Test
     public void constructor__probability_bits_hash__BadNumberOfBitsTest() {
         try {
-            new Shape("hash func", 0.5, 6, 1);
+            new Shape(testFunction, 0.5, 6, 1);
             fail( "Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected)
         {
@@ -314,7 +344,7 @@ public class ShapeTest {
     @Test
     public void constructor_probability_bits_hash_BadNumberOfHashFunctionsTest() {
         try {
-            new Shape("hash func", 0.5, 24, 0);
+            new Shape(testFunction, 0.5, 24, 0);
             fail( "Should have thrown IllegalArgumentException");
         } catch (IllegalArgumentException expected)
         {
@@ -325,16 +355,16 @@ public class ShapeTest {
     @Test
     public void equalsTest() {
 
-        assertEquals(new Shape("hash func", 5, 1.0 / 10), shape);
-        assertNotEquals(new Shape("hash func", 5, 1.0 / 11), shape);
-        assertNotEquals(new Shape("hash func", 4, 1.0 / 10), shape);
+        assertEquals(new Shape(testFunction, 5, 1.0 / 10), shape);
+        assertNotEquals(new Shape(testFunction, 5, 1.0 / 11), shape);
+        assertNotEquals(new Shape(testFunction, 4, 1.0 / 10), shape);
         assertFalse(shape.equals(shape.toString()));
 
     }
 
     @Test
     public void hashCodeTest() {
-        int hashCode = Objects.hash("hash func", 24, 3 );
+        int hashCode = Objects.hash(testFunction, 24, 3 );
         assertEquals(hashCode, shape.hashCode());
     }
 

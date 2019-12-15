@@ -20,29 +20,36 @@ package org.apache.commons.collections4.bloomfilter.hasher.function;
 import static org.junit.Assert.assertEquals;
 
 import java.nio.ByteBuffer;
-import java.util.Objects;
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 
-import org.apache.commons.collections4.bloomfilter.hasher.function.ObjectsHash;
+import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
 import org.junit.Test;
 
-public class ObjectsHashTest {
+public class MD5CyclicTest {
 
     @Test
-    public void test() throws Exception {
-        ObjectsHash obj = new ObjectsHash();
+    public void applyTest() throws Exception {
+        MD5Cyclic md5 = new MD5Cyclic();
+        long l1 = 0x8b1a9953c4611296L;
+        long l2 = 0xa827abf8c47804d7L;
+        byte[] buffer = "Hello".getBytes();
 
-        byte[] buffer = "Now is the time for all good men to come to the aid of their country".getBytes("UTF-8");
+        long l = md5.apply(buffer, 0);
+        assertEquals(l1, l);
+        l = md5.apply(buffer, 1);
+        assertEquals(l1 + l2, l);
+        l = md5.apply(buffer, 2);
+        assertEquals(l1 + l2 + l2, l);
+    }
 
-
-        long l = obj.applyAsLong(buffer, 0);
-        long prev = 0;
-        assertEquals(Objects.hash(prev, buffer), l);
-        prev += l;
-        l = obj.applyAsLong(buffer, 1);
-        assertEquals(Objects.hash(prev, buffer), l);
-        prev += l;
-        l = obj.applyAsLong(buffer, 2);
-        assertEquals(Objects.hash(prev, buffer), l);
+    @Test
+    public void signatureTest() {
+        MD5Cyclic md5 = new MD5Cyclic();
+        String arg = String.format( "%s-%s-%s", md5.getName().toUpperCase( Locale.ROOT),
+            md5.getSignedness(), md5.getProcess());
+        long expected = md5.apply( arg.getBytes( StandardCharsets.UTF_8 ), 0 );
+        assertEquals( expected, md5.getSignature());
     }
 
 }

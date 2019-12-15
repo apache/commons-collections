@@ -17,36 +17,19 @@
  */
 package org.apache.commons.collections4.bloomfilter.hasher;
 
-import java.util.function.ToLongBiFunction;
-
 /**
  * Defines the a Hash Function used by Hashers.
- *
+ * @since 4.5
  */
-public interface HashFunction extends ToLongBiFunction<byte[], Integer> {
+public interface HashFunction extends HashFunctionIdentity {
+
 
     /**
-     * Gets the name of this hash function.
-     * <p>
-     * Hash function should have the form: [hashName]-[S|U][C|I]
-     * where
-     * <dl>
-     * <dt>hashName</dt>
-     * <dd>Is the common name for the hash.  This may include indications as to hash length</dd>
-     * <dt>S|U</dt>
-     * <dd>Expresses how the calculations are performed and is either<ul>
-     * <li>{@code S } for signed; or</li>
-     * <li>{@code U } for unsigned</li>
-     * </ul></dd>
-     * <dt>C|I</dt>
-     * <dd>Expresses how additional hashes are implemented and Is either<ul>
-     * <li>{@code C } for cyclic hashing.  Using 2 calculated hash values to generate the series of
-     * hash values; or</li>
-     * <li>{@code I } for iterative hashing.  Using the hash to generate each hash value as needed</li>
-     * </ul></dd>
-     * </dl>
-     * @return the Hash name
+     * Apply the hash function to the buffer.
+     * @param buffer the buffer to apply the hash function to.
+     * @param seed the seed for the hashing.
+     * @return the long value of the hash.
      */
-    String getName();
+    long apply( byte[] buffer, int seed );
 
 }

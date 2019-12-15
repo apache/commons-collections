@@ -23,18 +23,24 @@ import java.nio.LongBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunction;
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 
 /**
- * An implementation of {@code ToLongBiFunction<byte[], Integer>} that
+ * An implementation of HashFunction that
  * performs MD5 hashing using a signed cyclic method.
  * @since 4.5
  */
-public class MD5 implements HashFunction {
+public final class MD5Cyclic implements HashFunction {
 
     /**
      * The MD5 digest implementation.
      */
     private final MessageDigest messageDigest;
+
+    /**
+     * The signature for this hash function.
+     */
+    private final long signature;
 
     /**
      * The result from the digest 0
@@ -44,21 +50,22 @@ public class MD5 implements HashFunction {
     /**
      * The name of this hash function.
      */
-    public static final String NAME = "MD5-SC";
+    public static final String NAME = "MD5";
 
     /**
      * Constructs the MD5 hashing function.
      */
-    public MD5() {
+    public MD5Cyclic() {
         try {
-            messageDigest = MessageDigest.getInstance("MD5");
+            messageDigest = MessageDigest.getInstance(NAME);
         } catch (NoSuchAlgorithmException e) {
             throw new IllegalStateException( e.getMessage() );
         }
+        signature = apply( HashFunctionIdentity.prepareSignatureBuffer(this), 0);
     }
 
     @Override
-    public long applyAsLong(byte[] buffer, Integer seed) {
+    public long apply(byte[] buffer, int seed) {
 
         if (seed == 0) {
             byte[] hash;
@@ -80,6 +87,26 @@ public class MD5 implements HashFunction {
     @Override
     public String getName() {
         return NAME;
+    }
+
+    @Override
+    public String getProvider() {
+        return "Apache Commons Collections";
+    }
+
+    @Override
+    public Signedness getSignedness() {
+        return Signedness.SIGNED;
+    }
+
+    @Override
+    public ProcessType getProcess() {
+        return ProcessType.CYCLIC;
+    }
+
+    @Override
+    public long getSignature() {
+        return signature;
     }
 
 }

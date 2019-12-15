@@ -1,0 +1,147 @@
+ /*
+     * Licensed to the Apache Software Foundation (ASF) under one
+     * or more contributor license agreements.  See the NOTICE file
+     * distributed with this work for additional information
+     * regarding copyright ownership.  The ASF licenses this file
+     * to you under the Apache License, Version 2.0 (the
+     * "License"); you may not use this file except in compliance
+     * with the License.  You may obtain a copy of the License at
+     *
+     *     http://www.apache.org/licenses/LICENSE-2.0
+     *
+     * Unless required by applicable law or agreed to in writing, software
+     * distributed under the License is distributed on an "AS IS" BASIS,
+     * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     * See the License for the specific language governing permissions and
+     * limitations under the License.
+     */
+package org.apache.commons.collections4.bloomfilter.hasher;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.TreeSet;
+
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.Signedness;
+import org.junit.Test;
+
+public class CommonComparatorTest {
+
+    private void assertBefore(HashFunctionIdentity identity1, HashFunctionIdentity identity2)
+    {
+        assertTrue( 0 > HashFunctionIdentity.COMMON_COMPARATOR.compare(identity1, identity2));
+    }
+
+    private void assertAfter(HashFunctionIdentity identity1, HashFunctionIdentity identity2)
+    {
+        assertTrue( 0 < HashFunctionIdentity.COMMON_COMPARATOR.compare(identity1, identity2));
+    }
+
+
+    @Test
+   public void nameOrderTestDifferentNames() {
+       HashFunctionIdentityImpl impl1 = new HashFunctionIdentityImpl( "Testing Suite", "impl1",
+           Signedness.SIGNED, ProcessType.CYCLIC, 300L);
+       HashFunctionIdentityImpl impl2 = new HashFunctionIdentityImpl( "Testing Suite", "impl2",
+           Signedness.SIGNED, ProcessType.CYCLIC, 300L);
+
+       assertBefore(impl1, impl2);
+       assertEquals( 0, HashFunctionIdentity.COMMON_COMPARATOR.compare(impl1, impl1));
+       assertEquals( 0, HashFunctionIdentity.COMMON_COMPARATOR.compare(impl2, impl2));
+       assertAfter(impl2, impl1);
+    }
+
+    @Test
+   public void nameOrderTestDifferentCapitalization() {
+       HashFunctionIdentityImpl impl1 = new HashFunctionIdentityImpl( "Testing Suite", "impl1",
+           Signedness.SIGNED, ProcessType.CYCLIC, 300L);
+       HashFunctionIdentityImpl impl2 = new HashFunctionIdentityImpl( "Testing Suite", "IMPL1",
+           Signedness.SIGNED, ProcessType.CYCLIC, 300L);
+
+       assertEquals( 0, HashFunctionIdentity.COMMON_COMPARATOR.compare(impl1, impl2));
+
+    }
+
+    @Test
+   public void signednessOrder() {
+       HashFunctionIdentityImpl impl1 = new HashFunctionIdentityImpl( "Testing Suite", "impl1",
+           Signedness.SIGNED, ProcessType.CYCLIC, 300L);
+       HashFunctionIdentityImpl impl2 = new HashFunctionIdentityImpl( "Testing Suite", "impl1",
+           Signedness.UNSIGNED, ProcessType.CYCLIC, 300L);
+
+       assertBefore(impl1, impl2);
+       assertEquals( 0, HashFunctionIdentity.COMMON_COMPARATOR.compare(impl1, impl1));
+       assertEquals( 0, HashFunctionIdentity.COMMON_COMPARATOR.compare(impl2, impl2));
+       assertAfter(impl2, impl1);
+    }
+
+
+   @Test
+   public void processTypeOrder() {
+       HashFunctionIdentityImpl impl1 = new HashFunctionIdentityImpl( "Testing Suite", "impl1",
+           Signedness.SIGNED, ProcessType.CYCLIC, 300L);
+       HashFunctionIdentityImpl impl2 = new HashFunctionIdentityImpl( "Testing Suite", "impl1",
+           Signedness.SIGNED, ProcessType.ITERATIVE, 300L);
+
+       assertBefore(impl1, impl2);
+       assertEquals( 0, HashFunctionIdentity.COMMON_COMPARATOR.compare(impl1, impl1));
+       assertEquals( 0, HashFunctionIdentity.COMMON_COMPARATOR.compare(impl2, impl2));
+       assertAfter(impl2, impl1);
+    }
+
+   @Test
+   public void producerDoesNotChangeOrder() {
+       HashFunctionIdentityImpl impl1 = new HashFunctionIdentityImpl( "Testing Suite", "impl1",
+           Signedness.SIGNED, ProcessType.CYCLIC, 300L);
+       HashFunctionIdentityImpl impl2 = new HashFunctionIdentityImpl( "Testing Suite2", "impl1",
+           Signedness.SIGNED, ProcessType.CYCLIC, 300L);
+
+       assertEquals( 0, HashFunctionIdentity.COMMON_COMPARATOR.compare(impl1, impl2));
+    }
+
+   @Test
+   public void testSortOrder() {
+       // in this test the signature is the position in the final collection for the ID
+       TreeSet<HashFunctionIdentity> result = new TreeSet<HashFunctionIdentity>( HashFunctionIdentity.COMMON_COMPARATOR );
+       List<HashFunctionIdentity> collection = new ArrayList<HashFunctionIdentity>();
+
+       collection.add( new HashFunctionIdentityImpl( "Testing Suite", "impl1",
+           Signedness.SIGNED, ProcessType.CYCLIC, 0));
+
+       collection.add( new HashFunctionIdentityImpl( "Testing Suite", "impl1",
+           Signedness.SIGNED, ProcessType.ITERATIVE, 1));
+
+       collection.add( new HashFunctionIdentityImpl( "Testing Suite", "impl1",
+           Signedness.UNSIGNED, ProcessType.CYCLIC, 2));
+
+       collection.add( new HashFunctionIdentityImpl( "Testing Suite", "impl1",
+           Signedness.UNSIGNED, ProcessType.ITERATIVE, 3));
+
+       collection.add( new HashFunctionIdentityImpl( "Testing Suite", "impl2",
+           Signedness.SIGNED, ProcessType.CYCLIC, 4));
+
+       collection.add( new HashFunctionIdentityImpl( "Testing Suite", "impl2",
+           Signedness.SIGNED, ProcessType.ITERATIVE, 5));
+
+       collection.add( new HashFunctionIdentityImpl( "Testing Suite", "impl2",
+           Signedness.UNSIGNED, ProcessType.CYCLIC, 6));
+
+       collection.add( new HashFunctionIdentityImpl( "Testing Suite", "impl2",
+           Signedness.UNSIGNED, ProcessType.ITERATIVE, 7));
+
+
+       Collections.shuffle( collection );
+
+       result.addAll( collection );
+       long idx = 0;
+       for (HashFunctionIdentity id : result )
+       {
+           assertEquals( "Unexpected order for "+HashFunctionIdentity.asCommonString(id), idx++, id.getSignature());
+       }
+   }
+
+}

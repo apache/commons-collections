@@ -21,6 +21,7 @@ import java.util.BitSet;
 import java.util.Objects;
 import java.util.PrimitiveIterator.OfInt;
 
+import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 
 /**
@@ -89,9 +90,11 @@ public abstract class BloomFilter {
      * @param hasher the Hasher to check
      */
     protected void verifyHasher(Hasher hasher) {
-        if (!shape.getHashFunctionName().equals(hasher.getName())) {
+        if (shape.getHashFunctionIdentity().getSignature() != hasher.getHashFunctionIdentity().getSignature()) {
             throw new IllegalArgumentException(
-                String.format("Hasher (%s) is not the hasher for shape (%s)", hasher.getName(), shape.toString()));
+                String.format("Hasher (%s) is not the hasher for shape (%s)",
+                    HashFunctionIdentity.asCommonString(hasher.getHashFunctionIdentity()),
+                    shape.toString()));
         }
     }
 
@@ -427,9 +430,9 @@ public abstract class BloomFilter {
         private final int hashCode;
 
         /**
-         * The name of the hasher function.
+         * The identity of the hasher function.
          */
-        private final String hashFunctionName;
+        private final HashFunctionIdentity hashFunctionIdentity;
 
         /**
          * Create a filter configuration with the specified number of items and
@@ -437,14 +440,14 @@ public abstract class BloomFilter {
          * desired probability but will be dependent upon the caluclated bloom filter size
          * and function count. </p>
          *
-         * @param hashFunctionName The name of the hash function this shape uses.
+         * @param hashFunctionIdentity The HashFunctionIdentity of the hash function this shape uses.
          * @param numberOfItems Number of items to be placed in the filter.
          * @param probability The desired probability of duplicates. Must be in the range
          * (0.0,1.0).
          */
-        public Shape(String hashFunctionName, final int numberOfItems, final double probability) {
-            if (hashFunctionName == null) {
-                throw new IllegalArgumentException("Hash function name may not be null");
+        public Shape(HashFunctionIdentity hashFunctionIdentity, final int numberOfItems, final double probability) {
+            if (hashFunctionIdentity == null) {
+                throw new IllegalArgumentException("Hash function identity may not be null");
             }
             if (numberOfItems < 1) {
                 throw new IllegalArgumentException("Number of Items must be greater than 0");
@@ -455,7 +458,7 @@ public abstract class BloomFilter {
             if (probability >= 1.0) {
                 throw new IllegalArgumentException("Probability must be less than 1.0");
             }
-            this.hashFunctionName = hashFunctionName;
+            this.hashFunctionIdentity = hashFunctionIdentity;
             this.numberOfItems = numberOfItems;
             /*
              * number of bits is called "m" in most mathematical statement describing
@@ -477,12 +480,12 @@ public abstract class BloomFilter {
          * Create a filter configuration with the specified number of items and
          * probability.
          *
-         * @param hashFunctionName The name of the hash function this shape uses.
+         * @param hashFunctionIdentity The HashFunctionIdentity of the hash function this shape uses.
          * @param numberOfItems Number of items to be placed in the filter.
          * @param numberOfBits The number of bits in the filter.
          */
-        public Shape(final String hashFunctionName, final int numberOfItems, final int numberOfBits) {
-            if (hashFunctionName == null) {
+        public Shape(final HashFunctionIdentity hashFunctionIdentity, final int numberOfItems, final int numberOfBits) {
+            if (hashFunctionIdentity == null) {
                 throw new IllegalArgumentException("Hash function name may not be null");
             }
             if (numberOfItems < 1) {
@@ -491,7 +494,7 @@ public abstract class BloomFilter {
             if (numberOfBits < 8) {
                 throw new IllegalArgumentException("Number of Bits must be greater than or equal to 8");
             }
-            this.hashFunctionName = hashFunctionName;
+            this.hashFunctionIdentity = hashFunctionIdentity;
             this.numberOfItems = numberOfItems;
             this.numberOfBits = numberOfBits;
             this.numberOfHashFunctions = calculateNumberOfHashFunctions(numberOfItems, numberOfBits);
@@ -505,14 +508,14 @@ public abstract class BloomFilter {
          * Create a filter configuration with the specified number of items and
          * probability.
          *
-         * @param hashFunctionName The name of the hash function this shape uses.
+         * @param hashFunctionIdentity The HashFunctionIdentity of the hash function this shape uses.
          * @param numberOfItems Number of items to be placed in the filter.
          * @param numberOfBits The number of bits in the filter.
          * @param numberOfHashFunctions The number of hash functions in the filter.
          */
-        public Shape(final String hashFunctionName, final int numberOfItems, final int numberOfBits,
+        public Shape(final HashFunctionIdentity hashFunctionIdentity, final int numberOfItems, final int numberOfBits,
             final int numberOfHashFunctions) {
-            if (hashFunctionName == null) {
+            if (hashFunctionIdentity == null) {
                 throw new IllegalArgumentException("Hash function name may not be null");
             }
             if (numberOfItems < 1) {
@@ -524,7 +527,7 @@ public abstract class BloomFilter {
             if (numberOfHashFunctions < 1) {
                 throw new IllegalArgumentException("Number of Hash Functions must be greater than or equal to 8");
             }
-            this.hashFunctionName = hashFunctionName;
+            this.hashFunctionIdentity = hashFunctionIdentity;
             this.numberOfItems = numberOfItems;
             this.numberOfBits = numberOfBits;
             this.numberOfHashFunctions = numberOfHashFunctions;
@@ -538,15 +541,15 @@ public abstract class BloomFilter {
          * Create a filter configuration with the specified number of items and
          * probability.
          *
-         * @param hashFunctionName The name of the hash function this shape uses.
+         * @param hashFunctionIdentity The HashFunctionIdentity of the hash function this shape uses.
          * @param probability The probability of duplicates. Must be in the range
          * (0.0,1.0).
          * @param numberOfBits The number of bits in the filter.
          * @param numberOfHashFunctions The number of hash functions in the filter.
          */
-        public Shape(final String hashFunctionName, final double probability, final int numberOfBits,
+        public Shape(final HashFunctionIdentity hashFunctionIdentity, final double probability, final int numberOfBits,
             final int numberOfHashFunctions) {
-            if (hashFunctionName == null) {
+            if (hashFunctionIdentity == null) {
                 throw new IllegalArgumentException("Hash function name may not be null");
             }
             if (probability <= 0.0) {
@@ -561,7 +564,7 @@ public abstract class BloomFilter {
             if (numberOfHashFunctions < 1) {
                 throw new IllegalArgumentException("Number of hash functions must be greater than or equal to 8");
             }
-            this.hashFunctionName = hashFunctionName;
+            this.hashFunctionIdentity = hashFunctionIdentity;
             this.numberOfBits = numberOfBits;
             this.numberOfHashFunctions = numberOfHashFunctions;
 
@@ -586,13 +589,14 @@ public abstract class BloomFilter {
         }
 
         private int generateHashCode() {
-            return Objects.hash(hashFunctionName, numberOfBits, numberOfHashFunctions);
+            return Objects.hash(hashFunctionIdentity, numberOfBits, numberOfHashFunctions);
         }
 
         @Override
         public String toString() {
-            return String.format("Shape[ %s n=%s m=%s k=%s ]", hashFunctionName, numberOfItems, numberOfBits,
-                numberOfHashFunctions);
+            return String.format("Shape[ %s n=%s m=%s k=%s ]",
+                HashFunctionIdentity.asCommonString(hashFunctionIdentity),
+                numberOfItems, numberOfBits, numberOfHashFunctions);
         }
 
         /**
@@ -686,7 +690,9 @@ public abstract class BloomFilter {
         public boolean equals(Object o) {
             if (o instanceof Shape) {
                 Shape other = (Shape) o;
-                return other.getHashFunctionName().equals(getHashFunctionName()) &&
+                return
+                    (HashFunctionIdentity.COMMON_COMPARATOR.compare( getHashFunctionIdentity(),
+                        other.getHashFunctionIdentity()) == 0) &&
                     other.getNumberOfBits() == getNumberOfBits() &&
                     other.getNumberOfHashFunctions() == getNumberOfHashFunctions();
             }
@@ -699,11 +705,11 @@ public abstract class BloomFilter {
         }
 
         /**
-         * Gets the name of the hash function that this Shape is using.
-         * @return the name of the hash function.
+         * Gets the HashFunctionIdentity of the hash function this shape uses.
+         * @return the HashFunctionIdentity of the hash function this shape uses.
          */
-        public String getHashFunctionName() {
-            return hashFunctionName;
+        public HashFunctionIdentity getHashFunctionIdentity() {
+            return hashFunctionIdentity;
         }
     }
 

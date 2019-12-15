@@ -20,24 +20,35 @@ package org.apache.commons.collections4.bloomfilter.hasher.function;
 import static org.junit.Assert.assertEquals;
 
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.util.Locale;
 
-import org.apache.commons.collections4.bloomfilter.hasher.function.Murmur32;
+import org.apache.commons.collections4.bloomfilter.hasher.function.Murmur32x86Iterative;
 import org.junit.Test;
 
-public class Murmur32Test {
+public class Murmur32x86IterativeTest {
 
     @Test
-    public void test() throws Exception {
-        Murmur32 murmur = new Murmur32();
+    public void applyTest() throws Exception {
+        Murmur32x86Iterative murmur = new Murmur32x86Iterative();
 
         byte[] buffer = "Now is the time for all good men to come to the aid of their country".getBytes("UTF-8");
 
-        long l = murmur.applyAsLong(buffer, 0);
+        long l = murmur.apply(buffer, 0);
         assertEquals(82674681, l);
-        l = murmur.applyAsLong(buffer, 1);
+        l = murmur.apply(buffer, 1);
         assertEquals(-1475490736, l);
-        l = murmur.applyAsLong(buffer, 2);
+        l = murmur.apply(buffer, 2);
         assertEquals(-1561435247, l);
+    }
+
+    @Test
+    public void signatureTest() {
+        Murmur32x86Iterative murmur = new Murmur32x86Iterative();
+        String arg = String.format( "%s-%s-%s", murmur.getName().toUpperCase( Locale.ROOT),
+            murmur.getSignedness(), murmur.getProcess());
+        long expected = murmur.apply( arg.getBytes( StandardCharsets.UTF_8 ), 0 );
+        assertEquals( expected, murmur.getSignature());
     }
 
 }
