@@ -51,7 +51,8 @@ public final class HashFunctionIdentityImpl implements HashFunctionIdentity {
      * @param process the processes of the hash function.
      * @param signature the signature for the hash function.
      */
-    public HashFunctionIdentityImpl( String provider, String name, Signedness signedness, ProcessType process, long signature) {
+    public HashFunctionIdentityImpl( String provider, String name, Signedness signedness, ProcessType process,
+        long signature) {
         this.name = name;
         this.provider = provider;
         this.signedness = signedness;
