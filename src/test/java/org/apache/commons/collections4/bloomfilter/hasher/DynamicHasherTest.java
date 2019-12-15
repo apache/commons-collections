@@ -54,7 +54,7 @@ public class DynamicHasherTest {
         }
 
         @Override
-        public ProcessType getProcess() {
+        public ProcessType getProcessType() {
             return ProcessType.CYCLIC;
         }
 

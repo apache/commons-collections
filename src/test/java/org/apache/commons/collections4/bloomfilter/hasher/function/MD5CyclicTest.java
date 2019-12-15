@@ -47,7 +47,7 @@ public class MD5CyclicTest {
     public void signatureTest() {
         MD5Cyclic md5 = new MD5Cyclic();
         String arg = String.format( "%s-%s-%s", md5.getName().toUpperCase( Locale.ROOT),
-            md5.getSignedness(), md5.getProcess());
+            md5.getSignedness(), md5.getProcessType());
         long expected = md5.apply( arg.getBytes( StandardCharsets.UTF_8 ), 0 );
         assertEquals( expected, md5.getSignature());
     }

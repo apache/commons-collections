@@ -48,7 +48,7 @@ public class HashFunctionIdentityImplTest {
             }
 
             @Override
-            public ProcessType getProcess() {
+            public ProcessType getProcessType() {
                 return ProcessType.CYCLIC;
             }
 
@@ -62,7 +62,7 @@ public class HashFunctionIdentityImplTest {
         assertEquals( "NAME", impl.getName());
         assertEquals( "Provider", impl.getProvider());
         assertEquals( Signedness.SIGNED, impl.getSignedness());
-        assertEquals( ProcessType.CYCLIC, impl.getProcess());
+        assertEquals( ProcessType.CYCLIC, impl.getProcessType());
         assertEquals( -1l, impl.getSignature());
     }
 
@@ -81,7 +81,7 @@ public class HashFunctionIdentityImplTest {
         assertEquals( "NAME", impl.getName());
         assertEquals( "Provider", impl.getProvider());
         assertEquals( Signedness.UNSIGNED, impl.getSignedness());
-        assertEquals( ProcessType.ITERATIVE, impl.getProcess());
+        assertEquals( ProcessType.ITERATIVE, impl.getProcessType());
         assertEquals( -2l, impl.getSignature());
     }
 

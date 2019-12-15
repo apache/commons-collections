@@ -39,7 +39,7 @@ public final class HashFunctionIdentityImpl implements HashFunctionIdentity {
         this.name = identity.getName();
         this.provider = identity.getProvider();
         this.signedness = identity.getSignedness();
-        this.process = identity.getProcess();
+        this.process = identity.getProcessType();
         this.signature = identity.getSignature();
     }
 
@@ -75,7 +75,7 @@ public final class HashFunctionIdentityImpl implements HashFunctionIdentity {
     }
 
     @Override
-    public ProcessType getProcess() {
+    public ProcessType getProcessType() {
         return process;
     }
 

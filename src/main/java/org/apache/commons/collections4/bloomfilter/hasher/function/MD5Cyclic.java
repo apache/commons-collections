@@ -100,7 +100,7 @@ public final class MD5Cyclic implements HashFunction {
     }
 
     @Override
-    public ProcessType getProcess() {
+    public ProcessType getProcessType() {
         return ProcessType.CYCLIC;
     }
 

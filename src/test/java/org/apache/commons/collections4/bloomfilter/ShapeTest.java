@@ -49,7 +49,7 @@ public class ShapeTest {
         }
 
         @Override
-        public ProcessType getProcess() {
+        public ProcessType getProcessType() {
             return ProcessType.CYCLIC;
         }
 

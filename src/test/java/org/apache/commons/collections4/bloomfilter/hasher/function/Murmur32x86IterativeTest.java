@@ -46,7 +46,7 @@ public class Murmur32x86IterativeTest {
     public void signatureTest() {
         Murmur32x86Iterative murmur = new Murmur32x86Iterative();
         String arg = String.format( "%s-%s-%s", murmur.getName().toUpperCase( Locale.ROOT),
-            murmur.getSignedness(), murmur.getProcess());
+            murmur.getSignedness(), murmur.getProcessType());
         long expected = murmur.apply( arg.getBytes( StandardCharsets.UTF_8 ), 0 );
         assertEquals( expected, murmur.getSignature());
     }

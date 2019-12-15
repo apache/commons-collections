@@ -65,7 +65,7 @@ public final class Murmur32x86Iterative implements HashFunction {
     }
 
     @Override
-    public ProcessType getProcess() {
+    public ProcessType getProcessType() {
         return ProcessType.ITERATIVE;
     }
 

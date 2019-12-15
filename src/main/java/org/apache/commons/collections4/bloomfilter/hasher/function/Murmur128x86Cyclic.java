@@ -76,7 +76,7 @@ public final class Murmur128x86Cyclic implements HashFunction {
     }
 
     @Override
-    public ProcessType getProcess() {
+    public ProcessType getProcessType() {
         return ProcessType.CYCLIC;
     }
 

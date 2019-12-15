@@ -53,7 +53,7 @@ public class StaticHasherTest {
         }
 
         @Override
-        public ProcessType getProcess() {
+        public ProcessType getProcessType() {
             return ProcessType.CYCLIC;
         }
 
@@ -80,7 +80,7 @@ public class StaticHasherTest {
             }
 
             @Override
-            public ProcessType getProcess() {
+            public ProcessType getProcessType() {
                 return ProcessType.CYCLIC;
             }
 

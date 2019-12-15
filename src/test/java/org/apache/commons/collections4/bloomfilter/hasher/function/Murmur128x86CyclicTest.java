@@ -48,7 +48,7 @@ public class Murmur128x86CyclicTest {
     public void signatureTest() {
         Murmur128x86Cyclic murmur = new Murmur128x86Cyclic();
         String arg = String.format( "%s-%s-%s", murmur.getName().toUpperCase( Locale.ROOT),
-            murmur.getSignedness(), murmur.getProcess());
+            murmur.getSignedness(), murmur.getProcessType());
         long expected = murmur.apply( arg.getBytes( StandardCharsets.UTF_8 ), 0 );
         assertEquals( expected, murmur.getSignature());
     }

@@ -82,7 +82,7 @@ public final class ObjectsHashIterative implements HashFunction {
     }
 
     @Override
-    public ProcessType getProcess() {
+    public ProcessType getProcessType() {
         return ProcessType.ITERATIVE;
     }
 

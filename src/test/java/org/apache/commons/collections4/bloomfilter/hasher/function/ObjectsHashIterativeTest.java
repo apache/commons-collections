@@ -51,7 +51,7 @@ public class ObjectsHashIterativeTest {
     public void signatureTest() {
         ObjectsHashIterative obj = new ObjectsHashIterative();
         String arg = String.format( "%s-%s-%s", obj.getName().toUpperCase( Locale.ROOT),
-            obj.getSignedness(), obj.getProcess());
+            obj.getSignedness(), obj.getProcessType());
         long expected = obj.apply( arg.getBytes( StandardCharsets.UTF_8 ), 0 );
         long expected2 = obj.apply( arg.getBytes( StandardCharsets.UTF_8 ), 0 );
         assertEquals( expected, expected2 );
