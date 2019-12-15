@@ -32,7 +32,7 @@ public interface HashFunctionIdentity {
      * A comparator implementation that performs the most common comparison using the
      * HashFunctionIdentity name, signedness, and process.
      */
-    public static Comparator<HashFunctionIdentity> COMMON_COMPARATOR = new Comparator<HashFunctionIdentity>() {
+    Comparator<HashFunctionIdentity> COMMON_COMPARATOR = new Comparator<HashFunctionIdentity>() {
 
         @Override
         public int compare(HashFunctionIdentity identity1, HashFunctionIdentity identity2) {
@@ -51,7 +51,7 @@ public interface HashFunctionIdentity {
      * A comparator implementation that performs the most common comparison using the
      * HashFunctionIdentity name, signedness, process, and privider..
      */
-    public static Comparator<HashFunctionIdentity> DEEP_COMPARATOR = new Comparator<HashFunctionIdentity>() {
+    Comparator<HashFunctionIdentity> DEEP_COMPARATOR = new Comparator<HashFunctionIdentity>() {
 
         @Override
         public int compare(HashFunctionIdentity identity1, HashFunctionIdentity identity2) {
@@ -69,7 +69,7 @@ public interface HashFunctionIdentity {
      * @param identity the identity to format.
      * @return the String representing the identity.
      */
-    public static String asCommonString(HashFunctionIdentity identity) {
+    static String asCommonString(HashFunctionIdentity identity) {
         return String.format("%s-%s-%s", identity.getName(), identity.getSignedness(), identity.getProcess());
     }
 
@@ -85,7 +85,7 @@ public interface HashFunctionIdentity {
      * @param identity The HashFunctionIdentity to create the buffer for.
      * @return the signature buffer for the identity
      */
-    public static byte[] prepareSignatureBuffer(HashFunctionIdentity identity) {
+    static byte[] prepareSignatureBuffer(HashFunctionIdentity identity) {
 
        return String.format( "%s-%s-%s",
            identity.getName().toUpperCase( Locale.ROOT ), identity.getSignedness(),

@@ -691,8 +691,8 @@ public abstract class BloomFilter {
             if (o instanceof Shape) {
                 Shape other = (Shape) o;
                 return
-                    (HashFunctionIdentity.COMMON_COMPARATOR.compare( getHashFunctionIdentity(),
-                        other.getHashFunctionIdentity()) == 0) &&
+                    HashFunctionIdentity.COMMON_COMPARATOR.compare( getHashFunctionIdentity(),
+                        other.getHashFunctionIdentity()) == 0 &&
                     other.getNumberOfBits() == getNumberOfBits() &&
                     other.getNumberOfHashFunctions() == getNumberOfHashFunctions();
             }
