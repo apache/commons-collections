@@ -51,7 +51,7 @@ All users are strongly encouraged to updated to this release.
 <li>Support Transformer for LazyList</li>
 <li>Make use of FunctionalInterface</li>
 </ul>
-   
+
 <h3>Security Changes</h3>
 <p>
 None.
