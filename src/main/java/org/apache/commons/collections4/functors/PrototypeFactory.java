@@ -73,7 +73,7 @@ public class PrototypeFactory {
 
         } catch (final NoSuchMethodException ex) {
             try {
-                prototype.getClass().getConstructor(new Class<?>[] { prototype.getClass() });
+                prototype.getClass().getConstructor(prototype.getClass());
                 return new InstantiateFactory<>(
                     (Class<T>) prototype.getClass(),
                     new Class<?>[] { prototype.getClass() },

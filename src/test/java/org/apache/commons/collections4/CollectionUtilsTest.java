@@ -1737,7 +1737,7 @@ public class CollectionUtilsTest extends MockTestCase {
 
     @Test
     public void addAllForElements() {
-        CollectionUtils.addAll(collectionA, new Integer[]{5});
+        CollectionUtils.addAll(collectionA, 5);
         assertTrue(collectionA.contains(5));
     }
 

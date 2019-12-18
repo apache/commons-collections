@@ -416,7 +416,7 @@ class BulkTestSuiteMaker {
 
     private static <T> Constructor<T> getTestCaseConstructor(final Class<T> c) {
         try {
-            return c.getConstructor(new Class[] { String.class });
+            return c.getConstructor(String.class);
         } catch (final NoSuchMethodException e) {
             throw new IllegalArgumentException(c + " must provide a (String) constructor");
         }
