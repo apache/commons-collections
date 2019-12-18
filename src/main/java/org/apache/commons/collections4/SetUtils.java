@@ -159,7 +159,7 @@ public class SetUtils {
     public static <E> SetView<E> disjunction(final Set<? extends E> setA, final Set<? extends E> setB) {
         Objects.requireNonNull(setA, "setA");
         Objects.requireNonNull(setB, "setB");
-        
+
         final SetView<E> aMinusB = difference(setA, setB);
         final SetView<E> bMinusA = difference(setB, setA);
 

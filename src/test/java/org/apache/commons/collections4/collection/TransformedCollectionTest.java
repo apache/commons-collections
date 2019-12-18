@@ -39,7 +39,7 @@ public class TransformedCollectionTest extends AbstractCollectionTest<Object> {
             return Integer.valueOf((String) input);
         }
     }
-    
+
     private static class ToLowerCase implements Transformer<Object, Object> {
         @Override
         public Object transform(final Object input) {

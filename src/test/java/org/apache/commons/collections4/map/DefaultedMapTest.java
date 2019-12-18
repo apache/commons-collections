@@ -138,7 +138,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
          } catch (NullPointerException e) {
              // Expected
          }
-    
+
          try {
              DefaultedMap.defaultedMap((Map<K, V>) null, nullFactory);
              fail("Expecting NullPointerException");
@@ -152,7 +152,7 @@ public class DefaultedMapTest<K, V> extends AbstractIterableMapTest<K, V> {
          } catch (NullPointerException e) {
              // Expected
          }
-    
+
          try {
              DefaultedMap.defaultedMap((Map<K, V>) null, nullTransformer);
              fail("Expecting NullPointerException");
