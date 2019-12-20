@@ -616,10 +616,14 @@ public class ListUtils {
         }
 
         @Override
-        public void visitInsertCommand(final E object) {}
+        public void visitInsertCommand(final E object) {
+            // noop
+        }
 
         @Override
-        public void visitDeleteCommand(final E object) {}
+        public void visitDeleteCommand(final E object) {
+            // noop
+        }
 
         @Override
         public void visitKeepCommand(final E object) {
