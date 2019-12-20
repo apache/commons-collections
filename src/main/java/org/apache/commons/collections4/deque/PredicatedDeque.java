@@ -40,6 +40,10 @@ import java.util.Iterator;
  * @since 4.5
  */
 public class PredicatedDeque<E> extends PredicatedCollection<E> implements Deque<E> {
+
+    /** Serialization version */
+    private static final long serialVersionUID = 7027705675493389763L;
+
     /**
      * Factory method to create a predicated (validating) deque.
      * <p>

@@ -40,6 +40,10 @@ import java.util.concurrent.locks.ReentrantLock;
  * @since 4.5
  */
 public class BlockingDeque<E> extends AbstractCollection<E> implements Deque<E>, Serializable {
+
+    /** Serialization version */
+    private static final long serialVersionUID = 3961982897426944557L;
+
     final Deque<E> deque;
     final ReentrantLock lock = new ReentrantLock();
 
@@ -116,7 +120,7 @@ public class BlockingDeque<E> extends AbstractCollection<E> implements Deque<E>,
         lock.lock();
         try {
             boolean r;
-            if ((r = deque.offerFirst(e)) == true)
+            if (r = deque.offerFirst(e))
                 notEmpty.signal();
             return r;
         } catch (Exception ex) {
@@ -139,7 +143,7 @@ public class BlockingDeque<E> extends AbstractCollection<E> implements Deque<E>,
         lock.lock();
         try {
             boolean r;
-            if ((r = deque.offerLast(e)) == true)
+            if (r = deque.offerLast(e))
                 notEmpty.signal();
             return r;
         } catch (Exception ex) {
@@ -330,7 +334,7 @@ public class BlockingDeque<E> extends AbstractCollection<E> implements Deque<E>,
         lock.lock();
         try {
             boolean r;
-            if ((r = deque.removeFirstOccurrence(o)) == true)
+            if (r = deque.removeFirstOccurrence(o))
                 notEmpty.signal();
             return r;
         } finally {
@@ -343,7 +347,7 @@ public class BlockingDeque<E> extends AbstractCollection<E> implements Deque<E>,
         lock.lock();
         try {
             boolean r;
-            if ((r = deque.removeLastOccurrence(o)) == true)
+            if (r = deque.removeLastOccurrence(o))
                 notEmpty.signal();
             return r;
         } finally {
@@ -412,7 +416,7 @@ public class BlockingDeque<E> extends AbstractCollection<E> implements Deque<E>,
         lock.lock();
         try {
             boolean r;
-            if ((r = deque.addAll(c)) == true)
+            if (r = deque.addAll(c))
                 notEmpty.signalAll();
             return r;
         } finally {
@@ -425,7 +429,7 @@ public class BlockingDeque<E> extends AbstractCollection<E> implements Deque<E>,
         lock.lock();
         try {
             boolean r;
-            if ((r = deque.removeAll(c)) == true)
+            if (r = deque.removeAll(c))
                 notFull.signalAll();
             return r;
         } finally {

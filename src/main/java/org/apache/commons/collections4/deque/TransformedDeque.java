@@ -39,7 +39,7 @@ import java.util.Iterator;
 public class TransformedDeque<E> extends TransformedCollection<E> implements Deque<E> {
 
     /** Serialization version */
-    private static final long serialVersionUID = -7901091318986132033L;
+    private static final long serialVersionUID = 7959728067506831816L;
 
     /**
      * Factory method to create a transforming deque.
@@ -76,7 +76,7 @@ public class TransformedDeque<E> extends TransformedCollection<E> implements Deq
      */
     public static <E> TransformedDeque<E> transformedDeque(final Deque<E> deque,
                                                            final Transformer<? super E, ? extends E> transformer) {
-        // throws IAE if deque or transformer is null
+        // throws NullPointerException if deque or transformer is null
         final TransformedDeque<E> decorated = new TransformedDeque<>(deque, transformer);
         if (deque.size() > 0) {
             @SuppressWarnings("unchecked") // deque is type <E>

@@ -56,6 +56,9 @@ import java.util.Iterator;
 public class CircularDeque<E> extends AbstractCollection<E>
         implements Deque<E>, BoundedCollection<E>, Serializable {
 
+    /** Serialization version */
+    private static final long serialVersionUID = 6013343683263686185L;
+
     /** Underlying storage array. */
     private transient E[] elements;
 
@@ -469,7 +472,7 @@ public class CircularDeque<E> extends AbstractCollection<E>
                 System.arraycopy(elements, i + 1, elements, i, back);
                 tail--;
             }
-        } else if (head >tail) {
+        } else if (head > tail) {
             if (i > head) {
                 System.arraycopy(elements, head, elements, head + 1, front);
                 head++;

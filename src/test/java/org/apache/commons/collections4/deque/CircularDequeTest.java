@@ -81,10 +81,10 @@ public class CircularDequeTest<E> extends AbstractDequeTest<E> {
     public void testConstructorException1() {
         try {
             new CircularDeque<E>(0);
+            fail();
         } catch (final IllegalArgumentException ex) {
-            return;
+
         }
-        fail();
     }
 
     /**
@@ -93,10 +93,10 @@ public class CircularDequeTest<E> extends AbstractDequeTest<E> {
     public void testConstructorException2() {
         try {
             new CircularDeque<E>(-20);
+            fail();
         } catch (final IllegalArgumentException ex) {
-            return;
+
         }
-        fail();
     }
 
     /**
@@ -105,10 +105,10 @@ public class CircularDequeTest<E> extends AbstractDequeTest<E> {
     public void testConstructorException3() {
         try {
             new CircularDeque<E>(null);
+            fail();
         } catch (final NullPointerException ex) {
-            return;
+
         }
-        fail();
     }
 
     /**

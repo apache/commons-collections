@@ -750,8 +750,8 @@ public abstract class AbstractDequeTest<E> extends AbstractCollectionTest<E> {
             return;
         }
 
-        final byte[] objekt = writeExternalFormToBytes((Serializable) deque);
-        final Deque<E> deque2 = (Deque<E>) readExternalFormFromBytes(objekt);
+        final byte[] object = writeExternalFormToBytes((Serializable) deque);
+        final Deque<E> deque2 = (Deque<E>) readExternalFormFromBytes(object);
 
         assertEquals("Both deques are empty", 0, deque.size());
         assertEquals("Both deques are empty", 0, deque2.size());
@@ -765,8 +765,8 @@ public abstract class AbstractDequeTest<E> extends AbstractCollectionTest<E> {
             return;
         }
 
-        final byte[] objekt = writeExternalFormToBytes((Serializable) deque);
-        final Deque<E> deque2 = (Deque<E>) readExternalFormFromBytes(objekt);
+        final byte[] object = writeExternalFormToBytes((Serializable) deque);
+        final Deque<E> deque2 = (Deque<E>) readExternalFormFromBytes(object);
 
         assertEquals("Both deques are same size", size, deque.size());
         assertEquals("Both deques are same size", size, deque2.size());

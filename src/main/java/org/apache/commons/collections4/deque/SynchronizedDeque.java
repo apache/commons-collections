@@ -34,7 +34,7 @@ import java.util.Iterator;
 public class SynchronizedDeque<E> extends SynchronizedCollection<E> implements Deque<E> {
 
     /** Serialization version */
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 4565577797338001569L;
 
     /**
      * Factory method to create a synchronized deque.
