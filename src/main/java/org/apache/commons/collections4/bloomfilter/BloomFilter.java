@@ -17,370 +17,23 @@
  */
 package org.apache.commons.collections4.bloomfilter;
 
-import java.util.BitSet;
 import java.util.Objects;
-import java.util.PrimitiveIterator.OfInt;
 
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 
 /**
- * An abstract Bloom filter providing default implementations for most Bloom filter
- * functions. Specific implementations are encouraged to override the methods that can be
- * more efficiently implemented.
+ * The interface that describes a Bloom filter.
  * @since 4.5
  */
-public abstract class BloomFilter {
+public interface BloomFilter {
 
     /**
-     * The shape used by this BloomFilter
-     */
-    private final Shape shape;
-
-    /**
-     * Gets an array of little-endian long values representing the on bits of this filter.
-     * bits 0-63 are in the first long.
-     *
-     * @return the LongBuffer representation of this filter.
-     */
-    public abstract long[] getBits();
-
-    /**
-     * Creates a StaticHasher that contains the indexes of the bits that are on in this
-     * filter.
-     *
-     * @return a StaticHasher for that produces this Bloom filter.
-     */
-    public abstract StaticHasher getHasher();
-
-    /**
-     * Construct a Bloom filter with the specified shape.
-     *
-     * @param shape The shape.
-     */
-    protected BloomFilter(Shape shape) {
-        this.shape = shape;
-    }
-
-    /**
-     * Verify the other Bloom filter has the same shape as this Bloom filter.
-     *
-     * @param other the other filter to check.
-     * @throws IllegalArgumentException if the shapes are not the same.
-     */
-    protected void verifyShape(BloomFilter other) {
-        verifyShape(other.getShape());
-    }
-
-    /**
-     * Verify the specified shape has the same shape as this Bloom filter.
-     *
-     * @param shape the other shape to check.
-     * @throws IllegalArgumentException if the shapes are not the same.
-     */
-    protected void verifyShape(Shape shape) {
-        if (!this.shape.equals(shape)) {
-            throw new IllegalArgumentException(String.format("Shape %s is not the same as %s", shape, this.shape));
-        }
-    }
-
-    /**
-     * Verifies that the hasher has the same name as the shape.
-     *
-     * @param hasher the Hasher to check
-     */
-    protected void verifyHasher(Hasher hasher) {
-        if (shape.getHashFunctionIdentity().getSignature() != hasher.getHashFunctionIdentity().getSignature()) {
-            throw new IllegalArgumentException(
-                String.format("Hasher (%s) is not the hasher for shape (%s)",
-                    HashFunctionIdentity.asCommonString(hasher.getHashFunctionIdentity()),
-                    shape.toString()));
-        }
-    }
-
-    /**
-     * Gets the shape of this filter.
-     *
-     * @return The shape of this filter.
-     */
-    public final Shape getShape() {
-        return shape;
-    }
-
-    /**
-     * Merge the other Bloom filter into this one.
-     *
-     * @param other the other Bloom filter.
-     */
-    abstract public void merge(BloomFilter other);
-
-    /**
-     * Merge the decomposed Bloom filter defined by the hasher into this Bloom
-     * filter. The hasher provides an iterator of bit indexes to enable.
-     *
-     * @param hasher the hasher to provide the indexes.
-     * @throws IllegalArgumentException if the shape argument does not match the shape of
-     * this filter, or if the hasher is not the specified one
-     */
-    abstract public void merge(Hasher hasher);
-
-    /**
-     * Gets the cardinality of this Bloom filter.
-     *
-     * @return the cardinality (number of enabled bits) in this filter.
-     */
-    public int cardinality() {
-        return BitSet.valueOf(getBits()).cardinality();
-    }
-
-    /**
-     * Performs a logical "AND" with the other Bloom filter and returns the cardinality of
-     * the result.
-     *
-     * @param other the other Bloom filter.
-     * @return the cardinality of the result of {@code ( this AND other )}.
-     */
-    public int andCardinality(BloomFilter other) {
-        verifyShape(other);
-        long[] mine = getBits();
-        long[] theirs = other.getBits();
-        int limit = Integer.min(mine.length, theirs.length);
-        long[] result = new long[limit];
-        for (int i = 0; i < limit; i++) {
-            result[i] = mine[i] & theirs[i];
-        }
-        return BitSet.valueOf(result).cardinality();
-    }
-
-    /**
-     * Performs a logical "OR" with the other Bloom filter and returns the cardinality of
-     * the result.
-     *
-     * @param other the other Bloom filter.
-     * @return the cardinality of the result of {@code ( this OR other )}.
-     */
-    public int orCardinality(BloomFilter other) {
-        verifyShape(other);
-        long[] mine = getBits();
-        long[] theirs = other.getBits();
-        long[] remainder = null;
-        long[] result = null;
-        if (mine.length > theirs.length) {
-            result = new long[mine.length];
-            remainder = mine;
-        } else {
-            result = new long[theirs.length];
-            remainder = theirs;
-
-        }
-        int limit = Integer.min(mine.length, theirs.length);
-        for (int i = 0; i < limit; i++) {
-            result[i] = mine[i] | theirs[i];
-        }
-        if (limit<result.length)
-        {
-            System.arraycopy(remainder, limit, result, limit, result.length-limit);
-        }
-        return BitSet.valueOf(result).cardinality();
-    }
-
-    /**
-     * Performs a logical "XOR" with the other Bloom filter and returns the cardinality of
-     * the result.
-     *
-     * @param other the other Bloom filter.
-     * @return the cardinality of the result of {@code( this XOR other )}
-     */
-    public int xorCardinality(BloomFilter other) {
-        verifyShape(other);
-        long[] mine = getBits();
-        long[] theirs = other.getBits();
-        long[] remainder = null;
-        long[] result = null;
-        if (mine.length > theirs.length) {
-            result = new long[mine.length];
-            remainder = mine;
-        } else {
-            result = new long[theirs.length];
-            remainder = theirs;
-
-        }
-        int limit = Integer.min(mine.length, theirs.length);
-        for (int i = 0; i < limit; i++) {
-            result[i] = mine[i] ^ theirs[i];
-        }
-        if (limit<result.length)
-        {
-            System.arraycopy(remainder, limit, result, limit, result.length-limit);
-        }
-        return BitSet.valueOf(result).cardinality();
-    }
-
-    /**
-     * Performs a contains check. Effectively this AND other == other.
-     *
-     * @param other the Other Bloom filter.
-     * @return true if this filter matches the other.
-     */
-    public boolean contains(BloomFilter other) {
-        verifyShape(other);
-        return other.cardinality() == andCardinality(other);
-    }
-
-    /**
-     * Performs a contains check against a decomposed Bloom filter. The shape must match
-     * the shape of this filter. The hasher provides bit indexes to check for. Effectively
-     * decomposed AND this == decomposed.
-     *
-     * @param hasher The hasher containing the bits to check.
-     * @return true if this filter contains the other.
-     * @throws IllegalArgumentException if the shape argument does not match the shape of
-     * this filter, or if the hasher is not the specified one
-     */
-    public boolean contains(Hasher hasher) {
-        verifyHasher( hasher );
-        long[] buff = getBits();
-
-        OfInt iter = hasher.getBits(shape);
-        while (iter.hasNext()) {
-            int idx = iter.nextInt();
-            int buffIdx = idx / Long.SIZE;
-            int pwr = Math.floorMod(idx, Long.SIZE);
-            long buffOffset = 1L << pwr;
-            if ((buff[buffIdx] & buffOffset) == 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    /**
-     * Gets the Hamming value of this Bloom filter.
-     *
-     * @return the hamming value.
-     */
-    public int hammingValue() {
-        return cardinality();
-    }
-
-    /**
-     * Gets the Hamming distance to the other Bloom filter.
-     *
-     * @param other the Other bloom filter.
-     * @return the Hamming distance.
-     */
-    public int hammingDistance(BloomFilter other) {
-        verifyShape(other);
-        return xorCardinality(other);
-    }
-
-    /**
-     * Gets the Jaccard similarity with the other Bloom filter.
-     *
-     * @param other the Other bloom filter.
-     * @return the Jaccard similarity.
-     */
-    public double jaccardSimilarity(BloomFilter other) {
-        verifyShape(other);
-        int orCard = orCardinality(other);
-        if (orCard == 0) {
-            return 0;
-        }
-        return hammingDistance(other) / (double) orCard;
-    }
-
-    /**
-     * Gets the jaccard distance to the other Bloom filter.
-     *
-     * @param other the Other Bloom filter.
-     * @return the jaccard distance.
-     */
-    public final double jaccardDistance(BloomFilter other) {
-        return 1.0 - jaccardSimilarity(other);
-    }
-
-    /**
-     * Gets the Cosine similarity wih the other Bloom filter.
-     *
-     * @param other the Other bloom filter.
-     * @return the Cosine similarity.
-     */
-    public double cosineSimilarity(BloomFilter other) {
-        verifyShape(other);
-        return andCardinality(other) / (Math.sqrt(cardinality()) * Math.sqrt(other.cardinality()));
-    }
-
-    /**
-     * Gets the jaccard distance to the other Bloom filter.
-     *
-     * @param other the Other Bloom filter.
-     * @return the jaccard distance.
-     */
-    public final double cosineDistance(BloomFilter other) {
-        return 1.0 - cosineSimilarity(other);
-    }
-
-    /**
-     * Estimates the number of items in the Bloom filter based on the shape and the number
-     * of bits that are enabled.
-     *
-     * @return and estimate of the number of items that were placed in the Bloom filter.
-     */
-    public final long estimateSize() {
-        double estimate = -(getShape().getNumberOfBits() *
-            Math.log(1.0 - hammingValue() * 1.0 / getShape().getNumberOfBits())) /
-            getShape().getNumberOfHashFunctions();
-        return Math.round(estimate);
-    }
-
-    /**
-     * Estimates the number of items in the union of the sets of items that created the
-     * bloom filters.
-     *
-     * @param other the other Bloom filter.
-     * @return an estimate of the size of the union between the two filters.
-     */
-    public final long estimateUnionSize(BloomFilter other) {
-        verifyShape(other);
-        double estimate = -(getShape().getNumberOfBits() *
-            Math.log(1.0 - orCardinality(other) * 1.0 / getShape().getNumberOfBits())) /
-            getShape().getNumberOfHashFunctions();
-        return Math.round(estimate);
-    }
-
-    /**
-     * Estimates the number of items in the intersection of the sets of items that created
-     * the bloom filters.
-     *
-     * @param other the other Bloom filter.
-     * @return an estimate of the size of the intersection between the two filters.
-     */
-    public final long estimateIntersectionSize(BloomFilter other) {
-        verifyShape(other);
-        // do subtraction early to avoid Long overflow.
-        return estimateSize() - estimateUnionSize(other) + other.estimateSize();
-    }
-
-    /**
-     * Determines if the bloom filter is "full". Full is definded as haveing no unset
-     * bits.
-     *
-     * @return true if the filter is full.
-     */
-    public final boolean isFull() {
-        return hammingValue() == getShape().getNumberOfBits();
-    }
-
-    /**
-     * The definition of a filter configuration. A simple Bloom filter configuration
-     * implementation that derives the values from the number of items and the probability
-     * of collision.
-     *
-     * <p> This interface defines the values for the filter configuration and is used to
-     * convert a ProtoBloomFilter into a BloomFilter. </p>
+     * The definition of a Bloom filter shape.
      *
      * <p> This class contains the values for the filter configuration and is used to
-     * convert a ProtoBloomFilter into a BloomFilter. </p>
+     * convert a Hasher into a BloomFilter as well as verify that two Bloom filters are
+     * compatible. (i.e. can be compared or merged)</p>
      *
      * <h2>Interrelatedness of values</h2>
      *
@@ -392,7 +45,7 @@ public abstract class BloomFilter {
      * Functions (AKA: {@code k})</dt> <dd>{@code k = round((m / n) * log(2))}</dd> </dl>
      *
      * <h2>Comparisons</h2> <p> For purposes of equality checking and hashCode
-     * calculations a {@code Shape} is defined by the hashing function name, the number of
+     * calculations a {@code Shape} is defined by the hashing function identity, the number of
      * bits ({@code m}), and the number of functions ({@code k}). </p>
      *
      * @see <a href="http://hur.st/bloomfilter?n=3&p=1.0E-5">Bloom Filter calculator</a>
@@ -400,7 +53,7 @@ public abstract class BloomFilter {
      * [Wikipedia]</a>
      * @since 4.5
      */
-    public static class Shape {
+    class Shape {
 
         /**
          * The natural logarithm of 2. Used in several calculations. approx 0.693147180
@@ -437,7 +90,7 @@ public abstract class BloomFilter {
         /**
          * Create a filter configuration with the specified number of items and
          * probability. <p> The actual probability will be approximately equal to the
-         * desired probability but will be dependent upon the caluclated bloom filter size
+         * desired probability but will be dependent upon the calculated bloom filter size
          * and function count. </p>
          *
          * @param hashFunctionIdentity The HashFunctionIdentity of the hash function this shape uses.
@@ -712,5 +365,180 @@ public abstract class BloomFilter {
             return hashFunctionIdentity;
         }
     }
+
+    /**
+     * Gets an array of little-endian long values representing the on bits of this filter.
+     * bits 0-63 are in the first long.
+     *
+     * @return the LongBuffer representation of this filter.
+     */
+    long[] getBits();
+
+    /**
+     * Creates a StaticHasher that contains the indexes of the bits that are on in this
+     * filter.
+     *
+     * @return a StaticHasher for that produces this Bloom filter.
+     */
+    StaticHasher getHasher();
+
+    /**
+     * Gets the shape of this filter.
+     *
+     * @return The shape of this filter.
+     */
+    BloomFilter.Shape getShape();
+
+    /**
+     * Merge the other Bloom filter into this one.
+     *
+     * @param other the other Bloom filter.
+     */
+    void merge(BloomFilter other);
+
+    /**
+     * Merge the decomposed Bloom filter defined by the hasher into this Bloom
+     * filter. The hasher provides an iterator of bit indexes to enable.
+     *
+     * @param hasher the hasher to provide the indexes.
+     * @throws IllegalArgumentException if the shape argument does not match the shape of
+     * this filter, or if the hasher is not the specified one
+     */
+    void merge(Hasher hasher);
+
+    /**
+     * Gets the cardinality of this Bloom filter.
+     *
+     * @return the cardinality (number of enabled bits) in this filter.
+     */
+    int cardinality();
+
+    /**
+     * Performs a logical "AND" with the other Bloom filter and returns the cardinality of
+     * the result.
+     *
+     * @param other the other Bloom filter.
+     * @return the cardinality of the result of {@code ( this AND other )}.
+     */
+    int andCardinality(BloomFilter other);
+
+//    /**
+//     * Performs a logical "OR" with the other Bloom filter and returns the cardinality of
+//     * the result.
+//     *
+//     * @param other the other Bloom filter.
+//     * @return the cardinality of the result of {@code ( this OR other )}.
+//     */
+//    int orCardinality(BloomFilter other);
+
+    /**
+     * Performs a logical "XOR" with the other Bloom filter and returns the cardinality of
+     * the result.
+     *
+     * @param other the other Bloom filter.
+     * @return the cardinality of the result of {@code( this XOR other )}
+     */
+    int xorCardinality(BloomFilter other);
+
+    /**
+     * Performs a contains check. Effectively this AND other == other.
+     *
+     * @param other the Other Bloom filter.
+     * @return true if this filter matches the other.
+     */
+    boolean contains(BloomFilter other);
+
+    /**
+     * Performs a contains check against a decomposed Bloom filter. The shape must match
+     * the shape of this filter. The hasher provides bit indexes to check for. Effectively
+     * decomposed AND this == decomposed.
+     *
+     * @param hasher The hasher containing the bits to check.
+     * @return true if this filter contains the other.
+     * @throws IllegalArgumentException if the shape argument does not match the shape of
+     * this filter, or if the hasher is not the specified one
+     */
+    boolean contains(Hasher hasher);
+
+    /**
+     * Gets the Hamming value of this Bloom filter.
+     *
+     * @return the hamming value.
+     */
+    int hammingValue();
+
+    /**
+     * Gets the Hamming distance to the other Bloom filter.
+     *
+     * @param other the Other bloom filter.
+     * @return the Hamming distance.
+     */
+    int hammingDistance(BloomFilter other);
+
+//    /**
+//     * Gets the Jaccard similarity with the other Bloom filter.
+//     *
+//     * @param other the Other bloom filter.
+//     * @return the Jaccard similarity.
+//     */
+//    double jaccardSimilarity(BloomFilter other);
+//
+//    /**
+//     * Gets the jaccard distance to the other Bloom filter.
+//     *
+//     * @param other the Other Bloom filter.
+//     * @return the jaccard distance.
+//     */
+//    double jaccardDistance(BloomFilter other);
+
+//    /**
+//     * Gets the Cosine similarity with the other Bloom filter.
+//     *
+//     * @param other the Other bloom filter.
+//     * @return the Cosine similarity.
+//     */
+//    double cosineSimilarity(BloomFilter other);
+//
+//    /**
+//     * Gets the jaccard distance to the other Bloom filter.
+//     *
+//     * @param other the Other Bloom filter.
+//     * @return the jaccard distance.
+//     */
+//    double cosineDistance(BloomFilter other);
+
+//    /**
+//     * Estimates the number of items in the Bloom filter based on the shape and the number
+//     * of bits that are enabled.
+//     *
+//     * @return and estimate of the number of items that were placed in the Bloom filter.
+//     */
+//    long estimateSize();
+//
+//    /**
+//     * Estimates the number of items in the union of the sets of items that created the
+//     * bloom filters.
+//     *
+//     * @param other the other Bloom filter.
+//     * @return an estimate of the size of the union between the two filters.
+//     */
+//    long estimateUnionSize(BloomFilter other);
+//
+//    /**
+//     * Estimates the number of items in the intersection of the sets of items that created
+//     * the bloom filters.
+//     *
+//     * @param other the other Bloom filter.
+//     * @return an estimate of the size of the intersection between the two filters.
+//     */
+//    long estimateIntersectionSize(BloomFilter other);
+
+//    /**
+//     * Determines if the bloom filter is "full". Full is defined as having no unset
+//     * bits.
+//     *
+//     * @return true if the filter is full.
+//     */
+//    boolean isFull();
 
 }

@@ -28,7 +28,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
  * implementation and should work well for most Bloom filters.
  * @since 4.5
  */
-public class BitSetBloomFilter extends BloomFilter {
+public class BitSetBloomFilter extends AbstractBloomFilter {
 
     /**
      * The bitset that defines this BloomFilter.
@@ -41,7 +41,7 @@ public class BitSetBloomFilter extends BloomFilter {
      * @param hasher the Hasher to use.
      * @param shape the desired shape of the filter.
      */
-    public BitSetBloomFilter(Hasher hasher, Shape shape) {
+    public BitSetBloomFilter(Hasher hasher, BloomFilter.Shape shape) {
         this(shape);
         verifyHasher(hasher);
         hasher.getBits(shape).forEachRemaining((IntConsumer) bitSet::set);
@@ -52,7 +52,7 @@ public class BitSetBloomFilter extends BloomFilter {
      *
      * @param shape the desired shape of the filter.
      */
-    public BitSetBloomFilter(Shape shape) {
+    public BitSetBloomFilter(BloomFilter.Shape shape) {
         super(shape);
         this.bitSet = new BitSet();
     }
@@ -100,7 +100,7 @@ public class BitSetBloomFilter extends BloomFilter {
      * internal structures of BitSetBloomFilter. </p>
      *
      * @param other the other BitSetBloomFilter.
-     * @see #merge(BloomFilter)
+     * @see #merge(AbstractBloomFilter)
      */
     public void merge(BitSetBloomFilter other) {
         verifyShape(other);
@@ -119,7 +119,7 @@ public class BitSetBloomFilter extends BloomFilter {
      *
      * @param other the other BitSetBloomFilter.
      * @return the cardinality of the result of {@code ( this AND other )}.
-     * @see #andCardinality(BloomFilter)
+     * @see #andCardinality(AbstractBloomFilter)
      */
     public int andCardinality(BitSetBloomFilter other) {
         verifyShape(other);
@@ -134,7 +134,7 @@ public class BitSetBloomFilter extends BloomFilter {
      *
      * @param other the other BitSetBloomFilter.
      * @return the cardinality of the result of {@code ( this OR other )}.
-     * @see #orCardinality(BloomFilter)
+     * @see #orCardinality(AbstractBloomFilter)
      */
     public int orCardinality(BitSetBloomFilter other) {
         verifyShape(other);
@@ -149,7 +149,7 @@ public class BitSetBloomFilter extends BloomFilter {
      *
      * @param other the other BitSetBloomFilter.
      * @return the cardinality of the result of {@code( this XOR other )}
-     * @see #xorCardinality(BloomFilter)
+     * @see #xorCardinality(AbstractBloomFilter)
      */
     public int xorCardinality(BitSetBloomFilter other) {
         verifyShape(other);

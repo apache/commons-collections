@@ -18,6 +18,7 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import java.util.PrimitiveIterator;
+
 import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 
@@ -51,7 +52,7 @@ public interface Hasher {
      * @throws IllegalArgumentException if {@code shape.getHasherName()} does not
      *                                  equal {@code getName()}
      */
-    PrimitiveIterator.OfInt getBits(Shape shape);
+    PrimitiveIterator.OfInt getBits(BloomFilter.Shape shape);
 
     /**
      * A builder to build a hasher.

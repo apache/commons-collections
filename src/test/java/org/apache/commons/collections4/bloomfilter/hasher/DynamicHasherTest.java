@@ -24,17 +24,19 @@ import static org.junit.Assert.fail;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.PrimitiveIterator.OfInt;
-import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
+
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.Signedness;
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
+import org.apache.commons.collections4.bloomfilter.BloomFilter;
+import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
 import org.apache.commons.collections4.bloomfilter.Hasher;
 import org.junit.Before;
 import org.junit.Test;
 
 public class DynamicHasherTest {
     private DynamicHasher.Builder builder;
-    private Shape shape;
+    private BloomFilter.Shape shape;
 
     private HashFunctionIdentity testFunction = new HashFunctionIdentity() {
 
@@ -66,7 +68,7 @@ public class DynamicHasherTest {
     @Before
     public void setup() throws NoSuchAlgorithmException {
         builder = new DynamicHasher.Builder( new MD5Cyclic() );
-        shape = new Shape(new MD5Cyclic(), 3, 72, 17);
+        shape = new BloomFilter.Shape(new MD5Cyclic(), 3, 72, 17);
     }
 
     @Test
@@ -109,7 +111,7 @@ public class DynamicHasherTest {
          Hasher hasher = builder.with("Hello").build();
 
        try {
-            hasher.getBits(new Shape( testFunction, 3, 72, 17) );
+            hasher.getBits(new BloomFilter.Shape( testFunction, 3, 72, 17) );
             fail( "Should have thown IllegalArgumentException");
           }
           catch (IllegalArgumentException expected) {

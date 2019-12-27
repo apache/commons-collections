@@ -42,18 +42,18 @@ public class HasherBloomFilterTest extends BloomFilterTest {
 
 
     @Override
-    protected HasherBloomFilter createFilter(Hasher hasher, Shape shape) {
+    protected HasherBloomFilter createFilter(Hasher hasher, BloomFilter.Shape shape) {
         return new HasherBloomFilter( hasher, shape );
     }
 
     @Override
-    protected BloomFilter createEmptyFilter(Shape shape) {
+    protected BloomFilter createEmptyFilter(BloomFilter.Shape shape) {
         return new HasherBloomFilter( shape );
     }
 
     @Test
     public void constructorTest_NonStatic() throws NoSuchAlgorithmException {
-        Shape shape = new Shape( new MD5Cyclic(), 3, 72, 17 );
+        BloomFilter.Shape shape = new BloomFilter.Shape( new MD5Cyclic(), 3, 72, 17 );
         DynamicHasher hasher = new DynamicHasher.Builder( new MD5Cyclic() ).with( "Hello").build();
         HasherBloomFilter filter = createFilter( hasher, shape );
         long[] lb = filter.getBits();

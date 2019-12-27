@@ -49,7 +49,7 @@ public abstract class BloomFilterTest {
      * @param shape the shape of the filter.
      * @return a BloomFilter implementation.
      */
-    protected abstract BloomFilter createFilter( Hasher hasher, Shape shape );
+    protected abstract BloomFilter createFilter( Hasher hasher, BloomFilter.Shape shape );
 
     protected HashFunctionIdentity testFunction = new HashFunctionIdentity() {
 
@@ -110,12 +110,12 @@ public abstract class BloomFilterTest {
      * @param shape the shape of the filter.
      * @return a BloomFilter implementation.
      */
-    protected abstract BloomFilter createEmptyFilter( Shape shape );
+    protected abstract BloomFilter createEmptyFilter( BloomFilter.Shape shape );
 
-    protected Shape shape;
+    protected BloomFilter.Shape shape;
 
     protected BloomFilterTest() {
-        shape = new Shape( testFunction, 3, 72, 17);
+        shape = new BloomFilter.Shape( testFunction, 3, 72, 17);
     }
 
     @Test
@@ -139,7 +139,7 @@ public abstract class BloomFilterTest {
 
     @Test
     public final void constructorTest_WrongShape() {
-        Shape anotherShape = new Shape( testFunctionX, 3, 72, 17);
+        BloomFilter.Shape anotherShape = new BloomFilter.Shape( testFunctionX, 3, 72, 17);
 
         List<Integer> lst = Arrays.asList( 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 );
         Hasher hasher = new StaticHasher( lst.iterator(), anotherShape );
@@ -280,7 +280,7 @@ public abstract class BloomFilterTest {
 
         BloomFilter bf = createFilter(hasher, shape);
 
-        Shape anotherShape = new Shape( testFunctionX, 3, 72, 17);
+        BloomFilter.Shape anotherShape = new BloomFilter.Shape( testFunctionX, 3, 72, 17);
         List<Integer> lst2 = Arrays.asList( 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 ,26 ,27 );
         Hasher hasher2 = new StaticHasher( lst2.iterator(), anotherShape );
         BloomFilter bf2 = createFilter(hasher2, anotherShape);
@@ -316,7 +316,7 @@ public abstract class BloomFilterTest {
 
         BloomFilter bf = createFilter(hasher, shape);
 
-        Shape anotherShape = new Shape( testFunctionX, 3, 72, 17);
+        BloomFilter.Shape anotherShape = new BloomFilter.Shape( testFunctionX, 3, 72, 17);
         List<Integer> lst2 = Arrays.asList( 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 ,26 ,27 );
         Hasher hasher2 = new StaticHasher( lst2.iterator(), anotherShape );
 
@@ -558,7 +558,7 @@ public abstract class BloomFilterTest {
         Hasher hasher = new StaticHasher( lst.iterator(), shape );
         BloomFilter bf = createFilter(hasher, shape);
 
-        Shape anotherShape = new Shape( testFunctionX, 3, 72, 17);
+        BloomFilter.Shape anotherShape = new BloomFilter.Shape( testFunctionX, 3, 72, 17);
         Hasher hasher2 = new StaticHasher( lst.iterator(), anotherShape );
         BloomFilter bf2 = createFilter(hasher2, anotherShape );
         try {
@@ -609,7 +609,7 @@ public abstract class BloomFilterTest {
         Hasher hasher = new StaticHasher( lst.iterator(), shape );
         BloomFilter bf = createFilter(hasher, shape);
 
-        Shape anotherShape = new Shape( testFunctionX, 3, 72, 17);
+        BloomFilter.Shape anotherShape = new BloomFilter.Shape( testFunctionX, 3, 72, 17);
 
         List<Integer> lst2 = Arrays.asList(4, 5, 6, 7, 8, 9, 10 );
         Hasher hasher2 = new StaticHasher( lst2.iterator(), anotherShape );

@@ -42,7 +42,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
  *
  * @since 4.5
  */
-public class CountingBloomFilter extends BloomFilter {
+public class CountingBloomFilter extends AbstractBloomFilter {
 
     /**
      * the count of entries. Each enabled bit is a key with the count for that bit
@@ -56,7 +56,7 @@ public class CountingBloomFilter extends BloomFilter {
      * @param hasher The hasher to build the filter from.
      * @param shape  The shape of the resulting filter.
      */
-    public CountingBloomFilter(Hasher hasher, Shape shape) {
+    public CountingBloomFilter(Hasher hasher, BloomFilter.Shape shape) {
         super(shape);
         verifyHasher(hasher);
         counts = new TreeMap<Integer, Integer>();
@@ -70,7 +70,7 @@ public class CountingBloomFilter extends BloomFilter {
      *
      * @param shape  The shape of the resulting filter.
      */
-    public CountingBloomFilter(Shape shape) {
+    public CountingBloomFilter(BloomFilter.Shape shape) {
         super(shape);
         this.counts = new TreeMap<Integer, Integer>();
     }
@@ -81,7 +81,7 @@ public class CountingBloomFilter extends BloomFilter {
      * @param counts A map of data counts.
      * @param shape  The shape of the resulting filter.
      */
-    public CountingBloomFilter(Map<Integer,Integer> counts, Shape shape) {
+    public CountingBloomFilter(Map<Integer,Integer> counts, BloomFilter.Shape shape) {
         this(shape);
         counts.entrySet().stream().forEach( e -> {
             if (e.getKey() >= shape.getNumberOfBits())
@@ -271,7 +271,7 @@ public class CountingBloomFilter extends BloomFilter {
      * Calculates the orCardinality with another CountingBloomFilter.
      * @param other The other CountingBloomFilter
      * @return the orCardinality
-     * @see #orCardinality(BloomFilter)
+     * @see #orCardinality(AbstractBloomFilter)
      */
     public int orCardinality(CountingBloomFilter other) {
         Set<Integer> result =
@@ -284,7 +284,7 @@ public class CountingBloomFilter extends BloomFilter {
      * Calculates the andCardinality with another CountingBloomFilter.
      * @param other The other CountingBloomFilter
      * @return the andCardinality
-     * @see #andCardinality(BloomFilter)
+     * @see #andCardinality(AbstractBloomFilter)
      */
     public int andCardinality(CountingBloomFilter other) {
         Set<Integer> result =

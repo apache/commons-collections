@@ -34,7 +34,7 @@ import org.apache.commons.collections4.iterators.IteratorChain;
  * implementations be used.
  * @since 4.5
  */
-public class HasherBloomFilter extends BloomFilter {
+public class HasherBloomFilter extends AbstractBloomFilter {
 
     /**
      * The internal hasher representation.
@@ -47,7 +47,7 @@ public class HasherBloomFilter extends BloomFilter {
      * @param hasher the hasher to use.
      * @param shape the shape of the Bloom filter.
      */
-    public HasherBloomFilter(Hasher hasher, Shape shape) {
+    public HasherBloomFilter(Hasher hasher, BloomFilter.Shape shape) {
         super(shape);
         verifyHasher(hasher);
         if (hasher instanceof StaticHasher) {
@@ -63,7 +63,7 @@ public class HasherBloomFilter extends BloomFilter {
      *
      * @param shape the shape of the Bloom filter.
      */
-    public HasherBloomFilter(Shape shape) {
+    public HasherBloomFilter(BloomFilter.Shape shape) {
         super(shape);
         this.hasher = new StaticHasher(EmptyIterator.emptyIterator(), shape);
     }

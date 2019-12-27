@@ -41,12 +41,12 @@ import org.junit.Test;
 public class BitSetBloomFilterTest extends BloomFilterTest {
 
     @Override
-    protected BitSetBloomFilter createFilter(Hasher hasher, Shape shape) {
+    protected BitSetBloomFilter createFilter(Hasher hasher, BloomFilter.Shape shape) {
         return new BitSetBloomFilter( hasher, shape );
     }
 
     @Override
-    protected BitSetBloomFilter createEmptyFilter(Shape shape) {
+    protected BitSetBloomFilter createEmptyFilter(BloomFilter.Shape shape) {
         return new BitSetBloomFilter( shape );
     }
 

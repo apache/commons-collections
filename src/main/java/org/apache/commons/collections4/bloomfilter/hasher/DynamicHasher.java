@@ -22,6 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.PrimitiveIterator;
+
+import org.apache.commons.collections4.bloomfilter.BloomFilter;
 import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
 import org.apache.commons.collections4.bloomfilter.Hasher;
 
@@ -68,7 +70,7 @@ public class DynamicHasher implements Hasher {
      * {@code getName()}
      */
     @Override
-    public PrimitiveIterator.OfInt getBits(Shape shape) {
+    public PrimitiveIterator.OfInt getBits(BloomFilter.Shape shape) {
         if (HashFunctionIdentity.COMMON_COMPARATOR.compare(getHashFunctionIdentity(),
             shape.getHashFunctionIdentity()) != 0) {
             throw new IllegalArgumentException(
@@ -85,14 +87,14 @@ public class DynamicHasher implements Hasher {
     private class Iterator implements PrimitiveIterator.OfInt {
         private int buffer = 0;
         private int funcCount = 0;
-        private final Shape shape;
+        private final BloomFilter.Shape shape;
 
         /**
          * Creates iterator with the specified shape.
          *
          * @param shape
          */
-        private Iterator(Shape shape) {
+        private Iterator(BloomFilter.Shape shape) {
             this.shape = shape;
         }
 
