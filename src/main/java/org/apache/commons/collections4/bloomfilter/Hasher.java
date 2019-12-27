@@ -52,7 +52,7 @@ public interface Hasher {
      * @throws IllegalArgumentException if {@code shape.getHasherName()} does not
      *                                  equal {@code getName()}
      */
-    PrimitiveIterator.OfInt getBits(BloomFilter.Shape shape);
+    PrimitiveIterator.OfInt getBits(Shape shape);
 
     /**
      * A builder to build a hasher.

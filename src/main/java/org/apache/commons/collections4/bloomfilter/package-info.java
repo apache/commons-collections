@@ -25,7 +25,7 @@
  * tell you where things are not. Basically, you create a Bloom filter by creating hashes
  * and converting those to enabled bits in a vector. You can merge the Bloom filters
  * together with logical "or" (call this filter "B"). You can then check to see if filter
- * "A" was "or"ed into "B" by testing A & B == A. if the statement is false then "A" was
+ * "A" was "or"ed into "B" by testing A &amp; B == A. if the statement is false then "A" was
  * not merged into "B", otherwise it _might_ have. They are generally used where hash
  * tables would be too large or as a filter front end for longer processes. For example
  * most browsers have a Bloom filter that is built from all known bad URLs (ones that

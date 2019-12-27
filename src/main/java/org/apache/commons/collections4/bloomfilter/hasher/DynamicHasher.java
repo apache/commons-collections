@@ -70,7 +70,7 @@ public class DynamicHasher implements Hasher {
      * {@code getName()}
      */
     @Override
-    public PrimitiveIterator.OfInt getBits(BloomFilter.Shape shape) {
+    public PrimitiveIterator.OfInt getBits(Shape shape) {
         if (HashFunctionIdentity.COMMON_COMPARATOR.compare(getHashFunctionIdentity(),
             shape.getHashFunctionIdentity()) != 0) {
             throw new IllegalArgumentException(
@@ -87,14 +87,14 @@ public class DynamicHasher implements Hasher {
     private class Iterator implements PrimitiveIterator.OfInt {
         private int buffer = 0;
         private int funcCount = 0;
-        private final BloomFilter.Shape shape;
+        private final Shape shape;
 
         /**
          * Creates iterator with the specified shape.
          *
          * @param shape
          */
-        private Iterator(BloomFilter.Shape shape) {
+        private Iterator(Shape shape) {
             this.shape = shape;
         }
 

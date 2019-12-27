@@ -102,7 +102,7 @@ public abstract class BloomFilterTest {
 
             @Override
             public long getSignature() {
-                return 0;
+                return 1;
             }};
 
     /**
@@ -164,37 +164,6 @@ public abstract class BloomFilterTest {
 
         BloomFilter bf = createFilter(hasher, shape);
         assertEquals(17, bf.hammingValue());
-    }
-
-    @Test
-    public final void orCardinalityTest() {
-        List<Integer> lst = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17 );
-        Hasher hasher = new StaticHasher( lst.iterator(), shape );
-
-        BloomFilter bf = createFilter(hasher, shape);
-
-        List<Integer> lst2 = Arrays.asList( 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25 ,26 ,27 );
-        Hasher hasher2 = new StaticHasher( lst2.iterator(), shape );
-
-        BloomFilter bf2 = createFilter(hasher2, shape);
-
-        assertEquals(27, bf.orCardinality(bf2));
-    }
-
-    @Test
-    public final void orCardinalityTest_ExtraLongs() {
-        List<Integer> lst = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17 );
-        Hasher hasher = new StaticHasher( lst.iterator(), shape );
-
-        BloomFilter bf = createFilter(hasher, shape);
-
-        List<Integer> lst2 = Arrays.asList( 11, 12, 13, 14, 15, 16, 17, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69 );
-        Hasher hasher2 = new StaticHasher( lst2.iterator(), shape );
-
-        BloomFilter bf2 = createFilter(hasher2, shape);
-
-        assertEquals(27, bf.orCardinality(bf2));
-        assertEquals(27, bf2.orCardinality(bf));
     }
 
     @Test
@@ -330,103 +299,6 @@ public abstract class BloomFilterTest {
         }
     }
 
-    @Test
-    public final void estimateSizeTest() {
-        // build a filter
-        List<Integer> lst = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17 );
-        Hasher hasher = new StaticHasher( lst.iterator(), shape );
-        BloomFilter filter1 = createFilter(hasher, shape);
-        assertEquals(1, filter1.estimateSize());
-
-        // the data provided above do not generate an estimate that is equivalent to the
-        // actual.
-        lst = Arrays.asList(
-             1,  2,  3,  4,  5,  6,  7,  8,  9, 10,
-            11, 12, 13, 14, 15, 16, 17, 18, 19, 20 );
-        hasher = new StaticHasher( lst.iterator(), shape );
-        filter1 = createFilter(hasher, shape);
-        assertEquals(1, filter1.estimateSize());
-
-        lst = Arrays.asList(
-             1,  2,  3,  4,  5,  6,  7,  8,  9, 10,
-            11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-            21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
-            31, 32, 33 );
-        Hasher hasher2 = new StaticHasher( lst.iterator(), shape );
-        BloomFilter filter2 = createFilter( hasher2, shape );
-
-        assertEquals(3, filter2.estimateSize());
-
-    }
-
-
-
-    @Test
-    public final void estimateUnionSizeTest() {
-        // build a filter
-        List<Integer> lst = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 );
-        Hasher hasher = new StaticHasher( lst.iterator(), shape );
-        BloomFilter filter1 = createFilter(hasher, shape);
-
-        lst = Arrays.asList(
-                                    17, 18, 19, 20,
-            21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
-            31, 32, 33, 34, 35, 36, 37, 38, 39, 40
-            );
-        Hasher hasher2 = new StaticHasher( lst.iterator(), shape );
-        BloomFilter filter2 = createFilter( hasher2, shape );
-
-        long estimate = filter1.estimateUnionSize(filter2);
-        assertEquals(3, estimate);
-
-    }
-
-    @Test
-    public final void estimateIntersectionSizeTest() {
-        // build a filter
-        List<Integer> lst = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17 );
-        Hasher hasher = new StaticHasher( lst.iterator(), shape );
-        BloomFilter filter1 = createFilter(hasher, shape);
-
-        lst = Arrays.asList(
-                                         8,  9, 10,
-            11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-            21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
-            31, 32, 33, 34, 35, 36, 37, 38, 39, 40
-            );
-        Hasher hasher2 = new StaticHasher( lst.iterator(), shape );
-        BloomFilter filter2 = createFilter( hasher2, shape );
-
-        long estimate = filter1.estimateIntersectionSize(filter2);
-        assertEquals(1, estimate);
-
-    }
-
-    @Test
-    public final void isFullTest() {
-
-        // create empty filter
-        BloomFilter filter = createEmptyFilter( shape );
-        assertFalse( filter.isFull());
-
-        List<Integer> values = new ArrayList<Integer>(shape.getNumberOfBits());
-        for (int i=0;i<shape.getNumberOfBits();i++)
-        {
-            values.add(i);
-        }
-
-        StaticHasher hasher2 = new StaticHasher(values.iterator(), shape );
-        filter = createFilter( hasher2, shape);
-
-        assertTrue( filter.isFull());
-
-        int mid = shape.getNumberOfBits()/2;
-        values.remove( Integer.valueOf( mid ));
-        hasher2 = new StaticHasher(values.iterator(), shape );
-        filter = createFilter( hasher2, shape);
-        assertFalse( filter.isFull());
-
-    }
 
     @Test
     public final void hammingDistanceTest() {
@@ -448,107 +320,6 @@ public abstract class BloomFilterTest {
 
         assertEquals( 17, filter1.hammingDistance(filter2));
         assertEquals( 17, filter2.hammingDistance( filter1 ));
-
-    }
-
-    @Test
-    public final void jaccardSimilarityTest() {
-        List<Integer> lst = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17 );
-        Hasher hasher = new StaticHasher( lst.iterator(), shape );
-        BloomFilter filter1 = createFilter(hasher, shape);
-
-
-        List<Integer> lst2 = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17 );
-        Hasher hasher2 = new StaticHasher( lst2.iterator(), shape );
-        BloomFilter filter2 = createFilter(hasher2, shape);
-
-        assertEquals( 0.0, filter1.jaccardSimilarity(filter2), 0.0001);
-        assertEquals( 0.0, filter2.jaccardSimilarity(filter1), 0.0001);
-
-        lst2 = Arrays.asList( 10, 11, 12, 13, 14, 15 ,16 ,17, 18, 19, 20, 21 ,22, 23, 24, 25 );
-        hasher2 = new StaticHasher( lst2.iterator(), shape );
-        filter2 = createFilter(hasher2, shape);
-
-        assertEquals( 0.68, filter1.jaccardSimilarity(filter2), 0.001);
-        assertEquals( 0.68, filter2.jaccardSimilarity( filter1 ), 0.001);
-    }
-
-    @Test
-    public final void jaccardSimilarityTest_NoValues() {
-        BloomFilter filter1 = createEmptyFilter(shape);
-        BloomFilter filter2 = createEmptyFilter(shape);
-
-        assertEquals( 0.0, filter1.jaccardSimilarity(filter2), 0.0001);
-        assertEquals( 0.0, filter2.jaccardSimilarity(filter1), 0.0001);
-
-    }
-
-    @Test
-    public final void jaccardDistanceTest() {
-        List<Integer> lst = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17 );
-        Hasher hasher = new StaticHasher( lst.iterator(), shape );
-        BloomFilter filter1 = createFilter(hasher, shape);
-
-
-        List<Integer> lst2 = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17 );
-        Hasher hasher2 = new StaticHasher( lst2.iterator(), shape );
-        BloomFilter filter2 = createFilter(hasher2, shape);
-
-        assertEquals( 1.0, filter1.jaccardDistance(filter2), 0.0001);
-        assertEquals( 1.0, filter2.jaccardDistance(filter1), 0.0001);
-
-        lst2 = Arrays.asList( 10, 11, 12, 13, 14, 15 ,16 ,17, 18, 19, 20, 21 ,22, 23, 24, 25 );
-        hasher2 = new StaticHasher( lst2.iterator(), shape );
-        filter2 = createFilter(hasher2, shape);
-
-        assertEquals( 0.32, filter1.jaccardDistance(filter2), 0.001);
-        assertEquals( 0.32, filter2.jaccardDistance( filter1 ), 0.001);
-
-    }
-
-    @Test
-    public final void cosineSimilarityTest() {
-        List<Integer> lst = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17 );
-        Hasher hasher = new StaticHasher( lst.iterator(), shape );
-        BloomFilter filter1 = createFilter(hasher, shape);
-
-
-        List<Integer> lst2 = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17 );
-        Hasher hasher2 = new StaticHasher( lst2.iterator(), shape );
-        BloomFilter filter2 = createFilter(hasher2, shape);
-
-        assertEquals( 1.0, filter1.cosineSimilarity(filter2), 0.0001);
-        assertEquals( 1.0, filter2.cosineSimilarity(filter1), 0.0001);
-
-        lst2 = Arrays.asList( 10, 11, 12, 13, 14, 15 ,16 ,17, 18, 19, 20, 21 ,22, 23, 24, 25 );
-        hasher2 = new StaticHasher( lst2.iterator(), shape );
-        filter2 = createFilter(hasher2, shape);
-
-        assertEquals( 0.485071250072666, filter1.cosineSimilarity(filter2), 0.000000000000001);
-        assertEquals( 0.485071250072666, filter2.cosineSimilarity( filter1 ), 0.000000000000001);
-
-    }
-
-    @Test
-    public final void cosineDistanceTest() {
-        List<Integer> lst = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17 );
-        Hasher hasher = new StaticHasher( lst.iterator(), shape );
-        BloomFilter filter1 = createFilter(hasher, shape);
-
-
-        List<Integer> lst2 = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17 );
-        Hasher hasher2 = new StaticHasher( lst2.iterator(), shape );
-        BloomFilter filter2 = createFilter(hasher2, shape);
-
-        assertEquals( 0.0, filter1.cosineDistance(filter2), 0.0001);
-        assertEquals( 0.0, filter2.cosineDistance(filter1), 0.0001);
-
-        lst2 = Arrays.asList( 10, 11, 12, 13, 14, 15 ,16 ,17, 18, 19, 20, 21 ,22, 23, 24, 25 );
-        hasher2 = new StaticHasher( lst2.iterator(), shape );
-        filter2 = createFilter(hasher2, shape);
-
-        assertEquals( 0.514928749927334, filter1.cosineDistance(filter2), 0.000000000000001);
-        assertEquals( 0.514928749927334, filter2.cosineDistance( filter1 ), 0.000000000000001);
 
     }
 

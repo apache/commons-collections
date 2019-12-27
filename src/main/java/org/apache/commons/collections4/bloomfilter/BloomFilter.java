@@ -422,15 +422,6 @@ public interface BloomFilter {
      */
     int andCardinality(BloomFilter other);
 
-//    /**
-//     * Performs a logical "OR" with the other Bloom filter and returns the cardinality of
-//     * the result.
-//     *
-//     * @param other the other Bloom filter.
-//     * @return the cardinality of the result of {@code ( this OR other )}.
-//     */
-//    int orCardinality(BloomFilter other);
-
     /**
      * Performs a logical "XOR" with the other Bloom filter and returns the cardinality of
      * the result.
@@ -475,70 +466,5 @@ public interface BloomFilter {
      */
     int hammingDistance(BloomFilter other);
 
-//    /**
-//     * Gets the Jaccard similarity with the other Bloom filter.
-//     *
-//     * @param other the Other bloom filter.
-//     * @return the Jaccard similarity.
-//     */
-//    double jaccardSimilarity(BloomFilter other);
-//
-//    /**
-//     * Gets the jaccard distance to the other Bloom filter.
-//     *
-//     * @param other the Other Bloom filter.
-//     * @return the jaccard distance.
-//     */
-//    double jaccardDistance(BloomFilter other);
-
-//    /**
-//     * Gets the Cosine similarity with the other Bloom filter.
-//     *
-//     * @param other the Other bloom filter.
-//     * @return the Cosine similarity.
-//     */
-//    double cosineSimilarity(BloomFilter other);
-//
-//    /**
-//     * Gets the jaccard distance to the other Bloom filter.
-//     *
-//     * @param other the Other Bloom filter.
-//     * @return the jaccard distance.
-//     */
-//    double cosineDistance(BloomFilter other);
-
-//    /**
-//     * Estimates the number of items in the Bloom filter based on the shape and the number
-//     * of bits that are enabled.
-//     *
-//     * @return and estimate of the number of items that were placed in the Bloom filter.
-//     */
-//    long estimateSize();
-//
-//    /**
-//     * Estimates the number of items in the union of the sets of items that created the
-//     * bloom filters.
-//     *
-//     * @param other the other Bloom filter.
-//     * @return an estimate of the size of the union between the two filters.
-//     */
-//    long estimateUnionSize(BloomFilter other);
-//
-//    /**
-//     * Estimates the number of items in the intersection of the sets of items that created
-//     * the bloom filters.
-//     *
-//     * @param other the other Bloom filter.
-//     * @return an estimate of the size of the intersection between the two filters.
-//     */
-//    long estimateIntersectionSize(BloomFilter other);
-
-//    /**
-//     * Determines if the bloom filter is "full". Full is defined as having no unset
-//     * bits.
-//     *
-//     * @return true if the filter is full.
-//     */
-//    boolean isFull();
 
 }

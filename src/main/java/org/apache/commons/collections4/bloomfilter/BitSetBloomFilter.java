@@ -70,7 +70,11 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
     @Override
     public void merge(BloomFilter other) {
         verifyShape(other);
-        bitSet.or(BitSet.valueOf(other.getBits()));
+        if (other instanceof BitSetBloomFilter) {
+            bitSet.or(((BitSetBloomFilter)other).bitSet);
+        } else {
+            bitSet.or(BitSet.valueOf(other.getBits()));
+        }
     }
 
     @Override
@@ -95,17 +99,6 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
         return bitSet.toString();
     }
 
-    /**
-     * Merge another BitSetBloomFilter into this one. <p> This method takes advantage of
-     * internal structures of BitSetBloomFilter. </p>
-     *
-     * @param other the other BitSetBloomFilter.
-     * @see #merge(AbstractBloomFilter)
-     */
-    public void merge(BitSetBloomFilter other) {
-        verifyShape(other);
-        bitSet.or(other.bitSet);
-    }
 
     @Override
     public void merge(Hasher hasher) {
@@ -119,43 +112,29 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
      *
      * @param other the other BitSetBloomFilter.
      * @return the cardinality of the result of {@code ( this AND other )}.
-     * @see #andCardinality(AbstractBloomFilter)
+     * @see #andCardinality(BloomFilter)
      */
-    public int andCardinality(BitSetBloomFilter other) {
-        verifyShape(other);
-        BitSet result = (BitSet) bitSet.clone();
-        result.and(other.bitSet);
-        return result.cardinality();
+    @Override
+    public int andCardinality(BloomFilter other) {
+        if (other instanceof BitSetBloomFilter) {
+            verifyShape(other);
+            BitSet result = (BitSet) bitSet.clone();
+            result.and(((BitSetBloomFilter)other).bitSet);
+            return result.cardinality();
+        }
+        return super.andCardinality(other);
     }
 
-    /**
-     * Calculates the orCardinality with another BitSetBloomFilter. <p> This method takes
-     * advantage of internal structures of BitSetBloomFilter. </p>
-     *
-     * @param other the other BitSetBloomFilter.
-     * @return the cardinality of the result of {@code ( this OR other )}.
-     * @see #orCardinality(AbstractBloomFilter)
-     */
-    public int orCardinality(BitSetBloomFilter other) {
-        verifyShape(other);
-        BitSet result = (BitSet) bitSet.clone();
-        result.or(other.bitSet);
-        return result.cardinality();
-    }
 
-    /**
-     * Calculates the xorCardinality with another BitSetBloomFilter. <p> This method takes
-     * advantage of internal structures of BitSetBloomFilter. </p>
-     *
-     * @param other the other BitSetBloomFilter.
-     * @return the cardinality of the result of {@code( this XOR other )}
-     * @see #xorCardinality(AbstractBloomFilter)
-     */
-    public int xorCardinality(BitSetBloomFilter other) {
-        verifyShape(other);
-        BitSet result = (BitSet) bitSet.clone();
-        result.xor(other.bitSet);
-        return result.cardinality();
+    @Override
+    public int xorCardinality(BloomFilter other) {
+        if (other instanceof BitSetBloomFilter) {
+            verifyShape(other);
+            BitSet result = (BitSet) bitSet.clone();
+            result.xor(((BitSetBloomFilter)other).bitSet);
+            return result.cardinality();
+        }
+        return super.xorCardinality(other);
     }
 
 }

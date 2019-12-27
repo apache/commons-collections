@@ -37,7 +37,7 @@ public final class StaticHasher implements Hasher {
     /**
      * The shape of this hasher
      */
-    private final BloomFilter.Shape shape;
+    private final Shape shape;
     /**
      * The ordered set of values that this hasher will return.
      */
@@ -49,7 +49,7 @@ public final class StaticHasher implements Hasher {
      * @param shape the Shape for the resulting values.
      * @throws IllegalArgumentException if the shape of the hasher and the shape parameter are not the same.
      */
-    public StaticHasher(StaticHasher hasher, BloomFilter.Shape shape) {
+    public StaticHasher(StaticHasher hasher, Shape shape) {
         if (!hasher.shape.equals(shape)) {
             throw new IllegalArgumentException(String.format("Hasher shape (%s) is not the same as shape (%s)",
                 hasher.getShape().toString(), shape.toString()));
@@ -64,7 +64,7 @@ public final class StaticHasher implements Hasher {
      * @param shape the Shape for the resulting values.
      * @throws IllegalArgumentException if the hasher function and the shape function are not the same.
      */
-    public StaticHasher(Hasher hasher, BloomFilter.Shape shape) {
+    public StaticHasher(Hasher hasher, Shape shape) {
         this( hasher.getBits(shape), shape);
         if (
             HashFunctionIdentity.COMMON_COMPARATOR.compare(
@@ -81,7 +81,7 @@ public final class StaticHasher implements Hasher {
      * @param shape the Shape that the integers were generated for.
      * @throws IllegalArgumentException if any Integer is outside the range [0,shape.getNumberOfBits())
      */
-    public StaticHasher(Iterator<Integer> iter, BloomFilter.Shape shape) {
+    public StaticHasher(Iterator<Integer> iter, Shape shape) {
         this.shape = shape;
         Set<Integer> workingValues = new TreeSet<Integer>();
         iter.forEachRemaining( idx -> {
@@ -107,7 +107,7 @@ public final class StaticHasher implements Hasher {
      *
      * @return the Shape of this hasher.
      */
-    public BloomFilter.Shape getShape() {
+    public Shape getShape() {
         return shape;
     }
 
@@ -135,7 +135,7 @@ public final class StaticHasher implements Hasher {
      *                                  equal {@code getName()}
      */
     @Override
-    public OfInt getBits(BloomFilter.Shape shape) {
+    public OfInt getBits(Shape shape) {
         if (!this.shape.equals(shape)) {
             throw new IllegalArgumentException(
                 String.format("shape (%s) does not match internal shape (%s)", shape, this.shape));

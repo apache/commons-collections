@@ -77,32 +77,6 @@ public class BitSetBloomFilterTest extends BloomFilterTest {
     }
 
     @Test
-    public void orCardinalityTest_BitSetBloomFilter() {
-        Hasher hasher = new StaticHasher( Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ).iterator(), shape );
-
-        BitSetBloomFilter bf = createFilter(hasher, shape);
-
-        Hasher hasher2 = new StaticHasher( Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ).iterator(), shape );
-        BitSetBloomFilter bf2 = createFilter(hasher2, shape);
-
-        assertEquals( 10, bf.orCardinality(bf2));
-        assertEquals( 10, bf2.orCardinality(bf));
-
-        hasher2 = new StaticHasher( Arrays.asList( 1, 2, 3, 4, 5 ).iterator(), shape );
-        bf2 = createFilter(hasher2, shape);
-
-        assertEquals( 10, bf.orCardinality(bf2));
-        assertEquals( 10, bf2.orCardinality(bf));
-
-        hasher2 = new StaticHasher( Arrays.asList( 11, 12, 13, 14, 15 ).iterator(), shape );
-        bf2 = createFilter(hasher2, shape);
-
-        assertEquals( 15, bf.orCardinality(bf2));
-        assertEquals( 15, bf2.orCardinality(bf));
-
-    }
-
-    @Test
     public void xorCardinalityTest_BitSetBloomFilter() {
         Hasher hasher = new StaticHasher( Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ).iterator(), shape );
 

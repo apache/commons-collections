@@ -135,23 +135,18 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     @Override
     public void merge(BloomFilter other) {
         verifyShape(other);
-        merge(BitSet.valueOf(other.getBits()).stream().iterator());
+        if (other instanceof CountingBloomFilter)
+        {
+            merge(((CountingBloomFilter)other).counts.keySet().iterator());
+        } else {
+            merge(BitSet.valueOf(other.getBits()).stream().iterator());
+        }
     }
 
     @Override
     public void merge(Hasher hasher) {
         verifyHasher( hasher );
         merge( hasher.getBits(getShape()) );
-    }
-
-    /**
-     * Merge another CountingBloomFilter into this one. Takes advantage
-     * of the internal structure of the CountingBloomFilter.
-     * @param other the other CountingBloomFilter.
-     */
-    public void merge(CountingBloomFilter other) {
-        verifyShape(other);
-        merge(other.counts.keySet().iterator());
     }
 
     /**
@@ -183,7 +178,12 @@ public class CountingBloomFilter extends AbstractBloomFilter {
      */
     public void remove(BloomFilter other) {
         verifyShape(other);
-        remove(BitSet.valueOf(other.getBits()).stream().boxed());
+        if (other instanceof CountingBloomFilter)
+        {
+            remove(((CountingBloomFilter)other).counts.keySet().stream());
+        } else {
+            remove(BitSet.valueOf(other.getBits()).stream().boxed());
+        }
     }
 
     /**
@@ -201,16 +201,6 @@ public class CountingBloomFilter extends AbstractBloomFilter {
         Set<Integer> lst = new HashSet<Integer>();
         hasher.getBits(getShape()).forEachRemaining( (Consumer<Integer>)lst::add );
         remove(lst.stream());
-    }
-
-    /**
-     * Decrement the counts for the bits that are on in the other BloomFilter from this
-     * one.  Takes advantage of the internal structure of the CountingBloomFilter.
-     * @param other the other CountingBloomFilter.
-     */
-    public void remove(CountingBloomFilter other) {
-        verifyShape(other);
-        remove(other.counts.keySet().stream());
     }
 
     /**
@@ -267,29 +257,13 @@ public class CountingBloomFilter extends AbstractBloomFilter {
         return counts.size();
     }
 
-    /**
-     * Calculates the orCardinality with another CountingBloomFilter.
-     * @param other The other CountingBloomFilter
-     * @return the orCardinality
-     * @see #orCardinality(AbstractBloomFilter)
-     */
-    public int orCardinality(CountingBloomFilter other) {
-        Set<Integer> result =
-            new HashSet<Integer>( counts.keySet());
-        result.addAll( other.counts.keySet() );
-        return result.size();
-    }
-
-    /**
-     * Calculates the andCardinality with another CountingBloomFilter.
-     * @param other The other CountingBloomFilter
-     * @return the andCardinality
-     * @see #andCardinality(AbstractBloomFilter)
-     */
-    public int andCardinality(CountingBloomFilter other) {
-        Set<Integer> result =
-            new HashSet<Integer>( counts.keySet());
-        result.retainAll( other.counts.keySet() );
-        return result.size();
+    @Override
+    public int andCardinality(BloomFilter other) {
+        if (other instanceof CountingBloomFilter) {
+            Set<Integer> result = new HashSet<Integer>( counts.keySet());
+            result.retainAll( ((CountingBloomFilter)other).counts.keySet() );
+            return result.size();
+        }
+        return super.andCardinality(other);
     }
 }
