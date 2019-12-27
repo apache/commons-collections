@@ -201,13 +201,13 @@ public class TransformerUtilsTest {
 
         assertEquals("A", TransformerUtils.chainedTransformer(b, a).transform(null));
         assertEquals("B", TransformerUtils.chainedTransformer(a, b).transform(null));
-        assertEquals("A", TransformerUtils.chainedTransformer(new Transformer[] { b, a }).transform(null));
+        assertEquals("A", TransformerUtils.chainedTransformer(b, a).transform(null));
         Collection<Transformer<Object, Object>> coll = new ArrayList<>();
         coll.add(b);
         coll.add(a);
         assertEquals("A", TransformerUtils.chainedTransformer(coll).transform(null));
 
-        assertSame(NOPTransformer.INSTANCE, TransformerUtils.chainedTransformer(new Transformer[0]));
+        assertSame(NOPTransformer.INSTANCE, TransformerUtils.chainedTransformer());
         assertSame(NOPTransformer.INSTANCE, TransformerUtils.chainedTransformer(Collections.<Transformer<Object, Object>>emptyList()));
 
         try {
@@ -223,7 +223,7 @@ public class TransformerUtilsTest {
             fail();
         } catch (final NullPointerException ex) {}
         try {
-            TransformerUtils.chainedTransformer(new Transformer[] {null, null});
+            TransformerUtils.chainedTransformer(null, null);
             fail();
         } catch (final NullPointerException ex) {}
         try {

@@ -44,11 +44,12 @@ All users are strongly encouraged to updated to this release.
      package do not implement the Serializable interface anymore (see COLLECTIONS-580)</li>
 </ul>
 
-<center><h3>Major changes since 4.2</h3></center>
+<center><h3>Major changes since 4.3</h3></center>
 <ul>
-<li>Updates the platform requirement from Java 7 to 8</li>
-<li>Add Automatic-Module-Name MANIFEST entry for Java 9 compatibility</li>
-<li>Added a few new APIs.</li>
+<li>Implement Collection's removeIf()</li>
+<li>Create a PropertiesFactory and SortedPropertiesFactory</li>
+<li>Support Transformer for LazyList</li>
+<li>Make use of FunctionalInterface</li>
 </ul>
 
 <h3>Security Changes</h3>

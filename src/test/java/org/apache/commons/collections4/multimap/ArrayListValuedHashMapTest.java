@@ -215,7 +215,7 @@ public class ArrayListValuedHashMapTest<K, V> extends AbstractMultiValuedMapTest
         assertEquals(3, listMap.get((K) "A").indexOf("Q"));
         assertEquals(4, listMap.get((K) "A").lastIndexOf("Q"));
         assertEquals(-1, listMap.get((K) "A").lastIndexOf("A"));
-        
+
         List<V> list2 = new ArrayList<>();
         listMap.get((K) "B").addAll(0, list2);
         assertEquals("{A=[W, X, F, Q, Q, L]}", listMap.toString());

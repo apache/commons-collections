@@ -23,6 +23,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import org.apache.commons.collections4.list.UnmodifiableList;
 
@@ -163,9 +164,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      */
     public void addIterator(final Iterator<? extends E> iterator) {
         checkNotStarted();
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
+        Objects.requireNonNull(iterator, "iterator");
         iterators.add(iterator);
     }
 
@@ -180,9 +179,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      */
     public void setIterator(final int index, final Iterator<? extends E> iterator) {
         checkNotStarted();
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
+        Objects.requireNonNull(iterator, "iterator");
         iterators.set(index, iterator);
     }
 
@@ -357,9 +354,7 @@ public class CollatingIterator<E> implements Iterator<E> {
                     leastObject = values.get(i);
                 } else {
                     final E curObject = values.get(i);
-                    if (comparator == null) {
-                        throw new NullPointerException("You must invoke setComparator() to set a comparator first.");
-                    }
+                    Objects.requireNonNull(comparator, "You must invoke setComparator() to set a comparator first.");
                     if (comparator.compare(curObject, leastObject) < 0) {
                         leastObject = curObject;
                         leastIndex = i;
