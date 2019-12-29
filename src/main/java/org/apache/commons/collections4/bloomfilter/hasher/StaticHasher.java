@@ -23,7 +23,6 @@ import java.util.PrimitiveIterator.OfInt;
 import java.util.Set;
 import java.util.TreeSet;
 
-import org.apache.commons.collections4.bloomfilter.BloomFilter;
 import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
 import org.apache.commons.collections4.bloomfilter.Hasher;
 

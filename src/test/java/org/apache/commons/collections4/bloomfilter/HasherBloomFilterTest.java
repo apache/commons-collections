@@ -38,7 +38,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-public class HasherBloomFilterTest extends BloomFilterTest {
+public class HasherBloomFilterTest extends AbstractBloomFilterTest {
 
 
     @Override
@@ -47,7 +47,7 @@ public class HasherBloomFilterTest extends BloomFilterTest {
     }
 
     @Override
-    protected BloomFilter createEmptyFilter(BloomFilter.Shape shape) {
+    protected AbstractBloomFilter createEmptyFilter(BloomFilter.Shape shape) {
         return new HasherBloomFilter( shape );
     }
 

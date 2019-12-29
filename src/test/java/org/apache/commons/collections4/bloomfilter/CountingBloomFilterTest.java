@@ -31,7 +31,7 @@ import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 import org.junit.Test;
 
-public class CountingBloomFilterTest extends BloomFilterTest {
+public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
 
     @Override
@@ -263,7 +263,7 @@ public class CountingBloomFilterTest extends BloomFilterTest {
         BitSetBloomFilter bf2 = new BitSetBloomFilter( hasher, shape );
 
         bf.remove( bf2 );
-        assertEquals( 17, bf.hammingValue() );
+        assertEquals( 17, bf.cardinality() );
         Map<Integer,Integer> map2 = new HashMap<Integer,Integer>();
         bf.getCounts().forEach( e -> map2.put( e.getKey(), e.getValue()));
 
@@ -295,7 +295,7 @@ public class CountingBloomFilterTest extends BloomFilterTest {
         BloomFilter bf2 = new CountingBloomFilter( hasher, shape );
 
         bf.remove( bf2 );
-        assertEquals( 17, bf.hammingValue() );
+        assertEquals( 17, bf.cardinality() );
         Map<Integer,Integer> map2 = new HashMap<Integer,Integer>();
         bf.getCounts().forEach( e -> map2.put( e.getKey(), e.getValue()));
 
@@ -359,7 +359,7 @@ public class CountingBloomFilterTest extends BloomFilterTest {
 
 
         bf.remove( hasher );
-        assertEquals( 17, bf.hammingValue() );
+        assertEquals( 17, bf.cardinality() );
         Map<Integer,Integer> map2 = new HashMap<Integer,Integer>();
         bf.getCounts().forEach( e -> map2.put( e.getKey(), e.getValue()));
 

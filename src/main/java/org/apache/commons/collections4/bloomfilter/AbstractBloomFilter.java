@@ -27,6 +27,22 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
  * An abstract Bloom filter providing default implementations for most Bloom filter
  * functions. Specific implementations are encouraged to override the methods that can be
  * more efficiently implemented.
+ * <p>
+ * This abstract class provides additional functionality not declared in the interface.
+ * Specifically:
+ * <ul>
+ * <li>orCardinality</li>
+ * <li>jaccardSimilarity</li>
+ * <li>jaccardDistance</li>
+ * <li>cosineSimilarity</li>
+ * <li>cosineDistance</li>
+ * <li>estimateSize</li>
+ * <li>estimateUnionSize</li>
+ * <li>estimateIntersectionSize</li>
+ * <li>isFull</li>
+ * </ul>
+ *
+ * </p>
  * @since 4.5
  */
 public abstract class AbstractBloomFilter implements BloomFilter {
@@ -158,6 +174,32 @@ public abstract class AbstractBloomFilter implements BloomFilter {
         return BitSet.valueOf(result).cardinality();
     }
 
+    @Override
+    public int orCardinality(BloomFilter other) {
+        verifyShape(other);
+        long[] mine = getBits();
+        long[] theirs = other.getBits();
+        long[] remainder = null;
+        long[] result = null;
+        if (mine.length > theirs.length) {
+            result = new long[mine.length];
+            remainder = mine;
+        } else {
+            result = new long[theirs.length];
+            remainder = theirs;
+
+        }
+        int limit = Integer.min(mine.length, theirs.length);
+        for (int i = 0; i < limit; i++) {
+            result[i] = mine[i] | theirs[i];
+        }
+        if (limit<result.length)
+        {
+            System.arraycopy(remainder, limit, result, limit, result.length-limit);
+        }
+        return BitSet.valueOf(result).cardinality();
+    }
+
     /**
      * Performs a logical "XOR" with the other Bloom filter and returns the cardinality of
      * the result.
@@ -232,25 +274,13 @@ public abstract class AbstractBloomFilter implements BloomFilter {
     }
 
     /**
-     * Gets the Hamming value of this Bloom filter.
+     * Determines if the bloom filter is "full". Full is definded as haveing no unset
+     * bits.
      *
-     * @return the hamming value.
+     * @return true if the filter is full.
      */
-    @Override
-    public int hammingValue() {
-        return cardinality();
-    }
-
-    /**
-     * Gets the Hamming distance to the other Bloom filter.
-     *
-     * @param other the Other bloom filter.
-     * @return the Hamming distance.
-     */
-    @Override
-    public int hammingDistance(BloomFilter other) {
-        verifyShape(other);
-        return xorCardinality(other);
+    public final boolean isFull() {
+        return cardinality() == getShape().getNumberOfBits();
     }
 
 }

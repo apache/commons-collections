@@ -18,27 +18,16 @@
 package org.apache.commons.collections4.bloomfilter;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import java.nio.ByteBuffer;
-import java.nio.LongBuffer;
 import java.util.Arrays;
-import java.util.BitSet;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.function.ToLongBiFunction;
-
-import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
-import org.apache.commons.collections4.bloomfilter.hasher.DynamicHasher;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
-import org.junit.Before;
 import org.junit.Test;
 
-
-public class BitSetBloomFilterTest extends BloomFilterTest {
+/**
+ * Tests for the BitSetBloomFilter implementation.
+ *
+ */
+public class BitSetBloomFilterTest extends AbstractBloomFilterTest {
 
     @Override
     protected BitSetBloomFilter createFilter(Hasher hasher, BloomFilter.Shape shape) {
@@ -50,6 +39,9 @@ public class BitSetBloomFilterTest extends BloomFilterTest {
         return new BitSetBloomFilter( shape );
     }
 
+    /**
+     * Test that andCardinality works for BitSetBloomFilter arguments.
+     */
     @Test
     public void andCardinalityTest_BitSetBloomFilter() {
         Hasher hasher = new StaticHasher( Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ).iterator(), shape );
@@ -76,6 +68,9 @@ public class BitSetBloomFilterTest extends BloomFilterTest {
 
     }
 
+    /**
+     * Test that xorCardinality works for BitSetBloomFilter arguments.
+     */
     @Test
     public void xorCardinalityTest_BitSetBloomFilter() {
         Hasher hasher = new StaticHasher( Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ).iterator(), shape );
@@ -102,6 +97,9 @@ public class BitSetBloomFilterTest extends BloomFilterTest {
 
     }
 
+    /**
+     * Test that merge() works for BitSetBloomFilter arguments.
+     */
     @Test
     public void mergeTest_BitSetBloomFilter() {
 
@@ -115,7 +113,6 @@ public class BitSetBloomFilterTest extends BloomFilterTest {
         BloomFilter bf2 = new BitSetBloomFilter(hasher2, shape);
 
         bf.merge(bf2);
-
 
         assertEquals(27, bf.cardinality());
 

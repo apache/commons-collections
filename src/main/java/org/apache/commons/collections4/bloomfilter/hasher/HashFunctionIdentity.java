@@ -88,8 +88,8 @@ public interface HashFunctionIdentity {
     static byte[] prepareSignatureBuffer(HashFunctionIdentity identity) {
 
        return String.format( "%s-%s-%s",
-           identity.getName().toUpperCase( Locale.ROOT ), identity.getSignedness(),
-           identity.getProcessType() ).getBytes( StandardCharsets.UTF_8 );
+           identity.getName().toUpperCase(Locale.ROOT), identity.getSignedness(),
+           identity.getProcessType() ).getBytes(StandardCharsets.UTF_8);
 
     }
 

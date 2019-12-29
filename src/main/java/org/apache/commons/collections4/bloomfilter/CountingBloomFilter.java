@@ -253,7 +253,7 @@ public class CountingBloomFilter extends AbstractBloomFilter {
     }
 
     @Override
-    public int hammingValue() {
+    public int cardinality() {
         return counts.size();
     }
 

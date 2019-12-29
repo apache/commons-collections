@@ -344,10 +344,10 @@ public interface BloomFilter {
             if (o instanceof Shape) {
                 Shape other = (Shape) o;
                 return
-                    HashFunctionIdentity.COMMON_COMPARATOR.compare( getHashFunctionIdentity(),
-                        other.getHashFunctionIdentity()) == 0 &&
                     other.getNumberOfBits() == getNumberOfBits() &&
-                    other.getNumberOfHashFunctions() == getNumberOfHashFunctions();
+                    other.getNumberOfHashFunctions() == getNumberOfHashFunctions() &&
+                    HashFunctionIdentity.COMMON_COMPARATOR.compare( getHashFunctionIdentity(),
+                        other.getHashFunctionIdentity()) == 0;
             }
             return false;
         }
@@ -408,6 +408,7 @@ public interface BloomFilter {
 
     /**
      * Gets the cardinality of this Bloom filter.
+     * <p>This is also known as the Hamming value.</p>
      *
      * @return the cardinality (number of enabled bits) in this filter.
      */
@@ -421,6 +422,15 @@ public interface BloomFilter {
      * @return the cardinality of the result of {@code ( this AND other )}.
      */
     int andCardinality(BloomFilter other);
+
+    /**
+     * Performs a logical "OR" with the other Bloom filter and returns the cardinality of
+     * the result.
+     *
+     * @param other the other Bloom filter.
+     * @return the cardinality of the result of {@code ( this OR other )}.
+     */
+    public int orCardinality(BloomFilter other);
 
     /**
      * Performs a logical "XOR" with the other Bloom filter and returns the cardinality of
@@ -451,20 +461,7 @@ public interface BloomFilter {
      */
     boolean contains(Hasher hasher);
 
-    /**
-     * Gets the Hamming value of this Bloom filter.
-     *
-     * @return the hamming value.
-     */
-    int hammingValue();
 
-    /**
-     * Gets the Hamming distance to the other Bloom filter.
-     *
-     * @param other the Other bloom filter.
-     * @return the Hamming distance.
-     */
-    int hammingDistance(BloomFilter other);
 
 
 }

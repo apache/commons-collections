@@ -90,7 +90,7 @@ public class BitSetBloomFilter extends AbstractBloomFilter {
     }
 
     @Override
-    public int hammingValue() {
+    public int cardinality() {
         return bitSet.cardinality();
     }
 

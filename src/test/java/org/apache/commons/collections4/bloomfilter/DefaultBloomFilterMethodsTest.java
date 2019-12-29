@@ -20,22 +20,21 @@ package org.apache.commons.collections4.bloomfilter;
 import java.util.BitSet;
 import java.util.function.IntConsumer;
 
-import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 
 /**
  * A test that test all the default implementations on the BloomFilter.
  *
  */
-public class DefaultBloomFilterMethodsTest extends BloomFilterTest {
+public class DefaultBloomFilterMethodsTest extends AbstractBloomFilterTest {
 
     @Override
-    protected BloomFilter createFilter(Hasher hasher, BloomFilter.Shape shape) {
+    protected AbstractBloomFilter createFilter(Hasher hasher, BloomFilter.Shape shape) {
         return new BF( hasher, shape );
     }
 
     @Override
-    protected BloomFilter createEmptyFilter(BloomFilter.Shape shape) {
+    protected AbstractBloomFilter createEmptyFilter(BloomFilter.Shape shape) {
         return new BF( shape );
     }
 
