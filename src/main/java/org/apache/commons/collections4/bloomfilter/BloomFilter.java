@@ -430,7 +430,7 @@ public interface BloomFilter {
      * @param other the other Bloom filter.
      * @return the cardinality of the result of {@code ( this OR other )}.
      */
-    public int orCardinality(BloomFilter other);
+    int orCardinality(BloomFilter other);
 
     /**
      * Performs a logical "XOR" with the other Bloom filter and returns the cardinality of
