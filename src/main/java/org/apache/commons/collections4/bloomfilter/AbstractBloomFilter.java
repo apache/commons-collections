@@ -42,7 +42,6 @@ import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
  * <li>isFull</li>
  * </ul>
  *
- * </p>
  * @since 4.5
  */
 public abstract class AbstractBloomFilter implements BloomFilter {

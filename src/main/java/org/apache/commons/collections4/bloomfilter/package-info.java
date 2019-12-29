@@ -67,7 +67,7 @@
  * filter on a Hasher. A rather slow implementation but convenient in some
  * situations.</li>
  *  </ul>
- *  </p>
+ *
  *  <h3>
  *  Shape</h3>
  *  <p>
@@ -88,7 +88,7 @@
  * on a pre-calculated list of Bloom filter index values. It is also limited to generating
  * values for a specific Shape.</li>
  *  </ul>
- *  </p>
+ *
  *  <h3>
  *  Hash Functions</h3>
  *  <p>
@@ -113,16 +113,13 @@
  * required. The second method described by Adam Kirsch and Micheal Mitzenmacher[1] has
  * become more common and is used in applications like Cassandra[2].</li>
  *  </ul>
- *  </p>
  *
  * <h2>References</h2>
- * <p>
+ *
  * <ol>
  * <li> https://www.eecs.harvard.edu/~michaelm/postscripts/tr-02-05.pdf</li>
  * <li> https://github.com/apache/cassandra/blob/trunk/src/java/org/apache/cassandra/utils/BloomFilter.java#L60</li>
  * </ol>
- * </p>
- *
  *
  * @since 4.5
  */
