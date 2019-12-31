@@ -24,6 +24,9 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 /**
  * An implementation of HashFunction that
  * performs Murmur32 hashing using a signed iterative method.
+ *
+ * <p>Requires the optional commons-codec library.</p>
+ *
  * @since 4.5
  */
 public final class Murmur32x86Iterative implements HashFunction {

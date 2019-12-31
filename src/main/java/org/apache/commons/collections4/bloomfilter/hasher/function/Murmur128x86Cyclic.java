@@ -24,6 +24,9 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 /**
  * An implementation of HashFunction that
  * performs Murmur128 hashing using a signed cyclic method.
+ *
+ * <p>Requires the optional commons-codec library.</p>
+ *
  * @since 4.5
  */
 public final class Murmur128x86Cyclic implements HashFunction {
