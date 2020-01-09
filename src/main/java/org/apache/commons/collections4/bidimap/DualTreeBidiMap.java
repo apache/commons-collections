@@ -49,7 +49,7 @@ import org.apache.commons.collections4.map.AbstractSortedMapDecorator;
  * </p>
  * <p>
  * NOTE: From Commons Collections 3.1, all subclasses will use {@link TreeMap}
- * and the flawed <code>createMap</code> method is ignored.
+ * and the flawed {@code createMap} method is ignored.
  * </p>
  *
  * @param <K> the type of the keys in this map
@@ -69,7 +69,7 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
     private final Comparator<? super V> valueComparator;
 
     /**
-     * Creates an empty <code>DualTreeBidiMap</code>
+     * Creates an empty {@code DualTreeBidiMap}
      */
     public DualTreeBidiMap() {
         super(new TreeMap<K, V>(), new TreeMap<V, K>());
@@ -78,8 +78,8 @@ public class DualTreeBidiMap<K, V> extends AbstractDualBidiMap<K, V>
     }
 
     /**
-     * Constructs a <code>DualTreeBidiMap</code> and copies the mappings from
-     * specified <code>Map</code>.
+     * Constructs a {@code DualTreeBidiMap} and copies the mappings from
+     * specified {@code Map}.
      *
      * @param map  the map whose mappings are to be placed in this map
      */

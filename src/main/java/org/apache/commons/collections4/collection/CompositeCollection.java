@@ -94,7 +94,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
     /**
      * Gets the size of this composite collection.
      * <p>
-     * This implementation calls <code>size()</code> on each collection.
+     * This implementation calls {@code size()} on each collection.
      * </p>
      * @return total number of elements in all contained containers
      */
@@ -110,7 +110,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
     /**
      * Checks whether this composite collection is empty.
      * <p>
-     * This implementation calls <code>isEmpty()</code> on each collection.
+     * This implementation calls {@code isEmpty()} on each collection.
      * </p>
      * @return true if all of the contained collections are empty
      */
@@ -127,7 +127,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
     /**
      * Checks whether this composite collection contains the object.
      * <p>
-     * This implementation calls <code>contains()</code> on each collection.
+     * This implementation calls {@code contains()} on each collection.
      * </p>
      * @param obj  the object to search for
      * @return true if obj is contained in any of the contained collections
@@ -145,10 +145,10 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
     /**
      * Gets an iterator over all the collections in this composite.
      * <p>
-     * This implementation uses an <code>IteratorChain</code>.
+     * This implementation uses an {@code IteratorChain}.
      * </p>
-     * @return an <code>IteratorChain</code> instance which supports
-     *  <code>remove()</code>. Iteration occurs over contained collections in
+     * @return an {@code IteratorChain} instance which supports
+     *  {@code remove()}. Iteration occurs over contained collections in
      *  the order they were added, but this behavior should not be relied upon.
      * @see IteratorChain
      */
@@ -181,7 +181,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
 
     /**
      * Returns an object array, populating the supplied array if possible.
-     * See <code>Collection</code> interface for full details.
+     * See {@code Collection} interface for full details.
      *
      * @param <T>  the type of the elements in the collection
      * @param array  the array to use, populating if possible
@@ -254,7 +254,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
     /**
      * Checks whether this composite contains all the elements in the specified collection.
      * <p>
-     * This implementation calls <code>contains()</code> for each element in the
+     * This implementation calls {@code contains()} for each element in the
      * specified collection.
      * </p>
      * @param coll  the collection to check for
@@ -297,7 +297,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
     /**
      * Removes the elements in the specified collection from this composite collection.
      * <p>
-     * This implementation calls <code>removeAll</code> on each collection.
+     * This implementation calls {@code removeAll} on each collection.
      * </p>
      * @param coll  the collection to remove
      * @return true if the collection was modified
@@ -318,7 +318,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
     /**
      * Removes all of the elements of this collection that satisfy the given predicate from this composite collection.
      * <p>
-     * This implementation calls <code>removeIf</code> on each collection.
+     * This implementation calls {@code removeIf} on each collection.
      * </p>
      * @param filter  a predicate which returns true for elements to be removed
      * @return true if the collection was modified
@@ -341,7 +341,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
      * Retains all the elements in the specified collection in this composite collection,
      * removing all others.
      * <p>
-     * This implementation calls <code>retainAll()</code> on each collection.
+     * This implementation calls {@code retainAll()} on each collection.
      * </p>
      * @param coll  the collection to remove
      * @return true if the collection was modified
@@ -361,7 +361,7 @@ public class CompositeCollection<E> implements Collection<E>, Serializable {
     /**
      * Removes all of the elements from this collection .
      * <p>
-     * This implementation calls <code>clear()</code> on each collection.
+     * This implementation calls {@code clear()} on each collection.
      * </p>
      * @throws UnsupportedOperationException if clear is unsupported
      */

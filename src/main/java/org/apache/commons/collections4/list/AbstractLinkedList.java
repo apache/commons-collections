@@ -57,8 +57,8 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
     /**
      * A {@link Node} which indicates the start and end of the list and does not
-     * hold a value. The value of <code>next</code> is the first item in the
-     * list. The value of of <code>previous</code> is the last item in the list.
+     * hold a value. The value of {@code next} is the first item in the
+     * list. The value of of {@code previous} is the last item in the list.
      */
     transient Node<E> header;
 
@@ -91,7 +91,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
     /**
      * The equivalent of a default constructor, broken out so it can be called
-     * by any constructor and by <code>readObject</code>.
+     * by any constructor and by {@code readObject}.
      * Subclasses which override this method should make sure they call super,
      * so the list is initialised properly.
      */
@@ -267,9 +267,9 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * {@inheritDoc}
      * <p>
      * This implementation iterates over the elements of this list, checking each element in
-     * turn to see if it's contained in <code>coll</code>. If it's contained, it's removed
+     * turn to see if it's contained in {@code coll}. If it's contained, it's removed
      * from this list. As a consequence, it is advised to use a collection type for
-     * <code>coll</code> that provides a fast (e.g. O(1)) implementation of
+     * {@code coll} that provides a fast (e.g. O(1)) implementation of
      * {@link Collection#contains(Object)}.
      */
     @Override
@@ -291,9 +291,9 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * {@inheritDoc}
      * <p>
      * This implementation iterates over the elements of this list, checking each element in
-     * turn to see if it's contained in <code>coll</code>. If it's not contained, it's removed
+     * turn to see if it's contained in {@code coll}. If it's not contained, it's removed
      * from this list. As a consequence, it is advised to use a collection type for
-     * <code>coll</code> that provides a fast (e.g. O(1)) implementation of
+     * {@code coll} that provides a fast (e.g. O(1)) implementation of
      * {@link Collection#contains(Object)}.
      */
     @Override
@@ -475,14 +475,14 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
     /**
      * Creates a new node with the specified object as its
-     * <code>value</code> and inserts it before <code>node</code>.
+     * {@code value} and inserts it before {@code node}.
      * <p>
      * This implementation uses {@link #createNode(Object)} and
      * {@link #addNode(AbstractLinkedList.Node,AbstractLinkedList.Node)}.
      *
      * @param node  node to insert before
      * @param value  value of the newly added node
-     * @throws NullPointerException if <code>node</code> is null
+     * @throws NullPointerException if {@code node} is null
      */
     protected void addNodeBefore(final Node<E> node, final E value) {
         final Node<E> newNode = createNode(value);
@@ -491,14 +491,14 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
     /**
      * Creates a new node with the specified object as its
-     * <code>value</code> and inserts it after <code>node</code>.
+     * {@code value} and inserts it after {@code node}.
      * <p>
      * This implementation uses {@link #createNode(Object)} and
      * {@link #addNode(AbstractLinkedList.Node,AbstractLinkedList.Node)}.
      *
      * @param node  node to insert after
      * @param value  value of the newly added node
-     * @throws NullPointerException if <code>node</code> is null
+     * @throws NullPointerException if {@code node} is null
      */
     protected void addNodeAfter(final Node<E> node, final E value) {
         final Node<E> newNode = createNode(value);
@@ -527,7 +527,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * Removes the specified node from the list.
      *
      * @param node  the node to remove
-     * @throws NullPointerException if <code>node</code> is null
+     * @throws NullPointerException if {@code node} is null
      */
     protected void removeNode(final Node<E> node) {
         Objects.requireNonNull(node, "The new node to remove must not be null.");
@@ -618,7 +618,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * Serializes the data held in this object to the stream specified.
      * <p>
      * The first serializable subclass must call this method from
-     * <code>writeObject</code>.
+     * {@code writeObject}.
      *
      * @param outputStream  the stream to write the object to
      * @throws IOException  if anything goes wrong
@@ -635,7 +635,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * Deserializes the data held in this object to the stream specified.
      * <p>
      * The first serializable subclass must call this method from
-     * <code>readObject</code>.
+     * {@code readObject}.
      *
      * @param inputStream  the stream to read the object from
      * @throws IOException  if any error occurs while reading from the stream
@@ -654,7 +654,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
     /**
      * A node within the linked list.
      * <p>
-     * From Commons Collections 3.1, all access to the <code>value</code> property
+     * From Commons Collections 3.1, all access to the {@code value} property
      * is via the methods on this class.
      */
     protected static class Node<E> {
@@ -782,7 +782,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
 
         /**
          * The last node that was returned by {@link #next()} or {@link
-         * #previous()}. Set to <code>null</code> if {@link #next()} or {@link
+         * #previous()}. Set to {@code null} if {@link #next()} or {@link
          * #previous()} haven't been called, or if the node has been removed
          * with {@link #remove()} or a new node added with {@link #add(Object)}.
          * Should be accessed through {@link #getLastNodeReturned()} to enforce

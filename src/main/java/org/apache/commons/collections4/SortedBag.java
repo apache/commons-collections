@@ -19,7 +19,7 @@ package org.apache.commons.collections4;
 import java.util.Comparator;
 
 /**
- * Defines a type of <code>Bag</code> that maintains a sorted order among
+ * Defines a type of {@code Bag} that maintains a sorted order among
  * its unique representative members.
  *
  * @param <E> the type of elements in this bag

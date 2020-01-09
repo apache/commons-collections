@@ -27,7 +27,7 @@ import org.apache.commons.collections4.iterators.UnmodifiableIterator;
 import org.apache.commons.collections4.iterators.UnmodifiableListIterator;
 
 /**
- * Decorates another <code>List</code> to ensure it can't be altered.
+ * Decorates another {@code List} to ensure it can't be altered.
  * <p>
  * This class is Serializable from Commons Collections 3.1.
  * </p>

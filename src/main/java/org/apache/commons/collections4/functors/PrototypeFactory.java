@@ -58,7 +58,7 @@ public class PrototypeFactory {
      *
      * @param <T>  the type the factory creates
      * @param prototype  the object to clone each time in the factory
-     * @return the <code>prototype</code> factory, or a {@link ConstantFactory#NULL_INSTANCE} if
+     * @return the {@code prototype} factory, or a {@link ConstantFactory#NULL_INSTANCE} if
      * the {@code prototype} is {@code null}
      * @throws IllegalArgumentException if the prototype cannot be cloned
      */
@@ -73,7 +73,7 @@ public class PrototypeFactory {
 
         } catch (final NoSuchMethodException ex) {
             try {
-                prototype.getClass().getConstructor(new Class<?>[] { prototype.getClass() });
+                prototype.getClass().getConstructor(prototype.getClass());
                 return new InstantiateFactory<>(
                     (Class<T>) prototype.getClass(),
                     new Class<?>[] { prototype.getClass() },

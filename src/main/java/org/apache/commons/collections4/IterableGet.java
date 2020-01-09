@@ -27,7 +27,7 @@ package org.apache.commons.collections4;
  */
 public interface IterableGet<K, V> extends Get<K, V> {
     /**
-     * Obtains a <code>MapIterator</code> over the map.
+     * Obtains a {@code MapIterator} over the map.
      * <p>
      * A map iterator is an efficient way of iterating over maps.
      * There is no need to access the entry set or use Map Entry objects.

@@ -20,6 +20,7 @@ package org.apache.commons.collections4.iterators;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
+import java.util.Objects;
 
 /**
  * Decorates an iterator to support pushback of elements.
@@ -52,9 +53,7 @@ public class PushbackIterator<E> implements Iterator<E> {
      * @throws NullPointerException if the iterator is null
      */
     public static <E> PushbackIterator<E> pushbackIterator(final Iterator<? extends E> iterator) {
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
+        Objects.requireNonNull(iterator, "iterator");
         if (iterator instanceof PushbackIterator<?>) {
             @SuppressWarnings("unchecked") // safe cast
             final PushbackIterator<E> it = (PushbackIterator<E>) iterator;

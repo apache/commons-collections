@@ -34,7 +34,7 @@ public class TransformIterator<I, O> implements Iterator<O> {
 
     //-----------------------------------------------------------------------
     /**
-     * Constructs a new <code>TransformIterator</code> that will not function
+     * Constructs a new {@code TransformIterator} that will not function
      * until the {@link #setIterator(Iterator) setIterator} and
      * {@link #setTransformer(Transformer)} methods are invoked.
      */
@@ -43,7 +43,7 @@ public class TransformIterator<I, O> implements Iterator<O> {
     }
 
     /**
-     * Constructs a new <code>TransformIterator</code> that won't transform
+     * Constructs a new {@code TransformIterator} that won't transform
      * elements from the given iterator.
      *
      * @param iterator  the iterator to use
@@ -54,7 +54,7 @@ public class TransformIterator<I, O> implements Iterator<O> {
     }
 
     /**
-     * Constructs a new <code>TransformIterator</code> that will use the
+     * Constructs a new {@code TransformIterator} that will use the
      * given iterator and transformer.  If the given transformer is null,
      * then objects will not be transformed.
      *

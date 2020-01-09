@@ -41,11 +41,11 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 			return ((String) arg1).compareTo((String)arg0);
 		}
 	}
-	
+
     protected static final Predicate<Object> truePredicate = TruePredicate.truePredicate();
 
     protected static final Predicate<Object> testPredicate = o -> o instanceof String;
-    
+
     protected final Comparator<K> reverseStringComparator = new ReverseStringComparator();
 
     public PredicatedSortedMapTest(final String testName) {
@@ -66,7 +66,7 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
     public SortedMap<K, V> makeTestMap() {
         return decorateMap(new TreeMap<K, V>(), testPredicate, testPredicate);
     }
-    
+
     public SortedMap<K, V> makeTestMapWithComparator() {
         return decorateMap(new ConcurrentSkipListMap<K, V>(reverseStringComparator), testPredicate, testPredicate);
     }
@@ -178,7 +178,7 @@ public class PredicatedSortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         assertTrue("natural order, so comparator should be null",
             c == null);
     }
-    
+
     @SuppressWarnings("unchecked")
     public void testReverseSortOrder() {
         final SortedMap<K, V> map = makeTestMapWithComparator();

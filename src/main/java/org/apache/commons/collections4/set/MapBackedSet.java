@@ -20,19 +20,20 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 
 /**
- * Decorates a <code>Map</code> to obtain <code>Set</code> behaviour.
+ * Decorates a {@code Map} to obtain {@code Set} behaviour.
  * <p>
- * This class is used to create a <code>Set</code> with the same properties as
+ * This class is used to create a {@code Set} with the same properties as
  * the key set of any map. Thus, a ReferenceSet can be created by wrapping a
- * <code>ReferenceMap</code> in an instance of this class.
+ * {@code ReferenceMap} in an instance of this class.
  * </p>
  * <p>
  * Most map implementation can be used to create a set by passing in dummy values.
- * Exceptions include <code>BidiMap</code> implementations, as they require unique values.
+ * Exceptions include {@code BidiMap} implementations, as they require unique values.
  * </p>
  *
  * @param <E> the type of the elements in this set
@@ -89,10 +90,7 @@ public final class MapBackedSet<E, V> implements Set<E>, Serializable {
      */
     private MapBackedSet(final Map<E, ? super V> map, final V dummyValue) {
         super();
-        if (map == null) {
-            throw new NullPointerException("The map must not be null");
-        }
-        this.map = map;
+        this.map = Objects.requireNonNull(map, "map");
         this.dummyValue = dummyValue;
     }
 

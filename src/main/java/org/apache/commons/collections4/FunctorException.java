@@ -28,7 +28,7 @@ public class FunctorException extends RuntimeException {
     private static final long serialVersionUID = -4704772662059351193L;
 
     /**
-     * Constructs a new <code>FunctorException</code> without specified
+     * Constructs a new {@code FunctorException} without specified
      * detail message.
      */
     public FunctorException() {
@@ -36,7 +36,7 @@ public class FunctorException extends RuntimeException {
     }
 
     /**
-     * Constructs a new <code>FunctorException</code> with specified
+     * Constructs a new {@code FunctorException} with specified
      * detail message.
      *
      * @param msg  the error message.
@@ -46,8 +46,8 @@ public class FunctorException extends RuntimeException {
     }
 
     /**
-     * Constructs a new <code>FunctorException</code> with specified
-     * nested <code>Throwable</code> root cause.
+     * Constructs a new {@code FunctorException} with specified
+     * nested {@code Throwable} root cause.
      *
      * @param rootCause  the exception or error that caused this exception
      *                   to be thrown.
@@ -57,8 +57,8 @@ public class FunctorException extends RuntimeException {
     }
 
     /**
-     * Constructs a new <code>FunctorException</code> with specified
-     * detail message and nested <code>Throwable</code> root cause.
+     * Constructs a new {@code FunctorException} with specified
+     * detail message and nested {@code Throwable} root cause.
      *
      * @param msg        the error message.
      * @param rootCause  the exception or error that caused this exception

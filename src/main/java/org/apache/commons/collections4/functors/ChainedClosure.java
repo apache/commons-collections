@@ -18,6 +18,7 @@ package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Closure;
 
@@ -39,7 +40,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      *
      * @param <E> the type that the closure acts on
      * @param closures  the closures to chain, copied, no nulls
-     * @return the <code>chained</code> closure
+     * @return the {@code chained} closure
      * @throws NullPointerException if the closures array is null
      * @throws NullPointerException if any closure in the array is null
      */
@@ -58,15 +59,13 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
      *
      * @param <E> the type that the closure acts on
      * @param closures  a collection of closures to chain
-     * @return the <code>chained</code> closure
+     * @return the {@code chained} closure
      * @throws NullPointerException if the closures collection is null
      * @throws NullPointerException if any closure in the collection is null
      */
     @SuppressWarnings("unchecked")
     public static <E> Closure<E> chainedClosure(final Collection<? extends Closure<? super E>> closures) {
-        if (closures == null) {
-            throw new NullPointerException("Closure collection must not be null");
-        }
+        Objects.requireNonNull(closures, "closures");
         if (closures.size() == 0) {
             return NOPClosure.<E>nopClosure();
         }
@@ -93,7 +92,7 @@ public class ChainedClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>chainedClosure</code> if you want that.
+     * Use {@code chainedClosure} if you want that.
      *
      * @param closures  the closures to chain, copied, no nulls
      */

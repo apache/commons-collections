@@ -15,6 +15,7 @@ package org.apache.commons.collections4.iterators;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
  * Decorates another iterator to return elements in a specific range.
@@ -60,9 +61,6 @@ public class BoundedIterator<E> implements Iterator<E> {
      * @throws IllegalArgumentException if either offset or max is negative
      */
     public BoundedIterator(final Iterator<? extends E> iterator, final long offset, final long max) {
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
         if (offset < 0) {
             throw new IllegalArgumentException("Offset parameter must not be negative.");
         }
@@ -70,7 +68,7 @@ public class BoundedIterator<E> implements Iterator<E> {
             throw new IllegalArgumentException("Max parameter must not be negative.");
         }
 
-        this.iterator = iterator;
+        this.iterator = Objects.requireNonNull(iterator, "iterator");
         this.offset = offset;
         this.max = max;
         pos = 0;

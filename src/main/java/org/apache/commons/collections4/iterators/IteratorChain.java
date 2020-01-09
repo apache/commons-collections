@@ -19,6 +19,7 @@ package org.apache.commons.collections4.iterators;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Queue;
 
 /**
@@ -97,7 +98,7 @@ public class IteratorChain<E> implements Iterator<E> {
     }
 
     /**
-     * Constructs a new <code>IteratorChain</code> over the two given iterators.
+     * Constructs a new {@code IteratorChain} over the two given iterators.
      * <p>
      * This method takes two iterators. The newly constructed iterator will
      * iterate through each one of the input iterators in turn.
@@ -113,7 +114,7 @@ public class IteratorChain<E> implements Iterator<E> {
     }
 
     /**
-     * Constructs a new <code>IteratorChain</code> over the array of iterators.
+     * Constructs a new {@code IteratorChain} over the array of iterators.
      * <p>
      * This method takes an array of iterators. The newly constructed iterator
      * will iterate through each one of the input iterators in turn.
@@ -129,7 +130,7 @@ public class IteratorChain<E> implements Iterator<E> {
     }
 
     /**
-     * Constructs a new <code>IteratorChain</code> over the collection of
+     * Constructs a new {@code IteratorChain} over the collection of
      * iterators.
      * <p>
      * This method takes a collection of iterators. The newly constructed
@@ -157,10 +158,7 @@ public class IteratorChain<E> implements Iterator<E> {
      */
     public void addIterator(final Iterator<? extends E> iterator) {
         checkLocked();
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
-        iteratorChain.add(iterator);
+        iteratorChain.add(Objects.requireNonNull(iterator, "iterator"));
     }
 
     /**

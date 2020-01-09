@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Closure;
 import org.apache.commons.collections4.Transformer;
@@ -40,19 +41,16 @@ public class ClosureTransformer<T> implements Transformer<T, T>, Serializable {
      *
      * @param <T>  the type of the object to transform
      * @param closure  the closure to call, not null
-     * @return the <code>closure</code> transformer
+     * @return the {@code closure} transformer
      * @throws NullPointerException if the closure is null
      */
     public static <T> Transformer<T, T> closureTransformer(final Closure<? super T> closure) {
-        if (closure == null) {
-            throw new NullPointerException("Closure must not be null");
-        }
-        return new ClosureTransformer<>(closure);
+        return new ClosureTransformer<>(Objects.requireNonNull(closure, "closure"));
     }
 
     /**
      * Constructor that performs no validation.
-     * Use <code>closureTransformer</code> if you want that.
+     * Use {@code closureTransformer} if you want that.
      *
      * @param closure  the closure to call, not null
      */

@@ -466,7 +466,7 @@ public class CircularFifoQueueTest<E> extends AbstractQueueTest<E> {
         }
         fail();
     }
-	
+
 	@Override
     public String getCompatibilityVersion() {
         return "4";

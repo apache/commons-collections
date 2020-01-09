@@ -16,6 +16,8 @@
  */
 package org.apache.commons.collections4.iterators;
 
+import java.util.Objects;
+
 import org.apache.commons.collections4.MapIterator;
 
 /**
@@ -41,10 +43,7 @@ public class AbstractMapIteratorDecorator<K, V> implements MapIterator<K, V> {
      */
     public AbstractMapIteratorDecorator(final MapIterator<K, V> iterator) {
         super();
-        if (iterator == null) {
-            throw new NullPointerException("MapIterator must not be null");
-        }
-        this.iterator = iterator;
+        this.iterator = Objects.requireNonNull(iterator, "iterator");
     }
 
     /**

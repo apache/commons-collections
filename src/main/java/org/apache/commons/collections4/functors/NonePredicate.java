@@ -43,7 +43,7 @@ public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> {
      *
      * @param <T> the type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null
-     * @return the <code>any</code> predicate
+     * @return the {@code any} predicate
      * @throws NullPointerException if the predicates array is null
      * @throws NullPointerException if any predicate in the array is null
      */
@@ -62,7 +62,7 @@ public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> {
      *
      * @param <T> the type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null
-     * @return the <code>one</code> predicate
+     * @return the {@code one} predicate
      * @throws NullPointerException if the predicates array is null
      * @throws NullPointerException if any predicate in the array is null
      */
@@ -76,7 +76,7 @@ public final class NonePredicate<T> extends AbstractQuantifierPredicate<T> {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>nonePredicate</code> if you want that.
+     * Use {@code nonePredicate} if you want that.
      *
      * @param predicates  the predicates to check, not cloned, not null
      */

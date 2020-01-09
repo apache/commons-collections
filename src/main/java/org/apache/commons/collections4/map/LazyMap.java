@@ -21,13 +21,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.Transformer;
 import org.apache.commons.collections4.functors.FactoryTransformer;
 
 /**
- * Decorates another <code>Map</code> to create objects in the map on demand.
+ * Decorates another {@code Map} to create objects in the map on demand.
  * <p>
  * When the {@link #get(Object)} method is called with a key that does not
  * exist in the map, the factory is used to create the object. The created
@@ -47,8 +48,8 @@ import org.apache.commons.collections4.functors.FactoryTransformer;
  * </pre>
  *
  * <p>
- * After the above code is executed, <code>date</code> will refer to
- * a new <code>Date</code> instance. Furthermore, that <code>Date</code>
+ * After the above code is executed, {@code date} will refer to
+ * a new {@code Date} instance. Furthermore, that {@code Date}
  * instance is mapped to the "NOW" key in the map.
  * </p>
  * <p>
@@ -114,10 +115,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
      */
     protected LazyMap(final Map<K,V> map, final Factory<? extends V> factory) {
         super(map);
-        if (factory == null) {
-            throw new NullPointerException("Factory must not be null");
-        }
-        this.factory = FactoryTransformer.factoryTransformer(factory);
+        this.factory = FactoryTransformer.factoryTransformer(Objects.requireNonNull(factory, "factory"));
     }
 
     /**
@@ -129,10 +127,7 @@ public class LazyMap<K, V> extends AbstractMapDecorator<K, V> implements Seriali
      */
     protected LazyMap(final Map<K,V> map, final Transformer<? super K, ? extends V> factory) {
         super(map);
-        if (factory == null) {
-            throw new NullPointerException("Factory must not be null");
-        }
-        this.factory = factory;
+        this.factory = Objects.requireNonNull(factory, "factory");
     }
 
     //-----------------------------------------------------------------------

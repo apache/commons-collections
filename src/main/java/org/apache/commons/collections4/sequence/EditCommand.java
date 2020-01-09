@@ -33,12 +33,12 @@ package org.apache.commons.collections4.sequence;
  * inserted into the first sequence, {@link DeleteCommand DeleteCommand} which
  * correspond to an object of the first sequence being removed and
  * {@link KeepCommand KeepCommand} which correspond to an object of the first
- * sequence which <code>equals</code> an object in the second sequence. It is
+ * sequence which {@code equals} an object in the second sequence. It is
  * guaranteed that comparison is always performed this way (i.e. the
- * <code>equals</code> method of the object from the first sequence is used and
+ * {@code equals} method of the object from the first sequence is used and
  * the object passed as an argument comes from the second sequence) ; this can
  * be important if subclassing is used for some elements in the first sequence
- * and the <code>equals</code> method is specialized.
+ * and the {@code equals} method is specialized.
  * </p>
  *
  * @see SequencesComparator

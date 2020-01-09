@@ -45,9 +45,9 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
 			return arg1.compareTo(arg0);
 		}
 	}
-	
+
     private static final Factory<Integer> oneFactory = FactoryUtils.constantFactory(1);
-    
+
     protected final Comparator<String> reverseStringComparator = new ReverseStringComparator();
 
     public LazySortedMapTest(final String testName) {
@@ -105,7 +105,7 @@ public class LazySortedMapTest<K, V> extends AbstractSortedMapTest<K, V> {
         assertTrue("natural order, so comparator should be null",
             c == null);
     }
-    
+
     public void testReverseSortOrder() {
         final SortedMap<String, Number> map = lazySortedMap(new ConcurrentSkipListMap<String, Number>(reverseStringComparator), oneFactory);
         map.put("A",  5);

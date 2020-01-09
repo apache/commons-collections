@@ -66,7 +66,7 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
 
     //-----------------------------------------------------------------------
     /**
-     * Hook method called when a value is being set using <code>setValue</code>.
+     * Hook method called when a value is being set using {@code setValue}.
      * <p>
      * An implementation may validate the value and throw an exception
      * or it may transform the value into another object.
@@ -85,12 +85,12 @@ abstract class AbstractInputCheckedMapDecorator<K, V>
     protected abstract V checkSetValue(V value);
 
     /**
-     * Hook method called to determine if <code>checkSetValue</code> has any effect.
+     * Hook method called to determine if {@code checkSetValue} has any effect.
      * <p>
-     * An implementation should return false if the <code>checkSetValue</code> method
+     * An implementation should return false if the {@code checkSetValue} method
      * has no effect as this optimises the implementation.
      * <p>
-     * This implementation returns <code>true</code>.
+     * This implementation returns {@code true}.
      *
      * @return true always
      */

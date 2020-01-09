@@ -59,7 +59,7 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
      * @param <I>  the input type
      * @param <O>  the output type
      * @param constantToReturn  the constant object to return each time in the factory
-     * @return the <code>constant</code> factory.
+     * @return the {@code constant} factory.
      */
     public static <I, O> Transformer<I, O> constantTransformer(final O constantToReturn) {
         if (constantToReturn == null) {
@@ -70,7 +70,7 @@ public class ConstantTransformer<I, O> implements Transformer<I, O>, Serializabl
 
     /**
      * Constructor that performs no validation.
-     * Use <code>constantTransformer</code> if you want that.
+     * Use {@code constantTransformer} if you want that.
      *
      * @param constantToReturn  the constant to return each time
      */

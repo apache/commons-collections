@@ -38,11 +38,11 @@ public class TransformerClosure<E> implements Closure<E>, Serializable {
     /**
      * Factory method that performs validation.
      * <p>
-     * A null transformer will return the <code>NOPClosure</code>.
+     * A null transformer will return the {@code NOPClosure}.
      *
      * @param <E> the type that the closure acts on
      * @param transformer  the transformer to call, null means nop
-     * @return the <code>transformer</code> closure
+     * @return the {@code transformer} closure
      */
     public static <E> Closure<E> transformerClosure(final Transformer<? super E, ?> transformer) {
         if (transformer == null) {
@@ -53,7 +53,7 @@ public class TransformerClosure<E> implements Closure<E>, Serializable {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>transformerClosure</code> if you want that.
+     * Use {@code transformerClosure} if you want that.
      *
      * @param transformer  the transformer to call, not null
      */

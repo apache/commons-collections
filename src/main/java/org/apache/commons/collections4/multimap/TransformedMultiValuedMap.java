@@ -18,6 +18,7 @@ package org.apache.commons.collections4.multimap;
 
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.FluentIterable;
@@ -25,7 +26,7 @@ import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.Transformer;
 
 /**
- * Decorates another <code>MultiValuedMap</code> to transform objects that are added.
+ * Decorates another {@code MultiValuedMap} to transform objects that are added.
  * <p>
  * This class affects the MultiValuedMap put methods. Thus objects must be
  * removed or searched for using their transformed form. For example, if the
@@ -158,9 +159,7 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
 
     @Override
     public boolean putAll(final K key, final Iterable<? extends V> values) {
-        if (values == null) {
-            throw new NullPointerException("Values must not be null.");
-        }
+        Objects.requireNonNull(values, "values");
 
         final Iterable<V> transformedValues = FluentIterable.of(values).transform(valueTransformer);
         final Iterator<? extends V> it = transformedValues.iterator();
@@ -169,9 +168,7 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
 
     @Override
     public boolean putAll(final Map<? extends K, ? extends V> map) {
-        if (map == null) {
-            throw new NullPointerException("Map must not be null.");
-        }
+        Objects.requireNonNull(map, "map");
         boolean changed = false;
         for (final Map.Entry<? extends K, ? extends V> entry : map.entrySet()) {
             changed |= put(entry.getKey(), entry.getValue());
@@ -181,9 +178,7 @@ public class TransformedMultiValuedMap<K, V> extends AbstractMultiValuedMapDecor
 
     @Override
     public boolean putAll(final MultiValuedMap<? extends K, ? extends V> map) {
-        if (map == null) {
-            throw new NullPointerException("Map must not be null.");
-        }
+        Objects.requireNonNull(map, "map");
         boolean changed = false;
         for (final Map.Entry<? extends K, ? extends V> entry : map.entries()) {
             changed |= put(entry.getKey(), entry.getValue());

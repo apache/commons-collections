@@ -41,7 +41,7 @@ import java.util.Set;
  * Collection<String> coll = map.get(1);
  * }</pre>
  * <p>
- * <code>coll</code> will be a collection containing "A", "B", "C".
+ * {@code coll} will be a collection containing "A", "B", "C".
  * </p>
  *
  * @param <K> the type of the keys in this map
@@ -219,7 +219,7 @@ public interface MultiValuedMap<K, V> {
      * Other values attached to that key are unaffected.
      * <p>
      * If the last value for a key is removed, implementations typically return
-     * an empty collection from a subsequent <code>get(Object)</code>.
+     * an empty collection from a subsequent {@code get(Object)}.
      *
      * @param key  the key to remove from
      * @param item  the item to remove
@@ -311,7 +311,7 @@ public interface MultiValuedMap<K, V> {
     // Iterators
 
     /**
-     * Obtains a <code>MapIterator</code> over this multi-valued map.
+     * Obtains a {@code MapIterator} over this multi-valued map.
      * <p>
      * A map iterator is an efficient way of iterating over maps. There is no
      * need to access the entries collection or use {@code Map.Entry} objects.

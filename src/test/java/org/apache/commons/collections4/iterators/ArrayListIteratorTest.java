@@ -51,7 +51,7 @@ public class ArrayListIteratorTest<E> extends ArrayIteratorTest<E> {
 
     /**
      * Test the basic ListIterator functionality - going backwards using
-     * <code>previous()</code>.
+     * {@code previous()}.
      */
     public void testListIterator() {
         final ListIterator<E> iter = makeObject();

@@ -33,7 +33,7 @@ import java.util.List;
  * commands} come from the second sequence and that the objects embedded in
  * either the {@link DeleteCommand delete commands} or {@link KeepCommand keep
  * commands} come from the first sequence. This can be important if subclassing
- * is used for some elements in the first sequence and the <code>equals</code>
+ * is used for some elements in the first sequence and the {@code equals}
  * method is specialized.
  * </p>
  *

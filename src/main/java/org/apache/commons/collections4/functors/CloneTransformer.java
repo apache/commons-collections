@@ -21,7 +21,7 @@ import org.apache.commons.collections4.Transformer;
 /**
  * Transformer implementation that returns a clone of the input object.
  * <p>
- * Clone is performed using <code>PrototypeFactory.prototypeFactory(input).create()</code>.
+ * Clone is performed using {@code PrototypeFactory.prototypeFactory(input).create()}.
  * </p>
  * <p>
  * <b>WARNING:</b> from v4.1 onwards this class will <b>not</b> be serializable anymore

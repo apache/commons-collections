@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import org.apache.commons.collections4.FluentIterable;
 
@@ -49,7 +50,7 @@ public class ZippingIterator<E> implements Iterator<E> {
     // ----------------------------------------------------------------------
 
     /**
-     * Constructs a new <code>ZippingIterator</code> that will provide
+     * Constructs a new {@code ZippingIterator} that will provide
      * interleaved iteration over the two given iterators.
      *
      * @param a  the first child iterator
@@ -62,7 +63,7 @@ public class ZippingIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Constructs a new <code>ZippingIterator</code> that will provide
+     * Constructs a new {@code ZippingIterator} that will provide
      * interleaved iteration over the three given iterators.
      *
      * @param a  the first child iterator
@@ -78,7 +79,7 @@ public class ZippingIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Constructs a new <code>ZippingIterator</code> that will provide
+     * Constructs a new {@code ZippingIterator} that will provide
      * interleaved iteration of the specified iterators.
      *
      * @param iterators  the array of iterators
@@ -88,9 +89,7 @@ public class ZippingIterator<E> implements Iterator<E> {
         // create a mutable list to be able to remove exhausted iterators
         final List<Iterator<? extends E>> list = new ArrayList<>();
         for (final Iterator<? extends E> iterator : iterators) {
-            if (iterator == null) {
-                throw new NullPointerException("Iterator must not be null.");
-            }
+            Objects.requireNonNull(iterator, "iterator");
             list.add(iterator);
         }
         this.iterators = FluentIterable.of(list).loop().iterator();

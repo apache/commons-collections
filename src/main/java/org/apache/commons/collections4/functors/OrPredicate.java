@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Predicate;
 
@@ -41,20 +42,18 @@ public final class OrPredicate<T> implements PredicateDecorator<T>, Serializable
      * @param <T> the type that the predicate queries
      * @param predicate1  the first predicate to check, not null
      * @param predicate2  the second predicate to check, not null
-     * @return the <code>and</code> predicate
+     * @return the {@code and} predicate
      * @throws NullPointerException if either predicate is null
      */
     public static <T> Predicate<T> orPredicate(final Predicate<? super T> predicate1,
                                                final Predicate<? super T> predicate2) {
-        if (predicate1 == null || predicate2 == null) {
-            throw new NullPointerException("Predicate must not be null");
-        }
-        return new OrPredicate<>(predicate1, predicate2);
+        return new OrPredicate<>(Objects.requireNonNull(predicate1, "predicate1"),
+                Objects.requireNonNull(predicate2, "predicate2"));
     }
 
     /**
      * Constructor that performs no validation.
-     * Use <code>orPredicate</code> if you want that.
+     * Use {@code orPredicate} if you want that.
      *
      * @param predicate1  the first predicate to check, not null
      * @param predicate2  the second predicate to check, not null

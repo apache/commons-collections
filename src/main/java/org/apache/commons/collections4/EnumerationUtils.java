@@ -36,11 +36,11 @@ public class EnumerationUtils {
     private EnumerationUtils() {}
 
     /**
-     * Returns the <code>index</code>-th value in the {@link Enumeration}, throwing
-     * <code>IndexOutOfBoundsException</code> if there is no such element.
+     * Returns the {@code index}-th value in the {@link Enumeration}, throwing
+     * {@code IndexOutOfBoundsException} if there is no such element.
      * <p>
-     * The Enumeration is advanced to <code>index</code> (or to the end, if
-     * <code>index</code> exceeds the number of entries) as a side effect of this method.
+     * The Enumeration is advanced to {@code index} (or to the end, if
+     * {@code index} exceeds the number of entries) as a side effect of this method.
      *
      * @param e  the enumeration to get a value from
      * @param index  the index to get
@@ -70,9 +70,9 @@ public class EnumerationUtils {
      * created. The new list is returned.</p>
      *
      * @param <E> the element type
-     * @param enumeration  the enumeration to traverse, which should not be <code>null</code>.
+     * @param enumeration  the enumeration to traverse, which should not be {@code null}.
      * @return a list containing all elements of the given enumeration
-     * @throws NullPointerException if the enumeration parameter is <code>null</code>.
+     * @throws NullPointerException if the enumeration parameter is {@code null}.
      */
     public static <E> List<E> toList(final Enumeration<? extends E> enumeration) {
         return IteratorUtils.toList(new EnumerationIterator<>(enumeration));

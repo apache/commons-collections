@@ -21,11 +21,11 @@ import java.util.Set;
 /**
  * Defines a map that allows bidirectional lookup between key and values.
  * <p>
- * This extended <code>Map</code> represents a mapping where a key may
+ * This extended {@code Map} represents a mapping where a key may
  * lookup a value and a value may lookup a key with equal ease.
- * This interface extends <code>Map</code> and so may be used anywhere a map
+ * This interface extends {@code Map} and so may be used anywhere a map
  * is required. The interface provides an inverse map view, enabling
- * full access to both directions of the <code>BidiMap</code>.
+ * full access to both directions of the {@code BidiMap}.
  * </p>
  * <p>
  * Implementations should allow a value to be looked up from a key and
@@ -66,7 +66,7 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      * @param value  the value to store
      * @return the previous value mapped to this key
      *
-     * @throws UnsupportedOperationException if the <code>put</code> method is not supported
+     * @throws UnsupportedOperationException if the {@code put} method is not supported
      * @throws ClassCastException (optional) if the map limits the type of the
      *  value and the specified value is inappropriate
      * @throws IllegalArgumentException (optional) if the map limits the values
@@ -80,15 +80,15 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
     /**
      * Gets the key that is currently mapped to the specified value.
      * <p>
-     * If the value is not contained in the map, <code>null</code> is returned.
+     * If the value is not contained in the map, {@code null} is returned.
      * </p>
      * <p>
      * Implementations should seek to make this method perform equally as well
-     * as <code>get(Object)</code>.
+     * as {@code get(Object)}.
      * </p>
      *
      * @param value  the value to find the key for
-     * @return the mapped key, or <code>null</code> if not found
+     * @return the mapped key, or {@code null} if not found
      *
      * @throws ClassCastException (optional) if the map limits the type of the
      *  value and the specified value is inappropriate
@@ -101,15 +101,15 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      * Removes the key-value pair that is currently mapped to the specified
      * value (optional operation).
      * <p>
-     * If the value is not contained in the map, <code>null</code> is returned.
+     * If the value is not contained in the map, {@code null} is returned.
      * </p>
      * <p>
      * Implementations should seek to make this method perform equally as well
-     * as <code>remove(Object)</code>.
+     * as {@code remove(Object)}.
      * </p>
      *
      * @param value  the value to find the key-value pair for
-     * @return the key that was removed, <code>null</code> if nothing removed
+     * @return the key that was removed, {@code null} if nothing removed
      *
      * @throws ClassCastException (optional) if the map limits the type of the
      *  value and the specified value is inappropriate
@@ -124,11 +124,11 @@ public interface BidiMap<K, V> extends IterableMap<K, V> {
      * Gets a view of this map where the keys and values are reversed.
      * <p>
      * Changes to one map will be visible in the other and vice versa.
-     * This enables both directions of the map to be accessed as a <code>Map</code>.
+     * This enables both directions of the map to be accessed as a {@code Map}.
      * </p>
      * <p>
      * Implementations should seek to avoid creating a new object every time this
-     * method is called. See <code>AbstractMap.values()</code> etc. Calling this
+     * method is called. See {@code AbstractMap.values()} etc. Calling this
      * method on the inverse map should return the original.
      * </p>
      *

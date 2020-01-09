@@ -32,7 +32,7 @@ import org.apache.commons.collections4.iterators.AbstractIteratorDecorator;
 import org.apache.commons.collections4.list.UnmodifiableList;
 
 /**
- * Decorates another <code>Set</code> to ensure that the order of addition is
+ * Decorates another {@code Set} to ensure that the order of addition is
  * retained and used by the iterator.
  * <p>
  * If an object is added to the set for a second time, it will remain in the
@@ -41,12 +41,12 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * </p>
  * <p>
  * The ListOrderedSet also has various useful direct methods. These include many
- * from <code>List</code>, such as <code>get(int)</code>,
- * <code>remove(int)</code> and <code>indexOf(int)</code>. An unmodifiable
- * <code>List</code> view of the set can be obtained via <code>asList()</code>.
+ * from {@code List}, such as {@code get(int)},
+ * {@code remove(int)} and {@code indexOf(int)}. An unmodifiable
+ * {@code List} view of the set can be obtained via {@code asList()}.
  * </p>
  * <p>
- * This class cannot implement the <code>List</code> interface directly as
+ * This class cannot implement the {@code List} interface directly as
  * various interface methods (notably equals/hashCode) are incompatible with a
  * set.
  * </p>
@@ -80,12 +80,8 @@ public class ListOrderedSet<E>
      * @since 4.0
      */
     public static <E> ListOrderedSet<E> listOrderedSet(final Set<E> set, final List<E> list) {
-        if (set == null) {
-            throw new NullPointerException("Set must not be null");
-        }
-        if (list == null) {
-            throw new NullPointerException("List must not be null");
-        }
+        Objects.requireNonNull(set, "set");
+        Objects.requireNonNull(list, "list");
         if (set.size() > 0 || list.size() > 0) {
             throw new IllegalArgumentException("Set and List must be empty");
         }
@@ -95,7 +91,7 @@ public class ListOrderedSet<E>
     /**
      * Factory method to create an ordered set.
      * <p>
-     * An <code>ArrayList</code> is used to retain order.
+     * An {@code ArrayList} is used to retain order.
      *
      * @param <E> the element type
      * @param set the set to decorate, must not be null
@@ -110,7 +106,7 @@ public class ListOrderedSet<E>
     /**
      * Factory method to create an ordered set using the supplied list to retain order.
      * <p>
-     * A <code>HashSet</code> is used for the set behaviour.
+     * A {@code HashSet} is used for the set behaviour.
      * <p>
      * NOTE: If the list contains duplicates, the duplicates are removed,
      * altering the specified list.
@@ -122,9 +118,7 @@ public class ListOrderedSet<E>
      * @since 4.0
      */
     public static <E> ListOrderedSet<E> listOrderedSet(final List<E> list) {
-        if (list == null) {
-            throw new NullPointerException("List must not be null");
-        }
+        Objects.requireNonNull(list, "list");
         CollectionUtils.filter(list, UniquePredicate.uniquePredicate());
         final Set<E> set = new HashSet<>(list);
 
@@ -133,8 +127,8 @@ public class ListOrderedSet<E>
 
     // -----------------------------------------------------------------------
     /**
-     * Constructs a new empty <code>ListOrderedSet</code> using a
-     * <code>HashSet</code> and an <code>ArrayList</code> internally.
+     * Constructs a new empty {@code ListOrderedSet} using a
+     * {@code HashSet} and an {@code ArrayList} internally.
      *
      * @since 3.1
      */
@@ -147,7 +141,7 @@ public class ListOrderedSet<E>
      * Constructor that wraps (not copies).
      *
      * @param set the set to decorate, must not be null
-     * @throws IllegalArgumentException if set is null
+     * @throws NullPointerException if set is null
      */
     protected ListOrderedSet(final Set<E> set) {
         super(set);
@@ -166,10 +160,7 @@ public class ListOrderedSet<E>
      */
     protected ListOrderedSet(final Set<E> set, final List<E> list) {
         super(set);
-        if (list == null) {
-            throw new NullPointerException("List must not be null");
-        }
-        setOrder = list;
+        setOrder = Objects.requireNonNull(list, "list");
     }
 
     // -----------------------------------------------------------------------
@@ -249,9 +240,9 @@ public class ListOrderedSet<E>
      * {@inheritDoc}
      * <p>
      * This implementation iterates over the elements of this set, checking
-     * each element in turn to see if it's contained in <code>coll</code>.
+     * each element in turn to see if it's contained in {@code coll}.
      * If it's not contained, it's removed from this set. As a consequence,
-     * it is advised to use a collection type for <code>coll</code> that provides
+     * it is advised to use a collection type for {@code coll} that provides
      * a fast (e.g. O(1)) implementation of {@link Collection#contains(Object)}.
      */
     @Override

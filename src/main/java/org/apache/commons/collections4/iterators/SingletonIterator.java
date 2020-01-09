@@ -21,7 +21,7 @@ import java.util.NoSuchElementException;
 import org.apache.commons.collections4.ResettableIterator;
 
 /**
- * <code>SingletonIterator</code> is an {@link java.util.Iterator} over a single
+ * {@code SingletonIterator} is an {@link java.util.Iterator} over a single
  * object instance.
  *
  * @since 2.0
@@ -39,7 +39,7 @@ public class SingletonIterator<E>
     private E object;
 
     /**
-     * Constructs a new <code>SingletonIterator</code> where <code>remove</code>
+     * Constructs a new {@code SingletonIterator} where {@code remove}
      * is a permitted operation.
      *
      * @param object  the single object to return from the iterator
@@ -49,8 +49,8 @@ public class SingletonIterator<E>
     }
 
     /**
-     * Constructs a new <code>SingletonIterator</code> optionally choosing if
-     * <code>remove</code> is a permitted operation.
+     * Constructs a new {@code SingletonIterator} optionally choosing if
+     * {@code remove} is a permitted operation.
      *
      * @param object  the single object to return from the iterator
      * @param removeAllowed  true if remove is allowed

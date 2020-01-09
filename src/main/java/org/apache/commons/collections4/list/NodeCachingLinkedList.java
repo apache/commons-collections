@@ -23,7 +23,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 /**
- * A <code>List</code> implementation that stores a cache of internal Node objects
+ * A {@code List} implementation that stores a cache of internal Node objects
  * in an effort to reduce wasteful object creation.
  * <p>
  * A linked list creates one Node for each item of data added. This can result in
@@ -52,9 +52,9 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
     private static final int DEFAULT_MAXIMUM_CACHE_SIZE = 20;
 
     /**
-     * The first cached node, or <code>null</code> if no nodes are cached.
+     * The first cached node, or {@code null} if no nodes are cached.
      * Cached nodes are stored in a singly-linked list with
-     * <code>next</code> pointing to the next element.
+     * {@code next} pointing to the next element.
      */
     private transient Node<E> firstCachedNode;
 
@@ -130,9 +130,9 @@ public class NodeCachingLinkedList<E> extends AbstractLinkedList<E> implements S
     /**
      * Gets a node from the cache. If a node is returned, then the value of
      * {@link #cacheSize} is decreased accordingly. The node that is returned
-     * will have <code>null</code> values for next, previous and element.
+     * will have {@code null} values for next, previous and element.
      *
-     * @return a node, or <code>null</code> if there are no nodes in the cache.
+     * @return a node, or {@code null} if there are no nodes in the cache.
      */
     protected Node<E> getNodeFromCache() {
         if (cacheSize == 0) {

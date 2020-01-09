@@ -27,7 +27,7 @@ import org.apache.commons.collections4.iterators.AbstractListIteratorDecorator;
 import org.apache.commons.collections4.iterators.UnmodifiableIterator;
 
 /**
- * Decorates another <code>List</code> to fix the size preventing add/remove.
+ * Decorates another {@code List} to fix the size preventing add/remove.
  * <p>
  * The add, remove, clear and retain operations are unsupported.
  * The set method is allowed (as it doesn't change the list size).

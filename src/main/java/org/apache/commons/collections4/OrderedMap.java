@@ -28,7 +28,7 @@ package org.apache.commons.collections4;
 public interface OrderedMap<K, V> extends IterableMap<K, V> {
 
     /**
-     * Obtains an <code>OrderedMapIterator</code> over the map.
+     * Obtains an {@code OrderedMapIterator} over the map.
      * <p>
      * A ordered map iterator is an efficient way of iterating over maps
      * in both directions.

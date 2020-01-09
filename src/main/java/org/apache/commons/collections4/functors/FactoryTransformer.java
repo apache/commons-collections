@@ -17,6 +17,7 @@
 package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Factory;
 import org.apache.commons.collections4.Transformer;
@@ -40,19 +41,16 @@ public class FactoryTransformer<I, O> implements Transformer<I, O>, Serializable
      * @param <I>  the input type
      * @param <O>  the output type
      * @param factory  the factory to call, not null
-     * @return the <code>factory</code> transformer
+     * @return the {@code factory} transformer
      * @throws NullPointerException if the factory is null
      */
     public static <I, O> Transformer<I, O> factoryTransformer(final Factory<? extends O> factory) {
-        if (factory == null) {
-            throw new NullPointerException("Factory must not be null");
-        }
-        return new FactoryTransformer<>(factory);
+        return new FactoryTransformer<>(Objects.requireNonNull(factory, "factory"));
     }
 
     /**
      * Constructor that performs no validation.
-     * Use <code>factoryTransformer</code> if you want that.
+     * Use {@code factoryTransformer} if you want that.
      *
      * @param factory  the factory to call, not null
      */

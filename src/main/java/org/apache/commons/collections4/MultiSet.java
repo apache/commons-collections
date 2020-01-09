@@ -24,9 +24,9 @@ import java.util.Set;
  * Defines a collection that counts the number of times an object appears in
  * the collection.
  * <p>
- * Suppose you have a MultiSet that contains <code>{a, a, b, c}</code>.
- * Calling {@link #getCount(Object)} on <code>a</code> would return 2, while
- * calling {@link #uniqueSet()} would return <code>{a, b, c}</code>.
+ * Suppose you have a MultiSet that contains {@code {a, a, b, c}}.
+ * Calling {@link #getCount(Object)} on {@code a} would return 2, while
+ * calling {@link #uniqueSet()} would return {@code {a, b, c}}.
  * </p>
  *
  * @param <E> the type held in the multiset
@@ -67,7 +67,7 @@ public interface MultiSet<E> extends Collection<E> {
      * {@link #uniqueSet()} and report its count as 1.
      *
      * @param object  the object to add
-     * @return <code>true</code> always, as the size of the MultiSet is increased
+     * @return {@code true} always, as the size of the MultiSet is increased
      *   in any case
      */
     @Override
@@ -78,7 +78,7 @@ public interface MultiSet<E> extends Collection<E> {
      * <p>
      * If the object is already in the {@link #uniqueSet()} then increment its
      * count as reported by {@link #getCount(Object)}. Otherwise add it to the
-     * {@link #uniqueSet()} and report its count as <code>occurrences</code>.
+     * {@link #uniqueSet()} and report its count as {@code occurrences}.
      *
      * @param object  the object to add
      * @param occurrences  the number of occurrences to add, may be zero,
@@ -96,7 +96,7 @@ public interface MultiSet<E> extends Collection<E> {
      * to zero, the object will be removed from the {@link #uniqueSet()}.
      *
      * @param object  the object to remove
-     * @return <code>true</code> if this call changed the collection
+     * @return {@code true} if this call changed the collection
      */
     @Override
     boolean remove(Object object);
@@ -159,11 +159,11 @@ public interface MultiSet<E> extends Collection<E> {
     int size();
 
     /**
-     * Returns <code>true</code> if the MultiSet contains at least one
+     * Returns {@code true} if the MultiSet contains at least one
      * occurrence for each element contained in the given collection.
      *
      * @param coll  the collection to check against
-     * @return <code>true</code> if the MultiSet contains all the collection
+     * @return {@code true} if the MultiSet contains all the collection
      */
     @Override
     boolean containsAll(Collection<?> coll);
@@ -173,7 +173,7 @@ public interface MultiSet<E> extends Collection<E> {
      * in the given collection.
      *
      * @param coll  the collection of elements to remove
-     * @return <code>true</code> if this call changed the multiset
+     * @return {@code true} if this call changed the multiset
      */
     @Override
     boolean removeAll(Collection<?> coll);
@@ -183,7 +183,7 @@ public interface MultiSet<E> extends Collection<E> {
      * given collection.
      *
      * @param coll  the collection of elements to retain
-     * @return <code>true</code> if this call changed the multiset
+     * @return {@code true} if this call changed the multiset
      */
     @Override
     boolean retainAll(Collection<?> coll);
@@ -204,7 +204,7 @@ public interface MultiSet<E> extends Collection<E> {
      * Gets a hash code for the MultiSet compatible with the definition of equals.
      * The hash code is defined as the sum total of a hash code for each element.
      * The per element hash code is defined as
-     * <code>(e==null ? 0 : e.hashCode()) ^ noOccurances)</code>.
+     * {@code (e==null ? 0 : e.hashCode()) ^ noOccurances)}.
      *
      * @return the hash code of the MultiSet
      */
@@ -241,7 +241,7 @@ public interface MultiSet<E> extends Collection<E> {
          * and the two entries represent the same element with the same
          * number of occurrences.
          * <p>
-         * More formally, two entries <code>e1</code> and <code>e2</code> represent
+         * More formally, two entries {@code e1} and {@code e2} represent
          * the same mapping if
          * <pre>
          *     (e1.getElement()==null ? e2.getElement()==null
@@ -258,7 +258,7 @@ public interface MultiSet<E> extends Collection<E> {
         /**
          * Returns the hash code value for this multiset entry.
          * <p>
-         * The hash code of a multiset entry <code>e</code> is defined to be:
+         * The hash code of a multiset entry {@code e} is defined to be:
          * <pre>
          *      (e==null ? 0 : e.hashCode()) ^ noOccurances)
          * </pre>

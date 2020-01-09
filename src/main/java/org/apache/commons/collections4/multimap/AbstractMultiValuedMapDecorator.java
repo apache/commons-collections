@@ -19,6 +19,7 @@ package org.apache.commons.collections4.multimap;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Map.Entry;
 import java.util.Set;
 
@@ -27,10 +28,10 @@ import org.apache.commons.collections4.MultiSet;
 import org.apache.commons.collections4.MultiValuedMap;
 
 /**
- * Decorates another <code>MultiValuedMap</code> to provide additional behaviour.
+ * Decorates another {@code MultiValuedMap} to provide additional behaviour.
  * <p>
- * Each method call made on this <code>MultiValuedMap</code> is forwarded to the
- * decorated <code>MultiValuedMap</code>. This class is used as a framework to build
+ * Each method call made on this {@code MultiValuedMap} is forwarded to the
+ * decorated {@code MultiValuedMap}. This class is used as a framework to build
  * to extensions such as synchronized and unmodifiable behaviour.
  * </p>
  *
@@ -55,10 +56,7 @@ public abstract class AbstractMultiValuedMapDecorator<K, V>
      * @throws NullPointerException if the map is null
      */
     protected AbstractMultiValuedMapDecorator(final MultiValuedMap<K, V> map) {
-        if (map == null) {
-            throw new NullPointerException("MultiValuedMap must not be null.");
-        }
-        this.map = map;
+        this.map = Objects.requireNonNull(map, "map");
     }
 
     // -----------------------------------------------------------------------

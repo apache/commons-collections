@@ -23,6 +23,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 import org.apache.commons.collections4.list.UnmodifiableList;
 
@@ -31,9 +32,9 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * Provides an ordered iteration over the elements contained in a collection of
  * ordered Iterators.
  * <p>
- * Given two ordered {@link Iterator} instances <code>A</code> and
- * <code>B</code>, the {@link #next} method on this iterator will return the
- * lesser of <code>A.next()</code> and <code>B.next()</code>.
+ * Given two ordered {@link Iterator} instances {@code A} and
+ * {@code B}, the {@link #next} method on this iterator will return the
+ * lesser of {@code A.next()} and {@code B.next()}.
  *
  * @since 2.1
  */
@@ -60,7 +61,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     // Constructors
     // ----------------------------------------------------------------------
     /**
-     * Constructs a new <code>CollatingIterator</code>. A comparator must be
+     * Constructs a new {@code CollatingIterator}. A comparator must be
      * set by calling {@link #setComparator(Comparator)} before invoking
      * {@link #hasNext()}, or {@link #next()} for the first time. Child
      * iterators will have to be manually added using the
@@ -71,7 +72,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Constructs a new <code>CollatingIterator</code> that will used the
+     * Constructs a new {@code CollatingIterator} that will used the
      * specified comparator for ordering. Child iterators will have to be
      * manually added using the {@link #addIterator(Iterator)} method.
      *
@@ -83,7 +84,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Constructs a new <code>CollatingIterator</code> that will used the
+     * Constructs a new {@code CollatingIterator} that will used the
      * specified comparator for ordering and have the specified initial
      * capacity. Child iterators will have to be manually added using the
      * {@link #addIterator(Iterator)} method.
@@ -99,7 +100,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Constructs a new <code>CollatingIterator</code> that will use the
+     * Constructs a new {@code CollatingIterator} that will use the
      * specified comparator to provide ordered iteration over the two given
      * iterators.
      *
@@ -117,7 +118,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Constructs a new <code>CollatingIterator</code> that will use the
+     * Constructs a new {@code CollatingIterator} that will use the
      * specified comparator to provide ordered iteration over the array of
      * iterators.
      *
@@ -134,7 +135,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Constructs a new <code>CollatingIterator</code> that will use the
+     * Constructs a new {@code CollatingIterator} that will use the
      * specified comparator to provide ordered iteration over the collection of
      * iterators.
      *
@@ -163,9 +164,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      */
     public void addIterator(final Iterator<? extends E> iterator) {
         checkNotStarted();
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
+        Objects.requireNonNull(iterator, "iterator");
         iterators.add(iterator);
     }
 
@@ -180,9 +179,7 @@ public class CollatingIterator<E> implements Iterator<E> {
      */
     public void setIterator(final int index, final Iterator<? extends E> iterator) {
         checkNotStarted();
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
+        Objects.requireNonNull(iterator, "iterator");
         iterators.set(index, iterator);
     }
 
@@ -222,7 +219,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     // Iterator Methods
     // -------------------------------------------------------------------
     /**
-     * Returns <code>true</code> if any child iterator has remaining elements.
+     * Returns {@code true} if any child iterator has remaining elements.
      *
      * @return true if this iterator has remaining elements
      */
@@ -357,9 +354,7 @@ public class CollatingIterator<E> implements Iterator<E> {
                     leastObject = values.get(i);
                 } else {
                     final E curObject = values.get(i);
-                    if (comparator == null) {
-                        throw new NullPointerException("You must invoke setComparator() to set a comparator first.");
-                    }
+                    Objects.requireNonNull(comparator, "You must invoke setComparator() to set a comparator first.");
                     if (comparator.compare(curObject, leastObject) < 0) {
                         leastObject = curObject;
                         leastIndex = i;
@@ -371,8 +366,8 @@ public class CollatingIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Returns <code>true</code> iff any bit in the given set is
-     * <code>true</code>.
+     * Returns {@code true} iff any bit in the given set is
+     * {@code true}.
      */
     private boolean anyValueSet(final BitSet set) {
         for (int i = 0; i < set.size(); i++) {
@@ -384,7 +379,7 @@ public class CollatingIterator<E> implements Iterator<E> {
     }
 
     /**
-     * Returns <code>true</code> iff any {@link Iterator} in the given list has
+     * Returns {@code true} iff any {@link Iterator} in the given list has
      * a next value.
      */
     private boolean anyHasNext(final List<Iterator<? extends E>> iters) {

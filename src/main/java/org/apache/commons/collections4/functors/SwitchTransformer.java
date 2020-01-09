@@ -18,6 +18,7 @@ package org.apache.commons.collections4.functors;
 
 import java.io.Serializable;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.collections4.Predicate;
 import org.apache.commons.collections4.Transformer;
@@ -48,9 +49,10 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * @param predicates  array of predicates, cloned, no nulls
      * @param transformers  matching array of transformers, cloned, no nulls
      * @param defaultTransformer  the transformer to use if no match, null means return null
-     * @return the <code>chained</code> transformer
-     * @throws NullPointerException if array is null
-     * @throws NullPointerException if any element in the array is null
+     * @return the {@code chained} transformer
+     * @throws NullPointerException if either array is null
+     * @throws NullPointerException if any element in the arrays is null
+     * @throws IllegalArgumentException if the arrays have different sizes
      */
     @SuppressWarnings("unchecked")
     public static <I, O> Transformer<I, O> switchTransformer(final Predicate<? super I>[] predicates,
@@ -82,7 +84,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
      * @param <I>  the input type
      * @param <O>  the output type
      * @param map  a map of predicates to transformers
-     * @return the <code>switch</code> transformer
+     * @return the {@code switch} transformer
      * @throws NullPointerException if the map is null
      * @throws NullPointerException if any transformer in the map is null
      * @throws ClassCastException  if the map elements are of the wrong type
@@ -91,9 +93,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
     public static <I, O> Transformer<I, O> switchTransformer(
             final Map<? extends Predicate<? super I>, ? extends Transformer<? super I, ? extends O>> map) {
 
-        if (map == null) {
-            throw new NullPointerException("The predicate and transformer map must not be null");
-        }
+        Objects.requireNonNull(map, "map");
         if (map.size() == 0) {
             return ConstantTransformer.<I, O>nullTransformer();
         }
@@ -137,7 +137,7 @@ public class SwitchTransformer<I, O> implements Transformer<I, O>, Serializable 
 
     /**
      * Constructor that performs no validation.
-     * Use <code>switchTransformer</code> if you want that.
+     * Use {@code switchTransformer} if you want that.
      *
      * @param predicates  array of predicates, cloned, no nulls
      * @param transformers  matching array of transformers, cloned, no nulls

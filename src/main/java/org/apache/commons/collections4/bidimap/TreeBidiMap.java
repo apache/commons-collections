@@ -28,6 +28,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.KeyValue;
@@ -40,7 +41,7 @@ import org.apache.commons.collections4.keyvalue.UnmodifiableMapEntry;
 
 /**
  * Red-Black tree-based implementation of BidiMap where all objects added
- * implement the <code>Comparable</code> interface.
+ * implement the {@code Comparable} interface.
  * <p>
  * This class guarantees that the map will be in both ascending key order
  * and ascending value order, sorted according to the natural order for
@@ -162,7 +163,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     /**
      * Checks whether this map contains the a mapping for the specified key.
      * <p>
-     * The key must implement <code>Comparable</code>.
+     * The key must implement {@code Comparable}.
      *
      * @param key  key whose presence in this map is to be tested
      * @return true if this map contains a mapping for the specified key
@@ -178,7 +179,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     /**
      * Checks whether this map contains the a mapping for the specified value.
      * <p>
-     * The value must implement <code>Comparable</code>.
+     * The value must implement {@code Comparable}.
      *
      * @param value  value whose presence in this map is to be tested
      * @return true if this map contains a mapping for the specified value
@@ -195,7 +196,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * Gets the value to which this map maps the specified key.
      * Returns null if the map contains no mapping for this key.
      * <p>
-     * The key must implement <code>Comparable</code>.
+     * The key must implement {@code Comparable}.
      *
      * @param key  key whose associated value is to be returned
      * @return the value to which this map maps the specified key,
@@ -226,7 +227,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      *  map.put("C","B");  // contains C mapped to B, key A is removed
      * </pre>
      * <p>
-     * Both key and value must implement <code>Comparable</code>.
+     * Both key and value must implement {@code Comparable}.
      *
      * @param key  key with which the specified value is to be  associated
      * @param value  value to be associated with the specified key
@@ -244,7 +245,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     /**
      * Puts all the mappings from the specified map into this map.
      * <p>
-     * All keys and values must implement <code>Comparable</code>.
+     * All keys and values must implement {@code Comparable}.
      *
      * @param map  the map to copy from
      */
@@ -258,7 +259,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     /**
      * Removes the mapping for this key from this map if present.
      * <p>
-     * The key must implement <code>Comparable</code>.
+     * The key must implement {@code Comparable}.
      *
      * @param key  key whose mapping is to be removed from the map.
      * @return previous value associated with specified key,
@@ -288,7 +289,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * Returns the key to which this map maps the specified value.
      * Returns null if the map contains no mapping for this value.
      * <p>
-     * The value must implement <code>Comparable</code>.
+     * The value must implement {@code Comparable}.
      *
      * @param value  value whose associated key is to be returned.
      * @return the key to which this map maps the specified value,
@@ -306,7 +307,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     /**
      * Removes the mapping for this value from this map if present.
      * <p>
-     * The value must implement <code>Comparable</code>.
+     * The value must implement {@code Comparable}.
      *
      * @param value  value whose mapping is to be removed from the map
      * @return previous key associated with specified value,
@@ -351,7 +352,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     /**
      * Gets the next key after the one specified.
      * <p>
-     * The key must implement <code>Comparable</code>.
+     * The key must implement {@code Comparable}.
      *
      * @param key the key to search for next from
      * @return the next key, null if no match or at end
@@ -366,7 +367,7 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
     /**
      * Gets the previous key before the one specified.
      * <p>
-     * The key must implement <code>Comparable</code>.
+     * The key must implement {@code Comparable}.
      *
      * @param key the key to search for previous from
      * @return the previous key, null if no match or at start
@@ -1232,18 +1233,16 @@ public class TreeBidiMap<K extends Comparable<K>, V extends Comparable<V>>
      * check if an object is fit to be proper input ... has to be
      * Comparable and non-null
      *
-     * @param o the object being checked
+     * @param obj the object being checked
      * @param dataElement  either {@link DataElement#KEY} key}
      *                     or the {@link DataElement#VALUE value}.
      *
      * @throws NullPointerException if o is null
      * @throws ClassCastException if o is not Comparable
      */
-    private static void checkNonNullComparable(final Object o, final DataElement dataElement) {
-        if (o == null) {
-            throw new NullPointerException(dataElement + " cannot be null");
-        }
-        if (!(o instanceof Comparable)) {
+    private static void checkNonNullComparable(final Object obj, final DataElement dataElement) {
+        Objects.requireNonNull(obj, Objects.toString(dataElement));
+        if (!(obj instanceof Comparable)) {
             throw new ClassCastException(dataElement + " must be Comparable");
         }
     }

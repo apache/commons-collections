@@ -218,7 +218,7 @@ public abstract class AbstractObjectTest extends BulkTest {
      * Subclasses can override this variable, indicating compatibility
      * with earlier Collections versions.
      *
-     * @return The version, or <code>null</code> if this object shouldn't be
+     * @return The version, or {@code null} if this object shouldn't be
      * tested for compatibility with previous versions.
      */
     public String getCompatibilityVersion() {

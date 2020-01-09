@@ -24,19 +24,19 @@ import org.apache.commons.collections4.functors.DefaultEquator;
 /**
  * This class allows to compare two objects sequences.
  * <p>
- * The two sequences can hold any object type, as only the <code>equals</code>
+ * The two sequences can hold any object type, as only the {@code equals}
  * method is used to compare the elements of the sequences. It is guaranteed
- * that the comparisons will always be done as <code>o1.equals(o2)</code> where
- * <code>o1</code> belongs to the first sequence and <code>o2</code> belongs to
+ * that the comparisons will always be done as {@code o1.equals(o2)} where
+ * {@code o1} belongs to the first sequence and {@code o2} belongs to
  * the second sequence. This can be important if subclassing is used for some
- * elements in the first sequence and the <code>equals</code> method is
+ * elements in the first sequence and the {@code equals} method is
  * specialized.
  * </p>
  * <p>
  * Comparison can be seen from two points of view: either as giving the smallest
  * modification allowing to transform the first sequence into the second one, or
  * as giving the longest sequence which is a subsequence of both initial
- * sequences. The <code>equals</code> method is used to compare objects, so any
+ * sequences. The {@code equals} method is used to compare objects, so any
  * object can be put into sequences. Modifications include deleting, inserting
  * or keeping one object, starting from the beginning of the first sequence.
  * </p>
@@ -79,10 +79,10 @@ public class SequencesComparator<T> {
      * Creates a new instance of SequencesComparator using a {@link DefaultEquator}.
      * <p>
      * It is <em>guaranteed</em> that the comparisons will always be done as
-     * <code>o1.equals(o2)</code> where <code>o1</code> belongs to the first
-     * sequence and <code>o2</code> belongs to the second sequence. This can be
+     * {@code o1.equals(o2)} where {@code o1} belongs to the first
+     * sequence and {@code o2} belongs to the second sequence. This can be
      * important if subclassing is used for some elements in the first sequence
-     * and the <code>equals</code> method is specialized.
+     * and the {@code equals} method is specialized.
      *
      * @param sequence1  first sequence to be compared
      * @param sequence2  second sequence to be compared
@@ -97,8 +97,8 @@ public class SequencesComparator<T> {
      * Creates a new instance of SequencesComparator with a custom {@link Equator}.
      * <p>
      * It is <em>guaranteed</em> that the comparisons will always be done as
-     * <code>Equator.equate(o1, o2)</code> where <code>o1</code> belongs to the first
-     * sequence and <code>o2</code> belongs to the second sequence.
+     * {@code Equator.equate(o1, o2)} where {@code o1} belongs to the first
+     * sequence and {@code o2} belongs to the second sequence.
      *
      * @param sequence1  first sequence to be compared
      * @param sequence2  second sequence to be compared
@@ -122,7 +122,7 @@ public class SequencesComparator<T> {
      * embedded in either the {@link DeleteCommand delete commands} or
      * {@link KeepCommand keep commands} come from the first sequence. This can
      * be important if subclassing is used for some elements in the first
-     * sequence and the <code>equals</code> method is specialized.
+     * sequence and the {@code equals} method is specialized.
      *
      * @return the edit script resulting from the comparison of the two
      *         sequences

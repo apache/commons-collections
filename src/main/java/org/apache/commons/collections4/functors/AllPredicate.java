@@ -48,7 +48,7 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> {
      *
      * @param <T> the type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null
-     * @return the <code>all</code> predicate
+     * @return the {@code all} predicate
      * @throws NullPointerException if the predicates array is null
      * @throws NullPointerException if any predicate in the array is null
      */
@@ -72,7 +72,7 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> {
      *
      * @param <T> the type that the predicate queries
      * @param predicates  the predicates to check, cloned, not null
-     * @return the <code>all</code> predicate
+     * @return the {@code all} predicate
      * @throws NullPointerException if the predicates array is null
      * @throws NullPointerException if any predicate in the array is null
      */
@@ -89,7 +89,7 @@ public final class AllPredicate<T> extends AbstractQuantifierPredicate<T> {
 
     /**
      * Constructor that performs no validation.
-     * Use <code>allPredicate</code> if you want that.
+     * Use {@code allPredicate} if you want that.
      *
      * @param predicates  the predicates to check, not cloned, not null
      */

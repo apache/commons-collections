@@ -19,6 +19,7 @@ package org.apache.commons.collections4.iterators;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
  * Decorates an iterator to support one-element lookahead while iterating.
@@ -55,9 +56,7 @@ public class PeekingIterator<E> implements Iterator<E> {
      * @throws NullPointerException if the iterator is null
      */
     public static <E> PeekingIterator<E> peekingIterator(final Iterator<? extends E> iterator) {
-        if (iterator == null) {
-            throw new NullPointerException("Iterator must not be null");
-        }
+        Objects.requireNonNull(iterator, "iterator");
         if (iterator instanceof PeekingIterator<?>) {
             @SuppressWarnings("unchecked") // safe cast
             final PeekingIterator<E> it = (PeekingIterator<E>) iterator;

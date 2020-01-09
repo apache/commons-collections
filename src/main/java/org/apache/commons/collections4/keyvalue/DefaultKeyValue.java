@@ -21,10 +21,10 @@ import java.util.Map;
 import org.apache.commons.collections4.KeyValue;
 
 /**
- * A mutable <code>KeyValue</code> pair that does not implement
+ * A mutable {@code KeyValue} pair that does not implement
  * {@link java.util.Map.Entry Map.Entry}.
  * <p>
- * Note that a <code>DefaultKeyValue</code> instance may not contain
+ * Note that a {@code DefaultKeyValue} instance may not contain
  * itself as a key or value.
  * </p>
  *
@@ -52,7 +52,7 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
     }
 
     /**
-     * Constructs a new pair from the specified <code>KeyValue</code>.
+     * Constructs a new pair from the specified {@code KeyValue}.
      *
      * @param pair  the pair to copy, must not be null
      * @throws NullPointerException if the entry is null
@@ -62,7 +62,7 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
     }
 
     /**
-     * Constructs a new pair from the specified <code>Map.Entry</code>.
+     * Constructs a new pair from the specified {@code Map.Entry}.
      *
      * @param entry  the entry to copy, must not be null
      * @throws NullPointerException if the entry is null
@@ -106,7 +106,7 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
 
     //-----------------------------------------------------------------------
     /**
-     * Returns a new <code>Map.Entry</code> object with key and value from this pair.
+     * Returns a new {@code Map.Entry} object with key and value from this pair.
      *
      * @return a MapEntry instance
      */
@@ -116,9 +116,9 @@ public class DefaultKeyValue<K, V> extends AbstractKeyValue<K, V> {
 
     //-----------------------------------------------------------------------
     /**
-     * Compares this <code>Map.Entry</code> with another <code>Map.Entry</code>.
+     * Compares this {@code Map.Entry} with another {@code Map.Entry}.
      * <p>
-     * Returns true if the compared object is also a <code>DefaultKeyValue</code>,
+     * Returns true if the compared object is also a {@code DefaultKeyValue},
      * and its key and value are equal to this object's key and value.
      *
      * @param obj  the object to compare to
