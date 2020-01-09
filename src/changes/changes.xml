@@ -20,7 +20,7 @@
     <title>Apache Commons Collections Release Notes</title>
   </properties>
   <body>
-  <release version="4.5" date="2019-MM-DD" description="Maintenance release.">
+  <release version="4.5" date="2020-MM-DD" description="Maintenance release.">
     <action issue="COLLECTIONS-738" dev="kinow" type="update" due-to="Pengyu Nie">
       Remove the redundant assertNull in IterableUtilsTest.find and update Javadocs.
     </action>
