@@ -513,7 +513,7 @@ public abstract class AbstractLinkedList<E> implements List<E> {
      * @throws NullPointerException if either node is null
      */
     protected void addNode(final Node<E> nodeToInsert, final Node<E> insertBeforeNode) {
-        Objects.requireNonNull(nodeToInsert, "The new node on insert must not be null.");
+        Objects.requireNonNull(nodeToInsert, "The new node to insert must not be null.");
         Objects.requireNonNull(insertBeforeNode, "The node to insert before must not be null.");
         nodeToInsert.next = insertBeforeNode;
         nodeToInsert.previous = insertBeforeNode.previous;
