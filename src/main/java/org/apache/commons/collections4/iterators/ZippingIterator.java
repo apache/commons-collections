@@ -33,6 +33,7 @@ import org.apache.commons.collections4.FluentIterable;
  * and {@code B.next()} until both iterators are exhausted.
  * </p>
  *
+ * @param <E> the type of elements returned by this iterator.
  * @since 4.1
  */
 public class ZippingIterator<E> implements Iterator<E> {

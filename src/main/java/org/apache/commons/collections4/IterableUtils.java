@@ -196,8 +196,8 @@ public class IterableUtils {
      * corresponding input iterator supports it.
      *
      * @param <E> the element type
-     * @param a  the first iterable, may not be null
-     * @param b  the second iterable, may not be null
+     * @param a  the first iterable, must not be null
+     * @param b  the second iterable, must not be null
      * @return a filtered view on the specified iterable
      * @throws NullPointerException if either of the provided iterables is null
      */
@@ -603,7 +603,7 @@ public class IterableUtils {
      *
      * @param <E> the element type
      * @param iterable  the iterable to search, may be null
-     * @param predicate  the predicate to use, may not be null
+     * @param predicate  the predicate to use, must not be null
      * @return the first element of the iterable which matches the predicate or null if none could be found
      * @throws NullPointerException if predicate is null
      */
@@ -619,7 +619,7 @@ public class IterableUtils {
      *
      * @param <E> the element type
      * @param iterable  the iterable to search, may be null
-     * @param predicate  the predicate to use, may not be null
+     * @param predicate  the predicate to use, must not be null
      * @return the index of the first element which matches the predicate or -1 if none matches
      * @throws NullPointerException if predicate is null
      */

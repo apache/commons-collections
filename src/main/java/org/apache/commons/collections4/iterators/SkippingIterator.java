@@ -23,6 +23,7 @@ import java.util.Iterator;
  * before that position.
  * </p>
  *
+ * @param <E> the type of elements returned by this iterator.
  * @since 4.1
  */
 public class SkippingIterator<E> extends AbstractIteratorDecorator<E> {
