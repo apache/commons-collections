@@ -21,28 +21,35 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import java.nio.ByteBuffer;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.PrimitiveIterator.OfInt;
 
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * DynamicHasher Builder tests.
+ *
+ */
 public class DynamicHasherBuilderTest {
 
-    DynamicHasher.Builder builder;
-    Shape shape = new Shape( new MD5Cyclic(), 1, Integer.MAX_VALUE, 1 );
+    private DynamicHasher.Builder builder;
+    private Shape shape = new Shape( new MD5Cyclic(), 1, Integer.MAX_VALUE, 1 );
 
+    /**
+     * Sets up the builder for testing.
+     * @throws NoSuchAlgorithmException if MD5 is not available.
+     */
     @Before
     public void setup() throws NoSuchAlgorithmException
     {
         builder = new DynamicHasher.Builder( new MD5Cyclic());
     }
 
-    //private static final Hash HELLO_HASH = new Hash(3871253994707141660L, -6917270852172884668L);
-
+    /**
+     * Tests that hashing a byte works as expected.
+     */
     @Test
     public void buildTest_byte() {
         DynamicHasher hasher = builder.with((byte) 0x1).build();
@@ -56,6 +63,9 @@ public class DynamicHasherBuilderTest {
         assertFalse( iter.hasNext());
     }
 
+    /**
+     * Tests that hashing a byte array works as expected.
+     */
     @Test
     public void buildTest_byteArray() {
         DynamicHasher hasher = builder.with("Hello".getBytes()).build();
@@ -69,6 +79,9 @@ public class DynamicHasherBuilderTest {
 
     }
 
+    /**
+     * Tests that hashing a string works as expected.
+     */
     @Test
     public void buildTest_String() {
         DynamicHasher hasher = builder.with("Hello").build();
@@ -81,6 +94,9 @@ public class DynamicHasherBuilderTest {
         assertFalse( iter.hasNext());
     }
 
+    /**
+     * Tests that an empty hasher works as expected.
+     */
     @Test
     public void buildTest_Empty() {
         DynamicHasher hasher = builder.build();

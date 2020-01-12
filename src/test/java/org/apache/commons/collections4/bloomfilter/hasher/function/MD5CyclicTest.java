@@ -19,17 +19,23 @@ package org.apache.commons.collections4.bloomfilter.hasher.function;
 
 import static org.junit.Assert.assertEquals;
 
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
 import org.junit.Test;
 
+/**
+ * Tests the MD5 cyclic hash function.
+ *
+ */
 public class MD5CyclicTest {
 
+    /**
+     * Test that the apply function returns the proper values.
+     */
     @Test
-    public void applyTest() throws Exception {
+    public void applyTest() {
         MD5Cyclic md5 = new MD5Cyclic();
         long l1 = 0x8b1a9953c4611296L;
         long l2 = 0xa827abf8c47804d7L;
@@ -43,13 +49,16 @@ public class MD5CyclicTest {
         assertEquals(l1 + l2 + l2, l);
     }
 
+    /**
+     * Test that the signature is properly generated.
+     */
     @Test
     public void signatureTest() {
         MD5Cyclic md5 = new MD5Cyclic();
-        String arg = String.format( "%s-%s-%s", md5.getName().toUpperCase( Locale.ROOT),
-            md5.getSignedness(), md5.getProcessType());
-        long expected = md5.apply( arg.getBytes( StandardCharsets.UTF_8 ), 0 );
-        assertEquals( expected, md5.getSignature());
+        String arg = String.format("%s-%s-%s", md5.getName().toUpperCase(Locale.ROOT), md5.getSignedness(),
+            md5.getProcessType());
+        long expected = md5.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
+        assertEquals(expected, md5.getSignature());
     }
 
 }

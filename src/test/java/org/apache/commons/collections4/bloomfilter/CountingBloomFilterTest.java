@@ -21,7 +21,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
-import java.nio.LongBuffer;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -32,6 +31,10 @@ import org.apache.commons.collections4.bloomfilter.hasher.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 import org.junit.Test;
 
+/**
+ * Tests for the Counting Bloom filter implementation.
+ *
+ */
 public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
 
@@ -45,6 +48,9 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         return new CountingBloomFilter( shape );
     }
 
+    /**
+     * Tests that counts are correct when a hasher is used.
+     */
     @Test
     public void ConstructorTest_HasherValues_CountsTest() {
         List<Integer> lst = Arrays.asList( 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 );
@@ -61,6 +67,9 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         assertEquals(Integer.valueOf(1), bf.getCounts().map(Map.Entry::getValue).min(Integer::compare).get());
     }
 
+    /**
+     * Tests that counts are correct when a map of counts is used.
+     */
     @Test
     public void ConstructorTest_Map_CountsTest() {
         Map<Integer,Integer> map = new HashMap<Integer,Integer>();
@@ -103,6 +112,9 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
     }
 
+    /**
+     * Tests that merge correctly updates the counts when a CountingBloomFilter is passed
+     */
     @Test
     public void mergeTest_Counts() {
         int[] expected = {
@@ -139,6 +151,10 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         }
     }
 
+
+    /**
+     * Test that merge correctly updates the counts when a BitSetBloomFilter is passed
+     */
     @Test
     public void mergeTest_Counts_BitSetFilter() {
         int[] expected = {
@@ -176,6 +192,9 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
     }
 
+    /**
+     * Test that merge correctly updates the counts when a Hasher is passed
+     */
     @Test
     public void mergeTest_Shape_Hasher_Count() {
         int[] expected = {
@@ -212,6 +231,9 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         }
     }
 
+    /**
+     * Test that merge correctly updates the counts when a CountingBloomFilter is passed and an integer overflow occurs.
+     */
     @Test
     public void mergeTest_Overflow() {
 
@@ -244,6 +266,9 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         }
     }
 
+    /**
+     * Tests that when removing a standard Bloom filter the counts are correctly updated.
+     */
     @Test
     public void removeTest_Standard() {
         int[] values = {
@@ -276,6 +301,9 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
     }
 
+    /**
+     * Tests that when removing a counting Bloom filter the counts are correctly updated.
+     */
     @Test
     public void removeTest_Counting() {
         int[] values = {
@@ -308,8 +336,11 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
     }
 
+    /**
+     * Tests that removel errors when the count fall below 0.
+     */
     @Test
-    public void removeTest_Overflow() {
+    public void removeTest_Underflow() {
 
         List<Integer> lst = Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 ,16 ,17 );
         Hasher hasher = new StaticHasher( lst.iterator(), shape );
@@ -326,7 +357,7 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         // should not fail
         bf.remove(bf2);
 
-        // try max int on other side of merge.
+        // try max int on other side of remove.
         bf2 = createFilter(hasher, shape);
         bf = new CountingBloomFilter(map, shape);
 
@@ -340,6 +371,9 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
         }
     }
 
+    /**
+     * Tests that removing a hasher update the counts properly.
+     */
     @Test
     public void removeTest_Hasher() {
         int[] values = {
@@ -372,6 +406,10 @@ public class CountingBloomFilterTest extends AbstractBloomFilterTest {
 
     }
 
+    /**
+     * Tests that the andCardinality calculation executes correctly when using a
+     * CountingBloomFilter argument.
+     */
     @Test
     public void andCardinalityTest_CountingBloomFilter() {
         Hasher hasher = new StaticHasher( Arrays.asList( 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ).iterator(), shape );

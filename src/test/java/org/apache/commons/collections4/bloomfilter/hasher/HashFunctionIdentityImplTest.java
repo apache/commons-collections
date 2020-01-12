@@ -23,6 +23,10 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.S
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
 import org.junit.Test;
 
+/**
+ * Tests the HashFunctionIdentity implementation.
+ *
+ */
 public class HashFunctionIdentityImplTest {
 
     /**

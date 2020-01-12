@@ -19,22 +19,29 @@ package org.apache.commons.collections4.bloomfilter.hasher.function;
 
 import static org.junit.Assert.assertEquals;
 
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 import org.apache.commons.collections4.bloomfilter.hasher.function.Murmur128x86Cyclic;
 import org.junit.Test;
 
+/**
+ * Test that the Murmur3 128 x86 hash function works correctly.
+ *
+ */
 public class Murmur128x86CyclicTest {
 
+    /**
+     * Test that the apply function returns the proper values.
+     */
     @Test
-    public void applyTest() throws Exception {
+    public void applyTest() {
         Murmur128x86Cyclic murmur = new Murmur128x86Cyclic();
 
         long l1 = 0xe7eb60dabb386407L;
         long l2 = 0xc3ca49f691f73056L;
-        byte[] buffer ="Now is the time for all good men to come to the aid of their country".getBytes("UTF-8");
+        byte[] buffer = "Now is the time for all good men to come to the aid of their country"
+            .getBytes(StandardCharsets.UTF_8);
 
         long l = murmur.apply(buffer, 0);
         assertEquals(l1, l);
@@ -44,13 +51,16 @@ public class Murmur128x86CyclicTest {
         assertEquals(l1 + l2 + l2, l);
     }
 
+    /**
+     * Test that the signature is properly generated.
+     */
     @Test
     public void signatureTest() {
         Murmur128x86Cyclic murmur = new Murmur128x86Cyclic();
-        String arg = String.format( "%s-%s-%s", murmur.getName().toUpperCase( Locale.ROOT),
-            murmur.getSignedness(), murmur.getProcessType());
-        long expected = murmur.apply( arg.getBytes( StandardCharsets.UTF_8 ), 0 );
-        assertEquals( expected, murmur.getSignature());
+        String arg = String.format("%s-%s-%s", murmur.getName().toUpperCase(Locale.ROOT), murmur.getSignedness(),
+            murmur.getProcessType());
+        long expected = murmur.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
+        assertEquals(expected, murmur.getSignature());
     }
 
 }

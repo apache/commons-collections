@@ -19,20 +19,27 @@ package org.apache.commons.collections4.bloomfilter.hasher.function;
 
 import static org.junit.Assert.assertEquals;
 
-import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
 import org.apache.commons.collections4.bloomfilter.hasher.function.Murmur32x86Iterative;
 import org.junit.Test;
 
+/**
+ * Test that the Murmur3 32 x86 hash function works correctly.
+ *
+ */
 public class Murmur32x86IterativeTest {
 
+    /**
+     * Test that the apply function returns the proper values.
+     */
     @Test
-    public void applyTest() throws Exception {
+    public void applyTest() {
         Murmur32x86Iterative murmur = new Murmur32x86Iterative();
 
-        byte[] buffer = "Now is the time for all good men to come to the aid of their country".getBytes("UTF-8");
+        byte[] buffer = "Now is the time for all good men to come to the aid of their country"
+            .getBytes(StandardCharsets.UTF_8);
 
         long l = murmur.apply(buffer, 0);
         assertEquals(82674681, l);
@@ -42,13 +49,16 @@ public class Murmur32x86IterativeTest {
         assertEquals(-1561435247, l);
     }
 
+    /**
+     * Test that the signature is properly generated.
+     */
     @Test
     public void signatureTest() {
         Murmur32x86Iterative murmur = new Murmur32x86Iterative();
-        String arg = String.format( "%s-%s-%s", murmur.getName().toUpperCase( Locale.ROOT),
-            murmur.getSignedness(), murmur.getProcessType());
-        long expected = murmur.apply( arg.getBytes( StandardCharsets.UTF_8 ), 0 );
-        assertEquals( expected, murmur.getSignature());
+        String arg = String.format("%s-%s-%s", murmur.getName().toUpperCase(Locale.ROOT), murmur.getSignedness(),
+            murmur.getProcessType());
+        long expected = murmur.apply(arg.getBytes(StandardCharsets.UTF_8), 0);
+        assertEquals(expected, murmur.getSignature());
     }
 
 }

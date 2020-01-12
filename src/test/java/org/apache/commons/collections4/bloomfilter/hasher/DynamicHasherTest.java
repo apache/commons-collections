@@ -25,12 +25,14 @@ import static org.junit.Assert.fail;
 import java.security.NoSuchAlgorithmException;
 import java.util.PrimitiveIterator.OfInt;
 
-import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.ProcessType;
-import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.Signedness;
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * Tests the Dynamic Hasher
+ *
+ */
 public class DynamicHasherTest {
     private DynamicHasher.Builder builder;
     private Shape shape;
@@ -60,16 +62,25 @@ public class DynamicHasherTest {
         @Override
         public long getSignature() {
             return 0;
-        }};
+        }
+    };
 
+    /**
+     * Sets up the DynamicHasher.
+     *
+     * @throws NoSuchAlgorithmException is MD5 is not available.
+     */
     @Before
     public void setup() throws NoSuchAlgorithmException {
-        builder = new DynamicHasher.Builder( new MD5Cyclic() );
+        builder = new DynamicHasher.Builder(new MD5Cyclic());
         shape = new Shape(new MD5Cyclic(), 3, 72, 17);
     }
 
+    /**
+     * Tests that the expected bits are returned from hashing.
+     */
     @Test
-    public void testGetBits() throws Exception {
+    public void testGetBits() {
 
         int[] expected = {6, 69, 44, 19, 10, 57, 48, 23, 70, 61, 36, 11, 2, 49, 24, 15, 62};
 
@@ -85,8 +96,11 @@ public class DynamicHasherTest {
 
     }
 
+    /**
+     * Tests that bits from multiple hashes are returned correctly.
+     */
     @Test
-    public void testGetBits_MultipleHashes() throws Exception {
+    public void testGetBits_MultipleHashes() {
         int[] expected = {6, 69, 44, 19, 10, 57, 48, 23, 70, 61, 36, 11, 2, 49, 24, 15, 62, 1, 63, 53, 43, 17, 7, 69,
             59, 49, 39, 13, 3, 65, 55, 45, 35, 25};
 
@@ -102,18 +116,20 @@ public class DynamicHasherTest {
 
     }
 
+    /**
+     * Tests that retrieving bits for the wrong shape throws an exception.
+     */
     @Test
-    public void testGetBits_WongShape() throws Exception {
+    public void testGetBits_WongShape() {
 
-         Hasher hasher = builder.with("Hello").build();
+        Hasher hasher = builder.with("Hello").build();
 
-       try {
-            hasher.getBits(new Shape( testFunction, 3, 72, 17) );
-            fail( "Should have thown IllegalArgumentException");
-          }
-          catch (IllegalArgumentException expected) {
-              // do nothing
-          }
+        try {
+            hasher.getBits(new Shape(testFunction, 3, 72, 17));
+            fail("Should have thown IllegalArgumentException");
+        } catch (IllegalArgumentException expected) {
+            // do nothing
+        }
     }
 
 }
