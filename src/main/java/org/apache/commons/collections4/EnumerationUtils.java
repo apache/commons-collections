@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import org.apache.commons.collections4.iterators.EnumerationIterator;
+import org.apache.commons.collections4.iterators.IteratorIterable;
 
 /**
  * Provides utility methods for {@link Enumeration} instances.
@@ -33,7 +34,22 @@ public class EnumerationUtils {
     /**
      * EnumerationUtils is not normally instantiated.
      */
-    private EnumerationUtils() {}
+    private EnumerationUtils() {
+        // no instances.
+    }
+
+    /**
+     * Creates an {@link Iterable} that wraps an {@link Enumeration}. The returned {@link Iterable} can be used for a
+     * single iteration.
+     *
+     * @param <T> the element type
+     * @param enumeration the enumeration to use, may not be null
+     * @return a new, single use {@link Iterable}
+     * @since 4.5
+     */
+    public static <T> Iterable<T> asIterable(final Enumeration<T> enumeration) {
+        return new IteratorIterable<>(new EnumerationIterator<>(enumeration));
+    }
 
     /**
      * Returns the {@code index}-th value in the {@link Enumeration}, throwing
@@ -51,8 +67,8 @@ public class EnumerationUtils {
      * @since 4.1
      */
     public static <T> T get(final Enumeration<T> e, final int index) {
+        CollectionUtils.checkIndexBounds(index);
         int i = index;
-        CollectionUtils.checkIndexBounds(i);
         while (e.hasMoreElements()) {
             i--;
             if (i == -1) {
@@ -92,4 +108,5 @@ public class EnumerationUtils {
         }
         return result;
     }
+
 }

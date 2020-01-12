@@ -18,11 +18,13 @@ package org.apache.commons.collections4;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
@@ -56,6 +58,30 @@ public class EnumerationUtilsTest {
             // expected
         }
         assertTrue(!en.hasMoreElements());
+    }
+
+    @Test
+    public void testAsIterableFor() {
+        final Vector<String> vector = new Vector<>();
+        vector.addElement("zero");
+        vector.addElement("one");
+        Enumeration<String> en = vector.elements();
+        final Iterator<String> iterator = EnumerationUtils.asIterable(en).iterator();
+        assertTrue(iterator.hasNext());
+        assertEquals("zero", iterator.next());
+        assertTrue(iterator.hasNext());
+        assertEquals("one", iterator.next());
+        assertFalse(iterator.hasNext());
+    }
+
+    @Test
+    public void testAsIterableForNull() {
+        try {
+            EnumerationUtils.asIterable((Enumeration) null).iterator().next();
+            fail("Expecting NullPointerException");
+        } catch (final NullPointerException ex) {
+            // success
+        }
     }
 
     @Test
