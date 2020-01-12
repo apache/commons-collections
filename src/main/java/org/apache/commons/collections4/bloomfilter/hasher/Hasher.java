@@ -41,6 +41,12 @@ public interface Hasher {
     HashFunctionIdentity getHashFunctionIdentity();
 
     /**
+     * Returns true if the hasher specifies no bits.
+     * @return true if the hasher does not specify any bits.
+     */
+    boolean isEmpty();
+
+    /**
      * Return an iterator of integers that are the bits to enable in the Bloom
      * filter based on the shape.  No guarantee is made as to order
      * or duplication of values.

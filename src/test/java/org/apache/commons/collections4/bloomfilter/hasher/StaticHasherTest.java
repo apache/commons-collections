@@ -22,6 +22,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -265,6 +266,9 @@ public class StaticHasherTest {
         Hasher testHasher = new Hasher() {
 
             @Override
+            public boolean isEmpty() { return false; }
+
+            @Override
             public HashFunctionIdentity getHashFunctionIdentity() {
                 return testFunction;
             }
@@ -294,6 +298,9 @@ public class StaticHasherTest {
         Hasher testHasher = new Hasher() {
 
             @Override
+            public boolean isEmpty() { return false; }
+
+            @Override
             public HashFunctionIdentity getHashFunctionIdentity() {
                 return testFunctionX;
             }
@@ -311,5 +318,21 @@ public class StaticHasherTest {
         } catch (IllegalArgumentException expected) {
             // do nothing
         }
+    }
+
+    /**
+     * Tests if isEmpty() reports correctly.
+     */
+    @Test
+    public void testIsEmpty() {
+        List<Integer> lst = new ArrayList<Integer>();
+        StaticHasher hasher = new StaticHasher(lst.iterator(), shape);
+
+
+        assertTrue( hasher.isEmpty() );
+
+        lst.add( Integer.valueOf( 1 ));
+        hasher = new StaticHasher(lst.iterator(), shape);
+        assertFalse( hasher.isEmpty() );
     }
 }

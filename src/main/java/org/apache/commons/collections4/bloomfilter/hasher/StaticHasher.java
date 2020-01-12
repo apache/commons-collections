@@ -108,6 +108,11 @@ public final class StaticHasher implements Hasher {
     }
 
     @Override
+    public boolean isEmpty() {
+        return values.length == 0;
+    }
+
+    @Override
     public HashFunctionIdentity getHashFunctionIdentity() {
         return shape.getHashFunctionIdentity();
     }

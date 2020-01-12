@@ -132,4 +132,13 @@ public class DynamicHasherTest {
         }
     }
 
+    /**
+     * Tests if isEmpty() reports correctly.
+     */
+    @Test
+    public void testIsEmpty() {
+        assertTrue( builder.build().isEmpty() );
+        assertFalse( builder.with("Hello").build().isEmpty() );
+    }
+
 }
