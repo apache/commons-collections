@@ -273,7 +273,7 @@ public abstract class AbstractBloomFilter implements BloomFilter {
     }
 
     /**
-     * Determines if the bloom filter is "full". Full is definded as haveing no unset
+     * Determines if the bloom filter is "full". Full is defined as having no unset
      * bits.
      *
      * @return true if the filter is full.

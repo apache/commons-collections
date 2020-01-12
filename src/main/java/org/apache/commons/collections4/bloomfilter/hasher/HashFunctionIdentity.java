@@ -101,7 +101,7 @@ public interface HashFunctionIdentity {
     };
 
     /**
-     * An enum that identfies the process type of this function. <dl> <dt>Iterative
+     * An enum that identifies the process type of this function. <dl> <dt>Iterative
      * processes</dt> <dd>Call the underlying algorithm for each buffer, seed pair call to
      * {@code apply}.</dd> <dt>Cyclic processes</dt> <dd>Call the underlying algorithm to
      * generate two values for each buffer. It returns the first value on the call with

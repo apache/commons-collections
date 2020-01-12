@@ -61,7 +61,7 @@ public interface BloomFilter {
         private static final double LOG_OF_2 = Math.log(2.0);
 
         /**
-         * 1 / 2^log(2) approx −0.090619058. Used in calculating the number of bits.
+         * 1 / 2^log(2) approx -0.090619058. Used in calculating the number of bits.
          */
         private static final double DENOMINATOR = Math.log(1.0 / (Math.pow(2.0, LOG_OF_2)));
         /**
@@ -231,7 +231,7 @@ public interface BloomFilter {
             // log 1-e^x = [log1, log0) = <0 with an effective lower limit of -53
             // numberOfBits/ (-numberOfHashFunctions / [-53,0) ) >0
             // ceil( >0 ) >= 1
-            // so we can not produce a negative value thus we don't chack for it.
+            // so we can not produce a negative value thus we don't check for it.
             //
             // similarly we can not produce a number greater than numberOfBits so we
             // do not have to check for Integer.MAX_VALUE either.

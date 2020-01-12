@@ -122,7 +122,7 @@ public final class SetOperations {
      * of bits that are enabled.
      *
      * @param filter the Bloom filter to estimate size for.
-     * @return and estimate of the number of items that were placed in the Bloom filter.
+     * @return an estimate of the number of items that were placed in the Bloom filter.
      */
     public static long estimateSize(BloomFilter filter) {
         Shape shape = filter.getShape();

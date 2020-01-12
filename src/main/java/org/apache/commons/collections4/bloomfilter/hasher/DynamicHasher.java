@@ -120,7 +120,7 @@ public class DynamicHasher implements Hasher {
     }
 
     /**
-     * The builder for DyanamicHashers.
+     * The builder for DynamicHashers.
      * @since 4.5
      */
     public static class Builder implements Hasher.Builder {

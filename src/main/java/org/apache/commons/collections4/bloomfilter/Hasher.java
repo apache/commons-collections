@@ -31,6 +31,7 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
  * Implementations of {@code getBits()} may return duplicate values and may return
  * values in a random order.  See implementation javadoc notes as to the guarantees
  * provided by the specific implementation.
+ * </p>
  * @since 4.5
  */
 public interface Hasher {
