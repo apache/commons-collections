@@ -20,6 +20,8 @@ package org.apache.commons.collections4.bloomfilter;
 import static org.junit.Assert.assertEquals;
 import java.util.Arrays;
 import java.util.List;
+
+import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 import org.junit.Test;
 

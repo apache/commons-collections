@@ -30,7 +30,6 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.S
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
 import org.apache.commons.collections4.bloomfilter.BloomFilter;
 import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
-import org.apache.commons.collections4.bloomfilter.Hasher;
 import org.junit.Before;
 import org.junit.Test;
 

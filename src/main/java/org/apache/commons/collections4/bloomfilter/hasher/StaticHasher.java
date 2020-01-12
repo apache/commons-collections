@@ -24,7 +24,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
-import org.apache.commons.collections4.bloomfilter.Hasher;
 
 /**
  * A Hasher implementation that contains the index for all enabled bits for a specific

@@ -21,6 +21,7 @@ import java.util.BitSet;
 import java.util.PrimitiveIterator.OfInt;
 import java.util.function.IntConsumer;
 
+import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 
 /**

@@ -20,6 +20,7 @@ package org.apache.commons.collections4.bloomfilter;
 import java.util.Objects;
 
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
+import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 
 /**

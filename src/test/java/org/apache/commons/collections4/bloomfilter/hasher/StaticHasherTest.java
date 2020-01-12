@@ -32,7 +32,6 @@ import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.P
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity.Signedness;
 import org.apache.commons.collections4.bloomfilter.BloomFilter;
 import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
-import org.apache.commons.collections4.bloomfilter.Hasher;
 import org.junit.Test;
 
 public class StaticHasherTest {

@@ -15,12 +15,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.commons.collections4.bloomfilter;
+package org.apache.commons.collections4.bloomfilter.hasher;
 
 import java.util.PrimitiveIterator;
 
 import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
-import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
 
 
 /**

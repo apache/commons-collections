@@ -27,6 +27,7 @@ import java.util.PrimitiveIterator.OfInt;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
+import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 import org.junit.Test;
 

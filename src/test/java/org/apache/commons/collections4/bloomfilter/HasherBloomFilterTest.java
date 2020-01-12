@@ -32,6 +32,7 @@ import java.util.function.ToLongBiFunction;
 
 import org.apache.commons.collections4.bloomfilter.BloomFilter.Shape;
 import org.apache.commons.collections4.bloomfilter.hasher.DynamicHasher;
+import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.function.MD5Cyclic;
 import org.junit.After;
 import org.junit.Before;

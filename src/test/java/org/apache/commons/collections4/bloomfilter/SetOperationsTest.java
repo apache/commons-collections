@@ -21,6 +21,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.Arrays;
 import org.apache.commons.collections4.bloomfilter.hasher.HashFunctionIdentity;
+import org.apache.commons.collections4.bloomfilter.hasher.Hasher;
 import org.apache.commons.collections4.bloomfilter.hasher.StaticHasher;
 import org.junit.Test;
 
