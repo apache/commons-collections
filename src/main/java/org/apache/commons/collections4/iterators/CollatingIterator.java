@@ -36,6 +36,7 @@ import org.apache.commons.collections4.list.UnmodifiableList;
  * {@code B}, the {@link #next} method on this iterator will return the
  * lesser of {@code A.next()} and {@code B.next()}.
  *
+ * @param <E> the type of elements returned by this iterator.
  * @since 2.1
  */
 public class CollatingIterator<E> implements Iterator<E> {

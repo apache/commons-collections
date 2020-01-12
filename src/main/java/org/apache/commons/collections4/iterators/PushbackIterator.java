@@ -31,6 +31,7 @@ import java.util.Objects;
  * The decorator does not support the removal operation. Any call to {@link #remove()} will
  * result in an {@link UnsupportedOperationException}.
  *
+ * @param <E> the type of elements returned by this iterator.
  * @since 4.0
  */
 public class PushbackIterator<E> implements Iterator<E> {

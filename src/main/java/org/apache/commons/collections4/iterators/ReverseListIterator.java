@@ -34,6 +34,7 @@ import org.apache.commons.collections4.ResettableListIterator;
  * index in the list, thus it starts high and reduces as the iteration
  * continues. The previous methods work similarly.
  *
+ * @param <E> the type of elements returned by this iterator.
  * @since 3.2
  */
 public class ReverseListIterator<E> implements ResettableListIterator<E> {

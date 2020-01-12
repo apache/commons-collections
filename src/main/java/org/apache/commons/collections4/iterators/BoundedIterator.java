@@ -29,6 +29,7 @@ import java.util.Objects;
  * iterator is immediately advanced to this position, skipping all elements
  * before that position.
  *
+ * @param <E> the type of elements returned by this iterator.
  * @since 4.1
  */
 public class BoundedIterator<E> implements Iterator<E> {

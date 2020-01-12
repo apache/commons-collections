@@ -24,6 +24,7 @@ import org.apache.commons.collections4.ResettableListIterator;
  * {@code SingletonIterator} is an {@link java.util.ListIterator} over a single
  * object instance.
  *
+ * @param <E> the type of elements returned by this iterator.
  * @since 2.1
  */
 public class SingletonListIterator<E> implements ResettableListIterator<E> {

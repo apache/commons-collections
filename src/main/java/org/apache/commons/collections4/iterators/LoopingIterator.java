@@ -33,6 +33,7 @@ import org.apache.commons.collections4.ResettableIterator;
  * Concurrent modifications are not directly supported, and for most collection
  * implementations will throw a ConcurrentModificationException.
  *
+ * @param <E> the type of elements returned by this iterator.
  * @since 3.0
  */
 public class LoopingIterator<E> implements ResettableIterator<E> {

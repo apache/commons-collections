@@ -28,6 +28,7 @@ import java.util.Objects;
  * will be thrown if {@link #remove()} is called directly after a call to
  * {@link #peek()} or {@link #element()}.
  *
+ * @param <E> the type of elements returned by this iterator.
  * @since 4.0
  */
 public class PeekingIterator<E> implements Iterator<E> {

@@ -32,7 +32,7 @@ import org.apache.commons.collections4.ResettableIterator;
  * The iterator implements a {@link #reset} method, allowing the reset of
  * the iterator back to the start if required.
  *
- * @param <E> the type of elements returned by this iterator
+ * @param <E> the type of elements returned by this iterator.
  * @since 1.0
  */
 public class ArrayIterator<E> implements ResettableIterator<E> {

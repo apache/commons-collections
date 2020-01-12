@@ -27,6 +27,7 @@ import org.apache.commons.collections4.Unmodifiable;
  * Attempts to modify it will result in an UnsupportedOperationException.
  * </p>
  *
+ * @param <E> the type of elements returned by this iterator.
  * @since 3.0
  */
 public final class UnmodifiableIterator<E> implements Iterator<E>, Unmodifiable {

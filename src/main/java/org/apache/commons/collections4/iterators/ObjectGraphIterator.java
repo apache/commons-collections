@@ -71,6 +71,7 @@ import org.apache.commons.collections4.Transformer;
  * Under many circumstances, linking Iterators together in this manner is
  * more efficient (and convenient) than using nested for loops to extract a list.
  *
+ * @param <E> the type of elements returned by this iterator.
  * @since 3.1
  */
 public class ObjectGraphIterator<E> implements Iterator<E> {
